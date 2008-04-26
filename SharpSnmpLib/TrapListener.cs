@@ -1,0 +1,100 @@
+/*
+ * Created by SharpDevelop.
+ * User: lextm
+ * Date: 2008/4/23
+ * Time: 19:40
+ * 
+ * To change this template use Tools | Options | Coding | Edit Standard Headers.
+ */
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Net;
+using System.Net.Sockets;
+using System.IO;
+using System.Diagnostics;
+
+namespace SharpSnmpLib
+{
+	/// <summary>
+	/// Description of MyClass.
+	/// </summary>
+	public class TrapListener
+	{
+		Socket _watcher;
+		BackgroundWorker _worker;
+		IPEndPoint _sender;
+		
+		public void Start(int port)
+		{
+			_sender = new IPEndPoint(IPAddress.Any, port);
+			_watcher = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+			try
+			{
+				_watcher.Bind(_sender);
+				_worker = new BackgroundWorker();
+				_worker.DoWork += worker_DoWork;
+				_worker.RunWorkerAsync();
+			}
+			catch (SocketException ex)
+			{
+				if (ex.ErrorCode == 10048)
+				{
+					throw new SharpSnmpException("Port is already used: " + port, ex);
+				}
+			}
+		}
+		
+		public void worker_DoWork(object sender, DoWorkEventArgs e)
+		{
+			EndPoint senderRemote = (EndPoint)_sender;	
+			byte[] msg = new Byte[_watcher.ReceiveBufferSize];				
+			Console.WriteLine("Waiting to receive datagrams from client...");
+			while (!((BackgroundWorker)sender).CancellationPending)
+			{				
+				int number = _watcher.Available;
+				if (number != 0) 
+				{
+					Console.WriteLine("receive data..." + number);
+					// This call blocks.
+					_watcher.ReceiveFrom(msg, ref senderRemote);
+					//TrapMessage trap = TrapMessage.Parse(msg, number);
+                    DebugHelper(msg, number);
+				}
+			}
+		}
+
+        [Conditional("DEBUG")]
+        private static void DebugHelper(byte[] msg, int number)
+        {
+            using (BinaryWriter writer = new BinaryWriter(File.OpenWrite("twovarbinds.dat")))
+            {
+                writer.BaseStream.Write(msg, 0, number);
+                writer.Close();
+            }
+            for (int i = 0; i < number; i++)
+            {
+                Console.Write((char)msg[i]);
+            }
+            Console.WriteLine();
+            for (int i = 0; i < number; i++)
+            {
+                Console.Write(msg[i].ToString("X2") + string.Format("({0}) ", i));
+            }
+            Console.WriteLine();
+            for (int i = 0; i < number; i++)
+            {
+                Console.Write(msg[i].ToString("D") + string.Format("({0}) ", i));
+            }
+            Console.WriteLine();
+        }
+		
+		public void Stop()
+		{
+			if (_watcher == null) {
+				return;
+			}
+			_watcher.Close();
+		}
+	}
+}
