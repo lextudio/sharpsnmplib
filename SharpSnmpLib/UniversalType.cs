@@ -55,7 +55,9 @@ namespace X690
 		GeneralString=0x1b,
 		UniversalString=0x1c,
 		CharacterString=0x1d,
-		BMPString=0x1e
+		BMPString=0x1e,
+        IpAddress=0x40,
+        Timeticks=0x43
 	}
 	// all references here are to ITU-X.690-12/97
 }

@@ -21,6 +21,19 @@ namespace SharpSnmpLib
 	/// </summary>
 	public class TrapMessage
 	{
+        public override string ToString()
+        {
+            return string.Format("SNMPv1 trap: agent address: {0}; time stamp: {1}; community: {2}; enterprise: {3}; generic: {4}; specific: {5}; varbind count: {6}",
+                AgentAddress, TimeStamp, Community, new ObjectIdentifier(Enterprise), GenericId, SpecificId, Variables.Count);
+        }
+        int _time;
+        public int TimeStamp
+        {
+            get
+            {
+                return _time;
+            }
+        }
         string _community;
         public string Community
         {
@@ -70,34 +83,28 @@ namespace SharpSnmpLib
             }
         }
  
-		TrapMessage(MemoryStream m)
+		public TrapMessage(MemoryStream m)
 		{
             int first = m.ReadByte();
-            int packetLength = m.ReadByte();
-            int packetHeader_2 = m.ReadByte();
-            int packetHeader_1 = m.ReadByte();
-            int packetHeader_0 = m.ReadByte();
-            Universal tag = new Universal(m);
-            _community = tag.Value.ToString();
+            int packetLength = getMultiByteLength(m);
+            Universal unknown = new Universal(m);
+            int unknownValue = (Integer)unknown.Value;
+            Universal community = new Universal(m);
+            _community = community.Value.ToString();
             int pduType = m.ReadByte();
-            int pduLength = m.ReadByte();
+            int pduLength = getMultiByteLength(m);
             Universal enterpriseOID = new Universal(m);
             _enterprise = (uint[])enterpriseOID.Value;// change to uint[] OID form
-            int IPflag = m.ReadByte();
-            int IPversion = m.ReadByte();
-            byte[] ip = new byte[4];
-            m.Read(ip, 0, 4);
-            _ip = new System.Net.IPAddress(ip);
-            int separator = m.ReadByte();
-            int separator1 = m.ReadByte();
-            _generic = m.ReadByte();
-            int separator2 = m.ReadByte();
-            int separator3 = m.ReadByte();
-            _specific = m.ReadByte();
+            Universal ip = new Universal(m);
+            _ip = ((IpAddress)ip.Value).ToIPAddress();
+            Universal generic = new Universal(m);
+            _generic = (Integer)generic.Value;
+            Universal specific = new Universal(m);
+            _specific = (Integer)specific.Value;
             Universal timeStamp = new Universal(m);
-            string time = timeStamp.Value.ToString();
+            _time = (Integer)timeStamp.Value;
             int separator4 = m.ReadByte();
-            int varbindSectionLength = m.ReadByte();
+            int varbindSectionLength = getMultiByteLength(m);
             long current = m.Position;
             _varbinds = new List<Variable>();
             if (varbindSectionLength != 0)
@@ -109,17 +116,41 @@ namespace SharpSnmpLib
                 } while ((m.Position - current) < varbindSectionLength);
             }
 		}
-		
-		public static TrapMessage Parse(byte[] buffer, int length)
+
+        private static int getMultiByteLength(MemoryStream m)
+        {
+            int current = m.ReadByte();
+            return ReadLength(m, (byte)current);
+        }
+        // copied from universal
+        static int ReadLength(Stream s, byte x) // x is initial octet
+        {
+            if ((x & 0x80) == 0)
+                return (int)x;
+            int u = 0;
+            int n = (int)(x & 0x7f);
+            for (int j = 0; j < n; j++)
+            {
+                x = ReadByte(s);
+                u = (u << 8) + (int)x;
+            }
+            return u;
+        }
+        //copied from universal
+        static byte ReadByte(Stream s)
+        {
+            int n = s.ReadByte();
+            if (n == -1)
+                throw (new Exception("BER end of file"));
+            return (byte)n;
+        }
+
+		public TrapMessage(byte[] buffer, int length): this(new MemoryStream(buffer, 0, length, false))
 		{
-			MemoryStream m = new MemoryStream(buffer, 0, length, false);
-			TrapMessage result = new TrapMessage(m);
-			return result;
 		}
 		
-		public static TrapMessage Parse(byte[] buffer)
+		public TrapMessage(byte[] buffer): this(buffer, buffer.Length)
 		{
-			return Parse(buffer, buffer.Length);
 		}
 	}
 	

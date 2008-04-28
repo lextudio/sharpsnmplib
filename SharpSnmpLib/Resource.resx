@@ -133,4 +133,11 @@
         BAhUcmFwVGVzdDAXBgsrBgEEAZByh2kWAAQIVHJhcFRlc3Q=
 </value>
   </data>
+  <data name="fivevarbinds" type="System.Byte[], mscorlib">
+    <value>
+        MIGuAgEABAZwdWJsaWOkgaAGCisGAQQBkHKHaAJABH8AAAECAQYCAQxDAj/gMIGBMBcGCysGAQQBkHKH
+        aRUABAhUcmFwVGVzdDAYBgsrBgEEAZByh2kWAAQJVHJhcFRlc3QyMBgGCysGAQQBkHKHaRcABAlUcmFw
+        VGVzdDMwGAYLKwYBBAGQcodpGAAECVRyYXBUZXN0NDAYBgsrBgEEAZByh2kZAAQJVHJhcFRlc3Q1
+</value>
+  </data>
 </root>

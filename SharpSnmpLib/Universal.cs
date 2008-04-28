@@ -1,8 +1,8 @@
 using System;
-using System.Net.Sockets;
-using System.IO;
 using System.Collections;
+using System.IO;
 using System.Text;
+using SharpSnmpLib;
 
 // ASN.1 BER encoding library by Malcolm Crowe at the University of the West of Scotland
 // See http://cis.paisley.ac.uk/crow-ci0
@@ -96,7 +96,7 @@ namespace X690
 		/// <summary>
 		/// Create a <see cref="Universal"></see> instance for object identifier.
 		/// </summary>
-		/// <param name="oid">OID</param>
+		/// <param name="result">OID</param>
 		public Universal(uint[] oid)
 		{
 			type = new BERtag(UniversalType.ObjectIdentifier);
@@ -263,56 +263,41 @@ namespace X690
 		}
 		protected virtual bool ValueOf(uint n)
 		{					  
-			int j=0;
-			switch ((UniversalType)(type.ToByte()))
-			{
-				case UniversalType.Boolean: val = (b[0]>0); break;
-				case UniversalType.Integer: 
-					val = new Integer(b); break;
-				case UniversalType.BitString:
-					byte r = b[0];
-					BitSet bs = new BitSet(n*8-r); // 8.6.2
-					for (j=0;j<bs.size;j++) 
-						bs.bits[j] = (b[4*j]<<24)|(b[4*j+1]<<16)|(b[4*j+2]<<8)|b[4*j+3];
-					val = bs; break;
-				case UniversalType.OctetString:
-					val = new OctetString(b,0,n); break;
-				case UniversalType.Null:
-					val = null;
-					break;
-				case UniversalType.ObjectIdentifier:
-					ArrayList al = new ArrayList();
-					int p = 0;
-					while (p<n)
-						al.Add(GetOIDEl(ref p));
-					uint[] oid;
-					if (((uint)al[0])==43) 
-					{
-						oid = new uint[al.Count+1];
-						oid[0] = 1;
-						oid[1] = 3;
-						for (j=1;j<al.Count;j++)
-							oid[j+1] = (uint)al[j];
-					} 
-					else // can happen that oid is .0??
-					{
-						//				throw(new Exception("OID must begin with .1.3"));
-						oid = new uint[al.Count];
-						for (j=0;j<al.Count;j++)
-							oid[j] = (uint)al[j];
-					}
-					val = oid; break;
-				case UniversalType.Real:
-					val = new Real(b); break;
-	                case UniversalType.GeneralString:
-	                    val = ASCIIEncoding.ASCII.GetString(b); break;
-	                case UniversalType.Enumerated:
-	                    val = new Integer(b); break;
-				default:
-					val = type.ToString()+" unimplemented"; break;
-			}
+            switch ((UniversalType)(type.ToByte()))
+            {
+                case UniversalType.Boolean: val = (b[0] > 0); break;
+                case UniversalType.Integer:
+                    val = new Integer(b); break;
+                case UniversalType.BitString:
+                    byte r = b[0];
+                    BitSet bs = new BitSet(n * 8 - r); // 8.6.2
+                    for (int j = 0; j < bs.size; j++)
+                        bs.bits[j] = (b[4 * j] << 24) | (b[4 * j + 1] << 16) | (b[4 * j + 2] << 8) | b[4 * j + 3];
+                    val = bs; break;
+                case UniversalType.OctetString:
+                    val = new OctetString(b, 0, n); break;
+                case UniversalType.Null:
+                    val = null;
+                    break;
+                case UniversalType.ObjectIdentifier:
+                    uint[] oid = new ObjectIdentifier(b).ToOid();
+                    val = oid; break;
+                case UniversalType.Real:
+                    val = new Real(b); break;
+                case UniversalType.GeneralString:
+                    val = ASCIIEncoding.ASCII.GetString(b); break;
+                case UniversalType.Enumerated:
+                    val = new Integer(b); break;
+                case UniversalType.IpAddress:
+                    val = new IpAddress(b); break;
+                case UniversalType.Timeticks:
+                    val = new Timeticks(b); break;
+                default:
+                    val = type.ToString() + " unimplemented"; break;
+            }
 			return true;
 		}
+
 		protected int Length
 		{
 			get 
@@ -378,6 +363,7 @@ namespace X690
 			} while ((x&0x80)!=0);
 			return r;
 		}
+
 		int LengthOIDEl(uint a)
 		{
 			int j = 0;

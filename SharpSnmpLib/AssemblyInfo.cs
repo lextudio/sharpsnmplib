@@ -1,9 +1,8 @@
 #region Using directives
 
-using System;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Resources;
+using System.Runtime.InteropServices;
 
 #endregion
 
@@ -12,7 +11,7 @@ using System.Resources;
 // associated with an assembly.
 [assembly: AssemblyTitle("SharpSnmpLib")]
 [assembly: AssemblyDescription("C# SNMP Library")]
-[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyConfiguration("Less GPL")]
 [assembly: AssemblyCompany("LeXtudio")]
 [assembly: AssemblyProduct("#SNMPLib")]
 [assembly: AssemblyCopyright("(C) 2008 Lex Y. Li")]
@@ -29,6 +28,6 @@ using System.Resources;
 //
 // You can specify all the values or you can use the default the Revision and 
 // Build Numbers by using the '*' as shown below:
-[assembly: AssemblyVersion("0.5.010426.00")]
-[assembly: AssemblyFileVersion("0.5.010426.00")]
+[assembly: AssemblyVersion("0.5.010428.01")]
+[assembly: AssemblyFileVersion("0.5.010428.01")]
 [assembly: NeutralResourcesLanguage("en")]

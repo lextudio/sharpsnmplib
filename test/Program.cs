@@ -15,16 +15,22 @@ namespace test
 	{
 		public static void Main(string[] args)
 		{
-			Console.WriteLine("Start watcher");
-			
-			TrapListener watcher = new TrapListener();
-			watcher.Start(162);
-			
-			Console.WriteLine("Press any key to stop . . . ");
-			Console.ReadKey(true);
-			watcher.Stop();
-			Console.WriteLine("Press any key to exit . . . ");
-			Console.Read();
+            Console.WriteLine("Start watcher");
+
+            TrapListener watcher = new TrapListener();
+            watcher.TrapReceived += new EventHandler<TrapReceivedEventArgs>(watcher_TrapReceived);
+            watcher.Start(162);
+
+            Console.WriteLine("Press any key to stop . . . ");
+            Console.ReadKey(true);
+            watcher.Stop();
+            Console.WriteLine("Press any key to exit . . . ");
+            Console.Read();
 		}
+
+        static void watcher_TrapReceived(object sender, TrapReceivedEventArgs e)
+        {
+            Console.WriteLine(e.Trap);
+        }
 	}
 }

@@ -16,18 +16,57 @@ using System.Diagnostics;
 
 namespace SharpSnmpLib
 {
+    public class TrapReceivedEventArgs : EventArgs
+    {
+        public TrapReceivedEventArgs(TrapMessage trap)
+        {
+            _trap = trap;
+        }
+
+        public TrapMessage Trap
+        {
+            get
+            {
+                return _trap;
+            }
+        }
+
+        TrapMessage _trap;
+    }
 	/// <summary>
 	/// Description of MyClass.
 	/// </summary>
-	public class TrapListener
+	public class TrapListener: Component
 	{
 		Socket _watcher;
 		BackgroundWorker _worker;
 		IPEndPoint _sender;
+        int _port = DEFAULTPORT;
+        const int DEFAULTPORT = 162;
+
+        public event EventHandler<TrapReceivedEventArgs> TrapReceived;
+
+        public int Port
+        {
+            get
+            {
+                return _port;
+            }
+            set
+            {
+                _port = value;
+            }
+        }
+
+        public void Start()
+        {
+            Start(DEFAULTPORT);
+        }
 		
 		public void Start(int port)
 		{
-			_sender = new IPEndPoint(IPAddress.Any, port);
+            _port = port;
+			_sender = new IPEndPoint(IPAddress.Any, _port);
 			_watcher = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 			try
 			{
@@ -40,7 +79,7 @@ namespace SharpSnmpLib
 			{
 				if (ex.ErrorCode == 10048)
 				{
-					throw new SharpSnmpException("Port is already used: " + port, ex);
+					throw new SharpSnmpException("Port is already used: " + _port, ex);
 				}
 			}
 		}
@@ -58,7 +97,10 @@ namespace SharpSnmpLib
 					Console.WriteLine("receive data..." + number);
 					// This call blocks.
 					_watcher.ReceiveFrom(msg, ref senderRemote);
-					//TrapMessage trap = TrapMessage.Parse(msg, number);
+                    if (TrapReceived != null)
+                    {
+                        TrapReceived(this, new TrapReceivedEventArgs(new TrapMessage(msg, number)));
+                    }
                     DebugHelper(msg, number);
 				}
 			}
@@ -67,7 +109,7 @@ namespace SharpSnmpLib
         [Conditional("DEBUG")]
         private static void DebugHelper(byte[] msg, int number)
         {
-            using (BinaryWriter writer = new BinaryWriter(File.OpenWrite("twovarbinds.dat")))
+            using (BinaryWriter writer = new BinaryWriter(File.OpenWrite("fivevarbinds.dat")))
             {
                 writer.BaseStream.Write(msg, 0, number);
                 writer.Close();
