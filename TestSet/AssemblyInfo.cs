@@ -1,7 +1,7 @@
-#region Using directives
+﻿#region Using directives
 
+using System;
 using System.Reflection;
-using System.Resources;
 using System.Runtime.InteropServices;
 
 #endregion
@@ -9,12 +9,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SharpSnmpLib")]
-[assembly: AssemblyDescription("C# SNMP Library")]
-[assembly: AssemblyConfiguration("Less GPL")]
-[assembly: AssemblyCompany("LeXtudio")]
-[assembly: AssemblyProduct("#SNMPLib")]
-[assembly: AssemblyCopyright("(C) 2008 Lex Y. Li")]
+[assembly: AssemblyTitle("TestSet")]
+[assembly: AssemblyDescription("")]
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("TestSet")]
+[assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -28,6 +28,4 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values or you can use the default the Revision and 
 // Build Numbers by using the '*' as shown below:
-[assembly: AssemblyVersion("0.5.010428.144")]
-[assembly: AssemblyFileVersion("0.5.010428.144")]
-[assembly: NeutralResourcesLanguage("en")]
+[assembly: AssemblyVersion("1.0.*")]

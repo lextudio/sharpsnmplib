@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,30 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="novarbind" type="System.Byte[], mscorlib">
-    <value>MCICAQAEBnB1YmxpY6QVBgErQAR/AAABAgEGAgEMQwI/4DAA</value>
-  </data>
-  <data name="onevarbind" type="System.Byte[], mscorlib">
-    <value>
-        MEQCAQAEBnB1YmxpY6Q3BgorBgEEAZByh2gCQAR/AAABAgEGAgEMQwI/4DAZMBcGCysGAQQBkHKHaRUA
-        BAhUcmFwVGVzdA==
-</value>
-  </data>
-  <data name="twovarbinds" type="System.Byte[], mscorlib">
-    <value>
-        MF0CAQAEBnB1YmxpY6RQBgorBgEEAZByh2gCQAR/AAABAgEGAgEMQwI/4DAyMBcGCysGAQQBkHKHaRUA
-        BAhUcmFwVGVzdDAXBgsrBgEEAZByh2kWAAQIVHJhcFRlc3Q=
-</value>
-  </data>
-  <data name="fivevarbinds" type="System.Byte[], mscorlib">
-    <value>
-        MIGuAgEABAZwdWJsaWOkgaAGCisGAQQBkHKHaAJABH8AAAECAQYCAQxDAj/gMIGBMBcGCysGAQQBkHKH
-        aRUABAhUcmFwVGVzdDAYBgsrBgEEAZByh2kWAAQJVHJhcFRlc3QyMBgGCysGAQQBkHKHaRcABAlUcmFw
-        VGVzdDMwGAYLKwYBBAGQcodpGAAECVRyYXBUZXN0NDAYBgsrBgEEAZByh2kZAAQJVHJhcFRlc3Q1
-</value>
-  </data>
-  <data name="get" type="System.Byte[], mscorlib">
-    <value>MIEvAoEBAASBBnB1YmxpY6CBHwKBAQoCgQEAAoEBADCBEDCBDQaBCCsGAQIBAQYABQA=</value>
-  </data>
+  <metadata name="trapListener.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="$this.TrayLargeIcon" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
+  </metadata>
 </root>

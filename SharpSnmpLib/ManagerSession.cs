@@ -1,10 +1,11 @@
 
+using SharpSnmpLib;
 using System;
-using System.Net.Sockets;
-using System.IO;
 using System.Collections;
-using System.Text;
+using System.IO;
 using System.Net;
+using System.Net.Sockets;
+using System.Text;
 using X690;
 
 // SNMP library for .NET by Malcolm Crowe at University of the West of Scotland
@@ -31,22 +32,37 @@ namespace Snmp
 		IPEndPoint agent; 
 		int seq = 0;
 		UdpClient udp = new UdpClient();
-		public ManagerSession(string a, string c)
-		{
-			agentAddress = a;
-			agentCommunity = c;
-			IPAddress host = Dns.GetHostEntry(a).AddressList[0];
-			agent = new IPEndPoint(host,161);
-		}
+
+        public ManagerSession(string a, string c) : this(IPAddress.Parse(a), c) { }
+
+        public ManagerSession(IPAddress ip, string c)
+        {
+            agentAddress = ip.ToString();
+            agentCommunity = c;
+            //IPAddress host = Dns.GetHostEntry(a).AddressList[0];
+            agent = new IPEndPoint(ip, 161);
+        }
 		public void Close() { udp.Close(); }
 		public Universal VarBind(uint[] oid)
 		{
+			return VarBind(new ObjectIdentifier(oid));
+		}
+		
+		public Universal VarBind(ObjectIdentifier oid)
+		{
 			return VarBind(oid, Universal.Null);
 		}
+			
 		public Universal VarBind(uint[] oid, Universal val)
 		{
-			return new Universal(new Universal(oid),val);
+			return VarBind(new ObjectIdentifier(oid), val);//new Universal(new Universal(oid),val);
 		}
+		
+		public Universal VarBind(ObjectIdentifier oid, Universal val)
+		{
+			return new Universal(new Universal(oid), val);
+		}
+		
 		public Universal PDU(SnmpType t,params Universal[] vbinds)
 		{
 			seq += 10;
@@ -56,9 +72,21 @@ namespace Snmp
 				new Universal(0), // errorIndex
 				new Universal(vbinds));
 		}
+		
+		public byte[] GetBytes(params Universal[] vbinds)
+		{
+			SnmpBER mess = new SnmpBER(SnmpType.Array,
+				new Universal(0), // version-1
+				new Universal(agentCommunity),
+				PDU(SnmpType.GetRequestPDU,vbinds));
+			MemoryStream m = new MemoryStream();
+			mess.Send(m);
+			return m.ToArray();
+		}
+		
 		public Universal[] Get(params Universal[] vbinds)
 		{
-			SnmpBER mess = new SnmpBER(SnmpType.Sequence,
+			SnmpBER mess = new SnmpBER(SnmpType.Array,
 				new Universal(0), // version-1
 				new Universal(agentCommunity),
 				PDU(SnmpType.GetRequestPDU,vbinds));
@@ -68,9 +96,9 @@ namespace Snmp
 			udp.Send(bytes,bytes.Length,agent);
 			IPEndPoint from = new IPEndPoint(IPAddress.Any,0);
 	            IAsyncResult result = udp.BeginReceive(null, this);
-	            result.AsyncWaitHandle.WaitOne(100, false);
+	            result.AsyncWaitHandle.WaitOne(_timeout, false);
 	            if (!result.IsCompleted)
-	                return null;
+	                throw new SharpSnmpException("timeout");
 	            bytes = udp.EndReceive(result, ref from);
 	            m = new MemoryStream(bytes, false);
 			mess = new SnmpBER(m);
@@ -78,9 +106,24 @@ namespace Snmp
 			Universal vbindlist = pdu[3];
 			return (Universal[])vbindlist.Value;
 		}
+
+        int _timeout = 5000;
+
+        public int Timeout
+        {
+            get
+            {
+                return _timeout;
+            }
+            set
+            {
+                _timeout = value;
+            }
+        }
+
 		public void Set(params Universal[] vbinds)
 		{
-			SnmpBER mess = new SnmpBER(SnmpType.Sequence,
+			SnmpBER mess = new SnmpBER(SnmpType.Array,
 				new Universal(0), // version-1
 				new Universal(agentCommunity),
 				PDU(SnmpType.SetRequestPDU,vbinds));
@@ -88,10 +131,21 @@ namespace Snmp
 			mess.Send(m);
 			byte[] bytes = m.ToArray();
 			udp.Send(bytes,bytes.Length,agent);
+				IPEndPoint from = new IPEndPoint(IPAddress.Any,0);
+	            IAsyncResult result = udp.BeginReceive(null, this);
+	            result.AsyncWaitHandle.WaitOne(_timeout, false);
+	            if (!result.IsCompleted)
+	                throw new SharpSnmpException("timeout");
+	            bytes = udp.EndReceive(result, ref from);
+	            m = new MemoryStream(bytes, false);
+			mess = new SnmpBER(m);
+			Universal pdu = mess[2];
+			Universal vbindlist = pdu[3];
 		}
+		
 		public bool GetNext(ref Universal vbind)
 		{
-			SnmpBER mess = new SnmpBER(SnmpType.Sequence,
+			SnmpBER mess = new SnmpBER(SnmpType.Array,
 				new Universal(0), // version-1
 				new Universal(agentCommunity),
 				PDU(SnmpType.GetNextRequestPDU,vbind));
@@ -103,7 +157,7 @@ namespace Snmp
 			udp.Send(bytes,bytes.Length,agent);
 			IPEndPoint from = new IPEndPoint(IPAddress.Any,0);
 	            IAsyncResult result = udp.BeginReceive(null, this);
-	            result.AsyncWaitHandle.WaitOne(100, false);
+	            result.AsyncWaitHandle.WaitOne(_timeout, false);
 	            if (!result.IsCompleted)
 	                return false;
 	            bytes = udp.EndReceive(result, ref from);

@@ -1,11 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual C# Express 2008
+# Visual Studio 2008
+# SharpDevelop 3.0.0.3043
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpSnmpLib", "SharpSnmpLib\SharpSnmpLib.csproj", "{286DE6DB-8F95-4BD4-86A2-86488D2E0EE1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestTrap", "test\TestTrap.csproj", "{2BD083D3-01C9-46CA-9E9D-72A29240DBF3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestGet", "TestGet\TestGet.csproj", "{5DE73026-002A-4369-A4D8-2D14CEC727F5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSet", "TestSet\TestSet.csproj", "{9557151F-BE39-48CD-BEB9-21B91DA5E531}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,6 +28,10 @@ Global
 		{5DE73026-002A-4369-A4D8-2D14CEC727F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5DE73026-002A-4369-A4D8-2D14CEC727F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5DE73026-002A-4369-A4D8-2D14CEC727F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9557151F-BE39-48CD-BEB9-21B91DA5E531}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9557151F-BE39-48CD-BEB9-21B91DA5E531}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9557151F-BE39-48CD-BEB9-21B91DA5E531}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9557151F-BE39-48CD-BEB9-21B91DA5E531}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

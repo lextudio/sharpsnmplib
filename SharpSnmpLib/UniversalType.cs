@@ -56,8 +56,23 @@ namespace X690
 		UniversalString=0x1c,
 		CharacterString=0x1d,
 		BMPString=0x1e,
-        IpAddress=0x40,
-        Timeticks=0x43
+		Sequence=0x30,  
+		IpAddress=0x40,
+		Counter32=0x41,
+		Gauge=0x42,
+        Timeticks=0x43,
+        Opaque=0x44,
+		NetAddress=0x45,
+        Counter64=0x46,
+        UInt32=0x47,
+        GetRequestPDU=0xA0,
+		GetNextRequestPDU=0xA1,
+		GetResponsePDU=0xA2,
+		SetRequestPDU=0xA3,
+		TrapPDUv1=0xA4,
+		TrapPDUv2=0xA7,
+		GetBulkRequest=0xA5,
+		InformRequest=0xA6
 	}
 	// all references here are to ITU-X.690-12/97
 }

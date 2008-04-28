@@ -1,7 +1,8 @@
+using SharpSnmpLib;
 using System;
-using System.Net.Sockets;
-using System.IO;
 using System.Collections;
+using System.IO;
+using System.Net.Sockets;
 using System.Text;
 
 // ASN.1 BER encoding library by Malcolm Crowe at the University of the West of Scotland
@@ -23,7 +24,7 @@ using System.Text;
 
 namespace X690
 {
-	public class Real
+	public class Real: ISnmpData
 	{
 		public byte[] octVal = null;
 		public Real(byte[] b)
@@ -100,6 +101,12 @@ namespace X690
 	        public override string ToString()
 		{
 			return ((double)this).ToString();
+		}
+		
+		public Snmp.SnmpType DataType {
+			get {
+				return Snmp.SnmpType.Real;
+			}
 		}
 	}
 	// all references here are to ITU-X.690-12/97

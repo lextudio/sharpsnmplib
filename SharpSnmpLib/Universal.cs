@@ -1,3 +1,4 @@
+using Snmp;
 using System;
 using System.Collections;
 using System.IO;
@@ -37,12 +38,12 @@ namespace X690
 		{
 			get 
 			{
-				return new Universal(new BERtag(UniversalType.Null),new Universal[0]); 
+				return new Universal(new BERtag(SnmpType.Null),new Universal[0]); 
 			}
 		}
 		public Universal(bool x) // 8.2
 		{
-			type = new BERtag(UniversalType.Boolean);
+			type = new BERtag(SnmpType.Boolean);
 			val = x;
 			e = true;
 			b = new byte[1];
@@ -50,14 +51,14 @@ namespace X690
 		}
 		public Universal(int n) // 8.3
 		{
-			type = new BERtag(UniversalType.Integer);
+			type = new BERtag(SnmpType.Integer);
 			val = n;
 			e = true;
 			b = new Integer(n).octVal;
 		}
 		public Universal(double d)
 		{
-			type = new BERtag(UniversalType.Real);
+			type = new BERtag(SnmpType.Real);
 			val = d;
 			e = true;
 			b = new Real(d).octVal;
@@ -65,7 +66,7 @@ namespace X690
 		public Universal(BitSet a)
 		{
 			// encoding 8.6.2
-			type = new BERtag(UniversalType.BitString);
+			type = new BERtag(SnmpType.BitString);
 			val = a;
 			e = true;
 			int n = (a.Length+7)/8;
@@ -88,32 +89,25 @@ namespace X690
 		}
 		public Universal(string s)
 		{
-			type = new BERtag(UniversalType.OctetString);
+			type = new BERtag(SnmpType.OctetString);
 			val = s;
 			e = true;
 			b = (new ASCIIEncoding()).GetBytes(s);
+		}
+		
+		public Universal(ObjectIdentifier oid)
+		{
+			val = oid;
+			type = new BERtag(SnmpType.ObjectIdentifier);
+			e = true;
+			b = oid.ToPduFormat();
 		}
 		/// <summary>
 		/// Create a <see cref="Universal"></see> instance for object identifier.
 		/// </summary>
 		/// <param name="result">OID</param>
-		public Universal(uint[] oid)
-		{
-			type = new BERtag(UniversalType.ObjectIdentifier);
-			val = oid;
-			e = true;
-			int ln = 0;
-			int j;
-			for (j=1;j<oid.Length;j++)
-				ln += LengthOIDEl(oid[j]);
-			b = new byte[ln];
-			if (oid[0]!=1 || oid[1]!=3)
-				throw(new Exception("OID must begin with .1.3"));
-			ln = 0;
-			PutOIDEl(ref ln,43);
-			for (j=2;j<oid.Length;j++)
-				PutOIDEl(ref ln,oid[j]);
-		}
+		public Universal(uint[] oid): this(new ObjectIdentifier(oid)) {	}
+		
 		public Universal(ArrayList a)
 		{
 			type = new BERtag(0,true,0);
@@ -140,7 +134,7 @@ namespace X690
 			type = t;
 			val = obs;
 			e = true;
-			val = obs;
+			//val = obs;
 		}
 		public Universal(params Universal[] obs) : this(new BERtag(0,true,16),obs) {}
 		protected bool Children(Stream s) // handle SEQUENCE
@@ -247,14 +241,14 @@ namespace X690
 		{
 			Universal[] a = (Universal[])val;
 			int j;
-			switch ((UniversalType)(type.ToByte()))
+			switch ((SnmpType)(type.ToByte()))
 			{
-				case UniversalType.BitString: // 8.6.3
+				case SnmpType.BitString: // 8.6.3
 					BitSet r = (BitSet)a[0].val;
 					for (j=1;j<a.Length;j++)
 						r = r.Cat((BitSet)a[j].val);
 					val = r; break;
-				case UniversalType.OctetString: // 8.7.3
+				case SnmpType.OctetString: // 8.7.3
 					OctetString s = (OctetString)a[0].val;
 					for (j=1;j<a.Length;j++)
 						s += (OctetString)a[j].val;
@@ -263,34 +257,34 @@ namespace X690
 		}
 		protected virtual bool ValueOf(uint n)
 		{					  
-            switch ((UniversalType)(type.ToByte()))
+            switch ((SnmpType)(type.ToByte()))
             {
-                case UniversalType.Boolean: val = (b[0] > 0); break;
-                case UniversalType.Integer:
+                case SnmpType.Boolean: val = (b[0] > 0); break;
+                case SnmpType.Integer:
                     val = new Integer(b); break;
-                case UniversalType.BitString:
+                case SnmpType.BitString:
                     byte r = b[0];
                     BitSet bs = new BitSet(n * 8 - r); // 8.6.2
                     for (int j = 0; j < bs.size; j++)
                         bs.bits[j] = (b[4 * j] << 24) | (b[4 * j + 1] << 16) | (b[4 * j + 2] << 8) | b[4 * j + 3];
                     val = bs; break;
-                case UniversalType.OctetString:
+                case SnmpType.OctetString:
                     val = new OctetString(b, 0, n); break;
-                case UniversalType.Null:
+                case SnmpType.Null:
                     val = null;
                     break;
-                case UniversalType.ObjectIdentifier:
-                    uint[] oid = new ObjectIdentifier(b).ToOid();
-                    val = oid; break;
-                case UniversalType.Real:
+                case SnmpType.ObjectIdentifier:
+                    val = new ObjectIdentifier(b);
+					break;
+                case SnmpType.Real:
                     val = new Real(b); break;
-                case UniversalType.GeneralString:
+                case SnmpType.GeneralString:
                     val = ASCIIEncoding.ASCII.GetString(b); break;
-                case UniversalType.Enumerated:
+                case SnmpType.Enumerated:
                     val = new Integer(b); break;
-                case UniversalType.IpAddress:
+                case SnmpType.IpAddress:
                     val = new IpAddress(b); break;
-                case UniversalType.Timeticks:
+                case SnmpType.Timeticks:
                     val = new Timeticks(b); break;
                 default:
                     val = type.ToString() + " unimplemented"; break;
@@ -413,20 +407,21 @@ namespace X690
 			{
 				if (val==null)
 					ValueOf(len);
-				switch ((UniversalType)type.ToByte()) // Guy McIlroy
+				//TODO: fix this
+				switch ((SnmpType)type.ToByte()) // Guy McIlroy
 				{
-					case UniversalType.BitString:
+					case SnmpType.BitString:
 						r += "["+val.ToString()+"]";
 						break;
-					case UniversalType.ObjectIdentifier:
-						uint[] oid = (uint[])val;
+					case SnmpType.ObjectIdentifier:
+						uint[] oid = ((ObjectIdentifier)val).ToOid();
 						for (int k=0;k<oid.Length;k++) 
 							r += "."+oid[k];
 						break;
-					case UniversalType.OctetString:
+					case SnmpType.OctetString:
 						r += "\""+val.ToString()+"\"";
 						break;
-					case UniversalType.Null:
+					case SnmpType.Null:
 						r += "NULL"; break;
 					default:
 						r += val.ToString();

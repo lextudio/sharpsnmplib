@@ -1,7 +1,8 @@
+using Snmp;
 using System;
-using System.Net.Sockets;
-using System.IO;
 using System.Collections;
+using System.IO;
+using System.Net.Sockets;
 using System.Text;
 
 // ASN.1 BER encoding library by Malcolm Crowe at the University of the West of Scotland
@@ -31,7 +32,7 @@ namespace X690
 		public ulong tag;
 		public BERtag() { atp=BERtype.Universal; comp=false; tag=0; } // EndMarker
 		public BERtag(BERtype a,bool c, ulong t) { atp=a; comp=c; tag=t; }
-		public BERtag(UniversalType b) : this((byte)b) {}
+		public BERtag(SnmpType b) : this((byte)b) {}
 		public BERtag(byte b) 
 		{
 			// decoding 8.1.2.4.3 for small tag values
@@ -120,7 +121,7 @@ namespace X690
 		public override string ToString()
 		{
 			if (atp==BERtype.Universal && !comp)
-				return ((UniversalType)tag).ToString().ToUpper();
+				return ((SnmpType)tag).ToString().ToUpper();
 			return "[" + atp.ToString().ToUpper()+" "+(comp?"SEQUENCE ":"")+tag+"]";
 		}
 	}

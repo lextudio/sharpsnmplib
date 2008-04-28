@@ -35,9 +35,9 @@ namespace Snmp
 					val = GetULong(); break;
 				case SnmpType.Gauge:
 					val = GetUInt(); break;
-				case SnmpType.TimeTicks:
+				case SnmpType.Timeticks:
 					val = GetUInt(); break;
-				case SnmpType.IPAddress:
+				case SnmpType.IpAddress:
 					val = b; break;
 				default:
 					return base.ValueOf(n); // handle Universal types
@@ -79,7 +79,7 @@ namespace Snmp
 		public SnmpBER(uint c) : this((ulong)c,SnmpType.Counter32) {}
 		public SnmpBER(byte[] a) // IPAddress
 		{
-			type = new SnmpTag(SnmpType.IPAddress);
+			type = new SnmpTag(SnmpType.IpAddress);
 			e = true;
 			b = a;
 		}

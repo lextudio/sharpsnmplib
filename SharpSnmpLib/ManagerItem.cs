@@ -1,10 +1,11 @@
 
+using SharpSnmpLib;
 using System;
-using System.Net.Sockets;
-using System.IO;
 using System.Collections;
-using System.Text;
+using System.IO;
 using System.Net;
+using System.Net.Sockets;
+using System.Text;
 using X690;
 
 // SNMP library for .NET by Malcolm Crowe at University of the West of Scotland
@@ -30,21 +31,14 @@ namespace Snmp
 		protected ManagerSession sess;
 	        public Universal Value
 	        {
-	            get
-	            {
-	                try
-	                {
-	                    if (isCached)
-	                        return varbind[1];
-	                    varbind = sess.Get(sess.VarBind(Oid))[0];
-	                    isCached = true;
-	                    return varbind[1];
-	                }
-	                catch (Exception)
-	                {
-	                    return null;
-	                }
-	            }
+                get
+                {
+                    if (isCached)
+                        return varbind[1];
+                    varbind = sess.Get(sess.VarBind(Oid))[0];
+                    isCached = true;
+                    return varbind[1];
+                }
 	            set
 	            {
 	                // crash if ManagerItem does not already contain a binding
@@ -53,15 +47,16 @@ namespace Snmp
 	                sess.Set(varbind);
 	            }
 	        }
-		public uint[] Oid 
+		public ObjectIdentifier Oid 
 		{
 			get 
 			{
-				return (uint[])(varbind[0].Value); 
+				return (ObjectIdentifier)(varbind[0].Value); 
 			}
 		}
 		Universal varbind;
-		public ManagerItem(ManagerSession s,uint[] oid) : this (s,s.VarBind(oid)) {}
+		public ManagerItem(ManagerSession s, ObjectIdentifier oid): this (s, s.VarBind(oid)) {}
+		public ManagerItem(ManagerSession s,uint[] oid) : this (s,new ObjectIdentifier(oid)) {}
 		public ManagerItem(ManagerSession s,Universal v)
 		{
 			sess = s;

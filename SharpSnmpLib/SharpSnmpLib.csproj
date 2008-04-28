@@ -40,8 +40,13 @@
     <Compile Include="BERtag.cs" />
     <Compile Include="BERtype.cs" />
     <Compile Include="bitset.cs" />
+    <Compile Include="GetMessage.cs" />
+    <Compile Include="IDataType.cs" />
     <Compile Include="Integer.cs" />
     <Compile Include="IpAddress.cs" />
+    <Compile Include="Manager.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ManagerItem.cs" />
     <Compile Include="ManagerSession.cs" />
     <Compile Include="ObjectIdentifier.cs" />
@@ -53,10 +58,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
+    <Compile Include="SetMessage.cs" />
     <Compile Include="SharpSnmpException.cs" />
     <Compile Include="SnmpBER.cs" />
     <Compile Include="SnmpTag.cs" />
     <Compile Include="SnmpType.cs" />
+    <Compile Include="Tests\TestGetMessage.cs" />
     <Compile Include="Tests\TestObjectIdentifier.cs" />
     <Compile Include="Tests\TestTrapMessage.cs" />
     <Compile Include="TimeTicks.cs" />
@@ -64,15 +71,25 @@
     <Compile Include="TrapListener.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="TrapReceivedEventArgs.cs" />
     <Compile Include="Universal.cs" />
-    <Compile Include="UniversalType.cs" />
+    <Compile Include="Variable.cs" />
+    <None Include="Resources\get.dat" />
     <None Include="Resources\onevarbind.dat" />
     <None Include="Resources\twovarbinds.dat" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Manager.resx">
+      <DependentUpon>Manager.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resource.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TrapListener.resx">
+      <DependentUpon>TrapListener.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>

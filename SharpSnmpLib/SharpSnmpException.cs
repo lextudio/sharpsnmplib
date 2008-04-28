@@ -16,7 +16,8 @@ namespace SharpSnmpLib
 {
 	public class SharpSnmpException: Exception
 	{
-		public SharpSnmpException(string message, Exception inner): base(message, inner) {}
+        public SharpSnmpException(string message) : base(message) { }
+        public SharpSnmpException(string message, Exception inner) : base(message, inner) { }
 	}
 
 }

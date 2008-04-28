@@ -6,7 +6,7 @@ using System.Net;
 
 namespace SharpSnmpLib
 {
-    public class IpAddress: OctetString
+    public class IpAddress: OctetString, ISnmpData
     {
         public IpAddress(byte[] bytes)
             : base(bytes)
@@ -40,5 +40,11 @@ namespace SharpSnmpLib
         {
             return ip;
         }
+    	
+		public override Snmp.SnmpType DataType {
+			get {
+				return Snmp.SnmpType.IpAddress;
+			}
+		}
     }
 }

@@ -24,7 +24,7 @@ namespace SharpSnmpLib
         public override string ToString()
         {
             return string.Format("SNMPv1 trap: agent address: {0}; time stamp: {1}; community: {2}; enterprise: {3}; generic: {4}; specific: {5}; varbind count: {6}",
-                AgentAddress, TimeStamp, Community, new ObjectIdentifier(Enterprise), GenericId, SpecificId, Variables.Count);
+                AgentAddress, TimeStamp, Community, Enterprise, GenericId, SpecificId, Variables.Count);
         }
         int _time;
         public int TimeStamp
@@ -42,8 +42,8 @@ namespace SharpSnmpLib
                 return _community;
             }
         }
-        uint[] _enterprise;
-        public uint[] Enterprise
+        ObjectIdentifier _enterprise;
+        public ObjectIdentifier Enterprise
         {
             get
             {
@@ -82,19 +82,29 @@ namespace SharpSnmpLib
                 return _varbinds;
             }
         }
+        ProtocolVersion _version;
+        public ProtocolVersion Version
+        {
+        	get {
+        		return _version;
+        	}
+        }
  
 		public TrapMessage(MemoryStream m)
 		{
-            int first = m.ReadByte();
+			if ((int)SnmpType.Array != m.ReadByte()) {
+				throw new ArgumentException("not a trap message");
+			}
             int packetLength = getMultiByteLength(m);
-            Universal unknown = new Universal(m);
-            int unknownValue = (Integer)unknown.Value;
+            Universal protocol = new Universal(m);
+            int version = (Integer)protocol.Value;
+            _version = (ProtocolVersion)version;
             Universal community = new Universal(m);
             _community = community.Value.ToString();
             int pduType = m.ReadByte();
             int pduLength = getMultiByteLength(m);
             Universal enterpriseOID = new Universal(m);
-            _enterprise = (uint[])enterpriseOID.Value;// change to uint[] OID form
+            _enterprise = (ObjectIdentifier)enterpriseOID.Value;
             Universal ip = new Universal(m);
             _ip = ((IpAddress)ip.Value).ToIPAddress();
             Universal generic = new Universal(m);
@@ -154,32 +164,5 @@ namespace SharpSnmpLib
 		}
 	}
 	
-	public class Variable
-	{
-		Universal _oid;
-		Universal _data;
-		
-		public Variable(Universal varbind)
-		{
-            Universal[] content = (Universal[])varbind.Value;
-			_oid = content[0];
-			_data = content[1];
-		}
-		
-		public Universal Id
-		{
-			get
-			{
-				return _oid;				
-			}
-		}
-		
-		public Universal Data
-		{
-			get
-			{
-				return _data;
-			}
-		}
-	}
+
 }

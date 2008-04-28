@@ -67,6 +67,13 @@ namespace SharpSnmpLib {
 			}
 		}
 		
+		internal static byte[] get {
+			get {
+				object obj = ResourceManager.GetObject("get", resourceCulture);
+				return ((byte[])(obj));
+			}
+		}
+		
 		internal static byte[] novarbind {
 			get {
 				object obj = ResourceManager.GetObject("novarbind", resourceCulture);

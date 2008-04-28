@@ -7,41 +7,28 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
-using System.IO;
-using System.Diagnostics;
 
 namespace SharpSnmpLib
 {
-    public class TrapReceivedEventArgs : EventArgs
-    {
-        public TrapReceivedEventArgs(TrapMessage trap)
-        {
-            _trap = trap;
-        }
-
-        public TrapMessage Trap
-        {
-            get
-            {
-                return _trap;
-            }
-        }
-
-        TrapMessage _trap;
-    }
 	/// <summary>
 	/// Description of MyClass.
 	/// </summary>
 	public class TrapListener: Component
 	{
+		public TrapListener()
+		{
+			InitializeComponent();
+		}
+		
 		Socket _watcher;
-		BackgroundWorker _worker;
 		IPEndPoint _sender;
         int _port = DEFAULTPORT;
+        private BackgroundWorker worker;
         const int DEFAULTPORT = 162;
 
         public event EventHandler<TrapReceivedEventArgs> TrapReceived;
@@ -71,9 +58,7 @@ namespace SharpSnmpLib
 			try
 			{
 				_watcher.Bind(_sender);
-				_worker = new BackgroundWorker();
-				_worker.DoWork += worker_DoWork;
-				_worker.RunWorkerAsync();
+				worker.RunWorkerAsync();
 			}
 			catch (SocketException ex)
 			{
@@ -138,5 +123,17 @@ namespace SharpSnmpLib
 			}
 			_watcher.Close();
 		}
+
+        private void InitializeComponent()
+        {
+            this.worker = new System.ComponentModel.BackgroundWorker();
+            // 
+            // worker
+            // 
+            this.worker.WorkerReportsProgress = true;
+            this.worker.WorkerSupportsCancellation = true;
+            this.worker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.worker_DoWork);
+
+        }
 	}
 }
