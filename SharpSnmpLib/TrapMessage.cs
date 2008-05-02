@@ -8,22 +8,22 @@
  */
 
 using System;
-using Snmp;
 using System.IO;
-using X690;
 using System.Net;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace SharpSnmpLib
 {
 	/// <summary>
 	/// Description of Trap.
 	/// </summary>
-	public class TrapMessage
+	public class TrapMessage: ISnmpMessage, ISnmpData
 	{
         public override string ToString()
         {
-            return string.Format("SNMPv1 trap: agent address: {0}; time stamp: {1}; community: {2}; enterprise: {3}; generic: {4}; specific: {5}; varbind count: {6}",
+            return string.Format(CultureInfo.InvariantCulture, 
+                "SNMPv1 trap: agent address: {0}; time stamp: {1}; community: {2}; enterprise: {3}; generic: {4}; specific: {5}; varbind count: {6}",
                 AgentAddress, TimeStamp, Community, Enterprise, GenericId, SpecificId, Variables.Count);
         }
         int _time;
@@ -82,87 +82,63 @@ namespace SharpSnmpLib
                 return _varbinds;
             }
         }
-        ProtocolVersion _version;
-        public ProtocolVersion Version
+        VersionCode _version;
+        public VersionCode Version
         {
         	get {
         		return _version;
         	}
         }
- 
-		public TrapMessage(MemoryStream m)
+		
+		public TrapMessage(SnmpArray body)
 		{
-			if ((int)SnmpType.Array != m.ReadByte()) {
-				throw new ArgumentException("not a trap message");
+			if (body == null) 
+			{
+				throw new ArgumentNullException("body");
 			}
-            int packetLength = getMultiByteLength(m);
-            Universal protocol = new Universal(m);
-            int version = (Integer)protocol.Value;
-            _version = (ProtocolVersion)version;
-            Universal community = new Universal(m);
-            _community = community.Value.ToString();
-            int pduType = m.ReadByte();
-            int pduLength = getMultiByteLength(m);
-            Universal enterpriseOID = new Universal(m);
-            _enterprise = (ObjectIdentifier)enterpriseOID.Value;
-            Universal ip = new Universal(m);
-            _ip = ((IpAddress)ip.Value).ToIPAddress();
-            Universal generic = new Universal(m);
-            _generic = (Integer)generic.Value;
-            Universal specific = new Universal(m);
-            _specific = (Integer)specific.Value;
-            Universal timeStamp = new Universal(m);
-            _time = (Integer)timeStamp.Value;
-            int separator4 = m.ReadByte();
-            int varbindSectionLength = getMultiByteLength(m);
-            long current = m.Position;
-            _varbinds = new List<Variable>();
-            if (varbindSectionLength != 0)
-            {
-                // parse varbinds
-                do {
-	                Universal varbind = new Universal(m);
-	                _varbinds.Add(new Variable(varbind));
-                } while ((m.Position - current) < varbindSectionLength);
-            }
-		}
-
-        private static int getMultiByteLength(MemoryStream m)
-        {
-            int current = m.ReadByte();
-            return ReadLength(m, (byte)current);
-        }
-        // copied from universal
-        static int ReadLength(Stream s, byte x) // x is initial octet
-        {
-            if ((x & 0x80) == 0)
-                return (int)x;
-            int u = 0;
-            int n = (int)(x & 0x7f);
-            for (int j = 0; j < n; j++)
-            {
-                x = ReadByte(s);
-                u = (u << 8) + (int)x;
-            }
-            return u;
-        }
-        //copied from universal
-        static byte ReadByte(Stream s)
-        {
-            int n = s.ReadByte();
-            if (n == -1)
-                throw (new Exception("BER end of file"));
-            return (byte)n;
-        }
-
-		public TrapMessage(byte[] buffer, int length): this(new MemoryStream(buffer, 0, length, false))
-		{
+			if (body.Items.Count != 3) 
+			{
+				throw new ArgumentException("wrong message body");
+			}
+			_pdu = (ISnmpPdu)body.Items[2];
+			if (_pdu.TypeCode != TypeCode) 
+			{
+				throw new ArgumentException("wrong message type");
+			}
+			_community = body.Items[1].ToString();
+			_version = (VersionCode)((Int)body.Items[0]).ToInt32();
+			TrapV1Pdu trapPdu = (TrapV1Pdu)_pdu;
+			_enterprise = trapPdu.Enterprise;
+			_ip = trapPdu.Agent.ToIPAddress();
+			_generic = trapPdu.Generic;
+			_specific = trapPdu.Specific;
+			_time = trapPdu.TimeStamp.ToInt32();
+			_varbinds = trapPdu.Variables;
 		}
 		
-		public TrapMessage(byte[] buffer): this(buffer, buffer.Length)
+		ISnmpPdu _pdu;
+		
+		public SnmpType TypeCode {
+			get {
+				return SnmpType.TrapPDUv1;
+			}
+		}
+		
+		byte[] _bytes;
+		
+		public byte[] ToBytes()
 		{
+			if (null == _bytes) 
+			{
+				_bytes = ((TrapV1Pdu)_pdu).ToMessageBody(_version, _community).ToBytes();
+			}
+			return _bytes;
+		}
+		
+		public ISnmpPdu Pdu {
+			get {
+				return _pdu;
+			}
 		}
 	}
-	
-
 }

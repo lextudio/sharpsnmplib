@@ -14,7 +14,8 @@ namespace SharpSnmpLib.Tests
         public void TestParseNoVarbind()
         {
             byte[] buffer = Resource.novarbind;
-            TrapMessage message = new TrapMessage(buffer);
+            ISnmpMessage m = MessageFactory.ParseMessage(buffer);
+            TrapMessage message = (TrapMessage)m;
             Assert.AreEqual(6, message.GenericId);
             Assert.AreEqual(12, message.SpecificId);
             Assert.AreEqual("public", message.Community);
@@ -28,7 +29,7 @@ namespace SharpSnmpLib.Tests
         public void TestParseOneVarbind()
         {
         	byte[] buffer = Resource.onevarbind;
-        	TrapMessage message = new TrapMessage(buffer);
+        	TrapMessage message = (TrapMessage)MessageFactory.ParseMessage(buffer);
         	Assert.AreEqual(1, message.Variables.Count);
         	Assert.AreEqual(new uint[] { 1, 3, 6, 1, 4, 1, 2162, 1000, 2 }, message.Enterprise.ToOid());
         	Assert.AreEqual("TrapTest", message.Variables[0].Data.ToString());
@@ -39,7 +40,7 @@ namespace SharpSnmpLib.Tests
         public void TestParseTwoVarbinds()
         {
         	byte[] buffer = Resource.twovarbinds;
-        	TrapMessage message = new TrapMessage(buffer);
+        	TrapMessage message = (TrapMessage)MessageFactory.ParseMessage(buffer);
         	Assert.AreEqual(2, message.Variables.Count);
         	Assert.AreEqual("TrapTest", message.Variables[0].Data.ToString());
         	Assert.AreEqual(new uint[] {1,3,6,1,4,1,2162,1001,21,0}, (uint[])message.Variables[0].Id.ToOid());
@@ -51,7 +52,7 @@ namespace SharpSnmpLib.Tests
         public void TestParseFiveVarbinds()
         {
             byte[] buffer = Resource.fivevarbinds;
-            TrapMessage message = new TrapMessage(buffer);
+            TrapMessage message = (TrapMessage)MessageFactory.ParseMessage(buffer);
             Assert.AreEqual(5, message.Variables.Count);
             Assert.AreEqual("TrapTest5", message.Variables[4].Data.ToString());
             Assert.AreEqual(new uint[] { 1, 3, 6, 1, 4, 1, 2162, 1001, 25, 0 }, (uint[])message.Variables[4].Id.ToOid());

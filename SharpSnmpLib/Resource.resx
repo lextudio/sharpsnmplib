@@ -143,4 +143,7 @@
   <data name="get" type="System.Byte[], mscorlib">
     <value>MIEvAoEBAASBBnB1YmxpY6CBHwKBAQoCgQEAAoEBADCBEDCBDQaBCCsGAQIBAQYABQA=</value>
   </data>
+  <data name="getresponse" type="System.Byte[], mscorlib">
+    <value>MC4CAQAEBnB1YmxpY6IhAgEKAgEAAgEAMBYwFAYIKwYBAgEBBgAECFNoYW5naGFp</value>
+  </data>
 </root>

@@ -5,7 +5,7 @@ using System.IO;
 using System.Collections;
 using System.Text;
 using System.Net;
-using X690;
+using System.Diagnostics.CodeAnalysis;
 
 // SNMP library for .NET by Malcolm Crowe at University of the West of Scotland
 // http://cis.paisley.ac.uk/crow-ci0/
@@ -13,7 +13,7 @@ using X690;
 // mailto:malcolm.crowe@paisley.ac.uk
 
 // Getting Started
-// The simplest way to get an SNMP value from a host is
+// The simplest way to get an SNMP value from index host is
 // ManagerItem mi = new ManagerItem(
 //								new ManagerSession(hostname,"public"),
 //								"1.3.6.1.2.1.1.4.0");
@@ -22,14 +22,16 @@ using X690;
 // TODO: Tables, lists of bindings
 //		 Friendly strings derived from MIBs
 
-namespace Snmp
+[module: SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", Scope = "member", Target = "SharpSnmpLib.SnmpType.#UTF8String")]
+
+namespace SharpSnmpLib
 {
 	public enum SnmpType // RFC1213 subset of ASN.1
 	{ 
 		//TODO: remove this
 //		EndMarker = 0x00,
 //		Boolean = 0x01,
-//		Integer=0x02, 
+//		Int=0x02, 
 //		UInt32=0x47, 
 //		BitString=0x03,  // internally BitSet
 //		OctetString=0x04, // internally string
@@ -53,7 +55,7 @@ namespace Snmp
 //		InformRequest=0xA6
 		EndMarker = 0x00,
 		Boolean = 0x01,
-		Integer=0x02, // X690.Integer
+		Integer=0x02, // X690.Int
 		BitString=0x03,  // X690.BitSet
 		OctetString=0x04, // X690.OctetString
 		Null=0x05,

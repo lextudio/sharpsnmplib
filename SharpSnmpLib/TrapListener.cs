@@ -69,7 +69,7 @@ namespace SharpSnmpLib
 			}
 		}
 		
-		public void worker_DoWork(object sender, DoWorkEventArgs e)
+		void worker_DoWork(object sender, DoWorkEventArgs e)
 		{
 			EndPoint senderRemote = (EndPoint)_sender;	
 			byte[] msg = new Byte[_watcher.ReceiveBufferSize];				
@@ -82,40 +82,16 @@ namespace SharpSnmpLib
 					Console.WriteLine("receive data..." + number);
 					// This call blocks.
 					_watcher.ReceiveFrom(msg, ref senderRemote);
-                    if (TrapReceived != null)
+					ISnmpMessage message = MessageFactory.ParseMessage(msg, number);
+                    if (TrapReceived != null 
+					    && message.TypeCode == SnmpType.TrapPDUv1)
                     {
-                        TrapReceived(this, new TrapReceivedEventArgs(new TrapMessage(msg, number)));
+						TrapReceived(this, new TrapReceivedEventArgs((TrapMessage)message));
                     }
-                    DebugHelper(msg, number);
 				}
 			}
 		}
 
-        [Conditional("DEBUG")]
-        private static void DebugHelper(byte[] msg, int number)
-        {
-            using (BinaryWriter writer = new BinaryWriter(File.OpenWrite("fivevarbinds.dat")))
-            {
-                writer.BaseStream.Write(msg, 0, number);
-                writer.Close();
-            }
-            for (int i = 0; i < number; i++)
-            {
-                Console.Write((char)msg[i]);
-            }
-            Console.WriteLine();
-            for (int i = 0; i < number; i++)
-            {
-                Console.Write(msg[i].ToString("X2") + string.Format("({0}) ", i));
-            }
-            Console.WriteLine();
-            for (int i = 0; i < number; i++)
-            {
-                Console.Write(msg[i].ToString("D") + string.Format("({0}) ", i));
-            }
-            Console.WriteLine();
-        }
-		
 		public void Stop()
 		{
 			if (_watcher == null) {

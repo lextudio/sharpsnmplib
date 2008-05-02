@@ -9,7 +9,6 @@
 using System;
 using System.Net;
 using SharpSnmpLib;
-using X690;
 
 namespace TestSet
 {
@@ -22,9 +21,9 @@ namespace TestSet
 			{
 				manager.Set(IPAddress.Parse("127.0.0.1"), "private",
 				                                new Variable(new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 1, 6, 0 }), 
-				                                             new OctetString("Shanghai")));
+				                                             new OctetString("Beijing")));
 			}
-			catch (SharpSnmpException ex)
+			catch (SharpOperationException ex)
 			{
 				Console.WriteLine(ex);
 			}

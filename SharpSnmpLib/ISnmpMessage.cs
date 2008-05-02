@@ -1,25 +1,24 @@
 /*
  * Created by SharpDevelop.
  * User: lextm
- * Date: 2008/4/28
- * Time: 11:48
+ * Date: 2008/5/1
+ * Time: 11:17
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 
-using Snmp;
 using System;
 
 namespace SharpSnmpLib
 {
 	/// <summary>
-	/// Description of IDataType.
+	/// SNMP message.
 	/// </summary>
-	public interface ISnmpData
+	public interface ISnmpMessage: ISnmpData
 	{
-		SnmpType DataType
-		{
-			get;
-		}
+		/// <summary>
+		/// PDU section.
+		/// </summary>
+		ISnmpPdu Pdu { get; }
 	}
 }

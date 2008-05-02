@@ -1,5 +1,6 @@
 #region Using directives
 
+using System;
 using System.Reflection;
 using System.Resources;
 using System.Runtime.InteropServices;
@@ -19,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCulture("")]
 
 // This sets the default COM visibility of types in the assembly to invisible.
-// If you need to expose a type to COM, use [ComVisible(true)] on that type.
+// If you need to expose index type to COM, use [ComVisible(true)] on that type.
 [assembly: ComVisible(false)]
 
 // The assembly version has following format :
@@ -28,6 +29,7 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values or you can use the default the Revision and 
 // Build Numbers by using the '*' as shown below:
-[assembly: AssemblyVersion("0.5.010428.144")]
-[assembly: AssemblyFileVersion("0.5.010428.144")]
+[assembly: AssemblyVersion("0.5.010502.335")]
+[assembly: AssemblyFileVersion("0.5.010502.335")]
 [assembly: NeutralResourcesLanguage("en")]
+[assembly: CLSCompliant(true)]

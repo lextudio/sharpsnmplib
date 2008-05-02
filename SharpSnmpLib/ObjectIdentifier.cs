@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.IO;
+using System.Text;
 
 namespace SharpSnmpLib
 {
-	public struct ObjectIdentifier: ISnmpData
+	public struct ObjectIdentifier: ISnmpData, IEquatable<ObjectIdentifier>
 	{
 		/// <summary>
 		/// Creates an <see cref="ObjectIdentifier"/> instance from OID array.
 		/// </summary>
 		/// <param name="oid">OID <see cref="uint"/> array</param>
+		[CLSCompliant(false)]
 		public ObjectIdentifier(uint[] oid)
 		{
 			if (oid[0]!=1 || oid[1]!=3)
@@ -18,15 +19,27 @@ namespace SharpSnmpLib
 				throw(new ArgumentException("OID must begin with .1.3"));
 			}
 			_oid = oid;
-			_pduFormat = null;
+			_raw = new byte[GetPduFormatLength(_oid)];
+			int ln = 0;
+			PutOIDEl(ref _raw, ref ln,43);
+			for (int j=2;j<_oid.Length;j++)
+			{
+				PutOIDEl(ref _raw, ref ln,_oid[j]);
+			}
+			_bytes = null;
 		}
 		/// <summary>
-		/// Creates an <see cref="ObjectIdentifier"/> instance from PDU raw bytes.
+		/// Creates an <see cref="ObjectIdentifier"/> instance from PDU raw value.
 		/// </summary>
-		/// <param name="bytes">PDU raw bytes</param>
-		/// <param name="n">number</param>
-		public ObjectIdentifier(byte[] bytes): this(ParsePduFormat(bytes, (uint)bytes.Length))	{}
-
+		/// <param name="value">PDU raw value</param>
+		/// <param name="count">number</param>
+		public ObjectIdentifier(byte[] raw)
+		{
+			_raw = raw;
+			_oid = ParsePduFormat(raw, (uint)raw.Length);
+			_bytes = null;
+		}
+		[CLSCompliant(false)]
 		public uint[] ToOid()
 		{
 			return _oid;
@@ -46,7 +59,7 @@ namespace SharpSnmpLib
 		/// <summary>
 		/// Decodes PDU OID representation.
 		/// </summary>
-		/// <param name="bytes"></param>
+		/// <param name="value"></param>
 		/// <param name="p"></param>
 		/// <returns></returns>
 		static uint GetOIDEl(byte[] bytes, ref int p)
@@ -124,7 +137,7 @@ namespace SharpSnmpLib
 				bytes[ln++] = (byte)x;
 			}
 		}
-		
+		[CLSCompliant(false)]
 		public static int GetPduFormatLength(uint[] oid)
 		{
 			int result = 0;
@@ -135,27 +148,61 @@ namespace SharpSnmpLib
 			return result;
 		}
 		
-		byte[] _pduFormat;
-		
 		public byte[] ToPduFormat()
 		{
-			if (_pduFormat == null)
-			{
-				_pduFormat = new byte[GetPduFormatLength(_oid)];
-				int ln = 0;
-				PutOIDEl(ref _pduFormat, ref ln,43);
-				for (int j=2;j<_oid.Length;j++)
-				{
-					PutOIDEl(ref _pduFormat, ref ln,_oid[j]);
-				}
-			}
-			return _pduFormat;
+			return _raw;
 		}
 		
-		public Snmp.SnmpType DataType {
-			get {
-				return Snmp.SnmpType.ObjectDescriptor;
+		byte[] _raw;
+		
+		byte[] _bytes;
+		
+		public byte[] ToBytes()
+		{
+			if (_bytes == null) {
+				_bytes = ByteTool.ToBytes(TypeCode, _raw);
 			}
+			return _bytes;
+		}
+		
+		public SnmpType TypeCode {
+			get {
+				return SnmpType.ObjectIdentifier;
+			}
+		}
+		
+		public override bool Equals(object obj)
+		{
+			if (obj == null) {
+				return false;
+			}
+			if (object.ReferenceEquals(this, obj)) {
+				return true;
+			}
+			if (GetType() != obj.GetType()) {
+				return false;
+			}
+			return Equals((ObjectIdentifier)obj);
+		}
+		
+		public bool Equals(ObjectIdentifier other)
+		{
+			return ByteTool.CompareRaw(_raw, other._raw);
+		}
+		
+		public override int GetHashCode()
+		{
+			return ToString().GetHashCode();
+		}
+		
+		public static bool operator == (ObjectIdentifier left, ObjectIdentifier right)
+		{
+			return left.Equals(right);
+		}
+		
+		public static bool operator != (ObjectIdentifier left, ObjectIdentifier right)
+		{
+			return !(left == right);
 		}
 	}
 }

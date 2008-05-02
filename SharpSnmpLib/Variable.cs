@@ -8,34 +8,26 @@
  */
 
 using System;
-using Snmp;
-using X690;
+using System.Collections.Generic;
+using System.IO;
 
 namespace SharpSnmpLib
 {
 	public class Variable
 	{
 		ObjectIdentifier _oid;
-		object _data;
+		ISnmpData _data;
 
-        public Variable(ObjectIdentifier oid)
-        {
-            _oid = oid;
-        }
-        
-        public Variable(ObjectIdentifier oid, OctetString data)
-        {
-        	_oid = oid;
-        	_data = data;
-        	_dataUniversal = new Universal(data);
-        }
-		
-		public Variable(Universal varbind)
+		public Variable(ObjectIdentifier oid)
 		{
-	        Universal[] content = (Universal[])varbind.Value;
-			_oid = (ObjectIdentifier)content[0].Value;
-			_dataUniversal = content[1];
-			_data = content[1].Value;
+			_oid = oid;
+			_data = new Null();
+		}
+		
+		public Variable(ObjectIdentifier oid, ISnmpData data)
+		{
+			_oid = oid;
+			_data = data;
 		}
 		
 		public ObjectIdentifier Id
@@ -46,40 +38,61 @@ namespace SharpSnmpLib
 			}
 		}
 		
-		public SnmpType DataType
-		{
-			get
-			{
-				return ((ISnmpData)_data).DataType;
-			}
-		}
-		
-		Universal _dataUniversal;
-		
-		public Universal DataUniversal
-		{
-			get 
-			{
-				return _dataUniversal;
-			}
-		}
-		
-		public object Data
+		public ISnmpData Data
 		{
 			get
 			{
 				return _data;
 			}
-            set
-            {
-                Universal data = value as Universal;
-                if (data == null)
-                {
-                    throw new ArgumentException("wrong data");
-                }
-                _dataUniversal = data;
-                _data = data.Value;
-            }
 		}
-	}
+		
+        /// <summary>
+        /// Converts varbind section to variable binds list.
+        /// </summary>
+        /// <param name="varbindSection"></param>
+        /// <returns></returns>
+		internal static IList<Variable> ConvertFrom(SnmpArray varbindSection)
+		{
+			IList<Variable> result = new List<Variable>(varbindSection.Items.Count);
+			foreach (ISnmpData item in varbindSection.Items)
+			{
+				if (item.TypeCode != SnmpType.Array)
+				{
+					throw new ArgumentException("wrong varbind section data");
+				}
+				SnmpArray varbind = item as SnmpArray;
+				if (null != varbind)
+				{
+					if (varbind.Items.Count != 2 || varbind.Items[0].TypeCode != SnmpType.ObjectIdentifier)
+					{
+						throw new ArgumentException("wrong varbind data");
+					}
+					result.Add(new Variable((ObjectIdentifier)varbind.Items[0], varbind.Items[1]));
+				}
+				else
+				{
+					Variable v = item as Variable;
+					if (null != v) {
+						result.Add(v);
+					}
+				}
+			}
+			return result;
+		}
+		/// <summary>
+		/// Converts variable binds to varbind section.
+		/// </summary>
+		/// <param name="variables"></param>
+		/// <returns></returns>
+        internal static SnmpArray ConvertTo(IList<Variable> variables)
+        {
+        	IList<ISnmpData> varbinds = new List<ISnmpData>(2*variables.Count);
+        	foreach (Variable v in variables)
+        	{
+        		varbinds.Add(new SnmpArray(v.Id, v.Data));
+        	}
+            SnmpArray result = new SnmpArray(varbinds);
+            return result;
+        }
+    }
 }

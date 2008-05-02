@@ -6,13 +6,6 @@ using System.Net;
 
 namespace SharpSnmpLib
 {
-    public enum ProtocolVersion
-    {
-        V1 = 0,
-        V2c,
-        V3
-    }
-
     public class Manager: Component
     {
     	public Manager()
@@ -22,7 +15,7 @@ namespace SharpSnmpLib
     	
         public event EventHandler<TrapReceivedEventArgs> OnTrapReceived;
         private TrapListener trapListener;
-        private ProtocolVersion _version;
+        private VersionCode _version = VersionCode.V1;
         private int _timeout = 5000;
 
         private void InitializeComponent()
@@ -33,10 +26,9 @@ namespace SharpSnmpLib
             // 
             this.trapListener.Port = 162;
             this.trapListener.TrapReceived += new System.EventHandler<SharpSnmpLib.TrapReceivedEventArgs>(this.trapListener_TrapReceived);
-
         }
 
-        public ProtocolVersion DefaultVersion
+        public VersionCode DefaultVersion
         {
             get {
                 return _version;
@@ -46,35 +38,54 @@ namespace SharpSnmpLib
             }
         }
 
-        public Variable Get(ProtocolVersion version, IPAddress agent, string community, Variable variable)
+        public IList<Variable> Get(VersionCode version, IPAddress agent, string community, IList<Variable> variables)
         {
-            if (version != ProtocolVersion.V1)
+            if (version != VersionCode.V1)
             {
                 throw new ArgumentException("you can only use SNMP v1 in this version");
             }
-            GetMessage message = new GetMessage(agent, community, variable);
-            Variable result = message.Send(_timeout);
-            return result;
-        }
-        
-        public void Set(ProtocolVersion version, IPAddress agent, string community, Variable variable)
+            GetRequestMessage message = new GetRequestMessage(version,agent, community, variables);
+            return message.Send(_timeout);
+        }       
+                
+        public void Set(VersionCode version, IPAddress agent, string community, IList<Variable> variables)
         {
-            if (version != ProtocolVersion.V1)
+            if (version != VersionCode.V1)
             {
                 throw new ArgumentException("you can only use SNMP v1 in this version");
             }
-            SetMessage message = new SetMessage(agent, community, variable);
+            SetRequestMessage message = new SetRequestMessage(version, agent, community, variables);
             message.Send(_timeout);
         }
-
+        
+        public Variable Get(VersionCode version, IPAddress agent, string community, Variable variable)
+        {
+       		return Get(version, agent, community, new List<Variable>() {variable})[0];
+        }
+        
+        public void Set(VersionCode version, IPAddress agent, string community, Variable variable)
+        {
+       		Set(version, agent, community, new List<Variable>() {variable});
+        }
+        
         public Variable Get(IPAddress agent, string community, Variable variable)
         {
-            return Get(_version, agent, community, variable);
+        	return Get(_version, agent, community, variable);
         }
         
         public void Set(IPAddress agent, string community, Variable variable)
         {
             Set(_version, agent, community, variable);
+        }    
+        
+        public IList<Variable> Get(IPAddress agent, string community, IList<Variable> variables)
+        {
+        	return Get(_version, agent, community, variables);
+        }
+        
+        public void Set(IPAddress agent, string community, IList<Variable> variables)
+        {
+        	Set(_version, agent, community, variables);
         }
 
         public int Timeout

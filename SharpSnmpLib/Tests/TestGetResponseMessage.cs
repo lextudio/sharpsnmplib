@@ -1,0 +1,37 @@
+/*
+ * Created by SharpDevelop.
+ * User: lextm
+ * Date: 2008/5/1
+ * Time: 20:29
+ * 
+ * To change this template use Tools | Options | Coding | Edit Standard Headers.
+ */
+
+using System;
+using System.IO;
+using NUnit.Framework;
+using NUnit.Framework.SyntaxHelpers;
+
+namespace SharpSnmpLib.Tests
+{
+	[TestFixture]
+	public class TestGetResponseMessage
+	{
+		[Test]
+		public void TestMethod()
+		{
+			MemoryStream m = new MemoryStream(Resource.getresponse, false);
+			ISnmpMessage message = MessageFactory.ParseMessage(m);
+	        Assert.AreEqual(SnmpType.GetResponsePDU, message.TypeCode);
+	        ISnmpPdu pdu = message.Pdu;
+	        Assert.AreEqual(SnmpType.GetResponsePDU, pdu.TypeCode);
+	        GetResponsePdu response = (GetResponsePdu)pdu;
+	        Assert.AreEqual(0, response.ErrorStatus);
+	        Assert.AreEqual(0, response.ErrorIndex);
+	        Assert.AreEqual(1, response.Variables.Count);
+	        Variable v = response.Variables[0];
+	        Assert.AreEqual(new uint[] { 1, 3, 6, 1, 2, 1, 1, 6, 0 }, v.Id.ToOid());
+	        Assert.AreEqual("Shanghai", v.Data.ToString());
+		}
+	}
+}
