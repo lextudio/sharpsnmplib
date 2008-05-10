@@ -11,25 +11,55 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace SharpSnmpLib
+namespace Lextm.SharpSnmpLib
 {
+	/// <summary>
+	/// Variable bind.
+	/// </summary>
+	/// <remarks>
+	/// <para>Represents SNMP variable bind.</para>
+	/// </remarks>
 	public class Variable
 	{
 		ObjectIdentifier _oid;
 		ISnmpData _data;
-
+		/// <summary>
+		/// Creates a <see cref="Variable"/> instance with a specific object identifier.
+		/// </summary>
+		/// <param name="oid">Object identifier</param>
 		public Variable(ObjectIdentifier oid)
 		{
 			_oid = oid;
 			_data = new Null();
 		}
-		
+		/// <summary>
+		/// Creates a <see cref="Variable"/> instance with a specific object identifier.
+		/// </summary>
+		/// <param name="oid">Object identifier</param>
+		[CLSCompliant(false)]
+		public Variable(uint[] oid) : this(new ObjectIdentifier(oid)) {}
+		/// <summary>
+		/// Creates a <see cref="Variable"/> instance with a specific object identifier and data.
+		/// </summary>
+		/// <param name="oid">Object identifier</param>
+		/// <param name="data">Data</param>
+		/// <remarks>If you set <c>null</c> to <paramref name="data"/>, you get a <see cref="Variable"/> instance whose <see cref="Data"/> is a <see cref="Null"/> instance.</remarks>
 		public Variable(ObjectIdentifier oid, ISnmpData data)
 		{
 			_oid = oid;
-			_data = data;
-		}
-		
+			_data = data?? new Null();
+		}		
+		/// <summary>
+		/// Creates a <see cref="Variable"/> instance with a specific object identifier and data.
+		/// </summary>
+		/// <param name="oid">Object identifier</param>
+		/// <param name="data">Data</param>
+		/// <remarks>If you set <c>null</c> to <paramref name="data"/>, you get a <see cref="Variable"/> instance whose <see cref="Data"/> is a <see cref="Null"/> instance.</remarks>
+		[CLSCompliant(false)]
+		public Variable(uint[] oid, ISnmpData data) : this(new ObjectIdentifier(oid), data) { }
+		/// <summary>
+		/// Variable object identifier.
+		/// </summary>
 		public ObjectIdentifier Id
 		{
 			get
@@ -37,15 +67,16 @@ namespace SharpSnmpLib
 				return _oid;
 			}
 		}
-		
+		/// <summary>
+		/// Variable data.
+		/// </summary>
 		public ISnmpData Data
 		{
 			get
 			{
 				return _data;
 			}
-		}
-		
+		}		
         /// <summary>
         /// Converts varbind section to variable binds list.
         /// </summary>

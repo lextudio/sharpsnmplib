@@ -8,15 +8,25 @@
  */
 using System;
 
-namespace SharpSnmpLib
+namespace Lextm.SharpSnmpLib
 {
+	/// <summary>
+	/// Provides data for a trap received event.
+	/// </summary>
 	public class TrapReceivedEventArgs : EventArgs
-	{
+	{	  
+		TrapMessage _trap;
+		/// <summary>
+		/// Creates a <see cref="TrapReceivedEventArgs"/> 
+		/// </summary>
+		/// <param name="trap">Trap message</param>
 	    public TrapReceivedEventArgs(TrapMessage trap)
 	    {
 	        _trap = trap;
 	    }
-	
+		/// <summary>
+		/// Trap message.
+		/// </summary>
 	    public TrapMessage Trap
 	    {
 	        get
@@ -24,7 +34,5 @@ namespace SharpSnmpLib
 	            return _trap;
 	        }
 	    }
-	
-	    TrapMessage _trap;
 	}
 }

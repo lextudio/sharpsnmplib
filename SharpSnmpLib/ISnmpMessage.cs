@@ -9,7 +9,7 @@
 
 using System;
 
-namespace SharpSnmpLib
+namespace Lextm.SharpSnmpLib
 {
 	/// <summary>
 	/// SNMP message.

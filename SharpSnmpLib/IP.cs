@@ -4,12 +4,34 @@ using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace SharpSnmpLib
+namespace Lextm.SharpSnmpLib
 {
+    /// <summary>
+    /// IPAddress type.
+    /// </summary>
 	public struct IP: ISnmpData, IEquatable<IP>
 	{
 		byte[] _raw;
-		
+        IPAddress _ip;
+        byte[] _bytes;
+        /// <summary>
+        /// Creates an <see cref="IP"/> with a specific <see cref="IPAddress"/>.
+        /// </summary>
+        /// <param name="ip">IP address</param>
+        public IP(IPAddress ip)
+        {
+            if (ip == null)
+            {
+                throw new ArgumentNullException("ip");
+            }
+            _ip = ip;
+            _raw = _ip.GetAddressBytes();
+            _bytes = null;
+        }
+		/// <summary>
+		/// Creates an <see cref="IP"/> from raw bytes.
+		/// </summary>
+		/// <param name="raw">Raw bytes</param>
 		public IP(byte[] raw)
 		{
 			if (raw.Length != 4)
@@ -20,12 +42,12 @@ namespace SharpSnmpLib
 			_ip = new IPAddress(raw);
             _bytes = null;
 		}
-		
-		public IP(string ip)
+		/// <summary>
+		/// Creates an <see cref="IP"/> from a specific <see cref="String"/>.
+		/// </summary>
+		/// <param name="ip">IP string</param>
+		public IP(string ip): this(IPAddress.Parse(ip))
 		{
-			_ip = IPAddress.Parse(ip);
-			_raw = _ip.GetAddressBytes();
-            _bytes = null;
 		}
 		
 		static Regex regex = new Regex(
@@ -37,26 +59,34 @@ namespace SharpSnmpLib
 			| RegexOptions.IgnorePatternWhitespace
 			| RegexOptions.Compiled);
 
-		IPAddress _ip;
-
+        /// <summary>
+        /// Returns a <see cref="String"/> that represents this <see cref="IP"/>.
+        /// </summary>
+        /// <returns></returns>
 		public override string ToString()
 		{
 			return _ip.ToString();
 		}
-
+        /// <summary>
+        /// Returns an <see cref="IPAddress"/> that represents this <see cref="IP"/>.
+        /// </summary>
+        /// <returns></returns>
 		public IPAddress ToIPAddress()
 		{
 			return _ip;
 		}
-		
+		/// <summary>
+		/// Type code.
+		/// </summary>
 		public SnmpType TypeCode {
 			get {
-				return SnmpType.IpAddress;
+				return SnmpType.IPAddress;
 			}
-		}
-
-        byte[] _bytes;
-		
+		}        
+		/// <summary>
+		/// Converts to byte format.
+		/// </summary>
+		/// <returns></returns>
 		public byte[] ToBytes()
 		{
             if (_bytes == null)
@@ -65,7 +95,12 @@ namespace SharpSnmpLib
             }
             return _bytes;
 		}
-		
+        /// <summary>
+        /// Determines whether the specified <see cref="Object"/> is equal to the current <see cref="IP"/>. 
+        /// </summary>
+        /// <param name="obj">The <see cref="Object"/> to compare with the current <see cref="IP"/>. </param>
+        /// <returns><value>true</value> if the specified <see cref="Object"/> is equal to the current <see cref="IP"/>; otherwise, <value>false</value>.
+        /// </returns>
 		public override bool Equals(object obj)
 		{
 			if (obj == null) {
@@ -79,22 +114,42 @@ namespace SharpSnmpLib
 			}
 			return Equals((IP)obj);
 		}
-		
+        /// <summary>
+        /// Indicates whether the current object is equal to another object of the same type.
+        /// </summary>
+        /// <param name="other">An object to compare with this object.</param>
+        /// <returns><value>true</value> if the current object is equal to the <paramref name="other"/> parameter; otherwise, <value>false</value>.
+        ///</returns>
 		public bool Equals(IP other)
 		{
 			return _ip.Equals(other._ip);
 		}
-		
+        /// <summary>
+        /// Serves as a hash function for a particular type.
+        /// </summary>
+        /// <returns>A hash code for the current <see cref="IP"/>.</returns>
 		public override int GetHashCode()
 		{
 			return _ip.GetHashCode();
 		}
-		
+        /// <summary>
+        /// The equality operator.
+        /// </summary>
+        /// <param name="left">Left <see cref="IP"/> object</param>
+        /// <param name="right">Right <see cref="IP"/> object</param>
+        /// <returns>
+        /// Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
 		public static bool operator == (IP left, IP right)
 		{
 			return left.Equals(right);
 		}
-		
+        /// <summary>
+        /// The inequality operator.
+        /// </summary>
+        /// <param name="left">Left <see cref="IP"/> object</param>
+        /// <param name="right">Right <see cref="IP"/> object</param>
+        /// <returns>
+        /// Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
 		public static bool operator != (IP left, IP right)
 		{
 			return !(left == right);

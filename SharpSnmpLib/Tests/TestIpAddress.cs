@@ -10,8 +10,8 @@
 using System;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
-
-namespace SharpSnmpLib.Tests
+#pragma warning disable 1591
+namespace Lextm.SharpSnmpLib.Tests
 {
 	[TestFixture]
 	public class TestIP
@@ -28,8 +28,9 @@ namespace SharpSnmpLib.Tests
 		{
 			IP ip = new IP("127.0.0.1");
 			ISnmpData data = SnmpDataFactory.CreateSnmpData(ip.ToBytes());
-			Assert.AreEqual(data.TypeCode, SnmpType.IpAddress);
+			Assert.AreEqual(data.TypeCode, SnmpType.IPAddress);
 			Assert.AreEqual("127.0.0.1", data.ToString());
 		}
 	}
 }
+#pragma warning restore 1591

@@ -6,35 +6,75 @@
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
-
+using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace SharpSnmpLib
+namespace Lextm.SharpSnmpLib
 {
 	/// <summary>
-	/// Description of TrapPduV1.
+	/// Trap v1 PDU.
 	/// </summary>
+	/// <remarks>represents the PDU of trap v1 message.</remarks>
 	public class TrapV1Pdu: ISnmpPdu, ISnmpData
 	{
+		byte[] _bytes;	
+		byte[] _raw;
+		ObjectIdentifier _enterprise;
+		IP _agent;
+		GenericCode _generic;
+		Integer32 _specific;
+		TimeTicks _timeStamp;
+		SnmpArray _varbindSection;
+		IList<Variable> _variables;	
+		/// <summary>
+		/// Creates a <see cref="TrapV1Pdu"/> instance with raw bytes.
+		/// </summary>
+		/// <param name="raw">Raw bytes</param>
 		public TrapV1Pdu(byte[] raw)
 		{
 			_raw = raw;
 			MemoryStream m = new MemoryStream(raw);
 			_enterprise = (ObjectIdentifier)SnmpDataFactory.CreateSnmpData(m);
 			_agent = (IP)SnmpDataFactory.CreateSnmpData(m);
-			_generic = (Int)SnmpDataFactory.CreateSnmpData(m);
-			_specific = (Int)SnmpDataFactory.CreateSnmpData(m);
-			_timeStamp = (Timeticks)SnmpDataFactory.CreateSnmpData(m);
+			_generic = (GenericCode)((Integer32)SnmpDataFactory.CreateSnmpData(m)).ToInt32();
+			_specific = (Integer32)SnmpDataFactory.CreateSnmpData(m);
+			_timeStamp = (TimeTicks)SnmpDataFactory.CreateSnmpData(m);
 			_varbindSection = (SnmpArray)SnmpDataFactory.CreateSnmpData(m);
 			_variables = Variable.ConvertFrom(_varbindSection);
 		}
-		
+				/// <summary>
+		/// Creates a <see cref="TrapV1Pdu"/> instance with PDU elements.
+		/// </summary>
+		/// <param name="enterprise">Enterprise</param>
+		/// <param name="agent">Agent address</param>
+		/// <param name="generic">Generic trap type</param>
+		/// <param name="specific">Specific trap type</param>
+		/// <param name="timeStamp">Time stamp</param>
+		/// <param name="variables">Variable binds</param>
+		[CLSCompliant(false)]
+		public TrapV1Pdu(uint[] enterprise,
+		                 IP agent,
+		                 GenericCode generic,
+		                 Integer32 specific,
+		                 TimeTicks timeStamp,
+		                 IList<Variable> variables)
+			: this(new ObjectIdentifier(enterprise), agent, generic, 
+			       specific, timeStamp, variables) {}
+		/// <summary>
+		/// Creates a <see cref="TrapV1Pdu"/> instance with PDU elements.
+		/// </summary>
+		/// <param name="enterprise">Enterprise</param>
+		/// <param name="agent">Agent address</param>
+		/// <param name="generic">Generic trap type</param>
+		/// <param name="specific">Specific trap type</param>
+		/// <param name="timeStamp">Time stamp</param>
+		/// <param name="variables">Variable binds</param>
 		public TrapV1Pdu(ObjectIdentifier enterprise, 
 		                 IP agent,
-		                 Int generic,
-		                 Int specific,
-		                 Timeticks timeStamp,
+		                 GenericCode generic,
+		                 Integer32 specific,
+		                 TimeTicks timeStamp,
 		                 IList<Variable> variables)
 		{
 			_enterprise = enterprise;
@@ -42,18 +82,23 @@ namespace SharpSnmpLib
 			_generic = generic;
 			_specific = specific;
 			_timeStamp = timeStamp;
-			//TODO: important. Variable must be converted to varbind section.
+			//IMPORTANT: Variable must be converted to varbind section.
 			_varbindSection = Variable.ConvertTo(variables);
 			_variables = variables;
-			_raw = ByteTool.ParseItems(_enterprise, _agent, _generic, _specific, _timeStamp, _varbindSection);
+			_raw = ByteTool.ParseItems(_enterprise, _agent, new Integer32((int)_generic), _specific, _timeStamp, _varbindSection);
 		}		
-		
+		/// <summary>
+		/// Type code.
+		/// </summary>
 		public SnmpType TypeCode {
 			get {
 				return SnmpType.TrapPDUv1;
 			}
 		}
-		
+		/// <summary>
+		/// To byte format.
+		/// </summary>
+		/// <returns></returns>
 		public byte[] ToBytes()
 		{
 			if (_bytes == null) {
@@ -65,51 +110,53 @@ namespace SharpSnmpLib
 			}
 			return _bytes;
 		}
-		
+		/// <summary>
+		/// To message body.
+		/// </summary>
+		/// <param name="version">Protocol version</param>
+		/// <param name="community">Community name</param>
+		/// <returns></returns>
 		public ISnmpData ToMessageBody(VersionCode version, string community)
 		{
-			Int ver = new Int((int)version);
+			Integer32 ver = new Integer32((int)version);
 			OctetString comm = new OctetString(community);
 			TrapV1Pdu pdu = this;
 			SnmpArray array = new SnmpArray(ver, comm, pdu);
 			return array;
-		}
-		
-		byte[] _bytes;	
-		byte[] _raw;
-		ObjectIdentifier _enterprise;
-		
+		}		
+		/// <summary>
+		/// Enterprise.
+		/// </summary>
 		public ObjectIdentifier Enterprise {
 			get { return _enterprise; }
 		}
-
-		IP _agent;
-		
-		public IP Agent {
+		/// <summary>
+		/// Agent address.
+		/// </summary>
+		public IP AgentAddress {
 			get { return _agent; }
 		}
-
-		Int _generic;
-		
-		public int Generic {
-			get { return _generic.ToInt32(); }
+		/// <summary>
+		/// Generic trap type.
+		/// </summary>
+		public GenericCode Generic {
+			get { return _generic; }
 		}
-
-		Int _specific;
-		
+		/// <summary>
+		/// Specific trap type.
+		/// </summary>
 		public int Specific {
 			get { return _specific.ToInt32(); }
 		}
-
-		Timeticks _timeStamp;
-		
-		public Timeticks TimeStamp {
+		/// <summary>
+		/// Time stamp.
+		/// </summary>
+		public TimeTicks TimeStamp {
 			get { return _timeStamp; }
 		}
-
-		SnmpArray _varbindSection;
-		IList<Variable> _variables;
-
+		/// <summary>
+		/// Variable binds.
+		/// </summary>
         public IList<Variable> Variables {
 			get { return _variables; }
 		}

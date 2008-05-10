@@ -5,9 +5,12 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 
-namespace SharpSnmpLib
+namespace Lextm.SharpSnmpLib
 {
-	public class SetRequestMessage: ISnmpMessage
+    /// <summary>
+    /// SET request message.
+    /// </summary>
+	public class SetRequestMessage: ISnmpMessage, IDisposable
 	{
 		UdpClient udp = new UdpClient();
 		byte[] _bytes;
@@ -16,7 +19,14 @@ namespace SharpSnmpLib
 		IPAddress _agent;
 		string _community;
         IList<Variable> _variables;
-        
+        int _sequenceNumber;
+        /// <summary>
+        /// Creates a <see cref="SetRequestMessage"/> with all contents.
+        /// </summary>
+        /// <param name="version">Protocol version</param>
+        /// <param name="agent">Agent address</param>
+        /// <param name="community">Community name</param>
+        /// <param name="variables">Variables</param>
 		public SetRequestMessage(VersionCode version, IPAddress agent, string community, IList<Variable> variables)
 		{
 			_version = version;
@@ -24,12 +34,16 @@ namespace SharpSnmpLib
 			_community = community;
             _variables = variables;
             SetRequestPdu pdu = new SetRequestPdu(
-                new Int(0),
-                new Int(0),
+                ErrorCode.NoError,
+                0,
                 _variables);
+            _sequenceNumber = pdu.SequenceNumber;
             _bytes = pdu.ToMessageBody(_version, _community).ToBytes();
 		}	
-
+        /// <summary>
+        /// Sends this <see cref="SetRequestMessage"/> and handles the response from agent.
+        /// </summary>
+        /// <param name="timeout"></param>
 		public void Send(int timeout)
 		{
 			byte[] bytes = _bytes;
@@ -53,8 +67,16 @@ namespace SharpSnmpLib
                 ex.Agent = _agent;
                 throw ex;
 	        }
+	        if (((GetResponseMessage)message).SequenceNumber != SequenceNumber) {
+                SharpOperationException ex = new SharpOperationException("wrong response");
+                ex.Agent = _agent;
+                throw ex;
+	        }
 		}
-		
+		/// <summary>
+		/// Creates a <see cref="SetRequestMessage"/> with a specific <see cref="SnmpArray"/>.
+		/// </summary>
+		/// <param name="body">Message body</param>
 		public SetRequestMessage(SnmpArray body)
         {
             if (body == null)
@@ -71,11 +93,21 @@ namespace SharpSnmpLib
                 throw new ArgumentException("wrong message type");
             }
             _community = body.Items[1].ToString();
-            _version = (VersionCode)((Int)body.Items[0]).ToInt32();
+            _version = (VersionCode)((Integer32)body.Items[0]).ToInt32();
             SetRequestPdu pdu = (SetRequestPdu)_pdu;
             _variables = pdu.Variables;
         }
-	 
+		
+		internal int SequenceNumber
+		{
+			get
+			{
+				return _sequenceNumber;
+			}
+		}
+	    /// <summary>
+	    /// Variables.
+	    /// </summary>
         public IList<Variable> Variables
         {
             get
@@ -83,22 +115,61 @@ namespace SharpSnmpLib
                 return _variables;
             }
         }
-		
+		/// <summary>
+		/// Converts to byte format.
+		/// </summary>
+		/// <returns></returns>
 		public byte[] ToBytes()
 		{
 			return _bytes;
 		}
-
+        /// <summary>
+        /// PDU.
+        /// </summary>
 		public ISnmpPdu Pdu {
 			get {
 				return _pdu;
 			}
 		}
-		
+		/// <summary>
+		/// Type code.
+		/// </summary>
 		public SnmpType TypeCode {
 			get {
 				return SnmpType.SetRequestPDU;
 			}
 		}
+
+		private bool _disposed;
+		/// <summary>
+		/// Finalizer of <see cref="SetRequestMessage"/>.
+		/// </summary>
+		~SetRequestMessage()
+		{
+			Dispose(false);
+		}
+		/// <summary>
+		/// Releases all resources used by the <see cref="SetRequestMessage"/>.
+		/// </summary>
+		public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
+		/// <summary>
+		/// Disposes of the resources (other than memory) used by the <see cref="SetRequestMessage"/>.
+		/// </summary>
+		/// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources. 
+		/// </param>
+		protected virtual void Dispose(bool disposing)
+		{
+			if (_disposed) {
+				return;
+			}
+			if (disposing) {
+				(udp as IDisposable).Dispose();		
+			}
+			_disposed = true;
+		}		
 	}
 }

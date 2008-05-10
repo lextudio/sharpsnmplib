@@ -10,27 +10,41 @@
 using System;
 using System.IO;
 
-namespace SharpSnmpLib
+namespace Lextm.SharpSnmpLib
 {
 	/// <summary>
-	/// Description of MessageFactory.
+	/// Factory that creates <see cref="ISnmpMessage"/> instances from byte format.
 	/// </summary>
 	public sealed class MessageFactory
 	{
 		MessageFactory()
 		{
 		}
-		
-		public static ISnmpMessage ParseMessage(byte[] buffer, int length)
+		/// <summary>
+		/// Creates an <see cref="ISnmpMessage"/> instance from buffer.
+		/// </summary>
+		/// <param name="buffer">Buffer</param>
+		/// <param name="index">Index</param>
+		/// <param name="count">Byte count</param>
+		/// <returns></returns>
+		public static ISnmpMessage ParseMessage(byte[] buffer, int index, int count)
 		{			
-			return ParseMessage(new MemoryStream(buffer, 0, length, false));
+			return ParseMessage(new MemoryStream(buffer, index, count, false));
 		}
-		
-		public static ISnmpMessage ParseMessage(byte[] value)
+		/// <summary>
+		/// Creates an <see cref="ISnmpMessage"/> instance from buffer.
+		/// </summary>
+		/// <param name="buffer"></param>
+		/// <returns></returns>
+		public static ISnmpMessage ParseMessage(byte[] buffer)
 		{
-			return ParseMessage(value, value.Length);
+			return ParseMessage(buffer, 0, buffer.Length);
 		}
-		
+		/// <summary>
+		/// Creates an <see cref="ISnmpMessage"/> instance from stream.
+		/// </summary>
+		/// <param name="stream">Stream</param>
+		/// <returns></returns>
 		public static ISnmpMessage ParseMessage(MemoryStream stream)
 		{
 			ISnmpData array = SnmpDataFactory.CreateSnmpData(stream);

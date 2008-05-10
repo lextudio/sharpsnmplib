@@ -12,7 +12,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 
-namespace SharpSnmpLib
+namespace Lextm.SharpSnmpLib
 {
 	/// <summary>
 	/// Description of ByteTool.
@@ -118,7 +118,7 @@ namespace SharpSnmpLib
         {
         	MemoryStream result = new MemoryStream();
 			result.WriteByte((byte)typeCode);
-			ByteTool.WriteMultiByteLength(result, raw.Length); //it seems that trap does not use this function
+			ByteTool.WriteMultiByteLength(result, raw.Length);
 			result.Write(raw,0,raw.Length);
 			return result.ToArray();
         }

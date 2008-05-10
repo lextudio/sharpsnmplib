@@ -3,41 +3,55 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 
-namespace SharpSnmpLib
+namespace Lextm.SharpSnmpLib
 {
+    /// <summary>
+    /// Get request PDU.
+    /// </summary>
     public class GetRequestPdu: ISnmpPdu
     {
-    	public GetRequestPdu(int errorStatus, int errorIndex, IList<Variable> variables) 
-    		: this(new Int(errorStatus), new Int(errorIndex), variables) {}
+        private Integer32 _errorStatus;
+        private Integer32 _errorIndex;
+        private IList<Variable> _variables;
+        private Integer32 _seq;
+        private byte[] _raw;
+        private SnmpArray _varbindSection;
+        private byte[] _bytes;
+        /// <summary>
+        /// Creates a <see cref="GetRequestPdu"/> with all contents.
+        /// </summary>
+        /// <param name="errorStatus">Error status</param>
+        /// <param name="errorIndex">Error index</param>
+        /// <param name="variables">Variables</param>
+    	public GetRequestPdu(ErrorCode errorStatus, int errorIndex, IList<Variable> variables) 
+    		: this(new Integer32((int)errorStatus), new Integer32(errorIndex), variables) {}
     	
-        public GetRequestPdu(Int errorStatus, Int errorIndex, IList<Variable> variables)
+        GetRequestPdu(Integer32 errorStatus, Integer32 errorIndex, IList<Variable> variables)
         {
-            _seq = PduCounter.GetNextCount();                      
+            _seq = PduCounter.NextCount;                      
             _errorStatus = errorStatus; 
             _errorIndex = errorIndex;
             _variables = variables;
             _varbindSection = Variable.ConvertTo(variables);
             _raw = ByteTool.ParseItems(_seq, _errorStatus, _errorIndex, _varbindSection);
         }
-        
+        /// <summary>
+        /// Creates a <see cref="GetRequestPdu"/> with raw bytes.
+        /// </summary>
+        /// <param name="raw">Raw bytes</param>
         public GetRequestPdu(byte[] raw)
         {
         	_raw = raw;
 			MemoryStream m = new MemoryStream(raw);
-			_seq = (Int)SnmpDataFactory.CreateSnmpData(m);
-			_errorStatus = (Int)SnmpDataFactory.CreateSnmpData(m);
-			_errorIndex = (Int)SnmpDataFactory.CreateSnmpData(m);
+			_seq = (Integer32)SnmpDataFactory.CreateSnmpData(m);
+			_errorStatus = (Integer32)SnmpDataFactory.CreateSnmpData(m);
+			_errorIndex = (Integer32)SnmpDataFactory.CreateSnmpData(m);
 			_varbindSection = (SnmpArray)SnmpDataFactory.CreateSnmpData(m);
 			_variables = Variable.ConvertFrom(_varbindSection);
         }
-
-        private Int _errorStatus;
-        private Int _errorIndex;
-        private IList<Variable> _variables;
-        private Int _seq;
-        private byte[] _raw;
-        private SnmpArray _varbindSection;
-
+        /// <summary>
+        /// Variables.
+        /// </summary>
         public IList<Variable> Variables
         {
             get
@@ -47,18 +61,15 @@ namespace SharpSnmpLib
         }
 
         #region ISnmpPdu Members
-
+        /// <summary>
+        /// Converts to message body.
+        /// </summary>
+        /// <param name="version">Protocol version</param>
+        /// <param name="community">Community name</param>
+        /// <returns></returns>
         public ISnmpData ToMessageBody(VersionCode version, string community)
         {
-            //SnmpBER mess = new SnmpBER(SnmpType.Array,
-            //                           new Universal(0), // version-1
-            //                           new Universal(_community),
-            //                           new SnmpBER(SnmpType.GetRequestPDU,
-            //                                       new Universal(seq),
-            //                                       new Universal(0), // errorStatus
-            //                                       new Universal(0), // errorIndex
-            //                                       new Universal(vbinds)));
-            Int ver = new Int((int)version);
+            Integer32 ver = new Integer32((int)version);
             OctetString comm = new OctetString(community);
             GetRequestPdu pdu = this;
             SnmpArray array = new SnmpArray(ver, comm, pdu);
@@ -68,14 +79,19 @@ namespace SharpSnmpLib
         #endregion
 
         #region ISnmpData Members
-
+        /// <summary>
+        /// Type code.
+        /// </summary>
         public SnmpType TypeCode
         {
             get { return SnmpType.GetRequestPDU; }
         }
 
-        byte[] _bytes;
 
+        /// <summary>
+        /// Converts to byte format.
+        /// </summary>
+        /// <returns></returns>
         public byte[] ToBytes()
         {
             if (_bytes == null)

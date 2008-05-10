@@ -11,8 +11,8 @@ using System;
 using System.IO;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
-
-namespace SharpSnmpLib.Tests
+#pragma warning disable 1591
+namespace Lextm.SharpSnmpLib.Tests
 {
 	[TestFixture]
 	public class TestGetResponseMessage
@@ -26,7 +26,7 @@ namespace SharpSnmpLib.Tests
 	        ISnmpPdu pdu = message.Pdu;
 	        Assert.AreEqual(SnmpType.GetResponsePDU, pdu.TypeCode);
 	        GetResponsePdu response = (GetResponsePdu)pdu;
-	        Assert.AreEqual(0, response.ErrorStatus);
+	        Assert.AreEqual(ErrorCode.NoError, response.ErrorStatus);
 	        Assert.AreEqual(0, response.ErrorIndex);
 	        Assert.AreEqual(1, response.Variables.Count);
 	        Variable v = response.Variables[0];
@@ -35,3 +35,4 @@ namespace SharpSnmpLib.Tests
 		}
 	}
 }
+#pragma warning restore 1591

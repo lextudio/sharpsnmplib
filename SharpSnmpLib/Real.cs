@@ -1,4 +1,3 @@
-using SharpSnmpLib;
 using System;
 using System.Collections;
 using System.IO;
@@ -23,17 +22,28 @@ using System.Globalization;
 // CONTEXT AND PRIVATE TYPES
 // Ad hoc coding can be used for these, as an alterative to derive index class as above.
 
-namespace SharpSnmpLib
+namespace Lextm.SharpSnmpLib
 {
+    /// <summary>
+    /// Real type.
+    /// </summary>
 	public struct Real: ISnmpData, IEquatable<Real>
 	{
 		byte[] _raw;
-		
+        byte[] _bytes;
+		/// <summary>
+		/// Creates a <see cref="Real"/> from raw bytes.
+		/// </summary>
+		/// <param name="raw">Raw bytes</param>
 		public Real(byte[] raw)
 		{
 			_raw = raw;
 			_bytes = null;
 		}
+        /// <summary>
+        /// Creates a <see cref="Real"/> with a specific <see cref="Double"/>.
+        /// </summary>
+        /// <param name="value"></param>
 		public Real(double value)
 		{
 			_bytes = null;
@@ -47,7 +57,7 @@ namespace SharpSnmpLib
 			_raw[0] = 0x0;
 			ASCIIEncoding.ASCII.GetBytes(s,0,s.Length,_raw,1);
 		}
-
+        
         double ToDouble()
         {
             if (_raw.Length == 0)
@@ -78,7 +88,7 @@ namespace SharpSnmpLib
                     g[j] = _raw[p++];
                 }
                 bool eb = CheckTwosComp(g);
-                long e = new Int(g).ToInt64();
+                long e = new Integer64(g).ToInt64();
                 if (eb)
                 {
                     e = -e;
@@ -88,7 +98,7 @@ namespace SharpSnmpLib
                 {
                     m[k] = _raw[p];
                 }
-                long n = new Int(m).ToInt64();
+                long n = new Integer64(m).ToInt64();
                 return ((double)(s * n * f)) * Math.Pow((double)b, (double)e);
             }
             if ((_raw[0] & 0x40) == 0) // 8.5.6 decimal encoding
@@ -159,19 +169,26 @@ namespace SharpSnmpLib
 			}
 			return true;
 		}
+        /// <summary>
+        /// Returns a <see cref="String"/> that represents this <see cref="Real"/>.
+        /// </summary>
+        /// <returns></returns>
 		public override string ToString()
 		{
 			return this.ToDouble().ToString(CultureInfo.CurrentCulture);
 		}
-		
+		/// <summary>
+		/// Type code.
+		/// </summary>
 		public SnmpType TypeCode {
 			get {
 				return SnmpType.Real;
 			}
 		}
-		
-		byte[] _bytes;
-		
+		/// <summary>
+		/// Converts to byte format.
+		/// </summary>
+		/// <returns></returns>
 		public byte[] ToBytes()
 		{
 			if (_bytes == null)
@@ -180,12 +197,22 @@ namespace SharpSnmpLib
 			}
 			return _bytes;
 		}
-		
+        /// <summary>
+        /// Indicates whether the current object is equal to another object of the same type.
+        /// </summary>
+        /// <param name="other">An object to compare with this object.</param>
+        /// <returns><value>true</value> if the current object is equal to the <paramref name="other"/> parameter; otherwise, <value>false</value>.
+        ///</returns>
 		public bool Equals(Real other)
 		{
-			return ByteTool.CompareRaw(_raw, other._raw);
+			return Math.Abs(ToDouble() - other.ToDouble()) < double.Epsilon;
 		}
-		
+        /// <summary>
+        /// Determines whether the specified <see cref="Object"/> is equal to the current <see cref="Real"/>. 
+        /// </summary>
+        /// <param name="obj">The <see cref="Object"/> to compare with the current <see cref="Real"/>. </param>
+        /// <returns><value>true</value> if the specified <see cref="Object"/> is equal to the current <see cref="Real"/>; otherwise, <value>false</value>.
+        /// </returns>
 		public override bool Equals(object obj)
 		{
 			if (obj == null) {
@@ -199,17 +226,32 @@ namespace SharpSnmpLib
 			}
 			return Equals((Real)obj);
 		}
-		
+        /// <summary>
+        /// Serves as a hash function for a particular type.
+        /// </summary>
+        /// <returns>A hash code for the current <see cref="Real"/>.</returns>
 		public override int GetHashCode()
 		{
 			return ToDouble().GetHashCode();
 		}
-
+        /// <summary>
+        /// The equality operator.
+        /// </summary>
+        /// <param name="left">Left <see cref="Real"/> object</param>
+        /// <param name="right">Right <see cref="Real"/> object</param>
+        /// <returns>
+        /// Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
         public static bool operator ==(Real left, Real right)
         {
             return left.Equals(right);
         }
-
+        /// <summary>
+        /// The inequality operator.
+        /// </summary>
+        /// <param name="left">Left <see cref="Real"/> object</param>
+        /// <param name="right">Right <see cref="Real"/> object</param>
+        /// <returns>
+        /// Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
         public static bool operator !=(Real left, Real right)
         {
             return !(left == right);

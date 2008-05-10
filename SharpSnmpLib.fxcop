@@ -1,0 +1,316 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FxCopProject Version="1.36" Name="My FxCop Project">
+ <ProjectOptions>
+  <SharedProject>True</SharedProject>
+  <Stylesheet Apply="False">c:\program files\microsoft fxcop 1.36\Xml\FxCopReport.xsl</Stylesheet>
+  <SaveMessages>
+   <Project Status="Active, Excluded" NewOnly="False" />
+   <Report Status="Active" NewOnly="False" />
+  </SaveMessages>
+  <ProjectFile Compress="True" DefaultTargetCheck="True" DefaultRuleCheck="True" SaveByRuleGroup="" Deterministic="True" />
+  <EnableMultithreadedLoad>True</EnableMultithreadedLoad>
+  <EnableMultithreadedAnalysis>True</EnableMultithreadedAnalysis>
+  <SourceLookup>True</SourceLookup>
+  <AnalysisExceptionsThreshold>10</AnalysisExceptionsThreshold>
+  <RuleExceptionsThreshold>1</RuleExceptionsThreshold>
+  <Spelling Locale="zh-CN" />
+  <OverrideRuleVisibilities>False</OverrideRuleVisibilities>
+  <CustomDictionaries SearchFxCopDir="True" SearchUserProfile="True" SearchProjectDir="True" />
+  <SearchGlobalAssemblyCache>False</SearchGlobalAssemblyCache>
+  <DeadlockDetectionTimeout>120</DeadlockDetectionTimeout>
+  <IgnoreGeneratedCode>False</IgnoreGeneratedCode>
+ </ProjectOptions>
+ <Targets>
+  <Target Name="$(ProjectDir)/SharpSnmpLib/bin/Debug/SharpSnmpLib.dll" Analyze="False" AnalyzeAllChildren="False">
+   <Modules AnalyzeAllChildren="False">
+    <Module Name="sharpsnmplib.dll" Analyze="False" AnalyzeAllChildren="False">
+     <Namespaces AnalyzeAllChildren="False">
+      <Namespace Name="Lextm.SharpSnmpLib" Analyze="True" AnalyzeAllChildren="False">
+       <Types AnalyzeAllChildren="False">
+        <Type Name="BitString" Analyze="True" AnalyzeAllChildren="True" />
+        <Type Name="Bool" Analyze="True" AnalyzeAllChildren="True" />
+        <Type Name="ByteTool" Analyze="True" AnalyzeAllChildren="True" />
+        <Type Name="Counter32" Analyze="True" AnalyzeAllChildren="True" />
+        <Type Name="ErrorCode" Analyze="True" AnalyzeAllChildren="True" />
+        <Type Name="Gauge32" Analyze="True" AnalyzeAllChildren="True" />
+        <Type Name="GeneralString" Analyze="True" AnalyzeAllChildren="True" />
+        <Type Name="GenericCode" Analyze="True" AnalyzeAllChildren="True" />
+        <Type Name="GetRequestMessage" Analyze="True" AnalyzeAllChildren="True" />
+        <Type Name="GetRequestPdu" Analyze="True" AnalyzeAllChildren="True" />
+        <Type Name="GetResponseMessage" Analyze="True" AnalyzeAllChildren="True" />
+        <Type Name="GetResponsePdu" Analyze="True" AnalyzeAllChildren="True" />
+        <Type Name="Integer32" Analyze="True" AnalyzeAllChildren="True" />
+        <Type Name="Integer64" Analyze="True" AnalyzeAllChildren="True" />
+        <Type Name="IP" Analyze="True" AnalyzeAllChildren="True" />
+        <Type Name="ISnmpData" Analyze="True" AnalyzeAllChildren="True" />
+        <Type Name="ISnmpMessage" Analyze="True" AnalyzeAllChildren="True" />
+        <Type Name="ISnmpPdu" Analyze="True" AnalyzeAllChildren="True" />
+        <Type Name="Manager" Analyze="True" AnalyzeAllChildren="True" />
+        <Type Name="MessageFactory" Analyze="True" AnalyzeAllChildren="True" />
+        <Type Name="Null" Analyze="True" AnalyzeAllChildren="True" />
+        <Type Name="ObjectIdentifier" Analyze="True" AnalyzeAllChildren="True" />
+        <Type Name="OctetString" Analyze="True" AnalyzeAllChildren="True" />
+        <Type Name="PduCounter" Analyze="True" AnalyzeAllChildren="True" />
+        <Type Name="Real" Analyze="True" AnalyzeAllChildren="True" />
+        <Type Name="SetRequestMessage" Analyze="True" AnalyzeAllChildren="True" />
+        <Type Name="SetRequestPdu" Analyze="True" AnalyzeAllChildren="True" />
+        <Type Name="SharpErrorException" Analyze="True" AnalyzeAllChildren="True" />
+        <Type Name="SharpOperationException" Analyze="True" AnalyzeAllChildren="True" />
+        <Type Name="SharpSnmpException" Analyze="True" AnalyzeAllChildren="True" />
+        <Type Name="SharpTimeoutException" Analyze="True" AnalyzeAllChildren="True" />
+        <Type Name="SnmpArray" Analyze="True" AnalyzeAllChildren="True" />
+        <Type Name="SnmpDataFactory" Analyze="True" AnalyzeAllChildren="True" />
+        <Type Name="SnmpType" Analyze="True" AnalyzeAllChildren="True" />
+        <Type Name="TimeTicks" Analyze="True" AnalyzeAllChildren="True" />
+        <Type Name="TrapListener" Analyze="True" AnalyzeAllChildren="True" />
+        <Type Name="TrapMessage" Analyze="True" AnalyzeAllChildren="True" />
+        <Type Name="TrapReceivedEventArgs" Analyze="True" AnalyzeAllChildren="True" />
+        <Type Name="TrapV1Pdu" Analyze="True" AnalyzeAllChildren="True" />
+        <Type Name="Variable" Analyze="True" AnalyzeAllChildren="True" />
+        <Type Name="VersionCode" Analyze="True" AnalyzeAllChildren="True" />
+       </Types>
+      </Namespace>
+     </Namespaces>
+     <Resources AnalyzeAllChildren="False" />
+    </Module>
+   </Modules>
+  </Target>
+ </Targets>
+ <Rules>
+  <RuleFiles>
+   <RuleFile Name="$(FxCopDir)\Rules\DesignRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\GlobalizationRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\InteroperabilityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\MobilityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\NamingRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\PerformanceRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\PortabilityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\SecurityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\UsageRules.dll" Enabled="True" AllRulesEnabled="True" />
+  </RuleFiles>
+  <Groups />
+  <Settings />
+ </Rules>
+ <FxCopReport Version="1.36">
+  <Targets>
+   <Target Name="$(ProjectDir)/SharpSnmpLib/bin/Debug/SharpSnmpLib.dll">
+    <Modules>
+     <Module Name="sharpsnmplib.dll">
+      <Namespaces>
+       <Namespace Name="Lextm.SharpSnmpLib">
+        <Types>
+         <Type Name="Integer64">
+          <Members>
+           <Member Name="#.ctor(System.Int64)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-05-10 09:21:46Z">
+              <Issue>
+               <Item>'Integer64.Integer64(long)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="Null">
+          <Members>
+           <Member Name="#op_Equality(Lextm.SharpSnmpLib.Null,Lextm.SharpSnmpLib.Null)">
+            <Messages>
+             <Message Id="left" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2008-05-10 09:21:46Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'left'</Item>
+               <Item>'Null.operator ==(Null, Null)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="right" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2008-05-10 09:21:46Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'right'</Item>
+               <Item>'Null.operator ==(Null, Null)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#op_Inequality(Lextm.SharpSnmpLib.Null,Lextm.SharpSnmpLib.Null)">
+            <Messages>
+             <Message Id="left" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2008-05-10 09:21:46Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'left'</Item>
+               <Item>'Null.operator !=(Null, Null)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="right" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2008-05-10 09:21:46Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'right'</Item>
+               <Item>'Null.operator !=(Null, Null)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="SnmpType">
+          <Members>
+           <Member Name="#BMPString">
+            <Messages>
+             <Message Id="BMP" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-10 09:21:46Z">
+              <Issue Name="Member">
+               <Item>BMP</Item>
+               <Item>'SnmpType.BMPString'</Item>
+               <Item>Bmp</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#EmbeddedPDV">
+            <Messages>
+             <Message Id="PDV" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-10 09:21:46Z">
+              <Issue Name="Member">
+               <Item>PDV</Item>
+               <Item>'SnmpType.EmbeddedPDV'</Item>
+               <Item>Pdv</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetNextRequestPDU">
+            <Messages>
+             <Message Id="PDU" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-10 09:21:46Z">
+              <Issue Name="Member">
+               <Item>PDU</Item>
+               <Item>'SnmpType.GetNextRequestPDU'</Item>
+               <Item>Pdu</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetRequestPDU">
+            <Messages>
+             <Message Id="PDU" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-10 09:21:46Z">
+              <Issue Name="Member">
+               <Item>PDU</Item>
+               <Item>'SnmpType.GetRequestPDU'</Item>
+               <Item>Pdu</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetResponsePDU">
+            <Messages>
+             <Message Id="PDU" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-10 09:21:46Z">
+              <Issue Name="Member">
+               <Item>PDU</Item>
+               <Item>'SnmpType.GetResponsePDU'</Item>
+               <Item>Pdu</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#RelativeOID">
+            <Messages>
+             <Message Id="OID" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-10 09:21:46Z">
+              <Issue Name="Member">
+               <Item>OID</Item>
+               <Item>'SnmpType.RelativeOID'</Item>
+               <Item>Oid</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Reserved1">
+            <Messages>
+             <Message TypeName="DoNotNameEnumValuesReserved" Category="Microsoft.Naming" CheckId="CA1700" Created="2008-05-10 09:21:46Z">
+              <Issue>
+               <Item>'SnmpType.Reserved1'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Reserved2">
+            <Messages>
+             <Message TypeName="DoNotNameEnumValuesReserved" Category="Microsoft.Naming" CheckId="CA1700" Created="2008-05-10 09:21:46Z">
+              <Issue>
+               <Item>'SnmpType.Reserved2'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#SetRequestPDU">
+            <Messages>
+             <Message Id="PDU" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-10 09:21:46Z">
+              <Issue Name="Member">
+               <Item>PDU</Item>
+               <Item>'SnmpType.SetRequestPDU'</Item>
+               <Item>Pdu</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#TrapPDUv1">
+            <Messages>
+             <Message Id="Uv" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-10 09:21:46Z">
+              <Issue Name="Member">
+               <Item>Uv</Item>
+               <Item>'SnmpType.TrapPDUv1'</Item>
+               <Item>UV</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#TrapPDUv2">
+            <Messages>
+             <Message Id="Uv" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-10 09:21:46Z">
+              <Issue Name="Member">
+               <Item>Uv</Item>
+               <Item>'SnmpType.TrapPDUv2'</Item>
+               <Item>UV</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#UTCTime">
+            <Messages>
+             <Message Id="UTC" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-10 09:21:46Z">
+              <Issue Name="Member">
+               <Item>UTC</Item>
+               <Item>'SnmpType.UTCTime'</Item>
+               <Item>Utc</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#UTF8String">
+            <Messages>
+             <Message Id="UTF" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-10 09:21:46Z">
+              <Issue Name="Member">
+               <Item>UTF</Item>
+               <Item>'SnmpType.UTF8String'</Item>
+               <Item>Utf</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
+  </Targets>
+  <Rules>
+   <Rule TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811">
+    <Resolution Name="Default">{0} appears to have no upstream public or protected callers.</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotNameEnumValuesReserved" Category="Microsoft.Naming" CheckId="CA1700">
+    <Resolution Name="Default">If {0} is not used in the current implementation, remove it. Otherwise give it a meaningful name.</Resolution>
+   </Rule>
+   <Rule TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709">
+    <Resolution Name="Member">Correct the casing of '{0}' in member name {1} by changing it to '{2}'.</Resolution>
+   </Rule>
+   <Rule TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801">
+    <Resolution Name="Default">Parameter {0} of {1} is never used. Remove the parameter or use it in the method body.</Resolution>
+   </Rule>
+  </Rules>
+ </FxCopReport>
+</FxCopProject>

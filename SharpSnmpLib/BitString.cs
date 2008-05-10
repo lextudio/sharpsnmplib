@@ -1,19 +1,24 @@
-using SharpSnmpLib;
 using System;
 using System.Collections;
 using System.Diagnostics;
 
-namespace SharpSnmpLib
+namespace Lextm.SharpSnmpLib
 {
-    //TODO: remove all setters.
+    /// <summary>
+    /// BitString type.
+    /// </summary>
 	public struct BitString: ISnmpData, IEquatable<BitString> // BitArray seems to be bad news, so here goes
 	{
 		int _nbits;
 		int _size;
 		int[] _bits;
-		public int Length { get { return (int)_nbits; }}
 		byte[] _raw;
-		
+        byte[] _bytes;
+
+		/// <summary>
+		/// Creates a <see cref="BitString"/> from raw bytes.
+		/// </summary>
+		/// <param name="raw">Raw bytes</param>
 		public BitString(byte[] raw)
 		{
 			_nbits = raw.Length * 8 - raw[0];//8.6.2
@@ -26,15 +31,11 @@ namespace SharpSnmpLib
 			_bytes = null;
 			_raw = raw;
 		}
-		
-        //public BitString(int index) {
-        //    _nbits = index;
-        //    _size = (index+31)/32;
-        //    _bits = new int[_size];
-        //    _bytes = null;
-        //    _raw = parseItem(_nbits, _bits);
-        //}
-
+		/// <summary>
+		/// Creates a <see cref="BitString"/> with a bit length and a bit array.
+		/// </summary>
+		/// <param name="nbits">Bit length</param>
+		/// <param name="bits">Bit array</param>
         public BitString(int nbits, int[] bits)
         {
             if (bits.Length != (nbits + 31) / 32)
@@ -45,9 +46,12 @@ namespace SharpSnmpLib
             _size = bits.Length;
             _bits = bits;
             _bytes = null;
-            _raw = parseItem(_nbits, _bits);
+            _raw = ParseItem(_nbits, _bits);
         }
-		
+		/// <summary>
+		/// Creates a <see cref="BitString"/> from a <see cref="BitString"/>.
+		/// </summary>
+		/// <param name="str">Another <see cref="BitString"/> instance</param>
 		public BitString(BitString str)
 		{
 			_bytes = null;
@@ -56,19 +60,20 @@ namespace SharpSnmpLib
 			_size = str._size;
 			_bits = (int[])str._bits.Clone();
 		}
-
+        /// <summary>
+        /// Returns a bit at specific index.
+        /// </summary>
+        /// <param name="index">Index</param>
+        /// <returns></returns>
 		public bool this[int index]
 		{
 			get { return (_bits[index>>5]&(1<<(31-((int)index&31))))!=0; }
-            //set { int bit = 1<<(31-((int)index&31));
-            //    if (value)
-            //        _bits[index>>5] |= bit;
-            //    else
-            //        _bits[index>>5] &= ~bit;
-            //    OnBitsChanged();
-            //}
 		}
-
+        /// <summary>
+        /// And operator.
+        /// </summary>
+        /// <param name="other">Another <see cref="BitString"/> instance.</param>
+        /// <returns></returns>
 		public BitString And (BitString other)
 		{
 			Debug.Assert(_nbits==other._nbits);
@@ -79,7 +84,11 @@ namespace SharpSnmpLib
             }
 			return new BitString(_nbits, bits);
 		}
-
+        /// <summary>
+        /// Or operator.
+        /// </summary>
+        /// <param name="other">Another <see cref="BitString"/> instance</param>
+        /// <returns></returns>
 		public BitString Or (BitString other)
 		{
 			Debug.Assert(_nbits==other._nbits);
@@ -89,13 +98,10 @@ namespace SharpSnmpLib
                 bits[j] = _bits[j] | other._bits[j];
             }
             return new BitString(_nbits, bits);
-            //BitString r = new BitString(_nbits);
-            //for (uint j=0;j<_size;j++)
-            //    r._bits[j] = _bits[j]|other._bits[j];
-            //r.OnBitsChanged();
-			//return r;
 		}
-
+        /// <summary>
+        /// Returns how many bits are set.
+        /// </summary>
 		public int Card
 		{
 			get {
@@ -110,12 +116,16 @@ namespace SharpSnmpLib
 				return r;
 			}
 		}
+        /// <summary>
+        /// Cat operator.
+        /// </summary>
+        /// <param name="other">Another <see cref="BitString"/> instance</param>
+        /// <returns></returns>
 		public BitString Cat (BitString other)
 		{
             int nbits = _nbits + other._nbits;
             int size = _size + other._size;
             int[] bits = new int[size];
-            //BitString r = new BitString(_nbits+other._nbits);
             uint i=0,j;
             for (j = 0; j < _nbits; j++)
             {
@@ -126,10 +136,11 @@ namespace SharpSnmpLib
                 bits[i++] = other._bits[j];
             }
             return new BitString(nbits, bits);
-            //r.OnBitsChanged();
-            //return r;
 		}
-		
+        /// <summary>
+        /// Serves as a hash function for a particular type.
+        /// </summary>
+        /// <returns>A hash code for the current <see cref="BitString"/>.</returns>
 		public override int GetHashCode()
 		{
 			int n = 0;
@@ -137,10 +148,13 @@ namespace SharpSnmpLib
 				n += _bits[j];
 			return n;
 		}
-
+        /// <summary>
+        /// Returns a <see cref="String"/> that represents this <see cref="BitString"/>.
+        /// </summary>
+        /// <returns></returns>
 		public override string ToString()
 		{
-			string r="";
+			string r= string.Empty;
 			for (int i=0;i<_nbits;i++)
 				if ((_bits[i>>5]&(1<<(i&31)))!=0)
 				r+="1";
@@ -148,15 +162,18 @@ namespace SharpSnmpLib
 				r+="0";
 			return r;
 		}
-		
+		/// <summary>
+		/// Type code.
+		/// </summary>
 		public SnmpType TypeCode {
 			get {
 				return SnmpType.BitString;
 			}
-		}
-		
-		byte[] _bytes;
-		
+		}		
+		/// <summary>
+		/// Converts to byte format.
+		/// </summary>
+		/// <returns></returns>
 		public byte[] ToBytes()
 		{
 			if (_bytes == null)
@@ -166,7 +183,7 @@ namespace SharpSnmpLib
 			return _bytes;
 		}
 		
-		static byte[] parseItem(int nbits, int[] bits)
+		static byte[] ParseItem(int nbits, int[] bits)
 		{
 			// encoding 8.6.2
 			int n = (nbits+7)/8;
@@ -188,7 +205,12 @@ namespace SharpSnmpLib
 			}
 			return result;
 		}
-
+        /// <summary>
+        /// Determines whether the specified <see cref="Object"/> is equal to the current <see cref="BitString"/>. 
+        /// </summary>
+        /// <param name="obj">The <see cref="Object"/> to compare with the current <see cref="BitString"/>. </param>
+        /// <returns><value>true</value> if the specified <see cref="Object"/> is equal to the current <see cref="BitString"/>; otherwise, <value>false</value>.
+        /// </returns>
         public override bool Equals(object obj)
         {
             if (obj == null)
@@ -205,19 +227,36 @@ namespace SharpSnmpLib
             }
             return Equals((BitString)obj);
         }
-
+        /// <summary>
+        /// The equality operator.
+        /// </summary>
+        /// <param name="left">Left <see cref="BitString"/> object</param>
+        /// <param name="right">Right <see cref="BitString"/> object</param>
+        /// <returns>
+        /// Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
         public static bool operator ==(BitString left, BitString right)
         {
             return left.Equals(right);
         }
-
+        /// <summary>
+        /// The inequality operator.
+        /// </summary>
+        /// <param name="left">Left <see cref="BitString"/> object</param>
+        /// <param name="right">Right <see cref="BitString"/> object</param>
+        /// <returns>
+        /// Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
         public static bool operator !=(BitString left, BitString right)
         {
             return !(left == right);
         }
 
         #region IEquatable<BitString> Members
-
+        /// <summary>
+        /// Indicates whether the current object is equal to another object of the same type.
+        /// </summary>
+        /// <param name="other">An object to compare with this object.</param>
+        /// <returns><value>true</value> if the current object is equal to the <paramref name="other"/> parameter; otherwise, <value>false</value>.
+        ///</returns>
         public bool Equals(BitString other)
         {
             return ByteTool.CompareRaw(_raw, other._raw);

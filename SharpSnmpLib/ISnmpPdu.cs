@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SharpSnmpLib
+namespace Lextm.SharpSnmpLib
 {
 	/// <summary>
 	/// SNMP PDU.

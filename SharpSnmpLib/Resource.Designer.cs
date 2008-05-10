@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SharpSnmpLib {
+namespace Lextm.SharpSnmpLib {
 	using System;
 	
 	
@@ -39,7 +39,7 @@ namespace SharpSnmpLib {
 		internal static global::System.Resources.ResourceManager ResourceManager {
 			get {
 				if (object.ReferenceEquals(resourceMan, null)) {
-					global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SharpSnmpLib.Resource", typeof(Resource).Assembly);
+					global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Lextm.SharpSnmpLib.Resource", typeof(Resource).Assembly);
 					resourceMan = temp;
 				}
 				return resourceMan;

@@ -4,15 +4,20 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <OutputType>Library</OutputType>
-    <RootNamespace>SharpSnmpLib</RootNamespace>
+    <RootNamespace>Lextm.SharpSnmpLib</RootNamespace>
     <AssemblyName>SharpSnmpLib</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>sharpsnmplib.snk</AssemblyOriginatorKeyFile>
+    <DocumentationFile>bin\Debug\SharpSnmpLib.xml</DocumentationFile>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <NoStdLib>False</NoStdLib>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <OutputPath>bin\Debug\</OutputPath>
-    <DebugSymbols>True</DebugSymbols>
+    <DebugSymbols>true</DebugSymbols>
     <DebugType>Full</DebugType>
     <Optimize>False</Optimize>
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
@@ -25,6 +30,13 @@
     <Optimize>True</Optimize>
     <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
     <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <BaseAddress>4194304</BaseAddress>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <FileAlignment>4096</FileAlignment>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <Import Project="Microsoft.VersionNumber.targets" />
@@ -39,14 +51,18 @@
     <Compile Include="BitString.cs" />
     <Compile Include="Bool.cs" />
     <Compile Include="ByteTool.cs" />
+    <Compile Include="Counter32.cs" />
+    <Compile Include="ErrorCode.cs" />
+    <Compile Include="Gauge32.cs" />
     <Compile Include="GeneralString.cs" />
     <Compile Include="GetRequestMessage.cs" />
     <Compile Include="GetRequestPdu.cs" />
     <Compile Include="GetResponseMessage.cs" />
     <Compile Include="GetResponsePdu.cs" />
+    <Compile Include="Integer64.cs" />
     <Compile Include="ISnmpMessage.cs" />
     <Compile Include="ISnmpData.cs" />
-    <Compile Include="Int.cs" />
+    <Compile Include="Integer32.cs" />
     <Compile Include="IP.cs" />
     <Compile Include="ISnmpPdu.cs" />
     <Compile Include="Manager.cs">
@@ -72,10 +88,13 @@
     <Compile Include="SnmpArray.cs" />
     <Compile Include="SnmpDataFactory.cs" />
     <Compile Include="SnmpType.cs" />
+    <Compile Include="Tests\TestCounter32.cs" />
+    <Compile Include="Tests\TestGauge32.cs" />
     <Compile Include="Tests\TestGetRequestMessage.cs" />
     <Compile Include="Tests\TestGetRequestPdu.cs" />
     <Compile Include="Tests\TestGetResponseMessage.cs" />
     <Compile Include="Tests\TestIpAddress.cs" />
+    <Compile Include="Tests\TestNull.cs" />
     <Compile Include="Tests\TestObjectIdentifier.cs" />
     <Compile Include="Tests\TestOctetString.cs" />
     <Compile Include="Tests\TestSnmpArray.cs" />
@@ -85,6 +104,7 @@
     <Compile Include="Tests\TestTrapV1Pdu.cs" />
     <Compile Include="Tests\TestVariable.cs" />
     <Compile Include="TimeTicks.cs" />
+    <Compile Include="GenericCode.cs" />
     <Compile Include="TrapMessage.cs" />
     <Compile Include="TrapListener.cs">
       <SubType>Component</SubType>
@@ -93,6 +113,7 @@
     <Compile Include="TrapReceivedEventArgs.cs" />
     <Compile Include="Variable.cs" />
     <Compile Include="VersionCode.cs" />
+    <None Include="license.txt" />
     <None Include="Resources\get.dat" />
     <None Include="Resources\getresponse.dat" />
     <None Include="Resources\onevarbind.dat" />

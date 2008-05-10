@@ -9,8 +9,8 @@
 
 using System;
 using NUnit.Framework;
-
-namespace SharpSnmpLib.Tests
+#pragma warning disable 1591
+namespace Lextm.SharpSnmpLib.Tests
 {
 	[TestFixture]
 	public class TestSnmpDataFactory
@@ -38,8 +38,8 @@ namespace SharpSnmpLib.Tests
 		{
 			byte[] expected = new byte[] {0x02, 0x01, 0x00};
 			ISnmpData data = SnmpDataFactory.CreateSnmpData(expected);
-			Assert.AreEqual(SnmpType.Integer, data.TypeCode);
-			Int i = (Int)data;
+			Assert.AreEqual(SnmpType.Integer32, data.TypeCode);
+			Integer32 i = (Integer32)data;
 			Assert.AreEqual(0, i.ToInt32());
 		}
 		[Test]
@@ -51,11 +51,11 @@ namespace SharpSnmpLib.Tests
 			Assert.AreEqual("public", data.ToString());
 		}
 		[Test]
-		public void TestCreateIpAddress()
+		public void TestCreateIP()
 		{
 			byte[] expected = new byte[] { 0x40, 0x04, 0x7F, 0x00, 0x00, 0x01};
 			ISnmpData data = SnmpDataFactory.CreateSnmpData(expected);
-			Assert.AreEqual(SnmpType.IpAddress, data.TypeCode);
+			Assert.AreEqual(SnmpType.IPAddress, data.TypeCode);
 			IP a = (IP)data;
 			Assert.AreEqual("127.0.0.1", a.ToString());
 		}
@@ -64,8 +64,8 @@ namespace SharpSnmpLib.Tests
 		{
 			byte[] expected = new byte[] { 0x43, 0x02, 0x3F, 0xE0 };
 			ISnmpData data = SnmpDataFactory.CreateSnmpData(expected);
-			Assert.AreEqual(SnmpType.Timeticks, data.TypeCode);
-			Timeticks t = (Timeticks)data;
+			Assert.AreEqual(SnmpType.TimeTicks, data.TypeCode);
+			TimeTicks t = (TimeTicks)data;
 			Assert.AreEqual(16352, t.ToInt32());
 		}
 		[Test]
@@ -121,8 +121,8 @@ namespace SharpSnmpLib.Tests
 			
 			TrapV1Pdu t = (TrapV1Pdu)data;
 			Assert.AreEqual(new uint[] {1,3,6,1,4,1,2162,1000,2}, t.Enterprise.ToOid());
-			Assert.AreEqual("127.0.0.1", t.Agent.ToIPAddress().ToString());
-			Assert.AreEqual(6, t.Generic);
+			Assert.AreEqual("127.0.0.1", t.AgentAddress.ToIPAddress().ToString());
+			Assert.AreEqual(GenericCode.EnterpriseSpecific, t.Generic);
 			Assert.AreEqual(12, t.Specific);
 			Assert.AreEqual(16352, t.TimeStamp.ToInt32());
 			Assert.AreEqual(1, t.Variables.Count);
@@ -150,8 +150,8 @@ namespace SharpSnmpLib.Tests
 			SnmpArray t = (SnmpArray)data;
 			Assert.AreEqual(3, t.Items.Count);
 			ISnmpData version = t.Items[0];
-			Assert.AreEqual(SnmpType.Integer, version.TypeCode);
-			Assert.AreEqual(1, 1 + ((Int)version).ToInt32());
+			Assert.AreEqual(SnmpType.Integer32, version.TypeCode);
+			Assert.AreEqual(1, 1 + ((Integer32)version).ToInt32());
 			ISnmpData community = t.Items[1];
 			Assert.AreEqual(SnmpType.OctetString, community.TypeCode);
 			Assert.AreEqual("public", ((OctetString)community).ToString());
@@ -160,3 +160,4 @@ namespace SharpSnmpLib.Tests
 		}
 	}
 }
+#pragma warning restore 1591

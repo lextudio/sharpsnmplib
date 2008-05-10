@@ -12,23 +12,37 @@ using System.Globalization;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
 
-namespace SharpSnmpLib
+namespace Lextm.SharpSnmpLib
 {
+	/// <summary>
+	/// Timeout exception type of #SNMP.
+	/// </summary>
     [Serializable]
     public sealed class SharpTimeoutException : SharpOperationException
     {
         int _timeout;
-
+		/// <summary>
+		/// Timeout.
+		/// </summary>
         public int Timeout
         {
             get { return _timeout; }
             set { _timeout = value; }
         }
-
+		/// <summary>
+		/// Creates a <see cref="SharpTimeoutException"/> instance.
+		/// </summary>
         public SharpTimeoutException() { }
-
+		/// <summary>
+		/// Creates a <see cref="SharpTimeoutException"/> instance with a specific <see cref="String"/>.
+		/// </summary>
+		/// <param name="message">Message</param>
         public SharpTimeoutException(string message) : base(message) { }
-
+		/// <summary>
+		/// Creates a <see cref="SharpTimeoutException"/> instance with a specific <see cref="String"/> and an <see cref="Exception"/> instance.
+		/// </summary>
+		/// <param name="message">Message</param>
+		/// <param name="inner">Inner exception</param>
         public SharpTimeoutException(string message, Exception inner) : base(message, inner) { }
 
         private SharpTimeoutException(SerializationInfo info, StreamingContext context) : base(info, context) 
@@ -39,6 +53,11 @@ namespace SharpSnmpLib
             }
             _timeout = info.GetInt32("Timeout");
         }
+        /// <summary>
+        /// Gets object data.
+        /// </summary>
+        /// <param name="info">Info</param>
+        /// <param name="context">Context</param>
         [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {    

@@ -13,83 +13,27 @@ using System.Net;
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace SharpSnmpLib
+namespace Lextm.SharpSnmpLib
 {
 	/// <summary>
-	/// Description of Trap.
+	/// Trap message.
 	/// </summary>
 	public class TrapMessage: ISnmpMessage, ISnmpData
 	{
-        public override string ToString()
-        {
-            return string.Format(CultureInfo.InvariantCulture, 
-                "SNMPv1 trap: agent address: {0}; time stamp: {1}; community: {2}; enterprise: {3}; generic: {4}; specific: {5}; varbind count: {6}",
-                AgentAddress, TimeStamp, Community, Enterprise, GenericId, SpecificId, Variables.Count);
-        }
-        int _time;
-        public int TimeStamp
-        {
-            get
-            {
-                return _time;
-            }
-        }
+        int _time;        
         string _community;
-        public string Community
-        {
-            get
-            {
-                return _community;
-            }
-        }
         ObjectIdentifier _enterprise;
-        public ObjectIdentifier Enterprise
-        {
-            get
-            {
-                return _enterprise;
-            }
-        }
         IPAddress _ip;
-        public IPAddress AgentAddress
-        {
-            get
-            {
-                return _ip;
-            }
-        }
-        int _generic;
-        public int GenericId
-        {
-            get
-            {
-                return _generic;
-            }
-        }
+        GenericCode _generic;
         int _specific;
-        public int SpecificId
-        {
-            get
-            {
-                return _specific;
-            }
-        }
         IList<Variable> _varbinds;
-        public IList<Variable> Variables
-        {
-            get
-            {
-                return _varbinds;
-            }
-        }
         VersionCode _version;
-        public VersionCode Version
-        {
-        	get {
-        		return _version;
-        	}
-        }
-		
+        ISnmpPdu _pdu;		
+		byte[] _bytes; 
+		/// <summary>
+		/// Creates a <see cref="TrapMessage"/> instance with a message body.
+		/// </summary>
+		/// <param name="body">Message body</param>
 		public TrapMessage(SnmpArray body)
 		{
 			if (body == null) 
@@ -106,26 +50,106 @@ namespace SharpSnmpLib
 				throw new ArgumentException("wrong message type");
 			}
 			_community = body.Items[1].ToString();
-			_version = (VersionCode)((Int)body.Items[0]).ToInt32();
+			_version = (VersionCode)((Integer32)body.Items[0]).ToInt32();
 			TrapV1Pdu trapPdu = (TrapV1Pdu)_pdu;
 			_enterprise = trapPdu.Enterprise;
-			_ip = trapPdu.Agent.ToIPAddress();
+			_ip = trapPdu.AgentAddress.ToIPAddress();
 			_generic = trapPdu.Generic;
 			_specific = trapPdu.Specific;
 			_time = trapPdu.TimeStamp.ToInt32();
 			_varbinds = trapPdu.Variables;
 		}
-		
-		ISnmpPdu _pdu;
-		
+		/// <summary>
+		/// Time stamp.
+		/// </summary>
+        public int TimeStamp
+        {
+            get
+            {
+                return _time;
+            }
+        }
+        /// <summary>
+        /// Community name.
+        /// </summary>
+        public string Community
+        {
+            get
+            {
+                return _community;
+            }
+        }
+        /// <summary>
+        /// Enterprise.
+        /// </summary>
+        public ObjectIdentifier Enterprise
+        {
+            get
+            {
+                return _enterprise;
+            }
+        }
+        /// <summary>
+        /// Agent address.
+        /// </summary>
+        public IPAddress AgentAddress
+        {
+            get
+            {
+                return _ip;
+            }
+        }
+       	/// <summary>
+       	/// Generic type.
+       	/// </summary>
+        public GenericCode Generic
+        {
+            get
+            {
+                return _generic;
+            }
+        }
+        /// <summary>
+        /// Specific type.
+        /// </summary>
+        public int Specific
+        {
+            get
+            {
+                return _specific;
+            }
+        }     
+		/// <summary>
+		/// Variable binds.
+		/// </summary>
+		public IList<Variable> Variables
+        {
+            get
+            {
+                return _varbinds;
+            }
+        }
+		/// <summary>
+		/// Protocol version.
+		/// </summary>
+        public VersionCode Version
+        {
+        	get {
+        		return _version;
+        	}
+        }		
+		/// <summary>
+		/// Type code.
+		/// </summary>
 		public SnmpType TypeCode {
 			get {
 				return SnmpType.TrapPDUv1;
 			}
 		}
-		
-		byte[] _bytes;
-		
+		/// <summary>
+		/// To byte format.
+		/// </summary>
+		/// <returns></returns>
 		public byte[] ToBytes()
 		{
 			if (null == _bytes) 
@@ -134,11 +158,23 @@ namespace SharpSnmpLib
 			}
 			return _bytes;
 		}
-		
+		/// <summary>
+		/// PDU.
+		/// </summary>
 		public ISnmpPdu Pdu {
 			get {
 				return _pdu;
 			}
-		}
+		}		
+		/// <summary>
+		/// Returns a <see cref="String"/> that represents the current <see cref="TrapMessage"/>.
+		/// </summary>
+		/// <returns></returns>
+		public override string ToString()
+        {
+            return string.Format(CultureInfo.InvariantCulture, 
+                "SNMPv1 trap: agent address: {0}; time stamp: {1}; community: {2}; enterprise: {3}; generic: {4}; specific: {5}; varbind count: {6}",
+                AgentAddress, TimeStamp, Community, Enterprise, Generic, Specific, Variables.Count);
+        }
 	}
 }

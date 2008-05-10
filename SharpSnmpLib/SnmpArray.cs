@@ -12,13 +12,21 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 
-namespace SharpSnmpLib
+namespace Lextm.SharpSnmpLib
 {
 	/// <summary>
-	/// Description of SnmpArray.
+	/// Array type.
 	/// </summary>
+	/// <remarks>Represents SMIv1 SEQUENCE.</remarks>
 	public class SnmpArray: ISnmpData
 	{
+		byte[] _bytes;
+		byte[] _raw;		
+		IList<ISnmpData> _list = new List<ISnmpData>();
+		/// <summary>
+		/// Creates an <see cref="SnmpArray"/> instance with varied <see cref="ISnmpData"/> instances.
+		/// </summary>
+		/// <param name="items"></param>
 		public SnmpArray(params ISnmpData[] items)
 		{
 			foreach (ISnmpData item in items)
@@ -27,7 +35,10 @@ namespace SharpSnmpLib
 			}
 			_raw = ByteTool.ParseItems(items);
 		}
-		
+		/// <summary>
+		/// Creates an <see cref="SnmpArray"/> instance with varied <see cref="ISnmpData"/> instances.
+		/// </summary>
+		/// <param name="items"></param>
 		public SnmpArray(IEnumerable items)
 		{
 			if (!(items is IEnumerable<ISnmpData>)) 
@@ -40,7 +51,10 @@ namespace SharpSnmpLib
 			}
 			_raw = ByteTool.ParseItems(items);
 		}
-		
+		/// <summary>
+		/// Creates an <see cref="SnmpArray"/> instance from raw bytes.
+		/// </summary>
+		/// <param name="raw">Raw bytes</param>
 		public SnmpArray(byte[] raw)
 		{
 			_raw = raw;
@@ -52,11 +66,9 @@ namespace SharpSnmpLib
 				}
 			}
 		}
-		
-		byte[] _raw;
-		
-		IList<ISnmpData> _list = new List<ISnmpData>();
-		
+		/// <summary>
+		/// <see cref="ISnmpData"/> instances containing in this <see cref="SnmpArray"/>
+		/// </summary>
 		public IList<ISnmpData> Items
 		{
 			get
@@ -64,15 +76,18 @@ namespace SharpSnmpLib
 				return _list;
 			}
 		}
-		
+		/// <summary>
+		/// Type code.
+		/// </summary>
 		public SnmpType TypeCode {
 			get {
 				return SnmpType.Array;
 			}
 		}
-		
-		byte[] _bytes;
-		
+		/// <summary>
+		/// To byte format.
+		/// </summary>
+		/// <returns></returns>
 		public byte[] ToBytes()
 		{
 			if (null == _bytes) {

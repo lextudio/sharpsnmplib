@@ -8,7 +8,7 @@
  */
 using System;
 using System.Net;
-using SharpSnmpLib;
+using Lextm.SharpSnmpLib;
 
 namespace TestSet
 {

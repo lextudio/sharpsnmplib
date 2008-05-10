@@ -12,7 +12,10 @@ using System.IO;
 using System.Net;
 
 using NUnit.Framework;
-namespace SharpSnmpLib.Tests
+
+#pragma warning disable 1591
+
+namespace Lextm.SharpSnmpLib.Tests
 {
 	/// <summary>
 	/// Description of TestGetMessage.
@@ -34,3 +37,4 @@ namespace SharpSnmpLib.Tests
 		}
 	}
 }
+#pragma warning restore 1591

@@ -9,7 +9,7 @@
 
 using System;
 
-namespace SharpSnmpLib
+namespace Lextm.SharpSnmpLib
 {
 	/// <summary>
 	/// SNMP data entity.
@@ -24,7 +24,7 @@ namespace SharpSnmpLib
 			get;
 		}
 		/// <summary>
-		/// Converts to value.
+		/// To byte format.
 		/// </summary>
 		/// <returns></returns>
 		/// <remarks>The byte format is used to construct PDU.</remarks>

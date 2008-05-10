@@ -10,27 +10,42 @@
 using System;
 using System.IO;
 
-namespace SharpSnmpLib
+namespace Lextm.SharpSnmpLib
 {
 	/// <summary>
-	/// Description of SnmpDataFactory.
+	/// Factory that creates <see cref="ISnmpData"/> instances.
 	/// </summary>
 	public sealed class SnmpDataFactory
 	{
 		SnmpDataFactory()
 		{
-		}
-				
-		public static ISnmpData CreateSnmpData(byte[] raw)
+		}		
+		/// <summary>
+		/// Creates an <see cref="ISnmpData"/> instance from buffer.
+		/// </summary>
+		/// <param name="buffer">Buffer</param>
+		/// <returns></returns>
+		public static ISnmpData CreateSnmpData(byte[] buffer)
 		{
-			return CreateSnmpData(raw, raw.Length);
+			return CreateSnmpData(buffer, 0, buffer.Length);
 		}
-		public static ISnmpData CreateSnmpData(byte[] buffer, int length)
+		/// <summary>
+		/// Creates an <see cref="ISnmpData"/> instance from buffer.
+		/// </summary>
+		/// <param name="buffer">Buffer</param>
+		/// <param name="index">Index</param>
+		/// <param name="count">Count</param>
+		/// <returns></returns>
+		public static ISnmpData CreateSnmpData(byte[] buffer, int index, int count)
 		{
-			MemoryStream m = new MemoryStream(buffer, 0, length, false);
+			MemoryStream m = new MemoryStream(buffer, index, count, false);
 			return CreateSnmpData(m);
 		}
-		
+		/// <summary>
+		/// Creates an <see cref="ISnmpData"/> instance from stream.
+		/// </summary>
+		/// <param name="stream">Stream</param>
+		/// <returns></returns>
 		public static ISnmpData CreateSnmpData(MemoryStream stream)
 		{
 			int type = stream.ReadByte();
@@ -39,18 +54,22 @@ namespace SharpSnmpLib
 			stream.Read(bytes, 0, length);
 			switch ((SnmpType)type) 
 			{
+                case SnmpType.Counter32:
+                    return new Counter32(bytes);
+                case SnmpType.Gauge32:
+                    return new Gauge32(bytes);
 				case SnmpType.ObjectIdentifier:
 					return new ObjectIdentifier(bytes);
 				case SnmpType.Null:
 					return new Null();
-				case SnmpType.Integer:
-					return new Int(bytes);
+				case SnmpType.Integer32:
+					return new Integer32(bytes);
 				case SnmpType.OctetString:
 					return new OctetString(bytes);
-				case SnmpType.IpAddress:
+				case SnmpType.IPAddress:
 					return new IP(bytes);
-				case SnmpType.Timeticks:
-					return new Timeticks(bytes);
+				case SnmpType.TimeTicks:
+					return new TimeTicks(bytes);
 				case SnmpType.Array:
 					return new SnmpArray(bytes);
 				case SnmpType.TrapPDUv1:

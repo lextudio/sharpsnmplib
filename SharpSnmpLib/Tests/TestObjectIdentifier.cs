@@ -1,8 +1,8 @@
 ﻿using System;
 using System.IO;
 using NUnit.Framework;
-
-namespace SharpSnmpLib.Tests
+#pragma warning disable 1591
+namespace Lextm.SharpSnmpLib.Tests
 {
     [TestFixture]
     public class TestObjectIdentifier
@@ -29,3 +29,4 @@ namespace SharpSnmpLib.Tests
         }        
     }
 }
+#pragma warning restore 1591

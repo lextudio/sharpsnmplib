@@ -10,8 +10,8 @@
 using System;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
-
-namespace SharpSnmpLib.Tests
+#pragma warning disable 1591
+namespace Lextm.SharpSnmpLib.Tests
 {
 	[TestFixture]
 	public class TestTimeticks
@@ -19,16 +19,17 @@ namespace SharpSnmpLib.Tests
 		[Test]
 		public void TestConstructor()
 		{
-			Timeticks time = new Timeticks(15);
+			TimeTicks time = new TimeTicks(15);
 			Assert.AreEqual(15, time.ToInt32());
 		}
 		[Test]
 		public void TestToBytes()
 		{
-			Timeticks time = new Timeticks(16352);
+			TimeTicks time = new TimeTicks(16352);
 			ISnmpData data = SnmpDataFactory.CreateSnmpData(time.ToBytes());
-			Assert.AreEqual(data.TypeCode, SnmpType.Timeticks);
+			Assert.AreEqual(data.TypeCode, SnmpType.TimeTicks);
 			Assert.AreEqual(time.ToString(), data.ToString());
 		}
 	}
 }
+#pragma warning restore 1591

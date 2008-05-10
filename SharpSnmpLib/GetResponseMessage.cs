@@ -9,16 +9,22 @@
 
 using System;
 using System.Collections.Generic;
-namespace SharpSnmpLib
+namespace Lextm.SharpSnmpLib
 {
 	/// <summary>
-	/// Description of GetResponseMessage.
+	/// GET response message.
 	/// </summary>
 	public class GetResponseMessage: ISnmpMessage
 	{
 		ISnmpPdu _pdu;
+		int _sequenceNumber;
+        ErrorCode _errorStatus;
+        int _errorIndex;
 		IList<Variable> _variables;
-		
+		/// <summary>
+		/// Creates a <see cref="GetResponseMessage"/> with a specific <see cref="SnmpArray"/>.
+		/// </summary>
+		/// <param name="body">Message body</param>
 		public GetResponseMessage(SnmpArray body)
 		{
 			if (body == null)
@@ -35,9 +41,42 @@ namespace SharpSnmpLib
 				throw new ArgumentException("wrong message type");
 			}
 			GetResponsePdu pdu = (GetResponsePdu)_pdu;
+			_sequenceNumber = pdu.SequenceNumber;
+            _errorStatus = pdu.ErrorStatus;
+            _errorIndex = pdu.ErrorIndex;
 			_variables = pdu.Variables;
 		}
-
+        /// <summary>
+        /// Error status.
+        /// </summary>
+        public ErrorCode ErrorStatus
+        {
+            get
+            {
+                return _errorStatus;
+            }
+        }
+        /// <summary>
+        /// Error index.
+        /// </summary>
+        public int ErrorIndex
+        {
+            get
+            {
+                return _errorIndex;
+            }
+        }
+		
+		internal int SequenceNumber
+		{
+			get
+			{
+				return _sequenceNumber;
+			}
+		}
+        /// <summary>
+        /// Variables.
+        /// </summary>
         public IList<Variable> Variables
         {
             get
@@ -45,19 +84,26 @@ namespace SharpSnmpLib
                 return _variables;
             }
         }
-		
+		/// <summary>
+		/// PDU.
+		/// </summary>
 		public ISnmpPdu Pdu {
 			get {
 				return _pdu;
 			}
 		}
-		
+		/// <summary>
+		/// Type code
+		/// </summary>
 		public SnmpType TypeCode {
 			get {
 				return SnmpType.GetResponsePDU;
 			}
 		}
-		
+		/// <summary>
+		/// Converts to byte format.
+		/// </summary>
+		/// <returns></returns>
 		public byte[] ToBytes()
 		{
 			throw new NotImplementedException();

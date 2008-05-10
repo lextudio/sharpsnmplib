@@ -11,8 +11,8 @@ using System;
 using System.Collections.Generic;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
-
-namespace SharpSnmpLib.Tests
+#pragma warning disable 1591
+namespace Lextm.SharpSnmpLib.Tests
 {
 	[TestFixture]
 	public class TestSnmpArray
@@ -49,3 +49,4 @@ namespace SharpSnmpLib.Tests
 		}
 	}
 }
+#pragma warning restore 1591

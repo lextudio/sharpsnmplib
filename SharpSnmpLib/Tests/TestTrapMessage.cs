@@ -4,8 +4,8 @@ using System.Text;
 using NUnit.Framework;
 using System.IO;
 using System.Net;
-
-namespace SharpSnmpLib.Tests
+#pragma warning disable 1591
+namespace Lextm.SharpSnmpLib.Tests
 {
     [TestFixture]
     public class TestTrapMessage
@@ -16,8 +16,8 @@ namespace SharpSnmpLib.Tests
             byte[] buffer = Resource.novarbind;
             ISnmpMessage m = MessageFactory.ParseMessage(buffer);
             TrapMessage message = (TrapMessage)m;
-            Assert.AreEqual(6, message.GenericId);
-            Assert.AreEqual(12, message.SpecificId);
+            Assert.AreEqual(GenericCode.EnterpriseSpecific, message.Generic);
+            Assert.AreEqual(12, message.Specific);
             Assert.AreEqual("public", message.Community);
             Assert.AreEqual(IPAddress.Parse("127.0.0.1"), message.AgentAddress);
             Assert.AreEqual(new uint[] { 1,3 }, message.Enterprise.ToOid());
@@ -59,3 +59,4 @@ namespace SharpSnmpLib.Tests
         }
     }
 }
+#pragma warning restore 1591

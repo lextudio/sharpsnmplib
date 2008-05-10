@@ -3,10 +3,16 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace SharpSnmpLib
+namespace Lextm.SharpSnmpLib
 {
+    /// <summary>
+    /// ObjectIdentifier type.
+    /// </summary>
 	public struct ObjectIdentifier: ISnmpData, IEquatable<ObjectIdentifier>
 	{
+        uint[] _oid;
+        byte[] _raw;
+        byte[] _bytes;
 		/// <summary>
 		/// Creates an <see cref="ObjectIdentifier"/> instance from OID array.
 		/// </summary>
@@ -29,22 +35,28 @@ namespace SharpSnmpLib
 			_bytes = null;
 		}
 		/// <summary>
-		/// Creates an <see cref="ObjectIdentifier"/> instance from PDU raw value.
+		/// Creates an <see cref="ObjectIdentifier"/> instance from raw bytes.
 		/// </summary>
-		/// <param name="value">PDU raw value</param>
-		/// <param name="count">number</param>
+		/// <param name="raw">Raw bytes</param>
 		public ObjectIdentifier(byte[] raw)
 		{
 			_raw = raw;
 			_oid = ParsePduFormat(raw, (uint)raw.Length);
 			_bytes = null;
 		}
+        /// <summary>
+        /// Convers to OID array.
+        /// </summary>
+        /// <returns></returns>
 		[CLSCompliant(false)]
 		public uint[] ToOid()
 		{
 			return _oid;
 		}
-
+        /// <summary>
+        /// Returns a <see cref="String"/> that represents this <see cref="ObjectIdentifier"/>.
+        /// </summary>
+        /// <returns></returns>
 		public override string ToString()
 		{
 			StringBuilder result = new StringBuilder();
@@ -55,14 +67,7 @@ namespace SharpSnmpLib
 			return result.ToString();
 		}
 
-		uint[] _oid;
-		/// <summary>
-		/// Decodes PDU OID representation.
-		/// </summary>
-		/// <param name="value"></param>
-		/// <param name="p"></param>
-		/// <returns></returns>
-		static uint GetOIDEl(byte[] bytes, ref int p)
+        static uint GetOIDEl(byte[] bytes, ref int p)
 		{
 			uint r = 0;
 			byte x;
@@ -137,8 +142,8 @@ namespace SharpSnmpLib
 				bytes[ln++] = (byte)x;
 			}
 		}
-		[CLSCompliant(false)]
-		public static int GetPduFormatLength(uint[] oid)
+
+		static int GetPduFormatLength(uint[] oid)
 		{
 			int result = 0;
 			for (int j=1;j<oid.Length;j++)
@@ -148,15 +153,14 @@ namespace SharpSnmpLib
 			return result;
 		}
 		
-		public byte[] ToPduFormat()
+		byte[] ToPduFormat()
 		{
 			return _raw;
-		}
-		
-		byte[] _raw;
-		
-		byte[] _bytes;
-		
+		}		
+        /// <summary>
+        /// Converts to byte format.
+        /// </summary>
+        /// <returns></returns>
 		public byte[] ToBytes()
 		{
 			if (_bytes == null) {
@@ -164,13 +168,20 @@ namespace SharpSnmpLib
 			}
 			return _bytes;
 		}
-		
+		/// <summary>
+		/// Type code.
+		/// </summary>
 		public SnmpType TypeCode {
 			get {
 				return SnmpType.ObjectIdentifier;
 			}
 		}
-		
+        /// <summary>
+        /// Determines whether the specified <see cref="Object"/> is equal to the current <see cref="ObjectIdentifier"/>. 
+        /// </summary>
+        /// <param name="obj">The <see cref="Object"/> to compare with the current <see cref="ObjectIdentifier"/>. </param>
+        /// <returns><value>true</value> if the specified <see cref="Object"/> is equal to the current <see cref="ObjectIdentifier"/>; otherwise, <value>false</value>.
+        /// </returns>
 		public override bool Equals(object obj)
 		{
 			if (obj == null) {
@@ -184,22 +195,42 @@ namespace SharpSnmpLib
 			}
 			return Equals((ObjectIdentifier)obj);
 		}
-		
+        /// <summary>
+        /// Indicates whether the current object is equal to another object of the same type.
+        /// </summary>
+        /// <param name="other">An object to compare with this object.</param>
+        /// <returns><value>true</value> if the current object is equal to the <paramref name="other"/> parameter; otherwise, <value>false</value>.
+        ///</returns>
 		public bool Equals(ObjectIdentifier other)
 		{
 			return ByteTool.CompareRaw(_raw, other._raw);
 		}
-		
+        /// <summary>
+        /// Serves as a hash function for a particular type.
+        /// </summary>
+        /// <returns>A hash code for the current <see cref="ObjectIdentifier"/>.</returns>
 		public override int GetHashCode()
 		{
 			return ToString().GetHashCode();
 		}
-		
+        /// <summary>
+        /// The equality operator.
+        /// </summary>
+        /// <param name="left">Left <see cref="ObjectIdentifier"/> object</param>
+        /// <param name="right">Right <see cref="ObjectIdentifier"/> object</param>
+        /// <returns>
+        /// Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
 		public static bool operator == (ObjectIdentifier left, ObjectIdentifier right)
 		{
 			return left.Equals(right);
 		}
-		
+        /// <summary>
+        /// The inequality operator.
+        /// </summary>
+        /// <param name="left">Left <see cref="ObjectIdentifier"/> object</param>
+        /// <param name="right">Right <see cref="ObjectIdentifier"/> object</param>
+        /// <returns>
+        /// Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
 		public static bool operator != (ObjectIdentifier left, ObjectIdentifier right)
 		{
 			return !(left == right);

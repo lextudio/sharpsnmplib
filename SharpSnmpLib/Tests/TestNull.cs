@@ -1,8 +1,8 @@
 /*
  * Created by SharpDevelop.
  * User: lextm
- * Date: 2008/5/2
- * Time: 12:24
+ * Date: 2008/5/3
+ * Time: 20:26
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
@@ -14,16 +14,12 @@ using NUnit.Framework.SyntaxHelpers;
 namespace Lextm.SharpSnmpLib.Tests
 {
 	[TestFixture]
-	public class TestOctetString
+	public class TestNull
 	{
 		[Test]
 		public void TestMethod()
 		{
-			byte[] expected = new byte[] {0x04, 0x06, 0x70, 0x75, 0x62, 0x6C, 0x69, 0x63};
-			ISnmpData data = SnmpDataFactory.CreateSnmpData(expected);
-			Assert.AreEqual(SnmpType.OctetString, data.TypeCode);
-			OctetString s = (OctetString)data;
-			Assert.AreEqual("public", s.ToString());
+			Assert.AreEqual(false, new Null().Equals(null));
 		}
 	}
 }

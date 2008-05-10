@@ -11,36 +11,56 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace SharpSnmpLib
+namespace Lextm.SharpSnmpLib
 {
 	/// <summary>
-	/// Description of GetResponsePdu.
+	/// GET response PDU.
 	/// </summary>
 	public class GetResponsePdu: ISnmpPdu
 	{
-        private Int _errorStatus;
-        
-		public int ErrorStatus {
-			get { return _errorStatus.ToInt32(); }
-		}
-        private Int _errorIndex;
-        
-		public int ErrorIndex {
-			get { return _errorIndex.ToInt32(); }
-		}
+        private Integer32 _errorStatus;
+        private Integer32 _sequenceNumber;
+        private Integer32 _errorIndex;
         private IList<Variable> _variables;
         private SnmpArray _varbindSection;
-		
+		/// <summary>
+		/// Creates a <see cref="GetResponsePdu"/> from raw bytes.
+		/// </summary>
+		/// <param name="raw">Raw bytes</param>
 		public GetResponsePdu(byte[] raw)
 		{
 			MemoryStream m = new MemoryStream(raw);
-			SnmpDataFactory.CreateSnmpData(m);
-			_errorStatus = (Int)SnmpDataFactory.CreateSnmpData(m);
-			_errorIndex = (Int)SnmpDataFactory.CreateSnmpData(m);
+			_sequenceNumber = (Integer32)SnmpDataFactory.CreateSnmpData(m);
+			_errorStatus = (Integer32)SnmpDataFactory.CreateSnmpData(m);
+			_errorIndex = (Integer32)SnmpDataFactory.CreateSnmpData(m);
 			_varbindSection = (SnmpArray)SnmpDataFactory.CreateSnmpData(m);
 			_variables = Variable.ConvertFrom(_varbindSection);
 		}
 		
+		internal int SequenceNumber
+		{
+			get
+			{
+				return _sequenceNumber.ToInt32();
+			}
+		}
+        /// <summary>
+        /// Error status.
+        /// </summary>
+        public ErrorCode ErrorStatus
+        {
+            get { return (ErrorCode)_errorStatus.ToInt32(); }
+        }
+        /// <summary>
+        /// Error index.
+        /// </summary>
+        public int ErrorIndex
+        {
+            get { return _errorIndex.ToInt32(); }
+        }
+		/// <summary>
+		/// Variables.
+		/// </summary>
 		public IList<Variable> Variables
         {
             get
@@ -48,18 +68,28 @@ namespace SharpSnmpLib
                 return _variables;
             }
         }
-		
+		/// <summary>
+		/// Type code.
+		/// </summary>
 		public SnmpType TypeCode {
 			get {
 				return SnmpType.GetResponsePDU;
 			}
 		}
-		
+		/// <summary>
+		/// Converts to message body.
+		/// </summary>
+		/// <param name="version">Protocol version</param>
+		/// <param name="community">Community name</param>
+		/// <returns></returns>
 		public ISnmpData ToMessageBody(VersionCode version, string community)
 		{
 			throw new NotImplementedException();
 		}
-		
+		/// <summary>
+		/// Converts to byte format.
+		/// </summary>
+		/// <returns></returns>
 		public byte[] ToBytes()
 		{
 			throw new NotImplementedException();
