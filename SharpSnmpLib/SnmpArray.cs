@@ -11,6 +11,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -99,5 +100,18 @@ namespace Lextm.SharpSnmpLib
 			}
 			return _bytes;
 		}
+        /// <summary>
+        /// Returns a <see cref="String"/> that represents this <see cref="SnmpArray"/>.
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            StringBuilder result = new StringBuilder("SNMP SEQUENCE: ");
+            foreach (ISnmpData item in Items)
+            {
+                result.Append(item + "; ");
+            }
+            return result.ToString();
+        }
 	}
 }

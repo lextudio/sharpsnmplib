@@ -101,5 +101,13 @@ namespace Lextm.SharpSnmpLib
                     Message, Status, Index, Id);
             }
         }
+        /// <summary>
+        /// Returns a <see cref="String"/> that represents this <see cref="SharpErrorException"/>.
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return "SharpErrorException: " + Details;
+        }
 	}
 }

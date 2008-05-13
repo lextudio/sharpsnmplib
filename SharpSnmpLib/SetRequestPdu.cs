@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Globalization;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -60,6 +61,16 @@ namespace Lextm.SharpSnmpLib
 			_errorIndex = (Integer32)SnmpDataFactory.CreateSnmpData(m);
 			_varbindSection = (SnmpArray)SnmpDataFactory.CreateSnmpData(m);
 			_variables = Variable.ConvertFrom(_varbindSection);
+        }
+        /// <summary>
+        /// Returns a <see cref="String"/> that represents this <see cref="SetRequestPdu"/>.
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return string.Format(CultureInfo.InvariantCulture,
+                "SET request PDU: seq: {0}; status: {1}; index: {2}; variable count: {3}",
+                _sequenceNumber, _errorStatus, _errorIndex, _variables.Count);
         }
 
 		internal int SequenceNumber

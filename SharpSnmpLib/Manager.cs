@@ -61,7 +61,41 @@ namespace Lextm.SharpSnmpLib
             {
             	return message.Send(_timeout);
             }            
-        }       
+        }
+        /// <summary>
+        /// Gets a variable bind.
+        /// </summary>
+        /// <param name="version">Protocol version</param>
+        /// <param name="agent">Agent address</param>
+        /// <param name="community">Community name</param>
+        /// <param name="variable">Variable bind</param>
+        /// <returns></returns>
+        public Variable Get(VersionCode version, IPAddress agent, string community, Variable variable)
+        {
+            return Get(version, agent, community, new List<Variable>() { variable })[0];
+        }
+        /// <summary>
+        /// Gets a variable bind.
+        /// </summary>
+        /// <param name="agent">Agent address</param>
+        /// <param name="community">Community name</param>
+        /// <param name="variable">Variable bind</param>
+        /// <returns></returns>
+        public Variable Get(IPAddress agent, string community, Variable variable)
+        {
+            return Get(_version, agent, community, variable);
+        }
+        /// <summary>
+        /// Gets a list of variable binds.
+        /// </summary>
+        /// <param name="agent">Agent address</param>
+        /// <param name="community">Community name</param>
+        /// <param name="variables">Variable binds</param>
+        /// <returns></returns>        
+        public IList<Variable> Get(IPAddress agent, string community, IList<Variable> variables)
+        {
+            return Get(_version, agent, community, variables);
+        }
         /// <summary>
 		/// Sets a list of variable binds.
 		/// </summary>
@@ -81,73 +115,130 @@ namespace Lextm.SharpSnmpLib
             	message.Send(_timeout);
             }
         }
+
         /// <summary>
-		/// Gets a variable bind.
-		/// </summary>
-		/// <param name="version">Protocol version</param>
-		/// <param name="agent">Agent address</param>
-		/// <param name="community">Community name</param>
-		/// <param name="variable">Variable bind</param>
-		/// <returns></returns>
-        public Variable Get(VersionCode version, IPAddress agent, string community, Variable variable)
-        {
-       		return Get(version, agent, community, new List<Variable>() {variable})[0];
-        }
-        /// <summary>
-		/// Sets a variable bind.
-		/// </summary>
-		/// <param name="version">Protocol version</param>
-		/// <param name="agent">Agent address</param>
-		/// <param name="community">Community name</param>
-		/// <param name="variable">Variable bind</param>
-		/// <returns></returns>
+        /// Sets a variable bind.
+        /// </summary>
+        /// <param name="version">Protocol version</param>
+        /// <param name="agent">Agent address</param>
+        /// <param name="community">Community name</param>
+        /// <param name="variable">Variable bind</param>
+        /// <returns></returns>
         public void Set(VersionCode version, IPAddress agent, string community, Variable variable)
         {
-       		Set(version, agent, community, new List<Variable>() {variable});
+            Set(version, agent, community, new List<Variable>() { variable });
         }
-		/// <summary>
-		/// Gets a variable bind.
-		/// </summary>
-		/// <param name="agent">Agent address</param>
-		/// <param name="community">Community name</param>
-		/// <param name="variable">Variable bind</param>
-		/// <returns></returns>
-        public Variable Get(IPAddress agent, string community, Variable variable)
-        {
-        	return Get(_version, agent, community, variable);
-        }
-		/// <summary>
-		/// Sets a variable bind.
-		/// </summary>
-		/// <param name="agent">Agent address</param>
-		/// <param name="community">Community name</param>
-		/// <param name="variable">Variable bind</param>
-		/// <returns></returns>        
+
+        /// <summary>
+        /// Sets a variable bind.
+        /// </summary>
+        /// <param name="agent">Agent address</param>
+        /// <param name="community">Community name</param>
+        /// <param name="variable">Variable bind</param>
+        /// <returns></returns>        
         public void Set(IPAddress agent, string community, Variable variable)
         {
             Set(_version, agent, community, variable);
-        }    
-		/// <summary>
-		/// Gets a list of variable binds.
-		/// </summary>
-		/// <param name="agent">Agent address</param>
-		/// <param name="community">Community name</param>
-		/// <param name="variables">Variable binds</param>
-		/// <returns></returns>        
-        public IList<Variable> Get(IPAddress agent, string community, IList<Variable> variables)
-        {
-        	return Get(_version, agent, community, variables);
         }
-		/// <summary>
-		/// Sets a list of variable binds.
-		/// </summary>
-		/// <param name="agent">Agent address</param>
-		/// <param name="community">Community name</param>
-		/// <param name="variables">Variable binds</param>
-		/// <returns></returns>        
+
+        /// <summary>
+        /// Sets a list of variable binds.
+        /// </summary>
+        /// <param name="agent">Agent address</param>
+        /// <param name="community">Community name</param>
+        /// <param name="variables">Variable binds</param>
+        /// <returns></returns>        
         public void Set(IPAddress agent, string community, IList<Variable> variables)
         {
-        	Set(_version, agent, community, variables);
+            Set(_version, agent, community, variables);
+        }
+        /// <summary>
+        /// Gets a table of variables.
+        /// </summary>
+        /// <param name="version">Protocol version</param>
+        /// <param name="agent">Agent address</param>
+        /// <param name="community">Community name</param>
+        /// <param name="table">Table OID</param>
+        /// <returns></returns>
+        public Variable[,] GetTable(VersionCode version, IPAddress agent, string community, ObjectIdentifier table)
+        {
+            if (version != VersionCode.V1)
+            {
+                throw new ArgumentException("only SNMP v1 is supported");
+            }
+            IList<Variable> list = new List<Variable>();
+            Variable seed = null;
+            Variable next = new Variable(table);//1.3.6.1.2.1.2.2
+            int rows = 0;
+            do
+            {
+                seed = next;
+                if (seed.Id.ToString().StartsWith(table + ".1.", StringComparison.Ordinal))
+                {
+                    list.Add(seed);
+                    if (seed.Id.ToString().StartsWith(table + ".1.1.", StringComparison.Ordinal))
+                    {
+                        rows++;
+                    }
+                }
+                else
+                {
+                    break;
+                }
+            }
+            while (HasNext(version, agent, community, seed, _timeout, out next));
+            if (rows == 0)
+            {
+                return new Variable[0, 0];
+            }
+            int cols = list.Count / rows;
+            int k = 0;
+            Variable[,] result = new Variable[rows, cols];
+            for (int j = 0; j < cols; j++)
+            {
+                for (int i = 0; i < rows; i++)
+                {
+                    result[i, j] = list[k];
+                    k++;
+                }
+            }
+            return result;
+        }
+        /// <summary>
+        /// Gets a table of variables.
+        /// </summary>
+        /// <param name="version">Protocol version</param>
+        /// <param name="agent">Agent address</param>
+        /// <param name="community">Community name</param>
+        /// <param name="table">Table OID</param>
+        /// <returns></returns>
+        [CLSCompliant(false)]
+        public Variable[,] GetTable(VersionCode version, IPAddress agent, string community, uint[] table)
+        {
+            return GetTable(version, agent, community, new ObjectIdentifier(table));
+        }
+        /// <summary>
+        /// Gets a table of variables.
+        /// </summary>
+        /// <param name="agent">Agent address</param>
+        /// <param name="community">Community name</param>
+        /// <param name="table">Table OID</param>
+        /// <returns></returns>
+        public Variable[,] GetTable(IPAddress agent, string community, ObjectIdentifier table)
+        {
+            return GetTable(_version, agent, community, table);
+        }
+        /// <summary>
+        /// Gets a table of variables.
+        /// </summary>
+        /// <param name="agent">Agent address</param>
+        /// <param name="community">Community name</param>
+        /// <param name="table">Table OID</param>
+        /// <returns></returns>
+        [CLSCompliant(false)]
+        public Variable[,] GetTable(IPAddress agent, string community, uint[] table)
+        {
+            return GetTable(agent, community, new ObjectIdentifier(table));
         }
         /// <summary>
         /// Starts trap listener.
@@ -186,6 +277,14 @@ namespace Lextm.SharpSnmpLib
                 _timeout = value;
             }
         }
+        /// <summary>
+        /// Returns a <see cref="String"/> that represents this <see cref="Manager"/>.
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return "SNMP manager: timeout: " + Timeout + "; version: " + DefaultVersion + "; " + trapListener;
+        }
 
         private void TrapListener_TrapReceived(object sender, TrapReceivedEventArgs e)
         {
@@ -193,6 +292,28 @@ namespace Lextm.SharpSnmpLib
             {
                 TrapReceived(this, e);
             }
+        }
+
+        static bool HasNext(VersionCode version, IPAddress agent, string community, Variable seed, int timeout, out Variable next)
+        {
+            bool result;
+            try
+            {
+                GetNextRequestMessage message = new GetNextRequestMessage(version,
+                                                                          agent,
+                                                                          community,
+                                                                          new List<Variable>(1) {
+				                                                          	seed});
+
+                next = message.Send(timeout)[0];
+                result = true;
+            }
+            catch (SharpErrorException)
+            {
+                next = null;
+                result = false;
+            }
+            return result;
         }
                
         private void InitializeComponent()

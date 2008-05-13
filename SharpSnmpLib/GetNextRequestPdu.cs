@@ -1,4 +1,12 @@
-﻿using System;
+/*
+ * Created by SharpDevelop.
+ * User: lextm
+ * Date: 2008/5/11
+ * Time: 12:35
+ * 
+ * To change this template use Tools | Options | Coding | Edit Standard Headers.
+ */
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -7,9 +15,9 @@ using System.Text;
 namespace Lextm.SharpSnmpLib
 {
     /// <summary>
-    /// GET request PDU.
+    /// GETNEXT request PDU.
     /// </summary>
-    public class GetRequestPdu: ISnmpPdu
+    public class GetNextRequestPdu: ISnmpPdu
     {
         private Integer32 _errorStatus;
         private Integer32 _errorIndex;
@@ -19,15 +27,15 @@ namespace Lextm.SharpSnmpLib
         private SnmpArray _varbindSection;
         private byte[] _bytes;        
         /// <summary>
-        /// Creates a <see cref="GetRequestPdu"/> with all contents.
+        /// Creates a <see cref="GetNextRequestPdu"/> with all contents.
         /// </summary>
         /// <param name="errorStatus">Error status</param>
         /// <param name="errorIndex">Error index</param>
         /// <param name="variables">Variables</param>
-    	public GetRequestPdu(ErrorCode errorStatus, int errorIndex, IList<Variable> variables) 
+    	public GetNextRequestPdu(ErrorCode errorStatus, int errorIndex, IList<Variable> variables) 
     		: this(new Integer32((int)errorStatus), new Integer32(errorIndex), variables) {}
     	
-        GetRequestPdu(Integer32 errorStatus, Integer32 errorIndex, IList<Variable> variables)
+        GetNextRequestPdu(Integer32 errorStatus, Integer32 errorIndex, IList<Variable> variables)
         {
             _seq = PduCounter.NextCount;                      
             _errorStatus = errorStatus; 
@@ -37,10 +45,10 @@ namespace Lextm.SharpSnmpLib
             _raw = ByteTool.ParseItems(_seq, _errorStatus, _errorIndex, _varbindSection);
         }
         /// <summary>
-        /// Creates a <see cref="GetRequestPdu"/> with raw bytes.
+        /// Creates a <see cref="GetNextRequestPdu"/> with raw bytes.
         /// </summary>
         /// <param name="raw">Raw bytes</param>
-        public GetRequestPdu(byte[] raw)
+        public GetNextRequestPdu(byte[] raw)
         {
         	_raw = raw;
 			MemoryStream m = new MemoryStream(raw);
@@ -80,7 +88,7 @@ namespace Lextm.SharpSnmpLib
         {
             Integer32 ver = new Integer32((int)version);
             OctetString comm = new OctetString(community);
-            GetRequestPdu pdu = this;
+            GetNextRequestPdu pdu = this;
             SnmpArray array = new SnmpArray(ver, comm, pdu);
             return array;
         }
@@ -93,7 +101,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         public SnmpType TypeCode
         {
-            get { return SnmpType.GetRequestPDU; }
+            get { return SnmpType.GetNextRequestPDU; }
         }
 
 
@@ -115,16 +123,16 @@ namespace Lextm.SharpSnmpLib
         }
 
         #endregion
-        
         /// <summary>
-        /// Returns a <see cref="String"/> that represents this <see cref="GetRequestPdu"/>.
+        /// Returns a <see cref="String"/> that represents this <see cref="GetNextRequestPdu"/>.
         /// </summary>
         /// <returns></returns>
         public override string ToString()
         {
             return string.Format(CultureInfo.InvariantCulture,
-                "GET request PDU: seq: {0}; status: {1}; index: {2}; variable count: {3}",
+                "GET NEXT request PDU: seq: {0}; status: {1}; index: {2}; variable count: {3}",
                 _seq, _errorStatus, _errorIndex, _variables.Count);
         }
     }
 }
+

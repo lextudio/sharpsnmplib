@@ -34,5 +34,13 @@ namespace Lextm.SharpSnmpLib
 	            return _trap;
 	        }
 	    }
+        /// <summary>
+        /// Returns a <see cref="String"/> that represents this <see cref="TrapReceivedEventArgs"/>
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return "Trap received event args: trap message: " + _trap;
+        }
 	}
 }

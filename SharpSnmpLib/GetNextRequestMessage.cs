@@ -1,4 +1,13 @@
-﻿using System;
+/*
+ * Created by SharpDevelop.
+ * User: lextm
+ * Date: 2008/5/11
+ * Time: 12:33
+ * 
+ * To change this template use Tools | Options | Coding | Edit Standard Headers.
+ */
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
@@ -8,9 +17,9 @@ using System.Text;
 namespace Lextm.SharpSnmpLib
 {
 	/// <summary>
-	/// GET request message.
+	/// GETNEXT request message.
 	/// </summary>
-	public class GetRequestMessage: ISnmpMessage, IDisposable
+	public class GetNextRequestMessage: ISnmpMessage, IDisposable
 	{
 		VersionCode _version;
 		IList<Variable> _variables;
@@ -21,19 +30,19 @@ namespace Lextm.SharpSnmpLib
 		ISnmpPdu _pdu;
 		int _sequenceNumber;
 		/// <summary>
-		/// Creates a <see cref="GetRequestMessage"/> with all contents.
+		/// Creates a <see cref="GetNextRequestMessage"/> with all contents.
 		/// </summary>
 		/// <param name="version">Protocol version</param>
 		/// <param name="agent">Agent address</param>
 		/// <param name="community">Community name</param>
 		/// <param name="variables">Variables</param>
-		public GetRequestMessage(VersionCode version, IPAddress agent, string community, IList<Variable> variables)
+		public GetNextRequestMessage(VersionCode version, IPAddress agent, string community, IList<Variable> variables)
 		{
 			_version = version;
 			_agent = agent;
 			_community = community;
 			_variables = variables;
-			GetRequestPdu pdu = new GetRequestPdu(
+			GetNextRequestPdu pdu = new GetNextRequestPdu(
 				ErrorCode.NoError,
 				0,
 				_variables);
@@ -41,10 +50,10 @@ namespace Lextm.SharpSnmpLib
 			_bytes = pdu.ToMessageBody(_version, _community).ToBytes();
 		}
 		/// <summary>
-		/// Creates a <see cref="GetRequestMessage"/> with a specific <see cref="SnmpArray"/>.
+		/// Creates a <see cref="GetNextRequestMessage"/> with a specific <see cref="SnmpArray"/>.
 		/// </summary>
 		/// <param name="body">Message body</param>
-		public GetRequestMessage(SnmpArray body)
+		public GetNextRequestMessage(SnmpArray body)
 		{
 			if (body == null)
 			{
@@ -75,7 +84,7 @@ namespace Lextm.SharpSnmpLib
 			}
 		}
 		/// <summary>
-		/// Sends this <see cref="GetRequestMessage"/> and handles the response from agent.
+		/// Sends this <see cref="GetNextRequestMessage"/> and handles the response from agent.
 		/// </summary>
 		/// <param name="timeout">Timeout</param>
 		/// <returns></returns>
@@ -154,14 +163,14 @@ namespace Lextm.SharpSnmpLib
 		
 		private bool _disposed;
 		/// <summary>
-		/// Finalizer of <see cref="GetRequestMessage"/>.
+		/// Finalizer of <see cref="GetNextRequestMessage"/>.
 		/// </summary>
-		~GetRequestMessage()
+		~GetNextRequestMessage()
 		{
 			Dispose(false);
 		}
 		/// <summary>
-		/// Releases all resources used by the <see cref="GetRequestMessage"/>.
+		/// Releases all resources used by the <see cref="GetNextRequestMessage"/>.
 		/// </summary>
 		public void Dispose()
 		{
@@ -169,7 +178,7 @@ namespace Lextm.SharpSnmpLib
 			GC.SuppressFinalize(this);
 		}
 		/// <summary>
-		/// Disposes of the resources (other than memory) used by the <see cref="GetRequestMessage"/>.
+		/// Disposes of the resources (other than memory) used by the <see cref="GetNextRequestMessage"/>.
 		/// </summary>
 		/// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.
 		/// </param>
@@ -181,16 +190,15 @@ namespace Lextm.SharpSnmpLib
 			if (disposing) {
 				(udp as IDisposable).Dispose();
 			}
-			_disposed = true;
-		}
-		
+			_disposed = true;			
+		}		        
 		/// <summary>
-        /// Returns a <see cref="String"/> that represents this <see cref="GetRequestMessage"/>.
+        /// Returns a <see cref="String"/> that represents this <see cref="GetNextRequestMessage"/>.
         /// </summary>
         /// <returns></returns>
         public override string ToString()
         {
-            return "GET request message: version: " + _version + "; " + _community + "; " + _pdu;
+            return "GET NEXT request message: version: " + _version + "; " + _community + "; " + _pdu;
         }
 	}
 }

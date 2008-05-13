@@ -43,5 +43,13 @@ namespace Lextm.SharpSnmpLib
 		/// <param name="info">Info</param>
 		/// <param name="context">Context</param>
         protected SharpSnmpException(SerializationInfo info, StreamingContext context) : base(info, context) { }
+        /// <summary>
+        /// Returns a <see cref="String"/> that represents this <see cref="SharpSnmpException"/>.
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return "SharpSnmpException: " + Message;
+        }
 	}
 }

@@ -63,15 +63,25 @@ namespace Lextm.SharpSnmpLib
 	            MemoryStream m = new MemoryStream(bytes, false);
 	        ISnmpMessage message = MessageFactory.ParseMessage(m);
 	        if (message.TypeCode != SnmpType.GetResponsePDU) {
-                SharpOperationException ex = new SharpOperationException("wrong response");
+                SharpOperationException ex = new SharpOperationException("wrong response type");
                 ex.Agent = _agent;
                 throw ex;
 	        }
-	        if (((GetResponseMessage)message).SequenceNumber != SequenceNumber) {
-                SharpOperationException ex = new SharpOperationException("wrong response");
+	        GetResponseMessage response = (GetResponseMessage)message;
+	        if (response.SequenceNumber != SequenceNumber) {
+                SharpOperationException ex = new SharpOperationException("wrong response sequence");
                 ex.Agent = _agent;
                 throw ex;
-	        }
+	        }	        
+            if (response.ErrorStatus != ErrorCode.NoError)
+            {
+                SharpErrorException ex = new SharpErrorException("error in response");
+                ex.Agent = _agent;
+                ex.Status = response.ErrorStatus;
+                ex.Index = response.ErrorIndex;
+                ex.Id = response.Variables[response.ErrorIndex - 1].Id;
+                throw ex;
+            }
 		}
 		/// <summary>
 		/// Creates a <see cref="SetRequestMessage"/> with a specific <see cref="SnmpArray"/>.
@@ -96,6 +106,14 @@ namespace Lextm.SharpSnmpLib
             _version = (VersionCode)((Integer32)body.Items[0]).ToInt32();
             SetRequestPdu pdu = (SetRequestPdu)_pdu;
             _variables = pdu.Variables;
+        }
+        /// <summary>
+        /// Returns a <see cref="String"/> that represents this <see cref="SetRequestMessage"/>.
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return "SET request message: version: " + _version + "; " + _community + "; " + _pdu;
         }
 		
 		internal int SequenceNumber

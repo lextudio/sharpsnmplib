@@ -55,6 +55,8 @@
     <Compile Include="ErrorCode.cs" />
     <Compile Include="Gauge32.cs" />
     <Compile Include="GeneralString.cs" />
+    <Compile Include="GetNextRequestMessage.cs" />
+    <Compile Include="GetNextRequestPdu.cs" />
     <Compile Include="GetRequestMessage.cs" />
     <Compile Include="GetRequestPdu.cs" />
     <Compile Include="GetResponseMessage.cs" />
@@ -114,6 +116,7 @@
     <Compile Include="Variable.cs" />
     <Compile Include="VersionCode.cs" />
     <None Include="license.txt" />
+    <None Include="Microsoft.VersionNumber.targets" />
     <None Include="Resources\get.dat" />
     <None Include="Resources\getresponse.dat" />
     <None Include="Resources\onevarbind.dat" />

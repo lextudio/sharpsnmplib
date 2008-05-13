@@ -140,5 +140,13 @@ namespace Lextm.SharpSnmpLib
 			return !(lhs.Equals(rhs)); // use operator == and negate result
 		}
 		#endregion
+        /// <summary>
+        /// Returns a <see cref="String"/> that represents this <see cref="Integer64"/>.
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return ToInt64().ToString();
+        }
 	}
 }

@@ -50,6 +50,14 @@ namespace Lextm.SharpSnmpLib
 			}
 		}
 		/// <summary>
+		/// Returns a <see cref="String"/> that represents this <see cref="Bool"/>.
+		/// </summary>
+		/// <returns></returns>
+		public override string ToString()
+		{
+			return ToBoolean().ToString();
+		}
+		/// <summary>
 		/// Converts to byte format.
 		/// </summary>
 		/// <returns></returns>

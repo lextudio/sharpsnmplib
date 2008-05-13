@@ -64,5 +64,13 @@ namespace Lextm.SharpSnmpLib
             base.GetObjectData(info, context);
             info.AddValue("Timeout", _timeout);
         }
+        /// <summary>
+        /// Returns a <see cref="String"/> that represents this <see cref="SharpTimeoutException"/>.
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return "SharpTimeoutException: timeout: " + _timeout;
+        }
     }
 }

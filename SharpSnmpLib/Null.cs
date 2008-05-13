@@ -93,9 +93,17 @@ namespace Lextm.SharpSnmpLib
         /// <param name="right">Right <see cref="Null"/> object</param>
         /// <returns>
         /// Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
-		public static bool operator != (Null left, Null right)
-		{
-			return false;
-		}
+        public static bool operator !=(Null left, Null right)
+        {
+            return false;
+        }
+        /// <summary>
+        /// Returns a <see cref="String"/> that represents this <see cref="Null"/>.
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return "Null";
+        }
 	}
 }

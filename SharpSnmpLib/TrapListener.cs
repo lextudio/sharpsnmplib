@@ -135,5 +135,13 @@ namespace Lextm.SharpSnmpLib
 				}
 			}
 		}
+        /// <summary>
+        /// Returns a <see cref="String"/> that represents a <see cref="TrapListener"/>.
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return "Trap listener: port: " + _port;
+        }
 	}
 }

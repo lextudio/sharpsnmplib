@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Globalization;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -163,5 +164,13 @@ namespace Lextm.SharpSnmpLib
 		{
 			return !(left == right);
 		}
+        /// <summary>
+        /// Returns a <see cref="String"/> that represents this <see cref="TimeTicks"/>.
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return ToInt32().ToString(CultureInfo.InvariantCulture);
+        }
     }
 }

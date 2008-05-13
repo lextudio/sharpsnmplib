@@ -108,5 +108,13 @@ namespace Lextm.SharpSnmpLib
 		{
 			throw new NotImplementedException();
 		}
+		/// <summary>
+		/// Returns a <see cref="String"/> that represents this <see cref="GetResponseMessage"/>.
+		/// </summary>
+		/// <returns></returns>
+		public override string ToString()
+		{
+			return "GET response message: " + _pdu;
+		}
 	}
 }

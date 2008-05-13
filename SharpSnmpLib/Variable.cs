@@ -125,5 +125,13 @@ namespace Lextm.SharpSnmpLib
             SnmpArray result = new SnmpArray(varbinds);
             return result;
         }
+        /// <summary>
+        /// Returns a <see cref="String"/> that represents this <see cref="Variable"/>.
+        /// </summary>
+        /// <returns></returns>
+		public override string ToString()
+		{
+			return "Variable: Id: " + Id + "; Data: " + Data;
+		}
     }
 }

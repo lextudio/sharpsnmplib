@@ -10,6 +10,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Globalization;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -94,5 +95,15 @@ namespace Lextm.SharpSnmpLib
 		{
 			throw new NotImplementedException();
 		}
+        /// <summary>
+        /// Returns a <see cref="String"/> that represents this <see cref="GetResponsePdu"/>/
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return string.Format(CultureInfo.InvariantCulture,
+                "GET response PDU: seq: {0}; status: {1}; index: {2}; variable count: {3}",
+                _sequenceNumber, _errorStatus, _errorIndex, _variables.Count);
+        }
 	}
 }

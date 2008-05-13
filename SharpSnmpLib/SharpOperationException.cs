@@ -78,5 +78,13 @@ namespace Lextm.SharpSnmpLib
                 return Message + ". Agent: " + Agent;
             }
         }
+        /// <summary>
+        /// Returns a <see cref="String"/> that represents this <see cref="SharpOperationException"/>.
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return "SharpOperationException: " + Details;
+        }
 	}
 }

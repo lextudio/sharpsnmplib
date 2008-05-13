@@ -35,6 +35,8 @@
         <Type Name="Gauge32" Analyze="True" AnalyzeAllChildren="True" />
         <Type Name="GeneralString" Analyze="True" AnalyzeAllChildren="True" />
         <Type Name="GenericCode" Analyze="True" AnalyzeAllChildren="True" />
+        <Type Name="GetNextRequestMessage" Analyze="True" AnalyzeAllChildren="True" />
+        <Type Name="GetNextRequestPdu" Analyze="True" AnalyzeAllChildren="True" />
         <Type Name="GetRequestMessage" Analyze="True" AnalyzeAllChildren="True" />
         <Type Name="GetRequestPdu" Analyze="True" AnalyzeAllChildren="True" />
         <Type Name="GetResponseMessage" Analyze="True" AnalyzeAllChildren="True" />
@@ -45,20 +47,61 @@
         <Type Name="ISnmpData" Analyze="True" AnalyzeAllChildren="True" />
         <Type Name="ISnmpMessage" Analyze="True" AnalyzeAllChildren="True" />
         <Type Name="ISnmpPdu" Analyze="True" AnalyzeAllChildren="True" />
-        <Type Name="Manager" Analyze="True" AnalyzeAllChildren="True" />
+        <Type Name="Manager" Analyze="True" AnalyzeAllChildren="False">
+         <Members AnalyzeAllChildren="False">
+          <Member Name="#.ctor()" Analyze="True" />
+          <Member Name="#_timeout" Analyze="True" />
+          <Member Name="#_version" Analyze="True" />
+          <Member Name="#DefaultVersion" Analyze="True" AnalyzeAllChildren="True" />
+          <Member Name="#Get(Lextm.SharpSnmpLib.VersionCode,System.Net.IPAddress,System.String,Lextm.SharpSnmpLib.Variable)" Analyze="True" />
+          <Member Name="#Get(Lextm.SharpSnmpLib.VersionCode,System.Net.IPAddress,System.String,System.Collections.Generic.IList`1&lt;Lextm.SharpSnmpLib.Variable&gt;)" Analyze="True" />
+          <Member Name="#Get(System.Net.IPAddress,System.String,Lextm.SharpSnmpLib.Variable)" Analyze="True" />
+          <Member Name="#Get(System.Net.IPAddress,System.String,System.Collections.Generic.IList`1&lt;Lextm.SharpSnmpLib.Variable&gt;)" Analyze="True" />
+          <Member Name="#GetTable(Lextm.SharpSnmpLib.VersionCode,System.Net.IPAddress,System.String,Lextm.SharpSnmpLib.ObjectIdentifier)" Analyze="True" />
+          <Member Name="#GetTable(Lextm.SharpSnmpLib.VersionCode,System.Net.IPAddress,System.String,System.UInt32[])" Analyze="True" />
+          <Member Name="#GetTable(System.Net.IPAddress,System.String,Lextm.SharpSnmpLib.ObjectIdentifier)" Analyze="True" />
+          <Member Name="#GetTable(System.Net.IPAddress,System.String,System.UInt32[])" Analyze="True" />
+          <Member Name="#InitializeComponent()" Analyze="True" />
+          <Member Name="#Set(Lextm.SharpSnmpLib.VersionCode,System.Net.IPAddress,System.String,Lextm.SharpSnmpLib.Variable)" Analyze="True" />
+          <Member Name="#Set(Lextm.SharpSnmpLib.VersionCode,System.Net.IPAddress,System.String,System.Collections.Generic.IList`1&lt;Lextm.SharpSnmpLib.Variable&gt;)" Analyze="True" />
+          <Member Name="#Set(System.Net.IPAddress,System.String,Lextm.SharpSnmpLib.Variable)" Analyze="True" />
+          <Member Name="#Set(System.Net.IPAddress,System.String,System.Collections.Generic.IList`1&lt;Lextm.SharpSnmpLib.Variable&gt;)" Analyze="True" />
+          <Member Name="#Start()" Analyze="True" />
+          <Member Name="#Start(System.Int32)" Analyze="True" />
+          <Member Name="#Stop()" Analyze="True" />
+          <Member Name="#Timeout" Analyze="True" AnalyzeAllChildren="True" />
+          <Member Name="#trapListener" Analyze="True" />
+          <Member Name="#TrapListener_TrapReceived(System.Object,Lextm.SharpSnmpLib.TrapReceivedEventArgs)" Analyze="True" />
+          <Member Name="#TrapReceived" Analyze="True" />
+          <Member Name="#TrapReceived" Kind="Event" Analyze="True" AnalyzeAllChildren="True" />
+         </Members>
+        </Type>
         <Type Name="MessageFactory" Analyze="True" AnalyzeAllChildren="True" />
         <Type Name="Null" Analyze="True" AnalyzeAllChildren="True" />
         <Type Name="ObjectIdentifier" Analyze="True" AnalyzeAllChildren="True" />
         <Type Name="OctetString" Analyze="True" AnalyzeAllChildren="True" />
         <Type Name="PduCounter" Analyze="True" AnalyzeAllChildren="True" />
         <Type Name="Real" Analyze="True" AnalyzeAllChildren="True" />
+        <Type Name="Resource" Analyze="True" AnalyzeAllChildren="True" />
         <Type Name="SetRequestMessage" Analyze="True" AnalyzeAllChildren="True" />
         <Type Name="SetRequestPdu" Analyze="True" AnalyzeAllChildren="True" />
         <Type Name="SharpErrorException" Analyze="True" AnalyzeAllChildren="True" />
         <Type Name="SharpOperationException" Analyze="True" AnalyzeAllChildren="True" />
         <Type Name="SharpSnmpException" Analyze="True" AnalyzeAllChildren="True" />
         <Type Name="SharpTimeoutException" Analyze="True" AnalyzeAllChildren="True" />
-        <Type Name="SnmpArray" Analyze="True" AnalyzeAllChildren="True" />
+        <Type Name="SnmpArray" Analyze="True" AnalyzeAllChildren="False">
+         <Members AnalyzeAllChildren="False">
+          <Member Name="#.ctor(Lextm.SharpSnmpLib.ISnmpData[])" Analyze="True" />
+          <Member Name="#.ctor(System.Byte[])" Analyze="True" />
+          <Member Name="#.ctor(System.Collections.IEnumerable)" Analyze="True" />
+          <Member Name="#_bytes" Analyze="True" />
+          <Member Name="#_list" Analyze="True" />
+          <Member Name="#_raw" Analyze="True" />
+          <Member Name="#Items" Analyze="True" AnalyzeAllChildren="True" />
+          <Member Name="#ToBytes()" Analyze="True" />
+          <Member Name="#TypeCode" Analyze="True" AnalyzeAllChildren="True" />
+         </Members>
+        </Type>
         <Type Name="SnmpDataFactory" Analyze="True" AnalyzeAllChildren="True" />
         <Type Name="SnmpType" Analyze="True" AnalyzeAllChildren="True" />
         <Type Name="TimeTicks" Analyze="True" AnalyzeAllChildren="True" />
@@ -112,6 +155,60 @@
            </Member>
           </Members>
          </Type>
+         <Type Name="Manager">
+          <Members>
+           <Member Name="#GetTable(Lextm.SharpSnmpLib.VersionCode,System.Net.IPAddress,System.String,Lextm.SharpSnmpLib.ObjectIdentifier)">
+            <Messages>
+             <Message Id="Body" TypeName="PreferJaggedArraysOverMultidimensional" Category="Microsoft.Performance" CheckId="CA1814" Created="2008-05-12 12:14:45Z">
+              <Issue Name="Body">
+               <Item>'Manager.GetTable(VersionCode, IPAddress, string, ObjectIdentifier)'</Item>
+               <Item>'Variable[,]'</Item>
+              </Issue>
+              <Issue Name="Body">
+               <Item>'Manager.GetTable(VersionCode, IPAddress, string, ObjectIdentifier)'</Item>
+               <Item>'Variable[,]'</Item>
+              </Issue>
+             </Message>
+             <Message Id="Return" TypeName="PreferJaggedArraysOverMultidimensional" Category="Microsoft.Performance" CheckId="CA1814" Created="2008-05-12 12:14:45Z">
+              <Issue Name="Return">
+               <Item>'Manager.GetTable(VersionCode, IPAddress, string, ObjectIdentifier)'</Item>
+               <Item>'Variable[,]'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetTable(Lextm.SharpSnmpLib.VersionCode,System.Net.IPAddress,System.String,System.UInt32[])">
+            <Messages>
+             <Message Id="Return" TypeName="PreferJaggedArraysOverMultidimensional" Category="Microsoft.Performance" CheckId="CA1814" Created="2008-05-12 12:14:45Z">
+              <Issue Name="Return">
+               <Item>'Manager.GetTable(VersionCode, IPAddress, string, uint[])'</Item>
+               <Item>'Variable[,]'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetTable(System.Net.IPAddress,System.String,Lextm.SharpSnmpLib.ObjectIdentifier)">
+            <Messages>
+             <Message Id="Return" TypeName="PreferJaggedArraysOverMultidimensional" Category="Microsoft.Performance" CheckId="CA1814" Created="2008-05-12 12:14:45Z">
+              <Issue Name="Return">
+               <Item>'Manager.GetTable(IPAddress, string, ObjectIdentifier)'</Item>
+               <Item>'Variable[,]'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetTable(System.Net.IPAddress,System.String,System.UInt32[])">
+            <Messages>
+             <Message Id="Return" TypeName="PreferJaggedArraysOverMultidimensional" Category="Microsoft.Performance" CheckId="CA1814" Created="2008-05-12 12:14:45Z">
+              <Issue Name="Return">
+               <Item>'Manager.GetTable(IPAddress, string, uint[])'</Item>
+               <Item>'Variable[,]'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
          <Type Name="Null">
           <Members>
            <Member Name="#op_Equality(Lextm.SharpSnmpLib.Null,Lextm.SharpSnmpLib.Null)">
@@ -152,7 +249,7 @@
           <Members>
            <Member Name="#BMPString">
             <Messages>
-             <Message Id="BMP" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-10 09:21:46Z">
+             <Message Id="BMP" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-05-10 09:21:46Z">
               <Issue Name="Member">
                <Item>BMP</Item>
                <Item>'SnmpType.BMPString'</Item>
@@ -163,7 +260,7 @@
            </Member>
            <Member Name="#EmbeddedPDV">
             <Messages>
-             <Message Id="PDV" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-10 09:21:46Z">
+             <Message Id="PDV" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-05-10 09:21:46Z">
               <Issue Name="Member">
                <Item>PDV</Item>
                <Item>'SnmpType.EmbeddedPDV'</Item>
@@ -174,7 +271,7 @@
            </Member>
            <Member Name="#GetNextRequestPDU">
             <Messages>
-             <Message Id="PDU" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-10 09:21:46Z">
+             <Message Id="PDU" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-05-10 09:21:46Z">
               <Issue Name="Member">
                <Item>PDU</Item>
                <Item>'SnmpType.GetNextRequestPDU'</Item>
@@ -185,7 +282,7 @@
            </Member>
            <Member Name="#GetRequestPDU">
             <Messages>
-             <Message Id="PDU" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-10 09:21:46Z">
+             <Message Id="PDU" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-05-10 09:21:46Z">
               <Issue Name="Member">
                <Item>PDU</Item>
                <Item>'SnmpType.GetRequestPDU'</Item>
@@ -196,7 +293,7 @@
            </Member>
            <Member Name="#GetResponsePDU">
             <Messages>
-             <Message Id="PDU" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-10 09:21:46Z">
+             <Message Id="PDU" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-05-10 09:21:46Z">
               <Issue Name="Member">
                <Item>PDU</Item>
                <Item>'SnmpType.GetResponsePDU'</Item>
@@ -207,7 +304,7 @@
            </Member>
            <Member Name="#RelativeOID">
             <Messages>
-             <Message Id="OID" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-10 09:21:46Z">
+             <Message Id="OID" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-05-10 09:21:46Z">
               <Issue Name="Member">
                <Item>OID</Item>
                <Item>'SnmpType.RelativeOID'</Item>
@@ -218,7 +315,7 @@
            </Member>
            <Member Name="#Reserved1">
             <Messages>
-             <Message TypeName="DoNotNameEnumValuesReserved" Category="Microsoft.Naming" CheckId="CA1700" Created="2008-05-10 09:21:46Z">
+             <Message TypeName="DoNotNameEnumValuesReserved" Category="Microsoft.Naming" CheckId="CA1700" Status="Excluded" Created="2008-05-10 09:21:46Z">
               <Issue>
                <Item>'SnmpType.Reserved1'</Item>
               </Issue>
@@ -227,7 +324,7 @@
            </Member>
            <Member Name="#Reserved2">
             <Messages>
-             <Message TypeName="DoNotNameEnumValuesReserved" Category="Microsoft.Naming" CheckId="CA1700" Created="2008-05-10 09:21:46Z">
+             <Message TypeName="DoNotNameEnumValuesReserved" Category="Microsoft.Naming" CheckId="CA1700" Status="Excluded" Created="2008-05-10 09:21:46Z">
               <Issue>
                <Item>'SnmpType.Reserved2'</Item>
               </Issue>
@@ -236,7 +333,7 @@
            </Member>
            <Member Name="#SetRequestPDU">
             <Messages>
-             <Message Id="PDU" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-10 09:21:46Z">
+             <Message Id="PDU" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-05-10 09:21:46Z">
               <Issue Name="Member">
                <Item>PDU</Item>
                <Item>'SnmpType.SetRequestPDU'</Item>
@@ -247,7 +344,7 @@
            </Member>
            <Member Name="#TrapPDUv1">
             <Messages>
-             <Message Id="Uv" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-10 09:21:46Z">
+             <Message Id="Uv" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-05-10 09:21:46Z">
               <Issue Name="Member">
                <Item>Uv</Item>
                <Item>'SnmpType.TrapPDUv1'</Item>
@@ -258,7 +355,7 @@
            </Member>
            <Member Name="#TrapPDUv2">
             <Messages>
-             <Message Id="Uv" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-10 09:21:46Z">
+             <Message Id="Uv" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-05-10 09:21:46Z">
               <Issue Name="Member">
                <Item>Uv</Item>
                <Item>'SnmpType.TrapPDUv2'</Item>
@@ -269,7 +366,7 @@
            </Member>
            <Member Name="#UTCTime">
             <Messages>
-             <Message Id="UTC" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-10 09:21:46Z">
+             <Message Id="UTC" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-05-10 09:21:46Z">
               <Issue Name="Member">
                <Item>UTC</Item>
                <Item>'SnmpType.UTCTime'</Item>
@@ -280,7 +377,7 @@
            </Member>
            <Member Name="#UTF8String">
             <Messages>
-             <Message Id="UTF" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-10 09:21:46Z">
+             <Message Id="UTF" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-05-10 09:21:46Z">
               <Issue Name="Member">
                <Item>UTF</Item>
                <Item>'SnmpType.UTF8String'</Item>
@@ -307,6 +404,10 @@
    </Rule>
    <Rule TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709">
     <Resolution Name="Member">Correct the casing of '{0}' in member name {1} by changing it to '{2}'.</Resolution>
+   </Rule>
+   <Rule TypeName="PreferJaggedArraysOverMultidimensional" Category="Microsoft.Performance" CheckId="CA1814">
+    <Resolution Name="Body">{0} uses a multidimensional array of {1}. Replace it with a jagged array if possible.</Resolution>
+    <Resolution Name="Return">{0} returns a multidimensional array of {1}. Replace it with a jagged array if possible.</Resolution>
    </Rule>
    <Rule TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801">
     <Resolution Name="Default">Parameter {0} of {1} is never used. Remove the parameter or use it in the method body.</Resolution>
