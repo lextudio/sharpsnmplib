@@ -17,7 +17,7 @@ namespace Lextm.SharpSnmpLib
 	/// <summary>
 	/// Description of ByteTool.
 	/// </summary>
-	public sealed class ByteTool
+	internal sealed class ByteTool
 	{
 		ByteTool(){	}
 		

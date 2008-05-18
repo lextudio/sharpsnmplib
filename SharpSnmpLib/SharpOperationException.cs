@@ -20,13 +20,15 @@ namespace Lextm.SharpSnmpLib
     [Serializable]
 	public class SharpOperationException: SharpSnmpException
 	{
-		IPAddress _agent;
+		/// <summary>
+		/// Agent address.
+		/// </summary>
+		protected IPAddress agentAddress;
 		/// <summary>
 		/// Agent address.
 		/// </summary>
 		public IPAddress Agent {
-			get { return _agent; }
-            set { _agent = value; }
+			get { return agentAddress; }
 		}
 	    
 		/// <summary>
@@ -55,7 +57,7 @@ namespace Lextm.SharpSnmpLib
             {
                 throw new ArgumentNullException("info");
             }
-            _agent = (IPAddress)info.GetValue("Agent", typeof(IPAddress));
+            agentAddress = (IPAddress)info.GetValue("Agent", typeof(IPAddress));
         }
 		/// <summary>
 		/// Gets object data.
@@ -66,12 +68,12 @@ namespace Lextm.SharpSnmpLib
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);
-            info.AddValue("Agent", _agent);
+            info.AddValue("Agent", agentAddress);
         }
         /// <summary>
         /// Details on operation.
         /// </summary>
-        public virtual string Details
+        public override string Details
         {
             get
             {
@@ -85,6 +87,17 @@ namespace Lextm.SharpSnmpLib
         public override string ToString()
         {
             return "SharpOperationException: " + Details;
+        }
+        /// <summary>
+        /// Creates a <see cref="SharpOperationException"/> with a specific <see cref="IPAddress"/>.
+        /// </summary>
+        /// <param name="message">Message</param>
+        /// <param name="agent">Agent address</param>
+        public static SharpOperationException Create(string message, IPAddress agent)
+        {
+        	SharpOperationException ex = new SharpOperationException(message);
+        	ex.agentAddress = agent;
+        	return ex;
         }
 	}
 }

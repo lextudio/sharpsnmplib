@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Gendarme">
+	<PropertyGroup>
+		<GendarmePath>"%ProgramFiles%\Novell\Gendarme\gendarme.exe"</GendarmePath>
+		<CommandLine>--config "%ProgramFiles%\Novell\Gendarme\rules.xml" --log .\gendarme.log --quiet .\sharpsnmplib.dll</CommandLine>
+		<DebugFolder>.\SharpSnmpLib\Bin\Debug</DebugFolder>
+	</PropertyGroup>
+	<Target Name="Gendarme">
+		<Exec Command="$(GendarmePath) $(CommandLine)" WorkingDirectory="$(DebugFolder)"/> 
+		<Copy SourceFiles="$(DebugFolder)\gendarme.log" DestinationFolder="."/>
+	</Target>
+</Project>

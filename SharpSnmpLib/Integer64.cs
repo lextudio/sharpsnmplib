@@ -9,6 +9,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -146,7 +147,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public override string ToString()
         {
-            return ToInt64().ToString();
+            return ToInt64().ToString(CultureInfo.InvariantCulture);
         }
 	}
 }

@@ -27,7 +27,6 @@ namespace Lextm.SharpSnmpLib
         public int Timeout
         {
             get { return _timeout; }
-            set { _timeout = value; }
         }
 		/// <summary>
 		/// Creates a <see cref="SharpTimeoutException"/> instance.
@@ -71,6 +70,19 @@ namespace Lextm.SharpSnmpLib
         public override string ToString()
         {
             return "SharpTimeoutException: timeout: " + _timeout;
+        }
+        /// <summary>
+        /// Creates a <see cref="SharpTimeoutException"/>.
+        /// </summary>
+        /// <param name="agent">Agent address</param>
+        /// <param name="timeout">Timeout</param>
+        /// <returns></returns>
+        public static SharpTimeoutException Create(IPAddress agent, int timeout)
+        {
+        	SharpTimeoutException ex = new SharpTimeoutException();
+        	ex.agentAddress = agent;
+        	ex._timeout = timeout;
+        	return ex;
         }
     }
 }

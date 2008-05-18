@@ -7,9 +7,9 @@ using System.Text;
 
 namespace Lextm.SharpSnmpLib
 {
-    /// <summary>
-    /// SET request message.
-    /// </summary>
+	/// <summary>
+	/// SET request message.
+	/// </summary>
 	public class SetRequestMessage: ISnmpMessage, IDisposable
 	{
 		UdpClient udp = new UdpClient();
@@ -18,103 +18,95 @@ namespace Lextm.SharpSnmpLib
 		VersionCode _version;
 		IPAddress _agent;
 		string _community;
-        IList<Variable> _variables;
-        int _sequenceNumber;
-        /// <summary>
-        /// Creates a <see cref="SetRequestMessage"/> with all contents.
-        /// </summary>
-        /// <param name="version">Protocol version</param>
-        /// <param name="agent">Agent address</param>
-        /// <param name="community">Community name</param>
-        /// <param name="variables">Variables</param>
+		IList<Variable> _variables;
+		int _sequenceNumber;
+		/// <summary>
+		/// Creates a <see cref="SetRequestMessage"/> with all contents.
+		/// </summary>
+		/// <param name="version">Protocol version</param>
+		/// <param name="agent">Agent address</param>
+		/// <param name="community">Community name</param>
+		/// <param name="variables">Variables</param>
 		public SetRequestMessage(VersionCode version, IPAddress agent, string community, IList<Variable> variables)
 		{
 			_version = version;
 			_agent = agent;
 			_community = community;
-            _variables = variables;
-            SetRequestPdu pdu = new SetRequestPdu(
-                ErrorCode.NoError,
-                0,
-                _variables);
-            _sequenceNumber = pdu.SequenceNumber;
-            _bytes = pdu.ToMessageBody(_version, _community).ToBytes();
-		}	
-        /// <summary>
-        /// Sends this <see cref="SetRequestMessage"/> and handles the response from agent.
-        /// </summary>
-        /// <param name="timeout"></param>
+			_variables = variables;
+			SetRequestPdu pdu = new SetRequestPdu(
+				ErrorCode.NoError,
+				0,
+				_variables);
+			_sequenceNumber = pdu.SequenceNumber;
+			_bytes = pdu.ToMessageBody(_version, _community).ToBytes();
+		}
+		/// <summary>
+		/// Sends this <see cref="SetRequestMessage"/> and handles the response from agent.
+		/// </summary>
+		/// <param name="timeout"></param>
 		public void Send(int timeout)
 		{
 			byte[] bytes = _bytes;
 			IPEndPoint agent = new IPEndPoint(_agent, 161);
 			udp.Send(bytes,bytes.Length,agent);
 			IPEndPoint from = new IPEndPoint(IPAddress.Any,0);
-	            IAsyncResult result = udp.BeginReceive(null, this);
-	            result.AsyncWaitHandle.WaitOne(timeout, false);
-                if (!result.IsCompleted)
-                {
-                    SharpTimeoutException ex = new SharpTimeoutException();
-                    ex.Agent = _agent;
-                    ex.Timeout = timeout;
-                    throw ex;
-                }
-	            bytes = udp.EndReceive(result, ref from);
-	            MemoryStream m = new MemoryStream(bytes, false);
-	        ISnmpMessage message = MessageFactory.ParseMessage(m);
-	        if (message.TypeCode != SnmpType.GetResponsePDU) {
-                SharpOperationException ex = new SharpOperationException("wrong response type");
-                ex.Agent = _agent;
-                throw ex;
-	        }
-	        GetResponseMessage response = (GetResponseMessage)message;
-	        if (response.SequenceNumber != SequenceNumber) {
-                SharpOperationException ex = new SharpOperationException("wrong response sequence");
-                ex.Agent = _agent;
-                throw ex;
-	        }	        
-            if (response.ErrorStatus != ErrorCode.NoError)
-            {
-                SharpErrorException ex = new SharpErrorException("error in response");
-                ex.Agent = _agent;
-                ex.Status = response.ErrorStatus;
-                ex.Index = response.ErrorIndex;
-                ex.Id = response.Variables[response.ErrorIndex - 1].Id;
-                throw ex;
-            }
+			IAsyncResult result = udp.BeginReceive(null, this);
+			result.AsyncWaitHandle.WaitOne(timeout, false);
+			if (!result.IsCompleted)
+			{
+				throw SharpTimeoutException.Create(_agent, timeout);
+			}
+			bytes = udp.EndReceive(result, ref from);
+			MemoryStream m = new MemoryStream(bytes, false);
+			ISnmpMessage message = MessageFactory.ParseMessage(m);
+			if (message.TypeCode != SnmpType.GetResponsePDU) {
+				throw SharpOperationException.Create("wrong response type", _agent);
+			}
+			GetResponseMessage response = (GetResponseMessage)message;
+			if (response.SequenceNumber != SequenceNumber) {
+				throw SharpOperationException.Create("wrong response sequence", _agent);
+			}
+			if (response.ErrorStatus != ErrorCode.NoError)
+			{
+				throw SharpErrorException.Create("error in response",
+				                                 _agent,
+				                                 response.ErrorStatus,
+				                                 response.ErrorIndex,
+				                                 response.Variables[response.ErrorIndex - 1].Id);
+			}
 		}
 		/// <summary>
 		/// Creates a <see cref="SetRequestMessage"/> with a specific <see cref="SnmpArray"/>.
 		/// </summary>
 		/// <param name="body">Message body</param>
 		public SetRequestMessage(SnmpArray body)
-        {
-            if (body == null)
-            {
-                throw new ArgumentNullException("body");
-            }
-            if (body.Items.Count != 3)
-            {
-                throw new ArgumentException("wrong message body");
-            }
-            _pdu = (ISnmpPdu)body.Items[2];
-            if (_pdu.TypeCode != TypeCode)
-            {
-                throw new ArgumentException("wrong message type");
-            }
-            _community = body.Items[1].ToString();
-            _version = (VersionCode)((Integer32)body.Items[0]).ToInt32();
-            SetRequestPdu pdu = (SetRequestPdu)_pdu;
-            _variables = pdu.Variables;
-        }
-        /// <summary>
-        /// Returns a <see cref="String"/> that represents this <see cref="SetRequestMessage"/>.
-        /// </summary>
-        /// <returns></returns>
-        public override string ToString()
-        {
-            return "SET request message: version: " + _version + "; " + _community + "; " + _pdu;
-        }
+		{
+			if (body == null)
+			{
+				throw new ArgumentNullException("body");
+			}
+			if (body.Items.Count != 3)
+			{
+				throw new ArgumentException("wrong message body");
+			}
+			_pdu = (ISnmpPdu)body.Items[2];
+			if (_pdu.TypeCode != TypeCode)
+			{
+				throw new ArgumentException("wrong message type");
+			}
+			_community = body.Items[1].ToString();
+			_version = (VersionCode)((Integer32)body.Items[0]).ToInt32();
+			SetRequestPdu pdu = (SetRequestPdu)_pdu;
+			_variables = pdu.Variables;
+		}
+		/// <summary>
+		/// Returns a <see cref="String"/> that represents this <see cref="SetRequestMessage"/>.
+		/// </summary>
+		/// <returns></returns>
+		public override string ToString()
+		{
+			return "SET request message: version: " + _version + "; " + _community + "; " + _pdu;
+		}
 		
 		internal int SequenceNumber
 		{
@@ -123,16 +115,16 @@ namespace Lextm.SharpSnmpLib
 				return _sequenceNumber;
 			}
 		}
-	    /// <summary>
-	    /// Variables.
-	    /// </summary>
-        public IList<Variable> Variables
-        {
-            get
-            {
-                return _variables;
-            }
-        }
+		/// <summary>
+		/// Variables.
+		/// </summary>
+		public IList<Variable> Variables
+		{
+			get
+			{
+				return _variables;
+			}
+		}
 		/// <summary>
 		/// Converts to byte format.
 		/// </summary>
@@ -141,9 +133,9 @@ namespace Lextm.SharpSnmpLib
 		{
 			return _bytes;
 		}
-        /// <summary>
-        /// PDU.
-        /// </summary>
+		/// <summary>
+		/// PDU.
+		/// </summary>
 		public ISnmpPdu Pdu {
 			get {
 				return _pdu;
@@ -177,7 +169,7 @@ namespace Lextm.SharpSnmpLib
 		/// <summary>
 		/// Disposes of the resources (other than memory) used by the <see cref="SetRequestMessage"/>.
 		/// </summary>
-		/// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources. 
+		/// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.
 		/// </param>
 		protected virtual void Dispose(bool disposing)
 		{
@@ -185,9 +177,9 @@ namespace Lextm.SharpSnmpLib
 				return;
 			}
 			if (disposing) {
-				(udp as IDisposable).Dispose();		
+				(udp as IDisposable).Dispose();
 			}
 			_disposed = true;
-		}		
+		}
 	}
 }

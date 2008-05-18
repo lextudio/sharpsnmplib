@@ -28,14 +28,12 @@ namespace Lextm.SharpSnmpLib
 		/// </summary>
 		public ErrorCode Status {
 			get { return _status; }
-            set { _status = value; }
 		}
 		/// <summary>
 		/// Error index.
 		/// </summary>
 		public int Index {
 			get { return _index; }
-            set { _index = value; }
 		}
         /// <summary>
         /// Error item OID.
@@ -43,7 +41,6 @@ namespace Lextm.SharpSnmpLib
         public ObjectIdentifier Id
         {
             get { return _id; }
-            set { _id = value; }
         }
 		/// <summary>
 		/// Creates a <see cref="SharpErrorException"/> instance.
@@ -108,6 +105,24 @@ namespace Lextm.SharpSnmpLib
         public override string ToString()
         {
             return "SharpErrorException: " + Details;
+        }
+        /// <summary>
+        /// Creates a <see cref="SharpErrorException"/>.
+        /// </summary>
+        /// <param name="message">Message</param>
+        /// <param name="agent">Agent address</param>
+        /// <param name="status">Error status</param>
+        /// <param name="index">Error index</param>
+        /// <param name="id">ID</param>
+        /// <returns></returns>
+        public static SharpErrorException Create(string message, IPAddress agent, ErrorCode status, int index, ObjectIdentifier id)
+        {
+        	SharpErrorException ex = new SharpErrorException(message);
+        	ex.agentAddress = agent;
+        	ex._status = status;
+        	ex._index = index;
+        	ex._id = id;
+        	return ex;
         }
 	}
 }

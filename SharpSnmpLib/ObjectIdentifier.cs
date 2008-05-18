@@ -152,11 +152,7 @@ namespace Lextm.SharpSnmpLib
 			}
 			return result;
 		}
-		
-		byte[] ToPduFormat()
-		{
-			return _raw;
-		}		
+
         /// <summary>
         /// Converts to byte format.
         /// </summary>

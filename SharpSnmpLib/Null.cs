@@ -10,9 +10,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-[module: SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", Scope = "member", Target = "SharpSnmpLib.Null.#op_Equality(SharpSnmpLib.Null,SharpSnmpLib.Null)")]
-[module: SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", Scope = "member", Target = "SharpSnmpLib.Null.#op_Inequality(SharpSnmpLib.Null,SharpSnmpLib.Null)")]
-
 namespace Lextm.SharpSnmpLib
 {
 	/// <summary>
@@ -46,7 +43,7 @@ namespace Lextm.SharpSnmpLib
 		/// </returns>		
 		public override bool Equals(object obj)
 		{
-			if (null == obj) {
+			if (obj == null) {
 				return false;
 			}
 			if (object.ReferenceEquals(this, obj)) {
@@ -55,7 +52,7 @@ namespace Lextm.SharpSnmpLib
 			if (GetType() != obj.GetType()) {
 				return false;
 			}
-			return true;
+			return Equals((Null)obj);
 		}
 		/// <summary>
 		/// Serves as a hash function for a particular type.
@@ -73,7 +70,7 @@ namespace Lextm.SharpSnmpLib
 		///</returns>
 		public bool Equals(Null other)
 		{
-			return (other != null);
+			return true;
 		}
         /// <summary>
         /// The equality operator.
@@ -84,7 +81,7 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
 		public static bool operator == (Null left, Null right)
 		{
-			return true;;
+			return left.Equals(right);
 		}
         /// <summary>
         /// The inequality operator.
@@ -95,7 +92,7 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
         public static bool operator !=(Null left, Null right)
         {
-            return false;
+        	return !(left == right);
         }
         /// <summary>
         /// Returns a <see cref="String"/> that represents this <see cref="Null"/>.

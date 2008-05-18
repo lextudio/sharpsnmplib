@@ -50,6 +50,16 @@ namespace Lextm.SharpSnmpLib
         public override string ToString()
         {
             return "SharpSnmpException: " + Message;
+        }        
+        /// <summary>
+        /// Details on operation.
+        /// </summary>
+        public virtual string Details
+        {
+            get
+            {
+                return Message;
+            }
         }
 	}
 }

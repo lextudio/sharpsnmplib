@@ -89,37 +89,29 @@ namespace Lextm.SharpSnmpLib
 			result.AsyncWaitHandle.WaitOne(timeout, false);
 			if (!result.IsCompleted)
 			{
-				SharpTimeoutException ex = new SharpTimeoutException();
-				ex.Agent = _agent;
-				ex.Timeout = timeout;
-				throw ex;
+				throw SharpTimeoutException.Create(_agent, timeout);
 			}
 			bytes = udp.EndReceive(result, ref from);
 			MemoryStream m = new MemoryStream(bytes, false);
 			ISnmpMessage message = MessageFactory.ParseMessage(m);
 			if (message.TypeCode != SnmpType.GetResponsePDU) {
-				SharpOperationException ex = new SharpOperationException("wrong response type");
-				ex.Agent = _agent;
-				throw ex;
+				throw SharpOperationException.Create("wrong response type", _agent);
 			}
 			GetResponseMessage response = (GetResponseMessage)message;
 			if (response.SequenceNumber != SequenceNumber) {
-				SharpOperationException ex = new SharpOperationException("wrong response sequence");
-				ex.Agent = _agent;
-				throw ex;
+				throw SharpOperationException.Create("wrong response sequence", _agent);
 			}
 			if (response.ErrorStatus != ErrorCode.NoError)
 			{
-				SharpErrorException ex = new SharpErrorException("error in response");
-				ex.Agent = _agent;
-				ex.Status = response.ErrorStatus;
-				ex.Index = response.ErrorIndex;
-				ex.Id = response.Variables[response.ErrorIndex - 1].Id;
-				throw ex;
+				throw SharpErrorException.Create("error in response",
+				                                 _agent,
+				                                 response.ErrorStatus,
+				                                 response.ErrorIndex,
+				                                 response.Variables[response.ErrorIndex - 1].Id);
 			}
 			return response.Variables;
 		}
-				
+		
 		internal int SequenceNumber
 		{
 			get
@@ -185,12 +177,12 @@ namespace Lextm.SharpSnmpLib
 		}
 		
 		/// <summary>
-        /// Returns a <see cref="String"/> that represents this <see cref="GetRequestMessage"/>.
-        /// </summary>
-        /// <returns></returns>
-        public override string ToString()
-        {
-            return "GET request message: version: " + _version + "; " + _community + "; " + _pdu;
-        }
+		/// Returns a <see cref="String"/> that represents this <see cref="GetRequestMessage"/>.
+		/// </summary>
+		/// <returns></returns>
+		public override string ToString()
+		{
+			return "GET request message: version: " + _version + "; " + _community + "; " + _pdu;
+		}
 	}
 }
