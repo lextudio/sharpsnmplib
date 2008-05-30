@@ -7,13 +7,14 @@
     <RootNamespace>Lextm.SharpSnmpLib</RootNamespace>
     <AssemblyName>SharpSnmpLib</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>sharpsnmplib.snk</AssemblyOriginatorKeyFile>
     <DocumentationFile>bin\Debug\SharpSnmpLib.xml</DocumentationFile>
     <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
     <NoStdLib>False</NoStdLib>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DelaySign>False</DelaySign>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <OutputPath>bin\Debug\</OutputPath>
@@ -21,15 +22,15 @@
     <DebugType>Full</DebugType>
     <Optimize>False</Optimize>
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;GENTIME</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <OutputPath>bin\Release\</OutputPath>
-    <DebugSymbols>False</DebugSymbols>
+    <DebugSymbols>false</DebugSymbols>
     <DebugType>None</DebugType>
     <Optimize>True</Optimize>
     <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;GENTIME</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
     <RegisterForComInterop>False</RegisterForComInterop>
@@ -41,7 +42,9 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <Import Project="Microsoft.VersionNumber.targets" />
   <ItemGroup>
-    <Reference Include="nunit.framework, Version=2.5.0.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL" />
+    <Reference Include="nunit.framework">
+      <HintPath>..\lib\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -71,8 +74,29 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="MessageFactory.cs" />
+    <Compile Include="Mib\AliasNode.cs" />
+    <Compile Include="Mib\Definition.cs" />
+    <Compile Include="Mib\IAsn.cs" />
+    <Compile Include="Mib\IEntity.cs" />
+    <Compile Include="Mib\Lexer.cs" />
+    <Compile Include="Mib\MacroNode.cs" />
+    <Compile Include="Mib\MibDocument.cs" />
+    <Compile Include="Mib\MibModule.cs" />
+    <Compile Include="Mib\ModuleComplianceNode.cs" />
+    <Compile Include="Mib\ModuleIdentityNode.cs" />
+    <Compile Include="Mib\NotificationGroupNode.cs" />
+    <Compile Include="Mib\NotificationTypeNode.cs" />
+    <Compile Include="Mib\ObjectGroupNode.cs" />
+    <Compile Include="Mib\ObjectIdentifierNode.cs" />
+    <Compile Include="Mib\ObjectIdentityNode.cs" />
+    <Compile Include="Mib\ObjectTree.cs" />
+    <Compile Include="Mib\ObjectTypeNode.cs" />
+    <Compile Include="Mib\SequenceNode.cs" />
+    <Compile Include="Mib\SharpMibException.cs" />
+    <Compile Include="Mib\Symbol.cs" />
     <Compile Include="Null.cs" />
     <Compile Include="ObjectIdentifier.cs" />
+    <Compile Include="Mib\ObjectRegistry.cs" />
     <Compile Include="OctetString.cs" />
     <Compile Include="PduCounter.cs" />
     <Compile Include="Real.cs" />
@@ -96,8 +120,11 @@
     <Compile Include="Tests\TestGetRequestPdu.cs" />
     <Compile Include="Tests\TestGetResponseMessage.cs" />
     <Compile Include="Tests\TestIpAddress.cs" />
+    <Compile Include="Tests\TestLexer.cs" />
+    <Compile Include="Tests\TestMibFile.cs" />
     <Compile Include="Tests\TestNull.cs" />
     <Compile Include="Tests\TestObjectIdentifier.cs" />
+    <Compile Include="Tests\TestObjectRegistry.cs" />
     <Compile Include="Tests\TestOctetString.cs" />
     <Compile Include="Tests\TestSnmpArray.cs" />
     <Compile Include="Tests\TestSnmpDataFactory.cs" />
@@ -120,6 +147,10 @@
     <None Include="Resources\get.dat" />
     <None Include="Resources\getresponse.dat" />
     <None Include="Resources\onevarbind.dat" />
+    <None Include="Resources\SNMPv2-CONF.txt" />
+    <None Include="Resources\SNMPv2-MIB.txt" />
+    <None Include="Resources\SNMPv2-SMI.txt" />
+    <None Include="Resources\SNMPv2-TC.txt" />
     <None Include="Resources\twovarbinds.dat" />
   </ItemGroup>
   <ItemGroup>
@@ -141,5 +172,8 @@
     <None Include="Resources\fivevarbinds.dat" />
     <None Include="Resources\novarbind.dat" />
     <None Include="sharpsnmplib.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SNMPv2-TM.txt" />
   </ItemGroup>
 </Project>

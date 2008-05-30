@@ -113,6 +113,29 @@
         <Type Name="VersionCode" Analyze="True" AnalyzeAllChildren="True" />
        </Types>
       </Namespace>
+      <Namespace Name="Lextm.SharpSnmpLib.Mib" Analyze="True" AnalyzeAllChildren="False">
+       <Types AnalyzeAllChildren="False">
+        <Type Name="Definition" Analyze="True" AnalyzeAllChildren="True" />
+        <Type Name="Lexer" Analyze="True" AnalyzeAllChildren="True" />
+        <Type Name="MibFile" Analyze="True" AnalyzeAllChildren="True" />
+        <Type Name="ObjectRegistry" Analyze="True" AnalyzeAllChildren="True" />
+        <Type Name="ObjectTree" Analyze="True" AnalyzeAllChildren="True" />
+        <Type Name="SharpMibException" Analyze="True" AnalyzeAllChildren="True" />
+        <Type Name="Symbol" Analyze="True" AnalyzeAllChildren="False">
+         <Members AnalyzeAllChildren="False">
+          <Member Name="#.cctor()" Analyze="True" />
+          <Member Name="#.ctor(System.String)" Analyze="True" />
+          <Member Name="#_text" Analyze="True" />
+          <Member Name="#definitions" Analyze="True" />
+          <Member Name="#Definitions" Analyze="True" AnalyzeAllChildren="True" />
+          <Member Name="#Equals(System.Object)" Analyze="True" />
+          <Member Name="#Parse(System.Char)" Analyze="True" />
+          <Member Name="#temp" Analyze="True" />
+          <Member Name="#ToString()" Analyze="True" />
+         </Members>
+        </Type>
+       </Types>
+      </Namespace>
      </Namespaces>
      <Resources AnalyzeAllChildren="False" />
     </Module>
@@ -203,42 +226,6 @@
               <Issue Name="Return">
                <Item>'Manager.GetTable(IPAddress, string, uint[])'</Item>
                <Item>'Variable[,]'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Null">
-          <Members>
-           <Member Name="#op_Equality(Lextm.SharpSnmpLib.Null,Lextm.SharpSnmpLib.Null)">
-            <Messages>
-             <Message Id="left" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2008-05-10 09:21:46Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'left'</Item>
-               <Item>'Null.operator ==(Null, Null)'</Item>
-              </Issue>
-             </Message>
-             <Message Id="right" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2008-05-10 09:21:46Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'right'</Item>
-               <Item>'Null.operator ==(Null, Null)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#op_Inequality(Lextm.SharpSnmpLib.Null,Lextm.SharpSnmpLib.Null)">
-            <Messages>
-             <Message Id="left" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2008-05-10 09:21:46Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'left'</Item>
-               <Item>'Null.operator !=(Null, Null)'</Item>
-              </Issue>
-             </Message>
-             <Message Id="right" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2008-05-10 09:21:46Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'right'</Item>
-               <Item>'Null.operator !=(Null, Null)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -390,6 +377,69 @@
          </Type>
         </Types>
        </Namespace>
+       <Namespace Name="Lextm.SharpSnmpLib.Mib">
+        <Types>
+         <Type Name="MibFile">
+          <Members>
+           <Member Name="#.ctor(System.Collections.Generic.IList`1&lt;Lextm.SharpSnmpLib.Mib.Symbol&gt;)">
+            <Messages>
+             <Message Id="name" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Created="2008-05-17 10:05:30Z">
+              <Issue>
+               <Item>'MibFile.MibFile(IList&lt;Symbol&gt;)'</Item>
+               <Item>'name'</Item>
+               <Item>'string'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="ObjectTree">
+          <Members>
+           <Member Name="#Find(System.UInt32[])">
+            <Messages>
+             <Message Id="temp" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Created="2008-05-17 10:05:30Z">
+              <Issue>
+               <Item>'ObjectTree.Find(uint[])'</Item>
+               <Item>'temp'</Item>
+               <Item>'Definition'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Parse(System.IO.StreamReader)">
+            <Messages>
+             <Message Id="file" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Created="2008-05-17 10:05:30Z">
+              <Issue>
+               <Item>'ObjectTree.Parse(StreamReader)'</Item>
+               <Item>'file'</Item>
+               <Item>'MibFile'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="SharpMibException">
+          <Messages>
+           <Message TypeName="ImplementStandardExceptionConstructors" Category="Microsoft.Design" CheckId="CA1032" Created="2008-05-17 10:05:30Z">
+            <Issue Name="MissingConstructor">
+             <Item>'SharpMibException'</Item>
+             <Item>protected SharpMibException(SerializationInfo, StreamingContext)</Item>
+            </Issue>
+            <Issue Name="MissingConstructor">
+             <Item>'SharpMibException'</Item>
+             <Item>public SharpMibException(String)</Item>
+            </Issue>
+            <Issue Name="MissingConstructor">
+             <Item>'SharpMibException'</Item>
+             <Item>public SharpMibException(String, Exception)</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+        </Types>
+       </Namespace>
       </Namespaces>
      </Module>
     </Modules>
@@ -405,12 +455,15 @@
    <Rule TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709">
     <Resolution Name="Member">Correct the casing of '{0}' in member name {1} by changing it to '{2}'.</Resolution>
    </Rule>
+   <Rule TypeName="ImplementStandardExceptionConstructors" Category="Microsoft.Design" CheckId="CA1032">
+    <Resolution Name="MissingConstructor">Add the following constructor to {0}: {1}.</Resolution>
+   </Rule>
    <Rule TypeName="PreferJaggedArraysOverMultidimensional" Category="Microsoft.Performance" CheckId="CA1814">
     <Resolution Name="Body">{0} uses a multidimensional array of {1}. Replace it with a jagged array if possible.</Resolution>
     <Resolution Name="Return">{0} returns a multidimensional array of {1}. Replace it with a jagged array if possible.</Resolution>
    </Rule>
-   <Rule TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801">
-    <Resolution Name="Default">Parameter {0} of {1} is never used. Remove the parameter or use it in the method body.</Resolution>
+   <Rule TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804">
+    <Resolution Name="Default">{0} declares a variable, {1}, of type {2}, which is never used or is only assigned to. Use this variable or remove it.</Resolution>
    </Rule>
   </Rules>
  </FxCopReport>

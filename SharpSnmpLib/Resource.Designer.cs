@@ -95,9 +95,37 @@ namespace Lextm.SharpSnmpLib {
 			}
 		}
 		
+		internal static byte[] SNMPv2_CONF {
+			get {
+				object obj = ResourceManager.GetObject("SNMPv2-CONF", resourceCulture);
+				return ((byte[])(obj));
+			}
+		}
+		
+		internal static byte[] SNMPv2_MIB {
+			get {
+				object obj = ResourceManager.GetObject("SNMPv2-MIB", resourceCulture);
+				return ((byte[])(obj));
+			}
+		}
+		
 		internal static byte[] SNMPv2_SMI {
 			get {
 				object obj = ResourceManager.GetObject("SNMPv2-SMI", resourceCulture);
+				return ((byte[])(obj));
+			}
+		}
+		
+		internal static byte[] SNMPv2_TC {
+			get {
+				object obj = ResourceManager.GetObject("SNMPv2-TC", resourceCulture);
+				return ((byte[])(obj));
+			}
+		}
+		
+		internal static byte[] SNMPv2_TM {
+			get {
+				object obj = ResourceManager.GetObject("SNMPv2-TM", resourceCulture);
 				return ((byte[])(obj));
 			}
 		}
