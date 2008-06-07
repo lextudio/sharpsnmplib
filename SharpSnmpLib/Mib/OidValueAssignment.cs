@@ -15,7 +15,7 @@ namespace Lextm.SharpSnmpLib.Mib
 	/// <summary>
 	/// Object identifier node.
 	/// </summary>
-	public class ObjectIdentifierNode : IEntity
+	public class OidValueAssignment : IEntity
 	{
 		string _module;
 		string _name;
@@ -28,7 +28,7 @@ namespace Lextm.SharpSnmpLib.Mib
 		/// <param name="name"></param>
 		/// <param name="parent"></param>
 		/// <param name="value"></param>
-        public ObjectIdentifierNode(string module, string name, string parent, int value)
+        public OidValueAssignment(string module, string name, string parent, int value)
         {
             _module = module;
             _name = name;
@@ -41,32 +41,11 @@ namespace Lextm.SharpSnmpLib.Mib
 		/// <param name="module">Module name</param>
 		/// <param name="name">Name</param>
 		/// <param name="lexer">Lexer</param>
-		public ObjectIdentifierNode(string module, string name, Lexer lexer)
+		public OidValueAssignment(string module, string name, Lexer lexer)
 		{			
 			_module = module;
 			_name = name;
-			Symbol temp = lexer.NextSymbol;
-			if (temp != Symbol.OpenBracket) {
-				throw SharpMibException.Create(temp);
-			}// {			
-			temp = lexer.NextSymbol;
-			bool isNumerical = int.TryParse(temp.ToString(), out _value);
-			if (isNumerical) {
-				_parent = null;
-			}
-			else
-			{
-				_parent = temp.ToString();
-				temp = lexer.NextSymbol;
-				isNumerical = int.TryParse(temp.ToString(), out _value);
-				if (!isNumerical) {
-					throw SharpMibException.Create(temp);
-				}
-			}
-			temp = lexer.NextSymbol;
-			if (temp != Symbol.CloseBracket) {
-				throw SharpMibException.Create(temp);
-			}// }
+            ConstructHelper.ParseOidValue(lexer, out _parent, out _value);
 		}
 		/// <summary>
 		/// Module name.

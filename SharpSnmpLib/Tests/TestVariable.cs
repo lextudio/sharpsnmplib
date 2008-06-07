@@ -23,9 +23,9 @@ namespace Lextm.SharpSnmpLib.Tests
 			Variable v = new Variable(
 					new ObjectIdentifier(new uint[] {1,3,6,1,4,1,2162,1001,21,0}),
 					new OctetString("TrapTest"));
-			SnmpArray varbindSection = Variable.ConvertTo(new List<Variable>() {v});
+			Sequence varbindSection = Variable.ConvertTo(new List<Variable>() {v});
 			Assert.AreEqual(1, varbindSection.Items.Count);
-			SnmpArray varbind = (SnmpArray)varbindSection.Items[0];
+			Sequence varbind = (Sequence)varbindSection.Items[0];
 			Assert.AreEqual(2, varbind.Items.Count);
 		}
 	}

@@ -28,8 +28,8 @@ namespace Lextm.SharpSnmpLib
 			{
 				_bits[j] = (raw[4 * j] << 24) | (raw[4 * j + 1] << 16) | (raw[4 * j + 2] << 8) | raw[4 * j + 3];
 			}
-			_bytes = null;
 			_raw = raw;
+			_bytes = ByteTool.ToBytes(SnmpType.BitString, _raw);
 		}
 		/// <summary>
 		/// Creates a <see cref="BitString"/> with a bit length and a bit array.
@@ -45,8 +45,8 @@ namespace Lextm.SharpSnmpLib
             _nbits = nbits;
             _size = bits.Length;
             _bits = bits;
-            _bytes = null;
             _raw = ParseItem(_nbits, _bits);
+            _bytes = ByteTool.ToBytes(SnmpType.BitString, _raw);
         }
 		/// <summary>
 		/// Creates a <see cref="BitString"/> from a <see cref="BitString"/>.
@@ -54,11 +54,11 @@ namespace Lextm.SharpSnmpLib
 		/// <param name="str">Another <see cref="BitString"/> instance</param>
 		public BitString(BitString str)
 		{
-			_bytes = null;
 			_raw = (byte[])str._raw.Clone();
 			_nbits = str._nbits;
 			_size = str._size;
 			_bits = (int[])str._bits.Clone();
+			_bytes = (byte[])str._bytes.Clone();
 		}
         /// <summary>
         /// Returns a bit at specific index.
@@ -176,10 +176,6 @@ namespace Lextm.SharpSnmpLib
 		/// <returns></returns>
 		public byte[] ToBytes()
 		{
-			if (_bytes == null)
-			{
-				_bytes = ByteTool.ToBytes(TypeCode, _raw);
-			}
 			return _bytes;
 		}
 		

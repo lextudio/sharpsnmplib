@@ -50,10 +50,10 @@ namespace Lextm.SharpSnmpLib
 			_bytes = pdu.ToMessageBody(_version, _community).ToBytes();
 		}
 		/// <summary>
-		/// Creates a <see cref="GetNextRequestMessage"/> with a specific <see cref="SnmpArray"/>.
+		/// Creates a <see cref="GetNextRequestMessage"/> with a specific <see cref="Sequence"/>.
 		/// </summary>
 		/// <param name="body">Message body</param>
-		public GetNextRequestMessage(SnmpArray body)
+		public GetNextRequestMessage(Sequence body)
 		{
 			if (body == null)
 			{

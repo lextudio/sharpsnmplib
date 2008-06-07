@@ -25,7 +25,7 @@ namespace Lextm.SharpSnmpLib
 		GenericCode _generic;
 		Integer32 _specific;
 		TimeTicks _timeStamp;
-		SnmpArray _varbindSection;
+		Sequence _varbindSection;
 		IList<Variable> _variables;	
 		/// <summary>
 		/// Creates a <see cref="TrapV1Pdu"/> instance with raw bytes.
@@ -40,7 +40,7 @@ namespace Lextm.SharpSnmpLib
 			_generic = (GenericCode)((Integer32)SnmpDataFactory.CreateSnmpData(m)).ToInt32();
 			_specific = (Integer32)SnmpDataFactory.CreateSnmpData(m);
 			_timeStamp = (TimeTicks)SnmpDataFactory.CreateSnmpData(m);
-			_varbindSection = (SnmpArray)SnmpDataFactory.CreateSnmpData(m);
+			_varbindSection = (Sequence)SnmpDataFactory.CreateSnmpData(m);
 			_variables = Variable.ConvertFrom(_varbindSection);
 		}
 				/// <summary>
@@ -121,7 +121,7 @@ namespace Lextm.SharpSnmpLib
 			Integer32 ver = new Integer32((int)version);
 			OctetString comm = new OctetString(community);
 			TrapV1Pdu pdu = this;
-			SnmpArray array = new SnmpArray(ver, comm, pdu);
+			Sequence array = new Sequence(ver, comm, pdu);
 			return array;
 		}		
 		/// <summary>

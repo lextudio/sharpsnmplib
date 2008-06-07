@@ -34,7 +34,7 @@ namespace Lextm.SharpSnmpLib
 		/// Creates a <see cref="TrapMessage"/> instance with a message body.
 		/// </summary>
 		/// <param name="body">Message body</param>
-		public TrapMessage(SnmpArray body)
+		public TrapMessage(Sequence body)
 		{
 			if (body == null) 
 			{

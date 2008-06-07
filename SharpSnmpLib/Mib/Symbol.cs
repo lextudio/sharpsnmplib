@@ -147,174 +147,39 @@ namespace Lextm.SharpSnmpLib.Mib
 		#endregion
 		
 		
-		static Symbol definitions = new Symbol("DEFINITIONS");
-		
-		internal static Symbol Definitions
-		{
-			get
-			{
-				return definitions;
-			}
-		}
-		
-		static Symbol begin = new Symbol("BEGIN");
-		
-		internal static Symbol Begin
-		{
-			get
-			{
-				return begin;
-			}
-		}
-		
-		static Symbol object1 = new Symbol("OBJECT");
-		
-		internal static Symbol Object
-		{
-			get
-			{
-				return object1;
-			}
-		}
-		
-		static Symbol identifier = new Symbol("IDENTIFIER");
-		
-		internal static Symbol Identifier
-		{
-			get
-			{
-				return identifier;
-			}
-		}
-		
-		static Symbol assign = new Symbol("::=");
-		
-		internal static Symbol Assign
-		{
-			get
-			{
-				return assign;
-			}
-		}
-		
-		static Symbol openBracket = new Symbol("{");
-		
-		internal static Symbol OpenBracket {
-			get { return openBracket; }
-		}
-
-		static Symbol closeBracket = new Symbol("}");
-		
-		internal static Symbol CloseBracket {
-			get { return closeBracket; }
-		}
-		
-		static Symbol comment = new Symbol("--");
-		
-		internal static Symbol Comment {
-			get { return comment; }
-		}
-		
-		static Symbol imports = new Symbol("IMPORTS");
-		
-		internal static Symbol Imports {
-			get { return imports; }
-		}
-		
-		static Symbol semicolon = new Symbol(";");
-		
-		internal static Symbol Semicolon
-		{
-			get { return semicolon; }
-		}
-		
-		static Symbol @from = new Symbol("FROM");
-		
-		internal static Symbol From {
-			get { return @from; }
-		}
-
-        static Symbol module_Identity = new Symbol("MODULE-IDENTITY");
-
-        internal static Symbol Module_Identity
-        {
-            get { return module_Identity; }
-        }
-
-        static Symbol object_Type = new Symbol("OBJECT-TYPE");
-
-        internal static Symbol Object_Type
-        {
-            get
-            {
-                return object_Type;
-            }
-        }
-        
-        static Symbol object_Group = new Symbol("OBJECT-GROUP");
-        
-		internal static Symbol Object_Group {
-			get { return object_Group; }
-		}
-        
-        static Symbol notification_Group = new Symbol("NOTIFICATION-GROUP");
-        
-		internal static Symbol Notification_Group {
-			get { return notification_Group; }
-		}
-
-        static Symbol module_Compliance = new Symbol("MODULE-COMPLIANCE");
-        
-		internal static Symbol Module_Compliance {
-			get { return module_Compliance; }
-		}
-        
-        static Symbol sequence = new Symbol("SEQUENCE");
-        
-        internal static Symbol Sequence 
-        {
-        	get { return sequence; }
-        }
-
-        static Symbol notification_Type = new Symbol("NOTIFICATION-TYPE");
-
-        internal static Symbol Notification_Type
-        {
-            get { return notification_Type; }
-        }
-        
-        static Symbol eol = new Symbol(Environment.NewLine);
-        
-		internal static Symbol EOL {
-			get { return eol; }
-		}
-
-        static Symbol object_Identity = new Symbol("OBJECT-IDENTITY");
-
-        internal static Symbol Object_Identity
-        {
-            get { return object_Identity; }
-        }
-        
-        static Symbol end = new Symbol("END");
-        
-        internal static Symbol End
-        {
-        	get { return end; }
-        }
-
-        static Symbol macro = new Symbol("MACRO");
-
-        internal static Symbol Macro
-        {
-            get { return macro; }
-        }
-
-        static Symbol choice = new Symbol("CHOICE");
-
-        internal static Symbol Choice
-        {
-            get { return choice; }
-        }
+		internal static Symbol Definitions = new Symbol("DEFINITIONS");		
+		internal static Symbol Begin = new Symbol("BEGIN");		
+		internal static Symbol Object = new Symbol("OBJECT");		
+		internal static Symbol Identifier = new Symbol("IDENTIFIER");
+		internal static Symbol Assign = new Symbol("::=");
+		internal static Symbol OpenBracket = new Symbol("{");
+		internal static Symbol CloseBracket = new Symbol("}");
+		internal static Symbol Comment = new Symbol("--");
+		internal static Symbol Imports = new Symbol("IMPORTS");
+		internal static Symbol Semicolon = new Symbol(";");
+		internal static Symbol From = new Symbol("FROM");
+        internal static Symbol Module_Identity = new Symbol("MODULE-IDENTITY");
+        internal static Symbol Object_Type = new Symbol("OBJECT-TYPE");
+        internal static Symbol Object_Group = new Symbol("OBJECT-GROUP");
+        internal static Symbol Notification_Group = new Symbol("NOTIFICATION-GROUP");
+        internal static Symbol Module_Compliance = new Symbol("MODULE-COMPLIANCE");
+        internal static Symbol Sequence = new Symbol("SEQUENCE");
+        internal static Symbol Notification_Type = new Symbol("NOTIFICATION-TYPE");
+        internal static Symbol EOL = new Symbol(Environment.NewLine);
+        internal static Symbol Object_Identity = new Symbol("OBJECT-IDENTITY");
+        internal static Symbol End = new Symbol("END");
+        internal static Symbol Macro = new Symbol("MACRO");
+        internal static Symbol Choice = new Symbol("CHOICE");
+        internal static Symbol Trap_Type = new Symbol("TRAP_TYPE");
+        internal static Symbol Agent_Capabilities = new Symbol("AGENT-CAPABILITIES");
+        internal static Symbol Comma = new Symbol(",");
+        internal static Symbol Textual_Convention = new Symbol("TEXTUAL-CONVENTION");
+        internal static Symbol Syntax = new Symbol("SYNTAX");
+        internal static Symbol Integer = new Symbol("INTEGER");
+        internal static Symbol Octet = new Symbol("OCTET");
+        internal static Symbol String = new Symbol("STRING");
+        internal static Symbol OpenParentheses = new Symbol("(");
+        internal static Symbol CloseParentheses = new Symbol(")");
+        internal static Symbol Exports = new Symbol("EXPORTS");
 	}
 }

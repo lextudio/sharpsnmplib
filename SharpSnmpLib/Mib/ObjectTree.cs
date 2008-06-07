@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.IO;
+using System.Text;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
@@ -15,7 +15,7 @@ namespace Lextm.SharpSnmpLib.Mib
 		{
 			_lexer = new Lexer();
 			root = Definition.RootDefinition;
-			Definition iso = Definition.ToDefinition(new ObjectIdentifierNode("SNMPv2-SMI", "iso", null, 1), null);
+			Definition iso = Definition.ToDefinition(new OidValueAssignment("SNMPv2-SMI", "iso", null, 1), null);
 			root.Add(iso);
 			nameTable = new Dictionary<string, Definition>() { { "iso", iso } };
 		}
@@ -68,7 +68,7 @@ namespace Lextm.SharpSnmpLib.Mib
 					return -1;
 				}
 				_modules.Add(module.Name, module);
-				foreach (IEntity node in module.EntityNodes)
+				foreach (IEntity node in module.Entities)
 				{
 					Definition result = root.Add(node);
 					if (result != null)

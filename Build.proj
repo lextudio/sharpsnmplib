@@ -4,9 +4,19 @@
 		<GendarmePath>"%ProgramFiles%\Novell\Gendarme\gendarme.exe"</GendarmePath>
 		<CommandLine>--config "%ProgramFiles%\Novell\Gendarme\rules.xml" --log .\gendarme.log --quiet .\sharpsnmplib.dll</CommandLine>
 		<DebugFolder>.\SharpSnmpLib\Bin\Debug</DebugFolder>
+		<NDependFolder>H:\Incoming\Green\NDepend</NDependFolder>
+		<NDependProject>"D:\lextm\documents\SharpDevelop Projects\TrapWatcher\SharpSnmpLib.xml"</NDependProject>
 	</PropertyGroup>
-	<Target Name="Gendarme">
-		<Exec Command="$(GendarmePath) $(CommandLine)" WorkingDirectory="$(DebugFolder)"/> 
-		<Copy SourceFiles="$(DebugFolder)\gendarme.log" DestinationFolder="."/>
+	<Target Name="Gendarme" DependsOnTargets="Debug">
+		<Exec Command="$(GendarmePath) $(CommandLine)" WorkingDirectory="$(DebugFolder)" />
+		<Copy SourceFiles="$(DebugFolder)\gendarme.log" DestinationFolder="." />
+	</Target>
+	<UsingTask AssemblyFile="$(NDependFolder)\MSBuild\NDepend.Build.MSBuild.dll" TaskName="NDependTask" />
+	<Target Name="NDepend" DependsOnTargets="Debug">
+		<!--<NDependTask NDependConsoleExePath="$(NDependFolder)" ProjectFilePath="$(NDependProject)" />-->
+		<Exec Command="$(NDependFolder)\NDepend.Console.exe $(NDependProject)" />
+	</Target>
+	<Target Name="Debug">
+		<MSBuild Projects="sharpsnmplib.sln"/>
 	</Target>
 </Project>

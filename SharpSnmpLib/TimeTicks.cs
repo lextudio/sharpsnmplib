@@ -20,7 +20,7 @@ namespace Lextm.SharpSnmpLib
 		public TimeTicks(int count) 
         {
             _count = new Integer32(count);
-            _bytes = null;
+            _bytes = ByteTool.ToBytes(SnmpType.TimeTicks, _count.GetRaw());
         }
 		/// <summary>
 		/// Creates a <see cref="TimeTicks"/> instance with raw bytes.
@@ -29,7 +29,7 @@ namespace Lextm.SharpSnmpLib
         public TimeTicks(byte[] raw)
         {
             _count = new Integer32(raw);
-            _bytes = null;
+            _bytes = ByteTool.ToBytes(SnmpType.TimeTicks, _count.GetRaw());
         }
 		/// <summary>
 		/// Returns an <see cref="Int32"/> that represents the current <see cref="TimeTicks"/>
@@ -124,10 +124,6 @@ namespace Lextm.SharpSnmpLib
 		/// <returns></returns>
         public byte[] ToBytes()
         {
-            if (_bytes == null)
-            {
-                _bytes = ByteTool.ToBytes(TypeCode, _count.GetRaw());
-            }
             return _bytes;
         }
 

@@ -13,7 +13,7 @@ namespace Lextm.SharpSnmpLib
 	/// <summary>
 	/// Provides data for a trap received event.
 	/// </summary>
-	public class TrapReceivedEventArgs : EventArgs
+	public sealed class TrapReceivedEventArgs : EventArgs
 	{	  
 		TrapMessage _trap;
 		/// <summary>

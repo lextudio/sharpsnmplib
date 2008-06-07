@@ -23,7 +23,7 @@ namespace Lextm.SharpSnmpLib
         private Integer32 _sequenceNumber;
         private Integer32 _errorIndex;
         private IList<Variable> _variables;
-        private SnmpArray _varbindSection;
+        private Sequence _varbindSection;
 		/// <summary>
 		/// Creates a <see cref="GetResponsePdu"/> from raw bytes.
 		/// </summary>
@@ -34,7 +34,7 @@ namespace Lextm.SharpSnmpLib
 			_sequenceNumber = (Integer32)SnmpDataFactory.CreateSnmpData(m);
 			_errorStatus = (Integer32)SnmpDataFactory.CreateSnmpData(m);
 			_errorIndex = (Integer32)SnmpDataFactory.CreateSnmpData(m);
-			_varbindSection = (SnmpArray)SnmpDataFactory.CreateSnmpData(m);
+			_varbindSection = (Sequence)SnmpDataFactory.CreateSnmpData(m);
 			_variables = Variable.ConvertFrom(_varbindSection);
 		}
 		

@@ -15,11 +15,8 @@ namespace Lextm.SharpSnmpLib
 	/// <summary>
 	/// Factory that creates <see cref="ISnmpData"/> instances.
 	/// </summary>
-	public sealed class SnmpDataFactory
+	public static class SnmpDataFactory
 	{
-		SnmpDataFactory()
-		{
-		}		
 		/// <summary>
 		/// Creates an <see cref="ISnmpData"/> instance from buffer.
 		/// </summary>
@@ -70,8 +67,8 @@ namespace Lextm.SharpSnmpLib
 					return new IP(bytes);
 				case SnmpType.TimeTicks:
 					return new TimeTicks(bytes);
-				case SnmpType.Array:
-					return new SnmpArray(bytes);
+				case SnmpType.Sequence:
+					return new Sequence(bytes);
 				case SnmpType.TrapPDUv1:
 					return new TrapV1Pdu(bytes);
 				case SnmpType.GetRequestPDU:

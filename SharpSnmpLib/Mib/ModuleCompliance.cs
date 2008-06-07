@@ -2,7 +2,7 @@
  * Created by SharpDevelop.
  * User: lextm
  * Date: 2008/5/21
- * Time: 19:27
+ * Time: 19:35
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
@@ -13,36 +13,20 @@ using System.Collections.Generic;
 namespace Lextm.SharpSnmpLib.Mib
 {
 	/// <summary>
-	/// Description of ObjectGroupNode.
+	/// Description of ModuleComplianceNode.
 	/// </summary>
-	public class ObjectGroupNode : IEntity
+	public class ModuleCompliance : IEntity
 	{
         string _module;
         string _parent;
         int _value;
         string _name;
 
-        public ObjectGroupNode(string module, IList<Symbol> header, Lexer lexer)
+        public ModuleCompliance(string module, IList<Symbol> header, Lexer lexer)
         {
             _module = module;
             _name = header[0].ToString();
-            Symbol temp = lexer.NextSymbol;
-            if (temp != Symbol.OpenBracket)
-            {
-                throw SharpMibException.Create(temp);
-            }
-            _parent = lexer.NextSymbol.ToString();
-            temp = lexer.NextSymbol;
-            bool succeeded = int.TryParse(temp.ToString(), out _value);
-            if (!succeeded)
-            {
-                throw SharpMibException.Create(temp);
-            }
-            temp = lexer.NextSymbol;
-            if (temp != Symbol.CloseBracket)
-            {
-                throw SharpMibException.Create(temp);
-            }
+            ConstructHelper.ParseOidValue(lexer, out _parent, out _value);
         }
 
 

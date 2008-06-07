@@ -98,11 +98,12 @@ namespace Lextm.SharpSnmpLib.Mib
 		/// <summary>
 		/// Creates a <see cref="SharpMibException"/> with a specific <see cref="Symbol"/>.
 		/// </summary>
+		/// <param name="message">Message</param>
 		/// <param name="symbol">Symbol</param>
 		/// <returns></returns>
-		public static SharpMibException Create(Symbol symbol)
+		public static SharpMibException Create(string message, Symbol symbol)
 		{
-			SharpMibException ex = new SharpMibException("wrong entity, " + symbol.ToString() + ". row: " + symbol.Row + "; column: " + symbol.Column);
+			SharpMibException ex = new SharpMibException(message + ". Wrong entity, " + symbol.ToString() + ". row: " + symbol.Row + "; column: " + symbol.Column);
 			ex._symbol = symbol;
 			return ex;
 		}

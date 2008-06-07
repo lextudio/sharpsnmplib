@@ -15,11 +15,8 @@ namespace Lextm.SharpSnmpLib
 	/// <summary>
 	/// Factory that creates <see cref="ISnmpMessage"/> instances from byte format.
 	/// </summary>
-	public sealed class MessageFactory
+	public static class MessageFactory
 	{
-		MessageFactory()
-		{
-		}
 		/// <summary>
 		/// Creates an <see cref="ISnmpMessage"/> instance from buffer.
 		/// </summary>
@@ -48,11 +45,11 @@ namespace Lextm.SharpSnmpLib
 		public static ISnmpMessage ParseMessage(MemoryStream stream)
 		{
 			ISnmpData array = SnmpDataFactory.CreateSnmpData(stream);
-			if (array.TypeCode != SnmpType.Array) 
+			if (array.TypeCode != SnmpType.Sequence) 
 			{
 				throw new ArgumentException("not an SNMP message");
 			}
-			SnmpArray body = (SnmpArray)array;
+			Sequence body = (Sequence)array;
 			if (body.Items.Count != 3) 
 			{
 				throw new ArgumentException("not an SNMP message");

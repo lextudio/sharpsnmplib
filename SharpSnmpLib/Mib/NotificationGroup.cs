@@ -15,34 +15,18 @@ namespace Lextm.SharpSnmpLib.Mib
 	/// <summary>
 	/// Description of NotificationGroupNode.
 	/// </summary>
-	public class NotificationGroupNode : IEntity
+	public class NotificationGroup : IEntity
 	{
         string _module;
-        Symbol _parent;
+        string _parent;
         int _value;
         string _name;
 
-        public NotificationGroupNode(string module, IList<Symbol> header, Lexer lexer)
+        public NotificationGroup(string module, IList<Symbol> header, Lexer lexer)
         {
             _module = module;
             _name = header[0].ToString();
-            Symbol temp = lexer.NextSymbol;
-            if (temp != Symbol.OpenBracket)
-            {
-                throw SharpMibException.Create(temp);
-            }
-            _parent = lexer.NextSymbol;
-            temp = lexer.NextSymbol;
-            bool succeeded = int.TryParse(temp.ToString(), out _value);
-            if (!succeeded)
-            {
-                throw SharpMibException.Create(temp);
-            }
-            temp = lexer.NextSymbol;
-            if (temp != Symbol.CloseBracket)
-            {
-                throw SharpMibException.Create(temp);
-            }
+            ConstructHelper.ParseOidValue(lexer, out _parent, out _value);
         }
 
 
@@ -53,7 +37,7 @@ namespace Lextm.SharpSnmpLib.Mib
 
         public string Parent
         {
-            get { return _parent.ToString(); }
+            get { return _parent; }
         }
 
         public int Value

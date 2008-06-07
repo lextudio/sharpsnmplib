@@ -27,7 +27,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Lextm.SharpSnmpLib
 {
     /// <summary>
-    /// SNMP type code.
+    /// SNMP type code. The values are tag values for SNMP types.
     /// </summary>
 	public enum SnmpType // RFC1213 subset of ASN.1
 	{ 
@@ -68,7 +68,7 @@ namespace Lextm.SharpSnmpLib
 		RelativeOID=0x0d,
 		Reserved1=0x0e,
 		Reserved2=0x0f,
-		Sequence=0x10,//X690.Sequence
+		SequenceTagNumber=0x10,//X690.Sequence (this is in fact the tag number for SEQUENCE)
 		Set=0x11,
 		NumericString=0x12,
 		PrintableString=0x13,
@@ -86,7 +86,7 @@ namespace Lextm.SharpSnmpLib
 		/// <summary>
 		/// RFC1213 sequence for whole SNMP packet beginning
 		/// </summary>
-		Array=0x30,  // RFC1213 sequence for whole SNMP packet beginning
+		Sequence=0x30,  // RFC1213 sequence for whole SNMP packet beginning
 		/// <summary>
 		/// IpAddress type. (SMIv1)
 		/// </summary>

@@ -38,7 +38,7 @@ namespace Lextm.SharpSnmpLib
 		public Integer32(byte[] raw)
 		{
 			_raw = raw;
-			_bytes = null;
+			_bytes = ByteTool.ToBytes(SnmpType.Integer32, _raw);
 		}
 		/// <summary>
 		/// Creates an <see cref="Integer32"/> instance with a specific <see cref="Int32"/>.
@@ -46,7 +46,6 @@ namespace Lextm.SharpSnmpLib
 		/// <param name="value">Value</param>
 		public Integer32(int value)
 		{
-			_bytes = null;
 			if (value>=-127 && value<=127)
 			{
 				_raw = new byte[1];
@@ -72,6 +71,7 @@ namespace Lextm.SharpSnmpLib
 				for (int j=v.Count-1;j>=0;j--)
 				{	_raw[len++] = v[j]; }
 			}
+			_bytes = ByteTool.ToBytes(SnmpType.Integer32, _raw);
 		}
 //		/// <summary>
 //		/// Creates an <see cref="Integer32"/> instance with a specific <see cref="Int64"/>.
@@ -186,9 +186,6 @@ namespace Lextm.SharpSnmpLib
 		/// <returns></returns>
 		public byte[] ToBytes()
 		{
-			if (_bytes == null) {
-				_bytes = ByteTool.ToBytes(TypeCode, _raw);
-			}
 			return _bytes;
 		}
 		/// <summary>

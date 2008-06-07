@@ -75,8 +75,8 @@ namespace Lextm.SharpSnmpLib.Tests
 				0x06, 0x0B, 0x2B, 0x06, 0x01, 0x04, 0x01, 0x90, 0x72, 0x87, 0x69, 0x15, 0x00,
 				0x04, 0x08, 0x54, 0x72, 0x61, 0x70, 0x54, 0x65, 0x73, 0x74};
 			ISnmpData data = SnmpDataFactory.CreateSnmpData(expected);
-			Assert.AreEqual(SnmpType.Array, data.TypeCode);
-			SnmpArray a = (SnmpArray)data;
+			Assert.AreEqual(SnmpType.Sequence, data.TypeCode);
+			Sequence a = (Sequence)data;
 			Assert.AreEqual(2, a.Items.Count);
 			
 			ISnmpData oid = a.Items[0];
@@ -96,12 +96,12 @@ namespace Lextm.SharpSnmpLib.Tests
 				0x06, 0x0B, 0x2B, 0x06, 0x01, 0x04, 0x01, 0x90, 0x72, 0x87, 0x69, 0x15, 0x00,
 				0x04, 0x08, 0x54, 0x72, 0x61, 0x70, 0x54, 0x65, 0x73, 0x74};
 			ISnmpData data = SnmpDataFactory.CreateSnmpData(expected);
-			Assert.AreEqual(SnmpType.Array, data.TypeCode);
+			Assert.AreEqual(SnmpType.Sequence, data.TypeCode);
 			
-			SnmpArray a = (SnmpArray)data;
+			Sequence a = (Sequence)data;
 			Assert.AreEqual(1, a.Items.Count);
 			ISnmpData varbind = a.Items[0];
-			Assert.AreEqual(SnmpType.Array, varbind.TypeCode);
+			Assert.AreEqual(SnmpType.Sequence, varbind.TypeCode);
 		}
 		[Test]
 		public void TestTrapv1Pdu()
@@ -145,9 +145,9 @@ namespace Lextm.SharpSnmpLib.Tests
 				0x06, 0x0B, 0x2B, 0x06, 0x01, 0x04, 0x01, 0x90, 0x72, 0x87, 0x69, 0x15, 0x00,
 				0x04, 0x08, 0x54, 0x72, 0x61, 0x70, 0x54, 0x65, 0x73, 0x74};
 			ISnmpData data = SnmpDataFactory.CreateSnmpData(expected);
-			Assert.AreEqual(SnmpType.Array, data.TypeCode);
+			Assert.AreEqual(SnmpType.Sequence, data.TypeCode);
 		
-			SnmpArray t = (SnmpArray)data;
+			Sequence t = (Sequence)data;
 			Assert.AreEqual(3, t.Items.Count);
 			ISnmpData version = t.Items[0];
 			Assert.AreEqual(SnmpType.Integer32, version.TypeCode);

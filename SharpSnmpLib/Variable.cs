@@ -82,16 +82,16 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="varbindSection"></param>
         /// <returns></returns>
-		internal static IList<Variable> ConvertFrom(SnmpArray varbindSection)
+		internal static IList<Variable> ConvertFrom(Sequence varbindSection)
 		{
 			IList<Variable> result = new List<Variable>(varbindSection.Items.Count);
 			foreach (ISnmpData item in varbindSection.Items)
 			{
-				if (item.TypeCode != SnmpType.Array)
+				if (item.TypeCode != SnmpType.Sequence)
 				{
 					throw new ArgumentException("wrong varbind section data");
 				}
-				SnmpArray varbind = item as SnmpArray;
+				Sequence varbind = item as Sequence;
 				if (null != varbind)
 				{
 					if (varbind.Items.Count != 2 || varbind.Items[0].TypeCode != SnmpType.ObjectIdentifier)
@@ -115,14 +115,14 @@ namespace Lextm.SharpSnmpLib
 		/// </summary>
 		/// <param name="variables"></param>
 		/// <returns></returns>
-        internal static SnmpArray ConvertTo(IList<Variable> variables)
+        internal static Sequence ConvertTo(IList<Variable> variables)
         {
         	IList<ISnmpData> varbinds = new List<ISnmpData>(2*variables.Count);
         	foreach (Variable v in variables)
         	{
-        		varbinds.Add(new SnmpArray(v.Id, v.Data));
+        		varbinds.Add(new Sequence(v.Id, v.Data));
         	}
-            SnmpArray result = new SnmpArray(varbinds);
+            Sequence result = new Sequence(varbinds);
             return result;
         }
         /// <summary>

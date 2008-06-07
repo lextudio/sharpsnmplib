@@ -12,11 +12,17 @@ using System;
 namespace Lextm.SharpSnmpLib.Mib
 {
 	/// <summary>
-	/// Description of SequenceNode.
+	/// The SEQUENCE type represents a list of specified types. This is roughtly analogous to a <code>struct</code> in C.
 	/// </summary>
-	public class SequenceNode : IAsn
+	public class Sequence : ITypeAssignment
     {
-		public SequenceNode(string module, Symbol name, Lexer lexer)
+        /// <summary>
+        /// Creates a <see cref="Sequence"/> instance.
+        /// </summary>
+        /// <param name="module"></param>
+        /// <param name="name"></param>
+        /// <param name="lexer"></param>
+		public Sequence(string module, string name, Lexer lexer)
 		{
 			Symbol temp;
             Symbol last = null;
@@ -28,10 +34,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 }
                 last = temp;
             }
-            if (temp == null)
-            {
-                throw SharpMibException.Create(last);
-            }
+            ConstructHelper.Validate(last, temp == null, "end of file reached");
 		}
 	}
 }

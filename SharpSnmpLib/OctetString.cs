@@ -39,7 +39,7 @@ namespace Lextm.SharpSnmpLib
 		public OctetString(byte[] raw)
 		{
 			_raw = raw;
-            _bytes = null;
+            _bytes = ByteTool.ToBytes(SnmpType.OctetString, _raw);
 		}
 
         //public OctetString(byte[] buffer,int index,int count)
@@ -119,13 +119,6 @@ namespace Lextm.SharpSnmpLib
 		
 		public byte[] ToBytes()
 		{
-			if (_bytes == null) {
-				MemoryStream m = new MemoryStream();
-				m.WriteByte((byte)TypeCode);
-				ByteTool.WriteMultiByteLength(m, _raw.Length);
-				m.Write(_raw, 0, _raw.Length);
-				_bytes = m.ToArray();
-			}
 			return _bytes;
 		}
         /// <summary>

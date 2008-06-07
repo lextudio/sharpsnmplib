@@ -14,10 +14,10 @@ namespace Lextm.SharpSnmpLib.Mib
 	/// <summary>
 	/// Alias.
 	/// </summary>
-	public class AliasNode : IAsn
+	public class TypeAssignment : ITypeAssignment
 	{
 		string _module;
-		Symbol _name;
+		string _name;
 		Symbol _last;
 		/// <summary>
 		/// Creates an <see cref="AliasNode"/>.
@@ -26,7 +26,7 @@ namespace Lextm.SharpSnmpLib.Mib
 		/// <param name="name"></param>
 		/// <param name="lexer"></param>
 		/// <param name="last"></param>
-		public AliasNode(string module, Symbol name, Symbol last, Lexer lexer)
+		public TypeAssignment(string module, string name, Symbol last, Lexer lexer)
 		{
             //TODO:
 			_module = module;
@@ -35,26 +35,15 @@ namespace Lextm.SharpSnmpLib.Mib
 			
             Symbol temp;
             Symbol previous = last;
-            do
+            while ((temp = lexer.NextSymbol) != null)
             {
-                temp = lexer.NextSymbol;
-                if (temp == Symbol.Choice)
-                {
-                    while ((temp = lexer.NextSymbol) != Symbol.OpenBracket)
-                    {
-                    }
-                    while ((temp = lexer.NextSymbol) != Symbol.CloseBracket)
-                    {
-                    }
-                    return;
-                }
-                if (last == Symbol.EOL && temp == Symbol.EOL)
+                if (previous == Symbol.EOL && temp == Symbol.EOL)
                 {
                     return;
                 }
-                last = temp;
-            } while (temp != null);
-            throw SharpMibException.Create(temp);
+                previous = temp;
+            }
+            ConstructHelper.Validate(previous, temp == null, "end of file reached");
 		}
 	}
 }

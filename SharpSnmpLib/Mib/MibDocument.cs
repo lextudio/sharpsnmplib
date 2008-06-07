@@ -12,8 +12,15 @@ using System.Collections.Generic;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
+    /// <summary>
+    /// MIB document.
+    /// </summary>
 	public class MibDocument
 	{
+        /// <summary>
+        /// Creates a <see cref="MibDocument"/> instance.
+        /// </summary>
+        /// <param name="lexer"></param>
 		public MibDocument(Lexer lexer)
 		{
 			Symbol temp;
@@ -28,7 +35,9 @@ namespace Lextm.SharpSnmpLib.Mib
 		}
 		
 		IList<MibModule> _modules = new List<MibModule>();
-		
+		/// <summary>
+		/// <see cref="MibModule"/> containing in this document.
+		/// </summary>
 		public IList<MibModule> Modules
 		{
 			get

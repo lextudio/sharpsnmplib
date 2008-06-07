@@ -24,7 +24,7 @@ namespace Lextm.SharpSnmpLib
         private IList<Variable> _variables;
         private Integer32 _seq;
         private byte[] _raw;
-        private SnmpArray _varbindSection;
+        private Sequence _varbindSection;
         private byte[] _bytes;        
         /// <summary>
         /// Creates a <see cref="GetNextRequestPdu"/> with all contents.
@@ -55,7 +55,7 @@ namespace Lextm.SharpSnmpLib
 			_seq = (Integer32)SnmpDataFactory.CreateSnmpData(m);
 			_errorStatus = (Integer32)SnmpDataFactory.CreateSnmpData(m);
 			_errorIndex = (Integer32)SnmpDataFactory.CreateSnmpData(m);
-			_varbindSection = (SnmpArray)SnmpDataFactory.CreateSnmpData(m);
+			_varbindSection = (Sequence)SnmpDataFactory.CreateSnmpData(m);
 			_variables = Variable.ConvertFrom(_varbindSection);
         }
         
@@ -89,7 +89,7 @@ namespace Lextm.SharpSnmpLib
             Integer32 ver = new Integer32((int)version);
             OctetString comm = new OctetString(community);
             GetNextRequestPdu pdu = this;
-            SnmpArray array = new SnmpArray(ver, comm, pdu);
+            Sequence array = new Sequence(ver, comm, pdu);
             return array;
         }
 

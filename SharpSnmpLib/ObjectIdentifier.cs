@@ -32,7 +32,7 @@ namespace Lextm.SharpSnmpLib
 			{
 				PutOIDEl(ref _raw, ref ln,_oid[j]);
 			}
-			_bytes = null;
+			_bytes = ByteTool.ToBytes(SnmpType.ObjectIdentifier, _raw);
 		}
 		/// <summary>
 		/// Creates an <see cref="ObjectIdentifier"/> instance from raw bytes.
@@ -42,7 +42,7 @@ namespace Lextm.SharpSnmpLib
 		{
 			_raw = raw;
 			_oid = ParsePduFormat(raw, (uint)raw.Length);
-			_bytes = null;
+			_bytes = ByteTool.ToBytes(SnmpType.ObjectIdentifier, _raw);
 		}
         /// <summary>
         /// Convers to OID array.
@@ -159,9 +159,6 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
 		public byte[] ToBytes()
 		{
-			if (_bytes == null) {
-				_bytes = ByteTool.ToBytes(TypeCode, _raw);
-			}
 			return _bytes;
 		}
 		/// <summary>

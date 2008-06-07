@@ -17,10 +17,8 @@ namespace Lextm.SharpSnmpLib
 	/// <summary>
 	/// Description of ByteTool.
 	/// </summary>
-	internal sealed class ByteTool
+	internal static class ByteTool
 	{
-		ByteTool(){	}
-		
 		internal static bool CompareRaw(byte[] left, byte[] right)
 		{
 			if (left.Length != right.Length)

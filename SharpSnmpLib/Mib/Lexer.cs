@@ -30,7 +30,7 @@ namespace Lextm.SharpSnmpLib.Mib
 			int i = 0;
 			while ((line = stream.ReadLine()) != null)
 			{
-				if (line.TrimStart().StartsWith("--", StringComparison.Ordinal)) {
+				if (!inString && line.TrimStart().StartsWith("--", StringComparison.Ordinal)) {
 					i++;
 					continue; // commented line
 				}

@@ -14,7 +14,7 @@ namespace Lextm.SharpSnmpLib.Mib
 	/// <summary>
 	/// Description of IEntity.
 	/// </summary>
-	interface IEntity : IAsn
+	interface IEntity : IConstruct
 	{
         string Module
         {

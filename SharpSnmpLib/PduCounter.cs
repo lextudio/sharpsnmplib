@@ -7,10 +7,8 @@ namespace Lextm.SharpSnmpLib
 	/// A counter that generates PDU sequence number.
 	/// </summary>
 	/// <remarks>The sequence number is used to identifier PDU sessions.</remarks>
-	sealed class PduCounter
+	static class PduCounter
 	{
-		PduCounter() { }
-		
 		internal static Integer32 NextCount
 		{
 			get {

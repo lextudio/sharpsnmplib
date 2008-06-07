@@ -76,10 +76,10 @@ namespace Lextm.SharpSnmpLib
 			}
 		}
 		/// <summary>
-		/// Creates a <see cref="SetRequestMessage"/> with a specific <see cref="SnmpArray"/>.
+		/// Creates a <see cref="SetRequestMessage"/> with a specific <see cref="Sequence"/>.
 		/// </summary>
 		/// <param name="body">Message body</param>
-		public SetRequestMessage(SnmpArray body)
+		public SetRequestMessage(Sequence body)
 		{
 			if (body == null)
 			{

@@ -22,10 +22,10 @@ namespace Lextm.SharpSnmpLib
         int _errorIndex;
 		IList<Variable> _variables;
 		/// <summary>
-		/// Creates a <see cref="GetResponseMessage"/> with a specific <see cref="SnmpArray"/>.
+		/// Creates a <see cref="GetResponseMessage"/> with a specific <see cref="Sequence"/>.
 		/// </summary>
 		/// <param name="body">Message body</param>
-		public GetResponseMessage(SnmpArray body)
+		public GetResponseMessage(Sequence body)
 		{
 			if (body == null)
 			{

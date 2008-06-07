@@ -18,57 +18,45 @@ namespace Lextm.SharpSnmpLib.Mib
 	public class MibModule
 	{
 		string _name;
+		Imports _imports;
+		Exports _exports;
+		IList<IConstruct> _tokens = new List<IConstruct>();
 		/// <summary>
 		/// Creates a <see cref="MibModule"/> with a specific <see cref="Lexer"/>.
 		/// </summary>
+		/// <param name="name">Module name</param>
 		/// <param name="lexer">Lexer</param>
 		public MibModule(string name, Lexer lexer)
 		{
 			_name = name;
 			Symbol temp = lexer.NextSymbol;
-			if (temp != Symbol.Definitions)
-			{
-				throw SharpMibException.Create(temp);
-			}
+			ConstructHelper.Expect(temp, Symbol.Definitions);
 			temp = lexer.NextSymbol;
-			if (temp != Symbol.Assign) {
-				throw SharpMibException.Create(temp);
-			}
+			ConstructHelper.Expect(temp, Symbol.Assign);
 			temp = lexer.NextSymbol;
-			if (temp != Symbol.Begin) {
-				throw SharpMibException.Create(temp);
-			}
-            do
-            {
-                temp = lexer.NextSymbol;
-            } while (temp == Symbol.EOL);
+			ConstructHelper.Expect(temp, Symbol.Begin);
+            temp = ConstructHelper.IgnoreEOL(lexer);
             if (temp == Symbol.Imports)
             {
-                ParseDependents(_dependents, lexer);
+                _imports = ParseDependents(lexer);
+            }
+            else if (temp == Symbol.Exports) {
+            	_exports = ParseExports(lexer);
             }
 			ParseEntities(_tokens, temp, _name, lexer);
 		}
 		
-		static void ParseDependents(IList<string> dependents, Lexer lexer)
+		Exports ParseExports(Lexer lexer)
 		{
-			Symbol temp;
-			while ((temp = lexer.NextSymbol) != null)
-			{
-				if (temp == Symbol.From)
-				{
-					dependents.Add(lexer.NextSymbol.ToString());
-				}
-				else if (temp == Symbol.Semicolon) 
-				{
-					return;
-				}				
-			}
+			return new Exports(lexer);
 		}
 		
-		IList<IAsn> _tokens = new List<IAsn>();
-		IList<string> _dependents = new List<string>();
+		Imports ParseDependents(Lexer lexer)
+		{
+			return new Imports(lexer);
+		}
 		
-		void ParseEntities(IList<IAsn> tokens, Symbol last, string module, Lexer lexer)
+		void ParseEntities(IList<IConstruct> tokens, Symbol last, string module, Lexer lexer)
 		{
 			Symbol temp = last;
 			
@@ -76,7 +64,7 @@ namespace Lextm.SharpSnmpLib.Mib
 			IList<Symbol> next = new List<Symbol>();// symbol that belongs to next token.
             do
             {
-                if (temp == Symbol.Imports || temp == Symbol.EOL)
+                if (temp == Symbol.Imports || temp == Symbol.Exports || temp == Symbol.EOL)
                 {
                     continue;
                 }
@@ -90,17 +78,15 @@ namespace Lextm.SharpSnmpLib.Mib
             while ((temp = lexer.NextSymbol) != Symbol.End);
 		}
 		
-		static void ParseEntity(IList<IAsn> tokens, string module, IList<Symbol> buffer, Lexer lexer, ref IList<Symbol> next)
+		static void ParseEntity(IList<IConstruct> tokens, string module, IList<Symbol> buffer, Lexer lexer, ref IList<Symbol> next)
 		{	
             next.Clear();
-            if (buffer.Count == 1)
-            {
-                throw SharpMibException.Create(buffer[0]);
-            } 
+            ConstructHelper.Validate(buffer[0], buffer.Count == 1, "unexpected symbol");
+            ConstructHelper.ValidateIdentifier(buffer[0]);
             if (buffer.Count == 2)
             {
                 // others
-                tokens.Add(ParseOthers(module, buffer[0], lexer));
+                tokens.Add(ParseOthers(module, buffer, lexer));
             }
             else if (buffer[1] == Symbol.Object)
             {
@@ -138,67 +124,77 @@ namespace Lextm.SharpSnmpLib.Mib
             {
                 tokens.Add(ParseMacro(module, buffer, lexer));
             }
+            else if (buffer[1] == Symbol.Trap_Type) 
+            {
+            	tokens.Add(new TrapType(module, buffer, lexer));
+            }
+            else if (buffer[1] == Symbol.Agent_Capabilities) {
+            	tokens.Add(new AgentCapabilities(module, buffer, lexer));
+            }
 		}
 
-        private static IAsn ParseMacro(string module, IList<Symbol> header, Lexer lexer)
+        private static IConstruct ParseMacro(string module, IList<Symbol> header, Lexer lexer)
         {
-            return new MacroNode(module, header, lexer);
+            return new Macro(module, header, lexer);
         }
 
         static IEntity ParseObjectIdentity(string module, IList<Symbol> header, Lexer lexer)
         {
-            return new ObjectIdentityNode(module, header, lexer);
+            return new ObjectIdentity(module, header, lexer);
         }
 
         static IEntity ParseNotificationType(string module, IList<Symbol> header, Lexer lexer)
         {
-            return new NotificationTypeNode(module, header, lexer);
+            return new NotificationType(module, header, lexer);
         }
 		
 		static IEntity ParseModuleCompliance(string module, IList<Symbol> header, Lexer lexer)
 		{
-            return new ModuleComplianceNode(module, header, lexer);
+            return new ModuleCompliance(module, header, lexer);
 		}
 		
 		static IEntity ParseNotificationGroup(string module, IList<Symbol> header, Lexer lexer)
 		{
-            return new NotificationGroupNode(module, header, lexer);
+            return new NotificationGroup(module, header, lexer);
 		}
 		
 		static IEntity ParseObjectGroup(string module, IList<Symbol> header, Lexer lexer)
 		{
-            return new ObjectGroupNode(module, header, lexer);
+            return new ObjectGroup(module, header, lexer);
 		}
 
         static IEntity ParseObjectType(string module, IList<Symbol> header, Lexer lexer)
         {           
-            return new ObjectTypeNode(module, header, lexer);
+            return new ObjectType(module, header, lexer);
         }
 
         static IEntity ParseModuleIdentity(string module, IList<Symbol> header, Lexer lexer)
         {
-            return new ModuleIdentityNode(module, header, lexer);
+            return new ModuleIdentity(module, header, lexer);
         }
 		
 		static IEntity ParseObjectIdentifier(string module, IList<Symbol> header, Lexer lexer)
 		{
-            if (header.Count != 4)
-            {
-                throw SharpMibException.Create(header[0]);
-            }
-			if (header[2] != Symbol.Identifier) {
-				throw SharpMibException.Create(header[2]);
-			}
-			return new ObjectIdentifierNode(module, header[0].ToString(), lexer);
+			ConstructHelper.Validate(header[0], header.Count != 4, "invalid OID value assignment");
+			ConstructHelper.Expect(header[2], Symbol.Identifier);
+			return new OidValueAssignment(module, header[0].ToString(), lexer);
 		}
 		
-		static IAsn ParseOthers(string module, Symbol name, Lexer lexer)
+		static IConstruct ParseOthers(string module, IList<Symbol> header, Lexer lexer)
 		{
-			Symbol current = lexer.NextSymbol;
-			if (current == Symbol.Sequence) {
-				return new SequenceNode(module, name, lexer);
+			Symbol current;
+            while ((current = lexer.NextSymbol) == Symbol.EOL) { }
+            if (current == Symbol.Sequence) {
+				return new Sequence(module, header[0].ToString(), lexer);
+			} 
+			else if (current == Symbol.Choice) {
+				return new Choice(module, header[0].ToString(), lexer);
 			}
-			return new AliasNode(module, name, current, lexer);
+            else if (current == Symbol.Textual_Convention)
+            {
+                return new TextualConvention(module, header[0].ToString(), lexer);
+            }
+			return new TypeAssignment(module, header[0].ToString(), current, lexer);
 		}
 		/// <summary>
 		/// Module name.
@@ -213,15 +209,32 @@ namespace Lextm.SharpSnmpLib.Mib
 		/// <summary>
 		/// OID nodes.
 		/// </summary>
-		internal IList<IEntity> EntityNodes
+		internal IList<IEntity> Entities
 		{
 			get
 			{
 				IList<IEntity> result = new List<IEntity>();
-				foreach (IAsn e in _tokens)
+				foreach (IConstruct e in _tokens)
 				{
 					if (e is IEntity) {
 						result.Add((IEntity)e);
+					}
+				}
+				return result;
+			}
+		}		
+		/// <summary>
+		/// OID nodes.
+		/// </summary>
+		internal IList<ObjectType> Objects
+		{
+			get
+			{
+				IList<ObjectType> result = new List<ObjectType>();
+				foreach (IConstruct e in _tokens)
+				{
+					if (e is ObjectType) {
+						result.Add((ObjectType)e);
 					}
 				}
 				return result;
@@ -232,7 +245,7 @@ namespace Lextm.SharpSnmpLib.Mib
 		{
 			get
 			{
-				return _dependents;
+				return (_imports == null) ? new List<string>() : _imports.Dependents;
 			}
 		}
 		

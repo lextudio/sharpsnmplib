@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
-    class MacroNode : IAsn
+    sealed class Macro : ITypeAssignment
     {
-        public MacroNode(string module, IList<Symbol> header, Lexer lexer)
+        public Macro(string module, IList<Symbol> header, Lexer lexer)
         {
             Symbol temp;
             while ((temp = lexer.NextSymbol) != Symbol.Begin)

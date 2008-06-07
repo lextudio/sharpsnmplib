@@ -26,7 +26,7 @@ namespace Lextm.SharpSnmpLib
             }
             _ip = ip;
             _raw = _ip.GetAddressBytes();
-            _bytes = null;
+            _bytes = ByteTool.ToBytes(SnmpType.IPAddress, _raw);
         }
 		/// <summary>
 		/// Creates an <see cref="IP"/> from raw bytes.
@@ -40,7 +40,7 @@ namespace Lextm.SharpSnmpLib
 			}
 			_raw = raw;
 			_ip = new IPAddress(raw);
-            _bytes = null;
+            _bytes = ByteTool.ToBytes(SnmpType.IPAddress, _raw);
 		}
 		/// <summary>
 		/// Creates an <see cref="IP"/> from a specific <see cref="String"/>.
@@ -89,10 +89,6 @@ namespace Lextm.SharpSnmpLib
 		/// <returns></returns>
 		public byte[] ToBytes()
 		{
-            if (_bytes == null)
-            {
-                _bytes = ByteTool.ToBytes(TypeCode, _raw);
-            }
             return _bytes;
 		}
         /// <summary>

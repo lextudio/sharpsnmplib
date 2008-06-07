@@ -6,40 +6,25 @@ namespace Lextm.SharpSnmpLib.Mib
     /// <summary>
     /// Object identifier node.
     /// </summary>
-    public class ObjectIdentityNode : IEntity
+    public class ObjectIdentity : IEntity
     {
         string _module;
         string _name;
         string _parent;
         int _value;
         /// <summary>
-        /// Creates a <see cref="ObjectIdentifierNode"/>.
+        /// Creates a <see cref="ObjectIdentity"/>.
         /// </summary>
         /// <param name="module">Module name</param>
         /// <param name="header">Header</param>
         /// <param name="lexer">Lexer</param>
-        public ObjectIdentityNode(string module, IList<Symbol> header, Lexer lexer)
+        public ObjectIdentity(string module, IList<Symbol> header, Lexer lexer)
         {
             _module = module;
             _name = header[0].ToString();
-            Symbol temp = lexer.NextSymbol;
-            if (temp != Symbol.OpenBracket)
-            {
-                throw SharpMibException.Create(temp);
-            }
-            _parent = lexer.NextSymbol.ToString();
-            temp = lexer.NextSymbol;
-            bool succeeded = int.TryParse(temp.ToString(), out _value);
-            if (!succeeded)
-            {
-                throw SharpMibException.Create(temp);
-            }
-            temp = lexer.NextSymbol;
-            if (temp != Symbol.CloseBracket)
-            {
-                throw SharpMibException.Create(temp);
-            }
+            ConstructHelper.ParseOidValue(lexer, out _parent, out _value);
         }
+
         /// <summary>
         /// Module name.
         /// </summary>
