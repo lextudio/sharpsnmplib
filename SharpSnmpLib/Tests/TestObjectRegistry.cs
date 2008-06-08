@@ -43,7 +43,7 @@ namespace Lextm.SharpSnmpLib.Tests
 		public void TestSNMPv2TMTextual()
 		{
 			uint[] old = ObjectRegistry.Instance.GetNumericalFrom("SNMPv2-SMI::snmpDomains");
-			string result = ObjectRegistry.Instance.GetTextualFrom(Definition.GetChildId(old, 1));
+			string result = ObjectRegistry.Instance.GetTextualFrom(Definition.AppendTo(old, 1));
 			Assert.AreEqual("SNMPv2-TM::snmpUDPDomain", result);
 		}
 		[Test]
@@ -85,6 +85,22 @@ namespace Lextm.SharpSnmpLib.Tests
 			uint[] id = ObjectRegistry.Instance.GetNumericalFrom(name);
 			Assert.IsTrue(ObjectRegistry.Instance.IsTableId(id));
 		}
+		[Test]
+		public void TestsysORTable0()
+		{
+			uint[] expected = new uint[] {1,3,6,1,2,1,1,9,0};
+			string name = "SNMPv2-MIB::sysORTable.0";
+			uint[] id = ObjectRegistry.Instance.GetNumericalFrom(name);
+			Assert.AreEqual(expected, id);
+		}
+		[Test]
+		public void TestsysORTable0Reverse()
+		{
+			uint[] id = new uint[] {1,3,6,1,2,1,1,9,0};
+			string expected = "SNMPv2-MIB::sysORTable.0";
+			string value = ObjectRegistry.Instance.GetTextualFrom(id);
+			Assert.AreEqual(expected, value);
+		}	
 		[Test]
 		public void TestsnmpMIB()
 		{

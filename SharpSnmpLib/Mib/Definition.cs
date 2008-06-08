@@ -116,7 +116,7 @@ namespace Lextm.SharpSnmpLib.Mib
             return new Definition(id.ToArray(), entity.Name.ToString(), entity.Module);
         }
         
-        internal static uint[] GetChildId(uint[] parentId, uint value)
+        internal static uint[] AppendTo(uint[] parentId, uint value)
         {
         	List<uint> n = new List<uint>(parentId);
 			n.Add(value);

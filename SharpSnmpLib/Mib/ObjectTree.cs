@@ -17,17 +17,15 @@ namespace Lextm.SharpSnmpLib.Mib
 			root = Definition.RootDefinition;
 			Definition iso = Definition.ToDefinition(new OidValueAssignment("SNMPv2-SMI", "iso", null, 1), null);
 			root.Add(iso);
-			nameTable = new Dictionary<string, Definition>() { { "iso", iso } };
+			nameTable = new Dictionary<string, Definition>() { { iso.TextualForm, iso } };
 		}
 
 		internal Definition Find(string module, string name)
 		{
-			if (nameTable.ContainsKey(name))
+			string full = module + "::" + name;
+			if (nameTable.ContainsKey(full))
 			{
-				if (nameTable[name].Module == module)
-				{
-					return nameTable[name];
-				}
+				return nameTable[full];	
 			}
 			return null;
 		}
@@ -73,7 +71,7 @@ namespace Lextm.SharpSnmpLib.Mib
 					Definition result = root.Add(node);
 					if (result != null)
 					{
-						nameTable.Add(result.Name, result);
+						nameTable.Add(result.TextualForm, result);
 					}
 				}
 			}

@@ -90,7 +90,20 @@ namespace Lextm.SharpSnmpLib.Mib
 			if (name.Length == 0) {
 				throw new ArgumentException("name cannot be empty");
 			}
-			return _tree.Find(module, name).NumericalForm;
+			if (!name.Contains(".")) {
+				return _tree.Find(module, name).NumericalForm;
+			}
+			string[] content = name.Split('.');
+			if (content.Length != 2) {
+				throw new ArgumentException("name can only contain one dot");
+			}
+			int value;
+			bool succeeded = int.TryParse(content[1], out value);
+			if (!succeeded) {
+				throw new ArgumentException("not a decimal after dot");
+			}
+			uint[] oid = _tree.Find(module, content[0]).NumericalForm;
+			return Definition.AppendTo(oid, (uint)value);
 		}
 		/// <summary>
 		/// Gets textual form from numerical form.
@@ -102,8 +115,22 @@ namespace Lextm.SharpSnmpLib.Mib
 		{
 			if (numerical == null) {
 				throw new ArgumentNullException("numerical");
+			}			
+			try {
+				return _tree.Find(numerical).TextualForm;
+			} catch (ArgumentOutOfRangeException) {
 			}
-			return _tree.Find(numerical).TextualForm;
+			return _tree.Find(GetParent(numerical)).TextualForm + "." + numerical[numerical.Length - 1];
+		}
+		
+		uint[] GetParent(uint[] id)
+		{
+			uint[] result = new uint[id.Length - 1];
+			for (int i = 0; i < result.Length; i++)
+			{
+				result[i] = id[i];
+			}
+			return result;
 		}
 		/// <summary>
 		/// Loads a folder of MIB files.

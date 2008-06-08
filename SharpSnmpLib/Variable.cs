@@ -24,20 +24,38 @@ namespace Lextm.SharpSnmpLib
 		ObjectIdentifier _oid;
 		ISnmpData _data;
 		/// <summary>
-		/// Creates a <see cref="Variable"/> instance with a specific object identifier.
+		/// Creates a <see cref="Variable"/> instance with a specific <see cref="ObjectIdentifier"/>.
 		/// </summary>
 		/// <param name="oid">Object identifier</param>
-		public Variable(ObjectIdentifier oid)
-		{
-			_oid = oid;
-			_data = new Null();
-		}
+		public Variable(ObjectIdentifier oid) : this(oid, null)		{	}
+		/// <summary>
+		/// Creates a <see cref="Variable"/> instance with a specific <see cref="String"/>.
+		/// </summary>
+		/// <param name="textual">Textual IID string</param>
+		public Variable(string textual) : this(new ObjectIdentifier(Mib.ObjectRegistry.Instance.GetNumericalFrom(textual)), null)
+		{	}
 		/// <summary>
 		/// Creates a <see cref="Variable"/> instance with a specific object identifier.
 		/// </summary>
 		/// <param name="oid">Object identifier</param>
 		[CLSCompliant(false)]
 		public Variable(uint[] oid) : this(new ObjectIdentifier(oid)) {}
+		/// <summary>
+		/// Creates a <see cref="Variable"/> instance with a specific <see cref="String"/> and <see cref="ISnmpData"/>.
+		/// </summary>
+		/// <param name="textual"></param>
+		/// <param name="data"></param>
+		public Variable(string textual, ISnmpData data) 
+			: this(new ObjectIdentifier(Mib.ObjectRegistry.Instance.GetNumericalFrom(textual)), data)
+		{}
+		/// <summary>
+		/// Creates a <see cref="Variable"/> instance with a specific <see cref="ObjectIdentifier"/> and <see cref="ISnmpData"/>.
+		/// </summary>
+		/// <param name="oid">Object identifier</param>
+		/// <param name="data">Data</param>
+		/// <remarks>If you set <c>null</c> to <paramref name="data"/>, you get a <see cref="Variable"/> instance whose <see cref="Data"/> is a <see cref="Null"/> instance.</remarks>
+		[CLSCompliant(false)]
+		public Variable(uint[] oid, ISnmpData data) : this(new ObjectIdentifier(oid), data) { }
 		/// <summary>
 		/// Creates a <see cref="Variable"/> instance with a specific object identifier and data.
 		/// </summary>
@@ -48,15 +66,7 @@ namespace Lextm.SharpSnmpLib
 		{
 			_oid = oid;
 			_data = data?? new Null();
-		}		
-		/// <summary>
-		/// Creates a <see cref="Variable"/> instance with a specific object identifier and data.
-		/// </summary>
-		/// <param name="oid">Object identifier</param>
-		/// <param name="data">Data</param>
-		/// <remarks>If you set <c>null</c> to <paramref name="data"/>, you get a <see cref="Variable"/> instance whose <see cref="Data"/> is a <see cref="Null"/> instance.</remarks>
-		[CLSCompliant(false)]
-		public Variable(uint[] oid, ISnmpData data) : this(new ObjectIdentifier(oid), data) { }
+		}
 		/// <summary>
 		/// Variable object identifier.
 		/// </summary>
@@ -76,12 +86,12 @@ namespace Lextm.SharpSnmpLib
 			{
 				return _data;
 			}
-		}		
-        /// <summary>
-        /// Converts varbind section to variable binds list.
-        /// </summary>
-        /// <param name="varbindSection"></param>
-        /// <returns></returns>
+		}
+		/// <summary>
+		/// Converts varbind section to variable binds list.
+		/// </summary>
+		/// <param name="varbindSection"></param>
+		/// <returns></returns>
 		internal static IList<Variable> ConvertFrom(Sequence varbindSection)
 		{
 			IList<Variable> result = new List<Variable>(varbindSection.Items.Count);
@@ -115,23 +125,23 @@ namespace Lextm.SharpSnmpLib
 		/// </summary>
 		/// <param name="variables"></param>
 		/// <returns></returns>
-        internal static Sequence ConvertTo(IList<Variable> variables)
-        {
-        	IList<ISnmpData> varbinds = new List<ISnmpData>(2*variables.Count);
-        	foreach (Variable v in variables)
-        	{
-        		varbinds.Add(new Sequence(v.Id, v.Data));
-        	}
-            Sequence result = new Sequence(varbinds);
-            return result;
-        }
-        /// <summary>
-        /// Returns a <see cref="String"/> that represents this <see cref="Variable"/>.
-        /// </summary>
-        /// <returns></returns>
+		internal static Sequence ConvertTo(IList<Variable> variables)
+		{
+			IList<ISnmpData> varbinds = new List<ISnmpData>(2*variables.Count);
+			foreach (Variable v in variables)
+			{
+				varbinds.Add(new Sequence(v.Id, v.Data));
+			}
+			Sequence result = new Sequence(varbinds);
+			return result;
+		}
+		/// <summary>
+		/// Returns a <see cref="String"/> that represents this <see cref="Variable"/>.
+		/// </summary>
+		/// <returns></returns>
 		public override string ToString()
 		{
 			return "Variable: Id: " + Id + "; Data: " + Data;
 		}
-    }
+	}
 }
