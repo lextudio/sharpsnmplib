@@ -37,6 +37,78 @@ namespace Lextm.SharpSnmpLib.Mib
 						instance.LoadFile(new StreamReader(new MemoryStream(Resource.SNMPv2_TC)));
 						instance.LoadFile(new StreamReader(new MemoryStream(Resource.SNMPv2_MIB)));
 						instance.LoadFile(new StreamReader(new MemoryStream(Resource.SNMPv2_TM)));
+						
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.AGENTX_MIB)));
+						
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.DISMAN_EVENT_MIB)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.DISMAN_EXPRESSION_MIB)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.DISMAN_NSLOOKUP_MIB)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.DISMAN_PING_MIB)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.DISMAN_SCHEDULE_MIB)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.DISMAN_SCRIPT_MIB)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.DISMAN_TRACEROUTE_MIB)));
+						
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.EtherLike_MIB)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.HCNUM_TC)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.HOST_RESOURCES_MIB)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.HOST_RESOURCES_TYPES)));
+						
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.IANA_ADDRESS_FAMILY_NUMBERS_MIB)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.IANA_LANGUAGE_MIB)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.IANA_RTPROTO_MIB)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.IANAifType_MIB)));
+						
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.IF_INVERTED_STACK_MIB)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.IF_MIB)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.INET_ADDRESS_MIB)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.IP_FORWARD_MIB)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.IP_MIB)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.IPV6_FLOW_LABEL_MIB)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.IPV6_ICMP_MIB)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.IPV6_MIB)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.IPV6_TC)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.IPV6_TCP_MIB)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.IPV6_UDP_MIB)));
+						
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.LM_SENSORS_MIB)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.MTA_MIB)));
+						
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.NET_SNMP_AGENT_MIB)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.NET_SNMP_EXAMPLES_MIB)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.NET_SNMP_EXTEND_MIB)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.NET_SNMP_MIB)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.NET_SNMP_MONITOR_MIB)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.NET_SNMP_SYSTEM_MIB)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.NET_SNMP_TC)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.NET_SNMP_VACM_MIB)));
+						
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.NETWORK_SERVICES_MIB)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.NOTIFICATION_LOG_MIB)));
+						
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.RMON_MIB)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.SMUX_MIB)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.SNMP_COMMUNITY_MIB)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.SNMP_FRAMEWORK_MIB)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.SNMP_MPD_MIB)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.SNMP_NOTIFICATION_MIB)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.SNMP_PROXY_MIB)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.SNMP_TARGET_MIB)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.SNMP_USER_BASED_SM_MIB)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.SNMP_USM_AES_MIB)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.SNMP_USM_DH_OBJECTS_MIB)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.SNMP_VIEW_BASED_ACM_MIB)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.TCP_MIB)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.TRANSPORT_ADDRESS_MIB)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.TUNNEL_MIB)));
+						
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.UCD_DEMO_MIB)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.UCD_DISKIO_MIB)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.UCD_DLMOD_MIB)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.UCD_IPFILTER_MIB)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.UCD_IPFWACC_MIB)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.UCD_SNMP_MIB)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.UCD_SNMP_MIB_OLD)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.UDP_MIB)));						
 					}
 				}
 				return instance;

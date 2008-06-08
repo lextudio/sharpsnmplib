@@ -25,7 +25,7 @@ namespace Lextm.SharpSnmpLib.Mib
 			string full = module + "::" + name;
 			if (nameTable.ContainsKey(full))
 			{
-				return nameTable[full];	
+				return nameTable[full];
 			}
 			return null;
 		}
@@ -54,6 +54,47 @@ namespace Lextm.SharpSnmpLib.Mib
 		}
 		
 		IDictionary<string, MibModule> _modules = new Dictionary<string, MibModule>();
+		IList<MibModule> _pending = new List<MibModule>();
+		
+		bool ParseModule(MibModule module)
+		{
+			if (!MibModule.AllDependentsAvailable(module, _modules)) {
+				return false;
+			}
+			_modules.Add(module.Name, module);
+			foreach (IEntity node in module.Entities)
+			{
+				Definition result = root.Add(node);
+				if (result != null)
+				{
+					nameTable.Add(result.TextualForm, result);
+				}
+			}
+			return true;
+		}
+		
+		int ParsePendings()
+		{
+			int previous;
+			int current = _pending.Count;
+			while (current != 0)
+			{
+				previous = current;
+				for (int i = 0; i < _pending.Count; i++)//MibModule module in _pending)
+				{
+					bool succeeded = ParseModule(_pending[i]);
+					if (succeeded) {
+						_pending.RemoveAt(i);
+					}
+				}
+				current = _pending.Count;
+				if (current == previous) {
+					// cannot parse more
+					break;
+				}
+			}
+			return current;
+		}
 
 		internal int Parse(TextReader stream)
 		{
@@ -62,19 +103,9 @@ namespace Lextm.SharpSnmpLib.Mib
 			IList<MibModule> modules = file.Modules;
 			foreach (MibModule module in modules)
 			{
-				if (!MibModule.AllDependentsAvailable(module, _modules)) {
-					return -1;
-				}
-				_modules.Add(module.Name, module);
-				foreach (IEntity node in module.Entities)
-				{
-					Definition result = root.Add(node);
-					if (result != null)
-					{
-						nameTable.Add(result.TextualForm, result);
-					}
-				}
+				_pending.Add(module);
 			}
+			ParsePendings();
 			return _lexer.SymbolCount;
 		}
 	}
