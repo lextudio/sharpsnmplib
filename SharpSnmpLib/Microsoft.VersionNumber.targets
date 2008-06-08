@@ -9,7 +9,7 @@
   <!-- Properties for controlling the Assembly Version -->
   <PropertyGroup>
     <AssemblyMajorVersion>0</AssemblyMajorVersion>
-    <AssemblyMinorVersion>6</AssemblyMinorVersion>
+    <AssemblyMinorVersion>7</AssemblyMinorVersion>
     <AssemblyBuildNumber></AssemblyBuildNumber>
     <AssemblyRevision></AssemblyRevision>
     <AssemblyBuildNumberType>DateString</AssemblyBuildNumberType>
@@ -21,7 +21,7 @@
   <!-- Properties for controlling the Assembly File Version -->
   <PropertyGroup>
     <AssemblyFileMajorVersion>0</AssemblyFileMajorVersion>
-    <AssemblyFileMinorVersion>6</AssemblyFileMinorVersion>
+    <AssemblyFileMinorVersion>7</AssemblyFileMinorVersion>
     <AssemblyFileBuildNumber></AssemblyFileBuildNumber>
     <AssemblyFileRevision></AssemblyFileRevision>
     <AssemblyFileBuildNumberType>DateString</AssemblyFileBuildNumberType>

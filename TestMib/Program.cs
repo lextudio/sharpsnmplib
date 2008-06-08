@@ -17,7 +17,6 @@ namespace TestMib
             //new TestMibDocument().TestSNMPv2_SMI();            
             //new TestMibDocument().Testv2TM();
             TestObjectRegistry test = new TestObjectRegistry();
-            test.SetUp();
             test.TestSNMPv2MIBNumerical();
         }
     }

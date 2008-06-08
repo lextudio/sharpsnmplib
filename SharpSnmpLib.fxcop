@@ -89,19 +89,6 @@
         <Type Name="SharpOperationException" Analyze="True" AnalyzeAllChildren="True" />
         <Type Name="SharpSnmpException" Analyze="True" AnalyzeAllChildren="True" />
         <Type Name="SharpTimeoutException" Analyze="True" AnalyzeAllChildren="True" />
-        <Type Name="SnmpArray" Analyze="True" AnalyzeAllChildren="False">
-         <Members AnalyzeAllChildren="False">
-          <Member Name="#.ctor(Lextm.SharpSnmpLib.ISnmpData[])" Analyze="True" />
-          <Member Name="#.ctor(System.Byte[])" Analyze="True" />
-          <Member Name="#.ctor(System.Collections.IEnumerable)" Analyze="True" />
-          <Member Name="#_bytes" Analyze="True" />
-          <Member Name="#_list" Analyze="True" />
-          <Member Name="#_raw" Analyze="True" />
-          <Member Name="#Items" Analyze="True" AnalyzeAllChildren="True" />
-          <Member Name="#ToBytes()" Analyze="True" />
-          <Member Name="#TypeCode" Analyze="True" AnalyzeAllChildren="True" />
-         </Members>
-        </Type>
         <Type Name="SnmpDataFactory" Analyze="True" AnalyzeAllChildren="True" />
         <Type Name="SnmpType" Analyze="True" AnalyzeAllChildren="True" />
         <Type Name="TimeTicks" Analyze="True" AnalyzeAllChildren="True" />
@@ -117,7 +104,6 @@
        <Types AnalyzeAllChildren="False">
         <Type Name="Definition" Analyze="True" AnalyzeAllChildren="True" />
         <Type Name="Lexer" Analyze="True" AnalyzeAllChildren="True" />
-        <Type Name="MibFile" Analyze="True" AnalyzeAllChildren="True" />
         <Type Name="ObjectRegistry" Analyze="True" AnalyzeAllChildren="True" />
         <Type Name="ObjectTree" Analyze="True" AnalyzeAllChildren="True" />
         <Type Name="SharpMibException" Analyze="True" AnalyzeAllChildren="True" />
@@ -126,11 +112,8 @@
           <Member Name="#.cctor()" Analyze="True" />
           <Member Name="#.ctor(System.String)" Analyze="True" />
           <Member Name="#_text" Analyze="True" />
-          <Member Name="#definitions" Analyze="True" />
-          <Member Name="#Definitions" Analyze="True" AnalyzeAllChildren="True" />
+          <Member Name="#Definitions" Analyze="True" />
           <Member Name="#Equals(System.Object)" Analyze="True" />
-          <Member Name="#Parse(System.Char)" Analyze="True" />
-          <Member Name="#temp" Analyze="True" />
           <Member Name="#ToString()" Analyze="True" />
          </Members>
         </Type>
@@ -182,7 +165,7 @@
           <Members>
            <Member Name="#GetTable(Lextm.SharpSnmpLib.VersionCode,System.Net.IPAddress,System.String,Lextm.SharpSnmpLib.ObjectIdentifier)">
             <Messages>
-             <Message Id="Body" TypeName="PreferJaggedArraysOverMultidimensional" Category="Microsoft.Performance" CheckId="CA1814" Created="2008-05-12 12:14:45Z">
+             <Message Id="Body" TypeName="PreferJaggedArraysOverMultidimensional" Category="Microsoft.Performance" CheckId="CA1814" Status="Excluded" Created="2008-05-12 12:14:45Z">
               <Issue Name="Body">
                <Item>'Manager.GetTable(VersionCode, IPAddress, string, ObjectIdentifier)'</Item>
                <Item>'Variable[,]'</Item>
@@ -192,7 +175,7 @@
                <Item>'Variable[,]'</Item>
               </Issue>
              </Message>
-             <Message Id="Return" TypeName="PreferJaggedArraysOverMultidimensional" Category="Microsoft.Performance" CheckId="CA1814" Created="2008-05-12 12:14:45Z">
+             <Message Id="Return" TypeName="PreferJaggedArraysOverMultidimensional" Category="Microsoft.Performance" CheckId="CA1814" Status="Excluded" Created="2008-05-12 12:14:45Z">
               <Issue Name="Return">
                <Item>'Manager.GetTable(VersionCode, IPAddress, string, ObjectIdentifier)'</Item>
                <Item>'Variable[,]'</Item>
@@ -202,7 +185,7 @@
            </Member>
            <Member Name="#GetTable(Lextm.SharpSnmpLib.VersionCode,System.Net.IPAddress,System.String,System.UInt32[])">
             <Messages>
-             <Message Id="Return" TypeName="PreferJaggedArraysOverMultidimensional" Category="Microsoft.Performance" CheckId="CA1814" Created="2008-05-12 12:14:45Z">
+             <Message Id="Return" TypeName="PreferJaggedArraysOverMultidimensional" Category="Microsoft.Performance" CheckId="CA1814" Status="Excluded" Created="2008-05-12 12:14:45Z">
               <Issue Name="Return">
                <Item>'Manager.GetTable(VersionCode, IPAddress, string, uint[])'</Item>
                <Item>'Variable[,]'</Item>
@@ -212,7 +195,7 @@
            </Member>
            <Member Name="#GetTable(System.Net.IPAddress,System.String,Lextm.SharpSnmpLib.ObjectIdentifier)">
             <Messages>
-             <Message Id="Return" TypeName="PreferJaggedArraysOverMultidimensional" Category="Microsoft.Performance" CheckId="CA1814" Created="2008-05-12 12:14:45Z">
+             <Message Id="Return" TypeName="PreferJaggedArraysOverMultidimensional" Category="Microsoft.Performance" CheckId="CA1814" Status="Excluded" Created="2008-05-12 12:14:45Z">
               <Issue Name="Return">
                <Item>'Manager.GetTable(IPAddress, string, ObjectIdentifier)'</Item>
                <Item>'Variable[,]'</Item>
@@ -222,7 +205,7 @@
            </Member>
            <Member Name="#GetTable(System.Net.IPAddress,System.String,System.UInt32[])">
             <Messages>
-             <Message Id="Return" TypeName="PreferJaggedArraysOverMultidimensional" Category="Microsoft.Performance" CheckId="CA1814" Created="2008-05-12 12:14:45Z">
+             <Message Id="Return" TypeName="PreferJaggedArraysOverMultidimensional" Category="Microsoft.Performance" CheckId="CA1814" Status="Excluded" Created="2008-05-12 12:14:45Z">
               <Issue Name="Return">
                <Item>'Manager.GetTable(IPAddress, string, uint[])'</Item>
                <Item>'Variable[,]'</Item>
@@ -377,69 +360,6 @@
          </Type>
         </Types>
        </Namespace>
-       <Namespace Name="Lextm.SharpSnmpLib.Mib">
-        <Types>
-         <Type Name="MibFile">
-          <Members>
-           <Member Name="#.ctor(System.Collections.Generic.IList`1&lt;Lextm.SharpSnmpLib.Mib.Symbol&gt;)">
-            <Messages>
-             <Message Id="name" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Created="2008-05-17 10:05:30Z">
-              <Issue>
-               <Item>'MibFile.MibFile(IList&lt;Symbol&gt;)'</Item>
-               <Item>'name'</Item>
-               <Item>'string'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="ObjectTree">
-          <Members>
-           <Member Name="#Find(System.UInt32[])">
-            <Messages>
-             <Message Id="temp" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Created="2008-05-17 10:05:30Z">
-              <Issue>
-               <Item>'ObjectTree.Find(uint[])'</Item>
-               <Item>'temp'</Item>
-               <Item>'Definition'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Parse(System.IO.StreamReader)">
-            <Messages>
-             <Message Id="file" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Created="2008-05-17 10:05:30Z">
-              <Issue>
-               <Item>'ObjectTree.Parse(StreamReader)'</Item>
-               <Item>'file'</Item>
-               <Item>'MibFile'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="SharpMibException">
-          <Messages>
-           <Message TypeName="ImplementStandardExceptionConstructors" Category="Microsoft.Design" CheckId="CA1032" Created="2008-05-17 10:05:30Z">
-            <Issue Name="MissingConstructor">
-             <Item>'SharpMibException'</Item>
-             <Item>protected SharpMibException(SerializationInfo, StreamingContext)</Item>
-            </Issue>
-            <Issue Name="MissingConstructor">
-             <Item>'SharpMibException'</Item>
-             <Item>public SharpMibException(String)</Item>
-            </Issue>
-            <Issue Name="MissingConstructor">
-             <Item>'SharpMibException'</Item>
-             <Item>public SharpMibException(String, Exception)</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-        </Types>
-       </Namespace>
       </Namespaces>
      </Module>
     </Modules>
@@ -455,15 +375,9 @@
    <Rule TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709">
     <Resolution Name="Member">Correct the casing of '{0}' in member name {1} by changing it to '{2}'.</Resolution>
    </Rule>
-   <Rule TypeName="ImplementStandardExceptionConstructors" Category="Microsoft.Design" CheckId="CA1032">
-    <Resolution Name="MissingConstructor">Add the following constructor to {0}: {1}.</Resolution>
-   </Rule>
    <Rule TypeName="PreferJaggedArraysOverMultidimensional" Category="Microsoft.Performance" CheckId="CA1814">
     <Resolution Name="Body">{0} uses a multidimensional array of {1}. Replace it with a jagged array if possible.</Resolution>
     <Resolution Name="Return">{0} returns a multidimensional array of {1}. Replace it with a jagged array if possible.</Resolution>
-   </Rule>
-   <Rule TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804">
-    <Resolution Name="Default">{0} declares a variable, {1}, of type {2}, which is never used or is only assigned to. Use this variable or remove it.</Resolution>
    </Rule>
   </Rules>
  </FxCopReport>

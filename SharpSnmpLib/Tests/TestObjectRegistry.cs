@@ -18,51 +18,32 @@ namespace Lextm.SharpSnmpLib.Tests
 	[TestFixture]
 	public class TestObjectRegistry
 	{
-        ObjectRegistry registry;
-        [SetUp]
-        public void SetUp()
-        {
-            registry = new ObjectRegistry();
-//            registry.LoadFolder(Environment.GetFolderPath(
-//            	Environment.SpecialFolder.System), "*.mib");
-			MemoryStream m = new MemoryStream(Resource.SNMPv2_SMI);
-			registry.LoadFile(new StreamReader(m));
-			m = new MemoryStream(Resource.SNMPv2_CONF);
-			registry.LoadFile(new StreamReader(m));
-			m = new MemoryStream(Resource.SNMPv2_TC);
-			registry.LoadFile(new StreamReader(m));
-			m = new MemoryStream(Resource.SNMPv2_MIB);
-			registry.LoadFile(new StreamReader(m));
-			m = new MemoryStream(Resource.SNMPv2_TM);
-			registry.LoadFile(new StreamReader(m));
-			
-        }
 		[Test]
 		public void TestGetTextualFrom()
 		{
 			uint[] oid = new uint[] {1};
-			string result = registry.GetTextualFrom(oid);
+			string result = ObjectRegistry.Instance.GetTextualFrom(oid);
             Assert.AreEqual("SNMPv2-SMI::iso", result);
 		}
 		[Test]
 		public void TestGetTextualForm()
 		{
             uint[] oid2 = new uint[] {1,3,6,1,2,1,10};
-			string result2 = registry.GetTextualFrom(oid2);
+			string result2 = ObjectRegistry.Instance.GetTextualFrom(oid2);
             Assert.AreEqual("SNMPv2-SMI::transmission", result2);
 		}	
 		[Test]
 		public void TestSNMPv2MIBTextual()
 		{
 			uint[] oid = new uint[] {1,3,6,1,2,1,1};
-			string result = registry.GetTextualFrom(oid);
+			string result = ObjectRegistry.Instance.GetTextualFrom(oid);
 			Assert.AreEqual("SNMPv2-MIB::system", result);
 		}
 		[Test]
 		public void TestSNMPv2TMTextual()
 		{
-			uint[] old = registry.GetNumericalFrom("SNMPv2-SMI::snmpDomains");
-			string result = registry.GetTextualFrom(Definition.GetChildId(old, 1));
+			uint[] old = ObjectRegistry.Instance.GetNumericalFrom("SNMPv2-SMI::snmpDomains");
+			string result = ObjectRegistry.Instance.GetTextualFrom(Definition.GetChildId(old, 1));
 			Assert.AreEqual("SNMPv2-TM::snmpUDPDomain", result);
 		}
 		[Test]
@@ -70,7 +51,7 @@ namespace Lextm.SharpSnmpLib.Tests
 		{
 			uint[] expected = new uint[] {1};
             string textual = "SNMPv2-SMI::iso";
-			uint[] result = registry.GetNumericalFrom(textual);
+			uint[] result = ObjectRegistry.Instance.GetNumericalFrom(textual);
 			Assert.AreEqual(expected, result);			
 		}
 		[Test]
@@ -78,7 +59,7 @@ namespace Lextm.SharpSnmpLib.Tests
 		{
 			uint[] expected = new uint[] {1,3,6,1,2,1,10};
             string textual = "SNMPv2-SMI::transmission";
-			uint[] result = registry.GetNumericalFrom(textual);
+			uint[] result = ObjectRegistry.Instance.GetNumericalFrom(textual);
 			Assert.AreEqual(expected, result);	
 		}
 		[Test]
@@ -86,7 +67,7 @@ namespace Lextm.SharpSnmpLib.Tests
 		{
 			uint[] expected = new uint[] {1,3,6,1,2,1,1};
 			string textual = "SNMPv2-MIB::system";
-			uint[] result = registry.GetNumericalFrom(textual);
+			uint[] result = ObjectRegistry.Instance.GetNumericalFrom(textual);
 			Assert.AreEqual(expected, result);
 		}
 		[Test]
@@ -94,8 +75,22 @@ namespace Lextm.SharpSnmpLib.Tests
 		{
 			uint[] expected = new uint[] {1,3,6,1,6,1,1};
 			string textual = "SNMPv2-TM::snmpUDPDomain";
-			uint[] result = registry.GetNumericalFrom(textual);
+			uint[] result = ObjectRegistry.Instance.GetNumericalFrom(textual);
 			Assert.AreEqual(expected, result);
+		}
+		[Test]
+		public void TestsysORTable()
+		{
+			string name = "SNMPv2-MIB::sysORTable";
+			uint[] id = ObjectRegistry.Instance.GetNumericalFrom(name);
+			Assert.IsTrue(ObjectRegistry.Instance.IsTableId(id));
+		}
+		[Test]
+		public void TestsnmpMIB()
+		{
+			string name = "SNMPv2-MIB::snmpMIB";
+			uint[] id = ObjectRegistry.Instance.GetNumericalFrom(name);
+			Assert.IsFalse(ObjectRegistry.Instance.IsTableId(id));
 		}
 	}
 }

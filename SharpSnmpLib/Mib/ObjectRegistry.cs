@@ -20,6 +20,34 @@ namespace Lextm.SharpSnmpLib.Mib
 	public class ObjectRegistry
 	{
 		ObjectTree _tree = new ObjectTree();
+		static ObjectRegistry instance;
+		
+		private ObjectRegistry() {}
+		
+		public static ObjectRegistry Instance
+		{
+			get
+			{
+				lock(typeof(ObjectRegistry))
+				{
+					if (instance == null) {
+						instance = new ObjectRegistry();
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.SNMPv2_SMI)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.SNMPv2_CONF)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.SNMPv2_TC)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.SNMPv2_MIB)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.SNMPv2_TM)));
+					}
+				}
+				return instance;
+			}
+		}
+		[CLSCompliant(false)]
+		public bool IsTableId(uint[] id)
+		{
+			string name = GetTextualFrom(id);
+			return name.EndsWith("Table", StringComparison.Ordinal);
+		}
 		/// <summary>
 		/// Gets numercial form from textual form.
 		/// </summary>
@@ -126,7 +154,7 @@ namespace Lextm.SharpSnmpLib.Mib
 		{
 			try {
 				_tree.Parse(stream);
-			} 
+			}
 			finally
 			{
 				stream.Close();

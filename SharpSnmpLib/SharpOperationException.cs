@@ -23,12 +23,13 @@ namespace Lextm.SharpSnmpLib
 		/// <summary>
 		/// Agent address.
 		/// </summary>
-		protected IPAddress agentAddress;
+		private IPAddress agentAddress;
 		/// <summary>
 		/// Agent address.
 		/// </summary>
 		public IPAddress Agent {
 			get { return agentAddress; }
+			protected set { agentAddress = value; }
 		}
 	    
 		/// <summary>

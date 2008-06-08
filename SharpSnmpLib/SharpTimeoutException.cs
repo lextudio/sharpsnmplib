@@ -80,7 +80,7 @@ namespace Lextm.SharpSnmpLib
         public static SharpTimeoutException Create(IPAddress agent, int timeout)
         {
         	SharpTimeoutException ex = new SharpTimeoutException();
-        	ex.agentAddress = agent;
+        	ex.Agent = agent;
         	ex._timeout = timeout;
         	return ex;
         }

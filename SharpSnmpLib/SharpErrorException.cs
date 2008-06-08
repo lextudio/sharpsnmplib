@@ -118,7 +118,7 @@ namespace Lextm.SharpSnmpLib
         public static SharpErrorException Create(string message, IPAddress agent, ErrorCode status, int index, ObjectIdentifier id)
         {
         	SharpErrorException ex = new SharpErrorException(message);
-        	ex.agentAddress = agent;
+        	ex.Agent = agent;
         	ex._status = status;
         	ex._index = index;
         	ex._id = id;
