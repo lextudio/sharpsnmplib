@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
-    class NotificationType : IEntity
+    sealed class NotificationType : IEntity
     {
         string _module;
         string _parent;

@@ -17,7 +17,7 @@ namespace Lextm.SharpSnmpLib.Mib
 	/// <summary>
 	/// Lexer class that parses MIB files into symbol list.
 	/// </summary>
-	public class Lexer
+	sealed class Lexer
 	{
 		IList<Symbol> _symbols = new List<Symbol>();
 		/// <summary>

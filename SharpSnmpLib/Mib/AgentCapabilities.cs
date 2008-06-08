@@ -15,7 +15,7 @@ namespace Lextm.SharpSnmpLib.Mib
 	/// <summary>
 	/// The AGENT-CAPABILITIES construct is used to specify implementation characteristics of an SNMP agent sub-system with respect to object types and events.
 	/// </summary>
-	public class AgentCapabilities : IEntity
+	sealed class AgentCapabilities : IEntity
 	{
 		string _module;
 		string _name;

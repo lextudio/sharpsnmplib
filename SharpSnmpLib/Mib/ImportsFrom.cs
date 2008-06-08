@@ -12,7 +12,7 @@ using System.Collections.Generic;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
-	class ImportsFrom
+	sealed class ImportsFrom
 	{
 		string _module;
 		IList<string> _types = new List<string>();

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
-    class ObjectType : IEntity
+    sealed class ObjectType : IEntity
     {
         string _module;
         string _parent;

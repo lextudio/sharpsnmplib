@@ -15,7 +15,7 @@ namespace Lextm.SharpSnmpLib.Mib
 	/// <summary>
 	/// The IMPORTS construct is used to specify items used in the current MIB module which are defined in another MIB module or ASN.1 module.
 	/// </summary>
-	public sealed class Imports : IConstruct
+	sealed class Imports : IConstruct
 	{
 		IList<string> _dependents = new List<string>();
 		/// <summary>

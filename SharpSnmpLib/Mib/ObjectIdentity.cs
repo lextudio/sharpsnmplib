@@ -6,7 +6,7 @@ namespace Lextm.SharpSnmpLib.Mib
     /// <summary>
     /// Object identifier node.
     /// </summary>
-    public class ObjectIdentity : IEntity
+    sealed class ObjectIdentity : IEntity
     {
         string _module;
         string _name;

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
-	class ObjectTree
+	sealed class ObjectTree
 	{
 		IDictionary<string, Definition> nameTable;
 		Definition root;
@@ -61,11 +61,14 @@ namespace Lextm.SharpSnmpLib.Mib
 			if (!MibModule.AllDependentsAvailable(module, _modules)) {
 				return false;
 			}
+			if (_modules.ContainsKey(module.Name)) {
+				return true;
+			}
 			_modules.Add(module.Name, module);
 			foreach (IEntity node in module.Entities)
 			{
 				Definition result = root.Add(node);
-				if (result != null)
+				if (result != null && !nameTable.ContainsKey(result.TextualForm))
 				{
 					nameTable.Add(result.TextualForm, result);
 				}

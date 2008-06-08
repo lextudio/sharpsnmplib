@@ -14,13 +14,13 @@ namespace Lextm.SharpSnmpLib.Mib
 	/// <summary>
 	/// Alias.
 	/// </summary>
-	public class TypeAssignment : ITypeAssignment
+	sealed class TypeAssignment : ITypeAssignment
 	{
 		string _module;
 		string _name;
 		Symbol _last;
 		/// <summary>
-		/// Creates an <see cref="AliasNode"/>.
+		/// Creates an <see cref="TypeAssignment"/>.
 		/// </summary>
 		/// <param name="module"></param>
 		/// <param name="name"></param>

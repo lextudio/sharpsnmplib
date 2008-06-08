@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
-    class TextualConvention : IConstruct
+    sealed class TextualConvention : IConstruct
     {
         public TextualConvention(string module, string name, Lexer lexer)
         {

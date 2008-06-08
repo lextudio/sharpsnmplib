@@ -14,7 +14,7 @@ namespace Lextm.SharpSnmpLib.Mib
 	/// <summary>
 	/// Description of ModuleComplianceNode.
 	/// </summary>
-	public class ModuleCompliance : IEntity
+	sealed class ModuleCompliance : IEntity
 	{
         string _module;
         string _parent;

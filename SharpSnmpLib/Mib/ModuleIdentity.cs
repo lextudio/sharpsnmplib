@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
-    class ModuleIdentity : IEntity
+    sealed class ModuleIdentity : IEntity
     {
         string _module;
         string _parent;
@@ -25,7 +25,7 @@ namespace Lextm.SharpSnmpLib.Mib
 
         public string Parent
         {
-            get { return _parent.ToString(); }
+            get { return _parent; }
         }
 
         public int Value

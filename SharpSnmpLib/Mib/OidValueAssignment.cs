@@ -15,14 +15,14 @@ namespace Lextm.SharpSnmpLib.Mib
 	/// <summary>
 	/// Object identifier node.
 	/// </summary>
-	public class OidValueAssignment : IEntity
+	sealed class OidValueAssignment : IEntity
 	{
 		string _module;
 		string _name;
 		string _parent;
 		int _value;
 		/// <summary>
-		/// Creates an <see cref="ObjectIdentifierNode"/>.
+		/// Creates an <see cref="OidValueAssignment"/>.
 		/// </summary>
 		/// <param name="module"></param>
 		/// <param name="name"></param>
@@ -36,7 +36,7 @@ namespace Lextm.SharpSnmpLib.Mib
             _value = value;
         }
 		/// <summary>
-		/// Creates a <see cref="ObjectIdentifierNode"/>.
+		/// Creates a <see cref="OidValueAssignment"/>.
 		/// </summary>
 		/// <param name="module">Module name</param>
 		/// <param name="name">Name</param>

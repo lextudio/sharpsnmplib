@@ -14,7 +14,7 @@ namespace Lextm.SharpSnmpLib.Mib
 	/// <summary>
 	/// MIB file class.
 	/// </summary>
-	public class MibModule
+	sealed class MibModule
 	{
 		string _name;
 		Imports _imports;
@@ -45,17 +45,17 @@ namespace Lextm.SharpSnmpLib.Mib
 			ParseEntities(_tokens, temp, _name, lexer);
 		}
 		
-		Exports ParseExports(Lexer lexer)
+		static Exports ParseExports(Lexer lexer)
 		{
 			return new Exports(lexer);
 		}
 		
-		Imports ParseDependents(Lexer lexer)
+		static Imports ParseDependents(Lexer lexer)
 		{
 			return new Imports(lexer);
 		}
 		
-		void ParseEntities(IList<IConstruct> tokens, Symbol last, string module, Lexer lexer)
+		static void ParseEntities(IList<IConstruct> tokens, Symbol last, string module, Lexer lexer)
 		{
 			Symbol temp = last;
 			

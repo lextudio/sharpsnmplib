@@ -15,7 +15,7 @@ namespace Lextm.SharpSnmpLib.Mib
 	/// <summary>
 	/// Description of ObjectGroupNode.
 	/// </summary>
-	public class ObjectGroup : IEntity
+	sealed class ObjectGroup : IEntity
 	{
         string _module;
         string _parent;

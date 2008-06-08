@@ -15,7 +15,7 @@ namespace Lextm.SharpSnmpLib.Mib
 	/// <summary>
 	/// Description of Symbol.
 	/// </summary>
-	public class Symbol : IEquatable<Symbol>
+	public sealed class Symbol : IEquatable<Symbol>
 	{
 		string _text;
 		int _row;

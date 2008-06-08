@@ -14,7 +14,7 @@ namespace Lextm.SharpSnmpLib.Mib
 	/// <summary>
 	/// The CHOICE type represents a list of alternatives..
 	/// </summary>
-	public sealed class Choice : ITypeAssignment
+	sealed class Choice : ITypeAssignment
 	{
         /// <summary>
         /// Creates a <see cref="Choice"/> instance.

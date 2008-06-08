@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
-	class Definition
+	sealed class Definition
 	{
 		uint[] _id;
 		string _name;
@@ -113,7 +113,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 id = new List<uint>(parent.NumericalForm);
             }
             id.Add((uint)entity.Value);
-            return new Definition(id.ToArray(), entity.Name.ToString(), entity.Module);
+            return new Definition(id.ToArray(), entity.Name, entity.Module);
         }
         
         internal static uint[] AppendTo(uint[] parentId, uint value)

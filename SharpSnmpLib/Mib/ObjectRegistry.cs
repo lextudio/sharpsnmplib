@@ -23,7 +23,9 @@ namespace Lextm.SharpSnmpLib.Mib
 		static ObjectRegistry instance;
 		
 		private ObjectRegistry() {}
-		
+		/// <summary>
+		/// Registry instance.
+		/// </summary>
 		public static ObjectRegistry Instance
 		{
 			get
@@ -114,6 +116,11 @@ namespace Lextm.SharpSnmpLib.Mib
 				return instance;
 			}
 		}
+		/// <summary>
+		/// Indicates that if the specific OID is a table.
+		/// </summary>
+		/// <param name="id">OID</param>
+		/// <returns></returns>
 		[CLSCompliant(false)]
 		public bool IsTableId(uint[] id)
 		{
@@ -195,7 +202,7 @@ namespace Lextm.SharpSnmpLib.Mib
 			return _tree.Find(GetParent(numerical)).TextualForm + "." + numerical[numerical.Length - 1];
 		}
 		
-		uint[] GetParent(uint[] id)
+		static uint[] GetParent(uint[] id)
 		{
 			uint[] result = new uint[id.Length - 1];
 			for (int i = 0; i < result.Length; i++)

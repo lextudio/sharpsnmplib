@@ -13,7 +13,7 @@ using System.Text;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
-    class TrapType : IConstruct
+    sealed class TrapType : IConstruct
     {
         string _module;
         int _value;

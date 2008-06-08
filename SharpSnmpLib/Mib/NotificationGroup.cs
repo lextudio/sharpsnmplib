@@ -15,7 +15,7 @@ namespace Lextm.SharpSnmpLib.Mib
 	/// <summary>
 	/// Description of NotificationGroupNode.
 	/// </summary>
-	public class NotificationGroup : IEntity
+	sealed class NotificationGroup : IEntity
 	{
         string _module;
         string _parent;

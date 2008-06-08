@@ -14,7 +14,7 @@ namespace Lextm.SharpSnmpLib.Mib
     /// <summary>
     /// MIB document.
     /// </summary>
-	public class MibDocument
+	sealed class MibDocument
 	{
         /// <summary>
         /// Creates a <see cref="MibDocument"/> instance.

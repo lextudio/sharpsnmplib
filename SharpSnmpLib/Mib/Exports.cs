@@ -15,7 +15,7 @@ namespace Lextm.SharpSnmpLib.Mib
 	/// <summary>
 	/// Description of Exports.
 	/// </summary>
-	public class Exports
+	sealed class Exports
 	{
 		IList<string> _types = new List<string>();
 		
