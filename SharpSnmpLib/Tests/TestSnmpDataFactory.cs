@@ -22,7 +22,7 @@ namespace Lextm.SharpSnmpLib.Tests
 			ISnmpData data = SnmpDataFactory.CreateSnmpData(expected);
 			Assert.AreEqual(SnmpType.ObjectIdentifier, data.TypeCode);
 			ObjectIdentifier o = (ObjectIdentifier)data;
-			Assert.AreEqual(new uint[] { 1, 3, 6, 1, 4, 1, 2162, 1000, 2 }, o.ToOid());
+			Assert.AreEqual(new uint[] { 1, 3, 6, 1, 4, 1, 2162, 1000, 2 }, o.ToNumerical());
 		}
 		[Test]
 		public void TestCreateNull()
@@ -84,7 +84,7 @@ namespace Lextm.SharpSnmpLib.Tests
 			Assert.AreEqual(SnmpType.ObjectIdentifier, oid.TypeCode);
 			Assert.AreEqual(SnmpType.OctetString, name.TypeCode);
 			ObjectIdentifier o = (ObjectIdentifier)oid;
-			Assert.AreEqual(new uint[] {1,3,6,1,4,1,2162,1001,21,0}, o.ToOid());
+			Assert.AreEqual(new uint[] {1,3,6,1,4,1,2162,1001,21,0}, o.ToNumerical());
 			OctetString s = (OctetString)name;
 			Assert.AreEqual("TrapTest", s.ToString());
 		}
@@ -120,7 +120,7 @@ namespace Lextm.SharpSnmpLib.Tests
 			Assert.AreEqual(SnmpType.TrapPDUv1, data.TypeCode);
 			
 			TrapV1Pdu t = (TrapV1Pdu)data;
-			Assert.AreEqual(new uint[] {1,3,6,1,4,1,2162,1000,2}, t.Enterprise.ToOid());
+			Assert.AreEqual(new uint[] {1,3,6,1,4,1,2162,1000,2}, t.Enterprise.ToNumerical());
 			Assert.AreEqual("127.0.0.1", t.AgentAddress.ToIPAddress().ToString());
 			Assert.AreEqual(GenericCode.EnterpriseSpecific, t.Generic);
 			Assert.AreEqual(12, t.Specific);

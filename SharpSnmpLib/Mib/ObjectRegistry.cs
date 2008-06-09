@@ -110,7 +110,11 @@ namespace Lextm.SharpSnmpLib.Mib
 						instance.LoadFile(new StreamReader(new MemoryStream(Resource.UCD_IPFWACC_MIB)));
 						instance.LoadFile(new StreamReader(new MemoryStream(Resource.UCD_SNMP_MIB)));
 						instance.LoadFile(new StreamReader(new MemoryStream(Resource.UCD_SNMP_MIB_OLD)));
-						instance.LoadFile(new StreamReader(new MemoryStream(Resource.UDP_MIB)));						
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.UDP_MIB)));	
+						
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.RFC_1215)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.RFC1155_SMI)));
+						instance.LoadFile(new StreamReader(new MemoryStream(Resource.RFC1213_MIB)));							
 					}
 				}
 				return instance;
@@ -170,7 +174,7 @@ namespace Lextm.SharpSnmpLib.Mib
 				throw new ArgumentException("name cannot be empty");
 			}
 			if (!name.Contains(".")) {
-				return _tree.Find(module, name).NumericalForm;
+				return _tree.Find(module, name).GetNumericalForm();
 			}
 			string[] content = name.Split('.');
 			if (content.Length != 2) {
@@ -181,7 +185,7 @@ namespace Lextm.SharpSnmpLib.Mib
 			if (!succeeded) {
 				throw new ArgumentException("not a decimal after dot");
 			}
-			uint[] oid = _tree.Find(module, content[0]).NumericalForm;
+			uint[] oid = _tree.Find(module, content[0]).GetNumericalForm();
 			return Definition.AppendTo(oid, (uint)value);
 		}
 		/// <summary>

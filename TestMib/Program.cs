@@ -13,11 +13,11 @@ namespace TestMib
         {
             //new TestLexer().TestParse();
             //new TestMibDocument().TestINET_ADDRESS_MIB();
-            new TestMibDocument().TestNet_Snmp_Examples_MIB();
+            //new TestMibDocument().TestNet_Snmp_Examples_MIB();
             //new TestMibDocument().TestSNMPv2_SMI();            
             //new TestMibDocument().Testv2TM();
             TestObjectRegistry test = new TestObjectRegistry();
-            test.TestSNMPv2MIBNumerical();
+            test.TestZeroDotZero();//TestSNMPv2MIBNumerical();
         }
     }
 }

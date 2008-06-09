@@ -15,9 +15,14 @@ namespace Lextm.SharpSnmpLib.Mib
 		{
 			_lexer = new Lexer();
 			root = Definition.RootDefinition;
+			Definition ccitt = Definition.ToDefinition(new OidValueAssignment("SNMPv2-SMI", "ccitt", null, 0), null);
 			Definition iso = Definition.ToDefinition(new OidValueAssignment("SNMPv2-SMI", "iso", null, 1), null);
+			Definition joint_iso_ccitt = Definition.ToDefinition(new OidValueAssignment("SNMPv2-SMI", "joint-iso-ccitt", null, 2), null);
 			root.Add(iso);
-			nameTable = new Dictionary<string, Definition>() { { iso.TextualForm, iso } };
+            root.Add(ccitt);
+            root.Add(joint_iso_ccitt);
+			nameTable = new Dictionary<string, Definition>() { { iso.TextualForm, iso }, 
+				{ccitt.TextualForm, ccitt}, {joint_iso_ccitt.TextualForm, joint_iso_ccitt} };
 		}
 
 		internal Definition Find(string module, string name)

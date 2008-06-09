@@ -43,7 +43,7 @@ namespace Lextm.SharpSnmpLib.Tests
 			Assert.AreEqual(2, v.Items.Count);
 			Assert.AreEqual(SnmpType.ObjectIdentifier, v.Items[0].TypeCode);
 			ObjectIdentifier o = (ObjectIdentifier)v.Items[0];
-			Assert.AreEqual(new uint[] {1,3,6,1,4,1,2162,1001,21,0}, o.ToOid());
+			Assert.AreEqual(new uint[] {1,3,6,1,4,1,2162,1001,21,0}, o.ToNumerical());
 			Assert.AreEqual(SnmpType.OctetString, v.Items[1].TypeCode);
 			Assert.AreEqual("TrapTest", v.Items[1].ToString());
 		}

@@ -1216,10 +1216,10 @@ namespace Lextm.SharpSnmpLib.Tests
 			Assert.AreEqual(1, file.Modules.Count);
 			Assert.AreEqual("SNMPv2-SMI", file.Modules[0].Name);
 			Assert.AreEqual(16, file.Modules[0].Entities.Count);
-			IEntity node = file.Modules[0].Entities[0];
-			Assert.AreEqual("org", node.Name);
-			Assert.AreEqual(3, node.Value);
-			Assert.AreEqual("iso", node.Parent.ToString());
+			IEntity node = file.Modules[0].Entities[15];
+			Assert.AreEqual("zeroDotZero", node.Name);
+			Assert.AreEqual(0, node.Value);
+			Assert.AreEqual("ccitt", node.Parent.ToString());
 		}
 		
 		[Test]

@@ -46,7 +46,7 @@ namespace Lextm.SharpSnmpLib.Mib
 			{
 				foreach (Definition d in _children)//index >= _children.Count)
 				{
-                    if (d.NumericalForm[d.NumericalForm.Length - 1] == index)
+					if (d.GetNumericalForm()[d.GetNumericalForm().Length - 1] == index)
                     {
                         return d;
                     }					
@@ -71,12 +71,9 @@ namespace Lextm.SharpSnmpLib.Mib
 			}
 		}
 
-		public uint[] NumericalForm
+		public uint[] GetNumericalForm()
 		{
-			get
-			{
-				return _id;
-			}
+			return (uint[])_id.Clone();
 		}
 		
 		public Definition Add(IEntity node)
@@ -104,13 +101,13 @@ namespace Lextm.SharpSnmpLib.Mib
         internal static Definition ToDefinition(IEntity entity, Definition parent)
         {
             List<uint> id;
-            if (parent == null || parent.NumericalForm == null || parent.NumericalForm.Length == 0)
+            if (parent == null || parent.GetNumericalForm() == null || parent.GetNumericalForm().Length == 0)
             {
                 id = new List<uint>();
             }
             else
             {
-                id = new List<uint>(parent.NumericalForm);
+            	id = new List<uint>(parent.GetNumericalForm());
             }
             id.Add((uint)entity.Value);
             return new Definition(id.ToArray(), entity.Name, entity.Module);

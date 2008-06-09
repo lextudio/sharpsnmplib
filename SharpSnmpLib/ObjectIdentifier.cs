@@ -5,16 +5,22 @@ using System.Text;
 
 namespace Lextm.SharpSnmpLib
 {
-    /// <summary>
-    /// ObjectIdentifier type.
-    /// </summary>
+	/// <summary>
+	/// ObjectIdentifier type.
+	/// </summary>
 	public struct ObjectIdentifier: ISnmpData, IEquatable<ObjectIdentifier>
 	{
-        uint[] _oid;
-        byte[] _raw;
-        byte[] _bytes;
+		uint[] _oid;
+		byte[] _raw;
+		byte[] _bytes;
 		/// <summary>
-		/// Creates an <see cref="ObjectIdentifier"/> instance from OID array.
+		/// Creates an <see cref="ObjectIdentifier"/> instance from textual ID.
+		/// </summary>
+		/// <param name="textual"></param>
+		public ObjectIdentifier(string textual) : this(Mib.ObjectRegistry.Instance.GetNumericalFrom(textual))
+		{}
+		/// <summary>
+		/// Creates an <see cref="ObjectIdentifier"/> instance from numerical ID.
 		/// </summary>
 		/// <param name="oid">OID <see cref="uint"/> array</param>
 		[CLSCompliant(false)]
@@ -44,19 +50,28 @@ namespace Lextm.SharpSnmpLib
 			_oid = ParsePduFormat(raw, (uint)raw.Length);
 			_bytes = ByteTool.ToBytes(SnmpType.ObjectIdentifier, _raw);
 		}
-        /// <summary>
-        /// Convers to OID array.
-        /// </summary>
-        /// <returns></returns>
+		/// <summary>
+		/// Convers to numerical ID.
+		/// </summary>
+		/// <returns></returns>
 		[CLSCompliant(false)]
-		public uint[] ToOid()
+		public uint[] ToNumerical()
 		{
 			return _oid;
 		}
-        /// <summary>
-        /// Returns a <see cref="String"/> that represents this <see cref="ObjectIdentifier"/>.
-        /// </summary>
-        /// <returns></returns>
+		/// <summary>
+		/// Textual ID.
+		/// </summary>
+		public string Textual
+		{
+			get {
+				return Mib.ObjectRegistry.Instance.GetTextualFrom(_oid);
+			}
+		}
+		/// <summary>
+		/// Returns a <see cref="String"/> that represents this <see cref="ObjectIdentifier"/>.
+		/// </summary>
+		/// <returns></returns>
 		public override string ToString()
 		{
 			StringBuilder result = new StringBuilder();
@@ -67,7 +82,7 @@ namespace Lextm.SharpSnmpLib
 			return result.ToString();
 		}
 
-        static uint GetOIDEl(byte[] bytes, ref int p)
+		static uint GetOIDEl(byte[] bytes, ref int p)
 		{
 			uint r = 0;
 			byte x;
@@ -153,10 +168,10 @@ namespace Lextm.SharpSnmpLib
 			return result;
 		}
 
-        /// <summary>
-        /// Converts to byte format.
-        /// </summary>
-        /// <returns></returns>
+		/// <summary>
+		/// Converts to byte format.
+		/// </summary>
+		/// <returns></returns>
 		public byte[] ToBytes()
 		{
 			return _bytes;
@@ -169,12 +184,12 @@ namespace Lextm.SharpSnmpLib
 				return SnmpType.ObjectIdentifier;
 			}
 		}
-        /// <summary>
-        /// Determines whether the specified <see cref="Object"/> is equal to the current <see cref="ObjectIdentifier"/>. 
-        /// </summary>
-        /// <param name="obj">The <see cref="Object"/> to compare with the current <see cref="ObjectIdentifier"/>. </param>
-        /// <returns><value>true</value> if the specified <see cref="Object"/> is equal to the current <see cref="ObjectIdentifier"/>; otherwise, <value>false</value>.
-        /// </returns>
+		/// <summary>
+		/// Determines whether the specified <see cref="Object"/> is equal to the current <see cref="ObjectIdentifier"/>.
+		/// </summary>
+		/// <param name="obj">The <see cref="Object"/> to compare with the current <see cref="ObjectIdentifier"/>. </param>
+		/// <returns><value>true</value> if the specified <see cref="Object"/> is equal to the current <see cref="ObjectIdentifier"/>; otherwise, <value>false</value>.
+		/// </returns>
 		public override bool Equals(object obj)
 		{
 			if (obj == null) {
@@ -188,42 +203,42 @@ namespace Lextm.SharpSnmpLib
 			}
 			return Equals((ObjectIdentifier)obj);
 		}
-        /// <summary>
-        /// Indicates whether the current object is equal to another object of the same type.
-        /// </summary>
-        /// <param name="other">An object to compare with this object.</param>
-        /// <returns><value>true</value> if the current object is equal to the <paramref name="other"/> parameter; otherwise, <value>false</value>.
-        ///</returns>
+		/// <summary>
+		/// Indicates whether the current object is equal to another object of the same type.
+		/// </summary>
+		/// <param name="other">An object to compare with this object.</param>
+		/// <returns><value>true</value> if the current object is equal to the <paramref name="other"/> parameter; otherwise, <value>false</value>.
+		///</returns>
 		public bool Equals(ObjectIdentifier other)
 		{
 			return ByteTool.CompareRaw(_raw, other._raw);
 		}
-        /// <summary>
-        /// Serves as a hash function for a particular type.
-        /// </summary>
-        /// <returns>A hash code for the current <see cref="ObjectIdentifier"/>.</returns>
+		/// <summary>
+		/// Serves as a hash function for a particular type.
+		/// </summary>
+		/// <returns>A hash code for the current <see cref="ObjectIdentifier"/>.</returns>
 		public override int GetHashCode()
 		{
 			return ToString().GetHashCode();
 		}
-        /// <summary>
-        /// The equality operator.
-        /// </summary>
-        /// <param name="left">Left <see cref="ObjectIdentifier"/> object</param>
-        /// <param name="right">Right <see cref="ObjectIdentifier"/> object</param>
-        /// <returns>
-        /// Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
+		/// <summary>
+		/// The equality operator.
+		/// </summary>
+		/// <param name="left">Left <see cref="ObjectIdentifier"/> object</param>
+		/// <param name="right">Right <see cref="ObjectIdentifier"/> object</param>
+		/// <returns>
+		/// Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
 		public static bool operator == (ObjectIdentifier left, ObjectIdentifier right)
 		{
 			return left.Equals(right);
 		}
-        /// <summary>
-        /// The inequality operator.
-        /// </summary>
-        /// <param name="left">Left <see cref="ObjectIdentifier"/> object</param>
-        /// <param name="right">Right <see cref="ObjectIdentifier"/> object</param>
-        /// <returns>
-        /// Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
+		/// <summary>
+		/// The inequality operator.
+		/// </summary>
+		/// <param name="left">Left <see cref="ObjectIdentifier"/> object</param>
+		/// <param name="right">Right <see cref="ObjectIdentifier"/> object</param>
+		/// <returns>
+		/// Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
 		public static bool operator != (ObjectIdentifier left, ObjectIdentifier right)
 		{
 			return !(left == right);

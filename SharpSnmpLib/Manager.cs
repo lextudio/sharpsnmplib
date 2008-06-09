@@ -166,7 +166,7 @@ namespace Lextm.SharpSnmpLib
             {
                 throw new ArgumentException("only SNMP v1 is supported");
             }
-            if (!Mib.ObjectRegistry.Instance.IsTableId(table.ToOid())) {
+            if (!Mib.ObjectRegistry.Instance.IsTableId(table.ToNumerical())) {
             	throw new ArgumentException("not a table OID: " + table);
             }
             IList<Variable> list = new List<Variable>();

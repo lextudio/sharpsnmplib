@@ -32,7 +32,7 @@ namespace Lextm.SharpSnmpLib.Tests
             GetRequestPdu pdu = (GetRequestPdu)message.Pdu;
             Assert.AreEqual(1, pdu.Variables.Count);
             Variable v = pdu.Variables[0];
-            Assert.AreEqual(new uint[] { 1, 3, 6, 1, 2, 1, 1, 6, 0 }, v.Id.ToOid());
+            Assert.AreEqual(new uint[] { 1, 3, 6, 1, 2, 1, 1, 6, 0 }, v.Id.ToNumerical());
             Assert.AreEqual(typeof(Null), v.Data.GetType());
 		}
 	}

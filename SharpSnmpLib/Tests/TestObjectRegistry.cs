@@ -63,6 +63,25 @@ namespace Lextm.SharpSnmpLib.Tests
 			Assert.AreEqual(expected, result);	
 		}
 		[Test]
+		public void TestRFC1155_SMI()
+		{
+			string textual = "RFC1155-SMI::private";
+			uint[] expected = new uint[] {1,3,6,1,4};
+			Assert.AreEqual(expected, ObjectRegistry.Instance.GetNumericalFrom(textual));
+			
+			Assert.AreEqual("SNMPv2-SMI::private", ObjectRegistry.Instance.GetTextualFrom(expected));
+		}
+		[Test]
+		public void TestZeroDotZero()
+		{
+			Assert.AreEqual(new uint[] {0}, ObjectRegistry.Instance.GetNumericalFrom("SNMPv2-SMI::ccitt"));
+			string textual = "SNMPv2-SMI::zeroDotZero";
+			uint[] expected = new uint[] {0, 0};
+            Assert.AreEqual(textual, ObjectRegistry.Instance.GetTextualFrom(expected));
+
+			Assert.AreEqual(expected, ObjectRegistry.Instance.GetNumericalFrom(textual));			
+		}
+		[Test]
 		public void TestSNMPv2MIBNumerical()
 		{
 			uint[] expected = new uint[] {1,3,6,1,2,1,1};

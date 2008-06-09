@@ -34,9 +34,9 @@ namespace Lextm.SharpSnmpLib.Tests
 			Assert.AreEqual(GenericCode.EnterpriseSpecific, message.Generic);
 			Assert.AreEqual(12, message.Specific);
 			Assert.AreEqual(16352, message.TimeStamp);
-			Assert.AreEqual(new uint[] {1, 3, 6, 1, 4, 1, 2162, 1000, 2}, message.Enterprise.ToOid());
+			Assert.AreEqual(new uint[] {1, 3, 6, 1, 4, 1, 2162, 1000, 2}, message.Enterprise.ToNumerical());
 			Assert.AreEqual(1, message.Variables.Count);
-			Assert.AreEqual(new uint[] {1,3,6,1,4,1,2162,1001,21,0}, message.Variables[0].Id.ToOid());
+			Assert.AreEqual(new uint[] {1,3,6,1,4,1,2162,1001,21,0}, message.Variables[0].Id.ToNumerical());
 			Assert.AreEqual("TrapTest", message.Variables[0].Data.ToString());
 		}
 	}

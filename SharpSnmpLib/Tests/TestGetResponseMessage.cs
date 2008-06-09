@@ -30,7 +30,7 @@ namespace Lextm.SharpSnmpLib.Tests
 	        Assert.AreEqual(0, response.ErrorIndex);
 	        Assert.AreEqual(1, response.Variables.Count);
 	        Variable v = response.Variables[0];
-	        Assert.AreEqual(new uint[] { 1, 3, 6, 1, 2, 1, 1, 6, 0 }, v.Id.ToOid());
+	        Assert.AreEqual(new uint[] { 1, 3, 6, 1, 2, 1, 1, 6, 0 }, v.Id.ToNumerical());
 	        Assert.AreEqual("Shanghai", v.Data.ToString());
 		}
 	}
