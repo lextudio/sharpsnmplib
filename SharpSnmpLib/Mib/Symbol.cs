@@ -20,20 +20,33 @@ namespace Lextm.SharpSnmpLib.Mib
 		string _text;
 		int _row;
 		int _column;
+		string _file;
 		
-		Symbol(string text) : this(text, -1, -1) {}
+		Symbol(string text) : this(null, text, -1, -1) {}
 		
 		/// <summary>
 		/// Creates a <see cref="Symbol"/>.
 		/// </summary>
+		/// <param name="file">File</param>
 		/// <param name="text">Text</param>
 		/// <param name="row">Row number</param>
 		/// <param name="column">column number</param>
-		public Symbol(string text, int row, int column)
+		public Symbol(string file, string text, int row, int column)
 		{
+			_file = file;
 			_text = text;
 			_row = row;
 			_column = column;
+		}
+		/// <summary>
+		/// File.
+		/// </summary>
+		public string File
+		{
+			get
+			{
+				return _file;
+			}
 		}
 		/// <summary>
 		/// Row number.

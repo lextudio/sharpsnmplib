@@ -257,18 +257,23 @@ namespace Lextm.SharpSnmpLib.Mib
 			if (!File.Exists(fileName)) {
 				throw new ArgumentException("file does not exist: " + fileName);
 			}
-			LoadFile(File.OpenText(fileName));
+			LoadFile(fileName, File.OpenText(fileName));
 		}
 
-		internal void LoadFile(TextReader stream)
+		internal void LoadFile(string file, TextReader stream)
 		{
 			try {
-				_tree.Parse(stream);
+				_tree.Parse(file, stream);
 			}
 			finally
 			{
 				stream.Close();
 			}
+		}
+		
+		internal void LoadFile(TextReader stream)
+		{
+			LoadFile(null, stream);
 		}
 	}
 }

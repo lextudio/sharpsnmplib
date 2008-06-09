@@ -7,6 +7,8 @@ namespace Lextm.SharpSnmpLib.Mib
 {
 	sealed class ObjectTree
 	{
+		IDictionary<string, MibModule> _parsed = new Dictionary<string, MibModule>();
+		IList<MibModule> _pending = new List<MibModule>();
 		IDictionary<string, Definition> nameTable;
 		Definition root;
 		Lexer _lexer;
@@ -19,9 +21,9 @@ namespace Lextm.SharpSnmpLib.Mib
 			Definition iso = Definition.ToDefinition(new OidValueAssignment("SNMPv2-SMI", "iso", null, 1), null);
 			Definition joint_iso_ccitt = Definition.ToDefinition(new OidValueAssignment("SNMPv2-SMI", "joint-iso-ccitt", null, 2), null);
 			root.Add(iso);
-            root.Add(ccitt);
-            root.Add(joint_iso_ccitt);
-			nameTable = new Dictionary<string, Definition>() { { iso.TextualForm, iso }, 
+			root.Add(ccitt);
+			root.Add(joint_iso_ccitt);
+			nameTable = new Dictionary<string, Definition>() { { iso.TextualForm, iso },
 				{ccitt.TextualForm, ccitt}, {joint_iso_ccitt.TextualForm, joint_iso_ccitt} };
 		}
 
@@ -58,18 +60,15 @@ namespace Lextm.SharpSnmpLib.Mib
 			return result;
 		}
 		
-		IDictionary<string, MibModule> _modules = new Dictionary<string, MibModule>();
-		IList<MibModule> _pending = new List<MibModule>();
-		
 		bool ParseModule(MibModule module)
 		{
-			if (!MibModule.AllDependentsAvailable(module, _modules)) {
+			if (!MibModule.AllDependentsAvailable(module, _parsed)) {
 				return false;
 			}
-			if (_modules.ContainsKey(module.Name)) {
+			if (_parsed.ContainsKey(module.Name)) {
 				return true;
 			}
-			_modules.Add(module.Name, module);
+			_parsed.Add(module.Name, module);
 			foreach (IEntity node in module.Entities)
 			{
 				Definition result = root.Add(node);
@@ -88,7 +87,7 @@ namespace Lextm.SharpSnmpLib.Mib
 			while (current != 0)
 			{
 				previous = current;
-				for (int i = 0; i < _pending.Count; i++)//MibModule module in _pending)
+				for (int i = 0; i < _pending.Count; i++)
 				{
 					bool succeeded = ParseModule(_pending[i]);
 					if (succeeded) {
@@ -104,11 +103,11 @@ namespace Lextm.SharpSnmpLib.Mib
 			return current;
 		}
 
-		internal int Parse(TextReader stream)
+		internal int Parse(string file, TextReader stream)
 		{
-			_lexer.Parse(stream);
-			MibDocument file = new MibDocument(_lexer);
-			IList<MibModule> modules = file.Modules;
+			_lexer.Parse(file, stream);
+			MibDocument doc = new MibDocument(_lexer);
+			IList<MibModule> modules = doc.Modules;
 			foreach (MibModule module in modules)
 			{
 				_pending.Add(module);

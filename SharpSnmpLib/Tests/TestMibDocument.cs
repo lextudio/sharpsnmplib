@@ -20,6 +20,19 @@ namespace Lextm.SharpSnmpLib.Tests
 	public class TestMibDocument
 	{
 		[Test]
+		[ExpectedException(typeof(SharpMibException))]
+		public void TestException()
+		{
+			Lexer lexer = new Lexer();
+			MemoryStream m = new MemoryStream(Resource.fivevarbinds);
+			using (StreamReader reader = new StreamReader(m))
+			{
+				lexer.Parse("temp.txt", reader);
+				reader.Close();
+			}
+			MibDocument file = new MibDocument(lexer);
+		}
+		[Test]
 		public void TestRFC1155_SMI()
 		{
 			Lexer lexer = new Lexer();

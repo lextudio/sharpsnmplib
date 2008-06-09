@@ -20,11 +20,17 @@ namespace Lextm.SharpSnmpLib.Mib
 	sealed class Lexer
 	{
 		IList<Symbol> _symbols = new List<Symbol>();
+		
+		internal void Parse(TextReader stream)
+		{
+			Parse(null, stream);
+		}
 		/// <summary>
 		/// Parses MIB file to symbol list.
 		/// </summary>
+		/// <param name="file">File</param>
 		/// <param name="stream">File stream</param>
-		public void Parse(TextReader stream)
+		public void Parse(string file, TextReader stream)
 		{
 			string line;
 			int i = 0;
@@ -34,12 +40,12 @@ namespace Lextm.SharpSnmpLib.Mib
 					i++;
 					continue; // commented line
 				}
-				ParseLine(line, i);
+				ParseLine(file, line, i);
 				i++;
 			}
 		}
 		
-		void ParseLine(string line, int row)
+		void ParseLine(string file, string line, int row)
 		{
 			line = line + '\n';
 			int count = line.Length;
@@ -47,7 +53,7 @@ namespace Lextm.SharpSnmpLib.Mib
 			for (i = 0; i < count; i++)
 			{
 				char current = line[i];
-				bool moveNext = Parse(_symbols, current, row, i);
+				bool moveNext = Parse(file, _symbols, current, row, i);
 				if (moveNext) {
 					break;	
 				}
@@ -83,24 +89,25 @@ namespace Lextm.SharpSnmpLib.Mib
 		/// <summary>
 		/// Parses a list of <see cref="Char"/> to <see cref="Symbol"/>.
 		/// </summary>
+		/// <param name="file">File</param>
 		/// <param name="current">Current <see cref="Char"/></param>
 		/// <param name="row">Row number</param>
 		/// <param name="column">Column number</param>
 		/// <param name="list"></param>
 		/// <returns></returns>
-		public static bool Parse(IList<Symbol> list, char current, int row, int column)
+		public static bool Parse(string file, IList<Symbol> list, char current, int row, int column)
 		{
 			switch (current)
 			{
 				case '\n':	case '{': case '}':	case '(':
 				case ')': case ';': case ',':
 					if (!inString) {
-						bool moveNext = ParseLastSymbol(list, ref temp, row, column);
+						bool moveNext = ParseLastSymbol(file, list, ref temp, row, column);
 						if (moveNext) {
-                            list.Add(CreateSpecialSymbol('\n', row, column));
+                            list.Add(CreateSpecialSymbol(file, '\n', row, column));
 							return true;
 						}
-						list.Add(CreateSpecialSymbol(current, row, column));
+						list.Add(CreateSpecialSymbol(file, current, row, column));
 						return false;
 					}
 					break;
@@ -112,10 +119,10 @@ namespace Lextm.SharpSnmpLib.Mib
 				default:
 					if (char.IsWhiteSpace(current) && !inString)
 					{
-						bool moveNext = ParseLastSymbol(list, ref temp, row, column);
+						bool moveNext = ParseLastSymbol(file, list, ref temp, row, column);
                         if (moveNext)
                         {
-                            list.Add(CreateSpecialSymbol('\n', row, column));
+                            list.Add(CreateSpecialSymbol(file, '\n', row, column));
                             return true;
                         }
                         return false;
@@ -126,13 +133,13 @@ namespace Lextm.SharpSnmpLib.Mib
 			return false;
 		}
 		
-		static bool ParseLastSymbol(IList<Symbol> list, ref StringBuilder builder, int row, int column)
+		static bool ParseLastSymbol(string file, IList<Symbol> list, ref StringBuilder builder, int row, int column)
 		{
 			if (builder.Length > 0)
 			{
 				string content = builder.ToString();
 				builder.Length = 0;
-				Symbol s = new Symbol(content, row, column);
+				Symbol s = new Symbol(file, content, row, column);
                 if (s == Symbol.Comment)
                 {
                     return true;
@@ -142,7 +149,7 @@ namespace Lextm.SharpSnmpLib.Mib
 			return false;
 		}
 		
-		static Symbol CreateSpecialSymbol(char value, int row, int column)
+		static Symbol CreateSpecialSymbol(string file, char value, int row, int column)
 		{
 			string str;
 			switch (value) {
@@ -170,7 +177,7 @@ namespace Lextm.SharpSnmpLib.Mib
 				default:
 					throw new ArgumentException("value is not a special character");
 			}
-			return new Symbol(str, row, column);
+			return new Symbol(file, str, row, column);
 		}
 	}
 }
