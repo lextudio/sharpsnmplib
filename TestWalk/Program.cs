@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using Lextm.SharpSnmpLib;
 using System.Net;
 using System.IO;
+using Lextm.SharpSnmpLib.Mib;
 
 namespace TestWalk
 {
@@ -20,40 +21,16 @@ namespace TestWalk
 
 		public static void Main(string[] args)
 		{
-			Variable seed;
-            Variable next = new Variable(new uint[] { 1, 3, 6, 1, 2, 1, 2, 2 });//1.3.6.1.2.1.2.2
-			do
-			{
-				seed = next;
-			}
-			while (HasNext(seed, out next));
+            IList<Variable> list = new List<Variable>();
+            int rows = Manager.Walk(VersionCode.V1, IPAddress.Parse("127.0.0.1"), "public", new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 2, 2 }), list, 1000);
+            foreach (Variable v in list)
+            {
+                writer.WriteLine(v);
+            }
             writer.Close();
 			
 			Console.Write("Press any key to continue . . . ");
 			Console.ReadKey(true);
-		}
-		
-		static bool HasNext(Variable seed, out Variable next)
-		{
-			bool result;
-			try {
-				GetNextRequestMessage message = new GetNextRequestMessage(VersionCode.V1,
-				                                                          IPAddress.Parse("127.0.0.1"),
-				                                                          "public",
-				                                                          new List<Variable>(1) {
-				                                                          	seed});
-				
-				next = message.Send(1000)[0];
-				result = true;
-			} catch (SharpErrorException ex) {
-				next = null;
-				result = false;
-                writer.WriteLine(ex.Details);
-			}
-			if (result) {
-				writer.WriteLine(next.ToString());
-			}	
-			return result;
 		}
 	}
 }
