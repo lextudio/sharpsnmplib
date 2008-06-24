@@ -28,10 +28,6 @@ namespace TestGetNext
 				
 				Variable variable = message.Send(1000)[0];
 				Console.WriteLine(variable.ToString());
-				//Variable v2 = manager.Get(IPAddress.Parse("127.0.0.1"), "public",
-				//                          new Variable(new uint[] { 1, 3, 6, 1, 2, 1, 2, 2, 1, 10, 9 }));
-				////.1.3.6.1.2.1.2.2.1.10.9
-				//Console.WriteLine(v2.Data);
 			}
 			catch (SharpSnmpException ex)
 			{

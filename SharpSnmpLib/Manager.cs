@@ -53,9 +53,9 @@ namespace Lextm.SharpSnmpLib
 		/// <returns></returns>
 		public IList<Variable> Get(VersionCode version, IPAddress agent, string community, IList<Variable> variables)
 		{
-			if (version != VersionCode.V1)
+			if (version == VersionCode.V3)
 			{
-				throw new ArgumentException("you can only use SNMP v1 in this version");
+				throw new ArgumentException("you can only use SNMP v1 or v2 in this version");
 			}
 			using (GetRequestMessage message = new GetRequestMessage(version,agent, community, variables))
 			{
@@ -106,9 +106,9 @@ namespace Lextm.SharpSnmpLib
 		/// <returns></returns>
 		public void Set(VersionCode version, IPAddress agent, string community, IList<Variable> variables)
 		{
-			if (version != VersionCode.V1)
+			if (version == VersionCode.V3)
 			{
-				throw new ArgumentException("you can only use SNMP v1 in this version");
+				throw new ArgumentException("you can only use SNMP v1 or v2 in this version");
 			}
 			using (SetRequestMessage message = new SetRequestMessage(version, agent, community, variables))
 			{
@@ -162,9 +162,9 @@ namespace Lextm.SharpSnmpLib
 		/// <returns></returns>
 		public Variable[,] GetTable(VersionCode version, IPAddress agent, string community, ObjectIdentifier table)
 		{
-			if (version != VersionCode.V1)
+			if (version == VersionCode.V2)
 			{
-				throw new ArgumentException("only SNMP v1 is supported");
+				throw new ArgumentException("only SNMP v1 or v2 is supported");
 			}
 			if (!Mib.ObjectRegistry.Instance.IsTableId(table.ToNumerical())) {
 				throw new ArgumentException("not a table OID: " + table);

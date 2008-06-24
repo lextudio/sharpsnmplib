@@ -10,13 +10,12 @@ class TestGet
         Manager manager = new Manager();
         try
         {
-            Variable variable = manager.Get(IPAddress.Parse("127.0.0.1"), "public",
-                new Variable(new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 1, 6, 0 })));
+        	Variable test = new Variable(new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 1, 6, 0 }));
+            Variable variable = manager.Get(IPAddress.Parse("127.0.0.1"), "public", test);
             Console.WriteLine(variable.Data);
-            //Variable v2 = manager.Get(IPAddress.Parse("127.0.0.1"), "public",
-            //                          new Variable(new uint[] { 1, 3, 6, 1, 2, 1, 2, 2, 1, 10, 9 }));
-            ////.1.3.6.1.2.1.2.2.1.10.9
-            //Console.WriteLine(v2.Data);
+            
+            Variable v2 = manager.Get(VersionCode.V2, IPAddress.Parse("127.0.0.1"), "public", test);
+            Console.WriteLine(v2.Data);
         }
         catch (SharpSnmpException ex)
         {
