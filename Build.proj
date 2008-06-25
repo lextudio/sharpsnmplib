@@ -5,7 +5,7 @@
 		<CommandLine>--config "%ProgramFiles%\Novell\Gendarme\rules.xml" --log .\gendarme.log --quiet .\sharpsnmplib.dll</CommandLine>
 		<DebugFolder>.\SharpSnmpLib\Bin\Debug</DebugFolder>
 		<NDependFolder>H:\Incoming\Green\NDepend</NDependFolder>
-		<NDependProject>"D:\lextm\documents\SharpDevelop Projects\TrapWatcher\SharpSnmpLib.xml"</NDependProject>
+		<NDependProject>"D:\lextm\documents\SharpDevelop Projects\SharpSnmpLib\SharpSnmpLib.xml"</NDependProject>
 	</PropertyGroup>
 	<Target Name="Gendarme" DependsOnTargets="Debug">
 		<Exec Command="$(GendarmePath) $(CommandLine)" WorkingDirectory="$(DebugFolder)" />
