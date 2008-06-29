@@ -5,14 +5,19 @@ using System.Text;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
-	sealed class ObjectTree
+	/// <summary>
+	/// Object tree class.
+	/// </summary>
+	public sealed class ObjectTree
 	{
 		IDictionary<string, MibModule> _parsed = new Dictionary<string, MibModule>();
 		IList<MibModule> _pending = new List<MibModule>();
 		IDictionary<string, Definition> nameTable;
 		Definition root;
 		Lexer _lexer;
-		
+		/// <summary>
+		/// Creates an <see cref="ObjectTree"/> instance.
+		/// </summary>
 		public ObjectTree()
 		{
 			_lexer = new Lexer();
@@ -20,12 +25,22 @@ namespace Lextm.SharpSnmpLib.Mib
 			Definition ccitt = Definition.ToDefinition(new OidValueAssignment("SNMPv2-SMI", "ccitt", null, 0), null);
 			Definition iso = Definition.ToDefinition(new OidValueAssignment("SNMPv2-SMI", "iso", null, 1), null);
 			Definition joint_iso_ccitt = Definition.ToDefinition(new OidValueAssignment("SNMPv2-SMI", "joint-iso-ccitt", null, 2), null);
-			root.Add(iso);
 			root.Add(ccitt);
+			root.Add(iso);
 			root.Add(joint_iso_ccitt);
 			nameTable = new Dictionary<string, Definition>() { { iso.TextualForm, iso },
 				{ccitt.TextualForm, ccitt}, {joint_iso_ccitt.TextualForm, joint_iso_ccitt} };
 		}
+		/// <summary>
+		/// Root definition.
+		/// </summary>
+        public Definition Root
+        {
+            get
+            {
+                return root;
+            }
+        }
 
 		internal Definition Find(string module, string name)
 		{

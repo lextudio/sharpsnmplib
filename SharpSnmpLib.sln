@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-# SharpDevelop 3.0.0.3082
+# SharpDevelop 3.0.0.3129
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpSnmpLib", "SharpSnmpLib\SharpSnmpLib.csproj", "{286DE6DB-8F95-4BD4-86A2-86488D2E0EE1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestTrap", "test\TestTrap.csproj", "{2BD083D3-01C9-46CA-9E9D-72A29240DBF3}"
@@ -22,6 +22,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{
 	ProjectSection(SolutionItems) = postProject
 		readme.txt = readme.txt
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Browser", "Browser\Browser.csproj", "{60EA8A71-EE0B-4F0E-9485-B30B71D454D7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,6 +63,18 @@ Global
 		{AA1CC969-B74E-4D58-BBDB-84EB5C1B0383}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA1CC969-B74E-4D58-BBDB-84EB5C1B0383}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA1CC969-B74E-4D58-BBDB-84EB5C1B0383}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60EA8A71-EE0B-4F0E-9485-B30B71D454D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60EA8A71-EE0B-4F0E-9485-B30B71D454D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60EA8A71-EE0B-4F0E-9485-B30B71D454D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60EA8A71-EE0B-4F0E-9485-B30B71D454D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		56885420-38D8-48ED-A66A-C85DAF6B9A4C.Debug|Any CPU.Build.0 = Debug|Any CPU
+		56885420-38D8-48ED-A66A-C85DAF6B9A4C.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		56885420-38D8-48ED-A66A-C85DAF6B9A4C.Release|Any CPU.Build.0 = Release|Any CPU
+		56885420-38D8-48ED-A66A-C85DAF6B9A4C.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C75532C4-765B-418E-B09B-46D36B2ABDB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C75532C4-765B-418E-B09B-46D36B2ABDB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C75532C4-765B-418E-B09B-46D36B2ABDB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C75532C4-765B-418E-B09B-46D36B2ABDB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

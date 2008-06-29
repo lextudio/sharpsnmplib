@@ -1,6 +1,10 @@
 Source Code Notice
 
-The source code is released under LGPL.
+The #SNMP source code (for SharpSnmpLib.dll) is released under LGPL.
+
+The MIB Browser Demo for #SNMP source code (for Browser.exe) is released under BSD License.
+
+Other demo source code is released in public domain.
 
 Dependency
 

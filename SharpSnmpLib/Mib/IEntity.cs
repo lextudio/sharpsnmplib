@@ -12,10 +12,13 @@ using System;
 namespace Lextm.SharpSnmpLib.Mib
 {
 	/// <summary>
-	/// Description of IEntity.
+	/// Entity interface.
 	/// </summary>
-	interface IEntity : IConstruct
+	public interface IEntity : IConstruct
 	{
+		/// <summary>
+		/// Module name.
+		/// </summary>
         string Module
         {
             get;

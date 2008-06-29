@@ -24,6 +24,16 @@ namespace Lextm.SharpSnmpLib.Mib
 		
 		private ObjectRegistry() {}
 		/// <summary>
+		/// Object tree.
+		/// </summary>
+        public ObjectTree Tree
+        {
+            get
+            {
+                return _tree;
+            }
+        }
+		/// <summary>
 		/// Registry instance.
 		/// </summary>
 		public static ObjectRegistry Instance

@@ -4,7 +4,10 @@ using System.Text;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
-    interface IConstruct
+	/// <summary>
+	/// Construct interface.
+	/// </summary>
+    public interface IConstruct
     {
     }
 }
