@@ -7,7 +7,7 @@ namespace Lextm.SharpSnmpLib.Mib
 	/// <summary>
 	/// Construct interface.
 	/// </summary>
-    public interface IConstruct
+    interface IConstruct
     {
     }
 }

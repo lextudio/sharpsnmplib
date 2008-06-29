@@ -40,10 +40,10 @@ namespace Browser
             }
 		}
 
-        private static TreeNode Wrap(Definition definition)
+        private static TreeNode Wrap(IDefinition definition)
         {
-            TreeNode node = new TreeNode(definition.Name) { Tag = definition, ToolTipText = definition.TextualForm };
-            foreach (Definition def in definition.Children)
+        	TreeNode node = new TreeNode(definition.Name) { Tag = definition, ToolTipText = definition.TextualForm + Environment.NewLine + definition.Value };
+            foreach (IDefinition def in definition.Children)
             {
             	node.Nodes.Add(Wrap(def));
             }

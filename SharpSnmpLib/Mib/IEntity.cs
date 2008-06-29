@@ -14,7 +14,7 @@ namespace Lextm.SharpSnmpLib.Mib
 	/// <summary>
 	/// Entity interface.
 	/// </summary>
-	public interface IEntity : IConstruct
+	interface IEntity : IConstruct
 	{
 		/// <summary>
 		/// Module name.

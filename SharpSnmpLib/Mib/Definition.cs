@@ -7,13 +7,13 @@ namespace Lextm.SharpSnmpLib.Mib
 	/// <summary>
 	/// Definition class.
 	/// </summary>
-	public sealed class Definition
+	internal sealed class Definition : IDefinition
 	{
 		uint[] _id;
 		string _name;
 		string _module;
 		int _value;
-		IDictionary<int, Definition> _children = new Dictionary<int, Definition>();
+		IDictionary<int, IDefinition> _children = new SortedDictionary<int, IDefinition>();
 
 		Definition() {} 
 		/// <summary>
@@ -23,7 +23,6 @@ namespace Lextm.SharpSnmpLib.Mib
 		/// <param name="name"></param>
 		/// <param name="module"></param>
 		/// <param name="value"></param>
-		[CLSCompliant(false)]
 		public Definition(uint[] id, string name, string module, int value)
 		{
 			_id = id;
@@ -46,7 +45,7 @@ namespace Lextm.SharpSnmpLib.Mib
 		/// <summary>
 		/// Children definitions.
 		/// </summary>
-		public IEnumerable<Definition> Children
+		public IEnumerable<IDefinition> Children
 		{
 			get
 			{
@@ -76,11 +75,11 @@ namespace Lextm.SharpSnmpLib.Mib
 		/// <summary>
 		/// Indexer.
 		/// </summary>
-		public Definition this[int index]
+		public IDefinition this[int index]
 		{
 			get
 			{
-				foreach (Definition d in _children.Values)
+				foreach (IDefinition d in _children.Values)
 				{
 					if (d.GetNumericalForm()[d.GetNumericalForm().Length - 1] == index)
                     {
@@ -117,7 +116,6 @@ namespace Lextm.SharpSnmpLib.Mib
 		/// Gets the numerical form.
 		/// </summary>
 		/// <returns></returns>
-		[CLSCompliant(false)]
 		public uint[] GetNumericalForm()
 		{
 			return (uint[])_id.Clone();
@@ -127,16 +125,16 @@ namespace Lextm.SharpSnmpLib.Mib
 		/// </summary>
 		/// <param name="node"></param>
 		/// <returns></returns>
-		public Definition Add(IEntity node)
+		public IDefinition Add(IEntity node)
 		{
 			if (_name == node.Parent) {
-                Definition def = ToDefinition(node, this);
+                IDefinition def = ToDefinition(node, this);
                 Add(def);
 				return def;
 			}
 			foreach (Definition d in _children.Values)
 			{
-                Definition result = d.Add(node);
+                IDefinition result = d.Add(node);
 				if (result != null) {
 					return result;
 				}
@@ -147,7 +145,7 @@ namespace Lextm.SharpSnmpLib.Mib
 		/// Adds a <see cref="Definition"/> child to this <see cref="Definition"/>.
 		/// </summary>
 		/// <param name="def"></param>
-        public void Add(Definition def)
+        public void Add(IDefinition def)
         {
         	if (!_children.ContainsKey(def.Value))
         	{
@@ -155,7 +153,7 @@ namespace Lextm.SharpSnmpLib.Mib
         	}
         }
 
-        internal static Definition ToDefinition(IEntity entity, Definition parent)
+        internal static IDefinition ToDefinition(IEntity entity, IDefinition parent)
         {
         	uint[] id =
             	(parent == null || parent.GetNumericalForm() == null || parent.GetNumericalForm().Length == 0) ?

@@ -80,6 +80,7 @@
     <Compile Include="Mib\Choice.cs" />
     <Compile Include="Mib\Exports.cs" />
     <Compile Include="Mib\IConstruct.cs" />
+    <Compile Include="Mib\IDefinition.cs" />
     <Compile Include="Mib\IEntity.cs" />
     <Compile Include="Mib\Imports.cs" />
     <Compile Include="Mib\ImportsFrom.cs" />

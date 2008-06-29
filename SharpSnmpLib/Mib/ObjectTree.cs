@@ -12,7 +12,7 @@ namespace Lextm.SharpSnmpLib.Mib
 	{
 		IDictionary<string, MibModule> _parsed = new Dictionary<string, MibModule>();
 		IList<MibModule> _pending = new List<MibModule>();
-		IDictionary<string, Definition> nameTable;
+		IDictionary<string, IDefinition> nameTable;
 		Definition root;
 		Lexer _lexer;
 		/// <summary>
@@ -22,19 +22,20 @@ namespace Lextm.SharpSnmpLib.Mib
 		{
 			_lexer = new Lexer();
 			root = Definition.RootDefinition;
-			Definition ccitt = Definition.ToDefinition(new OidValueAssignment("SNMPv2-SMI", "ccitt", null, 0), null);
-			Definition iso = Definition.ToDefinition(new OidValueAssignment("SNMPv2-SMI", "iso", null, 1), null);
-			Definition joint_iso_ccitt = Definition.ToDefinition(new OidValueAssignment("SNMPv2-SMI", "joint-iso-ccitt", null, 2), null);
+			IDefinition ccitt = Definition.ToDefinition(new OidValueAssignment("SNMPv2-SMI", "ccitt", null, 0), null);
+			IDefinition iso = Definition.ToDefinition(new OidValueAssignment("SNMPv2-SMI", "iso", null, 1), null);
+			IDefinition joint_iso_ccitt = Definition.ToDefinition(new OidValueAssignment("SNMPv2-SMI", "joint-iso-ccitt", null, 2), null);
 			root.Add(ccitt);
 			root.Add(iso);
 			root.Add(joint_iso_ccitt);
-			nameTable = new Dictionary<string, Definition>() { { iso.TextualForm, iso },
+			nameTable = new Dictionary<string, IDefinition>() { { iso.TextualForm, iso },
 				{ccitt.TextualForm, ccitt}, {joint_iso_ccitt.TextualForm, joint_iso_ccitt} };
 		}
 		/// <summary>
 		/// Root definition.
 		/// </summary>
-        public Definition Root
+		[CLSCompliant(false)]
+        public IDefinition Root
         {
             get
             {
@@ -42,7 +43,7 @@ namespace Lextm.SharpSnmpLib.Mib
             }
         }
 
-		internal Definition Find(string module, string name)
+		internal IDefinition Find(string module, string name)
 		{
 			string full = module + "::" + name;
 			if (nameTable.ContainsKey(full))
@@ -52,7 +53,7 @@ namespace Lextm.SharpSnmpLib.Mib
 			return null;
 		}
 
-		internal Definition Find(uint[] numerical)
+		internal IDefinition Find(uint[] numerical)
 		{
 			if (numerical == null)
 			{
@@ -63,8 +64,8 @@ namespace Lextm.SharpSnmpLib.Mib
 				throw new ArgumentException("numerical cannot be empty");
 			}
 			int i = 0;
-			Definition result;
-			Definition temp = root;
+			IDefinition result;
+			IDefinition temp = root;
 			do
 			{
 				result = temp[(int)numerical[i]];
@@ -86,7 +87,7 @@ namespace Lextm.SharpSnmpLib.Mib
 			_parsed.Add(module.Name, module);
 			foreach (IEntity node in module.Entities)
 			{
-				Definition result = root.Add(node);
+				IDefinition result = root.Add(node);
 				if (result != null && !nameTable.ContainsKey(result.TextualForm))
 				{
 					nameTable.Add(result.TextualForm, result);
