@@ -71,5 +71,13 @@ namespace Lextm.SharpSnmpLib.Mib
 		/// </summary>
 		/// <returns></returns>
 		uint[] GetNumericalForm();
+
+		/// <summary>
+		/// Type.
+		/// </summary>
+        DefinitionType Type
+        {
+            get;
+        }
 	}
 }

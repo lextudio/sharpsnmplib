@@ -8,7 +8,7 @@ namespace Lextm.SharpSnmpLib.Mib
 	/// <summary>
 	/// Object tree class.
 	/// </summary>
-	public sealed class ObjectTree
+	internal sealed class ObjectTree : IObjectTree
 	{
 		IDictionary<string, MibModule> _parsed = new Dictionary<string, MibModule>();
 		IList<MibModule> _pending = new List<MibModule>();
@@ -22,19 +22,18 @@ namespace Lextm.SharpSnmpLib.Mib
 		{
 			_lexer = new Lexer();
 			root = Definition.RootDefinition;
-			IDefinition ccitt = Definition.ToDefinition(new OidValueAssignment("SNMPv2-SMI", "ccitt", null, 0), null);
-			IDefinition iso = Definition.ToDefinition(new OidValueAssignment("SNMPv2-SMI", "iso", null, 1), null);
-			IDefinition joint_iso_ccitt = Definition.ToDefinition(new OidValueAssignment("SNMPv2-SMI", "joint-iso-ccitt", null, 2), null);
-			root.Add(ccitt);
-			root.Add(iso);
-			root.Add(joint_iso_ccitt);
+			IDefinition ccitt = Definition.ToDefinition(new OidValueAssignment("SNMPv2-SMI", "ccitt", null, 0), root);
+			IDefinition iso = Definition.ToDefinition(new OidValueAssignment("SNMPv2-SMI", "iso", null, 1), root);
+			IDefinition joint_iso_ccitt = Definition.ToDefinition(new OidValueAssignment("SNMPv2-SMI", "joint-iso-ccitt", null, 2), root);
+            //root.Add(ccitt);
+            //root.Add(iso);
+            //root.Add(joint_iso_ccitt);
 			nameTable = new Dictionary<string, IDefinition>() { { iso.TextualForm, iso },
 				{ccitt.TextualForm, ccitt}, {joint_iso_ccitt.TextualForm, joint_iso_ccitt} };
 		}
 		/// <summary>
 		/// Root definition.
 		/// </summary>
-		[CLSCompliant(false)]
         public IDefinition Root
         {
             get

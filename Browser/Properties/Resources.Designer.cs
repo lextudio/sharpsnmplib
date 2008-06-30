@@ -60,9 +60,51 @@ namespace Browser.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap application_x_executable {
+            get {
+                object obj = ResourceManager.GetObject("application_x_executable", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap package_x_generic {
+            get {
+                object obj = ResourceManager.GetObject("package_x_generic", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap system_log_out {
             get {
                 object obj = ResourceManager.GetObject("system_log_out", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap text_x_generic {
+            get {
+                object obj = ResourceManager.GetObject("text_x_generic", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap text_x_generic_template {
+            get {
+                object obj = ResourceManager.GetObject("text_x_generic_template", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap text_x_script {
+            get {
+                object obj = ResourceManager.GetObject("text_x_script", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap x_office_spreadsheet {
+            get {
+                object obj = ResourceManager.GetObject("x_office_spreadsheet", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

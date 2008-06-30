@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
+using Lextm.SharpSnmpLib;
 
 namespace Browser
 {
@@ -34,6 +35,7 @@ namespace Browser
             output.Show(dockPanel1, DockState.DockBottomAutoHide);
             MibTreePanel tree = new MibTreePanel();
             tree.Show(dockPanel1, DockState.Document);
+            SnmpProfile.Initiate(manager1, "public", "public", VersionCode.V1, null);
 		}
-	}
+    }
 }

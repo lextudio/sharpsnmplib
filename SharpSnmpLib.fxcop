@@ -25,6 +25,7 @@
    <Modules AnalyzeAllChildren="False">
     <Module Name="sharpsnmplib.dll" Analyze="False" AnalyzeAllChildren="False">
      <Namespaces AnalyzeAllChildren="False">
+      <Namespace Name="" Analyze="True" AnalyzeAllChildren="True" />
       <Namespace Name="Lextm.SharpSnmpLib" Analyze="True" AnalyzeAllChildren="False">
        <Types AnalyzeAllChildren="False">
         <Type Name="BitString" Analyze="True" AnalyzeAllChildren="True" />
@@ -120,7 +121,7 @@
        </Types>
       </Namespace>
      </Namespaces>
-     <Resources AnalyzeAllChildren="False" />
+     <Resources AnalyzeAllChildren="True" />
     </Module>
    </Modules>
   </Target>

@@ -78,12 +78,14 @@
     <Compile Include="Mib\ConstructHelper.cs" />
     <Compile Include="Mib\AgentCapabilities.cs" />
     <Compile Include="Mib\Choice.cs" />
+    <Compile Include="Mib\DefinitionType.cs" />
     <Compile Include="Mib\Exports.cs" />
     <Compile Include="Mib\IConstruct.cs" />
     <Compile Include="Mib\IDefinition.cs" />
     <Compile Include="Mib\IEntity.cs" />
     <Compile Include="Mib\Imports.cs" />
     <Compile Include="Mib\ImportsFrom.cs" />
+    <Compile Include="Mib\IObjectTree.cs" />
     <Compile Include="Mib\ITypeAssignment.cs" />
     <Compile Include="Mib\Macro.cs" />
     <Compile Include="Mib\ModuleCompliance.cs" />

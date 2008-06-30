@@ -13,22 +13,50 @@ namespace Lextm.SharpSnmpLib.Mib
 		string _name;
 		string _module;
 		int _value;
+        DefinitionType _type;
 		IDictionary<int, IDefinition> _children = new SortedDictionary<int, IDefinition>();
 
-		Definition() {} 
+        Definition() { _type = DefinitionType.Unknown; } 
 		/// <summary>
 		/// Creates a <see cref="Definition"/> instance.
 		/// </summary>
-		/// <param name="id"></param>
-		/// <param name="name"></param>
-		/// <param name="module"></param>
-		/// <param name="value"></param>
-		public Definition(uint[] id, string name, string module, int value)
+		/// <param name="parent"></param>
+		/// <param name="entity"></param>
+		internal Definition(Definition parent, IEntity entity)
 		{
-			_id = id;
-			_name = name;
-			_module = module;
-			_value = value;
+            uint[] id = string.IsNullOrEmpty(parent.Name) ?            	
+            	null : parent.GetNumericalForm(); // null for root node
+            _id = AppendTo(id, (uint)entity.Value);
+			_name = entity.Name;
+			_module = entity.Module;
+			_value = entity.Value;
+            parent.Add(this);
+            if (entity.GetType() == typeof(OidValueAssignment)) 
+            {
+                _type = DefinitionType.OidValueAssignment;
+                return;
+            }
+            if (entity.GetType() != typeof(ObjectType))
+            {
+                _type = DefinitionType.Unknown;
+                return;
+            }
+            if (_name.EndsWith("Table", StringComparison.Ordinal))
+            {
+                _type = DefinitionType.Table;
+                return;
+            }
+            if (_name.EndsWith("Entry", StringComparison.Ordinal))
+            {
+                _type = DefinitionType.Entry;
+                return;
+            }
+            if (parent.Type == DefinitionType.Entry)
+            {
+                _type = DefinitionType.Column;
+                return;
+            }
+            _type = DefinitionType.Scalar;
 		}
 		
 		/// <summary>
@@ -52,6 +80,14 @@ namespace Lextm.SharpSnmpLib.Mib
 				return _children.Values;
 			}
 		}
+
+        public DefinitionType Type
+        {
+            get
+            {
+                return _type;
+            }
+        }
 
 		internal static Definition RootDefinition
 		{
@@ -129,7 +165,7 @@ namespace Lextm.SharpSnmpLib.Mib
 		{
 			if (_name == node.Parent) {
                 IDefinition def = ToDefinition(node, this);
-                Add(def);
+                //Add(def);
 				return def;
 			}
 			foreach (Definition d in _children.Values)
@@ -145,20 +181,25 @@ namespace Lextm.SharpSnmpLib.Mib
 		/// Adds a <see cref="Definition"/> child to this <see cref="Definition"/>.
 		/// </summary>
 		/// <param name="def"></param>
-        public void Add(IDefinition def)
+        void Add(IDefinition def)
         {
-        	if (!_children.ContainsKey(def.Value))
-        	{
-        		_children.Add(def.Value, def);
-        	}
+            if (!_children.ContainsKey(def.Value))
+            {
+                _children.Add(def.Value, def);
+            }
         }
 
-        internal static IDefinition ToDefinition(IEntity entity, IDefinition parent)
+        internal static IDefinition ToDefinition(IEntity entity, Definition parent)
         {
-        	uint[] id =
-            	(parent == null || parent.GetNumericalForm() == null || parent.GetNumericalForm().Length == 0) ?
-            	null : parent.GetNumericalForm();
-        	return new Definition(AppendTo(id, (uint)entity.Value), entity.Name, entity.Module, entity.Value);
+            if (entity == null)
+            {
+                throw new ArgumentNullException("entity");
+            }
+            if (parent == null)
+            {
+                throw new ArgumentNullException("parent");
+            }
+        	return new Definition(parent, entity);//.GetType()/*, AppendTo(id, (uint)entity.Value)*/, entity.Name, entity.Module, entity.Value);
         }
         
         internal static uint[] AppendTo(uint[] parentId, uint value)

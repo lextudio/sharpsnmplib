@@ -66,6 +66,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="SnmpProfile.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -89,5 +90,23 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\system-log-out.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\package-x-generic.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\text-x-generic.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\x-office-spreadsheet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\text-x-script.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\application-x-executable.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\text-x-generic-template.png" />
   </ItemGroup>
 </Project>

@@ -26,7 +26,8 @@ namespace Lextm.SharpSnmpLib.Mib
 		/// <summary>
 		/// Object tree.
 		/// </summary>
-        public ObjectTree Tree
+		[CLSCompliant(false)]
+        public IObjectTree Tree
         {
             get
             {
