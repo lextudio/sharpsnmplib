@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Lextm.SharpSnmpLib;
 using Lextm.SharpSnmpLib.Mib;
+using System.Net;
 
 namespace Browser
 {
@@ -24,14 +25,6 @@ namespace Browser
             _ip = ip;
         }
 
-        internal void Get(IDefinition def)
-        {
-            if (def.Type == DefinitionType.Scalar)
-            {
-
-            }
-        }
-
         internal static void Initiate(Manager manager, string getCommunity, string setCommunity, VersionCode version, string ip)
         {
             lock (typeof(SnmpProfile))
@@ -51,9 +44,56 @@ namespace Browser
             }
         }
 
+
+        internal void Get(IDefinition def)
+        {
+            IPAddress ip;
+            bool succeeded = IPAddress.TryParse(_ip, out ip);
+            if (!succeeded)
+            {
+                throw new MibBrowserException();
+            }
+            if (def.Type == DefinitionType.Scalar)
+            {
+                Variable result = _manager.Get(ip, _get, new Variable(def.TextualForm + ".0"));
+            }
+            else
+            {
+                //TODO: get index
+                int index = 0;
+                Variable result = _manager.Get(ip, _get, new Variable(def.TextualForm + "." + index));
+            }
+        }
+
         internal void Set(IDefinition def)
         {
-            throw new NotImplementedException();
+            IPAddress ip;
+            bool succeeded = IPAddress.TryParse(_ip, out ip);
+            if (!succeeded)
+            {
+                throw new MibBrowserException();
+            }
+            //TODO: get type
+            if (def.Type == DefinitionType.Scalar)
+            {
+                _manager.Set(ip, _get, new Variable(def.TextualForm + ".0"));
+            }
+            else
+            {
+                //TODO: get index
+                int index = 0;
+                _manager.Set(ip, _get, new Variable(def.TextualForm + "." + index));
+            }
+        }
+
+        internal void Walk(IDefinition def)
+        {
+            IPAddress ip;
+            bool succeeded = IPAddress.TryParse(_ip, out ip);
+            if (!succeeded)
+            {
+                throw new MibBrowserException();
+            }
         }
     }
 }

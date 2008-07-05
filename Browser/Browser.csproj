@@ -47,6 +47,7 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="MibBrowserException.cs" />
     <Compile Include="MibTreePanel.cs">
       <SubType>Form</SubType>
     </Compile>

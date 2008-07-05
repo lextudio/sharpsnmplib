@@ -42,10 +42,10 @@ namespace Browser
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.getToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.actionList1 = new Crad.Windows.Forms.Actions.ActionList();
             this.actGet = new Crad.Windows.Forms.Actions.Action();
             this.actSet = new Crad.Windows.Forms.Actions.Action();
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.actWalk = new Crad.Windows.Forms.Actions.Action();
             this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.actionList1)).BeginInit();
@@ -86,6 +86,17 @@ namespace Browser
             this.setToolStripMenuItem.Size = new System.Drawing.Size(96, 22);
             this.setToolStripMenuItem.Text = "Set";
             // 
+            // imageList1
+            // 
+            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList1.Images.SetKeyName(0, "text-x-generic-template.png");
+            this.imageList1.Images.SetKeyName(1, "package-x-generic.png");
+            this.imageList1.Images.SetKeyName(2, "text-x-generic.png");
+            this.imageList1.Images.SetKeyName(3, "x-office-spreadsheet.png");
+            this.imageList1.Images.SetKeyName(4, "application-x-executable.png");
+            this.imageList1.Images.SetKeyName(5, "text-x-script.png");
+            // 
             // actionList1
             // 
             this.actionList1.Actions.Add(this.actGet);
@@ -107,21 +118,11 @@ namespace Browser
             this.actSet.Update += new System.EventHandler(this.actSet_Update);
             this.actSet.Execute += new System.EventHandler(this.actSet_Execute);
             // 
-            // imageList1
-            // 
-            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
-            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList1.Images.SetKeyName(0, "text-x-generic-template.png");
-            this.imageList1.Images.SetKeyName(1, "package-x-generic.png");
-            this.imageList1.Images.SetKeyName(2, "text-x-generic.png");
-            this.imageList1.Images.SetKeyName(3, "x-office-spreadsheet.png");
-            this.imageList1.Images.SetKeyName(4, "application-x-executable.png");
-            this.imageList1.Images.SetKeyName(5, "text-x-script.png");
-            // 
             // actWalk
             // 
             this.actWalk.Text = "Walk";
             this.actWalk.ToolTipText = "Walk";
+            this.actWalk.Execute += new System.EventHandler(this.actWalk_Execute);
             // 
             // MibTreePanel
             // 

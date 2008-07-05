@@ -101,5 +101,11 @@ namespace Browser
             return treeNode.ImageIndex == 2 || treeNode.ImageIndex == 5;
         }
 
+        private void actWalk_Execute(object sender, EventArgs e)
+        {
+            IDefinition def = treeView1.SelectedNode.Tag as IDefinition;
+            SnmpProfile.Instance.Walk(def);
+        }
+
     }
 }
