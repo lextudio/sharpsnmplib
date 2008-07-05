@@ -8,8 +8,7 @@
  */
 using System;
 using System.Net;
-using SharpSnmpLib;
-using X690;
+using Lextm.SharpSnmpLib;
 
 namespace TestSet
 {
@@ -20,11 +19,12 @@ namespace TestSet
 			Manager manager = new Manager();
 			try
 			{
-				manager.Set(IPAddress.Parse("127.0.0.1"), "private",
-				                                new Variable(new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 1, 6, 0 }), 
-				                                             new OctetString("Shanghai")));
+				Variable test = new Variable(new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 1, 6, 0 }), 
+				                                             new OctetString("Beijing"));
+				manager.Set(IPAddress.Parse("127.0.0.1"), "private", test);
+				manager.Set(VersionCode.V2, IPAddress.Parse("127.0.0.1"), "private", test);
 			}
-			catch (SharpSnmpException ex)
+			catch (SharpOperationException ex)
 			{
 				Console.WriteLine(ex);
 			}

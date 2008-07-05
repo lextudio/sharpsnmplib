@@ -1,4 +1,4 @@
-锘�Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+锘�<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectGuid>{286DE6DB-8F95-4BD4-86A2-86488D2E0EE1}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -271,4 +271,3 @@
     <None Include="Resources\SNMPv2-TM.txt" />
   </ItemGroup>
 </Project>
-
