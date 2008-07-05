@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+ﻄ1�7?xml version="1.0" encoding="utf-8"?>
 <FxCopProject Version="1.36" Name="My FxCop Project">
  <ProjectOptions>
   <SharedProject>True</SharedProject>
@@ -383,3 +383,4 @@
   </Rules>
  </FxCopReport>
 </FxCopProject>
+

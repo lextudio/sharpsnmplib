@@ -1,4 +1,4 @@
-﻿/*
+ﻄ1�7/*
  * Created by SharpDevelop.
  * User: lextm
  * Date: 2008/4/28
