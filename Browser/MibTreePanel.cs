@@ -56,8 +56,14 @@ namespace Browser
 
         private void actGet_Execute(object sender, EventArgs e)
         {
-            IDefinition def = treeView1.SelectedNode.Tag as IDefinition;
-            SnmpProfile.Instance.Get(def);
+            try
+            {
+                SnmpProfile.Instance.Get(treeView1.SelectedNode.Tag as IDefinition);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void actGet_Update(object sender, EventArgs e)
@@ -67,8 +73,14 @@ namespace Browser
 
         private void actSet_Execute(object sender, EventArgs e)
         {
-            IDefinition def = treeView1.SelectedNode.Tag as IDefinition;
-            SnmpProfile.Instance.Set(def);
+            try
+            {
+                SnmpProfile.Instance.Set(treeView1.SelectedNode.Tag as IDefinition);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void actSet_Update(object sender, EventArgs e)
@@ -103,9 +115,14 @@ namespace Browser
 
         private void actWalk_Execute(object sender, EventArgs e)
         {
-            IDefinition def = treeView1.SelectedNode.Tag as IDefinition;
-            SnmpProfile.Instance.Walk(def);
+            try
+            {
+                SnmpProfile.Instance.Walk(treeView1.SelectedNode.Tag as IDefinition);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
-
     }
 }

@@ -32,10 +32,10 @@ namespace Browser
 			// TODO: Add constructor code after the InitializeComponent() call.
 			//
             OutputPanel output = new OutputPanel();
-            output.Show(dockPanel1, DockState.DockBottomAutoHide);
+            output.Show(dockPanel1, DockState.DockBottom);
             MibTreePanel tree = new MibTreePanel();
             tree.Show(dockPanel1, DockState.Document);
-            SnmpProfile.Initiate(manager1, "public", "public", VersionCode.V1, null);
+            SnmpProfile.Initiate(manager1, "public", "public", VersionCode.V1, tscbAgent.Text, output.ReportMessage);
 		}
     }
 }

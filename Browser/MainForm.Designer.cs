@@ -105,6 +105,7 @@ namespace Browser
             this.tscbAgent.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.tscbAgent.Name = "tscbAgent";
             this.tscbAgent.Size = new System.Drawing.Size(121, 25);
+            this.tscbAgent.Text = "127.0.0.1";
             // 
             // menuStrip1
             // 

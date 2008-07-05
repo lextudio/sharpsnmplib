@@ -32,5 +32,11 @@ namespace Browser
 			// TODO: Add constructor code after the InitializeComponent() call.
 			//
 		}
+
+        internal void ReportMessage(string message)
+        {
+            txtMessages.AppendText(string.Format("[{0}] {1}{2}", DateTime.Now, message, Environment.NewLine));
+            txtMessages.ScrollToCaret();
+        }
 	}
 }
