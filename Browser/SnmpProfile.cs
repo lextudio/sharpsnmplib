@@ -50,19 +50,10 @@ namespace Browser
         }
 
 
-        internal void Get(IDefinition def)
+        internal void Get(string textual)
         {
             IPAddress ip = ValidateIP();
-            if (def.Type == DefinitionType.Scalar)
-            {
-                Report(_manager.Get(ip, _get, new Variable(def.TextualForm + ".0")));
-            }
-            else
-            {
-                //TODO: get index
-                int index = 1;
-                Variable result = _manager.Get(ip, _get, new Variable(def.TextualForm + "." + index));
-            }
+            Report(_manager.Get(ip, _get, new Variable(textual)));
         }
 
         private void Report(Variable variable)
@@ -73,20 +64,10 @@ namespace Browser
             }
         }
 
-        internal void Set(IDefinition def)
+        internal void Set(string textual, ISnmpData data)
         {
             IPAddress ip = ValidateIP();
-            //TODO: get type
-            if (def.Type == DefinitionType.Scalar)
-            {
-                _manager.Set(ip, _get, new Variable(def.TextualForm + ".0"));
-            }
-            else
-            {
-                //TODO: get index
-                int index = 1;
-                _manager.Set(ip, _get, new Variable(def.TextualForm + "." + index));
-            }
+            _manager.Set(ip, _get, new Variable(textual, data));
         }
 
         private IPAddress ValidateIP()

@@ -19,23 +19,17 @@ namespace Browser
 	/// <summary>
 	/// Description of OutputPanel.
 	/// </summary>
-	public partial class OutputPanel : DockContent
+	partial class OutputPanel : DockContent
 	{
 		public OutputPanel()
 		{
-			//
-			// The InitializeComponent() call is required for Windows Forms designer support.
-			//
 			InitializeComponent();
-			
-			//
-			// TODO: Add constructor code after the InitializeComponent() call.
-			//
 		}
 
         internal void ReportMessage(string message)
         {
-            txtMessages.AppendText(string.Format("[{0}] {1}{2}", DateTime.Now, message, Environment.NewLine));
+            txtMessages.AppendText(string.Format("[{0}] {1}", DateTime.Now, message));
+            txtMessages.AppendText(Environment.NewLine);
             txtMessages.ScrollToCaret();
         }
 	}

@@ -18,18 +18,11 @@ namespace Browser
     /// <summary>
     /// Description of MibTreePanel.
     /// </summary>
-    public partial class MibTreePanel : DockContent
+    partial class MibTreePanel : DockContent
     {
         public MibTreePanel()
         {
-            //
-            // The InitializeComponent() call is required for Windows Forms designer support.
-            //
             InitializeComponent();
-
-            //
-            // TODO: Add constructor code after the InitializeComponent() call.
-            //
             ObjectRegistry repository = ObjectRegistry.Instance;
             TreeNode root = Wrap(repository.Tree.Root);
             foreach (TreeNode node in root.Nodes)
@@ -58,11 +51,29 @@ namespace Browser
         {
             try
             {
-                SnmpProfile.Instance.Get(treeView1.SelectedNode.Tag as IDefinition);
+                SnmpProfile.Instance.Get(GetTextualForm(treeView1.SelectedNode.Tag as IDefinition));
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+        }
+
+        private string GetTextualForm(IDefinition def)
+        {
+            if (def.Type == DefinitionType.Scalar)
+            {
+                return def.TextualForm + ".0";
+            }
+            else
+            {
+                int index; 
+                using (FormIndex form = new FormIndex())
+                {
+                    form.ShowDialog();
+                    index = form.Index;
+                }
+                return def.TextualForm + "." + index;
             }
         }
 
@@ -75,7 +86,7 @@ namespace Browser
         {
             try
             {
-                SnmpProfile.Instance.Set(treeView1.SelectedNode.Tag as IDefinition);
+                SnmpProfile.Instance.Set(GetTextualForm(treeView1.SelectedNode.Tag as IDefinition), null);
             }
             catch (Exception ex)
             {
