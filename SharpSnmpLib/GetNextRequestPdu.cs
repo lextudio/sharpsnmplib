@@ -101,7 +101,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         public SnmpType TypeCode
         {
-            get { return SnmpType.GetNextRequestPDU; }
+            get { return SnmpType.GetNextRequestPdu; }
         }
 
 

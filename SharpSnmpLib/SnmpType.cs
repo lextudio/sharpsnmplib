@@ -119,38 +119,46 @@ namespace Lextm.SharpSnmpLib
         /// Unsigned32 type. (SMIv2)
         /// </summary>
         UInt32=0x47,
+        NoSuchObjectException=0x80,
+        NoSuchInstanceException=0x81,
+        EndOfMibViewException=0x82,
+        
         /// <summary>
         /// Get request PDU.
         /// </summary>
-        GetRequestPDU=0xA0,
+        GetRequestPdu=0xA0,
         /// <summary>
         /// Get Next request PDU.
         /// </summary>
-		GetNextRequestPDU=0xA1,
+		GetNextRequestPdu=0xA1,
 		/// <summary>
 		/// Get response PDU.
 		/// </summary>
-		GetResponsePDU=0xA2,
+		GetResponsePdu=0xA2,
 		/// <summary>
 		/// Set request PDU.
 		/// </summary>
-		SetRequestPDU=0xA3,
+		SetRequestPdu=0xA3,
 		/// <summary>
 		/// Trap v1 PDU.
 		/// </summary>
-		TrapPDUv1=0xA4,
+		TrapV1Pdu=0xA4,
 		/// <summary>
 		/// Get Bulk PDU.
 		/// </summary>
-		GetBulkRequest=0xA5,
+		GetBulkRequestPdu=0xA5,
 		/// <summary>
 		/// Inform PDU.
 		/// </summary>
-		InformRequest=0xA6,
+		InformRequestPdu=0xA6,
 		/// <summary>
 		/// Trap v2 PDU.
 		/// </summary>
-		TrapPDUv2=0xA7
+		TrapV2Pdu=0xA7,
+		/// <summary>
+		/// Report PDU. SNMP v3.
+		/// </summary>
+		ReportPdu=0xA8
 	}
 }
 #pragma warning restore 1591

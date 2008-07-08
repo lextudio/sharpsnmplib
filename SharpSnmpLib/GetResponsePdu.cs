@@ -74,7 +74,7 @@ namespace Lextm.SharpSnmpLib
 		/// </summary>
 		public SnmpType TypeCode {
 			get {
-				return SnmpType.GetResponsePDU;
+				return SnmpType.GetResponsePdu;
 			}
 		}
 		/// <summary>

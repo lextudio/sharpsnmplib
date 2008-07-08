@@ -22,9 +22,9 @@ namespace Lextm.SharpSnmpLib.Tests
 		{
 			MemoryStream m = new MemoryStream(Resource.getresponse, false);
 			ISnmpMessage message = MessageFactory.ParseMessage(m);
-	        Assert.AreEqual(SnmpType.GetResponsePDU, message.TypeCode);
+	        Assert.AreEqual(SnmpType.GetResponsePdu, message.TypeCode);
 	        ISnmpPdu pdu = message.Pdu;
-	        Assert.AreEqual(SnmpType.GetResponsePDU, pdu.TypeCode);
+	        Assert.AreEqual(SnmpType.GetResponsePdu, pdu.TypeCode);
 	        GetResponsePdu response = (GetResponsePdu)pdu;
 	        Assert.AreEqual(ErrorCode.NoError, response.ErrorStatus);
 	        Assert.AreEqual(0, response.ErrorIndex);

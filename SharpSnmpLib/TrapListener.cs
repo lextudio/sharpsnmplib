@@ -128,7 +128,7 @@ namespace Lextm.SharpSnmpLib
 					_watcher.ReceiveFrom(msg, ref senderRemote);
 					ISnmpMessage message = MessageFactory.ParseMessage(msg, 0, number);
                     if (TrapReceived != null 
-					    && message.TypeCode == SnmpType.TrapPDUv1)
+					    && message.TypeCode == SnmpType.TrapV1Pdu)
                     {
 						TrapReceived(this, new TrapReceivedEventArgs((TrapMessage)message));
                     }

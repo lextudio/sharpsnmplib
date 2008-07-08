@@ -56,11 +56,11 @@ namespace Lextm.SharpSnmpLib
 			}
 			ISnmpData pdu = body.Items[2];
 			switch (pdu.TypeCode) {
-				case SnmpType.TrapPDUv1:
+				case SnmpType.TrapV1Pdu:
 					return new TrapMessage(body);
-                case SnmpType.GetRequestPDU:
+                case SnmpType.GetRequestPdu:
                     return new GetRequestMessage(body);
-                case SnmpType.GetResponsePDU:
+                case SnmpType.GetResponsePdu:
                     return new GetResponseMessage(body);
 				default:
 					throw new SharpSnmpException("unsupported pdu: " + pdu.TypeCode);

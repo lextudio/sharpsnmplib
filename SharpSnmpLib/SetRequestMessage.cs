@@ -59,7 +59,7 @@ namespace Lextm.SharpSnmpLib
 			bytes = udp.EndReceive(result, ref from);
 			MemoryStream m = new MemoryStream(bytes, false);
 			ISnmpMessage message = MessageFactory.ParseMessage(m);
-			if (message.TypeCode != SnmpType.GetResponsePDU) {
+			if (message.TypeCode != SnmpType.GetResponsePdu) {
 				throw SharpOperationException.Create("wrong response type", _agent);
 			}
 			GetResponseMessage response = (GetResponseMessage)message;
@@ -146,7 +146,7 @@ namespace Lextm.SharpSnmpLib
 		/// </summary>
 		public SnmpType TypeCode {
 			get {
-				return SnmpType.SetRequestPDU;
+				return SnmpType.SetRequestPdu;
 			}
 		}
 

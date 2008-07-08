@@ -117,7 +117,7 @@ namespace Lextm.SharpSnmpLib.Tests
 				0x06, 0x0B, 0x2B, 0x06, 0x01, 0x04, 0x01, 0x90, 0x72, 0x87, 0x69, 0x15, 0x00,
 				0x04, 0x08, 0x54, 0x72, 0x61, 0x70, 0x54, 0x65, 0x73, 0x74};
 			ISnmpData data = SnmpDataFactory.CreateSnmpData(expected);
-			Assert.AreEqual(SnmpType.TrapPDUv1, data.TypeCode);
+			Assert.AreEqual(SnmpType.TrapV1Pdu, data.TypeCode);
 			
 			TrapV1Pdu t = (TrapV1Pdu)data;
 			Assert.AreEqual(new uint[] {1,3,6,1,4,1,2162,1000,2}, t.Enterprise.ToNumerical());
@@ -156,7 +156,7 @@ namespace Lextm.SharpSnmpLib.Tests
 			Assert.AreEqual(SnmpType.OctetString, community.TypeCode);
 			Assert.AreEqual("public", ((OctetString)community).ToString());
 			ISnmpData pdu = t.Items[2];
-			Assert.AreEqual(SnmpType.TrapPDUv1, pdu.TypeCode);
+			Assert.AreEqual(SnmpType.TrapV1Pdu, pdu.TypeCode);
 		}
 	}
 }

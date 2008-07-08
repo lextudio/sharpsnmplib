@@ -143,7 +143,7 @@ namespace Lextm.SharpSnmpLib
 		/// </summary>
 		public SnmpType TypeCode {
 			get {
-				return SnmpType.TrapPDUv1;
+				return SnmpType.TrapV1Pdu;
 			}
 		}
 		/// <summary>

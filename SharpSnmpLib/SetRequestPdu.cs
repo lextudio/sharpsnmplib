@@ -115,7 +115,7 @@ namespace Lextm.SharpSnmpLib
 		/// </summary>
         public SnmpType TypeCode
         {
-            get { return SnmpType.SetRequestPDU; }
+            get { return SnmpType.SetRequestPdu; }
         }
 
         byte[] _bytes;

@@ -69,11 +69,11 @@ namespace Lextm.SharpSnmpLib
 					return new TimeTicks(bytes);
 				case SnmpType.Sequence:
 					return new Sequence(bytes);
-				case SnmpType.TrapPDUv1:
+				case SnmpType.TrapV1Pdu:
 					return new TrapV1Pdu(bytes);
-				case SnmpType.GetRequestPDU:
+				case SnmpType.GetRequestPdu:
 					return new GetRequestPdu(bytes);
-				case SnmpType.GetResponsePDU:
+				case SnmpType.GetResponsePdu:
 					return new GetResponsePdu(bytes);
 				default:
 					throw new SharpSnmpException("unsupported data type: " + (SnmpType)type);
