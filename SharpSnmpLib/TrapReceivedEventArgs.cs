@@ -15,19 +15,19 @@ namespace Lextm.SharpSnmpLib
 	/// </summary>
 	public sealed class TrapReceivedEventArgs : EventArgs
 	{	  
-		TrapMessage _trap;
+		TrapV1Message _trap;
 		/// <summary>
 		/// Creates a <see cref="TrapReceivedEventArgs"/> 
 		/// </summary>
 		/// <param name="trap">Trap message</param>
-	    public TrapReceivedEventArgs(TrapMessage trap)
+	    public TrapReceivedEventArgs(TrapV1Message trap)
 	    {
 	        _trap = trap;
 	    }
 		/// <summary>
 		/// Trap message.
 		/// </summary>
-	    public TrapMessage Trap
+	    public TrapV1Message Trap
 	    {
 	        get
 	        {

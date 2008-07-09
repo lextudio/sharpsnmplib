@@ -119,10 +119,18 @@ namespace Lextm.SharpSnmpLib
         /// Unsigned32 type. (SMIv2)
         /// </summary>
         UInt32=0x47,
-        NoSuchObjectException=0x80,
-        NoSuchInstanceException=0x81,
-        EndOfMibViewException=0x82,
-        
+        /// <summary>
+        /// No such object exception.
+        /// </summary>
+        NoSuchObject=0x80,
+        /// <summary>
+        /// No such instance exception.
+        /// </summary>
+        NoSuchInstance=0x81,
+        /// <summary>
+        /// End of MIB view exception.
+        /// </summary>
+        EndOfMibView=0x82,        
         /// <summary>
         /// Get request PDU.
         /// </summary>

@@ -39,7 +39,7 @@ namespace Lextm.SharpSnmpLib
 			InitializeComponent();
 		}
     	/// <summary>
-    	/// Occurs when a <see cref="TrapMessage" /> is received.
+    	/// Occurs when a <see cref="TrapV1Message" /> is received.
     	/// </summary>
         public event EventHandler<TrapReceivedEventArgs> TrapReceived;
 		/// <summary>
@@ -130,7 +130,7 @@ namespace Lextm.SharpSnmpLib
                     if (TrapReceived != null 
 					    && message.TypeCode == SnmpType.TrapV1Pdu)
                     {
-						TrapReceived(this, new TrapReceivedEventArgs((TrapMessage)message));
+						TrapReceived(this, new TrapReceivedEventArgs((TrapV1Message)message));
                     }
 				}
 			}

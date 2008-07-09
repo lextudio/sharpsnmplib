@@ -27,7 +27,7 @@ namespace Lextm.SharpSnmpLib
 			InitializeComponent();
 		}
 		/// <summary>
-		/// Occurs when a <see cref="TrapMessage" /> is received.
+		/// Occurs when a <see cref="TrapV1Message" /> is received.
 		/// </summary>
 		public event EventHandler<TrapReceivedEventArgs> TrapReceived;
 		/// <summary>

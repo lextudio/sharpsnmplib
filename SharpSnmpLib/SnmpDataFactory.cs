@@ -59,6 +59,12 @@ namespace Lextm.SharpSnmpLib
 					return new ObjectIdentifier(bytes);
 				case SnmpType.Null:
 					return new Null();
+				case SnmpType.NoSuchInstance:
+					return new NoSuchInstance();
+				case SnmpType.NoSuchObject:
+					return new NoSuchObject();
+				case SnmpType.EndOfMibView:
+					return new EndOfMibView();
 				case SnmpType.Integer32:
 					return new Integer32(bytes);
 				case SnmpType.OctetString:

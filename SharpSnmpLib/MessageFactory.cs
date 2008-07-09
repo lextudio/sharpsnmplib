@@ -57,7 +57,7 @@ namespace Lextm.SharpSnmpLib
 			ISnmpData pdu = body.Items[2];
 			switch (pdu.TypeCode) {
 				case SnmpType.TrapV1Pdu:
-					return new TrapMessage(body);
+					return new TrapV1Message(body);
                 case SnmpType.GetRequestPdu:
                     return new GetRequestMessage(body);
                 case SnmpType.GetResponsePdu:

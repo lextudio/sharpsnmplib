@@ -43,7 +43,7 @@ namespace Lextm.SharpSnmpLib
 			_varbindSection = (Sequence)SnmpDataFactory.CreateSnmpData(m);
 			_variables = Variable.ConvertFrom(_varbindSection);
 		}
-				/// <summary>
+		/// <summary>
 		/// Creates a <see cref="TrapV1Pdu"/> instance with PDU elements.
 		/// </summary>
 		/// <param name="enterprise">Enterprise</param>
