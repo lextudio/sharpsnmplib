@@ -120,5 +120,10 @@ namespace Lextm.SharpSnmpLib
 			result.Write(raw,0,raw.Length);
 			return result.ToArray();
         }
+
+        internal static Sequence PackMessage(VersionCode version, string community, ISnmpPdu pdu)
+        {
+            return new Sequence(new Integer32((int)version), new OctetString(community), pdu);
+        }
 	}
 }

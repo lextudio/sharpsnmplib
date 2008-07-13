@@ -10,6 +10,30 @@ namespace Lextm.SharpSnmpLib.Tests
     [TestFixture]
     public class TestTrapMessage
     {
+    	[Test]
+    	public void TestSendTrap()
+    	{
+    		TrapV1Message message = new TrapV1Message(VersionCode.V1, 
+    		                                          IPAddress.Parse("127.0.0.1"),
+    		                                          "public",
+    		                                          new ObjectIdentifier(new uint[] {1,3,6}),
+    		                                          GenericCode.AuthenticationFailure,
+    		                                          0, 
+    		                                          0,
+    		                                          new List<Variable>());
+    		byte[] bytes = message.ToBytes();
+    		ISnmpMessage parsed = MessageFactory.ParseMessage(bytes);
+    		Assert.AreEqual(SnmpType.TrapV1Pdu, parsed.TypeCode);
+    		TrapV1Message m = (TrapV1Message)parsed;
+    		Assert.AreEqual(GenericCode.AuthenticationFailure, m.Generic);
+    		Assert.AreEqual(0, m.Specific);
+    		Assert.AreEqual("public", m.Community);
+    		Assert.AreEqual(IPAddress.Parse("127.0.0.1"), m.AgentAddress);
+    		Assert.AreEqual(new uint[] {1,3,6}, m.Enterprise.ToNumerical());
+    		Assert.AreEqual(0, m.TimeStamp);
+    		Assert.AreEqual(0, m.Variables.Count);
+    	}
+    	
         [Test]
         public void TestParseNoVarbind()
         {

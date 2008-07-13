@@ -77,6 +77,8 @@ namespace Lextm.SharpSnmpLib
 					return new Sequence(bytes);
 				case SnmpType.TrapV1Pdu:
 					return new TrapV1Pdu(bytes);
+                case SnmpType.TrapV2Pdu:
+                    return new TrapV2Pdu(bytes);
 				case SnmpType.GetRequestPdu:
 					return new GetRequestPdu(bytes);
 				case SnmpType.GetResponsePdu:

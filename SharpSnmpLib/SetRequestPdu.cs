@@ -100,11 +100,7 @@ namespace Lextm.SharpSnmpLib
 		/// <returns></returns>
         public ISnmpData ToMessageBody(VersionCode version, string community)
         {
-            Integer32 ver = new Integer32((int)version);
-            OctetString comm = new OctetString(community);
-            SetRequestPdu pdu = this;
-            Sequence array = new Sequence(ver, comm, pdu);
-            return array;
+            return ByteTool.PackMessage(version, community, this);
         }
 
         #endregion

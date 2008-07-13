@@ -53,7 +53,7 @@ namespace Lextm.SharpSnmpLib.Mib
 		/// <summary>
 		/// Module name.
 		/// </summary>
-		string Module
+		string ModuleName
 		{
 			get;
 		}

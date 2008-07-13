@@ -9,6 +9,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Globalization;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -118,11 +119,7 @@ namespace Lextm.SharpSnmpLib
 		/// <returns></returns>
 		public ISnmpData ToMessageBody(VersionCode version, string community)
 		{
-			Integer32 ver = new Integer32((int)version);
-			OctetString comm = new OctetString(community);
-			TrapV1Pdu pdu = this;
-			Sequence array = new Sequence(ver, comm, pdu);
-			return array;
+            return ByteTool.PackMessage(version, community, this);
 		}		
 		/// <summary>
 		/// Enterprise.
@@ -160,5 +157,16 @@ namespace Lextm.SharpSnmpLib
         public IList<Variable> Variables {
 			get { return _variables; }
 		}
+
+        /// <summary>
+        /// Returns a <see cref="String"/> that represents this <see cref="TrapV1Pdu"/>.
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return string.Format(CultureInfo.InvariantCulture,
+                "SNMPv1 TRAP PDU: agent address: {0}; time stamp: {1}; enterprise: {2}; generic: {3}; specific: {4}; varbind count: {5}",
+                AgentAddress, TimeStamp, Enterprise, Generic, Specific, Variables.Count);
+        }
 	}
 }

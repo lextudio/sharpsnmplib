@@ -11,16 +11,16 @@ using System;
 namespace Lextm.SharpSnmpLib
 {
 	/// <summary>
-	/// Provides data for a trap received event.
+	/// Provides data for a TRAP v1 received event.
 	/// </summary>
-	public sealed class TrapReceivedEventArgs : EventArgs
+	public sealed class TrapV1ReceivedEventArgs : EventArgs
 	{	  
 		TrapV1Message _trap;
 		/// <summary>
-		/// Creates a <see cref="TrapReceivedEventArgs"/> 
+		/// Creates a <see cref="TrapV1ReceivedEventArgs"/> 
 		/// </summary>
 		/// <param name="trap">Trap message</param>
-	    public TrapReceivedEventArgs(TrapV1Message trap)
+	    public TrapV1ReceivedEventArgs(TrapV1Message trap)
 	    {
 	        _trap = trap;
 	    }
@@ -35,7 +35,7 @@ namespace Lextm.SharpSnmpLib
 	        }
 	    }
         /// <summary>
-        /// Returns a <see cref="String"/> that represents this <see cref="TrapReceivedEventArgs"/>
+        /// Returns a <see cref="String"/> that represents this <see cref="TrapV1ReceivedEventArgs"/>
         /// </summary>
         /// <returns></returns>
         public override string ToString()

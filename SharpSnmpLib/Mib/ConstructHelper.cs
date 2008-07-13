@@ -68,7 +68,7 @@ namespace Lextm.SharpSnmpLib.Mib
 				message = "the initial character must be a letter";
 				return false;
 			}
-			if (name.EndsWith("-")) {
+			if (name.EndsWith("-", StringComparison.Ordinal)) {
 				message = "a hyphen cannot be the last character of an identifier";
 				return false;
 			}

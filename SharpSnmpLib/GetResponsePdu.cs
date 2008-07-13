@@ -24,6 +24,8 @@ namespace Lextm.SharpSnmpLib
         private Integer32 _errorIndex;
         private IList<Variable> _variables;
         private Sequence _varbindSection;
+        private byte[] _bytes;
+        private byte[] _raw;
 		/// <summary>
 		/// Creates a <see cref="GetResponsePdu"/> from raw bytes.
 		/// </summary>
@@ -36,6 +38,7 @@ namespace Lextm.SharpSnmpLib
 			_errorIndex = (Integer32)SnmpDataFactory.CreateSnmpData(m);
 			_varbindSection = (Sequence)SnmpDataFactory.CreateSnmpData(m);
 			_variables = Variable.ConvertFrom(_varbindSection);
+            _raw = raw;
 		}
 		
 		internal int SequenceNumber
@@ -85,7 +88,7 @@ namespace Lextm.SharpSnmpLib
 		/// <returns></returns>
 		public ISnmpData ToMessageBody(VersionCode version, string community)
 		{
-			throw new NotImplementedException();
+            return ByteTool.PackMessage(version, community, this);
 		}
 		/// <summary>
 		/// Converts to byte format.
@@ -93,7 +96,15 @@ namespace Lextm.SharpSnmpLib
 		/// <returns></returns>
 		public byte[] ToBytes()
 		{
-			throw new NotImplementedException();
+            if (_bytes == null)
+            {
+                MemoryStream result = new MemoryStream();
+                result.WriteByte((byte)TypeCode);
+                ByteTool.WriteMultiByteLength(result, _raw.Length); //it seems that trap does not use this function
+                result.Write(_raw, 0, _raw.Length);
+                _bytes = result.ToArray();
+            }
+            return _bytes;
 		}
         /// <summary>
         /// Returns a <see cref="String"/> that represents this <see cref="GetResponsePdu"/>/

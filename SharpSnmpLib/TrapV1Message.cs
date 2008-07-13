@@ -72,20 +72,21 @@ namespace Lextm.SharpSnmpLib
 			{
 				throw new ArgumentException("wrong message body");
 			}
-			_pdu = (ISnmpPdu)body.Items[2];
+			_community = body.Items[1].ToString();
+			_version = (VersionCode)((Integer32)body.Items[0]).ToInt32();		
+            _pdu = (ISnmpPdu)body.Items[2];
 			if (_pdu.TypeCode != TypeCode) 
 			{
 				throw new ArgumentException("wrong message type");
 			}
-			_community = body.Items[1].ToString();
-			_version = (VersionCode)((Integer32)body.Items[0]).ToInt32();
 			TrapV1Pdu trapPdu = (TrapV1Pdu)_pdu;
 			_enterprise = trapPdu.Enterprise;
 			_agent = trapPdu.AgentAddress.ToIPAddress();
 			_generic = trapPdu.Generic;
 			_specific = trapPdu.Specific;
 			_time = trapPdu.TimeStamp.ToInt32();
-			_variables = trapPdu.Variables;
+			_variables = _pdu.Variables;
+            _bytes = body.ToBytes();
 		}		
 
 		/// <summary>
@@ -192,10 +193,6 @@ namespace Lextm.SharpSnmpLib
 		/// <returns></returns>
 		public byte[] ToBytes()
 		{
-			if (null == _bytes) 
-			{
-				_bytes = ((TrapV1Pdu)_pdu).ToMessageBody(_version, _community).ToBytes();
-			}
 			return _bytes;
 		}
 		/// <summary>

@@ -58,6 +58,8 @@ namespace Lextm.SharpSnmpLib
 			switch (pdu.TypeCode) {
 				case SnmpType.TrapV1Pdu:
 					return new TrapV1Message(body);
+                case SnmpType.TrapV2Pdu:
+                    return new TrapV2Message(body);
                 case SnmpType.GetRequestPdu:
                     return new GetRequestMessage(body);
                 case SnmpType.GetResponsePdu:

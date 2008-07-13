@@ -41,7 +41,11 @@ namespace Lextm.SharpSnmpLib
     	/// <summary>
     	/// Occurs when a <see cref="TrapV1Message" /> is received.
     	/// </summary>
-        public event EventHandler<TrapReceivedEventArgs> TrapReceived;
+        public event EventHandler<TrapV1ReceivedEventArgs> TrapV1Received;
+        /// <summary>
+        /// Occurs when a <see cref="TrapV2Message"/> is received.
+        /// </summary>
+        public event EventHandler<TrapV2ReceivedEventArgs> TrapV2Received;
 		/// <summary>
 		/// Port number.
 		/// </summary>
@@ -115,7 +119,8 @@ namespace Lextm.SharpSnmpLib
         
         void Worker_DoWork(object sender, DoWorkEventArgs e)
 		{
-			EndPoint senderRemote = (EndPoint)_sender;	
+            IPEndPoint agent = new IPEndPoint(IPAddress.Any, 0);
+            EndPoint senderRemote = (EndPoint)agent;	
 			byte[] msg = new Byte[_watcher.ReceiveBufferSize];				
 			//Console.WriteLine("Waiting to receive datagrams from client...");
 			while (!((BackgroundWorker)sender).CancellationPending)
@@ -127,10 +132,27 @@ namespace Lextm.SharpSnmpLib
 					// This call blocks.
 					_watcher.ReceiveFrom(msg, ref senderRemote);
 					ISnmpMessage message = MessageFactory.ParseMessage(msg, 0, number);
-                    if (TrapReceived != null 
-					    && message.TypeCode == SnmpType.TrapV1Pdu)
+                    switch (message.TypeCode)
                     {
-						TrapReceived(this, new TrapReceivedEventArgs((TrapV1Message)message));
+                        case SnmpType.TrapV1Pdu:
+                            {
+                                if (TrapV1Received != null)
+                                {
+                                    TrapV1Received(this, new TrapV1ReceivedEventArgs((TrapV1Message)message));
+                                }
+                                break;
+                            }
+                        case SnmpType.TrapV2Pdu:
+                            {
+                                if (TrapV2Received != null)
+                                {
+                                    TrapV2Received(this, new TrapV2ReceivedEventArgs(senderRemote, (TrapV2Message)message));
+                                }
+                                break;
+                            }
+                        default:
+                            //TODO:
+                            break;
                     }
 				}
 			}

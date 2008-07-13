@@ -18,7 +18,8 @@ namespace test
             Console.WriteLine("Start watcher");
 
             TrapListener watcher = new TrapListener();
-            watcher.TrapReceived += new EventHandler<TrapReceivedEventArgs>(watcher_TrapReceived);
+            watcher.TrapV1Received += new EventHandler<TrapV1ReceivedEventArgs>(watcher_TrapReceived);
+            watcher.TrapV2Received += new EventHandler<TrapV2ReceivedEventArgs>(watcher_TrapV2Received);
             watcher.Start(162);
 
             Console.WriteLine("Press any key to stop . . . ");
@@ -28,9 +29,14 @@ namespace test
             Console.Read();
 		}
 
-        static void watcher_TrapReceived(object sender, TrapReceivedEventArgs e)
+        static void watcher_TrapV2Received(object sender, TrapV2ReceivedEventArgs e)
         {
-            Console.WriteLine(e.Trap);
+            Console.WriteLine(e);
+        }
+
+        static void watcher_TrapReceived(object sender, TrapV1ReceivedEventArgs e)
+        {
+            Console.WriteLine(e);
         }
 	}
 }

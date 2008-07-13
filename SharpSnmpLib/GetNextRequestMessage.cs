@@ -63,15 +63,15 @@ namespace Lextm.SharpSnmpLib
 			{
 				throw new ArgumentException("wrong message body");
 			}
+            _community = body.Items[1].ToString();
+			_version = (VersionCode)((Integer32)body.Items[0]).ToInt32();
 			_pdu = (ISnmpPdu)body.Items[2];
 			if (_pdu.TypeCode != TypeCode)
 			{
 				throw new ArgumentException("wrong message type");
 			}
-			_community = body.Items[1].ToString();
-			_version = (VersionCode)((Integer32)body.Items[0]).ToInt32();
-			GetRequestPdu pdu = (GetRequestPdu)_pdu;
-			_variables = pdu.Variables;
+			_variables = _pdu.Variables;
+            _bytes = body.ToBytes();
 		}
 		/// <summary>
 		/// Variables.

@@ -29,8 +29,8 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values or you can use the default the Revision and 
 // Build Numbers by using the '*' as shown below:
-[assembly: AssemblyVersion("1.0.010709.15")]
-[assembly: AssemblyFileVersion("1.0.010709.15")]
+[assembly: AssemblyVersion("1.0.010713.05")]
+[assembly: AssemblyFileVersion("1.0.010713.05")]
 [assembly: NeutralResourcesLanguage("en-US")]
 [assembly: CLSCompliant(true)]
 

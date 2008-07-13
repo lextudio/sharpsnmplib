@@ -21,6 +21,9 @@ namespace Lextm.SharpSnmpLib
         ErrorCode _errorStatus;
         int _errorIndex;
 		IList<Variable> _variables;
+        byte[] _bytes;
+        VersionCode _version;
+        string _community;
 		/// <summary>
 		/// Creates a <see cref="GetResponseMessage"/> with a specific <see cref="Sequence"/>.
 		/// </summary>
@@ -35,6 +38,8 @@ namespace Lextm.SharpSnmpLib
 			{
 				throw new ArgumentException("wrong message body");
 			}
+            _community = body.Items[1].ToString();
+            _version = (VersionCode)((Integer32)body.Items[0]).ToInt32();	
 			_pdu = (ISnmpPdu)body.Items[2];
 			if (_pdu.TypeCode != TypeCode)
 			{
@@ -44,7 +49,8 @@ namespace Lextm.SharpSnmpLib
 			_sequenceNumber = pdu.SequenceNumber;
             _errorStatus = pdu.ErrorStatus;
             _errorIndex = pdu.ErrorIndex;
-			_variables = pdu.Variables;
+			_variables = _pdu.Variables;
+            _bytes = body.ToBytes();
 		}
         /// <summary>
         /// Error status.
@@ -106,7 +112,7 @@ namespace Lextm.SharpSnmpLib
 		/// <returns></returns>
 		public byte[] ToBytes()
 		{
-			throw new NotImplementedException();
+			return _bytes;
 		}
 		/// <summary>
 		/// Returns a <see cref="String"/> that represents this <see cref="GetResponseMessage"/>.
@@ -114,7 +120,7 @@ namespace Lextm.SharpSnmpLib
 		/// <returns></returns>
 		public override string ToString()
 		{
-			return "GET response message: " + _pdu;
+			return "GET response message: version: " + _version + "; " + _community + "; " + _pdu;
 		}
 	}
 }
