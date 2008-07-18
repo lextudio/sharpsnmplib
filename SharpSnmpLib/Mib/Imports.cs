@@ -12,39 +12,37 @@ using System.Collections.Generic;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
-	/// <summary>
-	/// The IMPORTS construct is used to specify items used in the current MIB module which are defined in another MIB module or ASN.1 module.
-	/// </summary>
-	sealed class Imports : IConstruct
-	{
-		IList<string> _dependents = new List<string>();
-		/// <summary>
-		/// Creates an <see cref="Imports"/> instance.
-		/// </summary>
-		/// <param name="lexer"></param>
-		public Imports(Lexer lexer)
-		{
-			Symbol temp;
-			while ((temp = lexer.NextSymbol) != Symbol.Semicolon)
-			{
+    /// <summary>
+    /// The IMPORTS construct is used to specify items used in the current MIB module which are defined in another MIB module or ASN.1 module.
+    /// </summary>
+    internal sealed class Imports : IConstruct
+    {
+        private IList<string> _dependents = new List<string>();
+        
+        /// <summary>
+        /// Creates an <see cref="Imports"/> instance.
+        /// </summary>
+        /// <param name="lexer"></param>
+        public Imports(Lexer lexer)
+        {
+            Symbol temp;
+            while ((temp = lexer.NextSymbol) != Symbol.Semicolon)
+            {
                 if (temp == Symbol.EOL)
                 {
                     continue;
                 }
-				_dependents.Add(new ImportsFrom(temp, lexer).Module);
-			}
-		}
-		
-		internal IList<string> Dependents
-		{
-			get
-			{
-				return _dependents;
-			}
-		}		
-	}
-	
-
+                
+                _dependents.Add(new ImportsFrom(temp, lexer).Module);
+            }
+        }
+        
+        internal IList<string> Dependents
+        {
+            get
+            {
+                return _dependents;
+            }
+        }        
+    }
 }
-
-

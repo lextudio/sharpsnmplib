@@ -9,7 +9,8 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public struct Counter32 : ISnmpData, IEquatable<Counter32>
     {
-        byte[] _raw;
+        private byte[] _raw;
+        
         /// <summary>
         /// Creates a <see cref="Counter32"/> instance from raw bytes.
         /// </summary>
@@ -20,16 +21,20 @@ namespace Lextm.SharpSnmpLib
             {
                 throw new ArgumentNullException("raw");
             }
+            
             if (raw.Length == 0 || raw.Length > 5)
             {
                 throw new ArgumentException("byte length must between 1 and 5");
             }
+            
             if (raw.Length == 5 && raw[0] != 0)
             {
                 throw new ArgumentException("if byte length is 5, then first byte must be empty");
             }
+            
             _raw = raw;
         }
+        
         /// <summary>
         /// Creates a <see cref="Counter32"/> with a specific <see cref="UInt32"/>.
         /// </summary>
@@ -37,13 +42,14 @@ namespace Lextm.SharpSnmpLib
         [CLSCompliant(false)]
         public Counter32(uint value)
         {
-        	MemoryStream m = new MemoryStream();
-        	using (BinaryWriter writer = new BinaryWriter(m))
-        	{
-        		writer.Write(value);
-        		writer.Close();
-        	}
-        	_raw = m.ToArray();
+            MemoryStream m = new MemoryStream();
+            using (BinaryWriter writer = new BinaryWriter(m))
+            {
+                writer.Write(value);
+                writer.Close();
+            }
+            
+            _raw = m.ToArray();
         }
 
         #region ISnmpData Members
@@ -54,6 +60,7 @@ namespace Lextm.SharpSnmpLib
         {
             get { return SnmpType.Counter32; }
         }
+        
         /// <summary>
         /// Converts to byte format.
         /// </summary>
@@ -74,70 +81,84 @@ namespace Lextm.SharpSnmpLib
             uint result = 0;
             for (int i = 0; i < _raw.Length; i++)
             {
-            	if (_raw[i] != 0) {
-            		result += GetBase(i) * _raw[i];
-            	}                
+                if (_raw[i] != 0) 
+                {
+                    result += GetBase(i) * _raw[i];
+                }                
             }
+            
             return result;
         }
 
         private uint GetBase(int index)
         {
-        	int order = _raw.Length - index - 1;
-            const uint b = 256;
+            int order = _raw.Length - index - 1;
+            const uint Base = 256;
             uint result = 1;
             for (int i = 0; i < order; i++)
             {
-                result *= b;
+                result *= Base;
             }
+            
             return result;
         }
+        
         /// <summary>
         /// Returns a <see cref="String"/> that represents this <see cref="Counter32"/>.
         /// </summary>
         /// <returns></returns>
-		public override string ToString()
-		{
-			return ToUInt32().ToString(CultureInfo.InvariantCulture);
-		}
-    	/// <summary>
+        public override string ToString()
+        {
+            return ToUInt32().ToString(CultureInfo.InvariantCulture);
+        }
+        
+        /// <summary>
         /// Indicates whether the current object is equal to another object of the same type.
         /// </summary>
         /// <param name="other">An object to compare with this object.</param>
         /// <returns><value>true</value> if the current object is equal to the <paramref name="other"/> parameter; otherwise, <value>false</value>.
-        ///</returns>
-		public bool Equals(Counter32 other)
-		{
-			return ToUInt32() == other.ToUInt32();
-		}
-		/// <summary>
+        /// </returns>
+        public bool Equals(Counter32 other)
+        {
+            return ToUInt32() == other.ToUInt32();
+        }
+        
+        /// <summary>
         /// Determines whether the specified <see cref="Object"/> is equal to the current <see cref="Counter32"/>. 
         /// </summary>
         /// <param name="obj">The <see cref="Object"/> to compare with the current <see cref="Counter32"/>. </param>
         /// <returns><value>true</value> if the specified <see cref="Object"/> is equal to the current <see cref="Counter32"/>; otherwise, <value>false</value>.
         /// </returns>
-		public override bool Equals(object obj)
-		{
-			if (obj == null) {
-				return false;
-			}
-			if (object.ReferenceEquals(this, obj)) {
-				return true;
-			}
-			if (GetType() != obj.GetType()) {
-				return false;
-			}
-			return Equals((Counter32)obj);
-		}
-		/// <summary>
+        public override bool Equals(object obj)
+        {
+            if (obj == null) 
+            {
+                return false;
+            }
+            
+            if (object.ReferenceEquals(this, obj)) 
+            {
+                return true;
+            }
+            
+            if (GetType() != obj.GetType()) 
+            {
+                return false;
+            }
+        
+            return Equals((Counter32)obj);
+        }
+        
+        /// <summary>
         /// Serves as a hash function for a particular type.
         /// </summary>
         /// <returns>A hash code for the current <see cref="Counter32"/>.</returns>
-		public override int GetHashCode()
-		{
-			return ToUInt32().GetHashCode();
-		}		
-		/// <summary>
+        public override int GetHashCode()
+        {
+            return ToUInt32().GetHashCode();
+        }        
+        
+        /// <summary>
         /// The equality operator.
         /// </summary>
         /// <param name="left">Left <see cref="Counter32"/> object</param>
@@ -148,6 +169,7 @@ namespace Lextm.SharpSnmpLib
         {
             return left.Equals(right);
         }
+        
         /// <summary>
         /// The inequality operator.
         /// </summary>

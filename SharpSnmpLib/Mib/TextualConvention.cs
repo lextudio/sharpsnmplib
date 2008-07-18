@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
-    sealed class TextualConvention : IConstruct
+    internal sealed class TextualConvention : IConstruct
     {
         public TextualConvention(string module, string name, Lexer lexer)
         {
@@ -12,15 +12,18 @@ namespace Lextm.SharpSnmpLib.Mib
             while ((temp = lexer.NextSymbol) != Symbol.Syntax)
             {
             }
+            
             while ((temp = lexer.NextSymbol) == Symbol.EOL)
             {
             }
+            
             if (temp == Symbol.Integer)
             {
                 // parse between { }
                 while ((temp = lexer.NextSymbol) != Symbol.OpenBracket)
                 {
                 }
+                
                 while ((temp = lexer.NextSymbol) != Symbol.CloseBracket)
                 {
                 }
@@ -35,19 +38,20 @@ namespace Lextm.SharpSnmpLib.Mib
                 {
                     return;
                 }
-                int inParentheses = 0;
+                
+                int parenthesesSection = 0;
                 ConstructHelper.Expect(temp, Symbol.OpenParentheses);
-                inParentheses++;
-                while (inParentheses > 0)
+                parenthesesSection++;
+                while (parenthesesSection > 0)
                 {
                     temp = lexer.NextSymbol;
                     if (temp == Symbol.OpenParentheses)
                     {
-                        inParentheses++;
+                        parenthesesSection++;
                     }
                     else if (temp == Symbol.CloseParentheses)
                     {
-                        inParentheses--;
+                        parenthesesSection--;
                     }
                 }
             }
@@ -60,12 +64,12 @@ namespace Lextm.SharpSnmpLib.Mib
                     {
                         return;
                     }
+                    
                     previous = temp;
                 }
+                
                 ConstructHelper.Validate(previous, temp == null, "end of file reached");
             }
         }
     }
 }
-
-

@@ -1,3 +1,20 @@
+// <summary>#SNMP Library. An open source SNMP implementation for .NET.</summary>
+// <copyright company="Lex Y. Li" file="AssemblyInfo.cs">Copyright (C) 2008  Lex Y. Li</copyright>
+// 
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public
+// License as published by the Free Software Foundation; either
+// version 2.1 of the License, or (at your option) any later version.
+// 
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// Lesser General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
 #region Using directives
 
 using System;
@@ -29,8 +46,8 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values or you can use the default the Revision and 
 // Build Numbers by using the '*' as shown below:
-[assembly: AssemblyVersion("1.0.010713.05")]
-[assembly: AssemblyFileVersion("1.0.010713.05")]
+[assembly: AssemblyVersion("1.0.010718.29")]
+[assembly: AssemblyFileVersion("1.0.010718.29")]
 [assembly: NeutralResourcesLanguage("en-US")]
 [assembly: CLSCompliant(true)]
 

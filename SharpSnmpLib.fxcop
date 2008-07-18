@@ -21,88 +21,7 @@
   <IgnoreGeneratedCode>False</IgnoreGeneratedCode>
  </ProjectOptions>
  <Targets>
-  <Target Name="$(ProjectDir)/SharpSnmpLib/bin/Debug/SharpSnmpLib.dll" Analyze="False" AnalyzeAllChildren="False">
-   <Modules AnalyzeAllChildren="False">
-    <Module Name="sharpsnmplib.dll" Analyze="True" AnalyzeAllChildren="False">
-     <Namespaces AnalyzeAllChildren="False">
-      <Namespace Name="" Analyze="True" AnalyzeAllChildren="True" />
-      <Namespace Name="Lextm.SharpSnmpLib" Analyze="True" AnalyzeAllChildren="True" />
-      <Namespace Name="Lextm.SharpSnmpLib.Mib" Analyze="True" AnalyzeAllChildren="False">
-       <Types AnalyzeAllChildren="False">
-        <Type Name="AgentCapabilities" Analyze="True" AnalyzeAllChildren="True" />
-        <Type Name="Choice" Analyze="True" AnalyzeAllChildren="True" />
-        <Type Name="ConstructHelper" Analyze="True" AnalyzeAllChildren="True" />
-        <Type Name="Definition" Analyze="True" AnalyzeAllChildren="False">
-         <Members AnalyzeAllChildren="False">
-          <Member Name="#.ctor()" Analyze="True" />
-          <Member Name="#.ctor(Lextm.SharpSnmpLib.Mib.Definition,Lextm.SharpSnmpLib.Mib.IEntity)" Analyze="True" />
-          <Member Name="#_children" Analyze="True" />
-          <Member Name="#_id" Analyze="True" />
-          <Member Name="#_module" Analyze="True" />
-          <Member Name="#_name" Analyze="True" />
-          <Member Name="#_type" Analyze="True" />
-          <Member Name="#_value" Analyze="True" />
-          <Member Name="#Add(Lextm.SharpSnmpLib.Mib.IDefinition)" Analyze="True" />
-          <Member Name="#Add(Lextm.SharpSnmpLib.Mib.IEntity)" Analyze="True" />
-          <Member Name="#AppendTo(System.UInt32[],System.UInt32)" Analyze="True" />
-          <Member Name="#Children" Analyze="True" AnalyzeAllChildren="True" />
-          <Member Name="#GetNumericalForm()" Analyze="True" />
-          <Member Name="#Item[System.Int32]" Analyze="True" AnalyzeAllChildren="True" />
-          <Member Name="#Name" Analyze="True" AnalyzeAllChildren="True" />
-          <Member Name="#RootDefinition" Analyze="True" AnalyzeAllChildren="True" />
-          <Member Name="#TextualForm" Analyze="True" AnalyzeAllChildren="True" />
-          <Member Name="#ToDefinition(Lextm.SharpSnmpLib.Mib.IEntity,Lextm.SharpSnmpLib.Mib.Definition)" Analyze="True" />
-          <Member Name="#Type" Analyze="True" AnalyzeAllChildren="True" />
-          <Member Name="#Value" Analyze="True" AnalyzeAllChildren="True" />
-         </Members>
-        </Type>
-        <Type Name="DefinitionType" Analyze="True" AnalyzeAllChildren="True" />
-        <Type Name="Exports" Analyze="True" AnalyzeAllChildren="True" />
-        <Type Name="IConstruct" Analyze="True" />
-        <Type Name="IDefinition" Analyze="True" AnalyzeAllChildren="False">
-         <Members AnalyzeAllChildren="False">
-          <Member Name="#Children" Analyze="True" AnalyzeAllChildren="True" />
-          <Member Name="#GetNumericalForm()" Analyze="True" />
-          <Member Name="#Item[System.Int32]" Analyze="True" AnalyzeAllChildren="True" />
-          <Member Name="#Name" Analyze="True" AnalyzeAllChildren="True" />
-          <Member Name="#TextualForm" Analyze="True" AnalyzeAllChildren="True" />
-          <Member Name="#Type" Analyze="True" AnalyzeAllChildren="True" />
-          <Member Name="#Value" Analyze="True" AnalyzeAllChildren="True" />
-         </Members>
-        </Type>
-        <Type Name="IEntity" Analyze="True" AnalyzeAllChildren="True" />
-        <Type Name="Imports" Analyze="True" AnalyzeAllChildren="True" />
-        <Type Name="ImportsFrom" Analyze="True" AnalyzeAllChildren="True" />
-        <Type Name="IObjectTree" Analyze="True" AnalyzeAllChildren="True" />
-        <Type Name="ITypeAssignment" Analyze="True" />
-        <Type Name="Lexer" Analyze="True" AnalyzeAllChildren="True" />
-        <Type Name="Macro" Analyze="True" AnalyzeAllChildren="True" />
-        <Type Name="MibDocument" Analyze="True" AnalyzeAllChildren="True" />
-        <Type Name="MibModule" Analyze="True" AnalyzeAllChildren="True" />
-        <Type Name="ModuleCompliance" Analyze="True" AnalyzeAllChildren="True" />
-        <Type Name="ModuleIdentity" Analyze="True" AnalyzeAllChildren="True" />
-        <Type Name="NotificationGroup" Analyze="True" AnalyzeAllChildren="True" />
-        <Type Name="NotificationType" Analyze="True" AnalyzeAllChildren="True" />
-        <Type Name="ObjectGroup" Analyze="True" AnalyzeAllChildren="True" />
-        <Type Name="ObjectIdentity" Analyze="True" AnalyzeAllChildren="True" />
-        <Type Name="ObjectRegistry" Analyze="True" AnalyzeAllChildren="True" />
-        <Type Name="ObjectTree" Analyze="True" AnalyzeAllChildren="True" />
-        <Type Name="ObjectType" Analyze="True" AnalyzeAllChildren="True" />
-        <Type Name="OidValueAssignment" Analyze="True" AnalyzeAllChildren="True" />
-        <Type Name="Sequence" Analyze="True" AnalyzeAllChildren="True" />
-        <Type Name="SharpMibException" Analyze="True" AnalyzeAllChildren="True" />
-        <Type Name="Symbol" Analyze="True" AnalyzeAllChildren="True" />
-        <Type Name="TextualConvention" Analyze="True" AnalyzeAllChildren="True" />
-        <Type Name="TrapType" Analyze="True" AnalyzeAllChildren="True" />
-        <Type Name="TypeAssignment" Analyze="True" AnalyzeAllChildren="True" />
-       </Types>
-      </Namespace>
-      <Namespace Name="Lextm.SharpSnmpLib.Tests" Analyze="True" AnalyzeAllChildren="True" />
-     </Namespaces>
-     <Resources AnalyzeAllChildren="True" />
-    </Module>
-   </Modules>
-  </Target>
+  <Target Name="$(ProjectDir)/SharpSnmpLib/bin/Debug/SharpSnmpLib.dll" Analyze="True" AnalyzeAllChildren="True" />
  </Targets>
  <Rules>
   <RuleFiles>
@@ -271,13 +190,24 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="TrapV2Message">
+         <Type Name="TrapListener">
           <Members>
-           <Member Name="#_version">
+           <Member Name="#TrapListener_ProgressChanged(System.Object,System.ComponentModel.ProgressChangedEventArgs)">
             <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2008-07-13 05:10:02Z">
+             <Message TypeName="DoNotRaiseReservedExceptionTypes" Category="Microsoft.Usage" CheckId="CA2201" Created="2008-07-18 12:28:18Z">
+              <Issue Name="TooGeneric">
+               <Item>'TrapListener.TrapListener_ProgressChanged(object, ProgressChangedEventArgs)'</Item>
+               <Item>'Exception'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Worker_DoWork(System.Object,System.ComponentModel.DoWorkEventArgs)">
+            <Messages>
+             <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Created="2008-07-18 12:28:18Z">
               <Issue>
-               <Item>'TrapV2Message._version'</Item>
+               <Item>'TrapListener.Worker_DoWork(object, DoWorkEventArgs)'</Item>
+               <Item>'Exception'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -300,15 +230,6 @@
              <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2008-07-13 05:10:02Z">
               <Issue>
                <Item>'TrapV2Pdu._errorStatus'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#_sequenceNumber">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2008-07-13 05:10:02Z">
-              <Issue>
-               <Item>'TrapV2Pdu._sequenceNumber'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -4801,8 +4722,14 @@
    <Rule TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823">
     <Resolution Name="Default">It appears that field {0} is never used or is only ever assigned to. Use this field or remove it.</Resolution>
    </Rule>
+   <Rule TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031">
+    <Resolution Name="Default">Modify {0} to catch a more specific exception than {1} or rethrow the exception.</Resolution>
+   </Rule>
    <Rule TypeName="DoNotNameEnumValuesReserved" Category="Microsoft.Naming" CheckId="CA1700">
     <Resolution Name="Default">If {0} is not used in the current implementation, remove it. Otherwise give it a meaningful name.</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotRaiseReservedExceptionTypes" Category="Microsoft.Usage" CheckId="CA2201">
+    <Resolution Name="TooGeneric">{0} creates an exception of type {1}, an exception type that is not sufficiently specific and should never be raised by user code. If this exception instance might be thrown, use a different exception type.</Resolution>
    </Rule>
    <Rule TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709">
     <Resolution Name="Member">Correct the casing of '{0}' in member name {1} by changing it to '{2}'.</Resolution>

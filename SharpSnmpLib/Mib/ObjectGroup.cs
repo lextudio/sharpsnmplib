@@ -12,15 +12,15 @@ using System.Collections.Generic;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
-	/// <summary>
-	/// Description of ObjectGroupNode.
-	/// </summary>
-	sealed class ObjectGroup : IEntity
-	{
-        string _module;
-        string _parent;
-        int _value;
-        string _name;
+    /// <summary>
+    /// Description of ObjectGroupNode.
+    /// </summary>
+    internal sealed class ObjectGroup : IEntity
+    {
+        private string _module;
+        private string _parent;
+        private int _value;
+        private string _name;
 
         public ObjectGroup(string module, IList<Symbol> header, Lexer lexer)
         {
@@ -28,7 +28,6 @@ namespace Lextm.SharpSnmpLib.Mib
             _name = header[0].ToString();
             ConstructHelper.ParseOidValue(lexer, out _parent, out _value);
         }
-
 
         public string Module
         {
@@ -49,7 +48,5 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             get { return _name; }
         }
-	}
+    }
 }
-
-

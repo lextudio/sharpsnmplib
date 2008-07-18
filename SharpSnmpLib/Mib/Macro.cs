@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
-    sealed class Macro : ITypeAssignment
+    internal sealed class Macro : ITypeAssignment
     {
         public Macro(string module, IList<Symbol> header, Lexer lexer)
         {
@@ -12,6 +12,7 @@ namespace Lextm.SharpSnmpLib.Mib
             while ((temp = lexer.NextSymbol) != Symbol.Begin)
             {                
             }
+            
             while ((temp = lexer.NextSymbol) != Symbol.End)
             {
             }

@@ -20,144 +20,128 @@ using System.Text;
 // You will see an example of how to do this in the Snmplib
 // CONTEXT AND PRIVATE TYPES
 // Ad hoc coding can be used for these, as an alterative to derive index class as above.
-
 namespace Lextm.SharpSnmpLib
 {
     /// <summary>
     /// OctetString type.
     /// </summary>
-	public struct OctetString // This namespace has its own concept of string
-		: ISnmpData, IEquatable<OctetString>
-	{
-		byte[] _raw;
-        byte[] _bytes;
+    public struct OctetString // This namespace has its own concept of string
+        : ISnmpData, IEquatable<OctetString>
+    {
+        private byte[] _raw;
+        private byte[] _bytes;
 
         /// <summary>
         /// Creates an <see cref="OctetString"/> from raw bytes.
         /// </summary>
         /// <param name="raw">Raw bytes</param>
-		public OctetString(byte[] raw)
-		{
-			_raw = raw;
+        public OctetString(byte[] raw)
+        {
+            _raw = raw;
             _bytes = ByteTool.ToBytes(SnmpType.OctetString, _raw);
-		}
-
-        //public OctetString(byte[] buffer,int index,int count)
-        //    : this(new MemoryStream(buffer, index, count, false).ToArray()) { }
+        }
+        
         /// <summary>
         /// Creates an <see cref="OctetString"/> with a specific <see cref="String"/>.
         /// </summary>
         /// <param name="str"></param>
-		public OctetString(string str)
+        public OctetString(string str)
             : this(Encoding.ASCII.GetBytes(str))
-		{
-			if (str == null) 
-			{
-				throw new ArgumentNullException("str");
-			}
-            //TODO: current implementation is ASCII only.
-		}
+        {
+            if (str == null) 
+            {
+                throw new ArgumentNullException("str");
+            }
+        }
 
-//		static public implicit operator string(OctetString x)
-//		{
-//			if (x == null)
-//			{	
-//				return null;
-//			}
-////			int index = x._raw.Length;
-////			if (index == 0)
-////				return "";
-////			StringBuilder sb = new StringBuilder(index, index);
-////			for (int j = 0; j < index; j++)
-////				sb.Append((char)x._raw[j]);
-////			return sb.ToString();
-//			return Encoding.ASCII.GetString(x._raw);
-//		}
         /// <summary>
         /// Returns a <see cref="String"/> that represents this <see cref="OctetString"/>.
         /// </summary>
         /// <returns></returns>
-		public override string ToString()
-		{
-			if (_raw.Length==8||_raw.Length==11) // may be index date
-			{
-				uint yr = _raw[0];
-				yr = yr*256 + _raw[1];
-				uint mo = _raw[2];
-				uint dy = _raw[3];
-				if (yr<2005&&yr>1990 && mo<13 && dy<32)
-					return ""+dy+"/"+mo+"/"+yr;
-			}
-			return Encoding.ASCII.GetString(_raw);//(string)this;
-		}
-//		static public OctetString operator+ (OctetString other,OctetString str)
-//		{
-//			MemoryStream stream = new MemoryStream();
-//			stream.Write(other._raw, 0, other._raw.Length);
-//			stream.Write(str._raw, 0, other._raw.Length);
-////			int j;
-////			byte[] r = new byte[other._raw.Length+str._raw.Length];
-////			for (j=0;j<other._raw.Length;j++)
-////				r[j] = other._raw[j];
-////			for (j=0;j<str._raw.Length;j++)
-////				r[j+other._raw.Length] = str._raw[j];
-//			byte[] r = stream.ToArray();
-//			return new OctetString(r);
-//		}
-		/// <summary>
-		/// Type code.
-		/// </summary>
-		public SnmpType TypeCode {
-			get {
-				return SnmpType.OctetString;
-			}
-		}
-		/// <summary>
-		/// Converts to byte format.
-		/// </summary>
-		/// <returns></returns>
-		
-		public byte[] ToBytes()
-		{
-			return _bytes;
-		}
+        public override string ToString()
+        {
+            // may be index date
+            if (_raw.Length == 8 || _raw.Length == 11) 
+            {
+                uint yr = _raw[0];
+                yr = yr * 256 + _raw[1];
+                uint mo = _raw[2];
+                uint dy = _raw[3];
+                if (yr < 2005 && yr > 1990 && mo < 13 && dy < 32)
+                {
+                    return "" + dy + "/" + mo + "/" + yr;
+                }
+            }
+            
+            return Encoding.ASCII.GetString(_raw); 
+        }
+
+        /// <summary>
+        /// Type code.
+        /// </summary>
+        public SnmpType TypeCode 
+        {
+            get
+            {
+                return SnmpType.OctetString;
+            }
+        }
+        
+        /// <summary>
+        /// Converts to byte format.
+        /// </summary>
+        /// <returns></returns>        
+        public byte[] ToBytes()
+        {
+            return _bytes;
+        }
+        
         /// <summary>
         /// Indicates whether the current object is equal to another object of the same type.
         /// </summary>
         /// <param name="other">An object to compare with this object.</param>
         /// <returns><value>true</value> if the current object is equal to the <paramref name="other"/> parameter; otherwise, <value>false</value>.
-        ///</returns>
-		public bool Equals(OctetString other)
-		{
-			return ByteTool.CompareRaw(_raw, other._raw);
-		}
+        /// </returns>
+        public bool Equals(OctetString other)
+        {
+            return ByteTool.CompareRaw(_raw, other._raw);
+        }
+        
         /// <summary>
         /// Determines whether the specified <see cref="Object"/> is equal to the current <see cref="OctetString"/>. 
         /// </summary>
         /// <param name="obj">The <see cref="Object"/> to compare with the current <see cref="OctetString"/>. </param>
         /// <returns><value>true</value> if the specified <see cref="Object"/> is equal to the current <see cref="OctetString"/>; otherwise, <value>false</value>.
         /// </returns>
-		public override bool Equals(object obj)
-		{
-			if (obj == null) {
-				return false;
-			}
-			if (object.ReferenceEquals(this, obj)) {
-				return true;
-			}
-			if (GetType() != obj.GetType()) {
-				return false;
-			}
-			return Equals((OctetString)obj);
-		}
+        public override bool Equals(object obj)
+        {
+            if (obj == null) 
+            {
+                return false;
+            }
+            
+            if (object.ReferenceEquals(this, obj)) 
+            {
+                return true;
+            }
+            
+            if (GetType() != obj.GetType()) 
+            {
+                return false;
+            }
+            
+            return Equals((OctetString)obj);
+        }
+        
         /// <summary>
         /// Serves as a hash function for a particular type.
         /// </summary>
         /// <returns>A hash code for the current <see cref="OctetString"/>.</returns>
-		public override int GetHashCode()
-		{
-			return ToString().GetHashCode();
-		}
+        public override int GetHashCode()
+        {
+            return ToString().GetHashCode();
+        }
+        
         /// <summary>
         /// The equality operator.
         /// </summary>
@@ -169,6 +153,7 @@ namespace Lextm.SharpSnmpLib
         {
             return left.Equals(right);
         }
+        
         /// <summary>
         /// The inequality operator.
         /// </summary>
@@ -181,5 +166,6 @@ namespace Lextm.SharpSnmpLib
             return !(left == right);
         }
     }
-	// all references here are to ITU-X.690-12/97
+    
+    // all references here are to ITU-X.690-12/97
 }

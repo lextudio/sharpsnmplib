@@ -14,26 +14,26 @@ using NUnit.Framework.SyntaxHelpers;
 #pragma warning disable 1591
 namespace Lextm.SharpSnmpLib.Tests
 {
-	[TestFixture]
-	public class TestGetResponseMessage
-	{
-		[Test]
-		public void TestMethod()
-		{
-			MemoryStream m = new MemoryStream(Resource.getresponse, false);
-			ISnmpMessage message = MessageFactory.ParseMessage(m);
-	        Assert.AreEqual(SnmpType.GetResponsePdu, message.TypeCode);
-	        ISnmpPdu pdu = message.Pdu;
-	        Assert.AreEqual(SnmpType.GetResponsePdu, pdu.TypeCode);
-	        GetResponsePdu response = (GetResponsePdu)pdu;
-	        Assert.AreEqual(ErrorCode.NoError, response.ErrorStatus);
-	        Assert.AreEqual(0, response.ErrorIndex);
-	        Assert.AreEqual(1, response.Variables.Count);
-	        Variable v = response.Variables[0];
-	        Assert.AreEqual(new uint[] { 1, 3, 6, 1, 2, 1, 1, 6, 0 }, v.Id.ToNumerical());
-	        Assert.AreEqual("Shanghai", v.Data.ToString());
-		}
-	}
+    [TestFixture]
+    public class TestGetResponseMessage
+    {
+        [Test]
+        public void TestMethod()
+        {
+            MemoryStream m = new MemoryStream(Resource.getresponse, false);
+            ISnmpMessage message = MessageFactory.ParseMessage(m);
+            Assert.AreEqual(SnmpType.GetResponsePdu, message.TypeCode);
+            ISnmpPdu pdu = message.Pdu;
+            Assert.AreEqual(SnmpType.GetResponsePdu, pdu.TypeCode);
+            GetResponsePdu response = (GetResponsePdu)pdu;
+            Assert.AreEqual(ErrorCode.NoError, response.ErrorStatus);
+            Assert.AreEqual(0, response.ErrorIndex);
+            Assert.AreEqual(1, response.Variables.Count);
+            Variable v = response.Variables[0];
+            Assert.AreEqual(new uint[] { 1, 3, 6, 1, 2, 1, 1, 6, 0 }, v.Id.ToNumerical());
+            Assert.AreEqual("Shanghai", v.Data.ToString());
+        }
+    }
 }
 #pragma warning restore 1591
 

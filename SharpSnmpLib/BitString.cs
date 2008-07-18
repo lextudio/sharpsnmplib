@@ -1,5 +1,5 @@
-// BitString.cs, BitString class ported from Malcolm's code.
-// Copyright (C) 2008  Lex Y. Li
+// <summary>#SNMP Library. An open source SNMP implementation for .NET.</summary>
+// <copyright company="Lex Y. Li" file="BitString.cs">Copyright (C) 2008  Lex Y. Li</copyright>
 // 
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -35,40 +35,44 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Creates a <see cref="BitString"/> from raw bytes.
         /// </summary>
-        /// <param name="raw">Raw bytes</param>
+        /// <param name="raw">Raw bytes.</param>
         public BitString(byte[] raw)
         {
-            _nbits = raw.Length * 8 - raw[0];//8.6.2
+            _nbits = raw.Length * 8 - raw[0]; // 8.6.2
             _size = (_nbits + 31) / 32;
             _bits = new int[_size];
             for (int j = 0; j < _size; j++)
             {
                 _bits[j] = (raw[4 * j] << 24) | (raw[4 * j + 1] << 16) | (raw[4 * j + 2] << 8) | raw[4 * j + 3];
             }
+            
             _raw = raw;
             _bytes = ByteTool.ToBytes(SnmpType.BitString, _raw);
         }
+        
         /// <summary>
         /// Creates a <see cref="BitString"/> with a bit length and a bit array.
         /// </summary>
-        /// <param name="nbits">Bit length</param>
-        /// <param name="bits">Bit array</param>
+        /// <param name="nbits">Bit length.</param>
+        /// <param name="bits">Bit array.</param>
         public BitString(int nbits, int[] bits)
         {
             if (bits.Length != (nbits + 31) / 32)
             {
                 throw new ArgumentException("wrong bits length");
             }
+            
             _nbits = nbits;
             _size = bits.Length;
             _bits = bits;
             _raw = ParseItem(_nbits, _bits);
             _bytes = ByteTool.ToBytes(SnmpType.BitString, _raw);
         }
+        
         /// <summary>
         /// Creates a <see cref="BitString"/> from a <see cref="BitString"/>.
         /// </summary>
-        /// <param name="str">Another <see cref="BitString"/> instance</param>
+        /// <param name="str">Another <see cref="BitString"/> instance.</param>
         public BitString(BitString str)
         {
             _raw = (byte[])str._raw.Clone();
@@ -77,51 +81,58 @@ namespace Lextm.SharpSnmpLib
             _bits = (int[])str._bits.Clone();
             _bytes = (byte[])str._bytes.Clone();
         }
+        
         /// <summary>
         /// Returns a bit at specific index.
         /// </summary>
-        /// <param name="index">Index</param>
-        /// <returns></returns>
+        /// <param name="index">Index.</param>
+        /// <returns>Bit inside string at the specific index.</returns>
         public bool this[int index]
         {
-            get { return (_bits[index>>5]&(1<<(31-((int)index&31))))!=0; }
+            get { return (_bits[index >> 5] & (1 << (31 - ((int)index & 31)))) != 0; }
         }
+        
         /// <summary>
         /// And operator.
         /// </summary>
         /// <param name="other">Another <see cref="BitString"/> instance.</param>
-        /// <returns></returns>
-        public BitString And (BitString other)
+        /// <returns>A <see cref="BitString"/> that is the result of the AND operation.</returns>
+        public BitString And(BitString other)
         {
-            Debug.Assert(_nbits==other._nbits);
+            Debug.Assert(_nbits == other._nbits, "AND operation must be done on BitString of the same size");
             int[] bits = new int[_size];
             for (uint j = 0; j < _size; j++)
             {
                 bits[j] = _bits[j] & other._bits[j];
             }
+            
             return new BitString(_nbits, bits);
         }
+        
         /// <summary>
         /// Or operator.
         /// </summary>
-        /// <param name="other">Another <see cref="BitString"/> instance</param>
-        /// <returns></returns>
-        public BitString Or (BitString other)
+        /// <param name="other">Another <see cref="BitString"/> instance.</param>
+        /// <returns>A <see cref="BitString"/> that is the result of the OR operation.</returns>
+        public BitString Or(BitString other)
         {
-            Debug.Assert(_nbits==other._nbits);
+            Debug.Assert(_nbits == other._nbits, "OR operation must be done on BitString of the same size");
             int[] bits = new int[_size];
             for (uint j = 0; j < _size; j++)
             {
                 bits[j] = _bits[j] | other._bits[j];
             }
+            
             return new BitString(_nbits, bits);
         }
+        
         /// <summary>
-        /// Returns how many bits are set.
+        /// Gets a value that indicates how many bits are set.
         /// </summary>
         public int Card
         {
-            get {
+            get
+            {
                 int r = 0;
                 for (int i = 0; i < _nbits; i++)
                 {
@@ -130,30 +141,35 @@ namespace Lextm.SharpSnmpLib
                         r++;
                     }
                 }
+                
                 return r;
             }
         }
+        
         /// <summary>
         /// Cat operator.
         /// </summary>
-        /// <param name="other">Another <see cref="BitString"/> instance</param>
-        /// <returns></returns>
-        public BitString Cat (BitString other)
+        /// <param name="other">Another <see cref="BitString"/> instance.</param>
+        /// <returns>A <see cref="BitString"/> that is the result of the CAT operation.</returns>
+        public BitString Cat(BitString other)
         {
             int nbits = _nbits + other._nbits;
             int size = _size + other._size;
             int[] bits = new int[size];
-            uint i=0,j;
+            uint i = 0, j;
             for (j = 0; j < _nbits; j++)
             {
                 bits[i++] = _bits[j];
             }
+            
             for (j = 0; j < other._nbits; j++)
             {
                 bits[i++] = other._bits[j];
             }
+            
             return new BitString(nbits, bits);
         }
+        
         /// <summary>
         /// Serves as a hash function for a particular type.
         /// </summary>
@@ -161,32 +177,46 @@ namespace Lextm.SharpSnmpLib
         public override int GetHashCode()
         {
             int n = 0;
-            for (uint j=0;j<_size;j++)
+            for (uint j = 0; j < _size; j++)
+            {
                 n += _bits[j];
+            }
+            
             return n;
         }
+        
         /// <summary>
         /// Returns a <see cref="String"/> that represents this <see cref="BitString"/>.
         /// </summary>
-        /// <returns></returns>
         public override string ToString()
         {
-            string r= string.Empty;
-            for (int i=0;i<_nbits;i++)
-                if ((_bits[i>>5]&(1<<(i&31)))!=0)
-                r+="1";
-            else
-                r+="0";
+            string r = string.Empty;
+            for (int i = 0; i < _nbits; i++)
+            {
+                if ((_bits[i >> 5] & (1 << (i & 31))) != 0)
+                {
+                    r += "1";
+                }
+                else
+                {
+                    r += "0";
+                }
+            }
+            
             return r;
         }
+        
         /// <summary>
         /// Type code.
         /// </summary>
-        public SnmpType TypeCode {
-            get {
+        public SnmpType TypeCode
+        {
+            get
+            {
                 return SnmpType.BitString;
             }
         }
+        
         /// <summary>
         /// Converts to byte format.
         /// </summary>
@@ -196,28 +226,30 @@ namespace Lextm.SharpSnmpLib
             return _bytes;
         }
         
-        static byte[] ParseItem(int nbits, int[] bits)
+        private static byte[] ParseItem(int nbits, int[] bits)
         {
             // encoding 8.6.2
-            int n = (nbits+7)/8;
-            byte r = (byte)(8-nbits%8);
-            byte[] result = new byte[n+1];
+            int n = (nbits + 7) / 8;
+            byte r = (byte)(8 - nbits % 8);
+            byte[] result = new byte[n + 1];
             int ln = 0;
             result[ln++] = r;
             int k = 24;
             int i = 0;
-            for (int j=0;j<n;j++)
+            for (int j = 0; j < n; j++)
             {
-                result[ln++] = (byte)(bits[i]>>k);
+                result[ln++] = (byte)(bits[i] >> k);
                 k -= 8;
-                if (k<0)
+                if (k < 0)
                 {
                     i++;
                     k = 24;
                 }
             }
+            
             return result;
         }
+        
         /// <summary>
         /// Determines whether the specified <see cref="Object"/> is equal to the current <see cref="BitString"/>.
         /// </summary>
@@ -230,16 +262,20 @@ namespace Lextm.SharpSnmpLib
             {
                 return false;
             }
+            
             if (object.ReferenceEquals(this, obj))
             {
                 return true;
             }
+            
             if (GetType() != obj.GetType())
             {
                 return false;
             }
+            
             return Equals((BitString)obj);
         }
+        
         /// <summary>
         /// The equality operator.
         /// </summary>
@@ -251,6 +287,7 @@ namespace Lextm.SharpSnmpLib
         {
             return left.Equals(right);
         }
+        
         /// <summary>
         /// The inequality operator.
         /// </summary>
@@ -269,7 +306,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="other">An object to compare with this object.</param>
         /// <returns><value>true</value> if the current object is equal to the <paramref name="other"/> parameter; otherwise, <value>false</value>.
-        ///</returns>
+        /// </returns>
         public bool Equals(BitString other)
         {
             return ByteTool.CompareRaw(_raw, other._raw);
@@ -278,5 +315,3 @@ namespace Lextm.SharpSnmpLib
         #endregion
     }
 }
-
-

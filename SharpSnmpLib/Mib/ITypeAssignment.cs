@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
-    interface ITypeAssignment : IConstruct
+    internal interface ITypeAssignment : IConstruct
     {
     }
 }

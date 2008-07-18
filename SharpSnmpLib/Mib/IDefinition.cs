@@ -12,72 +12,72 @@ using System.Collections.Generic;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
-	/// <summary>
-	/// Definition interface.
-	/// </summary>
-	[CLSCompliant(false)]
-	public interface IDefinition
-	{
-		/// <summary>
-		/// Value.
-		/// </summary>
-		int Value
-		{
-			get;
-		}
-		
-		/// <summary>
-		/// Children definitions.
-		/// </summary>
-		IEnumerable<IDefinition> Children
-		{
-			get;
-		}
-		
-		/// <summary>
-		/// Returns the textual form.
-		/// </summary>
-		string TextualForm
-		{
-			get;
-		}
+    /// <summary>
+    /// Definition interface.
+    /// </summary>
+    [CLSCompliant(false)]
+    public interface IDefinition
+    {
+        /// <summary>
+        /// Value.
+        /// </summary>
+        int Value
+        {
+            get;
+        }
+        
+        /// <summary>
+        /// Children definitions.
+        /// </summary>
+        IEnumerable<IDefinition> Children
+        {
+            get;
+        }
+        
+        /// <summary>
+        /// Returns the textual form.
+        /// </summary>
+        string TextualForm
+        {
+            get;
+        }
 
-		/// <summary>
-		/// Indexer.
-		/// </summary>
-		IDefinition this[int index]
-		{
-			get;
-		}
+        /// <summary>
+        /// Indexer.
+        /// </summary>
+        IDefinition this[int index]
+        {
+            get;
+        }
 
-		/// <summary>
-		/// Module name.
-		/// </summary>
-		string ModuleName
-		{
-			get;
-		}
-		
-		/// <summary>
-		/// Name.
-		/// </summary>
-		string Name
-		{
-			get;
-		}
-		
-		/// <summary>
-		/// Gets the numerical form.
-		/// </summary>
-		/// <returns></returns>
-		uint[] GetNumericalForm();
+        /// <summary>
+        /// Module name.
+        /// </summary>
+        string ModuleName
+        {
+            get;
+        }
+        
+        /// <summary>
+        /// Name.
+        /// </summary>
+        string Name
+        {
+            get;
+        }
+        
+        /// <summary>
+        /// Gets the numerical form.
+        /// </summary>
+        /// <returns></returns>
+        uint[] GetNumericalForm();
 
-		/// <summary>
-		/// Type.
-		/// </summary>
+        /// <summary>
+        /// Type.
+        /// </summary>
         DefinitionType Type
         {
             get;
         }
-	}
+    }
 }

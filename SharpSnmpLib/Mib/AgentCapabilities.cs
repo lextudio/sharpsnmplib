@@ -12,28 +12,30 @@ using System.Collections.Generic;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
-	/// <summary>
-	/// The AGENT-CAPABILITIES construct is used to specify implementation characteristics of an SNMP agent sub-system with respect to object types and events.
-	/// </summary>
-	sealed class AgentCapabilities : IEntity
-	{
-		string _module;
-		string _name;
-		string _parent;
-		int _value;
-		/// <summary>
-		/// Creates an <see cref="AgentCapabilities"/> instance.
-		/// </summary>
-		/// <param name="module"></param>
-		/// <param name="header"></param>
-		/// <param name="lexer"></param>
-		public AgentCapabilities(string module, IList<Symbol> header, Lexer lexer)
-		{
-			_module = module;
-			_name = header[0].ToString();
+    /// <summary>
+    /// The AGENT-CAPABILITIES construct is used to specify implementation characteristics of an SNMP agent sub-system with respect to object types and events.
+    /// </summary>
+    internal sealed class AgentCapabilities : IEntity
+    {
+        private string _module;
+        private string _name;
+        private string _parent;
+        private int _value;
+        
+        /// <summary>
+        /// Creates an <see cref="AgentCapabilities"/> instance.
+        /// </summary>
+        /// <param name="module"></param>
+        /// <param name="header"></param>
+        /// <param name="lexer"></param>
+        public AgentCapabilities(string module, IList<Symbol> header, Lexer lexer)
+        {
+            _module = module;
+            _name = header[0].ToString();
             ConstructHelper.ParseOidValue(lexer, out _parent, out _value);
-		}
-		/// <summary>
+        }
+        
+        /// <summary>
         /// Module name.
         /// </summary>
         public string Module
@@ -43,6 +45,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 return _module;
             }
         }
+      
         /// <summary>
         /// Name.
         /// </summary>
@@ -53,6 +56,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 return _name;
             }
         }
+       
         /// <summary>
         /// Parent name.
         /// </summary>
@@ -63,6 +67,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 return _parent;
             }
         }
+       
         /// <summary>
         /// Value.
         /// </summary>
@@ -73,7 +78,5 @@ namespace Lextm.SharpSnmpLib.Mib
                 return _value;
             }
         }
-	}
+    }
 }
-
-

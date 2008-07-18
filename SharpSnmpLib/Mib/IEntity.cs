@@ -11,18 +11,19 @@ using System;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
-	/// <summary>
-	/// Entity interface.
-	/// </summary>
-	interface IEntity : IConstruct
-	{
-		/// <summary>
-		/// Module name.
-		/// </summary>
+    /// <summary>
+    /// Entity interface.
+    /// </summary>
+    internal interface IEntity : IConstruct
+    {
+        /// <summary>
+        /// Module name.
+        /// </summary>
         string Module
         {
             get;
         }
+        
         /// <summary>
         /// Name.
         /// </summary>
@@ -30,6 +31,7 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             get;
         }
+        
         /// <summary>
         /// Parent name.
         /// </summary>
@@ -37,6 +39,7 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             get;
         }
+        
         /// <summary>
         /// Value.
         /// </summary>
@@ -46,5 +49,3 @@ namespace Lextm.SharpSnmpLib.Mib
         }
     }
 }
-
-

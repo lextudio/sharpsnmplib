@@ -15,21 +15,21 @@ using NUnit.Framework.SyntaxHelpers;
 #pragma warning disable 1591
 namespace Lextm.SharpSnmpLib.Tests
 {
-	[TestFixture]
-	public class TestGetRequestPdu
-	{
-		[Test]
-		public void Test()
-		{
-			byte[] expected = new byte[] {
-				48, 129, 
-				47, 2, 129, 1, 0, 4, 129, 6, 112, 117, 98, 108, 105, 99, 160, 129, 31, 2, 129, 1, 10, 2, 129, 1, 0, 2, 129, 1, 0, 48, 129, 16, 48, 129, 13, 6, 129, 8, 43, 6, 1, 2, 1, 1, 6, 0, 
-				5, 0};
-			Variable v = new Variable(new ObjectIdentifier(new uint[] {1, 3, 6, 1, 2, 1, 1, 6, 0}));
-			PduCounter.Clear();
-			GetRequestPdu pdu = new GetRequestPdu(0, 0, new List<Variable>() {v});
-			Assert.AreEqual(expected, pdu.ToMessageBody(VersionCode.V1, "public").ToBytes());
-		}
-	}
+    [TestFixture]
+    public class TestGetRequestPdu
+    {
+        [Test]
+        public void Test()
+        {
+            byte[] expected = new byte[] {
+                48, 129, 
+                47, 2, 129, 1, 0, 4, 129, 6, 112, 117, 98, 108, 105, 99, 160, 129, 31, 2, 129, 1, 10, 2, 129, 1, 0, 2, 129, 1, 0, 48, 129, 16, 48, 129, 13, 6, 129, 8, 43, 6, 1, 2, 1, 1, 6, 0, 
+                5, 0};
+            Variable v = new Variable(new ObjectIdentifier(new uint[] {1, 3, 6, 1, 2, 1, 1, 6, 0}));
+            PduCounter.Clear();
+            GetRequestPdu pdu = new GetRequestPdu(0, 0, new List<Variable>() {v});
+            Assert.AreEqual(expected, pdu.ToMessageBody(VersionCode.V1, "public").ToBytes());
+        }
+    }
 }
 #pragma warning restore 1591

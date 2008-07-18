@@ -26,11 +26,11 @@
     <CppCommentsFixup>False</CppCommentsFixup>
     <FrameworkVersion>2.0.50727</FrameworkVersion>
     <BinaryTOC>True</BinaryTOC>
-    <IncludeFavorites>False</IncludeFavorites>
+    <IncludeFavorites>True</IncludeFavorites>
     <Preliminary>False</Preliminary>
     <RootNamespaceContainer>False</RootNamespaceContainer>
     <RootNamespaceTitle />
-    <HelpTitle>#SNMP Class Library</HelpTitle>
+    <HelpTitle>#SNMP Class Library Documentation</HelpTitle>
     <HtmlHelpName>Documentation</HtmlHelpName>
     <Language>en-US</Language>
     <CopyrightHref />
@@ -41,7 +41,7 @@
     <ProjectLinkType>Local</ProjectLinkType>
     <SdkLinkType>Msdn</SdkLinkType>
     <SdkLinkTarget>Blank</SdkLinkTarget>
-    <PresentationStyle>Prototype</PresentationStyle>
+    <PresentationStyle>vs2005</PresentationStyle>
     <NamingMethod>Guid</NamingMethod>
     <SyntaxFilters>Standard</SyntaxFilters>
     <ShowFeedbackControl>False</ShowFeedbackControl>

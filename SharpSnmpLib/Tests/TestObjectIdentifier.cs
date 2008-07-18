@@ -21,7 +21,6 @@ namespace Lextm.SharpSnmpLib.Tests
         	ObjectIdentifier oid = new ObjectIdentifier(expected);
         	byte[] result = oid.ToBytes();
         	MemoryStream m = new MemoryStream(result);
-        	//Universal uni = new Universal(stream);
         	ISnmpData data = SnmpDataFactory.CreateSnmpData(m);
         	Assert.AreEqual(SnmpType.ObjectIdentifier, data.TypeCode);
         	ObjectIdentifier o = (ObjectIdentifier)data;

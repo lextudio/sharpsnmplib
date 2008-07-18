@@ -11,15 +11,15 @@ using System.Collections.Generic;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
-	/// <summary>
-	/// Description of ModuleComplianceNode.
-	/// </summary>
-	sealed class ModuleCompliance : IEntity
-	{
-        string _module;
-        string _parent;
-        int _value;
-        string _name;
+    /// <summary>
+    /// Description of ModuleComplianceNode.
+    /// </summary>
+    internal sealed class ModuleCompliance : IEntity
+    {
+        private string _module;
+        private string _parent;
+        private int _value;
+        private string _name;
 
         public ModuleCompliance(string module, IList<Symbol> header, Lexer lexer)
         {
@@ -27,8 +27,7 @@ namespace Lextm.SharpSnmpLib.Mib
             _name = header[0].ToString();
             ConstructHelper.ParseOidValue(lexer, out _parent, out _value);
         }
-
-
+        
         public string Module
         {
             get { return _module; }
@@ -48,7 +47,5 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             get { return _name; }
         }
-	}
+    }
 }
-
-

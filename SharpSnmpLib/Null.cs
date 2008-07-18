@@ -12,66 +12,79 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Lextm.SharpSnmpLib
 {
-	/// <summary>
-	/// Null type.
-	/// </summary>
-	public struct Null : ISnmpData, IEquatable<Null>
-	{
-		/// <summary>
-		/// Type code.
-		/// </summary>
-		public SnmpType TypeCode {
-			get {
-				return SnmpType.Null;
-			}
-		}
-		/// <summary>
-		/// Converts to byte format.
-		/// </summary>
-		/// <returns></returns>
-		public byte[] ToBytes()
-		{
-			return _null;
-		}
-		
-		readonly static byte[] _null = new byte[] {0x05, 0x00};
+    /// <summary>
+    /// Null type.
+    /// </summary>
+    public struct Null : ISnmpData, IEquatable<Null>
+    {
+        /// <summary>
+        /// Type code.
+        /// </summary>
+        public SnmpType TypeCode
+        {
+            get 
+            {
+                return SnmpType.Null;
+            }
+        }
+      
+        /// <summary>
+        /// Converts to byte format.
+        /// </summary>
+        /// <returns></returns>
+        public byte[] ToBytes()
+        {
+            return _null;
+        }
+        
+        private readonly static byte[] _null = new byte[] { 0x05, 0x00 };
+       
         /// <summary>
         /// Determines whether the specified <see cref="Object"/> is equal to the current <see cref="Null"/>. 
         /// </summary>
         /// <param name="obj">The <see cref="Object"/> to compare with the current <see cref="Null"/>. </param>
         /// <returns><value>true</value> if the specified <see cref="Object"/> is equal to the current <see cref="Null"/>; otherwise, <value>false</value>.
-		/// </returns>		
-		public override bool Equals(object obj)
-		{
-			if (obj == null) {
-				return false;
-			}
-			if (object.ReferenceEquals(this, obj)) {
-				return true;
-			}
-			if (GetType() != obj.GetType()) {
-				return false;
-			}
-			return Equals((Null)obj);
-		}
-		/// <summary>
-		/// Serves as a hash function for a particular type.
-		/// </summary>
-		/// <returns>A hash code for the current <see cref="Null"/>.</returns>
-		public override int GetHashCode()
-		{
-			return 0;
-		}
-		/// <summary>
-		/// Indicates whether the current object is equal to another object of the same type.
-		/// </summary>
-		/// <param name="other">An object to compare with this object.</param>
-		/// <returns><value>true</value> if the current object is equal to the <paramref name="other"/> parameter; otherwise, <value>false</value>.
-		///</returns>
-		public bool Equals(Null other)
-		{
-			return true;
-		}
+        /// </returns>        
+        public override bool Equals(object obj)
+        {
+            if (obj == null) 
+            {
+                return false;
+            }
+            
+            if (object.ReferenceEquals(this, obj)) 
+            {
+                return true;
+            }
+            
+            if (GetType() != obj.GetType()) 
+            {
+                return false;
+            }
+            
+            return Equals((Null)obj);
+        }
+        
+        /// <summary>
+        /// Serves as a hash function for a particular type.
+        /// </summary>
+        /// <returns>A hash code for the current <see cref="Null"/>.</returns>
+        public override int GetHashCode()
+        {
+            return 0;
+        }
+        
+        /// <summary>
+        /// Indicates whether the current object is equal to another object of the same type.
+        /// </summary>
+        /// <param name="other">An object to compare with this object.</param>
+        /// <returns><value>true</value> if the current object is equal to the <paramref name="other"/> parameter; otherwise, <value>false</value>.
+        /// </returns>
+        public bool Equals(Null other)
+        {
+            return true;
+        }
+        
         /// <summary>
         /// The equality operator.
         /// </summary>
@@ -79,10 +92,11 @@ namespace Lextm.SharpSnmpLib
         /// <param name="right">Right <see cref="Null"/> object</param>
         /// <returns>
         /// Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
-		public static bool operator == (Null left, Null right)
-		{
-			return left.Equals(right);
-		}
+        public static bool operator ==(Null left, Null right)
+        {
+            return left.Equals(right);
+        }
+        
         /// <summary>
         /// The inequality operator.
         /// </summary>
@@ -92,8 +106,9 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
         public static bool operator !=(Null left, Null right)
         {
-        	return !(left == right);
+            return !(left == right);
         }
+        
         /// <summary>
         /// Returns a <see cref="String"/> that represents this <see cref="Null"/>.
         /// </summary>
@@ -102,5 +117,5 @@ namespace Lextm.SharpSnmpLib
         {
             return "Null";
         }
-	}
+    }
 }

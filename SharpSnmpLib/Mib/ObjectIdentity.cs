@@ -6,12 +6,13 @@ namespace Lextm.SharpSnmpLib.Mib
     /// <summary>
     /// Object identifier node.
     /// </summary>
-    sealed class ObjectIdentity : IEntity
+    internal sealed class ObjectIdentity : IEntity
     {
-        string _module;
-        string _name;
-        string _parent;
-        int _value;
+        private string _module;
+        private string _name;
+        private string _parent;
+        private int _value;
+        
         /// <summary>
         /// Creates a <see cref="ObjectIdentity"/>.
         /// </summary>
@@ -23,8 +24,9 @@ namespace Lextm.SharpSnmpLib.Mib
             _module = module;
             _name = header[0].ToString();
             ConstructHelper.ParseOidValue(lexer, out _parent, out _value);
-            if (_parent == "0") {
-            	_parent = "ccitt";
+            if (_parent == "0")
+            {
+                _parent = "ccitt";
             }
         }
 
@@ -38,6 +40,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 return _module;
             }
         }
+        
         /// <summary>
         /// Name.
         /// </summary>
@@ -48,6 +51,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 return _name;
             }
         }
+        
         /// <summary>
         /// Parent name.
         /// </summary>
@@ -58,6 +62,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 return _parent;
             }
         }
+        
         /// <summary>
         /// Value.
         /// </summary>
@@ -70,6 +75,3 @@ namespace Lextm.SharpSnmpLib.Mib
         }
     }
 }
-
-
-

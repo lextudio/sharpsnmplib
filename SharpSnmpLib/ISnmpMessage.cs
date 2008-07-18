@@ -11,14 +11,17 @@ using System;
 
 namespace Lextm.SharpSnmpLib
 {
-	/// <summary>
-	/// SNMP message.
-	/// </summary>
-	public interface ISnmpMessage: ISnmpData
-	{
-		/// <summary>
-		/// PDU section.
-		/// </summary>
-		ISnmpPdu Pdu { get; }
-	}
+    /// <summary>
+    /// SNMP message.
+    /// </summary>
+    public interface ISnmpMessage : ISnmpData
+    {
+        /// <summary>
+        /// PDU section.
+        /// </summary>
+        ISnmpPdu Pdu 
+        {
+            get;
+        }
+    }
 }

@@ -11,28 +11,28 @@ using System;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
-	/// <summary>
-	/// Alias.
-	/// </summary>
-	sealed class TypeAssignment : ITypeAssignment
-	{
-		string _module;
-		string _name;
-		Symbol _last;
-		/// <summary>
-		/// Creates an <see cref="TypeAssignment"/>.
-		/// </summary>
-		/// <param name="module"></param>
-		/// <param name="name"></param>
-		/// <param name="lexer"></param>
-		/// <param name="last"></param>
-		public TypeAssignment(string module, string name, Symbol last, Lexer lexer)
-		{
-            //TODO:
-			_module = module;
-			_name = name;
-			_last = last;
-			
+    /// <summary>
+    /// Alias.
+    /// </summary>
+    internal sealed class TypeAssignment : ITypeAssignment
+    {
+        private string _module;
+        private string _name;
+        private Symbol _last;
+        
+        /// <summary>
+        /// Creates an <see cref="TypeAssignment"/>.
+        /// </summary>
+        /// <param name="module"></param>
+        /// <param name="name"></param>
+        /// <param name="lexer"></param>
+        /// <param name="last"></param>
+        public TypeAssignment(string module, string name, Symbol last, Lexer lexer)
+        {
+            _module = module;
+            _name = name;
+            _last = last;
+            
             Symbol temp;
             Symbol previous = last;
             while ((temp = lexer.NextSymbol) != null)
@@ -41,11 +41,11 @@ namespace Lextm.SharpSnmpLib.Mib
                 {
                     return;
                 }
+                
                 previous = temp;
             }
+            
             ConstructHelper.Validate(previous, temp == null, "end of file reached");
-		}
-	}
+        }
+    }
 }
-
-

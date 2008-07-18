@@ -4,10 +4,10 @@ using System.Text;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
-	/// <summary>
-	/// Object tree interface.
-	/// </summary>
-	[CLSCompliant(false)]
+    /// <summary>
+    /// Object tree interface.
+    /// </summary>
+    [CLSCompliant(false)]
     public interface IObjectTree
     {
         /// <summary>

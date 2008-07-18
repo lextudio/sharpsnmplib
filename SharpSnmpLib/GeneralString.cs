@@ -12,44 +12,51 @@ using System.Text;
 
 namespace Lextm.SharpSnmpLib
 {
-	/// <summary>
-	/// GeneralString type.
-	/// </summary>
-	public struct GeneralString : ISnmpData, IEquatable<GeneralString>
-	{
-		byte[] _raw;
-		/// <summary>
-		/// Creates a <see cref="GeneralString"/> from raw bytes.
-		/// </summary>
-		/// <param name="raw">Raw bytes</param>
-		public GeneralString(byte[] raw)
-		{
-			_raw = raw;
-		}
-		/// <summary>
-		/// Type code.
-		/// </summary>
-		public SnmpType TypeCode {
-			get {
-				return SnmpType.GeneralString;
-			}
-		}
-		/// <summary>
-		/// Returns a <see cref="String"/> that represents this <see cref="GeneralString"/>.
-		/// </summary>
-		/// <returns></returns>
-		public override string ToString()
-		{
-			return ASCIIEncoding.ASCII.GetString(_raw);
-		}
-		/// <summary>
-		/// Converts to byte format.
-		/// </summary>
-		/// <returns></returns>
-		public byte[] ToBytes()
-		{
-			return ByteTool.ToBytes(TypeCode, _raw);
-		}
+    /// <summary>
+    /// GeneralString type.
+    /// </summary>
+    public struct GeneralString : ISnmpData, IEquatable<GeneralString>
+    {
+        private byte[] _raw;
+        
+        /// <summary>
+        /// Creates a <see cref="GeneralString"/> from raw bytes.
+        /// </summary>
+        /// <param name="raw">Raw bytes</param>
+        public GeneralString(byte[] raw)
+        {
+            _raw = raw;
+        }
+        
+        /// <summary>
+        /// Type code.
+        /// </summary>
+        public SnmpType TypeCode 
+        {
+            get 
+            {
+                return SnmpType.GeneralString;
+            }
+        }
+        
+        /// <summary>
+        /// Returns a <see cref="String"/> that represents this <see cref="GeneralString"/>.
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return ASCIIEncoding.ASCII.GetString(_raw);
+        }
+        
+        /// <summary>
+        /// Converts to byte format.
+        /// </summary>
+        /// <returns></returns>
+        public byte[] ToBytes()
+        {
+            return ByteTool.ToBytes(TypeCode, _raw);
+        }
+        
         /// <summary>
         /// Determines whether the specified <see cref="Object"/> is equal to the current <see cref="GeneralString"/>. 
         /// </summary>
@@ -62,16 +69,20 @@ namespace Lextm.SharpSnmpLib
             {
                 return false;
             }
+            
             if (object.ReferenceEquals(this, obj))
             {
                 return true;
             }
-            if(GetType() != obj.GetType())
+            
+            if (GetType() != obj.GetType())
             {
                 return false;
             }
+            
             return Equals((GeneralString)obj);
         }
+        
         /// <summary>
         /// Serves as a hash function for a particular type.
         /// </summary>
@@ -80,6 +91,7 @@ namespace Lextm.SharpSnmpLib
         {
             return ToString().GetHashCode();
         }
+        
         /// <summary>
         /// The equality operator.
         /// </summary>
@@ -91,6 +103,7 @@ namespace Lextm.SharpSnmpLib
         {
             return left.Equals(right);
         }
+        
         /// <summary>
         /// The inequality operator.
         /// </summary>
@@ -109,7 +122,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="other">An object to compare with this object.</param>
         /// <returns><value>true</value> if the current object is equal to the <paramref name="other"/> parameter; otherwise, <value>false</value>.
-        ///</returns>
+        /// </returns>
         public bool Equals(GeneralString other)
         {
             return ByteTool.CompareRaw(_raw, other._raw);

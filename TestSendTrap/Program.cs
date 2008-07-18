@@ -26,6 +26,13 @@ namespace TestSendTrap
 			                                          0, 
 			                                          new List<Variable>());
 			message.Send(IPAddress.Parse("127.0.0.1"), 162);
+
+            TrapV2Message m2 = new TrapV2Message(VersionCode.V2,                                                     
+                                                      "public",
+                                                      new ObjectIdentifier(new uint[] { 1, 3, 6 }),
+                                                      0,
+                                                      new List<Variable>());
+            m2.Send(IPAddress.Parse("127.0.0.1"), 162);
 			Console.Write("Press any key to continue . . . ");
 			Console.ReadKey(true);
 		}

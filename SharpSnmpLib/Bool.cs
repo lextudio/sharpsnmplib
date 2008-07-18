@@ -11,60 +11,70 @@ using System;
 
 namespace Lextm.SharpSnmpLib
 {
-	/// <summary>
-	/// Boolean type..
-	/// </summary>
-	public struct Bool : ISnmpData, IEquatable<Bool>
-	{
-		byte[] _raw;
-		/// <summary>
-		/// Creates a <see cref="Bool"/> instance from raw bytes.
-		/// </summary>
-		/// <param name="raw">Raw bytes</param>
-		public Bool(byte[] raw)
-		{
-			if (null == raw) 
-			{
-				throw new ArgumentNullException("raw");
-			}
-			if (raw.Length != 1) 
-			{
-				throw new ArgumentException("raw must be one item");
-			}
-			_raw = raw;
-		}
-		/// <summary>
-		/// Returns a <see cref="Boolean"/> that represents this <see cref="Bool"/>.
-		/// </summary>
-		/// <returns></returns>
-		public bool ToBoolean()
-		{
-			return (_raw[0] > 0);
-		}
-		/// <summary>
-		/// Type code.
-		/// </summary>
-		public SnmpType TypeCode {
-			get {
-				return SnmpType.Boolean;
-			}
-		}
-		/// <summary>
-		/// Returns a <see cref="String"/> that represents this <see cref="Bool"/>.
-		/// </summary>
-		/// <returns></returns>
-		public override string ToString()
-		{
-			return ToBoolean().ToString();
-		}
-		/// <summary>
-		/// Converts to byte format.
-		/// </summary>
-		/// <returns></returns>
-		public byte[] ToBytes()
-		{
-			return ByteTool.ToBytes(TypeCode, _raw);
-		}
+    /// <summary>
+    /// Boolean type..
+    /// </summary>
+    public struct Bool : ISnmpData, IEquatable<Bool>
+    {
+        private byte[] _raw;
+        
+        /// <summary>
+        /// Creates a <see cref="Bool"/> instance from raw bytes.
+        /// </summary>
+        /// <param name="raw">Raw bytes</param>
+        public Bool(byte[] raw)
+        {
+            if (null == raw) 
+            {
+                throw new ArgumentNullException("raw");
+            }
+            
+            if (raw.Length != 1) 
+            {
+                throw new ArgumentException("raw must be one item");
+            }
+            
+            _raw = raw;
+        }
+        
+        /// <summary>
+        /// Returns a <see cref="Boolean"/> that represents this <see cref="Bool"/>.
+        /// </summary>
+        /// <returns></returns>
+        public bool ToBoolean()
+        {
+            return (_raw[0] > 0);
+        }
+        
+        /// <summary>
+        /// Type code.
+        /// </summary>
+        public SnmpType TypeCode 
+        {
+            get 
+            {
+                return SnmpType.Boolean;
+            }
+        }
+        
+        /// <summary>
+        /// Returns a <see cref="String"/> that represents this <see cref="Bool"/>.
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return ToBoolean().ToString();
+        }
+        
+        /// <summary>
+        /// Converts to byte format.
+        /// </summary>
+        /// <returns></returns>
+        public byte[] ToBytes()
+        {
+            return ByteTool.ToBytes(TypeCode, _raw);
+        }
+        
         /// <summary>
         /// Serves as a hash function for a particular type.
         /// </summary>
@@ -73,6 +83,7 @@ namespace Lextm.SharpSnmpLib
         {
             return ToBoolean().GetHashCode();
         }
+        
         /// <summary>
         /// Determines whether the specified <see cref="Object"/> is equal to the current <see cref="Bool"/>. 
         /// </summary>
@@ -85,16 +96,20 @@ namespace Lextm.SharpSnmpLib
             {
                 return false;
             }
+            
             if (object.ReferenceEquals(this, obj))
             {
                 return true;
             }
+            
             if (GetType() != obj.GetType())
             {
                 return false;
             }
+            
             return Equals((Bool)obj);
         }
+        
         /// <summary>
         /// The equality operator.
         /// </summary>
@@ -106,6 +121,7 @@ namespace Lextm.SharpSnmpLib
         {
             return left.Equals(right);
         }
+        
         /// <summary>
         /// The inequality operator.
         /// </summary>
@@ -124,7 +140,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="other">An object to compare with this object.</param>
         /// <returns><value>true</value> if the current object is equal to the <paramref name="other"/> parameter; otherwise, <value>false</value>.
-        ///</returns>
+        /// </returns>
         public bool Equals(Bool other)
         {
             return ToBoolean() == other.ToBoolean();

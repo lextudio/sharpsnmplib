@@ -16,7 +16,8 @@
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <DelaySign>False</DelaySign>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
-    <SourceAnalysisOverrideSettingsFile>C:\Users\lextm\AppData\Roaming\ICSharpCode/SharpDevelop3.0\AddIns\MattEverson.SourceAnalysis\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
+    <SourceAnalysisOverrideSettingsFile>D:\lextm\documents\SharpDevelop Projects\SharpSnmpLib\SharpSnmpLib\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
+    <RunSourceAnalysis>False</RunSourceAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <OutputPath>bin\Debug\</OutputPath>

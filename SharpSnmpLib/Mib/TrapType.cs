@@ -13,11 +13,11 @@ using System.Text;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
-    sealed class TrapType : IConstruct
+    internal sealed class TrapType : IConstruct
     {
-        string _module;
-        int _value;
-        string _name;
+        private string _module;
+        private int _value;
+        private string _name;
 
         public TrapType(string module, IList<Symbol> header, Lexer lexer)
         {
@@ -25,7 +25,9 @@ namespace Lextm.SharpSnmpLib.Mib
             _name = header[0].ToString();
             Symbol temp;
             while ((temp = lexer.NextSymbol) == Symbol.EOL)
-            { }
+            {
+            }
+            
             bool succeeded = int.TryParse(temp.ToString(), out _value);
             ConstructHelper.Validate(temp, !succeeded, "not a decimal");
         }
@@ -46,5 +48,3 @@ namespace Lextm.SharpSnmpLib.Mib
         }
     }
 }
-
-

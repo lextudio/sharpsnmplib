@@ -4,12 +4,12 @@ using System.Text;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
-    sealed class ObjectType : IEntity
+    internal sealed class ObjectType : IEntity
     {
-        string _module;
-        string _parent;
-        int _value;
-        string _name;
+        private string _module;
+        private string _parent;
+        private int _value;
+        private string _name;
 
         public ObjectType(string module, IList<Symbol> header, Lexer lexer)
         {
@@ -39,5 +39,3 @@ namespace Lextm.SharpSnmpLib.Mib
         }
     }
 }
-
-
