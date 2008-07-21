@@ -35,6 +35,8 @@ namespace Browser
             output.Show(dockPanel1, DockState.DockBottom);
             MibTreePanel tree = new MibTreePanel();
             tree.Show(dockPanel1, DockState.Document);
+            ModuleListPanel modules = new ModuleListPanel();
+            modules.Show(dockPanel1, DockState.DockLeft);
             SnmpProfile.Initiate(manager1, "public", "public", VersionCode.V1, tscbAgent.Text, output.ReportMessage);
 		}
     }

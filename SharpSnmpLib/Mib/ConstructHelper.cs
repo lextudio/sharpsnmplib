@@ -8,12 +8,21 @@ namespace Lextm.SharpSnmpLib.Mib
     {
         internal static void ParseOidValue(Lexer lexer, out string parent, out int value)
         {
+            parent = null;
             Symbol temp = IgnoreEOL(lexer);
             Expect(temp, Symbol.OpenBracket);
+            string lastParent = parent;
             parent = lexer.NextSymbol.ToString();
             Symbol previous = null;
+            value = 0;
             while ((temp = lexer.NextSymbol) != null) 
             {
+                if (temp == Symbol.CloseBracket)
+                {
+                    parent = lastParent;
+                    return;
+                }
+
                 bool succeeded = int.TryParse(temp.ToString(), out value);
                 if (succeeded) 
                 {
@@ -21,7 +30,8 @@ namespace Lextm.SharpSnmpLib.Mib
                     Expect(temp, Symbol.CloseBracket);
                     return;
                 }
-                
+
+                lastParent = parent;
                 parent = temp.ToString();
                 temp = lexer.NextSymbol;
                 Expect(temp, Symbol.OpenParentheses);
@@ -66,7 +76,7 @@ namespace Lextm.SharpSnmpLib.Mib
             Validate(current, condition, message);
         }
         
-        private static bool IsValidIdentifier(string name, out string message)
+        internal static bool IsValidIdentifier(string name, out string message)
         {
             if (name.Length < 1 || name.Length > 64) 
             {

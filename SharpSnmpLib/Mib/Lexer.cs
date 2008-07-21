@@ -110,7 +110,9 @@ namespace Lextm.SharpSnmpLib.Mib
                 case '{': 
                 case '}':    
                 case '(': 
-                case ')': 
+                case ')':
+                case '[':
+                case ']':
                 case ';': 
                 case ',':
                     if (!stringSection) 
@@ -189,6 +191,12 @@ namespace Lextm.SharpSnmpLib.Mib
                     break;
                 case ')':
                     str = ")";
+                    break;
+                case '[':
+                    str = "[";
+                    break;
+                case ']':
+                    str = "]";
                     break;
                 case ';':
                     str = ";";

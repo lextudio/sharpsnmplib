@@ -19,6 +19,7 @@ namespace Lextm.SharpSnmpLib.Mib
         private string _module;
         private string _name;
         private Symbol _last;
+        private Symbol _left;
         
         /// <summary>
         /// Creates an <see cref="TypeAssignment"/>.
@@ -34,18 +35,30 @@ namespace Lextm.SharpSnmpLib.Mib
             _last = last;
             
             Symbol temp;
+            Symbol veryPrevious = null;
             Symbol previous = last;
+            string message;
             while ((temp = lexer.NextSymbol) != null)
             {
-                if (previous == Symbol.EOL && temp == Symbol.EOL)
+                if (veryPrevious == Symbol.EOL && previous == Symbol.EOL && ConstructHelper.IsValidIdentifier(temp.ToString(), out message))
                 {
+                    _left = temp;
                     return;
                 }
-                
+                    
+                veryPrevious = previous;
                 previous = temp;
             }
             
             ConstructHelper.Validate(previous, temp == null, "end of file reached");
+        }
+
+        public Symbol Left
+        {
+            get
+            {
+                return _left;
+            }
         }
     }
 }

@@ -67,6 +67,13 @@ namespace Browser.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap list_add {
+            get {
+                object obj = ResourceManager.GetObject("list-add", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap package_x_generic {
             get {
                 object obj = ResourceManager.GetObject("package_x_generic", resourceCulture);

@@ -23,7 +23,14 @@ namespace Browser
         public MibTreePanel()
         {
             InitializeComponent();
-            ObjectRegistry repository = ObjectRegistry.Instance;
+            RefreshPanel(ObjectRegistry.Instance, EventArgs.Empty);
+            ObjectRegistry.Instance.OnChanged += RefreshPanel;
+        }
+        
+        private void RefreshPanel(object sender, EventArgs e)
+        {
+            ObjectRegistry repository = (ObjectRegistry)sender;
+            treeView1.Nodes.Clear();
             TreeNode root = Wrap(repository.Tree.Root);
             foreach (TreeNode node in root.Nodes)
             {
@@ -36,10 +43,10 @@ namespace Browser
             TreeNode node = new TreeNode(definition.Name)
             {
                 Tag = definition,
-                      ImageIndex = (int)definition.Type,
-                                   SelectedImageIndex = (int)definition.Type,
-                                                        ToolTipText = definition.TextualForm + Environment.NewLine + definition.Value
-                                                                  };
+                ImageIndex = (int)definition.Type,
+                SelectedImageIndex = (int)definition.Type,
+                ToolTipText = definition.TextualForm + Environment.NewLine + definition.Value
+            };
             foreach (IDefinition def in definition.Children)
             {
                 node.Nodes.Add(Wrap(def));
@@ -67,7 +74,7 @@ namespace Browser
             }
             else
             {
-                int index; 
+                int index;
                 using (FormIndex form = new FormIndex())
                 {
                     form.ShowDialog();
@@ -108,7 +115,7 @@ namespace Browser
             | RegexOptions.CultureInvariant
             | RegexOptions.IgnorePatternWhitespace
             | RegexOptions.Compiled
-        );
+           );
 
         private static bool Validate(string ip)
         {

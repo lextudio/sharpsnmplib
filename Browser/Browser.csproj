@@ -60,6 +60,12 @@
     <Compile Include="MibTreePanel.Designer.cs">
       <DependentUpon>MibTreePanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="ModuleListPanel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ModuleListPanel.Designer.cs">
+      <DependentUpon>ModuleListPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="OutputPanel.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -82,6 +88,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MibTreePanel.resx">
       <DependentUpon>MibTreePanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ModuleListPanel.resx">
+      <DependentUpon>ModuleListPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OutputPanel.resx">
       <DependentUpon>OutputPanel.cs</DependentUpon>
@@ -118,5 +127,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\text-x-generic-template.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\list-add.png" />
   </ItemGroup>
 </Project>

@@ -76,6 +76,16 @@ namespace Lextm.SharpSnmpLib.Mib
                 {
                     ParseEntity(tokens, module, buffer, lexer, ref next);
                     buffer.Clear();
+                    foreach (Symbol s in next)
+                    {
+                        if (s == Symbol.End) 
+                        {
+                            return;
+                        }
+                        
+                        buffer.Add(s);
+                    }
+                    next.Clear();
                 }
             }
             while ((temp = lexer.NextSymbol) != Symbol.End);
@@ -89,7 +99,7 @@ namespace Lextm.SharpSnmpLib.Mib
             if (buffer.Count == 2)
             {
                 // others
-                tokens.Add(ParseOthers(module, buffer, lexer));
+                tokens.Add(ParseOthers(module, buffer, lexer, ref next));
             }
             else if (buffer[1] == Symbol.Object)
             {
@@ -145,8 +155,8 @@ namespace Lextm.SharpSnmpLib.Mib
             ConstructHelper.Expect(header[2], Symbol.Identifier);
             return new OidValueAssignment(module, header[0].ToString(), lexer);
         }
-        
-        private static IConstruct ParseOthers(string module, IList<Symbol> header, Lexer lexer)
+
+        private static IConstruct ParseOthers(string module, IList<Symbol> header, Lexer lexer, ref IList<Symbol> next)
         {
             Symbol current;
             while ((current = lexer.NextSymbol) == Symbol.EOL)
@@ -166,7 +176,9 @@ namespace Lextm.SharpSnmpLib.Mib
                 return new TextualConvention(module, header[0].ToString(), lexer);
             }
             
-            return new TypeAssignment(module, header[0].ToString(), current, lexer);
+            TypeAssignment result = new TypeAssignment(module, header[0].ToString(), current, lexer);
+            next.Add(result.Left);
+            return result;
         }
         
         /// <summary>

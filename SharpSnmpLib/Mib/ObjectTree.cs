@@ -10,7 +10,7 @@ namespace Lextm.SharpSnmpLib.Mib
     /// </summary>
     internal sealed class ObjectTree : IObjectTree
     {
-        private IDictionary<string, MibModule> _parsed = new Dictionary<string, MibModule>();
+        private IDictionary<string, MibModule> _parsed = new SortedDictionary<string, MibModule>();
         private IList<MibModule> _pending = new List<MibModule>();
         private IDictionary<string, IDefinition> nameTable;
         private Definition root;
@@ -151,6 +151,16 @@ namespace Lextm.SharpSnmpLib.Mib
             
             ParsePendings();
             return _lexer.SymbolCount;
+        }
+        /// <summary>
+        /// Loaded MIB documents.
+        /// </summary>
+        public IEnumerable<string> LoadedModules
+        {
+            get
+            {
+                return _parsed.Keys;
+            }
         }
     }
 }

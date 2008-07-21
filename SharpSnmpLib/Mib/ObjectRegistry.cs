@@ -22,10 +22,13 @@ namespace Lextm.SharpSnmpLib.Mib
         private ObjectTree _tree = new ObjectTree();
         private static ObjectRegistry instance;
         
-        private ObjectRegistry() 
+        private ObjectRegistry()
         {
         }
-        
+        /// <summary>
+        /// This event occurs when new documents are loaded.
+        /// </summary>
+        public event EventHandler OnChanged;
         /// <summary>
         /// Object tree.
         /// </summary>
@@ -39,7 +42,7 @@ namespace Lextm.SharpSnmpLib.Mib
         }
         
         /// <summary>
-        /// Registry instance.
+        /// Registry 
         /// </summary>
         public static ObjectRegistry Instance
         {
@@ -47,95 +50,100 @@ namespace Lextm.SharpSnmpLib.Mib
             {
                 lock (typeof(ObjectRegistry))
                 {
-                    if (instance == null) 
+                    if (instance == null)
                     {
                         instance = new ObjectRegistry();
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.SNMPv2_SMI)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.SNMPv2_CONF)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.SNMPv2_TC)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.SNMPv2_MIB)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.SNMPv2_TM)));
-                        
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.AGENTX_MIB)));
-                        
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.DISMAN_EVENT_MIB)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.DISMAN_EXPRESSION_MIB)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.DISMAN_NSLOOKUP_MIB)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.DISMAN_PING_MIB)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.DISMAN_SCHEDULE_MIB)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.DISMAN_SCRIPT_MIB)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.DISMAN_TRACEROUTE_MIB)));
-                        
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.EtherLike_MIB)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.HCNUM_TC)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.HOST_RESOURCES_MIB)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.HOST_RESOURCES_TYPES)));
-                        
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.IANA_ADDRESS_FAMILY_NUMBERS_MIB)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.IANA_LANGUAGE_MIB)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.IANA_RTPROTO_MIB)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.IANAifType_MIB)));
-                        
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.IF_INVERTED_STACK_MIB)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.IF_MIB)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.INET_ADDRESS_MIB)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.IP_FORWARD_MIB)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.IP_MIB)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.IPV6_FLOW_LABEL_MIB)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.IPV6_ICMP_MIB)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.IPV6_MIB)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.IPV6_TC)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.IPV6_TCP_MIB)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.IPV6_UDP_MIB)));
-                        
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.LM_SENSORS_MIB)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.MTA_MIB)));
-                        
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.NET_SNMP_AGENT_MIB)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.NET_SNMP_EXAMPLES_MIB)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.NET_SNMP_EXTEND_MIB)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.NET_SNMP_MIB)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.NET_SNMP_MONITOR_MIB)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.NET_SNMP_SYSTEM_MIB)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.NET_SNMP_TC)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.NET_SNMP_VACM_MIB)));
-                        
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.NETWORK_SERVICES_MIB)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.NOTIFICATION_LOG_MIB)));
-                        
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.RMON_MIB)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.SMUX_MIB)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.SNMP_COMMUNITY_MIB)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.SNMP_FRAMEWORK_MIB)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.SNMP_MPD_MIB)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.SNMP_NOTIFICATION_MIB)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.SNMP_PROXY_MIB)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.SNMP_TARGET_MIB)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.SNMP_USER_BASED_SM_MIB)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.SNMP_USM_AES_MIB)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.SNMP_USM_DH_OBJECTS_MIB)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.SNMP_VIEW_BASED_ACM_MIB)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.TCP_MIB)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.TRANSPORT_ADDRESS_MIB)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.TUNNEL_MIB)));
-                        
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.UCD_DEMO_MIB)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.UCD_DISKIO_MIB)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.UCD_DLMOD_MIB)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.UCD_IPFILTER_MIB)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.UCD_IPFWACC_MIB)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.UCD_SNMP_MIB)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.UCD_SNMP_MIB_OLD)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.UDP_MIB)));    
-                        
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.RFC_1215)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.RFC1155_SMI)));
-                        instance.LoadFile(new StreamReader(new MemoryStream(Resource.RFC1213_MIB)));                            
+                        instance.LoadDefaultDocuments();
                     }
                 }
                 
                 return instance;
             }
+        }
+        
+        private void LoadDefaultDocuments()
+        {
+            LoadFile(new StreamReader(new MemoryStream(Resource.SNMPv2_SMI)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.SNMPv2_CONF)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.SNMPv2_TC)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.SNMPv2_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.SNMPv2_TM)));
+            
+            LoadFile(new StreamReader(new MemoryStream(Resource.AGENTX_MIB)));
+            
+            LoadFile(new StreamReader(new MemoryStream(Resource.DISMAN_EVENT_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.DISMAN_EXPRESSION_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.DISMAN_NSLOOKUP_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.DISMAN_PING_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.DISMAN_SCHEDULE_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.DISMAN_SCRIPT_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.DISMAN_TRACEROUTE_MIB)));
+            
+            LoadFile(new StreamReader(new MemoryStream(Resource.EtherLike_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.HCNUM_TC)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.HOST_RESOURCES_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.HOST_RESOURCES_TYPES)));
+            
+            LoadFile(new StreamReader(new MemoryStream(Resource.IANA_ADDRESS_FAMILY_NUMBERS_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.IANA_LANGUAGE_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.IANA_RTPROTO_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.IANAifType_MIB)));
+            
+            LoadFile(new StreamReader(new MemoryStream(Resource.IF_INVERTED_STACK_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.IF_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.INET_ADDRESS_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.IP_FORWARD_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.IP_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.IPV6_FLOW_LABEL_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.IPV6_ICMP_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.IPV6_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.IPV6_TC)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.IPV6_TCP_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.IPV6_UDP_MIB)));
+            
+            LoadFile(new StreamReader(new MemoryStream(Resource.LM_SENSORS_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.MTA_MIB)));
+            
+            LoadFile(new StreamReader(new MemoryStream(Resource.NET_SNMP_AGENT_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.NET_SNMP_EXAMPLES_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.NET_SNMP_EXTEND_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.NET_SNMP_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.NET_SNMP_MONITOR_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.NET_SNMP_SYSTEM_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.NET_SNMP_TC)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.NET_SNMP_VACM_MIB)));
+            
+            LoadFile(new StreamReader(new MemoryStream(Resource.NETWORK_SERVICES_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.NOTIFICATION_LOG_MIB)));
+            
+            LoadFile(new StreamReader(new MemoryStream(Resource.RMON_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.SMUX_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.SNMP_COMMUNITY_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.SNMP_FRAMEWORK_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.SNMP_MPD_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.SNMP_NOTIFICATION_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.SNMP_PROXY_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.SNMP_TARGET_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.SNMP_USER_BASED_SM_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.SNMP_USM_AES_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.SNMP_USM_DH_OBJECTS_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.SNMP_VIEW_BASED_ACM_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.TCP_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.TRANSPORT_ADDRESS_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.TUNNEL_MIB)));
+            
+            LoadFile(new StreamReader(new MemoryStream(Resource.UCD_DEMO_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.UCD_DISKIO_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.UCD_DLMOD_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.UCD_IPFILTER_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.UCD_IPFWACC_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.UCD_SNMP_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.UCD_SNMP_MIB_OLD)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.UDP_MIB)));
+            
+            LoadFile(new StreamReader(new MemoryStream(Resource.RFC_1215)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.RFC1155_SMI)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.RFC1213_MIB)));
         }
         
         /// <summary>
@@ -158,12 +166,12 @@ namespace Lextm.SharpSnmpLib.Mib
         [CLSCompliant(false)]
         public uint[] GetNumericalFrom(string textual)
         {
-            if (textual == null) 
+            if (textual == null)
             {
                 throw new ArgumentNullException("textual");
             }
             
-            if (textual.Length == 0) 
+            if (textual.Length == 0)
             {
                 throw new ArgumentException("textual cannot be empty");
             }
@@ -186,17 +194,17 @@ namespace Lextm.SharpSnmpLib.Mib
         [CLSCompliant(false)]
         public uint[] GetNumericalFrom(string module, string name)
         {
-            if (module == null)            
+            if (module == null)
             {
                 throw new ArgumentNullException("module");
             }
             
-            if (module.Length == 0) 
+            if (module.Length == 0)
             {
                 throw new ArgumentException("module cannot be empty");
             }
             
-            if (name == null) 
+            if (name == null)
             {
                 throw new ArgumentNullException("name");
             }
@@ -206,7 +214,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 throw new ArgumentException("name cannot be empty");
             }
             
-            if (!name.Contains(".")) 
+            if (!name.Contains("."))
             {
                 return _tree.Find(module, name).GetNumericalForm();
             }
@@ -219,7 +227,7 @@ namespace Lextm.SharpSnmpLib.Mib
             
             int value;
             bool succeeded = int.TryParse(content[1], out value);
-            if (!succeeded) 
+            if (!succeeded)
             {
                 throw new ArgumentException("not a decimal after dot");
             }
@@ -236,15 +244,15 @@ namespace Lextm.SharpSnmpLib.Mib
         [CLSCompliant(false)]
         public string GetTextualFrom(uint[] numerical)
         {
-            if (numerical == null) 
+            if (numerical == null)
             {
                 throw new ArgumentNullException("numerical");
-            }    
+            }
             
-            try 
+            try
             {
                 return _tree.Find(numerical).TextualForm;
-            } 
+            }
             catch (ArgumentOutOfRangeException)
             {
             }
@@ -270,27 +278,27 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <param name="pattern">MIB file pattern</param>
         public void LoadFolder(string folder, string pattern)
         {
-            if (folder == null) 
+            if (folder == null)
             {
                 throw new ArgumentNullException("folder");
             }
             
-            if (folder.Length == 0) 
+            if (folder.Length == 0)
             {
                 throw new ArgumentException("folder cannot be empty");
             }
             
-            if (!Directory.Exists(folder)) 
+            if (!Directory.Exists(folder))
             {
                 throw new ArgumentException("folder does not exist: " + folder);
             }
             
-            if (pattern == null) 
+            if (pattern == null)
             {
                 throw new ArgumentNullException("pattern");
             }
             
-            if (pattern.Length == 0) 
+            if (pattern.Length == 0)
             {
                 throw new ArgumentException("pattern cannot be empty");
             }
@@ -298,6 +306,26 @@ namespace Lextm.SharpSnmpLib.Mib
             foreach (string file in Directory.GetFiles(folder, pattern))
             {
                 LoadFile(file);
+            }
+            if (OnChanged != null) 
+            {
+                OnChanged(this, EventArgs.Empty);
+            }
+        }
+        
+        /// <summary>
+        /// Loads MIB files.
+        /// </summary>
+        /// <param name="fileNames">File names.</param>
+        public void LoadFile(IEnumerable<string> fileNames)
+        {
+            foreach (string fileName in fileNames)
+            {
+                LoadFile(fileName, File.OpenText(fileName));
+            }
+            if (OnChanged != null) 
+            {
+                OnChanged(this, EventArgs.Empty);
             }
         }
         
@@ -307,27 +335,31 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <param name="fileName">File name</param>
         public void LoadFile(string fileName)
         {
-            if (fileName == null) 
+            if (fileName == null)
             {
                 throw new ArgumentNullException("fileName");
             }
             
-            if (fileName.Length == 0) 
+            if (fileName.Length == 0)
             {
                 throw new ArgumentException("fileName cannot be empty");
             }
             
-            if (!File.Exists(fileName)) 
+            if (!File.Exists(fileName))
             {
                 throw new ArgumentException("file does not exist: " + fileName);
             }
             
             LoadFile(fileName, File.OpenText(fileName));
+            if (OnChanged != null) 
+            {
+                OnChanged(this, EventArgs.Empty);
+            }
         }
 
         internal void LoadFile(string file, TextReader stream)
         {
-            try 
+            try
             {
                 _tree.Parse(file, stream);
             }

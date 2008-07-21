@@ -217,6 +217,7 @@
     <None Include="Resources\RFC-1215.txt" />
     <None Include="Resources\RFC1155-SMI.txt" />
     <None Include="Resources\RFC1213-MIB.txt" />
+    <None Include="Resources\RFC1271-MIB" />
     <None Include="Resources\rfclist" />
     <None Include="Resources\rfcmibs.diff" />
     <None Include="Resources\RMON-MIB.txt" />
@@ -276,6 +277,8 @@
     <None Include="sharpsnmplib.snk" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\BRIDGE-MIB" />
+    <None Include="Resources\RFC1213-MIB" />
     <None Include="Resources\SNMPv2-TM.txt" />
   </ItemGroup>
 </Project>

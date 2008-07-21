@@ -201,7 +201,7 @@ namespace Lextm.SharpSnmpLib.Mib
         internal static Symbol End = new Symbol("END");
         internal static Symbol Macro = new Symbol("MACRO");
         internal static Symbol Choice = new Symbol("CHOICE");
-        internal static Symbol TrapType = new Symbol("TRAP_TYPE");
+        internal static Symbol TrapType = new Symbol("TRAP-TYPE");
         internal static Symbol AgentCapabilities = new Symbol("AGENT-CAPABILITIES");
         internal static Symbol Comma = new Symbol(",");
         internal static Symbol TextualConvention = new Symbol("TEXTUAL-CONVENTION");

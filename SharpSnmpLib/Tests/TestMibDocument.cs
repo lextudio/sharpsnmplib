@@ -52,6 +52,25 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual("dod", node.Parent.ToString());
         }
         [Test]
+        public void TestRFC1271_MIB()
+        {
+            Lexer lexer = new Lexer();
+            MemoryStream m = new MemoryStream(Resource.RFC1271_MIB);
+            using (StreamReader reader = new StreamReader(m))
+            {
+                lexer.Parse(reader);
+                reader.Close();
+            }
+            MibDocument file = new MibDocument(lexer);
+            Assert.AreEqual(1, file.Modules.Count);
+            Assert.AreEqual("RFC1271-MIB", file.Modules[0].Name);
+            Assert.AreEqual(6, file.Modules[0].Entities.Count);
+            IEntity node = file.Modules[0].Entities[0];
+            Assert.AreEqual("internet", node.Name);
+            Assert.AreEqual(1, node.Value);
+            Assert.AreEqual("dod", node.Parent.ToString());
+        }
+        [Test]
         public void TestRFC1213_MIB()
         {
             Lexer lexer = new Lexer();
@@ -66,6 +85,26 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual("RFC1213-MIB", file.Modules[0].Name);
             Assert.AreEqual(201, file.Modules[0].Entities.Count);
             IEntity node = file.Modules[0].Entities[200];
+            Assert.AreEqual("snmpEnableAuthenTraps", node.Name);
+            Assert.AreEqual(30, node.Value);
+            Assert.AreEqual("snmp", node.Parent.ToString());
+        }
+
+        [Test]
+        public void TestRFC1213_MIB2()
+        {
+            Lexer lexer = new Lexer();
+            MemoryStream m = new MemoryStream(Resource.RFC1213_MIB2);
+            using (StreamReader reader = new StreamReader(m))
+            {
+                lexer.Parse(reader);
+                reader.Close();
+            }
+            MibDocument file = new MibDocument(lexer);
+            Assert.AreEqual(1, file.Modules.Count);
+            Assert.AreEqual("RFC1213-MIB", file.Modules[0].Name);
+            Assert.AreEqual(206, file.Modules[0].Entities.Count);
+            IEntity node = file.Modules[0].Entities[205];
             Assert.AreEqual("snmpEnableAuthenTraps", node.Name);
             Assert.AreEqual(30, node.Value);
             Assert.AreEqual("snmp", node.Parent.ToString());
@@ -1349,6 +1388,26 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual("rfc1157Domain", node.Name);
             Assert.AreEqual(1, node.Value);
             Assert.AreEqual("rfc1157Proxy", node.Parent.ToString());
+        }
+
+        [Test]
+        public void TestBridge()
+        {
+            Lexer lexer = new Lexer();
+            MemoryStream m = new MemoryStream(Resource.BRIDGE_MIB);
+            using (StreamReader reader = new StreamReader(m))
+            {
+                lexer.Parse(reader);
+                reader.Close();
+            }
+            MibDocument file = new MibDocument(lexer);
+            Assert.AreEqual("BRIDGE-MIB", file.Modules[0].Name);
+            Assert.AreEqual(4, file.Modules[0].Dependents.Count);
+            Assert.AreEqual(62, file.Modules[0].Entities.Count);
+            IEntity node = file.Modules[0].Entities[61];
+            Assert.AreEqual("dot1dStaticStatus", node.Name);
+            Assert.AreEqual(4, node.Value);
+            Assert.AreEqual("dot1dStaticEntry", node.Parent.ToString());
         }
     }
 }
