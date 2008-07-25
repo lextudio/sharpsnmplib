@@ -18,7 +18,7 @@ using System.Diagnostics.CodeAnalysis;
 //                                new ManagerSession(hostname,"public"),
 //                                "1.3.6.1.2.1.1.4.0");
 // Then the actual OID is mi.Name and the value is in mi.Value.ToString().
-[module: SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", Scope = "member", Target = "SharpSnmpLib.SnmpType.#UTF8String")]
+[module: SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", Scope = "member", Target = "SharpSnmpLib.SnmpType.#UTF8String", Justification = "Postponed")]
 #pragma warning disable 1591
 namespace Lextm.SharpSnmpLib
 {

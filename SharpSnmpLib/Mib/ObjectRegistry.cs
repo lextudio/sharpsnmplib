@@ -25,10 +25,12 @@ namespace Lextm.SharpSnmpLib.Mib
         private ObjectRegistry()
         {
         }
+        
         /// <summary>
         /// This event occurs when new documents are loaded.
         /// </summary>
         public event EventHandler OnChanged;
+        
         /// <summary>
         /// Object tree.
         /// </summary>
@@ -154,8 +156,26 @@ namespace Lextm.SharpSnmpLib.Mib
         [CLSCompliant(false)]
         public bool IsTableId(uint[] id)
         {
+            if (id == null) 
+            {
+                throw new ArgumentNullException("id");
+            }
+            
             string name = GetTextualFrom(id);
             return name.EndsWith("Table", StringComparison.Ordinal);
+        }
+        
+        internal static bool ValidateTable(ObjectIdentifier table)
+        {
+            try
+            {
+                return Mib.ObjectRegistry.Instance.IsTableId(table.ToNumerical());
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                // if no matching definition found, continue.
+                return true;
+            }
         }
         
         /// <summary>
@@ -255,6 +275,7 @@ namespace Lextm.SharpSnmpLib.Mib
             }
             catch (ArgumentOutOfRangeException)
             {
+                // no definition matches numerical.
             }
             
             return _tree.Find(GetParent(numerical)).TextualForm + "." + numerical[numerical.Length - 1];
@@ -307,6 +328,7 @@ namespace Lextm.SharpSnmpLib.Mib
             {
                 LoadFile(file);
             }
+            
             if (OnChanged != null) 
             {
                 OnChanged(this, EventArgs.Empty);
@@ -323,6 +345,7 @@ namespace Lextm.SharpSnmpLib.Mib
             {
                 LoadFile(fileName, File.OpenText(fileName));
             }
+            
             if (OnChanged != null) 
             {
                 OnChanged(this, EventArgs.Empty);

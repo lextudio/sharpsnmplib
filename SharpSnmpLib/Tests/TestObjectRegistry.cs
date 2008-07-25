@@ -19,6 +19,16 @@ namespace Lextm.SharpSnmpLib.Tests
     public class TestObjectRegistry
     {
         [Test]
+        public void TestValidateTable()
+        {
+            ObjectIdentifier table = new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 2, 2 });
+            ObjectIdentifier entry = new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 2, 2, 1 });
+            ObjectIdentifier unknown = new ObjectIdentifier(new uint[] { 1, 3, 6, 8, 18579, 111111});
+            Assert.IsTrue(ObjectRegistry.ValidateTable(table));
+            Assert.IsFalse(ObjectRegistry.ValidateTable(entry));
+            Assert.IsTrue(ObjectRegistry.ValidateTable(unknown));
+        }
+        [Test]
         public void TestGetTextualFrom()
         {
             uint[] oid = new uint[] {1};

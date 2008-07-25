@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Lextm.SharpSnmpLib.Mib;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
@@ -19,7 +20,7 @@ namespace Lextm.SharpSnmpLib
         private TrapListener trapListener;
         private VersionCode _version = VersionCode.V1;
         private int _timeout = 5000;
-        
+
         /// <summary>
         /// Creates a <see cref="Manager"></see> instance.
         /// </summary>
@@ -27,12 +28,12 @@ namespace Lextm.SharpSnmpLib
         {
             InitializeComponent();
         }
-        
+
         /// <summary>
         /// Occurs when a <see cref="TrapV1Message" /> is received.
         /// </summary>
         public event EventHandler<TrapV1ReceivedEventArgs> TrapReceived;
-        
+
         /// <summary>
         /// Default protocol version for operations.
         /// </summary>
@@ -43,13 +44,13 @@ namespace Lextm.SharpSnmpLib
             {
                 return _version;
             }
-            
+
             set
             {
                 _version = value;
             }
         }
-        
+
         /// <summary>
         /// Gets a list of variable binds.
         /// </summary>
@@ -64,13 +65,13 @@ namespace Lextm.SharpSnmpLib
             {
                 throw new ArgumentException("you can only use SNMP v1 or v2 in this version");
             }
-            
+
             using (GetRequestMessage message = new GetRequestMessage(version, agent, community, variables))
             {
                 return message.Send(_timeout);
             }
         }
-        
+
         /// <summary>
         /// Gets a variable bind.
         /// </summary>
@@ -83,7 +84,7 @@ namespace Lextm.SharpSnmpLib
         {
             return Get(version, agent, community, new List<Variable>() { variable })[0];
         }
-        
+
         /// <summary>
         /// Gets a variable bind.
         /// </summary>
@@ -95,7 +96,7 @@ namespace Lextm.SharpSnmpLib
         {
             return Get(_version, agent, community, variable);
         }
-        
+
         /// <summary>
         /// Gets a list of variable binds.
         /// </summary>
@@ -107,7 +108,7 @@ namespace Lextm.SharpSnmpLib
         {
             return Get(_version, agent, community, variables);
         }
-        
+
         /// <summary>
         /// Sets a list of variable binds.
         /// </summary>
@@ -122,7 +123,7 @@ namespace Lextm.SharpSnmpLib
             {
                 throw new ArgumentException("you can only use SNMP v1 or v2 in this version");
             }
-            
+
             using (SetRequestMessage message = new SetRequestMessage(version, agent, community, variables))
             {
                 message.Send(_timeout);
@@ -165,7 +166,7 @@ namespace Lextm.SharpSnmpLib
         {
             Set(_version, agent, community, variables);
         }
-        
+
         /// <summary>
         /// Gets a table of variables.
         /// </summary>
@@ -174,26 +175,27 @@ namespace Lextm.SharpSnmpLib
         /// <param name="community">Community name</param>
         /// <param name="table">Table OID</param>
         /// <returns></returns>
-        [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Return")]
+        [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Return", Justification = "ByDesign")]
         public Variable[,] GetTable(VersionCode version, IPAddress agent, string community, ObjectIdentifier table)
         {
             if (version == VersionCode.V2)
             {
                 throw new ArgumentException("only SNMP v1 or v2 is supported");
             }
-            
-            if (!Mib.ObjectRegistry.Instance.IsTableId(table.ToNumerical()))
+
+            bool canContinue = ObjectRegistry.ValidateTable(table);
+            if (!canContinue)
             {
                 throw new ArgumentException("not a table OID: " + table);
             }
-            
+
             IList<Variable> list = new List<Variable>();
             int rows = Walk(version, agent, community, table, list, _timeout);
             if (rows == 0)
             {
                 return new Variable[0, 0];
             }
-            
+
             int cols = list.Count / rows;
             int k = 0;
             Variable[,] result = new Variable[rows, cols];
@@ -205,7 +207,7 @@ namespace Lextm.SharpSnmpLib
                     k++;
                 }
             }
-            
+
             return result;
         }
         
@@ -232,13 +234,13 @@ namespace Lextm.SharpSnmpLib
                 {
                     continue;
                 }
-                
+
                 if (!seed.Id.ToString().StartsWith(table + ".1.", StringComparison.Ordinal))
                 {
                     // not in sub tree
                     break;
                 }
-                
+
                 list.Add(seed);
                 if (seed.Id.ToString().StartsWith(table + ".1.1.", StringComparison.Ordinal))
                 {
@@ -248,7 +250,7 @@ namespace Lextm.SharpSnmpLib
             while (HasNext(version, agent, community, seed, timeout, out next));
             return result;
         }
-        
+
         /// <summary>
         /// Gets a table of variables.
         /// </summary>
@@ -258,12 +260,12 @@ namespace Lextm.SharpSnmpLib
         /// <param name="table">Table OID</param>
         /// <returns></returns>
         [CLSCompliant(false)]
-        [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Return")]
+        [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Return", Justification = "ByDesign")]
         public Variable[,] GetTable(VersionCode version, IPAddress agent, string community, uint[] table)
         {
             return GetTable(version, agent, community, new ObjectIdentifier(table));
         }
-        
+
         /// <summary>
         /// Gets a table of variables.
         /// </summary>
@@ -271,12 +273,12 @@ namespace Lextm.SharpSnmpLib
         /// <param name="community">Community name</param>
         /// <param name="table">Table OID</param>
         /// <returns></returns>
-        [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Return")]
+        [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Return", Justification = "ByDesign")]
         public Variable[,] GetTable(IPAddress agent, string community, ObjectIdentifier table)
         {
             return GetTable(_version, agent, community, table);
         }
-        
+
         /// <summary>
         /// Gets a table of variables.
         /// </summary>
@@ -285,12 +287,12 @@ namespace Lextm.SharpSnmpLib
         /// <param name="table">Table OID</param>
         /// <returns></returns>
         [CLSCompliant(false)]
-        [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Return")]
+        [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Return", Justification = "ByDesign")]
         public Variable[,] GetTable(IPAddress agent, string community, uint[] table)
         {
             return GetTable(agent, community, new ObjectIdentifier(table));
         }
-        
+
         /// <summary>
         /// Starts trap listener.
         /// </summary>
@@ -298,7 +300,7 @@ namespace Lextm.SharpSnmpLib
         {
             trapListener.Start();
         }
-        
+
         /// <summary>
         /// Starts trap listener on a specific port.
         /// </summary>
@@ -307,7 +309,7 @@ namespace Lextm.SharpSnmpLib
         {
             trapListener.Start(port);
         }
-        
+
         /// <summary>
         /// Stops trap listener.
         /// </summary>
@@ -315,7 +317,7 @@ namespace Lextm.SharpSnmpLib
         {
             trapListener.Stop();
         }
-        
+
         /// <summary>
         /// Timeout value.
         /// </summary>
@@ -326,13 +328,13 @@ namespace Lextm.SharpSnmpLib
             {
                 return _timeout;
             }
-            
+
             set
             {
                 _timeout = value;
             }
         }
-        
+
         /// <summary>
         /// Returns a <see cref="String"/> that represents this <see cref="Manager"/>.
         /// </summary>
@@ -369,7 +371,7 @@ namespace Lextm.SharpSnmpLib
                 next = null;
                 result = false;
             }
-            
+
             return result;
         }
 

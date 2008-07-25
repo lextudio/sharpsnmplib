@@ -152,6 +152,7 @@ namespace Lextm.SharpSnmpLib.Mib
             ParsePendings();
             return _lexer.SymbolCount;
         }
+        
         /// <summary>
         /// Loaded MIB documents.
         /// </summary>

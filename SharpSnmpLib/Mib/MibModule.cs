@@ -40,7 +40,7 @@ namespace Lextm.SharpSnmpLib.Mib
             {
                 _imports = ParseDependents(lexer);
             }
-            else if (temp == Symbol.Exports) 
+            else if (temp == Symbol.Exports)
             {
                 _exports = ParseExports(lexer);
             }
@@ -78,13 +78,14 @@ namespace Lextm.SharpSnmpLib.Mib
                     buffer.Clear();
                     foreach (Symbol s in next)
                     {
-                        if (s == Symbol.End) 
+                        if (s == Symbol.End)
                         {
                             return;
                         }
                         
                         buffer.Add(s);
                     }
+                    
                     next.Clear();
                 }
             }
@@ -123,7 +124,7 @@ namespace Lextm.SharpSnmpLib.Mib
             {
                 tokens.Add(new NotificationGroup(module, buffer, lexer));
             }
-            else if (buffer[1] == Symbol.ModuleCompliance) 
+            else if (buffer[1] == Symbol.ModuleCompliance)
             {
                 tokens.Add(new ModuleCompliance(module, buffer, lexer));
             }
@@ -143,7 +144,7 @@ namespace Lextm.SharpSnmpLib.Mib
             {
                 tokens.Add(new TrapType(module, buffer, lexer));
             }
-            else if (buffer[1] == Symbol.AgentCapabilities) 
+            else if (buffer[1] == Symbol.AgentCapabilities)
             {
                 tokens.Add(new AgentCapabilities(module, buffer, lexer));
             }
@@ -160,16 +161,20 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             Symbol current;
             while ((current = lexer.NextSymbol) == Symbol.EOL)
-            { 
+            {
             }
             
-            if (current == Symbol.Sequence) 
+            if (current == Symbol.Sequence)
             {
                 return new Sequence(module, header[0].ToString(), lexer);
             }
-            else if (current == Symbol.Choice) 
+            else if (current == Symbol.Choice)
             {
                 return new Choice(module, header[0].ToString(), lexer);
+            }
+            else if (current == Symbol.Integer)
+            {
+                return new Integer(module, header[0].ToString(), lexer);
             }
             else if (current == Symbol.TextualConvention)
             {
@@ -224,7 +229,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 foreach (IConstruct e in _tokens)
                 {
                     ObjectType entity = e as ObjectType;
-                    if (entity != null) 
+                    if (entity != null)
                     {
                         result.Add(entity);
                     }
@@ -244,9 +249,9 @@ namespace Lextm.SharpSnmpLib.Mib
         
         internal static bool AllDependentsAvailable(MibModule module, IDictionary<string, MibModule> modules)
         {
-            foreach (string dependent in module.Dependents) 
+            foreach (string dependent in module.Dependents)
             {
-                if (!modules.ContainsKey(dependent)) 
+                if (!modules.ContainsKey(dependent))
                 {
                     return false;
                 }

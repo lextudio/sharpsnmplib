@@ -64,11 +64,11 @@ namespace Lextm.SharpSnmpLib.Tests
             MibDocument file = new MibDocument(lexer);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("RFC1271-MIB", file.Modules[0].Name);
-            Assert.AreEqual(6, file.Modules[0].Entities.Count);
-            IEntity node = file.Modules[0].Entities[0];
-            Assert.AreEqual("internet", node.Name);
-            Assert.AreEqual(1, node.Value);
-            Assert.AreEqual("dod", node.Parent.ToString());
+            Assert.AreEqual(213, file.Modules[0].Entities.Count);
+            IEntity node = file.Modules[0].Entities[212];
+            Assert.AreEqual("logDescription", node.Name);
+            Assert.AreEqual(4, node.Value);
+            Assert.AreEqual("logEntry", node.Parent.ToString());
         }
         [Test]
         public void TestRFC1213_MIB()
@@ -1403,8 +1403,8 @@ namespace Lextm.SharpSnmpLib.Tests
             MibDocument file = new MibDocument(lexer);
             Assert.AreEqual("BRIDGE-MIB", file.Modules[0].Name);
             Assert.AreEqual(4, file.Modules[0].Dependents.Count);
-            Assert.AreEqual(62, file.Modules[0].Entities.Count);
-            IEntity node = file.Modules[0].Entities[61];
+            Assert.AreEqual(61, file.Modules[0].Entities.Count);
+            IEntity node = file.Modules[0].Entities[60];
             Assert.AreEqual("dot1dStaticStatus", node.Name);
             Assert.AreEqual(4, node.Value);
             Assert.AreEqual("dot1dStaticEntry", node.Parent.ToString());
