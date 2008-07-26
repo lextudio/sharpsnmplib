@@ -375,6 +375,13 @@ namespace Lextm.SharpSnmpLib {
             }
         }
         
+        internal static byte[] RFC_1212 {
+            get {
+                object obj = ResourceManager.GetObject("RFC-1212", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         internal static byte[] RFC_1215 {
             get {
                 object obj = ResourceManager.GetObject("RFC-1215", resourceCulture);

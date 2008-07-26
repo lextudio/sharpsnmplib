@@ -143,6 +143,7 @@ namespace Lextm.SharpSnmpLib.Mib
             LoadFile(new StreamReader(new MemoryStream(Resource.UCD_SNMP_MIB_OLD)));
             LoadFile(new StreamReader(new MemoryStream(Resource.UDP_MIB)));
             
+            LoadFile(new StreamReader(new MemoryStream(Resource.RFC_1212)));
             LoadFile(new StreamReader(new MemoryStream(Resource.RFC_1215)));
             LoadFile(new StreamReader(new MemoryStream(Resource.RFC1155_SMI)));
             LoadFile(new StreamReader(new MemoryStream(Resource.RFC1213_MIB)));
@@ -339,7 +340,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// Loads MIB files.
         /// </summary>
         /// <param name="fileNames">File names.</param>
-        public void LoadFile(IEnumerable<string> fileNames)
+        public void LoadFiles(IEnumerable<string> fileNames)
         {
             foreach (string fileName in fileNames)
             {

@@ -34,12 +34,20 @@ namespace Browser
         private void RefreshPanel(object sender, EventArgs e)
         {
             ObjectRegistry reg = (ObjectRegistry)sender;
+            listView1.SuspendLayout();
             listView1.Items.Clear();
             foreach (string module in reg.Tree.LoadedModules)
             {
                 listView1.Items.Add(module);
             }
-            tslblCount.Text = "module count: " + listView1.Items.Count;
+            foreach (string pending in reg.Tree.PendingModules)
+            {
+                ListViewItem item = new ListViewItem(pending);
+                item.BackColor = Color.LightGray;
+                listView1.Items.Add(item);
+            }
+            listView1.ResumeLayout();
+            tslblCount.Text = "module count: " + reg.Tree.LoadedModules.Count + "; pending count: " + reg.Tree.PendingModules.Count;
         }
 
         private void actAdd_Execute(object sender, EventArgs e)

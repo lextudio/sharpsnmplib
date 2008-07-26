@@ -215,6 +215,7 @@
     <None Include="Resources\NOTIFICATION-LOG-MIB.txt" />
     <None Include="Resources\onevarbind.dat" />
     <None Include="Resources\README.mibs" />
+    <None Include="Resources\RFC-1212" />
     <None Include="Resources\RFC-1215.txt" />
     <None Include="Resources\RFC1155-SMI.txt" />
     <None Include="Resources\RFC1213-MIB.txt" />

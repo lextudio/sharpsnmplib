@@ -11,7 +11,7 @@ namespace Lextm.SharpSnmpLib.Mib
     internal sealed class ObjectTree : IObjectTree
     {
         private IDictionary<string, MibModule> _parsed = new SortedDictionary<string, MibModule>();
-        private IList<MibModule> _pending = new List<MibModule>();
+        private IDictionary<string, MibModule> _pendings = new Dictionary<string, MibModule>();
         private IDictionary<string, IDefinition> nameTable;
         private Definition root;
         private Lexer _lexer;
@@ -115,20 +115,26 @@ namespace Lextm.SharpSnmpLib.Mib
         private int ParsePendings()
         {
             int previous;
-            int current = _pending.Count;
+            int current = _pendings.Count;
             while (current != 0)
             {
                 previous = current;
-                for (int i = 0; i < _pending.Count; i++)
+                IList<string> parsed = new List<string>();
+                foreach (MibModule pending in _pendings.Values)
                 {
-                    bool succeeded = ParseModule(_pending[i]);
+                    bool succeeded = ParseModule(pending);
                     if (succeeded)
                     {
-                        _pending.RemoveAt(i);
+                        parsed.Add(pending.Name);
                     }
                 }
                 
-                current = _pending.Count;
+                foreach (string file in parsed)
+                {
+                    _pendings.Remove(file);
+                }
+                
+                current = _pendings.Count;
                 if (current == previous) 
                 {
                     // cannot parse more
@@ -146,7 +152,12 @@ namespace Lextm.SharpSnmpLib.Mib
             IList<MibModule> modules = doc.Modules;
             foreach (MibModule module in modules)
             {
-                _pending.Add(module);
+                if (_pendings.ContainsKey(module.Name)) 
+                {
+                    continue;
+                }
+                
+                _pendings.Add(module.Name, module);
             }
             
             ParsePendings();
@@ -154,13 +165,24 @@ namespace Lextm.SharpSnmpLib.Mib
         }
         
         /// <summary>
-        /// Loaded MIB documents.
+        /// Loaded MIB modules.
         /// </summary>
-        public IEnumerable<string> LoadedModules
+        public ICollection<string> LoadedModules
         {
             get
             {
                 return _parsed.Keys;
+            }
+        }
+        
+        /// <summary>
+        /// Pending MIB modules.
+        /// </summary>
+        public ICollection<string> PendingModules
+        {
+            get
+            {
+                return _pendings.Keys;
             }
         }
     }

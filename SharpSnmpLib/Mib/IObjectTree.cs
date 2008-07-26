@@ -12,16 +12,24 @@ namespace Lextm.SharpSnmpLib.Mib
     {
         /// <summary>
         /// Root definition.
-        /// </summary>        
+        /// </summary>
         IDefinition Root
         {
             get;
-        } 
+        }
         
         /// <summary>
-        /// Loaded MIB documents.
+        /// Loaded MIB modules.
         /// </summary>
-        IEnumerable<string> LoadedModules
+        ICollection<string> LoadedModules
+        {
+            get;
+        }
+        
+        /// <summary>
+        /// Pending MIB modules.
+        /// </summary>
+        ICollection<string> PendingModules
         {
             get;
         }

@@ -12,7 +12,7 @@ using System.Collections.Generic;
 namespace Lextm.SharpSnmpLib.Mib
 {
     /// <summary>
-    /// MIB file class.
+    /// MIB module class.
     /// </summary>
     internal sealed class MibModule
     {

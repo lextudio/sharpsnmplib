@@ -4,7 +4,7 @@ IMPORTS
         enterprises
                 FROM RFC1155-SMI
         OBJECT-TYPE
-                FROM RFC1212;
+                FROM RFC-1212;
 
 unix    OBJECT IDENTIFIER ::= { enterprises 4 }
 
