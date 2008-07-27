@@ -10,7 +10,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace Browser
+namespace Lextm.SharpSnmpLib.Browser
 {
 	/// <summary>
 	/// Class with program entry point.

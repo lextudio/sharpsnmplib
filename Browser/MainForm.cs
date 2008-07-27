@@ -14,7 +14,7 @@ using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 using Lextm.SharpSnmpLib;
 
-namespace Browser
+namespace Lextm.SharpSnmpLib.Browser
 {
 	/// <summary>
 	/// Description of MainForm.
@@ -23,21 +23,36 @@ namespace Browser
 	{
 		public MainForm()
 		{
-			//
-			// The InitializeComponent() call is required for Windows Forms designer support.
-			//
 			InitializeComponent();
-			
-			//
-			// TODO: Add constructor code after the InitializeComponent() call.
-			//
+
             OutputPanel output = new OutputPanel();
             output.Show(dockPanel1, DockState.DockBottom);
             MibTreePanel tree = new MibTreePanel();
             tree.Show(dockPanel1, DockState.Document);
             ModuleListPanel modules = new ModuleListPanel();
             modules.Show(dockPanel1, DockState.DockLeft);
-            SnmpProfile.Initiate(manager1, "public", "public", VersionCode.V1, tscbAgent.Text, output.ReportMessage);
+            
+            AgentProfile first = new AgentProfile("127.0.0.1", VersionCode.V1, "public", "public");
+            first.OnOperationCompleted += output.ReportMessage;
+            ProfileRegistry.AddProfile(first);
+            ProfileRegistry.Default = "127.0.0.1";
+
+            foreach (string name in ProfileRegistry.Names)
+            {
+                tscbAgent.Items.Add(name);
+            }
+            tscbAgent.SelectedIndex = 0;
 		}
+
+        private void actExit_Execute(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void actConfigure_Execute(object sender, EventArgs e)
+        {
+            AgentProfilePanel agent = new AgentProfilePanel();
+            agent.Show(dockPanel1, DockState.DockLeft);
+        }
     }
 }

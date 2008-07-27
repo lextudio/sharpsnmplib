@@ -14,7 +14,7 @@ using System.Windows.Forms;
 
 using WeifenLuo.WinFormsUI.Docking;
 
-namespace Browser
+namespace Lextm.SharpSnmpLib.Browser
 {
 	/// <summary>
 	/// Description of OutputPanel.

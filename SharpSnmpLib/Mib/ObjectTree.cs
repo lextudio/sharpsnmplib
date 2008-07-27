@@ -154,7 +154,7 @@ namespace Lextm.SharpSnmpLib.Mib
             {
                 if (_pendings.ContainsKey(module.Name)) 
                 {
-                    continue;
+                    _pendings.Remove(module.Name); // always add new module
                 }
                 
                 _pendings.Add(module.Name, module);

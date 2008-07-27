@@ -1,4 +1,4 @@
-﻿namespace Browser
+﻿namespace Lextm.SharpSnmpLib.Browser
 {
     partial class FormIndex
     {
@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.nudIndex = new System.Windows.Forms.NumericUpDown();
+            this.btnOK = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.nudIndex)).BeginInit();
             this.SuspendLayout();
             // 
@@ -55,11 +56,23 @@
             0,
             0});
             // 
+            // btnOK
+            // 
+            this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.btnOK.Location = new System.Drawing.Point(35, 46);
+            this.btnOK.Name = "btnOK";
+            this.btnOK.Size = new System.Drawing.Size(75, 23);
+            this.btnOK.TabIndex = 1;
+            this.btnOK.Text = "OK";
+            this.btnOK.UseVisualStyleBackColor = true;
+            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
+            // 
             // FormIndex
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(144, 44);
+            this.ClientSize = new System.Drawing.Size(149, 81);
+            this.Controls.Add(this.btnOK);
             this.Controls.Add(this.nudIndex);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
@@ -75,5 +88,6 @@
         #endregion
 
         private System.Windows.Forms.NumericUpDown nudIndex;
+        private System.Windows.Forms.Button btnOK;
     }
 }

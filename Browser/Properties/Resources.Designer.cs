@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Browser.Properties {
+namespace Lextm.SharpSnmpLib.Browser.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Browser.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Browser.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Lextm.SharpSnmpLib.Browser.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -67,9 +67,23 @@ namespace Browser.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap document_properties {
+            get {
+                object obj = ResourceManager.GetObject("document-properties", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap list_add {
             get {
-                object obj = ResourceManager.GetObject("list-add", resourceCulture);
+                object obj = ResourceManager.GetObject("list_add", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap list_remove {
+            get {
+                object obj = ResourceManager.GetObject("list-remove", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -77,6 +91,13 @@ namespace Browser.Properties {
         internal static System.Drawing.Bitmap package_x_generic {
             get {
                 object obj = ResourceManager.GetObject("package_x_generic", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap preferences_desktop_theme {
+            get {
+                object obj = ResourceManager.GetObject("preferences-desktop-theme", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -4,10 +4,11 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Browser</RootNamespace>
+    <RootNamespace>Lextm.SharpSnmpLib.Browser</RootNamespace>
     <AssemblyName>Browser</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SourceAnalysisOverrideSettingsFile>C:\Users\lextm\AppData\Roaming\ICSharpCode/SharpDevelop3.0\AddIns\MattEverson.SourceAnalysis\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <OutputPath>bin\Debug\</OutputPath>
@@ -41,11 +42,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AgentProfile.cs" />
+    <Compile Include="AgentProfilePanel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AgentProfilePanel.Designer.cs">
+      <DependentUpon>AgentProfilePanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormIndex.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormIndex.Designer.cs">
       <DependentUpon>FormIndex.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormProfile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormProfile.Designer.cs">
+      <DependentUpon>FormProfile.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -72,6 +86,7 @@
     <Compile Include="OutputPanel.Designer.cs">
       <DependentUpon>OutputPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="ProfileRegistry.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -79,9 +94,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="SnmpProfile.cs" />
+    <EmbeddedResource Include="AgentProfilePanel.resx">
+      <DependentUpon>AgentProfilePanel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormIndex.resx">
       <DependentUpon>FormIndex.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormProfile.resx">
+      <DependentUpon>FormProfile.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -130,5 +150,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\list-add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="changes.txt" />
+    <None Include="Resources\document-properties.png" />
+    <None Include="Resources\list-remove.png" />
+    <None Include="Resources\preferences-desktop-theme.png" />
   </ItemGroup>
 </Project>

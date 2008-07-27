@@ -6,7 +6,7 @@
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
-namespace Browser
+namespace Lextm.SharpSnmpLib.Browser
 {
 	partial class OutputPanel
 	{

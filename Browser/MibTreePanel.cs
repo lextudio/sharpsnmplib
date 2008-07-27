@@ -13,7 +13,7 @@ using System.Windows.Forms;
 using Lextm.SharpSnmpLib.Mib;
 using WeifenLuo.WinFormsUI.Docking;
 
-namespace Browser
+namespace Lextm.SharpSnmpLib.Browser
 {
     /// <summary>
     /// Description of MibTreePanel.
@@ -58,7 +58,7 @@ namespace Browser
         {
             try
             {
-                SnmpProfile.Instance.Get(GetTextualForm(treeView1.SelectedNode.Tag as IDefinition));
+                ProfileRegistry.DefaultProfile.Get(manager1, GetTextualForm(treeView1.SelectedNode.Tag as IDefinition));
             }
             catch (Exception ex)
             {
@@ -93,7 +93,7 @@ namespace Browser
         {
             try
             {
-                SnmpProfile.Instance.Set(GetTextualForm(treeView1.SelectedNode.Tag as IDefinition), null);
+                ProfileRegistry.DefaultProfile.Set(manager1, GetTextualForm(treeView1.SelectedNode.Tag as IDefinition), null);
             }
             catch (Exception ex)
             {
@@ -135,7 +135,7 @@ namespace Browser
         {
             try
             {
-                SnmpProfile.Instance.Walk(treeView1.SelectedNode.Tag as IDefinition);
+                ProfileRegistry.DefaultProfile.Walk(manager1, treeView1.SelectedNode.Tag as IDefinition);
             }
             catch (Exception ex)
             {

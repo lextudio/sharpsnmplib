@@ -13,7 +13,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 
-namespace Browser
+namespace Lextm.SharpSnmpLib.Browser
 {
     /// <summary>
     /// Description of ModuleListPanel.
@@ -34,20 +34,23 @@ namespace Browser
         private void RefreshPanel(object sender, EventArgs e)
         {
             ObjectRegistry reg = (ObjectRegistry)sender;
-            listView1.SuspendLayout();
+            SuspendLayout();
             listView1.Items.Clear();
             foreach (string module in reg.Tree.LoadedModules)
             {
-                listView1.Items.Add(module);
+                ListViewItem item = listView1.Items.Add(module);
+                item.Group = listView1.Groups["lvgLoaded"];
             }
             foreach (string pending in reg.Tree.PendingModules)
             {
-                ListViewItem item = new ListViewItem(pending);
+                ListViewItem item = listView1.Items.Add(pending);
                 item.BackColor = Color.LightGray;
-                listView1.Items.Add(item);
+                item.Group = listView1.Groups["lvgPending"];
             }
-            listView1.ResumeLayout();
-            tslblCount.Text = "module count: " + reg.Tree.LoadedModules.Count + "; pending count: " + reg.Tree.PendingModules.Count;
+            ResumeLayout();
+            listView1.Groups["lvgLoaded"].Header = string.Format("Loaded ({0})", reg.Tree.LoadedModules.Count);
+            listView1.Groups["lvgPending"].Header = string.Format("Pending ({0})", reg.Tree.PendingModules.Count);
+            tslblCount.Text = "loaded count: " + reg.Tree.LoadedModules.Count + "; pending count: " + reg.Tree.PendingModules.Count;
         }
 
         private void actAdd_Execute(object sender, EventArgs e)

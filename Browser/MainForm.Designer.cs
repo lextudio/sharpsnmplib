@@ -6,7 +6,7 @@
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
-namespace Browser
+namespace Lextm.SharpSnmpLib.Browser
 {
 	partial class MainForm
 	{
@@ -43,12 +43,13 @@ namespace Browser
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.tscbAgent = new System.Windows.Forms.ToolStripComboBox();
+            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.manager1 = new Lextm.SharpSnmpLib.Manager();
             this.actionList1 = new Crad.Windows.Forms.Actions.ActionList();
             this.actExit = new Crad.Windows.Forms.Actions.Action();
+            this.actConfigure = new Crad.Windows.Forms.Actions.Action();
             this.toolStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.actionList1)).BeginInit();
@@ -71,7 +72,8 @@ namespace Browser
             this.toolStripButton1,
             this.toolStripSeparator1,
             this.toolStripLabel1,
-            this.tscbAgent});
+            this.tscbAgent,
+            this.toolStripButton2});
             this.toolStrip1.Location = new System.Drawing.Point(0, 25);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(493, 25);
@@ -105,7 +107,16 @@ namespace Browser
             this.tscbAgent.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.tscbAgent.Name = "tscbAgent";
             this.tscbAgent.Size = new System.Drawing.Size(121, 25);
-            this.tscbAgent.Text = "127.0.0.1";
+            // 
+            // toolStripButton2
+            // 
+            this.actionList1.SetAction(this.toolStripButton2, this.actConfigure);
+            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton2.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.preferences_desktop_theme;
+            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton2.Name = "toolStripButton2";
+            this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton2.Text = "Configure";
             // 
             // menuStrip1
             // 
@@ -133,14 +144,10 @@ namespace Browser
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(96, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             // 
-            // manager1
-            // 
-            this.manager1.DefaultVersion = Lextm.SharpSnmpLib.VersionCode.V1;
-            this.manager1.Timeout = 5000;
-            // 
             // actionList1
             // 
             this.actionList1.Actions.Add(this.actExit);
+            this.actionList1.Actions.Add(this.actConfigure);
             this.actionList1.ContainerControl = this;
             // 
             // actExit
@@ -148,6 +155,14 @@ namespace Browser
             this.actExit.Image = ((System.Drawing.Image)(resources.GetObject("actExit.Image")));
             this.actExit.Text = "E&xit";
             this.actExit.ToolTipText = "Exit Browser";
+            this.actExit.Execute += new System.EventHandler(this.actExit_Execute);
+            // 
+            // actConfigure
+            // 
+            this.actConfigure.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.preferences_desktop_theme;
+            this.actConfigure.Text = "Configure";
+            this.actConfigure.ToolTipText = "Configure Agents";
+            this.actConfigure.Execute += new System.EventHandler(this.actConfigure_Execute);
             // 
             // MainForm
             // 
@@ -174,12 +189,13 @@ namespace Browser
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private Lextm.SharpSnmpLib.Manager manager1;
         private Crad.Windows.Forms.Actions.ActionList actionList1;
         private Crad.Windows.Forms.Actions.Action actExit;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.ToolStripComboBox tscbAgent;
+        private Crad.Windows.Forms.Actions.Action actConfigure;
+        private System.Windows.Forms.ToolStripButton toolStripButton2;
 	}
 }

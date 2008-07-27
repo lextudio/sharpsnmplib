@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Browser
+namespace Lextm.SharpSnmpLib.Browser
 {
     partial class FormIndex : Form
     {
@@ -22,6 +22,11 @@ namespace Browser
             {
                 return (int)nudIndex.Value;
             }
+        }
+
+        private void btnOK_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

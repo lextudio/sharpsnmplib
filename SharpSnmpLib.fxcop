@@ -21,6 +21,7 @@
   <IgnoreGeneratedCode>False</IgnoreGeneratedCode>
  </ProjectOptions>
  <Targets>
+  <Target Name="$(ProjectDir)/Browser/bin/Debug/Browser.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/SharpSnmpLib/bin/Debug/SharpSnmpLib.dll" Analyze="True" AnalyzeAllChildren="True" />
  </Targets>
  <Rules>
@@ -261,6 +262,33 @@
               <Issue>
                <Item>'name'</Item>
                <Item>'Choice.Choice(string, string, Lexer)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="Integer">
+          <Members>
+           <Member Name="#.ctor(System.String,System.String,Lextm.SharpSnmpLib.Mib.Lexer)">
+            <Messages>
+             <Message Id="temp" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Created="2008-07-26 03:56:41Z">
+              <Issue>
+               <Item>'Integer.Integer(string, string, Lexer)'</Item>
+               <Item>'temp'</Item>
+               <Item>'Symbol'</Item>
+              </Issue>
+             </Message>
+             <Message Id="module" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2008-07-26 03:56:41Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'module'</Item>
+               <Item>'Integer.Integer(string, string, Lexer)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="name" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2008-07-26 03:56:41Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'name'</Item>
+               <Item>'Integer.Integer(string, string, Lexer)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -626,6 +654,20 @@
               <Notes>
                <User Name="lextm">
                 <Note Id="0" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#TestBridge()">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-07-26 03:56:41Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'TestMibDocument.TestBridge()'</Item>
+              </Issue>
+              <Notes>
+               <User Name="lextm">
+                <Note Id="1" />
                </User>
               </Notes>
              </Message>
@@ -2505,6 +2547,102 @@
              </Message>
             </Messages>
            </Member>
+           <Member Name="#TestRFC1213_MIB2()">
+            <Messages>
+             <Message Id="MIB" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-07-26 03:56:41Z">
+              <Issue Name="Member">
+               <Item>MIB</Item>
+               <Item>'TestMibDocument.TestRFC1213_MIB2()'</Item>
+               <Item>Mib</Item>
+              </Issue>
+              <Notes>
+               <User Name="lextm">
+                <Note Id="1" />
+               </User>
+              </Notes>
+             </Message>
+             <Message Id="RFC" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-07-26 03:56:41Z">
+              <Issue Name="Member">
+               <Item>RFC</Item>
+               <Item>'TestMibDocument.TestRFC1213_MIB2()'</Item>
+               <Item>Rfc</Item>
+              </Issue>
+              <Notes>
+               <User Name="lextm">
+                <Note Id="1" />
+               </User>
+              </Notes>
+             </Message>
+             <Message TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Excluded" Created="2008-07-26 03:56:41Z">
+              <Issue Name="Member">
+               <Item>'TestMibDocument.TestRFC1213_MIB2()'</Item>
+              </Issue>
+              <Notes>
+               <User Name="lextm">
+                <Note Id="1" />
+               </User>
+              </Notes>
+             </Message>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-07-26 03:56:41Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'TestMibDocument.TestRFC1213_MIB2()'</Item>
+              </Issue>
+              <Notes>
+               <User Name="lextm">
+                <Note Id="1" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#TestRFC1271_MIB()">
+            <Messages>
+             <Message Id="MIB" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-07-26 03:56:41Z">
+              <Issue Name="Member">
+               <Item>MIB</Item>
+               <Item>'TestMibDocument.TestRFC1271_MIB()'</Item>
+               <Item>Mib</Item>
+              </Issue>
+              <Notes>
+               <User Name="lextm">
+                <Note Id="1" />
+               </User>
+              </Notes>
+             </Message>
+             <Message Id="RFC" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-07-26 03:56:41Z">
+              <Issue Name="Member">
+               <Item>RFC</Item>
+               <Item>'TestMibDocument.TestRFC1271_MIB()'</Item>
+               <Item>Rfc</Item>
+              </Issue>
+              <Notes>
+               <User Name="lextm">
+                <Note Id="1" />
+               </User>
+              </Notes>
+             </Message>
+             <Message TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Excluded" Created="2008-07-26 03:56:41Z">
+              <Issue Name="Member">
+               <Item>'TestMibDocument.TestRFC1271_MIB()'</Item>
+              </Issue>
+              <Notes>
+               <User Name="lextm">
+                <Note Id="1" />
+               </User>
+              </Notes>
+             </Message>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-07-26 03:56:41Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'TestMibDocument.TestRFC1271_MIB()'</Item>
+              </Issue>
+              <Notes>
+               <User Name="lextm">
+                <Note Id="1" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="#TestRMON_MIB()">
             <Messages>
              <Message Id="MIB" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-07-13 05:10:02Z">
@@ -4339,6 +4477,20 @@
              </Message>
             </Messages>
            </Member>
+           <Member Name="#TestValidateTable()">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-07-26 03:56:41Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'TestObjectRegistry.TestValidateTable()'</Item>
+              </Issue>
+              <Notes>
+               <User Name="lextm">
+                <Note Id="1" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="#TestZeroDotZero()">
             <Messages>
              <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-07-13 05:10:02Z" FixCategory="DependsOnFix">
@@ -4713,6 +4865,7 @@
   <Notes>
    <User Name="lextm">
     <Note Id="0" Modified="2008-07-13 05:11:02Z">test</Note>
+    <Note Id="1" Modified="2008-07-26 03:57:23Z">test</Note>
    </User>
   </Notes>
   <Rules>
