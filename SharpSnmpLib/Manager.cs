@@ -178,7 +178,7 @@ namespace Lextm.SharpSnmpLib
         [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Return", Justification = "ByDesign")]
         public Variable[,] GetTable(VersionCode version, IPAddress agent, string community, ObjectIdentifier table)
         {
-            if (version == VersionCode.V2)
+            if (version == VersionCode.V3)
             {
                 throw new ArgumentException("only SNMP v1 or v2 is supported");
             }
