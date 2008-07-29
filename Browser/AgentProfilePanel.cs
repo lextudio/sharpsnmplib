@@ -84,7 +84,8 @@ namespace Lextm.SharpSnmpLib.Browser
             {
                 if (editor.ShowDialog() == DialogResult.OK)
                 {
-                    profile.Update(editor.IP, editor.VersionCode, editor.GetCommunity, editor.SetCommunity);
+                    ProfileRegistry.DeleteProfile(listView1.SelectedItems[0].Text);
+                    ProfileRegistry.AddProfile(new AgentProfile(editor.IP, editor.VersionCode, editor.GetCommunity, editor.SetCommunity));
                 }
             }
         }

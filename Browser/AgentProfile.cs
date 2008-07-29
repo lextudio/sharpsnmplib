@@ -33,6 +33,16 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             get { return _version; }
         }
+
+        internal string GetCommunity
+        {
+            get { return _get; }
+        }
+
+        internal string SetCommunity
+        {
+            get { return _set; }
+        }
 	
 	    internal event ReportMessage OnOperationCompleted;
 	
@@ -58,18 +68,23 @@ namespace Lextm.SharpSnmpLib.Browser
 	
 	    private IPAddress ValidateIP()
 	    {
-	        IPAddress ip;
-	        bool succeeded = IPAddress.TryParse(_ip, out ip);
+            IPAddress ip;
+            bool succeeded = IsValidIPAddress(_ip, out ip);
 	        if (!succeeded)
 	        {
 	            throw new MibBrowserException("Invalid IP address: " + _ip);
 	        }
 	        return ip;
 	    }
+
+        internal static bool IsValidIPAddress(string address, out IPAddress ip)
+        {
+            return IPAddress.TryParse(address, out ip);
+        }
 	
 	    internal void Walk(Manager manager, IDefinition def)
 	    {
 	        IPAddress ip = ValidateIP();
 	    }
-	}
+    }
 }
