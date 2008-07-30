@@ -15,9 +15,9 @@ namespace TestMib
             //new TestMibDocument().TestINET_ADDRESS_MIB();
             //new TestMibDocument().TestNet_Snmp_Examples_MIB();
             //new TestMibDocument().TestSNMPv2_SMI();            
-            new TestMibDocument().TestRFC1271_MIB();
             TestObjectRegistry test = new TestObjectRegistry();
             test.TestZeroDotZero();//TestSNMPv2MIBNumerical();
+            Console.Read();
         }
     }
 }

@@ -4,7 +4,8 @@ using System.Text;
 
 namespace Lextm.SharpSnmpLib.Browser
 {
-    class MibBrowserException : Exception
+    [Serializable]
+    public class MibBrowserException : Exception
     {
         public MibBrowserException(string message) : base(message) { }
     }

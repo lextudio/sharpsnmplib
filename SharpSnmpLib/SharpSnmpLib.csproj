@@ -162,6 +162,7 @@
     <Compile Include="TrapV2ReceivedEventArgs.cs" />
     <Compile Include="Variable.cs" />
     <Compile Include="VersionCode.cs" />
+    <Compile Include="WalkMode.cs" />
     <None Include="license.txt" />
     <None Include="Microsoft.VersionNumber.targets" />
     <None Include="Resources\AGENTX-MIB.txt" />

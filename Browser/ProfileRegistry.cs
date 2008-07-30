@@ -7,12 +7,13 @@ using System.Net;
 
 namespace Lextm.SharpSnmpLib.Browser
 {
-	internal class ProfileRegistry
+	internal static class ProfileRegistry
 	{
-	    private static string _default;
+	    private static IPAddress _default;
 	    private static AgentProfile _defaultProfile;
+	    private static string _defaultString;
 	    
-	    internal static AgentProfile GetProfile(string ip)
+	    internal static AgentProfile GetProfile(IPAddress ip)
 	    {
 	        if (profiles.ContainsKey(ip)) 
 	        {
@@ -21,7 +22,7 @@ namespace Lextm.SharpSnmpLib.Browser
 	        return null;
 	    }
 
-        internal static IEnumerable<string> Names
+        internal static IEnumerable<IPAddress> Names
         {
             get { return profiles.Keys; }
         }
@@ -36,7 +37,12 @@ namespace Lextm.SharpSnmpLib.Browser
 	        get { return _defaultProfile; }
 	    }
 	    
-	    internal static string Default
+	    internal static string DefaultString
+	    {
+	        get { return _defaultString; }
+	    }
+	    
+	    internal static IPAddress Default
 	    {
 	        get { return _default; }
 	        set 
@@ -45,18 +51,15 @@ namespace Lextm.SharpSnmpLib.Browser
 	            {
 	                throw new ArgumentNullException("value");
 	            }
-	            if (value.Length == 0) 
-	            {
-	                throw new ArgumentException("value cannot be empty", "value");
-	            }
 	            _defaultProfile = GetProfile(value);
 	            _default = value;
+	            _defaultString = value.ToString();
 	        }
 	    }
 	    
 	    internal static void AddProfile(AgentProfile profile)
 	    {
-	        if (profiles.ContainsKey(profile.IP)) 
+	        if (profiles.ContainsKey(profile.IP))
 	        {
 	            profiles.Remove(profile.IP);
 	        }
@@ -64,9 +67,9 @@ namespace Lextm.SharpSnmpLib.Browser
 	        profiles.Add(profile.IP, profile);
 	    }
 	    
-	    private static IDictionary<string, AgentProfile> profiles = new Dictionary<string, AgentProfile>();
+	    private static IDictionary<IPAddress, AgentProfile> profiles = new Dictionary<IPAddress, AgentProfile>();
 
-        internal static void DeleteProfile(string profile)
+        internal static void DeleteProfile(IPAddress profile)
         {
             if (profiles.ContainsKey(profile))
             {

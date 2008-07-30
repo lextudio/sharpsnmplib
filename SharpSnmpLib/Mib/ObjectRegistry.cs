@@ -65,87 +65,79 @@ namespace Lextm.SharpSnmpLib.Mib
         
         private void LoadDefaultDocuments()
         {
+            // SMI v1
             LoadFile(new StreamReader(new MemoryStream(Resource.SNMPv2_SMI)));
             LoadFile(new StreamReader(new MemoryStream(Resource.SNMPv2_CONF)));
             LoadFile(new StreamReader(new MemoryStream(Resource.SNMPv2_TC)));
             LoadFile(new StreamReader(new MemoryStream(Resource.SNMPv2_MIB)));
             LoadFile(new StreamReader(new MemoryStream(Resource.SNMPv2_TM)));
-            
+            LoadFile(new StreamReader(new MemoryStream(Resource.HCNUM_TC)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.IANA_ADDRESS_FAMILY_NUMBERS_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.IANA_LANGUAGE_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.IANA_RTPROTO_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.IANAifType_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.IF_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.EtherLike_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.HOST_RESOURCES_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.HOST_RESOURCES_TYPES)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.IF_INVERTED_STACK_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.INET_ADDRESS_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.IP_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.IP_FORWARD_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.IPV6_FLOW_LABEL_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.IPV6_TC)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.IPV6_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.IPV6_ICMP_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.IPV6_TCP_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.IPV6_UDP_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.NET_SNMP_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.NET_SNMP_MONITOR_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.NET_SNMP_TC)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.NET_SNMP_SYSTEM_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.RMON_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.SNMP_FRAMEWORK_MIB)));
             LoadFile(new StreamReader(new MemoryStream(Resource.AGENTX_MIB)));
-            
-            LoadFile(new StreamReader(new MemoryStream(Resource.DISMAN_EVENT_MIB)));
             LoadFile(new StreamReader(new MemoryStream(Resource.DISMAN_EXPRESSION_MIB)));
             LoadFile(new StreamReader(new MemoryStream(Resource.DISMAN_NSLOOKUP_MIB)));
             LoadFile(new StreamReader(new MemoryStream(Resource.DISMAN_PING_MIB)));
             LoadFile(new StreamReader(new MemoryStream(Resource.DISMAN_SCHEDULE_MIB)));
             LoadFile(new StreamReader(new MemoryStream(Resource.DISMAN_SCRIPT_MIB)));
             LoadFile(new StreamReader(new MemoryStream(Resource.DISMAN_TRACEROUTE_MIB)));
-            
-            LoadFile(new StreamReader(new MemoryStream(Resource.EtherLike_MIB)));
-            LoadFile(new StreamReader(new MemoryStream(Resource.HCNUM_TC)));
-            LoadFile(new StreamReader(new MemoryStream(Resource.HOST_RESOURCES_MIB)));
-            LoadFile(new StreamReader(new MemoryStream(Resource.HOST_RESOURCES_TYPES)));
-            
-            LoadFile(new StreamReader(new MemoryStream(Resource.IANA_ADDRESS_FAMILY_NUMBERS_MIB)));
-            LoadFile(new StreamReader(new MemoryStream(Resource.IANA_LANGUAGE_MIB)));
-            LoadFile(new StreamReader(new MemoryStream(Resource.IANA_RTPROTO_MIB)));
-            LoadFile(new StreamReader(new MemoryStream(Resource.IANAifType_MIB)));
-            
-            LoadFile(new StreamReader(new MemoryStream(Resource.IF_INVERTED_STACK_MIB)));
-            LoadFile(new StreamReader(new MemoryStream(Resource.IF_MIB)));
-            LoadFile(new StreamReader(new MemoryStream(Resource.INET_ADDRESS_MIB)));
-            LoadFile(new StreamReader(new MemoryStream(Resource.IP_FORWARD_MIB)));
-            LoadFile(new StreamReader(new MemoryStream(Resource.IP_MIB)));
-            LoadFile(new StreamReader(new MemoryStream(Resource.IPV6_FLOW_LABEL_MIB)));
-            LoadFile(new StreamReader(new MemoryStream(Resource.IPV6_ICMP_MIB)));
-            LoadFile(new StreamReader(new MemoryStream(Resource.IPV6_MIB)));
-            LoadFile(new StreamReader(new MemoryStream(Resource.IPV6_TC)));
-            LoadFile(new StreamReader(new MemoryStream(Resource.IPV6_TCP_MIB)));
-            LoadFile(new StreamReader(new MemoryStream(Resource.IPV6_UDP_MIB)));
-            
-            LoadFile(new StreamReader(new MemoryStream(Resource.LM_SENSORS_MIB)));
-            LoadFile(new StreamReader(new MemoryStream(Resource.MTA_MIB)));
-            
-            LoadFile(new StreamReader(new MemoryStream(Resource.NET_SNMP_AGENT_MIB)));
             LoadFile(new StreamReader(new MemoryStream(Resource.NET_SNMP_EXAMPLES_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.NET_SNMP_AGENT_MIB)));
             LoadFile(new StreamReader(new MemoryStream(Resource.NET_SNMP_EXTEND_MIB)));
-            LoadFile(new StreamReader(new MemoryStream(Resource.NET_SNMP_MIB)));
-            LoadFile(new StreamReader(new MemoryStream(Resource.NET_SNMP_MONITOR_MIB)));
-            LoadFile(new StreamReader(new MemoryStream(Resource.NET_SNMP_SYSTEM_MIB)));
-            LoadFile(new StreamReader(new MemoryStream(Resource.NET_SNMP_TC)));
-            LoadFile(new StreamReader(new MemoryStream(Resource.NET_SNMP_VACM_MIB)));
-            
             LoadFile(new StreamReader(new MemoryStream(Resource.NETWORK_SERVICES_MIB)));
             LoadFile(new StreamReader(new MemoryStream(Resource.NOTIFICATION_LOG_MIB)));
-            
-            LoadFile(new StreamReader(new MemoryStream(Resource.RMON_MIB)));
-            LoadFile(new StreamReader(new MemoryStream(Resource.SMUX_MIB)));
-            LoadFile(new StreamReader(new MemoryStream(Resource.SNMP_COMMUNITY_MIB)));
-            LoadFile(new StreamReader(new MemoryStream(Resource.SNMP_FRAMEWORK_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.MTA_MIB)));
             LoadFile(new StreamReader(new MemoryStream(Resource.SNMP_MPD_MIB)));
-            LoadFile(new StreamReader(new MemoryStream(Resource.SNMP_NOTIFICATION_MIB)));
-            LoadFile(new StreamReader(new MemoryStream(Resource.SNMP_PROXY_MIB)));
             LoadFile(new StreamReader(new MemoryStream(Resource.SNMP_TARGET_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.SNMP_PROXY_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.SNMP_COMMUNITY_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.DISMAN_EVENT_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.SNMP_NOTIFICATION_MIB)));
             LoadFile(new StreamReader(new MemoryStream(Resource.SNMP_USER_BASED_SM_MIB)));
             LoadFile(new StreamReader(new MemoryStream(Resource.SNMP_USM_AES_MIB)));
             LoadFile(new StreamReader(new MemoryStream(Resource.SNMP_USM_DH_OBJECTS_MIB)));
             LoadFile(new StreamReader(new MemoryStream(Resource.SNMP_VIEW_BASED_ACM_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.NET_SNMP_VACM_MIB)));
             LoadFile(new StreamReader(new MemoryStream(Resource.TCP_MIB)));
             LoadFile(new StreamReader(new MemoryStream(Resource.TRANSPORT_ADDRESS_MIB)));
             LoadFile(new StreamReader(new MemoryStream(Resource.TUNNEL_MIB)));
-            
-            LoadFile(new StreamReader(new MemoryStream(Resource.UCD_DEMO_MIB)));
-            LoadFile(new StreamReader(new MemoryStream(Resource.UCD_DISKIO_MIB)));
-            LoadFile(new StreamReader(new MemoryStream(Resource.UCD_DLMOD_MIB)));
-            LoadFile(new StreamReader(new MemoryStream(Resource.UCD_IPFILTER_MIB)));
-            LoadFile(new StreamReader(new MemoryStream(Resource.UCD_IPFWACC_MIB)));
             LoadFile(new StreamReader(new MemoryStream(Resource.UCD_SNMP_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.UCD_IPFWACC_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.UCD_IPFILTER_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.UCD_DLMOD_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.UCD_DISKIO_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.LM_SENSORS_MIB)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.UCD_DEMO_MIB)));
             LoadFile(new StreamReader(new MemoryStream(Resource.UCD_SNMP_MIB_OLD)));
             LoadFile(new StreamReader(new MemoryStream(Resource.UDP_MIB)));
             
-            LoadFile(new StreamReader(new MemoryStream(Resource.RFC_1212)));
+            // SMI v1
             LoadFile(new StreamReader(new MemoryStream(Resource.RFC_1215)));
             LoadFile(new StreamReader(new MemoryStream(Resource.RFC1155_SMI)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.RFC_1212)));
+            LoadFile(new StreamReader(new MemoryStream(Resource.SMUX_MIB)));
             LoadFile(new StreamReader(new MemoryStream(Resource.RFC1213_MIB)));
         }
         

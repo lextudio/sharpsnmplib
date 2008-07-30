@@ -14,9 +14,9 @@ namespace Lextm.SharpSnmpLib.Browser
 	    private string _get;
 	    private string _set;
 	    private VersionCode _version;
-	    private string _ip;
+	    private IPAddress _ip;
 	
-	    internal AgentProfile(string ip, VersionCode version, string getCommunity, string setCommunity)
+	    internal AgentProfile(IPAddress ip, VersionCode version, string getCommunity, string setCommunity)
 	    {
 	        _get = getCommunity;
 	        _set = setCommunity;
@@ -24,7 +24,7 @@ namespace Lextm.SharpSnmpLib.Browser
 	        _ip = ip;
 	    }
 	    
-	    internal string IP
+	    internal IPAddress IP
 	    {
 	        get { return _ip; }
 	    }
@@ -48,8 +48,7 @@ namespace Lextm.SharpSnmpLib.Browser
 	
 	    internal void Get(Manager manager, string textual)
 	    {
-	        IPAddress ip = ValidateIP();
-	        Report(manager.Get(ip, _get, new Variable(textual)));
+	        Report(manager.Get(_ip, _get, new Variable(textual)));
 	    }
 	
 	    private void Report(Variable variable)
@@ -62,20 +61,19 @@ namespace Lextm.SharpSnmpLib.Browser
 	
 	    internal void Set(Manager manager, string textual, ISnmpData data)
 	    {
-	        IPAddress ip = ValidateIP();
-	        manager.Set(ip, _get, new Variable(textual, data));
+	        manager.Set(_ip, _get, new Variable(textual, data));
 	    }
 	
-	    private IPAddress ValidateIP()
-	    {
-            IPAddress ip;
-            bool succeeded = IsValidIPAddress(_ip, out ip);
-	        if (!succeeded)
-	        {
-	            throw new MibBrowserException("Invalid IP address: " + _ip);
-	        }
-	        return ip;
-	    }
+	    // private IPAddress ValidateIP()
+	    // {
+            // IPAddress ip;
+            // bool succeeded = IsValidIPAddress(_ip, out ip);
+	        // if (!succeeded)
+	        // {
+	            // throw new MibBrowserException("Invalid IP address: " + _ip);
+	        // }
+	        // return ip;
+	    // }
 
         internal static bool IsValidIPAddress(string address, out IPAddress ip)
         {
@@ -84,7 +82,6 @@ namespace Lextm.SharpSnmpLib.Browser
 	
 	    internal void Walk(Manager manager, IDefinition def)
 	    {
-	        IPAddress ip = ValidateIP();
 	    }
     }
 }

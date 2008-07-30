@@ -126,6 +126,8 @@ namespace Lextm.SharpSnmpLib.Mib
                     if (succeeded)
                     {
                         parsed.Add(pending.Name);
+                        
+                        // Console.WriteLine("LoadFile(new StreamReader(new MemoryStream(Resource." + pending.Name + ")));");
                     }
                 }
                 

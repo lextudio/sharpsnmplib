@@ -190,7 +190,7 @@ namespace Lextm.SharpSnmpLib
             }
 
             IList<Variable> list = new List<Variable>();
-            int rows = Walk(version, agent, community, table, list, _timeout);
+            int rows = Walk(version, agent, community, table, list, _timeout, WalkMode.WithinSubtree);
             if (rows == 0)
             {
                 return new Variable[0, 0];
@@ -214,14 +214,15 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Walks.
         /// </summary>
-        /// <param name="version">Protocol version</param>
-        /// <param name="agent">Agent address</param>
-        /// <param name="community">Community name</param>
-        /// <param name="table">OID</param>
-        /// <param name="list">A list to hold the results</param>
-        /// <param name="timeout">Timeout</param>
+        /// <param name="version">Protocol version.</param>
+        /// <param name="agent">Agent address.</param>
+        /// <param name="community">Community name.</param>
+        /// <param name="table">OID.</param>
+        /// <param name="list">A list to hold the results.</param>
+        /// <param name="timeout">Timeout.</param>
+        /// <param name="mode">Walk mode.</param>
         /// <returns>Returns row count if the OID is a table. Otherwise this value is meaningless.</returns>
-        public static int Walk(VersionCode version, IPAddress agent, string community, ObjectIdentifier table, IList<Variable> list, int timeout)
+        public static int Walk(VersionCode version, IPAddress agent, string community, ObjectIdentifier table, IList<Variable> list, int timeout, WalkMode mode)
         {
             int result = 0;
             Variable tableV = new Variable(table);
@@ -235,7 +236,7 @@ namespace Lextm.SharpSnmpLib
                     continue;
                 }
 
-                if (!seed.Id.ToString().StartsWith(table + ".1.", StringComparison.Ordinal))
+                if (mode == WalkMode.WithinSubtree && !seed.Id.ToString().StartsWith(table + ".1.", StringComparison.Ordinal))
                 {
                     // not in sub tree
                     break;

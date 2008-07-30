@@ -10,9 +10,11 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Net;
 using System.Windows.Forms;
-using WeifenLuo.WinFormsUI.Docking;
+
 using Lextm.SharpSnmpLib;
+using WeifenLuo.WinFormsUI.Docking;
 
 namespace Lextm.SharpSnmpLib.Browser
 {
@@ -32,14 +34,15 @@ namespace Lextm.SharpSnmpLib.Browser
             ModuleListPanel modules = new ModuleListPanel();
             modules.Show(dockPanel1, DockState.DockLeft);
             
-            AgentProfile first = new AgentProfile("127.0.0.1", VersionCode.V1, "public", "public");
+            IPAddress def = IPAddress.Parse("127.0.0.1");
+            AgentProfile first = new AgentProfile(def, VersionCode.V1, "public", "public");
             first.OnOperationCompleted += output.ReportMessage;
             ProfileRegistry.AddProfile(first);
-            ProfileRegistry.Default = "127.0.0.1";
+            ProfileRegistry.Default = def;
 
-            foreach (string name in ProfileRegistry.Names)
+            foreach (IPAddress name in ProfileRegistry.Names)
             {
-                tscbAgent.Items.Add(name);
+                tscbAgent.Items.Add(name.ToString());
             }
             tscbAgent.SelectedIndex = 0;
 		}

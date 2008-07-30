@@ -41,6 +41,201 @@
  </Rules>
  <FxCopReport Version="1.36">
   <Targets>
+   <Target Name="$(ProjectDir)/Browser/bin/Debug/Browser.exe">
+    <Modules>
+     <Module Name="browser.exe">
+      <Messages>
+       <Message TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210" Created="2008-07-29 12:26:48Z">
+        <Issue Name="NoStrongName">
+         <Item>'Browser.exe'</Item>
+        </Issue>
+       </Message>
+      </Messages>
+      <Namespaces>
+       <Namespace Name="Lextm.SharpSnmpLib.Browser">
+        <Types>
+         <Type Name="AgentProfile">
+          <Members>
+           <Member Name="#Walk(Lextm.SharpSnmpLib.Manager,Lextm.SharpSnmpLib.Mib.IDefinition)">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-07-30 11:33:36Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'AgentProfile.Walk(Manager, IDefinition)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="def" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2008-07-29 12:26:48Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'def'</Item>
+               <Item>'AgentProfile.Walk(Manager, IDefinition)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="manager" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2008-07-29 12:26:48Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'manager'</Item>
+               <Item>'AgentProfile.Walk(Manager, IDefinition)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="MibBrowserException">
+          <Messages>
+           <Message TypeName="ImplementStandardExceptionConstructors" Category="Microsoft.Design" CheckId="CA1032" Created="2008-07-29 12:26:48Z">
+            <Issue Name="MissingConstructor">
+             <Item>'MibBrowserException'</Item>
+             <Item>protected MibBrowserException(SerializationInfo, StreamingContext)</Item>
+            </Issue>
+            <Issue Name="MissingConstructor">
+             <Item>'MibBrowserException'</Item>
+             <Item>public MibBrowserException()</Item>
+            </Issue>
+            <Issue Name="MissingConstructor">
+             <Item>'MibBrowserException'</Item>
+             <Item>public MibBrowserException(String, Exception)</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="MibTreePanel">
+          <Members>
+           <Member Name="#actGet_Execute(System.Object,System.EventArgs)">
+            <Messages>
+             <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Created="2008-07-29 12:26:48Z">
+              <Issue>
+               <Item>'MibTreePanel.actGet_Execute(object, EventArgs)'</Item>
+               <Item>'Exception'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Created="2008-07-29 12:26:48Z">
+              <Issue>
+               <Item>'MibTreePanel.actGet_Execute(object, EventArgs)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#actSet_Execute(System.Object,System.EventArgs)">
+            <Messages>
+             <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Created="2008-07-29 12:26:48Z">
+              <Issue>
+               <Item>'MibTreePanel.actSet_Execute(object, EventArgs)'</Item>
+               <Item>'Exception'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Created="2008-07-29 12:26:48Z">
+              <Issue>
+               <Item>'MibTreePanel.actSet_Execute(object, EventArgs)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#actWalk_Execute(System.Object,System.EventArgs)">
+            <Messages>
+             <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Created="2008-07-29 12:26:48Z">
+              <Issue>
+               <Item>'MibTreePanel.actWalk_Execute(object, EventArgs)'</Item>
+               <Item>'Exception'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Created="2008-07-29 12:26:48Z">
+              <Issue>
+               <Item>'MibTreePanel.actWalk_Execute(object, EventArgs)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetTextualForm(Lextm.SharpSnmpLib.Mib.IDefinition)">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-07-29 12:26:48Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'MibTreePanel.GetTextualForm(IDefinition)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="ModuleListPanel">
+          <Members>
+           <Member Name="#actAdd_Execute(System.Object,System.EventArgs)">
+            <Messages>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Created="2008-07-29 12:26:48Z">
+              <Issue>
+               <Item>'ModuleListPanel.actAdd_Execute(object, EventArgs)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#RefreshPanel(System.Object,System.EventArgs)">
+            <Messages>
+             <Message Id="System.String.Format(System.String,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2008-07-29 12:26:48Z">
+              <Issue>
+               <Item>'string.Format(string, object)'</Item>
+               <Item>'ModuleListPanel.RefreshPanel(object, EventArgs)'</Item>
+               <Item>'string.Format(IFormatProvider, string, params object[])'</Item>
+              </Issue>
+              <Issue>
+               <Item>'string.Format(string, object)'</Item>
+               <Item>'ModuleListPanel.RefreshPanel(object, EventArgs)'</Item>
+               <Item>'string.Format(IFormatProvider, string, params object[])'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="OutputPanel">
+          <Members>
+           <Member Name="#ReportMessage(System.String)">
+            <Messages>
+             <Message Id="System.String.Format(System.String,System.Object,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2008-07-29 12:26:48Z">
+              <Issue>
+               <Item>'string.Format(string, object, object)'</Item>
+               <Item>'OutputPanel.ReportMessage(string)'</Item>
+               <Item>'string.Format(IFormatProvider, string, params object[])'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="ProfileRegistry">
+          <Members>
+           <Member Name="#Default">
+            <Accessors>
+             <Accessor Name="#get_Default()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-07-30 11:33:36Z">
+                <Issue>
+                 <Item>'ProfileRegistry.Default.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="Program">
+          <Members>
+           <Member Name="#Main(System.String[])">
+            <Messages>
+             <Message Id="args" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2008-07-29 12:26:48Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'args'</Item>
+               <Item>'Program.Main(string[])'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
    <Target Name="$(ProjectDir)/SharpSnmpLib/bin/Debug/SharpSnmpLib.dll">
     <Modules>
      <Module Name="sharpsnmplib.dll">
@@ -4869,6 +5064,9 @@
    </User>
   </Notes>
   <Rules>
+   <Rule TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210">
+    <Resolution Name="NoStrongName">Sign {0} with a strong name key.</Resolution>
+   </Rule>
    <Rule TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811">
     <Resolution Name="Default">{0} appears to have no upstream public or protected callers.</Resolution>
    </Rule>
@@ -4890,6 +5088,9 @@
    <Rule TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707">
     <Resolution Name="Member">Remove the underscores from member name {0}.</Resolution>
    </Rule>
+   <Rule TypeName="ImplementStandardExceptionConstructors" Category="Microsoft.Design" CheckId="CA1032">
+    <Resolution Name="MissingConstructor">Add the following constructor to {0}: {1}.</Resolution>
+   </Rule>
    <Rule TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822">
     <Resolution Name="Default">The 'this' parameter (or 'Me' in Visual Basic) of {0} is never used. Mark the member as static (or Shared in Visual Basic) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Resolution>
    </Rule>
@@ -4902,6 +5103,12 @@
    </Rule>
    <Rule TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801">
     <Resolution Name="Default">Parameter {0} of {1} is never used. Remove the parameter or use it in the method body.</Resolution>
+   </Rule>
+   <Rule TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305">
+    <Resolution Name="Default">Because the behavior of {0} could vary based on the current user's locale settings, replace this call in {1} with a call to {2}. If the result of {2} will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Resolution>
+   </Rule>
+   <Rule TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300">
+    <Resolution Name="Default">Change {0} to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control.</Resolution>
    </Rule>
   </Rules>
  </FxCopReport>

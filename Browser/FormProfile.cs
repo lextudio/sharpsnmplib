@@ -19,24 +19,24 @@ namespace Lextm.SharpSnmpLib.Browser
             _agent = agent;
         }
 
-        internal string IP
+        internal IPAddress IP
         {
-            get { return null; }
+            get { return IPAddress.Parse(txtIP.Text); }
         }
 
         internal VersionCode VersionCode
         {
-            get { return VersionCode.V1; }
+            get { return (VersionCode)cbVersionCode.SelectedIndex; }
         }
 
         internal string GetCommunity
         {
-            get { return null; }
+            get { return txtGet.Text; }
         }
 
         internal string SetCommunity
         {
-            get { return null; }
+            get { return txtSet.Text; }
         }
 
         private void txtSet_Validating(object sender, CancelEventArgs e)
@@ -59,7 +59,7 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             if (_agent != null)
             {
-                txtIP.Text = _agent.IP;
+                txtIP.Text = _agent.IP.ToString();
                 txtGet.Text = _agent.GetCommunity;
                 txtSet.Text = _agent.SetCommunity;
                 cbVersionCode.SelectedIndex = (int)_agent.VersionCode;

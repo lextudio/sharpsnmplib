@@ -14,7 +14,7 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             foreach (AgentProfile agent in ProfileRegistry.Profiles)
             {
-                ListViewItem item = listView1.Items.Add(agent.IP);
+                ListViewItem item = listView1.Items.Add(agent.IP.ToString());
                 item.Tag = agent;
                 switch (agent.VersionCode)
                 {
@@ -53,17 +53,17 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void actDefault_Execute(object sender, System.EventArgs e)
         {
-            ProfileRegistry.Default = listView1.SelectedItems[0].Text;
+            ProfileRegistry.Default = (listView1.SelectedItems[0].Tag as AgentProfile).IP;
         }
 
         private void actionList1_Update(object sender, System.EventArgs e)
         {
-            tslblDefault.Text = ProfileRegistry.Default;
+            tslblDefault.Text = ProfileRegistry.DefaultString;
         }
 
         private void actDelete_Execute(object sender, System.EventArgs e)
         {
-            ProfileRegistry.DeleteProfile(listView1.SelectedItems[0].Text);
+            ProfileRegistry.DeleteProfile((listView1.SelectedItems[0].Tag as AgentProfile).IP);
         }
 
         private void actAdd_Execute(object sender, System.EventArgs e)
@@ -79,12 +79,12 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void actEdit_Execute(object sender, System.EventArgs e)
         {
-            AgentProfile profile = ProfileRegistry.GetProfile(listView1.SelectedItems[0].Text);
+            AgentProfile profile = ProfileRegistry.GetProfile((listView1.SelectedItems[0].Tag as AgentProfile).IP);
             using (FormProfile editor = new FormProfile(profile))
             {
                 if (editor.ShowDialog() == DialogResult.OK)
                 {
-                    ProfileRegistry.DeleteProfile(listView1.SelectedItems[0].Text);
+                    ProfileRegistry.DeleteProfile((listView1.SelectedItems[0].Tag as AgentProfile).IP);
                     ProfileRegistry.AddProfile(new AgentProfile(editor.IP, editor.VersionCode, editor.GetCommunity, editor.SetCommunity));
                 }
             }
