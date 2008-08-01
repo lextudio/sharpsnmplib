@@ -42,14 +42,8 @@ namespace Lextm.SharpSnmpLib
         [CLSCompliant(false)]
         public Counter32(uint value)
         {
-            MemoryStream m = new MemoryStream();
-            using (BinaryWriter writer = new BinaryWriter(m))
-            {
-                writer.Write(value);
-                writer.Close();
-            }
-            
-            _raw = m.ToArray();
+            _raw = BitConverter.GetBytes(value);
+            Array.Reverse(_raw);
         }
 
         #region ISnmpData Members
@@ -111,7 +105,16 @@ namespace Lextm.SharpSnmpLib
         {
             return ToUInt32().ToString(CultureInfo.InvariantCulture);
         }
-        
+
+        /// <summary>
+        /// Gets that raw bytes.
+        /// </summary>
+        /// <returns></returns>
+        internal byte[] GetRaw()
+        {
+            return _raw;
+        }
+
         /// <summary>
         /// Indicates whether the current object is equal to another object of the same type.
         /// </summary>

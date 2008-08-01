@@ -132,15 +132,6 @@ namespace Lextm.SharpSnmpLib
         }
         
         /// <summary>
-        /// Gets that raw bytes.
-        /// </summary>
-        /// <returns></returns>
-        internal byte[] GetRaw()
-        {
-            return _raw;
-        }
-        
-        /// <summary>
         /// Serves as a hash function for a particular type.
         /// </summary>
         /// <returns>A hash code for the current <see cref="Integer32"/>.</returns>

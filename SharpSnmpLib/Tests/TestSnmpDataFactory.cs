@@ -66,7 +66,7 @@ namespace Lextm.SharpSnmpLib.Tests
             ISnmpData data = SnmpDataFactory.CreateSnmpData(expected);
             Assert.AreEqual(SnmpType.TimeTicks, data.TypeCode);
             TimeTicks t = (TimeTicks)data;
-            Assert.AreEqual(16352, t.ToInt32());
+            Assert.AreEqual(16352, t.ToUInt32());
         }
         [Test]
         public void TestVarbind()
@@ -124,7 +124,7 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual("127.0.0.1", t.AgentAddress.ToIPAddress().ToString());
             Assert.AreEqual(GenericCode.EnterpriseSpecific, t.Generic);
             Assert.AreEqual(12, t.Specific);
-            Assert.AreEqual(16352, t.TimeStamp.ToInt32());
+            Assert.AreEqual(16352, t.TimeStamp.ToUInt32());
             Assert.AreEqual(1, t.Variables.Count);
         }
         [Test]

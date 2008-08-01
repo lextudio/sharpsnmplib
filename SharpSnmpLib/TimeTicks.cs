@@ -10,17 +10,18 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     /// <remarks>Represents SNMP TimeTicks type.</remarks>
     public struct TimeTicks : ISnmpData, IEquatable<TimeTicks>
-    {        
+    {
         private byte[] _bytes;
-        private Integer32 _count;
+        private Counter32 _count;
         
         /// <summary>
         /// Creates a <see cref="TimeTicks"/> instance with a specific count.
         /// </summary>
         /// <param name="count">Count</param>
-        public TimeTicks(int count) 
+        [CLSCompliant(false)]
+        public TimeTicks(uint count)
         {
-            _count = new Integer32(count);
+            _count = new Counter32(count);
             _bytes = ByteTool.ToBytes(SnmpType.TimeTicks, _count.GetRaw());
         }
         
@@ -30,7 +31,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="raw">Raw bytes</param>
         public TimeTicks(byte[] raw)
         {
-            _count = new Integer32(raw);
+            _count = new Counter32(raw);
             _bytes = ByteTool.ToBytes(SnmpType.TimeTicks, _count.GetRaw());
         }
         
@@ -38,50 +39,52 @@ namespace Lextm.SharpSnmpLib
         /// Returns an <see cref="Int32"/> that represents the current <see cref="TimeTicks"/>
         /// </summary>
         /// <returns></returns>
-        public int ToInt32()
+        [CLSCompliant(false)]
+        public uint ToUInt32()
         {
-            byte[] raw = _count.GetRaw();
-            if (raw.Length > 4)
-            {
-                throw (new SharpSnmpException("truncation error for 32-bit integer coding"));
-            }
-            
-            int result = ((raw[0] & 0x80) == 0x80) ? -1 : 0; // sign extended! Guy McIlroy
-            for (int j = 0; j < raw.Length; j++)
-            {
-                result = (result << 8) | (int)raw[j];
-            }
-            
-            return result;
+            //            byte[] raw = _count.GetRaw();
+            //            if (raw.Length > 4)
+            //            {
+            //                throw (new SharpSnmpException("truncation error for 32-bit integer coding"));
+            //            }
+//
+            //            uint result = 0; // ((raw[0] & 0x80) == 0x80) ? -1 : 0; // sign extended! Guy McIlroy
+            //            for (int j = 0; j < raw.Length; j++)
+            //            {
+            //                result = (result << 8) | (uint)raw[j];
+            //            }
+//
+            //            return result;
+            return _count.ToUInt32();
         }
 
         /// <summary>
         /// Type code.
         /// </summary>
-        public SnmpType TypeCode 
+        public SnmpType TypeCode
         {
-            get 
+            get
             {
                 return SnmpType.TimeTicks;
             }
         }
         
         /// <summary>
-        /// Determines whether the specified <see cref="Object"/> is equal to the current <see cref="TimeTicks"/>. 
+        /// Determines whether the specified <see cref="Object"/> is equal to the current <see cref="TimeTicks"/>.
         /// </summary>
         /// <param name="obj">The <see cref="Object"/> to compare with the current <see cref="TimeTicks"/>. </param>
         /// <returns><value>true</value> if the specified <see cref="Object"/> is equal to the current <see cref="TimeTicks"/>; otherwise, <value>false</value>.
         /// </returns>
         public override bool Equals(object obj)
         {
-            if (obj == null) 
+            if (obj == null)
             {
                 return false;
             }
             
-            if (object.ReferenceEquals(this, obj)) 
+            if (object.ReferenceEquals(this, obj))
             {
-                return true;    
+                return true;
             }
             
             if (GetType() != obj.GetType())
@@ -123,7 +126,7 @@ namespace Lextm.SharpSnmpLib
         {
             return _count == other._count;
         }
-       
+        
         /// <summary>
         /// The equality operator.
         /// </summary>
@@ -135,7 +138,7 @@ namespace Lextm.SharpSnmpLib
         {
             return left.Equals(right);
         }
-      
+        
         /// <summary>
         /// The inequality operator.
         /// </summary>
@@ -154,7 +157,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public override string ToString()
         {
-            return ToInt32().ToString(CultureInfo.InvariantCulture);
+            return ToUInt32().ToString(CultureInfo.InvariantCulture);
         }
     }
 }

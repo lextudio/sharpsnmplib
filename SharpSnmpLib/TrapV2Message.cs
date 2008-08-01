@@ -19,7 +19,7 @@ namespace Lextm.SharpSnmpLib
         private string _community;
         private IList<Variable> _variables;
         private ObjectIdentifier _enterprise;
-        private int _time;
+        private uint _time;
         
         /// <summary>
         /// Creates a <see cref="TrapV2Message"/> instance with all content.
@@ -29,7 +29,8 @@ namespace Lextm.SharpSnmpLib
         /// <param name="enterprise">Enterprise</param>
         /// <param name="time">Time stamp</param>
         /// <param name="variables">Variables</param>
-        public TrapV2Message(VersionCode version, string community, ObjectIdentifier enterprise, int time, IList<Variable> variables)
+        [CLSCompliant(false)]
+        public TrapV2Message(VersionCode version, string community, ObjectIdentifier enterprise, uint time, IList<Variable> variables)
         {
             _version = version;
             _community = community;
@@ -176,7 +177,8 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Time stamp.
         /// </summary>
-        public int TimeStamp
+        [CLSCompliant(false)]
+        public uint TimeStamp
         {
             get { return _time; }
         }

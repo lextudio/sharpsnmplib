@@ -20,7 +20,13 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestConstructor()
         {
             TimeTicks time = new TimeTicks(15);
-            Assert.AreEqual(15, time.ToInt32());
+            Assert.AreEqual(15, time.ToUInt32());
+        }
+        [Test]
+        public void TestConstructor2()
+        {
+            TimeTicks time2 = new TimeTicks(new byte[] { 0x3F, 0xE0 });
+            Assert.AreEqual(16352, time2.ToUInt32());
         }
         [Test]
         public void TestToBytes()
@@ -28,7 +34,7 @@ namespace Lextm.SharpSnmpLib.Tests
             TimeTicks time = new TimeTicks(16352);
             ISnmpData data = SnmpDataFactory.CreateSnmpData(time.ToBytes());
             Assert.AreEqual(data.TypeCode, SnmpType.TimeTicks);
-            Assert.AreEqual(time.ToString(), data.ToString());
+            Assert.AreEqual(16352, ((TimeTicks)data).ToUInt32());
         }
     }
 }

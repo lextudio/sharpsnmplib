@@ -38,6 +38,13 @@ namespace Lextm.SharpSnmpLib.Tests
         }
         
         [Test]
+        public void TestConstructor2()
+        {
+            Counter32 test = new Counter32(300);
+            Assert.AreEqual(300, test.ToUInt32());
+        }
+        
+        [Test]
         public void TestToBytes()
         {
             Counter32 c0 = new Counter32(0);

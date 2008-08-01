@@ -21,7 +21,7 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public class TrapV1Message : ISnmpMessage, ISnmpData, IDisposable
     {
-        private int _time;
+        private uint _time;
         private UdpClient udp = new UdpClient();
         private string _community;
         private ObjectIdentifier _enterprise;
@@ -44,7 +44,8 @@ namespace Lextm.SharpSnmpLib
         /// <param name="specific">Specific</param>
         /// <param name="time">Time</param>
         /// <param name="variables">Variables</param>
-        public TrapV1Message(VersionCode version, IPAddress agent, string community, ObjectIdentifier enterprise, GenericCode generic, int specific, int time, IList<Variable> variables)
+        [CLSCompliant(false)]
+        public TrapV1Message(VersionCode version, IPAddress agent, string community, ObjectIdentifier enterprise, GenericCode generic, int specific, uint time, IList<Variable> variables)
         {
             _version = version;
             _agent = agent;
@@ -93,7 +94,7 @@ namespace Lextm.SharpSnmpLib
             _agent = trapPdu.AgentAddress.ToIPAddress();
             _generic = trapPdu.Generic;
             _specific = trapPdu.Specific;
-            _time = trapPdu.TimeStamp.ToInt32();
+            _time = trapPdu.TimeStamp.ToUInt32();
             _variables = _pdu.Variables;
             _bytes = body.ToBytes();
         }
@@ -113,7 +114,8 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Time stamp.
         /// </summary>
-        public int TimeStamp
+        [CLSCompliant(false)]
+        public uint TimeStamp
         {
             get
             {

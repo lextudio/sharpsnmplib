@@ -122,9 +122,10 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Time stamp.
         /// </summary>
-        public int TimeStamp
+        [CLSCompliant(false)]
+        public uint TimeStamp
         {
-            get { return _time.ToInt32(); }
+            get { return _time.ToUInt32(); }
         }
 
         /// <summary>
