@@ -42,19 +42,6 @@ namespace Lextm.SharpSnmpLib
         [CLSCompliant(false)]
         public uint ToUInt32()
         {
-            //            byte[] raw = _count.GetRaw();
-            //            if (raw.Length > 4)
-            //            {
-            //                throw (new SharpSnmpException("truncation error for 32-bit integer coding"));
-            //            }
-//
-            //            uint result = 0; // ((raw[0] & 0x80) == 0x80) ? -1 : 0; // sign extended! Guy McIlroy
-            //            for (int j = 0; j < raw.Length; j++)
-            //            {
-            //                result = (result << 8) | (uint)raw[j];
-            //            }
-//
-            //            return result;
             return _count.ToUInt32();
         }
 

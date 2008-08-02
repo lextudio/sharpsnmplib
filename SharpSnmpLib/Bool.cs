@@ -12,7 +12,7 @@ using System;
 namespace Lextm.SharpSnmpLib
 {
     /// <summary>
-    /// Boolean type..
+    /// Boolean type.
     /// </summary>
     public struct Bool : ISnmpData, IEquatable<Bool>
     {

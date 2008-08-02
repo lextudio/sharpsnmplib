@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 
@@ -9,7 +10,7 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public struct Counter32 : ISnmpData, IEquatable<Counter32>
     {
-        private byte[] _raw;
+        private uint _count;
         
         /// <summary>
         /// Creates a <see cref="Counter32"/> instance from raw bytes.
@@ -32,7 +33,14 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentException("if byte length is 5, then first byte must be empty");
             }
             
-            _raw = raw;
+            _count = 0;
+            for (int i = 0; i < raw.Length; i++)
+            {
+                if (raw[i] != 0) 
+                {
+                    _count += GetBase(i, raw.Length) * raw[i];
+                }                
+            }    
         }
         
         /// <summary>
@@ -42,8 +50,7 @@ namespace Lextm.SharpSnmpLib
         [CLSCompliant(false)]
         public Counter32(uint value)
         {
-            _raw = BitConverter.GetBytes(value);
-            Array.Reverse(_raw);
+            _count = value;
         }
 
         #region ISnmpData Members
@@ -61,7 +68,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public byte[] ToBytes()
         {
-            return ByteTool.ToBytes(TypeCode, _raw);
+            return ByteTool.ToBytes(TypeCode, GetRaw());
         }
 
         #endregion
@@ -72,21 +79,12 @@ namespace Lextm.SharpSnmpLib
         [CLSCompliant(false)]
         public uint ToUInt32()
         {
-            uint result = 0;
-            for (int i = 0; i < _raw.Length; i++)
-            {
-                if (_raw[i] != 0) 
-                {
-                    result += GetBase(i) * _raw[i];
-                }                
-            }
-            
-            return result;
+            return _count;
         }
 
-        private uint GetBase(int index)
+        private uint GetBase(int index, int length)
         {
-            int order = _raw.Length - index - 1;
+            int order = length - index - 1;
             const uint Base = 256;
             uint result = 1;
             for (int i = 0; i < order; i++)
@@ -112,7 +110,23 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         internal byte[] GetRaw()
         {
-            return _raw;
+            List<byte> list = new List<byte>(BitConverter.GetBytes(_count));
+            
+            // there must be at least one byte.
+            while (list.Count > 1) 
+            {
+                if (list[list.Count - 1] == 0)
+                {
+                    list.RemoveAt(list.Count - 1);
+                }
+                else
+                {
+                    break;
+                }
+            }
+            
+            list.Reverse();
+            return list.ToArray();
         }
 
         /// <summary>
