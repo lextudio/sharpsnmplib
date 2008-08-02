@@ -56,10 +56,11 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="version">Protocol version</param>
         /// <param name="agent">Agent address</param>
+        /// <param name="port">Agent port number</param>
         /// <param name="community">Community name</param>
         /// <param name="variables">Variable binds</param>
         /// <returns></returns>
-        public IList<Variable> Get(VersionCode version, IPAddress agent, string community, IList<Variable> variables)
+        public IList<Variable> Get(VersionCode version, IPAddress agent, int port, string community, IList<Variable> variables)
         {
             if (version == VersionCode.V3)
             {
@@ -68,7 +69,7 @@ namespace Lextm.SharpSnmpLib
 
             using (GetRequestMessage message = new GetRequestMessage(version, agent, community, variables))
             {
-                return message.Send(_timeout);
+                return message.Send(_timeout, port);
             }
         }
 
@@ -77,36 +78,39 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="version">Protocol version</param>
         /// <param name="agent">Agent address</param>
+        /// <param name="port">Agent port number</param>
         /// <param name="community">Community name</param>
         /// <param name="variable">Variable bind</param>
         /// <returns></returns>
-        public Variable Get(VersionCode version, IPAddress agent, string community, Variable variable)
+        public Variable Get(VersionCode version, IPAddress agent, int port, string community, Variable variable)
         {
-            return Get(version, agent, community, new List<Variable>() { variable })[0];
+            return Get(version, agent, port, community, new List<Variable>() { variable })[0];
         }
 
         /// <summary>
         /// Gets a variable bind.
         /// </summary>
         /// <param name="agent">Agent address</param>
+        /// <param name="port">Agent port number</param>
         /// <param name="community">Community name</param>
         /// <param name="variable">Variable bind</param>
         /// <returns></returns>
-        public Variable Get(IPAddress agent, string community, Variable variable)
+        public Variable Get(IPAddress agent, int port, string community, Variable variable)
         {
-            return Get(_version, agent, community, variable);
+            return Get(_version, agent, port, community, variable);
         }
 
         /// <summary>
         /// Gets a list of variable binds.
         /// </summary>
         /// <param name="agent">Agent address</param>
+        /// <param name="port">Agent port number</param>
         /// <param name="community">Community name</param>
         /// <param name="variables">Variable binds</param>
         /// <returns></returns>
-        public IList<Variable> Get(IPAddress agent, string community, IList<Variable> variables)
+        public IList<Variable> Get(IPAddress agent, int port, string community, IList<Variable> variables)
         {
-            return Get(_version, agent, community, variables);
+            return Get(_version, agent, port, community, variables);
         }
 
         /// <summary>
@@ -114,10 +118,11 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="version">Protocol version</param>
         /// <param name="agent">Agent address</param>
+        /// <param name="port">Agent port number</param>
         /// <param name="community">Community name</param>
         /// <param name="variables">Variable binds</param>
         /// <returns></returns>
-        public void Set(VersionCode version, IPAddress agent, string community, IList<Variable> variables)
+        public void Set(VersionCode version, IPAddress agent, int port, string community, IList<Variable> variables)
         {
             if (version == VersionCode.V3)
             {
@@ -126,7 +131,7 @@ namespace Lextm.SharpSnmpLib
 
             using (SetRequestMessage message = new SetRequestMessage(version, agent, community, variables))
             {
-                message.Send(_timeout);
+                message.Send(_timeout, port);
             }
         }
 
@@ -135,36 +140,39 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="version">Protocol version</param>
         /// <param name="agent">Agent address</param>
+        /// <param name="port">Agent port number</param>
         /// <param name="community">Community name</param>
         /// <param name="variable">Variable bind</param>
         /// <returns></returns>
-        public void Set(VersionCode version, IPAddress agent, string community, Variable variable)
+        public void Set(VersionCode version, IPAddress agent, int port, string community, Variable variable)
         {
-            Set(version, agent, community, new List<Variable>() { variable });
+            Set(version, agent, port, community, new List<Variable>() { variable });
         }
 
         /// <summary>
         /// Sets a variable bind.
         /// </summary>
-        /// <param name="agent">Agent address</param>
-        /// <param name="community">Community name</param>
-        /// <param name="variable">Variable bind</param>
+        /// <param name="agent">Agent address.</param>
+        /// <param name="community">Community name.</param>
+        /// <param name="variable">Variable bind.</param>
+        /// <param name="port">Port number.</param>
         /// <returns></returns>
-        public void Set(IPAddress agent, string community, Variable variable)
+        public void Set(IPAddress agent, int port, string community, Variable variable)
         {
-            Set(_version, agent, community, variable);
+            Set(_version, agent, port, community, variable);
         }
 
         /// <summary>
         /// Sets a list of variable binds.
         /// </summary>
-        /// <param name="agent">Agent address</param>
-        /// <param name="community">Community name</param>
-        /// <param name="variables">Variable binds</param>
+        /// <param name="agent">Agent address.</param>
+        /// <param name="community">Community name.</param>
+        /// <param name="variables">Variable binds.</param>
+        /// <param name="port">Port number.</param>
         /// <returns></returns>
-        public void Set(IPAddress agent, string community, IList<Variable> variables)
+        public void Set(IPAddress agent, int port, string community, IList<Variable> variables)
         {
-            Set(_version, agent, community, variables);
+            Set(_version, agent, port, community, variables);
         }
 
         /// <summary>
@@ -172,11 +180,12 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="version">Protocol version</param>
         /// <param name="agent">Agent address</param>
+        /// <param name="port">Agent port number</param>
         /// <param name="community">Community name</param>
         /// <param name="table">Table OID</param>
         /// <returns></returns>
         [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Return", Justification = "ByDesign")]
-        public Variable[,] GetTable(VersionCode version, IPAddress agent, string community, ObjectIdentifier table)
+        public Variable[,] GetTable(VersionCode version, IPAddress agent, int port, string community, ObjectIdentifier table)
         {
             if (version == VersionCode.V3)
             {
@@ -190,7 +199,7 @@ namespace Lextm.SharpSnmpLib
             }
 
             IList<Variable> list = new List<Variable>();
-            int rows = Walk(version, agent, community, table, list, _timeout, WalkMode.WithinSubtree);
+            int rows = Walk(version, agent, port, community, table, list, _timeout, WalkMode.WithinSubtree);
             if (rows == 0)
             {
                 return new Variable[0, 0];
@@ -216,13 +225,14 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="version">Protocol version.</param>
         /// <param name="agent">Agent address.</param>
+        /// <param name="port">Agent port number</param>
         /// <param name="community">Community name.</param>
         /// <param name="table">OID.</param>
         /// <param name="list">A list to hold the results.</param>
         /// <param name="timeout">Timeout.</param>
         /// <param name="mode">Walk mode.</param>
         /// <returns>Returns row count if the OID is a table. Otherwise this value is meaningless.</returns>
-        public static int Walk(VersionCode version, IPAddress agent, string community, ObjectIdentifier table, IList<Variable> list, int timeout, WalkMode mode)
+        public static int Walk(VersionCode version, IPAddress agent, int port, string community, ObjectIdentifier table, IList<Variable> list, int timeout, WalkMode mode)
         {
             int result = 0;
             Variable tableV = new Variable(table);
@@ -248,7 +258,7 @@ namespace Lextm.SharpSnmpLib
                     result++;
                 }
             }
-            while (HasNext(version, agent, community, seed, timeout, out next));
+            while (HasNext(version, agent, port, community, seed, timeout, out next));
             return result;
         }
 
@@ -257,41 +267,44 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="version">Protocol version</param>
         /// <param name="agent">Agent address</param>
+        /// <param name="port">Agent port number</param>
         /// <param name="community">Community name</param>
         /// <param name="table">Table OID</param>
         /// <returns></returns>
         [CLSCompliant(false)]
         [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Return", Justification = "ByDesign")]
-        public Variable[,] GetTable(VersionCode version, IPAddress agent, string community, uint[] table)
+        public Variable[,] GetTable(VersionCode version, IPAddress agent, int port, string community, uint[] table)
         {
-            return GetTable(version, agent, community, new ObjectIdentifier(table));
+            return GetTable(version, agent, port, community, new ObjectIdentifier(table));
         }
 
         /// <summary>
         /// Gets a table of variables.
         /// </summary>
         /// <param name="agent">Agent address</param>
+        /// <param name="port">Agent port number</param>
         /// <param name="community">Community name</param>
         /// <param name="table">Table OID</param>
         /// <returns></returns>
         [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Return", Justification = "ByDesign")]
-        public Variable[,] GetTable(IPAddress agent, string community, ObjectIdentifier table)
+        public Variable[,] GetTable(IPAddress agent, int port, string community, ObjectIdentifier table)
         {
-            return GetTable(_version, agent, community, table);
+            return GetTable(_version, agent, port, community, table);
         }
 
         /// <summary>
         /// Gets a table of variables.
         /// </summary>
         /// <param name="agent">Agent address</param>
+        /// <param name="port">Agent port number</param>
         /// <param name="community">Community name</param>
         /// <param name="table">Table OID</param>
         /// <returns></returns>
         [CLSCompliant(false)]
         [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Return", Justification = "ByDesign")]
-        public Variable[,] GetTable(IPAddress agent, string community, uint[] table)
+        public Variable[,] GetTable(IPAddress agent, int port, string community, uint[] table)
         {
-            return GetTable(agent, community, new ObjectIdentifier(table));
+            return GetTable(agent, port, community, new ObjectIdentifier(table));
         }
 
         /// <summary>
@@ -305,7 +318,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Starts trap listener on a specific port.
         /// </summary>
-        /// <param name="port">Port number</param>
+        /// <param name="port">Manager port number</param>
         public void Start(int port)
         {
             trapListener.Start(port);
@@ -353,7 +366,7 @@ namespace Lextm.SharpSnmpLib
             }
         }
 
-        private static bool HasNext(VersionCode version, IPAddress agent, string community, Variable seed, int timeout, out Variable next)
+        private static bool HasNext(VersionCode version, IPAddress agent, int port, string community, Variable seed, int timeout, out Variable next)
         {
             bool result;
             try
@@ -364,7 +377,7 @@ namespace Lextm.SharpSnmpLib
                     community,
                     new List<Variable>(1) { seed });
 
-                next = message.Send(timeout)[0];
+                next = message.Send(timeout, port)[0];
                 result = true;
             }
             catch (SharpErrorException)

@@ -26,7 +26,7 @@ namespace TestGetNext
 				                                                          	new Variable(
 				                                                          		new uint[] { 1, 3, 6, 1, 2, 1, 1, 6, 0 })});
 				
-				Variable variable = message.Send(1000)[0];
+				Variable variable = message.Send(1000, 161)[0];
 				Console.WriteLine(variable.ToString());
 			}
 			catch (SharpSnmpException ex)

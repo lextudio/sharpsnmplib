@@ -45,11 +45,12 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Sends this <see cref="SetRequestMessage"/> and handles the response from agent.
         /// </summary>
-        /// <param name="timeout"></param>
-        public void Send(int timeout)
+        /// <param name="timeout">Timeout.</param>
+        /// <param name="port">Port number.</param>
+        public void Send(int timeout, int port)
         {
             byte[] bytes = _bytes;
-            IPEndPoint agent = new IPEndPoint(_agent, 161);
+            IPEndPoint agent = new IPEndPoint(_agent, port);
             udp.Send(bytes, bytes.Length, agent);
             IPEndPoint from = new IPEndPoint(IPAddress.Any, 0);
             IAsyncResult result = udp.BeginReceive(null, this);

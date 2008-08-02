@@ -38,6 +38,11 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             get { return txtSet.Text; }
         }
+        
+        internal int Port
+        {
+            get { return int.Parse(txtPort.Text); }
+        }
 
         private void txtSet_Validating(object sender, CancelEventArgs e)
         {
@@ -64,6 +69,12 @@ namespace Lextm.SharpSnmpLib.Browser
                 txtSet.Text = _agent.SetCommunity;
                 cbVersionCode.SelectedIndex = (int)_agent.VersionCode;
             }
+        }
+        
+        void TxtPortValidating(object sender, CancelEventArgs e)
+        {
+            int result;
+            e.Cancel = int.TryParse(txtPort.Text, out result);
         }
     }
 }

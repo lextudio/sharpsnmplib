@@ -17,7 +17,7 @@ namespace TestGetTable
             Manager manager = new Manager();
             try
             {
-                Variable[,] table = manager.GetTable(IPAddress.Parse("127.0.0.1"), "public",
+                Variable[,] table = manager.GetTable(IPAddress.Parse("127.0.0.1"), 161, "public",
                     new uint[] { 1, 3, 6, 1, 2, 1, 2, 2 });
                 for (int row = 0; row < table.GetUpperBound(0); row++)
                 {
