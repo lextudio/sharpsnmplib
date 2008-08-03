@@ -72,6 +72,9 @@ namespace Lextm.SharpSnmpLib.Tests
             Gauge32 c2 = new Gauge32(300);
             Gauge32 r2 = (Gauge32)SnmpDataFactory.CreateSnmpData(c2.ToBytes());
             Assert.AreEqual(r2, c2);
+            
+            Assert.AreEqual(new byte[] {0x42, 0x01, 0x03}, new Gauge32(3).ToBytes());
+            Assert.AreEqual(new byte[] {0x42, 0x05, 0x00, 0x80, 0x00, 0x00, 0x00}, new Gauge32(2147483648).ToBytes());
         }
     }
 }

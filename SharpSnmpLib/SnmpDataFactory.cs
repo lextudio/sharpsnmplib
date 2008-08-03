@@ -48,13 +48,15 @@ namespace Lextm.SharpSnmpLib
         public static ISnmpData CreateSnmpData(MemoryStream stream)
         {
             int type = stream.ReadByte();
-            int length = ByteTool.ReadMultiByteLength(stream);
+            int length = ByteTool.ReadPayloadLength(stream);
             byte[] bytes = new byte[length];
             stream.Read(bytes, 0, length);
             switch ((SnmpType)type) 
             {
                 case SnmpType.Counter32:
                     return new Counter32(bytes);
+                case SnmpType.Counter64:
+                    return new Counter64(bytes);
                 case SnmpType.Gauge32:
                     return new Gauge32(bytes);
                 case SnmpType.ObjectIdentifier:

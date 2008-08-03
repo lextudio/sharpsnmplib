@@ -70,6 +70,8 @@ namespace Lextm.SharpSnmpLib.Tests
             Counter32 c2 = new Counter32(300);
             Counter32 r2 = (Counter32)SnmpDataFactory.CreateSnmpData(c2.ToBytes());
             Assert.AreEqual(r2, c2);
+            
+            Assert.AreEqual(new byte[] {0x41, 0x01, 0x04}, new Counter32(4).ToBytes());
         }
     }
 }

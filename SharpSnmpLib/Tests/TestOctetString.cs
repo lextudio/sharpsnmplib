@@ -25,6 +25,12 @@ namespace Lextm.SharpSnmpLib.Tests
             OctetString s = (OctetString)data;
             Assert.AreEqual("public", s.ToString());
         }
+        
+        [Test]
+        public void TestToBytes()
+        {
+            Assert.AreEqual(2, new OctetString("").ToBytes().Length);
+        }
     }
 }
 #pragma warning restore 1591

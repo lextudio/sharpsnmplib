@@ -35,6 +35,8 @@ namespace Lextm.SharpSnmpLib.Tests
             ISnmpData data = SnmpDataFactory.CreateSnmpData(time.ToBytes());
             Assert.AreEqual(data.TypeCode, SnmpType.TimeTicks);
             Assert.AreEqual(16352, ((TimeTicks)data).ToUInt32());
+            
+            Assert.AreEqual(new byte[] {0x43, 0x05, 0x00, 0x93, 0xA3, 0x41, 0x4B}, new TimeTicks(2476949835).ToBytes());
         }
     }
 }

@@ -1,4 +1,5 @@
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 
@@ -9,7 +10,7 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public struct Gauge32 : ISnmpData, IEquatable<Gauge32>
     {
-        private byte[] _raw;
+        private Counter32 _count;
         
         /// <summary>
         /// Creates a <see cref="Gauge32"/> instance from raw bytes.
@@ -17,22 +18,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="raw"></param>
         public Gauge32(byte[] raw)
         {
-            if (raw == null)
-            {
-                throw new ArgumentNullException("raw");
-            }
-            
-            if (raw.Length == 0 || raw.Length > 5)
-            {
-                throw new ArgumentException("byte length must between 1 and 5");
-            }
-            
-            if (raw.Length == 5 && raw[0] != 0)
-            {
-                throw new ArgumentException("if byte length is 5, then first byte must be empty");
-            }
-            
-            _raw = raw;
+            _count = new Counter32(raw);
         }
         
         /// <summary>
@@ -42,14 +28,7 @@ namespace Lextm.SharpSnmpLib
         [CLSCompliant(false)]
         public Gauge32(uint value)
         {
-            MemoryStream m = new MemoryStream();
-            using (BinaryWriter writer = new BinaryWriter(m))
-            {
-                writer.Write(value);
-                writer.Close();
-            }
-            
-            _raw = m.ToArray();
+            _count = new Counter32(value);
         }
 
         #region ISnmpData Members
@@ -67,7 +46,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public byte[] ToBytes()
         {
-            return ByteTool.ToBytes(TypeCode, _raw);
+            return ByteTool.ToBytes(TypeCode, _count.GetRaw());
         }
 
         #endregion
@@ -78,29 +57,7 @@ namespace Lextm.SharpSnmpLib
         [CLSCompliant(false)]
         public uint ToUInt32()
         {
-            uint result = 0;
-            for (int i = 0; i < _raw.Length; i++)
-            {
-                if (_raw[i] != 0) 
-                {
-                    result += GetBase(i) * _raw[i];
-                }                
-            }
-            
-            return result;
-        }
-
-        private uint GetBase(int index)
-        {
-            int order = _raw.Length - index - 1;
-            const uint Base = 256;
-            uint result = 1;
-            for (int i = 0; i < order; i++)
-            {
-                result *= Base;
-            }
-            
-            return result;
+            return _count.ToUInt32();
         }
         
         /// <summary>
@@ -111,7 +68,7 @@ namespace Lextm.SharpSnmpLib
         {
             return ToUInt32().ToString(CultureInfo.InvariantCulture);
         }
-        
+                
         /// <summary>
         /// Indicates whether the current object is equal to another object of the same type.
         /// </summary>
@@ -145,7 +102,7 @@ namespace Lextm.SharpSnmpLib
             {
                 return false;
             }
-            
+        
             return Equals((Gauge32)obj);
         }
         
@@ -156,7 +113,7 @@ namespace Lextm.SharpSnmpLib
         public override int GetHashCode()
         {
             return ToUInt32().GetHashCode();
-        }    
+        }        
         
         /// <summary>
         /// The equality operator.

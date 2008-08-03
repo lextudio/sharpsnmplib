@@ -50,7 +50,7 @@ namespace Lextm.SharpSnmpLib
             if (value >= -127 && value <= 127)
             {
                 _raw = new byte[1];
-                _raw[0] = (byte)value;
+                _raw[0] = Convert.ToByte(value);
             }
             else
             {

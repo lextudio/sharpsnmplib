@@ -1,8 +1,8 @@
 /*
  * Created by SharpDevelop.
  * User: lextm
- * Date: 2008/5/1
- * Time: 11:39
+ * Date: 2008/8/3
+ * Time: 12:57
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
@@ -14,20 +14,18 @@ using NUnit.Framework.SyntaxHelpers;
 namespace Lextm.SharpSnmpLib.Tests
 {
     [TestFixture]
-    public class TestIP
+    public class TestCounter64
     {
         [Test]
-        public void TestConstructor()
+        public void TestContructor()
         {
-            string expected = "127.0.0.1";
-            IP ip = new IP(expected);
-            Assert.AreEqual(expected, ip.ToString());
+            Assert.AreEqual(14532202884452442569, new Counter64(new byte[] {0x00, 0xC9, 0xAC, 0xC1, 0x87, 0x4B, 0xB1, 0xE1, 0xC9}).ToUInt64());
         }
+        
         [Test]
         public void TestToBytes()
         {
-            IP ip = new IP("129.213.224.111");
-            Assert.AreEqual(new byte[] {0x40, 0x04, 0x81, 0xD5, 0xE0, 0x6F}, ip.ToBytes());
+            Assert.AreEqual(new byte[] {0x46, 0x09, 0x00, 0xC9, 0xAC, 0xC1, 0x87, 0x4B, 0xB1, 0xE1, 0xC9}, new Counter64(14532202884452442569).ToBytes());
         }
     }
 }

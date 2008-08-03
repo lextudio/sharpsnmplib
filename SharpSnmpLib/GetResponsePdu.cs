@@ -109,7 +109,7 @@ namespace Lextm.SharpSnmpLib
             {
                 MemoryStream result = new MemoryStream();
                 result.WriteByte((byte)TypeCode);
-                ByteTool.WriteMultiByteLength(result, _raw.Length); // it seems that trap does not use this function
+                ByteTool.WritePayloadLength(result, _raw.Length); // it seems that trap does not use this function
                 result.Write(_raw, 0, _raw.Length);
                 _bytes = result.ToArray();
             }

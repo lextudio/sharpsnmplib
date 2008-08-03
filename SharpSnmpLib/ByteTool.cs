@@ -66,53 +66,57 @@ namespace Lextm.SharpSnmpLib
             return result.ToArray();
         }        
                 
-        internal static void WriteMultiByteLength(Stream s, int a) // excluding initial octet
+        internal static void WritePayloadLength(Stream stream, int length) // excluding initial octet
         {
-            if (a <= 0)
+            if (length < 0)
             {
-                s.WriteByte(0);
+                throw new ArgumentException("length cannot be negative", "length");
+            }
+            
+            if (length < 127)
+            {
+                stream.WriteByte((byte)length);
                 return;
             }
             
             byte[] c = new byte[16];
             int j = 0;
-            while (a > 0) 
+            while (length > 0) 
             {
-                c[j++] = (byte)(a & 0xff);
-                a = a >> 8;
+                c[j++] = (byte)(length & 0xff);
+                length = length >> 8;
             }
             
-            s.WriteByte((byte)(0x80 | j));            
+            stream.WriteByte((byte)(0x80 | j));            
             while (j > 0) 
             {
                 int x = c[--j];
-                s.WriteByte((byte)x);
+                stream.WriteByte((byte)x);
             }
         }
         
-        internal static int ReadMultiByteLength(MemoryStream m)
+        internal static int ReadPayloadLength(MemoryStream m)
         {
-            int current = m.ReadByte();
-            return ReadLength(m, (byte)current);
+            int first = m.ReadByte();
+            return ReadLength(m, (byte)first);
         }
         
         // copied from universal
-        private static int ReadLength(Stream s, byte x) // x is initial octet
+        private static int ReadLength(Stream stream, byte first) // x is initial octet
         {
-            if ((x & 0x80) == 0)
+            if ((first & 0x80) == 0)
             {
-                return (int)x;
+                return (int)first;
             }
             
-            int u = 0;
-            int n = (int)(x & 0x7f);
-            for (int j = 0; j < n; j++)
+            int result = 0;
+            int octets = (int)(first & 0x7f);
+            for (int j = 0; j < octets; j++)
             {
-                x = ReadByte(s);
-                u = (u << 8) + (int)x;
+                result = (result << 8) + (int)ReadByte(stream);
             }
             
-            return u;
+            return result;
         }
         
         // copied from universal
@@ -131,7 +135,7 @@ namespace Lextm.SharpSnmpLib
         {
             MemoryStream result = new MemoryStream();
             result.WriteByte((byte)typeCode);
-            ByteTool.WriteMultiByteLength(result, raw.Length);
+            ByteTool.WritePayloadLength(result, raw.Length);
             result.Write(raw, 0, raw.Length);
             return result.ToArray();
         }

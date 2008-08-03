@@ -39,10 +39,10 @@
         	this.txtGet = new System.Windows.Forms.TextBox();
         	this.cbVersionCode = new System.Windows.Forms.ComboBox();
         	this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+        	this.txtPort = new System.Windows.Forms.TextBox();
         	this.btnOK = new System.Windows.Forms.Button();
         	this.btnCancel = new System.Windows.Forms.Button();
         	this.label5 = new System.Windows.Forms.Label();
-        	this.txtPort = new System.Windows.Forms.TextBox();
         	this.groupBox1.SuspendLayout();
         	((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
         	this.SuspendLayout();
@@ -60,11 +60,11 @@
         	// 
         	this.txtIP.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
         	        	        	| System.Windows.Forms.AnchorStyles.Right)));
-        	this.errorProvider1.SetError(this.txtIP, "Please provide a valid IP address");
         	this.txtIP.Location = new System.Drawing.Point(85, 44);
         	this.txtIP.Name = "txtIP";
         	this.txtIP.Size = new System.Drawing.Size(100, 21);
         	this.txtIP.TabIndex = 1;
+        	this.txtIP.Validated += new System.EventHandler(this.txtIP_Validated);
         	this.txtIP.Validating += new System.ComponentModel.CancelEventHandler(this.txtIP_Validating);
         	// 
         	// label2
@@ -114,22 +114,22 @@
         	// 
         	this.txtSet.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
         	        	        	| System.Windows.Forms.AnchorStyles.Right)));
-        	this.errorProvider1.SetError(this.txtSet, "Please provide a community name");
         	this.txtSet.Location = new System.Drawing.Point(70, 58);
         	this.txtSet.Name = "txtSet";
         	this.txtSet.Size = new System.Drawing.Size(100, 21);
         	this.txtSet.TabIndex = 1;
+        	this.txtSet.Validated += new System.EventHandler(this.txtSet_Validated);
         	this.txtSet.Validating += new System.ComponentModel.CancelEventHandler(this.txtSet_Validating);
         	// 
         	// txtGet
         	// 
         	this.txtGet.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
         	        	        	| System.Windows.Forms.AnchorStyles.Right)));
-        	this.errorProvider1.SetError(this.txtGet, "Please provide a community name");
         	this.txtGet.Location = new System.Drawing.Point(70, 31);
         	this.txtGet.Name = "txtGet";
         	this.txtGet.Size = new System.Drawing.Size(100, 21);
         	this.txtGet.TabIndex = 0;
+        	this.txtGet.Validated += new System.EventHandler(this.txtGet_Validated);
         	this.txtGet.Validating += new System.ComponentModel.CancelEventHandler(this.txtGet_Validating);
         	// 
         	// cbVersionCode
@@ -145,11 +145,19 @@
         	this.cbVersionCode.Location = new System.Drawing.Point(85, 11);
         	this.cbVersionCode.Name = "cbVersionCode";
         	this.cbVersionCode.Size = new System.Drawing.Size(100, 20);
-        	this.cbVersionCode.TabIndex = 4;
+        	this.cbVersionCode.TabIndex = 0;
         	// 
         	// errorProvider1
         	// 
         	this.errorProvider1.ContainerControl = this;
+        	// 
+        	// txtPort
+        	// 
+        	this.txtPort.Location = new System.Drawing.Point(85, 75);
+        	this.txtPort.Name = "txtPort";
+        	this.txtPort.Size = new System.Drawing.Size(100, 21);
+        	this.txtPort.TabIndex = 2;
+        	this.txtPort.Validating += new System.ComponentModel.CancelEventHandler(this.txtPort_Validating);
         	// 
         	// btnOK
         	// 
@@ -158,19 +166,21 @@
         	this.btnOK.Location = new System.Drawing.Point(24, 214);
         	this.btnOK.Name = "btnOK";
         	this.btnOK.Size = new System.Drawing.Size(75, 23);
-        	this.btnOK.TabIndex = 5;
+        	this.btnOK.TabIndex = 3;
         	this.btnOK.Text = "OK";
         	this.btnOK.UseVisualStyleBackColor = true;
+        	this.btnOK.Validating += new System.ComponentModel.CancelEventHandler(this.btnOK_Validating);
         	// 
         	// btnCancel
         	// 
         	this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
         	        	        	| System.Windows.Forms.AnchorStyles.Right)));
+        	this.btnCancel.CausesValidation = false;
         	this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
         	this.btnCancel.Location = new System.Drawing.Point(121, 214);
         	this.btnCancel.Name = "btnCancel";
         	this.btnCancel.Size = new System.Drawing.Size(75, 23);
-        	this.btnCancel.TabIndex = 6;
+        	this.btnCancel.TabIndex = 4;
         	this.btnCancel.Text = "Cancel";
         	this.btnCancel.UseVisualStyleBackColor = true;
         	// 
@@ -181,15 +191,6 @@
         	this.label5.Size = new System.Drawing.Size(49, 23);
         	this.label5.TabIndex = 7;
         	this.label5.Text = "Port";
-        	// 
-        	// txtPort
-        	// 
-        	this.errorProvider1.SetError(this.txtPort, "Please provide a valid port number");
-        	this.txtPort.Location = new System.Drawing.Point(85, 75);
-        	this.txtPort.Name = "txtPort";
-        	this.txtPort.Size = new System.Drawing.Size(100, 21);
-        	this.txtPort.TabIndex = 8;
-        	this.txtPort.Validating += new System.ComponentModel.CancelEventHandler(this.TxtPortValidating);
         	// 
         	// FormProfile
         	// 

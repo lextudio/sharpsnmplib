@@ -6,54 +6,54 @@ using System.IO;
 namespace Lextm.SharpSnmpLib
 {
     /// <summary>
-    /// Counter32 type.
+    /// Counter64 type.
     /// </summary>
-    public struct Counter32 : ISnmpData, IEquatable<Counter32>
+    public struct Counter64 : ISnmpData, IEquatable<Counter64>
     {
-        private uint _count;
+        private ulong _count;
         
         /// <summary>
-        /// Creates a <see cref="Counter32"/> instance from raw bytes.
+        /// Creates a <see cref="Counter64"/> instance from raw bytes.
         /// </summary>
         /// <param name="raw"></param>
-        public Counter32(byte[] raw)
+        public Counter64(byte[] raw)
         {
             if (raw == null)
             {
                 throw new ArgumentNullException("raw");
             }
             
-            if (raw.Length == 0 || raw.Length > 5)
+            if (raw.Length == 0 || raw.Length > 9)
             {
-                throw new ArgumentException("byte length must between 1 and 5");
+                throw new ArgumentException("byte length must between 1 and 9");
             }
             
-            if (raw.Length == 5 && raw[0] != 0)
+            if (raw.Length == 9 && raw[0] != 0)
             {
                 throw new ArgumentException("if byte length is 5, then first byte must be empty");
             }
             
             List<byte> list = new List<byte>(raw);
             list.Reverse();
-            while (list.Count > 4)
+            while (list.Count > 8)
             {
                 list.RemoveAt(list.Count - 1);
             }
             
-            while (list.Count < 4)
+            while (list.Count < 8)
             {
                 list.Add(0);
             }
             
-            _count = BitConverter.ToUInt32(list.ToArray(), 0);
+            _count = BitConverter.ToUInt64(list.ToArray(), 0);
         }
         
         /// <summary>
-        /// Creates a <see cref="Counter32"/> with a specific <see cref="UInt32"/>.
+        /// Creates a <see cref="Counter64"/> with a specific <see cref="UInt64"/>.
         /// </summary>
         /// <param name="value">Value</param>
         [CLSCompliant(false)]
-        public Counter32(uint value)
+        public Counter64(ulong value)
         {
             _count = value;
         }
@@ -64,7 +64,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         public SnmpType TypeCode
         {
-            get { return SnmpType.Counter32; }
+            get { return SnmpType.Counter64; }
         }
         
         /// <summary>
@@ -78,22 +78,22 @@ namespace Lextm.SharpSnmpLib
 
         #endregion
         /// <summary>
-        /// Returns a <see cref="UInt32"/> that represents a <see cref="Counter32"/>.
+        /// Returns a <see cref="UInt64"/> that represents a <see cref="Counter64"/>.
         /// </summary>
         /// <returns></returns>
         [CLSCompliant(false)]
-        public uint ToUInt32()
+        public ulong ToUInt64()
         {
             return _count;
         }
         
         /// <summary>
-        /// Returns a <see cref="String"/> that represents this <see cref="Counter32"/>.
+        /// Returns a <see cref="String"/> that represents this <see cref="Counter64"/>.
         /// </summary>
         /// <returns></returns>
         public override string ToString()
         {
-            return ToUInt32().ToString(CultureInfo.InvariantCulture);
+            return ToUInt64().ToString(CultureInfo.InvariantCulture);
         }
 
         /// <summary>
@@ -132,16 +132,16 @@ namespace Lextm.SharpSnmpLib
         /// <param name="other">An object to compare with this object.</param>
         /// <returns><value>true</value> if the current object is equal to the <paramref name="other"/> parameter; otherwise, <value>false</value>.
         /// </returns>
-        public bool Equals(Counter32 other)
+        public bool Equals(Counter64 other)
         {
-            return ToUInt32() == other.ToUInt32();
+            return ToUInt64() == other.ToUInt64();
         }
         
         /// <summary>
-        /// Determines whether the specified <see cref="Object"/> is equal to the current <see cref="Counter32"/>.
+        /// Determines whether the specified <see cref="Object"/> is equal to the current <see cref="Counter64"/>.
         /// </summary>
-        /// <param name="obj">The <see cref="Object"/> to compare with the current <see cref="Counter32"/>. </param>
-        /// <returns><value>true</value> if the specified <see cref="Object"/> is equal to the current <see cref="Counter32"/>; otherwise, <value>false</value>.
+        /// <param name="obj">The <see cref="Object"/> to compare with the current <see cref="Counter64"/>. </param>
+        /// <returns><value>true</value> if the specified <see cref="Object"/> is equal to the current <see cref="Counter64"/>; otherwise, <value>false</value>.
         /// </returns>
         public override bool Equals(object obj)
         {
@@ -160,26 +160,26 @@ namespace Lextm.SharpSnmpLib
                 return false;
             }
             
-            return Equals((Counter32)obj);
+            return Equals((Counter64)obj);
         }
         
         /// <summary>
         /// Serves as a hash function for a particular type.
         /// </summary>
-        /// <returns>A hash code for the current <see cref="Counter32"/>.</returns>
+        /// <returns>A hash code for the current <see cref="Counter64"/>.</returns>
         public override int GetHashCode()
         {
-            return ToUInt32().GetHashCode();
+            return ToUInt64().GetHashCode();
         }
         
         /// <summary>
         /// The equality operator.
         /// </summary>
-        /// <param name="left">Left <see cref="Counter32"/> object</param>
-        /// <param name="right">Right <see cref="Counter32"/> object</param>
+        /// <param name="left">Left <see cref="Counter64"/> object</param>
+        /// <param name="right">Right <see cref="Counter64"/> object</param>
         /// <returns>
         /// Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
-        public static bool operator ==(Counter32 left, Counter32 right)
+        public static bool operator ==(Counter64 left, Counter64 right)
         {
             return left.Equals(right);
         }
@@ -187,11 +187,11 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// The inequality operator.
         /// </summary>
-        /// <param name="left">Left <see cref="Counter32"/> object</param>
-        /// <param name="right">Right <see cref="Counter32"/> object</param>
+        /// <param name="left">Left <see cref="Counter64"/> object</param>
+        /// <param name="right">Right <see cref="Counter64"/> object</param>
         /// <returns>
         /// Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
-        public static bool operator !=(Counter32 left, Counter32 right)
+        public static bool operator !=(Counter64 left, Counter64 right)
         {
             return !(left == right);
         }
