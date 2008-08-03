@@ -69,6 +69,16 @@ namespace Lextm.SharpSnmpLib
                     return new GetRequestMessage(body);
                 case SnmpType.GetResponsePdu:
                     return new GetResponseMessage(body);
+                case SnmpType.SetRequestPdu:
+                    return new SetRequestMessage(body);
+                case SnmpType.GetNextRequestPdu:
+                    return new GetNextRequestMessage(body);
+                case SnmpType.GetBulkRequestPdu:
+                    return new GetBulkRequestMessage(body);
+                case SnmpType.ReportPdu:
+                    return new ReportMessage(body);
+                case SnmpType.InformRequestPdu:
+                    return new InformRequestMessage(body);
                 default:
                     throw new SharpSnmpException("unsupported pdu: " + pdu.TypeCode);
             }

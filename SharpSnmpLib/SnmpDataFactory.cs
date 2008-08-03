@@ -87,6 +87,16 @@ namespace Lextm.SharpSnmpLib
                     return new GetRequestPdu(bytes);
                 case SnmpType.GetResponsePdu:
                     return new GetResponsePdu(bytes);
+                case SnmpType.GetBulkRequestPdu:
+                    return new GetBulkRequestPdu(bytes);
+                case SnmpType.GetNextRequestPdu:
+                    return new GetNextRequestPdu(bytes);
+                case SnmpType.SetRequestPdu:
+                    return new SetRequestPdu(bytes);
+                case SnmpType.InformRequestPdu:
+                    return new InformRequestPdu(bytes);
+                case SnmpType.ReportPdu:
+                    return new ReportPdu(bytes);
                 default:
                     throw new SharpSnmpException("unsupported data type: " + (SnmpType)type);
             }            

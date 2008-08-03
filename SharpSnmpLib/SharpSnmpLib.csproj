@@ -61,12 +61,16 @@
     <Compile Include="ErrorCode.cs" />
     <Compile Include="Gauge32.cs" />
     <Compile Include="GeneralString.cs" />
+    <Compile Include="GetBulkRequestMessage.cs" />
+    <Compile Include="GetBulkRequestPdu.cs" />
     <Compile Include="GetNextRequestMessage.cs" />
     <Compile Include="GetNextRequestPdu.cs" />
     <Compile Include="GetRequestMessage.cs" />
     <Compile Include="GetRequestPdu.cs" />
     <Compile Include="GetResponseMessage.cs" />
     <Compile Include="GetResponsePdu.cs" />
+    <Compile Include="InformRequestMessage.cs" />
+    <Compile Include="InformRequestPdu.cs" />
     <Compile Include="Integer64.cs" />
     <Compile Include="ISnmpMessage.cs" />
     <Compile Include="ISnmpData.cs" />
@@ -119,6 +123,8 @@
     <Compile Include="Opaque.cs" />
     <Compile Include="PduCounter.cs" />
     <Compile Include="Real.cs" />
+    <Compile Include="ReportMessage.cs" />
+    <Compile Include="ReportPdu.cs" />
     <Compile Include="Resource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
