@@ -37,10 +37,10 @@ namespace Lextm.SharpSnmpLib.Browser
             IPAddress def = IPAddress.Parse("127.0.0.1");
             AgentProfile first = new AgentProfile(VersionCode.V1, def, 161, "public", "public");
             first.OnOperationCompleted += output.ReportMessage;
-            ProfileRegistry.AddProfile(first);
-            ProfileRegistry.Default = def;
+            ProfileRegistry.Instance.AddProfile(first);
+            ProfileRegistry.Instance.Default = first.Agent;
 
-            foreach (IPAddress name in ProfileRegistry.Names)
+            foreach (IPEndPoint name in ProfileRegistry.Instance.Names)
             {
                 tscbAgent.Items.Add(name.ToString());
             }

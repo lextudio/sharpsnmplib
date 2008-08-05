@@ -8,15 +8,22 @@ namespace Lextm.SharpSnmpLib.Browser
         public AgentProfilePanel()
         {
             InitializeComponent();
+            ProfileRegistry.Instance.OnChanged += UpdateView;
         }
 
         private void AgentProfilePanel_Load(object sender, System.EventArgs e)
         {
-            foreach (AgentProfile agent in ProfileRegistry.Profiles)
+            UpdateView(this, e);
+        }
+
+        private void UpdateView(object sender, System.EventArgs e)
+        {
+            listView1.Items.Clear();
+            foreach (AgentProfile profile in ProfileRegistry.Instance.Profiles)
             {
-                ListViewItem item = listView1.Items.Add(agent.IP.ToString());
-                item.Tag = agent;
-                switch (agent.VersionCode)
+                ListViewItem item = listView1.Items.Add(profile.Agent.ToString());
+                item.Tag = profile;
+                switch (profile.VersionCode)
                 {
                     case VersionCode.V1:
                         {
@@ -53,17 +60,17 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void actDefault_Execute(object sender, System.EventArgs e)
         {
-            ProfileRegistry.Default = (listView1.SelectedItems[0].Tag as AgentProfile).IP;
+            ProfileRegistry.Instance.Default = (listView1.SelectedItems[0].Tag as AgentProfile).Agent;
         }
 
         private void actionList1_Update(object sender, System.EventArgs e)
         {
-            tslblDefault.Text = ProfileRegistry.DefaultString;
+            tslblDefault.Text = "Default agent is " + ProfileRegistry.Instance.DefaultString;
         }
 
         private void actDelete_Execute(object sender, System.EventArgs e)
         {
-            ProfileRegistry.DeleteProfile((listView1.SelectedItems[0].Tag as AgentProfile).IP);
+            ProfileRegistry.Instance.DeleteProfile((listView1.SelectedItems[0].Tag as AgentProfile).Agent);
         }
 
         private void actAdd_Execute(object sender, System.EventArgs e)
@@ -72,21 +79,35 @@ namespace Lextm.SharpSnmpLib.Browser
             {
                 if (editor.ShowDialog() == DialogResult.OK)
                 {
-                    ProfileRegistry.AddProfile(new AgentProfile(editor.VersionCode, editor.IP, editor.Port, editor.GetCommunity, editor.SetCommunity));
+                    try
+                    {
+                        ProfileRegistry.Instance.AddProfile(new AgentProfile(editor.VersionCode, editor.IP, editor.Port, editor.GetCommunity, editor.SetCommunity));
+                    }
+                    catch (MibBrowserException ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
                 }
             }
         }
 
         private void actEdit_Execute(object sender, System.EventArgs e)
         {
-            AgentProfile profile = ProfileRegistry.GetProfile((listView1.SelectedItems[0].Tag as AgentProfile).IP);
+            AgentProfile profile = ProfileRegistry.Instance.GetProfile((listView1.SelectedItems[0].Tag as AgentProfile).Agent);
             using (FormProfile editor = new FormProfile(profile))
             {
                 if (editor.ShowDialog() == DialogResult.OK)
                 {
-                    ProfileRegistry.DeleteProfile((listView1.SelectedItems[0].Tag as AgentProfile).IP);
-                    ProfileRegistry.AddProfile(new AgentProfile(editor.VersionCode, editor.IP, editor.Port, editor.GetCommunity, editor.SetCommunity));
+                    ProfileRegistry.Instance.ReplaceProfile(new AgentProfile(editor.VersionCode, editor.IP, editor.Port, editor.GetCommunity, editor.SetCommunity));
                 }
+            }
+        }
+
+        private void listView1_DoubleClick(object sender, System.EventArgs e)
+        {
+            if (listView1.SelectedItems.Count == 1)
+            {
+                actEdit.DoExecute();
             }
         }
     }

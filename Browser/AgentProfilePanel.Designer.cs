@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewGroup listViewGroup5 = new System.Windows.Forms.ListViewGroup("SNMP v1", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup6 = new System.Windows.Forms.ListViewGroup("SNMP v2c", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("SNMP v1", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("SNMP v2c", System.Windows.Forms.HorizontalAlignment.Left);
             this.listView1 = new System.Windows.Forms.ListView();
             this.chName = new System.Windows.Forms.ColumnHeader();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
@@ -53,13 +53,14 @@
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.chName});
             this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            listViewGroup5.Header = "SNMP v1";
-            listViewGroup5.Name = "lvgV1";
-            listViewGroup6.Header = "SNMP v2c";
-            listViewGroup6.Name = "lvgV2";
+            this.listView1.FullRowSelect = true;
+            listViewGroup1.Header = "SNMP v1";
+            listViewGroup1.Name = "lvgV1";
+            listViewGroup2.Header = "SNMP v2c";
+            listViewGroup2.Name = "lvgV2";
             this.listView1.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            listViewGroup5,
-            listViewGroup6});
+            listViewGroup1,
+            listViewGroup2});
             this.listView1.Location = new System.Drawing.Point(0, 25);
             this.listView1.MultiSelect = false;
             this.listView1.Name = "listView1";
@@ -67,6 +68,7 @@
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
+            this.listView1.DoubleClick += new System.EventHandler(this.listView1_DoubleClick);
             // 
             // chName
             // 

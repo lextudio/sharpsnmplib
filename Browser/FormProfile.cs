@@ -45,13 +45,14 @@ namespace Lextm.SharpSnmpLib.Browser
             if (_agent != null)
             {
                 txtIP.Text = _agent.IP.ToString();
+                txtIP.ReadOnly = true;
                 txtGet.Text = _agent.GetCommunity;
                 txtSet.Text = _agent.SetCommunity;
                 cbVersionCode.SelectedIndex = (int)_agent.VersionCode;
             }
             else
             {
-                cbVersionCode.SelectedIndex = 0;
+                cbVersionCode.SelectedIndex = 1;
             }
         }
         
@@ -115,30 +116,6 @@ namespace Lextm.SharpSnmpLib.Browser
         private void txtIP_Validated(object sender, EventArgs e)
         {
             errorProvider1.SetError(txtIP, string.Empty);
-        }
-        
-        private void btnOK_Validating(object sender, CancelEventArgs e)
-        {
-            txtGet_Validating(txtGet, e);
-            if (e.Cancel)
-            {
-                return;
-            }
-            txtSet_Validating(txtSet, e);
-            if (e.Cancel)
-            {
-                return;
-            }
-            txtPort_Validating(txtPort, e);
-            if (e.Cancel)
-            {
-                return;
-            }
-            txtIP_Validating(txtIP, e);
-            if (e.Cancel)
-            {
-                return;
-            }
         }
     }
 }

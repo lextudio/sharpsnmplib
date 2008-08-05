@@ -58,7 +58,7 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             try
             {
-                ProfileRegistry.DefaultProfile.Get(manager1, GetTextualForm(treeView1.SelectedNode.Tag as IDefinition));
+                ProfileRegistry.Instance.DefaultProfile.Get(manager1, GetTextualForm(treeView1.SelectedNode.Tag as IDefinition));
             }
             catch (Exception ex)
             {
@@ -93,7 +93,7 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             try
             {
-                ProfileRegistry.DefaultProfile.Set(manager1, GetTextualForm(treeView1.SelectedNode.Tag as IDefinition), null);
+                ProfileRegistry.Instance.DefaultProfile.Set(manager1, GetTextualForm(treeView1.SelectedNode.Tag as IDefinition), null);
             }
             catch (Exception ex)
             {
@@ -135,12 +135,17 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             try
             {
-                ProfileRegistry.DefaultProfile.Walk(manager1, treeView1.SelectedNode.Tag as IDefinition);
+                ProfileRegistry.Instance.DefaultProfile.Walk(manager1, treeView1.SelectedNode.Tag as IDefinition);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            tslblOID.Text = ObjectIdentifier.Convert((e.Node.Tag as IDefinition).GetNumericalForm());
         }
     }
 }

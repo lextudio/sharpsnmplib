@@ -1,6 +1,7 @@
 using System;
 using System.Net;
 using Lextm.SharpSnmpLib;
+using System.Text;
 
 class TestGet
 {
@@ -10,7 +11,7 @@ class TestGet
         Manager manager = new Manager();
         try
         {
-        	Variable test = new Variable(new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 1, 6, 0 }));
+            Variable test = new Variable(new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 1, 6, 0 }));
             Variable variable = manager.Get(IPAddress.Parse("127.0.0.1"), 161, "public", test);
             Console.WriteLine(variable.Data);
             

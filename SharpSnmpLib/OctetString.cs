@@ -3,6 +3,7 @@ using System.Collections;
 using System.IO;
 using System.Net.Sockets;
 using System.Text;
+using System.Net.NetworkInformation;
 
 // ASN.1 BER encoding library by Malcolm Crowe at the University of the West of Scotland
 // See http://cis.paisley.ac.uk/crow-ci0
@@ -164,6 +165,20 @@ namespace Lextm.SharpSnmpLib
         public static bool operator !=(OctetString left, OctetString right)
         {
             return !(left == right);
+        }
+
+        /// <summary>
+        /// Converts octets to physical address.
+        /// </summary>
+        /// <returns></returns>
+        public PhysicalAddress ToPhysicalAddress()
+        {            
+            if (_raw.Length != 6)
+            {
+                return null;
+            }
+
+            return new PhysicalAddress(_raw);
         }
     }
     

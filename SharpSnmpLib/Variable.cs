@@ -36,7 +36,7 @@ namespace Lextm.SharpSnmpLib
         /// Creates a <see cref="Variable"/> instance with a specific <see cref="String"/>.
         /// </summary>
         /// <param name="textual">Textual IID string</param>
-        public Variable(string textual) : this(new ObjectIdentifier(Mib.ObjectRegistry.Instance.GetNumericalFrom(textual)), null)
+        public Variable(string textual) : this(new ObjectIdentifier(Mib.ObjectRegistry.Instance.Translate(textual)), null)
         {  
         }
         
@@ -55,7 +55,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="textual"></param>
         /// <param name="data"></param>
         public Variable(string textual, ISnmpData data)
-            : this(new ObjectIdentifier(Mib.ObjectRegistry.Instance.GetNumericalFrom(textual)), data)
+            : this(new ObjectIdentifier(Mib.ObjectRegistry.Instance.Translate(textual)), data)
         {
         }
         

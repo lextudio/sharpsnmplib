@@ -52,7 +52,7 @@ namespace Lextm.SharpSnmpLib.Tests
         [Test]
         public void TestSNMPv2TMTextual()
         {
-            uint[] old = ObjectRegistry.Instance.GetNumericalFrom("SNMPv2-SMI::snmpDomains");
+            uint[] old = ObjectRegistry.Instance.Translate("SNMPv2-SMI::snmpDomains");
             string result = ObjectRegistry.Instance.GetTextualFrom(Definition.AppendTo(old, 1));
             Assert.AreEqual("SNMPv2-TM::snmpUDPDomain", result);
         }
@@ -61,7 +61,7 @@ namespace Lextm.SharpSnmpLib.Tests
         {
             uint[] expected = new uint[] {1};
             string textual = "SNMPv2-SMI::iso";
-            uint[] result = ObjectRegistry.Instance.GetNumericalFrom(textual);
+            uint[] result = ObjectRegistry.Instance.Translate(textual);
             Assert.AreEqual(expected, result);            
         }
         [Test]
@@ -69,7 +69,7 @@ namespace Lextm.SharpSnmpLib.Tests
         {
             uint[] expected = new uint[] {1,3,6,1,2,1,10};
             string textual = "SNMPv2-SMI::transmission";
-            uint[] result = ObjectRegistry.Instance.GetNumericalFrom(textual);
+            uint[] result = ObjectRegistry.Instance.Translate(textual);
             Assert.AreEqual(expected, result);    
         }
         [Test]
@@ -77,26 +77,26 @@ namespace Lextm.SharpSnmpLib.Tests
         {
             string textual = "RFC1155-SMI::private";
             uint[] expected = new uint[] {1,3,6,1,4};
-            Assert.AreEqual(expected, ObjectRegistry.Instance.GetNumericalFrom(textual));
+            Assert.AreEqual(expected, ObjectRegistry.Instance.Translate(textual));
             
             Assert.AreEqual("SNMPv2-SMI::private", ObjectRegistry.Instance.GetTextualFrom(expected));
         }
         [Test]
         public void TestZeroDotZero()
         {
-            Assert.AreEqual(new uint[] {0}, ObjectRegistry.Instance.GetNumericalFrom("SNMPv2-SMI::ccitt"));
+            Assert.AreEqual(new uint[] {0}, ObjectRegistry.Instance.Translate("SNMPv2-SMI::ccitt"));
             string textual = "SNMPv2-SMI::zeroDotZero";
             uint[] expected = new uint[] {0, 0};
             Assert.AreEqual(textual, ObjectRegistry.Instance.GetTextualFrom(expected));
 
-            Assert.AreEqual(expected, ObjectRegistry.Instance.GetNumericalFrom(textual));            
+            Assert.AreEqual(expected, ObjectRegistry.Instance.Translate(textual));            
         }
         [Test]
         public void TestSNMPv2MIBNumerical()
         {
             uint[] expected = new uint[] {1,3,6,1,2,1,1};
             string textual = "SNMPv2-MIB::system";
-            uint[] result = ObjectRegistry.Instance.GetNumericalFrom(textual);
+            uint[] result = ObjectRegistry.Instance.Translate(textual);
             Assert.AreEqual(expected, result);
         }
         [Test]
@@ -104,14 +104,14 @@ namespace Lextm.SharpSnmpLib.Tests
         {
             uint[] expected = new uint[] {1,3,6,1,6,1,1};
             string textual = "SNMPv2-TM::snmpUDPDomain";
-            uint[] result = ObjectRegistry.Instance.GetNumericalFrom(textual);
+            uint[] result = ObjectRegistry.Instance.Translate(textual);
             Assert.AreEqual(expected, result);
         }
         [Test]
         public void TestsysORTable()
         {
             string name = "SNMPv2-MIB::sysORTable";
-            uint[] id = ObjectRegistry.Instance.GetNumericalFrom(name);
+            uint[] id = ObjectRegistry.Instance.Translate(name);
             Assert.IsTrue(ObjectRegistry.Instance.IsTableId(id));
         }
         [Test]
@@ -119,7 +119,7 @@ namespace Lextm.SharpSnmpLib.Tests
         {
             uint[] expected = new uint[] {1,3,6,1,2,1,1,9,0};
             string name = "SNMPv2-MIB::sysORTable.0";
-            uint[] id = ObjectRegistry.Instance.GetNumericalFrom(name);
+            uint[] id = ObjectRegistry.Instance.Translate(name);
             Assert.AreEqual(expected, id);
         }
         [Test]
@@ -134,7 +134,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestsnmpMIB()
         {
             string name = "SNMPv2-MIB::snmpMIB";
-            uint[] id = ObjectRegistry.Instance.GetNumericalFrom(name);
+            uint[] id = ObjectRegistry.Instance.Translate(name);
             Assert.IsFalse(ObjectRegistry.Instance.IsTableId(id));
         }
     }

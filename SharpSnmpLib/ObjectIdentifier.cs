@@ -18,7 +18,7 @@ namespace Lextm.SharpSnmpLib
         /// Creates an <see cref="ObjectIdentifier"/> instance from textual ID.
         /// </summary>
         /// <param name="textual"></param>
-        public ObjectIdentifier(string textual) : this(Mib.ObjectRegistry.Instance.GetNumericalFrom(textual))
+        public ObjectIdentifier(string textual) : this(Mib.ObjectRegistry.Instance.Translate(textual))
         {
         }
         
@@ -79,13 +79,41 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public override string ToString()
         {
+            return Convert(_oid);
+        }
+
+        /// <summary>
+        /// Converts uint array to dotted <see cref="String"/>.
+        /// </summary>
+        /// <param name="numerical"></param>
+        /// <returns></returns>
+        [CLSCompliant(false)]
+        public static string Convert(uint[] numerical)
+        {
             StringBuilder result = new StringBuilder();
-            for (int k = 0; k < _oid.Length; k++)
+            for (int k = 0; k < numerical.Length; k++)
             {
-                result.Append("." + _oid[k]);
+                result.Append("." + numerical[k]);
             }
-            
+
             return result.ToString();
+        }
+
+        /// <summary>
+        /// Converts dotted <see cref="String"/> to uint array.
+        /// </summary>
+        /// <param name="dotted">Dotted string.</param>
+        /// <returns>uint array.</returns>
+        [CLSCompliant(false)]
+        public static uint[] Convert(string dotted)
+        {
+            string[] parts = dotted.Split('.');
+            uint[] result = new uint[parts.Length];
+            for (int i = 0; i < parts.Length; i++)
+            {
+                result[i] = uint.Parse(parts[i]);
+            }
+            return result;
         }
 
         private static uint GetOIDEl(byte[] bytes, ref int p)

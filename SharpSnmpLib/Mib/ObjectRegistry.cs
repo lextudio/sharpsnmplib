@@ -177,7 +177,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <param name="textual">Textual</param>
         /// <returns></returns>
         [CLSCompliant(false)]
-        public uint[] GetNumericalFrom(string textual)
+        public uint[] Translate(string textual)
         {
             if (textual == null)
             {
@@ -195,7 +195,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 throw new ArgumentException("textual format must be '<module>::<name>'");
             }
             
-            return GetNumericalFrom(content[0], content[1]);
+            return Translate(content[0], content[1]);
         }
         
         /// <summary>
@@ -205,7 +205,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <param name="name">Object name</param>
         /// <returns></returns>
         [CLSCompliant(false)]
-        public uint[] GetNumericalFrom(string module, string name)
+        public uint[] Translate(string module, string name)
         {
             if (module == null)
             {

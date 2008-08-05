@@ -14,27 +14,33 @@ namespace Lextm.SharpSnmpLib.Browser
 	    private string _get;
 	    private string _set;
 	    private VersionCode _version;
-	    private IPAddress _ip;
-	    private int _port;
+        private IPEndPoint _agent;
 	
 	    internal AgentProfile(VersionCode version, IPAddress ip, int port, string getCommunity, string setCommunity)
 	    {
 	        _get = getCommunity;
 	        _set = setCommunity;
 	        _version = version;
-	        _ip = ip;
-	        _port = port;
+            _agent = new IPEndPoint(ip, port);
 	    }
 	    
 	    internal int Port
 	    {
-	        get { return _port; }
+	        get { return _agent.Port; }
 	    }
 	    
 	    internal IPAddress IP
 	    {
-	        get { return _ip; }
+	        get { return _agent.Address; }
 	    }
+
+        internal IPEndPoint Agent
+        {
+            get
+            {
+                return _agent;
+            }
+        }
 
         internal VersionCode VersionCode
         {
@@ -55,7 +61,7 @@ namespace Lextm.SharpSnmpLib.Browser
 	
 	    internal void Get(Manager manager, string textual)
 	    {
-	        Report(manager.Get(_ip, _port, _get, new Variable(textual)));
+	        Report(manager.Get(_agent.Address, _agent.Port, _get, new Variable(textual)));
 	    }
 	
 	    private void Report(Variable variable)
@@ -68,7 +74,7 @@ namespace Lextm.SharpSnmpLib.Browser
 	
 	    internal void Set(Manager manager, string textual, ISnmpData data)
 	    {
-	        manager.Set(_ip, _port, _get, new Variable(textual, data));
+            manager.Set(_agent.Address, _agent.Port, _get, new Variable(textual, data));
 	    }
 	
 	    // private IPAddress ValidateIP()
