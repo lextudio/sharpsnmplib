@@ -21,10 +21,11 @@ using System;
 using System.Reflection;
 using System.Resources;
 using System.Runtime.InteropServices;
+using System.Runtime.CompilerServices;
 
 #endregion
 
-// General Information about an assembly is controlled through the following 
+// General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("SharpSnmpLib")]
@@ -44,10 +45,14 @@ using System.Runtime.InteropServices;
 //
 // Major.Minor.Build.Revision
 //
-// You can specify all the values or you can use the default the Revision and 
+// You can specify all the values or you can use the default the Revision and
 // Build Numbers by using the '*' as shown below:
-[assembly: AssemblyVersion("1.2.010811.06")]
-[assembly: AssemblyFileVersion("1.2.010811.06")]
+[assembly: AssemblyVersion("1.2.010811.19")]
+[assembly: AssemblyFileVersion("1.2.010811.19")]
 [assembly: NeutralResourcesLanguage("en-US")]
 [assembly: CLSCompliant(true)]
-
+[assembly: InternalsVisibleTo("SharpSnmpLib.Tests, PublicKey=0024000004800000940000000602000000240000525341310004000001000100cda8c7bee95df6" +
+                              "7f8d98cc94c28b38249c0fd3e42f909d339b1d668dcc5dd1746deae7a097ae275b3a56ba9d2897"+
+                              "0b5e9a803a0ca3ad0d6f9147c48a0fd103ad127e9e000b343e360a5430b70c6fd1a1358857592e"+
+                              "0129e26e308c952967f5828448f19d8ac3355a8a907e34770e92ee051edcc315c2ad281fa6247b"+
+                              "a7cd1dbd")]

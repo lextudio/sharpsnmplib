@@ -45,9 +45,6 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <Import Project="Microsoft.VersionNumber.targets" />
   <ItemGroup>
-    <Reference Include="nunit.framework">
-      <HintPath>..\lib\nunit.framework.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
@@ -139,28 +136,6 @@
     <Compile Include="SharpTimeoutException.cs" />
     <Compile Include="SnmpDataFactory.cs" />
     <Compile Include="SnmpType.cs" />
-    <Compile Include="Tests\TestByteTool.cs" />
-    <Compile Include="Tests\TestCounter32.cs" />
-    <Compile Include="Tests\TestCounter64.cs" />
-    <Compile Include="Tests\TestGauge32.cs" />
-    <Compile Include="Tests\TestGetRequestMessage.cs" />
-    <Compile Include="Tests\TestGetResponseMessage.cs" />
-    <Compile Include="Tests\TestInteger32.cs" />
-    <Compile Include="Tests\TestIP.cs" />
-    <Compile Include="Tests\TestLexer.cs" />
-    <Compile Include="Tests\TestMessageFactory.cs" />
-    <Compile Include="Tests\TestMibDocument.cs" />
-    <Compile Include="Tests\TestNull.cs" />
-    <Compile Include="Tests\TestObjectIdentifier.cs" />
-    <Compile Include="Tests\TestObjectRegistry.cs" />
-    <Compile Include="Tests\TestOctetString.cs" />
-    <Compile Include="Tests\TestOpaque.cs" />
-    <Compile Include="Tests\TestSequence.cs" />
-    <Compile Include="Tests\TestSnmpDataFactory.cs" />
-    <Compile Include="Tests\TestTimeticks.cs" />
-    <Compile Include="Tests\TestTrapMessage.cs" />
-    <Compile Include="Tests\TestTrapV1Pdu.cs" />
-    <Compile Include="Tests\TestVariable.cs" />
     <Compile Include="TimeTicks.cs" />
     <Compile Include="GenericCode.cs" />
     <Compile Include="TrapV1Message.cs" />
