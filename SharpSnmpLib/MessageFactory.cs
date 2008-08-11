@@ -8,6 +8,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Lextm.SharpSnmpLib
@@ -18,48 +19,60 @@ namespace Lextm.SharpSnmpLib
     public static class MessageFactory
     {
         /// <summary>
-        /// Creates an <see cref="ISnmpMessage"/> instance from buffer.
+        /// Creates <see cref="ISnmpMessage"/> instances from buffer.
         /// </summary>
-        /// <param name="buffer">Buffer</param>
-        /// <param name="index">Index</param>
-        /// <param name="count">Byte count</param>
+        /// <param name="buffer">Buffer.</param>
+        /// <param name="index">Index.</param>
+        /// <param name="count">Byte count.</param>
         /// <returns></returns>
-        public static ISnmpMessage ParseMessage(byte[] buffer, int index, int count)
-        {            
-            return ParseMessage(new MemoryStream(buffer, index, count, false));
+        public static IList<ISnmpMessage> ParseMessages(byte[] buffer, int index, int count)
+        {
+            return ParseMessages(new MemoryStream(buffer, index, count, false));
         }
         
         /// <summary>
-        /// Creates an <see cref="ISnmpMessage"/> instance from buffer.
+        /// Creates <see cref="ISnmpMessage"/> instances from buffer.
         /// </summary>
-        /// <param name="buffer"></param>
+        /// <param name="buffer">Buffer.</param>
         /// <returns></returns>
-        public static ISnmpMessage ParseMessage(byte[] buffer)
+        public static IList<ISnmpMessage> ParseMessages(byte[] buffer)
         {
-            return ParseMessage(buffer, 0, buffer.Length);
+            return ParseMessages(buffer, 0, buffer.Length);
         }
         
         /// <summary>
-        /// Creates an <see cref="ISnmpMessage"/> instance from stream.
+        /// Creates <see cref="ISnmpMessage"/> instances from stream.
         /// </summary>
-        /// <param name="stream">Stream</param>
+        /// <param name="stream">Stream.</param>
         /// <returns></returns>
-        public static ISnmpMessage ParseMessage(MemoryStream stream)
+        public static IList<ISnmpMessage> ParseMessages(MemoryStream stream)
         {
-            ISnmpData array = SnmpDataFactory.CreateSnmpData(stream);
-            if (array.TypeCode != SnmpType.Sequence) 
+            IList<ISnmpMessage> result = new List<ISnmpMessage>();
+            int first;
+            while ((first = stream.ReadByte()) != -1)
+            {
+                result.Add(ParseMessage((byte)first, stream));
+            }
+            
+            return result;
+        }
+        
+        private static ISnmpMessage ParseMessage(byte first, MemoryStream stream)
+        {
+            ISnmpData array = SnmpDataFactory.CreateSnmpData(first, stream);
+            if (array.TypeCode != SnmpType.Sequence)
             {
                 throw new ArgumentException("not an SNMP message");
             }
             
             Sequence body = (Sequence)array;
-            if (body.Items.Count != 3) 
+            if (body.Items.Count != 3)
             {
                 throw new ArgumentException("not an SNMP message");
             }
             
             ISnmpData pdu = body.Items[2];
-            switch (pdu.TypeCode) 
+            switch (pdu.TypeCode)
             {
                 case SnmpType.TrapV1Pdu:
                     return new TrapV1Message(body);

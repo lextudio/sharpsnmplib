@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text;
 
@@ -17,9 +18,17 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Creates an <see cref="ObjectIdentifier"/> instance from textual ID.
         /// </summary>
-        /// <param name="textual"></param>
-        public ObjectIdentifier(string textual) : this(Mib.ObjectRegistry.Instance.Translate(textual))
+        /// <param name="text">String in one of the formats, "[module]:[name]" or "*.*.*.*".</param>
+        public static ObjectIdentifier Create(string text)
         {
+            if (text.Contains("::"))
+            {
+                return new ObjectIdentifier(Mib.ObjectRegistry.Instance.Translate(text));
+            }
+            else
+            {
+                return new ObjectIdentifier(ObjectIdentifier.Convert(text));
+            }
         }
         
         /// <summary>
@@ -111,8 +120,9 @@ namespace Lextm.SharpSnmpLib
             uint[] result = new uint[parts.Length];
             for (int i = 0; i < parts.Length; i++)
             {
-                result[i] = uint.Parse(parts[i]);
+                result[i] = uint.Parse(parts[i], CultureInfo.InvariantCulture);
             }
+            
             return result;
         }
 

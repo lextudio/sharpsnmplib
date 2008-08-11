@@ -12,6 +12,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -31,7 +32,7 @@ namespace Lextm.SharpSnmpLib
         private int _port = DEFAULTPORT;
         private BackgroundWorker worker;
         private const int DEFAULTPORT = 162;
-       
+        
         /// <summary>
         /// Creates a <see cref="TrapListener" /> instance.
         /// </summary>
@@ -44,12 +45,12 @@ namespace Lextm.SharpSnmpLib
         /// Occurs when a <see cref="TrapV1Message" /> is received.
         /// </summary>
         public event EventHandler<TrapV1ReceivedEventArgs> TrapV1Received;
-      
+        
         /// <summary>
         /// Occurs when a <see cref="TrapV2Message"/> is received.
         /// </summary>
         public event EventHandler<TrapV2ReceivedEventArgs> TrapV2Received;
-      
+        
         /// <summary>
         /// Port number.
         /// </summary>
@@ -80,7 +81,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="port">Port number</param>
         public void Start(int port)
         {
-            if (worker.IsBusy) 
+            if (worker.IsBusy)
             {
                 return;
             }
@@ -113,7 +114,7 @@ namespace Lextm.SharpSnmpLib
             }
             
             _watcher.Close();
-            if (worker.IsBusy) 
+            if (worker.IsBusy)
             {
                 worker.CancelAsync();
             }
@@ -145,15 +146,16 @@ namespace Lextm.SharpSnmpLib
             byte[] msg = new byte[_watcher.ReceiveBufferSize];
             while (!((BackgroundWorker)sender).CancellationPending)
             {
+                Thread.Sleep(100);
                 int number = _watcher.Available;
                 if (number != 0)
                 {
                     _watcher.ReceiveFrom(msg, ref senderRemote);
-                    try 
+                    try
                     {
-                        HandleMessage(msg, number, (IPEndPoint)senderRemote);
-                    } 
-                    catch (Exception ex) 
+                        HandleMessages(msg, number, (IPEndPoint)senderRemote);
+                    }
+                    catch (Exception ex)
                     {
                         worker.ReportProgress(-1, ex);
                     }
@@ -161,33 +163,35 @@ namespace Lextm.SharpSnmpLib
             }
         }
         
-        private void HandleMessage(byte[] buffer, int number, IPEndPoint agent)
+        private void HandleMessages(byte[] buffer, int number, IPEndPoint agent)
         {
-            ISnmpMessage message = MessageFactory.ParseMessage(buffer, 0, number);
-            switch (message.TypeCode)
+            foreach (ISnmpMessage message in MessageFactory.ParseMessages(buffer, 0, number))
             {
-                case SnmpType.TrapV1Pdu:
-                    {
-                        if (TrapV1Received != null)
+                switch (message.TypeCode)
+                {
+                    case SnmpType.TrapV1Pdu:
                         {
-                            TrapV1Received(this, new TrapV1ReceivedEventArgs(agent, (TrapV1Message)message));
+                            if (TrapV1Received != null)
+                            {
+                                TrapV1Received(this, new TrapV1ReceivedEventArgs(agent, (TrapV1Message)message));
+                            }
+                            
+                            break;
                         }
                         
-                        break;
-                    }
-                    
-                case SnmpType.TrapV2Pdu:
-                    {
-                        if (TrapV2Received != null)
+                    case SnmpType.TrapV2Pdu:
                         {
-                            TrapV2Received(this, new TrapV2ReceivedEventArgs(agent, (TrapV2Message)message));
+                            if (TrapV2Received != null)
+                            {
+                                TrapV2Received(this, new TrapV2ReceivedEventArgs(agent, (TrapV2Message)message));
+                            }
+                            
+                            break;
                         }
                         
+                    default:
                         break;
-                    }
-                    
-                default:
-                    break;
+                }
             }
         }
         

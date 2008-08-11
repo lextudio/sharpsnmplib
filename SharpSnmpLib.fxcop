@@ -56,6 +56,19 @@
         <Types>
          <Type Name="AgentProfile">
           <Members>
+           <Member Name="#Port">
+            <Accessors>
+             <Accessor Name="#get_Port()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-08-11 03:43:56Z">
+                <Issue>
+                 <Item>'AgentProfile.Port.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
            <Member Name="#Walk(Lextm.SharpSnmpLib.Manager,Lextm.SharpSnmpLib.Mib.IDefinition)">
             <Messages>
              <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-07-30 11:33:36Z" FixCategory="NonBreaking">
@@ -73,6 +86,47 @@
               <Issue>
                <Item>'manager'</Item>
                <Item>'AgentProfile.Walk(Manager, IDefinition)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="AgentProfilePanel">
+          <Members>
+           <Member Name="#actAdd_Execute(System.Object,System.EventArgs)">
+            <Messages>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Created="2008-08-11 03:43:56Z">
+              <Issue>
+               <Item>'AgentProfilePanel.actAdd_Execute(object, EventArgs)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="FormProfile">
+          <Members>
+           <Member Name="#Port">
+            <Accessors>
+             <Accessor Name="#get_Port()">
+              <Messages>
+               <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2008-08-11 03:43:56Z">
+                <Issue>
+                 <Item>'int.Parse(string)'</Item>
+                 <Item>'FormProfile.Port.get()'</Item>
+                 <Item>'int.Parse(string, IFormatProvider)'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+           <Member Name="#txtPort_Validated(System.Object,System.EventArgs)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-08-11 03:43:56Z">
+              <Issue>
+               <Item>'FormProfile.txtPort_Validated(object, EventArgs)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -199,23 +253,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="ProfileRegistry">
-          <Members>
-           <Member Name="#Default">
-            <Accessors>
-             <Accessor Name="#get_Default()">
-              <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-07-30 11:33:36Z">
-                <Issue>
-                 <Item>'ProfileRegistry.Default.get()'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="Program">
           <Members>
            <Member Name="#Main(System.String[])">
@@ -257,52 +294,65 @@
          </Type>
          <Type Name="Manager">
           <Members>
-           <Member Name="#GetTable(Lextm.SharpSnmpLib.VersionCode,System.Net.IPAddress,System.String,Lextm.SharpSnmpLib.ObjectIdentifier)">
+           <Member Name="#GetTable(Lextm.SharpSnmpLib.VersionCode,System.Net.IPAddress,System.Int32,System.String,Lextm.SharpSnmpLib.ObjectIdentifier)">
             <Messages>
-             <Message Id="Body" TypeName="PreferJaggedArraysOverMultidimensional" Category="Microsoft.Performance" CheckId="CA1814" Created="2008-05-12 12:14:45Z">
+             <Message Id="Body" TypeName="PreferJaggedArraysOverMultidimensional" Category="Microsoft.Performance" CheckId="CA1814" Created="2008-08-11 03:43:56Z">
               <Issue Name="Body">
-               <Item>'Manager.GetTable(VersionCode, IPAddress, string, ObjectIdentifier)'</Item>
+               <Item>'Manager.GetTable(VersionCode, IPAddress, int, string, ObjectIdentifier)'</Item>
                <Item>'Variable[,]'</Item>
               </Issue>
               <Issue Name="Body">
-               <Item>'Manager.GetTable(VersionCode, IPAddress, string, ObjectIdentifier)'</Item>
+               <Item>'Manager.GetTable(VersionCode, IPAddress, int, string, ObjectIdentifier)'</Item>
                <Item>'Variable[,]'</Item>
               </Issue>
              </Message>
-             <Message Id="Return" TypeName="PreferJaggedArraysOverMultidimensional" Category="Microsoft.Performance" CheckId="CA1814" Created="2008-05-12 12:14:45Z">
+             <Message Id="Return" TypeName="PreferJaggedArraysOverMultidimensional" Category="Microsoft.Performance" CheckId="CA1814" Created="2008-08-11 03:43:56Z">
               <Issue Name="Return">
-               <Item>'Manager.GetTable(VersionCode, IPAddress, string, ObjectIdentifier)'</Item>
-               <Item>'Variable[,]'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#GetTable(Lextm.SharpSnmpLib.VersionCode,System.Net.IPAddress,System.String,System.UInt32[])">
-            <Messages>
-             <Message Id="Return" TypeName="PreferJaggedArraysOverMultidimensional" Category="Microsoft.Performance" CheckId="CA1814" Created="2008-05-12 12:14:45Z">
-              <Issue Name="Return">
-               <Item>'Manager.GetTable(VersionCode, IPAddress, string, uint[])'</Item>
+               <Item>'Manager.GetTable(VersionCode, IPAddress, int, string, ObjectIdentifier)'</Item>
                <Item>'Variable[,]'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="#GetTable(System.Net.IPAddress,System.String,Lextm.SharpSnmpLib.ObjectIdentifier)">
+           <Member Name="#GetTable(Lextm.SharpSnmpLib.VersionCode,System.Net.IPAddress,System.Int32,System.String,System.UInt32[])">
             <Messages>
-             <Message Id="Return" TypeName="PreferJaggedArraysOverMultidimensional" Category="Microsoft.Performance" CheckId="CA1814" Created="2008-05-12 12:14:45Z">
+             <Message Id="Return" TypeName="PreferJaggedArraysOverMultidimensional" Category="Microsoft.Performance" CheckId="CA1814" Created="2008-08-11 03:43:56Z">
               <Issue Name="Return">
-               <Item>'Manager.GetTable(IPAddress, string, ObjectIdentifier)'</Item>
+               <Item>'Manager.GetTable(VersionCode, IPAddress, int, string, uint[])'</Item>
                <Item>'Variable[,]'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="#GetTable(System.Net.IPAddress,System.String,System.UInt32[])">
+           <Member Name="#GetTable(System.Net.IPAddress,System.Int32,System.String,Lextm.SharpSnmpLib.ObjectIdentifier)">
             <Messages>
-             <Message Id="Return" TypeName="PreferJaggedArraysOverMultidimensional" Category="Microsoft.Performance" CheckId="CA1814" Created="2008-05-12 12:14:45Z">
+             <Message Id="Return" TypeName="PreferJaggedArraysOverMultidimensional" Category="Microsoft.Performance" CheckId="CA1814" Created="2008-08-11 03:43:56Z">
               <Issue Name="Return">
-               <Item>'Manager.GetTable(IPAddress, string, uint[])'</Item>
+               <Item>'Manager.GetTable(IPAddress, int, string, ObjectIdentifier)'</Item>
                <Item>'Variable[,]'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetTable(System.Net.IPAddress,System.Int32,System.String,System.UInt32[])">
+            <Messages>
+             <Message Id="Return" TypeName="PreferJaggedArraysOverMultidimensional" Category="Microsoft.Performance" CheckId="CA1814" Created="2008-08-11 03:43:56Z">
+              <Issue Name="Return">
+               <Item>'Manager.GetTable(IPAddress, int, string, uint[])'</Item>
+               <Item>'Variable[,]'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="PduCounter">
+          <Members>
+           <Member Name="#Clear()">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-08-11 03:43:56Z">
+              <Issue>
+               <Item>'PduCounter.Clear()'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -648,6 +698,66 @@
        </Namespace>
        <Namespace Name="Lextm.SharpSnmpLib.Tests">
         <Types>
+         <Type Name="TestByteTool">
+          <Members>
+           <Member Name="#TestReadLongLength()">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-08-11 03:43:56Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'TestByteTool.TestReadLongLength()'</Item>
+              </Issue>
+              <Notes>
+               <User Name="lextm">
+                <Note Id="2" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#TestReadShortLength()">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-08-11 03:43:56Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'TestByteTool.TestReadShortLength()'</Item>
+              </Issue>
+              <Notes>
+               <User Name="lextm">
+                <Note Id="2" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#TestWriteLongLength()">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-08-11 03:43:56Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'TestByteTool.TestWriteLongLength()'</Item>
+              </Issue>
+              <Notes>
+               <User Name="lextm">
+                <Note Id="2" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#TestWriteShortLength()">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-08-11 03:43:56Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'TestByteTool.TestWriteShortLength()'</Item>
+              </Issue>
+              <Notes>
+               <User Name="lextm">
+                <Note Id="2" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
          <Type Name="TestCounter32">
           <Members>
            <Member Name="#TestConstructor()">
@@ -664,6 +774,20 @@
              </Message>
             </Messages>
            </Member>
+           <Member Name="#TestConstructor2()">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-08-11 03:43:56Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'TestCounter32.TestConstructor2()'</Item>
+              </Issue>
+              <Notes>
+               <User Name="lextm">
+                <Note Id="2" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="#TestToBytes()">
             <Messages>
              <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-07-13 05:10:02Z" FixCategory="DependsOnFix">
@@ -673,6 +797,38 @@
               <Notes>
                <User Name="lextm">
                 <Note Id="0" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="TestCounter64">
+          <Members>
+           <Member Name="#TestContructor()">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-08-11 03:43:56Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'TestCounter64.TestContructor()'</Item>
+              </Issue>
+              <Notes>
+               <User Name="lextm">
+                <Note Id="2" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#TestToBytes()">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-08-11 03:43:56Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'TestCounter64.TestToBytes()'</Item>
+              </Issue>
+              <Notes>
+               <User Name="lextm">
+                <Note Id="2" />
                </User>
               </Notes>
              </Message>
@@ -730,24 +886,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="TestGetRequestPdu">
-          <Members>
-           <Member Name="#Test()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-07-13 05:10:02Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'TestGetRequestPdu.Test()'</Item>
-              </Issue>
-              <Notes>
-               <User Name="lextm">
-                <Note Id="0" />
-               </User>
-              </Notes>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="TestGetResponseMessage">
           <Members>
            <Member Name="#TestMethod()">
@@ -759,6 +897,52 @@
               <Notes>
                <User Name="lextm">
                 <Note Id="0" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="TestInteger32">
+          <Members>
+           <Member Name="#TestConstructor()">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-08-11 03:43:56Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'TestInteger32.TestConstructor()'</Item>
+              </Issue>
+              <Notes>
+               <User Name="lextm">
+                <Note Id="2" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#TestToBytes()">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-08-11 03:43:56Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'TestInteger32.TestToBytes()'</Item>
+              </Issue>
+              <Notes>
+               <User Name="lextm">
+                <Note Id="2" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#TestToInt32()">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-08-11 03:43:56Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'TestInteger32.TestToInt32()'</Item>
+              </Issue>
+              <Notes>
+               <User Name="lextm">
+                <Note Id="2" />
                </User>
               </Notes>
              </Message>
@@ -809,6 +993,24 @@
               <Notes>
                <User Name="lextm">
                 <Note Id="0" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="TestMessageFactory">
+          <Members>
+           <Member Name="#TestMethod()">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-08-11 03:43:56Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'TestMessageFactory.TestMethod()'</Item>
+              </Issue>
+              <Notes>
+               <User Name="lextm">
+                <Note Id="2" />
                </User>
               </Notes>
              </Message>
@@ -4718,6 +4920,38 @@
              </Message>
             </Messages>
            </Member>
+           <Member Name="#TestToBytes()">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-08-11 03:43:56Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'TestOctetString.TestToBytes()'</Item>
+              </Issue>
+              <Notes>
+               <User Name="lextm">
+                <Note Id="2" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="TestOpaque">
+          <Members>
+           <Member Name="#TestConstructor()">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-08-11 03:43:56Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'TestOpaque.TestConstructor()'</Item>
+              </Issue>
+              <Notes>
+               <User Name="lextm">
+                <Note Id="2" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
           </Members>
          </Type>
          <Type Name="TestSequence">
@@ -4924,6 +5158,20 @@
              </Message>
             </Messages>
            </Member>
+           <Member Name="#TestConstructor2()">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-08-11 03:43:56Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'TestTimeticks.TestConstructor2()'</Item>
+              </Issue>
+              <Notes>
+               <User Name="lextm">
+                <Note Id="2" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="#TestToBytes()">
             <Messages>
              <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-07-13 05:10:02Z" FixCategory="DependsOnFix">
@@ -5061,6 +5309,7 @@
    <User Name="lextm">
     <Note Id="0" Modified="2008-07-13 05:11:02Z">test</Note>
     <Note Id="1" Modified="2008-07-26 03:57:23Z">test</Note>
+    <Note Id="2" Modified="2008-08-11 03:44:13Z">test</Note>
    </User>
   </Notes>
   <Rules>

@@ -50,6 +50,28 @@ namespace Lextm.SharpSnmpLib
                 _version = value;
             }
         }
+        
+        /// <summary>
+        /// Discovers SNMP agents in the network
+        /// </summary>
+        /// <param name="version">Version code.</param>
+        /// <param name="broadcast">Broadcast address.</param>
+        /// <param name="port">Port number.</param>
+        /// <param name="community">Comunity name.</param>
+        /// <returns></returns>
+        public IDictionary<IPEndPoint, ISnmpData> Discover(VersionCode version, IPAddress broadcast, int port, string community)
+        {
+            if (version == VersionCode.V3)
+            {
+                throw new ArgumentException("you can only use SNMP v1 or v2 in this version");
+            }
+
+            Variable v = new Variable(new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 1, 1, 0 }));
+            using (GetRequestMessage message = new GetRequestMessage(version, broadcast, community, new List<Variable>() { v }))
+            {
+                return message.Broadcast(_timeout, port);
+            }
+        }
 
         /// <summary>
         /// Gets a list of variable binds.

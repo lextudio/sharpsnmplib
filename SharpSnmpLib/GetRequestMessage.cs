@@ -59,7 +59,7 @@ namespace Lextm.SharpSnmpLib
             }
             
             _community = body.Items[1].ToString();
-            _version = (VersionCode)((Integer32)body.Items[0]).ToInt32();    
+            _version = (VersionCode)((Integer32)body.Items[0]).ToInt32();
             _pdu = (ISnmpPdu)body.Items[2];
             if (_pdu.TypeCode != TypeCode)
             {
@@ -79,6 +79,52 @@ namespace Lextm.SharpSnmpLib
             {
                 return _variables;
             }
+        }
+        
+        /// <summary>
+        /// Broadcasts request for new agents.
+        /// </summary>
+        /// <param name="timeout">Timeout.</param>
+        /// <param name="port">Port number.</param>
+        /// <returns></returns>
+        public IDictionary<IPEndPoint, ISnmpData> Broadcast(int timeout, int port)
+        {
+            IDictionary<IPEndPoint, ISnmpData> list = new Dictionary<IPEndPoint, ISnmpData>();
+            byte[] bytes = _bytes;
+            IPEndPoint agent = new IPEndPoint(_agent, port);
+            udp.Send(bytes, bytes.Length, agent);
+            IPEndPoint from = new IPEndPoint(IPAddress.Any, 0);
+            IAsyncResult result = udp.BeginReceive(null, this);
+            result.AsyncWaitHandle.WaitOne(timeout, false);
+            if (!result.IsCompleted)
+            {
+                throw SharpTimeoutException.Create(_agent, timeout);
+            }
+            
+            bytes = udp.EndReceive(result, ref from);
+            MemoryStream m = new MemoryStream(bytes, false);
+            foreach (ISnmpMessage message in MessageFactory.ParseMessages(m))
+            {
+                if (message.TypeCode != SnmpType.GetResponsePdu)
+                {
+                    break; // throw SharpOperationException.Create("wrong response type", _agent);
+                }
+                
+                GetResponseMessage response = (GetResponseMessage)message;
+                if (response.SequenceNumber != SequenceNumber)
+                {
+                    break; // throw SharpOperationException.Create("wrong response sequence", _agent);
+                }
+                
+                if (response.ErrorStatus != ErrorCode.NoError)
+                {
+                    break;
+                }
+                
+                list.Add(from, response.Variables.Count == 0 ? null : response.Variables[0].Data);
+            }
+            
+            return list;
         }
         
         /// <summary>
@@ -102,8 +148,8 @@ namespace Lextm.SharpSnmpLib
             
             bytes = udp.EndReceive(result, ref from);
             MemoryStream m = new MemoryStream(bytes, false);
-            ISnmpMessage message = MessageFactory.ParseMessage(m);
-            if (message.TypeCode != SnmpType.GetResponsePdu) 
+            ISnmpMessage message = MessageFactory.ParseMessages(m)[0];
+            if (message.TypeCode != SnmpType.GetResponsePdu)
             {
                 throw SharpOperationException.Create("wrong response type", _agent);
             }
@@ -118,10 +164,10 @@ namespace Lextm.SharpSnmpLib
             {
                 throw SharpErrorException.Create(
                     "error in response",
-                                                 _agent,
-                                                 response.ErrorStatus,
-                                                 response.ErrorIndex,
-                                                 response.Variables[response.ErrorIndex - 1].Id);
+                    _agent,
+                    response.ErrorStatus,
+                    response.ErrorIndex,
+                    response.Variables[response.ErrorIndex - 1].Id);
             }
             
             return response.Variables;
@@ -149,7 +195,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         public ISnmpPdu Pdu
         {
-            get 
+            get
             {
                 return _pdu;
             }
@@ -158,9 +204,9 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Type code.
         /// </summary>
-        public SnmpType TypeCode 
+        public SnmpType TypeCode
         {
-            get 
+            get
             {
                 return SnmpType.GetRequestPdu;
             }

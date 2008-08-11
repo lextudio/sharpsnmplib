@@ -26,32 +26,19 @@ namespace Lextm.SharpSnmpLib
         {
             return CreateSnmpData(buffer, 0, buffer.Length);
         }
-      
-        /// <summary>
-        /// Creates an <see cref="ISnmpData"/> instance from buffer.
-        /// </summary>
-        /// <param name="buffer">Buffer</param>
-        /// <param name="index">Index</param>
-        /// <param name="count">Count</param>
-        /// <returns></returns>
-        public static ISnmpData CreateSnmpData(byte[] buffer, int index, int count)
-        {
-            MemoryStream m = new MemoryStream(buffer, index, count, false);
-            return CreateSnmpData(m);
-        }
-     
+        
         /// <summary>
         /// Creates an <see cref="ISnmpData"/> instance from stream.
         /// </summary>
-        /// <param name="stream">Stream</param>
+        /// <param name="stream">Stream.</param>
+        /// <param name="type">Type code.</param>
         /// <returns></returns>
-        public static ISnmpData CreateSnmpData(MemoryStream stream)
+        public static ISnmpData CreateSnmpData(int type, MemoryStream stream)
         {
-            int type = stream.ReadByte();
             int length = ByteTool.ReadPayloadLength(stream);
             byte[] bytes = new byte[length];
             stream.Read(bytes, 0, length);
-            switch ((SnmpType)type) 
+            switch ((SnmpType)type)
             {
                 case SnmpType.Counter32:
                     return new Counter32(bytes);
@@ -99,7 +86,30 @@ namespace Lextm.SharpSnmpLib
                     return new ReportPdu(bytes);
                 default:
                     throw new SharpSnmpException("unsupported data type: " + (SnmpType)type);
-            }            
+            }
+        }
+        
+        /// <summary>
+        /// Creates an <see cref="ISnmpData"/> instance from buffer.
+        /// </summary>
+        /// <param name="buffer">Buffer</param>
+        /// <param name="index">Index</param>
+        /// <param name="count">Count</param>
+        /// <returns></returns>
+        public static ISnmpData CreateSnmpData(byte[] buffer, int index, int count)
+        {
+            MemoryStream m = new MemoryStream(buffer, index, count, false);
+            return CreateSnmpData(m);
+        }
+        
+        /// <summary>
+        /// Creates an <see cref="ISnmpData"/> instance from stream.
+        /// </summary>
+        /// <param name="stream">Stream</param>
+        /// <returns></returns>
+        public static ISnmpData CreateSnmpData(MemoryStream stream)
+        {
+            return CreateSnmpData(stream.ReadByte(), stream);
         }
     }
 }

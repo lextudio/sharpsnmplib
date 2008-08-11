@@ -21,7 +21,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestMethod()
         {
             MemoryStream m = new MemoryStream(Resource.getresponse, false);
-            ISnmpMessage message = MessageFactory.ParseMessage(m);
+            ISnmpMessage message = MessageFactory.ParseMessages(m)[0];
             Assert.AreEqual(SnmpType.GetResponsePdu, message.TypeCode);
             ISnmpPdu pdu = message.Pdu;
             Assert.AreEqual(SnmpType.GetResponsePdu, pdu.TypeCode);

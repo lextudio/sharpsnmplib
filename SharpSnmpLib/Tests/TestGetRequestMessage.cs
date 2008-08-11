@@ -27,7 +27,7 @@ namespace Lextm.SharpSnmpLib.Tests
 		public void Test()
 		{
 			byte[] expected = Resource.get;
-            ISnmpMessage message = MessageFactory.ParseMessage(expected);
+			ISnmpMessage message = MessageFactory.ParseMessages(expected)[0];
             Assert.AreEqual(SnmpType.GetRequestPdu, message.TypeCode);
             GetRequestPdu pdu = (GetRequestPdu)message.Pdu;
             Assert.AreEqual(1, pdu.Variables.Count);
@@ -38,5 +38,3 @@ namespace Lextm.SharpSnmpLib.Tests
 	}
 }
 #pragma warning restore 1591
-
-
