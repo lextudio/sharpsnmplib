@@ -6,15 +6,17 @@
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
-
-using System;
-using System.Collections.Generic;
 namespace Lextm.SharpSnmpLib
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Net;
+    using System.Net.Sockets;
+    
     /// <summary>
     /// GET response message.
     /// </summary>
-    public class GetResponseMessage : ISnmpMessage
+    public class GetResponseMessage : ISnmpMessage, IDisposable
     {
         private ISnmpPdu _pdu;
         private int _sequenceNumber;
@@ -24,7 +26,33 @@ namespace Lextm.SharpSnmpLib
         private byte[] _bytes;
         private VersionCode _version;
         private string _community;
+        private IPAddress _receiver;
+        private UdpClient udp = new UdpClient();
         
+        
+        /// <summary>
+        /// Creates a <see cref="GetResponseMessage"/> with all contents.
+        /// </summary>
+        /// <param name="version">Protocol version.</param>
+        /// <param name="receiver">Receiver address.</param>
+        /// <param name="community">Community name.</param>
+        /// <param name="sequenceNumber">Sequence number.</param>
+        /// <param name="variables">Variables.</param>
+        public GetResponseMessage(int sequenceNumber, VersionCode version, IPAddress receiver, string community, IList<Variable> variables)
+        {
+            _version = version;
+            _receiver = receiver;
+            _community = community;
+            _variables = variables;
+            GetResponsePdu pdu = new GetResponsePdu(
+                new Integer32(sequenceNumber),
+                ErrorCode.NoError,
+                new Integer32(0),
+                _variables);
+            _sequenceNumber = sequenceNumber;
+            _bytes = pdu.ToMessageBody(_version, _community).ToBytes();
+        }
+                
         /// <summary>
         /// Creates a <see cref="GetResponseMessage"/> with a specific <see cref="Sequence"/>.
         /// </summary>
@@ -55,6 +83,18 @@ namespace Lextm.SharpSnmpLib
             _errorIndex = pdu.ErrorIndex;
             _variables = _pdu.Variables;
             _bytes = body.ToBytes();
+        }
+        
+        /// <summary>
+        /// Sends this <see cref="GetRequestMessage"/> and handles the response from agent.
+        /// </summary>
+        /// <param name="port">Port number.</param>
+        /// <returns></returns>
+        public void Send(int port)
+        {
+            byte[] bytes = _bytes;
+            IPEndPoint receiver = new IPEndPoint(_receiver, port);
+            udp.Send(bytes, bytes.Length, receiver);
         }
         
         /// <summary>
@@ -136,6 +176,45 @@ namespace Lextm.SharpSnmpLib
         public override string ToString()
         {
             return "GET response message: version: " + _version + "; " + _community + "; " + _pdu;
+        }
+        
+        private bool _disposed;
+        
+        /// <summary>
+        /// Finalizer of <see cref="GetResponseMessage"/>.
+        /// </summary>
+        ~GetResponseMessage()
+        {
+            Dispose(false);
+        }
+        
+        /// <summary>
+        /// Releases all resources used by the <see cref="GetResponseMessage"/>.
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        
+        /// <summary>
+        /// Disposes of the resources (other than memory) used by the <see cref="GetResponseMessage"/>.
+        /// </summary>
+        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.
+        /// </param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+            
+            if (disposing)
+            {
+                (udp as IDisposable).Dispose();
+            }
+            
+            _disposed = true;
         }
     }
 }

@@ -129,7 +129,7 @@ namespace Lextm.SharpSnmpLib
         }
 
         /// <summary>
-        /// Returns a <see cref="String"/> that represents this <see cref="SetRequestPdu"/>.
+        /// Returns a <see cref="String"/> that represents this <see cref="TrapV2Pdu"/>.
         /// </summary>
         /// <returns></returns>
         public override string ToString()

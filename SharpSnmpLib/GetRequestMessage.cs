@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Net;
-using System.Net.Sockets;
-using System.Text;
-
-namespace Lextm.SharpSnmpLib
+﻿namespace Lextm.SharpSnmpLib
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Net;
+    using System.Net.Sockets;
+    using System.Text;
+    
     /// <summary>
     /// GET request message.
     /// </summary>
@@ -89,42 +89,13 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public IDictionary<IPEndPoint, ISnmpData> Broadcast(int timeout, int port)
         {
-            IDictionary<IPEndPoint, ISnmpData> list = new Dictionary<IPEndPoint, ISnmpData>();
             byte[] bytes = _bytes;
             IPEndPoint agent = new IPEndPoint(_agent, port);
-            udp.Send(bytes, bytes.Length, agent);
-            IPEndPoint from = new IPEndPoint(IPAddress.Any, 0);
-            IAsyncResult result = udp.BeginReceive(null, this);
-            result.AsyncWaitHandle.WaitOne(timeout, false);
-            if (!result.IsCompleted)
-            {
-                throw SharpTimeoutException.Create(_agent, timeout);
-            }
-            
-            bytes = udp.EndReceive(result, ref from);
-            MemoryStream m = new MemoryStream(bytes, false);
-            foreach (ISnmpMessage message in MessageFactory.ParseMessages(m))
-            {
-                if (message.TypeCode != SnmpType.GetResponsePdu)
-                {
-                    break; // throw SharpOperationException.Create("wrong response type", _agent);
-                }
-                
-                GetResponseMessage response = (GetResponseMessage)message;
-                if (response.SequenceNumber != SequenceNumber)
-                {
-                    break; // throw SharpOperationException.Create("wrong response sequence", _agent);
-                }
-                
-                if (response.ErrorStatus != ErrorCode.NoError)
-                {
-                    break;
-                }
-                
-                list.Add(from, response.Variables.Count == 0 ? null : response.Variables[0].Data);
-            }
-            
-            return list;
+            udp.EnableBroadcast = true;
+            udp.Send(bytes, bytes.Length, agent); 
+            IPEndPoint local = (IPEndPoint)udp.Client.LocalEndPoint;
+            udp.Close();
+            return new BroadcastHandler(timeout, local).Found;
         }
         
         /// <summary>

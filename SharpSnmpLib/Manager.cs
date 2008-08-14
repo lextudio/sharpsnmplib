@@ -343,7 +343,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="port">Manager port number</param>
         public void Start(int port)
         {
-            trapListener.Start(port);
+            trapListener.Start(IPAddress.Any, port);
         }
 
         /// <summary>

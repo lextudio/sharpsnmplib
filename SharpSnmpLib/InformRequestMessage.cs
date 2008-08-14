@@ -32,19 +32,21 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Creates a <see cref="InformRequestMessage"/> with all contents.
         /// </summary>
-        /// <param name="version">Protocol version</param>
-        /// <param name="agent">Agent address</param>
-        /// <param name="community">Community name</param>
-        /// <param name="variables">Variables</param>
-        public InformRequestMessage(VersionCode version, IPAddress agent, string community, IList<Variable> variables)
+        /// <param name="version">Protocol version.</param>
+        /// <param name="agent">Agent address.</param>
+        /// <param name="community">Community name.</param>
+		/// <param name="enterprise">Enterprise.</param>
+		/// <param name="time">Time ticks.</param>
+        /// <param name="variables">Variables.</param>
+        [CLSCompliant(false)]
+        public InformRequestMessage(VersionCode version, IPAddress agent, string community, ObjectIdentifier enterprise, uint time, IList<Variable> variables)
         {
             _version = version;
             _agent = agent;
             _community = community;
             _variables = variables;
-            InformRequestPdu pdu = new InformRequestPdu(
-                ErrorCode.NoError,
-                0,
+            InformRequestPdu pdu = new InformRequestPdu(enterprise,
+                new TimeTicks(time),
                 _variables);
             _sequenceNumber = pdu.SequenceNumber;
             _bytes = pdu.ToMessageBody(_version, _community).ToBytes();
@@ -74,6 +76,8 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentException("wrong message type");
             }
             
+            InformRequestPdu pdu = (InformRequestPdu)_pdu;
+            _sequenceNumber = pdu.SequenceNumber;
             _variables = _pdu.Variables;
             _bytes = body.ToBytes();
         }
@@ -89,13 +93,19 @@ namespace Lextm.SharpSnmpLib
             }
         }
         
+        internal void SendResponse(IPEndPoint receiver)
+        {
+             // TODO: make more efficient here.
+             InformRequestPdu pdu = (InformRequestPdu)_pdu;
+             new GetResponseMessage(_sequenceNumber, _version, receiver.Address, _community, pdu.AllVariables).Send(receiver.Port);
+        }
+        
         /// <summary>
-        /// Sends this <see cref="InformRequestMessage"/> and handles the response from agent.
+        /// Sends this <see cref="InformRequestMessage"/> and handles the response from receiver (managers or agents).
         /// </summary>
         /// <param name="timeout">Timeout.</param>
         /// <param name="port">Port number.</param>
-        /// <returns></returns>
-        public IList<Variable> Send(int timeout, int port)
+        public void Send(int timeout, int port)
         {
             byte[] bytes = _bytes;
             IPEndPoint agent = new IPEndPoint(_agent, port);
@@ -131,8 +141,6 @@ namespace Lextm.SharpSnmpLib
                                                  response.ErrorIndex,
                                                  response.Variables[response.ErrorIndex - 1].Id);
             }
-            
-            return response.Variables;
         }
         
         internal int SequenceNumber
@@ -170,7 +178,7 @@ namespace Lextm.SharpSnmpLib
         {
             get 
             {
-                return SnmpType.GetRequestPdu;
+                return SnmpType.InformRequestPdu;
             }
         }
         

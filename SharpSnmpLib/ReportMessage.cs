@@ -170,7 +170,7 @@ namespace Lextm.SharpSnmpLib
         {
             get 
             {
-                return SnmpType.GetRequestPdu;
+                return SnmpType.ReportPdu;
             }
         }
         

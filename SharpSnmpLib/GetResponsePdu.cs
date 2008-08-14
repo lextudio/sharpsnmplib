@@ -26,7 +26,23 @@ namespace Lextm.SharpSnmpLib
         private Sequence _varbindSection;
         private byte[] _bytes;
         private byte[] _raw;
-        
+                
+        /// <summary>
+        /// Creates a <see cref="GetResponsePdu"/> with all contents.
+        /// </summary>
+        /// <param name="errorStatus">Error status.</param>
+        /// <param name="errorIndex">Error index.</param>
+        /// <param name="sequenceNumber">Sequence number.</param>
+        /// <param name="variables">Variables.</param>
+        public GetResponsePdu(Integer32 sequenceNumber, ErrorCode errorStatus, Integer32 errorIndex, IList<Variable> variables)
+        {
+            _sequenceNumber = sequenceNumber;
+            _errorStatus = new Integer32((int)errorStatus);
+            _errorIndex = errorIndex;
+            _variables = variables;
+            _varbindSection = Variable.Transform(variables);
+            _raw = ByteTool.ParseItems(_sequenceNumber, _errorStatus, _errorIndex, _varbindSection);
+        }
         /// <summary>
         /// Creates a <see cref="GetResponsePdu"/> from raw bytes.
         /// </summary>

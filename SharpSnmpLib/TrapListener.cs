@@ -32,6 +32,7 @@ namespace Lextm.SharpSnmpLib
         private int _port = DEFAULTPORT;
         private BackgroundWorker worker;
         private const int DEFAULTPORT = 162;
+        private IPAddress defaultAddress = IPAddress.Any;
         
         /// <summary>
         /// Creates a <see cref="TrapListener" /> instance.
@@ -50,6 +51,16 @@ namespace Lextm.SharpSnmpLib
         /// Occurs when a <see cref="TrapV2Message"/> is received.
         /// </summary>
         public event EventHandler<TrapV2ReceivedEventArgs> TrapV2Received;
+        
+        /// <summary>
+        /// Occurs when a <see cref="InformRequestMessage"/> is received.
+        /// </summary>
+        public event EventHandler<InformRequestReceivedEventArgs> InformRequestReceived;
+        
+        /// <summary>
+        /// Occurs when a <see cref="GetResponseMessage"/> is received.
+        /// </summary>
+        public event EventHandler<GetResponseReceivedEventArgs> GetResponseReceived;
         
         /// <summary>
         /// Port number.
@@ -72,14 +83,15 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         public void Start()
         {
-            Start(DEFAULTPORT);
+            Start(defaultAddress, DEFAULTPORT);
         }
         
         /// <summary>
         /// Starts on a specific port.
         /// </summary>
-        /// <param name="port">Port number</param>
-        public void Start(int port)
+        /// <param name="port">Port number.</param>
+        /// <param name="address">Address.</param>
+        public void Start(IPAddress address, int port)
         {
             if (worker.IsBusy)
             {
@@ -87,7 +99,7 @@ namespace Lextm.SharpSnmpLib
             }
             
             _port = port;
-            _sender = new IPEndPoint(IPAddress.Any, _port);
+            _sender = new IPEndPoint(address, _port);
             _watcher = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             try
             {
@@ -125,7 +137,7 @@ namespace Lextm.SharpSnmpLib
             this.worker = new System.ComponentModel.BackgroundWorker();
             this.worker.WorkerReportsProgress = true;
             this.worker.WorkerSupportsCancellation = true;
-            this.worker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.Worker_DoWork);
+            this.worker.DoWork += new System.ComponentModel.DoWorkEventHandler(Worker_DoWork);
             this.worker.ProgressChanged += new ProgressChangedEventHandler(TrapListener_ProgressChanged);
         }
 
@@ -189,6 +201,28 @@ namespace Lextm.SharpSnmpLib
                             break;
                         }
                         
+                    case SnmpType.InformRequestPdu:
+                        {
+                            InformRequestMessage inform = (InformRequestMessage)message;
+                            inform.SendResponse(agent);
+                            
+                            if (InformRequestReceived != null)
+                            {
+                                InformRequestReceived(this, new InformRequestReceivedEventArgs(agent, inform));
+                            }
+                            break;
+                        }
+                        
+                    case SnmpType.GetResponsePdu:
+                        {
+                            if (GetResponseReceived != null)
+                            {
+                                GetResponseReceived(this, new GetResponseReceivedEventArgs(agent, (GetResponseMessage)message));
+                            }
+                            
+                            break;
+                        }
+                        
                     default:
                         break;
                 }
@@ -202,6 +236,17 @@ namespace Lextm.SharpSnmpLib
         public override string ToString()
         {
             return "Trap listener: port: " + _port;
+        }
+        
+        /// <summary>
+        /// Returns a value if the listener is still working.
+        /// </summary>
+        public bool Active
+        {
+            get
+            {
+                return worker.IsBusy;
+            }
         }
     }
 }

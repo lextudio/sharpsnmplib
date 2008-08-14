@@ -26,28 +26,28 @@ namespace Lextm.SharpSnmpLib
         private byte[] _raw;
         private Sequence _varbindSection;
         private byte[] _bytes;
+        private TimeTicks _time;
+        private ObjectIdentifier _enterprise;
         
         /// <summary>
-        /// Creates a <see cref="InformRequestPdu"/> with all contents.
+        /// Creates a <see cref="InformRequestPdu"/> instance with all content.
         /// </summary>
-        /// <param name="errorStatus">Error status</param>
-        /// <param name="errorIndex">Error index</param>
+        /// <param name="enterprise">Enterprise</param>
+        /// <param name="time">Time stamp</param>
         /// <param name="variables">Variables</param>
-        public InformRequestPdu(ErrorCode errorStatus, int errorIndex, IList<Variable> variables)
-            : this(new Integer32((int)errorStatus), new Integer32(errorIndex), variables)
+        public InformRequestPdu(ObjectIdentifier enterprise, TimeTicks time, IList<Variable> variables)
         {
-        }
-        
-        private InformRequestPdu(Integer32 errorStatus, Integer32 errorIndex, IList<Variable> variables)
-        {
+            _enterprise = enterprise;
             _seq = PduCounter.NextCount;
-            _errorStatus = errorStatus;
-            _errorIndex = errorIndex;
+            _time = time;
             _variables = variables;
-            _varbindSection = Variable.Transform(variables);
-            _raw = ByteTool.ParseItems(_seq, _errorStatus, _errorIndex, _varbindSection);
-        }
-        
+            IList<Variable> full = new List<Variable>(variables);
+            full.Insert(0, new Variable(new uint[] { 1, 3, 6, 1, 2, 1, 1, 3, 0 }, _time));
+            full.Insert(1, new Variable(new uint[] { 1, 3, 6, 1, 6, 3, 1, 1, 4, 1, 0 }, _enterprise));
+            _varbindSection = Variable.Transform(full);
+            _raw = ByteTool.ParseItems(_seq, new Integer32(0), new Integer32(0), _varbindSection);
+        }        
+
         /// <summary>
         /// Creates a <see cref="InformRequestPdu"/> with raw bytes.
         /// </summary>
@@ -61,6 +61,10 @@ namespace Lextm.SharpSnmpLib
             _errorIndex = (Integer32)SnmpDataFactory.CreateSnmpData(m);
             _varbindSection = (Sequence)SnmpDataFactory.CreateSnmpData(m);
             _variables = Variable.Transform(_varbindSection);
+            _time = (TimeTicks)_variables[0].Data;
+            _variables.RemoveAt(0);
+            _enterprise = (ObjectIdentifier)_variables[0].Data;
+            _variables.RemoveAt(0);
         }
         
         internal int SequenceNumber
@@ -68,6 +72,14 @@ namespace Lextm.SharpSnmpLib
             get
             {
                 return _seq.ToInt32();
+            }
+        }
+        
+        internal IList<Variable> AllVariables
+        {
+            get
+            {
+                return Variable.Transform(_varbindSection);
             }
         }
         
@@ -134,9 +146,9 @@ namespace Lextm.SharpSnmpLib
             return string.Format(
                 CultureInfo.InvariantCulture,
                 "INFORM request PDU: seq: {0}; status: {1}; index: {2}; variable count: {3}",
-                _seq, 
-                _errorStatus, 
-                _errorIndex, 
+                _seq,
+                _errorStatus,
+                _errorIndex,
                 _variables.Count);
         }
     }
