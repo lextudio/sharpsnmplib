@@ -43,6 +43,7 @@ namespace Lextm.SharpSnmpLib
             _varbindSection = Variable.Transform(variables);
             _raw = ByteTool.ParseItems(_sequenceNumber, _errorStatus, _errorIndex, _varbindSection);
         }
+        
         /// <summary>
         /// Creates a <see cref="GetResponsePdu"/> from raw bytes.
         /// </summary>

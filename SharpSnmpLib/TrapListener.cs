@@ -174,9 +174,12 @@ namespace Lextm.SharpSnmpLib
                 }
             }
         }
+        
+/*
 #if DEBUG        
-        private static int i = 0;
-#endif        
+        private static int i;
+#endif  
+// */
         private void HandleMessages(byte[] buffer, int number, IPEndPoint agent)
         {
             /*
@@ -189,6 +192,7 @@ namespace Lextm.SharpSnmpLib
             }
             #endif
             //*/
+            
             //*
             #region parsing
             foreach (ISnmpMessage message in MessageFactory.ParseMessages(buffer, 0, number))
@@ -224,6 +228,7 @@ namespace Lextm.SharpSnmpLib
                             {
                                 InformRequestReceived(this, new InformRequestReceivedEventArgs(agent, inform));
                             }
+                            
                             break;
                         }
                         
@@ -242,7 +247,7 @@ namespace Lextm.SharpSnmpLib
                 }
             }
             #endregion
-            //*/
+            // */
         }
         
         /// <summary>

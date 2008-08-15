@@ -19,11 +19,10 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// GETNEXT request message.
     /// </summary>
-    public class GetNextRequestMessage : ISnmpMessage, IDisposable
+    public class GetNextRequestMessage : ISnmpMessage
     {
         private VersionCode _version;
         private IList<Variable> _variables;
-        private UdpClient udp = new UdpClient();
         private byte[] _bytes;
         private IPAddress _agent;
         private string _community;
@@ -100,16 +99,21 @@ namespace Lextm.SharpSnmpLib
         {
             byte[] bytes = _bytes;
             IPEndPoint agent = new IPEndPoint(_agent, port);
-            udp.Send(bytes, bytes.Length, agent);
-            IPEndPoint from = new IPEndPoint(IPAddress.Any, 0);
-            IAsyncResult result = udp.BeginReceive(null, this);
-            result.AsyncWaitHandle.WaitOne(timeout, false);
-            if (!result.IsCompleted)
+            using (UdpClient udp = new UdpClient())
             {
-                throw SharpTimeoutException.Create(_agent, timeout);
+                udp.Send(bytes, bytes.Length, agent);
+                IPEndPoint from = new IPEndPoint(IPAddress.Any, 0);
+                IAsyncResult result = udp.BeginReceive(null, this);
+                result.AsyncWaitHandle.WaitOne(timeout, false);
+                if (!result.IsCompleted)
+                {
+                    throw SharpTimeoutException.Create(_agent, timeout);
+                }
+                
+                bytes = udp.EndReceive(result, ref from);
+                udp.Close();
             }
             
-            bytes = udp.EndReceive(result, ref from);
             MemoryStream m = new MemoryStream(bytes, false);
             ISnmpMessage message = MessageFactory.ParseMessages(m)[0];
             if (message.TypeCode != SnmpType.GetResponsePdu)
@@ -173,45 +177,6 @@ namespace Lextm.SharpSnmpLib
             {
                 return SnmpType.GetRequestPdu;
             }
-        }
-        
-        private bool _disposed;
-        
-        /// <summary>
-        /// Finalizer of <see cref="GetNextRequestMessage"/>.
-        /// </summary>
-        ~GetNextRequestMessage()
-        {
-            Dispose(false);
-        }
-        
-        /// <summary>
-        /// Releases all resources used by the <see cref="GetNextRequestMessage"/>.
-        /// </summary>
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-        
-        /// <summary>
-        /// Disposes of the resources (other than memory) used by the <see cref="GetNextRequestMessage"/>.
-        /// </summary>
-        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.
-        /// </param>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (_disposed)
-            {
-                return;
-            }
-            
-            if (disposing)
-            {
-                (udp as IDisposable).Dispose();
-            }
-            
-            _disposed = true;
         }
         
         /// <summary>

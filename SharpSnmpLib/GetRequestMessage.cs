@@ -10,11 +10,10 @@
     /// <summary>
     /// GET request message.
     /// </summary>
-    public class GetRequestMessage : ISnmpMessage, IDisposable
+    public class GetRequestMessage : ISnmpMessage
     {
         private VersionCode _version;
         private IList<Variable> _variables;
-        private UdpClient udp = new UdpClient();
         private byte[] _bytes;
         private IPAddress _agent;
         private string _community;
@@ -91,10 +90,15 @@
         {
             byte[] bytes = _bytes;
             IPEndPoint agent = new IPEndPoint(_agent, port);
-            udp.EnableBroadcast = true;
-            udp.Send(bytes, bytes.Length, agent); 
-            IPEndPoint local = (IPEndPoint)udp.Client.LocalEndPoint;
-            udp.Close();
+            IPEndPoint local;
+            using (UdpClient udp = new UdpClient())
+            {
+                udp.EnableBroadcast = true;
+                udp.Send(bytes, bytes.Length, agent);
+                local = (IPEndPoint)udp.Client.LocalEndPoint;
+                udp.Close();
+            }
+            
             return new BroadcastHandler(timeout, local).Found;
         }
         
@@ -108,16 +112,21 @@
         {
             byte[] bytes = _bytes;
             IPEndPoint agent = new IPEndPoint(_agent, port);
-            udp.Send(bytes, bytes.Length, agent);
-            IPEndPoint from = new IPEndPoint(IPAddress.Any, 0);
-            IAsyncResult result = udp.BeginReceive(null, this);
-            result.AsyncWaitHandle.WaitOne(timeout, false);
-            if (!result.IsCompleted)
+            using (UdpClient udp = new UdpClient())
             {
-                throw SharpTimeoutException.Create(_agent, timeout);
+                udp.Send(bytes, bytes.Length, agent);
+                IPEndPoint from = new IPEndPoint(IPAddress.Any, 0);
+                IAsyncResult result = udp.BeginReceive(null, this);
+                result.AsyncWaitHandle.WaitOne(timeout, false);
+                if (!result.IsCompleted)
+                {
+                    throw SharpTimeoutException.Create(_agent, timeout);
+                }
+                
+                bytes = udp.EndReceive(result, ref from);
+                udp.Close();
             }
             
-            bytes = udp.EndReceive(result, ref from);
             MemoryStream m = new MemoryStream(bytes, false);
             ISnmpMessage message = MessageFactory.ParseMessages(m)[0];
             if (message.TypeCode != SnmpType.GetResponsePdu)
@@ -182,46 +191,7 @@
                 return SnmpType.GetRequestPdu;
             }
         }
-        
-        private bool _disposed;
-        
-        /// <summary>
-        /// Finalizer of <see cref="GetRequestMessage"/>.
-        /// </summary>
-        ~GetRequestMessage()
-        {
-            Dispose(false);
-        }
-        
-        /// <summary>
-        /// Releases all resources used by the <see cref="GetRequestMessage"/>.
-        /// </summary>
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-        
-        /// <summary>
-        /// Disposes of the resources (other than memory) used by the <see cref="GetRequestMessage"/>.
-        /// </summary>
-        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.
-        /// </param>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (_disposed)
-            {
-                return;
-            }
-            
-            if (disposing)
-            {
-                (udp as IDisposable).Dispose();
-            }
-            
-            _disposed = true;
-        }
-        
+
         /// <summary>
         /// Returns a <see cref="String"/> that represents this <see cref="GetRequestMessage"/>.
         /// </summary>

@@ -86,14 +86,6 @@ namespace Lextm.SharpSnmpLib
                 case SnmpType.ReportPdu:
                     return new ReportPdu(GetBytes(stream));
                 case SnmpType.EndMarker:
-                    //GetBytes(stream);
-                    //int i = 0;
-                    //while (0 == stream.ReadByte())
-                    //{
-                    //    i++;
-                    //}
-                    //byte[] buffer = new byte[75];
-                    //stream.Read(buffer, 0, 75);
                     return null;
                 default:
                     throw new SharpSnmpException("unsupported data type: " + (SnmpType)type);

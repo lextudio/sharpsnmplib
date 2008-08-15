@@ -6,7 +6,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// Provides data for a INFORM request received event.
     /// </summary>
-    public sealed class InformRequestReceivedEventArgs : EventArgs, IDisposable
+    public sealed class InformRequestReceivedEventArgs : EventArgs
     {
         private InformRequestMessage _inform;
         private IPEndPoint _sender;
@@ -48,45 +48,6 @@ namespace Lextm.SharpSnmpLib
         public override string ToString()
         {
             return "INFORM request received event args: INFORM message: " + _inform + "; sender: " + _sender;
-        }
-        
-        private bool _disposed;
-        
-        /// <summary>
-        /// Finalizer of <see cref="InformRequestReceivedEventArgs"/>.
-        /// </summary>
-        ~InformRequestReceivedEventArgs()
-        {
-            Dispose(false);
-        }
-        
-        /// <summary>
-        /// Releases all resources used by the <see cref="InformRequestReceivedEventArgs"/>.
-        /// </summary>
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-        
-        /// <summary>
-        /// Disposes of the resources (other than memory) used by the <see cref="InformRequestReceivedEventArgs"/>.
-        /// </summary>
-        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.
-        /// </param>
-        private void Dispose(bool disposing)
-        {
-            if (_disposed)
-            {
-                return;
-            }
-            
-            if (disposing)
-            {
-                _inform.Dispose();
-            }
-            
-            _disposed = true;
         }
     }
 }

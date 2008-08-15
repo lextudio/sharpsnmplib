@@ -16,7 +16,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// GET response message.
     /// </summary>
-    public class GetResponseMessage : ISnmpMessage, IDisposable
+    public class GetResponseMessage : ISnmpMessage
     {
         private ISnmpPdu _pdu;
         private int _sequenceNumber;
@@ -27,8 +27,6 @@ namespace Lextm.SharpSnmpLib
         private VersionCode _version;
         private string _community;
         private IPAddress _receiver;
-        private UdpClient udp = new UdpClient();
-        
         
         /// <summary>
         /// Creates a <see cref="GetResponseMessage"/> with all contents.
@@ -94,7 +92,11 @@ namespace Lextm.SharpSnmpLib
         {
             byte[] bytes = _bytes;
             IPEndPoint receiver = new IPEndPoint(_receiver, port);
-            udp.Send(bytes, bytes.Length, receiver);
+            using (UdpClient udp = new UdpClient())
+            {
+                udp.Send(bytes, bytes.Length, receiver);
+                udp.Close();
+            }
         }
         
         /// <summary>
@@ -176,45 +178,6 @@ namespace Lextm.SharpSnmpLib
         public override string ToString()
         {
             return "GET response message: version: " + _version + "; " + _community + "; " + _pdu;
-        }
-        
-        private bool _disposed;
-        
-        /// <summary>
-        /// Finalizer of <see cref="GetResponseMessage"/>.
-        /// </summary>
-        ~GetResponseMessage()
-        {
-            Dispose(false);
-        }
-        
-        /// <summary>
-        /// Releases all resources used by the <see cref="GetResponseMessage"/>.
-        /// </summary>
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-        
-        /// <summary>
-        /// Disposes of the resources (other than memory) used by the <see cref="GetResponseMessage"/>.
-        /// </summary>
-        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.
-        /// </param>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (_disposed)
-            {
-                return;
-            }
-            
-            if (disposing)
-            {
-                (udp as IDisposable).Dispose();
-            }
-            
-            _disposed = true;
         }
     }
 }

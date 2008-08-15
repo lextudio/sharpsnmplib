@@ -6,7 +6,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// Provides data for a trap received event.
     /// </summary>
-    public sealed class TrapV2ReceivedEventArgs : EventArgs, IDisposable
+    public sealed class TrapV2ReceivedEventArgs : EventArgs
     {
         private TrapV2Message _trap;
         private IPEndPoint _agent;
@@ -48,45 +48,6 @@ namespace Lextm.SharpSnmpLib
         public override string ToString()
         {
             return "Trap received event args: trap message: " + _trap + "; agent: " + _agent;
-        }
-        
-                private bool _disposed;
-        
-        /// <summary>
-        /// Finalizer of <see cref="TrapV2ReceivedEventArgs"/>.
-        /// </summary>
-        ~TrapV2ReceivedEventArgs()
-        {
-            Dispose(false);
-        }
-        
-        /// <summary>
-        /// Releases all resources used by the <see cref="TrapV2ReceivedEventArgs"/>.
-        /// </summary>
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-        
-        /// <summary>
-        /// Disposes of the resources (other than memory) used by the <see cref="TrapV2ReceivedEventArgs"/>.
-        /// </summary>
-        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.
-        /// </param>
-        private void Dispose(bool disposing)
-        {
-            if (_disposed)
-            {
-                return;
-            }
-            
-            if (disposing)
-            {
-                _trap.Dispose();
-            }
-            
-            _disposed = true;
         }
     }
 }

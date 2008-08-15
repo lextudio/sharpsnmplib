@@ -67,10 +67,8 @@ namespace Lextm.SharpSnmpLib
             }
 
             Variable v = new Variable(new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 1, 1, 0 }));
-            using (GetRequestMessage message = new GetRequestMessage(version, broadcast, community, new List<Variable>() { v }))
-            {
-                return message.Broadcast(_timeout, port);
-            }
+            GetRequestMessage message = new GetRequestMessage(version, broadcast, community, new List<Variable>() { v });
+            return message.Broadcast(_timeout, port);
         }
 
         /// <summary>
@@ -89,10 +87,8 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentException("you can only use SNMP v1 or v2 in this version");
             }
 
-            using (GetRequestMessage message = new GetRequestMessage(version, agent, community, variables))
-            {
-                return message.Send(_timeout, port);
-            }
+            GetRequestMessage message = new GetRequestMessage(version, agent, community, variables);
+            return message.Send(_timeout, port);
         }
 
         /// <summary>
@@ -151,10 +147,8 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentException("you can only use SNMP v1 or v2 in this version");
             }
 
-            using (SetRequestMessage message = new SetRequestMessage(version, agent, community, variables))
-            {
-                message.Send(_timeout, port);
-            }
+            SetRequestMessage message = new SetRequestMessage(version, agent, community, variables);
+            message.Send(_timeout, port);
         }
 
         /// <summary>

@@ -47,12 +47,12 @@ using System.Runtime.CompilerServices;
 //
 // You can specify all the values or you can use the default the Revision and
 // Build Numbers by using the '*' as shown below:
-[assembly: AssemblyVersion("1.2.010815.02")]
-[assembly: AssemblyFileVersion("1.2.010815.02")]
+[assembly: AssemblyVersion("1.2.010815.41")]
+[assembly: AssemblyFileVersion("1.2.010815.41")]
 [assembly: NeutralResourcesLanguage("en-US")]
 [assembly: CLSCompliant(true)]
 [assembly: InternalsVisibleTo("SharpSnmpLib.Tests, PublicKey=0024000004800000940000000602000000240000525341310004000001000100cda8c7bee95df6" +
-                              "7f8d98cc94c28b38249c0fd3e42f909d339b1d668dcc5dd1746deae7a097ae275b3a56ba9d2897"+
-                              "0b5e9a803a0ca3ad0d6f9147c48a0fd103ad127e9e000b343e360a5430b70c6fd1a1358857592e"+
-                              "0129e26e308c952967f5828448f19d8ac3355a8a907e34770e92ee051edcc315c2ad281fa6247b"+
+                              "7f8d98cc94c28b38249c0fd3e42f909d339b1d668dcc5dd1746deae7a097ae275b3a56ba9d2897" +
+                              "0b5e9a803a0ca3ad0d6f9147c48a0fd103ad127e9e000b343e360a5430b70c6fd1a1358857592e" +
+                              "0129e26e308c952967f5828448f19d8ac3355a8a907e34770e92ee051edcc315c2ad281fa6247b" +
                               "a7cd1dbd")]

@@ -10,9 +10,8 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// TRAP v2 message.
     /// </summary>
-    public class TrapV2Message : ISnmpMessage, IDisposable
+    public class TrapV2Message : ISnmpMessage
     {
-        private UdpClient udp = new UdpClient();
         private byte[] _bytes;
         private ISnmpPdu _pdu;
         private VersionCode _version;
@@ -103,49 +102,6 @@ namespace Lextm.SharpSnmpLib
 
         #endregion
 
-        #region IDisposable Members
-
-        private bool _disposed;
-        
-        /// <summary>
-        /// Finalizer of <see cref="TrapV2Message"/>.
-        /// </summary>
-        ~TrapV2Message()
-        {
-            Dispose(false);
-        }
-        
-        /// <summary>
-        /// Releases all resources used by the <see cref="TrapV2Message"/>.
-        /// </summary>
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-      
-        /// <summary>
-        /// Disposes of the resources (other than memory) used by the <see cref="TrapV2Message"/>.
-        /// </summary>
-        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.
-        /// </param>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (_disposed) 
-            {
-                return;
-            }
-            
-            if (disposing)
-            {
-                (udp as IDisposable).Dispose();
-            }
-            
-            _disposed = true;
-        }
-
-        #endregion
-
         /// <summary>
         /// Sends this <see cref="TrapV2Message"/>.
         /// </summary>
@@ -155,7 +111,11 @@ namespace Lextm.SharpSnmpLib
         {
             byte[] bytes = _bytes;
             IPEndPoint agent = new IPEndPoint(manager, port);
-            udp.Send(bytes, bytes.Length, agent);
+            using (UdpClient udp = new UdpClient()) 
+            {
+                udp.Send(bytes, bytes.Length, agent);
+                udp.Close();
+            }
         }
         
         /// <summary>

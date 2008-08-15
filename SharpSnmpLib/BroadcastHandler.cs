@@ -16,9 +16,8 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// Description of BroadcastHandler.
     /// </summary>
-    internal class BroadcastHandler
+    internal sealed class BroadcastHandler
     {
-        private TrapListener listener;
         private IPEndPoint _endpoint;
         private int _timeout;
         private IDictionary<IPEndPoint, ISnmpData> list = new Dictionary<IPEndPoint, ISnmpData>();
@@ -27,23 +26,25 @@ namespace Lextm.SharpSnmpLib
         {
             _timeout = timeout;
             _endpoint = endpoint;
-            listener = new TrapListener();
-            listener.GetResponseReceived += delegate(object sender, GetResponseReceivedEventArgs e) { list.Add(e.Sender, e.GetResponse.Variables[0].Data); };
         }
         
         public IDictionary<IPEndPoint, ISnmpData> Found
         {
-            get 
-            {                            
-                listener.Start(_endpoint.Address, _endpoint.Port);
-                Thread.Sleep(_timeout);
-                listener.Stop();
-                while (listener.Active)
+            get
+            {
+                using (TrapListener listener = new TrapListener())
                 {
-                    Thread.Sleep(100);
-                }                
+                    listener.GetResponseReceived += delegate(object sender, GetResponseReceivedEventArgs e) { list.Add(e.Sender, e.GetResponse.Variables[0].Data); };
+                    listener.Start(_endpoint.Address, _endpoint.Port);
+                    Thread.Sleep(_timeout);
+                    listener.Stop();
+                    while (listener.Active)
+                    {
+                        Thread.Sleep(100);
+                    }
+                }
                 return list;
             }
-        }
+        }        
     }
 }

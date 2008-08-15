@@ -19,10 +19,9 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// Trap message.
     /// </summary>
-    public class TrapV1Message : ISnmpMessage, ISnmpData, IDisposable
+    public class TrapV1Message : ISnmpMessage
     {
         private uint _time;
-        private UdpClient udp = new UdpClient();
         private string _community;
         private ObjectIdentifier _enterprise;
         private IPAddress _agent;
@@ -108,7 +107,11 @@ namespace Lextm.SharpSnmpLib
         {
             byte[] bytes = _bytes;
             IPEndPoint agent = new IPEndPoint(manager, port);
-            udp.Send(bytes, bytes.Length, agent);
+            using (UdpClient udp = new UdpClient())
+            {
+                udp.Send(bytes, bytes.Length, agent);
+                udp.Close();
+            }
         }
         
         /// <summary>
@@ -247,45 +250,6 @@ namespace Lextm.SharpSnmpLib
                 Generic,
                 Specific,
                 Variables.Count);
-        }
-        
-        private bool _disposed;
-        
-        /// <summary>
-        /// Finalizer of <see cref="TrapV1Message"/>.
-        /// </summary>
-        ~TrapV1Message()
-        {
-            Dispose(false);
-        }
-        
-        /// <summary>
-        /// Releases all resources used by the <see cref="TrapV1Message"/>.
-        /// </summary>
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-        
-        /// <summary>
-        /// Disposes of the resources (other than memory) used by the <see cref="TrapV1Message"/>.
-        /// </summary>
-        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.
-        /// </param>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (_disposed)
-            {
-                return;
-            }
-            
-            if (disposing)
-            {
-                (udp as IDisposable).Dispose();
-            }
-            
-            _disposed = true;
         }
     }
 }

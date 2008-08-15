@@ -14,7 +14,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// Provides data for a GET response received event.
     /// </summary>
-    public sealed class GetResponseReceivedEventArgs : EventArgs, IDisposable
+    public sealed class GetResponseReceivedEventArgs : EventArgs
     {
         private GetResponseMessage _response;
         private IPEndPoint _sender;
@@ -56,45 +56,6 @@ namespace Lextm.SharpSnmpLib
         public override string ToString()
         {
             return "GET response received event args: GET response message: " + _response + "; sender: " + _sender;
-        }
-        
-        private bool _disposed;
-        
-        /// <summary>
-        /// Finalizer of <see cref="GetResponseReceivedEventArgs"/>.
-        /// </summary>
-        ~GetResponseReceivedEventArgs()
-        {
-            Dispose(false);
-        }
-        
-        /// <summary>
-        /// Releases all resources used by the <see cref="GetResponseReceivedEventArgs"/>.
-        /// </summary>
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-        
-        /// <summary>
-        /// Disposes of the resources (other than memory) used by the <see cref="GetResponseReceivedEventArgs"/>.
-        /// </summary>
-        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.
-        /// </param>
-        private void Dispose(bool disposing)
-        {
-            if (_disposed)
-            {
-                return;
-            }
-            
-            if (disposing)
-            {
-                _response.Dispose();
-            }
-            
-            _disposed = true;
         }
     }
 }
