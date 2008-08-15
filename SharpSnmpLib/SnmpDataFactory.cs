@@ -35,58 +35,77 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public static ISnmpData CreateSnmpData(int type, MemoryStream stream)
         {
-            int length = ByteTool.ReadPayloadLength(stream);
-            byte[] bytes = new byte[length];
-            stream.Read(bytes, 0, length);
             switch ((SnmpType)type)
             {
                 case SnmpType.Counter32:
-                    return new Counter32(bytes);
+                    return new Counter32(GetBytes(stream));
                 case SnmpType.Counter64:
-                    return new Counter64(bytes);
+                    return new Counter64(GetBytes(stream));
                 case SnmpType.Gauge32:
-                    return new Gauge32(bytes);
+                    return new Gauge32(GetBytes(stream));
                 case SnmpType.ObjectIdentifier:
-                    return new ObjectIdentifier(bytes);
+                    return new ObjectIdentifier(GetBytes(stream));
                 case SnmpType.Null:
+                    GetBytes(stream);
                     return new Null();
                 case SnmpType.NoSuchInstance:
+                    GetBytes(stream);
                     return new NoSuchInstance();
                 case SnmpType.NoSuchObject:
+                    GetBytes(stream);
                     return new NoSuchObject();
                 case SnmpType.EndOfMibView:
+                    GetBytes(stream);
                     return new EndOfMibView();
                 case SnmpType.Integer32:
-                    return new Integer32(bytes);
+                    return new Integer32(GetBytes(stream));
                 case SnmpType.OctetString:
-                    return new OctetString(bytes);
+                    return new OctetString(GetBytes(stream));
                 case SnmpType.IPAddress:
-                    return new IP(bytes);
+                    return new IP(GetBytes(stream));
                 case SnmpType.TimeTicks:
-                    return new TimeTicks(bytes);
+                    return new TimeTicks(GetBytes(stream));
                 case SnmpType.Sequence:
-                    return new Sequence(bytes);
+                    return new Sequence(GetBytes(stream));
                 case SnmpType.TrapV1Pdu:
-                    return new TrapV1Pdu(bytes);
+                    return new TrapV1Pdu(GetBytes(stream));
                 case SnmpType.TrapV2Pdu:
-                    return new TrapV2Pdu(bytes);
+                    return new TrapV2Pdu(GetBytes(stream));
                 case SnmpType.GetRequestPdu:
-                    return new GetRequestPdu(bytes);
+                    return new GetRequestPdu(GetBytes(stream));
                 case SnmpType.GetResponsePdu:
-                    return new GetResponsePdu(bytes);
+                    return new GetResponsePdu(GetBytes(stream));
                 case SnmpType.GetBulkRequestPdu:
-                    return new GetBulkRequestPdu(bytes);
+                    return new GetBulkRequestPdu(GetBytes(stream));
                 case SnmpType.GetNextRequestPdu:
-                    return new GetNextRequestPdu(bytes);
+                    return new GetNextRequestPdu(GetBytes(stream));
                 case SnmpType.SetRequestPdu:
-                    return new SetRequestPdu(bytes);
+                    return new SetRequestPdu(GetBytes(stream));
                 case SnmpType.InformRequestPdu:
-                    return new InformRequestPdu(bytes);
+                    return new InformRequestPdu(GetBytes(stream));
                 case SnmpType.ReportPdu:
-                    return new ReportPdu(bytes);
+                    return new ReportPdu(GetBytes(stream));
+                case SnmpType.EndMarker:
+                    //GetBytes(stream);
+                    //int i = 0;
+                    //while (0 == stream.ReadByte())
+                    //{
+                    //    i++;
+                    //}
+                    //byte[] buffer = new byte[75];
+                    //stream.Read(buffer, 0, 75);
+                    return null;
                 default:
                     throw new SharpSnmpException("unsupported data type: " + (SnmpType)type);
             }
+        }
+
+        private static byte[] GetBytes(MemoryStream stream)
+        {
+            int length = ByteTool.ReadPayloadLength(stream);
+            byte[] bytes = new byte[length];
+            stream.Read(bytes, 0, length);
+            return bytes;
         }
         
         /// <summary>

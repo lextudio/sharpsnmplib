@@ -51,15 +51,25 @@ namespace Lextm.SharpSnmpLib
             int first;
             while ((first = stream.ReadByte()) != -1)
             {
-                result.Add(ParseMessage((byte)first, stream));
+                ISnmpMessage message = ParseMessage(first, stream);
+                if (message != null)
+                {
+                    result.Add(message);
+                    break;
+                }
             }
             
             return result;
         }
         
-        private static ISnmpMessage ParseMessage(byte first, MemoryStream stream)
-        {
+        private static ISnmpMessage ParseMessage(int first, MemoryStream stream)
+        {           
             ISnmpData array = SnmpDataFactory.CreateSnmpData(first, stream);
+            if (array == null)
+            {
+                return null;
+            }
+
             if (array.TypeCode != SnmpType.Sequence)
             {
                 throw new ArgumentException("not an SNMP message");

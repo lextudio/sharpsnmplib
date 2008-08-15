@@ -24,7 +24,6 @@ namespace Lextm.SharpSnmpLib
         private IList<Variable> _variables;
         private UdpClient udp = new UdpClient();
         private byte[] _bytes;
-        private IPAddress _agent;
         private string _community;
         private ISnmpPdu _pdu;
         private int _sequenceNumber;
@@ -33,16 +32,14 @@ namespace Lextm.SharpSnmpLib
         /// Creates a <see cref="InformRequestMessage"/> with all contents.
         /// </summary>
         /// <param name="version">Protocol version.</param>
-        /// <param name="agent">Agent address.</param>
         /// <param name="community">Community name.</param>
 		/// <param name="enterprise">Enterprise.</param>
 		/// <param name="time">Time ticks.</param>
         /// <param name="variables">Variables.</param>
         [CLSCompliant(false)]
-        public InformRequestMessage(VersionCode version, IPAddress agent, string community, ObjectIdentifier enterprise, uint time, IList<Variable> variables)
+        public InformRequestMessage(VersionCode version, string community, ObjectIdentifier enterprise, uint time, IList<Variable> variables)
         {
             _version = version;
-            _agent = agent;
             _community = community;
             _variables = variables;
             InformRequestPdu pdu = new InformRequestPdu(enterprise,
@@ -103,19 +100,20 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Sends this <see cref="InformRequestMessage"/> and handles the response from receiver (managers or agents).
         /// </summary>
+        /// <param name="receiver">Receiver address.</param>
         /// <param name="timeout">Timeout.</param>
         /// <param name="port">Port number.</param>
-        public void Send(int timeout, int port)
+        public void Send(IPAddress receiver, int timeout, int port)
         {
             byte[] bytes = _bytes;
-            IPEndPoint agent = new IPEndPoint(_agent, port);
+            IPEndPoint agent = new IPEndPoint(receiver, port);
             udp.Send(bytes, bytes.Length, agent);
             IPEndPoint from = new IPEndPoint(IPAddress.Any, 0);
             IAsyncResult result = udp.BeginReceive(null, this);
             result.AsyncWaitHandle.WaitOne(timeout, false);
             if (!result.IsCompleted)
             {
-                throw SharpTimeoutException.Create(_agent, timeout);
+                throw SharpTimeoutException.Create(receiver, timeout);
             }
             
             bytes = udp.EndReceive(result, ref from);
@@ -123,20 +121,20 @@ namespace Lextm.SharpSnmpLib
             ISnmpMessage message = MessageFactory.ParseMessages(m)[0];
             if (message.TypeCode != SnmpType.GetResponsePdu) 
             {
-                throw SharpOperationException.Create("wrong response type", _agent);
+                throw SharpOperationException.Create("wrong response type", receiver);
             }
             
             GetResponseMessage response = (GetResponseMessage)message;
             if (response.SequenceNumber != SequenceNumber)
             {
-                throw SharpOperationException.Create("wrong response sequence", _agent);
+                throw SharpOperationException.Create("wrong response sequence", receiver);
             }
             
             if (response.ErrorStatus != ErrorCode.NoError)
             {
                 throw SharpErrorException.Create(
                     "error in response",
-                                                 _agent,
+                                                 receiver,
                                                  response.ErrorStatus,
                                                  response.ErrorIndex,
                                                  response.Variables[response.ErrorIndex - 1].Id);

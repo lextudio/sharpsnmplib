@@ -174,9 +174,23 @@ namespace Lextm.SharpSnmpLib
                 }
             }
         }
-        
+#if DEBUG        
+        private static int i = 0;
+#endif        
         private void HandleMessages(byte[] buffer, int number, IPEndPoint agent)
         {
+            /*
+            #if DEBUG
+            i++;
+            using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(@"d:\test" + i + ".dat")))
+            {
+                writer.Write(buffer, 0, number);
+                writer.Close();
+            }
+            #endif
+            //*/
+            //*
+            #region parsing
             foreach (ISnmpMessage message in MessageFactory.ParseMessages(buffer, 0, number))
             {
                 switch (message.TypeCode)
@@ -227,6 +241,8 @@ namespace Lextm.SharpSnmpLib
                         break;
                 }
             }
+            #endregion
+            //*/
         }
         
         /// <summary>
