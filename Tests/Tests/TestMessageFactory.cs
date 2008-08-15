@@ -19,17 +19,17 @@ namespace Lextm.SharpSnmpLib.Tests
     [TestFixture]
     public class TestMessageFactory
     {
-        [Test]
-        public void TestMethod()
-        {
-            MemoryStream m = new MemoryStream();
-            m.Write(Resource.getresponse, 0, Resource.getresponse.Length);
-            m.Write(Resource.getresponse, 0, Resource.getresponse.Length);
-            m.Flush();
-            m.Position = 0;
-            IList<ISnmpMessage> messages = MessageFactory.ParseMessages(m);
-            Assert.AreEqual(2, messages.Count);
-        }
+//        [Test]
+//        public void TestMethod()
+//        {
+//            MemoryStream m = new MemoryStream();
+//            m.Write(Resource.getresponse, 0, Resource.getresponse.Length);
+//            m.Write(Resource.getresponse, 0, Resource.getresponse.Length);
+//            m.Flush();
+//            m.Position = 0;
+//            IList<ISnmpMessage> messages = MessageFactory.ParseMessages(m);
+//            Assert.AreEqual(2, messages.Count);
+//        }
 		
 		[Test]
 		public void TestInform()

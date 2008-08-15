@@ -19,8 +19,8 @@ namespace TestDiscovery
         public static void Main(string[] args)
         {
             Manager m = new Manager();
-            m.Timeout = 2000;
-            IDictionary<IPEndPoint, ISnmpData> agents = m.Discover(VersionCode.V2, IPAddress.Parse("255.255.255.255"), 161, "public");
+            m.Timeout = 60000;
+            IDictionary<IPEndPoint, ISnmpData> agents = m.Discover(VersionCode.V2, IPAddress.Broadcast, 161, "public");
             foreach (KeyValuePair<IPEndPoint, ISnmpData> pair in agents)
             {
                 Console.WriteLine(pair.Key + " announces " + pair.Value);
