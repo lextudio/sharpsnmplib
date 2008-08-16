@@ -20,10 +20,10 @@ namespace TestDiscovery
         {
             Manager m = new Manager();
             m.Timeout = 60000;
-            IDictionary<IPEndPoint, ISnmpData> agents = m.Discover(VersionCode.V2, IPAddress.Broadcast, 161, "public");
-            foreach (KeyValuePair<IPEndPoint, ISnmpData> pair in agents)
+            IDictionary<IPEndPoint, Variable> agents = m.Discover(VersionCode.V2, new IPEndPoint(IPAddress.Broadcast, 161), "public");
+            foreach (KeyValuePair<IPEndPoint, Variable> pair in agents)
             {
-                Console.WriteLine(pair.Key + " announces " + pair.Value);
+                Console.WriteLine(pair.Key + " announces " + pair.Value.Data);
             }
             
             Console.Write("Press any key to continue . . . ");

@@ -24,7 +24,7 @@ namespace TestWalk
                 writer.WriteLine("within subtree mode");
                 IList<Variable> list = new List<Variable>();
                 try {
-                    Manager.Walk(VersionCode.V1, IPAddress.Parse("127.0.0.1"), 161, "public", new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 2, 2 }), list, 1000, WalkMode.WithinSubtree);
+                    Manager.Walk(VersionCode.V1, new IPEndPoint(IPAddress.Loopback, 161), "public", new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 2, 2 }), list, 1000, WalkMode.WithinSubtree);
                 } catch (SharpTimeoutException ex) {
                     Console.WriteLine(ex.Details);
                 }
@@ -40,7 +40,7 @@ namespace TestWalk
                 IList<Variable> list = new List<Variable>();
                 writer.WriteLine("default mode");
                 try {
-                    Manager.Walk(VersionCode.V1, IPAddress.Parse("127.0.0.1"), 161, "public", new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 2, 2 }), list, 1000, WalkMode.Default);
+                    Manager.Walk(VersionCode.V1, new IPEndPoint(IPAddress.Loopback, 161), "public", new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 2, 2 }), list, 1000, WalkMode.Default);
                 } catch (SharpTimeoutException ex) {
                     Console.WriteLine(ex.Details);
                 }

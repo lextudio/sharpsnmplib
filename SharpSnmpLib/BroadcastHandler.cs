@@ -20,7 +20,7 @@ namespace Lextm.SharpSnmpLib
     {
         private IPEndPoint _endpoint;
         private int _timeout;
-        private IDictionary<IPEndPoint, ISnmpData> list = new Dictionary<IPEndPoint, ISnmpData>();
+        private IDictionary<IPEndPoint, Variable> list = new Dictionary<IPEndPoint, Variable>();
         
         public BroadcastHandler(int timeout, IPEndPoint endpoint)
         {
@@ -28,14 +28,14 @@ namespace Lextm.SharpSnmpLib
             _endpoint = endpoint;
         }
         
-        public IDictionary<IPEndPoint, ISnmpData> Found
+        public IDictionary<IPEndPoint, Variable> Found
         {
             get
             {
                 using (TrapListener listener = new TrapListener())
                 {
-                    listener.GetResponseReceived += delegate(object sender, GetResponseReceivedEventArgs e) { list.Add(e.Sender, e.GetResponse.Variables[0].Data); };
-                    listener.Start(_endpoint.Address, _endpoint.Port);
+                    listener.GetResponseReceived += delegate(object sender, GetResponseReceivedEventArgs e) { list.Add(e.Sender, e.GetResponse.Variables[0]); };
+                    listener.Start(_endpoint);
                     Thread.Sleep(_timeout);
                     listener.Stop();
                     while (listener.Active)

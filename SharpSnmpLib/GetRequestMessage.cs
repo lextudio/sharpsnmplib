@@ -86,7 +86,7 @@
         /// <param name="timeout">Timeout.</param>
         /// <param name="port">Port number.</param>
         /// <returns></returns>
-        public IDictionary<IPEndPoint, ISnmpData> Broadcast(int timeout, int port)
+        public IDictionary<IPEndPoint, Variable> Broadcast(int timeout, int port)
         {
             byte[] bytes = _bytes;
             IPEndPoint agent = new IPEndPoint(_agent, port);

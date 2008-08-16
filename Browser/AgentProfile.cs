@@ -61,7 +61,7 @@ namespace Lextm.SharpSnmpLib.Browser
 	
 	    internal void Get(Manager manager, string textual)
 	    {
-	        Report(manager.Get(_agent.Address, _agent.Port, _get, new Variable(textual)));
+	        Report(manager.Get(_agent, _get, new Variable(textual)));
 	    }
 	
 	    private void Report(Variable variable)
@@ -74,7 +74,7 @@ namespace Lextm.SharpSnmpLib.Browser
 	
 	    internal void Set(Manager manager, string textual, ISnmpData data)
 	    {
-            manager.Set(_agent.Address, _agent.Port, _get, new Variable(textual, data));
+            manager.Set(_agent, _get, new Variable(textual, data));
 	    }
 	
 	    // private IPAddress ValidateIP()

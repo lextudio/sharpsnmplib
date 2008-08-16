@@ -22,7 +22,7 @@ class TestGet
         Variable test = new Variable(new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 1, 1, 0 }));
         try
         {            
-            Variable variable = manager.Get(VersionCode.V1, IPAddress.Parse(ip), 161, "public", new List<Variable>() {test})[0];
+            Variable variable = manager.Get(VersionCode.V1, new IPEndPoint(IPAddress.Parse(ip), 161), "public", new List<Variable>() {test})[0];
             Console.WriteLine(variable.Data);
         }
         catch (SharpSnmpException ex)
@@ -39,7 +39,7 @@ class TestGet
         
         try
         {  
-            Variable v2 = manager.Get(VersionCode.V2, IPAddress.Parse(ip), 161, "public", new List<Variable>() {test})[0];
+            Variable v2 = manager.Get(VersionCode.V2, new IPEndPoint(IPAddress.Parse(ip), 161), "public", new List<Variable>() {test})[0];
             Console.WriteLine(v2.Data);
         }
         catch (SharpSnmpException ex)

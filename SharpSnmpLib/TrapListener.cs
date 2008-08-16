@@ -27,12 +27,11 @@ namespace Lextm.SharpSnmpLib
     /// </remarks>
     public class TrapListener : Component
     {
-        private Socket _watcher;
-        private IPEndPoint _sender;
+        private Socket _watcher;        
         private int _port = DEFAULTPORT;
         private BackgroundWorker worker;
         private const int DEFAULTPORT = 162;
-        private IPAddress defaultAddress = IPAddress.Any;
+        private readonly IPEndPoint defaultEndPoint = new IPEndPoint(IPAddress.Any, DEFAULTPORT);
         
         /// <summary>
         /// Creates a <see cref="TrapListener" /> instance.
@@ -60,7 +59,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Occurs when a <see cref="GetResponseMessage"/> is received.
         /// </summary>
-        public event EventHandler<GetResponseReceivedEventArgs> GetResponseReceived;
+        internal event EventHandler<GetResponseReceivedEventArgs> GetResponseReceived;
         
         /// <summary>
         /// Port number.
@@ -83,23 +82,22 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         public void Start()
         {
-            Start(defaultAddress, DEFAULTPORT);
+            Start(defaultEndPoint);
         }
         
         /// <summary>
-        /// Starts on a specific port.
+        /// Starts on a specific end point.
         /// </summary>
-        /// <param name="port">Port number.</param>
-        /// <param name="address">Address.</param>
-        public void Start(IPAddress address, int port)
+        /// <param name="endpoint">End point.</param>
+        public void Start(IPEndPoint endpoint)
         {
             if (worker.IsBusy)
             {
                 return;
             }
             
-            _port = port;
-            _sender = new IPEndPoint(address, _port);
+            _port = endpoint.Port;
+            IPEndPoint _sender = new IPEndPoint(endpoint.Address, endpoint.Port);
             _watcher = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             try
             {
@@ -110,7 +108,7 @@ namespace Lextm.SharpSnmpLib
             {
                 if (ex.ErrorCode == 10048)
                 {
-                    throw new SharpSnmpException("Port is already used: " + _port, ex);
+                    throw new SharpSnmpException("Port is already used: " + endpoint.Port, ex);
                 }
             }
         }
@@ -157,8 +155,7 @@ namespace Lextm.SharpSnmpLib
             EndPoint senderRemote = (EndPoint)agent;
             byte[] msg = new byte[_watcher.ReceiveBufferSize];
             while (!((BackgroundWorker)sender).CancellationPending)
-            {
-                Thread.Sleep(100);
+            {                
                 int number = _watcher.Available;
                 if (number != 0)
                 {
@@ -172,6 +169,8 @@ namespace Lextm.SharpSnmpLib
                         worker.ReportProgress(-1, ex);
                     }
                 }
+                
+                Thread.Sleep(100);
             }
         }
         

@@ -22,8 +22,8 @@ namespace TestSet
 			{
 				Variable test = new Variable(new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 1, 6, 0 }), 
 				                                             new OctetString("Beijing"));
-				manager.Set(VersionCode.V1, IPAddress.Parse("127.0.0.1"), 161, "private", new List<Variable>() {test});
-				manager.Set(VersionCode.V2, IPAddress.Parse("127.0.0.1"), 161, "private", new List<Variable>() {test});
+			    manager.Set(VersionCode.V1, new IPEndPoint(IPAddress.Loopback, 161), "private", new List<Variable>() {test});
+			    manager.Set(VersionCode.V2, new IPEndPoint(IPAddress.Loopback, 161), "private", new List<Variable>() {test});
 			}
 			catch (SharpOperationException ex)
 			{
