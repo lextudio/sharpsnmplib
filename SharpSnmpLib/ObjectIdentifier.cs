@@ -9,11 +9,9 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// ObjectIdentifier type.
     /// </summary>
-    public struct ObjectIdentifier : ISnmpData, IEquatable<ObjectIdentifier>
+    public class ObjectIdentifier : ISnmpData, IEquatable<ObjectIdentifier>
     {
         private uint[] _oid;
-        private byte[] _raw;
-        private byte[] _bytes;
        
         /// <summary>
         /// Creates an <see cref="ObjectIdentifier"/> instance from textual ID.
@@ -39,15 +37,6 @@ namespace Lextm.SharpSnmpLib
         public ObjectIdentifier(uint[] oid)
         {
             _oid = oid;
-            _raw = new byte[GetPduFormatLength(_oid)];
-            int ln = 0;
-            PutOIDEl(ref _raw, ref ln, 43);
-            for (int j = 2; j < _oid.Length; j++)
-            {
-                PutOIDEl(ref _raw, ref ln, _oid[j]);
-            }
-            
-            _bytes = ByteTool.ToBytes(SnmpType.ObjectIdentifier, _raw);
         }
         
         /// <summary>
@@ -56,9 +45,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="raw">Raw bytes</param>
         public ObjectIdentifier(byte[] raw)
         {
-            _raw = raw;
             _oid = ParsePduFormat(raw, (uint)raw.Length);
-            _bytes = ByteTool.ToBytes(SnmpType.ObjectIdentifier, _raw);
         }
         
         /// <summary>
@@ -234,7 +221,15 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public byte[] ToBytes()
         {
-            return _bytes;
+            byte[] raw = new byte[GetPduFormatLength(_oid)];
+            int ln = 0;
+            PutOIDEl(ref raw, ref ln, 43);
+            for (int j = 2; j < _oid.Length; j++)
+            {
+                PutOIDEl(ref raw, ref ln, _oid[j]);
+            } 
+            
+            return ByteTool.ToBytes(SnmpType.ObjectIdentifier, raw);
         }
         
         /// <summary>
@@ -282,7 +277,12 @@ namespace Lextm.SharpSnmpLib
         /// </returns>
         public bool Equals(ObjectIdentifier other)
         {
-            return ByteTool.CompareRaw(_raw, other._raw);
+            if (other == null)
+            {
+                return false;
+            }
+            
+            return ByteTool.CompareArray(_oid, other._oid);
         }
       
         /// <summary>

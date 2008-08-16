@@ -13,7 +13,7 @@ namespace Lextm.SharpSnmpLib
     /// <remarks>
     /// <para>Drag this component into your form in designer, or create an instance in code.</para>
     /// <para>Use <see cref="TrapListener" /> component if you only need TRAP operation.</para>
-    /// <para>Currently only SNMP v1 operations are supported.</para>
+    /// <para>Currently only SNMP v1 and v2c operations are supported.</para>
     /// </remarks>
     public class Manager : Component
     {
@@ -69,7 +69,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="community">Comunity name.</param>
         /// <param name="timeout">Timeout.</param>
         /// <returns></returns>
-        public IDictionary<IPEndPoint, Variable> Discover(VersionCode version, IPEndPoint endpoint, string community, int timeout)
+        public static IDictionary<IPEndPoint, Variable> Discover(VersionCode version, IPEndPoint endpoint, string community, int timeout)
         {
             if (version == VersionCode.V3)
             {
@@ -92,6 +92,7 @@ namespace Lextm.SharpSnmpLib
         {
             return Discover(version, endpoint, community, _timeout);
         }
+        
         /// <summary>
         /// Gets a list of variable binds.
         /// </summary>

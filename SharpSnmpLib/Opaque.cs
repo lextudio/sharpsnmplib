@@ -25,7 +25,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// Opaque type.
     /// </summary>
-    public struct Opaque : ISnmpData, IEquatable<Opaque>
+    public class Opaque : ISnmpData, IEquatable<Opaque>
     {
         private byte[] _raw;
 
@@ -86,6 +86,11 @@ namespace Lextm.SharpSnmpLib
         /// </returns>
         public bool Equals(Opaque other)
         {
+            if (other == null) 
+            {
+                return false;    
+            }
+            
             return ByteTool.CompareRaw(_raw, other._raw);
         }
         

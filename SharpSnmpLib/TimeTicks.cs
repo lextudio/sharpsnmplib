@@ -11,7 +11,6 @@ namespace Lextm.SharpSnmpLib
     /// <remarks>Represents SNMP TimeTicks type.</remarks>
     public struct TimeTicks : ISnmpData, IEquatable<TimeTicks>
     {
-        private byte[] _bytes;
         private Counter32 _count;
         
         /// <summary>
@@ -22,7 +21,6 @@ namespace Lextm.SharpSnmpLib
         public TimeTicks(uint count)
         {
             _count = new Counter32(count);
-            _bytes = ByteTool.ToBytes(SnmpType.TimeTicks, _count.GetRaw());
         }
         
         /// <summary>
@@ -32,7 +30,6 @@ namespace Lextm.SharpSnmpLib
         public TimeTicks(byte[] raw)
         {
             _count = new Counter32(raw);
-            _bytes = ByteTool.ToBytes(SnmpType.TimeTicks, _count.GetRaw());
         }
         
         /// <summary>
@@ -99,7 +96,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public byte[] ToBytes()
         {
-            return _bytes;
+            return ByteTool.ToBytes(SnmpType.TimeTicks, _count.GetRaw());
         }
 
         #endregion

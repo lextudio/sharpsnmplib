@@ -15,7 +15,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// GeneralString type.
     /// </summary>
-    public struct GeneralString : ISnmpData, IEquatable<GeneralString>
+    public class GeneralString : ISnmpData, IEquatable<GeneralString>
     {
         private byte[] _raw;
         
@@ -125,6 +125,11 @@ namespace Lextm.SharpSnmpLib
         /// </returns>
         public bool Equals(GeneralString other)
         {
+            if (other == null) 
+            {
+                return false;    
+            }
+            
             return ByteTool.CompareRaw(_raw, other._raw);
         }
 

@@ -29,7 +29,7 @@ namespace Lextm.SharpSnmpLib
     public struct Integer32 // This namespace has its own concept of Integer
         : ISnmpData, IEquatable<Integer32>
     {
-        private byte[] _raw;
+        private int _int;
         
         /// <summary>
         /// Creates an <see cref="Integer32"/> instance.
@@ -37,8 +37,16 @@ namespace Lextm.SharpSnmpLib
         /// <param name="raw">Raw bytes</param>
         public Integer32(byte[] raw)
         {
-            _raw = raw;
-            _bytes = ByteTool.ToBytes(SnmpType.Integer32, _raw);
+            if (raw.Length > 4)
+            {
+                throw (new ArgumentException("truncation error for 32-bit integer coding", "raw"));
+            }
+            
+            _int = ((raw[0] & 0x80) == 0x80) ? -1 : 0; // sign extended! Guy McIlroy
+            for (int j = 0; j < raw.Length; j++)
+            {
+                _int = (_int << 8) | (int)raw[j];
+            }
         }
         
         /// <summary>
@@ -47,37 +55,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="value">Value</param>
         public Integer32(int value)
         {
-            if (value >= -127 && value <= 127)
-            {
-                _raw = new byte[1];
-                _raw[0] = Convert.ToByte(value);
-            }
-            else
-            {
-                IList<byte> v = new List<byte>();
-                int n = value;
-                while (n != 0 && n != -1)
-                {
-                    if (n < 256 && n >= 128)
-                    {
-                        v.Add((byte)n);
-                        v.Add((byte)0);
-                        break;
-                    }
-                    
-                    v.Add((byte)(n & 0xff));
-                    n >>= 8;
-                }
-                
-                _raw = new byte[v.Count];
-                int len = 0;
-                for (int j = v.Count - 1; j >= 0; j--)
-                {    
-                    _raw[len++] = v[j]; 
-                }
-            }
-            
-            _bytes = ByteTool.ToBytes(SnmpType.Integer32, _raw);
+            _int = value;
         }
 
         /// <summary>
@@ -85,19 +63,8 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <returns></returns>
         public int ToInt32()
-        {
-            if (_raw.Length > 4)
-            {
-                throw (new SharpSnmpException("truncation error for 32-bit integer coding"));
-            }
-            
-            int result = ((_raw[0] & 0x80) == 0x80) ? -1 : 0; // sign extended! Guy McIlroy
-            for (int j = 0; j < _raw.Length; j++)
-            {
-                result = (result << 8) | (int)_raw[j];
-            }
-            
-            return result;
+        {         
+            return _int;
         }
 
         /// <summary>
@@ -118,17 +85,46 @@ namespace Lextm.SharpSnmpLib
             {
                 return SnmpType.Integer32;
             }
-        }
-        
-        private byte[] _bytes;
-        
+        }        
+       
         /// <summary>
         /// Converts to byte format.
         /// </summary>
         /// <returns></returns>
         public byte[] ToBytes()
         {
-            return _bytes;
+            byte[] raw;
+            if (_int >= -127 && _int <= 127)
+            {
+                raw = new byte[1];
+                raw[0] = Convert.ToByte(_int);
+            }
+            else
+            {
+                IList<byte> v = new List<byte>();
+                int n = _int;
+                while (n != 0 && n != -1)
+                {
+                    if (n < 256 && n >= 128)
+                    {
+                        v.Add((byte)n);
+                        v.Add((byte)0);
+                        break;
+                    }
+                    
+                    v.Add((byte)(n & 0xff));
+                    n >>= 8;
+                }
+                
+                raw = new byte[v.Count];
+                int len = 0;
+                for (int j = v.Count - 1; j >= 0; j--)
+                {    
+                    raw[len++] = v[j]; 
+                }
+            }
+            
+            return ByteTool.ToBytes(SnmpType.Integer32, raw);
         }
         
         /// <summary>
@@ -174,7 +170,7 @@ namespace Lextm.SharpSnmpLib
         /// </returns>
         public bool Equals(Integer32 other)
         {
-            return ByteTool.CompareRaw(_raw, other._raw);
+            return _int == other._int;
         }
         
         /// <summary>

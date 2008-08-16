@@ -28,7 +28,25 @@ namespace Lextm.SharpSnmpLib
             
             for (int i = 0; i < left.Length; i++)
             {
-                if (left[i] != right[i]) 
+                if (left[i] != right[i])
+                {
+                    return false;
+                }
+            }
+            
+            return true;
+        }
+        
+        internal static bool CompareArray(uint[] left, uint[] right)
+        {
+            if (left.Length != right.Length)
+            {
+                return false;
+            }
+            
+            for (int i = 0; i < left.Length; i++)
+            {
+                if (left[i] != right[i])
                 {
                     return false;
                 }
@@ -51,7 +69,7 @@ namespace Lextm.SharpSnmpLib
         
         internal static byte[] ParseItems(IEnumerable items)
         {
-            if (!(items is IEnumerable<ISnmpData>)) 
+            if (!(items is IEnumerable<ISnmpData>))
             {
                 throw new ArgumentException("items must be IEnumerable<ISnmpData>");
             }
@@ -64,8 +82,8 @@ namespace Lextm.SharpSnmpLib
             }
             
             return result.ToArray();
-        }        
-                
+        }
+        
         internal static void WritePayloadLength(Stream stream, int length) // excluding initial octet
         {
             if (length < 0)
@@ -81,14 +99,14 @@ namespace Lextm.SharpSnmpLib
             
             byte[] c = new byte[16];
             int j = 0;
-            while (length > 0) 
+            while (length > 0)
             {
                 c[j++] = (byte)(length & 0xff);
                 length = length >> 8;
             }
             
-            stream.WriteByte((byte)(0x80 | j));            
-            while (j > 0) 
+            stream.WriteByte((byte)(0x80 | j));
+            while (j > 0)
             {
                 int x = c[--j];
                 stream.WriteByte((byte)x);
@@ -124,7 +142,7 @@ namespace Lextm.SharpSnmpLib
         {
             int n = s.ReadByte();
             if (n == -1)
-            {   
+            {
                 throw (new SharpSnmpException("BER end of file"));
             }
             

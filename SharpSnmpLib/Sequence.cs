@@ -21,10 +21,9 @@ namespace Lextm.SharpSnmpLib
     /// <remarks>Represents SMIv1 SEQUENCE.</remarks>
     public class Sequence : ISnmpData
     {
-        private byte[] _bytes;
-        private byte[] _raw;        
+        private byte[] _raw;
         private IList<ISnmpData> _list = new List<ISnmpData>();
-       
+        
         /// <summary>
         /// Creates an <see cref="Sequence"/> instance with varied <see cref="ISnmpData"/> instances.
         /// </summary>
@@ -45,7 +44,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="items"></param>
         public Sequence(IEnumerable items)
         {
-            if (!(items is IEnumerable<ISnmpData>)) 
+            if (!(items is IEnumerable<ISnmpData>))
             {
                 throw new ArgumentException("objects must be IEnumerable<ISnmpData>");
             }
@@ -65,7 +64,7 @@ namespace Lextm.SharpSnmpLib
         public Sequence(byte[] raw)
         {
             _raw = raw;
-            if (raw.Length != 0) 
+            if (raw.Length != 0)
             {
                 MemoryStream m = new MemoryStream(raw);
                 while (m.Position < raw.Length)
@@ -89,9 +88,9 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Type code.
         /// </summary>
-        public SnmpType TypeCode 
+        public SnmpType TypeCode
         {
-            get 
+            get
             {
                 return SnmpType.Sequence;
             }
@@ -103,16 +102,11 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public byte[] ToBytes()
         {
-            if (null == _bytes) 
-            {
-                MemoryStream result = new MemoryStream();
-                result.WriteByte((byte)TypeCode);
-                ByteTool.WritePayloadLength(result, _raw.Length); // it seems that trap does not use this function
-                result.Write(_raw, 0, _raw.Length);
-                _bytes = result.ToArray();
-            }
-            
-            return _bytes;
+            MemoryStream result = new MemoryStream();
+            result.WriteByte((byte)TypeCode);
+            ByteTool.WritePayloadLength(result, _raw.Length); // it seems that trap does not use this function
+            result.Write(_raw, 0, _raw.Length);
+            return result.ToArray();
         }
         
         /// <summary>

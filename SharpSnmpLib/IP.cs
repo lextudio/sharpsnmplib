@@ -11,9 +11,7 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public struct IP : ISnmpData, IEquatable<IP>
     {
-        private byte[] _raw;
         private IPAddress _ip;
-        private byte[] _bytes;
         
         /// <summary>
         /// Creates an <see cref="IP"/> with a specific <see cref="IPAddress"/>.
@@ -26,9 +24,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("ip");
             }
             
-            _ip = ip;
-            _raw = _ip.GetAddressBytes();
-            _bytes = ByteTool.ToBytes(SnmpType.IPAddress, _raw);
+            _ip = ip;            
         }
         
         /// <summary>
@@ -41,10 +37,8 @@ namespace Lextm.SharpSnmpLib
             {
                 throw new ArgumentException("bytes must contain 4 elements");
             }
-            
-            _raw = raw;
+
             _ip = new IPAddress(raw);
-            _bytes = ByteTool.ToBytes(SnmpType.IPAddress, _raw);
         }
         
         /// <summary>
@@ -96,7 +90,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public byte[] ToBytes()
         {
-            return _bytes;
+            return ByteTool.ToBytes(SnmpType.IPAddress, _ip.GetAddressBytes());
         }
         
         /// <summary>

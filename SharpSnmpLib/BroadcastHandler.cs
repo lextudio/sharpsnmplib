@@ -43,6 +43,7 @@ namespace Lextm.SharpSnmpLib
                         Thread.Sleep(100);
                     }
                 }
+                
                 return list;
             }
         }        

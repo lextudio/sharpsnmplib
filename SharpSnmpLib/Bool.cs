@@ -15,8 +15,8 @@ namespace Lextm.SharpSnmpLib
     /// Boolean type.
     /// </summary>
     public struct Bool : ISnmpData, IEquatable<Bool>
-    {
-        private byte[] _raw;
+    {   
+        private bool _boolean;
         
         /// <summary>
         /// Creates a <see cref="Bool"/> instance from raw bytes.
@@ -34,7 +34,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentException("raw must be one item");
             }
             
-            _raw = raw;
+            _boolean = (raw[0] > 0);
         }
         
         /// <summary>
@@ -43,7 +43,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public bool ToBoolean()
         {
-            return (_raw[0] > 0);
+            return _boolean;
         }
         
         /// <summary>
@@ -72,7 +72,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public byte[] ToBytes()
         {
-            return ByteTool.ToBytes(TypeCode, _raw);
+            return ByteTool.ToBytes(TypeCode, new byte[1] { 1 });
         }
         
         /// <summary>

@@ -26,11 +26,10 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// OctetString type.
     /// </summary>
-    public struct OctetString // This namespace has its own concept of string
+    public class OctetString // This namespace has its own concept of string
         : ISnmpData, IEquatable<OctetString>
     {
         private byte[] _raw;
-        private byte[] _bytes;
 
         /// <summary>
         /// Creates an <see cref="OctetString"/> from raw bytes.
@@ -39,7 +38,6 @@ namespace Lextm.SharpSnmpLib
         public OctetString(byte[] raw)
         {
             _raw = raw;
-            _bytes = ByteTool.ToBytes(SnmpType.OctetString, _raw);
         }
         
         /// <summary>
@@ -94,7 +92,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>        
         public byte[] ToBytes()
         {
-            return _bytes;
+            return ByteTool.ToBytes(SnmpType.OctetString, _raw);
         }
         
         /// <summary>
@@ -105,6 +103,11 @@ namespace Lextm.SharpSnmpLib
         /// </returns>
         public bool Equals(OctetString other)
         {
+            if (other == null)
+            {
+                return false;    
+            }
+            
             return ByteTool.CompareRaw(_raw, other._raw);
         }
         

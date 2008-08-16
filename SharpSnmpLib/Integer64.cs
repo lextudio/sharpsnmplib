@@ -18,7 +18,7 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     internal struct Integer64 : IEquatable<Integer64>
     {
-        private byte[] _raw; // this is just an example member, replace it with your own struct members!
+        private byte[] _raw;
         
         public Integer64(byte[] raw)
         {
