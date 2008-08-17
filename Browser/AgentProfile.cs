@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Xml;
+using System.Xml.Serialization;
+
 using Lextm.SharpSnmpLib;
 using Lextm.SharpSnmpLib.Mib;
 using System.Net;
@@ -9,30 +12,37 @@ namespace Lextm.SharpSnmpLib.Browser
 {
 	internal delegate void ReportMessage(string message);
 	
-	internal class AgentProfile
+    internal class AgentProfile
 	{
-	    private string _get;
+        private string _get;
 	    private string _set;
 	    private VersionCode _version;
         private IPEndPoint _agent;
-	
-	    internal AgentProfile(VersionCode version, IPAddress ip, int port, string getCommunity, string setCommunity)
+        private string _name;
+
+	    internal AgentProfile(VersionCode version, IPEndPoint agent, string getCommunity, string setCommunity, string name)
 	    {
 	        _get = getCommunity;
 	        _set = setCommunity;
 	        _version = version;
-            _agent = new IPEndPoint(ip, port);
+            _agent = agent;
+            _name = name;
 	    }
-	    
-	    internal int Port
-	    {
-	        get { return _agent.Port; }
-	    }
-	    
-	    internal IPAddress IP
-	    {
-	        get { return _agent.Address; }
-	    }
+
+        internal string Name
+        {
+            get { return _name; }
+        }
+
+//	    internal int Port
+//	    {
+//	        get { return _agent.Port; }
+//	    }
+//	    
+//	    internal IPAddress IP
+//	    {
+//	        get { return _agent.Address; }
+//	    }
 
         internal IPEndPoint Agent
         {
@@ -58,11 +68,29 @@ namespace Lextm.SharpSnmpLib.Browser
         }
 	
 	    internal event ReportMessage OnOperationCompleted;
-	
-	    internal void Get(Manager manager, string textual)
-	    {
-	        Report(manager.Get(_agent, _get, new Variable(textual)));
-	    }
+
+        internal string Get(Manager manager, string textual)
+        {
+            Variable var = new Variable(textual);
+
+            Report(manager.Get(_agent, _get, var));
+            return var.ToString();
+        }
+
+        internal string GetValue(Manager manager, string textual)
+        {
+            Variable var = new Variable(textual);
+
+            return manager.Get(_agent, _get, var).Data.ToString();
+        }
+
+        internal string GetNext(Manager manager, string textual)
+        {
+            //Variable var = new Variable(textual);
+
+            //Report(manager.GetNext(_agent.Address, _agent.Port, _get, var));
+            return "";
+        }
 	
 	    private void Report(Variable variable)
 	    {
@@ -72,9 +100,12 @@ namespace Lextm.SharpSnmpLib.Browser
 	        }
 	    }
 	
+        //
+        // TODO: return success if it succeeded!
+        //
 	    internal void Set(Manager manager, string textual, ISnmpData data)
 	    {
-            manager.Set(_agent, _get, new Variable(textual, data));
+            manager.Set(VersionCode, _agent, _set, new Variable(textual, data));
 	    }
 	
 	    // private IPAddress ValidateIP()
@@ -95,6 +126,15 @@ namespace Lextm.SharpSnmpLib.Browser
 	
 	    internal void Walk(Manager manager, IDefinition def)
 	    {
+            IList<Variable> list = new List<Variable>();
+ 
+            Manager.Walk(this.VersionCode, this.Agent, this.GetCommunity, new ObjectIdentifier(def.GetNumericalForm()), list, 1000, WalkMode.WithinSubtree);
+            //Manager.Walk(this.VersionCode, this.IP, this.Port, this.GetCommunity, new ObjectIdentifier(def.GetNumericalForm()), list, 1000, WalkMode.Default);
+            for (int i = 0; i < list.Count; i++)
+            {
+                Report(list[i]);
+            }
+
 	    }
     }
 }

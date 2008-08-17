@@ -17,15 +17,15 @@ namespace Lextm.SharpSnmpLib
         /// Creates an <see cref="ObjectIdentifier"/> instance from textual ID.
         /// </summary>
         /// <param name="text">String in one of the formats, "[module]:[name]" or "*.*.*.*".</param>
-        public static ObjectIdentifier Create(string text)
+        public ObjectIdentifier(string text)
         {
             if (text.Contains("::"))
             {
-                return new ObjectIdentifier(Mib.ObjectRegistry.Instance.Translate(text));
+                _oid = Mib.ObjectRegistry.Instance.Translate(text);
             }
             else
             {
-                return new ObjectIdentifier(ObjectIdentifier.Convert(text));
+                _oid = ObjectIdentifier.Convert(text);
             }
         }
         

@@ -93,7 +93,22 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             try
             {
-                ProfileRegistry.Instance.DefaultProfile.Set(manager1, GetTextualForm(treeView1.SelectedNode.Tag as IDefinition), null);
+                OctetString newVal;
+                using (FormSet form = new FormSet())
+                {
+                    form.OldVal = ProfileRegistry.Instance.DefaultProfile.GetValue(manager1, GetTextualForm(treeView1.SelectedNode.Tag as IDefinition));
+                    if (form.ShowDialog() == DialogResult.OK)
+                    {
+                        newVal = new OctetString(form.NewVal);
+
+                        ProfileRegistry.Instance.DefaultProfile.Set(manager1, GetTextualForm(treeView1.SelectedNode.Tag as IDefinition), newVal);
+
+                        //
+                        // For now so we can see the change occured
+                        //
+                        actGet_Execute(null, null);
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -143,9 +158,100 @@ namespace Lextm.SharpSnmpLib.Browser
             }
         }
 
+        private void actWalk_Update(object sender, EventArgs e)
+        {
+            actWalk.Enabled = !Validate(treeView1.SelectedNode);
+        }
+
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
             tslblOID.Text = ObjectIdentifier.Convert((e.Node.Tag as IDefinition).GetNumericalForm());
+            if (Validate(e.Node))
+            {
+                actGet_Execute(sender, e);
+            }
+            else if(e.Node.ImageIndex == 3)
+            {
+                actWalk_Execute(sender, e);
+            }
+        }
+
+        private void treeView1_NodeMouseHover(object sender, TreeNodeMouseHoverEventArgs e)
+        {/*
+            if (e.Node.Tag.ToString() != toolTip1.GetToolTip(this.treeView1))
+            {
+                try
+                {
+                    toolTip1.SetToolTip(this.treeView1, ProfileRegistry.Instance.DefaultProfile.Get(manager1, GetTextualForm(e.Node.Tag as IDefinition)));
+                }
+                catch (Exception ex)
+                {
+                }
+            }*/
+        }
+
+        private void treeView1_MouseMove(object sender, MouseEventArgs e)
+        {/*
+            TreeNode theNode = this.treeView1.GetNodeAt(e.X, e.Y);
+
+            // Set a ToolTip only if the mouse pointer is actually paused on a node.
+            if ((theNode != null))
+            {
+                // Verify that the tag property is not "null".
+                if (theNode.Tag != null)
+                {
+                    // Change the ToolTip only if the pointer moved to a new node.
+                    if (theNode.Tag.ToString() != this.toolTip1.GetToolTip(this.treeView1))
+                    {
+                        this.toolTip1.SetToolTip(this.treeView1, theNode.Tag.ToString());
+                    }
+                }
+                else
+                {
+                    this.toolTip1.SetToolTip(this.treeView1, "");
+                }
+            }
+            else     // Pointer is not over a node so clear the ToolTip.
+            {
+                this.toolTip1.SetToolTip(this.treeView1, "");
+            }*/
+        }
+
+        private void treeView1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            TreeNode theNode = this.treeView1.GetNodeAt(e.X, e.Y);
+
+            if (e.Button == MouseButtons.Left && theNode != null && !Validate(theNode))
+            {
+                actWalk_Execute(sender, e);
+            }
+        }
+
+        //
+        // This will need to change once Manager implements GetNext (if we choose to do it this way...
+        //
+        private void actGetNext_Execute(object sender, EventArgs e)
+        {
+            try
+            {
+                ProfileRegistry.Instance.DefaultProfile.Get(manager1, GetTextualForm(treeView1.SelectedNode.NextNode.Tag as IDefinition));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void actGetNext_Update(object sender, EventArgs e)
+        {
+            if (treeView1.SelectedNode != null && treeView1.SelectedNode.NextNode != null)
+            {
+                actGetNext.Enabled = Validate(treeView1.SelectedNode.NextNode);
+            }
+            else
+            {
+                actGetNext.Enabled = false;
+            }
         }
     }
 }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("SNMP v1", System.Windows.Forms.HorizontalAlignment.Left);
             System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("SNMP v2c", System.Windows.Forms.HorizontalAlignment.Left);
             this.listView1 = new System.Windows.Forms.ListView();
@@ -44,6 +45,7 @@
             this.actDelete = new Crad.Windows.Forms.Actions.Action();
             this.actEdit = new Crad.Windows.Forms.Actions.Action();
             this.actDefault = new Crad.Windows.Forms.Actions.Action();
+            this.contextAgentMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.actionList1)).BeginInit();
             this.SuspendLayout();
@@ -64,11 +66,13 @@
             this.listView1.Location = new System.Drawing.Point(0, 25);
             this.listView1.MultiSelect = false;
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(366, 245);
+            this.listView1.ShowItemToolTips = true;
+            this.listView1.Size = new System.Drawing.Size(366, 268);
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
-            this.listView1.DoubleClick += new System.EventHandler(this.listView1_DoubleClick);
+            this.listView1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listView1_MouseDoubleClick);
+            this.listView1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.listView1_MouseClick);
             // 
             // chName
             // 
@@ -96,7 +100,7 @@
             this.toolStripButton1.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.list_add;
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(52, 22);
+            this.toolStripButton1.Size = new System.Drawing.Size(46, 22);
             this.toolStripButton1.Text = "Add";
             // 
             // toolStripButton2
@@ -105,7 +109,7 @@
             this.toolStripButton2.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.list_remove;
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(65, 22);
+            this.toolStripButton2.Size = new System.Drawing.Size(58, 22);
             this.toolStripButton2.Text = "Delete";
             // 
             // toolStripButton3
@@ -114,7 +118,7 @@
             this.toolStripButton3.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.document_properties;
             this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(50, 22);
+            this.toolStripButton3.Size = new System.Drawing.Size(45, 22);
             this.toolStripButton3.Text = "Edit";
             // 
             // toolStripSeparator1
@@ -127,14 +131,14 @@
             this.actionList1.SetAction(this.toolStripButton4, this.actDefault);
             this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton4.Name = "toolStripButton4";
-            this.toolStripButton4.Size = new System.Drawing.Size(75, 22);
+            this.toolStripButton4.Size = new System.Drawing.Size(65, 22);
             this.toolStripButton4.Text = "Set Default";
             // 
             // tslblDefault
             // 
             this.tslblDefault.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.tslblDefault.Name = "tslblDefault";
-            this.tslblDefault.Size = new System.Drawing.Size(12, 22);
+            this.tslblDefault.Size = new System.Drawing.Size(10, 22);
             this.tslblDefault.Text = " ";
             // 
             // actionList1
@@ -176,11 +180,16 @@
             this.actDefault.Update += new System.EventHandler(this.actDefault_Update);
             this.actDefault.Execute += new System.EventHandler(this.actDefault_Execute);
             // 
+            // contextAgentMenu
+            // 
+            this.contextAgentMenu.Name = "contextAgentMenu";
+            this.contextAgentMenu.Size = new System.Drawing.Size(61, 4);
+            // 
             // AgentProfilePanel
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(366, 270);
+            this.ClientSize = new System.Drawing.Size(366, 293);
             this.Controls.Add(this.listView1);
             this.Controls.Add(this.toolStrip1);
             this.Name = "AgentProfilePanel";
@@ -210,5 +219,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton toolStripButton4;
         private System.Windows.Forms.ToolStripLabel tslblDefault;
+        private System.Windows.Forms.ContextMenuStrip contextAgentMenu;
     }
 }

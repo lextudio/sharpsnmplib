@@ -49,7 +49,7 @@ namespace Lextm.SharpSnmpLib.Browser
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.actionList1 = new Crad.Windows.Forms.Actions.ActionList();
             this.actExit = new Crad.Windows.Forms.Actions.Action();
-            this.actConfigure = new Crad.Windows.Forms.Actions.Action();
+            this.actSave = new Crad.Windows.Forms.Actions.Action();
             this.toolStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.actionList1)).BeginInit();
@@ -60,10 +60,10 @@ namespace Lextm.SharpSnmpLib.Browser
             this.dockPanel1.ActiveAutoHideContent = null;
             this.dockPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dockPanel1.DocumentStyle = WeifenLuo.WinFormsUI.Docking.DocumentStyle.DockingSdi;
-            this.dockPanel1.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World);
-            this.dockPanel1.Location = new System.Drawing.Point(0, 50);
+            this.dockPanel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World);
+            this.dockPanel1.Location = new System.Drawing.Point(0, 49);
             this.dockPanel1.Name = "dockPanel1";
-            this.dockPanel1.Size = new System.Drawing.Size(493, 305);
+            this.dockPanel1.Size = new System.Drawing.Size(493, 336);
             this.dockPanel1.TabIndex = 0;
             // 
             // toolStrip1
@@ -74,7 +74,7 @@ namespace Lextm.SharpSnmpLib.Browser
             this.toolStripLabel1,
             this.tscbAgent,
             this.toolStripButton2});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 25);
+            this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(493, 25);
             this.toolStrip1.TabIndex = 2;
@@ -98,7 +98,7 @@ namespace Lextm.SharpSnmpLib.Browser
             // toolStripLabel1
             // 
             this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(42, 22);
+            this.toolStripLabel1.Size = new System.Drawing.Size(36, 22);
             this.toolStripLabel1.Text = "Agent";
             // 
             // tscbAgent
@@ -110,13 +110,13 @@ namespace Lextm.SharpSnmpLib.Browser
             // 
             // toolStripButton2
             // 
-            this.actionList1.SetAction(this.toolStripButton2, this.actConfigure);
+            this.actionList1.SetAction(this.toolStripButton2, this.actSave);
             this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.toolStripButton2.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.preferences_desktop_theme;
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Name = "toolStripButton2";
             this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton2.Text = "Configure";
+            this.toolStripButton2.Text = "Save";
             // 
             // menuStrip1
             // 
@@ -124,7 +124,7 @@ namespace Lextm.SharpSnmpLib.Browser
             this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(493, 25);
+            this.menuStrip1.Size = new System.Drawing.Size(493, 24);
             this.menuStrip1.TabIndex = 3;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -133,7 +133,7 @@ namespace Lextm.SharpSnmpLib.Browser
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(39, 21);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(35, 20);
             this.fileToolStripMenuItem.Text = "&File";
             // 
             // exitToolStripMenuItem
@@ -141,13 +141,13 @@ namespace Lextm.SharpSnmpLib.Browser
             this.actionList1.SetAction(this.exitToolStripMenuItem, this.actExit);
             this.exitToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("exitToolStripMenuItem.Image")));
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(96, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             // 
             // actionList1
             // 
             this.actionList1.Actions.Add(this.actExit);
-            this.actionList1.Actions.Add(this.actConfigure);
+            this.actionList1.Actions.Add(this.actSave);
             this.actionList1.ContainerControl = this;
             // 
             // actExit
@@ -157,18 +157,18 @@ namespace Lextm.SharpSnmpLib.Browser
             this.actExit.ToolTipText = "Exit Browser";
             this.actExit.Execute += new System.EventHandler(this.actExit_Execute);
             // 
-            // actConfigure
+            // actSave
             // 
-            this.actConfigure.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.preferences_desktop_theme;
-            this.actConfigure.Text = "Configure";
-            this.actConfigure.ToolTipText = "Configure Agents";
-            this.actConfigure.Execute += new System.EventHandler(this.actConfigure_Execute);
+            this.actSave.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.preferences_desktop_theme;
+            this.actSave.Text = "Save";
+            this.actSave.ToolTipText = "Save Agents";
+            this.actSave.Execute += new System.EventHandler(this.actSave_Execute);
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(493, 355);
+            this.ClientSize = new System.Drawing.Size(493, 385);
             this.Controls.Add(this.dockPanel1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.menuStrip1);
@@ -195,7 +195,7 @@ namespace Lextm.SharpSnmpLib.Browser
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.ToolStripComboBox tscbAgent;
-        private Crad.Windows.Forms.Actions.Action actConfigure;
+        private Crad.Windows.Forms.Actions.Action actSave;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
 	}
 }

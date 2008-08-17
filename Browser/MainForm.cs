@@ -33,12 +33,10 @@ namespace Lextm.SharpSnmpLib.Browser
             tree.Show(dockPanel1, DockState.Document);
             ModuleListPanel modules = new ModuleListPanel();
             modules.Show(dockPanel1, DockState.DockLeft);
+            AgentProfilePanel agent = new AgentProfilePanel();
+            agent.Show(dockPanel1, DockState.DockLeft);
             
-            IPAddress def = IPAddress.Parse("127.0.0.1");
-            AgentProfile first = new AgentProfile(VersionCode.V1, def, 161, "public", "public");
-            first.OnOperationCompleted += output.ReportMessage;
-            ProfileRegistry.Instance.AddProfile(first);
-            ProfileRegistry.Instance.Default = first.Agent;
+            ProfileRegistry.Instance.LoadProfiles(output);
 
             foreach (IPEndPoint name in ProfileRegistry.Instance.Names)
             {
@@ -52,10 +50,9 @@ namespace Lextm.SharpSnmpLib.Browser
             Close();
         }
 
-        private void actConfigure_Execute(object sender, EventArgs e)
+        private void actSave_Execute(object sender, EventArgs e)
         {
-            AgentProfilePanel agent = new AgentProfilePanel();
-            agent.Show(dockPanel1, DockState.DockLeft);
+            ProfileRegistry.Instance.SaveProfiles();
         }
     }
 }

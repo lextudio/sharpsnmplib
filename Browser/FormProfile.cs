@@ -7,12 +7,12 @@ namespace Lextm.SharpSnmpLib.Browser
 {
     internal partial class FormProfile : Form
     {
-        private AgentProfile _agent;
+        private AgentProfile _profile;
 
         public FormProfile(AgentProfile agent)
         {
             InitializeComponent();
-            _agent = agent;
+            _profile = agent;
         }
 
         internal IPAddress IP
@@ -23,6 +23,11 @@ namespace Lextm.SharpSnmpLib.Browser
         internal VersionCode VersionCode
         {
             get { return (VersionCode)cbVersionCode.SelectedIndex; }
+        }
+
+        internal string AgentName
+        {
+            get { return txtName.Text; }
         }
 
         internal string GetCommunity
@@ -42,13 +47,14 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void FormProfile_Load(object sender, EventArgs e)
         {
-            if (_agent != null)
+            if (_profile != null)
             {
-                txtIP.Text = _agent.IP.ToString();
+                txtIP.Text = _profile.Agent.Address.ToString();
                 txtIP.ReadOnly = true;
-                txtGet.Text = _agent.GetCommunity;
-                txtSet.Text = _agent.SetCommunity;
-                cbVersionCode.SelectedIndex = (int)_agent.VersionCode;
+                txtGet.Text = _profile.GetCommunity;
+                txtSet.Text = _profile.SetCommunity;
+                txtName.Text = _profile.Name;
+                cbVersionCode.SelectedIndex = (int)_profile.VersionCode;
             }
             else
             {
