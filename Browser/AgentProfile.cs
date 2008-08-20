@@ -129,7 +129,6 @@ namespace Lextm.SharpSnmpLib.Browser
             IList<Variable> list = new List<Variable>();
  
             Manager.Walk(this.VersionCode, this.Agent, this.GetCommunity, new ObjectIdentifier(def.GetNumericalForm()), list, 1000, WalkMode.WithinSubtree);
-            //Manager.Walk(this.VersionCode, this.IP, this.Port, this.GetCommunity, new ObjectIdentifier(def.GetNumericalForm()), list, 1000, WalkMode.Default);
             for (int i = 0; i < list.Count; i++)
             {
                 Report(list[i]);

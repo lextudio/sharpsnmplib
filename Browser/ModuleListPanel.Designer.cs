@@ -36,18 +36,23 @@ namespace Lextm.SharpSnmpLib.Browser
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("Loaded", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("Pending", System.Windows.Forms.HorizontalAlignment.Left);
+            this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.ListViewGroup listViewGroup3 = new System.Windows.Forms.ListViewGroup("Loaded", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup4 = new System.Windows.Forms.ListViewGroup("Pending", System.Windows.Forms.HorizontalAlignment.Left);
             this.listView1 = new System.Windows.Forms.ListView();
+            this.chName = new System.Windows.Forms.ColumnHeader();
             this.actionList1 = new Crad.Windows.Forms.Actions.ActionList();
             this.actAdd = new Crad.Windows.Forms.Actions.Action();
+            this.actRemove = new Crad.Windows.Forms.Actions.Action();
             this.tsbtnAdd = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.tslblCount = new System.Windows.Forms.ToolStripLabel();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.chName = new System.Windows.Forms.ColumnHeader();
+            this.contextModuleMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.actionList1)).BeginInit();
             this.toolStrip1.SuspendLayout();
+            this.contextModuleMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // listView1
@@ -55,23 +60,31 @@ namespace Lextm.SharpSnmpLib.Browser
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.chName});
             this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            listViewGroup1.Header = "Loaded";
-            listViewGroup1.Name = "lvgLoaded";
-            listViewGroup2.Header = "Pending";
-            listViewGroup2.Name = "lvgPending";
+            listViewGroup3.Header = "Loaded";
+            listViewGroup3.Name = "lvgLoaded";
+            listViewGroup4.Header = "Pending";
+            listViewGroup4.Name = "lvgPending";
             this.listView1.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            listViewGroup1,
-            listViewGroup2});
+            listViewGroup3,
+            listViewGroup4});
             this.listView1.Location = new System.Drawing.Point(0, 25);
+            this.listView1.MultiSelect = false;
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(465, 251);
+            this.listView1.Size = new System.Drawing.Size(465, 274);
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
+            this.listView1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listView1_MouseDown);
+            // 
+            // chName
+            // 
+            this.chName.Text = "Name";
+            this.chName.Width = 381;
             // 
             // actionList1
             // 
             this.actionList1.Actions.Add(this.actAdd);
+            this.actionList1.Actions.Add(this.actRemove);
             this.actionList1.ContainerControl = this;
             // 
             // actAdd
@@ -81,13 +94,20 @@ namespace Lextm.SharpSnmpLib.Browser
             this.actAdd.ToolTipText = "Add";
             this.actAdd.Execute += new System.EventHandler(this.actAdd_Execute);
             // 
+            // actRemove
+            // 
+            this.actRemove.Text = "Remove";
+            this.actRemove.ToolTipText = "Remove Mib File";
+            this.actRemove.Update += new System.EventHandler(this.actRemove_Update);
+            this.actRemove.Execute += new System.EventHandler(this.actRemove_Execute);
+            // 
             // tsbtnAdd
             // 
             this.actionList1.SetAction(this.tsbtnAdd, this.actAdd);
             this.tsbtnAdd.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.list_add;
             this.tsbtnAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnAdd.Name = "tsbtnAdd";
-            this.tsbtnAdd.Size = new System.Drawing.Size(52, 22);
+            this.tsbtnAdd.Size = new System.Drawing.Size(46, 22);
             this.tsbtnAdd.Text = "Add";
             // 
             // toolStrip1
@@ -105,7 +125,7 @@ namespace Lextm.SharpSnmpLib.Browser
             // 
             this.tslblCount.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.tslblCount.Name = "tslblCount";
-            this.tslblCount.Size = new System.Drawing.Size(12, 22);
+            this.tslblCount.Size = new System.Drawing.Size(10, 22);
             this.tslblCount.Text = " ";
             // 
             // openFileDialog1
@@ -113,16 +133,25 @@ namespace Lextm.SharpSnmpLib.Browser
             this.openFileDialog1.Filter = "Text files (*.txt)|*.txt|MIB files (*.mib)|*.mib|All files (*.*)|*.*";
             this.openFileDialog1.Multiselect = true;
             // 
-            // chName
+            // contextModuleMenu
             // 
-            this.chName.Text = "Name";
-            this.chName.Width = 381;
+            this.contextModuleMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.removeToolStripMenuItem});
+            this.contextModuleMenu.Name = "contextModuleMenu";
+            this.contextModuleMenu.Size = new System.Drawing.Size(153, 48);
+            // 
+            // removeToolStripMenuItem
+            // 
+            this.actionList1.SetAction(this.removeToolStripMenuItem, this.actRemove);
+            this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
+            this.removeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.removeToolStripMenuItem.Text = "Remove";
             // 
             // ModuleListPanel
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(465, 276);
+            this.ClientSize = new System.Drawing.Size(465, 299);
             this.Controls.Add(this.listView1);
             this.Controls.Add(this.toolStrip1);
             this.Name = "ModuleListPanel";
@@ -131,6 +160,7 @@ namespace Lextm.SharpSnmpLib.Browser
             ((System.ComponentModel.ISupportInitialize)(this.actionList1)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.contextModuleMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -143,5 +173,8 @@ namespace Lextm.SharpSnmpLib.Browser
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.ToolStripLabel tslblCount;
         private System.Windows.Forms.ColumnHeader chName;
+        private System.Windows.Forms.ContextMenuStrip contextModuleMenu;
+        private Crad.Windows.Forms.Actions.Action actRemove;
+        private System.Windows.Forms.ToolStripMenuItem removeToolStripMenuItem;
     }
 }

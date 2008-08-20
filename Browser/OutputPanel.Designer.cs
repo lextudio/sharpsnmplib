@@ -36,7 +36,14 @@ namespace Lextm.SharpSnmpLib.Browser
 		/// </summary>
 		private void InitializeComponent()
 		{
+            this.components = new System.ComponentModel.Container();
             this.txtMessages = new System.Windows.Forms.RichTextBox();
+            this.contextOuputMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.actionList1 = new Crad.Windows.Forms.Actions.ActionList();
+            this.actClear = new Crad.Windows.Forms.Actions.Action();
+            this.contextOuputMenu.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.actionList1)).BeginInit();
             this.SuspendLayout();
             // 
             // txtMessages
@@ -44,21 +51,53 @@ namespace Lextm.SharpSnmpLib.Browser
             this.txtMessages.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtMessages.Location = new System.Drawing.Point(0, 0);
             this.txtMessages.Name = "txtMessages";
-            this.txtMessages.Size = new System.Drawing.Size(511, 142);
+            this.txtMessages.Size = new System.Drawing.Size(511, 154);
             this.txtMessages.TabIndex = 0;
             this.txtMessages.Text = "";
+            this.txtMessages.MouseUp += new System.Windows.Forms.MouseEventHandler(this.txtMessages_MouseUp);
+            // 
+            // contextOuputMenu
+            // 
+            this.contextOuputMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.clearToolStripMenuItem});
+            this.contextOuputMenu.Name = "contextOuputMenu";
+            this.contextOuputMenu.Size = new System.Drawing.Size(111, 26);
+            // 
+            // clearToolStripMenuItem
+            // 
+            this.actionList1.SetAction(this.clearToolStripMenuItem, this.actClear);
+            this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
+            this.clearToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
+            this.clearToolStripMenuItem.Text = "Clear";
+            // 
+            // actionList1
+            // 
+            this.actionList1.Actions.Add(this.actClear);
+            this.actionList1.ContainerControl = this;
+            // 
+            // actClear
+            // 
+            this.actClear.Text = "Clear";
+            this.actClear.ToolTipText = "Clear Panel";
+            this.actClear.Execute += new System.EventHandler(this.actClear_Execute);
             // 
             // OutputPanel
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(511, 142);
+            this.ClientSize = new System.Drawing.Size(511, 154);
             this.Controls.Add(this.txtMessages);
             this.Name = "OutputPanel";
             this.TabText = "Output";
+            this.contextOuputMenu.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.actionList1)).EndInit();
             this.ResumeLayout(false);
 
 		}
 		private System.Windows.Forms.RichTextBox txtMessages;
+        private System.Windows.Forms.ContextMenuStrip contextOuputMenu;
+        private System.Windows.Forms.ToolStripMenuItem clearToolStripMenuItem;
+        private Crad.Windows.Forms.Actions.ActionList actionList1;
+        private Crad.Windows.Forms.Actions.Action actClear;
 	}
 }

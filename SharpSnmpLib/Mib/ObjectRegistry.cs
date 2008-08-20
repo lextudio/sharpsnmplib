@@ -139,6 +139,14 @@ namespace Lextm.SharpSnmpLib.Mib
             LoadFile(new StreamReader(new MemoryStream(Resource.RFC_1212)));
             LoadFile(new StreamReader(new MemoryStream(Resource.SMUX_MIB)));
             LoadFile(new StreamReader(new MemoryStream(Resource.RFC1213_MIB)));
+
+            //
+            // User loaded MIBS
+            //
+            if( Directory.Exists(Directory.GetCurrentDirectory() + "\\mibs"))
+            {
+                LoadFolder(Directory.GetCurrentDirectory() +  "\\mibs", "*.mib");
+            }
         }
         
         /// <summary>
@@ -388,6 +396,23 @@ namespace Lextm.SharpSnmpLib.Mib
         internal void LoadFile(TextReader stream)
         {
             LoadFile(null, stream);
+        }
+
+        /// <summary>
+        /// Removes a MIB file.
+        /// </summary>
+        /// <param name="mib">mib</param>
+        public void RemoveMIB(string mib, string group)
+        {
+            _tree.RemoveMIB(mib, group);
+
+            //
+            // We also need to figure out how to remove the mibs we just took out!
+            //
+            if (OnChanged != null)
+            {
+                OnChanged(this, EventArgs.Empty);
+            }
         }
     }
 }

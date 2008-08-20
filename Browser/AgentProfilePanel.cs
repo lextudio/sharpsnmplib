@@ -1,8 +1,7 @@
-﻿using System.Drawing;
-using System.Net;
+﻿using WeifenLuo.WinFormsUI.Docking;
 using System.Windows.Forms;
-
-using WeifenLuo.WinFormsUI.Docking;
+using System.Drawing;
+using System.Net;
 
 namespace Lextm.SharpSnmpLib.Browser
 {
@@ -12,13 +11,6 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             InitializeComponent();
             ProfileRegistry.Instance.OnChanged += UpdateView;
-
-            //
-            // Actions in the context menu
-            //
-            contextAgentMenu.Items.Add("Set Default", null, actDefault_Execute);
-            contextAgentMenu.Items.Add("Delete", null, actDelete_Execute);
-            contextAgentMenu.Items.Add("Edit", null, actEdit_Execute);
         }
 
         private void AgentProfilePanel_Load(object sender, System.EventArgs e)
@@ -76,7 +68,14 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void actDelete_Update(object sender, System.EventArgs e)
         {
-            actDelete.Enabled = listView1.SelectedItems.Count == 1;
+            if (listView1.SelectedItems.Count == 1 && ProfileRegistry.Instance.Default == (listView1.SelectedItems[0].Tag as AgentProfile).Agent)
+            {
+                actDelete.Enabled = false;
+            }
+            else
+            {
+                actDelete.Enabled = listView1.SelectedItems.Count == 1;
+            }
         }
 
         private void actEdit_Update(object sender, System.EventArgs e)
@@ -86,7 +85,14 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void actDefault_Update(object sender, System.EventArgs e)
         {
-            actDefault.Enabled = listView1.SelectedItems.Count == 1;
+            if (listView1.SelectedItems.Count == 1 && ProfileRegistry.Instance.Default == (listView1.SelectedItems[0].Tag as AgentProfile).Agent)
+            {
+                actDefault.Enabled = false;
+            }
+            else
+            {
+                actDefault.Enabled = listView1.SelectedItems.Count == 1;
+            }
         }
 
         private void actDefault_Execute(object sender, System.EventArgs e)

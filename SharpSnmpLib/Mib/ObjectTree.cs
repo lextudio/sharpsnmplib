@@ -12,9 +12,11 @@ namespace Lextm.SharpSnmpLib.Mib
     {
         private IDictionary<string, MibModule> _parsed = new SortedDictionary<string, MibModule>();
         private IDictionary<string, MibModule> _pendings = new Dictionary<string, MibModule>();
+        private IDictionary<string, string> _newMibs = new Dictionary<string, string>();
         private IDictionary<string, IDefinition> nameTable;
         private Definition root;
         private Lexer _lexer;
+        private string mibDir = Directory.GetCurrentDirectory() + "\\mibs\\";
         
         /// <summary>
         /// Creates an <see cref="ObjectTree"/> instance.
@@ -160,12 +162,50 @@ namespace Lextm.SharpSnmpLib.Mib
                 }
                 
                 _pendings.Add(module.Name, module);
+
+                if (file != null && !_newMibs.ContainsKey(module.Name))
+                {
+                    _newMibs.Add(module.Name, file);
+                }
             }
-            
+
+            if (file != null)
+            {
+                if (!Directory.Exists(mibDir))
+                {
+                    Directory.CreateDirectory(mibDir);
+                }
+                if (!File.Exists(mibDir + System.IO.Path.GetFileName(file)))
+                {
+                    File.Copy(file, mibDir + System.IO.Path.GetFileName(file));            
+                }
+            }
+
             ParsePendings();
             return _lexer.SymbolCount;
         }
-        
+
+        internal void RemoveMIB(string mib, string group)
+        {
+            string file = "";
+            _newMibs.TryGetValue(mib, out file);
+
+            if (File.Exists(file))
+            {
+                _newMibs.Remove(mib);
+                File.Delete(file);
+            }
+
+            if (group == "lvgLoaded")
+            {
+                _parsed.Remove(mib);
+            }
+            else
+            {
+                _pendings.Remove(mib);
+            }
+        }
+
         /// <summary>
         /// Loaded MIB modules.
         /// </summary>
@@ -185,6 +225,17 @@ namespace Lextm.SharpSnmpLib.Mib
             get
             {
                 return _pendings.Keys;
+            }
+        }
+
+        /// <summary>
+        /// Compiled MIB modules.
+        /// </summary>
+        public ICollection<string> NewModules
+        {
+            get
+            {
+                return _newMibs.Keys;
             }
         }
     }

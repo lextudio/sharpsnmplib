@@ -32,5 +32,18 @@ namespace Lextm.SharpSnmpLib.Browser
             txtMessages.AppendText(Environment.NewLine);
             txtMessages.ScrollToCaret();
         }
+
+        private void actClear_Execute(object sender, EventArgs e)
+        {
+            txtMessages.Clear();
+        }
+
+        private void txtMessages_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                contextOuputMenu.Show(txtMessages, e.Location);
+            }
+        }
 	}
 }

@@ -150,7 +150,15 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             try
             {
-                ProfileRegistry.Instance.DefaultProfile.Walk(manager1, treeView1.SelectedNode.Tag as IDefinition);
+                if (actGet.Enabled == false)
+                {
+                    ManualWalk(treeView1.SelectedNode, true);
+                }
+                else
+                {
+                    ProfileRegistry.Instance.DefaultProfile.Walk(manager1, treeView1.SelectedNode.Tag as IDefinition);
+                }
+                
             }
             catch (Exception ex)
             {
@@ -227,9 +235,6 @@ namespace Lextm.SharpSnmpLib.Browser
             }
         }
 
-        //
-        // This will need to change once Manager implements GetNext (if we choose to do it this way...
-        //
         private void actGetNext_Execute(object sender, EventArgs e)
         {
             try
@@ -251,6 +256,44 @@ namespace Lextm.SharpSnmpLib.Browser
             else
             {
                 actGetNext.Enabled = false;
+            }
+        }
+
+        private void ManualWalk(TreeNode node, bool first)
+        {
+            if (node != null)
+            {
+                try
+                {
+                    switch (node.ImageIndex)
+                    {
+                        case 3:
+                            ProfileRegistry.Instance.DefaultProfile.Walk(manager1, node.Tag as IDefinition);
+                            break;
+                        default:
+                            if (Validate(node))
+                            {
+                                ProfileRegistry.Instance.DefaultProfile.Get(manager1, GetTextualForm(node.Tag as IDefinition));
+                            }
+                            else
+                            {
+                                //
+                                // TODO: I would like to be ablet to put headings for the parent of the child nodes
+                                //
+                                ManualWalk(node.Nodes[0], false);
+                            }
+                            break;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+
+                if (!first)
+                {
+                    ManualWalk(node.NextNode, false);
+                }
             }
         }
     }

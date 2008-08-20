@@ -23,7 +23,7 @@ namespace Lextm.SharpSnmpLib.Browser
         public ModuleListPanel()
         {
             InitializeComponent();
-            ObjectRegistry.Instance.OnChanged += RefreshPanel;            
+            ObjectRegistry.Instance.OnChanged += RefreshPanel;
         }
         
         void ModuleListPanel_Load(object sender, EventArgs e)
@@ -68,6 +68,42 @@ namespace Lextm.SharpSnmpLib.Browser
                         MessageBox.Show(ex.ToString());
                     }
                 }
+            }
+        }
+
+        private void actRemove_Execute(object sender, EventArgs e)
+        {
+            if (listView1.SelectedItems.Count == 1 && ObjectRegistry.Instance.Tree.NewModules.Contains(listView1.SelectedItems[0].Text))
+            {
+                string mib = listView1.SelectedItems[0].Text;
+                ObjectRegistry.Instance.RemoveMIB(mib, listView1.SelectedItems[0].Group.Name);
+            }
+            else
+            {
+                //
+                // What error msg do we put here? or just an exception?
+                //
+            }
+        }
+
+        private void actRemove_Update(object sender, EventArgs e)
+        {
+            if(listView1.SelectedItems.Count == 1)
+            {
+                string mib = listView1.SelectedItems[0].Text;
+                actRemove.Enabled = ObjectRegistry.Instance.Tree.NewModules.Contains(mib);
+            }
+            else
+            {
+                actRemove.Enabled = false;
+            }
+        }
+
+        private void listView1_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                contextModuleMenu.Show(listView1, e.Location);
             }
         }
     }

@@ -46,8 +46,12 @@
             this.actEdit = new Crad.Windows.Forms.Actions.Action();
             this.actDefault = new Crad.Windows.Forms.Actions.Action();
             this.contextAgentMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.setDefaultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.actionList1)).BeginInit();
+            this.contextAgentMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // listView1
@@ -182,8 +186,35 @@
             // 
             // contextAgentMenu
             // 
+            this.contextAgentMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.editToolStripMenuItem,
+            this.setDefaultToolStripMenuItem,
+            this.deleteToolStripMenuItem});
             this.contextAgentMenu.Name = "contextAgentMenu";
-            this.contextAgentMenu.Size = new System.Drawing.Size(61, 4);
+            this.contextAgentMenu.Size = new System.Drawing.Size(153, 92);
+            // 
+            // editToolStripMenuItem
+            // 
+            this.actionList1.SetAction(this.editToolStripMenuItem, this.actEdit);
+            this.editToolStripMenuItem.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.document_properties;
+            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.editToolStripMenuItem.Text = "Edit";
+            // 
+            // setDefaultToolStripMenuItem
+            // 
+            this.actionList1.SetAction(this.setDefaultToolStripMenuItem, this.actDefault);
+            this.setDefaultToolStripMenuItem.Name = "setDefaultToolStripMenuItem";
+            this.setDefaultToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.setDefaultToolStripMenuItem.Text = "Set Default";
+            // 
+            // deleteToolStripMenuItem
+            // 
+            this.actionList1.SetAction(this.deleteToolStripMenuItem, this.actDelete);
+            this.deleteToolStripMenuItem.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.list_remove;
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.deleteToolStripMenuItem.Text = "Delete";
             // 
             // AgentProfilePanel
             // 
@@ -198,6 +229,7 @@
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.actionList1)).EndInit();
+            this.contextAgentMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -220,5 +252,8 @@
         private System.Windows.Forms.ToolStripButton toolStripButton4;
         private System.Windows.Forms.ToolStripLabel tslblDefault;
         private System.Windows.Forms.ContextMenuStrip contextAgentMenu;
+        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem setDefaultToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
     }
 }
