@@ -8,8 +8,8 @@
  */
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Globalization;
+using System.IO;
 
 namespace Lextm.SharpSnmpLib
 {

@@ -1,9 +1,6 @@
 using System;
-using System.Collections;
-using System.IO;
-using System.Net.Sockets;
-using System.Text;
 using System.Net.NetworkInformation;
+using System.Text;
 
 // ASN.1 BER encoding library by Malcolm Crowe at the University of the West of Scotland
 // See http://cis.paisley.ac.uk/crow-ci0
@@ -63,12 +60,12 @@ namespace Lextm.SharpSnmpLib
             if (_raw.Length == 8 || _raw.Length == 11) 
             {
                 uint yr = _raw[0];
-                yr = yr * 256 + _raw[1];
+                yr = (yr * 256) + _raw[1];
                 uint mo = _raw[2];
                 uint dy = _raw[3];
                 if (yr < 2005 && yr > 1990 && mo < 13 && dy < 32)
                 {
-                    return "" + dy + "/" + mo + "/" + yr;
+                    return string.Empty + dy + "/" + mo + "/" + yr;
                 }
             }
             

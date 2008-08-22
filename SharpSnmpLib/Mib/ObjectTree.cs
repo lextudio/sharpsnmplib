@@ -175,6 +175,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 {
                     Directory.CreateDirectory(mibDir);
                 }
+                
                 if (!File.Exists(mibDir + System.IO.Path.GetFileName(file)))
                 {
                     File.Copy(file, mibDir + System.IO.Path.GetFileName(file));            
@@ -187,7 +188,7 @@ namespace Lextm.SharpSnmpLib.Mib
 
         internal void RemoveMIB(string mib, string group)
         {
-            string file = "";
+            string file = string.Empty;
             _newMibs.TryGetValue(mib, out file);
 
             if (File.Exists(file))

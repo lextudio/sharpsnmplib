@@ -143,7 +143,7 @@ namespace Lextm.SharpSnmpLib
             int n = s.ReadByte();
             if (n == -1)
             {
-                throw (new SharpSnmpException("BER end of file"));
+                throw new SharpSnmpException("BER end of file");
             }
             
             return (byte)n;

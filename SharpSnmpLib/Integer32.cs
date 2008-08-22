@@ -1,8 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Net.Sockets;
-using System.Text;
 using System.Globalization;
 
 // ASN.1 BER encoding library by Malcolm Crowe at the University of the West of Scotland
@@ -39,7 +36,7 @@ namespace Lextm.SharpSnmpLib
         {
             if (raw.Length > 4)
             {
-                throw (new ArgumentException("truncation error for 32-bit integer coding", "raw"));
+                throw new ArgumentException("truncation error for 32-bit integer coding", "raw");
             }
             
             _int = ((raw[0] & 0x80) == 0x80) ? -1 : 0; // sign extended! Guy McIlroy

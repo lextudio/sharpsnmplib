@@ -66,7 +66,7 @@ namespace Lextm.SharpSnmpLib
         {
             if (_raw.Length > 8)
             {
-                throw (new SharpSnmpException("truncation error for 64-bit integer coding"));
+                throw new SharpSnmpException("truncation error for 64-bit integer coding");
             }
             
             long result = ((_raw[0] & 0x80) == 0x80) ? -1 : 0; // sign extended! Guy McIlroy
@@ -148,7 +148,7 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
         public static bool operator !=(Integer64 lhs, Integer64 rhs)
         {
-            return !(lhs.Equals(rhs)); // use operator == and negate result
+            return !lhs.Equals(rhs); // use operator == and negate result
         }
         #endregion
         /// <summary>

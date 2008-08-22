@@ -8,9 +8,8 @@
  */
 
 using System;
-using System.IO;
 using System.Collections.Generic;
-using System.Collections;
+using System.IO;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
@@ -140,12 +139,10 @@ namespace Lextm.SharpSnmpLib.Mib
             LoadFile(new StreamReader(new MemoryStream(Resource.SMUX_MIB)));
             LoadFile(new StreamReader(new MemoryStream(Resource.RFC1213_MIB)));
 
-            //
             // User loaded MIBS
-            //
-            if( Directory.Exists(Directory.GetCurrentDirectory() + "\\mibs"))
+            if (Directory.Exists(Directory.GetCurrentDirectory() + "\\mibs"))
             {
-                LoadFolder(Directory.GetCurrentDirectory() +  "\\mibs", "*.mib");
+                LoadFolder(Directory.GetCurrentDirectory() + "\\mibs", "*.mib");
             }
         }
         
@@ -402,13 +399,12 @@ namespace Lextm.SharpSnmpLib.Mib
         /// Removes a MIB file.
         /// </summary>
         /// <param name="mib">mib</param>
+        /// <param name="group">group.</param>
         public void RemoveMIB(string mib, string group)
         {
             _tree.RemoveMIB(mib, group);
 
-            //
-            // We also need to figure out how to remove the mibs we just took out!
-            //
+            // FIXME: We also need to figure out how to remove the mibs we just took out!
             if (OnChanged != null)
             {
                 OnChanged(this, EventArgs.Empty);

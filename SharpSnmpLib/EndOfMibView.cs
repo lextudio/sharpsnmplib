@@ -84,7 +84,7 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
         public static bool operator !=(EndOfMibView lhs, EndOfMibView rhs)
         {
-            return !(lhs.Equals(rhs)); // use operator == and negate result
+            return !lhs.Equals(rhs); // use operator == and negate result
         }
         #endregion
         /// <summary>

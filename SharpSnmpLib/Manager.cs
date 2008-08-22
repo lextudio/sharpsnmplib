@@ -1,9 +1,10 @@
-﻿using Lextm.SharpSnmpLib.Mib;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
+
+using Lextm.SharpSnmpLib.Mib;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -79,18 +80,6 @@ namespace Lextm.SharpSnmpLib
             Variable v = new Variable(new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 1, 1, 0 }));
             GetRequestMessage message = new GetRequestMessage(version, endpoint.Address, community, new List<Variable>() { v });
             return message.Broadcast(timeout, endpoint.Port);
-        }
-        
-        /// <summary>
-        /// Discovers SNMP agents in the network
-        /// </summary>
-        /// <param name="version">Version code.</param>
-        /// <param name="endpoint">Broadcast endpoint.</param>
-        /// <param name="community">Comunity name.</param>
-        /// <returns></returns>
-        public IDictionary<IPEndPoint, Variable> Discover(VersionCode version, IPEndPoint endpoint, string community)
-        {
-            return Discover(version, endpoint, community, _timeout);
         }
         
         /// <summary>

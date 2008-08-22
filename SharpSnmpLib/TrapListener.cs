@@ -57,11 +57,6 @@ namespace Lextm.SharpSnmpLib
         public event EventHandler<InformRequestReceivedEventArgs> InformRequestReceived;
         
         /// <summary>
-        /// Occurs when a <see cref="GetResponseMessage"/> is received.
-        /// </summary>
-        internal event EventHandler<GetResponseReceivedEventArgs> GetResponseReceived;
-        
-        /// <summary>
         /// Port number.
         /// </summary>
         public int Port
@@ -157,20 +152,21 @@ namespace Lextm.SharpSnmpLib
             while (!((BackgroundWorker)sender).CancellationPending)
             {                
                 int number = _watcher.Available;
-                if (number != 0)
+                Thread.Sleep(100);
+                if (number == 0)
                 {
-                    _watcher.ReceiveFrom(msg, ref senderRemote);
-                    try
-                    {
-                        HandleMessages(msg, number, (IPEndPoint)senderRemote);
-                    }
-                    catch (Exception ex)
-                    {
-                        worker.ReportProgress(-1, ex);
-                    }
+                    continue;
                 }
                 
-                Thread.Sleep(100);
+                _watcher.ReceiveFrom(msg, ref senderRemote);
+                try
+                {
+                    HandleMessages(msg, number, (IPEndPoint)senderRemote);
+                }
+                catch (Exception ex)
+                {
+                    worker.ReportProgress(-1, ex);
+                }
             }
         }
         
@@ -226,16 +222,6 @@ namespace Lextm.SharpSnmpLib
                             if (InformRequestReceived != null)
                             {
                                 InformRequestReceived(this, new InformRequestReceivedEventArgs(agent, inform));
-                            }
-                            
-                            break;
-                        }
-                        
-                    case SnmpType.GetResponsePdu:
-                        {
-                            if (GetResponseReceived != null)
-                            {
-                                GetResponseReceived(this, new GetResponseReceivedEventArgs(agent, (GetResponseMessage)message));
                             }
                             
                             break;

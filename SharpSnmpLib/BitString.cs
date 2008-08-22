@@ -38,12 +38,12 @@ namespace Lextm.SharpSnmpLib
         /// <param name="raw">Raw bytes.</param>
         public BitString(byte[] raw)
         {
-            _nbits = raw.Length * 8 - raw[0]; // 8.6.2
+            _nbits = (raw.Length * 8) - raw[0]; // 8.6.2
             _size = (_nbits + 31) / 32;
             _bits = new int[_size];
             for (int j = 0; j < _size; j++)
             {
-                _bits[j] = (raw[4 * j] << 24) | (raw[4 * j + 1] << 16) | (raw[4 * j + 2] << 8) | raw[4 * j + 3];
+                _bits[j] = (raw[4 * j] << 24) | (raw[(4 * j) + 1] << 16) | (raw[(4 * j) + 2] << 8) | raw[(4 * j) + 3];
             }
             
             _raw = raw;
@@ -230,7 +230,7 @@ namespace Lextm.SharpSnmpLib
         {
             // encoding 8.6.2
             int n = (nbits + 7) / 8;
-            byte r = (byte)(8 - nbits % 8);
+            byte r = (byte)(8 - (nbits % 8));
             byte[] result = new byte[n + 1];
             int ln = 0;
             result[ln++] = r;

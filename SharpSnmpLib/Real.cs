@@ -1,9 +1,6 @@
 using System;
-using System.Collections;
-using System.IO;
-using System.Net.Sockets;
-using System.Text;
 using System.Globalization;
+using System.Text;
 
 // ASN.1 BER encoding library by Malcolm Crowe at the University of the West of Scotland
 // See http://cis.paisley.ac.uk/crow-ci0
@@ -78,7 +75,7 @@ namespace Lextm.SharpSnmpLib
                 int b = (t == 0) ? 2 : (t == 1) ? 8 : 16;
                 if (t == 3)
                 {
-                    throw (new SharpSnmpException("X690:8.5.5.2 reserved encoding"));
+                    throw new SharpSnmpException("X690:8.5.5.2 reserved encoding");
                 }
                 
                 int f = (c & 0xc) >> 2;
@@ -124,7 +121,7 @@ namespace Lextm.SharpSnmpLib
             {
                     case 0x40: return double.PositiveInfinity;
                     case 0x41: return double.NegativeInfinity;
-                    default: throw (new SharpSnmpException("X690:8.5.7 reserved encoding"));
+                    default: throw new SharpSnmpException("X690:8.5.7 reserved encoding");
             }
         }
 

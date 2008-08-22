@@ -2,11 +2,13 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.IO;
     using System.Net;
     using System.Net.Sockets;
     using System.Text;
-    
+    using System.Threading;
+
     /// <summary>
     /// GET request message.
     /// </summary>
@@ -90,16 +92,59 @@
         {
             byte[] bytes = _bytes;
             IPEndPoint agent = new IPEndPoint(_agent, port);
-            IPEndPoint local;
+            IDictionary<IPEndPoint, Variable> result;
             using (UdpClient udp = new UdpClient())
             {
                 udp.EnableBroadcast = true;
                 udp.Send(bytes, bytes.Length, agent);
-                local = (IPEndPoint)udp.Client.LocalEndPoint;
+                result = ReceiveResponses(udp, timeout);
                 udp.Close();
             }
             
-            return new BroadcastHandler(timeout, local).Found;
+            return result;
+        }
+
+        private static IDictionary<IPEndPoint, Variable> ReceiveResponses(UdpClient udp, int timeout)
+        {
+            IDictionary<IPEndPoint, Variable> result = new Dictionary<IPEndPoint, Variable>();
+            using (BackgroundWorker worker = new BackgroundWorker())
+            {
+                worker.WorkerSupportsCancellation = true;
+                worker.DoWork += delegate(object sender, DoWorkEventArgs e)
+                {
+                    Socket _watcher = ((UdpClient)e.Argument).Client;
+                    IPEndPoint source = new IPEndPoint(IPAddress.Any, 0);
+                    EndPoint senderRemote = (EndPoint)source;
+                    byte[] msg = new byte[_watcher.ReceiveBufferSize];
+                    while (!((BackgroundWorker)sender).CancellationPending)
+                    {
+                        int number = _watcher.Available;
+                        Thread.Sleep(100);
+                        if (number == 0)
+                        {
+                            continue;
+                        }
+                        
+                        _watcher.ReceiveFrom(msg, ref senderRemote);
+                        ISnmpMessage message = MessageFactory.ParseMessages(msg)[0];
+                        if (message.TypeCode != SnmpType.GetResponsePdu)
+                        {
+                            continue;
+                        }
+                        
+                        result.Add((IPEndPoint)senderRemote, ((GetResponseMessage)message).Variables[0]);
+                    }
+                };
+                worker.RunWorkerAsync(udp);
+                Thread.Sleep(timeout);
+                worker.CancelAsync();
+                while (worker.IsBusy)
+                {
+                    Thread.Sleep(100);
+                }
+            }
+            
+            return result;
         }
         
         /// <summary>

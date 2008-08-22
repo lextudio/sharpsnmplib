@@ -51,7 +51,6 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="BitString.cs" />
     <Compile Include="Bool.cs" />
-    <Compile Include="BroadcastHandler.cs" />
     <Compile Include="ByteTool.cs" />
     <Compile Include="Counter32.cs" />
     <Compile Include="Counter64.cs" />
@@ -67,7 +66,6 @@
     <Compile Include="GetRequestPdu.cs" />
     <Compile Include="GetResponseMessage.cs" />
     <Compile Include="GetResponsePdu.cs" />
-    <Compile Include="GetResponseReceivedEventArgs.cs" />
     <Compile Include="InformRequestMessage.cs" />
     <Compile Include="InformRequestPdu.cs" />
     <Compile Include="InformRequestReceivedEventArgs.cs" />

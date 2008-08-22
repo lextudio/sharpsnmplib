@@ -8,7 +8,6 @@
  */
 using System;
 using System.Net;
-using System.Globalization;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
 

@@ -49,32 +49,34 @@
         <Types>
          <Type Name="AgentProfile">
           <Members>
-           <Member Name="#Port">
-            <Accessors>
-             <Accessor Name="#get_Port()">
-              <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-08-11 03:43:56Z">
-                <Issue>
-                 <Item>'AgentProfile.Port.get()'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
+           <Member Name="#GetNext(Lextm.SharpSnmpLib.Manager,System.String)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-08-22 13:55:36Z">
+              <Issue>
+               <Item>'AgentProfile.GetNext(Manager, string)'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-08-22 13:55:36Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'AgentProfile.GetNext(Manager, string)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="manager" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2008-08-22 13:55:36Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'manager'</Item>
+               <Item>'AgentProfile.GetNext(Manager, string)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="textual" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2008-08-22 13:55:36Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'textual'</Item>
+               <Item>'AgentProfile.GetNext(Manager, string)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
            </Member>
            <Member Name="#Walk(Lextm.SharpSnmpLib.Manager,Lextm.SharpSnmpLib.Mib.IDefinition)">
             <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-07-30 11:33:36Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'AgentProfile.Walk(Manager, IDefinition)'</Item>
-              </Issue>
-             </Message>
-             <Message Id="def" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2008-07-29 12:26:48Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'def'</Item>
-               <Item>'AgentProfile.Walk(Manager, IDefinition)'</Item>
-              </Issue>
-             </Message>
              <Message Id="manager" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2008-07-29 12:26:48Z" FixCategory="NonBreaking">
               <Issue>
                <Item>'manager'</Item>
@@ -92,6 +94,25 @@
              <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Created="2008-08-11 03:43:56Z">
               <Issue>
                <Item>'AgentProfilePanel.actAdd_Execute(object, EventArgs)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#actDelete_Execute(System.Object,System.EventArgs)">
+            <Messages>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Created="2008-08-22 13:55:36Z">
+              <Issue>
+               <Item>'AgentProfilePanel.actDelete_Execute(object, EventArgs)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#UpdateView(System.Object,System.EventArgs)">
+            <Messages>
+             <Message TypeName="TestForEmptyStringsUsingStringLength" Category="Microsoft.Performance" CheckId="CA1820" Created="2008-08-22 13:55:36Z">
+              <Issue Name="IsNullOrEmpty">
+               <Item>'string.operator !=(string, string)'</Item>
+               <Item>'AgentProfilePanel.UpdateView(object, EventArgs)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -161,6 +182,21 @@
              </Message>
             </Messages>
            </Member>
+           <Member Name="#actGetNext_Execute(System.Object,System.EventArgs)">
+            <Messages>
+             <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Created="2008-08-22 13:55:36Z">
+              <Issue>
+               <Item>'MibTreePanel.actGetNext_Execute(object, EventArgs)'</Item>
+               <Item>'Exception'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Created="2008-08-22 13:55:36Z">
+              <Issue>
+               <Item>'MibTreePanel.actGetNext_Execute(object, EventArgs)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="#actSet_Execute(System.Object,System.EventArgs)">
             <Messages>
              <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Created="2008-07-29 12:26:48Z">
@@ -196,6 +232,30 @@
              <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-07-29 12:26:48Z" FixCategory="NonBreaking">
               <Issue>
                <Item>'MibTreePanel.GetTextualForm(IDefinition)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#ManualWalk(System.Windows.Forms.TreeNode,System.Boolean)">
+            <Messages>
+             <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Created="2008-08-22 13:55:36Z">
+              <Issue>
+               <Item>'MibTreePanel.ManualWalk(TreeNode, bool)'</Item>
+               <Item>'Exception'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Created="2008-08-22 13:55:36Z">
+              <Issue>
+               <Item>'MibTreePanel.ManualWalk(TreeNode, bool)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#toolTip1">
+            <Messages>
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2008-08-22 13:55:36Z">
+              <Issue>
+               <Item>'MibTreePanel.toolTip1'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -246,6 +306,25 @@
            </Member>
           </Members>
          </Type>
+         <Type Name="ProfileRegistry">
+          <Members>
+           <Member Name="#LoadProfilesFromFile(Lextm.SharpSnmpLib.Browser.OutputPanel)">
+            <Messages>
+             <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Created="2008-08-22 13:55:36Z">
+              <Issue>
+               <Item>'ProfileRegistry.LoadProfilesFromFile(OutputPanel)'</Item>
+               <Item>'Exception'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Created="2008-08-22 13:55:36Z">
+              <Issue>
+               <Item>'ProfileRegistry.LoadProfilesFromFile(OutputPanel)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
          <Type Name="Program">
           <Members>
            <Member Name="#Main(System.String[])">
@@ -279,6 +358,60 @@
              <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-05-10 09:21:46Z">
               <Issue>
                <Item>'Integer64.Integer64(long)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="Manager">
+          <Members>
+           <Member Name="#GetTable(Lextm.SharpSnmpLib.VersionCode,System.Net.IPEndPoint,System.String,Lextm.SharpSnmpLib.ObjectIdentifier)">
+            <Messages>
+             <Message Id="Body" TypeName="PreferJaggedArraysOverMultidimensional" Category="Microsoft.Performance" CheckId="CA1814" Created="2008-08-22 13:55:36Z">
+              <Issue Name="Body">
+               <Item>'Manager.GetTable(VersionCode, IPEndPoint, string, ObjectIdentifier)'</Item>
+               <Item>'Variable[,]'</Item>
+              </Issue>
+              <Issue Name="Body">
+               <Item>'Manager.GetTable(VersionCode, IPEndPoint, string, ObjectIdentifier)'</Item>
+               <Item>'Variable[,]'</Item>
+              </Issue>
+             </Message>
+             <Message Id="Return" TypeName="PreferJaggedArraysOverMultidimensional" Category="Microsoft.Performance" CheckId="CA1814" Created="2008-08-22 13:55:36Z">
+              <Issue Name="Return">
+               <Item>'Manager.GetTable(VersionCode, IPEndPoint, string, ObjectIdentifier)'</Item>
+               <Item>'Variable[,]'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetTable(Lextm.SharpSnmpLib.VersionCode,System.Net.IPEndPoint,System.String,System.UInt32[])">
+            <Messages>
+             <Message Id="Return" TypeName="PreferJaggedArraysOverMultidimensional" Category="Microsoft.Performance" CheckId="CA1814" Created="2008-08-22 13:55:36Z">
+              <Issue Name="Return">
+               <Item>'Manager.GetTable(VersionCode, IPEndPoint, string, uint[])'</Item>
+               <Item>'Variable[,]'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetTable(System.Net.IPEndPoint,System.String,Lextm.SharpSnmpLib.ObjectIdentifier)">
+            <Messages>
+             <Message Id="Return" TypeName="PreferJaggedArraysOverMultidimensional" Category="Microsoft.Performance" CheckId="CA1814" Created="2008-08-22 13:55:36Z">
+              <Issue Name="Return">
+               <Item>'Manager.GetTable(IPEndPoint, string, ObjectIdentifier)'</Item>
+               <Item>'Variable[,]'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetTable(System.Net.IPEndPoint,System.String,System.UInt32[])">
+            <Messages>
+             <Message Id="Return" TypeName="PreferJaggedArraysOverMultidimensional" Category="Microsoft.Performance" CheckId="CA1814" Created="2008-08-22 13:55:36Z">
+              <Issue Name="Return">
+               <Item>'Manager.GetTable(IPEndPoint, string, uint[])'</Item>
+               <Item>'Variable[,]'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -545,6 +678,21 @@
            </Member>
           </Members>
          </Type>
+         <Type Name="ObjectRegistry">
+          <Members>
+           <Member Name="#RemoveMIB(System.String,System.String)">
+            <Messages>
+             <Message Id="MIB" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-08-22 13:55:36Z">
+              <Issue Name="Member">
+               <Item>MIB</Item>
+               <Item>'ObjectRegistry.RemoveMIB(string, string)'</Item>
+               <Item>Mib</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
          <Type Name="Sequence">
           <Members>
            <Member Name="#.ctor(System.String,System.String,Lextm.SharpSnmpLib.Mib.Lexer)">
@@ -691,6 +839,10 @@
    <Rule TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822">
     <Resolution Name="Default">The 'this' parameter (or 'Me' in Visual Basic) of {0} is never used. Mark the member as static (or Shared in Visual Basic) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Resolution>
    </Rule>
+   <Rule TypeName="PreferJaggedArraysOverMultidimensional" Category="Microsoft.Performance" CheckId="CA1814">
+    <Resolution Name="Body">{0} uses a multidimensional array of {1}. Replace it with a jagged array if possible.</Resolution>
+    <Resolution Name="Return">{0} returns a multidimensional array of {1}. Replace it with a jagged array if possible.</Resolution>
+   </Rule>
    <Rule TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804">
     <Resolution Name="Default">{0} declares a variable, {1}, of type {2}, which is never used or is only assigned to. Use this variable or remove it.</Resolution>
    </Rule>
@@ -702,6 +854,9 @@
    </Rule>
    <Rule TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300">
     <Resolution Name="Default">Change {0} to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control.</Resolution>
+   </Rule>
+   <Rule TypeName="TestForEmptyStringsUsingStringLength" Category="Microsoft.Performance" CheckId="CA1820">
+    <Resolution Name="IsNullOrEmpty">Replace the call to {0} in {1} with a call to 'String.IsNullOrEmpty'.</Resolution>
    </Rule>
   </Rules>
  </FxCopReport>

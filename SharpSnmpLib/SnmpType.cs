@@ -1,10 +1,5 @@
 
 using System;
-using System.Net.Sockets;
-using System.IO;
-using System.Collections;
-using System.Text;
-using System.Net;
 using System.Diagnostics.CodeAnalysis;
 
 // SNMP library for .NET by Malcolm Crowe at University of the West of Scotland
