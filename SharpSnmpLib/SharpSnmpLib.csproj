@@ -43,7 +43,7 @@
     <FileAlignment>4096</FileAlignment>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
-  <Import Project="Microsoft.VersionNumber.targets" />
+  <Import Project="Microsoft.VersionNumber.targets" Condition=" '$(Configuration)' == 'Debug' " />
   <ItemGroup>
     <Reference Include="System" />
   </ItemGroup>
