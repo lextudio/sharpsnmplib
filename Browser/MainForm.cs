@@ -37,12 +37,6 @@ namespace Lextm.SharpSnmpLib.Browser
             agent.Show(dockPanel1, DockState.DockLeft);
             
             ProfileRegistry.Instance.LoadProfiles(output);
-
-            foreach (IPEndPoint name in ProfileRegistry.Instance.Names)
-            {
-                tscbAgent.Items.Add(name.ToString());
-            }
-            tscbAgent.SelectedIndex = 0;
 		}
 
         private void actExit_Execute(object sender, EventArgs e)

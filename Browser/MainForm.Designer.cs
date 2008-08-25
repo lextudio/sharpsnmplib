@@ -42,7 +42,6 @@ namespace Lextm.SharpSnmpLib.Browser
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
-            this.tscbAgent = new System.Windows.Forms.ToolStripComboBox();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -72,7 +71,6 @@ namespace Lextm.SharpSnmpLib.Browser
             this.toolStripButton1,
             this.toolStripSeparator1,
             this.toolStripLabel1,
-            this.tscbAgent,
             this.toolStripButton2});
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
@@ -98,15 +96,8 @@ namespace Lextm.SharpSnmpLib.Browser
             // toolStripLabel1
             // 
             this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(36, 22);
+            this.toolStripLabel1.Size = new System.Drawing.Size(35, 22);
             this.toolStripLabel1.Text = "Agent";
-            // 
-            // tscbAgent
-            // 
-            this.tscbAgent.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
-            this.tscbAgent.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.tscbAgent.Name = "tscbAgent";
-            this.tscbAgent.Size = new System.Drawing.Size(121, 25);
             // 
             // toolStripButton2
             // 
@@ -141,7 +132,7 @@ namespace Lextm.SharpSnmpLib.Browser
             this.actionList1.SetAction(this.exitToolStripMenuItem, this.actExit);
             this.exitToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("exitToolStripMenuItem.Image")));
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(91, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             // 
             // actionList1
@@ -194,7 +185,6 @@ namespace Lextm.SharpSnmpLib.Browser
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
-        private System.Windows.Forms.ToolStripComboBox tscbAgent;
         private Crad.Windows.Forms.Actions.Action actSave;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
 	}

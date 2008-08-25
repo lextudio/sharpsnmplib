@@ -45,11 +45,11 @@ namespace Lextm.SharpSnmpLib.Browser
             this.actAdd = new Crad.Windows.Forms.Actions.Action();
             this.actRemove = new Crad.Windows.Forms.Actions.Action();
             this.tsbtnAdd = new System.Windows.Forms.ToolStripButton();
+            this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.tslblCount = new System.Windows.Forms.ToolStripLabel();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.contextModuleMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.actionList1)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.contextModuleMenu.SuspendLayout();
@@ -110,6 +110,13 @@ namespace Lextm.SharpSnmpLib.Browser
             this.tsbtnAdd.Size = new System.Drawing.Size(46, 22);
             this.tsbtnAdd.Text = "Add";
             // 
+            // removeToolStripMenuItem
+            // 
+            this.actionList1.SetAction(this.removeToolStripMenuItem, this.actRemove);
+            this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
+            this.removeToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.removeToolStripMenuItem.Text = "Remove";
+            // 
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -138,14 +145,7 @@ namespace Lextm.SharpSnmpLib.Browser
             this.contextModuleMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.removeToolStripMenuItem});
             this.contextModuleMenu.Name = "contextModuleMenu";
-            this.contextModuleMenu.Size = new System.Drawing.Size(153, 48);
-            // 
-            // removeToolStripMenuItem
-            // 
-            this.actionList1.SetAction(this.removeToolStripMenuItem, this.actRemove);
-            this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
-            this.removeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.removeToolStripMenuItem.Text = "Remove";
+            this.contextModuleMenu.Size = new System.Drawing.Size(115, 26);
             // 
             // ModuleListPanel
             // 
