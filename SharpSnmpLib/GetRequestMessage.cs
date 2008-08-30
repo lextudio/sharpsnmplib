@@ -104,7 +104,7 @@
             return result;
         }
 
-        private static IDictionary<IPEndPoint, Variable> ReceiveResponses(UdpClient udp, int timeout)
+        private IDictionary<IPEndPoint, Variable> ReceiveResponses(UdpClient udp, int timeout)
         {
             IDictionary<IPEndPoint, Variable> result = new Dictionary<IPEndPoint, Variable>();
             using (BackgroundWorker worker = new BackgroundWorker())
@@ -128,6 +128,17 @@
                         _watcher.ReceiveFrom(msg, ref senderRemote);
                         ISnmpMessage message = MessageFactory.ParseMessages(msg)[0];
                         if (message.TypeCode != SnmpType.GetResponsePdu)
+                        {
+                            continue;
+                        }
+                        
+                        GetResponseMessage response = (GetResponseMessage)message;
+                        if (response.SequenceNumber != SequenceNumber)
+                        {
+                            continue;
+                        }
+                        
+                        if (response.ErrorStatus != ErrorCode.NoError)
                         {
                             continue;
                         }
