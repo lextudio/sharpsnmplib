@@ -89,8 +89,9 @@ namespace Lextm.SharpSnmpLib
         /// <param name="endpoint">Endpoint.</param>
         /// <param name="community">Community name.</param>
         /// <param name="variables">Variable binds.</param>
+        /// <param name="timeout">Timeout.</param>
         /// <returns></returns>
-        public IList<Variable> Get(VersionCode version, IPEndPoint endpoint, string community, IList<Variable> variables)
+        public static IList<Variable> Get(VersionCode version, IPEndPoint endpoint, string community, IList<Variable> variables, int timeout)
         {
             if (version == VersionCode.V3)
             {
@@ -98,20 +99,7 @@ namespace Lextm.SharpSnmpLib
             }
 
             GetRequestMessage message = new GetRequestMessage(version, endpoint.Address, community, variables);
-            return message.Send(_timeout, endpoint.Port);
-        }
-
-        /// <summary>
-        /// Gets a variable bind.
-        /// </summary>
-        /// <param name="version">Protocol version.</param>
-        /// <param name="endpoint">Endpoint.</param>
-        /// <param name="community">Community name.</param>
-        /// <param name="variable">Variable bind.</param>
-        /// <returns></returns>
-        public Variable Get(VersionCode version, IPEndPoint endpoint, string community, Variable variable)
-        {
-            return Get(version, endpoint, community, new List<Variable>() { variable })[0];
+            return message.Send(timeout, endpoint.Port);
         }
 
         /// <summary>
@@ -121,9 +109,9 @@ namespace Lextm.SharpSnmpLib
         /// <param name="community">Community name.</param>
         /// <param name="variable">Variable bind.</param>
         /// <returns></returns>
-        public Variable Get(IPEndPoint endpoint, string community, Variable variable)
+        public Variable GetSingle(IPEndPoint endpoint, string community, Variable variable)
         {
-            return Get(_version, endpoint, community, variable);
+            return Get(_version, endpoint, community, new List<Variable>() { variable }, _timeout)[0];
         }
 
         /// <summary>
@@ -135,7 +123,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public IList<Variable> Get(IPEndPoint endpoint, string community, IList<Variable> variables)
         {
-            return Get(_version, endpoint, community, variables);
+            return Get(_version, endpoint, community, variables, _timeout);
         }
 
         /// <summary>
@@ -145,8 +133,9 @@ namespace Lextm.SharpSnmpLib
         /// <param name="endpoint">Endpoint.</param>
         /// <param name="community">Community name.</param>
         /// <param name="variables">Variable binds.</param>
+        /// <param name="timeout">Timeout.</param>
         /// <returns></returns>
-        public void Set(VersionCode version, IPEndPoint endpoint, string community, IList<Variable> variables)
+        public static void Set(VersionCode version, IPEndPoint endpoint, string community, IList<Variable> variables, int timeout)
         {
             if (version == VersionCode.V3)
             {
@@ -154,20 +143,7 @@ namespace Lextm.SharpSnmpLib
             }
 
             SetRequestMessage message = new SetRequestMessage(version, endpoint.Address, community, variables);
-            message.Send(_timeout, endpoint.Port);
-        }
-
-        /// <summary>
-        /// Sets a variable bind.
-        /// </summary>
-        /// <param name="version">Protocol version.</param>
-        /// <param name="endpoint">Endpoint.</param>
-        /// <param name="community">Community name.</param>
-        /// <param name="variable">Variable bind.</param>
-        /// <returns></returns>
-        public void Set(VersionCode version, IPEndPoint endpoint, string community, Variable variable)
-        {
-            Set(version, endpoint, community, new List<Variable>() { variable });
+            message.Send(timeout, endpoint.Port);
         }
 
         /// <summary>
@@ -177,9 +153,9 @@ namespace Lextm.SharpSnmpLib
         /// <param name="community">Community name.</param>
         /// <param name="variable">Variable bind.</param>
         /// <returns></returns>
-        public void Set(IPEndPoint endpoint, string community, Variable variable)
+        public void SetSingle(IPEndPoint endpoint, string community, Variable variable)
         {
-            Set(_version, endpoint, community, variable);
+            Set(_version, endpoint, community, new List<Variable>() { variable }, _timeout);
         }
 
         /// <summary>
@@ -191,19 +167,20 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public void Set(IPEndPoint endpoint, string community, IList<Variable> variables)
         {
-            Set(_version, endpoint, community, variables);
+            Set(_version, endpoint, community, variables, _timeout);
         }
 
         /// <summary>
         /// Gets a table of variables.
         /// </summary>
-        /// <param name="version">Protocol version</param>
+        /// <param name="version">Protocol version.</param>
         /// <param name="endpoint">Endpoint.</param>
-        /// <param name="community">Community name</param>
-        /// <param name="table">Table OID</param>
+        /// <param name="community">Community name.</param>
+        /// <param name="table">Table OID.</param>
+        /// <param name="timeout">Timeout.</param>
         /// <returns></returns>
         [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Return", Justification = "ByDesign")]
-        public Variable[,] GetTable(VersionCode version, IPEndPoint endpoint, string community, ObjectIdentifier table)
+        public static Variable[,] GetTable(VersionCode version, IPEndPoint endpoint, string community, ObjectIdentifier table, int timeout)
         {
             if (version == VersionCode.V3)
             {
@@ -217,7 +194,7 @@ namespace Lextm.SharpSnmpLib
             }
 
             IList<Variable> list = new List<Variable>();
-            int rows = Walk(version, endpoint, community, table, list, _timeout, WalkMode.WithinSubtree);
+            int rows = Walk(version, endpoint, community, table, list, timeout, WalkMode.WithinSubtree);
             if (rows == 0)
             {
                 return new Variable[0, 0];
@@ -282,16 +259,15 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Gets a table of variables.
         /// </summary>
-        /// <param name="version">Protocol version.</param>
         /// <param name="endpoint">Endpoint.</param>
         /// <param name="community">Community name.</param>
         /// <param name="table">Table OID.</param>
         /// <returns></returns>
         [CLSCompliant(false)]
         [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Return", Justification = "ByDesign")]
-        public Variable[,] GetTable(VersionCode version, IPEndPoint endpoint, string community, uint[] table)
+        public Variable[,] GetTable(IPEndPoint endpoint, string community, uint[] table)
         {
-            return GetTable(version, endpoint, community, new ObjectIdentifier(table));
+            return GetTable(endpoint, community, new ObjectIdentifier(table));
         }
 
         /// <summary>
@@ -304,21 +280,7 @@ namespace Lextm.SharpSnmpLib
         [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Return", Justification = "ByDesign")]
         public Variable[,] GetTable(IPEndPoint endpoint, string community, ObjectIdentifier table)
         {
-            return GetTable(_version, endpoint, community, table);
-        }
-
-        /// <summary>
-        /// Gets a table of variables.
-        /// </summary>
-        /// <param name="endpoint">Endpoint.</param>
-        /// <param name="community">Community name.</param>
-        /// <param name="table">Table OID.</param>
-        /// <returns></returns>
-        [CLSCompliant(false)]
-        [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Return", Justification = "ByDesign")]
-        public Variable[,] GetTable(IPEndPoint endpoint, string community, uint[] table)
-        {
-            return GetTable(endpoint, community, new ObjectIdentifier(table));
+            return GetTable(_version, endpoint, community, table, _timeout);
         }
 
         /// <summary>

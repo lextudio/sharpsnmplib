@@ -73,7 +73,7 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             Variable var = new Variable(textual);
 
-            Report(manager.Get(_agent, _get, var));
+            Report(manager.GetSingle(_agent, _get, var));
             return var.ToString();
         }
 
@@ -81,7 +81,7 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             Variable var = new Variable(textual);
 
-            return manager.Get(_agent, _get, var).Data.ToString();
+            return manager.GetSingle(_agent, _get, var).Data.ToString();
         }
 
         internal string GetNext(Manager manager, string textual)
@@ -105,7 +105,7 @@ namespace Lextm.SharpSnmpLib.Browser
         //
 	    internal void Set(Manager manager, string textual, ISnmpData data)
 	    {
-            manager.Set(VersionCode, _agent, _set, new Variable(textual, data));
+            manager.SetSingle(_agent, _set, new Variable(textual, data));
 	    }
 	
 	    // private IPAddress ValidateIP()

@@ -17,13 +17,12 @@ namespace TestSet
 	{
 		public static void Main(string[] args)
 		{
-			Manager manager = new Manager();
 			try
 			{
 				Variable test = new Variable(new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 1, 6, 0 }), 
 				                                             new OctetString("Beijing"));
-			    manager.Set(VersionCode.V1, new IPEndPoint(IPAddress.Loopback, 161), "private", new List<Variable>() {test});
-			    manager.Set(VersionCode.V2, new IPEndPoint(IPAddress.Loopback, 161), "private", new List<Variable>() {test});
+			    Manager.Set(VersionCode.V1, new IPEndPoint(IPAddress.Loopback, 161), "private", new List<Variable>() {test}, 5000);
+			    Manager.Set(VersionCode.V2, new IPEndPoint(IPAddress.Loopback, 161), "private", new List<Variable>() {test}, 5000);
 			}
 			catch (SharpOperationException ex)
 			{

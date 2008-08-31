@@ -14,11 +14,10 @@ namespace TestGetTable
 
         static void Main(string[] args)
         {
-            Manager manager = new Manager();
             try
             {
-                Variable[,] table = manager.GetTable(IPAddress.Parse("127.0.0.1"), "public",
-                    new uint[] { 1, 3, 6, 1, 2, 1, 2, 2 });
+                Variable[,] table = Manager.GetTable(VersionCode.V1, new IPEndPoint(IPAddress.Loopback, 161), "public",
+                    new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 2, 2 }), 5000);
                 for (int row = 0; row < table.GetUpperBound(0); row++)
                 {
                     for (int col = 0; col < table.GetUpperBound(1); col++)
