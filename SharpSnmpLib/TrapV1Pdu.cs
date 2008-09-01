@@ -25,7 +25,7 @@ namespace Lextm.SharpSnmpLib
         private IP _agent;
         private Integer32 _generic;
         private Integer32 _specific;
-        private TimeTicks _timeStamp;
+        private TimeTicks _timestamp;
         private Sequence _varbindSection;
         private IList<Variable> _variables;    
       
@@ -41,7 +41,7 @@ namespace Lextm.SharpSnmpLib
             _agent = (IP)SnmpDataFactory.CreateSnmpData(m);
             _generic = (Integer32)SnmpDataFactory.CreateSnmpData(m);
             _specific = (Integer32)SnmpDataFactory.CreateSnmpData(m);
-            _timeStamp = (TimeTicks)SnmpDataFactory.CreateSnmpData(m);
+            _timestamp = (TimeTicks)SnmpDataFactory.CreateSnmpData(m);
             _varbindSection = (Sequence)SnmpDataFactory.CreateSnmpData(m);
             _variables = Variable.Transform(_varbindSection);
         }
@@ -53,11 +53,11 @@ namespace Lextm.SharpSnmpLib
         /// <param name="agent">Agent address</param>
         /// <param name="generic">Generic trap type</param>
         /// <param name="specific">Specific trap type</param>
-        /// <param name="timeStamp">Time stamp</param>
+        /// <param name="timestamp">Time stamp</param>
         /// <param name="variables">Variable binds</param>
         [CLSCompliant(false)]
-        public TrapV1Pdu(uint[] enterprise, IP agent, Integer32 generic, Integer32 specific, TimeTicks timeStamp, IList<Variable> variables)
-            : this(new ObjectIdentifier(enterprise), agent, generic, specific, timeStamp, variables) 
+        public TrapV1Pdu(uint[] enterprise, IP agent, Integer32 generic, Integer32 specific, TimeTicks timestamp, IList<Variable> variables)
+            : this(new ObjectIdentifier(enterprise), agent, generic, specific, timestamp, variables) 
         {
         }
         
@@ -68,18 +68,18 @@ namespace Lextm.SharpSnmpLib
         /// <param name="agent">Agent address</param>
         /// <param name="generic">Generic trap type</param>
         /// <param name="specific">Specific trap type</param>
-        /// <param name="timeStamp">Time stamp</param>
+        /// <param name="timestamp">Time stamp</param>
         /// <param name="variables">Variable binds</param>
-        public TrapV1Pdu(ObjectIdentifier enterprise, IP agent, Integer32 generic, Integer32 specific, TimeTicks timeStamp, IList<Variable> variables)
+        public TrapV1Pdu(ObjectIdentifier enterprise, IP agent, Integer32 generic, Integer32 specific, TimeTicks timestamp, IList<Variable> variables)
         {
             _enterprise = enterprise;
             _agent = agent;
             _generic = generic;
             _specific = specific;
-            _timeStamp = timeStamp;
+            _timestamp = timestamp;
             _varbindSection = Variable.Transform(variables);
             _variables = variables;
-            _raw = ByteTool.ParseItems(_enterprise, _agent, _generic, _specific, _timeStamp, _varbindSection);
+            _raw = ByteTool.ParseItems(_enterprise, _agent, _generic, _specific, _timestamp, _varbindSection);
         }   
         
         /// <summary>
@@ -159,7 +159,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         public TimeTicks TimeStamp
         {
-            get { return _timeStamp; }
+            get { return _timestamp; }
         }
         
         /// <summary>

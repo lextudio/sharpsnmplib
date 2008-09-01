@@ -113,11 +113,19 @@ namespace Lextm.SharpSnmpLib
             }
         }
         
-        internal static int ReadPayloadLength(MemoryStream m)
+        private static int ReadPayloadLength(Stream stream)
         {
-            int first = m.ReadByte();
-            return ReadLength(m, (byte)first);
-        }
+            int first = stream.ReadByte();
+            return ReadLength(stream, (byte)first);
+        }        
+        
+        internal static byte[] GetBytes(Stream stream)
+        {
+            int length = ByteTool.ReadPayloadLength(stream);
+            byte[] bytes = new byte[length];
+            stream.Read(bytes, 0, length);
+            return bytes;
+        }        
         
         // copied from universal
         private static int ReadLength(Stream stream, byte first) // x is initial octet

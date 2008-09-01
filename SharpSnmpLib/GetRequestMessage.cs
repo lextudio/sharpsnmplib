@@ -143,7 +143,7 @@
                             continue;
                         }
                         
-                        result.Add((IPEndPoint)senderRemote, ((GetResponseMessage)message).Variables[0]);
+                        result.Add((IPEndPoint)senderRemote, response.Variables[0]);
                     }
                 };
                 worker.RunWorkerAsync(udp);

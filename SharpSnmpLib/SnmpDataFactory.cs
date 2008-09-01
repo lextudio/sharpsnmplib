@@ -33,58 +33,58 @@ namespace Lextm.SharpSnmpLib
         /// <param name="stream">Stream.</param>
         /// <param name="type">Type code.</param>
         /// <returns></returns>
-        public static ISnmpData CreateSnmpData(int type, MemoryStream stream)
+        public static ISnmpData CreateSnmpData(int type, Stream stream)
         {
             switch ((SnmpType)type)
             {
                 case SnmpType.Counter32:
-                    return new Counter32(GetBytes(stream));
+                    return new Counter32(ByteTool.GetBytes(stream));
                 case SnmpType.Counter64:
-                    return new Counter64(GetBytes(stream));
+                    return new Counter64(ByteTool.GetBytes(stream));
                 case SnmpType.Gauge32:
-                    return new Gauge32(GetBytes(stream));
+                    return new Gauge32(ByteTool.GetBytes(stream));
                 case SnmpType.ObjectIdentifier:
-                    return new ObjectIdentifier(GetBytes(stream));
+                    return new ObjectIdentifier(ByteTool.GetBytes(stream));
                 case SnmpType.Null:
-                    GetBytes(stream);
+                    ByteTool.GetBytes(stream);
                     return new Null();
                 case SnmpType.NoSuchInstance:
-                    GetBytes(stream);
+                    ByteTool.GetBytes(stream);
                     return new NoSuchInstance();
                 case SnmpType.NoSuchObject:
-                    GetBytes(stream);
+                    ByteTool.GetBytes(stream);
                     return new NoSuchObject();
                 case SnmpType.EndOfMibView:
-                    GetBytes(stream);
+                    ByteTool.GetBytes(stream);
                     return new EndOfMibView();
                 case SnmpType.Integer32:
-                    return new Integer32(GetBytes(stream));
+                    return new Integer32(ByteTool.GetBytes(stream));
                 case SnmpType.OctetString:
-                    return new OctetString(GetBytes(stream));
+                    return new OctetString(ByteTool.GetBytes(stream));
                 case SnmpType.IPAddress:
-                    return new IP(GetBytes(stream));
+                    return new IP(ByteTool.GetBytes(stream));
                 case SnmpType.TimeTicks:
-                    return new TimeTicks(GetBytes(stream));
+                    return new TimeTicks(ByteTool.GetBytes(stream));
                 case SnmpType.Sequence:
-                    return new Sequence(GetBytes(stream));
+                    return new Sequence(ByteTool.GetBytes(stream));
                 case SnmpType.TrapV1Pdu:
-                    return new TrapV1Pdu(GetBytes(stream));
+                    return new TrapV1Pdu(ByteTool.GetBytes(stream));
                 case SnmpType.TrapV2Pdu:
-                    return new TrapV2Pdu(GetBytes(stream));
+                    return new TrapV2Pdu(ByteTool.GetBytes(stream));
                 case SnmpType.GetRequestPdu:
-                    return new GetRequestPdu(GetBytes(stream));
+                    return new GetRequestPdu(ByteTool.GetBytes(stream));
                 case SnmpType.GetResponsePdu:
-                    return new GetResponsePdu(GetBytes(stream));
+                    return new GetResponsePdu(ByteTool.GetBytes(stream));
                 case SnmpType.GetBulkRequestPdu:
-                    return new GetBulkRequestPdu(GetBytes(stream));
+                    return new GetBulkRequestPdu(ByteTool.GetBytes(stream));
                 case SnmpType.GetNextRequestPdu:
-                    return new GetNextRequestPdu(GetBytes(stream));
+                    return new GetNextRequestPdu(ByteTool.GetBytes(stream));
                 case SnmpType.SetRequestPdu:
-                    return new SetRequestPdu(GetBytes(stream));
+                    return new SetRequestPdu(ByteTool.GetBytes(stream));
                 case SnmpType.InformRequestPdu:
-                    return new InformRequestPdu(GetBytes(stream));
+                    return new InformRequestPdu(ByteTool.GetBytes(stream));
                 case SnmpType.ReportPdu:
-                    return new ReportPdu(GetBytes(stream));
+                    return new ReportPdu(ByteTool.GetBytes(stream));
                 case SnmpType.EndMarker:
                     return null;
                 default:
@@ -92,14 +92,6 @@ namespace Lextm.SharpSnmpLib
             }
         }
 
-        private static byte[] GetBytes(MemoryStream stream)
-        {
-            int length = ByteTool.ReadPayloadLength(stream);
-            byte[] bytes = new byte[length];
-            stream.Read(bytes, 0, length);
-            return bytes;
-        }
-        
         /// <summary>
         /// Creates an <see cref="ISnmpData"/> instance from buffer.
         /// </summary>
