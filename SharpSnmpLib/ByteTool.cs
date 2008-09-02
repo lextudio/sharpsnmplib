@@ -113,7 +113,7 @@ namespace Lextm.SharpSnmpLib
             }
         }
         
-        private static int ReadPayloadLength(Stream stream)
+        internal static int ReadPayloadLength(Stream stream)
         {
             int first = stream.ReadByte();
             return ReadLength(stream, (byte)first);

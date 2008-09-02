@@ -115,6 +115,32 @@ namespace Lextm.SharpSnmpLib
         }
 
         /// <summary>
+        /// Gets a variable bind.
+        /// </summary>
+        /// <param name="address">Address.</param>
+        /// <param name="community">Community name.</param>
+        /// <param name="variable">Variable bind.</param>
+        /// <returns></returns>
+        public Variable GetSingle(string address, string community, Variable variable)
+        {
+            return GetSingle(IPAddress.Parse(address), community, variable);
+        }
+        
+        /// <summary>
+        /// Gets a variable bind.
+        /// </summary>
+        /// <param name="address">Address.</param>
+        /// <param name="community">Community name.</param>
+        /// <param name="variable">Variable bind.</param>
+        /// <returns></returns>
+        public Variable GetSingle(IPAddress address, string community, Variable variable)
+        {
+            return GetSingle(new IPEndPoint(address, DefaultPort), community, variable);
+        }
+        
+        private const int DefaultPort = 162;
+
+        /// <summary>
         /// Gets a list of variable binds.
         /// </summary>
         /// <param name="endpoint">Endpoint.</param>
@@ -124,6 +150,30 @@ namespace Lextm.SharpSnmpLib
         public IList<Variable> Get(IPEndPoint endpoint, string community, IList<Variable> variables)
         {
             return Get(_version, endpoint, community, variables, _timeout);
+        }
+        
+        /// <summary>
+        /// Gets a list of variable binds.
+        /// </summary>
+        /// <param name="address">Address.</param>
+        /// <param name="community">Community name.</param>
+        /// <param name="variables">Variable binds.</param>
+        /// <returns></returns>
+        public IList<Variable> Get(string address, string community, IList<Variable> variables)
+        {
+            return Get(IPAddress.Parse(address), community, variables);
+        }
+        
+        /// <summary>
+        /// Gets a list of variable binds.
+        /// </summary>
+        /// <param name="address">Address.</param>
+        /// <param name="community">Community name.</param>
+        /// <param name="variables">Variable binds.</param>
+        /// <returns></returns>
+        public IList<Variable> Get(IPAddress address, string community, IList<Variable> variables)
+        {
+            return Get(new IPEndPoint(address, DefaultPort), community, variables);
         }
 
         /// <summary>
@@ -157,6 +207,30 @@ namespace Lextm.SharpSnmpLib
         {
             Set(_version, endpoint, community, new List<Variable>() { variable }, _timeout);
         }
+        
+        /// <summary>
+        /// Sets a variable bind.
+        /// </summary>
+        /// <param name="address">Address.</param>
+        /// <param name="community">Community name.</param>
+        /// <param name="variable">Variable bind.</param>
+        /// <returns></returns>
+        public void SetSingle(IPAddress address, string community, Variable variable)
+        {
+            SetSingle(new IPEndPoint(address, DefaultPort), community, variable);
+        }
+        
+        /// <summary>
+        /// Sets a variable bind.
+        /// </summary>
+        /// <param name="address">Address.</param>
+        /// <param name="community">Community name.</param>
+        /// <param name="variable">Variable bind.</param>
+        /// <returns></returns>
+        public void SetSingle(string address, string community, Variable variable)
+        {
+            SetSingle(IPAddress.Parse(address), community, variable);
+        }
 
         /// <summary>
         /// Sets a list of variable binds.
@@ -168,6 +242,30 @@ namespace Lextm.SharpSnmpLib
         public void Set(IPEndPoint endpoint, string community, IList<Variable> variables)
         {
             Set(_version, endpoint, community, variables, _timeout);
+        }
+        
+        /// <summary>
+        /// Sets a list of variable binds.
+        /// </summary>
+        /// <param name="address">Address.</param>
+        /// <param name="community">Community name.</param>
+        /// <param name="variables">Variable binds.</param>
+        /// <returns></returns>
+        public void Set(string address, string community, IList<Variable> variables)
+        {
+            Set(IPAddress.Parse(address), community, variables);
+        }
+        
+        /// <summary>
+        /// Sets a list of variable binds.
+        /// </summary>
+        /// <param name="address">Address.</param>
+        /// <param name="community">Community name.</param>
+        /// <param name="variables">Variable binds.</param>
+        /// <returns></returns>
+        public void Set(IPAddress address, string community, IList<Variable> variables)
+        {
+            Set(new IPEndPoint(address, DefaultPort), community, variables);
         }
 
         /// <summary>
@@ -216,6 +314,87 @@ namespace Lextm.SharpSnmpLib
         }
         
         /// <summary>
+        /// Gets a table of variables.
+        /// </summary>
+        /// <param name="endpoint">Endpoint.</param>
+        /// <param name="community">Community name.</param>
+        /// <param name="table">Table OID.</param>
+        /// <returns></returns>
+        [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Return", Justification = "ByDesign")]
+        public Variable[,] GetTable(IPEndPoint endpoint, string community, ObjectIdentifier table)
+        {
+            return GetTable(endpoint, community, table);
+        }
+        
+        /// <summary>
+        /// Gets a table of variables.
+        /// </summary>
+        /// <param name="address">Address.</param>
+        /// <param name="community">Community name.</param>
+        /// <param name="table">Table OID.</param>
+        /// <returns></returns>
+        [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Return", Justification = "ByDesign")]
+        public Variable[,] GetTable(IPAddress address, string community, ObjectIdentifier table)
+        {
+            return GetTable(new IPEndPoint(address, DefaultPort), community, table);
+        }
+        
+        /// <summary>
+        /// Gets a table of variables.
+        /// </summary>
+        /// <param name="address">Address.</param>
+        /// <param name="community">Community name.</param>
+        /// <param name="table">Table OID.</param>
+        /// <returns></returns>
+        [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Return", Justification = "ByDesign")]
+        public Variable[,] GetTable(string address, string community, ObjectIdentifier table)
+        {
+            return GetTable(address, community, table);
+        }
+
+        /// <summary>
+        /// Gets a table of variables.
+        /// </summary>
+        /// <param name="endpoint">Endpoint.</param>
+        /// <param name="community">Community name.</param>
+        /// <param name="table">Table OID.</param>
+        /// <returns></returns>
+        [CLSCompliant(false)]
+        [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Return", Justification = "ByDesign")]
+        public Variable[,] GetTable(IPEndPoint endpoint, string community, uint[] table)
+        {
+            return GetTable(_version, endpoint, community, new ObjectIdentifier(table), _timeout);
+        }
+        
+        /// <summary>
+        /// Gets a table of variables.
+        /// </summary>
+        /// <param name="address">Address.</param>
+        /// <param name="community">Community name.</param>
+        /// <param name="table">Table OID.</param>
+        /// <returns></returns>
+        [CLSCompliant(false)]
+        [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Return", Justification = "ByDesign")]
+        public Variable[,] GetTable(string address, string community, uint[] table)
+        {
+            return GetTable(IPAddress.Parse(address), community, new ObjectIdentifier(table));
+        }
+
+        /// <summary>
+        /// Gets a table of variables.
+        /// </summary>
+        /// <param name="address">Address.</param>
+        /// <param name="community">Community name.</param>
+        /// <param name="table">Table OID.</param>
+        /// <returns></returns>
+        [CLSCompliant(false)]
+        [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Return", Justification = "ByDesign")]
+        public Variable[,] GetTable(IPAddress address, string community, uint[] table)
+        {
+            return GetTable(new IPEndPoint(address, DefaultPort), community, new ObjectIdentifier(table));
+        }
+        
+        /// <summary>
         /// Walks.
         /// </summary>
         /// <param name="version">Protocol version.</param>
@@ -254,33 +433,6 @@ namespace Lextm.SharpSnmpLib
             }
             while (HasNext(version, endpoint, community, seed, timeout, out next));
             return result;
-        }
-
-        /// <summary>
-        /// Gets a table of variables.
-        /// </summary>
-        /// <param name="endpoint">Endpoint.</param>
-        /// <param name="community">Community name.</param>
-        /// <param name="table">Table OID.</param>
-        /// <returns></returns>
-        [CLSCompliant(false)]
-        [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Return", Justification = "ByDesign")]
-        public Variable[,] GetTable(IPEndPoint endpoint, string community, uint[] table)
-        {
-            return GetTable(endpoint, community, new ObjectIdentifier(table));
-        }
-
-        /// <summary>
-        /// Gets a table of variables.
-        /// </summary>
-        /// <param name="endpoint">Endpoint.</param>
-        /// <param name="community">Community name.</param>
-        /// <param name="table">Table OID.</param>
-        /// <returns></returns>
-        [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Return", Justification = "ByDesign")]
-        public Variable[,] GetTable(IPEndPoint endpoint, string community, ObjectIdentifier table)
-        {
-            return GetTable(_version, endpoint, community, table, _timeout);
         }
 
         /// <summary>

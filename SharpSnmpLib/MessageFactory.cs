@@ -45,7 +45,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="stream">Stream.</param>
         /// <returns></returns>
-        public static IList<ISnmpMessage> ParseMessages(MemoryStream stream)
+        public static IList<ISnmpMessage> ParseMessages(Stream stream)
         {
             IList<ISnmpMessage> result = new List<ISnmpMessage>();
             int first;
@@ -62,7 +62,7 @@ namespace Lextm.SharpSnmpLib
             return result;
         }
         
-        private static ISnmpMessage ParseMessage(int first, MemoryStream stream)
+        private static ISnmpMessage ParseMessage(int first, Stream stream)
         {           
             ISnmpData array = SnmpDataFactory.CreateSnmpData(first, stream);
             if (array == null)

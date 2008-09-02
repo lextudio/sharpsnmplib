@@ -110,7 +110,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="stream">Stream</param>
         /// <returns></returns>
-        public static ISnmpData CreateSnmpData(MemoryStream stream)
+        public static ISnmpData CreateSnmpData(Stream stream)
         {
             return CreateSnmpData(stream.ReadByte(), stream);
         }

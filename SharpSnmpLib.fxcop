@@ -1516,18 +1516,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#ReceiveResponses(System.Net.Sockets.UdpClient,System.Int32)">
-            <Messages>
-             <Message TypeName="DoNotCastUnnecessarily" Category="Microsoft.Performance" CheckId="CA1800" Created="2008-09-01 03:58:25Z">
-              <Issue Name="Local">
-               <Item>'message'</Item>
-               <Item>'GetResponseMessage'</Item>
-               <Item>'GetRequestMessage.ReceiveResponses(UdpClient, int)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
           </Members>
          </Type>
          <Type Name="GetRequestPdu">
@@ -1719,6 +1707,26 @@
              </Message>
             </Messages>
            </Member>
+           <Member Name="#GetTable(System.Net.IPAddress,System.String,Lextm.SharpSnmpLib.ObjectIdentifier)">
+            <Messages>
+             <Message Id="Return" TypeName="PreferJaggedArraysOverMultidimensional" Category="Microsoft.Performance" CheckId="CA1814" Created="2008-09-02 12:38:25Z">
+              <Issue Name="Return">
+               <Item>'Manager.GetTable(IPAddress, string, ObjectIdentifier)'</Item>
+               <Item>'Variable[,]'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetTable(System.Net.IPAddress,System.String,System.UInt32[])">
+            <Messages>
+             <Message Id="Return" TypeName="PreferJaggedArraysOverMultidimensional" Category="Microsoft.Performance" CheckId="CA1814" Created="2008-09-02 12:38:25Z">
+              <Issue Name="Return">
+               <Item>'Manager.GetTable(IPAddress, string, uint[])'</Item>
+               <Item>'Variable[,]'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="#GetTable(System.Net.IPEndPoint,System.String,Lextm.SharpSnmpLib.ObjectIdentifier)">
             <Messages>
              <Message Id="Return" TypeName="PreferJaggedArraysOverMultidimensional" Category="Microsoft.Performance" CheckId="CA1814" Created="2008-08-22 13:55:36Z">
@@ -1734,6 +1742,26 @@
              <Message Id="Return" TypeName="PreferJaggedArraysOverMultidimensional" Category="Microsoft.Performance" CheckId="CA1814" Created="2008-08-22 13:55:36Z">
               <Issue Name="Return">
                <Item>'Manager.GetTable(IPEndPoint, string, uint[])'</Item>
+               <Item>'Variable[,]'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetTable(System.String,System.String,Lextm.SharpSnmpLib.ObjectIdentifier)">
+            <Messages>
+             <Message Id="Return" TypeName="PreferJaggedArraysOverMultidimensional" Category="Microsoft.Performance" CheckId="CA1814" Created="2008-09-02 12:38:25Z">
+              <Issue Name="Return">
+               <Item>'Manager.GetTable(string, string, ObjectIdentifier)'</Item>
+               <Item>'Variable[,]'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetTable(System.String,System.String,System.UInt32[])">
+            <Messages>
+             <Message Id="Return" TypeName="PreferJaggedArraysOverMultidimensional" Category="Microsoft.Performance" CheckId="CA1814" Created="2008-09-02 12:38:25Z">
+              <Issue Name="Return">
+               <Item>'Manager.GetTable(string, string, uint[])'</Item>
                <Item>'Variable[,]'</Item>
               </Issue>
              </Message>
@@ -2116,22 +2144,6 @@
               <Issue Name="Member">
                <Item>varbind</Item>
                <Item>'SetRequestPdu._varbindSection'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="SnmpDataFactory">
-          <Members>
-           <Member Name="#CreateSnmpData(System.Int32,System.IO.MemoryStream)">
-            <Messages>
-             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Created="2008-09-01 04:30:22Z">
-              <Issue>
-               <Item>'stream'</Item>
-               <Item>'SnmpDataFactory.CreateSnmpData(int, MemoryStream)'</Item>
-               <Item>'MemoryStream'</Item>
-               <Item>'Stream'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -3513,15 +3525,9 @@
    <Rule TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702">
     <Resolution Name="MemberShouldBeDiscreteTerm">The compound word '{0}' in member name {1} exists as a discrete term. If your usage is intended to be single word, case it as '{2}' or strip the first token entirely if it represents any sort of Hungarian notation.</Resolution>
    </Rule>
-   <Rule TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011">
-    <Resolution Name="Default">Consider changing the type of parameter {0} in {1} from {2} to its base type {3}. This method appears to only require base class members in its implementation. Suppress this violation if there is a compelling reason to require the more derived type in the method signature.</Resolution>
-   </Rule>
    <Rule TypeName="DeclareEventHandlersCorrectly" Category="Microsoft.Design" CheckId="CA1009">
     <Resolution Name="First">Declare the first parameter of {0} as an object named 'sender'.</Resolution>
     <Resolution Name="Second">Declare the second parameter of {0} as an EventArgs, or an instance of a type that extends EventArgs, named 'e'.</Resolution>
-   </Rule>
-   <Rule TypeName="DoNotCastUnnecessarily" Category="Microsoft.Performance" CheckId="CA1800">
-    <Resolution Name="Local">{0}, a variable, is cast to type {1} multiple times in method {2}. Cache the result of the 'as' operator or direct cast in order to eliminate the redundant {3} instruction.</Resolution>
    </Rule>
    <Rule TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031">
     <Resolution Name="Default">Modify {0} to catch a more specific exception than {1} or rethrow the exception.</Resolution>
