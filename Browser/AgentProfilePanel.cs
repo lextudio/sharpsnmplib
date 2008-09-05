@@ -107,7 +107,7 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void actionList1_Update(object sender, System.EventArgs e)
         {
-            tslblDefault.Text = "Default agent is " + ProfileRegistry.Instance.DefaultString;
+            tslblDefault.Text = "Default agent is " + ProfileRegistry.Instance.DefaultProfile.Name;
         }
 
         private void actDelete_Execute(object sender, System.EventArgs e)

@@ -210,7 +210,7 @@ namespace Lextm.SharpSnmpLib.Browser
 
         internal void LoadDefaultProfile(OutputPanel output)
         {
-            AgentProfile first = new AgentProfile(VersionCode.V1, new IPEndPoint(IPAddress.Loopback, 161), "public", "public", "127.0.0.1");
+            AgentProfile first = new AgentProfile(VersionCode.V1, new IPEndPoint(IPAddress.Loopback, 161), "public", "public", "Localhost");
             first.OnOperationCompleted += output.ReportMessage;
             AddProfile(first);
             Default = first.Agent;

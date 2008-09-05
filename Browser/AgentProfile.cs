@@ -127,11 +127,26 @@ namespace Lextm.SharpSnmpLib.Browser
 	    internal void Walk(Manager manager, IDefinition def)
 	    {
             IList<Variable> list = new List<Variable>();
- 
-            Manager.Walk(this.VersionCode, this.Agent, this.GetCommunity, new ObjectIdentifier(def.GetNumericalForm()), list, 1000, WalkMode.WithinSubtree);
-            for (int i = 0; i < list.Count; i++)
+            int rows = 0;
+
+            rows = Manager.Walk(this.VersionCode, this.Agent, this.GetCommunity, new ObjectIdentifier(def.GetNumericalForm()), list, 1000, WalkMode.WithinSubtree);
+            
+            // 
+            // How many rows are there?
+            //
+            if (rows > 0)
             {
-                Report(list[i]);
+                FormTable newTable = new FormTable(def);
+                newTable.setRows(rows);
+                newTable.populateGrid(list);
+                newTable.Show();
+            }
+            else
+            {
+                for (int i = 0; i < list.Count; i++)
+                {
+                    Report(list[i]);
+                }
             }
 
 	    }
