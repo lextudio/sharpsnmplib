@@ -46,8 +46,18 @@
   <Import Project="Microsoft.VersionNumber.targets" Condition=" '$(Configuration)' == 'Debug' " />
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Agent.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Agent.Designer.cs">
+      <DependentUpon>Agent.cs</DependentUpon>
+    </Compile>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="BitString.cs" />
     <Compile Include="Bool.cs" />
@@ -66,6 +76,7 @@
     <Compile Include="GetRequestPdu.cs" />
     <Compile Include="GetResponseMessage.cs" />
     <Compile Include="GetResponsePdu.cs" />
+    <Compile Include="GetRequestReceivedEventArg.cs" />
     <Compile Include="InformRequestMessage.cs" />
     <Compile Include="InformRequestPdu.cs" />
     <Compile Include="InformRequestReceivedEventArgs.cs" />
@@ -246,6 +257,9 @@
     <None Include="Resources\UDP-MIB.txt" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Agent.resx">
+      <DependentUpon>Agent.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Manager.resx">
       <DependentUpon>Manager.cs</DependentUpon>
       <SubType>Designer</SubType>

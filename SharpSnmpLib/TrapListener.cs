@@ -55,7 +55,12 @@ namespace Lextm.SharpSnmpLib
         /// Occurs when a <see cref="InformRequestMessage"/> is received.
         /// </summary>
         public event EventHandler<InformRequestReceivedEventArgs> InformRequestReceived;
-        
+
+        /// <summary>
+        /// Occurs when a <see cref="GetRequestMessage"/> is received.
+        /// </summary>
+        public event EventHandler<GetRequestReceivedEventArgs> GetRequestReceived;
+
         /// <summary>
         /// Port number.
         /// </summary>
@@ -78,6 +83,15 @@ namespace Lextm.SharpSnmpLib
         public void Start()
         {
             Start(defaultEndPoint);
+        }
+
+        /// <summary>
+        /// Starts on a specific port number.
+        /// </summary>
+        /// <param name="port">Port number.</param>
+        public void Start(int port)
+        {
+            Start(new IPEndPoint(IPAddress.Any, port));
         }
         
         /// <summary>
@@ -226,7 +240,14 @@ namespace Lextm.SharpSnmpLib
                             
                             break;
                         }
-                        
+                    case SnmpType.GetRequestPdu:
+                        {
+                            if (GetRequestReceived != null)
+                            {
+                                GetRequestReceived(this, new GetRequestReceivedEventArgs(agent, (GetRequestMessage)message));
+                            }
+                            break;
+                        }
                     default:
                         break;
                 }
