@@ -26,6 +26,22 @@ namespace Lextm.SharpSnmpLib.Tests
         	ObjectIdentifier o = (ObjectIdentifier)data;
         	Assert.AreEqual(expected, o.ToNumerical());
         }        
+        
+        [Test]
+        public void TestToBytes2()
+        {
+            uint[] expected = new uint[] {0};
+         	ObjectIdentifier oid = new ObjectIdentifier(expected);
+         	Assert.AreEqual(new byte[] {0x06, 0x01, 0x00}, oid.ToBytes());
+        }
+        
+        [Test]
+        public void TestToBytes3()
+        {
+            uint[] expected = new uint[] {0, 0};
+         	ObjectIdentifier oid = new ObjectIdentifier(expected);
+         	Assert.AreEqual(new byte[] {0x06, 0x02, 0x00, 0x00}, oid.ToBytes());
+        } 
     }
 }
 #pragma warning restore 1591

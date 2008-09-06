@@ -24,6 +24,27 @@ namespace Lextm.SharpSnmpLib.Tests
             ObjectIdentifier o = (ObjectIdentifier)data;
             Assert.AreEqual(new uint[] { 1, 3, 6, 1, 4, 1, 2162, 1000, 2 }, o.ToNumerical());
         }
+        
+        [Test]
+        public void TestCreateObjectIdentifier2()
+        {
+            byte[] expected = new Byte[] {0x06, 0x01, 0x00};
+            ISnmpData data = SnmpDataFactory.CreateSnmpData(expected);
+            Assert.AreEqual(SnmpType.ObjectIdentifier, data.TypeCode);
+            ObjectIdentifier o = (ObjectIdentifier)data;
+            Assert.AreEqual(new uint[] {0}, o.ToNumerical());
+        }
+        
+        [Test]
+        public void TestCreateObjectIdentifier3()
+        {
+            byte[] expected = new Byte[] {0x06, 0x02, 0x00, 0x00};
+            ISnmpData data = SnmpDataFactory.CreateSnmpData(expected);
+            Assert.AreEqual(SnmpType.ObjectIdentifier, data.TypeCode);
+            ObjectIdentifier o = (ObjectIdentifier)data;
+            Assert.AreEqual(new uint[] {0, 0}, o.ToNumerical());
+        }
+        
         [Test]
         public void TestCreateNull()
         {
@@ -47,7 +68,7 @@ namespace Lextm.SharpSnmpLib.Tests
         {
             byte[] expected = new byte[] {0x04, 0x06, 0x70, 0x75, 0x62, 0x6C, 0x69, 0x63};
             ISnmpData data = SnmpDataFactory.CreateSnmpData(expected);
-            Assert.AreEqual(SnmpType.OctetString, data.TypeCode);            
+            Assert.AreEqual(SnmpType.OctetString, data.TypeCode);
             Assert.AreEqual("public", data.ToString());
         }
         [Test]
@@ -146,7 +167,7 @@ namespace Lextm.SharpSnmpLib.Tests
                 0x04, 0x08, 0x54, 0x72, 0x61, 0x70, 0x54, 0x65, 0x73, 0x74};
             ISnmpData data = SnmpDataFactory.CreateSnmpData(expected);
             Assert.AreEqual(SnmpType.Sequence, data.TypeCode);
-        
+            
             Sequence t = (Sequence)data;
             Assert.AreEqual(3, t.Items.Count);
             ISnmpData version = t.Items[0];
