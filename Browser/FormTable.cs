@@ -13,6 +13,7 @@ namespace Lextm.SharpSnmpLib.Browser
     {
         private IDefinition definition;
 
+        [CLSCompliant(false)]
         public FormTable(IDefinition def)
         {
             definition = def;

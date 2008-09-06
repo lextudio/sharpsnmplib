@@ -138,7 +138,7 @@ namespace Lextm.SharpSnmpLib
             return GetSingle(new IPEndPoint(address, DefaultPort), community, variable);
         }
         
-        private const int DefaultPort = 162;
+        private const int DefaultPort = 161;
 
         /// <summary>
         /// Gets a list of variable binds.

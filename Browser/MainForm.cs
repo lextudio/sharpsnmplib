@@ -37,12 +37,6 @@ namespace Lextm.SharpSnmpLib.Browser
             agent.Show(dockPanel1, DockState.DockLeft);
             
             ProfileRegistry.Instance.LoadProfiles(output);
-
-            foreach (AgentProfile prof in ProfileRegistry.Instance.Profiles)
-            {
-                tscbAgent.Items.Add(prof.Name);
-            }
-            tscbAgent.SelectedIndex = 0;
 		}
 
         private void actExit_Execute(object sender, EventArgs e)
