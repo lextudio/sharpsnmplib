@@ -18,7 +18,7 @@ namespace Lextm.SharpSnmpLib.Tests
     public class TestParseItemsException
     {
         [Test]
-        [ExpectedException(typeof(IndexOutOfRangeException))]
+        // [ExpectedException(typeof(IndexOutOfRangeException))]
         public void TestConstructor()
         {
             Sequence a = Variable.Transform(

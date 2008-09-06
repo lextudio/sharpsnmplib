@@ -12,7 +12,7 @@ namespace Lextm.SharpSnmpLib
     public class ObjectIdentifier : ISnmpData, IEquatable<ObjectIdentifier>
     {
         private uint[] _oid;
-       
+        
         /// <summary>
         /// Creates an <see cref="ObjectIdentifier"/> instance from textual ID.
         /// </summary>
@@ -63,7 +63,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         public string Textual
         {
-            get 
+            get
             {
                 return Mib.ObjectRegistry.Instance.GetTextualFrom(_oid);
             }
@@ -121,7 +121,7 @@ namespace Lextm.SharpSnmpLib
             {
                 x = bytes[p++];
                 r = (r << 7) + ((uint)x & 0x7f);    // 0.3.3a (Evan Watson)
-            } 
+            }
             while ((x & 0x80) != 0);
             return r;
         }
@@ -132,7 +132,7 @@ namespace Lextm.SharpSnmpLib
             IList<uint> temp = new List<uint>();
             int p = 0;
             while (p < n)
-            { 
+            {
                 temp.Add(ObjectIdentifier.GetOIDEl(bytes, ref p));
             }
 
@@ -142,16 +142,16 @@ namespace Lextm.SharpSnmpLib
                 result[0] = 1;
                 result[1] = 3;
                 for (int j = 1; j < temp.Count; j++)
-                { 
+                {
                     result[j + 1] = (uint)temp[j];
                 }
             }
-            else 
+            else
             {
                 // can happen that result is .0??
                 result = new uint[temp.Count];
                 for (int j = 0; j < temp.Count; j++)
-                { 
+                {
                     result[j] = (uint)temp[j];
                 }
             }
@@ -206,6 +206,11 @@ namespace Lextm.SharpSnmpLib
 
         private static int GetPduFormatLength(uint[] oid)
         {
+            if (oid.Length == 1)
+            {
+                return 1;
+            }
+            
             int result = 0;
             for (int j = 1; j < oid.Length; j++)
             {
@@ -227,7 +232,7 @@ namespace Lextm.SharpSnmpLib
             for (int j = 2; j < _oid.Length; j++)
             {
                 PutOIDEl(ref raw, ref ln, _oid[j]);
-            } 
+            }
             
             return ByteTool.ToBytes(SnmpType.ObjectIdentifier, raw);
         }
@@ -237,7 +242,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         public SnmpType TypeCode
         {
-            get 
+            get
             {
                 return SnmpType.ObjectIdentifier;
             }
@@ -268,7 +273,7 @@ namespace Lextm.SharpSnmpLib
             
             return Equals((ObjectIdentifier)obj);
         }
-     
+        
         /// <summary>
         /// Indicates whether the current object is equal to another object of the same type.
         /// </summary>
@@ -284,7 +289,7 @@ namespace Lextm.SharpSnmpLib
             
             return ByteTool.CompareArray(_oid, other._oid);
         }
-      
+        
         /// <summary>
         /// Serves as a hash function for a particular type.
         /// </summary>
@@ -293,7 +298,7 @@ namespace Lextm.SharpSnmpLib
         {
             return ToString().GetHashCode();
         }
-   
+        
         /// <summary>
         /// The equality operator.
         /// </summary>
@@ -305,7 +310,7 @@ namespace Lextm.SharpSnmpLib
         {
             return left.Equals(right);
         }
-   
+        
         /// <summary>
         /// The inequality operator.
         /// </summary>

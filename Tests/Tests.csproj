@@ -55,6 +55,7 @@
     <Compile Include="Tests\TestObjectRegistry.cs" />
     <Compile Include="Tests\TestOctetString.cs" />
     <Compile Include="Tests\TestOpaque.cs" />
+    <Compile Include="Tests\TestParseItemsException.cs" />
     <Compile Include="Tests\TestSequence.cs" />
     <Compile Include="Tests\TestSnmpDataFactory.cs" />
     <Compile Include="Tests\TestTimeticks.cs" />
