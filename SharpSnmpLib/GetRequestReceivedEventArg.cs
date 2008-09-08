@@ -15,7 +15,7 @@ namespace Lextm.SharpSnmpLib
         /// Creates a <see cref="GetRequestReceivedEventArgs"/> 
         /// </summary>
         /// <param name="agent">Agent</param>
-        /// <param name="response">GET request message</param>
+        /// <param name="request">GET request message</param>
         public GetRequestReceivedEventArgs(IPEndPoint agent, GetRequestMessage request)
         {
             _agent = agent;
@@ -51,5 +51,3 @@ namespace Lextm.SharpSnmpLib
         }
     }
 }
-
-

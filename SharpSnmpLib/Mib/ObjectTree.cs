@@ -186,7 +186,7 @@ namespace Lextm.SharpSnmpLib.Mib
             return _lexer.SymbolCount;
         }
 
-        internal void RemoveMIB(string mib, string group)
+        internal void RemoveMib(string mib, string group)
         {
             string file = string.Empty;
             _newMibs.TryGetValue(mib, out file);

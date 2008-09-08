@@ -400,9 +400,9 @@ namespace Lextm.SharpSnmpLib.Mib
         /// </summary>
         /// <param name="mib">mib</param>
         /// <param name="group">group.</param>
-        public void RemoveMIB(string mib, string group)
+        public void RemoveMib(string mib, string group)
         {
-            _tree.RemoveMIB(mib, group);
+            _tree.RemoveMib(mib, group);
 
             // FIXME: We also need to figure out how to remove the mibs we just took out!
             if (OnChanged != null)

@@ -148,6 +148,7 @@ namespace Lextm.SharpSnmpLib
             this.worker.ProgressChanged += new ProgressChangedEventHandler(TrapListener_ProgressChanged);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2201:DoNotRaiseReservedExceptionTypes", Justification = "ByDesign")]
         private void TrapListener_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             if (e.ProgressPercentage != -1)
@@ -158,6 +159,7 @@ namespace Lextm.SharpSnmpLib
             throw new Exception("thread exception", (Exception)e.UserState);
         }
         
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "ByDesign")]
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
             IPEndPoint agent = new IPEndPoint(IPAddress.Any, 0);
@@ -240,14 +242,17 @@ namespace Lextm.SharpSnmpLib
                             
                             break;
                         }
+                        
                     case SnmpType.GetRequestPdu:
                         {
                             if (GetRequestReceived != null)
                             {
                                 GetRequestReceived(this, new GetRequestReceivedEventArgs(agent, (GetRequestMessage)message));
                             }
+                            
                             break;
                         }
+                        
                     default:
                         break;
                 }

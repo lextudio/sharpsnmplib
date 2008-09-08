@@ -25,7 +25,7 @@ namespace Lextm.SharpSnmpLib.Tests
                 new List<Variable>() {
                    new Variable(
                         new ObjectIdentifier(new uint[] {1,3,6,1,2,1,2,2,1,22,1}),
-                        new ObjectIdentifier(new uint[] {0}))
+                        new ObjectIdentifier(new uint[] {0,0}))
                 });
         }
     }

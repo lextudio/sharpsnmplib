@@ -8,7 +8,14 @@ namespace Lextm.SharpSnmpLib.Tests
     public class TestObjectIdentifier
     {
         [Test]
-        public void TestToOid()
+        public void TestConstructor()
+        {
+            ObjectIdentifier oid = new ObjectIdentifier(new byte[] { 0x2B, 0x06, 0x99, 0x37 });
+            Assert.AreEqual(new uint[] { 1, 3, 6, 3255 }, oid.ToNumerical());            
+        }
+        
+        [Test]
+        public void TestConstructor2()
         {
             ObjectIdentifier oid = new ObjectIdentifier(new byte[] { 0x2B, 0x06, 0x01, 0x04, 0x01, 0x90, 0x72, 0x87, 0x68, 0x02 });
             Assert.AreEqual(new uint[] { 1, 3, 6, 1, 4, 1, 2162, 1000, 2 }, oid.ToNumerical());
@@ -19,29 +26,24 @@ namespace Lextm.SharpSnmpLib.Tests
         {
         	uint[] expected = new uint[] {1,3,6,1,4,1,2162,1000,2};
         	ObjectIdentifier oid = new ObjectIdentifier(expected);
-        	byte[] result = oid.ToBytes();
-        	MemoryStream m = new MemoryStream(result);
-        	ISnmpData data = SnmpDataFactory.CreateSnmpData(m);
-        	Assert.AreEqual(SnmpType.ObjectIdentifier, data.TypeCode);
-        	ObjectIdentifier o = (ObjectIdentifier)data;
-        	Assert.AreEqual(expected, o.ToNumerical());
+        	Assert.AreEqual(new byte[] { 0x06, 0x0A, 0x2B, 0x06, 0x01, 0x04, 0x01, 0x90, 0x72, 0x87, 0x68, 0x02 }, oid.ToBytes());
         }        
         
         [Test]
         public void TestToBytes2()
         {
-            uint[] expected = new uint[] {0};
-         	ObjectIdentifier oid = new ObjectIdentifier(expected);
-         	Assert.AreEqual(new byte[] {0x06, 0x01, 0x00}, oid.ToBytes());
-        }
-        
-        [Test]
-        public void TestToBytes3()
-        {
             uint[] expected = new uint[] {0, 0};
          	ObjectIdentifier oid = new ObjectIdentifier(expected);
-         	Assert.AreEqual(new byte[] {0x06, 0x02, 0x00, 0x00}, oid.ToBytes());
+         	Assert.AreEqual(new byte[] {0x06, 0x01, 0x00}, oid.ToBytes());
         } 
+        
+        [Test] 
+        public void TestToBytes3()
+        {
+            uint[] expected = new uint[] {1, 3, 6, 3255};
+         	ObjectIdentifier oid = new ObjectIdentifier(expected);
+         	Assert.AreEqual(new byte[] {0x06, 0x04, 0x2B, 0x06, 0x99, 0x37}, oid.ToBytes());            
+        }
     }
 }
 #pragma warning restore 1591

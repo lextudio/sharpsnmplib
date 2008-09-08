@@ -278,6 +278,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="timeout">Timeout.</param>
         /// <returns></returns>
         [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Return", Justification = "ByDesign")]
+        [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Body", Justification = "ByDesign")]
         public static Variable[,] GetTable(VersionCode version, IPEndPoint endpoint, string community, ObjectIdentifier table, int timeout)
         {
             if (version == VersionCode.V3)

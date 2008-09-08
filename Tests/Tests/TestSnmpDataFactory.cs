@@ -32,16 +32,6 @@ namespace Lextm.SharpSnmpLib.Tests
             ISnmpData data = SnmpDataFactory.CreateSnmpData(expected);
             Assert.AreEqual(SnmpType.ObjectIdentifier, data.TypeCode);
             ObjectIdentifier o = (ObjectIdentifier)data;
-            Assert.AreEqual(new uint[] {0}, o.ToNumerical());
-        }
-        
-        [Test]
-        public void TestCreateObjectIdentifier3()
-        {
-            byte[] expected = new Byte[] {0x06, 0x02, 0x00, 0x00};
-            ISnmpData data = SnmpDataFactory.CreateSnmpData(expected);
-            Assert.AreEqual(SnmpType.ObjectIdentifier, data.TypeCode);
-            ObjectIdentifier o = (ObjectIdentifier)data;
             Assert.AreEqual(new uint[] {0, 0}, o.ToNumerical());
         }
         

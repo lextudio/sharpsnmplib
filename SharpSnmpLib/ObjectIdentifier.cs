@@ -17,15 +17,19 @@ namespace Lextm.SharpSnmpLib
         /// Creates an <see cref="ObjectIdentifier"/> instance from textual ID.
         /// </summary>
         /// <param name="text">String in one of the formats, "[module]:[name]" or "*.*.*.*".</param>
-        public ObjectIdentifier(string text)
+        public ObjectIdentifier(string text) : this(ParseString(text))
         {
-            if (text.Contains("::"))
+        }
+
+        private static uint[] ParseString(string text)
+        {
+            if (text.Contains("::")) 
             {
-                _oid = Mib.ObjectRegistry.Instance.Translate(text);
+                return Mib.ObjectRegistry.Instance.Translate(text);
             }
             else
             {
-                _oid = ObjectIdentifier.Convert(text);
+                return ObjectIdentifier.Convert(text);
             }
         }
         
@@ -36,6 +40,21 @@ namespace Lextm.SharpSnmpLib
         [CLSCompliant(false)]
         public ObjectIdentifier(uint[] oid)
         {
+            if (oid.Length < 2) 
+            {
+                throw new ArgumentException("The length of the shortest identifier is two", "oid");
+            }
+
+            if (oid[0] > 2)
+            {
+                throw new ArgumentException("The first sub-identifier must be 0, 1, or 2.", "oid");
+            }
+
+            if (oid[1] > 39)
+            {
+                throw new ArgumentException("The second sub-identifier must be less than 40", "oid");
+            }
+
             _oid = oid;
         }
         
@@ -45,9 +64,33 @@ namespace Lextm.SharpSnmpLib
         /// <param name="raw">Raw bytes</param>
         public ObjectIdentifier(byte[] raw)
         {
-            _oid = ParsePduFormat(raw, (uint)raw.Length);
+            // _oid = ParsePduFormat(raw, (uint)raw.Length);
+            _oid = ParseRaw(raw);
         }
-        
+
+        private static uint[] ParseRaw(byte[] raw)
+        {
+            List<uint> result = new List<uint>();
+            result.Add((uint)(raw[0] / 40));
+            result.Add((uint)(raw[0] % 40));
+            uint buffer = 0;
+            for (int i = 1; i < raw.Length; i++)
+            {
+                if ((raw[i] & 0x80) == 0)
+                {
+                    result.Add(raw[i] + (buffer << 7));
+                    buffer = 0;
+                }
+                else
+                {
+                    buffer <<= 7;
+                    buffer += (uint)(raw[i] & 0x7F);
+                }
+            }
+            
+            return result.ToArray();
+        }
+
         /// <summary>
         /// Convers to numerical ID.
         /// </summary>
@@ -111,130 +154,36 @@ namespace Lextm.SharpSnmpLib
             }
             
             return result;
-        }
-
-        private static uint GetOIDEl(byte[] bytes, ref int p)
-        {
-            uint r = 0;
-            byte x;
-            do
-            {
-                x = bytes[p++];
-                r = (r << 7) + ((uint)x & 0x7f);    // 0.3.3a (Evan Watson)
-            }
-            while ((x & 0x80) != 0);
-            return r;
-        }
-
-        private static uint[] ParsePduFormat(byte[] bytes, uint n)
-        {
-            uint[] result;
-            IList<uint> temp = new List<uint>();
-            int p = 0;
-            while (p < n)
-            {
-                temp.Add(ObjectIdentifier.GetOIDEl(bytes, ref p));
-            }
-
-            if (temp[0] == 43)
-            {
-                result = new uint[temp.Count + 1];
-                result[0] = 1;
-                result[1] = 3;
-                for (int j = 1; j < temp.Count; j++)
-                {
-                    result[j + 1] = (uint)temp[j];
-                }
-            }
-            else
-            {
-                // can happen that result is .0??
-                result = new uint[temp.Count];
-                for (int j = 0; j < temp.Count; j++)
-                {
-                    result[j] = (uint)temp[j];
-                }
-            }
-            
-            return result;
-        }
+        }        
         
-        private static int LengthOIDEl(uint a)
-        {
-            int j = 0;
-            if (a == 0)
-            {
-                return 1;
-            }
-            
-            while (a > 0)
-            {
-                j++;
-                a = a >> 7;
-            }
-            
-            return j;
-        }
-        
-        private static void PutOIDEl(ref byte[] bytes, ref int ln, uint a)
-        {
-            if (a == 0)
-            {
-                bytes[ln++] = 0;
-                return;
-            }
-            
-            byte[] c = new byte[16];
-            int j = 0;
-            while (a > 0)
-            {
-                c[j++] = (byte)(a & 0x7f);
-                a = a >> 7;
-            }
-            
-            while (j > 0)
-            {
-                int x = c[--j];
-                if (j > 0)
-                {
-                    x |= 0x80;
-                }
-                
-                bytes[ln++] = (byte)x;
-            }
-        }
-
-        private static int GetPduFormatLength(uint[] oid)
-        {
-            if (oid.Length == 1)
-            {
-                return 1;
-            }
-            
-            int result = 0;
-            for (int j = 1; j < oid.Length; j++)
-            {
-                result += LengthOIDEl(oid[j]);
-            }
-            
-            return result;
-        }
-
         /// <summary>
         /// Converts to byte format.
         /// </summary>
         /// <returns></returns>
         public byte[] ToBytes()
         {
-            byte[] raw = new byte[GetPduFormatLength(_oid)];
-            int ln = 0;
-            PutOIDEl(ref raw, ref ln, 43);
-            for (int j = 2; j < _oid.Length; j++)
+            List<byte> temp = new List<byte>();
+            byte first = (byte)((40 * _oid[0]) + _oid[1]);
+            temp.Add(first);
+            for (int i = 2; i < _oid.Length; i++)
             {
-                PutOIDEl(ref raw, ref ln, _oid[j]);
+                temp.AddRange(ConvertToBytes(_oid[i]));
             }
             
-            return ByteTool.ToBytes(SnmpType.ObjectIdentifier, raw);
+            return ByteTool.ToBytes(SnmpType.ObjectIdentifier, temp.ToArray());
+        }
+
+        private static IEnumerable<byte> ConvertToBytes(uint subIdentifier)
+        {
+            List<byte> result = new List<byte>();
+            result.Add((byte)(subIdentifier & 0x7F));
+            while ((subIdentifier = subIdentifier >> 7) > 0)
+            {                
+                result.Add((byte)((subIdentifier & 0x7F) | 0x80));
+            }
+            
+            result.Reverse();
+            return result;
         }
         
         /// <summary>

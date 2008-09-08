@@ -10,8 +10,6 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public class TrapV2Pdu : ISnmpPdu
     {
-        private Integer32 _errorStatus;
-        private Integer32 _errorIndex;
         private IList<Variable> _variables;
         private Integer32 _version;
         private byte[] _raw;
@@ -48,8 +46,8 @@ namespace Lextm.SharpSnmpLib
             _raw = raw;
             MemoryStream m = new MemoryStream(raw);
             _version = (Integer32)SnmpDataFactory.CreateSnmpData(m); // version number v2c
-            _errorStatus = (Integer32)SnmpDataFactory.CreateSnmpData(m); // 0
-            _errorIndex = (Integer32)SnmpDataFactory.CreateSnmpData(m); // 0
+            SnmpDataFactory.CreateSnmpData(m); // 0
+            SnmpDataFactory.CreateSnmpData(m); // 0
             _varbindSection = (Sequence)SnmpDataFactory.CreateSnmpData(m);
             _variables = Variable.Transform(_varbindSection); // v[0] is timestamp. v[1] oid, v[2] value.
             _time = (TimeTicks)_variables[0].Data;
