@@ -76,7 +76,7 @@ namespace Lextm.SharpSnmpLib.Browser
             if (listView1.SelectedItems.Count == 1 && ObjectRegistry.Instance.Tree.NewModules.Contains(listView1.SelectedItems[0].Text))
             {
                 string mib = listView1.SelectedItems[0].Text;
-                ObjectRegistry.Instance.RemoveMIB(mib, listView1.SelectedItems[0].Group.Name);
+                ObjectRegistry.Instance.RemoveMib(mib, listView1.SelectedItems[0].Group.Name);
             }
             else
             {
