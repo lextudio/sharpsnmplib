@@ -9,16 +9,16 @@ namespace Lextm.SharpSnmpLib
     public sealed class TrapV2ReceivedEventArgs : EventArgs
     {
         private TrapV2Message _trap;
-        private IPEndPoint _agent;
+        private IPEndPoint _sender;
       
         /// <summary>
-        /// Creates a <see cref="TrapV2ReceivedEventArgs"/> 
+        /// Creates a <see cref="TrapV2ReceivedEventArgs"/>. 
         /// </summary>
-        /// <param name="agent">Agent</param>
-        /// <param name="trap">Trap message</param>
-        public TrapV2ReceivedEventArgs(IPEndPoint agent, TrapV2Message trap)
+        /// <param name="sender">Sender.</param>
+        /// <param name="trap">Trap message.</param>
+        public TrapV2ReceivedEventArgs(IPEndPoint sender, TrapV2Message trap)
         {
-            _agent = agent;
+            _sender = sender;
             _trap = trap;
         }
        
@@ -34,11 +34,11 @@ namespace Lextm.SharpSnmpLib
         }
       
         /// <summary>
-        /// Agent.
+        /// Sender.
         /// </summary>
-        public IPEndPoint Agent
+        public IPEndPoint Sender
         {
-            get { return _agent; }
+            get { return _sender; }
         }
         
         /// <summary>
@@ -47,7 +47,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public override string ToString()
         {
-            return "Trap received event args: trap message: " + _trap + "; agent: " + _agent;
+            return "Trap received event args: trap message: " + _trap + "; sender: " + _sender;
         }
     }
 }

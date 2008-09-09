@@ -62,6 +62,21 @@ namespace Lextm.SharpSnmpLib
         public event EventHandler<GetRequestReceivedEventArgs> GetRequestReceived;
 
         /// <summary>
+        /// Occurs when a SET request is received.
+        /// </summary>
+        public event EventHandler<SetRequestReceivedEventArgs> SetRequestReceived;
+
+        /// <summary>
+        /// Occurs when a GET NEXT request is received.
+        /// </summary>
+        public event EventHandler<GetNextRequestReceivedEventArgs> GetNextRequestReceived;
+
+        /// <summary>
+        /// Occurs when a GET BULK request is received.
+        /// </summary>
+        public event EventHandler<GetBulkRequestReceivedEventArgs> GetBulkRequestReceived;
+
+        /// <summary>
         /// Port number.
         /// </summary>
         public int Port
@@ -252,7 +267,37 @@ namespace Lextm.SharpSnmpLib
                             
                             break;
                         }
-                        
+
+                    case SnmpType.SetRequestPdu:
+                        {
+                            if (SetRequestReceived != null)
+                            {
+                                SetRequestReceived(this, new SetRequestReceivedEventArgs(agent, (SetRequestMessage)message));
+                            }
+
+                            break;
+                        }
+
+                    case SnmpType.GetNextRequestPdu:
+                        {
+                            if (GetNextRequestReceived != null)
+                            {
+                                GetNextRequestReceived(this, new GetNextRequestReceivedEventArgs(agent, (GetNextRequestMessage)message));
+                            }
+
+                            break;
+                        }
+
+                    case SnmpType.GetBulkRequestPdu:
+                        {
+                            if (GetBulkRequestReceived != null)
+                            {
+                                GetBulkRequestReceived(this, new GetBulkRequestReceivedEventArgs(agent, (GetBulkRequestMessage)message));
+                            }
+
+                            break;
+                        }
+                                          
                     default:
                         break;
                 }

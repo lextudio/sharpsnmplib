@@ -10,18 +10,36 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public partial class Agent : Component
     {
+        private const int DefaultPort = 161;
+        
         /// <summary>
         /// Initiates an <see cref="Agent"/> instance.
         /// </summary>
         public Agent()
         {
             InitializeComponent();
+            trapListener.Start(DefaultPort);
         }
 
         /// <summary>
         /// Occurs when a GET request is received.
         /// </summary>
         public event EventHandler<GetRequestReceivedEventArgs> GetRequestReceived;
+        
+        /// <summary>
+        /// Occurs when a SET request is received.
+        /// </summary>
+        public event EventHandler<SetRequestReceivedEventArgs> SetRequestReceived;
+        
+        /// <summary>
+        /// Occurs when a GET NEXT request is received.
+        /// </summary>
+        public event EventHandler<GetNextRequestReceivedEventArgs> GetNextRequestReceived;
+        
+        /// <summary>
+        /// Occurs when a GET BULK request is received.
+        /// </summary>
+        public event EventHandler<GetBulkRequestReceivedEventArgs> GetBulkRequestReceived;
 
         /// <summary>
         /// Sends a TRAP v1 message.
@@ -71,8 +89,6 @@ namespace Lextm.SharpSnmpLib
             message.Send(receiver.Address, timeout, receiver.Port);
         }
 
-        // TODO: send response.
-        // TODO: add other request handler.
         private void TrapListener_GetRequestReceived(object sender, GetRequestReceivedEventArgs e)
         {
             if (GetRequestReceived != null)
@@ -93,13 +109,40 @@ namespace Lextm.SharpSnmpLib
             // 
             // trapListener
             // 
-            this.trapListener.Port = 162;
+            this.trapListener.Port = 161;            
             this.trapListener.GetRequestReceived += new System.EventHandler<Lextm.SharpSnmpLib.GetRequestReceivedEventArgs>(this.TrapListener_GetRequestReceived);
+            this.trapListener.GetBulkRequestReceived += new System.EventHandler<Lextm.SharpSnmpLib.GetBulkRequestReceivedEventArgs>(this.TrapListener_GetBulkRequestReceived);
+            this.trapListener.SetRequestReceived += new System.EventHandler<Lextm.SharpSnmpLib.SetRequestReceivedEventArgs>(this.TrapListener_SetRequestReceived);
+            this.trapListener.GetNextRequestReceived += new System.EventHandler<Lextm.SharpSnmpLib.GetNextRequestReceivedEventArgs>(this.TrapListener_GetNextRequestReceived);
 
         }
 
         #endregion
 
         private TrapListener trapListener;
+
+        private void TrapListener_GetBulkRequestReceived(object sender, GetBulkRequestReceivedEventArgs e)
+        {
+            if (GetBulkRequestReceived != null)
+            {
+                GetBulkRequestReceived(this, e);
+            }
+        }
+
+        private void TrapListener_GetNextRequestReceived(object sender, GetNextRequestReceivedEventArgs e)
+        {
+            if (GetNextRequestReceived != null)
+            {
+                GetNextRequestReceived(this, e);
+            }
+        }
+
+        private void TrapListener_SetRequestReceived(object sender, SetRequestReceivedEventArgs e)
+        {
+            if (SetRequestReceived != null)
+            {
+                SetRequestReceived(this, e);
+            }
+        }
     }
 }

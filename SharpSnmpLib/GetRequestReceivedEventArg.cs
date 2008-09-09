@@ -9,21 +9,21 @@ namespace Lextm.SharpSnmpLib
     public sealed class GetRequestReceivedEventArgs : EventArgs
     {
         private GetRequestMessage _request;
-        private IPEndPoint _agent;
+        private IPEndPoint _sender;
 
         /// <summary>
-        /// Creates a <see cref="GetRequestReceivedEventArgs"/> 
+        /// Creates a <see cref="GetRequestReceivedEventArgs"/>.
         /// </summary>
-        /// <param name="agent">Agent</param>
-        /// <param name="request">GET request message</param>
-        public GetRequestReceivedEventArgs(IPEndPoint agent, GetRequestMessage request)
+        /// <param name="sender">Sender.</param>
+        /// <param name="request">GET request message.</param>
+        public GetRequestReceivedEventArgs(IPEndPoint sender, GetRequestMessage request)
         {
-            _agent = agent;
+            _sender = sender;
             _request = request;
         }
 
         /// <summary>
-        /// Trap message.
+        /// GET request message.
         /// </summary>
         public GetRequestMessage Request
         {
@@ -34,11 +34,11 @@ namespace Lextm.SharpSnmpLib
         }
 
         /// <summary>
-        /// Agent.
+        /// Sender.
         /// </summary>
-        public IPEndPoint Agent
+        public IPEndPoint Sender
         {
-            get { return _agent; }
+            get { return _sender; }
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public override string ToString()
         {
-            return "Trap received event args: trap message: " + _request + "; agent: " + _agent;
+            return "GET request received event args: GET request message: " + _request + "; sender: " + _sender;
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Lextm.SharpSnmpLib
         /// Creates a <see cref="InformRequestReceivedEventArgs"/> 
         /// </summary>
         /// <param name="sender">Sender</param>
-        /// <param name="inform">Trap message</param>
+        /// <param name="inform">INFORM message</param>
         public InformRequestReceivedEventArgs(IPEndPoint sender, InformRequestMessage inform)
         {
             _sender = sender;
@@ -34,7 +34,7 @@ namespace Lextm.SharpSnmpLib
         }
       
         /// <summary>
-        /// Agent.
+        /// Sender.
         /// </summary>
         public IPEndPoint Sender
         {

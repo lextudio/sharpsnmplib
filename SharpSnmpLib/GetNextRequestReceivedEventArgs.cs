@@ -1,8 +1,8 @@
 /*
  * Created by SharpDevelop.
  * User: lextm
- * Date: 2008/4/23
- * Time: 19:40
+ * Date: 2008/9/9
+ * Time: 19:21
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
@@ -12,35 +12,35 @@ using System.Net;
 namespace Lextm.SharpSnmpLib
 {
     /// <summary>
-    /// Provides data for a TRAP v1 received event.
+    /// Provides data for a GET NEXT request received event.
     /// </summary>
-    public sealed class TrapV1ReceivedEventArgs : EventArgs
+    public sealed class GetNextRequestReceivedEventArgs : EventArgs
     {
-        private TrapV1Message _trap;
+        private GetNextRequestMessage _request;
         private IPEndPoint _sender;
-        
+
         /// <summary>
-        /// Creates a <see cref="TrapV1ReceivedEventArgs"/>.
+        /// Creates a <see cref="GetNextRequestReceivedEventArgs"/>. 
         /// </summary>
-        /// <param name="trap">Trap message.</param>
         /// <param name="sender">Sender.</param>
-        public TrapV1ReceivedEventArgs(IPEndPoint sender, TrapV1Message trap)
+        /// <param name="request">GET NEXT request message.</param>
+        public GetNextRequestReceivedEventArgs(IPEndPoint sender, GetNextRequestMessage request)
         {
             _sender = sender;
-            _trap = trap;
+            _request = request;
         }
-        
+
         /// <summary>
-        /// Trap message.
+        /// GET NEXT request message.
         /// </summary>
-        public TrapV1Message Trap
+        public GetNextRequestMessage Request
         {
             get
             {
-                return _trap;
+                return _request;
             }
         }
-        
+
         /// <summary>
         /// Sender.
         /// </summary>
@@ -48,14 +48,14 @@ namespace Lextm.SharpSnmpLib
         {
             get { return _sender; }
         }
-        
+
         /// <summary>
-        /// Returns a <see cref="String"/> that represents this <see cref="TrapV1ReceivedEventArgs"/>
+        /// Returns a <see cref="String"/> that represents this <see cref="GetNextRequestReceivedEventArgs"/>
         /// </summary>
         /// <returns></returns>
         public override string ToString()
         {
-            return "Trap received event args: trap message: " + _trap + "; sender: " + _sender;
+            return "GET NEXT received event args: GET NEXT request message: " + _request + "; sender: " + _sender;
         }
     }
 }

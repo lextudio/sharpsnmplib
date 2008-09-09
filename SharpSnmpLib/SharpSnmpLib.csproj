@@ -67,8 +67,10 @@
     <Compile Include="GeneralString.cs" />
     <Compile Include="GetBulkRequestMessage.cs" />
     <Compile Include="GetBulkRequestPdu.cs" />
+    <Compile Include="GetBulkRequestReceivedEventArgs.cs" />
     <Compile Include="GetNextRequestMessage.cs" />
     <Compile Include="GetNextRequestPdu.cs" />
+    <Compile Include="GetNextRequestReceivedEventArgs.cs" />
     <Compile Include="GetRequestMessage.cs" />
     <Compile Include="GetRequestPdu.cs" />
     <Compile Include="GetResponseMessage.cs" />
@@ -139,6 +141,7 @@
     <Compile Include="Sequence.cs" />
     <Compile Include="SetRequestMessage.cs" />
     <Compile Include="SetRequestPdu.cs" />
+    <Compile Include="SetRequestReceivedEventArgs.cs" />
     <Compile Include="SharpErrorException.cs" />
     <Compile Include="SharpSnmpException.cs" />
     <Compile Include="SharpOperationException.cs" />
