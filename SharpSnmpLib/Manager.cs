@@ -420,7 +420,7 @@ namespace Lextm.SharpSnmpLib
                     continue;
                 }
 
-                if (mode == WalkMode.WithinSubtree && !seed.Id.ToString().StartsWith(table + ".1.", StringComparison.Ordinal))
+                if (mode == WalkMode.WithinSubtree && !seed.Id.ToString().StartsWith(table + ".", StringComparison.Ordinal))
                 {
                     // not in sub tree
                     break;
@@ -520,12 +520,12 @@ namespace Lextm.SharpSnmpLib
                     version,
                     endpoint.Address,
                     community,
-                    new List<Variable>(1) { seed });
+                    new List<Variable>(1) { new Variable(seed.Id) });
 
                 next = message.Send(timeout, endpoint.Port)[0];
                 result = true;
             }
-            catch (SharpErrorException)
+            catch (SharpOperationException)
             {
                 next = null;
                 result = false;

@@ -42,7 +42,7 @@ namespace Lextm.SharpSnmpLib
             _int = ((raw[0] & 0x80) == 0x80) ? -1 : 0; // sign extended! Guy McIlroy
             for (int j = 0; j < raw.Length; j++)
             {
-                _int = (_int << 8) | (int)raw[j];
+                _int = (_int << 8) | raw[j];
             }
         }
         
@@ -60,7 +60,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <returns></returns>
         public int ToInt32()
-        {         
+        {
             return _int;
         }
 
@@ -76,52 +76,50 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Type code.
         /// </summary>
-        public SnmpType TypeCode 
+        public SnmpType TypeCode
         {
-            get 
+            get
             {
                 return SnmpType.Integer32;
             }
-        }        
-       
+        }
+        
         /// <summary>
         /// Converts to byte format.
         /// </summary>
         /// <returns></returns>
         public byte[] ToBytes()
         {
-            byte[] raw;
-            if (_int >= -127 && _int <= 127)
+            bool negative = _int < 0;
+            byte[] bytes = BitConverter.GetBytes(_int);
+            List<byte> raw = new List<byte>();
+            for (int i = bytes.Length - 1; i > 0; i--)
             {
-                raw = new byte[1];
-                raw[0] = Convert.ToByte(_int);
-            }
-            else
-            {
-                IList<byte> v = new List<byte>();
-                int n = _int;
-                while (n != 0 && n != -1)
+                byte flag;
+                byte sign;
+                if (negative)
                 {
-                    if (n < 256 && n >= 128)
-                    {
-                        v.Add((byte)n);
-                        v.Add((byte)0);
-                        break;
-                    }
-                    
-                    v.Add((byte)(n & 0xff));
-                    n >>= 8;
+                    flag = 0xFF;
+                    sign = 0x80;
+                }
+                else
+                {
+                    flag = 0x00;
+                    sign = 0x00;
                 }
                 
-                raw = new byte[v.Count];
-                int len = 0;
-                for (int j = v.Count - 1; j >= 0; j--)
-                {    
-                    raw[len++] = v[j]; 
+                if (bytes[i] == flag && (bytes[i - 1] & 0x80) == sign)
+                {
+                    continue;
+                }
+                else
+                {
+                    raw.Add(bytes[i]);
                 }
             }
-            
-            return ByteTool.ToBytes(SnmpType.Integer32, raw);
+                        
+            raw.Add(bytes[0]);            
+            return ByteTool.ToBytes(SnmpType.Integer32, raw.ToArray());
         }
         
         /// <summary>
@@ -134,24 +132,24 @@ namespace Lextm.SharpSnmpLib
         }
         
         /// <summary>
-        /// Determines whether the specified <see cref="Object"/> is equal to the current <see cref="Integer32"/>. 
+        /// Determines whether the specified <see cref="Object"/> is equal to the current <see cref="Integer32"/>.
         /// </summary>
         /// <param name="obj">The <see cref="Object"/> to compare with the current <see cref="Integer32"/>. </param>
         /// <returns><value>true</value> if the specified <see cref="Object"/> is equal to the current <see cref="Integer32"/>; otherwise, <value>false</value>.
         /// </returns>
         public override bool Equals(object obj)
         {
-            if (obj == null) 
+            if (obj == null)
             {
                 return false;
             }
             
-            if (object.ReferenceEquals(this, obj)) 
+            if (object.ReferenceEquals(this, obj))
             {
                 return true;
             }
             
-            if (GetType() != obj.GetType()) 
+            if (GetType() != obj.GetType())
             {
                 return false;
             }

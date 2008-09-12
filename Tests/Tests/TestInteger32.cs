@@ -25,6 +25,9 @@ namespace Lextm.SharpSnmpLib.Tests
             
             Integer32 test2 = new Integer32(new byte[] {0x00});
             Assert.AreEqual(0, test2.ToInt32());
+            
+            Integer32 test3 = new Integer32(new byte[] {0xFF});
+            Assert.AreEqual(-1, test3.ToInt32());
         }
         
         [Test]
@@ -48,6 +51,13 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual(new byte[] {0x02, 0x02, 0x00, 0xFF}, new Integer32(255).ToBytes());
             
             Assert.AreEqual(6, new Integer32(2147483647).ToBytes().Length);
+        }
+        
+        [Test]
+        public void TestToBytes2()
+        {
+            Integer32 i = new Integer32(-1);
+            Assert.AreEqual(new byte[] {0x02, 0x01, 0xFF}, i.ToBytes());
         }
     }
 }

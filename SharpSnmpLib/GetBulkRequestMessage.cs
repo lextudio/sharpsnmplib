@@ -75,6 +75,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentException("wrong message type");
             }
             
+            _sequenceNumber = ((GetBulkRequestPdu)_pdu).SequenceNumber;
             _variables = _pdu.Variables;
             _bytes = body.ToBytes();
         }

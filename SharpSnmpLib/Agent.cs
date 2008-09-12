@@ -18,7 +18,31 @@ namespace Lextm.SharpSnmpLib
         public Agent()
         {
             InitializeComponent();
-            trapListener.Start(DefaultPort);
+        }
+        
+        /// <summary>
+        /// Stops.
+        /// </summary>
+        public void Stop()
+        {
+            trapListener.Stop();
+        }
+        
+        /// <summary>
+        /// Starts.
+        /// </summary>
+        public void Start()
+        {
+            Start(DefaultPort);
+        }
+        
+        /// <summary>
+        /// Starts on a specific port.
+        /// </summary>
+        /// <param name="port">Port.</param>
+        public void Start(int port)
+        {
+            trapListener.Start(port);
         }
 
         /// <summary>
