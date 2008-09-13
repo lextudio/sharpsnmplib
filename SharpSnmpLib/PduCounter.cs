@@ -14,7 +14,10 @@ namespace Lextm.SharpSnmpLib
         {
             get
             {
-                count += 10;
+                unchecked 
+                {
+                    count += 10;
+                }
                 return new Integer32(count);
             }
         }

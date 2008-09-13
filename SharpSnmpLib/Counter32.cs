@@ -102,28 +102,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         internal byte[] GetRaw()
         {
-            List<byte> list = new List<byte>(BitConverter.GetBytes(_count));
-            
-            // there must be at least one byte.
-            while (list.Count > 1)
-            {
-                if (list[list.Count - 1] == 0)
-                {
-                    list.RemoveAt(list.Count - 1);
-                }
-                else
-                {
-                    if ((list[list.Count - 1] & 0x80) == 0x80)
-                    {
-                        list.Add(0);
-                    }
-                    
-                    break;
-                }
-            }
-            
-            list.Reverse();
-            return list.ToArray();
+            return ByteTool.GetRawBytes(BitConverter.GetBytes(_count), false);
         }
 
         /// <summary>

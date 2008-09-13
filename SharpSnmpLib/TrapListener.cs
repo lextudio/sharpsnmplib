@@ -27,7 +27,7 @@ namespace Lextm.SharpSnmpLib
     /// </remarks>
     public class TrapListener : Component
     {
-        private Socket _watcher;        
+        private Socket _watcher;
         private int _port = DEFAULTPORT;
         private BackgroundWorker worker;
         private const int DEFAULTPORT = 162;
@@ -180,12 +180,21 @@ namespace Lextm.SharpSnmpLib
             IPEndPoint agent = new IPEndPoint(IPAddress.Any, 0);
             EndPoint senderRemote = (EndPoint)agent;
             byte[] msg = new byte[_watcher.ReceiveBufferSize];
+            uint loops = 0;
             while (!((BackgroundWorker)sender).CancellationPending)
-            {                
+            {
                 int number = _watcher.Available;
-                Thread.Sleep(100);
                 if (number == 0)
                 {
+                    if (Environment.ProcessorCount == 1 || unchecked(++loops % 100) == 0)
+                    {
+                        Thread.Sleep(0);
+                    }
+                    else
+                    {
+                        Thread.SpinWait(20);
+                    }
+                    
                     continue;
                 }
                 
@@ -201,10 +210,10 @@ namespace Lextm.SharpSnmpLib
             }
         }
         
-/*
-#if DEBUG        
+        /*
+#if DEBUG
         private static int i;
-#endif  
+#endif
 // */
         private void HandleMessages(byte[] buffer, int number, IPEndPoint agent)
         {
@@ -297,7 +306,7 @@ namespace Lextm.SharpSnmpLib
 
                             break;
                         }
-                                          
+                        
                     default:
                         break;
                 }

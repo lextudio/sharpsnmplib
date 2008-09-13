@@ -9,6 +9,25 @@ namespace Lextm.SharpSnmpLib.Tests
     public class TestCounter32
     {
         [Test]
+        public void TestExtra()
+        {
+            uint j = 1;
+            uint i = uint.MinValue;
+            while (i + j < uint.MaxValue)
+            {                
+                Counter32 _int = new Counter32(i + j);
+                byte[] bytes = _int.ToBytes();
+                Counter32 _else = (Counter32)SnmpDataFactory.CreateSnmpData(bytes);
+                Assert.AreEqual(i + j, _else.ToUInt32());
+                try {
+                   j = j * 256; 
+                } catch (Exception) {
+                   break; 
+                }                
+            }
+        }
+        
+        [Test]
         public void TestConstructor()
         {
             byte[] buffer2 = new byte[] {01, 44};
@@ -70,6 +89,9 @@ namespace Lextm.SharpSnmpLib.Tests
             Counter32 c2 = new Counter32(300);
             Counter32 r2 = (Counter32)SnmpDataFactory.CreateSnmpData(c2.ToBytes());
             Assert.AreEqual(r2, c2);
+            
+            Counter32 c255 = new Counter32(255);
+            Assert.AreEqual(new byte[] {0x41, 0x02, 0x00, 0xff}, c255.ToBytes());
             
             Assert.AreEqual(new byte[] {0x41, 0x01, 0x04}, new Counter32(4).ToBytes());
         }

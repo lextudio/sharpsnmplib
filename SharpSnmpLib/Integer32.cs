@@ -90,36 +90,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public byte[] ToBytes()
         {
-            bool negative = _int < 0;
-            byte[] bytes = BitConverter.GetBytes(_int);
-            List<byte> raw = new List<byte>();
-            for (int i = bytes.Length - 1; i > 0; i--)
-            {
-                byte flag;
-                byte sign;
-                if (negative)
-                {
-                    flag = 0xFF;
-                    sign = 0x80;
-                }
-                else
-                {
-                    flag = 0x00;
-                    sign = 0x00;
-                }
-                
-                if (bytes[i] == flag && (bytes[i - 1] & 0x80) == sign)
-                {
-                    continue;
-                }
-                else
-                {
-                    raw.Add(bytes[i]);
-                }
-            }
-                        
-            raw.Add(bytes[0]);            
-            return ByteTool.ToBytes(SnmpType.Integer32, raw.ToArray());
+            return ByteTool.ToBytes(SnmpType.Integer32, ByteTool.GetRawBytes(BitConverter.GetBytes(_int), _int < 0));
         }
         
         /// <summary>

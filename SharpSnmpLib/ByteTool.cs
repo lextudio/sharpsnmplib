@@ -165,6 +165,44 @@ namespace Lextm.SharpSnmpLib
             result.Write(raw, 0, raw.Length);
             return result.ToArray();
         }
+        
+        internal static byte[] GetRawBytes(byte[] orig, bool negative)
+        {
+            byte flag;
+            byte sign;
+            if (negative) 
+            {
+                flag = 0xff;
+                sign = 0x80;
+            }
+            else 
+            {
+                flag = 0x0;
+                sign = 0x0;
+            }
+
+            List<byte> list = new List<byte>(orig);
+            while (list.Count > 1)
+            {
+                if (list[list.Count - 1] == flag) 
+                {
+                    list.RemoveAt(list.Count - 1);
+                }
+                else 
+                {
+                    break;
+                }
+            }
+
+            // if sign bit is not correct, add an extra byte
+            if ((list[list.Count - 1] & 0x80) != sign) 
+            {
+                list.Add(sign);
+            }
+
+            list.Reverse();
+            return list.ToArray();
+        }
 
         internal static Sequence PackMessage(VersionCode version, string community, ISnmpPdu pdu)
         {
