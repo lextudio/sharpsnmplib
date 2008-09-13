@@ -16,7 +16,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// Integer64 type.
     /// </summary>
-    internal struct Integer64 : IEquatable<Integer64>
+    internal class Integer64 : IEquatable<Integer64>
     {
         private byte[] _raw;
         
@@ -113,7 +113,11 @@ namespace Lextm.SharpSnmpLib
         /// </returns>
         public bool Equals(Integer64 other)
         {
-            // add comparisions for all members here
+            if (other == null)
+            {
+                return false;
+            }
+            
             return ToInt64() == other.ToInt64();
         }
         
@@ -136,6 +140,11 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
         public static bool operator ==(Integer64 lhs, Integer64 rhs)
         {
+            if (lhs == null)
+            {
+                return rhs == null;    
+            }
+            
             return lhs.Equals(rhs);
         }
         
@@ -148,7 +157,7 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
         public static bool operator !=(Integer64 lhs, Integer64 rhs)
         {
-            return !lhs.Equals(rhs); // use operator == and negate result
+            return !(lhs == rhs); // use operator == and negate result
         }
         #endregion
         /// <summary>

@@ -14,7 +14,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// Boolean type.
     /// </summary>
-    public struct Bool : ISnmpData, IEquatable<Bool>
+    public class Bool : ISnmpData, IEquatable<Bool>
     {   
         private bool _boolean;
         
@@ -119,6 +119,11 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
         public static bool operator ==(Bool left, Bool right)
         {
+            if (left == null)
+            {
+                return right == null;    
+            }
+            
             return left.Equals(right);
         }
         
@@ -143,6 +148,11 @@ namespace Lextm.SharpSnmpLib
         /// </returns>
         public bool Equals(Bool other)
         {
+            if (other == null)
+            {
+                return false;    
+            }
+            
             return ToBoolean() == other.ToBoolean();
         }
 

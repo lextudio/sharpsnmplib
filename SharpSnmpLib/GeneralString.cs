@@ -101,6 +101,11 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
         public static bool operator ==(GeneralString left, GeneralString right)
         {
+            if (left == null)
+            {
+                return right == null;    
+            }
+            
             return left.Equals(right);
         }
         

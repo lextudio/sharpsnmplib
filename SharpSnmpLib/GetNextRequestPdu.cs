@@ -136,7 +136,7 @@ namespace Lextm.SharpSnmpLib
                 _seq, 
                 _errorStatus, 
                 _errorIndex, 
-                _variables.Count);
+                _variables.Count.ToString());
         }
     }
 }

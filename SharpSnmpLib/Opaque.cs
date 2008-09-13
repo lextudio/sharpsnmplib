@@ -52,7 +52,7 @@ namespace Lextm.SharpSnmpLib
             StringBuilder result = new StringBuilder("Opaque type: ");
             foreach (byte b in _raw)
             {
-                result.AppendFormat("{0:X2}", b);
+                result.Append(b.ToString("X2"));
             }
             
             return result.ToString();
@@ -138,6 +138,11 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
         public static bool operator ==(Opaque left, Opaque right)
         {
+            if (left == null)
+            {
+                return right == null;    
+            }
+            
             return left.Equals(right);
         }
         

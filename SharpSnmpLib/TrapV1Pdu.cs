@@ -180,11 +180,11 @@ namespace Lextm.SharpSnmpLib
                 CultureInfo.InvariantCulture,
                 "SNMPv1 TRAP PDU: agent address: {0}; time stamp: {1}; enterprise: {2}; generic: {3}; specific: {4}; varbind count: {5}",
                 AgentAddress, 
-                TimeStamp, 
+                TimeStamp,
                 Enterprise, 
-                Generic, 
-                Specific,
-                Variables.Count);
+                Generic,
+                Specific.ToString(),
+                Variables.Count.ToString());
         }
     }
 }

@@ -136,7 +136,7 @@ namespace Lextm.SharpSnmpLib
                 "TRAP v2 PDU: enterprise: {0}; time stamp: {1}; variable count: {2}",
                 _enterprise, 
                 _time, 
-                _variables.Count);
+                _variables.Count.ToString());
         }
     }
 }

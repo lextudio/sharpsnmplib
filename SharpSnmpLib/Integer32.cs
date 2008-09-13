@@ -23,7 +23,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// Integer32 type in SMIv2 (or INTEGER in SMIv1).
     /// </summary>
-    public struct Integer32 // This namespace has its own concept of Integer
+    public class Integer32 // This namespace has its own concept of Integer
         : ISnmpData, IEquatable<Integer32>
     {
         private int _int;
@@ -136,6 +136,11 @@ namespace Lextm.SharpSnmpLib
         /// </returns>
         public bool Equals(Integer32 other)
         {
+            if (other == null)
+            {
+                return false;    
+            }
+            
             return _int == other._int;
         }
         
@@ -148,6 +153,11 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
         public static bool operator ==(Integer32 left, Integer32 right)
         {
+            if (left == null)
+            {
+                return right == null;    
+            }
+            
             return left.Equals(right);
         }
         

@@ -7,7 +7,7 @@ namespace Lextm.SharpSnmpLib
     /// TimeTicks type.
     /// </summary>
     /// <remarks>Represents SNMP TimeTicks type.</remarks>
-    public struct TimeTicks : ISnmpData, IEquatable<TimeTicks>
+    public class TimeTicks : ISnmpData, IEquatable<TimeTicks>
     {
         private Counter32 _count;
         
@@ -106,6 +106,11 @@ namespace Lextm.SharpSnmpLib
         /// </returns>
         public bool Equals(TimeTicks other)
         {
+            if (other == null)
+            {
+                return false;    
+            }
+            
             return _count == other._count;
         }
         
@@ -118,6 +123,11 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
         public static bool operator ==(TimeTicks left, TimeTicks right)
         {
+            if (left == null)
+            {
+                return right == null;    
+            }
+            
             return left.Equals(right);
         }
         

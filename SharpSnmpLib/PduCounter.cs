@@ -18,6 +18,7 @@ namespace Lextm.SharpSnmpLib
                 {
                     count += 10;
                 }
+                
                 return new Integer32(count);
             }
         }

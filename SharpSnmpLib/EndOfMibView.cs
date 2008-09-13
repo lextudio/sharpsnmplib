@@ -13,7 +13,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// EndOfMibView exception.
     /// </summary>
-    public struct EndOfMibView : ISnmpData, IEquatable<EndOfMibView>
+    public class EndOfMibView : ISnmpData, IEquatable<EndOfMibView>
     {        
         #region Equals and GetHashCode implementation
         /// <summary>
@@ -59,7 +59,11 @@ namespace Lextm.SharpSnmpLib
         /// </returns>
         public bool Equals(EndOfMibView other)
         {
-            // add comparisions for all members here
+            if (other == null)
+            {
+                return false;
+            }
+            
             return true;
         }
         
@@ -72,6 +76,11 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
         public static bool operator ==(EndOfMibView lhs, EndOfMibView rhs)
         {
+            if (lhs == null)
+            {
+                return rhs == null;    
+            }
+            
             return lhs.Equals(rhs);
         }
         
@@ -84,7 +93,7 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
         public static bool operator !=(EndOfMibView lhs, EndOfMibView rhs)
         {
-            return !lhs.Equals(rhs); // use operator == and negate result
+            return !(lhs == rhs); // use operator == and negate result
         }
         #endregion
         /// <summary>

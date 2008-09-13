@@ -159,10 +159,10 @@ namespace Lextm.SharpSnmpLib
             return string.Format(
                 CultureInfo.InvariantCulture,
                 "SNMPv2 trap: time stamp: {0}; community: {1}; enterprise: {2}; varbind count: {3}",
-                TimeStamp, 
+                TimeStamp.ToString(),
                 Community, 
                 Enterprise, 
-                Variables.Count);
+                Variables.Count.ToString());
         }
     }
 }

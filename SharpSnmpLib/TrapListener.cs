@@ -132,7 +132,7 @@ namespace Lextm.SharpSnmpLib
             {
                 if (ex.ErrorCode == 10048)
                 {
-                    throw new SharpSnmpException("Port is already used: " + endpoint.Port, ex);
+                    throw new SharpSnmpException("Port is already used: " + endpoint.Port.ToString(), ex);
                 }
             }
         }
@@ -321,7 +321,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public override string ToString()
         {
-            return "Trap listener: port: " + _port;
+            return "Trap listener: port: " + _port.ToString();
         }
         
         /// <summary>

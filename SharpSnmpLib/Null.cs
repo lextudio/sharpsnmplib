@@ -15,7 +15,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// Null type.
     /// </summary>
-    public struct Null : ISnmpData, IEquatable<Null>
+    public class Null : ISnmpData, IEquatable<Null>
     {
         /// <summary>
         /// Type code.
@@ -82,6 +82,11 @@ namespace Lextm.SharpSnmpLib
         /// </returns>
         public bool Equals(Null other)
         {
+            if (other == null)
+            {
+                return false;    
+            }
+            
             return true;
         }
         
@@ -94,6 +99,11 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
         public static bool operator ==(Null left, Null right)
         {
+            if (left == null)
+            {
+                return right == null;    
+            }
+            
             return left.Equals(right);
         }
         

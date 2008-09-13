@@ -276,7 +276,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 // no definition matches numerical.
             }
             
-            return _tree.Find(GetParent(numerical)).TextualForm + "." + numerical[numerical.Length - 1];
+            return _tree.Find(GetParent(numerical)).TextualForm + "." + numerical[numerical.Length - 1].ToString();
         }
         
         private static uint[] GetParent(uint[] id)

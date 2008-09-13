@@ -8,7 +8,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// Gauge32 type.
     /// </summary>
-    public struct Gauge32 : ISnmpData, IEquatable<Gauge32>
+    public class Gauge32 : ISnmpData, IEquatable<Gauge32>
     {
         private Counter32 _count;
         
@@ -77,6 +77,11 @@ namespace Lextm.SharpSnmpLib
         /// </returns>
         public bool Equals(Gauge32 other)
         {
+            if (other == null)
+            {
+                return false;    
+            }
+            
             return ToUInt32() == other.ToUInt32();
         }
         
@@ -124,6 +129,11 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
         public static bool operator ==(Gauge32 left, Gauge32 right)
         {
+            if (left == null)
+            {
+                return right == null;    
+            }
+            
             return left.Equals(right);
         }
         

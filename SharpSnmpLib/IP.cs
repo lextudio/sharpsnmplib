@@ -9,7 +9,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// IPAddress type.
     /// </summary>
-    public struct IP : ISnmpData, IEquatable<IP>
+    public class IP : ISnmpData, IEquatable<IP>
     {
         private IPAddress _ip;
         
@@ -127,6 +127,11 @@ namespace Lextm.SharpSnmpLib
         /// </returns>
         public bool Equals(IP other)
         {
+            if (other == null)
+            {
+                return false;    
+            }
+            
             return _ip.Equals(other._ip);
         }
         
@@ -148,6 +153,11 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
         public static bool operator ==(IP left, IP right)
         {
+            if (left == null)
+            {
+                return right == null;    
+            }
+            
             return left.Equals(right);
         }
         

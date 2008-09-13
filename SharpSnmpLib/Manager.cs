@@ -484,7 +484,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public override string ToString()
         {
-            return "SNMP manager: timeout: " + Timeout + "; version: " + DefaultVersion + "; " + trapListener;
+            return "SNMP manager: timeout: " + Timeout.ToString() + "; version: " + DefaultVersion.ToString() + "; " + trapListener;
         }
 
         private void TrapListener_TrapV1Received(object sender, TrapV1ReceivedEventArgs e)

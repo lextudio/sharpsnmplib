@@ -137,7 +137,7 @@ namespace Lextm.SharpSnmpLib
                 _seq, 
                 _nonRepeaters, 
                 _maxRepetitions, 
-                _variables.Count);
+                _variables.Count.ToString());
         }
     }
 }

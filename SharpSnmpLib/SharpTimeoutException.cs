@@ -81,7 +81,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public override string ToString()
         {
-            return "SharpTimeoutException: timeout: " + _timeout;
+            return "SharpTimeoutException: timeout: " + _timeout.ToString();
         }
         
         /// <summary>

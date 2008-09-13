@@ -38,23 +38,57 @@ namespace Lextm.SharpSnmpLib
         }
         
         /// <summary>
-        /// Creates an <see cref="OctetString"/> with a specific <see cref="String"/>.
+        /// Creates an <see cref="OctetString"/> with a specific <see cref="String"/>. This string is treated as UTF-16.
         /// </summary>
         /// <param name="str"></param>
         public OctetString(string str)
-            : this(Encoding.ASCII.GetBytes(str))
+            : this(Encoding.Unicode.GetBytes(str))
         {
             if (str == null) 
             {
                 throw new ArgumentNullException("str");
             }
         }
+        
+        /// <summary>
+        /// Returns a <see cref="String"/> in a hex form that represents this <see cref="OctetString"/>.
+        /// </summary>
+        /// <returns></returns>
+        public string ToHexString()
+        {
+            StringBuilder result = new StringBuilder();
+            foreach (byte b in _raw)
+            {
+                result.Append(b.ToString("X2"));
+            }
+            
+            return result.ToString();
+        }
+        
+        /// <summary>
+        /// Returns a <see cref="String"/> in a specific <see cref="Encoding"/> that represents this <see cref="OctetString"/>.
+        /// </summary>
+        /// <param name="encoding"></param>
+        /// <returns></returns>
+        public string ToString(Encoding encoding)
+        {
+            return encoding.GetString(_raw);
+        }
 
         /// <summary>
-        /// Returns a <see cref="String"/> that represents this <see cref="OctetString"/>.
+        /// Returns a <see cref="String"/> in UTF-16 that represents this <see cref="OctetString"/>.
         /// </summary>
         /// <returns></returns>
         public override string ToString()
+        {            
+            return ToString(Encoding.Unicode);
+        }
+        
+        /// <summary>
+        /// Converts octets to data string.
+        /// </summary>
+        /// <returns></returns>
+        public string ToDateString()
         {
             // may be index date
             if (_raw.Length == 8 || _raw.Length == 11) 
@@ -65,11 +99,11 @@ namespace Lextm.SharpSnmpLib
                 uint dy = _raw[3];
                 if (yr < 2005 && yr > 1990 && mo < 13 && dy < 32)
                 {
-                    return string.Empty + dy + "/" + mo + "/" + yr;
+                    return dy.ToString() + "/" + mo.ToString() + "/" + yr.ToString();
                 }
             }
             
-            return Encoding.ASCII.GetString(_raw); 
+            return null;
         }
 
         /// <summary>
@@ -152,6 +186,11 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
         public static bool operator ==(OctetString left, OctetString right)
         {
+            if (left == null)
+            {
+                return right == null;    
+            }
+            
             return left.Equals(right);
         }
         

@@ -8,7 +8,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// Counter64 type.
     /// </summary>
-    public struct Counter64 : ISnmpData, IEquatable<Counter64>
+    public class Counter64 : ISnmpData, IEquatable<Counter64>
     {
         private ulong _count;
         
@@ -113,6 +113,11 @@ namespace Lextm.SharpSnmpLib
         /// </returns>
         public bool Equals(Counter64 other)
         {
+            if (other == null)
+            {
+                return false;    
+            }
+            
             return ToUInt64() == other.ToUInt64();
         }
         
@@ -160,6 +165,11 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
         public static bool operator ==(Counter64 left, Counter64 right)
         {
+            if (left == null)
+            {
+                return right == null;    
+            }
+            
             return left.Equals(right);
         }
         

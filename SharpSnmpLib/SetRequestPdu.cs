@@ -79,7 +79,7 @@ namespace Lextm.SharpSnmpLib
                 _sequenceNumber,
                 _errorStatus,
                 _errorIndex,
-                _variables.Count);
+                _variables.Count.ToString());
         }
 
         internal int SequenceNumber

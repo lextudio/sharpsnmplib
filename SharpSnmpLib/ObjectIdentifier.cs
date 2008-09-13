@@ -132,7 +132,7 @@ namespace Lextm.SharpSnmpLib
             StringBuilder result = new StringBuilder();
             for (int k = 0; k < numerical.Length; k++)
             {
-                result.Append("." + numerical[k]);
+                result.Append("." + numerical[k].ToString());
             }
 
             return result.ToString();
@@ -257,6 +257,11 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
         public static bool operator ==(ObjectIdentifier left, ObjectIdentifier right)
         {
+            if (left == null)
+            {
+                return right == null;    
+            }
+            
             return left.Equals(right);
         }
         

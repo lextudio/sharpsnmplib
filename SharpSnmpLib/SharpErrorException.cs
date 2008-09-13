@@ -111,7 +111,7 @@ namespace Lextm.SharpSnmpLib
                     "{0}. {1}. Index: {2}. Errored Object ID: {3}",
                     Message,
                     Status,
-                    Index,
+                    Index.ToString(),
                     Id);
             }
         }

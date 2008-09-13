@@ -13,7 +13,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// NoSuchInstance exception.
     /// </summary>
-    public struct NoSuchInstance : ISnmpData, IEquatable<NoSuchInstance>
+    public class NoSuchInstance : ISnmpData, IEquatable<NoSuchInstance>
     {        
         #region Equals and GetHashCode implementation
         /// <summary>
@@ -59,7 +59,11 @@ namespace Lextm.SharpSnmpLib
         /// </returns>
         public bool Equals(NoSuchInstance other)
         {
-            // add comparisions for all members here
+            if (other == null)
+            {
+                return false;
+            }
+            
             return true;
         }
         
@@ -72,6 +76,11 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
         public static bool operator ==(NoSuchInstance lhs, NoSuchInstance rhs)
         {
+            if (lhs == null)
+            {
+                return rhs == null;    
+            }
+            
             return lhs.Equals(rhs);
         }
         
@@ -84,7 +93,7 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
         public static bool operator !=(NoSuchInstance lhs, NoSuchInstance rhs)
         {
-            return !lhs.Equals(rhs); // use operator == and negate result
+            return !(lhs == rhs); // use operator == and negate result
         }
         #endregion
         /// <summary>

@@ -23,7 +23,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// Real type.
     /// </summary>
-    public struct Real : ISnmpData, IEquatable<Real>
+    public class Real : ISnmpData, IEquatable<Real>
     {
         private byte[] _raw;
         private byte[] _bytes;
@@ -184,6 +184,11 @@ namespace Lextm.SharpSnmpLib
         /// </returns>
         public bool Equals(Real other)
         {
+            if (other == null)
+            {
+                return false;    
+            }
+            
             return Math.Abs(ToDouble() - other.ToDouble()) < double.Epsilon;
         }
         
@@ -231,6 +236,11 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
         public static bool operator ==(Real left, Real right)
         {
+            if (left == null)
+            {
+                return right == null;    
+            }
+            
             return left.Equals(right);
         }
         

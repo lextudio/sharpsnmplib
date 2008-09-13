@@ -8,7 +8,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// Counter32 type.
     /// </summary>
-    public struct Counter32 : ISnmpData, IEquatable<Counter32>
+    public class Counter32 : ISnmpData, IEquatable<Counter32>
     {
         private uint _count;
         
@@ -113,6 +113,11 @@ namespace Lextm.SharpSnmpLib
         /// </returns>
         public bool Equals(Counter32 other)
         {
+            if (other == null)
+            {
+                return false;    
+            }
+            
             return ToUInt32() == other.ToUInt32();
         }
         
@@ -160,6 +165,11 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
         public static bool operator ==(Counter32 left, Counter32 right)
         {
+            if (left == null)
+            {
+                return right == null;    
+            }
+            
             return left.Equals(right);
         }
         

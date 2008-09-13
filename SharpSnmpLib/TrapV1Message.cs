@@ -242,14 +242,7 @@ namespace Lextm.SharpSnmpLib
         {
             return string.Format(
                 CultureInfo.InvariantCulture,
-                "SNMPv1 trap: agent address: {0}; time stamp: {1}; community: {2}; enterprise: {3}; generic: {4}; specific: {5}; varbind count: {6}",
-                AgentAddress,
-                TimeStamp,
-                Community,
-                Enterprise,
-                Generic,
-                Specific,
-                Variables.Count);
+                "SNMPv1 trap: " + _pdu);
         }
     }
 }

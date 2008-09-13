@@ -24,7 +24,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// BitString type.
     /// </summary>
-    public struct BitString : ISnmpData, IEquatable<BitString> // BitArray seems to be bad news, so here goes
+    public class BitString : ISnmpData, IEquatable<BitString> // BitArray seems to be bad news, so here goes
     {
         private int _nbits;
         private int _size;
@@ -285,6 +285,11 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
         public static bool operator ==(BitString left, BitString right)
         {
+            if (left == null)
+            {
+                return right == null;    
+            }
+            
             return left.Equals(right);
         }
         
@@ -309,6 +314,11 @@ namespace Lextm.SharpSnmpLib
         /// </returns>
         public bool Equals(BitString other)
         {
+            if (other == null)
+            {
+                return false;    
+            }
+            
             return ByteTool.CompareRaw(_raw, other._raw);
         }
 

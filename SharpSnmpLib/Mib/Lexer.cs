@@ -50,7 +50,7 @@ namespace Lextm.SharpSnmpLib.Mib
         
         private void ParseLine(string file, string line, int row)
         {
-            line = line + '\n';
+            line = line + "\n";
             int count = line.Length;
             int i = 0;
             for (i = 0; i < count; i++)
