@@ -38,16 +38,22 @@ namespace Lextm.SharpSnmpLib
         }
         
         /// <summary>
+        /// Creates an <see cref="OctetString"/> with a specific <see cref="String"/>. This string is treated in specific <see cref="Encoding"/>.
+        /// </summary>
+        /// <param name="str">String.</param>
+        /// <param name="encoding">Encoding.</param>
+        public OctetString(string str, Encoding encoding)
+            : this(encoding.GetBytes(str))
+        {
+        }    
+        
+        /// <summary>
         /// Creates an <see cref="OctetString"/> with a specific <see cref="String"/>. This string is treated as UTF-16.
         /// </summary>
-        /// <param name="str"></param>
+        /// <param name="str">String.</param>
         public OctetString(string str)
-            : this(Encoding.Unicode.GetBytes(str))
+            : this(str, Encoding.Unicode)
         {
-            if (str == null) 
-            {
-                throw new ArgumentNullException("str");
-            }
         }
         
         /// <summary>
