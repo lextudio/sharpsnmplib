@@ -1,7 +1,0 @@
-﻿<NUnitProject>
-  <Settings activeconfig="Debug" />
-  <Config name="Debug" binpathtype="Auto">
-    <assembly path="SharpSnmpLib\bin\Debug\SharpSnmpLib.dll" />
-  </Config>
-  <Config name="Release" binpathtype="Auto" />
-</NUnitProject>
