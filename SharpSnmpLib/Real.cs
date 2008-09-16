@@ -236,9 +236,9 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
         public static bool operator ==(Real left, Real right)
         {
-            if (left == null)
+            if ((object)left == null)
             {
-                return right == null;    
+                return (object)right == null;    
             }
             
             return left.Equals(right);

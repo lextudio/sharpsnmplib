@@ -140,9 +140,9 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
         public static bool operator ==(Integer64 lhs, Integer64 rhs)
         {
-            if (lhs == null)
+            if ((object)lhs == null)
             {
-                return rhs == null;    
+                return (object)rhs == null;    
             }
             
             return lhs.Equals(rhs);

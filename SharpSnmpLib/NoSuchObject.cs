@@ -76,9 +76,9 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
         public static bool operator ==(NoSuchObject lhs, NoSuchObject rhs)
         {
-            if (lhs == null)
+            if ((object)lhs == null)
             {
-                return rhs == null;    
+                return (object)rhs == null;    
             }
             
             return lhs.Equals(rhs);
