@@ -13,33 +13,18 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// NoSuchInstance exception.
     /// </summary>
-    public class NoSuchInstance : ISnmpData, IEquatable<NoSuchInstance>
-    {        
+    public sealed class NoSuchInstance : ISnmpData, IEquatable<NoSuchInstance>
+    {
         #region Equals and GetHashCode implementation
         /// <summary>
-        /// Determines whether the specified <see cref="Object"/> is equal to the current <see cref="NoSuchInstance"/>. 
+        /// Determines whether the specified <see cref="Object"/> is equal to the current <see cref="NoSuchInstance"/>.
         /// </summary>
         /// <param name="obj">The <see cref="Object"/> to compare with the current <see cref="NoSuchInstance"/>. </param>
         /// <returns><value>true</value> if the specified <see cref="Object"/> is equal to the current <see cref="NoSuchInstance"/>; otherwise, <value>false</value>.
-        /// </returns>        
+        /// </returns>
         public override bool Equals(object obj)
         {
-            if (obj == null) 
-            {
-                return false;
-            }
-            
-            if (object.ReferenceEquals(this, obj)) 
-            {
-                return true;
-            }
-            
-            if (GetType() != obj.GetType()) 
-            {
-                return false;
-            }
-            
-            return Equals((NoSuchInstance)obj);
+            return Equals(this, obj as NoSuchInstance);
         }
         
         /// <summary>
@@ -59,12 +44,7 @@ namespace Lextm.SharpSnmpLib
         /// </returns>
         public bool Equals(NoSuchInstance other)
         {
-            if (other == null)
-            {
-                return false;
-            }
-            
-            return true;
+            return Equals(this, other);
         }
         
         /// <summary>
@@ -76,12 +56,7 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
         public static bool operator ==(NoSuchInstance lhs, NoSuchInstance rhs)
         {
-            if ((object)lhs == null)
-            {
-                return (object)rhs == null;    
-            }
-            
-            return lhs.Equals(rhs);
+            return Equals(lhs, rhs);
         }
         
         /// <summary>
@@ -99,9 +74,9 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Type code.
         /// </summary>
-        public SnmpType TypeCode 
+        public SnmpType TypeCode
         {
-            get 
+            get
             {
                 return SnmpType.NoSuchInstance;
             }
@@ -110,21 +85,38 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Converts to byte format.
         /// </summary>
-        /// <returns></returns>        
+        /// <returns></returns>
         public byte[] ToBytes()
         {
             return constantNoSuchInstance;
         }
         
         private readonly static byte[] constantNoSuchInstance = new byte[] { 0x81, 0x00 };
-       
+        
         /// <summary>
         /// Returns a <see cref="String"/> that represents this <see cref="NoSuchInstance"/>.
         /// </summary>
-        /// <returns></returns>        
+        /// <returns></returns>
         public override string ToString()
         {
             return "NoSuchInstance";
+        }
+        
+        public static bool Equals (NoSuchInstance left, NoSuchInstance right)
+        {
+            object lo = left as object;
+            object ro = right as object;
+            if (lo == ro)
+            {
+                return true;
+            }
+
+            if (lo == null || ro == null)
+            {
+                return false;
+            }
+            
+            return true;
         }
     }
 }

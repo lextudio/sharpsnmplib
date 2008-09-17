@@ -8,7 +8,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// Counter64 type.
     /// </summary>
-    public class Counter64 : ISnmpData, IEquatable<Counter64>
+    public sealed class Counter64 : ISnmpData, IEquatable<Counter64>
     {
         private ulong _count;
         
@@ -113,12 +113,7 @@ namespace Lextm.SharpSnmpLib
         /// </returns>
         public bool Equals(Counter64 other)
         {
-            if (other == null)
-            {
-                return false;    
-            }
-            
-            return ToUInt64() == other.ToUInt64();
+            return Equals(this, other);
         }
         
         /// <summary>
@@ -129,22 +124,7 @@ namespace Lextm.SharpSnmpLib
         /// </returns>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
-            
-            if (object.ReferenceEquals(this, obj))
-            {
-                return true;
-            }
-            
-            if (GetType() != obj.GetType())
-            {
-                return false;
-            }
-            
-            return Equals((Counter64)obj);
+            return Equals(this, obj as Counter64);
         }
         
         /// <summary>
@@ -165,12 +145,7 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
         public static bool operator ==(Counter64 left, Counter64 right)
         {
-            if ((object)left == null)
-            {
-                return (object)right == null;    
-            }
-            
-            return left.Equals(right);
+            return Equals(left, right);
         }
         
         /// <summary>
@@ -183,6 +158,23 @@ namespace Lextm.SharpSnmpLib
         public static bool operator !=(Counter64 left, Counter64 right)
         {
             return !(left == right);
+        }
+        
+        public static bool Equals (Counter64 left, Counter64 right)
+        {
+            object lo = left as object;
+            object ro = right as object;
+            if (lo == ro)
+            {
+                return true;
+            }
+
+            if (lo == null || ro == null)
+            {
+                return false;
+            }
+            
+            return left.ToUInt64() == right.ToUInt64();
         }
     }
 }

@@ -7,7 +7,7 @@ namespace Lextm.SharpSnmpLib
     /// TimeTicks type.
     /// </summary>
     /// <remarks>Represents SNMP TimeTicks type.</remarks>
-    public class TimeTicks : ISnmpData, IEquatable<TimeTicks>
+    public sealed class TimeTicks : ISnmpData, IEquatable<TimeTicks>
     {
         private Counter32 _count;
         
@@ -59,22 +59,7 @@ namespace Lextm.SharpSnmpLib
         /// </returns>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
-            
-            if (object.ReferenceEquals(this, obj))
-            {
-                return true;
-            }
-            
-            if (GetType() != obj.GetType())
-            {
-                return false;
-            }
-            
-            return Equals((TimeTicks)obj);
+            return Equals(this, obj as TimeTicks);
         }
         
         /// <summary>
@@ -106,12 +91,7 @@ namespace Lextm.SharpSnmpLib
         /// </returns>
         public bool Equals(TimeTicks other)
         {
-            if (other == null)
-            {
-                return false;    
-            }
-            
-            return _count == other._count;
+            return Equals(this, other);
         }
         
         /// <summary>
@@ -123,12 +103,7 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
         public static bool operator ==(TimeTicks left, TimeTicks right)
         {
-            if ((object)left == null)
-            {
-                return (object)right == null;    
-            }
-            
-            return left.Equals(right);
+            return Equals(left, right);
         }
         
         /// <summary>
@@ -150,6 +125,23 @@ namespace Lextm.SharpSnmpLib
         public override string ToString()
         {
             return ToUInt32().ToString(CultureInfo.InvariantCulture);
+        }
+        
+        public static bool Equals (TimeTicks left, TimeTicks right)
+        {
+            object lo = left as object;
+            object ro = right as object;
+            if (lo == ro)
+            {
+                return true;
+            }
+
+            if (lo == null || ro == null)
+            {
+                return false;
+            }
+            
+            return left._count == right._count;
         }
     }
 }

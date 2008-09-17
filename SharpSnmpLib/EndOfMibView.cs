@@ -13,33 +13,18 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// EndOfMibView exception.
     /// </summary>
-    public class EndOfMibView : ISnmpData, IEquatable<EndOfMibView>
-    {        
+    public sealed class EndOfMibView : ISnmpData, IEquatable<EndOfMibView>
+    {
         #region Equals and GetHashCode implementation
         /// <summary>
-        /// Determines whether the specified <see cref="Object"/> is equal to the current <see cref="EndOfMibView"/>. 
+        /// Determines whether the specified <see cref="Object"/> is equal to the current <see cref="EndOfMibView"/>.
         /// </summary>
         /// <param name="obj">The <see cref="Object"/> to compare with the current <see cref="EndOfMibView"/>. </param>
         /// <returns><value>true</value> if the specified <see cref="Object"/> is equal to the current <see cref="EndOfMibView"/>; otherwise, <value>false</value>.
-        /// </returns>        
+        /// </returns>
         public override bool Equals(object obj)
         {
-            if (obj == null) 
-            {
-                return false;
-            }
-            
-            if (object.ReferenceEquals(this, obj))
-            {
-                return true;
-            }
-            
-            if (GetType() != obj.GetType())
-            {
-                return false;
-            }
-            
-            return Equals((EndOfMibView)obj);
+            return Equals(this, obj as EndOfMibView);
         }
         
         /// <summary>
@@ -59,12 +44,7 @@ namespace Lextm.SharpSnmpLib
         /// </returns>
         public bool Equals(EndOfMibView other)
         {
-            if (other == null)
-            {
-                return false;
-            }
-            
-            return true;
+            return Equals(this, other);
         }
         
         /// <summary>
@@ -76,12 +56,7 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
         public static bool operator ==(EndOfMibView lhs, EndOfMibView rhs)
         {
-            if ((object)lhs == null)
-            {
-                return (object)rhs == null;    
-            }
-            
-            return lhs.Equals(rhs);
+            return Equals(lhs, rhs);
         }
         
         /// <summary>
@@ -99,9 +74,9 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Type code.
         /// </summary>
-        public SnmpType TypeCode 
+        public SnmpType TypeCode
         {
-            get 
+            get
             {
                 return SnmpType.EndOfMibView;
             }
@@ -110,7 +85,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Converts to byte format.
         /// </summary>
-        /// <returns></returns>        
+        /// <returns></returns>
         public byte[] ToBytes()
         {
             return _endOfMibView;
@@ -121,10 +96,27 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Returns a <see cref="String"/> that represents this <see cref="Null"/>.
         /// </summary>
-        /// <returns></returns>        
+        /// <returns></returns>
         public override string ToString()
         {
             return "EndOfMibView";
+        }
+        
+        public static bool Equals (EndOfMibView left, EndOfMibView right)
+        {
+            object lo = left as object;
+            object ro = right as object;
+            if (lo == ro)
+            {
+                return true;
+            }
+
+            if (lo == null || ro == null)
+            {
+                return false;
+            }
+            
+            return true;
         }
     }
 }

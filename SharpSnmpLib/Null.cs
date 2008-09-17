@@ -15,19 +15,19 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// Null type.
     /// </summary>
-    public class Null : ISnmpData, IEquatable<Null>
+    public sealed class Null : ISnmpData, IEquatable<Null>
     {
         /// <summary>
         /// Type code.
         /// </summary>
         public SnmpType TypeCode
         {
-            get 
+            get
             {
                 return SnmpType.Null;
             }
         }
-      
+        
         /// <summary>
         /// Converts to byte format.
         /// </summary>
@@ -38,31 +38,16 @@ namespace Lextm.SharpSnmpLib
         }
         
         private readonly static byte[] _null = new byte[] { 0x05, 0x00 };
-       
+        
         /// <summary>
-        /// Determines whether the specified <see cref="Object"/> is equal to the current <see cref="Null"/>. 
+        /// Determines whether the specified <see cref="Object"/> is equal to the current <see cref="Null"/>.
         /// </summary>
         /// <param name="obj">The <see cref="Object"/> to compare with the current <see cref="Null"/>. </param>
         /// <returns><value>true</value> if the specified <see cref="Object"/> is equal to the current <see cref="Null"/>; otherwise, <value>false</value>.
-        /// </returns>        
+        /// </returns>
         public override bool Equals(object obj)
         {
-            if (obj == null) 
-            {
-                return false;
-            }
-            
-            if (object.ReferenceEquals(this, obj)) 
-            {
-                return true;
-            }
-            
-            if (GetType() != obj.GetType()) 
-            {
-                return false;
-            }
-            
-            return Equals((Null)obj);
+            return Equals(this, obj as Null);
         }
         
         /// <summary>
@@ -82,12 +67,7 @@ namespace Lextm.SharpSnmpLib
         /// </returns>
         public bool Equals(Null other)
         {
-            if (other == null)
-            {
-                return false;    
-            }
-            
-            return true;
+            return Equals(this, other);
         }
         
         /// <summary>
@@ -99,12 +79,7 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
         public static bool operator ==(Null left, Null right)
         {
-            if ((object)left == null)
-            {
-                return (object)right == null;    
-            }
-            
-            return left.Equals(right);
+            return Equals(left, right);
         }
         
         /// <summary>
@@ -126,6 +101,23 @@ namespace Lextm.SharpSnmpLib
         public override string ToString()
         {
             return "Null";
+        }
+        
+        public static bool Equals (Null left, Null right)
+        {
+            object lo = left as object;
+            object ro = right as object;
+            if (lo == ro)
+            {
+                return true;
+            }
+
+            if (lo == null || ro == null)
+            {
+                return false;
+            }
+            
+            return true;
         }
     }
 }

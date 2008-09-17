@@ -188,7 +188,7 @@ namespace Lextm.SharpSnmpLib
                 {
                     if (Environment.ProcessorCount == 1 || unchecked(++loops % 100) == 0)
                     {
-                        Thread.Sleep(0);
+                        Thread.Sleep(1);
                     }
                     else
                     {

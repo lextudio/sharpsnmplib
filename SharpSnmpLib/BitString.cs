@@ -24,7 +24,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// BitString type.
     /// </summary>
-    public class BitString : ISnmpData, IEquatable<BitString> // BitArray seems to be bad news, so here goes
+    public sealed class BitString : ISnmpData, IEquatable<BitString> // BitArray seems to be bad news, so here goes
     {
         private int _nbits;
         private int _size;
@@ -257,23 +257,8 @@ namespace Lextm.SharpSnmpLib
         /// <returns><value>true</value> if the specified <see cref="Object"/> is equal to the current <see cref="BitString"/>; otherwise, <value>false</value>.
         /// </returns>
         public override bool Equals(object obj)
-        {
-            if (obj == null)
-            {
-                return false;
-            }
-            
-            if (object.ReferenceEquals(this, obj))
-            {
-                return true;
-            }
-            
-            if (GetType() != obj.GetType())
-            {
-                return false;
-            }
-            
-            return Equals((BitString)obj);
+        {            
+            return Equals(this, obj as BitString);
         }
         
         /// <summary>
@@ -285,12 +270,7 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
         public static bool operator ==(BitString left, BitString right)
         {
-            if ((object)left == null)
-            {
-                return (object)right == null;    
-            }
-            
-            return left.Equals(right);
+            return Equals(left, right);
         }
         
         /// <summary>
@@ -314,14 +294,26 @@ namespace Lextm.SharpSnmpLib
         /// </returns>
         public bool Equals(BitString other)
         {
-            if (other == null)
-            {
-                return false;    
-            }
-            
-            return ByteTool.CompareRaw(_raw, other._raw);
+            return Equals(this, other);
         }
 
         #endregion
+
+        public static bool Equals (BitString left, BitString right)
+        {
+            object lo = left as object;
+            object ro = right as object;
+            if (lo == ro)
+            {
+                return true;
+            }
+
+            if (lo == null || ro == null)
+            {
+                return false;
+            }
+			
+			return ByteTool.CompareRaw(left._raw, right._raw);
+        }
     }
 }

@@ -9,7 +9,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// ObjectIdentifier type.
     /// </summary>
-    public class ObjectIdentifier : ISnmpData, IEquatable<ObjectIdentifier>
+    public sealed class ObjectIdentifier : ISnmpData, IEquatable<ObjectIdentifier>
     {
         private uint[] _oid;
         
@@ -23,7 +23,7 @@ namespace Lextm.SharpSnmpLib
 
         private static uint[] ParseString(string text)
         {
-            if (text.Contains("::")) 
+            if (text.Contains("::"))
             {
                 return Mib.ObjectRegistry.Instance.Translate(text);
             }
@@ -40,7 +40,7 @@ namespace Lextm.SharpSnmpLib
         [CLSCompliant(false)]
         public ObjectIdentifier(uint[] oid)
         {
-            if (oid.Length < 2) 
+            if (oid.Length < 2)
             {
                 throw new ArgumentException("The length of the shortest identifier is two", "oid");
             }
@@ -154,7 +154,7 @@ namespace Lextm.SharpSnmpLib
             }
             
             return result;
-        }        
+        }
         
         /// <summary>
         /// Converts to byte format.
@@ -178,7 +178,7 @@ namespace Lextm.SharpSnmpLib
             List<byte> result = new List<byte>();
             result.Add((byte)(subIdentifier & 0x7F));
             while ((subIdentifier = subIdentifier >> 7) > 0)
-            {                
+            {
                 result.Add((byte)((subIdentifier & 0x7F) | 0x80));
             }
             
@@ -205,22 +205,7 @@ namespace Lextm.SharpSnmpLib
         /// </returns>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
-            
-            if (object.ReferenceEquals(this, obj))
-            {
-                return true;
-            }
-            
-            if (GetType() != obj.GetType())
-            {
-                return false;
-            }
-            
-            return Equals((ObjectIdentifier)obj);
+            return Equals(this, obj as ObjectIdentifier);
         }
         
         /// <summary>
@@ -231,12 +216,7 @@ namespace Lextm.SharpSnmpLib
         /// </returns>
         public bool Equals(ObjectIdentifier other)
         {
-            if (other == null)
-            {
-                return false;
-            }
-            
-            return ByteTool.CompareArray(_oid, other._oid);
+            return Equals(this, other);
         }
         
         /// <summary>
@@ -257,12 +237,7 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
         public static bool operator ==(ObjectIdentifier left, ObjectIdentifier right)
         {
-            if ((object)left == null)
-            {
-                return (object)right == null;    
-            }
-            
-            return left.Equals(right);
+            return Equals(left, right);
         }
         
         /// <summary>
@@ -275,6 +250,23 @@ namespace Lextm.SharpSnmpLib
         public static bool operator !=(ObjectIdentifier left, ObjectIdentifier right)
         {
             return !(left == right);
+        }
+        
+        public static bool Equals (ObjectIdentifier left, ObjectIdentifier right)
+        {
+            object lo = left as object;
+            object ro = right as object;
+            if (lo == ro)
+            {
+                return true;
+            }
+
+            if (lo == null || ro == null)
+            {
+                return false;
+            }
+            
+            return ByteTool.CompareArray(left._oid, right._oid);
         }
     }
 }

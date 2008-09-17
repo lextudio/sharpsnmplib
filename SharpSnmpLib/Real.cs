@@ -23,7 +23,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// Real type.
     /// </summary>
-    public class Real : ISnmpData, IEquatable<Real>
+    public sealed class Real : ISnmpData, IEquatable<Real>
     {
         private byte[] _raw;
         private byte[] _bytes;
@@ -67,7 +67,7 @@ namespace Lextm.SharpSnmpLib
             }
             
             // 8.5.5 binary encoding
-            if ((_raw[0] & 0x80) != 0) 
+            if ((_raw[0] & 0x80) != 0)
             {
                 byte c = _raw[0];
                 int s = ((c & 0x40) != 0) ? -1 : 1;
@@ -111,7 +111,7 @@ namespace Lextm.SharpSnmpLib
             }
             
             // 8.5.6 decimal encoding
-            if ((_raw[0] & 0x40) == 0) 
+            if ((_raw[0] & 0x40) == 0)
             {
                 return double.Parse(ASCIIEncoding.ASCII.GetString(_raw, 0, _raw.Length), CultureInfo.InvariantCulture);
             }
@@ -159,9 +159,9 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Type code.
         /// </summary>
-        public SnmpType TypeCode 
+        public SnmpType TypeCode
         {
-            get 
+            get
             {
                 return SnmpType.Real;
             }
@@ -184,12 +184,7 @@ namespace Lextm.SharpSnmpLib
         /// </returns>
         public bool Equals(Real other)
         {
-            if (other == null)
-            {
-                return false;    
-            }
-            
-            return Math.Abs(ToDouble() - other.ToDouble()) < double.Epsilon;
+            return Equals(this, other);
         }
         
         /// <summary>
@@ -200,22 +195,7 @@ namespace Lextm.SharpSnmpLib
         /// </returns>
         public override bool Equals(object obj)
         {
-            if (obj == null) 
-            {
-                return false;
-            }
-            
-            if (object.ReferenceEquals(this, obj)) 
-            {
-                return true;
-            }
-            
-            if (GetType() != obj.GetType()) 
-            {
-                return false;
-            }
-            
-            return Equals((Real)obj);
+            return Equals(this, obj as Real);
         }
         
         /// <summary>
@@ -236,12 +216,7 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
         public static bool operator ==(Real left, Real right)
         {
-            if ((object)left == null)
-            {
-                return (object)right == null;    
-            }
-            
-            return left.Equals(right);
+            return Equals(left, right);
         }
         
         /// <summary>
@@ -254,6 +229,23 @@ namespace Lextm.SharpSnmpLib
         public static bool operator !=(Real left, Real right)
         {
             return !(left == right);
+        }
+        
+        public static bool Equals (Real left, Real right)
+        {
+            object lo = left as object;
+            object ro = right as object;
+            if (lo == ro)
+            {
+                return true;
+            }
+
+            if (lo == null || ro == null)
+            {
+                return false;
+            }
+            
+            return Math.Abs(left.ToDouble() - right.ToDouble()) < double.Epsilon;
         }
     }
     

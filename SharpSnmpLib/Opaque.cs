@@ -25,7 +25,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// Opaque type.
     /// </summary>
-    public class Opaque : ISnmpData, IEquatable<Opaque>
+    public sealed class Opaque : ISnmpData, IEquatable<Opaque>
     {
         private byte[] _raw;
 
@@ -35,7 +35,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="raw">Raw bytes</param>
         public Opaque(byte[] raw)
         {
-            if (raw == null) 
+            if (raw == null)
             {
                 throw new ArgumentNullException("raw");
             }
@@ -86,12 +86,7 @@ namespace Lextm.SharpSnmpLib
         /// </returns>
         public bool Equals(Opaque other)
         {
-            if (other == null) 
-            {
-                return false;    
-            }
-            
-            return ByteTool.CompareRaw(_raw, other._raw);
+            return Equals(this, other);
         }
         
         /// <summary>
@@ -102,22 +97,7 @@ namespace Lextm.SharpSnmpLib
         /// </returns>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
-            
-            if (object.ReferenceEquals(this, obj))
-            {
-                return true;
-            }
-            
-            if (GetType() != obj.GetType())
-            {
-                return false;
-            }
-            
-            return Equals((Opaque)obj);
+            return Equals(this, obj as Opaque);
         }
         
         /// <summary>
@@ -138,12 +118,7 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
         public static bool operator ==(Opaque left, Opaque right)
         {
-            if ((object)left == null)
-            {
-                return (object)right == null;    
-            }
-            
-            return left.Equals(right);
+            return Equals(left, right);
         }
         
         /// <summary>
@@ -156,6 +131,23 @@ namespace Lextm.SharpSnmpLib
         public static bool operator !=(Opaque left, Opaque right)
         {
             return !(left == right);
+        }
+        
+        public static bool Equals (Opaque left, Opaque right)
+        {
+            object lo = left as object;
+            object ro = right as object;
+            if (lo == ro)
+            {
+                return true;
+            }
+
+            if (lo == null || ro == null)
+            {
+                return false;
+            }
+            
+            return ByteTool.CompareRaw(left._raw, right._raw);
         }
     }
     

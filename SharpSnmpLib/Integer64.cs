@@ -16,7 +16,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// Integer64 type.
     /// </summary>
-    internal class Integer64 : IEquatable<Integer64>
+    internal sealed class Integer64 : IEquatable<Integer64>
     {
         private byte[] _raw;
         
@@ -80,29 +80,14 @@ namespace Lextm.SharpSnmpLib
         
         #region Equals and GetHashCode implementation
         /// <summary>
-        /// Determines whether the specified <see cref="Object"/> is equal to the current <see cref="Integer64"/>. 
+        /// Determines whether the specified <see cref="Object"/> is equal to the current <see cref="Integer64"/>.
         /// </summary>
         /// <param name="obj">The <see cref="Object"/> to compare with the current <see cref="Integer64"/>. </param>
         /// <returns><value>true</value> if the specified <see cref="Object"/> is equal to the current <see cref="Integer64"/>; otherwise, <value>false</value>.
         /// </returns>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
-            
-            if (object.ReferenceEquals(this, obj))
-            {
-                return true;
-            }
-            
-            if (GetType() != obj.GetType())
-            {
-                return false;
-            }
-            
-            return Equals((Integer64)obj); // use Equals method below
+            return Equals(this, obj as Integer64);
         }
         
         /// <summary>
@@ -113,12 +98,7 @@ namespace Lextm.SharpSnmpLib
         /// </returns>
         public bool Equals(Integer64 other)
         {
-            if (other == null)
-            {
-                return false;
-            }
-            
-            return ToInt64() == other.ToInt64();
+            return Equals(this, other);
         }
         
         /// <summary>
@@ -140,12 +120,7 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
         public static bool operator ==(Integer64 lhs, Integer64 rhs)
         {
-            if ((object)lhs == null)
-            {
-                return (object)rhs == null;    
-            }
-            
-            return lhs.Equals(rhs);
+            return Equals(lhs, rhs);
         }
         
         /// <summary>
@@ -167,6 +142,23 @@ namespace Lextm.SharpSnmpLib
         public override string ToString()
         {
             return ToInt64().ToString(CultureInfo.InvariantCulture);
+        }
+        
+        public static bool Equals (Integer64 left, Integer64 right)
+        {
+            object lo = left as object;
+            object ro = right as object;
+            if (lo == ro)
+            {
+                return true;
+            }
+
+            if (lo == null || ro == null)
+            {
+                return false;
+            }
+            
+            return left.ToInt64() == right.ToInt64();
         }
     }
 }

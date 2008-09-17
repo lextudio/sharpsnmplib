@@ -14,8 +14,8 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// Boolean type.
     /// </summary>
-    public class Bool : ISnmpData, IEquatable<Bool>
-    {   
+    public sealed class Bool : ISnmpData, IEquatable<Bool>
+    {
         private bool _boolean;
         
         /// <summary>
@@ -24,12 +24,12 @@ namespace Lextm.SharpSnmpLib
         /// <param name="raw">Raw bytes</param>
         public Bool(byte[] raw)
         {
-            if (null == raw) 
+            if (null == raw)
             {
                 throw new ArgumentNullException("raw");
             }
             
-            if (raw.Length != 1) 
+            if (raw.Length != 1)
             {
                 throw new ArgumentException("raw must be one item");
             }
@@ -49,9 +49,9 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Type code.
         /// </summary>
-        public SnmpType TypeCode 
+        public SnmpType TypeCode
         {
-            get 
+            get
             {
                 return SnmpType.Boolean;
             }
@@ -85,29 +85,14 @@ namespace Lextm.SharpSnmpLib
         }
         
         /// <summary>
-        /// Determines whether the specified <see cref="Object"/> is equal to the current <see cref="Bool"/>. 
+        /// Determines whether the specified <see cref="Object"/> is equal to the current <see cref="Bool"/>.
         /// </summary>
         /// <param name="obj">The <see cref="Object"/> to compare with the current <see cref="Bool"/>. </param>
         /// <returns><value>true</value> if the specified <see cref="Object"/> is equal to the current <see cref="Bool"/>; otherwise, <value>false</value>.
         /// </returns>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
-            
-            if (object.ReferenceEquals(this, obj))
-            {
-                return true;
-            }
-            
-            if (GetType() != obj.GetType())
-            {
-                return false;
-            }
-            
-            return Equals((Bool)obj);
+            return Equals(this, obj as Bool);
         }
         
         /// <summary>
@@ -119,12 +104,7 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
         public static bool operator ==(Bool left, Bool right)
         {
-            if ((object)left == null)
-            {
-                return (object)right == null;    
-            }
-            
-            return left.Equals(right);
+            return Equals(left, right);
         }
         
         /// <summary>
@@ -148,14 +128,26 @@ namespace Lextm.SharpSnmpLib
         /// </returns>
         public bool Equals(Bool other)
         {
-            if (other == null)
-            {
-                return false;    
-            }
-            
-            return ToBoolean() == other.ToBoolean();
+            return Equals(this, other);
         }
 
         #endregion
+        
+        public static bool Equals (Bool left, Bool right)
+        {
+            object lo = left as object;
+            object ro = right as object;
+            if (lo == ro)
+            {
+                return true;
+            }
+
+            if (lo == null || ro == null)
+            {
+                return false;
+            }
+            
+            return left.ToBoolean() == right.ToBoolean();
+        }
     }
 }

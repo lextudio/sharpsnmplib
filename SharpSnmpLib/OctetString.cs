@@ -23,7 +23,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// OctetString type.
     /// </summary>
-    public class OctetString // This namespace has its own concept of string
+    public sealed class OctetString // This namespace has its own concept of string
         : ISnmpData, IEquatable<OctetString>
     {
         private byte[] _raw;
@@ -45,14 +45,14 @@ namespace Lextm.SharpSnmpLib
         public OctetString(string str, Encoding encoding)
             : this(encoding.GetBytes(str))
         {
-        }    
+        }
         
         /// <summary>
         /// Creates an <see cref="OctetString"/> with a specific <see cref="String"/>. This string is treated as UTF-16.
         /// </summary>
         /// <param name="str">String.</param>
         public OctetString(string str)
-            : this(str, Encoding.Unicode)
+            : this(str, DefaultEncoding)
         {
         }
         
@@ -86,8 +86,8 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <returns></returns>
         public override string ToString()
-        {            
-            return ToString(Encoding.Unicode);
+        {
+            return ToString(DefaultEncoding);
         }
         
         /// <summary>
@@ -97,7 +97,7 @@ namespace Lextm.SharpSnmpLib
         public string ToDateString()
         {
             // may be index date
-            if (_raw.Length == 8 || _raw.Length == 11) 
+            if (_raw.Length == 8 || _raw.Length == 11)
             {
                 uint yr = _raw[0];
                 yr = (yr * 256) + _raw[1];
@@ -115,7 +115,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Type code.
         /// </summary>
-        public SnmpType TypeCode 
+        public SnmpType TypeCode
         {
             get
             {
@@ -126,7 +126,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Converts to byte format.
         /// </summary>
-        /// <returns></returns>        
+        /// <returns></returns>
         public byte[] ToBytes()
         {
             return ByteTool.ToBytes(SnmpType.OctetString, _raw);
@@ -140,38 +140,18 @@ namespace Lextm.SharpSnmpLib
         /// </returns>
         public bool Equals(OctetString other)
         {
-            if (other == null)
-            {
-                return false;    
-            }
-            
-            return ByteTool.CompareRaw(_raw, other._raw);
+            return Equals(this, other);
         }
         
         /// <summary>
-        /// Determines whether the specified <see cref="Object"/> is equal to the current <see cref="OctetString"/>. 
+        /// Determines whether the specified <see cref="Object"/> is equal to the current <see cref="OctetString"/>.
         /// </summary>
         /// <param name="obj">The <see cref="Object"/> to compare with the current <see cref="OctetString"/>. </param>
         /// <returns><value>true</value> if the specified <see cref="Object"/> is equal to the current <see cref="OctetString"/>; otherwise, <value>false</value>.
         /// </returns>
         public override bool Equals(object obj)
         {
-            if (obj == null) 
-            {
-                return false;
-            }
-            
-            if (object.ReferenceEquals(this, obj)) 
-            {
-                return true;
-            }
-            
-            if (GetType() != obj.GetType()) 
-            {
-                return false;
-            }
-            
-            return Equals((OctetString)obj);
+            return Equals(this, obj as OctetString);
         }
         
         /// <summary>
@@ -192,12 +172,7 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
         public static bool operator ==(OctetString left, OctetString right)
         {
-            if (left == null)
-            {
-                return right == null;    
-            }
-            
-            return left.Equals(right);
+            return Equals(left, right);
         }
         
         /// <summary>
@@ -217,13 +192,38 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <returns></returns>
         public PhysicalAddress ToPhysicalAddress()
-        {            
+        {
             if (_raw.Length != 6)
             {
                 return null;
             }
 
             return new PhysicalAddress(_raw);
+        }
+        
+        private static Encoding defaultEncoding = Encoding.ASCII;
+        
+        public static Encoding DefaultEncoding 
+        {
+            get { return defaultEncoding; }
+            set { defaultEncoding = value; }
+        }
+        
+        public static bool Equals (OctetString left, OctetString right)
+        {
+            object lo = left as object;
+            object ro = right as object;
+            if (lo == ro)
+            {
+                return true;
+            }
+
+            if (lo == null || ro == null)
+            {
+                return false;
+            }
+            
+            return ByteTool.CompareRaw(left._raw, right._raw);
         }
     }
     

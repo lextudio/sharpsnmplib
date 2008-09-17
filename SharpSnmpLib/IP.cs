@@ -9,7 +9,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// IPAddress type.
     /// </summary>
-    public class IP : ISnmpData, IEquatable<IP>
+    public sealed class IP : ISnmpData, IEquatable<IP>
     {
         private IPAddress _ip;
         
@@ -24,7 +24,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("ip");
             }
             
-            _ip = ip;            
+            _ip = ip;
         }
         
         /// <summary>
@@ -78,11 +78,11 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         public SnmpType TypeCode
         {
-            get 
+            get
             {
                 return SnmpType.IPAddress;
             }
-        }    
+        }
         
         /// <summary>
         /// Converts to byte format.
@@ -94,29 +94,14 @@ namespace Lextm.SharpSnmpLib
         }
         
         /// <summary>
-        /// Determines whether the specified <see cref="Object"/> is equal to the current <see cref="IP"/>. 
+        /// Determines whether the specified <see cref="Object"/> is equal to the current <see cref="IP"/>.
         /// </summary>
         /// <param name="obj">The <see cref="Object"/> to compare with the current <see cref="IP"/>. </param>
         /// <returns><value>true</value> if the specified <see cref="Object"/> is equal to the current <see cref="IP"/>; otherwise, <value>false</value>.
         /// </returns>
         public override bool Equals(object obj)
         {
-            if (obj == null) 
-            {
-                return false;
-            }
-            
-            if (object.ReferenceEquals(this, obj)) 
-            {
-                return true;
-            }
-            
-            if (GetType() != obj.GetType()) 
-            {
-                return false;
-            }
-            
-            return Equals((IP)obj);
+            return Equals(this, obj as IP);
         }
         
         /// <summary>
@@ -127,12 +112,7 @@ namespace Lextm.SharpSnmpLib
         /// </returns>
         public bool Equals(IP other)
         {
-            if (other == null)
-            {
-                return false;    
-            }
-            
-            return _ip.Equals(other._ip);
+            return Equals(this, other);
         }
         
         /// <summary>
@@ -153,12 +133,7 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
         public static bool operator ==(IP left, IP right)
         {
-            if ((object)left == null)
-            {
-                return (object)right == null;    
-            }
-            
-            return left.Equals(right);
+            return Equals(left, right);
         }
         
         /// <summary>
@@ -171,6 +146,23 @@ namespace Lextm.SharpSnmpLib
         public static bool operator !=(IP left, IP right)
         {
             return !(left == right);
+        }
+        
+        public static bool Equals (IP left, IP right)
+        {
+            object lo = left as object;
+            object ro = right as object;
+            if (lo == ro)
+            {
+                return true;
+            }
+
+            if (lo == null || ro == null)
+            {
+                return false;
+            }
+            
+            return left.ToIPAddress() == right.ToIPAddress();
         }
     }
 }

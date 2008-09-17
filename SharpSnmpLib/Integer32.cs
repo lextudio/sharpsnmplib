@@ -23,7 +23,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// Integer32 type in SMIv2 (or INTEGER in SMIv1).
     /// </summary>
-    public class Integer32 // This namespace has its own concept of Integer
+    public sealed class Integer32 // This namespace has its own concept of Integer
         : ISnmpData, IEquatable<Integer32>
     {
         private int _int;
@@ -110,22 +110,7 @@ namespace Lextm.SharpSnmpLib
         /// </returns>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
-            
-            if (object.ReferenceEquals(this, obj))
-            {
-                return true;
-            }
-            
-            if (GetType() != obj.GetType())
-            {
-                return false;
-            }
-            
-            return Equals((Integer32)obj);
+            return Equals(this, obj as Integer32);
         }
         
         /// <summary>
@@ -136,12 +121,7 @@ namespace Lextm.SharpSnmpLib
         /// </returns>
         public bool Equals(Integer32 other)
         {
-            if (other == null)
-            {
-                return false;    
-            }
-            
-            return _int == other._int;
+            return Equals(this, other);
         }
         
         /// <summary>
@@ -153,12 +133,7 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
         public static bool operator ==(Integer32 left, Integer32 right)
         {
-            if ((object)left == null)
-            {
-                return (object)right == null;    
-            }
-            
-            return left.Equals(right);
+            return Equals(left, right);
         }
         
         /// <summary>
@@ -171,6 +146,23 @@ namespace Lextm.SharpSnmpLib
         public static bool operator !=(Integer32 left, Integer32 right)
         {
             return !(left == right);
+        }
+        
+        public static bool Equals (Integer32 left, Integer32 right)
+        {
+            object lo = left as object;
+            object ro = right as object;
+            if (lo == ro)
+            {
+                return true;
+            }
+
+            if (lo == null || ro == null)
+            {
+                return false;
+            }
+            
+            return left.ToInt32() == right.ToInt32();
         }
     }
     
