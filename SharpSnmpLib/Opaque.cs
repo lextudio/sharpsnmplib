@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Globalization;
 using System.IO;
 using System.Net.Sockets;
 using System.Text;
@@ -52,7 +53,7 @@ namespace Lextm.SharpSnmpLib
             StringBuilder result = new StringBuilder("Opaque type: ");
             foreach (byte b in _raw)
             {
-                result.Append(b.ToString("X2"));
+                result.Append(b.ToString("X2", CultureInfo.InvariantCulture));
             }
             
             return result.ToString();
@@ -133,7 +134,7 @@ namespace Lextm.SharpSnmpLib
             return !(left == right);
         }
         
-        public static bool Equals (Opaque left, Opaque right)
+        public static bool Equals(Opaque left, Opaque right)
         {
             object lo = left as object;
             object ro = right as object;

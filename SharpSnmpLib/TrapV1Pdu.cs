@@ -117,7 +117,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="version">Protocol version</param>
         /// <param name="community">Community name</param>
         /// <returns></returns>
-        public ISnmpData ToMessageBody(VersionCode version, string community)
+        public ISnmpData ToMessageBody(VersionCode version, OctetString community)
         {
             return ByteTool.PackMessage(version, community, this);
         }      
@@ -183,8 +183,8 @@ namespace Lextm.SharpSnmpLib
                 TimeStamp,
                 Enterprise, 
                 Generic,
-                Specific.ToString(),
-                Variables.Count.ToString());
+                Specific.ToString(CultureInfo.InvariantCulture),
+                Variables.Count.ToString(CultureInfo.InvariantCulture));
         }
     }
 }

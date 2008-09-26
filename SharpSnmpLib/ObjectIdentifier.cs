@@ -132,7 +132,7 @@ namespace Lextm.SharpSnmpLib
             StringBuilder result = new StringBuilder();
             for (int k = 0; k < numerical.Length; k++)
             {
-                result.Append("." + numerical[k].ToString());
+                result.Append("." + numerical[k].ToString(CultureInfo.InvariantCulture));
             }
 
             return result.ToString();
@@ -252,7 +252,7 @@ namespace Lextm.SharpSnmpLib
             return !(left == right);
         }
         
-        public static bool Equals (ObjectIdentifier left, ObjectIdentifier right)
+        public static bool Equals(ObjectIdentifier left, ObjectIdentifier right)
         {
             object lo = left as object;
             object ro = right as object;

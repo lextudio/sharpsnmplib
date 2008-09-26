@@ -28,7 +28,7 @@ namespace Lextm.SharpSnmpLib.Tests
                                           new Integer32(12),
                                           new TimeTicks(16352),
                                           new List<Variable>() {v});
-            byte[] bytes = pdu.ToMessageBody(VersionCode.V1, "public").ToBytes();
+            byte[] bytes = pdu.ToMessageBody(VersionCode.V1, new OctetString("public")).ToBytes();
             TrapV1Message message = (TrapV1Message)MessageFactory.ParseMessages(bytes)[0];
             Assert.AreEqual("127.0.0.1", message.AgentAddress.ToString());
             Assert.AreEqual(GenericCode.EnterpriseSpecific, message.Generic);

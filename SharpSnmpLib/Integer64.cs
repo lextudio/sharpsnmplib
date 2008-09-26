@@ -144,7 +144,7 @@ namespace Lextm.SharpSnmpLib
             return ToInt64().ToString(CultureInfo.InvariantCulture);
         }
         
-        public static bool Equals (Integer64 left, Integer64 right)
+        public static bool Equals(Integer64 left, Integer64 right)
         {
             object lo = left as object;
             object ro = right as object;

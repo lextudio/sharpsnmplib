@@ -61,10 +61,15 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         Real = 0x09,  // X690.Real
         Enumerated = 0x0a,
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "PDV")]
         EmbeddedPDV = 0x0b,
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "UTF")]
         UTF8String = 0x0c,
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "OID")]
         RelativeOID = 0x0d,
+        [SuppressMessage("Microsoft.Naming", "CA1700:DoNotNameEnumValuesReserved")]
         Reserved1 = 0x0e,
+        [SuppressMessage("Microsoft.Naming", "CA1700:DoNotNameEnumValuesReserved")]
         Reserved2 = 0x0f,
         SequenceTagNumber = 0x10, // X690.Sequence (this is in fact the tag number for SEQUENCE)
         Set = 0x11,
@@ -73,6 +78,7 @@ namespace Lextm.SharpSnmpLib
         T61String = 0x14,
         VideoTextString = 0x15,
         IA5String = 0x16,
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "UTC")]
         UTCTime = 0x17,
         GeneralizedTime = 0x18,
         GrahicString = 0x19,
@@ -80,6 +86,7 @@ namespace Lextm.SharpSnmpLib
         GeneralString = 0x1b,
         UniversalString = 0x1c,
         CharacterString = 0x1d,
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "BMP")]
         BMPString = 0x1e,
         
         /// <summary>

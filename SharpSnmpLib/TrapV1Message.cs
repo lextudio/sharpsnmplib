@@ -22,7 +22,7 @@ namespace Lextm.SharpSnmpLib
     public class TrapV1Message : ISnmpMessage
     {
         private uint _time;
-        private string _community;
+        private OctetString _community;
         private ObjectIdentifier _enterprise;
         private IPAddress _agent;
         private GenericCode _generic;
@@ -44,7 +44,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="time">Time</param>
         /// <param name="variables">Variables</param>
         [CLSCompliant(false)]
-        public TrapV1Message(VersionCode version, IPAddress agent, string community, ObjectIdentifier enterprise, GenericCode generic, int specific, uint time, IList<Variable> variables)
+        public TrapV1Message(VersionCode version, IPAddress agent, OctetString community, ObjectIdentifier enterprise, GenericCode generic, int specific, uint time, IList<Variable> variables)
         {
             _version = version;
             _agent = agent;
@@ -80,7 +80,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentException("wrong message body");
             }
             
-            _community = body.Items[1].ToString();
+            _community = (OctetString)body.Items[1];
             _version = (VersionCode)((Integer32)body.Items[0]).ToInt32();
             _pdu = (ISnmpPdu)body.Items[2];
             if (_pdu.TypeCode != TypeCode)
@@ -129,7 +129,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Community name.
         /// </summary>
-        public string Community
+        public OctetString Community
         {
             get
             {

@@ -9,6 +9,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 
 namespace Lextm.SharpSnmpLib.Mib
@@ -276,7 +277,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 // no definition matches numerical.
             }
             
-            return _tree.Find(GetParent(numerical)).TextualForm + "." + numerical[numerical.Length - 1].ToString();
+            return _tree.Find(GetParent(numerical)).TextualForm + "." + numerical[numerical.Length - 1].ToString(CultureInfo.InvariantCulture);
         }
         
         private static uint[] GetParent(uint[] id)

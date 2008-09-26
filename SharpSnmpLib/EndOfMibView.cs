@@ -102,7 +102,7 @@ namespace Lextm.SharpSnmpLib
             return "EndOfMibView";
         }
         
-        public static bool Equals (EndOfMibView left, EndOfMibView right)
+        public static bool Equals(EndOfMibView left, EndOfMibView right)
         {
             object lo = left as object;
             object ro = right as object;

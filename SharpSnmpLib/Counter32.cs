@@ -160,7 +160,7 @@ namespace Lextm.SharpSnmpLib
             return !(left == right);
         }
         
-        public static bool Equals (Counter32 left, Counter32 right)
+        public static bool Equals(Counter32 left, Counter32 right)
         {
             object lo = left as object;
             object ro = right as object;

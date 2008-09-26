@@ -47,14 +47,8 @@ namespace Lextm.SharpSnmpLib
         /// <param name="ip">IP string</param>
         public IP(string ip) : this(IPAddress.Parse(ip))
         {
-        }
+        }        
         
-        private static Regex regex = new Regex(
-            "^(?<First>2[0-4]\\d|25[0-5]|[01]?\\d\\d?)\\.(?<Second>2[0-4]" +
-            "\\d|25[0-5]|[01]?\\d\\d?)\\.(?<Third>2[0-4]\\d|25[0-5]|[01]?" +
-            "\\d\\d?)\\.(?<Fourth>2[0-4]\\d|25[0-5]|[01]?\\d\\d?)$",
-            RegexOptions.IgnoreCase    | RegexOptions.CultureInvariant    | RegexOptions.IgnorePatternWhitespace | RegexOptions.Compiled);
-
         /// <summary>
         /// Returns a <see cref="String"/> that represents this <see cref="IP"/>.
         /// </summary>
@@ -148,7 +142,7 @@ namespace Lextm.SharpSnmpLib
             return !(left == right);
         }
         
-        public static bool Equals (IP left, IP right)
+        public static bool Equals(IP left, IP right)
         {
             object lo = left as object;
             object ro = right as object;

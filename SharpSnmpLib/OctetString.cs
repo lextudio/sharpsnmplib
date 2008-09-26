@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Net.NetworkInformation;
 using System.Text;
 
@@ -27,7 +28,8 @@ namespace Lextm.SharpSnmpLib
         : ISnmpData, IEquatable<OctetString>
     {
         private byte[] _raw;
-
+        private Encoding _encoding;
+        
         /// <summary>
         /// Creates an <see cref="OctetString"/> from raw bytes.
         /// </summary>
@@ -35,6 +37,7 @@ namespace Lextm.SharpSnmpLib
         public OctetString(byte[] raw)
         {
             _raw = raw;
+            _encoding = DefaultEncoding;
         }
         
         /// <summary>
@@ -43,8 +46,9 @@ namespace Lextm.SharpSnmpLib
         /// <param name="str">String.</param>
         /// <param name="encoding">Encoding.</param>
         public OctetString(string str, Encoding encoding)
-            : this(encoding.GetBytes(str))
         {
+            _encoding = encoding;
+            _raw = _encoding.GetBytes(str);
         }
         
         /// <summary>
@@ -57,6 +61,14 @@ namespace Lextm.SharpSnmpLib
         }
         
         /// <summary>
+        /// Encoding of this <see cref="OctetString"/>
+        /// </summary>
+        public Encoding Encoding 
+        {
+            get { return _encoding; }
+        }
+        
+        /// <summary>
         /// Returns a <see cref="String"/> in a hex form that represents this <see cref="OctetString"/>.
         /// </summary>
         /// <returns></returns>
@@ -65,7 +77,7 @@ namespace Lextm.SharpSnmpLib
             StringBuilder result = new StringBuilder();
             foreach (byte b in _raw)
             {
-                result.Append(b.ToString("X2"));
+                result.Append(b.ToString("X2", CultureInfo.InvariantCulture));
             }
             
             return result.ToString();
@@ -87,7 +99,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public override string ToString()
         {
-            return ToString(DefaultEncoding);
+            return ToString(_encoding);
         }
         
         /// <summary>
@@ -105,7 +117,7 @@ namespace Lextm.SharpSnmpLib
                 uint dy = _raw[3];
                 if (yr < 2005 && yr > 1990 && mo < 13 && dy < 32)
                 {
-                    return dy.ToString() + "/" + mo.ToString() + "/" + yr.ToString();
+                    return dy.ToString(CultureInfo.InvariantCulture) + "/" + mo.ToString(CultureInfo.InvariantCulture) + "/" + yr.ToString(CultureInfo.InvariantCulture);
                 }
             }
             
@@ -160,7 +172,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns>A hash code for the current <see cref="OctetString"/>.</returns>
         public override int GetHashCode()
         {
-            return ToString().GetHashCode();
+            return ToString(Encoding.Unicode).GetHashCode();
         }
         
         /// <summary>
@@ -203,13 +215,16 @@ namespace Lextm.SharpSnmpLib
         
         private static Encoding defaultEncoding = Encoding.ASCII;
         
-        public static Encoding DefaultEncoding 
+        /// <summary>
+        /// Default encoding of <see cref="OctetString"/> type.
+        /// </summary>
+        public static Encoding DefaultEncoding
         {
             get { return defaultEncoding; }
             set { defaultEncoding = value; }
         }
         
-        public static bool Equals (OctetString left, OctetString right)
+        public static bool Equals(OctetString left, OctetString right)
         {
             object lo = left as object;
             object ro = right as object;

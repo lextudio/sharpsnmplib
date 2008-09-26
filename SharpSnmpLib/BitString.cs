@@ -299,7 +299,13 @@ namespace Lextm.SharpSnmpLib
 
         #endregion
 
-        public static bool Equals (BitString left, BitString right)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
+        public static bool Equals(BitString left, BitString right)
         {
             object lo = left as object;
             object ro = right as object;
@@ -312,8 +318,8 @@ namespace Lextm.SharpSnmpLib
             {
                 return false;
             }
-			
-			return ByteTool.CompareRaw(left._raw, right._raw);
+            
+            return ByteTool.CompareRaw(left._raw, right._raw);
         }
     }
 }

@@ -115,7 +115,7 @@ namespace Lextm.SharpSnmpLib
 
         #endregion
         
-        public static bool Equals (GeneralString left, GeneralString right)
+        public static bool Equals(GeneralString left, GeneralString right)
         {
             object lo = left as object;
             object ro = right as object;

@@ -16,7 +16,7 @@ namespace TestGetTable
         {
             try
             {
-                Variable[,] table = Manager.GetTable(VersionCode.V1, new IPEndPoint(IPAddress.Loopback, 161), "public",
+                Variable[,] table = Manager.GetTable(VersionCode.V1, new IPEndPoint(IPAddress.Loopback, 161), new OctetString("public"),
                     new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 2, 2 }), 5000);
                 for (int row = 0; row < table.GetUpperBound(0); row++)
                 {

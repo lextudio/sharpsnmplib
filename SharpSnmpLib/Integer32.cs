@@ -148,7 +148,7 @@ namespace Lextm.SharpSnmpLib
             return !(left == right);
         }
         
-        public static bool Equals (Integer32 left, Integer32 right)
+        public static bool Equals(Integer32 left, Integer32 right)
         {
             object lo = left as object;
             object ro = right as object;

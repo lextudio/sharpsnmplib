@@ -7,6 +7,7 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
+using System.Globalization;
 using System.Net;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
@@ -81,7 +82,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public override string ToString()
         {
-            return "SharpTimeoutException: timeout: " + _timeout.ToString();
+            return "SharpTimeoutException: timeout: " + _timeout.ToString(CultureInfo.InvariantCulture);
         }
         
         /// <summary>

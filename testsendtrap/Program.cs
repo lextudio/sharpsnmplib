@@ -22,7 +22,7 @@ namespace TestSendTrap
 		    
             TrapV1Message message = new TrapV1Message(VersionCode.V1,
                                                       IPAddress.Parse("127.0.0.1"),
-                                                      "public",
+                                                      new OctetString("public"),
                                                       new ObjectIdentifier(new uint[] { 1, 3, 6 }),
                                                       GenericCode.ColdStart,
                                                       0,
@@ -37,7 +37,7 @@ namespace TestSendTrap
             
             
             TrapV2Message m2 = new TrapV2Message(VersionCode.V2,
-                                                      "public",
+                                                 new OctetString("public"),
                                                       new ObjectIdentifier(new uint[] { 1, 3, 6 }),
                                                       0,
                                                       new List<Variable>());
@@ -48,7 +48,7 @@ namespace TestSendTrap
             writer.Close();
             //*/
            
-            InformRequestMessage m3 = new InformRequestMessage(VersionCode.V2, "public", new ObjectIdentifier(new uint[] { 1, 3, 6 }),
+            InformRequestMessage m3 = new InformRequestMessage(VersionCode.V2, new OctetString("public"), new ObjectIdentifier(new uint[] { 1, 3, 6 }),
                                                       0,
                                                       new List<Variable>());
             try

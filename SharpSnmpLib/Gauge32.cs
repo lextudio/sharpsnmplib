@@ -124,7 +124,7 @@ namespace Lextm.SharpSnmpLib
             return !(left == right);
         }
         
-        public static bool Equals (Gauge32 left, Gauge32 right)
+        public static bool Equals(Gauge32 left, Gauge32 right)
         {
             object lo = left as object;
             object ro = right as object;

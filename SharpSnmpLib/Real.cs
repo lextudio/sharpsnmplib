@@ -231,7 +231,7 @@ namespace Lextm.SharpSnmpLib
             return !(left == right);
         }
         
-        public static bool Equals (Real left, Real right)
+        public static bool Equals(Real left, Real right)
         {
             object lo = left as object;
             object ro = right as object;

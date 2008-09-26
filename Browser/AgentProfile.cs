@@ -129,7 +129,7 @@ namespace Lextm.SharpSnmpLib.Browser
             IList<Variable> list = new List<Variable>();
             int rows = 0;
 
-            rows = Manager.Walk(this.VersionCode, this.Agent, this.GetCommunity, new ObjectIdentifier(def.GetNumericalForm()), list, 1000, WalkMode.WithinSubtree);
+            rows = Manager.Walk(VersionCode, Agent, new OctetString(GetCommunity), new ObjectIdentifier(def.GetNumericalForm()), list, 1000, WalkMode.WithinSubtree);
             
             // 
             // How many rows are there?

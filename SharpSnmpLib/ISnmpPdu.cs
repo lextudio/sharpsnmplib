@@ -15,7 +15,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="version"></param>
         /// <param name="community"></param>
         /// <returns></returns>
-        ISnmpData ToMessageBody(VersionCode version, string community);
+        ISnmpData ToMessageBody(VersionCode version, OctetString community);
         
         /// <summary>
         /// Variable bindings.

@@ -63,7 +63,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="version">Prtocol version</param>
         /// <param name="community">Community name</param>
         /// <returns></returns>
-        public ISnmpData ToMessageBody(VersionCode version, string community)
+        public ISnmpData ToMessageBody(VersionCode version, OctetString community)
         {
             return ByteTool.PackMessage(version, community, this);
         }
@@ -136,7 +136,7 @@ namespace Lextm.SharpSnmpLib
                 "TRAP v2 PDU: enterprise: {0}; time stamp: {1}; variable count: {2}",
                 _enterprise, 
                 _time, 
-                _variables.Count.ToString());
+                _variables.Count.ToString(CultureInfo.InvariantCulture));
         }
     }
 }

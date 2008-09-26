@@ -9,6 +9,7 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
@@ -132,7 +133,7 @@ namespace Lextm.SharpSnmpLib
             {
                 if (ex.ErrorCode == 10048)
                 {
-                    throw new SharpSnmpException("Port is already used: " + endpoint.Port.ToString(), ex);
+                    throw new SharpSnmpException("Port is already used: " + endpoint.Port.ToString(CultureInfo.InvariantCulture), ex);
                 }
             }
         }
@@ -321,7 +322,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public override string ToString()
         {
-            return "Trap listener: port: " + _port.ToString();
+            return "Trap listener: port: " + _port.ToString(CultureInfo.InvariantCulture);
         }
         
         /// <summary>

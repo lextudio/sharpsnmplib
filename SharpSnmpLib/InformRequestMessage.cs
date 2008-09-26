@@ -23,7 +23,7 @@ namespace Lextm.SharpSnmpLib
         private VersionCode _version;
         private IList<Variable> _variables;
         private byte[] _bytes;
-        private string _community;
+        private OctetString _community;
         private ISnmpPdu _pdu;
         private int _sequenceNumber;
         
@@ -36,7 +36,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="time">Time ticks.</param>
         /// <param name="variables">Variables.</param>
         [CLSCompliant(false)]
-        public InformRequestMessage(VersionCode version, string community, ObjectIdentifier enterprise, uint time, IList<Variable> variables)
+        public InformRequestMessage(VersionCode version, OctetString community, ObjectIdentifier enterprise, uint time, IList<Variable> variables)
         {
             _version = version;
             _community = community;
@@ -62,7 +62,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentException("wrong message body");
             }
             
-            _community = body.Items[1].ToString();
+            _community = (OctetString)body.Items[1];
             _version = (VersionCode)((Integer32)body.Items[0]).ToInt32();
             _pdu = (ISnmpPdu)body.Items[2];
             if (_pdu.TypeCode != TypeCode)

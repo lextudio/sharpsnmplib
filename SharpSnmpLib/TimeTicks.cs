@@ -127,7 +127,7 @@ namespace Lextm.SharpSnmpLib
             return ToUInt32().ToString(CultureInfo.InvariantCulture);
         }
         
-        public static bool Equals (TimeTicks left, TimeTicks right)
+        public static bool Equals(TimeTicks left, TimeTicks right)
         {
             object lo = left as object;
             object ro = right as object;

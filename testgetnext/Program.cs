@@ -21,7 +21,7 @@ namespace TestGetNext
 			{
 				GetNextRequestMessage message = new GetNextRequestMessage(VersionCode.V1, 
 				                                                          IPAddress.Parse("127.0.0.1"),
-				                                                          "public",
+				                                                          new OctetString("public"),
 				                                                          new List<Variable>(1) {
 				                                                          	new Variable(
 				                                                          		new uint[] { 1, 3, 6, 1, 2, 1, 1, 6, 0 })});

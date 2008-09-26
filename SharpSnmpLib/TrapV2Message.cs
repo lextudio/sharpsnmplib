@@ -14,7 +14,7 @@ namespace Lextm.SharpSnmpLib
         private byte[] _bytes;
         private ISnmpPdu _pdu;
         private VersionCode _version;
-        private string _community;
+        private OctetString _community;
         private IList<Variable> _variables;
         private ObjectIdentifier _enterprise;
         private uint _time;
@@ -28,7 +28,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="time">Time stamp</param>
         /// <param name="variables">Variables</param>
         [CLSCompliant(false)]
-        public TrapV2Message(VersionCode version, string community, ObjectIdentifier enterprise, uint time, IList<Variable> variables)
+        public TrapV2Message(VersionCode version, OctetString community, ObjectIdentifier enterprise, uint time, IList<Variable> variables)
         {
             _version = version;
             _community = community;
@@ -55,7 +55,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentException("wrong message body");
             }    
             
-            _community = body.Items[1].ToString();
+            _community = (OctetString)body.Items[1];
             _version = (VersionCode)((Integer32)body.Items[0]).ToInt32();
             _pdu = (ISnmpPdu)body.Items[2];
             if (_pdu.TypeCode != TypeCode)
@@ -120,7 +120,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Community name.
         /// </summary>
-        public string Community
+        public OctetString Community
         {
             get { return _community; }
         }
@@ -159,10 +159,10 @@ namespace Lextm.SharpSnmpLib
             return string.Format(
                 CultureInfo.InvariantCulture,
                 "SNMPv2 trap: time stamp: {0}; community: {1}; enterprise: {2}; varbind count: {3}",
-                TimeStamp.ToString(),
+                TimeStamp.ToString(CultureInfo.InvariantCulture),
                 Community, 
                 Enterprise, 
-                Variables.Count.ToString());
+                Variables.Count.ToString(CultureInfo.InvariantCulture));
         }
     }
 }

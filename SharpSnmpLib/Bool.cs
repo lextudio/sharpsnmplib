@@ -133,7 +133,7 @@ namespace Lextm.SharpSnmpLib
 
         #endregion
         
-        public static bool Equals (Bool left, Bool right)
+        public static bool Equals(Bool left, Bool right)
         {
             object lo = left as object;
             object ro = right as object;

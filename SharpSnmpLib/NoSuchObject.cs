@@ -102,7 +102,7 @@ namespace Lextm.SharpSnmpLib
             return "NoSuchObject";
         }
         
-        public static bool Equals (BitString left, BitString right)
+        public static bool Equals(BitString left, BitString right)
         {
             object lo = left as object;
             object ro = right as object;

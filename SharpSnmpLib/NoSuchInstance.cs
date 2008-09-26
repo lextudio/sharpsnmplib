@@ -102,7 +102,7 @@ namespace Lextm.SharpSnmpLib
             return "NoSuchInstance";
         }
         
-        public static bool Equals (NoSuchInstance left, NoSuchInstance right)
+        public static bool Equals(NoSuchInstance left, NoSuchInstance right)
         {
             object lo = left as object;
             object ro = right as object;

@@ -111,7 +111,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="version">Protocol version</param>
         /// <param name="community">Community name</param>
         /// <returns></returns>
-        public ISnmpData ToMessageBody(VersionCode version, string community)
+        public ISnmpData ToMessageBody(VersionCode version, OctetString community)
         {
             return ByteTool.PackMessage(version, community, this);
         }
@@ -146,7 +146,7 @@ namespace Lextm.SharpSnmpLib
                 _sequenceNumber, 
                 _errorStatus, 
                 _errorIndex, 
-                _variables.Count.ToString());
+                _variables.Count.ToString(CultureInfo.InvariantCulture));
         }
     }
 }

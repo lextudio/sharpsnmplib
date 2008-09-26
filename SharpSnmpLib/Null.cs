@@ -103,7 +103,7 @@ namespace Lextm.SharpSnmpLib
             return "Null";
         }
         
-        public static bool Equals (Null left, Null right)
+        public static bool Equals(Null left, Null right)
         {
             object lo = left as object;
             object ro = right as object;

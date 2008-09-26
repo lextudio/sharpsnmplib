@@ -204,9 +204,9 @@ namespace Lextm.SharpSnmpLib
             return list.ToArray();
         }
 
-        internal static Sequence PackMessage(VersionCode version, string community, ISnmpPdu pdu)
+        internal static Sequence PackMessage(VersionCode version, OctetString community, ISnmpPdu pdu)
         {
-            return new Sequence(new Integer32((int)version), new OctetString(community), pdu);
+            return new Sequence(new Integer32((int)version), community, pdu);
         }
     }
 }

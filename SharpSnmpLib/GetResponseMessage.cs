@@ -25,7 +25,7 @@ namespace Lextm.SharpSnmpLib
         private IList<Variable> _variables;
         private byte[] _bytes;
         private VersionCode _version;
-        private string _community;
+        private OctetString _community;
         private IPAddress _receiver;
         
         /// <summary>
@@ -36,7 +36,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="community">Community name.</param>
         /// <param name="sequenceNumber">Sequence number.</param>
         /// <param name="variables">Variables.</param>
-        public GetResponseMessage(int sequenceNumber, VersionCode version, IPAddress receiver, string community, IList<Variable> variables)
+        public GetResponseMessage(int sequenceNumber, VersionCode version, IPAddress receiver, OctetString community, IList<Variable> variables)
         {
             _version = version;
             _receiver = receiver;
@@ -67,7 +67,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentException("wrong message body");
             }
             
-            _community = body.Items[1].ToString();
+            _community = (OctetString)body.Items[1];
             _version = (VersionCode)((Integer32)body.Items[0]).ToInt32();    
             _pdu = (ISnmpPdu)body.Items[2];
             if (_pdu.TypeCode != TypeCode)
