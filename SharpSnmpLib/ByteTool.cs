@@ -19,41 +19,23 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     internal static class ByteTool
     {
-        internal static bool CompareRaw(byte[] left, byte[] right)
+        internal static bool CompareArray<T>(IList<T> left, IList<T> right)
         {
-            if (left.Length != right.Length)
+            if (left.Count != right.Count)
             {
                 return false;
             }
             
-            for (int i = 0; i < left.Length; i++)
+            for (int i = 0; i < left.Count; i++)
             {
-                if (left[i] != right[i])
+                if (!left[i].Equals(right[i]))
                 {
                     return false;
                 }
             }
             
             return true;
-        }
-        
-        internal static bool CompareArray(uint[] left, uint[] right)
-        {
-            if (left.Length != right.Length)
-            {
-                return false;
-            }
-            
-            for (int i = 0; i < left.Length; i++)
-            {
-                if (left[i] != right[i])
-                {
-                    return false;
-                }
-            }
-            
-            return true;
-        }
+        }    
         
         internal static byte[] ParseItems(params ISnmpData[] items)
         {

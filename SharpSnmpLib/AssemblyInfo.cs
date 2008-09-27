@@ -47,8 +47,8 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values or you can use the default the Revision and
 // Build Numbers by using the '*' as shown below:
-[assembly: AssemblyVersion("1.4.010926.35")]
-[assembly: AssemblyFileVersion("1.4.010926.35")]
+[assembly: AssemblyVersion("1.4.010927.17")]
+[assembly: AssemblyFileVersion("1.4.010927.17")]
 [assembly: NeutralResourcesLanguage("en-US")]
 [assembly: CLSCompliant(true)]
 [assembly: InternalsVisibleTo("SharpSnmpLib.Tests, PublicKey=0024000004800000940000000602000000240000525341310004000001000100cda8c7bee95df6" +

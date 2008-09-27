@@ -27,6 +27,12 @@ namespace Lextm.SharpSnmpLib.Tests
         }
         
         [Test]
+        public void TestEqual()
+        {
+            Assert.AreEqual(new OctetString("public"), new OctetString("public"));
+        }
+        
+        [Test]
         public void TestToBytes()
         {
             Assert.AreEqual(2, new OctetString("").ToBytes().Length);

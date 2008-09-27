@@ -129,7 +129,7 @@ namespace Lextm.SharpSnmpLib
                 return false;
             }
             
-            return ByteTool.CompareRaw(left._raw, right._raw);
+            return ByteTool.CompareArray(left._raw, right._raw);
         }
     }
 }

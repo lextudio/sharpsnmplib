@@ -27,7 +27,7 @@ namespace Lextm.SharpSnmpLib.Tests
             TrapV1Message m = (TrapV1Message)parsed;
             Assert.AreEqual(GenericCode.AuthenticationFailure, m.Generic);
             Assert.AreEqual(0, m.Specific);
-            Assert.AreEqual(new OctetString("public"), m.Community);
+            Assert.AreEqual("public", m.Community.ToString());
             Assert.AreEqual(IPAddress.Parse("127.0.0.1"), m.AgentAddress);
             Assert.AreEqual(new uint[] {1,3,6}, m.Enterprise.ToNumerical());
             Assert.AreEqual(0, m.TimeStamp);
@@ -42,7 +42,7 @@ namespace Lextm.SharpSnmpLib.Tests
             TrapV1Message message = (TrapV1Message)m;
             Assert.AreEqual(GenericCode.EnterpriseSpecific, message.Generic);
             Assert.AreEqual(12, message.Specific);
-            Assert.AreEqual(new OctetString("public"), message.Community);
+            Assert.AreEqual("public", message.Community.ToString());
             Assert.AreEqual(IPAddress.Parse("127.0.0.1"), message.AgentAddress);
             Assert.AreEqual(new uint[] { 1,3 }, message.Enterprise.ToNumerical());
             Assert.AreEqual(16352, message.TimeStamp);
