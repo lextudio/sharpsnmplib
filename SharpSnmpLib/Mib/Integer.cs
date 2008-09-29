@@ -24,13 +24,25 @@ namespace Lextm.SharpSnmpLib.Mib
         public Integer(string module, string name, Lexer lexer)
         {
             Symbol temp;
-            while ((temp = lexer.NextSymbol) != Symbol.OpenBracket)
+            Symbol last = null;
+            temp = lexer.NextNonEOLSymbol;
+            if (temp == Symbol.OpenBracket)
             {
+                while ((temp = lexer.NextSymbol) != Symbol.CloseBracket)
+                {
+                }                
+                return;
             }
             
-            while ((temp = lexer.NextSymbol) != Symbol.CloseBracket)
+            if (temp == Symbol.OpenParentheses) 
             {
+                while ((temp = lexer.NextSymbol) != Symbol.CloseParentheses)
+                {
+                }                
+                return;
             }
+            
+            lexer.Restore(temp); 
         }
     }
 }

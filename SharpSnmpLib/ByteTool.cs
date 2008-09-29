@@ -19,7 +19,7 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     internal static class ByteTool
     {
-        internal static bool CompareArray<T>(IList<T> left, IList<T> right) where T: IEquatable<T>
+        internal static bool CompareArray<T>(IList<T> left, IList<T> right) where T : IEquatable<T>
         {
             if (left.Count != right.Count)
             {

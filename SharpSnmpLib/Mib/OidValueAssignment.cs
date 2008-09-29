@@ -20,7 +20,7 @@ namespace Lextm.SharpSnmpLib.Mib
         private string _module;
         private string _name;
         private string _parent;
-        private int _value;
+        private uint _value;
         
         /// <summary>
         /// Creates an <see cref="OidValueAssignment"/>.
@@ -29,7 +29,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <param name="name"></param>
         /// <param name="parent"></param>
         /// <param name="value"></param>
-        public OidValueAssignment(string module, string name, string parent, int value)
+        public OidValueAssignment(string module, string name, string parent, uint value)
         {
             _module = module;
             _name = name;
@@ -55,10 +55,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// </summary>
         public string Module
         {
-            get
-            {
-                return _module;
-            }
+            get { return _module; }
         }
         
         /// <summary>
@@ -66,10 +63,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// </summary>
         public string Name
         {
-            get 
-            {
-                return _name;
-            }
+            get { return _name; }
         }
         
         /// <summary>
@@ -77,21 +71,16 @@ namespace Lextm.SharpSnmpLib.Mib
         /// </summary>
         public string Parent
         {
-            get
-            {
-                return _parent;
-            }
+            get { return _parent; }
+            set { _parent = value; }
         }
         
         /// <summary>
         /// Value.
         /// </summary>
-        public int Value
+        public uint Value
         {
-            get
-            {
-                return _value;
-            }
+            get { return _value; }
         }
     }
 }

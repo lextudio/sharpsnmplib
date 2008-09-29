@@ -11,7 +11,7 @@ namespace Lextm.SharpSnmpLib.Mib
         private string _module;
         private string _name;
         private string _parent;
-        private int _value;
+        private uint _value;
         
         /// <summary>
         /// Creates a <see cref="ObjectIdentity"/>.
@@ -61,12 +61,13 @@ namespace Lextm.SharpSnmpLib.Mib
             {
                 return _parent;
             }
+            set { _parent = value; }
         }
         
         /// <summary>
         /// Value.
         /// </summary>
-        public int Value
+        public uint Value
         {
             get
             {

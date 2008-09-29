@@ -38,12 +38,13 @@ namespace Lextm.SharpSnmpLib.Mib
         string Parent
         {
             get;
+            set;
         }
         
         /// <summary>
         /// Value.
         /// </summary>
-        int Value
+        uint Value
         {
             get;            
         }

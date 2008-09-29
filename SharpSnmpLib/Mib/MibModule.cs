@@ -29,13 +29,13 @@ namespace Lextm.SharpSnmpLib.Mib
         public MibModule(string name, Lexer lexer)
         {
             _name = name;
-            Symbol temp = lexer.NextSymbol;
+            Symbol temp = lexer.NextNonEOLSymbol;
             ConstructHelper.Expect(temp, Symbol.Definitions);
-            temp = lexer.NextSymbol;
+            temp = lexer.NextNonEOLSymbol;
             ConstructHelper.Expect(temp, Symbol.Assign);
             temp = lexer.NextSymbol;
             ConstructHelper.Expect(temp, Symbol.Begin);
-            temp = ConstructHelper.IgnoreEOL(lexer);
+            temp = lexer.NextNonEOLSymbol;
             if (temp == Symbol.Imports)
             {
                 _imports = ParseDependents(lexer);

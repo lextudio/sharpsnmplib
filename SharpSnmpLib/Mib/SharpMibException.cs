@@ -94,8 +94,8 @@ namespace Lextm.SharpSnmpLib.Mib
                     "wrong symbol {0} in file \"{1}\". Row {2}. Column: {3}",
                     _symbol,
                     _symbol.File,
-                    _symbol.Row.ToString(CultureInfo.InvariantCulture),
-                    _symbol.Column.ToString(CultureInfo.InvariantCulture));
+                    (_symbol.Row + 1).ToString(CultureInfo.InvariantCulture),
+                    (_symbol.Column + 1).ToString(CultureInfo.InvariantCulture));
             }
         }
         
@@ -116,7 +116,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <returns></returns>
         public static SharpMibException Create(string message, Symbol symbol)
         {
-            SharpMibException ex = new SharpMibException(message + ". Wrong entity, " + symbol.ToString() + " in file \"" + symbol.File + "\". row: " + symbol.Row.ToString(CultureInfo.InvariantCulture) + "; column: " + symbol.Column.ToString(CultureInfo.InvariantCulture));
+            SharpMibException ex = new SharpMibException(message + ". Wrong entity, " + symbol.ToString() + " in file \"" + symbol.File + "\". row: " + (symbol.Row + 1).ToString(CultureInfo.InvariantCulture) + "; column: " + (symbol.Column + 1).ToString(CultureInfo.InvariantCulture));
             ex._symbol = symbol;
             return ex;
         }

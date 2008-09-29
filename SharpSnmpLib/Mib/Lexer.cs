@@ -3,7 +3,7 @@
  * User: lextm
  * Date: 2008/5/17
  * Time: 16:50
- * 
+ *
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 
@@ -20,12 +20,12 @@ namespace Lextm.SharpSnmpLib.Mib
     internal sealed class Lexer
     {
         private IList<Symbol> _symbols = new List<Symbol>();
-        
+
         internal void Parse(TextReader stream)
         {
             Parse(null, stream);
         }
-        
+
         /// <summary>
         /// Parses MIB file to symbol list.
         /// </summary>
@@ -42,12 +42,12 @@ namespace Lextm.SharpSnmpLib.Mib
                     i++;
                     continue; // commented line
                 }
-                
+
                 ParseLine(file, line, i);
                 i++;
             }
         }
-        
+
         private void ParseLine(string file, string line, int row)
         {
             line = line + "\n";
@@ -57,15 +57,31 @@ namespace Lextm.SharpSnmpLib.Mib
             {
                 char current = line[i];
                 bool moveNext = Parse(file, _symbols, current, row, i);
-                if (moveNext) 
+                if (moveNext)
                 {
-                    break;    
+                    break;
                 }
             }
         }
-        
+
         private int index;
-        
+
+        /// <summary>
+        /// Next <see cref="Symbol"/> which is not <see cref="Symbol.EOL"/>.
+        /// </summary>
+        public Symbol NextNonEOLSymbol
+        {
+            get
+            {
+                Symbol result;
+                while ((result = NextSymbol) == Symbol.EOL)
+                {
+                }
+
+                return result;
+            }
+        }
+
         /// <summary>
         /// Next <see cref="Symbol"/>.
         /// </summary>
@@ -73,15 +89,24 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             get
             {
-                if (index < _symbols.Count) 
+                if (index < _symbols.Count)
                 {
                     return _symbols[index++];
                 }
-                
+
                 return null;
             }
         }
         
+        public void Restore(Symbol last)
+        {
+            index--;
+            if (last != _symbols[index])
+            {
+                throw new ArgumentException("wrong last symbol", "last");
+            }
+        }
+
         internal int SymbolCount
         {
             get
@@ -89,10 +114,10 @@ namespace Lextm.SharpSnmpLib.Mib
                 return _symbols.Count;
             }
         }
-        
+
         private static StringBuilder temp = new StringBuilder();
         private static bool stringSection;
-        
+
         /// <summary>
         /// Parses a list of <see cref="Char"/> to <see cref="Symbol"/>.
         /// </summary>
@@ -106,54 +131,54 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             switch (current)
             {
-                case '\n':    
-                case '{': 
-                case '}':    
-                case '(': 
-                case ')':
-                case '[':
-                case ']':
-                case ';': 
-                case ',':
-                    if (!stringSection) 
+            case '\n':
+            case '{':
+            case '}':
+            case '(':
+            case ')':
+            case '[':
+            case ']':
+            case ';':
+            case ',':
+                if (!stringSection)
+                {
+                    bool moveNext = ParseLastSymbol(file, list, ref temp, row, column);
+                    if (moveNext)
                     {
-                        bool moveNext = ParseLastSymbol(file, list, ref temp, row, column);
-                        if (moveNext) 
-                        {
-                            list.Add(CreateSpecialSymbol(file, '\n', row, column));
-                            return true;
-                        }
-                        
-                        list.Add(CreateSpecialSymbol(file, current, row, column));
-                        return false;
+                        list.Add(CreateSpecialSymbol(file, '\n', row, column));
+                        return true;
                     }
-                    
-                    break;
-                case '"':
-                    stringSection = !stringSection;
-                    break;
-                case '\r':
+
+                    list.Add(CreateSpecialSymbol(file, current, row, column));
                     return false;
-                default:
-                    if (char.IsWhiteSpace(current) && !stringSection)
+                }
+
+                break;
+            case '"':
+                stringSection = !stringSection;
+                break;
+            case '\r':
+                return false;
+            default:
+                if (char.IsWhiteSpace(current) && !stringSection)
+                {
+                    bool moveNext = ParseLastSymbol(file, list, ref temp, row, column);
+                    if (moveNext)
                     {
-                        bool moveNext = ParseLastSymbol(file, list, ref temp, row, column);
-                        if (moveNext)
-                        {
-                            list.Add(CreateSpecialSymbol(file, '\n', row, column));
-                            return true;
-                        }
-                        
-                        return false;
+                        list.Add(CreateSpecialSymbol(file, '\n', row, column));
+                        return true;
                     }
-                    
-                    break;
+
+                    return false;
+                }
+
+                break;
             }
-            
+
             temp.Append(current);
             return false;
         }
-        
+
         private static bool ParseLastSymbol(string file, IList<Symbol> list, ref StringBuilder builder, int row, int column)
         {
             if (builder.Length > 0)
@@ -165,49 +190,49 @@ namespace Lextm.SharpSnmpLib.Mib
                 {
                     return true;
                 }
-                
+
                 list.Add(s);
             }
-            
+
             return false;
         }
-        
+
         private static Symbol CreateSpecialSymbol(string file, char value, int row, int column)
         {
             string str;
-            switch (value) 
+            switch (value)
             {
-                case '\n':
-                    str = Environment.NewLine;
-                    break;
-                case '{':
-                    str = "{";
-                    break;
-                case '}':
-                    str = "}";
-                    break;
-                case '(':
-                    str = "(";
-                    break;
-                case ')':
-                    str = ")";
-                    break;
-                case '[':
-                    str = "[";
-                    break;
-                case ']':
-                    str = "]";
-                    break;
-                case ';':
-                    str = ";";
-                    break;
-                case ',':
-                    str = ",";
-                    break;
-                default:
-                    throw new ArgumentException("value is not a special character");
+            case '\n':
+                str = Environment.NewLine;
+                break;
+            case '{':
+                str = "{";
+                break;
+            case '}':
+                str = "}";
+                break;
+            case '(':
+                str = "(";
+                break;
+            case ')':
+                str = ")";
+                break;
+            case '[':
+                str = "[";
+                break;
+            case ']':
+                str = "]";
+                break;
+            case ';':
+                str = ";";
+                break;
+            case ',':
+                str = ",";
+                break;
+            default:
+                throw new ArgumentException("value is not a special character");
             }
-            
+
             return new Symbol(file, str, row, column);
         }
     }

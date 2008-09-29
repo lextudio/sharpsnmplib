@@ -12,9 +12,9 @@ namespace Lextm.SharpSnmpLib.Mib
         private uint[] _id;
         private string _name;
         private string _module;
-        private int _value;
+        private uint _value;
         private DefinitionType _type;
-        private IDictionary<int, IDefinition> _children = new SortedDictionary<int, IDefinition>();
+        private IDictionary<uint, IDefinition> _children = new SortedDictionary<uint, IDefinition>();
 
         private Definition() 
         { 
@@ -30,7 +30,7 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             uint[] id = string.IsNullOrEmpty(parent.Name) ?                
                 null : parent.GetNumericalForm(); // null for root node
-            _id = AppendTo(id, (uint)entity.Value);
+            _id = AppendTo(id, entity.Value);
             _name = entity.Name;
             _module = entity.Module;
             _value = entity.Value;
@@ -71,7 +71,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <summary>
         /// Value.
         /// </summary>
-        public int Value
+        public uint Value
         {
             get
             {
@@ -120,7 +120,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <summary>
         /// Indexer.
         /// </summary>
-        public IDefinition this[int index]
+        public IDefinition this[uint index]
         {
             get
             {

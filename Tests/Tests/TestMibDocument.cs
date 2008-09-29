@@ -20,6 +20,226 @@ namespace Lextm.SharpSnmpLib.Tests
     public class TestMibDocument
     {
         [Test]
+        public void TestBASEBRDD_MIB_MIB()
+        {
+            Lexer lexer = new Lexer();
+            MemoryStream m = new MemoryStream(Resource.BASEBRDD_MIB_MIB);
+            using (StreamReader reader = new StreamReader(m))
+            {
+                lexer.Parse(reader);
+                reader.Close();
+            }
+            MibDocument file = new MibDocument(lexer);
+            Assert.AreEqual("BASEBRDD_MIB-MIB", file.Modules[0].Name);
+            Assert.AreEqual(5, file.Modules[0].Dependents.Count);
+            Assert.AreEqual(607, file.Modules[0].Entities.Count);
+            IEntity node = file.Modules[0].Entities[606];
+            Assert.AreEqual("dMTFVoltageProbeEvSub", node.Name);
+            Assert.AreEqual(7, node.Value);
+            Assert.AreEqual("dMTFVoltageProbeTable", node.Parent.ToString());
+        }
+        
+        [Test]
+        public void TestATM_TC__MIB()
+        {
+            Lexer lexer = new Lexer();
+            MemoryStream m = new MemoryStream(Resource.ATM_TC_MIB);
+            using (StreamReader reader = new StreamReader(m))
+            {
+                lexer.Parse(reader);
+                reader.Close();
+            }
+            MibDocument file = new MibDocument(lexer);
+            Assert.AreEqual("ATM-TC-MIB", file.Modules[0].Name);
+            Assert.AreEqual(2, file.Modules[0].Dependents.Count);
+            Assert.AreEqual(11, file.Modules[0].Entities.Count);
+            IEntity node = file.Modules[0].Entities[10];
+            Assert.AreEqual("atmClpTaggingScrCdvt", node.Name);
+            Assert.AreEqual(15, node.Value);
+            Assert.AreEqual("atmTrafficDescriptorTypes", node.Parent.ToString());
+        }
+        
+        [Test]
+        public void TestARROWPOINT_IPV4_OSPF_MIB()
+        {
+            Lexer lexer = new Lexer();
+            MemoryStream m = new MemoryStream(Resource.ARROWPOINT_IPV4_OSPF_MIB);
+            using (StreamReader reader = new StreamReader(m))
+            {
+                lexer.Parse(reader);
+                reader.Close();
+            }
+            MibDocument file = new MibDocument(lexer);
+            Assert.AreEqual("ARROWPOINT-IPV4-OSPF-MIB", file.Modules[0].Name);
+            Assert.AreEqual(5, file.Modules[0].Dependents.Count);
+            Assert.AreEqual(50, file.Modules[0].Entities.Count);
+            IEntity node = file.Modules[0].Entities[49];
+            Assert.AreEqual("apIpv4OspfCompliance", node.Name);
+            Assert.AreEqual(1, node.Value);
+            Assert.AreEqual("apIpv4OspfCompliances", node.Parent.ToString());
+        }
+        
+        [Test]
+        public void TestAPPC_MIB()
+        {
+            Lexer lexer = new Lexer();
+            MemoryStream m = new MemoryStream(Resource.APPC_MIB);
+            using (StreamReader reader = new StreamReader(m))
+            {
+                lexer.Parse(reader);
+                reader.Close();
+            }
+            MibDocument file = new MibDocument(lexer);
+            Assert.AreEqual("APPC-MIB", file.Modules[0].Name);
+            Assert.AreEqual(4, file.Modules[0].Dependents.Count);
+            Assert.AreEqual(305, file.Modules[0].Entities.Count);
+            IEntity node = file.Modules[0].Entities[304];
+            Assert.AreEqual("appcConversationConfGroup", node.Name);
+            Assert.AreEqual(10, node.Value);
+            Assert.AreEqual("appcGroups", node.Parent.ToString());
+        }
+        
+        [Test]
+        public void TestALVARION_DOT11_WLAN_MIB()
+        {
+            Lexer lexer = new Lexer();
+            MemoryStream m = new MemoryStream(Resource.ALVARION_DOT11_WLAN_MIB);
+            using (StreamReader reader = new StreamReader(m))
+            {
+                lexer.Parse(reader);
+                reader.Close();
+            }
+            MibDocument file = new MibDocument(lexer);
+            Assert.AreEqual("ALVARION-DOT11-WLAN-MIB", file.Modules[0].Name);
+            Assert.AreEqual(2, file.Modules[0].Dependents.Count);
+            Assert.AreEqual(269, file.Modules[0].Entities.Count);
+            IEntity node = file.Modules[0].Entities[268];
+            Assert.AreEqual("brzaccVLTrapFtpStatus", node.Name);
+            Assert.AreEqual(10, node.Value);
+            Assert.AreEqual("brzaccVLTraps", node.Parent.ToString());
+        }
+        
+        [Test]
+        public void TestARRAYMANAGER_MIB()
+        {
+            Lexer lexer = new Lexer();
+            MemoryStream m = new MemoryStream(Resource.ARRAYMANAGER_MIB);
+            using (StreamReader reader = new StreamReader(m))
+            {
+                lexer.Parse(reader);
+                reader.Close();
+            }
+            MibDocument file = new MibDocument(lexer);
+            Assert.AreEqual("ArrayManager-MIB", file.Modules[0].Name);
+            Assert.AreEqual(4, file.Modules[0].Dependents.Count);
+            Assert.AreEqual(380, file.Modules[0].Entities.Count);
+            IEntity node = file.Modules[0].Entities[379];
+            Assert.AreEqual("rebuildRateEv", node.Name);
+            Assert.AreEqual(222, node.Value);
+            Assert.AreEqual("aryMgrEvts", node.Parent.ToString());
+        }
+        
+        [Test]
+        public void TestAIRPORT_BASESTATION_3_MIB()
+        {
+            Lexer lexer = new Lexer();
+            MemoryStream m = new MemoryStream(Resource.AIRPORT_BASESTATION_3_MIB);
+            using (StreamReader reader = new StreamReader(m))
+            {
+                lexer.Parse(reader);
+                reader.Close();
+            }
+            MibDocument file = new MibDocument(lexer);
+            Assert.AreEqual("AIRPORT-BASESTATION-3-MIB", file.Modules[0].Name);
+            Assert.AreEqual(3, file.Modules[0].Dependents.Count);
+            Assert.AreEqual(47, file.Modules[0].Entities.Count);
+            IEntity node = file.Modules[0].Entities[46];
+            Assert.AreEqual("physicalInterfaceNumRXError", node.Name);
+            Assert.AreEqual(10, node.Value);
+            Assert.AreEqual("physicalInterface", node.Parent.ToString());
+        }
+        
+        [Test]
+        public void TestALLIEDTELESYN_MIB()
+        {
+            Lexer lexer = new Lexer();
+            MemoryStream m = new MemoryStream(Resource.ALLIEDTELESYN_MIB);
+            using (StreamReader reader = new StreamReader(m))
+            {
+                lexer.Parse(reader);
+                reader.Close();
+            }
+            MibDocument file = new MibDocument(lexer);
+            Assert.AreEqual("ALLIEDTELESYN-MIB", file.Modules[0].Name);
+            Assert.AreEqual(4, file.Modules[0].Dependents.Count);
+            Assert.AreEqual(606, file.Modules[0].Entities.Count);
+            IEntity node = file.Modules[0].Entities[605];
+            Assert.AreEqual("ds3TrapInterval", node.Name);
+            Assert.AreEqual(4, node.Value);
+            Assert.AreEqual("ds3TrapEntry", node.Parent.ToString());
+        }
+        
+        [Test]
+        public void TestADSL_TC_MIB()
+        {
+            Lexer lexer = new Lexer();
+            MemoryStream m = new MemoryStream(Resource.ADSL_TC_MIB);
+            using (StreamReader reader = new StreamReader(m))
+            {
+                lexer.Parse(reader);
+                reader.Close();
+            }
+            MibDocument file = new MibDocument(lexer);
+            Assert.AreEqual("ADSL-TC-MIB", file.Modules[0].Name);
+            Assert.AreEqual(2, file.Modules[0].Dependents.Count);
+            Assert.AreEqual(1, file.Modules[0].Entities.Count);
+            IEntity node = file.Modules[0].Entities[0];
+            Assert.AreEqual("adsltcmib", node.Name);
+            Assert.AreEqual(2, node.Value);
+            Assert.AreEqual("transmission.94", node.Parent.ToString());
+        }
+        
+        [Test]
+        public void TestADSL_LINE_MIB()
+        {
+            Lexer lexer = new Lexer();
+            MemoryStream m = new MemoryStream(Resource.ADSL_LINE_MIB);
+            using (StreamReader reader = new StreamReader(m))
+            {
+                lexer.Parse(reader);
+                reader.Close();
+            }
+            MibDocument file = new MibDocument(lexer);
+            Assert.AreEqual("ADSL-LINE-MIB", file.Modules[0].Name);
+            Assert.AreEqual(6, file.Modules[0].Dependents.Count);
+            Assert.AreEqual(275, file.Modules[0].Entities.Count);
+            IEntity node = file.Modules[0].Entities[274];
+            Assert.AreEqual("adslAturLineProfileControlGroup", node.Name);
+            Assert.AreEqual(25, node.Value);
+            Assert.AreEqual("adslGroups", node.Parent.ToString());
+        }
+        
+        [Test]
+        public void TestACTONA_ACTASTOR_MIB()
+        {
+            Lexer lexer = new Lexer();
+            MemoryStream m = new MemoryStream(Resource.ACTONA_ACTASTOR_MIB);
+            using (StreamReader reader = new StreamReader(m))
+            {
+                lexer.Parse(reader);
+                reader.Close();
+            }
+            MibDocument file = new MibDocument(lexer);
+            Assert.AreEqual("ACTONA-ACTASTOR-MIB", file.Modules[0].Name);
+            Assert.AreEqual(3, file.Modules[0].Dependents.Count);
+            Assert.AreEqual(100, file.Modules[0].Entities.Count);
+            IEntity node = file.Modules[0].Entities[99];
+            Assert.AreEqual("acNotificationInfoGroup", node.Name);
+            Assert.AreEqual(7, node.Value);
+            Assert.AreEqual("actastorGroups", node.Parent.ToString());
+        }
+        
+        [Test]
         [ExpectedException(typeof(SharpMibException))]
         public void TestException()
         {
@@ -1370,6 +1590,7 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual(2, node.Value);
             Assert.AreEqual("ipMIBGroups", node.Parent.ToString());
         }
+        
         [Test]
         public void Testv2TM()
         {
@@ -1403,8 +1624,8 @@ namespace Lextm.SharpSnmpLib.Tests
             MibDocument file = new MibDocument(lexer);
             Assert.AreEqual("BRIDGE-MIB", file.Modules[0].Name);
             Assert.AreEqual(4, file.Modules[0].Dependents.Count);
-            Assert.AreEqual(61, file.Modules[0].Entities.Count);
-            IEntity node = file.Modules[0].Entities[60];
+            Assert.AreEqual(62, file.Modules[0].Entities.Count);
+            IEntity node = file.Modules[0].Entities[61];
             Assert.AreEqual("dot1dStaticStatus", node.Name);
             Assert.AreEqual(4, node.Value);
             Assert.AreEqual("dot1dStaticEntry", node.Parent.ToString());

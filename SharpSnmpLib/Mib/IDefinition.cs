@@ -21,7 +21,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <summary>
         /// Value.
         /// </summary>
-        int Value
+        uint Value
         {
             get;
         }
@@ -45,7 +45,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <summary>
         /// Indexer.
         /// </summary>
-        IDefinition this[int index]
+        IDefinition this[uint index]
         {
             get;
         }

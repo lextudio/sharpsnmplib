@@ -15,7 +15,6 @@ namespace Lextm.SharpSnmpLib.Mib
         private IDictionary<string, string> _newMibs = new Dictionary<string, string>();
         private IDictionary<string, IDefinition> nameTable;
         private Definition root;
-        private Lexer _lexer;
         private string mibDir = Directory.GetCurrentDirectory() + "\\mibs\\";
         
         /// <summary>
@@ -23,22 +22,21 @@ namespace Lextm.SharpSnmpLib.Mib
         /// </summary>
         public ObjectTree()
         {
-            _lexer = new Lexer();
             root = Definition.RootDefinition;
             IDefinition ccitt = Definition.ToDefinition(new OidValueAssignment("SNMPv2-SMI", "ccitt", null, 0), root);
             IDefinition iso = Definition.ToDefinition(new OidValueAssignment("SNMPv2-SMI", "iso", null, 1), root);
             IDefinition joint_iso_ccitt = Definition.ToDefinition(new OidValueAssignment("SNMPv2-SMI", "joint-iso-ccitt", null, 2), root);
-            nameTable = new Dictionary<string, IDefinition>() 
-            { 
-                { 
-                    iso.TextualForm, iso 
+            nameTable = new Dictionary<string, IDefinition>()
+            {
+                {
+                    iso.TextualForm, iso
                 },
                 {
                     ccitt.TextualForm, ccitt
-                }, 
+                },
                 {
                     joint_iso_ccitt.TextualForm, joint_iso_ccitt
-                } 
+                }
             };
         }
         
@@ -63,6 +61,19 @@ namespace Lextm.SharpSnmpLib.Mib
             
             return null;
         }
+        
+        internal IDefinition Find(string name)
+        {            
+            foreach (string key in nameTable.Keys)
+            {
+                if (key.Split(new string[] {"::"}, StringSplitOptions.None)[1] == name)
+                {
+                    return nameTable[key];
+                }
+            }
+            
+            return null;
+        }
 
         internal IDefinition Find(uint[] numerical)
         {
@@ -81,7 +92,7 @@ namespace Lextm.SharpSnmpLib.Mib
             IDefinition temp = root;
             do
             {
-                result = temp[(int)numerical[i]];
+                result = temp[numerical[i]];
                 temp = result;
                 i++;
             }
@@ -96,7 +107,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 return false;
             }
             
-            if (_parsed.ContainsKey(module.Name)) 
+            if (_parsed.ContainsKey(module.Name))
             {
                 return true;
             }
@@ -105,13 +116,38 @@ namespace Lextm.SharpSnmpLib.Mib
             foreach (IEntity node in module.Entities)
             {
                 IDefinition result = root.Add(node);
-                if (result != null && !nameTable.ContainsKey(result.TextualForm))
+                if (result == null && node.Parent.Contains("."))
                 {
-                    nameTable.Add(result.TextualForm, result);
-                }
+                    string[] content = node.Parent.Split('.');
+                    IDefinition subroot = Find(content[0]);
+                    uint value = uint.Parse(content[1]);
+                    IDefinition unknown;
+                    try 
+                    {
+                        unknown = subroot[value];
+                    }
+                    catch (ArgumentOutOfRangeException) 
+                    {
+                        IEntity prefixNode = new OidValueAssignment(module.Name, subroot.Name + "Prefix", subroot.Name, value);
+                        unknown = root.Add(prefixNode);
+                    }
+                    
+                    AddToTable(unknown);
+                    node.Parent = unknown.Name;
+                    result = root.Add(node);
+                }                
+
+                AddToTable(result);
             }
             
             return true;
+        }
+
+        private void AddToTable(IDefinition result)
+        {
+            if (result != null && !nameTable.ContainsKey(result.TextualForm)) {
+                nameTable.Add(result.TextualForm, result);
+            }
         }
         
         private int ParsePendings()
@@ -139,7 +175,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 }
                 
                 current = _pendings.Count;
-                if (current == previous) 
+                if (current == previous)
                 {
                     // cannot parse more
                     break;
@@ -149,14 +185,20 @@ namespace Lextm.SharpSnmpLib.Mib
             return current;
         }
 
-        internal int Parse(string file, TextReader stream)
+        internal static IList<MibModule> ParseFile(string file, TextReader stream)
         {
-            _lexer.Parse(file, stream);
-            MibDocument doc = new MibDocument(_lexer);
-            IList<MibModule> modules = doc.Modules;
+            Lexer lexer = new Lexer();
+            lexer.Parse(file, stream);
+            MibDocument doc = new MibDocument(lexer);
+            return doc.Modules;
+        }
+
+        internal void Parse(string file, TextReader stream)
+        {
+            IList<MibModule> modules = ParseFile(file, stream);
             foreach (MibModule module in modules)
             {
-                if (_pendings.ContainsKey(module.Name)) 
+                if (_pendings.ContainsKey(module.Name))
                 {
                     _pendings.Remove(module.Name); // always add new module
                 }
@@ -178,12 +220,11 @@ namespace Lextm.SharpSnmpLib.Mib
                 
                 if (!File.Exists(mibDir + System.IO.Path.GetFileName(file)))
                 {
-                    File.Copy(file, mibDir + System.IO.Path.GetFileName(file));            
+                    File.Copy(file, mibDir + System.IO.Path.GetFileName(file));
                 }
             }
 
             ParsePendings();
-            return _lexer.SymbolCount;
         }
 
         internal void RemoveMib(string mib, string group)

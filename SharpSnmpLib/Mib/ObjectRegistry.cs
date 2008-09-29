@@ -290,7 +290,39 @@ namespace Lextm.SharpSnmpLib.Mib
             
             return result;
         }
-        
+
+        public static void TestLoadFolder(string folder, string pattern)
+        {
+            if (folder == null)
+            {
+                throw new ArgumentNullException("folder");
+            }
+
+            if (folder.Length == 0)
+            {
+                throw new ArgumentException("folder cannot be empty");
+            }
+
+            if (!Directory.Exists(folder))
+            {
+                throw new ArgumentException("folder does not exist: " + folder);
+            }
+
+            if (pattern == null)
+            {
+                throw new ArgumentNullException("pattern");
+            }
+
+            if (pattern.Length == 0)
+            {
+                throw new ArgumentException("pattern cannot be empty");
+            }
+
+            foreach (string file in Directory.GetFiles(folder, pattern))
+            {
+                TestLoadFile(file);
+            }
+        }
         /// <summary>
         /// Loads a folder of MIB files.
         /// </summary>
@@ -350,6 +382,30 @@ namespace Lextm.SharpSnmpLib.Mib
                 OnChanged(this, EventArgs.Empty);
             }
         }
+
+        /// <summary>
+        /// Loads a MIB file.
+        /// </summary>
+        /// <param name="fileName">File name</param>
+        public static void TestLoadFile(string fileName)
+        {
+            if (fileName == null)
+            {
+                throw new ArgumentNullException("fileName");
+            }
+
+            if (fileName.Length == 0)
+            {
+                throw new ArgumentException("fileName cannot be empty");
+            }
+
+            if (!File.Exists(fileName))
+            {
+                throw new ArgumentException("file does not exist: " + fileName);
+            }
+
+            TestLoadFile(fileName, File.OpenText(fileName));
+        }
         
         /// <summary>
         /// Loads a MIB file.
@@ -384,6 +440,18 @@ namespace Lextm.SharpSnmpLib.Mib
             try
             {
                 _tree.Parse(file, stream);
+            }
+            finally
+            {
+                stream.Close();
+            }
+        }
+
+        internal static void TestLoadFile(string file, TextReader stream)
+        {
+            try
+            {
+                ObjectTree.ParseFile(file, stream);
             }
             finally
             {

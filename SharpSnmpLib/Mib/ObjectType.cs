@@ -8,7 +8,7 @@ namespace Lextm.SharpSnmpLib.Mib
     {
         private string _module;
         private string _parent;
-        private int _value;
+        private uint _value;
         private string _name;
 
         public ObjectType(string module, IList<Symbol> header, Lexer lexer)
@@ -26,9 +26,10 @@ namespace Lextm.SharpSnmpLib.Mib
         public string Parent
         {
             get { return _parent; }
+            set { _parent = value; }
         }
 
-        public int Value
+        public uint Value
         {
             get { return _value; }
         }
