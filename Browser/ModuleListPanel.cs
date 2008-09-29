@@ -20,9 +20,17 @@ namespace Lextm.SharpSnmpLib.Browser
     /// </summary>
     public partial class ModuleListPanel : DockContent
     {
-        public ModuleListPanel()
+        private IOutput _output;
+        
+        public ModuleListPanel(IOutput output)
         {
+            if (output == null)
+            {
+                throw new ArgumentNullException("output");
+            }
+            
             InitializeComponent();
+            _output = output;
             ObjectRegistry.Instance.OnChanged += RefreshPanel;
         }
         
@@ -65,7 +73,7 @@ namespace Lextm.SharpSnmpLib.Browser
                     }
                     catch (SharpMibException ex)
                     {
-                        MessageBox.Show(ex.ToString());
+                        _output.ReportMessage(ex.ToString());
                     }
                 }
             }

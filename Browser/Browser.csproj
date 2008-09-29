@@ -77,6 +77,7 @@
     <Compile Include="FormTable.Designer.cs">
       <DependentUpon>FormTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="IOutput.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

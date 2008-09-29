@@ -19,14 +19,14 @@ namespace Lextm.SharpSnmpLib.Browser
 	/// <summary>
 	/// Description of OutputPanel.
 	/// </summary>
-	partial class OutputPanel : DockContent
+	partial class OutputPanel : DockContent, IOutput
 	{
 		public OutputPanel()
 		{
 			InitializeComponent();
 		}
 
-        internal void ReportMessage(string message)
+        public void ReportMessage(string message)
         {
             txtMessages.AppendText(string.Format("[{0}] {1}", DateTime.Now, message));
             txtMessages.AppendText(Environment.NewLine);

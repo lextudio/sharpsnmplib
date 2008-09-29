@@ -143,7 +143,7 @@ namespace Lextm.SharpSnmpLib.Browser
             }
         }
 
-        internal void LoadProfiles(OutputPanel output)
+        internal void LoadProfiles(IOutput output)
         {
             if (LoadProfilesFromFile(output) == 0)
             {
@@ -208,7 +208,7 @@ namespace Lextm.SharpSnmpLib.Browser
             objXmlTextWriter.Close();
         }
 
-        internal void LoadDefaultProfile(OutputPanel output)
+        internal void LoadDefaultProfile(IOutput output)
         {
             AgentProfile first = new AgentProfile(VersionCode.V1, new IPEndPoint(IPAddress.Loopback, 161), "public", "public", "Localhost");
             first.OnOperationCompleted += output.ReportMessage;
@@ -216,7 +216,7 @@ namespace Lextm.SharpSnmpLib.Browser
             Default = first.Agent;
         }
 
-        internal int LoadProfilesFromFile(OutputPanel output)
+        internal int LoadProfilesFromFile(IOutput output)
         {
             if (!File.Exists("Agents.xml"))
             {

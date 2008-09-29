@@ -31,7 +31,7 @@ namespace Lextm.SharpSnmpLib.Browser
             output.Show(dockPanel1, DockState.DockBottom);
             MibTreePanel tree = new MibTreePanel();
             tree.Show(dockPanel1, DockState.Document);
-            ModuleListPanel modules = new ModuleListPanel();
+            ModuleListPanel modules = new ModuleListPanel(output);
             modules.Show(dockPanel1, DockState.DockLeft);
             AgentProfilePanel agent = new AgentProfilePanel();
             agent.Show(dockPanel1, DockState.DockLeft);
