@@ -33,7 +33,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("Less GPL")]
 [assembly: AssemblyCompany("LeXtudio")]
 [assembly: AssemblyProduct("#SNMPLib")]
-[assembly: AssemblyCopyright("(C) 2008 Lex Y. Li")]
+[assembly: AssemblyCopyright("(C) 2008 Malcolm Crowe, University of the West of Scotland\r\n(C) 2008 Lex Y. Li\r\n(C) 2008 Steve Santacroce")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -47,8 +47,8 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values or you can use the default the Revision and
 // Build Numbers by using the '*' as shown below:
-[assembly: AssemblyVersion("1.5.010928.01")]
-[assembly: AssemblyFileVersion("1.5.010928.01")]
+[assembly: AssemblyVersion("1.5.010929.00")]
+[assembly: AssemblyFileVersion("1.5.010929.00")]
 [assembly: NeutralResourcesLanguage("en-US")]
 [assembly: CLSCompliant(true)]
 [assembly: InternalsVisibleTo("SharpSnmpLib.Tests, PublicKey=0024000004800000940000000602000000240000525341310004000001000100cda8c7bee95df6" +

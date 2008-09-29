@@ -65,7 +65,8 @@ namespace Lextm.SharpSnmpLib.Browser
         private void txtPort_Validating(object sender, CancelEventArgs e)
         {
             int result;
-            if (!int.TryParse(txtPort.Text, out result))
+            bool isInt = int.TryParse(txtPort.Text, out result);
+            if (!isInt || result < 0)
             {
                 e.Cancel = true;
                 txtPort.SelectAll();
@@ -122,6 +123,31 @@ namespace Lextm.SharpSnmpLib.Browser
         private void txtIP_Validated(object sender, EventArgs e)
         {
             errorProvider1.SetError(txtIP, string.Empty);
+        }
+        
+        private void BtnOKClick(object sender, EventArgs e)
+        {
+            ValidateAllChildren(this);
+        }
+        
+        private void ValidateAllChildren(Control parent)
+        {
+            if (DialogResult == DialogResult.None)
+            {
+                return;    
+            }
+            
+            foreach (Control c in parent.Controls)
+            {
+                c.Focus();
+                if (!Validate())
+                {
+                    DialogResult = DialogResult.None;
+                    return;
+                }
+                
+                ValidateAllChildren(c);
+            }
         }
     }
 }
