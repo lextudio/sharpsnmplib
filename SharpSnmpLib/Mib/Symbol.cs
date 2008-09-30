@@ -207,6 +207,7 @@ namespace Lextm.SharpSnmpLib.Mib
         internal static Symbol TextualConvention = new Symbol("TEXTUAL-CONVENTION");
         internal static Symbol Syntax = new Symbol("SYNTAX");
         internal static Symbol Integer = new Symbol("INTEGER");
+        internal static Symbol Bits = new Symbol("BITS");
         internal static Symbol Octet = new Symbol("OCTET");
         internal static Symbol String = new Symbol("STRING");
         internal static Symbol OpenParentheses = new Symbol("(");

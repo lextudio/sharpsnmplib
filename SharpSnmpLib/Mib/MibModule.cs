@@ -159,10 +159,7 @@ namespace Lextm.SharpSnmpLib.Mib
 
         private static IConstruct ParseOthers(string module, IList<Symbol> header, Lexer lexer, ref IList<Symbol> next)
         {
-            Symbol current;
-            while ((current = lexer.NextSymbol) == Symbol.EOL)
-            {
-            }
+            Symbol current = lexer.NextNonEOLSymbol;
             
             if (current == Symbol.Sequence)
             {

@@ -176,6 +176,9 @@
     <None Include="Resources\ARROWPOINT-IPV4-OSPF-MIB.mib" />
     <None Include="Resources\ATM-TC-MIB.mib" />
     <None Include="Resources\BASEBRDD_MIB-MIB.mib" />
+    <None Include="Resources\CISCO-AAA-SERVER-MIB.mib" />
+    <None Include="Resources\CISCO-BULK-FILE-MIB.mib" />
+    <None Include="Resources\CISCO-CSG-MIB.mib" />
     <None Include="Resources\DISMAN-EVENT-MIB.txt" />
     <None Include="Resources\DISMAN-EXPRESSION-MIB.txt" />
     <None Include="Resources\DISMAN-NSLOOKUP-MIB.txt" />
@@ -194,6 +197,7 @@
     <None Include="Resources\IANA-RTPROTO-MIB.txt" />
     <None Include="Resources\IANAifType-MIB.txt" />
     <None Include="Resources\ianalist" />
+    <None Include="Resources\IEEE8021-PAE-MIB.mib" />
     <None Include="Resources\IF-INVERTED-STACK-MIB.txt" />
     <None Include="Resources\IF-MIB.txt" />
     <None Include="Resources\INET-ADDRESS-MIB.txt" />
@@ -205,6 +209,7 @@
     <None Include="Resources\IPV6-TC.txt" />
     <None Include="Resources\IPV6-TCP-MIB.txt" />
     <None Include="Resources\IPV6-UDP-MIB.txt" />
+    <None Include="Resources\JVM-MANAGEMENT-MIB.mib" />
     <None Include="Resources\LM-SENSORS-MIB.txt" />
     <None Include="Resources\Makefile.in" />
     <None Include="Resources\Makefile.mib" />
@@ -227,6 +232,7 @@
     <None Include="Resources\RFC-1212" />
     <None Include="Resources\RFC-1215.txt" />
     <None Include="Resources\RFC1155-SMI.txt" />
+    <None Include="Resources\RFC1157-SNMP.mib" />
     <None Include="Resources\RFC1213-MIB.txt" />
     <None Include="Resources\RFC1271-MIB" />
     <None Include="Resources\rfclist" />
@@ -246,6 +252,7 @@
     <None Include="Resources\SNMP-VIEW-BASED-ACM-MIB.txt" />
     <None Include="Resources\SNMPv2-CONF.txt" />
     <None Include="Resources\SNMPv2-MIB.txt" />
+    <None Include="Resources\SNMPV2-PDU.mib" />
     <None Include="Resources\SNMPv2-SMI.txt" />
     <None Include="Resources\SNMPv2-TC.txt" />
     <None Include="Resources\TCP-MIB.txt" />

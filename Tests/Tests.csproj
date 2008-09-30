@@ -40,6 +40,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\TestByteTool.cs" />
+    <Compile Include="Tests\TestConstructHelper.cs" />
     <Compile Include="Tests\TestCounter32.cs" />
     <Compile Include="Tests\TestCounter64.cs" />
     <Compile Include="Tests\TestGauge32.cs" />
@@ -53,6 +54,7 @@
     <Compile Include="Tests\TestNull.cs" />
     <Compile Include="Tests\TestObjectIdentifier.cs" />
     <Compile Include="Tests\TestObjectRegistry.cs" />
+    <Compile Include="Tests\TestObjectTree.cs" />
     <Compile Include="Tests\TestOctetString.cs" />
     <Compile Include="Tests\TestOpaque.cs" />
     <Compile Include="Tests\TestParseItemsException.cs" />

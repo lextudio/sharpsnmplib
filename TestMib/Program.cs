@@ -10,8 +10,10 @@ namespace TestMib
     {
         static void Main(string[] args)
         {
+            //ObjectRegistry.TestLoadFile(@"D:\lextm\documents\SharpDevelop Projects\SharpSnmpLib\SharpSnmpLib\Resources\SNMPv2-TM.txt");
             ObjectRegistry.TestLoadFolder(@"D:\lextm\documents\Downloads\MIBS", "*.mib");
-            //ObjectRegistry.TestLoadFile(@"D:\lextm\documents\Downloads\MIBS\ARROWPOINT-IPV4-OSPF-MIB.mib");
+            //ObjectRegistry.TestLoadFile(@"D:\lextm\documents\Downloads\MIBS\SNMPv2-PDU.mib");
+            Console.WriteLine("Press any key to exit");
             Console.Read();
         }
     }

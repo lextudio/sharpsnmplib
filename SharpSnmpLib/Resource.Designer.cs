@@ -151,6 +151,27 @@ namespace Lextm.SharpSnmpLib {
             }
         }
         
+        internal static byte[] CISCO_AAA_SERVER_MIB {
+            get {
+                object obj = ResourceManager.GetObject("CISCO-AAA-SERVER-MIB", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] CISCO_BULK_FILE_MIB {
+            get {
+                object obj = ResourceManager.GetObject("CISCO-BULK-FILE-MIB", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] CISCO_CSG_MIB {
+            get {
+                object obj = ResourceManager.GetObject("CISCO-CSG-MIB", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         internal static byte[] DISMAN_EVENT_MIB {
             get {
                 object obj = ResourceManager.GetObject("DISMAN-EVENT-MIB", resourceCulture);
@@ -277,6 +298,13 @@ namespace Lextm.SharpSnmpLib {
             }
         }
         
+        internal static byte[] IEEE8021_PAE_MIB {
+            get {
+                object obj = ResourceManager.GetObject("IEEE8021-PAE-MIB", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         internal static byte[] IF_INVERTED_STACK_MIB {
             get {
                 object obj = ResourceManager.GetObject("IF-INVERTED-STACK-MIB", resourceCulture);
@@ -350,6 +378,13 @@ namespace Lextm.SharpSnmpLib {
         internal static byte[] IPV6_UDP_MIB {
             get {
                 object obj = ResourceManager.GetObject("IPV6-UDP-MIB", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] JVM_MANAGEMENT_MIB {
+            get {
+                object obj = ResourceManager.GetObject("JVM-MANAGEMENT-MIB", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -473,6 +508,13 @@ namespace Lextm.SharpSnmpLib {
             }
         }
         
+        internal static byte[] RFC1157_SNMP {
+            get {
+                object obj = ResourceManager.GetObject("RFC1157-SNMP", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         internal static byte[] RFC1213_MIB {
             get {
                 object obj = ResourceManager.GetObject("RFC1213-MIB", resourceCulture);
@@ -588,6 +630,13 @@ namespace Lextm.SharpSnmpLib {
         internal static byte[] SNMPv2_MIB {
             get {
                 object obj = ResourceManager.GetObject("SNMPv2-MIB", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] SNMPV2_PDU {
+            get {
+                object obj = ResourceManager.GetObject("SNMPV2-PDU", resourceCulture);
                 return ((byte[])(obj));
             }
         }

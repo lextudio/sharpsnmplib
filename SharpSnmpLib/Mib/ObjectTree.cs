@@ -63,7 +63,7 @@ namespace Lextm.SharpSnmpLib.Mib
         }
         
         internal IDefinition Find(string name)
-        {            
+        {
             foreach (string key in nameTable.Keys)
             {
                 if (key.Split(new string[] {"::"}, StringSplitOptions.None)[1] == name)
@@ -118,34 +118,77 @@ namespace Lextm.SharpSnmpLib.Mib
                 IDefinition result = root.Add(node);
                 if (result == null && node.Parent.Contains("."))
                 {
-                    string[] content = node.Parent.Split('.');
-                    IDefinition subroot = Find(content[0]);
-                    uint value = uint.Parse(content[1]);
-                    IDefinition unknown;
-                    try 
-                    {
-                        unknown = subroot[value];
-                    }
-                    catch (ArgumentOutOfRangeException) 
-                    {
-                        IEntity prefixNode = new OidValueAssignment(module.Name, subroot.Name + "Prefix", subroot.Name, value);
-                        unknown = root.Add(prefixNode);
-                    }
-                    
-                    AddToTable(unknown);
+                    IDefinition unknown = CreateExtraNodes(module.Name, node.Parent);
                     node.Parent = unknown.Name;
                     result = root.Add(node);
                 }                
-
+                
                 AddToTable(result);
             }
             
             return true;
         }
 
+        public IDefinition CreateExtraNodes(string module, string longParent)
+        {
+            string[] content = longParent.Split('.');
+            IDefinition subroot = Find(content[0]);
+            uint value;
+            bool isUInt = uint.TryParse(content[1], out value);
+            if (isUInt)
+            {
+                // numerical way.
+                IDefinition unknown;
+                try
+                {
+                    // if already in tree.
+                    unknown = subroot[value];
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                    // if not, create Prefix node.
+                    IEntity prefixNode = new OidValueAssignment(module, subroot.Name + "Prefix", subroot.Name, value);
+                    unknown = root.Add(prefixNode);
+                    AddToTable(unknown);
+                }
+                return unknown;
+            }
+            
+            IDefinition extraNode = null;
+            // create all textual nodes.
+            for (int i = 0; i < content.Length - 1; i++)
+            {
+                string self = content[i + 1];
+                string parent = content[i];
+                IEntity extra = new OidValueAssignment(module, ExtractName(self), ExtractName(parent), ExtractValue(self));
+                extraNode = root.Add(extra);
+                AddToTable(extraNode);
+            }
+            return extraNode;
+        }
+        
+        internal static string ExtractName(string input)
+        {
+            int left = input.IndexOf('(');            
+            return left == -1? input : input.Substring(0, left);
+        }
+        
+        internal static uint ExtractValue(string input)
+        {
+            int left = input.IndexOf('(');
+            int right = input.IndexOf(')');
+            if (left >= right) 
+            {
+                throw new FormatException("input does not contain a value");
+            }
+            
+            return uint.Parse(input.Substring(left + 1, right - left - 1));
+        }
+        
         private void AddToTable(IDefinition result)
         {
-            if (result != null && !nameTable.ContainsKey(result.TextualForm)) {
+            if (result != null && !nameTable.ContainsKey(result.TextualForm)) 
+            {
                 nameTable.Add(result.TextualForm, result);
             }
         }

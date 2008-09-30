@@ -13,20 +13,48 @@ namespace Lextm.SharpSnmpLib.Mib
             {
             }
             
-            while ((temp = lexer.NextSymbol) == Symbol.EOL)
-            {
-            }
-            
-            if (temp == Symbol.Integer)
+            temp = lexer.NextNonEOLSymbol;            
+            if (temp == Symbol.Bits)
             {
                 // parse between { }
-                while ((temp = lexer.NextSymbol) != Symbol.OpenBracket)
+                temp = lexer.NextNonEOLSymbol;
+                if (temp == Symbol.OpenBracket)
                 {
+                    while ((temp = lexer.NextNonEOLSymbol) != Symbol.CloseBracket)
+                    {
+                    }
+                    return;
+                }
+                // parse between ( )
+                if (temp == Symbol.OpenParentheses)
+                {
+                    while ((temp = lexer.NextNonEOLSymbol) != Symbol.CloseParentheses)
+                    {
+                    }
+                    return;
                 }
                 
-                while ((temp = lexer.NextSymbol) != Symbol.CloseBracket)
+            }
+            else if (temp == Symbol.Integer)
+            {
+                // parse between { }
+                temp = lexer.NextNonEOLSymbol;
+                if (temp == Symbol.OpenBracket)
                 {
+                    while ((temp = lexer.NextNonEOLSymbol) != Symbol.CloseBracket)
+                    {
+                    }
+                    return;
                 }
+                // parse between ( )
+                if (temp == Symbol.OpenParentheses)
+                {
+                    while ((temp = lexer.NextNonEOLSymbol) != Symbol.CloseParentheses)
+                    {
+                    }
+                    return;
+                }
+                
             }
             else if (temp == Symbol.Octet)
             {

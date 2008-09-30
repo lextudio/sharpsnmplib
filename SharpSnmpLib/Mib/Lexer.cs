@@ -33,6 +33,10 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <param name="stream">File stream</param>
         public void Parse(string file, TextReader stream)
         {
+            assignAhead = false;
+            assignSection = false;
+            stringSection = false;
+            
             string line;
             int i = 0;
             while ((line = stream.ReadLine()) != null)
@@ -117,6 +121,8 @@ namespace Lextm.SharpSnmpLib.Mib
 
         private static StringBuilder temp = new StringBuilder();
         private static bool stringSection;
+        private static bool assignSection;
+        private static bool assignAhead;
 
         /// <summary>
         /// Parses a list of <see cref="Char"/> to <see cref="Symbol"/>.
@@ -131,48 +137,69 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             switch (current)
             {
-            case '\n':
-            case '{':
-            case '}':
-            case '(':
-            case ')':
-            case '[':
-            case ']':
-            case ';':
-            case ',':
-                if (!stringSection)
-                {
-                    bool moveNext = ParseLastSymbol(file, list, ref temp, row, column);
-                    if (moveNext)
+                case '\n':
+                case '{':
+                case '}':
+                case '(':
+                case ')':
+                case '[':
+                case ']':
+                case ';':
+                case ',':
+                    if (!stringSection)
                     {
-                        list.Add(CreateSpecialSymbol(file, '\n', row, column));
-                        return true;
+                        bool moveNext = ParseLastSymbol(file, list, ref temp, row, column);
+                        if (moveNext)
+                        {
+                            list.Add(CreateSpecialSymbol(file, '\n', row, column));
+                            return true;
+                        }
+
+                        list.Add(CreateSpecialSymbol(file, current, row, column));
+                        return false;
                     }
 
-                    list.Add(CreateSpecialSymbol(file, current, row, column));
+                    break;
+                case '"':
+                    stringSection = !stringSection;
+                    break;
+                case '\r':
                     return false;
-                }
-
-                break;
-            case '"':
-                stringSection = !stringSection;
-                break;
-            case '\r':
-                return false;
-            default:
-                if (char.IsWhiteSpace(current) && !stringSection)
-                {
-                    bool moveNext = ParseLastSymbol(file, list, ref temp, row, column);
-                    if (moveNext)
+                default:
+                    if (char.IsWhiteSpace(current) && !assignSection && !stringSection)
                     {
-                        list.Add(CreateSpecialSymbol(file, '\n', row, column));
-                        return true;
+                        bool moveNext = ParseLastSymbol(file, list, ref temp, row, column);
+                        if (moveNext)
+                        {
+                            list.Add(CreateSpecialSymbol(file, '\n', row, column));
+                            return true;
+                        }
+
+                        return false;
+                    }
+                    
+                    if (assignAhead)
+                    {
+                        assignAhead = false;
+                        ParseLastSymbol(file, list, ref temp, row, column);
+                        break;
+                    }
+                    
+                    if (current == ':' && !stringSection)
+                    {    
+                        if (!assignSection)
+                        {
+                            ParseLastSymbol(file, list, ref temp, row, column);
+                        }
+                        assignSection = true;
+                    }
+                    if (current == '=' && !stringSection)
+                    {
+                        assignSection = false; 
+                        assignAhead = true;
                     }
 
-                    return false;
-                }
-
-                break;
+                    break;
             }
 
             temp.Append(current);
@@ -202,35 +229,35 @@ namespace Lextm.SharpSnmpLib.Mib
             string str;
             switch (value)
             {
-            case '\n':
-                str = Environment.NewLine;
-                break;
-            case '{':
-                str = "{";
-                break;
-            case '}':
-                str = "}";
-                break;
-            case '(':
-                str = "(";
-                break;
-            case ')':
-                str = ")";
-                break;
-            case '[':
-                str = "[";
-                break;
-            case ']':
-                str = "]";
-                break;
-            case ';':
-                str = ";";
-                break;
-            case ',':
-                str = ",";
-                break;
-            default:
-                throw new ArgumentException("value is not a special character");
+                case '\n':
+                    str = Environment.NewLine;
+                    break;
+                case '{':
+                    str = "{";
+                    break;
+                case '}':
+                    str = "}";
+                    break;
+                case '(':
+                    str = "(";
+                    break;
+                case ')':
+                    str = ")";
+                    break;
+                case '[':
+                    str = "[";
+                    break;
+                case ']':
+                    str = "]";
+                    break;
+                case ';':
+                    str = ";";
+                    break;
+                case ',':
+                    str = ",";
+                    break;
+                default:
+                    throw new ArgumentException("value is not a special character");
             }
 
             return new Symbol(file, str, row, column);

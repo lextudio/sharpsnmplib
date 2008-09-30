@@ -25,18 +25,23 @@ namespace Lextm.SharpSnmpLib.Mib
         public Sequence(string module, string name, Lexer lexer)
         {
             Symbol temp;
-            Symbol last = null;
-            while ((temp = lexer.NextSymbol) != null)
+            // parse between ( )
+            temp = lexer.NextNonEOLSymbol; 
+            int bracketSection = 0;
+            ConstructHelper.Expect(temp, Symbol.OpenBracket);
+            bracketSection++;
+            while (bracketSection > 0)
             {
-                if (temp == Symbol.CloseBracket)
+                temp = lexer.NextNonEOLSymbol;
+                if (temp == Symbol.OpenBracket)
                 {
-                    break;
+                    bracketSection++;
                 }
-                
-                last = temp;
+                else if (temp == Symbol.CloseBracket)
+                {
+                    bracketSection--;
+                }
             }
-            
-            ConstructHelper.Validate(last, temp == null, "end of file reached");
         }
     }
 }

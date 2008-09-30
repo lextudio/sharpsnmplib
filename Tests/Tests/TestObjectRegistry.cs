@@ -72,6 +72,7 @@ namespace Lextm.SharpSnmpLib.Tests
             uint[] result = ObjectRegistry.Instance.Translate(textual);
             Assert.AreEqual(expected, result);    
         }
+        
         [Test]
         public void TestRFC1155_SMI()
         {

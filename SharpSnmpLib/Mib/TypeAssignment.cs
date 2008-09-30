@@ -37,10 +37,9 @@ namespace Lextm.SharpSnmpLib.Mib
             Symbol temp;
             Symbol veryPrevious = null;
             Symbol previous = last;
-            string message;
             while ((temp = lexer.NextSymbol) != null)
             {
-                if (veryPrevious == Symbol.EOL && previous == Symbol.EOL && ConstructHelper.IsValidIdentifier(temp.ToString(), out message))
+                if (veryPrevious == Symbol.EOL && previous == Symbol.EOL && ValidType(temp))
                 {
                     _left = temp;
                     return;
@@ -51,6 +50,12 @@ namespace Lextm.SharpSnmpLib.Mib
             }
             
             ConstructHelper.Validate(previous, temp == null, "end of file reached");
+        }
+        
+        private static bool ValidType(Symbol symbol)
+        {      
+            string message;
+            return ConstructHelper.IsValidIdentifier(symbol.ToString(), out message);
         }
 
         public Symbol Left

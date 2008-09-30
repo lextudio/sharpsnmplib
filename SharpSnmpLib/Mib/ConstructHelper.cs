@@ -10,43 +10,65 @@ namespace Lextm.SharpSnmpLib.Mib
         internal static void ParseOidValue(Lexer lexer, out string parent, out uint value)
         {
             parent = null;
+            value = 0;
+            Symbol previous = null;
+            
             Symbol temp = lexer.NextNonEOLSymbol;
             Expect(temp, Symbol.OpenBracket);
-            string lastParent = parent;
-            parent = lexer.NextSymbol.ToString();
-            Symbol previous = null;
-            value = 0;
-            while ((temp = lexer.NextSymbol) != null) 
+            StringBuilder longParent = new StringBuilder();
+            temp = lexer.NextNonEOLSymbol;
+            longParent.Append(temp);
+            
+            while ((temp = lexer.NextNonEOLSymbol) != null)
             {
+                if (temp == Symbol.OpenParentheses)
+                {
+                    longParent.Append(temp);
+                    temp = lexer.NextNonEOLSymbol;
+                    bool succeed = uint.TryParse(temp.ToString(), out value);
+                    Validate(temp, !succeed, "not a decimal");
+                    longParent.Append(temp);
+                    temp = lexer.NextNonEOLSymbol;
+                    Expect(temp, Symbol.CloseParentheses);
+                    longParent.Append(temp);
+                    continue;
+                }
+                
                 if (temp == Symbol.CloseBracket)
                 {
-                    parent = lastParent;
+                    parent = longParent.ToString();
                     return;
                 }
-
+                
                 bool succeeded = uint.TryParse(temp.ToString(), out value);
-                if (succeeded) 
+                if (succeeded)
                 {
+                    // numerical way
                     while ((temp = lexer.NextNonEOLSymbol) != Symbol.CloseBracket)
                     {
-                        parent = parent + "." + value.ToString(CultureInfo.InvariantCulture);
+                        longParent.Append(".");
+                        longParent.Append(value);
                         succeeded = uint.TryParse(temp.ToString(), out value);
-                        Validate(temp, !succeeded, "not a decimal");  
+                        Validate(temp, !succeeded, "not a decimal");
                     }
                     
                     Expect(temp, Symbol.CloseBracket);
+                    parent = longParent.ToString();
                     return;
                 }
-
-                lastParent = parent;
-                parent = temp.ToString();
-                temp = lexer.NextSymbol;
+                
+                longParent.Append(".");
+                longParent.Append(temp);
+                temp = lexer.NextNonEOLSymbol;
                 Expect(temp, Symbol.OpenParentheses);
-                temp = lexer.NextSymbol;
+                longParent.Append(temp);
+                temp = lexer.NextNonEOLSymbol;
                 succeeded = uint.TryParse(temp.ToString(), out value);
                 Validate(temp, !succeeded, "not a decimal");
-                temp = lexer.NextSymbol;
+                longParent.Append(temp);
+                temp = lexer.NextNonEOLSymbol;
                 Expect(temp, Symbol.CloseParentheses);
+                longParent.Append(temp);
                 previous = temp;
             }
             
@@ -75,12 +97,12 @@ namespace Lextm.SharpSnmpLib.Mib
         
         internal static bool IsValidIdentifier(string name, out string message)
         {
-// TODO: enable this later.
-//            if (name.Length < 1 || name.Length > 64) 
-//            {
-//                message = "an identifier must consist of 1 to 64 letters, digits, and hyphens";
-//                return false;
-//            }
+            // TODO: enable this later.
+            //            if (name.Length < 1 || name.Length > 64)
+            //            {
+            //                message = "an identifier must consist of 1 to 64 letters, digits, and hyphens";
+            //                return false;
+            //            }
             
             if (!char.IsLetter(name[0]))
             {
@@ -94,17 +116,17 @@ namespace Lextm.SharpSnmpLib.Mib
                 return false;
             }
             
-            if (name.Contains("--")) 
+            if (name.Contains("--"))
             {
                 message = "a hyphen cannot be immediately followed by another hyphen in an identifier";
                 return false;
             }
-// TODO: enable this later.            
-//            if (name.Contains("_"))
-//            {
-//                message = "underscores are not allowed in identifiers";
-//                return false;
-//            }
+            // TODO: enable this later.
+            //            if (name.Contains("_"))
+            //            {
+            //                message = "underscores are not allowed in identifiers";
+            //                return false;
+            //            }
             
             message = null;
             

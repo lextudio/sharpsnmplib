@@ -19,6 +19,136 @@ namespace Lextm.SharpSnmpLib.Tests
     [TestFixture]
     public class TestMibDocument
     {
+        // TODO: [Test]
+        public void TestSNMPv2_PDU()
+        {
+            Lexer lexer = new Lexer();
+            MemoryStream m = new MemoryStream(Resource.SNMPV2_PDU);
+            using (StreamReader reader = new StreamReader(m))
+            {
+                lexer.Parse(reader);
+                reader.Close();
+            }
+            MibDocument file = new MibDocument(lexer);
+            Assert.AreEqual("SNMPv2-PDU", file.Modules[0].Name);
+            Assert.AreEqual(5, file.Modules[0].Dependents.Count);
+            Assert.AreEqual(55, file.Modules[0].Entities.Count);
+            IEntity node = file.Modules[0].Entities[54];
+            Assert.AreEqual("casConfigGroup", node.Name);
+            Assert.AreEqual(2, node.Value);
+            Assert.AreEqual("casMIBGroups", node.Parent.ToString());
+        }
+        [Test]
+        public void TestRFC1157_SNMP_MIB()
+        {
+            Lexer lexer = new Lexer();
+            MemoryStream m = new MemoryStream(Resource.RFC1157_SNMP);
+            using (StreamReader reader = new StreamReader(m))
+            {
+                lexer.Parse(reader);
+                reader.Close();
+            }
+            MibDocument file = new MibDocument(lexer);
+            Assert.AreEqual("RFC1157-SNMP", file.Modules[0].Name);
+            Assert.AreEqual(1, file.Modules[0].Dependents.Count);
+            Assert.AreEqual(0, file.Modules[0].Entities.Count);
+        }
+        [Test]
+        public void TestJVM_MANAGEMENT_MIB()
+        {
+            Lexer lexer = new Lexer();
+            MemoryStream m = new MemoryStream(Resource.JVM_MANAGEMENT_MIB);
+            using (StreamReader reader = new StreamReader(m))
+            {
+                lexer.Parse(reader);
+                reader.Close();
+            }
+            MibDocument file = new MibDocument(lexer);
+            Assert.AreEqual("JVM-MANAGEMENT-MIB", file.Modules[0].Name);
+            Assert.AreEqual(3, file.Modules[0].Dependents.Count);
+            Assert.AreEqual(160, file.Modules[0].Entities.Count);
+            IEntity node = file.Modules[0].Entities[159];
+            Assert.AreEqual("jvmLowMemoryCollectNotifGroup", node.Name);
+            Assert.AreEqual(8, node.Value);
+            Assert.AreEqual("jvmMgtMIBGroups", node.Parent.ToString());
+        }
+        [Test]
+        public void TestIEEE8021_PAE_MIB()
+        {
+            Lexer lexer = new Lexer();
+            MemoryStream m = new MemoryStream(Resource.IEEE8021_PAE_MIB);
+            using (StreamReader reader = new StreamReader(m))
+            {
+                lexer.Parse(reader);
+                reader.Close();
+            }
+            MibDocument file = new MibDocument(lexer);
+            Assert.AreEqual("IEEE8021-PAE-MIB", file.Modules[0].Name);
+            Assert.AreEqual(5, file.Modules[0].Dependents.Count);
+            Assert.AreEqual(106, file.Modules[0].Entities.Count);
+            IEntity node = file.Modules[0].Entities[105];
+            Assert.AreEqual("dot1xPaeCompliance", node.Name);
+            Assert.AreEqual(1, node.Value);
+            Assert.AreEqual("dot1xPaeCompliances", node.Parent.ToString());
+        }
+        [Test]
+        public void TestCISCO_CSG_MIB()
+        {
+            Lexer lexer = new Lexer();
+            MemoryStream m = new MemoryStream(Resource.CISCO_CSG_MIB);
+            using (StreamReader reader = new StreamReader(m))
+            {
+                lexer.Parse(reader);
+                reader.Close();
+            }
+            MibDocument file = new MibDocument(lexer);
+            Assert.AreEqual("CISCO-CSG-MIB", file.Modules[0].Name);
+            Assert.AreEqual(5, file.Modules[0].Dependents.Count);
+            Assert.AreEqual(82, file.Modules[0].Entities.Count);
+            IEntity node = file.Modules[0].Entities[81];
+            Assert.AreEqual("ciscoCsgNotifGroup", node.Name);
+            Assert.AreEqual(6, node.Value);
+            Assert.AreEqual("ciscoCsgMIBGroups", node.Parent.ToString());
+        }
+        [Test]
+        public void TestCISCO_BULK_FILE_MIB()
+        {
+            Lexer lexer = new Lexer();
+            MemoryStream m = new MemoryStream(Resource.CISCO_BULK_FILE_MIB);
+            using (StreamReader reader = new StreamReader(m))
+            {
+                lexer.Parse(reader);
+                reader.Close();
+            }
+            MibDocument file = new MibDocument(lexer);
+            Assert.AreEqual("CISCO-BULK-FILE-MIB", file.Modules[0].Name);
+            Assert.AreEqual(5, file.Modules[0].Dependents.Count);
+            Assert.AreEqual(51, file.Modules[0].Entities.Count);
+            IEntity node = file.Modules[0].Entities[50];
+            Assert.AreEqual("ciscoBulkFileStatusGroup", node.Name);
+            Assert.AreEqual(2, node.Value);
+            Assert.AreEqual("ciscoBulkFileMIBGroups", node.Parent.ToString());
+        }
+        [Test]
+        public void TestCISCO_AAA_SERVER_MIB()
+        {
+            Lexer lexer = new Lexer();
+            MemoryStream m = new MemoryStream(Resource.CISCO_AAA_SERVER_MIB);
+            using (StreamReader reader = new StreamReader(m))
+            {
+                lexer.Parse(reader);
+                reader.Close();
+            }
+            MibDocument file = new MibDocument(lexer);
+            Assert.AreEqual("CISCO-AAA-SERVER-MIB", file.Modules[0].Name);
+            Assert.AreEqual(5, file.Modules[0].Dependents.Count);
+            Assert.AreEqual(55, file.Modules[0].Entities.Count);
+            IEntity node = file.Modules[0].Entities[54];
+            Assert.AreEqual("casConfigGroup", node.Name);
+            Assert.AreEqual(2, node.Value);
+            Assert.AreEqual("casMIBGroups", node.Parent.ToString());
+        }
+        
         [Test]
         public void TestBASEBRDD_MIB_MIB()
         {
@@ -269,7 +399,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[0];
             Assert.AreEqual("internet", node.Name);
             Assert.AreEqual(1, node.Value);
-            Assert.AreEqual("dod", node.Parent.ToString());
+            Assert.AreEqual("iso.org(3).dod(6)", node.Parent.ToString());
         }
         [Test]
         public void TestRFC1271_MIB()
