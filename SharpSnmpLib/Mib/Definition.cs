@@ -126,7 +126,8 @@ namespace Lextm.SharpSnmpLib.Mib
             {
                 foreach (IDefinition d in _children.Values)
                 {
-                    if (d.GetNumericalForm()[d.GetNumericalForm().Length - 1] == index)
+                    uint[] id = d.GetNumericalForm();
+                    if (id[id.Length - 1] == index)
                     {
                         return d;
                     }                    

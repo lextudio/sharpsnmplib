@@ -119,10 +119,10 @@ namespace Lextm.SharpSnmpLib.Mib
             }
         }
 
-        private static StringBuilder temp = new StringBuilder();
-        private static bool stringSection;
-        private static bool assignSection;
-        private static bool assignAhead;
+        private StringBuilder temp = new StringBuilder();
+        private bool stringSection;
+        private bool assignSection;
+        private bool assignAhead;
 
         /// <summary>
         /// Parses a list of <see cref="Char"/> to <see cref="Symbol"/>.
@@ -133,7 +133,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <param name="column">Column number</param>
         /// <param name="list"></param>
         /// <returns></returns>
-        public static bool Parse(string file, IList<Symbol> list, char current, int row, int column)
+        public bool Parse(string file, IList<Symbol> list, char current, int row, int column)
         {
             switch (current)
             {

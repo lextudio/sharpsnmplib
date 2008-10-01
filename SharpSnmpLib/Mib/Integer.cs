@@ -24,7 +24,6 @@ namespace Lextm.SharpSnmpLib.Mib
         public Integer(string module, string name, Lexer lexer)
         {
             Symbol temp;
-            Symbol last = null;
             temp = lexer.NextNonEOLSymbol;
             if (temp == Symbol.OpenBracket)
             {

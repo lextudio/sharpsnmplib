@@ -305,6 +305,13 @@ namespace Lextm.SharpSnmpLib {
             }
         }
         
+        internal static byte[] IEEE802DOT11_MIB {
+            get {
+                object obj = ResourceManager.GetObject("IEEE802DOT11-MIB", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         internal static byte[] IF_INVERTED_STACK_MIB {
             get {
                 object obj = ResourceManager.GetObject("IF-INVERTED-STACK-MIB", resourceCulture);

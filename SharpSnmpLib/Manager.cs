@@ -333,7 +333,7 @@ namespace Lextm.SharpSnmpLib
         [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Return", Justification = "ByDesign")]
         public Variable[,] GetTable(IPEndPoint endpoint, string community, ObjectIdentifier table)
         {
-            return GetTable(endpoint, community, table);
+            return GetTable(DefaultVersion, endpoint, new OctetString(community), table, Timeout);
         }
         
         /// <summary>
@@ -359,7 +359,7 @@ namespace Lextm.SharpSnmpLib
         [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Return", Justification = "ByDesign")]
         public Variable[,] GetTable(string address, string community, ObjectIdentifier table)
         {
-            return GetTable(address, community, table);
+            return GetTable(IPAddress.Parse(address), community, table);
         }        
         
         /// <summary>

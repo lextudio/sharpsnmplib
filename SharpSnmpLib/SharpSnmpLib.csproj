@@ -88,6 +88,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="MessageFactory.cs" />
+    <Compile Include="Mib\Compiler.cs" />
     <Compile Include="Mib\ConstructHelper.cs" />
     <Compile Include="Mib\AgentCapabilities.cs" />
     <Compile Include="Mib\Choice.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="Mib\IObjectTree.cs" />
     <Compile Include="Mib\ITypeAssignment.cs" />
     <Compile Include="Mib\Macro.cs" />
+    <Compile Include="Mib\MibInventory.cs" />
     <Compile Include="Mib\ModuleCompliance.cs" />
     <Compile Include="Mib\ModuleIdentity.cs" />
     <Compile Include="Mib\NotificationGroup.cs" />
@@ -198,6 +200,7 @@
     <None Include="Resources\IANAifType-MIB.txt" />
     <None Include="Resources\ianalist" />
     <None Include="Resources\IEEE8021-PAE-MIB.mib" />
+    <None Include="Resources\IEEE802DOT11-MIB.mib" />
     <None Include="Resources\IF-INVERTED-STACK-MIB.txt" />
     <None Include="Resources\IF-MIB.txt" />
     <None Include="Resources\INET-ADDRESS-MIB.txt" />

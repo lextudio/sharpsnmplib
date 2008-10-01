@@ -33,13 +33,13 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             get;
         }
-
-        /// <summary>
-        /// Compiled MIB modules.
-        /// </summary>
-        ICollection<string> NewModules
-        {
-            get;
-        }
+//
+//        /// <summary>
+//        /// Compiled MIB modules.
+//        /// </summary>
+//        ICollection<string> NewModules
+//        {
+//            get;
+//        }
     }
 }

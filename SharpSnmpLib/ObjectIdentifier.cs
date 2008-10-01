@@ -108,7 +108,7 @@ namespace Lextm.SharpSnmpLib
         {
             get
             {
-                return Mib.ObjectRegistry.Instance.GetTextualFrom(_oid);
+                return Mib.ObjectRegistry.Instance.Translate(_oid);
             }
         }
         

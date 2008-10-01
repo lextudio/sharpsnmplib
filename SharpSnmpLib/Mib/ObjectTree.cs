@@ -12,10 +12,8 @@ namespace Lextm.SharpSnmpLib.Mib
     {
         private IDictionary<string, MibModule> _parsed = new SortedDictionary<string, MibModule>();
         private IDictionary<string, MibModule> _pendings = new Dictionary<string, MibModule>();
-        private IDictionary<string, string> _newMibs = new Dictionary<string, string>();
         private IDictionary<string, IDefinition> nameTable;
         private Definition root;
-        private string mibDir = Directory.GetCurrentDirectory() + "\\mibs\\";
         
         /// <summary>
         /// Creates an <see cref="ObjectTree"/> instance.
@@ -66,7 +64,7 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             foreach (string key in nameTable.Keys)
             {
-                if (key.Split(new string[] {"::"}, StringSplitOptions.None)[1] == name)
+                if (string.CompareOrdinal(key.Split(new string[] {"::"}, StringSplitOptions.None)[1], name) == 0)
                 {
                     return nameTable[key];
                 }
@@ -113,63 +111,162 @@ namespace Lextm.SharpSnmpLib.Mib
             }
             
             _parsed.Add(module.Name, module);
-            foreach (IEntity node in module.Entities)
-            {
-                IDefinition result = root.Add(node);
-                if (result == null && node.Parent.Contains("."))
-                {
-                    IDefinition unknown = CreateExtraNodes(module.Name, node.Parent);
-                    node.Parent = unknown.Name;
-                    result = root.Add(node);
-                }                
-                
-                AddToTable(result);
-            }
-            
+            AddNodes(module);
             return true;
         }
 
-        public IDefinition CreateExtraNodes(string module, string longParent)
+        private void AddNodes(MibModule module)
+        {
+            var pendingNodes = new List<IEntity>();
+            // parse all direct nodes.
+            foreach (IEntity node in module.Entities)
+            {
+                if (node.Parent.Contains("."))
+                {
+                    pendingNodes.Add(node);
+                    continue;
+                }
+
+                IDefinition result = root.Add(node);
+                if (result == null)
+                {
+                    pendingNodes.Add(node);
+                    continue;
+                }
+
+                AddToTable(result);
+            }
+
+            // parse indirect nodes.            
+            int current = pendingNodes.Count;
+            int previous;
+            while (current != 0)
+            {
+                var parsed = new List<IEntity>();
+                previous = current;
+                foreach (IEntity node in pendingNodes)
+                {
+                    if (node.Parent.Contains("."))
+                    {
+                        if (!FirstNodeExists(node))
+                        {
+                            // wait till first node available.
+                            continue;
+                        }
+
+                        // create all place holders.
+                        IDefinition unknown = CreateExtraNodes(module.Name, node.Parent);
+                        node.Parent = unknown.Name;
+                        AddToTable(root.Add(node));
+                    }
+                    else
+                    {
+                        IDefinition result = root.Add(node);
+                        if (result == null)
+                        {
+                            // wait for parent
+                            continue;
+                        }
+
+                        AddToTable(result);                        
+                    }
+                    parsed.Add(node);
+                }
+                
+                foreach (IEntity en in parsed)
+                {
+                    pendingNodes.Remove(en);
+                }
+
+                current = pendingNodes.Count;
+                if (previous == current)
+                {
+                    break;
+                }
+            }
+        }
+
+        private bool FirstNodeExists(IEntity node)
+        {
+            string first = ExtractName(node.Parent.Split('.')[0]);
+            IDefinition firstNode;
+            try
+            {
+                firstNode = Find(first);
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                firstNode = null;
+            }
+            return firstNode != null;
+        }
+
+        private IDefinition CreateExtraNodes(string module, string longParent)
         {
             string[] content = longParent.Split('.');
-            IDefinition subroot = Find(content[0]);
-            uint value;
-            bool isUInt = uint.TryParse(content[1], out value);
-            if (isUInt)
+            IDefinition node = Find(ExtractName(content[0]));
+            uint[] rootId = node.GetNumericalForm();
+            uint[] all = new uint[content.Length + rootId.Length - 1];
+            for (int j = 0; j < rootId.Length; j++)
             {
-                // numerical way.
-                IDefinition unknown;
-                try
+                all[j] = rootId[j];
+            }
+            // change all to numerical
+            for (int i = 1; i < content.Length; i++)
+            {
+                uint value;
+                bool isUInt = uint.TryParse(content[i], out value);
+                int currentCursor = rootId.Length + i - 1;
+                if (isUInt)
                 {
-                    // if already in tree.
-                    unknown = subroot[value];
-                }
-                catch (ArgumentOutOfRangeException)
-                {
+                    all[currentCursor] = value;
+                    try
+                    {
+                        node = Find(ExtractParent(all, currentCursor + 1));
+                    }
+                    catch (ArgumentOutOfRangeException)
+                    {
+                        node = null;
+                    }
+
+                    if (node != null)
+                    {
+                        continue;
+                    }
+
+                    IDefinition subroot = Find(ExtractParent(all, currentCursor));
                     // if not, create Prefix node.
-                    IEntity prefixNode = new OidValueAssignment(module, subroot.Name + "Prefix", subroot.Name, value);
-                    unknown = root.Add(prefixNode);
-                    AddToTable(unknown);
+                    IEntity prefix = new OidValueAssignment(module, subroot.Name + "Prefix", subroot.Name, value);
+                    node = root.Add(prefix);
+                    AddToTable(node);
                 }
-                return unknown;
+                else
+                {
+                    string self = content[i];
+                    string parent = content[i - 1];
+                    IEntity extra = new OidValueAssignment(module, ExtractName(self), ExtractName(parent), ExtractValue(self));
+                    node = root.Add(extra);
+                    AddToTable(node);
+                    all[currentCursor] = node.Value;
+                }
             }
-            
-            IDefinition extraNode = null;
-            // create all textual nodes.
-            for (int i = 0; i < content.Length - 1; i++)
+
+            return node;
+        }
+        
+        internal static uint[] ExtractParent(uint[] input, int length)
+        {
+            uint[] result = new uint[length];
+            for (int i = 0; i < length; i++)
             {
-                string self = content[i + 1];
-                string parent = content[i];
-                IEntity extra = new OidValueAssignment(module, ExtractName(self), ExtractName(parent), ExtractValue(self));
-                extraNode = root.Add(extra);
-                AddToTable(extraNode);
+                result[i] = input[i];
             }
-            return extraNode;
+            return result;
         }
         
         internal static string ExtractName(string input)
         {
-            int left = input.IndexOf('(');            
+            int left = input.IndexOf('(');
             return left == -1? input : input.Substring(0, left);
         }
         
@@ -177,7 +274,7 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             int left = input.IndexOf('(');
             int right = input.IndexOf(')');
-            if (left >= right) 
+            if (left >= right)
             {
                 throw new FormatException("input does not contain a value");
             }
@@ -187,13 +284,13 @@ namespace Lextm.SharpSnmpLib.Mib
         
         private void AddToTable(IDefinition result)
         {
-            if (result != null && !nameTable.ContainsKey(result.TextualForm)) 
+            if (result != null && !nameTable.ContainsKey(result.TextualForm))
             {
                 nameTable.Add(result.TextualForm, result);
             }
         }
         
-        private int ParsePendings()
+        internal void Refresh()
         {
             int previous;
             int current = _pendings.Count;
@@ -207,16 +304,15 @@ namespace Lextm.SharpSnmpLib.Mib
                     if (succeeded)
                     {
                         parsed.Add(pending.Name);
-                        
-                        // Console.WriteLine("LoadFile(new StreamReader(new MemoryStream(Resource." + pending.Name + ")));");
                     }
+                    // Console.WriteLine("LoadFile(new StreamReader(new MemoryStream(Resource." + pending.Name + ")));");
                 }
-                
+
                 foreach (string file in parsed)
                 {
                     _pendings.Remove(file);
                 }
-                
+
                 current = _pendings.Count;
                 if (current == previous)
                 {
@@ -224,21 +320,10 @@ namespace Lextm.SharpSnmpLib.Mib
                     break;
                 }
             }
-            
-            return current;
         }
 
-        internal static IList<MibModule> ParseFile(string file, TextReader stream)
+        internal void Import(IEnumerable<MibModule> modules)
         {
-            Lexer lexer = new Lexer();
-            lexer.Parse(file, stream);
-            MibDocument doc = new MibDocument(lexer);
-            return doc.Modules;
-        }
-
-        internal void Parse(string file, TextReader stream)
-        {
-            IList<MibModule> modules = ParseFile(file, stream);
             foreach (MibModule module in modules)
             {
                 if (_pendings.ContainsKey(module.Name))
@@ -247,47 +332,6 @@ namespace Lextm.SharpSnmpLib.Mib
                 }
                 
                 _pendings.Add(module.Name, module);
-
-                if (file != null && !_newMibs.ContainsKey(module.Name))
-                {
-                    _newMibs.Add(module.Name, file);
-                }
-            }
-
-            if (file != null)
-            {
-                if (!Directory.Exists(mibDir))
-                {
-                    Directory.CreateDirectory(mibDir);
-                }
-                
-                if (!File.Exists(mibDir + System.IO.Path.GetFileName(file)))
-                {
-                    File.Copy(file, mibDir + System.IO.Path.GetFileName(file));
-                }
-            }
-
-            ParsePendings();
-        }
-
-        internal void RemoveMib(string mib, string group)
-        {
-            string file = string.Empty;
-            _newMibs.TryGetValue(mib, out file);
-
-            if (File.Exists(file))
-            {
-                _newMibs.Remove(mib);
-                File.Delete(file);
-            }
-
-            if (group == "lvgLoaded")
-            {
-                _parsed.Remove(mib);
-            }
-            else
-            {
-                _pendings.Remove(mib);
             }
         }
 
@@ -310,17 +354,6 @@ namespace Lextm.SharpSnmpLib.Mib
             get
             {
                 return _pendings.Keys;
-            }
-        }
-
-        /// <summary>
-        /// Compiled MIB modules.
-        /// </summary>
-        public ICollection<string> NewModules
-        {
-            get
-            {
-                return _newMibs.Keys;
             }
         }
     }

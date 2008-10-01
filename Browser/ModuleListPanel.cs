@@ -21,6 +21,7 @@ namespace Lextm.SharpSnmpLib.Browser
     public partial class ModuleListPanel : DockContent
     {
         private IOutput _output;
+        private MibInventory _inventory = new MibInventory(ObjectRegistry.Instance);
         
         public ModuleListPanel(IOutput output)
         {
@@ -31,6 +32,7 @@ namespace Lextm.SharpSnmpLib.Browser
             
             InitializeComponent();
             _output = output;
+            
             ObjectRegistry.Instance.OnChanged += RefreshPanel;
         }
         
@@ -65,46 +67,20 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                foreach (string file in openFileDialog1.FileNames)
-                {
-                    try
-                    {
-                        ObjectRegistry.Instance.LoadFile(file);
-                    }
-                    catch (SharpMibException ex)
-                    {
-                        _output.ReportMessage(ex.ToString());
-                    }
-                }
+                _inventory.AddFiles(openFileDialog1.FileNames);
             }
         }
 
         private void actRemove_Execute(object sender, EventArgs e)
         {
-            if (listView1.SelectedItems.Count == 1 && ObjectRegistry.Instance.Tree.NewModules.Contains(listView1.SelectedItems[0].Text))
-            {
-                string mib = listView1.SelectedItems[0].Text;
-                ObjectRegistry.Instance.RemoveMib(mib, listView1.SelectedItems[0].Group.Name);
-            }
-            else
-            {
-                //
-                // What error msg do we put here? or just an exception?
-                //
-            }
+            string mib = listView1.SelectedItems[0].Text;
+            string fileName = _inventory[mib];
+            _inventory.RemoveFile(fileName);
         }
 
         private void actRemove_Update(object sender, EventArgs e)
         {
-            if(listView1.SelectedItems.Count == 1)
-            {
-                string mib = listView1.SelectedItems[0].Text;
-                actRemove.Enabled = ObjectRegistry.Instance.Tree.NewModules.Contains(mib);
-            }
-            else
-            {
-                actRemove.Enabled = false;
-            }
+            actRemove.Enabled = listView1.SelectedItems.Count == 1 && _inventory.Contains(listView1.SelectedItems[0].Text);
         }
 
         private void listView1_MouseDown(object sender, MouseEventArgs e)
