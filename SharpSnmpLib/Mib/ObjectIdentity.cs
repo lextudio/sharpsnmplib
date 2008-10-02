@@ -57,10 +57,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// </summary>
         public string Parent
         {
-            get
-            {
-                return _parent;
-            }
+            get { return _parent; }
             set { _parent = value; }
         }
         

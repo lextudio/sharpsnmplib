@@ -143,8 +143,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestActona()
         {
             string name = "ACTONA-ACTASTOR-MIB::actona";
-            Compiler compiler = new Compiler();
-            var modules = compiler.Compile(new StreamReader(new MemoryStream(Resource.ACTONA_ACTASTOR_MIB)));
+            var modules = Compiler.Compile(new StreamReader(new MemoryStream(Resource.ACTONA_ACTASTOR_MIB)));
             ObjectRegistry.Instance.Import(modules);
             ObjectRegistry.Instance.Refresh();
             uint[] id = ObjectRegistry.Instance.Translate(name);
@@ -157,8 +156,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestIEEE802dot11_MIB()
         {
             string name = "IEEE802DOT11-MIB::dot11SMTnotification";
-            Compiler compiler = new Compiler();
-            var modules = compiler.Compile(new StreamReader(new MemoryStream(Resource.IEEE802DOT11_MIB)));
+            var modules = Compiler.Compile(new StreamReader(new MemoryStream(Resource.IEEE802DOT11_MIB)));
             ObjectRegistry.Instance.Import(modules);
             ObjectRegistry.Instance.Refresh();
             uint[] id = ObjectRegistry.Instance.Translate(name);

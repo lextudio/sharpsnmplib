@@ -45,10 +45,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <summary>
         /// Indexer.
         /// </summary>
-        IDefinition this[uint index]
-        {
-            get;
-        }
+        IDefinition GetChildAt(uint index);
 
         /// <summary>
         /// Module name.

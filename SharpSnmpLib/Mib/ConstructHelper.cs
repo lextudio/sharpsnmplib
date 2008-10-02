@@ -102,8 +102,7 @@ namespace Lextm.SharpSnmpLib.Mib
             //            {
             //                message = "an identifier must consist of 1 to 64 letters, digits, and hyphens";
             //                return false;
-            //            }
-            
+            //            }            
             if (!char.IsLetter(name[0]))
             {
                 message = "the initial character must be a letter";
@@ -121,16 +120,15 @@ namespace Lextm.SharpSnmpLib.Mib
                 message = "a hyphen cannot be immediately followed by another hyphen in an identifier";
                 return false;
             }
+            
             // TODO: enable this later.
             //            if (name.Contains("_"))
             //            {
             //                message = "underscores are not allowed in identifiers";
             //                return false;
-            //            }
-            
-            message = null;
-            
+            //            } 
             // TODO: SMIv2 forbids "-" except in module names and keywords
+            message = null;
             return true;
         }
     }

@@ -16,9 +16,9 @@ namespace Lextm.SharpSnmpLib.Mib
         private DefinitionType _type;
         private IDictionary<uint, IDefinition> _children = new SortedDictionary<uint, IDefinition>();
 
-        private Definition() 
-        { 
-            _type = DefinitionType.Unknown; 
+        private Definition()
+        {
+            _type = DefinitionType.Unknown;
         }
         
         /// <summary>
@@ -38,14 +38,14 @@ namespace Lextm.SharpSnmpLib.Mib
                 throw new ArgumentNullException("parent");
             }
 
-            uint[] id = string.IsNullOrEmpty(parent.Name) ?                
+            uint[] id = string.IsNullOrEmpty(parent.Name) ?
                 null : parent.GetNumericalForm(); // null for root node
             _id = AppendTo(id, entity.Value);
             _name = entity.Name;
             _module = entity.Module;
             _value = entity.Value;
             parent.Add(this);
-            if (entity.GetType() == typeof(OidValueAssignment)) 
+            if (entity.GetType() == typeof(OidValueAssignment))
             {
                 _type = DefinitionType.OidValueAssignment;
                 return;
@@ -130,21 +130,18 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <summary>
         /// Indexer.
         /// </summary>
-        public IDefinition this[uint index]
+        public IDefinition GetChildAt(uint index)
         {
-            get
+            foreach (IDefinition d in _children.Values)
             {
-                foreach (IDefinition d in _children.Values)
+                uint[] id = d.GetNumericalForm();
+                if (id[id.Length - 1] == index)
                 {
-                    uint[] id = d.GetNumericalForm();
-                    if (id[id.Length - 1] == index)
-                    {
-                        return d;
-                    }                    
+                    return d;
                 }
-                
-                throw new ArgumentOutOfRangeException("index");
             }
+            
+            throw new ArgumentOutOfRangeException("index");
         }
 
         /// <summary>
@@ -201,6 +198,7 @@ namespace Lextm.SharpSnmpLib.Mib
             }
 
             return null;
+            
             // */
 
             /* algorithm 2: put parent locating task outside.

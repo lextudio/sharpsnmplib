@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text;
 
@@ -64,7 +65,7 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             foreach (string key in nameTable.Keys)
             {
-                if (string.CompareOrdinal(key.Split(new string[] {"::"}, StringSplitOptions.None)[1], name) == 0)
+                if (string.CompareOrdinal(key.Split(new string[] { "::" }, StringSplitOptions.None)[1], name) == 0)
                 {
                     return nameTable[key];
                 }
@@ -90,7 +91,7 @@ namespace Lextm.SharpSnmpLib.Mib
             IDefinition temp = root;
             do
             {
-                result = temp[numerical[i]];
+                result = temp.GetChildAt(numerical[i]);
                 temp = result;
                 i++;
             }
@@ -114,7 +115,7 @@ namespace Lextm.SharpSnmpLib.Mib
             watch.Start();           
             _parsed.Add(module.Name, module);
             AddNodes(module); 
-            Lextm.Diagnostics.LoggingService.Debug(watch.Interval.ToString() + "-ms used to assemble " + module.Name);
+            Lextm.Diagnostics.LoggingService.Debug(watch.Value.ToString(CultureInfo.InvariantCulture) + "-ms used to assemble " + module.Name);
             watch.Stop();
             return true;
         }
@@ -130,14 +131,17 @@ namespace Lextm.SharpSnmpLib.Mib
 
             return ((Definition)parent).Add(node);
             // */
+            
             //* algorithm 1
             return root.Add(node);
+            
             // */
         }
 
         private void AddNodes(MibModule module)
         {
             var pendingNodes = new List<IEntity>();
+            
             // parse all direct nodes.
             foreach (IEntity node in module.Entities)
             {
@@ -190,6 +194,7 @@ namespace Lextm.SharpSnmpLib.Mib
 
                         AddToTable(result);                        
                     }
+                    
                     parsed.Add(node);
                 }
                 
@@ -218,6 +223,7 @@ namespace Lextm.SharpSnmpLib.Mib
             {
                 firstNode = null;
             }
+            
             return firstNode != null;
         }
 
@@ -231,6 +237,7 @@ namespace Lextm.SharpSnmpLib.Mib
             {
                 all[j] = rootId[j];
             }
+            
             // change all to numerical
             for (int i = 1; i < content.Length; i++)
             {
@@ -255,6 +262,7 @@ namespace Lextm.SharpSnmpLib.Mib
                     }
 
                     IDefinition subroot = Find(ExtractParent(all, currentCursor));
+                    
                     // if not, create Prefix node.
                     IEntity prefix = new OidValueAssignment(module, subroot.Name + "Prefix", subroot.Name, value);
                     node = CreateSelf(prefix);
@@ -281,6 +289,7 @@ namespace Lextm.SharpSnmpLib.Mib
             {
                 result[i] = input[i];
             }
+            
             return result;
         }        
         
@@ -310,6 +319,7 @@ namespace Lextm.SharpSnmpLib.Mib
                     {
                         parsed.Add(pending.Name);
                     }
+                    
                     // Console.WriteLine("LoadFile(new StreamReader(new MemoryStream(Resource." + pending.Name + ")));");
                 }
 
@@ -319,13 +329,14 @@ namespace Lextm.SharpSnmpLib.Mib
                 }
 
                 current = _pendings.Count;
-                Lextm.Diagnostics.LoggingService.Debug(current.ToString() + " pending after " + watch.Value.ToString() + "-ms");
+                Lextm.Diagnostics.LoggingService.Debug(current.ToString(CultureInfo.InvariantCulture) + " pending after " + watch.Value.ToString(CultureInfo.InvariantCulture) + "-ms");
                 if (current == previous)
                 {
                     // cannot parse more
                     break;
                 }
             }
+            
             watch.Stop();
             Lextm.Diagnostics.LoggingService.LeaveMethod();
         }

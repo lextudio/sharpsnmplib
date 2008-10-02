@@ -25,6 +25,7 @@ namespace Lextm.SharpSnmpLib.Mib
         public Sequence(string module, string name, Lexer lexer)
         {
             Symbol temp;
+            
             // parse between ( )
             temp = lexer.NextNonEOLSymbol; 
             int bracketSection = 0;

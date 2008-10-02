@@ -23,17 +23,19 @@ namespace Lextm.SharpSnmpLib.Mib
                     while ((temp = lexer.NextNonEOLSymbol) != Symbol.CloseBracket)
                     {
                     }
+                    
                     return;
                 }
+                
                 // parse between ( )
                 if (temp == Symbol.OpenParentheses)
                 {
                     while ((temp = lexer.NextNonEOLSymbol) != Symbol.CloseParentheses)
                     {
                     }
+                    
                     return;
-                }
-                
+                }                
             }
             else if (temp == Symbol.Integer)
             {
@@ -44,17 +46,19 @@ namespace Lextm.SharpSnmpLib.Mib
                     while ((temp = lexer.NextNonEOLSymbol) != Symbol.CloseBracket)
                     {
                     }
+                    
                     return;
                 }
+                
                 // parse between ( )
                 if (temp == Symbol.OpenParentheses)
                 {
                     while ((temp = lexer.NextNonEOLSymbol) != Symbol.CloseParentheses)
                     {
                     }
+                    
                     return;
-                }
-                
+                }                
             }
             else if (temp == Symbol.Octet)
             {

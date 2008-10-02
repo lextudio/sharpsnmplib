@@ -191,8 +191,10 @@ namespace Lextm.SharpSnmpLib.Mib
                         {
                             ParseLastSymbol(file, list, ref temp, row, column);
                         }
+                        
                         assignSection = true;
                     }
+                    
                     if (current == '=' && !stringSection)
                     {
                         assignSection = false; 

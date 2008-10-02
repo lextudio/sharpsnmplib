@@ -29,7 +29,8 @@ namespace Lextm.SharpSnmpLib.Mib
             {
                 while ((temp = lexer.NextSymbol) != Symbol.CloseBracket)
                 {
-                }                
+                }     
+                
                 return;
             }
             
@@ -37,7 +38,8 @@ namespace Lextm.SharpSnmpLib.Mib
             {
                 while ((temp = lexer.NextSymbol) != Symbol.CloseParentheses)
                 {
-                }                
+                }  
+                
                 return;
             }
             

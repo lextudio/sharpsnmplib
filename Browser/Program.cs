@@ -8,7 +8,9 @@
  */
 
 using System;
+using System.IO;
 using System.Windows.Forms;
+
 using Lextm.Diagnostics;
 
 namespace Lextm.SharpSnmpLib.Browser
@@ -24,7 +26,11 @@ namespace Lextm.SharpSnmpLib.Browser
 		[STAThread]
 		private static void Main(string[] args)
 		{
-            LoggingService.Start("logging.exe.config");
+		    if (File.Exists("logging.exe.config"))
+		    {
+		        LoggingService.Start("logging.exe.config");
+		    }
+            
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 			Application.Run(new MainForm());

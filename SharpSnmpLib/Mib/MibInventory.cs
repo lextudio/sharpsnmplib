@@ -25,6 +25,7 @@ namespace Lextm.SharpSnmpLib.Mib
         public MibInventory(ObjectRegistry registry)
         {
             _registry = registry;
+            
             // User loaded MIBS
             if (Directory.Exists(folder))
             {
@@ -33,14 +34,14 @@ namespace Lextm.SharpSnmpLib.Mib
                 {
                     Import(file);
                 }
+                
                 _registry.Refresh();
             }
         }
 
         private void Import(string file)
         {
-            Compiler compiler = new Compiler();
-            var modules = compiler.Compile(file);
+            var modules = Compiler.Compile(file);
             foreach (MibModule module in modules)
             {
                 if (!_moduleTable.ContainsKey(module.Name)) 
@@ -48,6 +49,7 @@ namespace Lextm.SharpSnmpLib.Mib
                     _moduleTable.Add(module.Name, file);
                 }                
             }
+            
             _registry.Import(modules);
         }
         
@@ -64,6 +66,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 {
                     throw new ArgumentException("no such module: " + module, "module");
                 }
+                
                 return _moduleTable[module];
             }
         }
@@ -74,6 +77,7 @@ namespace Lextm.SharpSnmpLib.Mib
             {
                 AddFileInner(file);
             }
+            
             _registry.Refresh();
         }
         
@@ -83,31 +87,37 @@ namespace Lextm.SharpSnmpLib.Mib
             _registry.Refresh();
         }
 
-        void AddFileInner(string orig)
+        private void AddFileInner(string orig)
         {
-            if (orig == null) {
+            if (orig == null) 
+            {
                 throw new ArgumentNullException("orig");
             }
 
-            if (orig.Length == 0) {
-                throw new ArgumentNullException("orig cannot be empty", "orig");
+            if (orig.Length == 0) 
+            {
+                throw new ArgumentException("orig cannot be empty", "orig");
             }
 
-            if (!_existing.Contains(orig)) {
+            if (!_existing.Contains(orig)) 
+            {
                 _existing.Add(orig);
             }
 
-            if (!Directory.Exists(folder)) {
+            if (!Directory.Exists(folder))
+            {
                 Directory.CreateDirectory(folder);
             }
 
             string fileName = Path.Combine(folder, Path.GetFileName(orig));
-            if (!File.Exists(fileName)) {
+            if (!File.Exists(fileName)) 
+            {
                 File.Copy(orig, fileName);
             }
 
             Import(orig);
         }
+        
         /// <summary>
         /// Removes a MIB file.
         /// </summary>
@@ -119,6 +129,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 _existing.Remove(file);
                 File.Delete(file);
             }
+            
             // TODO: We also need to figure out how to remove the mibs we just took out!
         }
     }

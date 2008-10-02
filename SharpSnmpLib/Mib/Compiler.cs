@@ -8,6 +8,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 
 namespace Lextm.SharpSnmpLib.Mib
@@ -15,9 +16,9 @@ namespace Lextm.SharpSnmpLib.Mib
     /// <summary>
     /// Description of Compiler.
     /// </summary>
-    internal sealed class Compiler
+    internal static class Compiler
     {       
-        public IList<MibModule> CompileFolder(string folder, string pattern)
+        public static IList<MibModule> CompileFolder(string folder, string pattern)
         {
             if (folder == null)
             {
@@ -48,23 +49,23 @@ namespace Lextm.SharpSnmpLib.Mib
             Lextm.Diagnostics.Stopwatch watch = new Lextm.Diagnostics.Stopwatch();
             watch.Start();
 
-
             var modules = new List<MibModule>();
             foreach (string file in Directory.GetFiles(folder, pattern))
             {
                 modules.AddRange(Compile(file));
             }
                         
-            Lextm.Diagnostics.LoggingService.Debug(modules.Count + " modules parsed after " + watch.Value.ToString() + "-ms");
+            Lextm.Diagnostics.LoggingService.Debug(modules.Count.ToString(CultureInfo.InvariantCulture) + " modules parsed after " + watch.Value.ToString(CultureInfo.InvariantCulture) + "-ms");
             watch.Stop();
             Lextm.Diagnostics.LoggingService.LeaveMethod();
             return modules;
         }
+        
         /// <summary>
         /// Loads a MIB file.
         /// </summary>
         /// <param name="fileName">File name</param>
-        public IList<MibModule> Compile(string fileName)
+        public static IList<MibModule> Compile(string fileName)
         {
             if (fileName == null)
             {
@@ -84,7 +85,7 @@ namespace Lextm.SharpSnmpLib.Mib
             return Compile(fileName, File.OpenText(fileName));
         }
         
-        internal IList<MibModule> Compile(string file, TextReader stream)
+        internal static IList<MibModule> Compile(string file, TextReader stream)
         {
             try
             {
@@ -96,7 +97,7 @@ namespace Lextm.SharpSnmpLib.Mib
             }            
         }
 
-        internal IList<MibModule> Compile(TextReader stream)
+        internal static IList<MibModule> Compile(TextReader stream)
         {
             return Compile(string.Empty, stream);
         }
@@ -108,7 +109,7 @@ namespace Lextm.SharpSnmpLib.Mib
             Lexer lexer = new Lexer();
             lexer.Parse(file, stream);
             MibDocument doc = new MibDocument(lexer);
-            Lextm.Diagnostics.LoggingService.Debug(watch.Value.ToString() + "-ms used to parse " + file);
+            Lextm.Diagnostics.LoggingService.Debug(watch.Value.ToString(CultureInfo.InvariantCulture) + "-ms used to parse " + file);
             watch.Stop();
             return doc.Modules;
         }
