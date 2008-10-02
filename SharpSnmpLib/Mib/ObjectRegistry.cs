@@ -67,81 +67,80 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             Compiler compiler = new Compiler();
             // SMI v2
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.SNMPv2_SMI)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.SNMPv2_CONF)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.SNMPv2_TC)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.SNMPv2_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.SNMPv2_TM)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.HCNUM_TC)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.IANA_ADDRESS_FAMILY_NUMBERS_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.IANA_LANGUAGE_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.IANA_RTPROTO_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.IANAifType_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.IF_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.EtherLike_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.HOST_RESOURCES_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.HOST_RESOURCES_TYPES)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.IF_INVERTED_STACK_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.INET_ADDRESS_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.IP_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.IP_FORWARD_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.IPV6_FLOW_LABEL_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.IPV6_TC)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.IPV6_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.IPV6_ICMP_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.IPV6_TCP_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.IPV6_UDP_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.NET_SNMP_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.NET_SNMP_MONITOR_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.NET_SNMP_TC)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.NET_SNMP_SYSTEM_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.RMON_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.SNMP_FRAMEWORK_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.AGENTX_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.DISMAN_EXPRESSION_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.DISMAN_NSLOOKUP_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.DISMAN_PING_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.DISMAN_SCHEDULE_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.DISMAN_SCRIPT_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.DISMAN_TRACEROUTE_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.NET_SNMP_EXAMPLES_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.NET_SNMP_AGENT_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.NET_SNMP_EXTEND_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.NETWORK_SERVICES_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.NOTIFICATION_LOG_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.MTA_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.SNMP_MPD_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.SNMP_TARGET_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.SNMP_PROXY_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.SNMP_COMMUNITY_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.DISMAN_EVENT_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.SNMP_NOTIFICATION_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.SNMP_USER_BASED_SM_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.SNMP_USM_AES_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.SNMP_USM_DH_OBJECTS_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.SNMP_VIEW_BASED_ACM_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.NET_SNMP_VACM_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.TCP_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.TRANSPORT_ADDRESS_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.TUNNEL_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.UCD_SNMP_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.UCD_IPFWACC_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.UCD_IPFILTER_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.UCD_DLMOD_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.UCD_DISKIO_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.LM_SENSORS_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.UCD_DEMO_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.UCD_SNMP_MIB_OLD)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.UDP_MIB)));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.SNMPv2_SMI))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.SNMPv2_CONF))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.SNMPv2_TC))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.SNMPv2_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.SNMPv2_TM))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.HCNUM_TC))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.IANA_ADDRESS_FAMILY_NUMBERS_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.IANA_LANGUAGE_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.IANA_RTPROTO_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.IANAifType_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.IF_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.EtherLike_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.HOST_RESOURCES_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.HOST_RESOURCES_TYPES))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.IF_INVERTED_STACK_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.INET_ADDRESS_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.IP_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.IP_FORWARD_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.IPV6_FLOW_LABEL_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.IPV6_TC))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.IPV6_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.IPV6_ICMP_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.IPV6_TCP_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.IPV6_UDP_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.NET_SNMP_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.NET_SNMP_MONITOR_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.NET_SNMP_TC))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.NET_SNMP_SYSTEM_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.RMON_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.SNMP_FRAMEWORK_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.AGENTX_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.DISMAN_EXPRESSION_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.DISMAN_NSLOOKUP_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.DISMAN_PING_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.DISMAN_SCHEDULE_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.DISMAN_SCRIPT_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.DISMAN_TRACEROUTE_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.NET_SNMP_EXAMPLES_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.NET_SNMP_AGENT_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.NET_SNMP_EXTEND_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.NETWORK_SERVICES_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.NOTIFICATION_LOG_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.MTA_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.SNMP_MPD_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.SNMP_TARGET_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.SNMP_PROXY_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.SNMP_COMMUNITY_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.DISMAN_EVENT_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.SNMP_NOTIFICATION_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.SNMP_USER_BASED_SM_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.SNMP_USM_AES_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.SNMP_USM_DH_OBJECTS_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.SNMP_VIEW_BASED_ACM_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.NET_SNMP_VACM_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.TCP_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.TRANSPORT_ADDRESS_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.TUNNEL_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.UCD_SNMP_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.UCD_IPFWACC_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.UCD_IPFILTER_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.UCD_DLMOD_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.UCD_DISKIO_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.LM_SENSORS_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.UCD_DEMO_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.UCD_SNMP_MIB_OLD))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.UDP_MIB))));
             
             // SMI v1
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.RFC_1215)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.RFC1155_SMI)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.RFC_1212)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.SMUX_MIB)));
-            compiler.Compile(new StreamReader(new MemoryStream(Resource.RFC1213_MIB)));
-            
-            Import(compiler.Modules);
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.RFC_1215))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.RFC1155_SMI))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.RFC_1212))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.SMUX_MIB))));
+            Import(compiler.Compile(new StreamReader(new MemoryStream(Resource.RFC1213_MIB))));
+
             Refresh();
         }
         
@@ -332,9 +331,8 @@ namespace Lextm.SharpSnmpLib.Mib
             Compiler compiler = new Compiler();
             foreach (string fileName in fileNames)
             {
-                compiler.Compile(fileName);
+                Import(compiler.Compile(fileName));
             }
-            Import(compiler.Modules);
             Refresh();
         }
         
@@ -360,8 +358,7 @@ namespace Lextm.SharpSnmpLib.Mib
             }
             
             Compiler compiler = new Compiler();
-            compiler.Compile(fileName);
-            Import(compiler.Modules);
+            Import(compiler.Compile(fileName));
             Refresh();
         }
      

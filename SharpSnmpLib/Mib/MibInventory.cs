@@ -40,15 +40,15 @@ namespace Lextm.SharpSnmpLib.Mib
         private void Import(string file)
         {
             Compiler compiler = new Compiler();
-            compiler.Compile(file);
-            foreach (MibModule module in compiler.Modules)
+            var modules = compiler.Compile(file);
+            foreach (MibModule module in modules)
             {
                 if (!_moduleTable.ContainsKey(module.Name)) 
                 {
                     _moduleTable.Add(module.Name, file);
                 }                
             }
-            _registry.Import(compiler.Modules);
+            _registry.Import(modules);
         }
         
         public bool Contains(string module)

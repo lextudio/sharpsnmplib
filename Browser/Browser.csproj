@@ -36,6 +36,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\Crad.Windows.Forms.Actions.dll</HintPath>
     </Reference>
+    <Reference Include="Lextm.Common, Version=7.0.10915.9, Culture=neutral, PublicKeyToken=c9f74e83ea524d7c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\grapevine\trunk\bin\Debug\Lextm.Common.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />

@@ -16,13 +16,7 @@ namespace Lextm.SharpSnmpLib.Mib
     /// Description of Compiler.
     /// </summary>
     internal sealed class Compiler
-    {
-        private IList<MibModule> _modules = new List<MibModule>();
-        
-        public IList<MibModule> Modules {
-            get { return _modules; }
-        }
-        
+    {       
         public IList<MibModule> CompileFolder(string folder, string pattern)
         {
             if (folder == null)
@@ -50,12 +44,21 @@ namespace Lextm.SharpSnmpLib.Mib
                 throw new ArgumentException("pattern cannot be empty");
             }
 
+            Lextm.Diagnostics.LoggingService.EnterMethod();
+            Lextm.Diagnostics.Stopwatch watch = new Lextm.Diagnostics.Stopwatch();
+            watch.Start();
+
+
+            var modules = new List<MibModule>();
             foreach (string file in Directory.GetFiles(folder, pattern))
             {
-                Compile(file);
+                modules.AddRange(Compile(file));
             }
-            
-            return Modules;
+                        
+            Lextm.Diagnostics.LoggingService.Debug(modules.Count + " modules parsed after " + watch.Value.ToString() + "-ms");
+            watch.Stop();
+            Lextm.Diagnostics.LoggingService.LeaveMethod();
+            return modules;
         }
         /// <summary>
         /// Loads a MIB file.
@@ -85,12 +88,7 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             try
             {
-                var result = CompileToModules(file, stream);
-                foreach (MibModule module in result)
-                {
-                    _modules.Add(module);
-                }
-                return result;
+                return CompileToModules(file, stream);
             }
             finally
             {
@@ -100,14 +98,18 @@ namespace Lextm.SharpSnmpLib.Mib
 
         internal IList<MibModule> Compile(TextReader stream)
         {
-            return Compile(null, stream);
+            return Compile(string.Empty, stream);
         }
         
         private static IList<MibModule> CompileToModules(string file, TextReader stream)
         {
+            Lextm.Diagnostics.Stopwatch watch = new Lextm.Diagnostics.Stopwatch();
+            watch.Start();
             Lexer lexer = new Lexer();
             lexer.Parse(file, stream);
             MibDocument doc = new MibDocument(lexer);
+            Lextm.Diagnostics.LoggingService.Debug(watch.Value.ToString() + "-ms used to parse " + file);
+            watch.Stop();
             return doc.Modules;
         }
     }

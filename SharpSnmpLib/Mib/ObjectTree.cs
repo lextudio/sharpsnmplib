@@ -21,9 +21,9 @@ namespace Lextm.SharpSnmpLib.Mib
         public ObjectTree()
         {
             root = Definition.RootDefinition;
-            IDefinition ccitt = Definition.ToDefinition(new OidValueAssignment("SNMPv2-SMI", "ccitt", null, 0), root);
-            IDefinition iso = Definition.ToDefinition(new OidValueAssignment("SNMPv2-SMI", "iso", null, 1), root);
-            IDefinition joint_iso_ccitt = Definition.ToDefinition(new OidValueAssignment("SNMPv2-SMI", "joint-iso-ccitt", null, 2), root);
+            IDefinition ccitt = new Definition(new OidValueAssignment("SNMPV2-SMI", "ccitt", null, 0), root);
+            IDefinition iso = new Definition(new OidValueAssignment("SNMPV2-SMI", "iso", null, 1), root);
+            IDefinition joint_iso_ccitt = new Definition(new OidValueAssignment("SNMPV2-SMI", "joint-iso-ccitt", null, 2), root);
             nameTable = new Dictionary<string, IDefinition>()
             {
                 {
@@ -109,10 +109,30 @@ namespace Lextm.SharpSnmpLib.Mib
             {
                 return true;
             }
-            
+
+            Lextm.Diagnostics.Stopwatch watch = new Lextm.Diagnostics.Stopwatch();
+            watch.Start();           
             _parsed.Add(module.Name, module);
-            AddNodes(module);
+            AddNodes(module); 
+            Lextm.Diagnostics.LoggingService.Debug(watch.Interval.ToString() + "-ms used to assemble " + module.Name);
+            watch.Stop();
             return true;
+        }
+
+        private IDefinition CreateSelf(IEntity node)
+        {
+            /* algorithm 2
+            IDefinition parent = Find(node.Parent);
+            if (parent == null)
+            {
+                return null;
+            } 
+
+            return ((Definition)parent).Add(node);
+            // */
+            //* algorithm 1
+            return root.Add(node);
+            // */
         }
 
         private void AddNodes(MibModule module)
@@ -126,8 +146,8 @@ namespace Lextm.SharpSnmpLib.Mib
                     pendingNodes.Add(node);
                     continue;
                 }
-
-                IDefinition result = root.Add(node);
+                
+                IDefinition result = CreateSelf(node);
                 if (result == null)
                 {
                     pendingNodes.Add(node);
@@ -157,11 +177,11 @@ namespace Lextm.SharpSnmpLib.Mib
                         // create all place holders.
                         IDefinition unknown = CreateExtraNodes(module.Name, node.Parent);
                         node.Parent = unknown.Name;
-                        AddToTable(root.Add(node));
+                        AddToTable(CreateSelf(node));
                     }
                     else
                     {
-                        IDefinition result = root.Add(node);
+                        IDefinition result = CreateSelf(node);
                         if (result == null)
                         {
                             // wait for parent
@@ -188,7 +208,7 @@ namespace Lextm.SharpSnmpLib.Mib
 
         private bool FirstNodeExists(IEntity node)
         {
-            string first = ExtractName(node.Parent.Split('.')[0]);
+            string first = StringUtility.ExtractName(node.Parent.Split('.')[0]);
             IDefinition firstNode;
             try
             {
@@ -204,7 +224,7 @@ namespace Lextm.SharpSnmpLib.Mib
         private IDefinition CreateExtraNodes(string module, string longParent)
         {
             string[] content = longParent.Split('.');
-            IDefinition node = Find(ExtractName(content[0]));
+            IDefinition node = Find(StringUtility.ExtractName(content[0]));
             uint[] rootId = node.GetNumericalForm();
             uint[] all = new uint[content.Length + rootId.Length - 1];
             for (int j = 0; j < rootId.Length; j++)
@@ -237,15 +257,15 @@ namespace Lextm.SharpSnmpLib.Mib
                     IDefinition subroot = Find(ExtractParent(all, currentCursor));
                     // if not, create Prefix node.
                     IEntity prefix = new OidValueAssignment(module, subroot.Name + "Prefix", subroot.Name, value);
-                    node = root.Add(prefix);
+                    node = CreateSelf(prefix);
                     AddToTable(node);
                 }
                 else
                 {
                     string self = content[i];
                     string parent = content[i - 1];
-                    IEntity extra = new OidValueAssignment(module, ExtractName(self), ExtractName(parent), ExtractValue(self));
-                    node = root.Add(extra);
+                    IEntity extra = new OidValueAssignment(module, StringUtility.ExtractName(self), StringUtility.ExtractName(parent), StringUtility.ExtractValue(self));
+                    node = CreateSelf(extra);
                     AddToTable(node);
                     all[currentCursor] = node.Value;
                 }
@@ -262,25 +282,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 result[i] = input[i];
             }
             return result;
-        }
-        
-        internal static string ExtractName(string input)
-        {
-            int left = input.IndexOf('(');
-            return left == -1? input : input.Substring(0, left);
-        }
-        
-        internal static uint ExtractValue(string input)
-        {
-            int left = input.IndexOf('(');
-            int right = input.IndexOf(')');
-            if (left >= right)
-            {
-                throw new FormatException("input does not contain a value");
-            }
-            
-            return uint.Parse(input.Substring(left + 1, right - left - 1));
-        }
+        }        
         
         private void AddToTable(IDefinition result)
         {
@@ -292,6 +294,9 @@ namespace Lextm.SharpSnmpLib.Mib
         
         internal void Refresh()
         {
+            Lextm.Diagnostics.LoggingService.EnterMethod();
+            Lextm.Diagnostics.Stopwatch watch = new Lextm.Diagnostics.Stopwatch();
+            watch.Start();
             int previous;
             int current = _pendings.Count;
             while (current != 0)
@@ -314,12 +319,15 @@ namespace Lextm.SharpSnmpLib.Mib
                 }
 
                 current = _pendings.Count;
+                Lextm.Diagnostics.LoggingService.Debug(current.ToString() + " pending after " + watch.Value.ToString() + "-ms");
                 if (current == previous)
                 {
                     // cannot parse more
                     break;
                 }
             }
+            watch.Stop();
+            Lextm.Diagnostics.LoggingService.LeaveMethod();
         }
 
         internal void Import(IEnumerable<MibModule> modules)
@@ -328,7 +336,8 @@ namespace Lextm.SharpSnmpLib.Mib
             {
                 if (_pendings.ContainsKey(module.Name))
                 {
-                    _pendings.Remove(module.Name); // always add new module
+                    // _pendings.Remove(module.Name); // always add new module
+                    continue;
                 }
                 
                 _pendings.Add(module.Name, module);
@@ -340,10 +349,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// </summary>
         public ICollection<string> LoadedModules
         {
-            get
-            {
-                return _parsed.Keys;
-            }
+            get { return _parsed.Keys; }
         }
         
         /// <summary>
@@ -351,10 +357,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// </summary>
         public ICollection<string> PendingModules
         {
-            get
-            {
-                return _pendings.Keys;
-            }
+            get { return _pendings.Keys; }
         }
     }
 }

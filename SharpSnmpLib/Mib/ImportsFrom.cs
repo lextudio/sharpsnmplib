@@ -37,7 +37,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 previous = temp;
             }
             
-            _module = lexer.NextSymbol.ToString();
+            _module = lexer.NextSymbol.ToString().ToUpperInvariant(); // module names are uppercase
         }
         
         public string Module

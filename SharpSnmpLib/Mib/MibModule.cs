@@ -8,6 +8,7 @@
  */
 
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
@@ -28,7 +29,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <param name="lexer">Lexer</param>
         public MibModule(string name, Lexer lexer)
         {
-            _name = name;
+            _name = name.ToUpperInvariant(); // all module name are uppercase.
             Symbol temp = lexer.NextNonEOLSymbol;
             ConstructHelper.Expect(temp, Symbol.Definitions);
             temp = lexer.NextNonEOLSymbol;
@@ -248,13 +249,30 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             foreach (string dependent in module.Dependents)
             {
-                if (!modules.ContainsKey(dependent))
+                if (!DependentFound(dependent, modules))
                 {
                     return false;
                 }
             }
             
             return true;
+        }
+        
+        private static bool DependentFound(string dependent, IDictionary<string, MibModule> modules)
+        {
+            const string pattern = "-V[0-9]+$";
+            if (!Regex.IsMatch(dependent, pattern))
+            {
+                return modules.ContainsKey(dependent);
+            }
+
+            if (modules.ContainsKey(dependent))
+            {
+                return true;
+            }
+            
+            string dependentNonVersion = Regex.Replace(dependent, pattern, string.Empty);
+            return modules.ContainsKey(dependentNonVersion);
         }
     }
 }

@@ -260,7 +260,7 @@ namespace Lextm.SharpSnmpLib.Tests
                 reader.Close();
             }
             MibDocument file = new MibDocument(lexer);
-            Assert.AreEqual("ArrayManager-MIB", file.Modules[0].Name);
+            Assert.AreEqual("ArrayManager-MIB".ToUpperInvariant(), file.Modules[0].Name);
             Assert.AreEqual(4, file.Modules[0].Dependents.Count);
             Assert.AreEqual(380, file.Modules[0].Entities.Count);
             IEntity node = file.Modules[0].Entities[379];
@@ -1242,7 +1242,7 @@ namespace Lextm.SharpSnmpLib.Tests
             }
             MibDocument file = new MibDocument(lexer);
             Assert.AreEqual(1, file.Modules.Count);
-            Assert.AreEqual("EtherLike-MIB", file.Modules[0].Name);
+            Assert.AreEqual("EtherLike-MIB".ToUpperInvariant(), file.Modules[0].Name);
             Assert.AreEqual(76, file.Modules[0].Entities.Count);
             IEntity node = file.Modules[0].Entities[75];
             Assert.AreEqual("etherRateControlGroup", node.Name);
@@ -1585,7 +1585,7 @@ namespace Lextm.SharpSnmpLib.Tests
             }
             MibDocument file = new MibDocument(lexer);
             Assert.AreEqual(1, file.Modules.Count);
-            Assert.AreEqual("SNMPv2-CONF", file.Modules[0].Name);
+            Assert.AreEqual("SNMPv2-CONF".ToUpperInvariant(), file.Modules[0].Name);
             Assert.AreEqual(0, file.Modules[0].Entities.Count);
         }
         [Test]
@@ -1600,7 +1600,7 @@ namespace Lextm.SharpSnmpLib.Tests
             }
             MibDocument file = new MibDocument(lexer);
             Assert.AreEqual(1, file.Modules.Count);
-            Assert.AreEqual("SNMPv2-TC", file.Modules[0].Name);
+            Assert.AreEqual("SNMPv2-TC".ToUpperInvariant(), file.Modules[0].Name);
             Assert.AreEqual(0, file.Modules[0].Entities.Count);
         }
         
@@ -1616,7 +1616,7 @@ namespace Lextm.SharpSnmpLib.Tests
             }
             MibDocument file = new MibDocument(lexer);
             Assert.AreEqual(1, file.Modules.Count);
-            Assert.AreEqual("SNMPv2-SMI", file.Modules[0].Name);
+            Assert.AreEqual("SNMPv2-SMI".ToUpperInvariant(), file.Modules[0].Name);
             Assert.AreEqual(16, file.Modules[0].Entities.Count);
             IEntity node = file.Modules[0].Entities[15];
             Assert.AreEqual("zeroDotZero", node.Name);
@@ -1635,7 +1635,7 @@ namespace Lextm.SharpSnmpLib.Tests
                 reader.Close();
             }
             MibDocument file = new MibDocument(lexer);
-            Assert.AreEqual("SNMPv2-MIB", file.Modules[0].Name);
+            Assert.AreEqual("SNMPv2-MIB".ToUpperInvariant(), file.Modules[0].Name);
             Assert.AreEqual(3, file.Modules[0].Dependents.Count);
             Assert.AreEqual(70, file.Modules[0].Entities.Count);
             IEntity node = file.Modules[0].Entities[69];
@@ -1655,7 +1655,7 @@ namespace Lextm.SharpSnmpLib.Tests
                 reader.Close();
             }
             MibDocument file = new MibDocument(lexer);
-            Assert.AreEqual("IANAifType-MIB", file.Modules[0].Name);
+            Assert.AreEqual("IANAifType-MIB".ToUpperInvariant(), file.Modules[0].Name);
             Assert.AreEqual(2, file.Modules[0].Dependents.Count);
             Assert.AreEqual(1, file.Modules[0].Entities.Count);
             IEntity node = file.Modules[0].Entities[0];
@@ -1732,7 +1732,7 @@ namespace Lextm.SharpSnmpLib.Tests
                 reader.Close();
             }
             MibDocument file = new MibDocument(lexer);
-            Assert.AreEqual("SNMPv2-TM", file.Modules[0].Name);
+            Assert.AreEqual("SNMPv2-TM".ToUpperInvariant(), file.Modules[0].Name);
             Assert.AreEqual(2, file.Modules[0].Dependents.Count);
             Assert.AreEqual(8, file.Modules[0].Entities.Count);
             IEntity node = file.Modules[0].Entities[7];

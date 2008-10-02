@@ -26,8 +26,18 @@ namespace Lextm.SharpSnmpLib.Mib
         /// </summary>
         /// <param name="parent"></param>
         /// <param name="entity"></param>
-        internal Definition(Definition parent, IEntity entity)
+        internal Definition(IEntity entity, Definition parent)
         {
+            if (entity == null)
+            {
+                throw new ArgumentNullException("entity");
+            }
+
+            if (parent == null)
+            {
+                throw new ArgumentNullException("parent");
+            }
+
             uint[] id = string.IsNullOrEmpty(parent.Name) ?                
                 null : parent.GetNumericalForm(); // null for root node
             _id = AppendTo(id, entity.Value);
@@ -175,21 +185,31 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <returns></returns>
         public IDefinition Add(IEntity node)
         {
-            if (_name == node.Parent) 
+            //* algorithm 1: recursive
+            if (_name == node.Parent)
             {
-                return ToDefinition(node, this);
+                return new Definition(node, this);
             }
-            
+
             foreach (Definition d in _children.Values)
             {
                 IDefinition result = d.Add(node);
-                if (result != null) 
+                if (result != null)
                 {
                     return result;
                 }
             }
-            
+
             return null;
+            // */
+
+            /* algorithm 2: put parent locating task outside.
+            if (_name != node.Parent)
+            {
+                throw new ArgumentException("this node is not child of mine", "node");
+            }
+            return new Definition(node, this);
+            // */
         }
         
         /// <summary>
@@ -202,21 +222,6 @@ namespace Lextm.SharpSnmpLib.Mib
             {
                 _children.Add(def.Value, def);
             }
-        }
-
-        internal static IDefinition ToDefinition(IEntity entity, Definition parent)
-        {
-            if (entity == null)
-            {
-                throw new ArgumentNullException("entity");
-            }
-            
-            if (parent == null)
-            {
-                throw new ArgumentNullException("parent");
-            }
-            
-            return new Definition(parent, entity);
         }
         
         internal static uint[] AppendTo(uint[] parentId, uint value)

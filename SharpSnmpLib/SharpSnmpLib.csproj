@@ -45,6 +45,10 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <Import Project="Microsoft.VersionNumber.targets" Condition=" '$(Configuration)' == 'Debug' " />
   <ItemGroup>
+    <Reference Include="Lextm.Common, Version=7.0.10915.9, Culture=neutral, PublicKeyToken=c9f74e83ea524d7c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\grapevine\trunk\bin\Debug\Lextm.Common.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -113,6 +117,7 @@
     <Compile Include="Mib\ObjectType.cs" />
     <Compile Include="Mib\OidValueAssignment.cs" />
     <Compile Include="Mib\Sequence.cs" />
+    <Compile Include="Mib\StringUtility.cs" />
     <Compile Include="Mib\TextualConvention.cs" />
     <Compile Include="Mib\TrapType.cs" />
     <Compile Include="Mib\TypeAssignment.cs" />
