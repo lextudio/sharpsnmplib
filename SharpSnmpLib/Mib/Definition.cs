@@ -12,6 +12,7 @@ namespace Lextm.SharpSnmpLib.Mib
         private uint[] _id;
         private string _name;
         private string _module;
+        private string _parent;
         private uint _value;
         private DefinitionType _type;
         private IDictionary<uint, IDefinition> _children = new SortedDictionary<uint, IDefinition>();
@@ -19,6 +20,15 @@ namespace Lextm.SharpSnmpLib.Mib
         private Definition()
         {
             _type = DefinitionType.Unknown;
+        }
+        
+        internal Definition(uint[] id, string name, string parent, string module)
+        {
+            _id = id;
+            _name = name;
+            _parent = parent;
+            _module = module;
+            _value = id[id.Length - 1];
         }
         
         /// <summary>
@@ -41,10 +51,11 @@ namespace Lextm.SharpSnmpLib.Mib
             uint[] id = string.IsNullOrEmpty(parent.Name) ?
                 null : parent.GetNumericalForm(); // null for root node
             _id = AppendTo(id, entity.Value);
+            _parent = parent.Name;
             _name = entity.Name;
-            _module = entity.Module;
+            _module = entity.ModuleName;
             _value = entity.Value;
-            parent.Add(this);
+            parent.Append(this);
             if (entity.GetType() == typeof(OidValueAssignment))
             {
                 _type = DefinitionType.OidValueAssignment;
@@ -83,10 +94,13 @@ namespace Lextm.SharpSnmpLib.Mib
         /// </summary>
         public uint Value
         {
-            get
-            {
-                return _value;
-            }
+            get { return _value; }
+        }
+        
+        public string Parent
+        {
+            get { return _parent; }
+            set {}
         }
         
         /// <summary>
@@ -94,26 +108,17 @@ namespace Lextm.SharpSnmpLib.Mib
         /// </summary>
         public IEnumerable<IDefinition> Children
         {
-            get
-            {
-                return _children.Values;
-            }
+            get { return _children.Values; }
         }
 
         public DefinitionType Type
         {
-            get
-            {
-                return _type;
-            }
+            get { return _type; }
         }
 
         internal static Definition RootDefinition
         {
-            get
-            {
-                return new Definition();
-            }
+            get { return new Definition(); }
         }
         
         /// <summary>
@@ -121,10 +126,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// </summary>
         public string TextualForm
         {
-            get
-            {
-                return _module + "::" + _name;
-            }
+            get { return _module + "::" + _name; }
         }
 
         /// <summary>
@@ -149,10 +151,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// </summary>
         public string ModuleName
         {
-            get
-            {
-                return _module;
-            }
+            get { return _module; }
         }
         
         /// <summary>
@@ -160,10 +159,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// </summary>
         public string Name
         {
-            get
-            {
-                return _name;
-            }
+            get { return _name; }
         }
         
         /// <summary>
@@ -214,7 +210,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// Adds a <see cref="Definition"/> child to this <see cref="Definition"/>.
         /// </summary>
         /// <param name="def"></param>
-        private void Add(IDefinition def)
+        internal void Append(IDefinition def)
         {
             if (!_children.ContainsKey(def.Value))
             {
@@ -227,6 +223,17 @@ namespace Lextm.SharpSnmpLib.Mib
             List<uint> n = parentId == null ? new List<uint>() : new List<uint>(parentId);
             n.Add(value);
             return n.ToArray();
+        }
+        
+        internal static uint[] GetParent(IDefinition definition)
+        {
+            uint[] self = definition.GetNumericalForm();
+            uint[] result = new uint[self.Length - 1];
+            for (int i = 0; i < result.Length; i++)
+            {
+                result[i] = self[i];
+            }
+            return result;
         }
     }
 }

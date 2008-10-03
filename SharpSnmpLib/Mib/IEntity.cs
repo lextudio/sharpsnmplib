@@ -14,12 +14,13 @@ namespace Lextm.SharpSnmpLib.Mib
     /// <summary>
     /// Entity interface.
     /// </summary>
-    internal interface IEntity : IConstruct
+    [CLSCompliant(false)]
+    public interface IEntity : IConstruct
     {
         /// <summary>
         /// Module name.
         /// </summary>
-        string Module
+        string ModuleName
         {
             get;
         }
@@ -44,6 +45,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <summary>
         /// Value.
         /// </summary>
+        [CLSCompliant(false)]
         uint Value
         {
             get;            

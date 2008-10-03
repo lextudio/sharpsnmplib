@@ -102,7 +102,14 @@ namespace Lextm.SharpSnmpLib
             return "NoSuchObject";
         }
         
-        public static bool Equals(BitString left, BitString right)
+        /// <summary>
+        /// The comparison.
+        /// </summary>
+        /// <param name="left">Left <see cref="NoSuchObject"/> object</param>
+        /// <param name="right">Right <see cref="NoSuchObject"/> object</param>
+        /// <returns>
+        /// Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
+        public static bool Equals(NoSuchObject left, NoSuchObject right)
         {
             object lo = left as object;
             object ro = right as object;

@@ -102,6 +102,13 @@ namespace Lextm.SharpSnmpLib
             return "NoSuchInstance";
         }
         
+        /// <summary>
+        /// The comparison.
+        /// </summary>
+        /// <param name="left">Left <see cref="NoSuchInstance"/> object</param>
+        /// <param name="right">Right <see cref="NoSuchInstance"/> object</param>
+        /// <returns>
+        /// Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
         public static bool Equals(NoSuchInstance left, NoSuchInstance right)
         {
             object lo = left as object;

@@ -16,16 +16,8 @@ namespace Lextm.SharpSnmpLib.Mib
     /// Definition interface.
     /// </summary>
     [CLSCompliant(false)]
-    public interface IDefinition
-    {
-        /// <summary>
-        /// Value.
-        /// </summary>
-        uint Value
-        {
-            get;
-        }
-        
+    public interface IDefinition : IEntity
+    {      
         /// <summary>
         /// Children definitions.
         /// </summary>
@@ -47,22 +39,6 @@ namespace Lextm.SharpSnmpLib.Mib
         /// </summary>
         IDefinition GetChildAt(uint index);
 
-        /// <summary>
-        /// Module name.
-        /// </summary>
-        string ModuleName
-        {
-            get;
-        }
-        
-        /// <summary>
-        /// Name.
-        /// </summary>
-        string Name
-        {
-            get;
-        }
-        
         /// <summary>
         /// Gets the numerical form.
         /// </summary>

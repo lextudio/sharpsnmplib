@@ -29,7 +29,7 @@ namespace Lextm.SharpSnmpLib.Mib
             ConstructHelper.ParseOidValue(lexer, out _parent, out _value);
         }
 
-        public string Module
+        public string ModuleName
         {
             get { return _module; }
         }

@@ -99,7 +99,7 @@ namespace Lextm.SharpSnmpLib.Mib
             return result;
         }
         
-        private bool ParseModule(MibModule module)
+        internal bool ParseModule(MibModule module)
         {
             if (!MibModule.AllDependentsAvailable(module, _parsed))
             {
@@ -114,7 +114,8 @@ namespace Lextm.SharpSnmpLib.Mib
             Lextm.Diagnostics.Stopwatch watch = new Lextm.Diagnostics.Stopwatch();
             watch.Start();           
             _parsed.Add(module.Name, module);
-            AddNodes(module); 
+            AddNodes(module);
+            Console.WriteLine(watch.Value.ToString(CultureInfo.InvariantCulture) + "-ms used to assemble " + module.Name);
             Lextm.Diagnostics.LoggingService.Debug(watch.Value.ToString(CultureInfo.InvariantCulture) + "-ms used to assemble " + module.Name);
             watch.Stop();
             return true;
@@ -264,7 +265,7 @@ namespace Lextm.SharpSnmpLib.Mib
                     IDefinition subroot = Find(ExtractParent(all, currentCursor));
                     
                     // if not, create Prefix node.
-                    IEntity prefix = new OidValueAssignment(module, subroot.Name + "Prefix", subroot.Name, value);
+                    IEntity prefix = new OidValueAssignment(module, subroot.Name + "_" + value.ToString(), subroot.Name, value);
                     node = CreateSelf(prefix);
                     AddToTable(node);
                 }
@@ -329,6 +330,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 }
 
                 current = _pendings.Count;
+                Console.WriteLine(current.ToString(CultureInfo.InvariantCulture) + " pending after " + watch.Value.ToString(CultureInfo.InvariantCulture) + "-ms");
                 Lextm.Diagnostics.LoggingService.Debug(current.ToString(CultureInfo.InvariantCulture) + " pending after " + watch.Value.ToString(CultureInfo.InvariantCulture) + "-ms");
                 if (current == previous)
                 {

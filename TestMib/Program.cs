@@ -16,7 +16,7 @@ namespace TestMib
             //ObjectRegistry.Instance.CompileFolder(@"D:\lextm\documents\Downloads\MIBS", "*.mib");
             //ObjectRegistry.TestLoadFile(@"D:\lextm\documents\Downloads\MIBS\SNMPv2-PDU.mib");
 
-            new TestObjectRegistry().TestIEEE802dot11_MIB();
+            new TestObjectRegistry().TestSYMMIB_MIB_MIB();
             
             Console.WriteLine("Press any key to exit");
             Console.Read();

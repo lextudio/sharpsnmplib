@@ -124,6 +124,13 @@ namespace Lextm.SharpSnmpLib
             return !(left == right);
         }
         
+        /// <summary>
+        /// The comparison.
+        /// </summary>
+        /// <param name="left">Left <see cref="Gauge32"/> object</param>
+        /// <param name="right">Right <see cref="Gauge32"/> object</param>
+        /// <returns>
+        /// Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
         public static bool Equals(Gauge32 left, Gauge32 right)
         {
             object lo = left as object;

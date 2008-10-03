@@ -22,6 +22,12 @@ namespace Lextm.SharpSnmpLib.Mib
         private Exports _exports;
         private IList<IConstruct> _tokens = new List<IConstruct>();
         
+        public MibModule(string name, IEnumerable<string> dependents)
+        {
+            _name = name;
+            _imports = new Imports(dependents);
+        }
+        
         /// <summary>
         /// Creates a <see cref="MibModule"/> with a specific <see cref="Lexer"/>.
         /// </summary>

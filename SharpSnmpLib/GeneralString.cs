@@ -115,6 +115,13 @@ namespace Lextm.SharpSnmpLib
 
         #endregion
         
+        /// <summary>
+        /// The comparison.
+        /// </summary>
+        /// <param name="left">Left <see cref="GeneralString"/> object</param>
+        /// <param name="right">Right <see cref="GeneralString"/> object</param>
+        /// <returns>
+        /// Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
         public static bool Equals(GeneralString left, GeneralString right)
         {
             object lo = left as object;

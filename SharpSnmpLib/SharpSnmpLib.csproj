@@ -91,6 +91,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="MessageFactory.cs" />
+    <Compile Include="Mib\Assembler.cs" />
     <Compile Include="Mib\Compiler.cs" />
     <Compile Include="Mib\ConstructHelper.cs" />
     <Compile Include="Mib\AgentCapabilities.cs" />
@@ -115,6 +116,7 @@
     <Compile Include="Mib\ObjectIdentity.cs" />
     <Compile Include="Mib\ObjectType.cs" />
     <Compile Include="Mib\OidValueAssignment.cs" />
+    <Compile Include="Mib\Parser.cs" />
     <Compile Include="Mib\Sequence.cs" />
     <Compile Include="Mib\StringUtility.cs" />
     <Compile Include="Mib\TextualConvention.cs" />
@@ -192,6 +194,7 @@
     <None Include="Resources\DISMAN-SCHEDULE-MIB.txt" />
     <None Include="Resources\DISMAN-SCRIPT-MIB.txt" />
     <None Include="Resources\DISMAN-TRACEROUTE-MIB.txt" />
+    <None Include="Resources\DMTF-DMI-MIB.mib" />
     <None Include="Resources\EtherLike-MIB.txt" />
     <None Include="Resources\get.dat" />
     <None Include="Resources\getresponse.dat" />
@@ -262,6 +265,7 @@
     <None Include="Resources\SNMPV2-PDU.mib" />
     <None Include="Resources\SNMPv2-SMI.txt" />
     <None Include="Resources\SNMPv2-TC.txt" />
+    <None Include="Resources\SYMMIB_MIB-MIB.mib" />
     <None Include="Resources\TCP-MIB.txt" />
     <None Include="Resources\TRANSPORT-ADDRESS-MIB.txt" />
     <None Include="Resources\TUNNEL-MIB.txt" />

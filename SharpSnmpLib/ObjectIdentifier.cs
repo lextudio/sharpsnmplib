@@ -146,7 +146,7 @@ namespace Lextm.SharpSnmpLib
         [CLSCompliant(false)]
         public static uint[] Convert(string dotted)
         {
-            string[] parts = dotted.Split('.');
+            string[] parts = dotted.Split(new char[] { '.' }, StringSplitOptions.RemoveEmptyEntries);
             uint[] result = new uint[parts.Length];
             for (int i = 0; i < parts.Length; i++)
             {
@@ -252,6 +252,13 @@ namespace Lextm.SharpSnmpLib
             return !(left == right);
         }
         
+        /// <summary>
+        /// The comparison.
+        /// </summary>
+        /// <param name="left">Left <see cref="ObjectIdentifier"/> object</param>
+        /// <param name="right">Right <see cref="ObjectIdentifier"/> object</param>
+        /// <returns>
+        /// Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
         public static bool Equals(ObjectIdentifier left, ObjectIdentifier right)
         {
             object lo = left as object;

@@ -13,7 +13,7 @@ using System.IO;
 namespace Lextm.SharpSnmpLib.Mib
 {
     /// <summary>
-    /// Description of MibInventory.
+    /// MIB inventory.
     /// </summary>
     public class MibInventory
     {
@@ -22,6 +22,10 @@ namespace Lextm.SharpSnmpLib.Mib
         private ObjectRegistry _registry;
         private IDictionary<string, string> _moduleTable = new Dictionary<string, string>();
         
+        /// <summary>
+        /// Creates a <see cref="MibInventory"/> object.
+        /// </summary>
+        /// <param name="registry">Registry to use this inventory.</param>
         public MibInventory(ObjectRegistry registry)
         {
             _registry = registry;
@@ -53,11 +57,20 @@ namespace Lextm.SharpSnmpLib.Mib
             _registry.Import(modules);
         }
         
+        /// <summary>
+        /// Returns a value that indicates if this module is in the inventory.
+        /// </summary>
+        /// <param name="module">Module name.</param>
+        /// <returns></returns>
         public bool Contains(string module)
         {
             return _moduleTable.ContainsKey(module);
         }
         
+        /// <summary>
+        /// Returns the real file name for this module.
+        /// </summary>
+        /// <param name="module">Module name.</param>
         public string this[string module]
         {
             get
@@ -71,6 +84,10 @@ namespace Lextm.SharpSnmpLib.Mib
             }
         }
         
+        /// <summary>
+        /// Adds a few files to the inventory.
+        /// </summary>
+        /// <param name="files">Files.</param>
         public void AddFiles(IEnumerable<string> files)
         {
             foreach (string file in files)
@@ -81,9 +98,13 @@ namespace Lextm.SharpSnmpLib.Mib
             _registry.Refresh();
         }
         
-        public void AddFile(string orig)
+        /// <summary>
+        /// Adds a file to the inventory.
+        /// </summary>
+        /// <param name="file">File name.</param>
+        public void AddFile(string file)
         {
-            AddFileInner(orig);
+            AddFileInner(file);
             _registry.Refresh();
         }
 
@@ -121,7 +142,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <summary>
         /// Removes a MIB file.
         /// </summary>
-        /// <param name="file">File</param>
+        /// <param name="file">File name.</param>
         public void RemoveFile(string file)
         {
             if (File.Exists(file))

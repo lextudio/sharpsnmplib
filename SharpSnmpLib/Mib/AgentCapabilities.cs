@@ -38,7 +38,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <summary>
         /// Module name.
         /// </summary>
-        public string Module
+        public string ModuleName
         {
             get
             {

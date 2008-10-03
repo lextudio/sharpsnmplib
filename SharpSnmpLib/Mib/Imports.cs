@@ -17,7 +17,12 @@ namespace Lextm.SharpSnmpLib.Mib
     /// </summary>
     internal sealed class Imports : IConstruct
     {
-        private IList<string> _dependents = new List<string>();
+        private List<string> _dependents = new List<string>();
+        
+        public Imports(IEnumerable<string> dependents)
+        {
+            _dependents.AddRange(dependents);
+        }
         
         /// <summary>
         /// Creates an <see cref="Imports"/> instance.

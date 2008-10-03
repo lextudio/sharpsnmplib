@@ -221,6 +221,13 @@ namespace Lextm.SharpSnmpLib {
             }
         }
         
+        internal static byte[] DMTF_DMI_MIB {
+            get {
+                object obj = ResourceManager.GetObject("DMTF-DMI-MIB", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         internal static byte[] EtherLike_MIB {
             get {
                 object obj = ResourceManager.GetObject("EtherLike-MIB", resourceCulture);
@@ -665,6 +672,13 @@ namespace Lextm.SharpSnmpLib {
         internal static byte[] SNMPv2_TM {
             get {
                 object obj = ResourceManager.GetObject("SNMPv2-TM", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] SYMMIB_MIB_MIB {
+            get {
+                object obj = ResourceManager.GetObject("SYMMIB_MIB-MIB", resourceCulture);
                 return ((byte[])(obj));
             }
         }

@@ -231,6 +231,13 @@ namespace Lextm.SharpSnmpLib
             return !(left == right);
         }
         
+        /// <summary>
+        /// The comparison.
+        /// </summary>
+        /// <param name="left">Left <see cref="Real"/> object</param>
+        /// <param name="right">Right <see cref="Real"/> object</param>
+        /// <returns>
+        /// Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
         public static bool Equals(Real left, Real right)
         {
             object lo = left as object;

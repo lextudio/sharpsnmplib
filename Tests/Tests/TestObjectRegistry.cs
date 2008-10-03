@@ -153,6 +153,21 @@ namespace Lextm.SharpSnmpLib.Tests
         }
         
         [Test]
+        public void TestSYMMIB_MIB_MIB()
+        {
+            string name = "SYMMIB_MIB-MIB::symbios_3_1";
+            var modules = Compiler.Compile(new StreamReader(new MemoryStream(Resource.SYMMIB_MIB_MIB)));
+            ObjectRegistry.Instance.Import(modules);
+            modules = Compiler.Compile(new StreamReader(new MemoryStream(Resource.DMTF_DMI_MIB)));
+            ObjectRegistry.Instance.Import(modules);
+            ObjectRegistry.Instance.Refresh();
+            uint[] id = ObjectRegistry.Instance.Translate(name);
+            
+            Assert.AreEqual(new uint[] {1, 3, 6, 1, 4, 1, 1123, 3, 1}, id);
+            Assert.AreEqual(name, ObjectRegistry.Instance.Translate(id));
+        }
+        
+        [Test]
         public void TestIEEE802dot11_MIB()
         {
             string name = "IEEE802DOT11-MIB::dot11SMTnotification";

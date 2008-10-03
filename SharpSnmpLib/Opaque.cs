@@ -134,6 +134,13 @@ namespace Lextm.SharpSnmpLib
             return !(left == right);
         }
         
+        /// <summary>
+        /// The comparison.
+        /// </summary>
+        /// <param name="left">Left <see cref="Opaque"/> object</param>
+        /// <param name="right">Right <see cref="Opaque"/> object</param>
+        /// <returns>
+        /// Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
         public static bool Equals(Opaque left, Opaque right)
         {
             object lo = left as object;
