@@ -11,7 +11,7 @@ namespace Lextm.SharpSnmpLib.Mib
     /// </summary>
     internal sealed class ObjectTree : IObjectTree
     {
-        private IDictionary<string, MibModule> _parsed = new SortedDictionary<string, MibModule>();
+        private IDictionary<string, MibModule> _loaded = new SortedDictionary<string, MibModule>();
         private IDictionary<string, MibModule> _pendings = new Dictionary<string, MibModule>();
         private IDictionary<string, IDefinition> nameTable;
         private Definition root;
@@ -50,7 +50,7 @@ namespace Lextm.SharpSnmpLib.Mib
             }
         }
 
-        internal IDefinition Find(string module, string name)
+        public IDefinition Find(string module, string name)
         {
             string full = module + "::" + name;
             if (nameTable.ContainsKey(full))
@@ -99,26 +99,30 @@ namespace Lextm.SharpSnmpLib.Mib
             return result;
         }
         
-        internal bool ParseModule(MibModule module)
+        internal bool CanParse(MibModule module)
         {
-            if (!MibModule.AllDependentsAvailable(module, _parsed))
+            if (!MibModule.AllDependentsAvailable(module, _loaded))
             {
                 return false;
             }
             
-            if (_parsed.ContainsKey(module.Name))
+            bool exists = _loaded.ContainsKey(module.Name); // FIXME: don't parse the same module twice now.
+            if (!exists)
             {
-                return true;
+                _loaded.Add(module.Name, module);
             }
 
+            return !exists;
+        }
+
+        internal void Parse(MibModule module)
+        {
             Lextm.Diagnostics.Stopwatch watch = new Lextm.Diagnostics.Stopwatch();
-            watch.Start();           
-            _parsed.Add(module.Name, module);
+            watch.Start();
             AddNodes(module);
             Console.WriteLine(watch.Value.ToString(CultureInfo.InvariantCulture) + "-ms used to assemble " + module.Name);
             Lextm.Diagnostics.LoggingService.Debug(watch.Value.ToString(CultureInfo.InvariantCulture) + "-ms used to assemble " + module.Name);
             watch.Stop();
-            return true;
         }
 
         private IDefinition CreateSelf(IEntity node)
@@ -315,9 +319,10 @@ namespace Lextm.SharpSnmpLib.Mib
                 IList<string> parsed = new List<string>();
                 foreach (MibModule pending in _pendings.Values)
                 {
-                    bool succeeded = ParseModule(pending);
+                    bool succeeded = CanParse(pending);
                     if (succeeded)
                     {
+                        Parse(pending);
                         parsed.Add(pending.Name);
                     }
                     
@@ -362,7 +367,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// </summary>
         public ICollection<string> LoadedModules
         {
-            get { return _parsed.Keys; }
+            get { return _loaded.Keys; }
         }
         
         /// <summary>
@@ -371,6 +376,129 @@ namespace Lextm.SharpSnmpLib.Mib
         public ICollection<string> PendingModules
         {
             get { return _pendings.Keys; }
+        }
+
+        internal int ImportFiles(IEnumerable<string> files)
+        {
+            var pendings = new List<string>(files);
+            Console.WriteLine(pendings.Count + " module files found");
+            int current = pendings.Count;
+            int previous;
+            while (current != 0)
+            {
+                previous = current;
+                var parsed = new List<string>();
+                foreach (var file in pendings)
+                {
+                    List<string> dependents;
+                    var nodes = ExtractNodes(file, out dependents);
+                    MibModule module = new MibModule(Path.GetFileNameWithoutExtension(file), dependents);
+                    bool canParse = CanParse(module);
+                    if (!canParse)
+                    {
+                        continue;
+                    }
+
+                    AddNodes(nodes);
+                    parsed.Add(file);
+                    Console.WriteLine(file + " loaded");
+                }
+
+                foreach (string p in parsed)
+                {
+                    pendings.Remove(p);
+                }
+
+                current = pendings.Count;
+                if (current == previous)
+                {
+                    break;
+                }
+            }
+            Console.WriteLine(current + " pending");
+            return current;
+        }
+
+        private void AddNodes(IEnumerable<IDefinition> nodes)
+        {
+            var pendings = new List<IDefinition>(nodes);
+            int current = pendings.Count;
+            int previous;
+            while (current != 0)
+            {
+                previous = current;
+                var parsed = new List<IDefinition>();
+                foreach (var node in pendings)
+                {
+                    IDefinition def;
+                    try
+                    {
+                        def = Find(Definition.GetParent(node));
+                    }
+                    catch (ArgumentOutOfRangeException)
+                    {
+                        def = null;
+                    }
+
+                    if (def == null)
+                    {
+                        continue;
+                    }
+
+                    ((Definition)def).Append(node);
+                    parsed.Add(node);
+                }
+
+                foreach (var d in parsed)
+                {
+                    pendings.Remove(d);
+                }
+
+                current = pendings.Count;
+                if (current == previous)
+                {
+                    break;
+                }
+            }
+        }
+
+        private IEnumerable<IDefinition> ExtractNodes(string fileName, out List<string> dependents)
+        {
+            var result = new List<IDefinition>();
+            dependents = new List<string>();
+            using (StreamReader reader = new StreamReader(fileName))
+            {
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    if (line.StartsWith("#"))
+                    {
+                        dependents.AddRange(ParseDependents(line));
+                        continue;
+                    }
+
+                    result.Add(ParseLine(line, fileName));
+                }
+                reader.Close();
+            }
+            return result;
+        }
+
+        private IEnumerable<string> ParseDependents(string line)
+        {
+            return line.Substring(1).Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+        }
+
+        private IDefinition ParseLine(string line, string module)
+        {
+            string[] content = line.Split(',');
+            /* 0: id
+             * 1: type
+             * 2: name
+             * 3: parent name
+             */
+            uint[] id = ObjectIdentifier.Convert(content[0]);
+            return new Definition(id, content[2], content[3], module);
         }
     }
 }

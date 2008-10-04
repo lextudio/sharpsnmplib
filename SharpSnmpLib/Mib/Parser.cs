@@ -17,15 +17,15 @@ namespace Lextm.SharpSnmpLib.Mib
     /// </summary>
     public sealed class Parser
     {
-        private string _folder;
+        private Assembler _assembler;
         
         /// <summary>
         /// Creates a <see cref="Parser"/>.
         /// </summary>
-        /// <param name="folder"></param>
-        public Parser(string folder)
+        /// <param name="assembler"></param>
+        public Parser(Assembler assembler)
         {
-            _folder = folder;
+            _assembler = assembler;
         }
         
         /// <summary>
@@ -34,15 +34,14 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <param name="files"></param>
         public void ParseToModules(IEnumerable<string> files)
         {
-            Console.WriteLine("loading existing modules started");
-            Assembler ass = new Assembler(_folder);
+            Console.WriteLine("loading existing modules started");            
             Console.WriteLine("loading existing modules ended");
             var modules = new List<MibModule>();
             foreach (string file in files)
             {
                 foreach (MibModule module in Compiler.Compile(file))
                 {
-                    if (ass.Tree.LoadedModules.Contains(module.Name) || ass.Tree.PendingModules.Contains(module.Name))
+                    if (_assembler.Tree.LoadedModules.Contains(module.Name) || _assembler.Tree.PendingModules.Contains(module.Name))
                     {
                         Console.WriteLine(module.Name + " ignored");
                         continue;
@@ -52,24 +51,24 @@ namespace Lextm.SharpSnmpLib.Mib
                 Console.WriteLine(file + " compiled");
             }
             Console.WriteLine("loading new modules started");
-            ass.Tree.Import(modules);
-            ass.Tree.Refresh();
+            _assembler.RealTree.Import(modules);
+            _assembler.RealTree.Refresh();
             Console.WriteLine("loading new modules ended");
             foreach (MibModule module in modules)
             {
-                if (ass.Tree.PendingModules.Contains(module.Name))
+                if (_assembler.Tree.PendingModules.Contains(module.Name))
                 {
                     Console.WriteLine(module.Name + " pending");
                 }
                 else
                 {                    
-                    PersistModuleToFile(_folder, module, ass.Tree);
+                    PersistModuleToFile(_assembler.Folder, module, _assembler.Tree);
                     Console.WriteLine(module.Name + " parsed");
                 }
             }
         }
         
-        internal static void PersistModuleToFile(string folder, MibModule module, ObjectTree tree)
+        internal static void PersistModuleToFile(string folder, MibModule module, IObjectTree tree)
         {
             string fileName = Path.Combine(folder, module.Name + ".module");
             using (StreamWriter writer = new StreamWriter(fileName))

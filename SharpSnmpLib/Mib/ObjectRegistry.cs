@@ -361,9 +361,22 @@ namespace Lextm.SharpSnmpLib.Mib
             Refresh();
         }
      
+        /// <summary>
+        /// Imports instances of <see cref="MibModule"/>.
+        /// </summary>
+        /// <param name="modules">Modules.</param>
         internal void Import(IEnumerable<MibModule> modules)
         {
             _tree.Import(modules);
+        }
+
+        /// <summary>
+        /// Imports a .module file.
+        /// </summary>
+        /// <param name="fileName">File name.</param>
+        internal void Import(string fileName)
+        {
+            // TODO:
         }
         
         internal void Refresh()

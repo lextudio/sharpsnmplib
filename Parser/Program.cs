@@ -10,6 +10,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Lextm.SharpSnmpLib.Mib;
 
 namespace Lextm.SharpSnmpLib.Parser
 {
@@ -53,11 +54,12 @@ namespace Lextm.SharpSnmpLib.Parser
             Lextm.Diagnostics.Stopwatch watch = new Lextm.Diagnostics.Stopwatch();
             watch.Start();
             
-            Lextm.SharpSnmpLib.Mib.Parser parser = new Lextm.SharpSnmpLib.Mib.Parser(root);
+            Lextm.SharpSnmpLib.Mib.Parser parser = new Lextm.SharpSnmpLib.Mib.Parser(new Assembler(root));
             parser.ParseToModules(files);
             Console.WriteLine("total time " + watch.Value.ToString());
             watch.Stop();
-            //Console.Read();
+            Console.WriteLine("Press any key to exit");
+            Console.Read();
         }       
     }
 }

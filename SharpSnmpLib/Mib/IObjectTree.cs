@@ -33,5 +33,7 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             get;
         }
+
+        IDefinition Find(string p, string p_2);
     }
 }
