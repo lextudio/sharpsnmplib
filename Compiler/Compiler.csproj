@@ -118,4 +118,7 @@
   <ItemGroup>
     <None Include="Resources\go-jump.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\system-log-out.png" />
+  </ItemGroup>
 </Project>

@@ -100,15 +100,13 @@ namespace Lextm.SharpSnmpLib.Compiler
         {
             IDockContent content = dockPanel1.ActiveDocument;
             DocumentPanel doc = (DocumentPanel)content;
-            Parser parser = new Parser(_assembler);
-            parser.ParseToModules(new List<string>(1) { doc.FileName });
-            _modules.RefreshPanel(_modules, EventArgs.Empty);
-            SystemSounds.Beep.Play();
+
+            backgroundWorker1.RunWorkerAsync(new List<string>(1) { doc.FileName });
         }
 
         private void actCompile_Update(object sender, EventArgs e)
         {
-            actCompile.Enabled = dockPanel1.ActiveDocument != null;
+            actCompile.Enabled = dockPanel1.ActiveDocument != null && !backgroundWorker1.IsBusy;
         }
 
         private void actCompileAll_Execute(object sender, EventArgs e)
@@ -118,17 +116,14 @@ namespace Lextm.SharpSnmpLib.Compiler
             {
                 DocumentPanel doc = (DocumentPanel)content;
                 docs.Add(doc.FileName);
-            }
+            }           
             
-            Parser parser = new Parser(_assembler);
-            parser.ParseToModules(docs);
-            _modules.RefreshPanel(_modules, EventArgs.Empty);
-            SystemSounds.Beep.Play();
+            backgroundWorker1.RunWorkerAsync(docs);
         }
 
         private void actCompileAll_Update(object sender, EventArgs e)
         {
-            actCompileAll.Enabled = dockPanel1.DocumentsCount > 0;
+            actCompileAll.Enabled = dockPanel1.DocumentsCount > 0 && !backgroundWorker1.IsBusy;
         }
 
         private void actCloseAll_Execute(object sender, EventArgs e)
@@ -169,6 +164,24 @@ namespace Lextm.SharpSnmpLib.Compiler
 
                 return null;
             }
+        }
+
+        private void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+            var docs = (IEnumerable<string>)e.Argument;
+            Parser parser = new Parser(_assembler);
+            parser.ParseToModules(docs);
+        }
+
+        private void backgroundWorker1_ProgressChanged(object sender, System.ComponentModel.ProgressChangedEventArgs e)
+        {
+
+        }
+
+        private void backgroundWorker1_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+        {
+            _modules.RefreshPanel(_modules, EventArgs.Empty);
+            SystemSounds.Beep.Play();
         }
 
     }

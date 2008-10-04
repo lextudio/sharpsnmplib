@@ -37,8 +37,9 @@ namespace Lextm.SharpSnmpLib.Compiler
 		private void InitializeComponent()
 		{
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.dockPanel1 = new WeifenLuo.WinFormsUI.Docking.DockPanel();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.closeAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -50,18 +51,17 @@ namespace Lextm.SharpSnmpLib.Compiler
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.actionList1 = new Crad.Windows.Forms.Actions.ActionList();
+            this.actCloseAll = new Crad.Windows.Forms.Actions.Action();
             this.actExit = new Crad.Windows.Forms.Actions.Action();
             this.actOpen = new Crad.Windows.Forms.Actions.Action();
             this.actCompile = new Crad.Windows.Forms.Actions.Action();
             this.actCompileAll = new Crad.Windows.Forms.Actions.Action();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.closeAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.actCloseAll = new Crad.Windows.Forms.Actions.Action();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.contextMenuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.actionList1)).BeginInit();
-            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // dockPanel1
@@ -74,6 +74,20 @@ namespace Lextm.SharpSnmpLib.Compiler
             this.dockPanel1.Name = "dockPanel1";
             this.dockPanel1.Size = new System.Drawing.Size(493, 305);
             this.dockPanel1.TabIndex = 0;
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.closeAllToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(127, 26);
+            // 
+            // closeAllToolStripMenuItem
+            // 
+            this.actionList1.SetAction(this.closeAllToolStripMenuItem, this.actCloseAll);
+            this.closeAllToolStripMenuItem.Name = "closeAllToolStripMenuItem";
+            this.closeAllToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
+            this.closeAllToolStripMenuItem.Text = "Close All";
             // 
             // toolStrip1
             // 
@@ -93,7 +107,7 @@ namespace Lextm.SharpSnmpLib.Compiler
             // 
             this.actionList1.SetAction(this.toolStripButton1, this.actExit);
             this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.Image = global::Lextm.SharpSnmpLib.Compiler.Properties.Resources.system_log_out;
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
             this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
@@ -158,15 +172,15 @@ namespace Lextm.SharpSnmpLib.Compiler
             this.actionList1.SetAction(this.openToolStripMenuItem, this.actOpen);
             this.openToolStripMenuItem.Image = global::Lextm.SharpSnmpLib.Compiler.Properties.Resources.document_open;
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.openToolStripMenuItem.Text = "Open";
             // 
             // exitToolStripMenuItem
             // 
             this.actionList1.SetAction(this.exitToolStripMenuItem, this.actExit);
-            this.exitToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("exitToolStripMenuItem.Image")));
+            this.exitToolStripMenuItem.Image = global::Lextm.SharpSnmpLib.Compiler.Properties.Resources.system_log_out;
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             // 
             // actionList1
@@ -178,9 +192,15 @@ namespace Lextm.SharpSnmpLib.Compiler
             this.actionList1.Actions.Add(this.actCloseAll);
             this.actionList1.ContainerControl = this;
             // 
+            // actCloseAll
+            // 
+            this.actCloseAll.Text = "Close All";
+            this.actCloseAll.ToolTipText = "Close All";
+            this.actCloseAll.Execute += new System.EventHandler(this.actCloseAll_Execute);
+            // 
             // actExit
             // 
-            this.actExit.Image = ((System.Drawing.Image)(resources.GetObject("actExit.Image")));
+            this.actExit.Image = global::Lextm.SharpSnmpLib.Compiler.Properties.Resources.system_log_out;
             this.actExit.Text = "E&xit";
             this.actExit.ToolTipText = "Exit Browser";
             this.actExit.Execute += new System.EventHandler(this.actExit_Execute);
@@ -213,25 +233,13 @@ namespace Lextm.SharpSnmpLib.Compiler
             this.openFileDialog1.Filter = "Text files (*.txt)|*.txt|MIB files (*.mib)|*.mib|All files (*.*)|*.*";
             this.openFileDialog1.Multiselect = true;
             // 
-            // contextMenuStrip1
+            // backgroundWorker1
             // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.closeAllToolStripMenuItem});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(127, 26);
-            // 
-            // closeAllToolStripMenuItem
-            // 
-            this.actionList1.SetAction(this.closeAllToolStripMenuItem, this.actCloseAll);
-            this.closeAllToolStripMenuItem.Name = "closeAllToolStripMenuItem";
-            this.closeAllToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
-            this.closeAllToolStripMenuItem.Text = "Close All";
-            // 
-            // actCloseAll
-            // 
-            this.actCloseAll.Text = "Close All";
-            this.actCloseAll.ToolTipText = "Close All";
-            this.actCloseAll.Execute += new System.EventHandler(this.actCloseAll_Execute);
+            this.backgroundWorker1.WorkerReportsProgress = true;
+            this.backgroundWorker1.WorkerSupportsCancellation = true;
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
+            this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
             // 
             // MainForm
             // 
@@ -245,12 +253,12 @@ namespace Lextm.SharpSnmpLib.Compiler
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
             this.Text = "Compiler";
+            this.contextMenuStrip1.ResumeLayout(false);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.actionList1)).EndInit();
-            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -275,5 +283,6 @@ namespace Lextm.SharpSnmpLib.Compiler
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem closeAllToolStripMenuItem;
         private Crad.Windows.Forms.Actions.Action actCloseAll;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
 	}
 }
