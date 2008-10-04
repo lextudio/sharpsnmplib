@@ -419,15 +419,15 @@ namespace Lextm.SharpSnmpLib.Mib
             return current;
         }
 
-        private void AddNodes(IEnumerable<IDefinition> nodes)
+        private void AddNodes(IEnumerable<Definition> nodes)
         {
-            var pendings = new List<IDefinition>(nodes);
+            var pendings = new List<Definition>(nodes);
             int current = pendings.Count;
             int previous;
             while (current != 0)
             {
                 previous = current;
-                var parsed = new List<IDefinition>();
+                var parsed = new List<Definition>();
                 foreach (var node in pendings)
                 {
                     IDefinition def;
@@ -445,6 +445,7 @@ namespace Lextm.SharpSnmpLib.Mib
                         continue;
                     }
 
+                    node.DetermineType(def);
                     ((Definition)def).Append(node);
                     parsed.Add(node);
                 }
@@ -462,9 +463,9 @@ namespace Lextm.SharpSnmpLib.Mib
             }
         }
 
-        private IEnumerable<IDefinition> ExtractNodes(string fileName, out List<string> dependents)
+        private IEnumerable<Definition> ExtractNodes(string fileName, out List<string> dependents)
         {
-            var result = new List<IDefinition>();
+            var result = new List<Definition>();
             dependents = new List<string>();
             using (StreamReader reader = new StreamReader(fileName))
             {
@@ -489,7 +490,7 @@ namespace Lextm.SharpSnmpLib.Mib
             return line.Substring(1).Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
         }
 
-        private IDefinition ParseLine(string line, string module)
+        private Definition ParseLine(string line, string module)
         {
             string[] content = line.Split(',');
             /* 0: id
@@ -498,7 +499,27 @@ namespace Lextm.SharpSnmpLib.Mib
              * 3: parent name
              */
             uint[] id = ObjectIdentifier.Convert(content[0]);
-            return new Definition(id, content[2], content[3], module);
+            return new Definition(id, content[2], content[3], module, content[1]);
         }
+
+        #region IObjectTree Members
+
+
+        public void Remove(string module)
+        {
+            if (_loaded.ContainsKey(module))
+            {
+                _loaded.Remove(module);
+            }
+
+            if (_pendings.ContainsKey(module))
+            {
+                _pendings.Remove(module);
+            }
+
+            // TODO: remove all those nodes
+        }
+
+        #endregion
     }
 }

@@ -51,9 +51,24 @@ namespace Lextm.SharpSnmpLib.Compiler
 
         #region IMediator Members
 
+        public void CloseAllDocuments()
+        {
+            if (dockPanel1.DocumentStyle == DocumentStyle.SystemMdi)
+            {
+                foreach (Form form in MdiChildren)
+                    form.Close();
+            }
+            else
+            {
+                IDockContent[] documents = dockPanel1.DocumentsToArray();
+                foreach (IDockContent content in documents)
+                    content.DockHandler.Close();
+            }
+        }
+
         public void OpenDocument(string fileName)
         {
-            DocumentPanel doc = new DocumentPanel(fileName);
+            DocumentPanel doc = new DocumentPanel(this, fileName);
             doc.Show(dockPanel1, DockState.Document);
         }
 
@@ -65,6 +80,11 @@ namespace Lextm.SharpSnmpLib.Compiler
         public IObjectTree Tree
         {
             get { return _assembler.Tree; }
+        }
+
+        public string Root
+        {
+            get { return root; }
         }
 
         #endregion
@@ -126,26 +146,6 @@ namespace Lextm.SharpSnmpLib.Compiler
             actCompileAll.Enabled = dockPanel1.DocumentsCount > 0 && !backgroundWorker1.IsBusy;
         }
 
-        private void actCloseAll_Execute(object sender, EventArgs e)
-        {
-            CloseAllDocuments();
-        }
-
-        private void CloseAllDocuments()
-        {
-            if (dockPanel1.DocumentStyle == DocumentStyle.SystemMdi)
-            {
-                foreach (Form form in MdiChildren)
-                    form.Close();
-            }
-            else
-            {
-                IDockContent[] documents = dockPanel1.DocumentsToArray();
-                foreach (IDockContent content in documents)
-                    content.DockHandler.Close();
-            }
-        }
-
         private IDockContent FindDocument(string fileName)
         {
             if (dockPanel1.DocumentStyle == DocumentStyle.SystemMdi)
@@ -183,6 +183,5 @@ namespace Lextm.SharpSnmpLib.Compiler
             _modules.RefreshPanel(_modules, EventArgs.Empty);
             SystemSounds.Beep.Play();
         }
-
     }
 }

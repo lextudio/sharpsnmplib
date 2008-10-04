@@ -35,5 +35,7 @@ namespace Lextm.SharpSnmpLib.Mib
         }
 
         IDefinition Find(string p, string p_2);
+
+        void Remove(string module);
     }
 }

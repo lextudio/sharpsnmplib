@@ -12,6 +12,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
+using System.IO;
 
 namespace Lextm.SharpSnmpLib.Compiler
 {
@@ -62,7 +63,9 @@ namespace Lextm.SharpSnmpLib.Compiler
         private void actRemove_Execute(object sender, EventArgs e)
         {
             string mib = listView1.SelectedItems[0].Text;
-
+            File.Delete(Path.Combine(_mediator.Root, mib + ".module"));
+            _mediator.Output.ReportMessage("The change will take effect when you restart compiler");
+            _mediator.Tree.Remove(mib);
         }
 
         private void actRemove_Update(object sender, EventArgs e)

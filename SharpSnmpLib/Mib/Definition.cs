@@ -16,19 +16,24 @@ namespace Lextm.SharpSnmpLib.Mib
         private uint _value;
         private DefinitionType _type;
         private IDictionary<uint, IDefinition> _children = new SortedDictionary<uint, IDefinition>();
-
+        private Definition _parentNode;
+        private string _typeString;
+        
         private Definition()
         {
             _type = DefinitionType.Unknown;
         }
         
-        internal Definition(uint[] id, string name, string parent, string module)
+        internal Definition(uint[] id, string name, string parent, string module, string typeString)
         {
             _id = id;
             _name = name;
             _parent = parent;
             _module = module;
             _value = id[id.Length - 1];
+            _parentNode = null;
+            _type = DefinitionType.Unknown;
+            _typeString = typeString;
         }
         
         /// <summary>
@@ -48,6 +53,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 throw new ArgumentNullException("parent");
             }
 
+            _parentNode = parent;
             uint[] id = string.IsNullOrEmpty(parent.Name) ?
                 null : parent.GetNumericalForm(); // null for root node
             _id = AppendTo(id, entity.Value);
@@ -55,38 +61,43 @@ namespace Lextm.SharpSnmpLib.Mib
             _name = entity.Name;
             _module = entity.ModuleName;
             _value = entity.Value;
-            parent.Append(this);
-            if (entity.GetType() == typeof(OidValueAssignment))
+            _parentNode.Append(this);
+            _type = DetermineType(entity.GetType().ToString(), _name, _parentNode);
+        }
+
+        internal void DetermineType(IDefinition parent)
+        {
+            _type = DetermineType(_typeString, _name, parent);
+        }
+        
+        private static DefinitionType DetermineType(string type, string name, IDefinition parent)
+        {
+            if (type == typeof(OidValueAssignment).ToString()) 
             {
-                _type = DefinitionType.OidValueAssignment;
-                return;
+                return DefinitionType.OidValueAssignment;
             }
-            
-            if (entity.GetType() != typeof(ObjectType))
+
+            if (type != typeof(ObjectType).ToString())
             {
-                _type = DefinitionType.Unknown;
-                return;
+                return DefinitionType.Unknown;
             }
-            
-            if (_name.EndsWith("Table", StringComparison.Ordinal))
+
+            if (name.EndsWith("Table", StringComparison.Ordinal))
             {
-                _type = DefinitionType.Table;
-                return;
+                return DefinitionType.Table;
             }
-            
-            if (_name.EndsWith("Entry", StringComparison.Ordinal))
+
+            if (name.EndsWith("Entry", StringComparison.Ordinal)) 
             {
-                _type = DefinitionType.Entry;
-                return;
+                return DefinitionType.Entry;
             }
-            
+
             if (parent.Type == DefinitionType.Entry)
             {
-                _type = DefinitionType.Column;
-                return;
+                return DefinitionType.Column;
             }
-            
-            _type = DefinitionType.Scalar;
+
+            return DefinitionType.Scalar;
         }
         
         /// <summary>

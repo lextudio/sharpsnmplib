@@ -37,14 +37,14 @@ namespace Lextm.SharpSnmpLib.Compiler
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("Loaded", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("Pending", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup3 = new System.Windows.Forms.ListViewGroup("Loaded", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup4 = new System.Windows.Forms.ListViewGroup("Pending", System.Windows.Forms.HorizontalAlignment.Left);
             this.listView1 = new System.Windows.Forms.ListView();
             this.chName = new System.Windows.Forms.ColumnHeader();
             this.actionList1 = new Crad.Windows.Forms.Actions.ActionList();
+            this.actRemove = new Crad.Windows.Forms.Actions.Action();
             this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextModuleMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.actRemove = new Crad.Windows.Forms.Actions.Action();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tslblCount = new System.Windows.Forms.ToolStripStatusLabel();
             ((System.ComponentModel.ISupportInitialize)(this.actionList1)).BeginInit();
@@ -57,13 +57,13 @@ namespace Lextm.SharpSnmpLib.Compiler
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.chName});
             this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            listViewGroup1.Header = "Loaded";
-            listViewGroup1.Name = "lvgLoaded";
-            listViewGroup2.Header = "Pending";
-            listViewGroup2.Name = "lvgPending";
+            listViewGroup3.Header = "Loaded";
+            listViewGroup3.Name = "lvgLoaded";
+            listViewGroup4.Header = "Pending";
+            listViewGroup4.Name = "lvgPending";
             this.listView1.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            listViewGroup1,
-            listViewGroup2});
+            listViewGroup3,
+            listViewGroup4});
             this.listView1.Location = new System.Drawing.Point(0, 0);
             this.listView1.MultiSelect = false;
             this.listView1.Name = "listView1";
@@ -80,10 +80,19 @@ namespace Lextm.SharpSnmpLib.Compiler
             // 
             // actionList1
             // 
+            this.actionList1.Actions.Add(this.actRemove);
             this.actionList1.ContainerControl = this;
+            // 
+            // actRemove
+            // 
+            this.actRemove.Text = "Remove";
+            this.actRemove.ToolTipText = "Remove";
+            this.actRemove.Update += new System.EventHandler(this.actRemove_Update);
+            this.actRemove.Execute += new System.EventHandler(this.actRemove_Execute);
             // 
             // removeToolStripMenuItem
             // 
+            this.actionList1.SetAction(this.removeToolStripMenuItem, this.actRemove);
             this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
             this.removeToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
             this.removeToolStripMenuItem.Text = "Remove";
@@ -94,13 +103,6 @@ namespace Lextm.SharpSnmpLib.Compiler
             this.removeToolStripMenuItem});
             this.contextModuleMenu.Name = "contextModuleMenu";
             this.contextModuleMenu.Size = new System.Drawing.Size(124, 26);
-            // 
-            // actRemove
-            // 
-            this.actRemove.Text = "Remove";
-            this.actRemove.ToolTipText = "Remove Mib File";
-            this.actRemove.Update += new System.EventHandler(this.actRemove_Update);
-            this.actRemove.Execute += new System.EventHandler(this.actRemove_Execute);
             // 
             // statusStrip1
             // 
@@ -141,8 +143,8 @@ namespace Lextm.SharpSnmpLib.Compiler
         private System.Windows.Forms.ColumnHeader chName;
         private System.Windows.Forms.ContextMenuStrip contextModuleMenu;
         private System.Windows.Forms.ToolStripMenuItem removeToolStripMenuItem;
-        private Crad.Windows.Forms.Actions.Action actRemove;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel tslblCount;
+        private Crad.Windows.Forms.Actions.Action actRemove;
     }
 }

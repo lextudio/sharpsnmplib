@@ -16,5 +16,12 @@ namespace Lextm.SharpSnmpLib.Compiler
         {
             get;
         }
+
+        string Root
+        {
+            get;
+        }
+
+        void CloseAllDocuments();
     }
 }
