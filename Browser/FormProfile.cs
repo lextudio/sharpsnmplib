@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Net;
 using System.Windows.Forms;
+using System.Globalization;
 
 namespace Lextm.SharpSnmpLib.Browser
 {
@@ -42,7 +43,7 @@ namespace Lextm.SharpSnmpLib.Browser
         
         internal int Port
         {
-            get { return int.Parse(txtPort.Text); }
+            get { return int.Parse(txtPort.Text, CultureInfo.CurrentCulture); }
         }
 
         private void FormProfile_Load(object sender, EventArgs e)

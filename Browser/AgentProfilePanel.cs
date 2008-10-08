@@ -25,7 +25,7 @@ namespace Lextm.SharpSnmpLib.Browser
             listView1.Items.Clear();
             foreach (AgentProfile profile in ProfileRegistry.Instance.Profiles)
             {
-                if (profile.Name != "")
+                if (profile.Name.Length != 0)
                 {
                     display = profile.Name;
                 }
