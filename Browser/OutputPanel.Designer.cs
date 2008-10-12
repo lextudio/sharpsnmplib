@@ -42,6 +42,8 @@ namespace Lextm.SharpSnmpLib.Browser
             this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.actionList1 = new Crad.Windows.Forms.Actions.ActionList();
             this.actClear = new Crad.Windows.Forms.Actions.Action();
+            this.tsSave = new System.Windows.Forms.ToolStripMenuItem();
+            this.actSave = new Crad.Windows.Forms.Actions.Action();
             this.contextOuputMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.actionList1)).BeginInit();
             this.SuspendLayout();
@@ -59,9 +61,10 @@ namespace Lextm.SharpSnmpLib.Browser
             // contextOuputMenu
             // 
             this.contextOuputMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.clearToolStripMenuItem});
+            this.clearToolStripMenuItem,
+            this.tsSave});
             this.contextOuputMenu.Name = "contextOuputMenu";
-            this.contextOuputMenu.Size = new System.Drawing.Size(111, 26);
+            this.contextOuputMenu.Size = new System.Drawing.Size(111, 48);
             // 
             // clearToolStripMenuItem
             // 
@@ -73,6 +76,7 @@ namespace Lextm.SharpSnmpLib.Browser
             // actionList1
             // 
             this.actionList1.Actions.Add(this.actClear);
+            this.actionList1.Actions.Add(this.actSave);
             this.actionList1.ContainerControl = this;
             // 
             // actClear
@@ -80,6 +84,18 @@ namespace Lextm.SharpSnmpLib.Browser
             this.actClear.Text = "Clear";
             this.actClear.ToolTipText = "Clear Panel";
             this.actClear.Execute += new System.EventHandler(this.actClear_Execute);
+            // 
+            // tsSave
+            // 
+            this.actionList1.SetAction(this.tsSave, this.actSave);
+            this.tsSave.Name = "tsSave";
+            this.tsSave.Size = new System.Drawing.Size(110, 22);
+            this.tsSave.Text = "Save";
+            // 
+            // actSave
+            // 
+            this.actSave.Text = "Save";
+            this.actSave.Execute += new System.EventHandler(this.actSave_Execute);
             // 
             // OutputPanel
             // 
@@ -99,5 +115,7 @@ namespace Lextm.SharpSnmpLib.Browser
         private System.Windows.Forms.ToolStripMenuItem clearToolStripMenuItem;
         private Crad.Windows.Forms.Actions.ActionList actionList1;
         private Crad.Windows.Forms.Actions.Action actClear;
+        private System.Windows.Forms.ToolStripMenuItem tsSave;
+        private Crad.Windows.Forms.Actions.Action actSave;
 	}
 }
