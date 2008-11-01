@@ -93,15 +93,33 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             try
             {
-                OctetString newVal;
                 using (FormSet form = new FormSet())
                 {
                     form.OldVal = ProfileRegistry.Instance.DefaultProfile.GetValue(manager1, GetTextualForm(treeView1.SelectedNode.Tag as IDefinition));
                     if (form.ShowDialog() == DialogResult.OK)
                     {
-                        newVal = new OctetString(form.NewVal);
+                        //
+                        // If its a string we will send the value as an OctetString, otherwise an Integer32... we might have to update this
+                        // to support other data types later
+                        //
+                        if (form.IsString)
+                        {
+                            OctetString newVal = new OctetString(form.NewVal);
+                            ProfileRegistry.Instance.DefaultProfile.Set(manager1, GetTextualForm(treeView1.SelectedNode.Tag as IDefinition), newVal);
+                        }
+                        else
+                        {
+                            int result;
 
-                        ProfileRegistry.Instance.DefaultProfile.Set(manager1, GetTextualForm(treeView1.SelectedNode.Tag as IDefinition), newVal);
+                            if (!int.TryParse(form.NewVal, out result))
+                            {
+                                MessageBox.Show("Value entered was not an Integer!", "SNMP Set Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+                            }
+
+                            Integer32 newVal = new Integer32(result);
+                            ProfileRegistry.Instance.DefaultProfile.Set(manager1, GetTextualForm(treeView1.SelectedNode.Tag as IDefinition), newVal);
+                        }
 
                         //
                         // For now so we can see the change occured

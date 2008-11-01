@@ -34,6 +34,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.rbString = new System.Windows.Forms.RadioButton();
+            this.rbInteger = new System.Windows.Forms.RadioButton();
             this.SuspendLayout();
             // 
             // txtCurrent
@@ -72,8 +74,7 @@
             // 
             // btnOK
             // 
-            this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOK.Location = new System.Drawing.Point(48, 213);
+            this.btnOK.Location = new System.Drawing.Point(33, 283);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 4;
@@ -84,7 +85,7 @@
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(167, 213);
+            this.btnCancel.Location = new System.Drawing.Point(205, 283);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 5;
@@ -92,11 +93,36 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
+            // rbString
+            // 
+            this.rbString.AutoSize = true;
+            this.rbString.Location = new System.Drawing.Point(15, 214);
+            this.rbString.Name = "rbString";
+            this.rbString.Size = new System.Drawing.Size(52, 17);
+            this.rbString.TabIndex = 6;
+            this.rbString.TabStop = true;
+            this.rbString.Text = "String";
+            this.rbString.UseVisualStyleBackColor = true;
+            // 
+            // rbInteger
+            // 
+            this.rbInteger.AutoSize = true;
+            this.rbInteger.Location = new System.Drawing.Point(15, 237);
+            this.rbInteger.Name = "rbInteger";
+            this.rbInteger.Size = new System.Drawing.Size(58, 17);
+            this.rbInteger.TabIndex = 7;
+            this.rbInteger.TabStop = true;
+            this.rbInteger.Text = "Integer";
+            this.rbInteger.UseVisualStyleBackColor = true;
+            this.rbInteger.CheckedChanged += new System.EventHandler(this.rbInteger_CheckedChanged);
+            // 
             // FormSet
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(292, 242);
+            this.ClientSize = new System.Drawing.Size(289, 313);
+            this.Controls.Add(this.rbInteger);
+            this.Controls.Add(this.rbString);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.label2);
@@ -118,5 +144,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.RadioButton rbString;
+        private System.Windows.Forms.RadioButton rbInteger;
     }
 }

@@ -302,7 +302,8 @@ namespace Lextm.SharpSnmpLib
             }
 
             IList<Variable> list = new List<Variable>();
-            int rows = Walk(version, endpoint, community, table, list, timeout, WalkMode.WithinSubtree);
+            int rows = SteveWalk(version, endpoint, community, table, list, timeout, WalkMode.WithinSubtree);
+            //int rows = Walk(version, endpoint, community, table, list, timeout, WalkMode.WithinSubtree);
             if (rows == 0)
             {
                 return new Variable[0, 0];
@@ -360,8 +361,8 @@ namespace Lextm.SharpSnmpLib
         public Variable[,] GetTable(string address, string community, ObjectIdentifier table)
         {
             return GetTable(IPAddress.Parse(address), community, table);
-        }        
-        
+        }
+
         /// <summary>
         /// Walks.
         /// </summary>
@@ -397,6 +398,72 @@ namespace Lextm.SharpSnmpLib
                 if (seed.Id.ToString().StartsWith(table + ".1.1.", StringComparison.Ordinal))
                 {
                     result++;
+                }
+            }
+            while (HasNext(version, endpoint, community, seed, timeout, out next));
+            return result;
+        }
+        /// <summary>
+        /// Steve Walks.
+        /// </summary>
+        /// <param name="version">Protocol version.</param>
+        /// <param name="endpoint">Endpoint.</param>
+        /// <param name="community">Community name.</param>
+        /// <param name="table">OID.</param>
+        /// <param name="list">A list to hold the results.</param>
+        /// <param name="timeout">Timeout.</param>
+        /// <param name="mode">Walk mode.</param>
+        /// <returns>Returns row count if the OID is a table. Otherwise this value is meaningless.</returns>
+        public static int SteveWalk(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, IList<Variable> list, int timeout, WalkMode mode)
+        {
+            int result = 0;
+            int index = -1;
+            Variable tableV = new Variable(table);
+            Variable seed = null;
+            Variable next = tableV;
+            bool first = true;
+            bool oldWay = false;
+
+            do
+            {
+                seed = next;
+                if (seed == tableV)
+                {
+                    continue;
+                }
+
+                if (mode == WalkMode.WithinSubtree && !seed.Id.ToString().StartsWith(table + ".", StringComparison.Ordinal))
+                {
+                    // not in sub tree
+                    break;
+                }
+
+                list.Add(seed);
+
+                //
+                // Here we need to figure out which way we will be counting tables
+                //
+                if (first && seed.Id.ToString().StartsWith(table + ".1.1.", StringComparison.Ordinal))
+                {
+                    oldWay = true;
+                }
+
+                first = false;
+
+                if (oldWay && seed.Id.ToString().StartsWith(table + ".1.1.", StringComparison.Ordinal))
+                {
+                    result++;
+                }
+                else if(!oldWay)
+                {
+                    string part = seed.Id.ToString().Replace(table.ToString(), "").Remove(0, 1);
+                    int end = part.IndexOf('.');
+                    int newIndex = Int32.Parse(part.Substring(0, end));
+                    if (index != newIndex)
+                    {
+                        index = newIndex;
+                        result++;
+                    }
                 }
             }
             while (HasNext(version, endpoint, community, seed, timeout, out next));

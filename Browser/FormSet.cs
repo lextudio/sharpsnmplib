@@ -13,6 +13,9 @@ namespace Lextm.SharpSnmpLib.Browser
         public FormSet()
         {
             InitializeComponent();
+
+            rbString.Checked = true;
+            txtCurrent.Enabled = false;
         }
 
         public string OldVal
@@ -31,14 +34,50 @@ namespace Lextm.SharpSnmpLib.Browser
             }
         }
 
+        public bool IsString
+        {
+            get
+            {
+                return rbString.Checked;
+            }
+        }
+
         private void btnOK_Click(object sender, EventArgs e)
         {
-            Close();
+            if (rbInteger.Checked && !Valid())
+            {
+                MessageBox.Show("The new value is not an Integer", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                this.DialogResult = DialogResult.Cancel;
+            }
+            else
+            {
+                DialogResult = DialogResult.OK;
+                Close();
+            }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void rbInteger_CheckedChanged(object sender, EventArgs e)
+        {
+            Valid();
+        }
+
+        private bool Valid()
+        {
+            int test; 
+            
+            if (rbInteger.Checked && !int.TryParse(txtNew.Text, out test))
+            {
+                txtNew.Text = "";
+
+                return false;
+            }
+
+            return true;
         }
     }
 }
