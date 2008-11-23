@@ -267,7 +267,7 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void actGetNext_Update(object sender, EventArgs e)
         {
-            if (treeView1.SelectedNode != null && treeView1.SelectedNode.NextNode != null)
+            if (treeView1.SelectedNode != null)
             {
                 actGetNext.Enabled = Validate(treeView1.SelectedNode.NextNode);
             }
