@@ -312,18 +312,95 @@ namespace Lextm.SharpSnmpLib
             int cols = list.Count / rows;
             int k = 0;
             Variable[,] result = new Variable[rows, cols];
+
             for (int j = 0; j < cols; j++)
             {
                 for (int i = 0; i < rows; i++)
                 {
-                    result[i, j] = list[k];
+                    result[i,j] = list[k];
                     k++;
                 }
             }
 
             return result;
         }
-        
+
+        /// <summary>
+        /// Gets a table of variables.
+        /// </summary>
+        /// <param name="version">Protocol version.</param>
+        /// <param name="endpoint">Endpoint.</param>
+        /// <param name="community">Community name.</param>
+        /// <param name="table">Table OID.</param>
+        /// <param name="timeout">Timeout.</param>
+        /// <returns></returns>
+        [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Return", Justification = "ByDesign")]
+        [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Body", Justification = "ByDesign")]
+        public static Variable[,] GetInnerTable(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, int timeout)
+        {
+            if (version == VersionCode.V3)
+            {
+                throw new ArgumentException("only SNMP v1 or v2 is supported");
+            }
+
+            bool canContinue = ObjectRegistry.ValidateTable(table);
+            if (!canContinue)
+            {
+                throw new ArgumentException("not a table OID: " + table);
+            }
+
+            IList<Variable> list = new List<Variable>();
+            int rows = SteveWalk(version, endpoint, community, table, list, timeout, WalkMode.WithinSubtree);
+            //int rows = Walk(version, endpoint, community, table, list, timeout, WalkMode.WithinSubtree);
+            if (rows == 0)
+            {
+                return new Variable[0, 0];
+            }
+
+            int cols = list.Count / rows;
+
+            if (list.Count % rows != 0)
+            {
+                cols++;
+            }
+
+            int k = 0;
+            Variable[,] result = new Variable[rows, cols];
+            string index = list[0].Id.ToString().Replace(table.ToString(), "").Remove(0, 1);
+            int end = index.IndexOf('.');
+            index = index.Substring(0, end);
+
+            for (int j = 0; j < cols; j++)
+            {
+                string newIndex = list[k].Id.ToString().Replace(table.ToString(), "").Remove(0, 1);
+                end = newIndex.IndexOf('.');
+                newIndex = newIndex.Substring(0, end);
+                int i = 0;
+
+                while (index == newIndex)
+                {
+                    result[i, j] = list[k];
+                    k++;
+                    i++;
+
+                    if (k < list.Count)
+                    {
+                        newIndex = list[k].Id.ToString().Replace(table.ToString(), "").Remove(0, 1);
+                        end = newIndex.IndexOf('.');
+                        newIndex = newIndex.Substring(0, end);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+
+                index = newIndex;
+            }
+
+            return result;
+        }
+
         /// <summary>
         /// Gets a table of variables.
         /// </summary>
@@ -391,6 +468,7 @@ namespace Lextm.SharpSnmpLib
                 if (mode == WalkMode.WithinSubtree && !seed.Id.ToString().StartsWith(table + ".", StringComparison.Ordinal))
                 {
                     // not in sub tree
+
                     break;
                 }
 
@@ -435,14 +513,18 @@ namespace Lextm.SharpSnmpLib
                 if (mode == WalkMode.WithinSubtree && !seed.Id.ToString().StartsWith(table + ".", StringComparison.Ordinal))
                 {
                     // not in sub tree
+
                     break;
                 }
 
                 list.Add(seed);
 
                 //
+
                 // Here we need to figure out which way we will be counting tables
+
                 //
+
                 if (first && seed.Id.ToString().StartsWith(table + ".1.1.", StringComparison.Ordinal))
                 {
                     oldWay = true;
@@ -454,7 +536,7 @@ namespace Lextm.SharpSnmpLib
                 {
                     result++;
                 }
-                else if(!oldWay)
+                else if (!oldWay)
                 {
                     string part = seed.Id.ToString().Replace(table.ToString(), "").Remove(0, 1);
                     int end = part.IndexOf('.');
@@ -469,6 +551,7 @@ namespace Lextm.SharpSnmpLib
             while (HasNext(version, endpoint, community, seed, timeout, out next));
             return result;
         }
+
 
         /// <summary>
         /// Starts trap listener.
