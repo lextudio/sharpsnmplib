@@ -265,17 +265,18 @@ namespace Lextm.SharpSnmpLib.Browser
             }
         }
 
-        private void actGetNext_Update(object sender, EventArgs e)
+	private void actGetNext_Update(object sender, EventArgs e)
         {
             if (treeView1.SelectedNode != null)
             {
-                actGetNext.Enabled = Validate(treeView1.SelectedNode.NextNode);
+                actGetNext.Enabled = Validate(treeView1.SelectedNode);
             }
             else
             {
                 actGetNext.Enabled = false;
             }
         }
+        
 
         private void ManualWalk(TreeNode node, bool first)
         {
