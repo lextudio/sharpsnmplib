@@ -33,7 +33,7 @@ namespace Lextm.SharpSnmpLib.Mib
             // User loaded MIBS
             if (Directory.Exists(folder))
             {
-                var files = Directory.GetFiles(folder, "*.*");
+                string[] files = Directory.GetFiles(folder, "*.*");
                 foreach (string file in files)
                 {
                     Import(file);
@@ -45,7 +45,7 @@ namespace Lextm.SharpSnmpLib.Mib
 
         private void Import(string file)
         {
-            var modules = Compiler.Compile(file);
+            IList<MibModule> modules = Compiler.Compile(file);
             foreach (MibModule module in modules)
             {
                 if (!_moduleTable.ContainsKey(module.Name)) 
@@ -150,8 +150,6 @@ namespace Lextm.SharpSnmpLib.Mib
                 _existing.Remove(file);
                 File.Delete(file);
             }
-            
-            // TODO: We also need to figure out how to remove the mibs we just took out!
         }
     }
 }

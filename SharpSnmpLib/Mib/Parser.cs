@@ -36,7 +36,7 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             Console.WriteLine("loading existing modules started");            
             Console.WriteLine("loading existing modules ended");
-            var modules = new List<MibModule>();
+            List<MibModule> modules = new List<MibModule>();
             foreach (string file in files)
             {
                 foreach (MibModule module in Compiler.Compile(file))
@@ -74,7 +74,7 @@ namespace Lextm.SharpSnmpLib.Mib
             using (StreamWriter writer = new StreamWriter(fileName))
             {
                 writer.Write("#");
-                foreach (var dependent in module.Dependents)
+                foreach (string dependent in module.Dependents)
                 {
                     writer.Write(dependent);
                     writer.Write(',');

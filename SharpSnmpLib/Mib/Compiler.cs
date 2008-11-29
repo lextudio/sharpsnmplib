@@ -49,7 +49,7 @@ namespace Lextm.SharpSnmpLib.Mib
             Lextm.Diagnostics.Stopwatch watch = new Lextm.Diagnostics.Stopwatch();
             watch.Start();
 
-            var modules = new List<MibModule>();
+            List<MibModule> modules = new List<MibModule>();
             foreach (string file in Directory.GetFiles(folder, pattern))
             {
                 modules.AddRange(Compile(file));

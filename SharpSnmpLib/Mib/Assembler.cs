@@ -52,7 +52,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 Directory.CreateDirectory(_folder);
             }
 
-            var files = Directory.GetFiles(_folder, "*.module");
+            string[] files = Directory.GetFiles(_folder, "*.module");
             _tree.ImportFiles(files);
         }     
     }

@@ -25,18 +25,10 @@ namespace Lextm.SharpSnmpLib.Mib
             IDefinition ccitt = new Definition(new OidValueAssignment("SNMPV2-SMI", "ccitt", null, 0), root);
             IDefinition iso = new Definition(new OidValueAssignment("SNMPV2-SMI", "iso", null, 1), root);
             IDefinition joint_iso_ccitt = new Definition(new OidValueAssignment("SNMPV2-SMI", "joint-iso-ccitt", null, 2), root);
-            nameTable = new Dictionary<string, IDefinition>()
-            {
-                {
-                    iso.TextualForm, iso
-                },
-                {
-                    ccitt.TextualForm, ccitt
-                },
-                {
-                    joint_iso_ccitt.TextualForm, joint_iso_ccitt
-                }
-            };
+            nameTable = new Dictionary<string, IDefinition>();
+            nameTable.Add(iso.TextualForm, iso);
+            nameTable.Add(ccitt.TextualForm, ccitt);
+            nameTable.Add(joint_iso_ccitt.TextualForm, joint_iso_ccitt);
         }
         
         /// <summary>
@@ -145,7 +137,7 @@ namespace Lextm.SharpSnmpLib.Mib
 
         private void AddNodes(MibModule module)
         {
-            var pendingNodes = new List<IEntity>();
+            List<IEntity> pendingNodes = new List<IEntity>();
             
             // parse all direct nodes.
             foreach (IEntity node in module.Entities)
@@ -171,7 +163,7 @@ namespace Lextm.SharpSnmpLib.Mib
             int previous;
             while (current != 0)
             {
-                var parsed = new List<IEntity>();
+                List<IEntity> parsed = new List<IEntity>();
                 previous = current;
                 foreach (IEntity node in pendingNodes)
                 {
@@ -380,18 +372,18 @@ namespace Lextm.SharpSnmpLib.Mib
 
         internal int ImportFiles(IEnumerable<string> files)
         {
-            var pendings = new List<string>(files);
+            List<string> pendings = new List<string>(files);
             Console.WriteLine(pendings.Count + " module files found");
             int current = pendings.Count;
             int previous;
             while (current != 0)
             {
                 previous = current;
-                var parsed = new List<string>();
-                foreach (var file in pendings)
+                List<string> parsed = new List<string>();
+                foreach (string file in pendings)
                 {
                     List<string> dependents;
-                    var nodes = ExtractNodes(file, out dependents);
+                    IEnumerable<Definition> nodes = ExtractNodes(file, out dependents);
                     MibModule module = new MibModule(Path.GetFileNameWithoutExtension(file), dependents);
                     bool canParse = CanParse(module);
                     if (!canParse)
@@ -421,14 +413,14 @@ namespace Lextm.SharpSnmpLib.Mib
 
         private void AddNodes(IEnumerable<Definition> nodes)
         {
-            var pendings = new List<Definition>(nodes);
+            List<Definition> pendings = new List<Definition>(nodes);
             int current = pendings.Count;
             int previous;
             while (current != 0)
             {
                 previous = current;
-                var parsed = new List<Definition>();
-                foreach (var node in pendings)
+                List<Definition> parsed = new List<Definition>();
+                foreach (Definition node in pendings)
                 {
                     IDefinition def;
                     try
@@ -450,7 +442,7 @@ namespace Lextm.SharpSnmpLib.Mib
                     parsed.Add(node);
                 }
 
-                foreach (var d in parsed)
+                foreach (Definition d in parsed)
                 {
                     pendings.Remove(d);
                 }
@@ -465,7 +457,7 @@ namespace Lextm.SharpSnmpLib.Mib
 
         private IEnumerable<Definition> ExtractNodes(string fileName, out List<string> dependents)
         {
-            var result = new List<Definition>();
+            List<Definition> result = new List<Definition>();
             dependents = new List<string>();
             using (StreamReader reader = new StreamReader(fileName))
             {
