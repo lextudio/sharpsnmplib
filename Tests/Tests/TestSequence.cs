@@ -21,17 +21,22 @@ namespace Lextm.SharpSnmpLib.Tests
         [ExpectedException(typeof(ArgumentException))]
         public void TestConstructor()
         {
-            Sequence array = new Sequence(new List<int>() {1, 2, 3});
+            List<int> iList = new List<int>();
+            iList.Add(1);
+            iList.Add(2);
+            iList.Add(2);
+
+            Sequence array = new Sequence(iList);
         }
         [Test]
         public void TestToBytes()
         {
-            Sequence a = Variable.Transform(
-                new List<Variable>() {
-                    new Variable(
+            List<Variable> vList = new List<Variable>();
+            vList.Add(new Variable(
                         new ObjectIdentifier(new uint[] {1,3,6,1,4,1,2162,1001,21,0}),
-                        new OctetString("TrapTest"))
-                });
+                        new OctetString("TrapTest")));
+
+            Sequence a = Variable.Transform(vList);
             byte[] bytes = a.ToBytes();
             ISnmpData data = SnmpDataFactory.CreateSnmpData(bytes);
             Assert.AreEqual(SnmpType.Sequence, data.TypeCode);

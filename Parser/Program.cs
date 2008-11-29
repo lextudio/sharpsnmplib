@@ -18,7 +18,7 @@ namespace Lextm.SharpSnmpLib.Parser
     {
         public static void Main(string[] args)
         {
-            var files = new List<string>();
+            List<string> files = new List<string>();
             string folder = null;
             string pattern = null;
             string root = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "modules");

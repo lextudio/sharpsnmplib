@@ -22,12 +22,15 @@ namespace Lextm.SharpSnmpLib.Tests
         {
             Variable v = new Variable(new ObjectIdentifier(new uint[] {1,3,6,1,4,1,2162,1001,21,0}), 
                                       new OctetString("TrapTest"));
+            List<Variable> vList = new List<Variable>();
+            vList.Add(v);
+
             TrapV1Pdu pdu = new TrapV1Pdu(new ObjectIdentifier(new uint[] {1, 3, 6, 1, 4, 1, 2162, 1000, 2}),
                                           new IP("127.0.0.1"),
                                           new Integer32((int)GenericCode.EnterpriseSpecific),
                                           new Integer32(12),
                                           new TimeTicks(16352),
-                                          new List<Variable>() {v});
+                                          vList);
             byte[] bytes = pdu.ToMessageBody(VersionCode.V1, new OctetString("public")).ToBytes();
             TrapV1Message message = (TrapV1Message)MessageFactory.ParseMessages(bytes)[0];
             Assert.AreEqual("127.0.0.1", message.AgentAddress.ToString());

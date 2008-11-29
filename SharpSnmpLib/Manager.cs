@@ -87,7 +87,10 @@ namespace Lextm.SharpSnmpLib
             }
 
             Variable v = new Variable(new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 1, 1, 0 }));
-            GetRequestMessage message = new GetRequestMessage(version, endpoint.Address, community, new List<Variable>() { v });
+            List<Variable> vList = new List<Variable>();
+            vList.Add(v);
+
+            GetRequestMessage message = new GetRequestMessage(version, endpoint.Address, community, vList);
             return message.Broadcast(timeout, endpoint.Port);
         }
         
@@ -120,7 +123,10 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public Variable GetSingle(IPEndPoint endpoint, string community, Variable variable)
         {
-            return Get(_version, endpoint, new OctetString(community), new List<Variable>() { variable }, _timeout)[0];
+            List<Variable> vList = new List<Variable>();
+            vList.Add(variable);
+
+            return Get(_version, endpoint, new OctetString(community), vList, _timeout)[0];
         }
 
         /// <summary>
@@ -214,7 +220,10 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public void SetSingle(IPEndPoint endpoint, string community, Variable variable)
         {
-            Set(_version, endpoint, new OctetString(community), new List<Variable>() { variable }, _timeout);
+            List<Variable> vList = new List<Variable>();
+            vList.Add(variable);
+
+            Set(_version, endpoint, new OctetString(community), vList, _timeout);
         }
         
         /// <summary>
@@ -633,11 +642,14 @@ namespace Lextm.SharpSnmpLib
             bool result;
             try
             {
+                List<Variable> vList = new List<Variable>();
+                vList.Add(new Variable(seed.Id));
+                
                 GetNextRequestMessage message = new GetNextRequestMessage(
                     version,
                     endpoint.Address,
                     community,
-                    new List<Variable>(1) { new Variable(seed.Id) });
+                    vList);
 
                 next = message.Send(timeout, endpoint.Port)[0];
                 result = true;

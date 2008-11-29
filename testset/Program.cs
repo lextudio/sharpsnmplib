@@ -19,10 +19,12 @@ namespace TestSet
 		{
 			try
 			{
-				Variable test = new Variable(new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 1, 6, 0 }), 
-				                                             new OctetString("Beijing"));
-			    Manager.Set(VersionCode.V1, new IPEndPoint(IPAddress.Loopback, 161), new OctetString("private"), new List<Variable>() {test}, 5000);
-			    Manager.Set(VersionCode.V2, new IPEndPoint(IPAddress.Loopback, 161), new OctetString("private"), new List<Variable>() {test}, 5000);
+				Variable test = new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.6.0"), new OctetString("Beijing"));
+                List<Variable> vList = new List<Variable>();
+                vList.Add(test);
+
+                Manager.Set(VersionCode.V1, new IPEndPoint(IPAddress.Loopback, 161), new OctetString("private"), vList, 5000);
+			    Manager.Set(VersionCode.V2, new IPEndPoint(IPAddress.Loopback, 161), new OctetString("private"), vList, 5000);
 			}
 			catch (SharpOperationException ex)
 			{

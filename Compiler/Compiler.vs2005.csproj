@@ -1,0 +1,128 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{5BED5642-262B-44C7-9017-2A971C18D37D}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>Lextm.SharpSnmpLib.Compiler</RootNamespace>
+    <AssemblyName>Compiler</AssemblyName>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SourceAnalysisOverrideSettingsFile>C:\Users\lextm\AppData\Roaming\ICSharpCode/SharpDevelop3.0\AddIns\MattEverson.SourceAnalysis\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\SharpSnmpLib\sharpsnmplib.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>False</DelaySign>
+    <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>True</Optimize>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
+  <ItemGroup>
+    <Reference Include="Crad.Windows.Forms.Actions, Version=1.1.1.0, Culture=neutral, PublicKeyToken=66b0ace6c5875704, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\Crad.Windows.Forms.Actions.dll</HintPath>
+    </Reference>
+    <Reference Include="Lextm.Common">
+      <HintPath>..\lib\Lextm.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WeifenLuo.WinFormsUI.Docking">
+      <HintPath>..\lib\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DocumentPanel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DocumentPanel.Designer.cs">
+      <DependentUpon>DocumentPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IMediator.cs" />
+    <Compile Include="IOutput.cs" />
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MibCompilerException.cs" />
+    <Compile Include="ModuleListPanel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ModuleListPanel.Designer.cs">
+      <DependentUpon>ModuleListPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OutputPanel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OutputPanel.Designer.cs">
+      <DependentUpon>OutputPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="DocumentPanel.resx">
+      <DependentUpon>DocumentPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ModuleListPanel.resx">
+      <DependentUpon>ModuleListPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OutputPanel.resx">
+      <DependentUpon>OutputPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <None Include="license.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SharpSnmpLib\SharpSnmpLib.vs2005.csproj">
+      <Project>{286DE6DB-8F95-4BD4-86A2-86488D2E0EE1}</Project>
+      <Name>SharpSnmpLib.vs2005</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\document-open.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\go-bottom.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\go-jump.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\system-log-out.png" />
+  </ItemGroup>
+</Project>

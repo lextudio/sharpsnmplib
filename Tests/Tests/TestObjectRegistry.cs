@@ -11,6 +11,7 @@ using System;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 using System.IO;
+using System.Collections.Generic;
 using Lextm.SharpSnmpLib.Mib;
 #pragma warning disable 1591
 namespace Lextm.SharpSnmpLib.Tests
@@ -143,7 +144,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestActona()
         {
             string name = "ACTONA-ACTASTOR-MIB::actona";
-            var modules = Compiler.Compile(new StreamReader(new MemoryStream(Resource.ACTONA_ACTASTOR_MIB)));
+            IList<MibModule> modules = Compiler.Compile(new StreamReader(new MemoryStream(Resource.ACTONA_ACTASTOR_MIB)));
             ObjectRegistry.Instance.Import(modules);
             ObjectRegistry.Instance.Refresh();
             uint[] id = ObjectRegistry.Instance.Translate(name);
@@ -156,7 +157,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestSYMMIB_MIB_MIB()
         {
             string name = "SYMMIB_MIB-MIB::symbios_3_1";
-            var modules = Compiler.Compile(new StreamReader(new MemoryStream(Resource.SYMMIB_MIB_MIB)));
+            IList<MibModule> modules = Compiler.Compile(new StreamReader(new MemoryStream(Resource.SYMMIB_MIB_MIB)));
             ObjectRegistry.Instance.Import(modules);
             modules = Compiler.Compile(new StreamReader(new MemoryStream(Resource.DMTF_DMI_MIB)));
             ObjectRegistry.Instance.Import(modules);
@@ -171,7 +172,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestIEEE802dot11_MIB()
         {
             string name = "IEEE802DOT11-MIB::dot11SMTnotification";
-            var modules = Compiler.Compile(new StreamReader(new MemoryStream(Resource.IEEE802DOT11_MIB)));
+            IList<MibModule> modules = Compiler.Compile(new StreamReader(new MemoryStream(Resource.IEEE802DOT11_MIB)));
             ObjectRegistry.Instance.Import(modules);
             ObjectRegistry.Instance.Refresh();
             uint[] id = ObjectRegistry.Instance.Translate(name);

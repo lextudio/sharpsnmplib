@@ -21,12 +21,12 @@ namespace Lextm.SharpSnmpLib.Tests
         // [ExpectedException(typeof(IndexOutOfRangeException))]
         public void TestConstructor()
         {
-            Sequence a = Variable.Transform(
-                new List<Variable>() {
-                   new Variable(
+            List<Variable> vList = new List<Variable>();
+            vList.Add(new Variable(
                         new ObjectIdentifier(new uint[] {1,3,6,1,2,1,2,2,1,22,1}),
-                        new ObjectIdentifier(new uint[] {0,0}))
-                });
+                        new ObjectIdentifier(new uint[] {0,0})));
+            
+            Sequence a = Variable.Transform(vList);
         }
     }
 }

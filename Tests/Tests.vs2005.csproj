@@ -1,0 +1,73 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{FE484004-0780-4730-9D91-D4597341B56E}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Lextm.SharpSnmpLib.Tests</RootNamespace>
+    <AssemblyName>SharpSnmpLib.Tests</AssemblyName>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SourceAnalysisOverrideSettingsFile>C:\Users\lextm\AppData\Roaming\ICSharpCode/SharpDevelop3.0\AddIns\MattEverson.SourceAnalysis\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\SharpSnmpLib\sharpsnmplib.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>False</DelaySign>
+    <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>True</Optimize>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
+  <ItemGroup>
+    <Reference Include="nunit.framework">
+      <HintPath>..\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tests\TestByteTool.cs" />
+    <Compile Include="Tests\TestConstructHelper.cs" />
+    <Compile Include="Tests\TestCounter32.cs" />
+    <Compile Include="Tests\TestCounter64.cs" />
+    <Compile Include="Tests\TestGauge32.cs" />
+    <Compile Include="Tests\TestGetRequestMessage.cs" />
+    <Compile Include="Tests\TestGetResponseMessage.cs" />
+    <Compile Include="Tests\TestInteger32.cs" />
+    <Compile Include="Tests\TestIP.cs" />
+    <Compile Include="Tests\TestLexer.cs" />
+    <Compile Include="Tests\TestMessageFactory.cs" />
+    <Compile Include="Tests\TestMibDocument.cs" />
+    <Compile Include="Tests\TestNull.cs" />
+    <Compile Include="Tests\TestObjectIdentifier.cs" />
+    <Compile Include="Tests\TestObjectRegistry.cs" />
+    <Compile Include="Tests\TestStringUtilities.cs" />
+    <Compile Include="Tests\TestOctetString.cs" />
+    <Compile Include="Tests\TestOpaque.cs" />
+    <Compile Include="Tests\TestParseItemsException.cs" />
+    <Compile Include="Tests\TestSequence.cs" />
+    <Compile Include="Tests\TestSnmpDataFactory.cs" />
+    <Compile Include="Tests\TestTimeticks.cs" />
+    <Compile Include="Tests\TestTrapMessage.cs" />
+    <Compile Include="Tests\TestTrapV1Pdu.cs" />
+    <Compile Include="Tests\TestVariable.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SharpSnmpLib\SharpSnmpLib.vs2005.csproj">
+      <Project>{286DE6DB-8F95-4BD4-86A2-86488D2E0EE1}</Project>
+      <Name>SharpSnmpLib.vs2005</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

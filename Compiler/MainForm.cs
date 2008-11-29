@@ -121,7 +121,10 @@ namespace Lextm.SharpSnmpLib.Compiler
             IDockContent content = dockPanel1.ActiveDocument;
             DocumentPanel doc = (DocumentPanel)content;
 
-            backgroundWorker1.RunWorkerAsync(new List<string>(1) { doc.FileName });
+            List<string> sList = new List<string>(1);
+            sList.Add(doc.FileName);
+
+            backgroundWorker1.RunWorkerAsync(sList);
         }
 
         private void actCompile_Update(object sender, EventArgs e)
@@ -131,7 +134,7 @@ namespace Lextm.SharpSnmpLib.Compiler
 
         private void actCompileAll_Execute(object sender, EventArgs e)
         {
-            var docs = new List<string>(dockPanel1.DocumentsCount);
+            List<string> docs = new List<string>(dockPanel1.DocumentsCount);
             foreach (IDockContent content in dockPanel1.Documents)
             {
                 DocumentPanel doc = (DocumentPanel)content;
@@ -168,7 +171,7 @@ namespace Lextm.SharpSnmpLib.Compiler
 
         private void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
-            var docs = (IEnumerable<string>)e.Argument;
+            IEnumerable<string> docs = (IEnumerable<string>)e.Argument;
             Parser parser = new Parser(_assembler);
             parser.ParseToModules(docs);
         }

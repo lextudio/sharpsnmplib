@@ -40,13 +40,12 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private static TreeNode Wrap(IDefinition definition)
         {
-            TreeNode node = new TreeNode(definition.Name)
-            {
-                Tag = definition,
-                ImageIndex = (int)definition.Type,
-                SelectedImageIndex = (int)definition.Type,
-                ToolTipText = definition.TextualForm + Environment.NewLine + definition.Value
-            };
+            TreeNode node = new TreeNode(definition.Name);
+            node.Tag = definition;
+            node.ImageIndex = (int)definition.Type;
+            node.SelectedImageIndex = (int)definition.Type;
+            node.ToolTipText = definition.TextualForm + Environment.NewLine + definition.Value;
+
             foreach (IDefinition def in definition.Children)
             {
                 node.Nodes.Add(Wrap(def));
