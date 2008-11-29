@@ -82,7 +82,7 @@
                 return _variables;
             }
         }
-        
+#region broadcast        
         /// <summary>
         /// Broadcasts request for new agents.
         /// </summary>
@@ -158,7 +158,7 @@
             
             return result;
         }
-        
+#endregion        
         /// <summary>
         /// Sends this <see cref="GetRequestMessage"/> and handles the response from agent.
         /// </summary>
@@ -209,13 +209,70 @@
             
             return response.Variables;
         }
-        
-        internal int SequenceNumber
+
+        /// <summary>
+        /// Sends this <see cref="GetRequestMessage"/> and handles the response from agent.
+        /// </summary>
+        /// <param name="timeout">Timeout.</param>
+        /// <param name="port">Port number.</param>
+        /// <returns></returns>
+        public GetResponseMessage GetResponse(int timeout, int port)
         {
-            get
+            byte[] bytes = _bytes;
+            IPEndPoint agent = new IPEndPoint(_agent, port);
+            using (UdpClient udp = new UdpClient())
             {
-                return _sequenceNumber;
+                udp.Send(bytes, bytes.Length, agent);
+                IPEndPoint from = new IPEndPoint(IPAddress.Any, 0);
+                IAsyncResult result = udp.BeginReceive(null, this);
+                result.AsyncWaitHandle.WaitOne(timeout, false);
+                if (!result.IsCompleted)
+                {
+                    throw SharpTimeoutException.Create(_agent, timeout);
+                }
+                
+                bytes = udp.EndReceive(result, ref from);
+                udp.Close();
             }
+            
+            MemoryStream m = new MemoryStream(bytes, false);
+            ISnmpMessage message = MessageFactory.ParseMessages(m)[0];
+            if (message.TypeCode != SnmpType.GetResponsePdu)
+            {
+                throw SharpOperationException.Create("wrong response type", _agent);
+            }
+            
+            GetResponseMessage response = (GetResponseMessage)message;
+            if (response.SequenceNumber != SequenceNumber)
+            {
+                throw SharpOperationException.Create("wrong response sequence", _agent);
+            }
+            
+            return response;
+        }
+
+        /// <summary>
+        /// Version.
+        /// </summary>
+        public VersionCode Version
+        {
+            get { return _version; }
+        }
+        
+        /// <summary>
+        /// Sequence number.
+        /// </summary>
+        public int SequenceNumber
+        {
+            get { return _sequenceNumber; }
+        }
+
+        /// <summary>
+        /// Community name.
+        /// </summary>
+        public OctetString Community
+        {
+            get { return _community; }
         }
         
         /// <summary>

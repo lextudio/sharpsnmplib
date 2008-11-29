@@ -10,7 +10,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
+using System.Text;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -19,6 +21,38 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     internal static class ByteTool
     {
+        internal static byte[] ParseByteString(string bytes)
+        {
+            List<byte> result = new List<byte>();
+            StringBuilder buffer = new StringBuilder(2);
+            foreach (char c in bytes)
+            {
+                if (char.IsWhiteSpace(c))
+                {
+                    continue;
+                }
+                
+                if (!char.IsLetterOrDigit(c)) 
+                {
+                    throw new ArgumentException("illegal character found", "bytes");
+                }
+                
+                buffer.Append(c);
+                if (buffer.Length == 2)
+                {
+                    result.Add(byte.Parse(buffer.ToString(), NumberStyles.AllowHexSpecifier));
+                    buffer.Length = 0;
+                }
+            }
+            
+            if (buffer.Length != 0)
+            {
+                throw new ArgumentException("not a complete byte string", "bytes");
+            }
+            
+            return result.ToArray();
+        }
+        
         internal static bool CompareArray<T>(IList<T> left, IList<T> right) where T : IEquatable<T>
         {
             if (left.Count != right.Count)

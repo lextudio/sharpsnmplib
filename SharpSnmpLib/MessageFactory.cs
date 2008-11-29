@@ -19,6 +19,15 @@ namespace Lextm.SharpSnmpLib
     public static class MessageFactory
     {
         /// <summary>
+        /// Creates <see cref="ISnmpMessage"/> instances from a string.
+        /// </summary>
+        /// <param name="bytes">Byte string.</param>
+        /// <returns></returns>
+        public static IList<ISnmpMessage> ParseMessages(string bytes)
+        {
+            return ParseMessages(ByteTool.ParseByteString(bytes));
+        }
+        /// <summary>
         /// Creates <see cref="ISnmpMessage"/> instances from buffer.
         /// </summary>
         /// <param name="buffer">Buffer.</param>

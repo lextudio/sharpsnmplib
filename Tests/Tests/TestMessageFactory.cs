@@ -45,6 +45,17 @@ namespace Lextm.SharpSnmpLib.Tests
 			//Assert.AreEqual(4, messages[0].TimeStamp);
 		}
 		
+		[Test]
+		public void TestString()
+		{
+		    string bytes = "30 29 02 01 00 04 06 70 75 62 6c 69 63 a0 1c 02 04 4f 89 fb dd" + Environment.NewLine +
+            "02 01 00 02 01 00 30 0e 30 0c 06 08 2b 06 01 02 01 01 05 00 05 00";
+		    IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes);
+		    Assert.AreEqual(1, messages.Count);
+		    GetRequestMessage m = (GetRequestMessage)messages[0];
+		    Variable v = m.Variables[0];
+		    string i = v.Id.ToString();
+		}
     }
 }
 #pragma warning restore 1591

@@ -173,12 +173,23 @@ namespace Lextm.SharpSnmpLib.Compiler
         {
             IEnumerable<string> docs = (IEnumerable<string>)e.Argument;
             Parser parser = new Parser(_assembler);
-            parser.ParseToModules(docs);
+            try 
+            {
+                parser.ParseToModules(docs); 
+            }
+            catch (SharpMibException ex)
+            {
+                // on compiling errors
+                backgroundWorker1.ReportProgress(-1, ex);
+            }            
         }
 
         private void backgroundWorker1_ProgressChanged(object sender, System.ComponentModel.ProgressChangedEventArgs e)
         {
-
+            if (e.ProgressPercentage == -1)
+            {
+                _output.ReportMessage(((Exception)e.UserState).Message);
+            }
         }
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)

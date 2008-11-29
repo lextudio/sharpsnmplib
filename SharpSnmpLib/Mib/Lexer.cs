@@ -132,7 +132,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <param name="row">Row number</param>
         /// <param name="column">Column number</param>
         /// <param name="list"></param>
-        /// <returns></returns>
+        /// <returns><code>true</code> if no need to process this line. Otherwise, <code>false</code> is returned.</returns>
         public bool Parse(string file, IList<Symbol> list, char current, int row, int column)
         {
             switch (current)
@@ -167,7 +167,7 @@ namespace Lextm.SharpSnmpLib.Mib
                     return false;
                 default:
                     if (char.IsWhiteSpace(current) && !assignSection && !stringSection)
-                    {
+                    {                     
                         bool moveNext = ParseLastSymbol(file, list, ref temp, row, column);
                         if (moveNext)
                         {
@@ -217,6 +217,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 Symbol s = new Symbol(file, content, row, column);
                 if (s == Symbol.Comment)
                 {
+                    // ignore the rest symbols on this line because they are in comment.
                     return true;
                 }
 
