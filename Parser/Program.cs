@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Lextm.SharpSnmpLib.Mib;
+using System.Diagnostics;
 
 namespace Lextm.SharpSnmpLib.Parser
 {
@@ -51,12 +52,12 @@ namespace Lextm.SharpSnmpLib.Parser
             }
             
             Console.WriteLine(files.Count.ToString() + " files found");
-            Lextm.Diagnostics.Stopwatch watch = new Lextm.Diagnostics.Stopwatch();
+            Stopwatch watch = new Stopwatch();
             watch.Start();
             
             Lextm.SharpSnmpLib.Mib.Parser parser = new Lextm.SharpSnmpLib.Mib.Parser(new Assembler(root));
             parser.ParseToModules(files);
-            Console.WriteLine("total time " + watch.Value.ToString());
+            Console.WriteLine("total time " + watch.ElapsedMilliseconds.ToString());
             watch.Stop();
             Console.WriteLine("Press any key to exit");
             Console.Read();

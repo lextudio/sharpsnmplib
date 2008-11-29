@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Diagnostics;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
@@ -45,8 +46,8 @@ namespace Lextm.SharpSnmpLib.Mib
                 throw new ArgumentException("pattern cannot be empty");
             }
 
-            Lextm.Diagnostics.LoggingService.EnterMethod();
-            Lextm.Diagnostics.Stopwatch watch = new Lextm.Diagnostics.Stopwatch();
+            TraceSource source = new TraceSource("Library");
+            Stopwatch watch = new Stopwatch();
             watch.Start();
 
             List<MibModule> modules = new List<MibModule>();
@@ -55,9 +56,10 @@ namespace Lextm.SharpSnmpLib.Mib
                 modules.AddRange(Compile(file));
             }
                         
-            Lextm.Diagnostics.LoggingService.Debug(modules.Count.ToString(CultureInfo.InvariantCulture) + " modules parsed after " + watch.Value.ToString(CultureInfo.InvariantCulture) + "-ms");
+            source.TraceInformation(modules.Count.ToString(CultureInfo.InvariantCulture) + " modules parsed after " + watch.ElapsedMilliseconds.ToString(CultureInfo.InvariantCulture) + "-ms");
             watch.Stop();
-            Lextm.Diagnostics.LoggingService.LeaveMethod();
+            source.Flush();
+            source.Close();
             return modules;
         }
         
@@ -104,13 +106,16 @@ namespace Lextm.SharpSnmpLib.Mib
         
         private static IList<MibModule> CompileToModules(string file, TextReader stream)
         {
-            Lextm.Diagnostics.Stopwatch watch = new Lextm.Diagnostics.Stopwatch();
+            TraceSource source = new TraceSource("Library");
+            Stopwatch watch = new Stopwatch();
             watch.Start();
             Lexer lexer = new Lexer();
             lexer.Parse(file, stream);
             MibDocument doc = new MibDocument(lexer);
-            Lextm.Diagnostics.LoggingService.Debug(watch.Value.ToString(CultureInfo.InvariantCulture) + "-ms used to parse " + file);
+            source.TraceInformation(watch.ElapsedMilliseconds.ToString(CultureInfo.InvariantCulture) + "-ms used to parse " + file);
             watch.Stop();
+            source.Flush();
+            source.Close();
             return doc.Modules;
         }
     }

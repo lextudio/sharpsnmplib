@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text;
+using System.Diagnostics;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
@@ -109,12 +110,14 @@ namespace Lextm.SharpSnmpLib.Mib
 
         internal void Parse(MibModule module)
         {
-            Lextm.Diagnostics.Stopwatch watch = new Lextm.Diagnostics.Stopwatch();
+            TraceSource source = new TraceSource("Library");
+            Stopwatch watch = new Stopwatch();
             watch.Start();
             AddNodes(module);
-            Console.WriteLine(watch.Value.ToString(CultureInfo.InvariantCulture) + "-ms used to assemble " + module.Name);
-            Lextm.Diagnostics.LoggingService.Debug(watch.Value.ToString(CultureInfo.InvariantCulture) + "-ms used to assemble " + module.Name);
+            source.TraceInformation(watch.ElapsedMilliseconds.ToString(CultureInfo.InvariantCulture) + "-ms used to assemble " + module.Name);
             watch.Stop();
+            source.Flush();
+            source.Close();
         }
 
         private IDefinition CreateSelf(IEntity node)
@@ -300,8 +303,8 @@ namespace Lextm.SharpSnmpLib.Mib
         
         internal void Refresh()
         {
-            Lextm.Diagnostics.LoggingService.EnterMethod();
-            Lextm.Diagnostics.Stopwatch watch = new Lextm.Diagnostics.Stopwatch();
+            TraceSource source = new TraceSource("Library");
+            Stopwatch watch = new Stopwatch();
             watch.Start();
             int previous;
             int current = _pendings.Count;
@@ -327,8 +330,8 @@ namespace Lextm.SharpSnmpLib.Mib
                 }
 
                 current = _pendings.Count;
-                Console.WriteLine(current.ToString(CultureInfo.InvariantCulture) + " pending after " + watch.Value.ToString(CultureInfo.InvariantCulture) + "-ms");
-                Lextm.Diagnostics.LoggingService.Debug(current.ToString(CultureInfo.InvariantCulture) + " pending after " + watch.Value.ToString(CultureInfo.InvariantCulture) + "-ms");
+                source.TraceInformation(current.ToString(CultureInfo.InvariantCulture) + " pending after " + watch.ElapsedMilliseconds.ToString(CultureInfo.InvariantCulture) + "-ms");
+                
                 if (current == previous)
                 {
                     // cannot parse more
@@ -337,7 +340,8 @@ namespace Lextm.SharpSnmpLib.Mib
             }
             
             watch.Stop();
-            Lextm.Diagnostics.LoggingService.LeaveMethod();
+            source.Flush();
+            source.Close();
         }
 
         internal void Import(IEnumerable<MibModule> modules)
