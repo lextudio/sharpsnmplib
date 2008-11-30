@@ -8,6 +8,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// TRAP v2 PDU.
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu")]
     public class TrapV2Pdu : ISnmpPdu
     {
         private IList<Variable> _variables;
@@ -120,6 +121,7 @@ namespace Lextm.SharpSnmpLib
         /// Time stamp.
         /// </summary>
         [CLSCompliant(false)]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "TimeStamp")]
         public uint TimeStamp
         {
             get { return _time.ToUInt32(); }

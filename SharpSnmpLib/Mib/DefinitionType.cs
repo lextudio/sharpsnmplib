@@ -17,6 +17,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <summary>
         /// OID value assignment.
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Oid")]
         OidValueAssignment = 1, // such as iso
       
         /// <summary>

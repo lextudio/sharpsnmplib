@@ -43,20 +43,20 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Creates an <see cref="OctetString"/> with a specific <see cref="String"/>. This string is treated in specific <see cref="Encoding"/>.
         /// </summary>
-        /// <param name="str">String.</param>
+        /// <param name="content">String.</param>
         /// <param name="encoding">Encoding.</param>
-        public OctetString(string str, Encoding encoding)
+        public OctetString(string content, Encoding encoding)
         {
             _encoding = encoding;
-            _raw = _encoding.GetBytes(str);
+            _raw = _encoding.GetBytes(content);
         }
         
         /// <summary>
         /// Creates an <see cref="OctetString"/> with a specific <see cref="String"/>. This string is treated as UTF-16.
         /// </summary>
-        /// <param name="str">String.</param>
-        public OctetString(string str)
-            : this(str, DefaultEncoding)
+        /// <param name="content">String.</param>
+        public OctetString(string content)
+            : this(content, DefaultEncoding)
         {
         }
         

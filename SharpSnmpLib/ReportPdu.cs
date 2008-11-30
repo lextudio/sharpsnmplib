@@ -17,6 +17,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// Report PDU.
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu")]
     public class ReportPdu : ISnmpPdu
     {
         private Integer32 _errorStatus;

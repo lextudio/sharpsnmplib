@@ -31,6 +31,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Sent when an interface on a device comes back up. The first variable binding identifies which interface came back up.
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "LinkUp")]
         LinkUp = 3,
         
         /// <summary>
@@ -41,6 +42,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Indicates that an Exterior Gateway Protocol (EGP) neighbor has gone down.
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Egp")]
         EgpNeighborLoss = 5,
         
         /// <summary>

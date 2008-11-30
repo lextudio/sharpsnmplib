@@ -50,25 +50,25 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// The equality operator.
         /// </summary>
-        /// <param name="lhs">Left <see cref="NoSuchObject"/> object</param>
-        /// <param name="rhs">Right <see cref="NoSuchObject"/> object</param>
+        /// <param name="left">Left <see cref="NoSuchObject"/> object</param>
+        /// <param name="right">Right <see cref="NoSuchObject"/> object</param>
         /// <returns>
         /// Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
-        public static bool operator ==(NoSuchObject lhs, NoSuchObject rhs)
+        public static bool operator ==(NoSuchObject left, NoSuchObject right)
         {
-            return Equals(lhs, rhs);
+            return Equals(left, right);
         }
         
         /// <summary>
         /// The inequality operator.
         /// </summary>
-        /// <param name="lhs">Left <see cref="NoSuchObject"/> object</param>
-        /// <param name="rhs">Right <see cref="NoSuchObject"/> object</param>
+        /// <param name="left">Left <see cref="NoSuchObject"/> object</param>
+        /// <param name="right">Right <see cref="NoSuchObject"/> object</param>
         /// <returns>
         /// Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
-        public static bool operator !=(NoSuchObject lhs, NoSuchObject rhs)
+        public static bool operator !=(NoSuchObject left, NoSuchObject right)
         {
-            return !(lhs == rhs); // use operator == and negate result
+            return !(left == right); // use operator == and negate result
         }
         #endregion
         /// <summary>

@@ -31,7 +31,6 @@ namespace Lextm.SharpSnmpLib.Mib
             _parent = parent;
             _module = module;
             _value = id[id.Length - 1];
-            _parentNode = null;
             _type = DefinitionType.Unknown;
             _typeString = typeString;
         }
@@ -111,7 +110,7 @@ namespace Lextm.SharpSnmpLib.Mib
         public string Parent
         {
             get { return _parent; }
-            set {}
+            set { }
         }
         
         /// <summary>
@@ -189,7 +188,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <returns></returns>
         public IDefinition Add(IEntity node)
         {
-            //* algorithm 1: recursive
+            // * algorithm 1: recursive
             if (_name == node.Parent)
             {
                 return new Definition(node, this);
@@ -208,7 +207,7 @@ namespace Lextm.SharpSnmpLib.Mib
             
             // */
 
-            /* algorithm 2: put parent locating task outside.
+            /* algorithm 2: put parent locating task outside. slower, so dropped.
             if (_name != node.Parent)
             {
                 throw new ArgumentException("this node is not child of mine", "node");
@@ -244,6 +243,7 @@ namespace Lextm.SharpSnmpLib.Mib
             {
                 result[i] = self[i];
             }
+            
             return result;
         }
     }

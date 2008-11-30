@@ -40,7 +40,7 @@ namespace Lextm.SharpSnmpLib
                 buffer.Append(c);
                 if (buffer.Length == 2)
                 {
-                    result.Add(byte.Parse(buffer.ToString(), NumberStyles.AllowHexSpecifier));
+                    result.Add(byte.Parse(buffer.ToString(), NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture));
                     buffer.Length = 0;
                 }
             }

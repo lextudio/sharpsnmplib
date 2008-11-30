@@ -48,11 +48,13 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can use the default the Revision and
 // Build Numbers by using the '*' as shown below:
 
-[assembly: AssemblyVersion("1.5.011129.17")]
-[assembly: AssemblyFileVersion("1.5.011129.17")]
+[assembly: AssemblyVersion("1.5.011130.21")]
+[assembly: AssemblyFileVersion("1.5.011130.21")]
 
 [assembly: NeutralResourcesLanguage("en-US")]
 [assembly: CLSCompliant(true)]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Mib")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Lextm")]
 [assembly: InternalsVisibleTo("SharpSnmpLib.Tests, PublicKey=0024000004800000940000000602000000240000525341310004000001000100cda8c7bee95df6" +
                               "7f8d98cc94c28b38249c0fd3e42f909d339b1d668dcc5dd1746deae7a097ae275b3a56ba9d2897" +
                               "0b5e9a803a0ca3ad0d6f9147c48a0fd103ad127e9e000b343e360a5430b70c6fd1a1358857592e" +

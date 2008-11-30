@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using System.Text;
-using System.Diagnostics;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
@@ -122,7 +121,7 @@ namespace Lextm.SharpSnmpLib.Mib
 
         private IDefinition CreateSelf(IEntity node)
         {
-            /* algorithm 2
+            /* algorithm 2: slower, dropped
             IDefinition parent = Find(node.Parent);
             if (parent == null)
             {
@@ -132,7 +131,7 @@ namespace Lextm.SharpSnmpLib.Mib
             return ((Definition)parent).Add(node);
             // */
             
-            //* algorithm 1
+            // * algorithm 1
             return root.Add(node);
             
             // */
@@ -264,7 +263,7 @@ namespace Lextm.SharpSnmpLib.Mib
                     IDefinition subroot = Find(ExtractParent(all, currentCursor));
                     
                     // if not, create Prefix node.
-                    IEntity prefix = new OidValueAssignment(module, subroot.Name + "_" + value.ToString(), subroot.Name, value);
+                    IEntity prefix = new OidValueAssignment(module, subroot.Name + "_" + value.ToString(CultureInfo.InvariantCulture), subroot.Name, value);
                     node = CreateSelf(prefix);
                     AddToTable(node);
                 }
@@ -411,6 +410,7 @@ namespace Lextm.SharpSnmpLib.Mib
                     break;
                 }
             }
+            
             Console.WriteLine(current + " pending");
             return current;
         }
@@ -459,7 +459,7 @@ namespace Lextm.SharpSnmpLib.Mib
             }
         }
 
-        private IEnumerable<Definition> ExtractNodes(string fileName, out List<string> dependents)
+        private static IEnumerable<Definition> ExtractNodes(string fileName, out List<string> dependents)
         {
             List<Definition> result = new List<Definition>();
             dependents = new List<string>();
@@ -468,7 +468,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 string line;
                 while ((line = reader.ReadLine()) != null)
                 {
-                    if (line.StartsWith("#"))
+                    if (line.StartsWith("#", StringComparison.Ordinal))
                     {
                         dependents.AddRange(ParseDependents(line));
                         continue;
@@ -476,17 +476,19 @@ namespace Lextm.SharpSnmpLib.Mib
 
                     result.Add(ParseLine(line, fileName));
                 }
+                
                 reader.Close();
             }
+            
             return result;
         }
 
-        private IEnumerable<string> ParseDependents(string line)
+        private static IEnumerable<string> ParseDependents(string line)
         {
             return line.Substring(1).Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
         }
 
-        private Definition ParseLine(string line, string module)
+        private static Definition ParseLine(string line, string module)
         {
             string[] content = line.Split(',');
             /* 0: id
@@ -499,7 +501,6 @@ namespace Lextm.SharpSnmpLib.Mib
         }
 
         #region IObjectTree Members
-
 
         public void Remove(string module)
         {

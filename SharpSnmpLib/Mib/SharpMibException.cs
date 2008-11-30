@@ -18,6 +18,7 @@ namespace Lextm.SharpSnmpLib.Mib
     /// Description of SharpMibException.
     /// </summary>
     [Serializable]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Mib")]
     public sealed class SharpMibException : SharpSnmpException
     {
         private Symbol _symbol;

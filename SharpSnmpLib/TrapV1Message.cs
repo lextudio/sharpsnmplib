@@ -118,6 +118,7 @@ namespace Lextm.SharpSnmpLib
         /// Time stamp.
         /// </summary>
         [CLSCompliant(false)]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "TimeStamp")]
         public uint TimeStamp
         {
             get

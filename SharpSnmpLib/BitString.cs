@@ -53,16 +53,16 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Creates a <see cref="BitString"/> with a bit length and a bit array.
         /// </summary>
-        /// <param name="nbits">Bit length.</param>
+        /// <param name="number">Bit length.</param>
         /// <param name="bits">Bit array.</param>
-        public BitString(int nbits, int[] bits)
+        public BitString(int number, int[] bits)
         {
-            if (bits.Length != (nbits + 31) / 32)
+            if (bits.Length != (number + 31) / 32)
             {
                 throw new ArgumentException("wrong bits length");
             }
             
-            _nbits = nbits;
+            _nbits = number;
             _size = bits.Length;
             _bits = bits;
             _raw = ParseItem(_nbits, _bits);
@@ -72,14 +72,14 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Creates a <see cref="BitString"/> from a <see cref="BitString"/>.
         /// </summary>
-        /// <param name="str">Another <see cref="BitString"/> instance.</param>
-        public BitString(BitString str)
+        /// <param name="other">Another <see cref="BitString"/> instance.</param>
+        public BitString(BitString other)
         {
-            _raw = (byte[])str._raw.Clone();
-            _nbits = str._nbits;
-            _size = str._size;
-            _bits = (int[])str._bits.Clone();
-            _bytes = (byte[])str._bytes.Clone();
+            _raw = (byte[])other._raw.Clone();
+            _nbits = other._nbits;
+            _size = other._size;
+            _bits = (int[])other._bits.Clone();
+            _bytes = (byte[])other._bytes.Clone();
         }
         
         /// <summary>

@@ -15,6 +15,7 @@ namespace Lextm.SharpSnmpLib.Mib
     /// <summary>
     /// MIB inventory.
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Mib")]
     public class MibInventory
     {
         private readonly string folder = Path.Combine(Directory.GetCurrentDirectory(), "mibs");

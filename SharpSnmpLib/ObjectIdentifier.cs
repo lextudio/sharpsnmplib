@@ -36,26 +36,26 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Creates an <see cref="ObjectIdentifier"/> instance from numerical ID.
         /// </summary>
-        /// <param name="oid">OID <see cref="uint"/> array</param>
+        /// <param name="id">OID <see cref="uint"/> array</param>
         [CLSCompliant(false)]
-        public ObjectIdentifier(uint[] oid)
+        public ObjectIdentifier(uint[] id)
         {
-            if (oid.Length < 2)
+            if (id.Length < 2)
             {
-                throw new ArgumentException("The length of the shortest identifier is two", "oid");
+                throw new ArgumentException("The length of the shortest identifier is two", "id");
             }
 
-            if (oid[0] > 2)
+            if (id[0] > 2)
             {
-                throw new ArgumentException("The first sub-identifier must be 0, 1, or 2.", "oid");
+                throw new ArgumentException("The first sub-identifier must be 0, 1, or 2.", "id");
             }
 
-            if (oid[1] > 39)
+            if (id[1] > 39)
             {
-                throw new ArgumentException("The second sub-identifier must be less than 40", "oid");
+                throw new ArgumentException("The second sub-identifier must be less than 40", "id");
             }
 
-            _oid = oid;
+            _oid = id;
         }
         
         /// <summary>

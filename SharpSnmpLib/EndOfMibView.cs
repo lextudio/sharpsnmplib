@@ -13,6 +13,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// EndOfMibView exception.
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Mib")]
     public sealed class EndOfMibView : ISnmpData, IEquatable<EndOfMibView>
     {
         #region Equals and GetHashCode implementation
@@ -50,25 +51,25 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// The equality operator.
         /// </summary>
-        /// <param name="lhs">Left <see cref="EndOfMibView"/> object</param>
-        /// <param name="rhs">Right <see cref="EndOfMibView"/> object</param>
+        /// <param name="left">Left <see cref="EndOfMibView"/> object</param>
+        /// <param name="right">Right <see cref="EndOfMibView"/> object</param>
         /// <returns>
         /// Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
-        public static bool operator ==(EndOfMibView lhs, EndOfMibView rhs)
+        public static bool operator ==(EndOfMibView left, EndOfMibView right)
         {
-            return Equals(lhs, rhs);
+            return Equals(left, right);
         }
         
         /// <summary>
         /// The inequality operator.
         /// </summary>
-        /// <param name="lhs">Left <see cref="EndOfMibView"/> object</param>
-        /// <param name="rhs">Right <see cref="EndOfMibView"/> object</param>
+        /// <param name="left">Left <see cref="EndOfMibView"/> object</param>
+        /// <param name="right">Right <see cref="EndOfMibView"/> object</param>
         /// <returns>
         /// Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
-        public static bool operator !=(EndOfMibView lhs, EndOfMibView rhs)
+        public static bool operator !=(EndOfMibView left, EndOfMibView right)
         {
-            return !(lhs == rhs); // use operator == and negate result
+            return !(left == right); // use operator == and negate result
         }
         #endregion
         /// <summary>

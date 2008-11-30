@@ -87,10 +87,10 @@ namespace Lextm.SharpSnmpLib
             }
 
             Variable v = new Variable(new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 1, 1, 0 }));
-            List<Variable> vList = new List<Variable>();
-            vList.Add(v);
+            List<Variable> variables = new List<Variable>();
+            variables.Add(v);
 
-            GetRequestMessage message = new GetRequestMessage(version, endpoint.Address, community, vList);
+            GetRequestMessage message = new GetRequestMessage(version, endpoint.Address, community, variables);
             return message.Broadcast(timeout, endpoint.Port);
         }
         
@@ -123,10 +123,10 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public Variable GetSingle(IPEndPoint endpoint, string community, Variable variable)
         {
-            List<Variable> vList = new List<Variable>();
-            vList.Add(variable);
+            List<Variable> variables = new List<Variable>();
+            variables.Add(variable);
 
-            return Get(_version, endpoint, new OctetString(community), vList, _timeout)[0];
+            return Get(_version, endpoint, new OctetString(community), variables, _timeout)[0];
         }
 
         /// <summary>
@@ -220,10 +220,10 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public void SetSingle(IPEndPoint endpoint, string community, Variable variable)
         {
-            List<Variable> vList = new List<Variable>();
-            vList.Add(variable);
+            List<Variable> variables = new List<Variable>();
+            variables.Add(variable);
 
-            Set(_version, endpoint, new OctetString(community), vList, _timeout);
+            Set(_version, endpoint, new OctetString(community), variables, _timeout);
         }
         
         /// <summary>
@@ -312,7 +312,8 @@ namespace Lextm.SharpSnmpLib
 
             IList<Variable> list = new List<Variable>();
             int rows = SteveWalk(version, endpoint, community, table, list, timeout, WalkMode.WithinSubtree);
-            //int rows = Walk(version, endpoint, community, table, list, timeout, WalkMode.WithinSubtree);
+            
+            // int rows = Walk(version, endpoint, community, table, list, timeout, WalkMode.WithinSubtree);
             if (rows == 0)
             {
                 return new Variable[0, 0];
@@ -326,7 +327,7 @@ namespace Lextm.SharpSnmpLib
             {
                 for (int i = 0; i < rows; i++)
                 {
-                    result[i,j] = list[k];
+                    result[i, j] = list[k];
                     k++;
                 }
             }
@@ -360,7 +361,8 @@ namespace Lextm.SharpSnmpLib
 
             IList<Variable> list = new List<Variable>();
             int rows = SteveWalk(version, endpoint, community, table, list, timeout, WalkMode.WithinSubtree);
-            //int rows = Walk(version, endpoint, community, table, list, timeout, WalkMode.WithinSubtree);
+            
+            // int rows = Walk(version, endpoint, community, table, list, timeout, WalkMode.WithinSubtree);
             if (rows == 0)
             {
                 return new Variable[0, 0];
@@ -375,13 +377,13 @@ namespace Lextm.SharpSnmpLib
 
             int k = 0;
             Variable[,] result = new Variable[rows, cols];
-            string index = list[0].Id.ToString().Replace(table.ToString(), "").Remove(0, 1);
+            string index = list[0].Id.ToString().Replace(table.ToString(), null).Remove(0, 1);
             int end = index.IndexOf('.');
             index = index.Substring(0, end);
 
             for (int j = 0; j < cols; j++)
             {
-                string newIndex = list[k].Id.ToString().Replace(table.ToString(), "").Remove(0, 1);
+                string newIndex = list[k].Id.ToString().Replace(table.ToString(), null).Remove(0, 1);
                 end = newIndex.IndexOf('.');
                 newIndex = newIndex.Substring(0, end);
                 int i = 0;
@@ -394,7 +396,7 @@ namespace Lextm.SharpSnmpLib
 
                     if (k < list.Count)
                     {
-                        newIndex = list[k].Id.ToString().Replace(table.ToString(), "").Remove(0, 1);
+                        newIndex = list[k].Id.ToString().Replace(table.ToString(), null).Remove(0, 1);
                         end = newIndex.IndexOf('.');
                         newIndex = newIndex.Substring(0, end);
                     }
@@ -477,7 +479,6 @@ namespace Lextm.SharpSnmpLib
                 if (mode == WalkMode.WithinSubtree && !seed.Id.ToString().StartsWith(table + ".", StringComparison.Ordinal))
                 {
                     // not in sub tree
-
                     break;
                 }
 
@@ -490,6 +491,7 @@ namespace Lextm.SharpSnmpLib
             while (HasNext(version, endpoint, community, seed, timeout, out next));
             return result;
         }
+        
         /// <summary>
         /// Steve Walks.
         /// </summary>
@@ -522,18 +524,12 @@ namespace Lextm.SharpSnmpLib
                 if (mode == WalkMode.WithinSubtree && !seed.Id.ToString().StartsWith(table + ".", StringComparison.Ordinal))
                 {
                     // not in sub tree
-
                     break;
                 }
 
                 list.Add(seed);
 
-                //
-
                 // Here we need to figure out which way we will be counting tables
-
-                //
-
                 if (first && seed.Id.ToString().StartsWith(table + ".1.1.", StringComparison.Ordinal))
                 {
                     oldWay = true;
@@ -547,9 +543,9 @@ namespace Lextm.SharpSnmpLib
                 }
                 else if (!oldWay)
                 {
-                    string part = seed.Id.ToString().Replace(table.ToString(), "").Remove(0, 1);
+                    string part = seed.Id.ToString().Replace(table.ToString(), null).Remove(0, 1);
                     int end = part.IndexOf('.');
-                    int newIndex = Int32.Parse(part.Substring(0, end));
+                    int newIndex = Int32.Parse(part.Substring(0, end), CultureInfo.InvariantCulture);
                     if (index != newIndex)
                     {
                         index = newIndex;
@@ -560,7 +556,6 @@ namespace Lextm.SharpSnmpLib
             while (HasNext(version, endpoint, community, seed, timeout, out next));
             return result;
         }
-
 
         /// <summary>
         /// Starts trap listener.
@@ -642,14 +637,14 @@ namespace Lextm.SharpSnmpLib
             bool result;
             try
             {
-                List<Variable> vList = new List<Variable>();
-                vList.Add(new Variable(seed.Id));
+                List<Variable> variables = new List<Variable>();
+                variables.Add(new Variable(seed.Id));
                 
                 GetNextRequestMessage message = new GetNextRequestMessage(
                     version,
                     endpoint.Address,
                     community,
-                    vList);
+                    variables);
 
                 next = message.Send(timeout, endpoint.Port)[0];
                 result = true;

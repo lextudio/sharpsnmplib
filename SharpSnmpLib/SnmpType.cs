@@ -76,12 +76,13 @@ namespace Lextm.SharpSnmpLib
         NumericString = 0x12,
         PrintableString = 0x13,
         T61String = 0x14,
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "VideoText")]
         VideoTextString = 0x15,
         IA5String = 0x16,
         [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "UTC")]
         UTCTime = 0x17,
         GeneralizedTime = 0x18,
-        GrahicString = 0x19,
+        GraphicString = 0x19,
         VisibleString = 0x1a,
         GeneralString = 0x1b,
         UniversalString = 0x1c,
@@ -147,51 +148,61 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// End of MIB view exception.
         /// </summary>
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Mib")]
         EndOfMibView = 0x82, 
         
         /// <summary>
         /// Get request PDU.
         /// </summary>
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu")]
         GetRequestPdu = 0xA0,
         
         /// <summary>
         /// Get Next request PDU.
         /// </summary>
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu")]
         GetNextRequestPdu = 0xA1,
         
         /// <summary>
         /// Get response PDU.
         /// </summary>
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu")]
         GetResponsePdu = 0xA2,
         
         /// <summary>
         /// Set request PDU.
         /// </summary>
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu")]
         SetRequestPdu = 0xA3,
         
         /// <summary>
         /// Trap v1 PDU.
         /// </summary>
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu")]
         TrapV1Pdu = 0xA4,
         
         /// <summary>
         /// Get Bulk PDU.
         /// </summary>
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu")]
         GetBulkRequestPdu = 0xA5,
         
         /// <summary>
         /// Inform PDU.
         /// </summary>
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu")]
         InformRequestPdu = 0xA6,
         
         /// <summary>
         /// Trap v2 PDU.
         /// </summary>
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu")]
         TrapV2Pdu = 0xA7,
         
         /// <summary>
         /// Report PDU. SNMP v3.
         /// </summary>
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu")]
         ReportPdu = 0xA8
     }
 }

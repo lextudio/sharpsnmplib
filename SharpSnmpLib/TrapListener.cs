@@ -229,7 +229,7 @@ namespace Lextm.SharpSnmpLib
             #endif
             //*/
             
-            //*
+            // *
             #region parsing
             foreach (ISnmpMessage message in MessageFactory.ParseMessages(buffer, 0, number))
             {

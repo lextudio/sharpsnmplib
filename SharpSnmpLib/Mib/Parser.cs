@@ -46,10 +46,13 @@ namespace Lextm.SharpSnmpLib.Mib
                         Console.WriteLine(module.Name + " ignored");
                         continue;
                     }
+                    
                     modules.Add(module);
                 }
+                
                 Console.WriteLine(file + " compiled");
             }
+            
             Console.WriteLine("loading new modules started");
             _assembler.RealTree.Import(modules);
             _assembler.RealTree.Refresh();
@@ -79,6 +82,7 @@ namespace Lextm.SharpSnmpLib.Mib
                     writer.Write(dependent);
                     writer.Write(',');
                 }
+                
                 writer.WriteLine();
                 foreach (IEntity entity in module.Entities)
                 {
@@ -87,6 +91,7 @@ namespace Lextm.SharpSnmpLib.Mib
                     {
                         continue;
                     }
+                    
                     uint[] id = node.GetNumericalForm();
                     /* 0: id
                      * 1: type
@@ -95,6 +100,7 @@ namespace Lextm.SharpSnmpLib.Mib
                      */
                     writer.WriteLine(ObjectIdentifier.Convert(id) + "," + entity.GetType() + "," + entity.Name + "," + entity.Parent);
                 }
+                
                 writer.Close();
             }
         }

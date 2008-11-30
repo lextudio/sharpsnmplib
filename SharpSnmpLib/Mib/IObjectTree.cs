@@ -34,8 +34,18 @@ namespace Lextm.SharpSnmpLib.Mib
             get;
         }
 
-        IDefinition Find(string p, string p_2);
+        /// <summary>
+        /// Finds an <see cref="IDefinition"/>.
+        /// </summary>
+        /// <param name="moduleName"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        IDefinition Find(string moduleName, string name);
 
-        void Remove(string module);
+        /// <summary>
+        /// Removes a module.
+        /// </summary>
+        /// <param name="moduleName"></param>
+        void Remove(string moduleName);
     }
 }

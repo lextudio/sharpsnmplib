@@ -19,6 +19,7 @@ namespace Lextm.SharpSnmpLib.Mib
     {
         private string _name;
         private Imports _imports;
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         private Exports _exports;
         private IList<IConstruct> _tokens = new List<IConstruct>();
         

@@ -17,6 +17,7 @@ namespace Lextm.SharpSnmpLib
     /// Trap v1 PDU.
     /// </summary>
     /// <remarks>represents the PDU of trap v1 message.</remarks>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu")]
     public class TrapV1Pdu : ISnmpPdu, ISnmpData
     {
         private byte[] _bytes;    
@@ -157,6 +158,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Time stamp.
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "TimeStamp")]
         public TimeTicks TimeStamp
         {
             get { return _timestamp; }

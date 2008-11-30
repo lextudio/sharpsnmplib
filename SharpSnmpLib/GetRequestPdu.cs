@@ -9,6 +9,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// GET request PDU.
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu")]
     public class GetRequestPdu : ISnmpPdu
     {
         private Integer32 _errorStatus;

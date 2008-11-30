@@ -27,6 +27,7 @@ namespace Lextm.SharpSnmpLib
         {
             return ParseMessages(ByteTool.ParseByteString(bytes));
         }
+        
         /// <summary>
         /// Creates <see cref="ISnmpMessage"/> instances from buffer.
         /// </summary>

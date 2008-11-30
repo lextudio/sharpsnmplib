@@ -27,8 +27,8 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Creates a <see cref="Variable"/> instance with a specific <see cref="ObjectIdentifier"/>.
         /// </summary>
-        /// <param name="oid">Object identifier</param>
-        public Variable(ObjectIdentifier oid) : this(oid, null)     
+        /// <param name="id">Object identifier</param>
+        public Variable(ObjectIdentifier id) : this(id, null)     
         { 
         }
         
@@ -43,9 +43,9 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Creates a <see cref="Variable"/> instance with a specific object identifier.
         /// </summary>
-        /// <param name="oid">Object identifier</param>
+        /// <param name="id">Object identifier</param>
         [CLSCompliant(false)]
-        public Variable(uint[] oid) : this(new ObjectIdentifier(oid)) 
+        public Variable(uint[] id) : this(new ObjectIdentifier(id)) 
         {
         }
         
@@ -62,23 +62,23 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Creates a <see cref="Variable"/> instance with a specific <see cref="ObjectIdentifier"/> and <see cref="ISnmpData"/>.
         /// </summary>
-        /// <param name="oid">Object identifier</param>
+        /// <param name="id">Object identifier</param>
         /// <param name="data">Data</param>
         /// <remarks>If you set <c>null</c> to <paramref name="data"/>, you get a <see cref="Variable"/> instance whose <see cref="Data"/> is a <see cref="Null"/> instance.</remarks>
         [CLSCompliant(false)]
-        public Variable(uint[] oid, ISnmpData data) : this(new ObjectIdentifier(oid), data) 
+        public Variable(uint[] id, ISnmpData data) : this(new ObjectIdentifier(id), data) 
         { 
         }
         
         /// <summary>
         /// Creates a <see cref="Variable"/> instance with a specific object identifier and data.
         /// </summary>
-        /// <param name="oid">Object identifier</param>
+        /// <param name="id">Object identifier</param>
         /// <param name="data">Data</param>
         /// <remarks>If you set <c>null</c> to <paramref name="data"/>, you get a <see cref="Variable"/> instance whose <see cref="Data"/> is a <see cref="Null"/> instance.</remarks>
-        public Variable(ObjectIdentifier oid, ISnmpData data)
+        public Variable(ObjectIdentifier id, ISnmpData data)
         {
-            _oid = oid;
+            _oid = id;
             _data = data ?? new Null();
         }
         
