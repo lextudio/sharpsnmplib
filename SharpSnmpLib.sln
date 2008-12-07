@@ -1,6 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual C# Express 2008
+# Visual Studio 2008
+# SharpDevelop 3.0.0.3643
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpSnmpLib", "SharpSnmpLib\SharpSnmpLib.csproj", "{286DE6DB-8F95-4BD4-86A2-86488D2E0EE1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestTrap", "test\TestTrap.csproj", "{2BD083D3-01C9-46CA-9E9D-72A29240DBF3}"
@@ -20,6 +21,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{669DE011-7BAD-44D5-93A4-204CFB8F4AD5}"
 	ProjectSection(SolutionItems) = postProject
 		readme.txt = readme.txt
+		Build.proj = Build.proj
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Browser", "Browser\Browser.csproj", "{60EA8A71-EE0B-4F0E-9485-B30B71D454D7}"

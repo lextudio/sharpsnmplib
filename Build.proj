@@ -1,16 +1,21 @@
 <?xml version="1.0"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Gendarme">
-	<PropertyGroup>
+	<PropertyGroup>        
+        <ReleaseFolder>.\bin</ReleaseFolder>
         <GendarmeFolder>H:\Incoming\Green\Gendarme</GendarmeFolder>
 		<GendarmePath>$(GendarmeFolder)\gendarme.exe</GendarmePath>
 		<CommandLine>--config "$(GendarmeFolder)\rules.xml" --log .\gendarme.log --quiet .\sharpsnmplib.dll</CommandLine>
-		<DebugFolder>.\SharpSnmpLib\Bin\Debug</DebugFolder>
+		<LibraryDebugFolder>.\SharpSnmpLib\Bin\Debug</LibraryDebugFolder>
 		<NDependFolder>H:\Incoming\Green\NDepend</NDependFolder>
 		<NDependProject>"D:\lextm\documents\SharpDevelop Projects\SharpSnmpLib\SharpSnmpLib.xml"</NDependProject>
 	</PropertyGroup>
+    <ItemGroup>
+        <LibraryOutputs Include=".\SharpSnmpLib\bin\Release\sharpsnmplib.*"/>
+        <BrowserOutputs Include=".\Browser\bin\Release\*.*" Exclude="*.pdb"/>
+    </ItemGroup>
 	<Target Name="Gendarme" DependsOnTargets="Debug">
-		<Exec Command="$(GendarmePath) $(CommandLine)" WorkingDirectory="$(DebugFolder)" />
-		<Copy SourceFiles="$(DebugFolder)\gendarme.log" DestinationFolder="." />
+		<Exec Command="$(GendarmePath) $(CommandLine)" WorkingDirectory="$(LibraryDebugFolder)" />
+		<Copy SourceFiles="$(LibraryDebugFolder)\gendarme.log" DestinationFolder="." />
 	</Target>
 	<UsingTask AssemblyFile="$(NDependFolder)\MSBuild\NDepend.Build.MSBuild.dll" TaskName="NDependTask" />
 	<Target Name="NDepend" DependsOnTargets="Debug">
@@ -20,5 +25,12 @@
 	<Target Name="Debug">
 		<MSBuild Projects="sharpsnmplib.sln"/>
 	</Target>
+    <Target Name="Release">
+        <MSBuild Projects="sharpsnmplib.sln" Properties="Configuration=Release"/>
+    </Target>
+    <Target Name="Package" DependsOnTargets="Release">
+        <!--<Copy SourceFiles="@(LibraryOutputs)" DestinationFiles="@(LibraryOutputs->'$(ReleaseFolder)\%(RecursiveDir)%(Filename)%(Extension)')"/>-->
+        <Copy SourceFiles="@(BrowserOutputs)" DestinationFiles="@(BrowserOutputs->'$(ReleaseFolder)\%(RecursiveDir)%(Filename)%(Extension)')"/>
+    </Target>
 </Project>
 

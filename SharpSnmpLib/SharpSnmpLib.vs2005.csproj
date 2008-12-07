@@ -62,6 +62,7 @@
     <Compile Include="Counter64.cs" />
     <Compile Include="EndOfMibView.cs" />
     <Compile Include="ErrorCode.cs" />
+    <Compile Include="ExceptionRaisedEventArgs.cs" />
     <Compile Include="Gauge32.cs" />
     <Compile Include="GeneralString.cs" />
     <Compile Include="GetBulkRequestMessage.cs" />

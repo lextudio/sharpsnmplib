@@ -78,6 +78,11 @@ namespace Lextm.SharpSnmpLib
         public event EventHandler<GetBulkRequestReceivedEventArgs> GetBulkRequestReceived;
 
         /// <summary>
+        /// Occurs when an exception is raised.
+        /// </summary>
+        public event EventHandler<ExceptionRaisedEventArgs> ExceptionRaised;
+
+        /// <summary>
         /// Port number.
         /// </summary>
         public int Port
@@ -157,32 +162,35 @@ namespace Lextm.SharpSnmpLib
 
         private void InitializeComponent()
         {
-            this.worker = new System.ComponentModel.BackgroundWorker();
+            this.worker = new BackgroundWorker();
             this.worker.WorkerReportsProgress = true;
             this.worker.WorkerSupportsCancellation = true;
             this.worker.DoWork += new System.ComponentModel.DoWorkEventHandler(Worker_DoWork);
             this.worker.ProgressChanged += new ProgressChangedEventHandler(TrapListener_ProgressChanged);
-        }
+            this.worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(TrapListener_RunWorkerCompleted);
+        } 
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2201:DoNotRaiseReservedExceptionTypes", Justification = "ByDesign")]
         private void TrapListener_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            if (e.ProgressPercentage != -1)
+            MessageParams param = (MessageParams)e.UserState;
+            HandleMessage(param);
+        }
+
+        private void TrapListener_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {                        
+            if (e.Error != null && ExceptionRaised != null)
             {
-                return;
+                ExceptionRaised(this, new ExceptionRaisedEventArgs(e.Error));
             }
-            
-            throw new Exception("thread exception", (Exception)e.UserState);
         }
         
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "ByDesign")]
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
             IPEndPoint agent = new IPEndPoint(IPAddress.Any, 0);
             EndPoint senderRemote = (EndPoint)agent;
             byte[] msg = new byte[_watcher.ReceiveBufferSize];
             uint loops = 0;
-            while (!((BackgroundWorker)sender).CancellationPending)
+            while (!worker.CancellationPending)
             {
                 int number = _watcher.Available;
                 if (number == 0)
@@ -199,15 +207,8 @@ namespace Lextm.SharpSnmpLib
                     continue;
                 }
                 
-                _watcher.ReceiveFrom(msg, ref senderRemote);
-                try
-                {
-                    HandleMessages(msg, number, (IPEndPoint)senderRemote);
-                }
-                catch (Exception ex)
-                {
-                    worker.ReportProgress(-1, ex);
-                }
+                _watcher.ReceiveFrom(msg, ref senderRemote);      
+                worker.ReportProgress(0, new MessageParams(msg, number, senderRemote));
             }
         }
         
@@ -216,7 +217,7 @@ namespace Lextm.SharpSnmpLib
         private static int i;
 #endif
 // */
-        private void HandleMessages(byte[] buffer, int number, IPEndPoint agent)
+        private void HandleMessage(MessageParams param)
         {
             /*
             #if DEBUG
@@ -231,7 +232,7 @@ namespace Lextm.SharpSnmpLib
             
             // *
             #region parsing
-            foreach (ISnmpMessage message in MessageFactory.ParseMessages(buffer, 0, number))
+            foreach (ISnmpMessage message in MessageFactory.ParseMessages(param.Bytes, 0, param.Number))
             {
                 switch (message.TypeCode)
                 {
@@ -239,7 +240,7 @@ namespace Lextm.SharpSnmpLib
                         {
                             if (TrapV1Received != null)
                             {
-                                TrapV1Received(this, new TrapV1ReceivedEventArgs(agent, (TrapV1Message)message));
+                                TrapV1Received(this, new TrapV1ReceivedEventArgs(param.Sender, (TrapV1Message)message));
                             }
                             
                             break;
@@ -249,7 +250,7 @@ namespace Lextm.SharpSnmpLib
                         {
                             if (TrapV2Received != null)
                             {
-                                TrapV2Received(this, new TrapV2ReceivedEventArgs(agent, (TrapV2Message)message));
+                                TrapV2Received(this, new TrapV2ReceivedEventArgs(param.Sender, (TrapV2Message)message));
                             }
                             
                             break;
@@ -258,11 +259,11 @@ namespace Lextm.SharpSnmpLib
                     case SnmpType.InformRequestPdu:
                         {
                             InformRequestMessage inform = (InformRequestMessage)message;
-                            inform.SendResponse(agent);
+                            inform.SendResponse(param.Sender);
                             
                             if (InformRequestReceived != null)
                             {
-                                InformRequestReceived(this, new InformRequestReceivedEventArgs(agent, inform));
+                                InformRequestReceived(this, new InformRequestReceivedEventArgs(param.Sender, inform));
                             }
                             
                             break;
@@ -272,7 +273,7 @@ namespace Lextm.SharpSnmpLib
                         {
                             if (GetRequestReceived != null)
                             {
-                                GetRequestReceived(this, new GetRequestReceivedEventArgs(agent, (GetRequestMessage)message));
+                                GetRequestReceived(this, new GetRequestReceivedEventArgs(param.Sender, (GetRequestMessage)message));
                             }
                             
                             break;
@@ -282,7 +283,7 @@ namespace Lextm.SharpSnmpLib
                         {
                             if (SetRequestReceived != null)
                             {
-                                SetRequestReceived(this, new SetRequestReceivedEventArgs(agent, (SetRequestMessage)message));
+                                SetRequestReceived(this, new SetRequestReceivedEventArgs(param.Sender, (SetRequestMessage)message));
                             }
 
                             break;
@@ -292,7 +293,7 @@ namespace Lextm.SharpSnmpLib
                         {
                             if (GetNextRequestReceived != null)
                             {
-                                GetNextRequestReceived(this, new GetNextRequestReceivedEventArgs(agent, (GetNextRequestMessage)message));
+                                GetNextRequestReceived(this, new GetNextRequestReceivedEventArgs(param.Sender, (GetNextRequestMessage)message));
                             }
 
                             break;
@@ -302,7 +303,7 @@ namespace Lextm.SharpSnmpLib
                         {
                             if (GetBulkRequestReceived != null)
                             {
-                                GetBulkRequestReceived(this, new GetBulkRequestReceivedEventArgs(agent, (GetBulkRequestMessage)message));
+                                GetBulkRequestReceived(this, new GetBulkRequestReceivedEventArgs(param.Sender, (GetBulkRequestMessage)message));
                             }
 
                             break;
@@ -333,6 +334,20 @@ namespace Lextm.SharpSnmpLib
             get
             {
                 return worker.IsBusy;
+            }
+        }
+        
+        private class MessageParams
+        {
+            internal int Number;
+            internal byte[] Bytes;
+            internal IPEndPoint Sender;
+            
+            public MessageParams(byte[] bytes, int number, EndPoint sender)
+            {
+                Bytes = bytes;
+                Number = number;
+                Sender = (IPEndPoint)sender;
             }
         }
     }
