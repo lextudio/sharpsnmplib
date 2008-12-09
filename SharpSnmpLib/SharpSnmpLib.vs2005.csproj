@@ -45,10 +45,7 @@
   <Import Project="Microsoft.VersionNumber.targets" Condition=" '$(Configuration)' == 'Debug' " />
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
+    <Reference Include="System.configuration" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Agent.cs">

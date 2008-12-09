@@ -19,16 +19,25 @@ namespace TestSendTrap
 	{
 		public static void Main(string[] args)
 		{
+		    IPAddress address;
+		    if (args.Length == 1)
+		    {
+		        address = IPAddress.Parse(args[0]);
+		    }
+		    else
+		    {
+		        address = IPAddress.Loopback;
+		    }
 		    
             TrapV1Message message = new TrapV1Message(VersionCode.V1,
-                                                      IPAddress.Parse("127.0.0.1"),
+                                                      address,
                                                       new OctetString("public"),
                                                       new ObjectIdentifier(new uint[] { 1, 3, 6 }),
                                                       GenericCode.ColdStart,
                                                       0,
                                                       0,
                                                       new List<Variable>());
-            message.Send(IPAddress.Loopback, 162);
+            message.Send(address, 162);
             /*
             BinaryWriter writer = new BinaryWriter(File.OpenWrite(@"d:\send1.dat"));
             writer.Write(message.ToBytes());
@@ -41,7 +50,7 @@ namespace TestSendTrap
                                                       new ObjectIdentifier(new uint[] { 1, 3, 6 }),
                                                       0,
                                                       new List<Variable>());
-            m2.Send(IPAddress.Loopback, 162);
+            m2.Send(address, 162);
             /*
             writer = new BinaryWriter(File.OpenWrite(@"d:\send2.dat"));
             writer.Write(m2.ToBytes());
@@ -53,7 +62,7 @@ namespace TestSendTrap
                                                       new List<Variable>());
             try
             {
-                m3.Send(IPAddress.Loopback, 2000, 162);                
+                m3.Send(address, 2000, 162);                
             }
             catch (Exception ex)
             {

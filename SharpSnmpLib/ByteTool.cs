@@ -13,6 +13,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text;
+using System.Configuration;
+using System.Diagnostics;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -21,6 +23,45 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     internal static class ByteTool
     {
+        //TODO: add this method to all message exchanges.
+        internal static void Capture(ISnmpMessage message)
+        {
+            object setting = ConfigurationManager.AppSettings["CaptureEnabled"];
+            if (setting != null && Convert.ToBoolean(setting.ToString()))
+            {
+                byte[] buffer = message.ToBytes();
+                CaptureInner(buffer, buffer.Length);
+            }
+        }
+
+        internal static void Capture(byte[] buffer)
+        {
+            Capture(buffer, buffer.Length);
+        }
+
+        internal static void Capture(byte[] buffer, int length)
+        {
+            object setting = ConfigurationManager.AppSettings["CaptureEnabled"];
+            if (setting != null && Convert.ToBoolean(setting.ToString()))
+            {
+                CaptureInner(buffer, length);
+            }
+        }
+
+        private static void CaptureInner(byte[] buffer, int length)
+        {
+            TraceSource source = new TraceSource("Library");
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < length; i++)
+            {
+                builder.AppendFormat("{0:X2} ", buffer[i]);
+            }
+            source.TraceInformation("SNMP packet captured at {0}", DateTime.Now);
+            source.TraceInformation(builder.ToString());
+            source.Flush();
+            source.Close();
+        }
+
         internal static byte[] ParseByteString(string bytes)
         {
             List<byte> result = new List<byte>();

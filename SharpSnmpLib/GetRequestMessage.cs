@@ -165,9 +165,11 @@
         /// <param name="timeout">Timeout.</param>
         /// <param name="port">Port number.</param>
         /// <returns></returns>
+        [Obsolete]
         public IList<Variable> Send(int timeout, int port)
         {
             byte[] bytes = _bytes;
+            ByteTool.Capture(bytes); // log request
             IPEndPoint agent = new IPEndPoint(_agent, port);
             using (UdpClient udp = new UdpClient())
             {
@@ -197,6 +199,7 @@
                 throw SharpOperationException.Create("wrong response sequence", _agent);
             }
             
+            ByteTool.Capture(bytes); // log response
             if (response.ErrorStatus != ErrorCode.NoError)
             {
                 throw SharpErrorException.Create(
@@ -219,6 +222,7 @@
         public GetResponseMessage GetResponse(int timeout, int port)
         {
             byte[] bytes = _bytes;
+            ByteTool.Capture(bytes); // log request
             IPEndPoint agent = new IPEndPoint(_agent, port);
             using (UdpClient udp = new UdpClient())
             {
@@ -247,7 +251,8 @@
             {
                 throw SharpOperationException.Create("wrong response sequence", _agent);
             }
-            
+
+            ByteTool.Capture(bytes); // log response
             return response;
         }
 

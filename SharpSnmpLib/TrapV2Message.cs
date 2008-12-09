@@ -109,6 +109,7 @@ namespace Lextm.SharpSnmpLib
         public void Send(IPAddress manager, int port)
         {
             byte[] bytes = _bytes;
+            ByteTool.Capture(bytes); // log response
             IPEndPoint agent = new IPEndPoint(manager, port);
             using (UdpClient udp = new UdpClient()) 
             {

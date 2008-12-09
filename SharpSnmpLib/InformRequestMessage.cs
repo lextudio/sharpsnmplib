@@ -102,7 +102,9 @@ namespace Lextm.SharpSnmpLib
         /// <param name="port">Port number.</param>
         public void Send(IPAddress receiver, int timeout, int port)
         {
+            //TODO: extract all similar code together to form a GetResponseBytes method
             byte[] bytes = _bytes;
+            ByteTool.Capture(bytes); // log request
             IPEndPoint agent = new IPEndPoint(receiver, port);
             using (UdpClient udp = new UdpClient())
             {
@@ -141,6 +143,7 @@ namespace Lextm.SharpSnmpLib
                     response.ErrorIndex,
                     response.Variables[response.ErrorIndex - 1].Id);
             }
+            ByteTool.Capture(bytes); // log response
         }
         
         internal int SequenceNumber

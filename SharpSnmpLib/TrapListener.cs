@@ -8,12 +8,12 @@
  */
 using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using System.Text;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -212,23 +212,9 @@ namespace Lextm.SharpSnmpLib
             }
         }
         
-        /*
-#if DEBUG
-        private static int i;
-#endif
-// */
         private void HandleMessage(MessageParams param)
         {
-            /*
-            #if DEBUG
-            i++;
-            using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(@"d:\test" + i + ".dat")))
-            {
-                writer.Write(buffer, 0, number);
-                writer.Close();
-            }
-            #endif
-            //*/
+            ByteTool.Capture(param.Bytes, param.Number);
             
             // *
             #region parsing
@@ -315,7 +301,7 @@ namespace Lextm.SharpSnmpLib
             }
             #endregion
             // */
-        }
+        }        
         
         /// <summary>
         /// Returns a <see cref="String"/> that represents a <see cref="TrapListener"/>.
