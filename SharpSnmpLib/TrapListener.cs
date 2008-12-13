@@ -190,7 +190,7 @@ namespace Lextm.SharpSnmpLib
             EndPoint senderRemote = (EndPoint)agent;
             byte[] msg = new byte[_watcher.ReceiveBufferSize];
             uint loops = 0;
-            while (!worker.CancellationPending)
+            while (!worker.CancellationPending && worker.IsBusy)
             {
                 int number = _watcher.Available;
                 if (number == 0)
@@ -217,7 +217,6 @@ namespace Lextm.SharpSnmpLib
             ByteTool.Capture(param.Bytes, param.Number);
             
             // *
-            #region parsing
             foreach (ISnmpMessage message in MessageFactory.ParseMessages(param.Bytes, 0, param.Number))
             {
                 switch (message.TypeCode)
@@ -299,7 +298,6 @@ namespace Lextm.SharpSnmpLib
                         break;
                 }
             }
-            #endregion
             // */
         }        
         

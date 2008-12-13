@@ -56,7 +56,7 @@ namespace Lextm.SharpSnmpLib
             {
                 builder.AppendFormat("{0:X2} ", buffer[i]);
             }
-            source.TraceInformation("SNMP packet captured at {0}", DateTime.Now);
+            source.TraceInformation("SNMP packet captured at {0}, length {1}", DateTime.Now, length);
             source.TraceInformation(builder.ToString());
             source.Flush();
             source.Close();

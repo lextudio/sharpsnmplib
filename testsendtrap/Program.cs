@@ -12,6 +12,7 @@ using System.IO;
 using System.Net;
 
 using Lextm.SharpSnmpLib;
+using System.Threading;
 
 namespace TestSendTrap
 {
@@ -38,6 +39,8 @@ namespace TestSendTrap
                                                       0,
                                                       new List<Variable>());
             message.Send(address, 162);
+
+            Thread.Sleep(50);
             /*
             BinaryWriter writer = new BinaryWriter(File.OpenWrite(@"d:\send1.dat"));
             writer.Write(message.ToBytes());
@@ -51,6 +54,7 @@ namespace TestSendTrap
                                                       0,
                                                       new List<Variable>());
             m2.Send(address, 162);
+            Thread.Sleep(50);
             /*
             writer = new BinaryWriter(File.OpenWrite(@"d:\send2.dat"));
             writer.Write(m2.ToBytes());
