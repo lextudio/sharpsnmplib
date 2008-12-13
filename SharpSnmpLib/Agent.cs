@@ -69,6 +69,7 @@ namespace Lextm.SharpSnmpLib
         /// Sends a TRAP v1 message.
         /// </summary>
         /// <param name="receiver">Receiver.</param>
+        /// <param name="agent">Agent.</param>
         /// <param name="community">Community name.</param>
         /// <param name="enterprise">Enterprise OID.</param>
         /// <param name="generic">Generic code.</param>
@@ -76,30 +77,32 @@ namespace Lextm.SharpSnmpLib
         /// <param name="timestamp">Timestamp.</param>
         /// <param name="variables">Variable bindings.</param>
         [CLSCompliant(false)]
-        public static void SendTrapV1(IPEndPoint receiver, OctetString community, ObjectIdentifier enterprise, GenericCode generic, int specific, uint timestamp, IList<Variable> variables)
+        public static void SendTrapV1(IPEndPoint receiver, IPAddress agent, OctetString community, ObjectIdentifier enterprise, GenericCode generic, int specific, uint timestamp, IList<Variable> variables)
         {
-            TrapV1Message message = new TrapV1Message(VersionCode.V1, receiver.Address, community, enterprise, generic, specific, timestamp, variables);
-            message.Send(receiver.Address, receiver.Port);
+            TrapV1Message message = new TrapV1Message(VersionCode.V1, agent, community, enterprise, generic, specific, timestamp, variables);
+            message.Send(receiver);
         }
 
         /// <summary>
         /// Sends TRAP v2 message.
         /// </summary>
+        /// <param name="version">Protocol version.</param>
         /// <param name="receiver">Receiver.</param>
         /// <param name="community">Community name.</param>
         /// <param name="enterprise">Enterprise OID.</param>
         /// <param name="timestamp">Timestamp.</param>
         /// <param name="variables">Variable bindings.</param>
         [CLSCompliant(false)]
-        public static void SendTrapV2(IPEndPoint receiver, OctetString community, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables)
+        public static void SendTrapV2(VersionCode version, IPEndPoint receiver, OctetString community, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables)
         {
             TrapV2Message message = new TrapV2Message(VersionCode.V2, community, enterprise, timestamp, variables);
-            message.Send(receiver.Address, receiver.Port);
+            message.Send(receiver);
         }
 
         /// <summary>
         /// Sends INFORM message.
         /// </summary>
+        /// <param name="version">Protocol version.</param>
         /// <param name="receiver">Receiver.</param>
         /// <param name="community">Community name.</param>
         /// <param name="enterprise">Enterprise OID.</param>
@@ -107,10 +110,19 @@ namespace Lextm.SharpSnmpLib
         /// <param name="variables">Variable bindings.</param>
         /// <param name="timeout">Timeout.</param>
         [CLSCompliant(false)]
-        public static void SendInform(IPEndPoint receiver, OctetString community, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables, int timeout)
+        public static void SendInform(VersionCode version, IPEndPoint receiver, OctetString community, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables, int timeout)
         {
-            InformRequestMessage message = new InformRequestMessage(VersionCode.V2, community, enterprise, timestamp, variables);
-            message.Send(receiver.Address, timeout, receiver.Port);
+            InformRequestMessage message = new InformRequestMessage(version, community, enterprise, timestamp, variables);
+            GetResponseMessage response = message.GetResponse(timeout, receiver);
+            if (response.ErrorStatus != ErrorCode.NoError)
+            {
+                throw SharpErrorException.Create(
+                    "error in response",
+                    receiver.Address,
+                    response.ErrorStatus,
+                    response.ErrorIndex,
+                    response.Variables[response.ErrorIndex - 1].Id);
+            }
         }
 
         private void TrapListener_GetRequestReceived(object sender, GetRequestReceivedEventArgs e)

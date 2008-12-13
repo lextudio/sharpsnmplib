@@ -15,6 +15,8 @@ using System.IO;
 using System.Text;
 using System.Configuration;
 using System.Diagnostics;
+using System.Net;
+using System.Net.Sockets;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -23,6 +25,42 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     internal static class ByteTool
     {
+        internal static GetResponseMessage GetResponse(object caller, IPEndPoint receiver, byte[] bytes, int number, int timeout)
+        {
+            byte[] reply = bytes;
+            ByteTool.Capture(bytes); // log request          
+            using (UdpClient udp = new UdpClient())
+            {
+                udp.Send(bytes, bytes.Length, receiver);
+                IPEndPoint from = new IPEndPoint(IPAddress.Any, 0);
+                IAsyncResult result = udp.BeginReceive(null, caller);
+                result.AsyncWaitHandle.WaitOne(timeout, false);
+                if (!result.IsCompleted)
+                {
+                    throw SharpTimeoutException.Create(receiver.Address, timeout);
+                }
+
+                reply = udp.EndReceive(result, ref from);
+                udp.Close();
+            }
+
+            MemoryStream m = new MemoryStream(reply, false);
+            ISnmpMessage message = MessageFactory.ParseMessages(m)[0];
+            if (message.TypeCode != SnmpType.GetResponsePdu)
+            {
+                throw SharpOperationException.Create("wrong response type", receiver.Address);
+            }
+
+            GetResponseMessage response = (GetResponseMessage)message;
+            if (response.SequenceNumber != number)
+            {
+                throw SharpOperationException.Create("wrong response sequence", receiver.Address);
+            }
+
+            ByteTool.Capture(reply); // log response
+            return response;
+        }
+
         //TODO: add this method to all message exchanges.
         internal static void Capture(ISnmpMessage message)
         {

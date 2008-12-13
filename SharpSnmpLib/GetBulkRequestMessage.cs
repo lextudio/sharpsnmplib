@@ -23,6 +23,7 @@ namespace Lextm.SharpSnmpLib
         private VersionCode _version;
         private IList<Variable> _variables;
         private byte[] _bytes;
+        [Obsolete]
         private IPAddress _agent;
         private OctetString _community;
         private ISnmpPdu _pdu;
@@ -37,6 +38,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="maxRepetitions">Max repetitions.</param>
         /// <param name="community">Community name.</param>
         /// <param name="variables">Variables.</param>
+        [Obsolete("Please use overload version instead.")]
         public GetBulkRequestMessage(VersionCode version, IPAddress agent, OctetString community, int nonRepeaters, int maxRepetitions, IList<Variable> variables)
         {
             _version = version;
@@ -50,7 +52,28 @@ namespace Lextm.SharpSnmpLib
             _sequenceNumber = pdu.SequenceNumber;
             _bytes = pdu.ToMessageBody(_version, _community).ToBytes();
         }
-        
+
+        /// <summary>
+        /// Creates a <see cref="GetBulkRequestMessage"/> with all contents.
+        /// </summary>
+        /// <param name="version">Protocol version.</param>
+        /// <param name="nonRepeaters">Non-repeaters.</param>
+        /// <param name="maxRepetitions">Max repetitions.</param>
+        /// <param name="community">Community name.</param>
+        /// <param name="variables">Variables.</param>
+        public GetBulkRequestMessage(VersionCode version, OctetString community, int nonRepeaters, int maxRepetitions, IList<Variable> variables)
+        {
+            _version = version;
+            _community = community;
+            _variables = variables;
+            GetBulkRequestPdu pdu = new GetBulkRequestPdu(
+                nonRepeaters,
+                maxRepetitions,
+                _variables);
+            _sequenceNumber = pdu.SequenceNumber;
+            _bytes = pdu.ToMessageBody(_version, _community).ToBytes();
+        }
+
         /// <summary>
         /// Creates a <see cref="GetBulkRequestMessage"/> with a specific <see cref="Sequence"/>.
         /// </summary>
@@ -90,6 +113,17 @@ namespace Lextm.SharpSnmpLib
                 return _variables;
             }
         }
+
+        /// <summary>
+        /// sends this <see cref="GetBulkRequestMessage"/> and handles the response from agent.
+        /// </summary>
+        /// <param name="timeout"></param>
+        /// <param name="receiver"></param>
+        /// <returns></returns>
+        public GetResponseMessage GetResponse(int timeout, IPEndPoint receiver)
+        {
+            return ByteTool.GetResponse(this, receiver, _bytes, SequenceNumber, timeout);
+        }
         
         /// <summary>
         /// Sends this <see cref="GetBulkRequestMessage"/> and handles the response from agent.
@@ -97,6 +131,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="timeout">Timeout.</param>
         /// <param name="port">Port number.</param>
         /// <returns></returns>
+        [Obsolete("Please use GetResponse instead. Otherwise, make sure you called the obsolete constructor for this object.")]
         public IList<Variable> Send(int timeout, int port)
         {
             byte[] bytes = _bytes;

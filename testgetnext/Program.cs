@@ -13,37 +13,46 @@ using System.Net;
 
 namespace TestGetNext
 {
-	class Program
-	{
-		public static void Main(string[] args)
-		{
-			try
-			{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            try
+            {
                 List<Variable> vList = new List<Variable>();
-                vList.Add(new Variable("1.3.6.1.2.1.1.6.0"));
+                vList.Add(new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.6.0")));
+                IPEndPoint endpoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 161);
+                GetNextRequestMessage message = new GetNextRequestMessage(VersionCode.V1,
+                                                                          new OctetString("public"),
+                                                                          vList);
+                GetResponseMessage response = message.GetResponse(1000, endpoint);
+                if (response.ErrorStatus != ErrorCode.NoError)
+                {
+                    throw SharpErrorException.Create(
+                        "error in response",
+                        endpoint.Address,
+                        response.ErrorStatus,
+                        response.ErrorIndex,
+                        response.Variables[response.ErrorIndex - 1].Id);
+                }
 
-				GetNextRequestMessage message = new GetNextRequestMessage(VersionCode.V1, 
-				                                                          IPAddress.Parse("127.0.0.1"),
-				                                                          new OctetString("public"),
-				                                                          vList);
-				
-				Variable variable = message.Send(1000, 161)[0];
-				Console.WriteLine(variable.ToString());
-			}
-			catch (SharpSnmpException ex)
-			{
-				if (ex is SharpOperationException)
-				{
-					Console.WriteLine((ex as SharpOperationException).Details);
-				}
-				else
-				{
-					Console.WriteLine(ex);
-				}
-			}
-			
-			Console.Write("Press any key to continue . . . ");
-			Console.ReadKey(true);
-		}
-	}
+                Variable variable = response.Variables[0];
+                Console.WriteLine(variable.ToString());
+            }
+            catch (SharpSnmpException ex)
+            {
+                if (ex is SharpOperationException)
+                {
+                    Console.WriteLine((ex as SharpOperationException).Details);
+                }
+                else
+                {
+                    Console.WriteLine(ex);
+                }
+            }
+
+            Console.Write("Press any key to continue . . . ");
+            Console.ReadKey(true);
+        }
+    }
 }

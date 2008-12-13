@@ -93,6 +93,17 @@ namespace Lextm.SharpSnmpLib
             InformRequestPdu pdu = (InformRequestPdu)_pdu;
             new GetResponseMessage(_sequenceNumber, _version, receiver.Address, _community, pdu.AllVariables).Send(receiver.Port);
         }
+
+        /// <summary>
+        /// Sends this <see cref="InformRequestMessage"/> and handles the response from receiver (managers or agents).
+        /// </summary>
+        /// <param name="timeout">Timeout.</param>
+        /// <param name="receiver">Receiver.</param>
+        /// <returns></returns>
+        public GetResponseMessage GetResponse(int timeout, IPEndPoint receiver)
+        {
+            return ByteTool.GetResponse(this, receiver, _bytes, SequenceNumber, timeout);
+        }
         
         /// <summary>
         /// Sends this <see cref="InformRequestMessage"/> and handles the response from receiver (managers or agents).
@@ -100,6 +111,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="receiver">Receiver address.</param>
         /// <param name="timeout">Timeout.</param>
         /// <param name="port">Port number.</param>
+        [Obsolete("Please use GetResponse instead. Otherwise, make sure you called the obsolete constructor for this object.")]
         public void Send(IPAddress receiver, int timeout, int port)
         {
             //TODO: extract all similar code together to form a GetResponseBytes method

@@ -18,68 +18,49 @@ namespace TestSendTrap
 {
 	class Program
 	{
-		public static void Main(string[] args)
-		{
-		    IPAddress address;
-		    if (args.Length == 1)
-		    {
-		        address = IPAddress.Parse(args[0]);
-		    }
-		    else
-		    {
-		        address = IPAddress.Loopback;
-		    }
-		    
-            TrapV1Message message = new TrapV1Message(VersionCode.V1,
-                                                      address,
+        public static void Main(string[] args)
+        {
+            IPAddress address;
+            if (args.Length == 1)
+            {
+                address = IPAddress.Parse(args[0]);
+            }
+            else
+            {
+                address = IPAddress.Loopback;
+            }
+
+            Agent.SendTrapV1(new IPEndPoint(address, 162), IPAddress.Loopback,
                                                       new OctetString("public"),
                                                       new ObjectIdentifier(new uint[] { 1, 3, 6 }),
                                                       GenericCode.ColdStart,
                                                       0,
                                                       0,
                                                       new List<Variable>());
-            message.Send(address, 162);
 
             Thread.Sleep(50);
-            /*
-            BinaryWriter writer = new BinaryWriter(File.OpenWrite(@"d:\send1.dat"));
-            writer.Write(message.ToBytes());
-            writer.Close();
-            //*/
-            
-            
-            TrapV2Message m2 = new TrapV2Message(VersionCode.V2,
+
+
+            Agent.SendTrapV2(VersionCode.V2, new IPEndPoint(address, 162), 
                                                  new OctetString("public"),
                                                       new ObjectIdentifier(new uint[] { 1, 3, 6 }),
                                                       0,
                                                       new List<Variable>());
-            m2.Send(address, 162);
             Thread.Sleep(50);
-            /*
-            writer = new BinaryWriter(File.OpenWrite(@"d:\send2.dat"));
-            writer.Write(m2.ToBytes());
-            writer.Close();
-            //*/
-           
-            InformRequestMessage m3 = new InformRequestMessage(VersionCode.V2, new OctetString("public"), new ObjectIdentifier(new uint[] { 1, 3, 6 }),
-                                                      0,
-                                                      new List<Variable>());
+
             try
             {
-                m3.Send(address, 2000, 162);                
+                Agent.SendInform(VersionCode.V2, new IPEndPoint(address, 162), new OctetString("public"), new ObjectIdentifier(new uint[] { 1, 3, 6 }),
+                                          0,
+                                          new List<Variable>(), 2000);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
-            } 
-            /*
-            writer = new BinaryWriter(File.OpenWrite(@"d:\send3.dat"));
-            writer.Write(m3.ToBytes());
-            writer.Close();
-            //*/
-            
-			Console.Write("Press any key to continue . . . ");
-			Console.ReadKey(true);
-		}
+            }
+
+            Console.Write("Press any key to continue . . . ");
+            Console.ReadKey(true);
+        }
 	}
 }

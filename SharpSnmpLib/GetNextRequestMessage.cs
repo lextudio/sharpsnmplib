@@ -24,6 +24,7 @@ namespace Lextm.SharpSnmpLib
         private VersionCode _version;
         private IList<Variable> _variables;
         private byte[] _bytes;
+        [Obsolete]
         private IPAddress _agent;
         private OctetString _community;
         private ISnmpPdu _pdu;
@@ -36,6 +37,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="agent">Agent address</param>
         /// <param name="community">Community name</param>
         /// <param name="variables">Variables</param>
+        [Obsolete("Please use overload version instead.")]
         public GetNextRequestMessage(VersionCode version, IPAddress agent, OctetString community, IList<Variable> variables)
         {
             _version = version;
@@ -49,7 +51,26 @@ namespace Lextm.SharpSnmpLib
             _sequenceNumber = pdu.SequenceNumber;
             _bytes = pdu.ToMessageBody(_version, _community).ToBytes();
         }
-        
+
+        /// <summary>
+        /// Creates a <see cref="GetNextRequestMessage"/> with all contents.
+        /// </summary>
+        /// <param name="version">Protocol version</param>
+        /// <param name="community">Community name</param>
+        /// <param name="variables">Variables</param>
+        public GetNextRequestMessage(VersionCode version, OctetString community, IList<Variable> variables)
+        {
+            _version = version;
+            _community = community;
+            _variables = variables;
+            GetNextRequestPdu pdu = new GetNextRequestPdu(
+                ErrorCode.NoError,
+                0,
+                _variables);
+            _sequenceNumber = pdu.SequenceNumber;
+            _bytes = pdu.ToMessageBody(_version, _community).ToBytes();
+        }   
+
         /// <summary>
         /// Creates a <see cref="GetNextRequestMessage"/> with a specific <see cref="Sequence"/>.
         /// </summary>
@@ -96,6 +117,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="timeout">Timeout.</param>
         /// <param name="port">Port number.</param>
         /// <returns></returns>
+        [Obsolete("Please use GetResponse instead. Otherwise, make sure you called the obsolete constructor for this object.")]
         public IList<Variable> Send(int timeout, int port)
         {
             byte[] bytes = _bytes;
@@ -187,6 +209,17 @@ namespace Lextm.SharpSnmpLib
         public override string ToString()
         {
             return "GET NEXT request message: version: " + _version + "; " + _community + "; " + _pdu;
+        }
+
+        /// <summary>
+        /// Sends this <see cref="GetNextRequestMessage"/> and handles the response from agent.
+        /// </summary>
+        /// <param name="timeout">Timeout.</param>
+        /// <param name="receiver">Port number.</param>
+        /// <returns></returns>
+        public GetResponseMessage GetResponse(int timeout, IPEndPoint receiver)
+        {
+            return ByteTool.GetResponse(this, receiver, _bytes, SequenceNumber, timeout); 
         }
     }
 }

@@ -48,8 +48,8 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can use the default the Revision and
 // Build Numbers by using the '*' as shown below:
 
-[assembly: AssemblyVersion("1.5.011213.13")]
-[assembly: AssemblyFileVersion("1.5.011213.13")]
+[assembly: AssemblyVersion("1.5.011213.41")]
+[assembly: AssemblyFileVersion("1.5.011213.41")]
 
 [assembly: NeutralResourcesLanguage("en-US")]
 [assembly: CLSCompliant(true)]

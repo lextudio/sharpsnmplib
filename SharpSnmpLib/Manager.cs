@@ -90,8 +90,8 @@ namespace Lextm.SharpSnmpLib
             List<Variable> variables = new List<Variable>();
             variables.Add(v);
 
-            GetRequestMessage message = new GetRequestMessage(version, endpoint.Address, community, variables);
-            return message.Broadcast(timeout, endpoint.Port);
+            GetRequestMessage message = new GetRequestMessage(version, community, variables);
+            return message.Broadcast(timeout, endpoint);
         }
         
         /// <summary>
@@ -110,8 +110,19 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentException("you can only use SNMP v1 or v2 in this version");
             }
 
-            GetRequestMessage message = new GetRequestMessage(version, endpoint.Address, community, variables);
-            return message.Send(timeout, endpoint.Port);
+            GetRequestMessage message = new GetRequestMessage(version, community, variables);
+            GetResponseMessage response = message.GetResponse(timeout, endpoint);
+            if (response.ErrorStatus != ErrorCode.NoError)
+            {
+                throw SharpErrorException.Create(
+                    "error in response",
+                    endpoint.Address,
+                    response.ErrorStatus,
+                    response.ErrorIndex,
+                    response.Variables[response.ErrorIndex - 1].Id);
+            }
+
+            return response.Variables;
         }
 
         /// <summary>
@@ -207,8 +218,18 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentException("you can only use SNMP v1 or v2 in this version");
             }
 
-            SetRequestMessage message = new SetRequestMessage(version, endpoint.Address, community, variables);
-            message.Send(timeout, endpoint.Port);
+            SetRequestMessage message = new SetRequestMessage(version, community, variables);
+            GetResponseMessage response = message.GetResponse(timeout, endpoint);
+
+            if (response.ErrorStatus != ErrorCode.NoError)
+            {
+                throw SharpErrorException.Create(
+                    "error in response",
+                    endpoint.Address,
+                    response.ErrorStatus,
+                    response.ErrorIndex,
+                    response.Variables[response.ErrorIndex - 1].Id);
+            }
         }
 
         /// <summary>
@@ -639,14 +660,24 @@ namespace Lextm.SharpSnmpLib
             {
                 List<Variable> variables = new List<Variable>();
                 variables.Add(new Variable(seed.Id));
-                
+
                 GetNextRequestMessage message = new GetNextRequestMessage(
                     version,
-                    endpoint.Address,
                     community,
                     variables);
 
-                next = message.Send(timeout, endpoint.Port)[0];
+                GetResponseMessage response = message.GetResponse(timeout, endpoint);
+                if (response.ErrorStatus != ErrorCode.NoError)
+                {
+                    throw SharpErrorException.Create(
+                        "error in response",
+                        endpoint.Address,
+                        response.ErrorStatus,
+                        response.ErrorIndex,
+                        response.Variables[response.ErrorIndex - 1].Id);
+                }
+
+                next = response.Variables[0];
                 result = true;
             }
             catch (SharpOperationException)

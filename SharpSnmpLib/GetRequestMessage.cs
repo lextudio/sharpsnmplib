@@ -17,6 +17,7 @@
         private VersionCode _version;
         private IList<Variable> _variables;
         private byte[] _bytes;
+        [Obsolete]
         private IPAddress _agent;
         private OctetString _community;
         private ISnmpPdu _pdu;
@@ -29,6 +30,7 @@
         /// <param name="agent">Agent address</param>
         /// <param name="community">Community name</param>
         /// <param name="variables">Variables</param>
+        [Obsolete("Please use the overload version.")]
         public GetRequestMessage(VersionCode version, IPAddress agent, OctetString community, IList<Variable> variables)
         {
             _version = version;
@@ -42,7 +44,26 @@
             _sequenceNumber = pdu.SequenceNumber;
             _bytes = pdu.ToMessageBody(_version, _community).ToBytes();
         }
-        
+
+        /// <summary>
+        /// Creates a <see cref="GetRequestMessage"/> with all contents.
+        /// </summary>
+        /// <param name="version">Protocol version</param>
+        /// <param name="community">Community name</param>
+        /// <param name="variables">Variables</param>
+        public GetRequestMessage(VersionCode version, OctetString community, IList<Variable> variables)
+        {
+            _version = version;
+            _community = community;
+            _variables = variables;
+            GetRequestPdu pdu = new GetRequestPdu(
+                ErrorCode.NoError,
+                0,
+                _variables);
+            _sequenceNumber = pdu.SequenceNumber;
+            _bytes = pdu.ToMessageBody(_version, _community).ToBytes();
+        }
+
         /// <summary>
         /// Creates a <see cref="GetRequestMessage"/> with a specific <see cref="Sequence"/>.
         /// </summary>
@@ -89,6 +110,7 @@
         /// <param name="timeout">Timeout.</param>
         /// <param name="port">Port number.</param>
         /// <returns></returns>
+        [Obsolete("Please use the overload version. Otherwise, make sure you called the obsolete constructor for this object.")]
         public IDictionary<IPEndPoint, Variable> Broadcast(int timeout, int port)
         {
             byte[] bytes = _bytes;
@@ -102,6 +124,27 @@
                 udp.Close();
             }
             
+            return result;
+        }
+
+        /// <summary>
+        /// Broadcasts request for new agents.
+        /// </summary>
+        /// <param name="timeout">Timeout.</param>
+        /// <param name="receiver">Agents.</param>
+        /// <returns></returns>        
+        public IDictionary<IPEndPoint, Variable> Broadcast(int timeout, IPEndPoint receiver)
+        {
+            byte[] bytes = _bytes;
+            IDictionary<IPEndPoint, Variable> result;
+            using (UdpClient udp = new UdpClient())
+            {
+                udp.EnableBroadcast = true;
+                udp.Send(bytes, bytes.Length, receiver);
+                result = ReceiveResponses(udp, timeout);
+                udp.Close();
+            }
+
             return result;
         }
 
@@ -165,7 +208,7 @@
         /// <param name="timeout">Timeout.</param>
         /// <param name="port">Port number.</param>
         /// <returns></returns>
-        [Obsolete]
+        [Obsolete("Please use GetResponse instead. Otherwise, make sure you called the obsolete constructor for this object.")]
         public IList<Variable> Send(int timeout, int port)
         {
             byte[] bytes = _bytes;
@@ -217,44 +260,12 @@
         /// Sends this <see cref="GetRequestMessage"/> and handles the response from agent.
         /// </summary>
         /// <param name="timeout">Timeout.</param>
-        /// <param name="port">Port number.</param>
+        /// <param name="receiver">Agent.</param>
         /// <returns></returns>
-        public GetResponseMessage GetResponse(int timeout, int port)
+        public GetResponseMessage GetResponse(int timeout, IPEndPoint receiver)
         {
-            byte[] bytes = _bytes;
-            ByteTool.Capture(bytes); // log request
-            IPEndPoint agent = new IPEndPoint(_agent, port);
-            using (UdpClient udp = new UdpClient())
-            {
-                udp.Send(bytes, bytes.Length, agent);
-                IPEndPoint from = new IPEndPoint(IPAddress.Any, 0);
-                IAsyncResult result = udp.BeginReceive(null, this);
-                result.AsyncWaitHandle.WaitOne(timeout, false);
-                if (!result.IsCompleted)
-                {
-                    throw SharpTimeoutException.Create(_agent, timeout);
-                }
-                
-                bytes = udp.EndReceive(result, ref from);
-                udp.Close();
-            }
-            
-            MemoryStream m = new MemoryStream(bytes, false);
-            ISnmpMessage message = MessageFactory.ParseMessages(m)[0];
-            if (message.TypeCode != SnmpType.GetResponsePdu)
-            {
-                throw SharpOperationException.Create("wrong response type", _agent);
-            }
-            
-            GetResponseMessage response = (GetResponseMessage)message;
-            if (response.SequenceNumber != SequenceNumber)
-            {
-                throw SharpOperationException.Create("wrong response sequence", _agent);
-            }
-
-            ByteTool.Capture(bytes); // log response
-            return response;
-        }
+            return ByteTool.GetResponse(this, receiver, _bytes, SequenceNumber, timeout);
+        }        
 
         /// <summary>
         /// Version.

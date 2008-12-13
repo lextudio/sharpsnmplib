@@ -103,18 +103,34 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="manager">Manager address</param>
         /// <param name="port">Port number</param>
+        [Obsolete("Please use overload version instead.")]
         public void Send(IPAddress manager, int port)
         {
             byte[] bytes = _bytes;
             ByteTool.Capture(bytes);
-            IPEndPoint agent = new IPEndPoint(manager, port);
+            IPEndPoint endpoint = new IPEndPoint(manager, port);
             using (UdpClient udp = new UdpClient())
             {
-                udp.Send(bytes, bytes.Length, agent);
+                udp.Send(bytes, bytes.Length, endpoint);
                 udp.Close();
             }
         }
-        
+
+        /// <summary>
+        /// Sends this <see cref="TrapV1Message"/>.
+        /// </summary>
+        /// <param name="manager">Manager</param>
+        public void Send(IPEndPoint manager)
+        {
+            byte[] bytes = _bytes;
+            ByteTool.Capture(bytes);
+            using (UdpClient udp = new UdpClient())
+            {
+                udp.Send(bytes, bytes.Length, manager);
+                udp.Close();
+            }
+        } 
+    
         /// <summary>
         /// Time stamp.
         /// </summary>
