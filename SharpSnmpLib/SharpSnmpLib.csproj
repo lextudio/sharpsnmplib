@@ -45,14 +45,8 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <Import Project="Microsoft.VersionNumber.targets" Condition=" '$(Configuration)' == 'Debug' " />
   <ItemGroup>
-    <Reference Include="Lextm.Common">
-      <HintPath>..\lib\Lextm.Common.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
+    <Reference Include="System.configuration" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Agent.cs">
@@ -66,6 +60,7 @@
     <Compile Include="Counter64.cs" />
     <Compile Include="EndOfMibView.cs" />
     <Compile Include="ErrorCode.cs" />
+    <Compile Include="ExceptionRaisedEventArgs.cs" />
     <Compile Include="Gauge32.cs" />
     <Compile Include="GeneralString.cs" />
     <Compile Include="GetBulkRequestMessage.cs" />
@@ -288,6 +283,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Agent.resx">
       <DependentUpon>Agent.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Manager.resx">
       <DependentUpon>Manager.cs</DependentUpon>
