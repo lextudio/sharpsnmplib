@@ -56,6 +56,15 @@ namespace Lextm.SharpSnmpLib.Tests
 		    Variable v = m.Variables[0];
 		    string i = v.Id.ToString();
 		}
+		
+		[Test]
+		[ExpectedException(typeof(SharpSnmpException))]
+		public void TestBrokenString()
+		{
+		    string bytes = "30 39 02 01 01 04 06 70 75 62 6C 69 63 A7 2C 02 01 01 02 01 00 02 01 00 30 21 30 0D 06 08 2B 06 01 02 01 01";
+		    IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes);
+		    Assert.AreEqual(1, messages.Count);	
+		}
     }
 }
 #pragma warning restore 1591

@@ -581,6 +581,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Starts trap listener.
         /// </summary>
+        [Obsolete("Use TrapListener property instead.")]
         public void Start()
         {
             trapListener.Start();
@@ -590,17 +591,27 @@ namespace Lextm.SharpSnmpLib
         /// Starts trap listener on a specific port.
         /// </summary>
         /// <param name="port">Manager port number</param>
+        [Obsolete("Use TrapListener property instead.")]
         public void Start(int port)
         {
-            trapListener.Start(new IPEndPoint(IPAddress.Any, port));
+            trapListener.Start(port);
         }
 
         /// <summary>
         /// Stops trap listener.
         /// </summary>
+        [Obsolete("Use TrapListener property instead.")]
         public void Stop()
         {
             trapListener.Stop();
+        }
+
+        /// <summary>
+        /// Trap listener.
+        /// </summary>
+        public TrapListener TrapListener
+        {
+            get { return trapListener; }
         }
 
         /// <summary>
@@ -692,7 +703,6 @@ namespace Lextm.SharpSnmpLib
         private void InitializeComponent()
         {
             this.trapListener = new SharpSnmpLib.TrapListener();
-            this.trapListener.Port = 162;
             this.trapListener.TrapV1Received += new System.EventHandler<SharpSnmpLib.TrapV1ReceivedEventArgs>(this.TrapListener_TrapV1Received);
             this.trapListener.TrapV2Received += new System.EventHandler<SharpSnmpLib.TrapV2ReceivedEventArgs>(this.TrapListener_TrapV2Received);
             this.trapListener.InformRequestReceived += new System.EventHandler<SharpSnmpLib.InformRequestReceivedEventArgs>(this.TrapListener_InformRequestReceived);

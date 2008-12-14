@@ -38,7 +38,7 @@ namespace TestSendTrap
                                                       0,
                                                       new List<Variable>());
 
-            Thread.Sleep(50);
+            //Thread.Sleep(50);
 
 
             Agent.SendTrapV2(VersionCode.V2, new IPEndPoint(address, 162), 
@@ -46,7 +46,7 @@ namespace TestSendTrap
                                                       new ObjectIdentifier(new uint[] { 1, 3, 6 }),
                                                       0,
                                                       new List<Variable>());
-            Thread.Sleep(50);
+            //Thread.Sleep(50);
 
             try
             {

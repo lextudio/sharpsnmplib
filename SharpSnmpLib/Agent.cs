@@ -9,9 +9,7 @@ namespace Lextm.SharpSnmpLib
     /// Agent component.
     /// </summary>
     public partial class Agent : Component
-    {
-        private const int DefaultPort = 161;
-        
+    {       
         /// <summary>
         /// Initiates an <see cref="Agent"/> instance.
         /// </summary>
@@ -19,30 +17,13 @@ namespace Lextm.SharpSnmpLib
         {
             InitializeComponent();
         }
-        
+
         /// <summary>
-        /// Stops.
+        /// Message monitor.
         /// </summary>
-        public void Stop()
+        public TrapListener Monitor
         {
-            trapListener.Stop();
-        }
-        
-        /// <summary>
-        /// Starts.
-        /// </summary>
-        public void Start()
-        {
-            Start(DefaultPort);
-        }
-        
-        /// <summary>
-        /// Starts on a specific port.
-        /// </summary>
-        /// <param name="port">Port.</param>
-        public void Start(int port)
-        {
-            trapListener.Start(port);
+            get { return trapListener; }
         }
 
         /// <summary>
@@ -144,8 +125,7 @@ namespace Lextm.SharpSnmpLib
             this.trapListener = new Lextm.SharpSnmpLib.TrapListener();
             // 
             // trapListener
-            // 
-            this.trapListener.Port = 161;            
+            //           
             this.trapListener.GetRequestReceived += new System.EventHandler<Lextm.SharpSnmpLib.GetRequestReceivedEventArgs>(this.TrapListener_GetRequestReceived);
             this.trapListener.GetBulkRequestReceived += new System.EventHandler<Lextm.SharpSnmpLib.GetBulkRequestReceivedEventArgs>(this.TrapListener_GetBulkRequestReceived);
             this.trapListener.SetRequestReceived += new System.EventHandler<Lextm.SharpSnmpLib.SetRequestReceivedEventArgs>(this.TrapListener_SetRequestReceived);

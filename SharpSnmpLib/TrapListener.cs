@@ -12,8 +12,10 @@ using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
-using System.Threading;
 using System.Text;
+using System.Threading;
+
+using TeamAgile.Samples.Threading;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -28,9 +30,10 @@ namespace Lextm.SharpSnmpLib
     /// </remarks>
     public class TrapListener : Component
     {
-        private Socket _watcher;
+        //private Socket _watcher;
+        [Obsolete]
         private int _port = DEFAULTPORT;
-        private BackgroundWorker worker;
+        private BackgroundWorkerEx worker;
         private const int DEFAULTPORT = 162;
         private readonly IPEndPoint defaultEndPoint = new IPEndPoint(IPAddress.Any, DEFAULTPORT);
         
@@ -85,6 +88,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Port number.
         /// </summary>
+        [Obsolete("Specify port number in Start instead.")]
         public int Port
         {
             get
@@ -127,20 +131,7 @@ namespace Lextm.SharpSnmpLib
             }
             
             _port = endpoint.Port;
-            IPEndPoint _sender = new IPEndPoint(endpoint.Address, endpoint.Port);
-            _watcher = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            try
-            {
-                _watcher.Bind(_sender);
-                worker.RunWorkerAsync();
-            }
-            catch (SocketException ex)
-            {
-                if (ex.ErrorCode == 10048)
-                {
-                    throw new SharpSnmpException("Port is already used: " + endpoint.Port.ToString(CultureInfo.InvariantCulture), ex);
-                }
-            }
+            worker.RunWorkerAsync(endpoint);            
         }
         
         /// <summary>
@@ -148,21 +139,16 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         public void Stop()
         {
-            if (_watcher == null)
-            {
-                return;
-            }
-            
-            _watcher.Close();
             if (worker.IsBusy)
             {
-                worker.CancelAsync();
+                worker.StopImmediately();
+                //worker.CancelAsync();
             }
         }
 
         private void InitializeComponent()
         {
-            this.worker = new BackgroundWorker();
+            this.worker = new BackgroundWorkerEx();
             this.worker.WorkerReportsProgress = true;
             this.worker.WorkerSupportsCancellation = true;
             this.worker.DoWork += new System.ComponentModel.DoWorkEventHandler(Worker_DoWork);
@@ -173,41 +159,69 @@ namespace Lextm.SharpSnmpLib
         private void TrapListener_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             MessageParams param = (MessageParams)e.UserState;
-            HandleMessage(param);
+            try
+            {
+                HandleMessage(param);
+            }
+            catch (SharpSnmpException ex)
+            {
+                HandleException(ex);
+            }
         }
 
         private void TrapListener_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {                        
-            if (e.Error != null && ExceptionRaised != null)
+        {     
+            Exception ex = e.Error;
+            watcher.Close();
+
+            HandleException(ex);
+        }
+
+        private void HandleException(Exception exception)
+        {
+            if (exception != null && ExceptionRaised != null)
             {
-                ExceptionRaised(this, new ExceptionRaisedEventArgs(e.Error));
+                SocketException socket = exception as SocketException;
+                if (socket == null && socket.ErrorCode == 10048)
+                {
+                    exception = new SharpSnmpException("Port is already used", socket);
+                }
+
+                ExceptionRaised(this, new ExceptionRaisedEventArgs(exception));
             }
         }
+
+        private Socket watcher;
         
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
+            IPEndPoint monitor = (IPEndPoint)e.Argument;
+            watcher = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            watcher.Blocking = true;
+            watcher.Bind(monitor);
+
             IPEndPoint agent = new IPEndPoint(IPAddress.Any, 0);
             EndPoint senderRemote = (EndPoint)agent;
-            byte[] msg = new byte[_watcher.ReceiveBufferSize];
-            uint loops = 0;
+            byte[] msg = new byte[watcher.ReceiveBufferSize];
+            //uint loops = 0;
             while (!worker.CancellationPending && worker.IsBusy)
             {
-                int number = _watcher.Available;
-                if (number == 0)
-                {
-                    if (Environment.ProcessorCount == 1 || unchecked(++loops % 100) == 0)
-                    {
-                        Thread.Sleep(1);
-                    }
-                    else
-                    {
-                        Thread.SpinWait(20);
-                    }
-                    
-                    continue;
-                }
+//                int number = _watcher.Available;
+//                if (number == 0)
+//                {
+//                    if (Environment.ProcessorCount == 1 || unchecked(++loops % 100) == 0)
+//                    {
+//                        Thread.Sleep(1);
+//                    }
+//                    else
+//                    {
+//                        Thread.SpinWait(20);
+//                    }
+//                    
+//                    continue;
+//                }
                 
-                _watcher.ReceiveFrom(msg, ref senderRemote);      
+                int number = watcher.ReceiveFrom(msg, ref senderRemote);      
                 worker.ReportProgress(0, new MessageParams(msg, number, senderRemote));
             }
         }
@@ -307,7 +321,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public override string ToString()
         {
-            return "Trap listener: port: " + _port.ToString(CultureInfo.InvariantCulture);
+            return "Trap listener";
         }
         
         /// <summary>

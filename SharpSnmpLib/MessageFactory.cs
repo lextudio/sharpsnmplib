@@ -73,8 +73,17 @@ namespace Lextm.SharpSnmpLib
         }
         
         private static ISnmpMessage ParseMessage(int first, Stream stream)
-        {           
-            ISnmpData array = SnmpDataFactory.CreateSnmpData(first, stream);
+        {
+            ISnmpData array;
+            try
+            {
+                array = SnmpDataFactory.CreateSnmpData(first, stream);
+            }
+            catch (Exception)
+            {
+                throw new SharpSnmpException("Invalid message bytes found. Use tracing to analyze the bytes.");
+            }
+            
             if (array == null)
             {
                 return null;
@@ -92,6 +101,7 @@ namespace Lextm.SharpSnmpLib
             }
             
             ISnmpData pdu = body.Items[2];
+
             switch (pdu.TypeCode)
             {
                 case SnmpType.TrapV1Pdu:
