@@ -27,6 +27,10 @@ namespace Lextm.SharpSnmpLib
         }
 
         /// <summary>
+        /// Occurs when an exception is raised.
+        /// </summary>
+        public event EventHandler<ExceptionRaisedEventArgs> ExceptionRaised;
+        /// <summary>
         /// Occurs when a GET request is received.
         /// </summary>
         public event EventHandler<GetRequestReceivedEventArgs> GetRequestReceived;
@@ -130,7 +134,15 @@ namespace Lextm.SharpSnmpLib
             this.trapListener.GetBulkRequestReceived += new System.EventHandler<Lextm.SharpSnmpLib.GetBulkRequestReceivedEventArgs>(this.TrapListener_GetBulkRequestReceived);
             this.trapListener.SetRequestReceived += new System.EventHandler<Lextm.SharpSnmpLib.SetRequestReceivedEventArgs>(this.TrapListener_SetRequestReceived);
             this.trapListener.GetNextRequestReceived += new System.EventHandler<Lextm.SharpSnmpLib.GetNextRequestReceivedEventArgs>(this.TrapListener_GetNextRequestReceived);
+            this.trapListener.ExceptionRaised += new EventHandler<ExceptionRaisedEventArgs>(trapListener_ExceptionRaised);
+        }
 
+        void trapListener_ExceptionRaised(object sender, ExceptionRaisedEventArgs e)
+        {
+            if (ExceptionRaised != null)
+            {
+                ExceptionRaised(this, e);
+            }
         }
 
         #endregion
