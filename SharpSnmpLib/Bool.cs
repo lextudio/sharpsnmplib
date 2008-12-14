@@ -24,7 +24,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="raw">Raw bytes</param>
         public Bool(byte[] raw)
         {
-            if (null == raw)
+            if (raw == null)
             {
                 throw new ArgumentNullException("raw");
             }

@@ -20,7 +20,8 @@ namespace Lextm.SharpSnmpLib.Mib
     public class ObjectRegistry
     {
         private ObjectTree _tree = new ObjectTree();
-        private static ObjectRegistry instance;
+        private static volatile ObjectRegistry instance;
+        private static object locker = new object();
         
         private ObjectRegistry()
         {
@@ -29,7 +30,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <summary>
         /// This event occurs when new documents are loaded.
         /// </summary>
-        public event EventHandler OnChanged;
+        public event EventHandler<EventArgs> OnChanged;
         
         /// <summary>
         /// Object tree.
@@ -50,12 +51,15 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             get
             {
-                lock (typeof(ObjectRegistry))
+                if (instance == null)
                 {
-                    if (instance == null)
+                    lock (locker)
                     {
-                        instance = new ObjectRegistry();
-                        instance.LoadDefaultDocuments();
+                        if (instance == null)
+                        {
+                            instance = new ObjectRegistry();
+                            instance.LoadDefaultDocuments();
+                        }
                     }
                 }
                 
@@ -328,6 +332,11 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <param name="fileNames">File names.</param>
         public void CompileFiles(IEnumerable<string> fileNames)
         {
+            if (fileNames == null)
+            {
+                throw new ArgumentNullException("fileNames");
+            }
+
             foreach (string fileName in fileNames)
             {
                 Import(Compiler.Compile(fileName));
@@ -382,9 +391,10 @@ namespace Lextm.SharpSnmpLib.Mib
         internal void Refresh()
         {
             _tree.Refresh();
-            if (OnChanged != null) 
+            EventHandler<EventArgs> handler = OnChanged;
+            if (handler != null) 
             {
-                OnChanged(this, EventArgs.Empty);
+                handler(this, EventArgs.Empty);
             }
         }
     }

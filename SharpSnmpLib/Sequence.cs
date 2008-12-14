@@ -30,6 +30,11 @@ namespace Lextm.SharpSnmpLib
         /// <param name="items"></param>
         public Sequence(params ISnmpData[] items)
         {
+            if (items == null)
+            {
+                throw new ArgumentNullException("items");
+            }
+
             foreach (ISnmpData item in items)
             {
                 _list.Add(item);
@@ -44,6 +49,11 @@ namespace Lextm.SharpSnmpLib
         /// <param name="items"></param>
         public Sequence(IEnumerable items)
         {
+            if (items == null)
+            {
+                throw new ArgumentNullException("items");
+            }
+
             if (!(items is IEnumerable<ISnmpData>))
             {
                 throw new ArgumentException("objects must be IEnumerable<ISnmpData>");
@@ -63,6 +73,11 @@ namespace Lextm.SharpSnmpLib
         /// <param name="raw">Raw bytes</param>
         public Sequence(byte[] raw)
         {
+            if (raw == null)
+            {
+                throw new ArgumentNullException("raw");
+            }
+
             _raw = raw;
             if (raw.Length != 0)
             {

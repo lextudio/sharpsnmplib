@@ -40,6 +40,11 @@ namespace Lextm.SharpSnmpLib
         [CLSCompliant(false)]
         public ObjectIdentifier(uint[] id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException("id");
+            }
+
             if (id.Length < 2)
             {
                 throw new ArgumentException("The length of the shortest identifier is two", "id");
@@ -64,12 +69,21 @@ namespace Lextm.SharpSnmpLib
         /// <param name="raw">Raw bytes</param>
         public ObjectIdentifier(byte[] raw)
         {
-            // _oid = ParsePduFormat(raw, (uint)raw.Length);
             _oid = ParseRaw(raw);
         }
 
         private static uint[] ParseRaw(byte[] raw)
         {
+            if (raw == null)
+            {
+                throw new ArgumentNullException("raw");
+            }
+
+            if (raw.Length == 0)
+            {
+                throw new ArgumentException("raw cannot be empty", "raw");
+            }
+
             List<uint> result = new List<uint>();
             result.Add((uint)(raw[0] / 40));
             result.Add((uint)(raw[0] % 40));
@@ -129,6 +143,11 @@ namespace Lextm.SharpSnmpLib
         [CLSCompliant(false)]
         public static string Convert(uint[] numerical)
         {
+            if (numerical == null)
+            {
+                throw new ArgumentNullException("numerical");
+            }
+
             StringBuilder result = new StringBuilder();
             for (int k = 0; k < numerical.Length; k++)
             {
@@ -146,6 +165,11 @@ namespace Lextm.SharpSnmpLib
         [CLSCompliant(false)]
         public static uint[] Convert(string dotted)
         {
+            if (dotted == null)
+            {
+                throw new ArgumentNullException("dotted");
+            }
+
             string[] parts = dotted.Split(new char[] { '.' }, StringSplitOptions.RemoveEmptyEntries);
             uint[] result = new uint[parts.Length];
             for (int i = 0; i < parts.Length; i++)

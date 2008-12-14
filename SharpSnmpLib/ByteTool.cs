@@ -152,6 +152,11 @@ namespace Lextm.SharpSnmpLib
         
         internal static byte[] ParseItems(params ISnmpData[] items)
         {
+            if (items == null)
+            {
+                throw new ArgumentNullException("items");
+            }
+
             MemoryStream result = new MemoryStream();
             foreach (ISnmpData item in items)
             {
@@ -164,6 +169,11 @@ namespace Lextm.SharpSnmpLib
         
         internal static byte[] ParseItems(IEnumerable items)
         {
+            if (items == null)
+            {
+                throw new ArgumentNullException("items");
+            }
+
             if (!(items is IEnumerable<ISnmpData>))
             {
                 throw new ArgumentException("items must be IEnumerable<ISnmpData>");

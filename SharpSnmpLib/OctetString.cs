@@ -90,6 +90,11 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public string ToString(Encoding encoding)
         {
+            if (encoding == null)
+            {
+                throw new ArgumentNullException("encoding");
+            }
+
             return encoding.GetString(_raw);
         }
 

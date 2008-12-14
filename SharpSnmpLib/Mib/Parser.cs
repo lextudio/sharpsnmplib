@@ -34,6 +34,11 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <param name="files"></param>
         public void ParseToModules(IEnumerable<string> files)
         {
+            if (files == null)
+            {
+                throw new ArgumentNullException("files");
+            }
+
             Console.WriteLine("loading existing modules started");            
             Console.WriteLine("loading existing modules ended");
             List<MibModule> modules = new List<MibModule>();

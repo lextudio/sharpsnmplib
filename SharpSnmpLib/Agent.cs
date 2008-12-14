@@ -80,7 +80,12 @@ namespace Lextm.SharpSnmpLib
         [CLSCompliant(false)]
         public static void SendTrapV2(VersionCode version, IPEndPoint receiver, OctetString community, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables)
         {
-            TrapV2Message message = new TrapV2Message(VersionCode.V2, community, enterprise, timestamp, variables);
+            if (version == VersionCode.V1)
+            {
+                throw new ArgumentException("SNMP v1 is not support", "version");
+            }
+
+            TrapV2Message message = new TrapV2Message(version, community, enterprise, timestamp, variables);
             message.Send(receiver);
         }
 
@@ -112,9 +117,10 @@ namespace Lextm.SharpSnmpLib
 
         private void TrapListener_GetRequestReceived(object sender, GetRequestReceivedEventArgs e)
         {
-            if (GetRequestReceived != null)
+            EventHandler<GetRequestReceivedEventArgs> handler = GetRequestReceived;
+            if (handler != null)
             {
-                GetRequestReceived(this, e);
+                handler(this, e);
             }
         }
 
@@ -134,14 +140,15 @@ namespace Lextm.SharpSnmpLib
             this.trapListener.GetBulkRequestReceived += new System.EventHandler<Lextm.SharpSnmpLib.GetBulkRequestReceivedEventArgs>(this.TrapListener_GetBulkRequestReceived);
             this.trapListener.SetRequestReceived += new System.EventHandler<Lextm.SharpSnmpLib.SetRequestReceivedEventArgs>(this.TrapListener_SetRequestReceived);
             this.trapListener.GetNextRequestReceived += new System.EventHandler<Lextm.SharpSnmpLib.GetNextRequestReceivedEventArgs>(this.TrapListener_GetNextRequestReceived);
-            this.trapListener.ExceptionRaised += new EventHandler<ExceptionRaisedEventArgs>(trapListener_ExceptionRaised);
+            this.trapListener.ExceptionRaised += new EventHandler<ExceptionRaisedEventArgs>(TrapListener_ExceptionRaised);
         }
 
-        void trapListener_ExceptionRaised(object sender, ExceptionRaisedEventArgs e)
+        void TrapListener_ExceptionRaised(object sender, ExceptionRaisedEventArgs e)
         {
-            if (ExceptionRaised != null)
+            EventHandler<ExceptionRaisedEventArgs> handler = ExceptionRaised;
+            if (handler != null)
             {
-                ExceptionRaised(this, e);
+                handler(this, e);
             }
         }
 
@@ -151,25 +158,28 @@ namespace Lextm.SharpSnmpLib
 
         private void TrapListener_GetBulkRequestReceived(object sender, GetBulkRequestReceivedEventArgs e)
         {
-            if (GetBulkRequestReceived != null)
+            EventHandler<GetBulkRequestReceivedEventArgs> handler = GetBulkRequestReceived;
+            if (handler != null)
             {
-                GetBulkRequestReceived(this, e);
+                handler(this, e);
             }
         }
 
         private void TrapListener_GetNextRequestReceived(object sender, GetNextRequestReceivedEventArgs e)
         {
-            if (GetNextRequestReceived != null)
+            EventHandler<GetNextRequestReceivedEventArgs> handler = GetNextRequestReceived;
+            if (handler != null)
             {
-                GetNextRequestReceived(this, e);
+                handler(this, e);
             }
         }
 
         private void TrapListener_SetRequestReceived(object sender, SetRequestReceivedEventArgs e)
         {
-            if (SetRequestReceived != null)
+            EventHandler<SetRequestReceivedEventArgs> handler = SetRequestReceived;
+            if (handler != null)
             {
-                SetRequestReceived(this, e);
+                handler(this, e);
             }
         }
     }

@@ -2,23 +2,23 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Gendarme">
 	<PropertyGroup>        
         <ReleaseFolder>.\bin</ReleaseFolder>
-        <GendarmeFolder>H:\Incoming\Green\Gendarme</GendarmeFolder>
+        <GendarmeFolder>H:\Green\Gendarme</GendarmeFolder>
 		<GendarmePath>$(GendarmeFolder)\gendarme.exe</GendarmePath>
 		<CommandLine>--config "$(GendarmeFolder)\rules.xml" --log .\gendarme.log --quiet .\sharpsnmplib.dll</CommandLine>
-		<LibraryDebugFolder>.\SharpSnmpLib\Bin\Debug</LibraryDebugFolder>
-		<NDependFolder>H:\Incoming\Green\NDepend</NDependFolder>
+		<LibraryReleaseFolder>.\SharpSnmpLib\Bin\Release</LibraryReleaseFolder>
+		<NDependFolder>H:\Green\NDepend</NDependFolder>
 		<NDependProject>"D:\lextm\documents\SharpDevelop Projects\SharpSnmpLib\SharpSnmpLib.xml"</NDependProject>
 	</PropertyGroup>
     <ItemGroup>
         <LibraryOutputs Include=".\SharpSnmpLib\bin\Release\sharpsnmplib.*"/>
         <BrowserOutputs Include=".\Browser\bin\Release\*.*" Exclude="*.pdb"/>
     </ItemGroup>
-	<Target Name="Gendarme" DependsOnTargets="Debug">
-		<Exec Command="$(GendarmePath) $(CommandLine)" WorkingDirectory="$(LibraryDebugFolder)" />
-		<Copy SourceFiles="$(LibraryDebugFolder)\gendarme.log" DestinationFolder="." />
+	<Target Name="Gendarme" DependsOnTargets="Release">
+		<Exec Command="$(GendarmePath) $(CommandLine)" WorkingDirectory="$(LibraryReleaseFolder)" />
+		<Copy SourceFiles="$(LibraryReleaseFolder)\gendarme.log" DestinationFolder="." />
 	</Target>
 	<UsingTask AssemblyFile="$(NDependFolder)\MSBuild\NDepend.Build.MSBuild.dll" TaskName="NDependTask" />
-	<Target Name="NDepend" DependsOnTargets="Debug">
+	<Target Name="NDepend" DependsOnTargets="Release">
 		<!--<NDependTask NDependConsoleExePath="$(NDependFolder)" ProjectFilePath="$(NDependProject)" />-->
 		<Exec Command="$(NDependFolder)\NDepend.Console.exe $(NDependProject)" />
 	</Target>

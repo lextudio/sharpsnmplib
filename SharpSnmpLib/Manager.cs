@@ -485,6 +485,11 @@ namespace Lextm.SharpSnmpLib
         /// <returns>Returns row count if the OID is a table. Otherwise this value is meaningless.</returns>
         public static int Walk(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, IList<Variable> list, int timeout, WalkMode mode)
         {
+            if (list == null)
+            {
+                throw new ArgumentNullException("list");
+            }
+
             int result = 0;
             Variable tableV = new Variable(table);
             Variable seed = null;
@@ -526,6 +531,11 @@ namespace Lextm.SharpSnmpLib
         /// <returns>Returns row count if the OID is a table. Otherwise this value is meaningless.</returns>
         public static int SteveWalk(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, IList<Variable> list, int timeout, WalkMode mode)
         {
+            if (list == null)
+            {
+                throw new ArgumentNullException("list");
+            }
+
             int result = 0;
             int index = -1;
             Variable tableV = new Variable(table);
@@ -642,25 +652,28 @@ namespace Lextm.SharpSnmpLib
 
         private void TrapListener_TrapV1Received(object sender, TrapV1ReceivedEventArgs e)
         {
-            if (null != TrapV1Received)
+            EventHandler<TrapV1ReceivedEventArgs> handler = TrapV1Received;
+            if (null != handler)
             {
-                TrapV1Received(this, e);
+                handler(this, e);
             }
         }
         
         private void TrapListener_TrapV2Received(object sender, TrapV2ReceivedEventArgs e)
         {
-            if (null != TrapV2Received)
+            EventHandler<TrapV2ReceivedEventArgs> handler = TrapV2Received;
+            if (null != handler)
             {
-                TrapV2Received(this, e);
+                handler(this, e);
             }
         }
         
         private void TrapListener_InformRequestReceived(object sender, InformRequestReceivedEventArgs e)
         {
-            if (null != InformRequestReceived)
+            EventHandler<InformRequestReceivedEventArgs> handler = InformRequestReceived;
+            if (null != handler)
             {
-                InformRequestReceived(this, e);
+                handler(this, e);
             }
         }
 

@@ -117,6 +117,11 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <returns></returns>
         public static SharpMibException Create(string message, Symbol symbol)
         {
+            if (symbol == null)
+            {
+                throw new ArgumentNullException("symbol");
+            }
+
             SharpMibException ex = new SharpMibException(message + ". Wrong entity, " + symbol.ToString() + " in file \"" + symbol.File + "\". row: " + (symbol.Row + 1).ToString(CultureInfo.InvariantCulture) + "; column: " + (symbol.Column + 1).ToString(CultureInfo.InvariantCulture));
             ex._symbol = symbol;
             return ex;

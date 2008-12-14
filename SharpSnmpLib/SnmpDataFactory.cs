@@ -24,6 +24,11 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public static ISnmpData CreateSnmpData(byte[] buffer)
         {
+            if (buffer == null)
+            {
+                throw new ArgumentNullException("buffer");
+            }
+
             return CreateSnmpData(buffer, 0, buffer.Length);
         }
         
@@ -112,6 +117,11 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public static ISnmpData CreateSnmpData(Stream stream)
         {
+            if (stream == null)
+            {
+                throw new ArgumentNullException("stream");
+            }
+
             return CreateSnmpData(stream.ReadByte(), stream);
         }
     }

@@ -15,8 +15,7 @@ namespace Lextm.SharpSnmpLib.Mib
     /// <summary>
     /// MIB inventory.
     /// </summary>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Mib")]
-    public class MibInventory
+    public class Inventory
     {
         private readonly string folder = Path.Combine(Directory.GetCurrentDirectory(), "mibs");
         private IList<string> _existing = new List<string>();
@@ -24,10 +23,10 @@ namespace Lextm.SharpSnmpLib.Mib
         private IDictionary<string, string> _moduleTable = new Dictionary<string, string>();
         
         /// <summary>
-        /// Creates a <see cref="MibInventory"/> object.
+        /// Creates a <see cref="Inventory"/> object.
         /// </summary>
         /// <param name="registry">Registry to use this inventory.</param>
-        public MibInventory(ObjectRegistry registry)
+        public Inventory(ObjectRegistry registry)
         {
             _registry = registry;
             
@@ -76,6 +75,11 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             get
             {
+                if (module == null)
+                {
+                    throw new ArgumentNullException("module");
+                }
+
                 if (!Contains(module))
                 {
                     throw new ArgumentException("no such module: " + module, "module");
@@ -91,6 +95,11 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <param name="files">Files.</param>
         public void AddFiles(IEnumerable<string> files)
         {
+            if (files == null)
+            {
+                throw new ArgumentNullException("files");
+            }
+
             foreach (string file in files)
             {
                 AddFileInner(file);

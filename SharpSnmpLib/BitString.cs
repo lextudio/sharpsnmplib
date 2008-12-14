@@ -38,6 +38,16 @@ namespace Lextm.SharpSnmpLib
         /// <param name="raw">Raw bytes.</param>
         public BitString(byte[] raw)
         {
+            if (raw == null)
+            {
+                throw new ArgumentNullException("raw");
+            }
+            
+            if (raw.Length == 0)
+            {
+                throw new ArgumentException("raw cannot be empty.", "raw");
+            }
+            
             _nbits = (raw.Length * 8) - raw[0]; // 8.6.2
             _size = (_nbits + 31) / 32;
             _bits = new int[_size];
@@ -57,6 +67,16 @@ namespace Lextm.SharpSnmpLib
         /// <param name="bits">Bit array.</param>
         public BitString(int number, int[] bits)
         {
+            if (bits == null)
+            {
+                throw new ArgumentNullException("bits");
+            }
+
+            if (bits.Length == 0)
+            {
+                throw new ArgumentException("bits cannot be empty.", "bits");
+            }
+
             if (bits.Length != (number + 31) / 32)
             {
                 throw new ArgumentException("wrong bits length");
@@ -75,6 +95,11 @@ namespace Lextm.SharpSnmpLib
         /// <param name="other">Another <see cref="BitString"/> instance.</param>
         public BitString(BitString other)
         {
+            if (other == null)
+            {
+                throw new ArgumentNullException("other");
+            }
+
             _raw = (byte[])other._raw.Clone();
             _nbits = other._nbits;
             _size = other._size;
@@ -99,6 +124,11 @@ namespace Lextm.SharpSnmpLib
         /// <returns>A <see cref="BitString"/> that is the result of the AND operation.</returns>
         public BitString And(BitString other)
         {
+            if (other == null)
+            {
+                throw new ArgumentNullException("other");
+            }
+
             Debug.Assert(_nbits == other._nbits, "AND operation must be done on BitString of the same size");
             int[] bits = new int[_size];
             for (uint j = 0; j < _size; j++)
@@ -116,6 +146,11 @@ namespace Lextm.SharpSnmpLib
         /// <returns>A <see cref="BitString"/> that is the result of the OR operation.</returns>
         public BitString Or(BitString other)
         {
+            if (other == null)
+            {
+                throw new ArgumentNullException("other");
+            }
+
             Debug.Assert(_nbits == other._nbits, "OR operation must be done on BitString of the same size");
             int[] bits = new int[_size];
             for (uint j = 0; j < _size; j++)
@@ -153,6 +188,11 @@ namespace Lextm.SharpSnmpLib
         /// <returns>A <see cref="BitString"/> that is the result of the CAT operation.</returns>
         public BitString Cat(BitString other)
         {
+            if (other == null)
+            {
+                throw new ArgumentNullException("other");
+            }
+            
             int nbits = _nbits + other._nbits;
             int size = _size + other._size;
             int[] bits = new int[size];

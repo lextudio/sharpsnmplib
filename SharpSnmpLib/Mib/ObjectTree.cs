@@ -345,6 +345,11 @@ namespace Lextm.SharpSnmpLib.Mib
 
         internal void Import(IEnumerable<MibModule> modules)
         {
+            if (modules == null)
+            {
+                throw new ArgumentNullException("modules");
+            }
+
             foreach (MibModule module in modules)
             {
                 if (_pendings.ContainsKey(module.Name))

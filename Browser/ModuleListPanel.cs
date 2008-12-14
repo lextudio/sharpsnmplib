@@ -21,7 +21,7 @@ namespace Lextm.SharpSnmpLib.Browser
     public partial class ModuleListPanel : DockContent
     {
         private IOutput _output;
-        private MibInventory _inventory = new MibInventory(ObjectRegistry.Instance);
+        private Inventory _inventory = new Inventory(ObjectRegistry.Instance);
         
         public ModuleListPanel(IOutput output)
         {

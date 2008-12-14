@@ -33,6 +33,11 @@ namespace Lextm.SharpSnmpLib
         /// <param name="raw">Raw bytes</param>
         public IP(byte[] raw)
         {
+            if (raw == null)
+            {
+                throw new ArgumentNullException("raw");
+            }
+
             if (raw.Length != 4)
             {
                 throw new ArgumentException("bytes must contain 4 elements");

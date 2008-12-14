@@ -34,6 +34,16 @@ namespace Lextm.SharpSnmpLib
         /// <param name="raw">Raw bytes</param>
         public Integer32(byte[] raw)
         {
+            if (raw == null)
+            {
+                throw new ArgumentNullException("raw");
+            }
+            
+            if (raw.Length == 0)
+            {
+                throw new ArgumentException("raw cannot be empty.", "raw");
+            }
+
             if (raw.Length > 4)
             {
                 throw new ArgumentException("truncation error for 32-bit integer coding", "raw");

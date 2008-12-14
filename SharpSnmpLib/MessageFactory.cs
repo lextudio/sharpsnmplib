@@ -47,6 +47,11 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public static IList<ISnmpMessage> ParseMessages(byte[] buffer)
         {
+            if (buffer == null)
+            {
+                throw new ArgumentNullException("buffer");
+            }
+
             return ParseMessages(buffer, 0, buffer.Length);
         }
         
@@ -57,6 +62,11 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public static IList<ISnmpMessage> ParseMessages(Stream stream)
         {
+            if (stream == null)
+            {
+                throw new ArgumentNullException("stream");
+            }
+
             IList<ISnmpMessage> result = new List<ISnmpMessage>();
             int first;
             while ((first = stream.ReadByte()) != -1)

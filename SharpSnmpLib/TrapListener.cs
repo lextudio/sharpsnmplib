@@ -125,6 +125,11 @@ namespace Lextm.SharpSnmpLib
         /// <param name="endpoint">End point.</param>
         public void Start(IPEndPoint endpoint)
         {
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException("endpoint");
+            }
+
             if (worker.IsBusy)
             {
                 return;
@@ -179,7 +184,8 @@ namespace Lextm.SharpSnmpLib
 
         private void HandleException(Exception exception)
         {
-            if (exception != null && ExceptionRaised != null)
+            EventHandler<ExceptionRaisedEventArgs> handler = ExceptionRaised;
+            if (exception != null && handler != null)
             {
                 SocketException socket = exception as SocketException;
                 if (socket == null && socket.ErrorCode == 10048)
@@ -187,7 +193,7 @@ namespace Lextm.SharpSnmpLib
                     exception = new SharpSnmpException("Port is already used", socket);
                 }
 
-                ExceptionRaised(this, new ExceptionRaisedEventArgs(exception));
+                handler(this, new ExceptionRaisedEventArgs(exception));
             }
         }
 
@@ -237,9 +243,10 @@ namespace Lextm.SharpSnmpLib
                 {
                     case SnmpType.TrapV1Pdu:
                         {
-                            if (TrapV1Received != null)
+                            EventHandler<TrapV1ReceivedEventArgs> handler = TrapV1Received;
+                            if (handler != null)
                             {
-                                TrapV1Received(this, new TrapV1ReceivedEventArgs(param.Sender, (TrapV1Message)message));
+                                handler(this, new TrapV1ReceivedEventArgs(param.Sender, (TrapV1Message)message));
                             }
                             
                             break;
@@ -247,9 +254,10 @@ namespace Lextm.SharpSnmpLib
                         
                     case SnmpType.TrapV2Pdu:
                         {
-                            if (TrapV2Received != null)
+                            EventHandler<TrapV2ReceivedEventArgs> handler = TrapV2Received;
+                            if (handler != null)
                             {
-                                TrapV2Received(this, new TrapV2ReceivedEventArgs(param.Sender, (TrapV2Message)message));
+                                handler(this, new TrapV2ReceivedEventArgs(param.Sender, (TrapV2Message)message));
                             }
                             
                             break;
@@ -259,10 +267,11 @@ namespace Lextm.SharpSnmpLib
                         {
                             InformRequestMessage inform = (InformRequestMessage)message;
                             inform.SendResponse(param.Sender);
-                            
-                            if (InformRequestReceived != null)
+
+                            EventHandler<InformRequestReceivedEventArgs> handler = InformRequestReceived;
+                            if (handler != null)
                             {
-                                InformRequestReceived(this, new InformRequestReceivedEventArgs(param.Sender, inform));
+                                handler(this, new InformRequestReceivedEventArgs(param.Sender, inform));
                             }
                             
                             break;
@@ -270,9 +279,10 @@ namespace Lextm.SharpSnmpLib
                         
                     case SnmpType.GetRequestPdu:
                         {
-                            if (GetRequestReceived != null)
+                            EventHandler<GetRequestReceivedEventArgs> handler = GetRequestReceived;
+                            if (handler != null)
                             {
-                                GetRequestReceived(this, new GetRequestReceivedEventArgs(param.Sender, (GetRequestMessage)message));
+                                handler(this, new GetRequestReceivedEventArgs(param.Sender, (GetRequestMessage)message));
                             }
                             
                             break;
@@ -280,9 +290,10 @@ namespace Lextm.SharpSnmpLib
 
                     case SnmpType.SetRequestPdu:
                         {
-                            if (SetRequestReceived != null)
+                            EventHandler<SetRequestReceivedEventArgs> handler = SetRequestReceived;
+                            if (handler != null)
                             {
-                                SetRequestReceived(this, new SetRequestReceivedEventArgs(param.Sender, (SetRequestMessage)message));
+                                handler(this, new SetRequestReceivedEventArgs(param.Sender, (SetRequestMessage)message));
                             }
 
                             break;
@@ -290,9 +301,10 @@ namespace Lextm.SharpSnmpLib
 
                     case SnmpType.GetNextRequestPdu:
                         {
-                            if (GetNextRequestReceived != null)
+                            EventHandler<GetNextRequestReceivedEventArgs> handler = GetNextRequestReceived;
+                            if (handler != null)
                             {
-                                GetNextRequestReceived(this, new GetNextRequestReceivedEventArgs(param.Sender, (GetNextRequestMessage)message));
+                                handler(this, new GetNextRequestReceivedEventArgs(param.Sender, (GetNextRequestMessage)message));
                             }
 
                             break;
@@ -300,9 +312,10 @@ namespace Lextm.SharpSnmpLib
 
                     case SnmpType.GetBulkRequestPdu:
                         {
-                            if (GetBulkRequestReceived != null)
+                            EventHandler<GetBulkRequestReceivedEventArgs> handler = GetBulkRequestReceived;
+                            if (handler != null)
                             {
-                                GetBulkRequestReceived(this, new GetBulkRequestReceivedEventArgs(param.Sender, (GetBulkRequestMessage)message));
+                                handler(this, new GetBulkRequestReceivedEventArgs(param.Sender, (GetBulkRequestMessage)message));
                             }
 
                             break;
