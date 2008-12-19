@@ -10,22 +10,32 @@ namespace Lextm.SharpSnmpLib
     /// <remarks>The sequence number is used to identifier PDU sessions.</remarks>
     internal static class PduCounter
     {
+        private static object syncRoot = new object();
+        
         internal static Integer32 NextCount
         {
             get
             {
-                unchecked 
+                Integer32 result;
+                lock(syncRoot)
                 {
-                    count += 10;
+                    unchecked
+                    {
+                        count += 10;
+                    }
+                    result = new Integer32(count);
                 }
                 
-                return new Integer32(count);
+                return result;
             }
         }
         
         internal static void Clear()
         {
-            count = 0;
+            lock(syncRoot)
+            {
+                count = 0;
+            }
         }
 
         private static int count;
