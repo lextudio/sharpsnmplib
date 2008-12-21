@@ -1,6 +1,8 @@
 using System;
 using System.Globalization;
+#if (!CF)
 using System.Net.NetworkInformation;
+#endif
 using System.Text;
 
 // ASN.1 BER encoding library by Malcolm Crowe at the University of the West of Scotland
@@ -204,6 +206,7 @@ namespace Lextm.SharpSnmpLib
             return !(left == right);
         }
 
+        #if (!CF)
         /// <summary>
         /// Converts octets to physical address.
         /// </summary>
@@ -217,7 +220,7 @@ namespace Lextm.SharpSnmpLib
 
             return new PhysicalAddress(_raw);
         }
-        
+        #endif 
         private static Encoding defaultEncoding = Encoding.ASCII;
         
         /// <summary>

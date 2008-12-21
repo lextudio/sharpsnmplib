@@ -49,7 +49,7 @@ using System.Runtime.InteropServices;
 // Build Numbers by using the '*' as shown below:
 
 [assembly: AssemblyVersion("1.5.011219.01")]
-[assembly: AssemblyFileVersion("1.5.011219.01")]
+//[assembly: AssemblyFileVersion("1.5.011219.01")]
 
 [assembly: NeutralResourcesLanguage("en-US")]
 [assembly: CLSCompliant(true)]

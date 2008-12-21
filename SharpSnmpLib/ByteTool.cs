@@ -28,7 +28,7 @@ namespace Lextm.SharpSnmpLib
         internal static GetResponseMessage GetResponse(object caller, IPEndPoint receiver, byte[] bytes, int number, int timeout)
         {
             byte[] reply = bytes;
-            ByteTool.Capture(bytes); // log request          
+            ByteTool.Capture(bytes); // log request
             using (UdpClient udp = new UdpClient())
             {
                 udp.Send(bytes, bytes.Length, receiver);
@@ -64,12 +64,14 @@ namespace Lextm.SharpSnmpLib
         //TODO: add this method to all message exchanges.
         internal static void Capture(ISnmpMessage message)
         {
+            #if (!CF)
             object setting = ConfigurationManager.AppSettings["CaptureEnabled"];
             if (setting != null && Convert.ToBoolean(setting.ToString()))
             {
                 byte[] buffer = message.ToBytes();
                 CaptureInner(buffer, buffer.Length);
             }
+            #endif
         }
 
         internal static void Capture(byte[] buffer)
@@ -79,13 +81,15 @@ namespace Lextm.SharpSnmpLib
 
         internal static void Capture(byte[] buffer, int length)
         {
+            #if (!CF)
             object setting = ConfigurationManager.AppSettings["CaptureEnabled"];
             if (setting != null && Convert.ToBoolean(setting.ToString()))
             {
                 CaptureInner(buffer, length);
             }
+            #endif
         }
-
+        #if (!CF)
         private static void CaptureInner(byte[] buffer, int length)
         {
             TraceSource source = new TraceSource("Library");
@@ -99,7 +103,7 @@ namespace Lextm.SharpSnmpLib
             source.Flush();
             source.Close();
         }
-
+        #endif
         internal static byte[] ParseByteString(string bytes)
         {
             List<byte> result = new List<byte>();
@@ -111,7 +115,7 @@ namespace Lextm.SharpSnmpLib
                     continue;
                 }
                 
-                if (!char.IsLetterOrDigit(c)) 
+                if (!char.IsLetterOrDigit(c))
                 {
                     throw new ArgumentException("illegal character found", "bytes");
                 }
@@ -148,7 +152,7 @@ namespace Lextm.SharpSnmpLib
             }
             
             return true;
-        }    
+        }
         
         internal static byte[] ParseItems(params ISnmpData[] items)
         {
@@ -222,7 +226,7 @@ namespace Lextm.SharpSnmpLib
         {
             int first = stream.ReadByte();
             return ReadLength(stream, (byte)first);
-        }        
+        }
         
         internal static byte[] GetBytes(Stream stream)
         {
@@ -230,7 +234,7 @@ namespace Lextm.SharpSnmpLib
             byte[] bytes = new byte[length];
             stream.Read(bytes, 0, length);
             return bytes;
-        }        
+        }
         
         // copied from universal
         private static int ReadLength(Stream stream, byte first) // x is initial octet
@@ -275,12 +279,12 @@ namespace Lextm.SharpSnmpLib
         {
             byte flag;
             byte sign;
-            if (negative) 
+            if (negative)
             {
                 flag = 0xff;
                 sign = 0x80;
             }
-            else 
+            else
             {
                 flag = 0x0;
                 sign = 0x0;
@@ -289,18 +293,18 @@ namespace Lextm.SharpSnmpLib
             List<byte> list = new List<byte>(orig);
             while (list.Count > 1)
             {
-                if (list[list.Count - 1] == flag) 
+                if (list[list.Count - 1] == flag)
                 {
                     list.RemoveAt(list.Count - 1);
                 }
-                else 
+                else
                 {
                     break;
                 }
             }
 
             // if sign bit is not correct, add an extra byte
-            if ((list[list.Count - 1] & 0x80) != sign) 
+            if ((list[list.Count - 1] & 0x80) != sign)
             {
                 list.Add(sign);
             }

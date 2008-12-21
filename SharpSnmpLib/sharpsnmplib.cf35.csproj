@@ -1,0 +1,305 @@
+﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{EBB48F98-32C4-474F-B691-3599827418A2}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>Library</OutputType>
+    <RootNamespace>sharpsnmplib.cf35</RootNamespace>
+    <AssemblyName>sharpsnmplib.cf35</AssemblyName>
+    <TargetFrameworkVersion>CF 3.5</TargetFrameworkVersion>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SourceAnalysisOverrideSettingsFile>C:\Documents and Settings\lexli\Application Data\ICSharpCode/SharpDevelop3.0\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>sharpsnmplib.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>False</DelaySign>
+    <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <NoStdLib>False</NoStdLib>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE;CF;NET_2_0</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>false</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>True</Optimize>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE;CF;NET_2_0</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <BaseAddress>4194304</BaseAddress>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <FileAlignment>4096</FileAlignment>
+  </PropertyGroup>
+  <Import Project="$(SharpDevelopBinPath)\SharpDevelop.Build.CSharp.targets" />
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Agent.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="AsyncOperation.cs" />
+    <Compile Include="AsyncOperationManager.cs" />
+    <Compile Include="BackgroundWorker.cs" />
+    <Compile Include="BackgroundWorkerEx.cs" />
+    <Compile Include="BitString.cs" />
+    <Compile Include="Bool.cs" />
+    <Compile Include="BrowsableAttribute.cs" />
+    <Compile Include="ByteTool.cs" />
+    <Compile Include="Counter32.cs" />
+    <Compile Include="Counter64.cs" />
+    <Compile Include="DefaultEventAttribute.cs" />
+    <Compile Include="DoWorkEventArgs.cs" />
+    <Compile Include="DoWorkEventHandler.cs" />
+    <Compile Include="EndOfMibView.cs" />
+    <Compile Include="ErrorCode.cs" />
+    <Compile Include="ExceptionRaisedEventArgs.cs" />
+    <Compile Include="Gauge32.cs" />
+    <Compile Include="GeneralString.cs" />
+    <Compile Include="GenericCode.cs" />
+    <Compile Include="GetBulkRequestMessage.cs" />
+    <Compile Include="GetBulkRequestPdu.cs" />
+    <Compile Include="GetBulkRequestReceivedEventArgs.cs" />
+    <Compile Include="GetNextRequestMessage.cs" />
+    <Compile Include="GetNextRequestPdu.cs" />
+    <Compile Include="GetNextRequestReceivedEventArgs.cs" />
+    <Compile Include="GetRequestMessage.cs" />
+    <Compile Include="GetRequestPdu.cs" />
+    <Compile Include="GetRequestReceivedEventArg.cs" />
+    <Compile Include="GetResponseMessage.cs" />
+    <Compile Include="GetResponsePdu.cs" />
+    <Compile Include="InformRequestMessage.cs" />
+    <Compile Include="InformRequestPdu.cs" />
+    <Compile Include="InformRequestReceivedEventArgs.cs" />
+    <Compile Include="Integer32.cs" />
+    <Compile Include="Integer64.cs" />
+    <Compile Include="IP.cs" />
+    <Compile Include="ISnmpData.cs" />
+    <Compile Include="ISnmpMessage.cs" />
+    <Compile Include="ISnmpPdu.cs" />
+    <Compile Include="Manager.cs" />
+    <Compile Include="MessageFactory.cs" />
+    <Compile Include="Mib\AgentCapabilities.cs" />
+    <Compile Include="Mib\Assembler.cs" />
+    <Compile Include="Mib\Choice.cs" />
+    <Compile Include="Mib\Compiler.cs" />
+    <Compile Include="Mib\ConstructHelper.cs" />
+    <Compile Include="Mib\Definition.cs" />
+    <Compile Include="Mib\DefinitionType.cs" />
+    <Compile Include="Mib\Exports.cs" />
+    <Compile Include="Mib\IConstruct.cs" />
+    <Compile Include="Mib\IDefinition.cs" />
+    <Compile Include="Mib\IEntity.cs" />
+    <Compile Include="Mib\Imports.cs" />
+    <Compile Include="Mib\ImportsFrom.cs" />
+    <Compile Include="Mib\Integer.cs" />
+    <Compile Include="Mib\IObjectTree.cs" />
+    <Compile Include="Mib\ITypeAssignment.cs" />
+    <Compile Include="Mib\Lexer.cs" />
+    <Compile Include="Mib\Macro.cs" />
+    <Compile Include="Mib\MibDocument.cs" />
+    <Compile Include="Mib\MibInventory.cs" />
+    <Compile Include="Mib\MibModule.cs" />
+    <Compile Include="Mib\ModuleCompliance.cs" />
+    <Compile Include="Mib\ModuleIdentity.cs" />
+    <Compile Include="Mib\NotificationGroup.cs" />
+    <Compile Include="Mib\NotificationType.cs" />
+    <Compile Include="Mib\ObjectGroup.cs" />
+    <Compile Include="Mib\ObjectIdentity.cs" />
+    <Compile Include="Mib\ObjectRegistry.cs" />
+    <Compile Include="Mib\ObjectTree.cs" />
+    <Compile Include="Mib\ObjectType.cs" />
+    <Compile Include="Mib\OidValueAssignment.cs" />
+    <Compile Include="Mib\Parser.cs" />
+    <Compile Include="Mib\Sequence.cs" />
+    <Compile Include="Mib\SharpMibException.cs" />
+    <Compile Include="Mib\StringUtility.cs" />
+    <Compile Include="Mib\Symbol.cs" />
+    <Compile Include="Mib\TextualConvention.cs" />
+    <Compile Include="Mib\TrapType.cs" />
+    <Compile Include="Mib\TypeAssignment.cs" />
+    <Compile Include="NoSuchInstance.cs" />
+    <Compile Include="NoSuchObject.cs" />
+    <Compile Include="Null.cs" />
+    <Compile Include="ObjectIdentifier.cs" />
+    <Compile Include="OctetString.cs" />
+    <Compile Include="Opaque.cs" />
+    <Compile Include="PduCounter.cs" />
+    <Compile Include="ProgressChangedEventArgs.cs" />
+    <Compile Include="ProgressChangedEventHandler.cs" />
+    <Compile Include="RBTree.cs" />
+    <Compile Include="Real.cs" />
+    <Compile Include="ReportMessage.cs" />
+    <Compile Include="ReportPdu.cs" />
+    <Compile Include="Resource.Designer.cs" />
+    <Compile Include="RunWorkerCompletedEventArgs.cs" />
+    <Compile Include="RunWorkerCompletedEventHandler.cs" />
+    <Compile Include="Sequence.cs" />
+    <Compile Include="SetRequestMessage.cs" />
+    <Compile Include="SetRequestPdu.cs" />
+    <Compile Include="SetRequestReceivedEventArgs.cs" />
+    <Compile Include="SharpErrorException.cs" />
+    <Compile Include="SharpOperationException.cs" />
+    <Compile Include="SharpSnmpException.cs" />
+    <Compile Include="SharpTimeoutException.cs" />
+    <Compile Include="SnmpDataFactory.cs" />
+    <Compile Include="SnmpType.cs" />
+    <Compile Include="SortedDictionary.cs" />
+    <Compile Include="TimeTicks.cs" />
+    <Compile Include="TrapListener.cs" />
+    <Compile Include="TrapV1Message.cs" />
+    <Compile Include="TrapV1Pdu.cs" />
+    <Compile Include="TrapV1ReceivedEventArgs.cs" />
+    <Compile Include="TrapV2Message.cs" />
+    <Compile Include="TrapV2Pdu.cs" />
+    <Compile Include="TrapV2ReceivedEventArgs.cs" />
+    <Compile Include="Variable.cs" />
+    <Compile Include="VersionCode.cs" />
+    <Compile Include="WalkMode.cs" />
+    <EmbeddedResource Include="Agent.resx">
+      <DependentUpon>Agent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Manager.resx">
+      <DependentUpon>Manager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TrapListener.resx">
+      <DependentUpon>TrapListener.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Microsoft.VersionNumber.targets" />
+    <None Include="Resources\ACTONA-ACTASTOR-MIB.mib" />
+    <None Include="Resources\ADSL-LINE-MIB.mib" />
+    <None Include="Resources\ADSL-TC-MIB.mib" />
+    <None Include="Resources\AGENTX-MIB.txt" />
+    <None Include="Resources\AIRPORT-BASESTATION-3-MIB.mib" />
+    <None Include="Resources\ALLIEDTELESYN-MIB.mib" />
+    <None Include="Resources\ALVARION-DOT11-WLAN-MIB.mib" />
+    <None Include="Resources\APPC-MIB.mib" />
+    <None Include="Resources\ARRAYMANAGER-MIB.mib" />
+    <None Include="Resources\ARROWPOINT-IPV4-OSPF-MIB.mib" />
+    <None Include="Resources\ATM-TC-MIB.mib" />
+    <None Include="Resources\BASEBRDD_MIB-MIB.mib" />
+    <None Include="Resources\BRIDGE-MIB" />
+    <None Include="Resources\CISCO-AAA-SERVER-MIB.mib" />
+    <None Include="Resources\CISCO-BULK-FILE-MIB.mib" />
+    <None Include="Resources\CISCO-CSG-MIB.mib" />
+    <None Include="Resources\DISMAN-EVENT-MIB.txt" />
+    <None Include="Resources\DISMAN-EXPRESSION-MIB.txt" />
+    <None Include="Resources\DISMAN-NSLOOKUP-MIB.txt" />
+    <None Include="Resources\DISMAN-PING-MIB.txt" />
+    <None Include="Resources\DISMAN-SCHEDULE-MIB.txt" />
+    <None Include="Resources\DISMAN-SCRIPT-MIB.txt" />
+    <None Include="Resources\DISMAN-TRACEROUTE-MIB.txt" />
+    <None Include="Resources\DMTF-DMI-MIB.mib" />
+    <None Include="Resources\EtherLike-MIB.txt" />
+    <None Include="Resources\fivevarbinds.dat" />
+    <None Include="Resources\get.dat" />
+    <None Include="Resources\getresponse.dat" />
+    <None Include="Resources\HCNUM-TC.txt" />
+    <None Include="Resources\HOST-RESOURCES-MIB.txt" />
+    <None Include="Resources\HOST-RESOURCES-TYPES.txt" />
+    <None Include="Resources\IANA-ADDRESS-FAMILY-NUMBERS-MIB.txt" />
+    <None Include="Resources\IANA-LANGUAGE-MIB.txt" />
+    <None Include="Resources\IANA-RTPROTO-MIB.txt" />
+    <None Include="Resources\IANAifType-MIB.txt" />
+    <None Include="Resources\ianalist" />
+    <None Include="Resources\IEEE8021-PAE-MIB.mib" />
+    <None Include="Resources\IEEE802DOT11-MIB.mib" />
+    <None Include="Resources\IF-INVERTED-STACK-MIB.txt" />
+    <None Include="Resources\IF-MIB.txt" />
+    <None Include="Resources\INET-ADDRESS-MIB.txt" />
+    <None Include="Resources\IP-FORWARD-MIB.txt" />
+    <None Include="Resources\IP-MIB.txt" />
+    <None Include="Resources\IPV6-FLOW-LABEL-MIB.txt" />
+    <None Include="Resources\IPV6-ICMP-MIB.txt" />
+    <None Include="Resources\IPV6-MIB.txt" />
+    <None Include="Resources\IPV6-TC.txt" />
+    <None Include="Resources\IPV6-TCP-MIB.txt" />
+    <None Include="Resources\IPV6-UDP-MIB.txt" />
+    <None Include="Resources\JVM-MANAGEMENT-MIB.mib" />
+    <None Include="Resources\LM-SENSORS-MIB.txt" />
+    <None Include="Resources\Makefile.in" />
+    <None Include="Resources\Makefile.mib" />
+    <None Include="Resources\makehtml.pl" />
+    <None Include="Resources\mibfetch" />
+    <None Include="Resources\MTA-MIB.txt" />
+    <None Include="Resources\NET-SNMP-AGENT-MIB.txt" />
+    <None Include="Resources\NET-SNMP-EXAMPLES-MIB.txt" />
+    <None Include="Resources\NET-SNMP-EXTEND-MIB.txt" />
+    <None Include="Resources\NET-SNMP-MIB.txt" />
+    <None Include="Resources\NET-SNMP-MONITOR-MIB.txt" />
+    <None Include="Resources\NET-SNMP-SYSTEM-MIB.txt" />
+    <None Include="Resources\NET-SNMP-TC.txt" />
+    <None Include="Resources\NET-SNMP-VACM-MIB.txt" />
+    <None Include="Resources\NETWORK-SERVICES-MIB.txt" />
+    <None Include="Resources\nodemap" />
+    <None Include="Resources\NOTIFICATION-LOG-MIB.txt" />
+    <None Include="Resources\novarbind.dat" />
+    <None Include="Resources\onevarbind.dat" />
+    <None Include="Resources\README.mibs" />
+    <None Include="Resources\RFC-1212" />
+    <None Include="Resources\RFC-1215.txt" />
+    <None Include="Resources\RFC1155-SMI.txt" />
+    <None Include="Resources\RFC1157-SNMP.mib" />
+    <None Include="Resources\RFC1213-MIB" />
+    <None Include="Resources\RFC1213-MIB.txt" />
+    <None Include="Resources\RFC1271-MIB" />
+    <None Include="Resources\rfclist" />
+    <None Include="Resources\rfcmibs.diff" />
+    <None Include="Resources\RMON-MIB.txt" />
+    <None Include="Resources\smistrip" />
+    <None Include="Resources\SMUX-MIB.txt" />
+    <None Include="Resources\SNMP-COMMUNITY-MIB.txt" />
+    <None Include="Resources\SNMP-FRAMEWORK-MIB.txt" />
+    <None Include="Resources\SNMP-MPD-MIB.txt" />
+    <None Include="Resources\SNMP-NOTIFICATION-MIB.txt" />
+    <None Include="Resources\SNMP-PROXY-MIB.txt" />
+    <None Include="Resources\SNMP-TARGET-MIB.txt" />
+    <None Include="Resources\SNMP-USER-BASED-SM-MIB.txt" />
+    <None Include="Resources\SNMP-USM-AES-MIB.txt" />
+    <None Include="Resources\SNMP-USM-DH-OBJECTS-MIB.txt" />
+    <None Include="Resources\SNMP-VIEW-BASED-ACM-MIB.txt" />
+    <None Include="Resources\SNMPv2-CONF.txt" />
+    <None Include="Resources\SNMPv2-MIB.txt" />
+    <None Include="Resources\SNMPV2-PDU.mib" />
+    <None Include="Resources\SNMPv2-SMI.txt" />
+    <None Include="Resources\SNMPv2-TC.txt" />
+    <None Include="Resources\SNMPv2-TM.txt" />
+    <None Include="Resources\SYMMIB_MIB-MIB.mib" />
+    <None Include="Resources\TCP-MIB.txt" />
+    <None Include="Resources\TRANSPORT-ADDRESS-MIB.txt" />
+    <None Include="Resources\TUNNEL-MIB.txt" />
+    <None Include="Resources\twovarbinds.dat" />
+    <None Include="Resources\UCD-DEMO-MIB.inc" />
+    <None Include="Resources\UCD-DEMO-MIB.txt" />
+    <None Include="Resources\UCD-DISKIO-MIB.inc" />
+    <None Include="Resources\UCD-DISKIO-MIB.txt" />
+    <None Include="Resources\UCD-DLMOD-MIB.inc" />
+    <None Include="Resources\UCD-DLMOD-MIB.txt" />
+    <None Include="Resources\UCD-IPFILTER-MIB.inc" />
+    <None Include="Resources\UCD-IPFILTER-MIB.txt" />
+    <None Include="Resources\UCD-IPFWACC-MIB.inc" />
+    <None Include="Resources\UCD-IPFWACC-MIB.txt" />
+    <None Include="Resources\UCD-SNMP-MIB-OLD.txt" />
+    <None Include="Resources\UCD-SNMP-MIB.inc" />
+    <None Include="Resources\UCD-SNMP-MIB.txt" />
+    <None Include="Resources\UDP-MIB.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Mib" />
+    <Folder Include="Resources" />
+  </ItemGroup>
+</Project>
