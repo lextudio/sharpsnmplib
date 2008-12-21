@@ -53,9 +53,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="BackgroundWorkerEx.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="BitString.cs" />
     <Compile Include="Bool.cs" />
     <Compile Include="ByteTool.cs" />

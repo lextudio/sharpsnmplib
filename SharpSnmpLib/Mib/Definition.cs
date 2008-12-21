@@ -21,7 +21,6 @@ namespace Lextm.SharpSnmpLib.Mib
         
         private Definition()
         {
-            _type = DefinitionType.Unknown;
         }
         
         internal Definition(uint[] id, string name, string parent, string module, string typeString)
@@ -31,7 +30,6 @@ namespace Lextm.SharpSnmpLib.Mib
             _parent = parent;
             _module = module;
             _value = id[id.Length - 1];
-            _type = DefinitionType.Unknown;
             _typeString = typeString;
         }
         

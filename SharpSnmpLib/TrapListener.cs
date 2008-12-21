@@ -15,8 +15,6 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 
-using TeamAgile.Samples.Threading;
-
 namespace Lextm.SharpSnmpLib
 {
     /// <summary>
@@ -33,7 +31,7 @@ namespace Lextm.SharpSnmpLib
         //private Socket _watcher;
         [Obsolete]
         private int _port = DEFAULTPORT;
-        private BackgroundWorkerEx worker;
+        private BackgroundWorker worker;
         private const int DEFAULTPORT = 162;
         private readonly IPEndPoint defaultEndPoint = new IPEndPoint(IPAddress.Any, DEFAULTPORT);
         
@@ -146,14 +144,13 @@ namespace Lextm.SharpSnmpLib
         {
             if (worker.IsBusy)
             {
-                worker.StopImmediately();
-                //worker.CancelAsync();
+                worker.CancelAsync();
             }
         }
 
         private void InitializeComponent()
         {
-            this.worker = new BackgroundWorkerEx();
+            this.worker = new BackgroundWorker();
             this.worker.WorkerReportsProgress = true;
             this.worker.WorkerSupportsCancellation = true;
             this.worker.DoWork += new System.ComponentModel.DoWorkEventHandler(Worker_DoWork);
@@ -174,7 +171,7 @@ namespace Lextm.SharpSnmpLib
             }
         }
 
-        private void TrapListener_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void TrapListener_RunWorkerCompleted(object sender, AsyncCompletedEventArgs e)
         {     
             Exception ex = e.Error;
             watcher.Close();
@@ -348,7 +345,7 @@ namespace Lextm.SharpSnmpLib
             }
         }
         
-        private class MessageParams
+        private sealed class MessageParams
         {
             internal int Number;
             internal byte[] Bytes;

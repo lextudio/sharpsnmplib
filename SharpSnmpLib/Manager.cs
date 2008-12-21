@@ -653,7 +653,7 @@ namespace Lextm.SharpSnmpLib
         private void TrapListener_TrapV1Received(object sender, TrapV1ReceivedEventArgs e)
         {
             EventHandler<TrapV1ReceivedEventArgs> handler = TrapV1Received;
-            if (null != handler)
+            if (handler != null)
             {
                 handler(this, e);
             }
@@ -662,7 +662,7 @@ namespace Lextm.SharpSnmpLib
         private void TrapListener_TrapV2Received(object sender, TrapV2ReceivedEventArgs e)
         {
             EventHandler<TrapV2ReceivedEventArgs> handler = TrapV2Received;
-            if (null != handler)
+            if (handler != null)
             {
                 handler(this, e);
             }

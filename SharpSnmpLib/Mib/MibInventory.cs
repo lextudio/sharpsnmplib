@@ -70,22 +70,22 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <summary>
         /// Returns the real file name for this module.
         /// </summary>
-        /// <param name="module">Module name.</param>
-        public string this[string module]
+        /// <param name="index">Module name.</param>
+        public string this[string index]
         {
             get
             {
-                if (module == null)
+                if (index == null)
                 {
-                    throw new ArgumentNullException("module");
+                    throw new ArgumentNullException("index");
                 }
 
-                if (!Contains(module))
+                if (!Contains(index))
                 {
-                    throw new ArgumentException("no such module: " + module, "module");
+                    throw new ArgumentException("no such module: " + index, "index");
                 }
                 
-                return _moduleTable[module];
+                return _moduleTable[index];
             }
         }
         

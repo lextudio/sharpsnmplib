@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -32,10 +33,7 @@ namespace Lextm.SharpSnmpLib
         
         internal static void Clear()
         {
-            lock(syncRoot)
-            {
-                count = 0;
-            }
+            Interlocked.Exchange(ref count, 0);
         }
 
         private static int count;
