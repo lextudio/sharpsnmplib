@@ -63,15 +63,13 @@ namespace Lextm.SharpSnmpLib
 
         //TODO: add this method to all message exchanges.
         internal static void Capture(ISnmpMessage message)
-        {
-            #if (!CF)
+        {            
             object setting = ConfigurationManager.AppSettings["CaptureEnabled"];
             if (setting != null && Convert.ToBoolean(setting.ToString()))
             {
                 byte[] buffer = message.ToBytes();
                 CaptureInner(buffer, buffer.Length);
             }
-            #endif
         }
 
         internal static void Capture(byte[] buffer)
@@ -81,15 +79,13 @@ namespace Lextm.SharpSnmpLib
 
         internal static void Capture(byte[] buffer, int length)
         {
-            #if (!CF)
             object setting = ConfigurationManager.AppSettings["CaptureEnabled"];
             if (setting != null && Convert.ToBoolean(setting.ToString()))
             {
                 CaptureInner(buffer, length);
             }
-            #endif
         }
-        #if (!CF)
+        
         private static void CaptureInner(byte[] buffer, int length)
         {
             TraceSource source = new TraceSource("Library");
@@ -103,7 +99,7 @@ namespace Lextm.SharpSnmpLib
             source.Flush();
             source.Close();
         }
-        #endif
+
         internal static byte[] ParseByteString(string bytes)
         {
             List<byte> result = new List<byte>();

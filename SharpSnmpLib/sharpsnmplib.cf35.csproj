@@ -44,13 +44,9 @@
   <Import Project="$(SharpDevelopBinPath)\SharpDevelop.Build.CSharp.targets" />
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    <Reference Include="System.Core">
+      <HintPath>C:\Program Files\Microsoft.NET\SDK\CompactFramework\v3.5\WindowsCE\System.Core.dll</HintPath>
     </Reference>
-    <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Agent.cs" />
@@ -62,6 +58,7 @@
     <Compile Include="Bool.cs" />
     <Compile Include="BrowsableAttribute.cs" />
     <Compile Include="ByteTool.cs" />
+    <Compile Include="ConfigurationManager.cs" />
     <Compile Include="Counter32.cs" />
     <Compile Include="Counter64.cs" />
     <Compile Include="DefaultEventAttribute.cs" />
@@ -162,6 +159,7 @@
     <Compile Include="SnmpType.cs" />
     <Compile Include="SortedDictionary.cs" />
     <Compile Include="TimeTicks.cs" />
+    <Compile Include="TraceSource.cs" />
     <Compile Include="TrapListener.cs" />
     <Compile Include="TrapV1Message.cs" />
     <Compile Include="TrapV1Pdu.cs" />
