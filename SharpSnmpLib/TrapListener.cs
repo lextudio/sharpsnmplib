@@ -134,7 +134,7 @@ namespace Lextm.SharpSnmpLib
             }
             
             _port = endpoint.Port;
-            worker.RunWorkerAsync(endpoint);            
+            worker.RunWorkerAsync(endpoint);
         }
         
         /// <summary>
@@ -156,7 +156,7 @@ namespace Lextm.SharpSnmpLib
             this.worker.DoWork += new System.ComponentModel.DoWorkEventHandler(Worker_DoWork);
             this.worker.ProgressChanged += new ProgressChangedEventHandler(TrapListener_ProgressChanged);
             this.worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(TrapListener_RunWorkerCompleted);
-        } 
+        }
 
         private void TrapListener_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
@@ -172,7 +172,7 @@ namespace Lextm.SharpSnmpLib
         }
 
         private void TrapListener_RunWorkerCompleted(object sender, AsyncCompletedEventArgs e)
-        {     
+        {
             Exception ex = e.Error;
             watcher.Close();
 
@@ -205,26 +205,30 @@ namespace Lextm.SharpSnmpLib
 
             IPEndPoint agent = new IPEndPoint(IPAddress.Any, 0);
             EndPoint senderRemote = (EndPoint)agent;
+            #if CF
+            byte[] msg = new byte[8192];
+            #else
             byte[] msg = new byte[watcher.ReceiveBufferSize];
-            //uint loops = 0;
+            #endif
+            uint loops = 0;
             while (!worker.CancellationPending && worker.IsBusy)
             {
-//                int number = _watcher.Available;
-//                if (number == 0)
-//                {
-//                    if (Environment.ProcessorCount == 1 || unchecked(++loops % 100) == 0)
-//                    {
-//                        Thread.Sleep(1);
-//                    }
-//                    else
-//                    {
-//                        Thread.SpinWait(20);
-//                    }
-//                    
-//                    continue;
-//                }
+                int number = watcher.Available;
+                if (number == 0)
+                {
+                    if (Environment.ProcessorCount == 1 || unchecked(++loops % 100) == 0)
+                    {
+                        Thread.Sleep(1);
+                    }
+                    else
+                    {
+                        Thread.SpinWait(20);
+                    }
+                    
+                    continue;
+                }
                 
-                int number = watcher.ReceiveFrom(msg, ref senderRemote);      
+                watcher.ReceiveFrom(msg, ref senderRemote);
                 worker.ReportProgress(0, new MessageParams(msg, number, senderRemote));
             }
         }
@@ -323,7 +327,7 @@ namespace Lextm.SharpSnmpLib
                 }
             }
             // */
-        }        
+        }
         
         /// <summary>
         /// Returns a <see cref="String"/> that represents a <see cref="TrapListener"/>.

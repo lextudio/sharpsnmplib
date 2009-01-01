@@ -103,7 +103,7 @@
                 return _variables;
             }
         }
-#region broadcast        
+        #region broadcast
         /// <summary>
         /// Broadcasts request for new agents.
         /// </summary>
@@ -118,7 +118,9 @@
             IDictionary<IPEndPoint, Variable> result;
             using (UdpClient udp = new UdpClient())
             {
+                #if (!CF)
                 udp.EnableBroadcast = true;
+                #endif
                 udp.Send(bytes, bytes.Length, agent);
                 result = ReceiveResponses(udp, timeout);
                 udp.Close();
@@ -132,14 +134,16 @@
         /// </summary>
         /// <param name="timeout">Timeout.</param>
         /// <param name="receiver">Agents.</param>
-        /// <returns></returns>        
+        /// <returns></returns>
         public IDictionary<IPEndPoint, Variable> Broadcast(int timeout, IPEndPoint receiver)
         {
             byte[] bytes = _bytes;
             IDictionary<IPEndPoint, Variable> result;
             using (UdpClient udp = new UdpClient())
             {
+                #if (!CF)
                 udp.EnableBroadcast = true;
+                #endif
                 udp.Send(bytes, bytes.Length, receiver);
                 result = ReceiveResponses(udp, timeout);
                 udp.Close();
@@ -156,20 +160,33 @@
                 worker.WorkerSupportsCancellation = true;
                 worker.DoWork += delegate(object sender, DoWorkEventArgs e)
                 {
-                    Socket _watcher = ((UdpClient)e.Argument).Client;
+                    Socket watcher = ((UdpClient)e.Argument).Client;
                     IPEndPoint source = new IPEndPoint(IPAddress.Any, 0);
                     EndPoint senderRemote = (EndPoint)source;
-                    byte[] msg = new byte[_watcher.ReceiveBufferSize];
+                    #if CF
+                    byte[] msg = new byte[8192];
+                    #else
+                    byte[] msg = new byte[watcher.ReceiveBufferSize];
+                    #endif
+                    uint loops = 0;
                     while (!((BackgroundWorker)sender).CancellationPending)
                     {
-                        int number = _watcher.Available;
-                        Thread.Sleep(100);
+                        int number = watcher.Available;
                         if (number == 0)
                         {
+                            if (Environment.ProcessorCount == 1 || unchecked(++loops % 100) == 0)
+                            {
+                                Thread.Sleep(1);
+                            }
+                            else
+                            {
+                                Thread.SpinWait(20);
+                            }
+                            
                             continue;
                         }
                         
-                        _watcher.ReceiveFrom(msg, ref senderRemote);
+                        watcher.ReceiveFrom(msg, ref senderRemote);
                         ISnmpMessage message = MessageFactory.ParseMessages(msg)[0];
                         if (message.TypeCode != SnmpType.GetResponsePdu)
                         {
@@ -201,7 +218,7 @@
             
             return result;
         }
-#endregion        
+        #endregion
         /// <summary>
         /// Sends this <see cref="GetRequestMessage"/> and handles the response from agent.
         /// </summary>
@@ -265,7 +282,7 @@
         public GetResponseMessage GetResponse(int timeout, IPEndPoint receiver)
         {
             return ByteTool.GetResponse(this, receiver, _bytes, SequenceNumber, timeout);
-        }        
+        }
 
         /// <summary>
         /// Version.
