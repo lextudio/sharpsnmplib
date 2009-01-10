@@ -113,8 +113,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="port">Port number.</param>
         [Obsolete("Please use GetResponse instead. Otherwise, make sure you called the obsolete constructor for this object.")]
         public void Send(IPAddress receiver, int timeout, int port)
-        {
-            //TODO: extract all similar code together to form a GetResponseBytes method
+        {           
             byte[] bytes = _bytes;
             ByteTool.Capture(bytes); // log request
             IPEndPoint agent = new IPEndPoint(receiver, port);
@@ -155,6 +154,7 @@ namespace Lextm.SharpSnmpLib
                     response.ErrorIndex,
                     response.Variables[response.ErrorIndex - 1].Id);
             }
+            
             ByteTool.Capture(bytes); // log response
         }
         

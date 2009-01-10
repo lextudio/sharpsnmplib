@@ -30,6 +30,7 @@ namespace Lextm.SharpSnmpLib
         /// Occurs when an exception is raised.
         /// </summary>
         public event EventHandler<ExceptionRaisedEventArgs> ExceptionRaised;
+        
         /// <summary>
         /// Occurs when a GET request is received.
         /// </summary>

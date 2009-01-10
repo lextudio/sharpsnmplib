@@ -20,8 +20,9 @@ namespace Lextm.SharpSnmpLib
     public class Manager : Component
     {
         private TrapListener trapListener;
-        private VersionCode _version = VersionCode.V1;
+        private VersionCode _version;
         private int _timeout = 5000;
+        private object locker = new object();
 
         /// <summary>
         /// Creates a <see cref="Manager"></see> instance.
@@ -34,6 +35,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Returns a value if the listener is still working.
         /// </summary>
+        [Obsolete("Use TrapListener property instead.")]
         public bool Active
         {
             get { return trapListener.Active; }
@@ -67,7 +69,10 @@ namespace Lextm.SharpSnmpLib
 
             set
             {
-                _version = value;
+                lock (locker)
+                {
+                    _version = value;
+                }
             }
         }
         
@@ -637,7 +642,10 @@ namespace Lextm.SharpSnmpLib
 
             set
             {
-                _timeout = value;
+                lock (locker)
+                {
+                    _timeout = value;
+                }
             }
         }
 
@@ -671,7 +679,7 @@ namespace Lextm.SharpSnmpLib
         private void TrapListener_InformRequestReceived(object sender, InformRequestReceivedEventArgs e)
         {
             EventHandler<InformRequestReceivedEventArgs> handler = InformRequestReceived;
-            if (null != handler)
+            if (handler != null)
             {
                 handler(this, e);
             }

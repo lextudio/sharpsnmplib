@@ -15,7 +15,8 @@ namespace Lextm.SharpSnmpLib
         private byte[] _bytes;
         private ISnmpPdu _pdu;
         private VersionCode _version;
-        [Obsolete]
+        
+        // TODO: [Obsolete]
         private IPAddress _agent;
         private OctetString _community;
         private IList<Variable> _variables;
@@ -49,7 +50,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="version">Protocol version</param>
         /// <param name="community">Community name</param>
         /// <param name="variables">Variables</param>
-        public SetRequestMessage(VersionCode version,OctetString community, IList<Variable> variables)
+        public SetRequestMessage(VersionCode version, OctetString community, IList<Variable> variables)
         {
             _version = version;
             _community = community;

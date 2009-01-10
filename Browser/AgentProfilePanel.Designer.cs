@@ -29,17 +29,17 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewGroup listViewGroup3 = new System.Windows.Forms.ListViewGroup("SNMP v1", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup4 = new System.Windows.Forms.ListViewGroup("SNMP v2c", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("SNMP v1", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("SNMP v2c", System.Windows.Forms.HorizontalAlignment.Left);
             this.listView1 = new System.Windows.Forms.ListView();
             this.chName = new System.Windows.Forms.ColumnHeader();
+            this.chIP = new System.Windows.Forms.ColumnHeader();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
-            this.tslblDefault = new System.Windows.Forms.ToolStripLabel();
             this.actionList1 = new Crad.Windows.Forms.Actions.ActionList();
             this.actAdd = new Crad.Windows.Forms.Actions.Action();
             this.actDelete = new Crad.Windows.Forms.Actions.Action();
@@ -49,29 +49,33 @@
             this.setDefaultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextAgentMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.tslblDefault = new System.Windows.Forms.ToolStripLabel();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.actionList1)).BeginInit();
             this.contextAgentMenu.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // listView1
             // 
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.chName});
+            this.chName,
+            this.chIP});
             this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listView1.FullRowSelect = true;
-            listViewGroup3.Header = "SNMP v1";
-            listViewGroup3.Name = "lvgV1";
-            listViewGroup4.Header = "SNMP v2c";
-            listViewGroup4.Name = "lvgV2";
+            listViewGroup1.Header = "SNMP v1";
+            listViewGroup1.Name = "lvgV1";
+            listViewGroup2.Header = "SNMP v2c";
+            listViewGroup2.Name = "lvgV2";
             this.listView1.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            listViewGroup3,
-            listViewGroup4});
+            listViewGroup1,
+            listViewGroup2});
             this.listView1.Location = new System.Drawing.Point(0, 25);
             this.listView1.MultiSelect = false;
             this.listView1.Name = "listView1";
             this.listView1.ShowItemToolTips = true;
-            this.listView1.Size = new System.Drawing.Size(366, 268);
+            this.listView1.Size = new System.Drawing.Size(366, 246);
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -80,8 +84,13 @@
             // 
             // chName
             // 
-            this.chName.Text = "IP";
+            this.chName.Text = "Name";
             this.chName.Width = 159;
+            // 
+            // chIP
+            // 
+            this.chIP.Text = "IP/Port";
+            this.chIP.Width = 148;
             // 
             // toolStrip1
             // 
@@ -90,8 +99,7 @@
             this.toolStripButton2,
             this.toolStripButton3,
             this.toolStripSeparator1,
-            this.toolStripButton4,
-            this.tslblDefault});
+            this.toolStripButton4});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(366, 25);
@@ -135,15 +143,8 @@
             this.actionList1.SetAction(this.toolStripButton4, this.actDefault);
             this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton4.Name = "toolStripButton4";
-            this.toolStripButton4.Size = new System.Drawing.Size(64, 22);
+            this.toolStripButton4.Size = new System.Drawing.Size(65, 22);
             this.toolStripButton4.Text = "Set Default";
-            // 
-            // tslblDefault
-            // 
-            this.tslblDefault.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.tslblDefault.Name = "tslblDefault";
-            this.tslblDefault.Size = new System.Drawing.Size(10, 22);
-            this.tslblDefault.Text = " ";
             // 
             // actionList1
             // 
@@ -189,14 +190,14 @@
             this.actionList1.SetAction(this.editToolStripMenuItem, this.actEdit);
             this.editToolStripMenuItem.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.document_properties;
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
             this.editToolStripMenuItem.Text = "Edit";
             // 
             // setDefaultToolStripMenuItem
             // 
             this.actionList1.SetAction(this.setDefaultToolStripMenuItem, this.actDefault);
             this.setDefaultToolStripMenuItem.Name = "setDefaultToolStripMenuItem";
-            this.setDefaultToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.setDefaultToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
             this.setDefaultToolStripMenuItem.Text = "Set Default";
             // 
             // deleteToolStripMenuItem
@@ -204,7 +205,7 @@
             this.actionList1.SetAction(this.deleteToolStripMenuItem, this.actDelete);
             this.deleteToolStripMenuItem.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.list_remove;
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
             // 
             // contextAgentMenu
@@ -214,7 +215,24 @@
             this.setDefaultToolStripMenuItem,
             this.deleteToolStripMenuItem});
             this.contextAgentMenu.Name = "contextAgentMenu";
-            this.contextAgentMenu.Size = new System.Drawing.Size(128, 70);
+            this.contextAgentMenu.Size = new System.Drawing.Size(129, 70);
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tslblDefault});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 271);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(366, 22);
+            this.statusStrip1.TabIndex = 2;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // tslblDefault
+            // 
+            this.tslblDefault.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.tslblDefault.Name = "tslblDefault";
+            this.tslblDefault.Size = new System.Drawing.Size(10, 20);
+            this.tslblDefault.Text = " ";
             // 
             // AgentProfilePanel
             // 
@@ -223,6 +241,7 @@
             this.ClientSize = new System.Drawing.Size(366, 293);
             this.Controls.Add(this.listView1);
             this.Controls.Add(this.toolStrip1);
+            this.Controls.Add(this.statusStrip1);
             this.Name = "AgentProfilePanel";
             this.TabText = "Agent Profiles";
             this.Load += new System.EventHandler(this.AgentProfilePanel_Load);
@@ -230,6 +249,8 @@
             this.toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.actionList1)).EndInit();
             this.contextAgentMenu.ResumeLayout(false);
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -250,10 +271,12 @@
         private Crad.Windows.Forms.Actions.Action actDefault;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton toolStripButton4;
-        private System.Windows.Forms.ToolStripLabel tslblDefault;
         private System.Windows.Forms.ContextMenuStrip contextAgentMenu;
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem setDefaultToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
+        private System.Windows.Forms.ColumnHeader chIP;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripLabel tslblDefault;
     }
 }

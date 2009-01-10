@@ -10,7 +10,6 @@
 using System;
 using System.ComponentModel;
 using System.Drawing;
-using System.IO;
 using System.Windows.Forms;
 
 using WeifenLuo.WinFormsUI.Docking;
@@ -20,16 +19,16 @@ namespace Lextm.SharpSnmpLib.Browser
 	/// <summary>
 	/// Description of OutputPanel.
 	/// </summary>
-	partial class OutputPanel : DockContent, IOutput
+	partial class OutputPanel : DockContent
 	{
 		public OutputPanel()
 		{
 			InitializeComponent();
 		}
 
-        public void ReportMessage(string message)
+        public void WriteLine(string message)
         {
-            txtMessages.AppendText(string.Format("[{0}] {1}", DateTime.Now, message));
+            txtMessages.AppendText(string.Format("[{2}] [{0}] {1}", DateTime.Now, message, ProfileRegistry.Instance.Default));
             txtMessages.AppendText(Environment.NewLine);
             txtMessages.ScrollToCaret();
         }
@@ -45,27 +44,6 @@ namespace Lextm.SharpSnmpLib.Browser
             {
                 contextOuputMenu.Show(txtMessages, e.Location);
             }
-        }
-
-        private void actSave_Execute(object sender, EventArgs e)
-        {
-            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
-
-            saveFileDialog1.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
-            saveFileDialog1.FilterIndex = 1;
-            saveFileDialog1.InitialDirectory = System.Environment.CurrentDirectory;
-            saveFileDialog1.RestoreDirectory = true;
-
-            if (saveFileDialog1.ShowDialog() != DialogResult.OK)
-            {
-                return;
-            }
-
-            TextWriter tw = new StreamWriter(saveFileDialog1.FileName);
-
-            tw.Write(txtMessages.Text);
-
-            tw.Close();
         }
 	}
 }

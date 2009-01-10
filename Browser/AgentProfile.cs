@@ -7,11 +7,10 @@ using System.Xml.Serialization;
 using Lextm.SharpSnmpLib;
 using Lextm.SharpSnmpLib.Mib;
 using System.Net;
+using System.Diagnostics;
 
 namespace Lextm.SharpSnmpLib.Browser
 {
-	internal delegate void ReportMessage(string message);
-	
     internal class AgentProfile
 	{
         private string _get;
@@ -67,13 +66,13 @@ namespace Lextm.SharpSnmpLib.Browser
             get { return _set; }
         }
 	
-	    internal event ReportMessage OnOperationCompleted;
-
         internal string Get(Manager manager, string textual)
         {
             Variable var = new Variable(textual);
-
-            Report(manager.GetSingle(_agent, _get, var));
+            TraceSource source = new TraceSource("Browser");
+            source.TraceInformation(manager.GetSingle(_agent, _get, var).ToString());
+            source.Flush();
+            source.Close();
             return var.ToString();
         }
 
@@ -92,14 +91,6 @@ namespace Lextm.SharpSnmpLib.Browser
             return "";
         }
 	
-	    private void Report(Variable variable)
-	    {
-	        if (OnOperationCompleted != null)
-	        {
-	            OnOperationCompleted(variable.ToString());
-	        }
-	    }
-	
         //
         // TODO: return success if it succeeded!
         //
@@ -108,17 +99,6 @@ namespace Lextm.SharpSnmpLib.Browser
             manager.SetSingle(_agent, _set, new Variable(textual, data));
 	    }
 	
-	    // private IPAddress ValidateIP()
-	    // {
-            // IPAddress ip;
-            // bool succeeded = IsValidIPAddress(_ip, out ip);
-	        // if (!succeeded)
-	        // {
-	            // throw new MibBrowserException("Invalid IP address: " + _ip);
-	        // }
-	        // return ip;
-	    // }
-
         internal static bool IsValidIPAddress(string address, out IPAddress ip)
         {
             return IPAddress.TryParse(address, out ip);
@@ -130,7 +110,7 @@ namespace Lextm.SharpSnmpLib.Browser
             int rows = 0;
 
             rows = Manager.Walk(VersionCode, Agent, new OctetString(GetCommunity), new ObjectIdentifier(def.GetNumericalForm()), list, 1000, WalkMode.WithinSubtree);
-
+            
             // 
             // How many rows are there?
             //
@@ -143,10 +123,14 @@ namespace Lextm.SharpSnmpLib.Browser
             }
             else
             {
+                TraceSource source = new TraceSource("Browser");
                 for (int i = 0; i < list.Count; i++)
                 {
-                    Report(list[i]);
+                    source.TraceInformation(list[i].ToString());
                 }
+
+                source.Flush();
+                source.Close();
             }
 
 	    }

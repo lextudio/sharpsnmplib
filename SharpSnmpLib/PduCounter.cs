@@ -18,12 +18,13 @@ namespace Lextm.SharpSnmpLib
             get
             {
                 Integer32 result;
-                lock(syncRoot)
+                lock (syncRoot)
                 {
                     unchecked
                     {
                         count += 10;
                     }
+                    
                     result = new Integer32(count);
                 }
                 

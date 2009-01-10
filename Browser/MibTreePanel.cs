@@ -12,6 +12,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Lextm.SharpSnmpLib.Mib;
 using WeifenLuo.WinFormsUI.Docking;
+using System.Diagnostics;
 
 namespace Lextm.SharpSnmpLib.Browser
 {
@@ -26,7 +27,7 @@ namespace Lextm.SharpSnmpLib.Browser
             RefreshPanel(ObjectRegistry.Instance, EventArgs.Empty);
             ObjectRegistry.Instance.OnChanged += RefreshPanel;
         }
-        
+
         private void RefreshPanel(object sender, EventArgs e)
         {
             ObjectRegistry repository = (ObjectRegistry)sender;
@@ -61,7 +62,10 @@ namespace Lextm.SharpSnmpLib.Browser
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                TraceSource source = new TraceSource("Browser");
+                source.TraceInformation(ex.ToString());
+                source.Flush();
+                source.Close();
             }
         }
 
@@ -129,7 +133,10 @@ namespace Lextm.SharpSnmpLib.Browser
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                TraceSource source = new TraceSource("Browser");
+                source.TraceInformation(ex.ToString());
+                source.Flush();
+                source.Close();
             }
         }
 
@@ -175,11 +182,14 @@ namespace Lextm.SharpSnmpLib.Browser
                 {
                     ProfileRegistry.Instance.DefaultProfile.Walk(manager1, treeView1.SelectedNode.Tag as IDefinition);
                 }
-                
+
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                TraceSource source = new TraceSource("Browser");
+                source.TraceInformation(ex.ToString());
+                source.Flush();
+                source.Close();
             }
         }
 
@@ -195,7 +205,7 @@ namespace Lextm.SharpSnmpLib.Browser
             {
                 actGet_Execute(sender, e);
             }
-            else if(e.Node.ImageIndex == 3)
+            else if (e.Node.ImageIndex == 3)
             {
                 actWalk_Execute(sender, e);
             }
@@ -260,11 +270,14 @@ namespace Lextm.SharpSnmpLib.Browser
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                TraceSource source = new TraceSource("Browser");
+                source.TraceInformation(ex.ToString());
+                source.Flush();
+                source.Close();
             }
         }
 
-	private void actGetNext_Update(object sender, EventArgs e)
+        private void actGetNext_Update(object sender, EventArgs e)
         {
             if (treeView1.SelectedNode != null)
             {
@@ -275,7 +288,7 @@ namespace Lextm.SharpSnmpLib.Browser
                 actGetNext.Enabled = false;
             }
         }
-        
+
 
         private void ManualWalk(TreeNode node, bool first)
         {
@@ -305,7 +318,10 @@ namespace Lextm.SharpSnmpLib.Browser
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    TraceSource source = new TraceSource("Browser");
+                    source.TraceInformation(ex.ToString());
+                    source.Flush();
+                    source.Close();
                 }
 
                 if (!first)

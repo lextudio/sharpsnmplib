@@ -28,8 +28,7 @@ namespace Lextm.SharpSnmpLib
     /// </remarks>
     public class TrapListener : Component
     {
-        //private Socket _watcher;
-        [Obsolete]
+        // TODO: [Obsolete]
         private int _port = DEFAULTPORT;
         private BackgroundWorker worker;
         private const int DEFAULTPORT = 162;
@@ -236,8 +235,7 @@ namespace Lextm.SharpSnmpLib
         private void HandleMessage(MessageParams param)
         {
             ByteTool.Capture(param.Bytes, param.Number);
-            
-            // *
+
             foreach (ISnmpMessage message in MessageFactory.ParseMessages(param.Bytes, 0, param.Number))
             {
                 switch (message.TypeCode)
@@ -326,7 +324,6 @@ namespace Lextm.SharpSnmpLib
                         break;
                 }
             }
-            // */
         }
         
         /// <summary>

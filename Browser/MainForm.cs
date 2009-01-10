@@ -29,24 +29,21 @@ namespace Lextm.SharpSnmpLib.Browser
 
             OutputPanel output = new OutputPanel();
             output.Show(dockPanel1, DockState.DockBottom);
+            OutputPanelTraceListener.Panel = output;
+
             MibTreePanel tree = new MibTreePanel();
             tree.Show(dockPanel1, DockState.Document);
-            ModuleListPanel modules = new ModuleListPanel(output);
+            ModuleListPanel modules = new ModuleListPanel();
             modules.Show(dockPanel1, DockState.DockLeft);
             AgentProfilePanel agent = new AgentProfilePanel();
             agent.Show(dockPanel1, DockState.DockLeft);
             
-            ProfileRegistry.Instance.LoadProfiles(output);
+            ProfileRegistry.Instance.LoadProfiles();
 		}
 
         private void actExit_Execute(object sender, EventArgs e)
         {
             Close();
-        }
-
-        private void actSave_Execute(object sender, EventArgs e)
-        {
-            ProfileRegistry.Instance.SaveProfiles();
         }
     }
 }

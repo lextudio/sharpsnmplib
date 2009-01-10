@@ -37,7 +37,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// BITS type. (SMIv2)
         /// </summary>
-        BitString = 0x03,  // X690.BitSet//TODO: verify if this is BITS.
+        BitString = 0x03,  // X690.BitSet // TODO: verify if this is BITS.
         
         /// <summary>
         /// OCTET STRING type.

@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using System.Drawing;
 using System.Net;
+using System.Diagnostics;
 
 namespace Lextm.SharpSnmpLib.Browser
 {
@@ -33,7 +34,9 @@ namespace Lextm.SharpSnmpLib.Browser
                 {
                     display = profile.Agent.ToString();
                 }
-                ListViewItem item = listView1.Items.Add(display);
+
+                ListViewItem item = new ListViewItem(new string[] { display, profile.Agent.ToString() });
+                listView1.Items.Add(item);
                 item.Tag = profile;
 
                 switch (profile.VersionCode)
@@ -112,13 +115,22 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void actDelete_Execute(object sender, System.EventArgs e)
         {
+            if (MessageBox.Show("Do you want to remove this item", "Confirmation", MessageBoxButtons.YesNo) != DialogResult.Yes)
+            {
+                return;
+            }
+
             try
             {
                 ProfileRegistry.Instance.DeleteProfile((listView1.SelectedItems[0].Tag as AgentProfile).Agent);
+                ProfileRegistry.Instance.SaveProfiles();
             }
             catch (MibBrowserException ex)
             {
-                MessageBox.Show(ex.Message);
+                TraceSource source = new TraceSource("Browser");
+                source.TraceInformation(ex.Message);
+                source.Flush();
+                source.Close();
             }
         }
 
@@ -131,10 +143,14 @@ namespace Lextm.SharpSnmpLib.Browser
                     try
                     {
                         ProfileRegistry.Instance.AddProfile(new AgentProfile(editor.VersionCode, new IPEndPoint(editor.IP, editor.Port), editor.GetCommunity, editor.SetCommunity, editor.AgentName));
+                        ProfileRegistry.Instance.SaveProfiles();
                     }
                     catch (MibBrowserException ex)
                     {
-                        MessageBox.Show(ex.Message);
+                        TraceSource source = new TraceSource("Browser");
+                        source.TraceInformation(ex.Message);
+                        source.Flush();
+                        source.Close();
                     }
                 }
             }
@@ -148,6 +164,7 @@ namespace Lextm.SharpSnmpLib.Browser
                 if (editor.ShowDialog() == DialogResult.OK)
                 {
                     ProfileRegistry.Instance.ReplaceProfile(new AgentProfile(editor.VersionCode, new IPEndPoint(editor.IP, editor.Port), editor.GetCommunity, editor.SetCommunity, editor.AgentName));
+                    ProfileRegistry.Instance.SaveProfiles();
                 }
             }
         }

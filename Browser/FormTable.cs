@@ -25,7 +25,6 @@ namespace Lextm.SharpSnmpLib.Browser
             definition = def;
             InitializeComponent();
             cbColumnDisplay.SelectedIndex = 1;
-            this.Text = ProfileRegistry.Instance.DefaultProfile.Name + ": " + definition.Name;
         }
 
         public void setRows(int rowCount)

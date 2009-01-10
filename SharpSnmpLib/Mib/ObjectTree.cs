@@ -104,25 +104,19 @@ namespace Lextm.SharpSnmpLib.Mib
                 _loaded.Add(module.Name, module);
             }
 
-            return !exists;
+            return true;
         }
 
         internal void Parse(MibModule module)
         {
-            #if (!CF)
             TraceSource source = new TraceSource("Library");
-            #endif
             Stopwatch watch = new Stopwatch();
             watch.Start();
             AddNodes(module);
-            #if (!CF)
             source.TraceInformation(watch.ElapsedMilliseconds.ToString(CultureInfo.InvariantCulture) + "-ms used to assemble " + module.Name);
-            #endif
             watch.Stop();
-            #if (!CF)
             source.Flush();
             source.Close();
-            #endif
         }
 
         private IDefinition CreateSelf(IEntity node)
@@ -308,9 +302,7 @@ namespace Lextm.SharpSnmpLib.Mib
         
         internal void Refresh()
         {
-            #if (!CF)
             TraceSource source = new TraceSource("Library");
-            #endif
             Stopwatch watch = new Stopwatch();
             watch.Start();
             int previous;
@@ -337,9 +329,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 }
 
                 current = _pendings.Count;
-                #if (!CF)
                 source.TraceInformation(current.ToString(CultureInfo.InvariantCulture) + " pending after " + watch.ElapsedMilliseconds.ToString(CultureInfo.InvariantCulture) + "-ms");
-                #endif
                 if (current == previous)
                 {
                     // cannot parse more
@@ -348,10 +338,8 @@ namespace Lextm.SharpSnmpLib.Mib
             }
             
             watch.Stop();
-            #if (!CF)
             source.Flush();
             source.Close();
-            #endif
         }
 
         internal void Import(IEnumerable<MibModule> modules)

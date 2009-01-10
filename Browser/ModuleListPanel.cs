@@ -20,19 +20,11 @@ namespace Lextm.SharpSnmpLib.Browser
     /// </summary>
     public partial class ModuleListPanel : DockContent
     {
-        private IOutput _output;
         private Inventory _inventory = new Inventory(ObjectRegistry.Instance);
         
-        public ModuleListPanel(IOutput output)
-        {
-            if (output == null)
-            {
-                throw new ArgumentNullException("output");
-            }
-            
-            InitializeComponent();
-            _output = output;
-            
+        public ModuleListPanel()
+        {            
+            InitializeComponent();        
             ObjectRegistry.Instance.OnChanged += RefreshPanel;
         }
         

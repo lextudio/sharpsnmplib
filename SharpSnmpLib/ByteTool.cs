@@ -10,13 +10,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
-using System.Text;
 using System.Configuration;
 using System.Diagnostics;
+using System.Globalization;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
+using System.Text;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -61,11 +61,11 @@ namespace Lextm.SharpSnmpLib
             return response;
         }
 
-        //TODO: add this method to all message exchanges.
+        // TODO: add this method to all message exchanges.
         internal static void Capture(ISnmpMessage message)
         {            
             object setting = ConfigurationManager.AppSettings["CaptureEnabled"];
-            if (setting != null && Convert.ToBoolean(setting.ToString()))
+            if (setting != null && Convert.ToBoolean(setting.ToString(), CultureInfo.InvariantCulture))
             {
                 byte[] buffer = message.ToBytes();
                 CaptureInner(buffer, buffer.Length);
@@ -80,7 +80,7 @@ namespace Lextm.SharpSnmpLib
         internal static void Capture(byte[] buffer, int length)
         {
             object setting = ConfigurationManager.AppSettings["CaptureEnabled"];
-            if (setting != null && Convert.ToBoolean(setting.ToString()))
+            if (setting != null && Convert.ToBoolean(setting.ToString(), CultureInfo.InvariantCulture))
             {
                 CaptureInner(buffer, length);
             }
@@ -94,6 +94,7 @@ namespace Lextm.SharpSnmpLib
             {
                 builder.AppendFormat("{0:X2} ", buffer[i]);
             }
+            
             source.TraceInformation("SNMP packet captured at {0}, length {1}", DateTime.Now, length);
             source.TraceInformation(builder.ToString());
             source.Flush();

@@ -40,15 +40,11 @@ namespace Lextm.SharpSnmpLib.Browser
             this.dockPanel1 = new WeifenLuo.WinFormsUI.Docking.DockPanel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.actionList1 = new Crad.Windows.Forms.Actions.ActionList();
             this.actExit = new Crad.Windows.Forms.Actions.Action();
-            this.actSave = new Crad.Windows.Forms.Actions.Action();
             this.toolStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.actionList1)).BeginInit();
@@ -68,10 +64,7 @@ namespace Lextm.SharpSnmpLib.Browser
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton1,
-            this.toolStripSeparator1,
-            this.toolStripLabel1,
-            this.toolStripButton2});
+            this.toolStripButton1});
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(493, 25);
@@ -87,27 +80,6 @@ namespace Lextm.SharpSnmpLib.Browser
             this.toolStripButton1.Name = "toolStripButton1";
             this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
             this.toolStripButton1.Text = "E&xit";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripLabel1
-            // 
-            this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(35, 22);
-            this.toolStripLabel1.Text = "Agent";
-            // 
-            // toolStripButton2
-            // 
-            this.actionList1.SetAction(this.toolStripButton2, this.actSave);
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton2.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.preferences_desktop_theme;
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton2.Text = "Save";
             // 
             // menuStrip1
             // 
@@ -132,13 +104,12 @@ namespace Lextm.SharpSnmpLib.Browser
             this.actionList1.SetAction(this.exitToolStripMenuItem, this.actExit);
             this.exitToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("exitToolStripMenuItem.Image")));
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(91, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             // 
             // actionList1
             // 
             this.actionList1.Actions.Add(this.actExit);
-            this.actionList1.Actions.Add(this.actSave);
             this.actionList1.ContainerControl = this;
             // 
             // actExit
@@ -147,13 +118,6 @@ namespace Lextm.SharpSnmpLib.Browser
             this.actExit.Text = "E&xit";
             this.actExit.ToolTipText = "Exit Browser";
             this.actExit.Execute += new System.EventHandler(this.actExit_Execute);
-            // 
-            // actSave
-            // 
-            this.actSave.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.preferences_desktop_theme;
-            this.actSave.Text = "Save";
-            this.actSave.ToolTipText = "Save Agents";
-            this.actSave.Execute += new System.EventHandler(this.actSave_Execute);
             // 
             // MainForm
             // 
@@ -165,7 +129,7 @@ namespace Lextm.SharpSnmpLib.Browser
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
-            this.Text = "Browser";
+            this.Text = "#SNMP MIB Browser";
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
@@ -183,9 +147,5 @@ namespace Lextm.SharpSnmpLib.Browser
         private Crad.Windows.Forms.Actions.ActionList actionList1;
         private Crad.Windows.Forms.Actions.Action actExit;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
-        private Crad.Windows.Forms.Actions.Action actSave;
-        private System.Windows.Forms.ToolStripButton toolStripButton2;
 	}
 }

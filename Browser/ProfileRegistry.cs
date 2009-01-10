@@ -9,6 +9,7 @@ using Lextm.SharpSnmpLib;
 using Lextm.SharpSnmpLib.Mib;
 using System.Windows.Forms;
 using System.Net;
+using System.Diagnostics;
 
 namespace Lextm.SharpSnmpLib.Browser
 {
@@ -19,18 +20,20 @@ namespace Lextm.SharpSnmpLib.Browser
 	    private string _defaultString;
 
         private static ProfileRegistry _instance;
+        private static object locker = new object();
 
         internal static ProfileRegistry Instance
         {
             get
             {
-                lock (typeof(ProfileRegistry))
+                lock (locker)
                 {
                     if (_instance == null)
                     {
                         _instance = new ProfileRegistry();
                     }
                 }
+
                 return _instance;
             }
         }
@@ -41,6 +44,7 @@ namespace Lextm.SharpSnmpLib.Browser
 	        {
 	            return profiles[endpoint];
 	        }
+
 	        return null;
 	    }
 
@@ -75,6 +79,7 @@ namespace Lextm.SharpSnmpLib.Browser
 	            {
 	                throw new ArgumentNullException("value");
 	            }
+
 	            _defaultProfile = GetProfile(value);
 	            _default = value;
 	            _defaultString = value.ToString();
@@ -127,6 +132,7 @@ namespace Lextm.SharpSnmpLib.Browser
             {
                 throw new MibBrowserException("Cannot delete the default endpoint!");
             }
+
             else if(profiles.ContainsKey(profile))
             {
                 profiles.Remove(profile);
@@ -143,11 +149,11 @@ namespace Lextm.SharpSnmpLib.Browser
             }
         }
 
-        internal void LoadProfiles(IOutput output)
+        internal void LoadProfiles()
         {
-            if (LoadProfilesFromFile(output) == 0)
+            if (LoadProfilesFromFile() == 0)
             {
-                LoadDefaultProfile(output);
+                LoadDefaultProfile();
             }
         }
 
@@ -208,15 +214,14 @@ namespace Lextm.SharpSnmpLib.Browser
             objXmlTextWriter.Close();
         }
 
-        internal void LoadDefaultProfile(IOutput output)
+        internal void LoadDefaultProfile()
         {
             AgentProfile first = new AgentProfile(VersionCode.V1, new IPEndPoint(IPAddress.Loopback, 161), "public", "public", "Localhost");
-            first.OnOperationCompleted += output.ReportMessage;
             AddProfile(first);
             Default = first.Agent;
         }
 
-        internal int LoadProfilesFromFile(IOutput output)
+        internal int LoadProfilesFromFile()
         {
             if (!File.Exists("Agents.xml"))
             {
@@ -266,7 +271,6 @@ namespace Lextm.SharpSnmpLib.Browser
                                 case "Default": 
                                     AgentProfile prof = new AgentProfile(vc, new IPEndPoint(def, port), get, set, name);
                                     
-                                    prof.OnOperationCompleted += output.ReportMessage;
                                     AddProfile(prof);
 
                                     bDefault = objXmlTextReader.ReadContentAsBoolean();
@@ -282,7 +286,10 @@ namespace Lextm.SharpSnmpLib.Browser
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString());
+                TraceSource source = new TraceSource("Browser");
+                source.TraceInformation(ex.ToString());
+                source.Flush();
+                source.Close();
             }
             finally
             {

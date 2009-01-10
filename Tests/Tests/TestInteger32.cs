@@ -17,7 +17,7 @@ namespace Lextm.SharpSnmpLib.Tests
     [TestFixture]
     public class TestInteger32
     {
-        [Test]
+        // [Test]
         public void TestExtra()
         {
             int j = 1;

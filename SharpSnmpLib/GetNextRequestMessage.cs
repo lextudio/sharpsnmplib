@@ -24,7 +24,8 @@ namespace Lextm.SharpSnmpLib
         private VersionCode _version;
         private IList<Variable> _variables;
         private byte[] _bytes;
-        [Obsolete]
+        
+        // TODO: [Obsolete]
         private IPAddress _agent;
         private OctetString _community;
         private ISnmpPdu _pdu;

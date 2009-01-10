@@ -45,9 +45,8 @@ namespace Lextm.SharpSnmpLib.Mib
             {
                 throw new ArgumentException("pattern cannot be empty");
             }
-            #if (!CF)
+
             TraceSource source = new TraceSource("Library");
-            #endif
             Stopwatch watch = new Stopwatch();
             watch.Start();
 
@@ -56,14 +55,11 @@ namespace Lextm.SharpSnmpLib.Mib
             {
                 modules.AddRange(Compile(file));
             }
-            #if (!CF)
+
             source.TraceInformation(modules.Count.ToString(CultureInfo.InvariantCulture) + " modules parsed after " + watch.ElapsedMilliseconds.ToString(CultureInfo.InvariantCulture) + "-ms");
-            #endif
             watch.Stop();
-            #if (!CF)
             source.Flush();
             source.Close();
-            #endif
             return modules;
         }
         
@@ -110,22 +106,16 @@ namespace Lextm.SharpSnmpLib.Mib
         
         private static IList<MibModule> CompileToModules(string file, TextReader stream)
         {
-            #if (!CF)
             TraceSource source = new TraceSource("Library");
-            #endif
             Stopwatch watch = new Stopwatch();
             watch.Start();
             Lexer lexer = new Lexer();
             lexer.Parse(file, stream);
             MibDocument doc = new MibDocument(lexer);
-            #if (!CF)
             source.TraceInformation(watch.ElapsedMilliseconds.ToString(CultureInfo.InvariantCulture) + "-ms used to parse " + file);
-            #endif
             watch.Stop();
-            #if (!CF)
             source.Flush();
             source.Close();
-            #endif
             return doc.Modules;
         }
     }

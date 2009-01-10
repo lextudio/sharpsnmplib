@@ -37,8 +37,8 @@ namespace Lextm.SharpSnmpLib.Browser
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewGroup listViewGroup3 = new System.Windows.Forms.ListViewGroup("Loaded", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup4 = new System.Windows.Forms.ListViewGroup("Pending", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("Loaded", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("Pending", System.Windows.Forms.HorizontalAlignment.Left);
             this.listView1 = new System.Windows.Forms.ListView();
             this.chName = new System.Windows.Forms.ColumnHeader();
             this.actionList1 = new Crad.Windows.Forms.Actions.ActionList();
@@ -60,13 +60,14 @@ namespace Lextm.SharpSnmpLib.Browser
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.chName});
             this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            listViewGroup3.Header = "Loaded";
-            listViewGroup3.Name = "lvgLoaded";
-            listViewGroup4.Header = "Pending";
-            listViewGroup4.Name = "lvgPending";
+            this.listView1.FullRowSelect = true;
+            listViewGroup1.Header = "Loaded";
+            listViewGroup1.Name = "lvgLoaded";
+            listViewGroup2.Header = "Pending";
+            listViewGroup2.Name = "lvgPending";
             this.listView1.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            listViewGroup3,
-            listViewGroup4});
+            listViewGroup1,
+            listViewGroup2});
             this.listView1.Location = new System.Drawing.Point(0, 25);
             this.listView1.MultiSelect = false;
             this.listView1.Name = "listView1";
@@ -114,7 +115,7 @@ namespace Lextm.SharpSnmpLib.Browser
             // 
             this.actionList1.SetAction(this.removeToolStripMenuItem, this.actRemove);
             this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
-            this.removeToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.removeToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
             this.removeToolStripMenuItem.Text = "Remove";
             // 
             // toolStrip1
@@ -145,7 +146,7 @@ namespace Lextm.SharpSnmpLib.Browser
             this.contextModuleMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.removeToolStripMenuItem});
             this.contextModuleMenu.Name = "contextModuleMenu";
-            this.contextModuleMenu.Size = new System.Drawing.Size(115, 26);
+            this.contextModuleMenu.Size = new System.Drawing.Size(114, 26);
             // 
             // ModuleListPanel
             // 
