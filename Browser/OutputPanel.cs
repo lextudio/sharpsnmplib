@@ -10,6 +10,7 @@
 using System;
 using System.ComponentModel;
 using System.Drawing;
+using System.Globalization;
 using System.Windows.Forms;
 
 using WeifenLuo.WinFormsUI.Docking;
@@ -28,7 +29,7 @@ namespace Lextm.SharpSnmpLib.Browser
 
         public void WriteLine(string message)
         {
-            txtMessages.AppendText(string.Format("[{2}] [{0}] {1}", DateTime.Now, message, ProfileRegistry.Instance.Default));
+            txtMessages.AppendText(string.Format(CultureInfo.CurrentCulture, "[{2}] [{0}] {1}", DateTime.Now, message, ProfileRegistry.Instance.Default));
             txtMessages.AppendText(Environment.NewLine);
             txtMessages.ScrollToCaret();
         }

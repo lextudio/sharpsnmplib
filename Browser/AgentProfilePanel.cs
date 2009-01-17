@@ -125,7 +125,7 @@ namespace Lextm.SharpSnmpLib.Browser
                 ProfileRegistry.Instance.DeleteProfile((listView1.SelectedItems[0].Tag as AgentProfile).Agent);
                 ProfileRegistry.Instance.SaveProfiles();
             }
-            catch (MibBrowserException ex)
+            catch (BrowserException ex)
             {
                 TraceSource source = new TraceSource("Browser");
                 source.TraceInformation(ex.Message);
@@ -145,7 +145,7 @@ namespace Lextm.SharpSnmpLib.Browser
                         ProfileRegistry.Instance.AddProfile(new AgentProfile(editor.VersionCode, new IPEndPoint(editor.IP, editor.Port), editor.GetCommunity, editor.SetCommunity, editor.AgentName));
                         ProfileRegistry.Instance.SaveProfiles();
                     }
-                    catch (MibBrowserException ex)
+                    catch (BrowserException ex)
                     {
                         TraceSource source = new TraceSource("Browser");
                         source.TraceInformation(ex.Message);

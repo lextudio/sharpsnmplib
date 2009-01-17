@@ -27,19 +27,19 @@ namespace Lextm.SharpSnmpLib.Browser
             cbColumnDisplay.SelectedIndex = 1;
         }
 
-        public void setRows(int rowCount)
+        public void SetRows(int rowCount)
         {
             dataGridTable.RowCount = rowCount;
         }
 
-        public void populateGrid(IList<Variable> list)
+        public void PopulateGrid(IList<Variable> list)
         {
             // InvokeRequired required compares the thread ID of the
             // calling thread to the thread ID of the creating thread.
             // If these threads are different, it returns true.
             if (this.dataGridTable.InvokeRequired)
             {
-                RefreshTableCallback r = new RefreshTableCallback(populateGrid);
+                RefreshTableCallback r = new RefreshTableCallback(PopulateGrid);
                 this.Invoke(r, new object[] { list });
             }
             else 
@@ -78,7 +78,7 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             if(checkBoxRefresh.Checked)
             {
-                refreshThread = new Thread(new ThreadStart(refreshTable));
+                refreshThread = new Thread(new ThreadStart(RefreshTable));
                 refreshThread.Start();
             }
             else
@@ -122,7 +122,7 @@ namespace Lextm.SharpSnmpLib.Browser
             }
         }
 
-        public void refreshTable()
+        public void RefreshTable()
         {
             while (true)
             {
@@ -133,8 +133,8 @@ namespace Lextm.SharpSnmpLib.Browser
                 Thread.Sleep(Convert.ToInt32(textBoxRefresh.Text, CultureInfo.CurrentCulture) * 1000);
                 rows = Manager.Walk(prof.VersionCode, prof.Agent, new OctetString(prof.GetCommunity), new ObjectIdentifier(definition.GetNumericalForm()), list, 1000, WalkMode.WithinSubtree);
 
-                this.setRows(rows);
-                this.populateGrid(list);
+                this.SetRows(rows);
+                this.PopulateGrid(list);
             }
         }
 

@@ -117,8 +117,8 @@ namespace Lextm.SharpSnmpLib.Browser
             if (rows > 0)
             {
                 FormTable newTable = new FormTable(def);
-                newTable.setRows(rows);
-                newTable.populateGrid(list);
+                newTable.SetRows(rows);
+                newTable.PopulateGrid(list);
                 newTable.Show();
             }
             else

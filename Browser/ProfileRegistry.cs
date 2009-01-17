@@ -99,7 +99,7 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             if (profiles.ContainsKey(profile.Agent))
             {
-                throw new MibBrowserException("This endpoint is already registered");
+                throw new BrowserException("This endpoint is already registered");
             }
 
             profiles.Add(profile.Agent, profile);            
@@ -130,7 +130,7 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             if (profile.Equals(Default) && !replace)
             {
-                throw new MibBrowserException("Cannot delete the default endpoint!");
+                throw new BrowserException("Cannot delete the default endpoint!");
             }
 
             else if(profiles.ContainsKey(profile))

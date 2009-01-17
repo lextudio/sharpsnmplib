@@ -6,11 +6,13 @@
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
-using Lextm.SharpSnmpLib.Mib;
 using System;
 using System.ComponentModel;
 using System.Drawing;
+using System.Globalization;
 using System.Windows.Forms;
+
+using Lextm.SharpSnmpLib.Mib;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace Lextm.SharpSnmpLib.Browser
@@ -50,8 +52,8 @@ namespace Lextm.SharpSnmpLib.Browser
                 item.Group = listView1.Groups["lvgPending"];
             }
             ResumeLayout();
-            listView1.Groups["lvgLoaded"].Header = string.Format("Loaded ({0})", reg.Tree.LoadedModules.Count);
-            listView1.Groups["lvgPending"].Header = string.Format("Pending ({0})", reg.Tree.PendingModules.Count);
+            listView1.Groups["lvgLoaded"].Header = string.Format(CultureInfo.CurrentCulture, "Loaded ({0})", reg.Tree.LoadedModules.Count);
+            listView1.Groups["lvgPending"].Header = string.Format(CultureInfo.CurrentCulture, "Pending ({0})", reg.Tree.PendingModules.Count);
             tslblCount.Text = "loaded count: " + reg.Tree.LoadedModules.Count + "; pending count: " + reg.Tree.PendingModules.Count;
         }
 

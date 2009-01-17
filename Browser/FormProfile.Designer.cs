@@ -52,9 +52,9 @@
         	// label1
         	// 
         	this.label1.AutoSize = true;
-        	this.label1.Location = new System.Drawing.Point(32, 74);
+        	this.label1.Location = new System.Drawing.Point(32, 80);
         	this.label1.Name = "label1";
-        	this.label1.Size = new System.Drawing.Size(17, 12);
+        	this.label1.Size = new System.Drawing.Size(17, 13);
         	this.label1.TabIndex = 0;
         	this.label1.Text = "IP";
         	// 
@@ -62,9 +62,9 @@
         	// 
         	this.txtIP.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
         	        	        	| System.Windows.Forms.AnchorStyles.Right)));
-        	this.txtIP.Location = new System.Drawing.Point(93, 71);
+        	this.txtIP.Location = new System.Drawing.Point(93, 77);
         	this.txtIP.Name = "txtIP";
-        	this.txtIP.Size = new System.Drawing.Size(100, 21);
+        	this.txtIP.Size = new System.Drawing.Size(100, 20);
         	this.txtIP.TabIndex = 1;
         	this.txtIP.Text = "127.0.0.1";
         	this.txtIP.Validated += new System.EventHandler(this.txtIP_Validated);
@@ -73,9 +73,9 @@
         	// label2
         	// 
         	this.label2.AutoSize = true;
-        	this.label2.Location = new System.Drawing.Point(32, 14);
+        	this.label2.Location = new System.Drawing.Point(32, 15);
         	this.label2.Name = "label2";
-        	this.label2.Size = new System.Drawing.Size(29, 12);
+        	this.label2.Size = new System.Drawing.Size(38, 13);
         	this.label2.TabIndex = 2;
         	this.label2.Text = "SNMP";
         	// 
@@ -88,9 +88,9 @@
         	this.groupBox1.Controls.Add(this.label3);
         	this.groupBox1.Controls.Add(this.txtSet);
         	this.groupBox1.Controls.Add(this.txtGet);
-        	this.groupBox1.Location = new System.Drawing.Point(12, 139);
+        	this.groupBox1.Location = new System.Drawing.Point(12, 151);
         	this.groupBox1.Name = "groupBox1";
-        	this.groupBox1.Size = new System.Drawing.Size(200, 86);
+        	this.groupBox1.Size = new System.Drawing.Size(200, 93);
         	this.groupBox1.TabIndex = 3;
         	this.groupBox1.TabStop = false;
         	this.groupBox1.Text = "Community Names";
@@ -98,18 +98,18 @@
         	// label4
         	// 
         	this.label4.AutoSize = true;
-        	this.label4.Location = new System.Drawing.Point(20, 53);
+        	this.label4.Location = new System.Drawing.Point(20, 57);
         	this.label4.Name = "label4";
-        	this.label4.Size = new System.Drawing.Size(23, 12);
+        	this.label4.Size = new System.Drawing.Size(28, 13);
         	this.label4.TabIndex = 3;
         	this.label4.Text = "SET";
         	// 
         	// label3
         	// 
         	this.label3.AutoSize = true;
-        	this.label3.Location = new System.Drawing.Point(20, 29);
+        	this.label3.Location = new System.Drawing.Point(20, 31);
         	this.label3.Name = "label3";
-        	this.label3.Size = new System.Drawing.Size(23, 12);
+        	this.label3.Size = new System.Drawing.Size(29, 13);
         	this.label3.TabIndex = 2;
         	this.label3.Text = "GET";
         	// 
@@ -117,9 +117,9 @@
         	// 
         	this.txtSet.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
         	        	        	| System.Windows.Forms.AnchorStyles.Right)));
-        	this.txtSet.Location = new System.Drawing.Point(81, 50);
+        	this.txtSet.Location = new System.Drawing.Point(81, 54);
         	this.txtSet.Name = "txtSet";
-        	this.txtSet.Size = new System.Drawing.Size(100, 21);
+        	this.txtSet.Size = new System.Drawing.Size(100, 20);
         	this.txtSet.TabIndex = 1;
         	this.txtSet.Text = "private";
         	this.txtSet.Validated += new System.EventHandler(this.txtSet_Validated);
@@ -129,9 +129,9 @@
         	// 
         	this.txtGet.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
         	        	        	| System.Windows.Forms.AnchorStyles.Right)));
-        	this.txtGet.Location = new System.Drawing.Point(81, 26);
+        	this.txtGet.Location = new System.Drawing.Point(81, 28);
         	this.txtGet.Name = "txtGet";
-        	this.txtGet.Size = new System.Drawing.Size(100, 21);
+        	this.txtGet.Size = new System.Drawing.Size(100, 20);
         	this.txtGet.TabIndex = 0;
         	this.txtGet.Text = "public";
         	this.txtGet.Validated += new System.EventHandler(this.txtGet_Validated);
@@ -147,9 +147,9 @@
         	        	        	"v1",
         	        	        	"v2c",
         	        	        	"v3"});
-        	this.cbVersionCode.Location = new System.Drawing.Point(93, 11);
+        	this.cbVersionCode.Location = new System.Drawing.Point(93, 12);
         	this.cbVersionCode.Name = "cbVersionCode";
-        	this.cbVersionCode.Size = new System.Drawing.Size(100, 20);
+        	this.cbVersionCode.Size = new System.Drawing.Size(100, 21);
         	this.cbVersionCode.TabIndex = 0;
         	// 
         	// errorProvider1
@@ -158,20 +158,21 @@
         	// 
         	// txtPort
         	// 
-        	this.txtPort.Location = new System.Drawing.Point(93, 101);
+        	this.txtPort.Location = new System.Drawing.Point(93, 109);
         	this.txtPort.Name = "txtPort";
-        	this.txtPort.Size = new System.Drawing.Size(100, 21);
+        	this.txtPort.Size = new System.Drawing.Size(100, 20);
         	this.txtPort.TabIndex = 2;
         	this.txtPort.Text = "161";
+        	this.txtPort.Validated += new System.EventHandler(this.txtPort_Validated);
         	this.txtPort.Validating += new System.ComponentModel.CancelEventHandler(this.txtPort_Validating);
         	// 
         	// btnOK
         	// 
         	this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
         	this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-        	this.btnOK.Location = new System.Drawing.Point(24, 231);
+        	this.btnOK.Location = new System.Drawing.Point(24, 250);
         	this.btnOK.Name = "btnOK";
-        	this.btnOK.Size = new System.Drawing.Size(75, 23);
+        	this.btnOK.Size = new System.Drawing.Size(75, 25);
         	this.btnOK.TabIndex = 3;
         	this.btnOK.Text = "OK";
         	this.btnOK.UseVisualStyleBackColor = true;
@@ -183,27 +184,27 @@
         	        	        	| System.Windows.Forms.AnchorStyles.Right)));
         	this.btnCancel.CausesValidation = false;
         	this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-        	this.btnCancel.Location = new System.Drawing.Point(121, 231);
+        	this.btnCancel.Location = new System.Drawing.Point(121, 250);
         	this.btnCancel.Name = "btnCancel";
-        	this.btnCancel.Size = new System.Drawing.Size(75, 23);
+        	this.btnCancel.Size = new System.Drawing.Size(75, 25);
         	this.btnCancel.TabIndex = 4;
         	this.btnCancel.Text = "Cancel";
         	this.btnCancel.UseVisualStyleBackColor = true;
         	// 
         	// label5
         	// 
-        	this.label5.Location = new System.Drawing.Point(32, 103);
+        	this.label5.Location = new System.Drawing.Point(32, 112);
         	this.label5.Name = "label5";
-        	this.label5.Size = new System.Drawing.Size(49, 23);
+        	this.label5.Size = new System.Drawing.Size(49, 25);
         	this.label5.TabIndex = 7;
         	this.label5.Text = "Port";
         	// 
         	// label6
         	// 
         	this.label6.AutoSize = true;
-        	this.label6.Location = new System.Drawing.Point(32, 44);
+        	this.label6.Location = new System.Drawing.Point(32, 48);
         	this.label6.Name = "label6";
-        	this.label6.Size = new System.Drawing.Size(29, 12);
+        	this.label6.Size = new System.Drawing.Size(35, 13);
         	this.label6.TabIndex = 8;
         	this.label6.Text = "Name";
         	// 
@@ -211,16 +212,16 @@
         	// 
         	this.txtName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
         	        	        	| System.Windows.Forms.AnchorStyles.Right)));
-        	this.txtName.Location = new System.Drawing.Point(93, 42);
+        	this.txtName.Location = new System.Drawing.Point(93, 46);
         	this.txtName.Name = "txtName";
-        	this.txtName.Size = new System.Drawing.Size(100, 21);
+        	this.txtName.Size = new System.Drawing.Size(100, 20);
         	this.txtName.TabIndex = 9;
         	// 
         	// FormProfile
         	// 
-        	this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+        	this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
         	this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-        	this.ClientSize = new System.Drawing.Size(225, 265);
+        	this.ClientSize = new System.Drawing.Size(225, 287);
         	this.Controls.Add(this.txtName);
         	this.Controls.Add(this.label6);
         	this.Controls.Add(this.txtPort);
