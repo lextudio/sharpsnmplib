@@ -319,8 +319,6 @@ namespace Lextm.SharpSnmpLib.Mib
                         Parse(pending);
                         parsed.Add(pending.Name);
                     }
-                    
-                    // Console.WriteLine("LoadFile(new StreamReader(new MemoryStream(Resource." + pending.Name + ")));");
                 }
 
                 foreach (string file in parsed)
@@ -380,7 +378,8 @@ namespace Lextm.SharpSnmpLib.Mib
         internal int ImportFiles(IEnumerable<string> files)
         {
             List<string> pendings = new List<string>(files);
-            Console.WriteLine(pendings.Count + " module files found");
+            TraceSource source = new TraceSource("Library");
+            source.TraceInformation(pendings.Count + " module files found");
             int current = pendings.Count;
             int previous;
             while (current != 0)
@@ -400,7 +399,7 @@ namespace Lextm.SharpSnmpLib.Mib
 
                     AddNodes(nodes);
                     parsed.Add(file);
-                    Console.WriteLine(file + " loaded");
+                    source.TraceInformation(file + " loaded");
                 }
 
                 foreach (string p in parsed)
@@ -415,7 +414,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 }
             }
             
-            Console.WriteLine(current + " pending");
+            source.TraceInformation(current + " pending");
             return current;
         }
 

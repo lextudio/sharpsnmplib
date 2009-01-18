@@ -8,6 +8,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 
 namespace Lextm.SharpSnmpLib.Mib
@@ -38,9 +39,8 @@ namespace Lextm.SharpSnmpLib.Mib
             {
                 throw new ArgumentNullException("files");
             }
-
-            Console.WriteLine("loading existing modules started");            
-            Console.WriteLine("loading existing modules ended");
+            
+            TraceSource source = new TraceSource("Library");
             List<MibModule> modules = new List<MibModule>();
             foreach (string file in files)
             {
@@ -48,32 +48,35 @@ namespace Lextm.SharpSnmpLib.Mib
                 {
                     if (_assembler.Tree.LoadedModules.Contains(module.Name) || _assembler.Tree.PendingModules.Contains(module.Name))
                     {
-                        Console.WriteLine(module.Name + " ignored");
+                        source.TraceInformation(module.Name + " ignored");
                         continue;
                     }
                     
                     modules.Add(module);
                 }
                 
-                Console.WriteLine(file + " compiled");
+                source.TraceInformation(file + " compiled");
             }
             
-            Console.WriteLine("loading new modules started");
+            source.TraceInformation("loading new modules started");
             _assembler.RealTree.Import(modules);
             _assembler.RealTree.Refresh();
-            Console.WriteLine("loading new modules ended");
+            source.TraceInformation("loading new modules ended");
             foreach (MibModule module in modules)
             {
                 if (_assembler.Tree.PendingModules.Contains(module.Name))
                 {
-                    Console.WriteLine(module.Name + " pending");
+                    source.TraceInformation(module.Name + " pending");
                 }
                 else
                 {                    
                     PersistModuleToFile(_assembler.Folder, module, _assembler.Tree);
-                    Console.WriteLine(module.Name + " parsed");
+                    source.TraceInformation(module.Name + " parsed");
                 }
             }
+            
+            source.Flush();
+            source.Close();
         }
         
         internal static void PersistModuleToFile(string folder, MibModule module, IObjectTree tree)
