@@ -84,7 +84,7 @@ namespace Lextm.SharpSnmpLib
                 MemoryStream m = new MemoryStream(raw);
                 while (m.Position < raw.Length)
                 {
-                    _list.Add(SnmpDataFactory.CreateSnmpData(m));
+                    _list.Add(DataFactory.CreateSnmpData(m));
                 }
             }
         }

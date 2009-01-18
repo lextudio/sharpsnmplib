@@ -13,40 +13,21 @@ using System.Diagnostics;
 
 namespace Lextm.SharpSnmpLib.Browser
 {
-	internal class ProfileRegistry
-	{
-	    private IPEndPoint _default;
-	    private AgentProfile _defaultProfile;
-	    private string _defaultString;
-
-        private static ProfileRegistry _instance;
-        private static object locker = new object();
-
-        internal static ProfileRegistry Instance
-        {
-            get
-            {
-                lock (locker)
-                {
-                    if (_instance == null)
-                    {
-                        _instance = new ProfileRegistry();
-                    }
-                }
-
-                return _instance;
-            }
-        }
-	    
-	    internal AgentProfile GetProfile(IPEndPoint endpoint)
-	    {
-	        if (profiles.ContainsKey(endpoint)) 
-	        {
-	            return profiles[endpoint];
-	        }
-
-	        return null;
-	    }
+    internal class ProfileRegistry
+    {
+        //private IPEndPoint _default;
+        private AgentProfile _defaultProfile;
+        //private string _defaultString;
+        
+//        internal AgentProfile GetProfile(IPEndPoint endpoint)
+//        {
+//            if (profiles.ContainsKey(endpoint))
+//            {
+//                return profiles[endpoint];
+//            }
+//
+//            return null;
+//        }
 
         internal event EventHandler OnChanged;
 
@@ -60,40 +41,49 @@ namespace Lextm.SharpSnmpLib.Browser
             get { return profiles.Values; }
         }
 
-	    internal AgentProfile DefaultProfile
-	    {
-	        get { return _defaultProfile; }
-	    }
-	    
-	    internal string DefaultString
-	    {
-	        get { return _defaultString; }
-	    }
-	    
-	    internal IPEndPoint Default
-	    {
-	        get { return _default; }
-	        set 
-	        {
-	            if (value == null)
-	            {
-	                throw new ArgumentNullException("value");
-	            }
+        internal AgentProfile DefaultProfile
+        {
+            get { return _defaultProfile; }
+            set
+            {
+                if (value == null)
+                {
+                    throw new ArgumentNullException("value");
+                }
 
-	            _defaultProfile = GetProfile(value);
-	            _default = value;
-	            _defaultString = value.ToString();
-	        }
-	    }
-	    
-	    internal void AddProfile(AgentProfile profile)
-	    {
+                _defaultProfile = value;
+            }
+        }
+        
+//	    internal string DefaultString
+//	    {
+//	        get { return _defaultString; }
+//	    }
+//
+//	    internal IPEndPoint Default
+//	    {
+//	        get { return _default; }
+//	        set
+//	        {
+//	            if (value == null)
+//	            {
+//	                throw new ArgumentNullException("value");
+//	            }
+//
+//	            _defaultProfile = GetProfile(value);
+//	            _default = value;
+//	            _defaultString = value.ToString();
+//	        }
+//	    }
+        
+        internal void AddProfile(AgentProfile profile)
+        {
             AddInternal(profile);
             if (OnChanged != null)
             {
                 OnChanged(null, EventArgs.Empty);
             }
-	    }
+        }
 
         private void AddInternal(AgentProfile profile)
         {
@@ -102,15 +92,15 @@ namespace Lextm.SharpSnmpLib.Browser
                 throw new BrowserException("This endpoint is already registered");
             }
 
-            profiles.Add(profile.Agent, profile);            
+            profiles.Add(profile.Agent, profile);
 
-            if (Default == null)
+            if (DefaultProfile == null)
             {
-                Default = profile.Agent;
+                DefaultProfile = profile;
             }
         }
-	    
-	    private IDictionary<IPEndPoint, AgentProfile> profiles = new Dictionary<IPEndPoint, AgentProfile>();
+        
+        private IDictionary<IPEndPoint, AgentProfile> profiles = new Dictionary<IPEndPoint, AgentProfile>();
 
         internal void DeleteProfile(IPEndPoint profile)
         {
@@ -128,7 +118,7 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void DeleteInternal(IPEndPoint profile, bool replace)
         {
-            if (profile.Equals(Default) && !replace)
+            if (profile.Equals(DefaultProfile.Agent) && !replace)
             {
                 throw new BrowserException("Cannot delete the default endpoint!");
             }
@@ -195,7 +185,7 @@ namespace Lextm.SharpSnmpLib.Browser
                 objXmlTextWriter.WriteEndElement();
 
                 objXmlTextWriter.WriteStartElement("Default");
-                if (Default == k)
+                if (DefaultProfile.Agent == k)
                 {
                     objXmlTextWriter.WriteValue(true);
                 }
@@ -218,7 +208,7 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             AgentProfile first = new AgentProfile(VersionCode.V1, new IPEndPoint(IPAddress.Loopback, 161), "public", "public", "Localhost");
             AddProfile(first);
-            Default = first.Agent;
+            DefaultProfile = first;
         }
 
         internal int LoadProfilesFromFile()
@@ -268,7 +258,7 @@ namespace Lextm.SharpSnmpLib.Browser
                                 case "Set":
                                     set = objXmlTextReader.Value;
                                     break;
-                                case "Default": 
+                                case "Default":
                                     AgentProfile prof = new AgentProfile(vc, new IPEndPoint(def, port), get, set, name);
                                     
                                     AddProfile(prof);
@@ -276,7 +266,7 @@ namespace Lextm.SharpSnmpLib.Browser
                                     bDefault = objXmlTextReader.ReadContentAsBoolean();
                                     if (bDefault)
                                     {
-                                        Default = prof.Agent;
+                                        DefaultProfile = prof;
                                     }
                                     break;
                             }

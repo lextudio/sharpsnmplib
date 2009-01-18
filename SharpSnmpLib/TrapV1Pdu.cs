@@ -38,12 +38,12 @@ namespace Lextm.SharpSnmpLib
         {
             _raw = raw;
             MemoryStream m = new MemoryStream(raw);
-            _enterprise = (ObjectIdentifier)SnmpDataFactory.CreateSnmpData(m);
-            _agent = (IP)SnmpDataFactory.CreateSnmpData(m);
-            _generic = (Integer32)SnmpDataFactory.CreateSnmpData(m);
-            _specific = (Integer32)SnmpDataFactory.CreateSnmpData(m);
-            _timestamp = (TimeTicks)SnmpDataFactory.CreateSnmpData(m);
-            _varbindSection = (Sequence)SnmpDataFactory.CreateSnmpData(m);
+            _enterprise = (ObjectIdentifier)DataFactory.CreateSnmpData(m);
+            _agent = (IP)DataFactory.CreateSnmpData(m);
+            _generic = (Integer32)DataFactory.CreateSnmpData(m);
+            _specific = (Integer32)DataFactory.CreateSnmpData(m);
+            _timestamp = (TimeTicks)DataFactory.CreateSnmpData(m);
+            _varbindSection = (Sequence)DataFactory.CreateSnmpData(m);
             _variables = Variable.Transform(_varbindSection);
         }
        

@@ -26,7 +26,7 @@ namespace Lextm.SharpSnmpLib.Tests
             {                
                 Integer32 _int = new Integer32(i + j);
                 byte[] bytes = _int.ToBytes();
-                Integer32 _else = (Integer32)SnmpDataFactory.CreateSnmpData(bytes);
+                Integer32 _else = (Integer32)DataFactory.CreateSnmpData(bytes);
                 Assert.AreEqual(i + j, _else.ToInt32());
                 try {
                    j = j * 256; 
@@ -42,7 +42,7 @@ namespace Lextm.SharpSnmpLib.Tests
             int i =-2147418240;
             Integer32 _int = new Integer32(i);
             byte[] bytes = _int.ToBytes();
-            Integer32 _else = (Integer32)SnmpDataFactory.CreateSnmpData(bytes);
+            Integer32 _else = (Integer32)DataFactory.CreateSnmpData(bytes);
             Assert.AreEqual(i, _else.ToInt32());
         }
         

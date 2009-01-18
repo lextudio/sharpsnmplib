@@ -11,7 +11,7 @@ using Lextm.SharpSnmpLib.Mib;
 
 namespace Lextm.SharpSnmpLib.Browser
 {
-    public partial class FormTable : Form
+    internal partial class FormTable : Form
     {
         private IDefinition definition;
         private bool columnCountSet;
@@ -19,7 +19,6 @@ namespace Lextm.SharpSnmpLib.Browser
 
         delegate void RefreshTableCallback(IList<Variable> list);
 
-        [CLSCompliant(false)]
         public FormTable(IDefinition def)
         {
             definition = def;
@@ -127,7 +126,7 @@ namespace Lextm.SharpSnmpLib.Browser
             while (true)
             {
                 IList<Variable> list = new List<Variable>();
-                AgentProfile prof = ProfileRegistry.Instance.DefaultProfile;
+                AgentProfile prof = Program.Mediator.Profiles.DefaultProfile;
                 int rows = 0;
 
                 Thread.Sleep(Convert.ToInt32(textBoxRefresh.Text, CultureInfo.CurrentCulture) * 1000);

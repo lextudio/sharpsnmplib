@@ -20,8 +20,8 @@ namespace Lextm.SharpSnmpLib.Browser
 	/// <summary>
 	/// Description of OutputPanel.
 	/// </summary>
-	partial class OutputPanel : DockContent
-	{
+	internal partial class OutputPanel : DockContent
+	{  
 		public OutputPanel()
 		{
 			InitializeComponent();
@@ -29,7 +29,7 @@ namespace Lextm.SharpSnmpLib.Browser
 
         public void WriteLine(string message)
         {
-            txtMessages.AppendText(string.Format(CultureInfo.CurrentCulture, "[{2}] [{0}] {1}", DateTime.Now, message, ProfileRegistry.Instance.Default));
+            txtMessages.AppendText(string.Format(CultureInfo.CurrentCulture, "[{2}] [{0}] {1}", DateTime.Now, message, Program.Mediator.Profiles.DefaultProfile.Agent));
             txtMessages.AppendText(Environment.NewLine);
             txtMessages.ScrollToCaret();
         }

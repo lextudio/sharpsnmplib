@@ -15,7 +15,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// Factory that creates <see cref="ISnmpData"/> instances.
     /// </summary>
-    public static class SnmpDataFactory
+    public static class DataFactory
     {
         /// <summary>
         /// Creates an <see cref="ISnmpData"/> instance from buffer.

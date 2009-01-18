@@ -57,10 +57,10 @@ namespace Lextm.SharpSnmpLib
         {
             _raw = raw;
             MemoryStream m = new MemoryStream(raw);
-            _seq = (Integer32)SnmpDataFactory.CreateSnmpData(m);
-            _nonRepeaters = (Integer32)SnmpDataFactory.CreateSnmpData(m);
-            _maxRepetitions = (Integer32)SnmpDataFactory.CreateSnmpData(m);
-            _varbindSection = (Sequence)SnmpDataFactory.CreateSnmpData(m);
+            _seq = (Integer32)DataFactory.CreateSnmpData(m);
+            _nonRepeaters = (Integer32)DataFactory.CreateSnmpData(m);
+            _maxRepetitions = (Integer32)DataFactory.CreateSnmpData(m);
+            _varbindSection = (Sequence)DataFactory.CreateSnmpData(m);
             _variables = Variable.Transform(_varbindSection);
         }
         

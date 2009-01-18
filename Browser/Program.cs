@@ -16,8 +16,17 @@ namespace Lextm.SharpSnmpLib.Browser
 	/// <summary>
 	/// Class with program entry point.
 	/// </summary>
-	internal sealed class Program
+	internal static class Program
 	{
+	    private static IMediator _mediator;
+	    
+	    internal static IMediator Mediator
+	    {
+	        get
+	        {
+	            return _mediator;
+	        }
+	    }
 		/// <summary>
 		/// Program entry point.
 		/// </summary>
@@ -26,7 +35,9 @@ namespace Lextm.SharpSnmpLib.Browser
 		{         
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new MainForm());
+			MainForm main = new MainForm();
+			_mediator = main;
+			Application.Run(main);
 		}
 		
 	}

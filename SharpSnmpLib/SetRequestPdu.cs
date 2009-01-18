@@ -61,10 +61,10 @@ namespace Lextm.SharpSnmpLib
         {
             _raw = raw;
             MemoryStream m = new MemoryStream(raw);
-            _sequenceNumber = (Integer32)SnmpDataFactory.CreateSnmpData(m);
-            _errorStatus = (Integer32)SnmpDataFactory.CreateSnmpData(m);
-            _errorIndex = (Integer32)SnmpDataFactory.CreateSnmpData(m);
-            _varbindSection = (Sequence)SnmpDataFactory.CreateSnmpData(m);
+            _sequenceNumber = (Integer32)DataFactory.CreateSnmpData(m);
+            _errorStatus = (Integer32)DataFactory.CreateSnmpData(m);
+            _errorIndex = (Integer32)DataFactory.CreateSnmpData(m);
+            _varbindSection = (Sequence)DataFactory.CreateSnmpData(m);
             _variables = Variable.Transform(_varbindSection);
         }
         

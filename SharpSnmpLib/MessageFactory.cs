@@ -87,7 +87,7 @@ namespace Lextm.SharpSnmpLib
             ISnmpData array;
             try
             {
-                array = SnmpDataFactory.CreateSnmpData(first, stream);
+                array = DataFactory.CreateSnmpData(first, stream);
             }
             catch (Exception)
             {

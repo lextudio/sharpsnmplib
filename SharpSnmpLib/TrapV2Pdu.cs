@@ -46,10 +46,10 @@ namespace Lextm.SharpSnmpLib
         {
             _raw = raw;
             MemoryStream m = new MemoryStream(raw);
-            _version = (Integer32)SnmpDataFactory.CreateSnmpData(m); // version number v2c
-            SnmpDataFactory.CreateSnmpData(m); // 0
-            SnmpDataFactory.CreateSnmpData(m); // 0
-            _varbindSection = (Sequence)SnmpDataFactory.CreateSnmpData(m);
+            _version = (Integer32)DataFactory.CreateSnmpData(m); // version number v2c
+            DataFactory.CreateSnmpData(m); // 0
+            DataFactory.CreateSnmpData(m); // 0
+            _varbindSection = (Sequence)DataFactory.CreateSnmpData(m);
             _variables = Variable.Transform(_varbindSection); // v[0] is timestamp. v[1] oid, v[2] value.
             _time = (TimeTicks)_variables[0].Data;
             _variables.RemoveAt(0);

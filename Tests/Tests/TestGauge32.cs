@@ -50,27 +50,27 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestToBytes()
         {
             Gauge32 c0 = new Gauge32(0);
-            Gauge32 r0 = (Gauge32)SnmpDataFactory.CreateSnmpData(c0.ToBytes());
+            Gauge32 r0 = (Gauge32)DataFactory.CreateSnmpData(c0.ToBytes());
             Assert.AreEqual(r0, c0);
             
             Gauge32 c5 = new Gauge32(uint.MaxValue);
-            Gauge32 r5 = (Gauge32)SnmpDataFactory.CreateSnmpData(c5.ToBytes());
+            Gauge32 r5 = (Gauge32)DataFactory.CreateSnmpData(c5.ToBytes());
             Assert.AreEqual(r5, c5);
             
             Gauge32 c4 = new Gauge32(30000000);
-            Gauge32 r4 = (Gauge32)SnmpDataFactory.CreateSnmpData(c4.ToBytes());
+            Gauge32 r4 = (Gauge32)DataFactory.CreateSnmpData(c4.ToBytes());
             Assert.AreEqual(r4, c4);
             
             Gauge32 c3 = new Gauge32(70000);
-            Gauge32 r3 = (Gauge32)SnmpDataFactory.CreateSnmpData(c3.ToBytes());
+            Gauge32 r3 = (Gauge32)DataFactory.CreateSnmpData(c3.ToBytes());
             Assert.AreEqual(r3, c3);
             
             Gauge32 c1 = new Gauge32(13);
-            Gauge32 r1 = (Gauge32)SnmpDataFactory.CreateSnmpData(c1.ToBytes());
+            Gauge32 r1 = (Gauge32)DataFactory.CreateSnmpData(c1.ToBytes());
             Assert.AreEqual(r1, c1);
             
             Gauge32 c2 = new Gauge32(300);
-            Gauge32 r2 = (Gauge32)SnmpDataFactory.CreateSnmpData(c2.ToBytes());
+            Gauge32 r2 = (Gauge32)DataFactory.CreateSnmpData(c2.ToBytes());
             Assert.AreEqual(r2, c2);
             
             Assert.AreEqual(new byte[] {0x42, 0x01, 0x03}, new Gauge32(3).ToBytes());

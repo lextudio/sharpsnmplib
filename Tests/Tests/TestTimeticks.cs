@@ -32,7 +32,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestToBytes()
         {
             TimeTicks time = new TimeTicks(16352);
-            ISnmpData data = SnmpDataFactory.CreateSnmpData(time.ToBytes());
+            ISnmpData data = DataFactory.CreateSnmpData(time.ToBytes());
             Assert.AreEqual(data.TypeCode, SnmpType.TimeTicks);
             Assert.AreEqual(16352, ((TimeTicks)data).ToUInt32());
             

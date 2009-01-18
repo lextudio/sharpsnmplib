@@ -38,7 +38,7 @@ namespace Lextm.SharpSnmpLib.Tests
 
             Sequence a = Variable.Transform(vList);
             byte[] bytes = a.ToBytes();
-            ISnmpData data = SnmpDataFactory.CreateSnmpData(bytes);
+            ISnmpData data = DataFactory.CreateSnmpData(bytes);
             Assert.AreEqual(SnmpType.Sequence, data.TypeCode);
             Sequence array = (Sequence)data;
             Assert.AreEqual(1, array.Items.Count);

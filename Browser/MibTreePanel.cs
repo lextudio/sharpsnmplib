@@ -20,7 +20,7 @@ namespace Lextm.SharpSnmpLib.Browser
     /// Description of MibTreePanel.
     /// </summary>
     partial class MibTreePanel : DockContent
-    {
+    {      
         public MibTreePanel()
         {
             InitializeComponent();
@@ -58,7 +58,7 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             try
             {
-                ProfileRegistry.Instance.DefaultProfile.Get(manager1, GetTextualForm(treeView1.SelectedNode.Tag as IDefinition));
+                Program.Mediator.Profiles.DefaultProfile.Get(manager1, GetTextualForm(treeView1.SelectedNode.Tag as IDefinition));
             }
             catch (Exception ex)
             {
@@ -98,7 +98,7 @@ namespace Lextm.SharpSnmpLib.Browser
             {
                 using (FormSet form = new FormSet())
                 {
-                    form.OldVal = ProfileRegistry.Instance.DefaultProfile.GetValue(manager1, GetTextualForm(treeView1.SelectedNode.Tag as IDefinition));
+                    form.OldVal = Program.Mediator.Profiles.DefaultProfile.GetValue(manager1, GetTextualForm(treeView1.SelectedNode.Tag as IDefinition));
                     if (form.ShowDialog() == DialogResult.OK)
                     {
                         //
@@ -108,7 +108,7 @@ namespace Lextm.SharpSnmpLib.Browser
                         if (form.IsString)
                         {
                             OctetString newVal = new OctetString(form.NewVal);
-                            ProfileRegistry.Instance.DefaultProfile.Set(manager1, GetTextualForm(treeView1.SelectedNode.Tag as IDefinition), newVal);
+                            Program.Mediator.Profiles.DefaultProfile.Set(manager1, GetTextualForm(treeView1.SelectedNode.Tag as IDefinition), newVal);
                         }
                         else
                         {
@@ -121,7 +121,7 @@ namespace Lextm.SharpSnmpLib.Browser
                             }
 
                             Integer32 newVal = new Integer32(result);
-                            ProfileRegistry.Instance.DefaultProfile.Set(manager1, GetTextualForm(treeView1.SelectedNode.Tag as IDefinition), newVal);
+                            Program.Mediator.Profiles.DefaultProfile.Set(manager1, GetTextualForm(treeView1.SelectedNode.Tag as IDefinition), newVal);
                         }
 
                         //
@@ -180,7 +180,7 @@ namespace Lextm.SharpSnmpLib.Browser
                 }
                 else
                 {
-                    ProfileRegistry.Instance.DefaultProfile.Walk(manager1, treeView1.SelectedNode.Tag as IDefinition);
+                    Program.Mediator.Profiles.DefaultProfile.Walk(manager1, treeView1.SelectedNode.Tag as IDefinition);
                 }
 
             }
@@ -266,7 +266,7 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             try
             {
-                ProfileRegistry.Instance.DefaultProfile.Get(manager1, GetTextualForm(treeView1.SelectedNode.NextNode.Tag as IDefinition));
+                Program.Mediator.Profiles.DefaultProfile.Get(manager1, GetTextualForm(treeView1.SelectedNode.NextNode.Tag as IDefinition));
             }
             catch (Exception ex)
             {
@@ -299,12 +299,12 @@ namespace Lextm.SharpSnmpLib.Browser
                     switch (node.ImageIndex)
                     {
                         case 3:
-                            ProfileRegistry.Instance.DefaultProfile.Walk(manager1, node.Tag as IDefinition);
+                            Program.Mediator.Profiles.DefaultProfile.Walk(manager1, node.Tag as IDefinition);
                             break;
                         default:
                             if (Validate(node))
                             {
-                                ProfileRegistry.Instance.DefaultProfile.Get(manager1, GetTextualForm(node.Tag as IDefinition));
+                                Program.Mediator.Profiles.DefaultProfile.Get(manager1, GetTextualForm(node.Tag as IDefinition));
                             }
                             else
                             {

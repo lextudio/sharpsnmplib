@@ -1,17 +1,28 @@
-﻿using WeifenLuo.WinFormsUI.Docking;
-using System.Windows.Forms;
+﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Net;
-using System.Diagnostics;
+using System.Windows.Forms;
+
+using WeifenLuo.WinFormsUI.Docking;
 
 namespace Lextm.SharpSnmpLib.Browser
 {
-    public partial class AgentProfilePanel : DockContent
+    internal partial class AgentProfilePanel : DockContent
     {
+        private ProfileRegistry _profiles = new ProfileRegistry();
+        
+        public ProfileRegistry Profiles
+        {
+            get { return _profiles; }
+        }
+        
         public AgentProfilePanel()
         {
             InitializeComponent();
-            ProfileRegistry.Instance.OnChanged += UpdateView;
+            _profiles.LoadProfiles();
+            UpdateView(this, EventArgs.Empty);
+            _profiles.OnChanged += UpdateView;            
         }
 
         private void AgentProfilePanel_Load(object sender, System.EventArgs e)
@@ -24,7 +35,7 @@ namespace Lextm.SharpSnmpLib.Browser
             string display = "";
 
             listView1.Items.Clear();
-            foreach (AgentProfile profile in ProfileRegistry.Instance.Profiles)
+            foreach (AgentProfile profile in _profiles.Profiles)
             {
                 if (profile.Name.Length != 0)
                 {
@@ -60,7 +71,7 @@ namespace Lextm.SharpSnmpLib.Browser
                 //
                 // Lets make the default Agent bold
                 //
-                if (profile.Agent.Equals(ProfileRegistry.Instance.Default))
+                if (profile == _profiles.DefaultProfile)
                 {
                     item.Font = new Font(listView1.Font, FontStyle.Bold);
                 }
@@ -71,7 +82,7 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void actDelete_Update(object sender, System.EventArgs e)
         {
-            if (listView1.SelectedItems.Count == 1 && ProfileRegistry.Instance.Default == (listView1.SelectedItems[0].Tag as AgentProfile).Agent)
+            if (listView1.SelectedItems.Count == 1 && _profiles.DefaultProfile == listView1.SelectedItems[0].Tag as AgentProfile)
             {
                 actDelete.Enabled = false;
             }
@@ -88,7 +99,7 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void actDefault_Update(object sender, System.EventArgs e)
         {
-            if (listView1.SelectedItems.Count == 1 && ProfileRegistry.Instance.Default == (listView1.SelectedItems[0].Tag as AgentProfile).Agent)
+            if (listView1.SelectedItems.Count == 1 && _profiles.DefaultProfile == listView1.SelectedItems[0].Tag as AgentProfile)
             {
                 actDefault.Enabled = false;
             }
@@ -100,7 +111,8 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void actDefault_Execute(object sender, System.EventArgs e)
         {
-            ProfileRegistry.Instance.Default = (listView1.SelectedItems[0].Tag as AgentProfile).Agent;
+            _profiles.DefaultProfile = listView1.SelectedItems[0].Tag as AgentProfile;
+            _profiles.SaveProfiles();
 
             //
             // Update view for new default agent
@@ -110,7 +122,7 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void actionList1_Update(object sender, System.EventArgs e)
         {
-            tslblDefault.Text = "Default agent is " + ProfileRegistry.Instance.DefaultProfile.Name;
+            tslblDefault.Text = "Default agent is " + _profiles.DefaultProfile.Name;
         }
 
         private void actDelete_Execute(object sender, System.EventArgs e)
@@ -122,8 +134,8 @@ namespace Lextm.SharpSnmpLib.Browser
 
             try
             {
-                ProfileRegistry.Instance.DeleteProfile((listView1.SelectedItems[0].Tag as AgentProfile).Agent);
-                ProfileRegistry.Instance.SaveProfiles();
+                _profiles.DeleteProfile((listView1.SelectedItems[0].Tag as AgentProfile).Agent);
+                _profiles.SaveProfiles();
             }
             catch (BrowserException ex)
             {
@@ -142,8 +154,8 @@ namespace Lextm.SharpSnmpLib.Browser
                 {
                     try
                     {
-                        ProfileRegistry.Instance.AddProfile(new AgentProfile(editor.VersionCode, new IPEndPoint(editor.IP, editor.Port), editor.GetCommunity, editor.SetCommunity, editor.AgentName));
-                        ProfileRegistry.Instance.SaveProfiles();
+                        _profiles.AddProfile(new AgentProfile(editor.VersionCode, new IPEndPoint(editor.IP, editor.Port), editor.GetCommunity, editor.SetCommunity, editor.AgentName));
+                        _profiles.SaveProfiles();
                     }
                     catch (BrowserException ex)
                     {
@@ -158,13 +170,13 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void actEdit_Execute(object sender, System.EventArgs e)
         {
-            AgentProfile profile = ProfileRegistry.Instance.GetProfile((listView1.SelectedItems[0].Tag as AgentProfile).Agent);
+            AgentProfile profile = listView1.SelectedItems[0].Tag as AgentProfile;
             using (FormProfile editor = new FormProfile(profile))
             {
                 if (editor.ShowDialog() == DialogResult.OK)
                 {
-                    ProfileRegistry.Instance.ReplaceProfile(new AgentProfile(editor.VersionCode, new IPEndPoint(editor.IP, editor.Port), editor.GetCommunity, editor.SetCommunity, editor.AgentName));
-                    ProfileRegistry.Instance.SaveProfiles();
+                    _profiles.ReplaceProfile(new AgentProfile(editor.VersionCode, new IPEndPoint(editor.IP, editor.Port), editor.GetCommunity, editor.SetCommunity, editor.AgentName));
+                    _profiles.SaveProfiles();
                 }
             }
         }

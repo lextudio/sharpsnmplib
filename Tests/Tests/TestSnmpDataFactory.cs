@@ -19,7 +19,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestCreateObjectIdentifier()
         {
             byte[] expected = new byte[] {0x06, 0x0A, 0x2B, 0x06, 0x01, 0x04, 0x01, 0x90, 0x72, 0x87, 0x68, 0x02};
-            ISnmpData data = SnmpDataFactory.CreateSnmpData(expected);
+            ISnmpData data = DataFactory.CreateSnmpData(expected);
             Assert.AreEqual(SnmpType.ObjectIdentifier, data.TypeCode);
             ObjectIdentifier o = (ObjectIdentifier)data;
             Assert.AreEqual(new uint[] { 1, 3, 6, 1, 4, 1, 2162, 1000, 2 }, o.ToNumerical());
@@ -29,7 +29,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestCreateObjectIdentifier2()
         {
             byte[] expected = new Byte[] {0x06, 0x01, 0x00};
-            ISnmpData data = SnmpDataFactory.CreateSnmpData(expected);
+            ISnmpData data = DataFactory.CreateSnmpData(expected);
             Assert.AreEqual(SnmpType.ObjectIdentifier, data.TypeCode);
             ObjectIdentifier o = (ObjectIdentifier)data;
             Assert.AreEqual(new uint[] {0, 0}, o.ToNumerical());
@@ -39,7 +39,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestCreateNull()
         {
             byte[] expected = new byte[] {0x05, 0x00};
-            ISnmpData data = SnmpDataFactory.CreateSnmpData(expected);
+            ISnmpData data = DataFactory.CreateSnmpData(expected);
             Assert.AreEqual(SnmpType.Null, data.TypeCode);
             Null n = (Null)data;
             Assert.AreEqual(expected, n.ToBytes());
@@ -48,7 +48,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestCreateInteger()
         {
             byte[] expected = new byte[] {0x02, 0x01, 0x00};
-            ISnmpData data = SnmpDataFactory.CreateSnmpData(expected);
+            ISnmpData data = DataFactory.CreateSnmpData(expected);
             Assert.AreEqual(SnmpType.Integer32, data.TypeCode);
             Integer32 i = (Integer32)data;
             Assert.AreEqual(0, i.ToInt32());
@@ -57,7 +57,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestCreateOctetString()
         {
             byte[] expected = new byte[] {0x04, 0x06, 0x70, 0x75, 0x62, 0x6C, 0x69, 0x63};
-            ISnmpData data = SnmpDataFactory.CreateSnmpData(expected);
+            ISnmpData data = DataFactory.CreateSnmpData(expected);
             Assert.AreEqual(SnmpType.OctetString, data.TypeCode);
             Assert.AreEqual("public", data.ToString());
         }
@@ -65,7 +65,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestCreateIP()
         {
             byte[] expected = new byte[] { 0x40, 0x04, 0x7F, 0x00, 0x00, 0x01};
-            ISnmpData data = SnmpDataFactory.CreateSnmpData(expected);
+            ISnmpData data = DataFactory.CreateSnmpData(expected);
             Assert.AreEqual(SnmpType.IPAddress, data.TypeCode);
             IP a = (IP)data;
             Assert.AreEqual("127.0.0.1", a.ToString());
@@ -74,7 +74,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestTimeticks()
         {
             byte[] expected = new byte[] { 0x43, 0x02, 0x3F, 0xE0 };
-            ISnmpData data = SnmpDataFactory.CreateSnmpData(expected);
+            ISnmpData data = DataFactory.CreateSnmpData(expected);
             Assert.AreEqual(SnmpType.TimeTicks, data.TypeCode);
             TimeTicks t = (TimeTicks)data;
             Assert.AreEqual(16352, t.ToUInt32());
@@ -85,7 +85,7 @@ namespace Lextm.SharpSnmpLib.Tests
             byte[] expected = new byte[] {0x30, 0x17,
                 0x06, 0x0B, 0x2B, 0x06, 0x01, 0x04, 0x01, 0x90, 0x72, 0x87, 0x69, 0x15, 0x00,
                 0x04, 0x08, 0x54, 0x72, 0x61, 0x70, 0x54, 0x65, 0x73, 0x74};
-            ISnmpData data = SnmpDataFactory.CreateSnmpData(expected);
+            ISnmpData data = DataFactory.CreateSnmpData(expected);
             Assert.AreEqual(SnmpType.Sequence, data.TypeCode);
             Sequence a = (Sequence)data;
             Assert.AreEqual(2, a.Items.Count);
@@ -106,7 +106,7 @@ namespace Lextm.SharpSnmpLib.Tests
                 0x30, 0x17,
                 0x06, 0x0B, 0x2B, 0x06, 0x01, 0x04, 0x01, 0x90, 0x72, 0x87, 0x69, 0x15, 0x00,
                 0x04, 0x08, 0x54, 0x72, 0x61, 0x70, 0x54, 0x65, 0x73, 0x74};
-            ISnmpData data = SnmpDataFactory.CreateSnmpData(expected);
+            ISnmpData data = DataFactory.CreateSnmpData(expected);
             Assert.AreEqual(SnmpType.Sequence, data.TypeCode);
             
             Sequence a = (Sequence)data;
@@ -127,7 +127,7 @@ namespace Lextm.SharpSnmpLib.Tests
                 0x30, 0x17,
                 0x06, 0x0B, 0x2B, 0x06, 0x01, 0x04, 0x01, 0x90, 0x72, 0x87, 0x69, 0x15, 0x00,
                 0x04, 0x08, 0x54, 0x72, 0x61, 0x70, 0x54, 0x65, 0x73, 0x74};
-            ISnmpData data = SnmpDataFactory.CreateSnmpData(expected);
+            ISnmpData data = DataFactory.CreateSnmpData(expected);
             Assert.AreEqual(SnmpType.TrapV1Pdu, data.TypeCode);
             
             TrapV1Pdu t = (TrapV1Pdu)data;
@@ -155,7 +155,7 @@ namespace Lextm.SharpSnmpLib.Tests
                 0x30, 0x17,
                 0x06, 0x0B, 0x2B, 0x06, 0x01, 0x04, 0x01, 0x90, 0x72, 0x87, 0x69, 0x15, 0x00,
                 0x04, 0x08, 0x54, 0x72, 0x61, 0x70, 0x54, 0x65, 0x73, 0x74};
-            ISnmpData data = SnmpDataFactory.CreateSnmpData(expected);
+            ISnmpData data = DataFactory.CreateSnmpData(expected);
             Assert.AreEqual(SnmpType.Sequence, data.TypeCode);
             
             Sequence t = (Sequence)data;
