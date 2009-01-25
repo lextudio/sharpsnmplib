@@ -53,6 +53,11 @@ namespace Lextm.SharpSnmpLib
         /// <param name="stream">The stream.</param>
         public Integer32(int length, Stream stream)
         {
+            if (stream == null)
+            {
+                throw new ArgumentNullException("stream");
+            }
+
             if (length == 0)
             {
                 throw new ArgumentException("length cannot be 0.", "length");

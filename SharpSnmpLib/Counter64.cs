@@ -38,6 +38,11 @@ namespace Lextm.SharpSnmpLib
         /// <param name="stream">The stream.</param>
         public Counter64(int length, Stream stream)
         {
+            if (stream == null)
+            {
+                throw new ArgumentNullException("stream");
+            }
+
             if (length == 0 || length > 9)
             {
                 throw new ArgumentException("byte length must between 1 and 9");

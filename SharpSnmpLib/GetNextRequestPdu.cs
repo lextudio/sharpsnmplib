@@ -9,6 +9,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Diagnostics;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -63,12 +64,13 @@ namespace Lextm.SharpSnmpLib
         /// <param name="stream">The stream.</param>
         public GetNextRequestPdu(int length, Stream stream)
         {
-            // TODO: _raw = raw;
             _seq = (Integer32)DataFactory.CreateSnmpData(stream);
             _errorStatus = (Integer32)DataFactory.CreateSnmpData(stream);
             _errorIndex = (Integer32)DataFactory.CreateSnmpData(stream);
             _varbindSection = (Sequence)DataFactory.CreateSnmpData(stream);
             _variables = Variable.Transform(_varbindSection);
+            _raw = ByteTool.ParseItems(_seq, _errorStatus, _errorIndex, _varbindSection);
+            Debug.Assert(length >= _raw.Length);
         }
         
         internal int SequenceNumber

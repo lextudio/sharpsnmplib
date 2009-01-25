@@ -65,7 +65,7 @@ namespace Lextm.SharpSnmpLib
         /// Creates an <see cref="ObjectIdentifier"/> instance from raw bytes.
         /// </summary>
         /// <param name="raw">Raw bytes</param>
-        public ObjectIdentifier(byte[] raw): this(raw.Length, new MemoryStream(raw))
+        internal ObjectIdentifier(byte[] raw): this(raw.Length, new MemoryStream(raw))
         {
 
         }
@@ -77,6 +77,11 @@ namespace Lextm.SharpSnmpLib
         /// <param name="stream">The stream.</param>
         public ObjectIdentifier(int length, Stream stream)
         {
+            if (stream == null)
+            {
+                throw new ArgumentNullException("stream");
+            }
+
             byte[] raw = new byte[length];
             stream.Read(raw, 0, length);
             if (length == 0)

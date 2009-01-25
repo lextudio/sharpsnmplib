@@ -84,6 +84,11 @@ namespace Lextm.SharpSnmpLib
         /// <param name="stream">The stream.</param>
         public Sequence(int length, Stream stream)
         {
+            if (stream == null)
+            {
+                throw new ArgumentNullException("stream");
+            }
+
             long original = stream.Position;
             if (length != 0)
             {

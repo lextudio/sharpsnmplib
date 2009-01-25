@@ -49,6 +49,11 @@ namespace Lextm.SharpSnmpLib
         /// <param name="stream">The stream.</param>
         public IP(int length, Stream stream)
         {
+            if (stream == null)
+            {
+                throw new ArgumentNullException("stream");
+            }
+
             if (length != 4)
             {
                 throw new ArgumentException("bytes must contain 4 elements");

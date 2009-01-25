@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Net;
 using Lextm.SharpSnmpLib.Mib;
+using System.Threading;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -496,7 +497,7 @@ namespace Lextm.SharpSnmpLib
 
             int result = 0;
             Variable tableV = new Variable(table);
-            Variable seed = null;
+            Variable seed;
             Variable next = tableV;
             do
             {
@@ -543,7 +544,7 @@ namespace Lextm.SharpSnmpLib
             int result = 0;
             int index = -1;
             Variable tableV = new Variable(table);
-            Variable seed = null;
+            Variable seed;
             Variable next = tableV;
             bool first = true;
             bool oldWay = false;
@@ -641,10 +642,7 @@ namespace Lextm.SharpSnmpLib
 
             set
             {
-                lock (locker)
-                {
-                    _timeout = value;
-                }
+                Interlocked.Exchange(ref _timeout, value);
             }
         }
 
@@ -654,7 +652,9 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public override string ToString()
         {
+// ReSharper disable RedundantToStringCall
             return "SNMP manager: timeout: " + Timeout.ToString(CultureInfo.InvariantCulture) + "; version: " + DefaultVersion.ToString() + "; " + trapListener;
+// ReSharper restore RedundantToStringCall
         }
 
         private void TrapListener_TrapV1Received(object sender, TrapV1ReceivedEventArgs e)
@@ -719,13 +719,15 @@ namespace Lextm.SharpSnmpLib
 
             return result;
         }
-
+// ReSharper disable all
         private void InitializeComponent()
         {
+
             this.trapListener = new SharpSnmpLib.TrapListener();
             this.trapListener.TrapV1Received += new System.EventHandler<SharpSnmpLib.TrapV1ReceivedEventArgs>(this.TrapListener_TrapV1Received);
             this.trapListener.TrapV2Received += new System.EventHandler<SharpSnmpLib.TrapV2ReceivedEventArgs>(this.TrapListener_TrapV2Received);
             this.trapListener.InformRequestReceived += new System.EventHandler<SharpSnmpLib.InformRequestReceivedEventArgs>(this.TrapListener_InformRequestReceived);
         }
+// ReSharper restore all
     }
 }

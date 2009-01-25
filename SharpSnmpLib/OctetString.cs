@@ -230,6 +230,11 @@ namespace Lextm.SharpSnmpLib
         /// <param name="stream">The stream.</param>
         public OctetString(int length, Stream stream)
         {
+            if (stream == null)
+            {
+                throw new ArgumentNullException("stream");
+            }
+
             _raw = new byte[length];
             stream.Read(_raw, 0, length);
             _encoding = DefaultEncoding;
