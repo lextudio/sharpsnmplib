@@ -8,10 +8,7 @@
  */
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Net;
-using System.Net.Sockets;
-using System.Text;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -20,12 +17,12 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public class ReportMessage : ISnmpMessage
     {
-        private VersionCode _version;
-        private IList<Variable> _variables;
-        private byte[] _bytes;
-        private OctetString _community;
-        private ISnmpPdu _pdu;
-        private int _sequenceNumber;
+        private readonly VersionCode _version;
+        private readonly IList<Variable> _variables;
+        private readonly byte[] _bytes;
+        private readonly OctetString _community;
+        private readonly ISnmpPdu _pdu;
+        private readonly int _sequenceNumber;
         
         /// <summary>
         /// Creates a <see cref="ReportMessage"/> with all contents.
@@ -136,7 +133,7 @@ namespace Lextm.SharpSnmpLib
         }
         
         /// <summary>
-        /// Returns a <see cref="String"/> that represents this <see cref="ReportMessage"/>.
+        /// Returns a <see cref="string"/> that represents this <see cref="ReportMessage"/>.
         /// </summary>
         /// <returns></returns>
         public override string ToString()

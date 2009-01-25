@@ -15,7 +15,7 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public class ExceptionRaisedEventArgs : EventArgs
     {
-        private Exception _ex;
+        private readonly Exception _ex;
         
         /// <summary>
         /// Creates an <see cref="ExceptionRaisedEventArgs"/>.

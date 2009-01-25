@@ -7,17 +7,15 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
     internal sealed class TrapType : IConstruct
     {
-        private string _module;
-        private int _value;
-        private string _name;
+        private readonly string _module;
+        private readonly int _value;
+        private readonly string _name;
 
         public TrapType(string module, IList<Symbol> header, Lexer lexer)
         {

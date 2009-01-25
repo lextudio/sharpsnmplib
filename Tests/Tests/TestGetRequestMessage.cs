@@ -8,6 +8,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 
@@ -34,7 +35,17 @@ namespace Lextm.SharpSnmpLib.Tests
             Variable v = pdu.Variables[0];
             Assert.AreEqual(new uint[] { 1, 3, 6, 1, 2, 1, 1, 6, 0 }, v.Id.ToNumerical());
             Assert.AreEqual(typeof(Null), v.Data.GetType());
+            Assert.GreaterOrEqual(expected.Length, message.ToBytes().Length);
 		}
+
+        [Test]
+        public void TestConstructor()
+        {
+            List<Variable> list = new List<Variable>(1);
+            list.Add(new Variable(new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 1, 6, 0 }), new Null()));
+            GetRequestMessage message = new GetRequestMessage(VersionCode.V2, new OctetString("public"), list);
+            Assert.GreaterOrEqual(Resource.get.Length, message.ToBytes().Length);
+        }
 	}
 }
 #pragma warning restore 1591

@@ -8,6 +8,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 
@@ -18,33 +19,25 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     /// <remarks>represents the PDU of trap v1 message.</remarks>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu")]
-    public class TrapV1Pdu : ISnmpPdu, ISnmpData
+    public class TrapV1Pdu : ISnmpPdu
     {
         private byte[] _bytes;    
-        private byte[] _raw;
-        private ObjectIdentifier _enterprise;
-        private IP _agent;
-        private Integer32 _generic;
-        private Integer32 _specific;
-        private TimeTicks _timestamp;
-        private Sequence _varbindSection;
-        private IList<Variable> _variables;    
+        private readonly byte[] _raw;
+        private readonly ObjectIdentifier _enterprise;
+        private readonly IP _agent;
+        private readonly Integer32 _generic;
+        private readonly Integer32 _specific;
+        private readonly TimeTicks _timestamp;
+        private readonly Sequence _varbindSection;
+        private readonly IList<Variable> _variables;    
       
         /// <summary>
         /// Creates a <see cref="TrapV1Pdu"/> instance with raw bytes.
         /// </summary>
         /// <param name="raw">Raw bytes</param>
-        public TrapV1Pdu(byte[] raw)
+        private TrapV1Pdu(byte[] raw): this(raw.Length, new MemoryStream(raw))
         {
-            _raw = raw;
-            MemoryStream m = new MemoryStream(raw);
-            _enterprise = (ObjectIdentifier)DataFactory.CreateSnmpData(m);
-            _agent = (IP)DataFactory.CreateSnmpData(m);
-            _generic = (Integer32)DataFactory.CreateSnmpData(m);
-            _specific = (Integer32)DataFactory.CreateSnmpData(m);
-            _timestamp = (TimeTicks)DataFactory.CreateSnmpData(m);
-            _varbindSection = (Sequence)DataFactory.CreateSnmpData(m);
-            _variables = Variable.Transform(_varbindSection);
+
         }
        
         /// <summary>
@@ -81,8 +74,26 @@ namespace Lextm.SharpSnmpLib
             _varbindSection = Variable.Transform(variables);
             _variables = variables;
             _raw = ByteTool.ParseItems(_enterprise, _agent, _generic, _specific, _timestamp, _varbindSection);
-        }   
-        
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TrapV1Pdu"/> class.
+        /// </summary>
+        /// <param name="length">The length.</param>
+        /// <param name="stream">The stream.</param>
+        public TrapV1Pdu(int length, Stream stream)
+        {
+            _enterprise = (ObjectIdentifier)DataFactory.CreateSnmpData(stream);
+            _agent = (IP)DataFactory.CreateSnmpData(stream);
+            _generic = (Integer32)DataFactory.CreateSnmpData(stream);
+            _specific = (Integer32)DataFactory.CreateSnmpData(stream);
+            _timestamp = (TimeTicks)DataFactory.CreateSnmpData(stream);
+            _varbindSection = (Sequence)DataFactory.CreateSnmpData(stream);
+            _variables = Variable.Transform(_varbindSection);
+            _raw = ByteTool.ParseItems(_enterprise, _agent, _generic, _specific, _timestamp, _varbindSection);
+            Debug.Assert(length >= _raw.Length);
+        }
+
         /// <summary>
         /// Type code.
         /// </summary>
@@ -173,7 +184,7 @@ namespace Lextm.SharpSnmpLib
         }
 
         /// <summary>
-        /// Returns a <see cref="String"/> that represents this <see cref="TrapV1Pdu"/>.
+        /// Returns a <see cref="string"/> that represents this <see cref="TrapV1Pdu"/>.
         /// </summary>
         /// <returns></returns>
         public override string ToString()

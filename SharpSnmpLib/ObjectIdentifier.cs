@@ -11,7 +11,7 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public sealed class ObjectIdentifier : ISnmpData, IEquatable<ObjectIdentifier>
     {
-        private uint[] _oid;
+        private readonly uint[] _oid;
         
         /// <summary>
         /// Creates an <see cref="ObjectIdentifier"/> instance from textual ID.
@@ -27,10 +27,8 @@ namespace Lextm.SharpSnmpLib
             {
                 return Mib.ObjectRegistry.Instance.Translate(text);
             }
-            else
-            {
-                return ObjectIdentifier.Convert(text);
-            }
+
+            return Convert(text);
         }
         
         /// <summary>
@@ -67,21 +65,23 @@ namespace Lextm.SharpSnmpLib
         /// Creates an <see cref="ObjectIdentifier"/> instance from raw bytes.
         /// </summary>
         /// <param name="raw">Raw bytes</param>
-        public ObjectIdentifier(byte[] raw)
+        public ObjectIdentifier(byte[] raw): this(raw.Length, new MemoryStream(raw))
         {
-            _oid = ParseRaw(raw);
+
         }
 
-        private static uint[] ParseRaw(byte[] raw)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ObjectIdentifier"/> class.
+        /// </summary>
+        /// <param name="length">The length.</param>
+        /// <param name="stream">The stream.</param>
+        public ObjectIdentifier(int length, Stream stream)
         {
-            if (raw == null)
+            byte[] raw = new byte[length];
+            stream.Read(raw, 0, length);
+            if (length == 0)
             {
-                throw new ArgumentNullException("raw");
-            }
-
-            if (raw.Length == 0)
-            {
-                throw new ArgumentException("raw cannot be empty", "raw");
+                throw new ArgumentException("length cannot be 0", "length");
             }
 
             List<uint> result = new List<uint>();
@@ -102,7 +102,7 @@ namespace Lextm.SharpSnmpLib
                 }
             }
             
-            return result.ToArray();
+            _oid = result.ToArray();
         }
 
         /// <summary>
@@ -285,8 +285,8 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
         public static bool Equals(ObjectIdentifier left, ObjectIdentifier right)
         {
-            object lo = left as object;
-            object ro = right as object;
+            object lo = left;
+            object ro = right;
             if (lo == ro)
             {
                 return true;

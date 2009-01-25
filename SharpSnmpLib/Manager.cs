@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Net;
-
 using Lextm.SharpSnmpLib.Mib;
 
 namespace Lextm.SharpSnmpLib
@@ -22,7 +21,7 @@ namespace Lextm.SharpSnmpLib
         private TrapListener trapListener;
         private VersionCode _version;
         private int _timeout = 5000;
-        private object locker = new object();
+        private readonly object locker = new object();
 
         /// <summary>
         /// Creates a <see cref="Manager"></see> instance.

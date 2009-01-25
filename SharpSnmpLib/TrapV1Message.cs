@@ -10,7 +10,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Net;
 using System.Net.Sockets;
 
@@ -21,16 +20,16 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public class TrapV1Message : ISnmpMessage
     {
-        private uint _time;
-        private OctetString _community;
-        private ObjectIdentifier _enterprise;
-        private IPAddress _agent;
-        private GenericCode _generic;
-        private int _specific;
-        private IList<Variable> _variables;
-        private VersionCode _version;
-        private ISnmpPdu _pdu;
-        private byte[] _bytes;
+        private readonly uint _time;
+        private readonly OctetString _community;
+        private readonly ObjectIdentifier _enterprise;
+        private readonly IPAddress _agent;
+        private readonly GenericCode _generic;
+        private readonly int _specific;
+        private readonly IList<Variable> _variables;
+        private readonly VersionCode _version;
+        private readonly ISnmpPdu _pdu;
+        private readonly byte[] _bytes;
         
         /// <summary>
         /// Creates a <see cref="TrapV1Message"/> with all content.
@@ -253,7 +252,7 @@ namespace Lextm.SharpSnmpLib
         }
         
         /// <summary>
-        /// Returns a <see cref="String"/> that represents the current <see cref="TrapV1Message"/>.
+        /// Returns a <see cref="string"/> that represents the current <see cref="TrapV1Message"/>.
         /// </summary>
         /// <returns></returns>
         public override string ToString()

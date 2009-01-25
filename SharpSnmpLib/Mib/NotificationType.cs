@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
     internal sealed class NotificationType : IEntity
     {
-        private string _module;
+        private readonly string _module;
         private string _parent;
-        private uint _value;
-        private string _name;
+        private readonly uint _value;
+        private readonly string _name;
 
         public NotificationType(string module, IList<Symbol> header, Lexer lexer)
         {

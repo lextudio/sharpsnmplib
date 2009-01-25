@@ -38,7 +38,7 @@ namespace Lextm.SharpSnmpLib
         }
         
         /// <summary>
-        /// Creates a <see cref="SharpTimeoutException"/> instance with a specific <see cref="String"/>.
+        /// Creates a <see cref="SharpTimeoutException"/> instance with a specific <see cref="string"/>.
         /// </summary>
         /// <param name="message">Message</param>
         public SharpTimeoutException(string message) : base(message)
@@ -46,7 +46,7 @@ namespace Lextm.SharpSnmpLib
         }
         
         /// <summary>
-        /// Creates a <see cref="SharpTimeoutException"/> instance with a specific <see cref="String"/> and an <see cref="Exception"/> instance.
+        /// Creates a <see cref="SharpTimeoutException"/> instance with a specific <see cref="string"/> and an <see cref="Exception"/> instance.
         /// </summary>
         /// <param name="message">Message</param>
         /// <param name="inner">Inner exception</param>

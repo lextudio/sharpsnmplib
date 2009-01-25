@@ -6,11 +6,10 @@
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
-using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using System.Text;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -20,12 +19,12 @@ namespace Lextm.SharpSnmpLib
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu")]
     public class GetBulkRequestPdu : ISnmpPdu
     {
-        private Integer32 _nonRepeaters;
-        private Integer32 _maxRepetitions;
-        private IList<Variable> _variables;
-        private Integer32 _seq;
-        private byte[] _raw;
-        private Sequence _varbindSection;
+        private readonly Integer32 _nonRepeaters;
+        private readonly Integer32 _maxRepetitions;
+        private readonly IList<Variable> _variables;
+        private readonly Integer32 _seq;
+        private readonly byte[] _raw;
+        private readonly Sequence _varbindSection;
         private byte[] _bytes;
         
         /// <summary>
@@ -53,15 +52,25 @@ namespace Lextm.SharpSnmpLib
         /// Creates a <see cref="GetBulkRequestPdu"/> with raw bytes.
         /// </summary>
         /// <param name="raw">Raw bytes</param>
-        public GetBulkRequestPdu(byte[] raw)
+        private GetBulkRequestPdu(byte[] raw): this(raw.Length, new MemoryStream(raw))
         {
-            _raw = raw;
-            MemoryStream m = new MemoryStream(raw);
-            _seq = (Integer32)DataFactory.CreateSnmpData(m);
-            _nonRepeaters = (Integer32)DataFactory.CreateSnmpData(m);
-            _maxRepetitions = (Integer32)DataFactory.CreateSnmpData(m);
-            _varbindSection = (Sequence)DataFactory.CreateSnmpData(m);
+
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetBulkRequestPdu"/> class.
+        /// </summary>
+        /// <param name="length">The length.</param>
+        /// <param name="stream">The stream.</param>
+        public GetBulkRequestPdu(int length, Stream stream)
+        {
+            _seq = (Integer32)DataFactory.CreateSnmpData(stream);
+            _nonRepeaters = (Integer32)DataFactory.CreateSnmpData(stream);
+            _maxRepetitions = (Integer32)DataFactory.CreateSnmpData(stream);
+            _varbindSection = (Sequence)DataFactory.CreateSnmpData(stream);
             _variables = Variable.Transform(_varbindSection);
+            _raw = ByteTool.ParseItems(_seq, _nonRepeaters, _maxRepetitions, _varbindSection);
+            Debug.Assert(length >= _raw.Length);
         }
         
         internal int SequenceNumber
@@ -127,7 +136,7 @@ namespace Lextm.SharpSnmpLib
         #endregion
         
         /// <summary>
-        /// Returns a <see cref="String"/> that represents this <see cref="GetBulkRequestPdu"/>.
+        /// Returns a <see cref="string"/> that represents this <see cref="GetBulkRequestPdu"/>.
         /// </summary>
         /// <returns></returns>
         public override string ToString()

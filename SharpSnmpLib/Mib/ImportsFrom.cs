@@ -7,15 +7,14 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 
-using System;
 using System.Collections.Generic;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
     internal sealed class ImportsFrom
     {
-        private string _module;
-        private IList<string> _types = new List<string>();
+        private readonly string _module;
+        private readonly IList<string> _types = new List<string>();
         
         public ImportsFrom(Symbol last, Lexer lexer)
         {

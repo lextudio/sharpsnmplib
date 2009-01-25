@@ -28,6 +28,7 @@ namespace Lextm.SharpSnmpLib.Tests
 
             Sequence array = new Sequence(iList);
         }
+
         [Test]
         public void TestToBytes()
         {

@@ -8,8 +8,8 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public sealed class TrapV2ReceivedEventArgs : EventArgs
     {
-        private TrapV2Message _trap;
-        private IPEndPoint _sender;
+        private readonly TrapV2Message _trap;
+        private readonly IPEndPoint _sender;
       
         /// <summary>
         /// Creates a <see cref="TrapV2ReceivedEventArgs"/>. 

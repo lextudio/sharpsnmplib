@@ -1,5 +1,3 @@
-
-using System;
 using System.Diagnostics.CodeAnalysis;
 
 // SNMP library for .NET by Malcolm Crowe at University of the West of Scotland

@@ -7,9 +7,6 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 
-using System;
-using System.Collections.Generic;
-
 namespace Lextm.SharpSnmpLib.Mib
 {
     /// <summary>
@@ -17,10 +14,10 @@ namespace Lextm.SharpSnmpLib.Mib
     /// </summary>
     internal sealed class OidValueAssignment : IEntity
     {
-        private string _module;
-        private string _name;
+        private readonly string _module;
+        private readonly string _name;
         private string _parent;
-        private uint _value;
+        private readonly uint _value;
         
         /// <summary>
         /// Creates an <see cref="OidValueAssignment"/>.

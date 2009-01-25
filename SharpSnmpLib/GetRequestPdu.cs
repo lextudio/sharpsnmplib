@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using System.Text;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -12,12 +11,12 @@ namespace Lextm.SharpSnmpLib
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu")]
     public class GetRequestPdu : ISnmpPdu
     {
-        private Integer32 _errorStatus;
-        private Integer32 _errorIndex;
-        private IList<Variable> _variables;
-        private Integer32 _seq;
-        private byte[] _raw;
-        private Sequence _varbindSection;
+        private readonly Integer32 _errorStatus;
+        private readonly Integer32 _errorIndex;
+        private readonly IList<Variable> _variables;
+        private readonly Integer32 _sequenceNumber;
+        private readonly byte[] _raw;
+        private readonly Sequence _varbindSection;
         private byte[] _bytes;
         
         /// <summary>
@@ -33,34 +32,44 @@ namespace Lextm.SharpSnmpLib
         
         private GetRequestPdu(Integer32 errorStatus, Integer32 errorIndex, IList<Variable> variables)
         {
-            _seq = PduCounter.NextCount;
+            _sequenceNumber = PduCounter.NextCount;
             _errorStatus = errorStatus;
             _errorIndex = errorIndex;
             _variables = variables;
             _varbindSection = Variable.Transform(variables);
-            _raw = ByteTool.ParseItems(_seq, _errorStatus, _errorIndex, _varbindSection);
+            _raw = ByteTool.ParseItems(_sequenceNumber, _errorStatus, _errorIndex, _varbindSection);
         }
         
         /// <summary>
         /// Creates a <see cref="GetRequestPdu"/> with raw bytes.
         /// </summary>
         /// <param name="raw">Raw bytes</param>
-        public GetRequestPdu(byte[] raw)
+        private GetRequestPdu(byte[] raw): this(raw.Length, new MemoryStream(raw))
         {
-            _raw = raw;
-            MemoryStream m = new MemoryStream(raw);
-            _seq = (Integer32)DataFactory.CreateSnmpData(m);
-            _errorStatus = (Integer32)DataFactory.CreateSnmpData(m);
-            _errorIndex = (Integer32)DataFactory.CreateSnmpData(m);
-            _varbindSection = (Sequence)DataFactory.CreateSnmpData(m);
-            _variables = Variable.Transform(_varbindSection);
+
         }
-        
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetRequestPdu"/> class.
+        /// </summary>
+        /// <param name="length">The length.</param>
+        /// <param name="stream">The stream.</param>
+        public GetRequestPdu(int length, Stream stream)
+        {
+            _sequenceNumber = (Integer32)DataFactory.CreateSnmpData(stream);
+            _errorStatus = (Integer32)DataFactory.CreateSnmpData(stream);
+            _errorIndex = (Integer32)DataFactory.CreateSnmpData(stream);
+            _varbindSection = (Sequence)DataFactory.CreateSnmpData(stream);
+            _variables = Variable.Transform(_varbindSection);
+            _raw = ByteTool.ParseItems(_sequenceNumber, _errorStatus, _errorIndex, _varbindSection);
+            Debug.Assert(length >= _raw.Length);
+        }
+
         internal int SequenceNumber
         {
             get
             {
-                return _seq.ToInt32();
+                return _sequenceNumber.ToInt32();
             }
         }
         
@@ -119,7 +128,7 @@ namespace Lextm.SharpSnmpLib
         #endregion
         
         /// <summary>
-        /// Returns a <see cref="String"/> that represents this <see cref="GetRequestPdu"/>.
+        /// Returns a <see cref="string"/> that represents this <see cref="GetRequestPdu"/>.
         /// </summary>
         /// <returns></returns>
         public override string ToString()
@@ -127,7 +136,7 @@ namespace Lextm.SharpSnmpLib
             return string.Format(
                 CultureInfo.InvariantCulture,
                 "GET request PDU: seq: {0}; status: {1}; index: {2}; variable count: {3}",
-                _seq, 
+                _sequenceNumber, 
                 _errorStatus, 
                 _errorIndex, 
                 _variables.Count.ToString(CultureInfo.InvariantCulture));

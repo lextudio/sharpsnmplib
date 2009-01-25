@@ -16,7 +16,7 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public sealed class Bool : ISnmpData, IEquatable<Bool>
     {
-        private bool _boolean;
+        private readonly bool _boolean;
         
         /// <summary>
         /// Creates a <see cref="Bool"/> instance from raw bytes.
@@ -142,8 +142,8 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
         public static bool Equals(Bool left, Bool right)
         {
-            object lo = left as object;
-            object ro = right as object;
+            object lo = left;
+            object ro = right;
             if (lo == ro)
             {
                 return true;

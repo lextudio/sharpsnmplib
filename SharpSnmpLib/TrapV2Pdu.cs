@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 
@@ -11,12 +12,12 @@ namespace Lextm.SharpSnmpLib
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu")]
     public class TrapV2Pdu : ISnmpPdu
     {
-        private IList<Variable> _variables;
-        private Integer32 _version;
-        private byte[] _raw;
-        private Sequence _varbindSection;
-        private TimeTicks _time;
-        private ObjectIdentifier _enterprise;
+        private readonly IList<Variable> _variables;
+        private readonly Integer32 _version;
+        private readonly byte[] _raw;
+        private readonly Sequence _varbindSection;
+        private readonly TimeTicks _time;
+        private readonly ObjectIdentifier _enterprise;
      
         /// <summary>
         /// Creates a <see cref="TrapV2Pdu"/> instance with all content.
@@ -42,19 +43,9 @@ namespace Lextm.SharpSnmpLib
         /// Creates a <see cref="TrapV2Pdu"/> instance from raw bytes.
         /// </summary>
         /// <param name="raw">Raw bytes</param>
-        public TrapV2Pdu(byte[] raw)
+        private TrapV2Pdu(byte[] raw): this(raw.Length, new MemoryStream(raw))
         {
-            _raw = raw;
-            MemoryStream m = new MemoryStream(raw);
-            _version = (Integer32)DataFactory.CreateSnmpData(m); // version number v2c
-            DataFactory.CreateSnmpData(m); // 0
-            DataFactory.CreateSnmpData(m); // 0
-            _varbindSection = (Sequence)DataFactory.CreateSnmpData(m);
-            _variables = Variable.Transform(_varbindSection); // v[0] is timestamp. v[1] oid, v[2] value.
-            _time = (TimeTicks)_variables[0].Data;
-            _variables.RemoveAt(0);
-            _enterprise = (ObjectIdentifier)_variables[0].Data;
-            _variables.RemoveAt(0);
+           
         }
 
         #region ISnmpPdu Members
@@ -89,7 +80,27 @@ namespace Lextm.SharpSnmpLib
         }
 
         private byte[] _bytes;
-        
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TrapV2Pdu"/> class.
+        /// </summary>
+        /// <param name="length">The length.</param>
+        /// <param name="stream">The stream.</param>
+        public TrapV2Pdu(int length, Stream stream)
+        {
+            _version = (Integer32)DataFactory.CreateSnmpData(stream); // version number v2c
+            Integer32 temp1 = (Integer32) DataFactory.CreateSnmpData(stream); // 0
+            Integer32 temp2 = (Integer32) DataFactory.CreateSnmpData(stream); // 0
+            _varbindSection = (Sequence)DataFactory.CreateSnmpData(stream);
+            _variables = Variable.Transform(_varbindSection); // v[0] is timestamp. v[1] oid, v[2] value.
+            _time = (TimeTicks)_variables[0].Data;
+            _variables.RemoveAt(0);
+            _enterprise = (ObjectIdentifier)_variables[0].Data;
+            _variables.RemoveAt(0);
+            _raw = ByteTool.ParseItems(_version, temp1, temp2, _varbindSection);
+            Debug.Assert(length >= _raw.Length);
+        }
+
         /// <summary>
         /// Converts to byte format.
         /// </summary>
@@ -128,7 +139,7 @@ namespace Lextm.SharpSnmpLib
         }
 
         /// <summary>
-        /// Returns a <see cref="String"/> that represents this <see cref="TrapV2Pdu"/>.
+        /// Returns a <see cref="string"/> that represents this <see cref="TrapV2Pdu"/>.
         /// </summary>
         /// <returns></returns>
         public override string ToString()

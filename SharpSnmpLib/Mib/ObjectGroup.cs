@@ -7,7 +7,6 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 
-using System;
 using System.Collections.Generic;
 
 namespace Lextm.SharpSnmpLib.Mib
@@ -17,10 +16,10 @@ namespace Lextm.SharpSnmpLib.Mib
     /// </summary>
     internal sealed class ObjectGroup : IEntity
     {
-        private string _module;
+        private readonly string _module;
         private string _parent;
-        private uint _value;
-        private string _name;
+        private readonly uint _value;
+        private readonly string _name;
 
         public ObjectGroup(string module, IList<Symbol> header, Lexer lexer)
         {

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
+﻿using System.Threading;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -11,7 +8,7 @@ namespace Lextm.SharpSnmpLib
     /// <remarks>The sequence number is used to identifier PDU sessions.</remarks>
     internal static class PduCounter
     {
-        private static object syncRoot = new object();
+        private static readonly object syncRoot = new object();
         
         internal static Integer32 NextCount
         {

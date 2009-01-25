@@ -10,42 +10,15 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public sealed class Counter32 : ISnmpData, IEquatable<Counter32>
     {
-        private uint _count;
+        private readonly uint _count;
         
         /// <summary>
         /// Creates a <see cref="Counter32"/> instance from raw bytes.
         /// </summary>
         /// <param name="raw"></param>
-        public Counter32(byte[] raw)
+        internal Counter32(byte[] raw): this(raw.Length, new MemoryStream(raw))
         {
-            if (raw == null)
-            {
-                throw new ArgumentNullException("raw");
-            }
             
-            if (raw.Length == 0 || raw.Length > 5)
-            {
-                throw new ArgumentException("byte length must between 1 and 5");
-            }
-            
-            if (raw.Length == 5 && raw[0] != 0)
-            {
-                throw new ArgumentException("if byte length is 5, then first byte must be empty");
-            }
-            
-            List<byte> list = new List<byte>(raw);
-            list.Reverse();
-            while (list.Count > 4)
-            {
-                list.RemoveAt(list.Count - 1);
-            }
-            
-            while (list.Count < 4)
-            {
-                list.Add(0);
-            }
-            
-            _count = BitConverter.ToUInt32(list.ToArray(), 0);
         }
         
         /// <summary>
@@ -56,6 +29,41 @@ namespace Lextm.SharpSnmpLib
         public Counter32(uint value)
         {
             _count = value;
+        }
+
+        /// <summary>
+        /// Creates a <see cref="Counter32"/> instance from stream.
+        /// </summary>
+        /// <param name="length">The length.</param>
+        /// <param name="stream">The stream.</param>
+        public Counter32(int length, Stream stream)
+        {
+            if (length == 0 || length > 5)
+            {
+                throw new ArgumentException("byte length must between 1 and 5");
+            }
+
+            byte[] raw = new byte[length];
+            stream.Read(raw, 0, raw.Length);
+            // TODO: improve here to read from stream directly.
+            if (length == 5 && raw[0] != 0)
+            {
+                throw new ArgumentException("if byte length is 5, then first byte must be empty");
+            }
+
+            List<byte> list = new List<byte>(raw);
+            list.Reverse();
+            while (list.Count > 4)
+            {
+                list.RemoveAt(list.Count - 1);
+            }
+
+            while (list.Count < 4)
+            {
+                list.Add(0);
+            }
+
+            _count = BitConverter.ToUInt32(list.ToArray(), 0);
         }
 
         #region ISnmpData Members
@@ -169,8 +177,8 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
         public static bool Equals(Counter32 left, Counter32 right)
         {
-            object lo = left as object;
-            object ro = right as object;
+            object lo = left;
+            object ro = right;
             if (lo == ro)
             {
                 return true;

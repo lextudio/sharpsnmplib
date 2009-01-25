@@ -7,8 +7,8 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 
-using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 
@@ -20,13 +20,13 @@ namespace Lextm.SharpSnmpLib
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu")]
     public class GetResponsePdu : ISnmpPdu
     {
-        private Integer32 _errorStatus;
-        private Integer32 _sequenceNumber;
-        private Integer32 _errorIndex;
-        private IList<Variable> _variables;
-        private Sequence _varbindSection;
+        private readonly Integer32 _errorStatus;
+        private readonly Integer32 _sequenceNumber;
+        private readonly Integer32 _errorIndex;
+        private readonly IList<Variable> _variables;
+        private readonly Sequence _varbindSection;
         private byte[] _bytes;
-        private byte[] _raw;
+        private readonly byte[] _raw;
                 
         /// <summary>
         /// Creates a <see cref="GetResponsePdu"/> with all contents.
@@ -49,17 +49,27 @@ namespace Lextm.SharpSnmpLib
         /// Creates a <see cref="GetResponsePdu"/> from raw bytes.
         /// </summary>
         /// <param name="raw">Raw bytes</param>
-        public GetResponsePdu(byte[] raw)
+        private GetResponsePdu(byte[] raw): this(raw.Length, new MemoryStream(raw))
         {
-            MemoryStream m = new MemoryStream(raw);
-            _sequenceNumber = (Integer32)DataFactory.CreateSnmpData(m);
-            _errorStatus = (Integer32)DataFactory.CreateSnmpData(m);
-            _errorIndex = (Integer32)DataFactory.CreateSnmpData(m);
-            _varbindSection = (Sequence)DataFactory.CreateSnmpData(m);
-            _variables = Variable.Transform(_varbindSection);
-            _raw = raw;
+
         }
-        
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetResponsePdu"/> class.
+        /// </summary>
+        /// <param name="length">The length.</param>
+        /// <param name="stream">The stream.</param>
+        public GetResponsePdu(int length, Stream stream)
+        {
+            _sequenceNumber = (Integer32)DataFactory.CreateSnmpData(stream);
+            _errorStatus = (Integer32)DataFactory.CreateSnmpData(stream);
+            _errorIndex = (Integer32)DataFactory.CreateSnmpData(stream);
+            _varbindSection = (Sequence)DataFactory.CreateSnmpData(stream);
+            _variables = Variable.Transform(_varbindSection);
+            _raw = ByteTool.ParseItems(_sequenceNumber, _errorStatus, _errorIndex, _varbindSection);
+            Debug.Assert(length >= _raw.Length);
+        }
+
         internal int SequenceNumber
         {
             get
@@ -136,7 +146,7 @@ namespace Lextm.SharpSnmpLib
         }
         
         /// <summary>
-        /// Returns a <see cref="String"/> that represents this <see cref="GetResponsePdu"/>/
+        /// Returns a <see cref="string"/> that represents this <see cref="GetResponsePdu"/>/
         /// </summary>
         /// <returns></returns>
         public override string ToString()

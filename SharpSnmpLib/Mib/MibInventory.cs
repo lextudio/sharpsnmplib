@@ -18,9 +18,9 @@ namespace Lextm.SharpSnmpLib.Mib
     public class Inventory
     {
         private readonly string folder = Path.Combine(Directory.GetCurrentDirectory(), "mibs");
-        private IList<string> _existing = new List<string>();
-        private ObjectRegistry _registry;
-        private IDictionary<string, string> _moduleTable = new Dictionary<string, string>();
+        private readonly IList<string> _existing = new List<string>();
+        private readonly ObjectRegistry _registry;
+        private readonly IDictionary<string, string> _moduleTable = new Dictionary<string, string>();
         
         /// <summary>
         /// Creates a <see cref="Inventory"/> object.

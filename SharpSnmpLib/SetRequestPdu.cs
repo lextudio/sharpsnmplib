@@ -6,8 +6,8 @@
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
-using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 
@@ -19,12 +19,12 @@ namespace Lextm.SharpSnmpLib
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu")]
     public class SetRequestPdu : ISnmpPdu
     {
-        private Integer32 _errorStatus;
-        private Integer32 _errorIndex;
-        private IList<Variable> _variables;
-        private Integer32 _sequenceNumber;
-        private byte[] _raw;
-        private Sequence _varbindSection;
+        private readonly Integer32 _errorStatus;
+        private readonly Integer32 _errorIndex;
+        private readonly IList<Variable> _variables;
+        private readonly Integer32 _sequenceNumber;
+        private readonly byte[] _raw;
+        private readonly Sequence _varbindSection;
         
         /// <summary>
         /// Creates a <see cref="SetRequestPdu"/> instance with all contents.
@@ -57,19 +57,29 @@ namespace Lextm.SharpSnmpLib
         /// Creates a <see cref="SetRequestPdu"/> instance from raw bytes.
         /// </summary>
         /// <param name="raw">Raw bytes</param>
-        public SetRequestPdu(byte[] raw)
+        private SetRequestPdu(byte[] raw): this(raw.Length, new MemoryStream(raw))
         {
-            _raw = raw;
-            MemoryStream m = new MemoryStream(raw);
-            _sequenceNumber = (Integer32)DataFactory.CreateSnmpData(m);
-            _errorStatus = (Integer32)DataFactory.CreateSnmpData(m);
-            _errorIndex = (Integer32)DataFactory.CreateSnmpData(m);
-            _varbindSection = (Sequence)DataFactory.CreateSnmpData(m);
+            
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SetRequestPdu"/> class.
+        /// </summary>
+        /// <param name="length">The length.</param>
+        /// <param name="stream">The stream.</param>
+        public SetRequestPdu(int length, Stream stream)
+        {
+            _sequenceNumber = (Integer32)DataFactory.CreateSnmpData(stream);
+            _errorStatus = (Integer32)DataFactory.CreateSnmpData(stream);
+            _errorIndex = (Integer32)DataFactory.CreateSnmpData(stream);
+            _varbindSection = (Sequence)DataFactory.CreateSnmpData(stream);
             _variables = Variable.Transform(_varbindSection);
+            _raw = ByteTool.ParseItems(_sequenceNumber, _errorStatus, _errorIndex, _varbindSection);
+            Debug.Assert(length >= _raw.Length);
         }
         
         /// <summary>
-        /// Returns a <see cref="String"/> that represents this <see cref="SetRequestPdu"/>.
+        /// Returns a <see cref="string"/> that represents this <see cref="SetRequestPdu"/>.
         /// </summary>
         /// <returns></returns>
         public override string ToString()

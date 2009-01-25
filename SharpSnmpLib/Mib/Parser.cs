@@ -18,7 +18,7 @@ namespace Lextm.SharpSnmpLib.Mib
     /// </summary>
     public sealed class Parser
     {
-        private Assembler _assembler;
+        private readonly Assembler _assembler;
         
         /// <summary>
         /// Creates a <see cref="Parser"/>.

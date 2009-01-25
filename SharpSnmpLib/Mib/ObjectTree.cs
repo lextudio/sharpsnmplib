@@ -11,10 +11,10 @@ namespace Lextm.SharpSnmpLib.Mib
     /// </summary>
     internal sealed class ObjectTree : IObjectTree
     {
-        private IDictionary<string, MibModule> _loaded = new SortedDictionary<string, MibModule>();
-        private IDictionary<string, MibModule> _pendings = new Dictionary<string, MibModule>();
-        private IDictionary<string, IDefinition> nameTable;
-        private Definition root;
+        private readonly IDictionary<string, MibModule> _loaded = new SortedDictionary<string, MibModule>();
+        private readonly IDictionary<string, MibModule> _pendings = new Dictionary<string, MibModule>();
+        private readonly IDictionary<string, IDefinition> nameTable;
+        private readonly Definition root;
         
         /// <summary>
         /// Creates an <see cref="ObjectTree"/> instance.

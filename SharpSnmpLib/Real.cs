@@ -25,8 +25,8 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public sealed class Real : ISnmpData, IEquatable<Real>
     {
-        private byte[] _raw;
-        private byte[] _bytes;
+        private readonly byte[] _raw;
+        private readonly byte[] _bytes;
         
         /// <summary>
         /// Creates a <see cref="Real"/> from raw bytes.
@@ -53,7 +53,7 @@ namespace Lextm.SharpSnmpLib
                 string s = value.ToString("E", CultureInfo.InvariantCulture); // hope this is acceptable..
                 _raw = new byte[s.Length + 1];
                 _raw[0] = 0x0;
-                ASCIIEncoding.ASCII.GetBytes(s, 0, s.Length, _raw, 1);
+                Encoding.ASCII.GetBytes(s, 0, s.Length, _raw, 1);
             }
             
             _bytes = ByteTool.ToBytes(SnmpType.Real, _raw);
@@ -107,13 +107,13 @@ namespace Lextm.SharpSnmpLib
                 }
                 
                 long n = new Integer64(m).ToInt64();
-                return ((double)(s * n * f)) * Math.Pow((double)b, (double)e);
+                return s * n * f * Math.Pow(b, e);
             }
             
             // 8.5.6 decimal encoding
             if ((_raw[0] & 0x40) == 0)
             {
-                return double.Parse(ASCIIEncoding.ASCII.GetString(_raw, 0, _raw.Length), CultureInfo.InvariantCulture);
+                return double.Parse(Encoding.ASCII.GetString(_raw, 0, _raw.Length), CultureInfo.InvariantCulture);
             }
             
             // 8.5.7 special real encoding
@@ -153,7 +153,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public override string ToString()
         {
-            return this.ToDouble().ToString(CultureInfo.CurrentCulture);
+            return ToDouble().ToString(CultureInfo.CurrentCulture);
         }
         
         /// <summary>
@@ -240,8 +240,8 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
         public static bool Equals(Real left, Real right)
         {
-            object lo = left as object;
-            object ro = right as object;
+            object lo = left;
+            object ro = right;
             if (lo == ro)
             {
                 return true;

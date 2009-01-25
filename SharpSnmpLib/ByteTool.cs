@@ -27,8 +27,8 @@ namespace Lextm.SharpSnmpLib
     {
         internal static GetResponseMessage GetResponse(object caller, IPEndPoint receiver, byte[] bytes, int number, int timeout)
         {
-            byte[] reply = bytes;
-            ByteTool.Capture(bytes); // log request
+            byte[] reply;
+            Capture(bytes); // log request
             using (UdpClient udp = new UdpClient())
             {
                 udp.Send(bytes, bytes.Length, receiver);
@@ -57,7 +57,7 @@ namespace Lextm.SharpSnmpLib
                 throw SharpOperationException.Create("wrong response sequence", receiver.Address);
             }
 
-            ByteTool.Capture(reply); // log response
+            Capture(reply); // log response
             return response;
         }
 
@@ -224,10 +224,9 @@ namespace Lextm.SharpSnmpLib
             int first = stream.ReadByte();
             return ReadLength(stream, (byte)first);
         }
-        
-        internal static byte[] GetBytes(Stream stream)
+
+        internal static byte[] IgnoreBytes(Stream stream, int length)
         {
-            int length = ByteTool.ReadPayloadLength(stream);
             byte[] bytes = new byte[length];
             stream.Read(bytes, 0, length);
             return bytes;
@@ -238,14 +237,14 @@ namespace Lextm.SharpSnmpLib
         {
             if ((first & 0x80) == 0)
             {
-                return (int)first;
+                return first;
             }
             
             int result = 0;
-            int octets = (int)(first & 0x7f);
+            int octets = first & 0x7f;
             for (int j = 0; j < octets; j++)
             {
-                result = (result << 8) + (int)ReadByte(stream);
+                result = (result << 8) + ReadByte(stream);
             }
             
             return result;
@@ -267,7 +266,7 @@ namespace Lextm.SharpSnmpLib
         {
             MemoryStream result = new MemoryStream();
             result.WriteByte((byte)typeCode);
-            ByteTool.WritePayloadLength(result, raw.Length);
+            WritePayloadLength(result, raw.Length);
             result.Write(raw, 0, raw.Length);
             return result.ToArray();
         }

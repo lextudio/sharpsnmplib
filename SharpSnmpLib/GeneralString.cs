@@ -17,7 +17,7 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public sealed class GeneralString : ISnmpData, IEquatable<GeneralString>
     {
-        private byte[] _raw;
+        private readonly byte[] _raw;
         
         /// <summary>
         /// Creates a <see cref="GeneralString"/> from raw bytes.
@@ -45,7 +45,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public override string ToString()
         {
-            return ASCIIEncoding.ASCII.GetString(_raw);
+            return Encoding.ASCII.GetString(_raw);
         }
         
         /// <summary>
@@ -124,8 +124,8 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
         public static bool Equals(GeneralString left, GeneralString right)
         {
-            object lo = left as object;
-            object ro = right as object;
+            object lo = left;
+            object ro = right;
             if (lo == ro)
             {
                 return true;

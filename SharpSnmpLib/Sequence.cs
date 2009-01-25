@@ -10,6 +10,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 
@@ -21,8 +22,8 @@ namespace Lextm.SharpSnmpLib
     /// <remarks>Represents SMIv1 SEQUENCE.</remarks>
     public class Sequence : ISnmpData
     {
-        private byte[] _raw;
-        private IList<ISnmpData> _list = new List<ISnmpData>();
+        private readonly byte[] _raw;
+        private readonly IList<ISnmpData> _list = new List<ISnmpData>();
         
         /// <summary>
         /// Creates an <see cref="Sequence"/> instance with varied <see cref="ISnmpData"/> instances.
@@ -71,24 +72,31 @@ namespace Lextm.SharpSnmpLib
         /// Creates an <see cref="Sequence"/> instance from raw bytes.
         /// </summary>
         /// <param name="raw">Raw bytes</param>
-        public Sequence(byte[] raw)
+        private Sequence(byte[] raw): this(raw.Length, new MemoryStream(raw))
         {
-            if (raw == null)
-            {
-                throw new ArgumentNullException("raw");
-            }
+            
+        }
 
-            _raw = raw;
-            if (raw.Length != 0)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Sequence"/> class.
+        /// </summary>
+        /// <param name="length">The length.</param>
+        /// <param name="stream">The stream.</param>
+        public Sequence(int length, Stream stream)
+        {
+            long original = stream.Position;
+            if (length != 0)
             {
-                MemoryStream m = new MemoryStream(raw);
-                while (m.Position < raw.Length)
+                while (stream.Position < original + length)
                 {
-                    _list.Add(DataFactory.CreateSnmpData(m));
+                    _list.Add(DataFactory.CreateSnmpData(stream));
                 }
             }
+
+            _raw = ByteTool.ParseItems(_list);
+            Debug.Assert(length >= _raw.Length);
         }
-        
+
         /// <summary>
         /// <see cref="ISnmpData"/> instances containing in this <see cref="Sequence"/>
         /// </summary>
@@ -125,7 +133,7 @@ namespace Lextm.SharpSnmpLib
         }
         
         /// <summary>
-        /// Returns a <see cref="String"/> that represents this <see cref="Sequence"/>.
+        /// Returns a <see cref="string"/> that represents this <see cref="Sequence"/>.
         /// </summary>
         /// <returns></returns>
         public override string ToString()

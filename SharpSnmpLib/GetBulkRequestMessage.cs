@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -20,15 +19,15 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public class GetBulkRequestMessage : ISnmpMessage
     {
-        private VersionCode _version;
-        private IList<Variable> _variables;
-        private byte[] _bytes;
+        private readonly VersionCode _version;
+        private readonly IList<Variable> _variables;
+        private readonly byte[] _bytes;
         
         // TODO: [Obsolete]
-        private IPAddress _agent;
-        private OctetString _community;
-        private ISnmpPdu _pdu;
-        private int _sequenceNumber;
+        private readonly IPAddress _agent;
+        private readonly OctetString _community;
+        private readonly ISnmpPdu _pdu;
+        private readonly int _sequenceNumber;
         
         /// <summary>
         /// Creates a <see cref="GetBulkRequestMessage"/> with all contents.
@@ -218,7 +217,7 @@ namespace Lextm.SharpSnmpLib
         }
         
         /// <summary>
-        /// Returns a <see cref="String"/> that represents this <see cref="GetBulkRequestMessage"/>.
+        /// Returns a <see cref="string"/> that represents this <see cref="GetBulkRequestMessage"/>.
         /// </summary>
         /// <returns></returns>
         public override string ToString()

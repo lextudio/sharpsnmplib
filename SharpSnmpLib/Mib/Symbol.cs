@@ -8,7 +8,6 @@
  */
 
 using System;
-using System.Text;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
@@ -17,10 +16,10 @@ namespace Lextm.SharpSnmpLib.Mib
     /// </summary>
     public sealed class Symbol : IEquatable<Symbol>
     {
-        private string _text;
-        private int _row;
-        private int _column;
-        private string _file;
+        private readonly string _text;
+        private readonly int _row;
+        private readonly int _column;
+        private readonly string _file;
         
         private Symbol(string text) : this(null, text, -1, -1)
         {

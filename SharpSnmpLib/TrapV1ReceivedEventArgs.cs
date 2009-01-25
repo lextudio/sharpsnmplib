@@ -16,8 +16,8 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public sealed class TrapV1ReceivedEventArgs : EventArgs
     {
-        private TrapV1Message _trap;
-        private IPEndPoint _sender;
+        private readonly TrapV1Message _trap;
+        private readonly IPEndPoint _sender;
         
         /// <summary>
         /// Creates a <see cref="TrapV1ReceivedEventArgs"/>.

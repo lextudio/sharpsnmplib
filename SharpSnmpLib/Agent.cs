@@ -8,7 +8,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// Agent component.
     /// </summary>
-    public partial class Agent : Component
+    public class Agent : Component
     {       
         /// <summary>
         /// Initiates an <see cref="Agent"/> instance.
@@ -126,14 +126,16 @@ namespace Lextm.SharpSnmpLib
         }
 
         #region Component Designer generated code
-
+// ReSharper disable all
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
         {
+
             this.trapListener = new Lextm.SharpSnmpLib.TrapListener();
+
             // 
             // trapListener
             //           
@@ -143,7 +145,7 @@ namespace Lextm.SharpSnmpLib
             this.trapListener.GetNextRequestReceived += new System.EventHandler<Lextm.SharpSnmpLib.GetNextRequestReceivedEventArgs>(this.TrapListener_GetNextRequestReceived);
             this.trapListener.ExceptionRaised += new EventHandler<ExceptionRaisedEventArgs>(TrapListener_ExceptionRaised);
         }
-
+// ReSharper restore all
         void TrapListener_ExceptionRaised(object sender, ExceptionRaisedEventArgs e)
         {
             EventHandler<ExceptionRaisedEventArgs> handler = ExceptionRaised;

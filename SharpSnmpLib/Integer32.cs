@@ -1,6 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 
 // ASN.1 BER encoding library by Malcolm Crowe at the University of the West of Scotland
 // See http://cis.paisley.ac.uk/crow-ci0
@@ -26,34 +26,15 @@ namespace Lextm.SharpSnmpLib
     public sealed class Integer32 // This namespace has its own concept of Integer
         : ISnmpData, IEquatable<Integer32>
     {
-        private int _int;
+        private readonly int _int;
         
         /// <summary>
         /// Creates an <see cref="Integer32"/> instance.
         /// </summary>
         /// <param name="raw">Raw bytes</param>
-        public Integer32(byte[] raw)
+        internal Integer32(byte[] raw): this(raw.Length, new MemoryStream(raw))
         {
-            if (raw == null)
-            {
-                throw new ArgumentNullException("raw");
-            }
             
-            if (raw.Length == 0)
-            {
-                throw new ArgumentException("raw cannot be empty.", "raw");
-            }
-
-            if (raw.Length > 4)
-            {
-                throw new ArgumentException("truncation error for 32-bit integer coding", "raw");
-            }
-            
-            _int = ((raw[0] & 0x80) == 0x80) ? -1 : 0; // sign extended! Guy McIlroy
-            for (int j = 0; j < raw.Length; j++)
-            {
-                _int = (_int << 8) | raw[j];
-            }
         }
         
         /// <summary>
@@ -63,6 +44,32 @@ namespace Lextm.SharpSnmpLib
         public Integer32(int value)
         {
             _int = value;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Integer32"/> class.
+        /// </summary>
+        /// <param name="length">The length.</param>
+        /// <param name="stream">The stream.</param>
+        public Integer32(int length, Stream stream)
+        {
+            if (length == 0)
+            {
+                throw new ArgumentException("length cannot be 0.", "length");
+            }
+
+            if (length > 4)
+            {
+                throw new ArgumentException("truncation error for 32-bit integer coding", "length");
+            }
+
+            byte[] raw = new byte[length];
+            stream.Read(raw, 0, length);
+            _int = ((raw[0] & 0x80) == 0x80) ? -1 : 0; // sign extended! Guy McIlroy
+            for (int j = 0; j < length; j++)
+            {
+                _int = (_int << 8) | raw[j];
+            }
         }
 
         /// <summary>
@@ -167,8 +174,8 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
         public static bool Equals(Integer32 left, Integer32 right)
         {
-            object lo = left as object;
-            object ro = right as object;
+            object lo = left;
+            object ro = right;
             if (lo == ro)
             {
                 return true;

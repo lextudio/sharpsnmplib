@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.IO;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -9,7 +10,7 @@ namespace Lextm.SharpSnmpLib
     /// <remarks>Represents SNMP TimeTicks type.</remarks>
     public sealed class TimeTicks : ISnmpData, IEquatable<TimeTicks>
     {
-        private Counter32 _count;
+        private readonly Counter32 _count;
         
         /// <summary>
         /// Creates a <see cref="TimeTicks"/> instance with a specific count.
@@ -25,11 +26,20 @@ namespace Lextm.SharpSnmpLib
         /// Creates a <see cref="TimeTicks"/> instance with raw bytes.
         /// </summary>
         /// <param name="raw">Raw bytes</param>
-        public TimeTicks(byte[] raw)
+        internal TimeTicks(byte[] raw): this(raw.Length, new MemoryStream(raw))
         {
-            _count = new Counter32(raw);
         }
-        
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TimeTicks"/> class.
+        /// </summary>
+        /// <param name="length">The length.</param>
+        /// <param name="stream">The stream.</param>
+        public TimeTicks(int length, Stream stream)
+        {
+            _count = new Counter32(length, stream);
+        }
+
         /// <summary>
         /// Returns an <see cref="Int32"/> that represents the current <see cref="TimeTicks"/>
         /// </summary>
@@ -136,8 +146,8 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
         public static bool Equals(TimeTicks left, TimeTicks right)
         {
-            object lo = left as object;
-            object ro = right as object;
+            object lo = left;
+            object ro = right;
             if (lo == ro)
             {
                 return true;

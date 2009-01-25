@@ -18,7 +18,7 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     internal sealed class Integer64 : IEquatable<Integer64>
     {
-        private byte[] _raw;
+        private readonly byte[] _raw;
         
         public Integer64(byte[] raw)
         {
@@ -146,8 +146,8 @@ namespace Lextm.SharpSnmpLib
         
         public static bool Equals(Integer64 left, Integer64 right)
         {
-            object lo = left as object;
-            object ro = right as object;
+            object lo = left;
+            object ro = right;
             if (lo == ro)
             {
                 return true;

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Lextm.SharpSnmpLib.Mib
+﻿namespace Lextm.SharpSnmpLib.Mib
 {
     internal sealed class TextualConvention : IConstruct
     {

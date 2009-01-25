@@ -39,7 +39,7 @@ namespace Lextm.SharpSnmpLib.Mib
         }
         
         /// <summary>
-        /// Creates a <see cref="SharpSnmpException"/> instance with a specific <see cref="String"/>.
+        /// Creates a <see cref="SharpSnmpException"/> instance with a specific <see cref="string"/>.
         /// </summary>
         /// <param name="message">Message</param>
         public SharpMibException(string message) : base(message)
@@ -47,7 +47,7 @@ namespace Lextm.SharpSnmpLib.Mib
         }
         
         /// <summary>
-        /// Creates a <see cref="SharpMibException"/> instance with a specific <see cref="String"/> and an <see cref="Exception"/>.
+        /// Creates a <see cref="SharpMibException"/> instance with a specific <see cref="string"/> and an <see cref="Exception"/>.
         /// </summary>
         /// <param name="message">Message</param>
         /// <param name="inner">Inner exception</param>

@@ -8,11 +8,8 @@
  */
 using System;
 using System.ComponentModel;
-using System.Globalization;
-using System.IO;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
 using System.Threading;
 
 namespace Lextm.SharpSnmpLib
@@ -348,9 +345,9 @@ namespace Lextm.SharpSnmpLib
         
         private sealed class MessageParams
         {
-            internal int Number;
-            internal byte[] Bytes;
-            internal IPEndPoint Sender;
+            internal readonly int Number;
+            internal readonly byte[] Bytes;
+            internal readonly IPEndPoint Sender;
             
             public MessageParams(byte[] bytes, int number, EndPoint sender)
             {

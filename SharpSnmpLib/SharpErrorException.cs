@@ -56,7 +56,7 @@ namespace Lextm.SharpSnmpLib
         }
         
         /// <summary>
-        /// Creates a <see cref="SharpErrorException"/> instance with a specific <see cref="String"/>.
+        /// Creates a <see cref="SharpErrorException"/> instance with a specific <see cref="string"/>.
         /// </summary>
         /// <param name="message">Message</param>
         public SharpErrorException(string message) : base(message)
@@ -64,7 +64,7 @@ namespace Lextm.SharpSnmpLib
         }
         
         /// <summary>
-        /// Creates a <see cref="SharpErrorException"/> instance with a specific <see cref="String"/> and an <see cref="Exception"/>.
+        /// Creates a <see cref="SharpErrorException"/> instance with a specific <see cref="string"/> and an <see cref="Exception"/>.
         /// </summary>
         /// <param name="message">Message</param>
         /// <param name="inner">Inner exception</param>

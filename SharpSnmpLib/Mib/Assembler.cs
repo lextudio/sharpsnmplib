@@ -17,8 +17,8 @@ namespace Lextm.SharpSnmpLib.Mib
     /// </summary>
     public class Assembler
     {
-        private ObjectTree _tree = new ObjectTree();
-        private string _folder;
+        private readonly ObjectTree _tree = new ObjectTree();
+        private readonly string _folder;
 
         internal string Folder
         {

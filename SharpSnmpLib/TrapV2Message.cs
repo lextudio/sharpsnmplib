@@ -11,13 +11,13 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public class TrapV2Message : ISnmpMessage
     {
-        private byte[] _bytes;
-        private ISnmpPdu _pdu;
-        private VersionCode _version;
-        private OctetString _community;
-        private IList<Variable> _variables;
-        private ObjectIdentifier _enterprise;
-        private uint _time;
+        private readonly byte[] _bytes;
+        private readonly ISnmpPdu _pdu;
+        private readonly VersionCode _version;
+        private readonly OctetString _community;
+        private readonly IList<Variable> _variables;
+        private readonly ObjectIdentifier _enterprise;
+        private readonly uint _time;
         
         /// <summary>
         /// Creates a <see cref="TrapV2Message"/> instance with all content.
@@ -169,7 +169,7 @@ namespace Lextm.SharpSnmpLib
         }
 
         /// <summary>
-        /// Returns a <see cref="String"/> that represents the current <see cref="TrapV2Message"/>.
+        /// Returns a <see cref="string"/> that represents the current <see cref="TrapV2Message"/>.
         /// </summary>
         /// <returns></returns>
         public override string ToString()

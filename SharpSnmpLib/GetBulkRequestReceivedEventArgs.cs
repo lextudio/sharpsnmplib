@@ -16,8 +16,8 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public sealed class GetBulkRequestReceivedEventArgs : EventArgs
     {
-        private GetBulkRequestMessage _request;
-        private IPEndPoint _sender;
+        private readonly GetBulkRequestMessage _request;
+        private readonly IPEndPoint _sender;
 
         /// <summary>
         /// Creates a <see cref="GetBulkRequestReceivedEventArgs"/>. 

@@ -6,27 +6,27 @@
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
+using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Net.Sockets;
+
 namespace Lextm.SharpSnmpLib
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Net;
-    using System.Net.Sockets;
-    
     /// <summary>
     /// GET response message.
     /// </summary>
     public class GetResponseMessage : ISnmpMessage
     {
-        private ISnmpPdu _pdu;
-        private int _sequenceNumber;
-        private ErrorCode _errorStatus;
-        private int _errorIndex;
-        private IList<Variable> _variables;
-        private byte[] _bytes;
-        private VersionCode _version;
-        private OctetString _community;
-        private IPAddress _receiver;
+        private readonly ISnmpPdu _pdu;
+        private readonly int _sequenceNumber;
+        private readonly ErrorCode _errorStatus;
+        private readonly int _errorIndex;
+        private readonly IList<Variable> _variables;
+        private readonly byte[] _bytes;
+        private readonly VersionCode _version;
+        private readonly OctetString _community;
+        private readonly IPAddress _receiver;
         
         /// <summary>
         /// Creates a <see cref="GetResponseMessage"/> with all contents.
@@ -172,7 +172,7 @@ namespace Lextm.SharpSnmpLib
         }
         
         /// <summary>
-        /// Returns a <see cref="String"/> that represents this <see cref="GetResponseMessage"/>.
+        /// Returns a <see cref="string"/> that represents this <see cref="GetResponseMessage"/>.
         /// </summary>
         /// <returns></returns>
         public override string ToString()

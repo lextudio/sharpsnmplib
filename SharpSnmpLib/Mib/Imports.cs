@@ -7,7 +7,6 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 
-using System;
 using System.Collections.Generic;
 
 namespace Lextm.SharpSnmpLib.Mib
@@ -17,7 +16,7 @@ namespace Lextm.SharpSnmpLib.Mib
     /// </summary>
     internal sealed class Imports : IConstruct
     {
-        private List<string> _dependents = new List<string>();
+        private readonly List<string> _dependents = new List<string>();
         
         public Imports(IEnumerable<string> dependents)
         {

@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.IO;
 using System.Net;
-using System.Text;
-using System.Text.RegularExpressions;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -11,7 +9,7 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public sealed class IP : ISnmpData, IEquatable<IP>
     {
-        private IPAddress _ip;
+        private readonly IPAddress _ip;
         
         /// <summary>
         /// Creates an <see cref="IP"/> with a specific <see cref="IPAddress"/>.
@@ -31,19 +29,9 @@ namespace Lextm.SharpSnmpLib
         /// Creates an <see cref="IP"/> from raw bytes.
         /// </summary>
         /// <param name="raw">Raw bytes</param>
-        public IP(byte[] raw)
+        private IP(byte[] raw): this(raw.Length, new MemoryStream(raw))
         {
-            if (raw == null)
-            {
-                throw new ArgumentNullException("raw");
-            }
-
-            if (raw.Length != 4)
-            {
-                throw new ArgumentException("bytes must contain 4 elements");
-            }
-
-            _ip = new IPAddress(raw);
+           
         }
         
         /// <summary>
@@ -52,8 +40,25 @@ namespace Lextm.SharpSnmpLib
         /// <param name="ip">IP string</param>
         public IP(string ip) : this(IPAddress.Parse(ip))
         {
-        }        
-        
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="IP"/> class.
+        /// </summary>
+        /// <param name="length">The length.</param>
+        /// <param name="stream">The stream.</param>
+        public IP(int length, Stream stream)
+        {
+            if (length != 4)
+            {
+                throw new ArgumentException("bytes must contain 4 elements");
+            }
+
+            byte[] raw = new byte[4];
+            stream.Read(raw, 0, 4);
+            _ip = new IPAddress(raw);
+        }
+
         /// <summary>
         /// Returns a <see cref="String"/> that represents this <see cref="IP"/>.
         /// </summary>
@@ -156,8 +161,8 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
         public static bool Equals(IP left, IP right)
         {
-            object lo = left as object;
-            object ro = right as object;
+            object lo = left;
+            object ro = right;
             if (lo == ro)
             {
                 return true;

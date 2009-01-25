@@ -16,8 +16,8 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public sealed class SetRequestReceivedEventArgs : EventArgs
     {
-        private SetRequestMessage _request;
-        private IPEndPoint _sender;
+        private readonly SetRequestMessage _request;
+        private readonly IPEndPoint _sender;
 
         /// <summary>
         /// Creates a <see cref="SetRequestReceivedEventArgs"/>.

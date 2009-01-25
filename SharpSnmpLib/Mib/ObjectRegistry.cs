@@ -19,9 +19,9 @@ namespace Lextm.SharpSnmpLib.Mib
     /// </summary>
     public class ObjectRegistry
     {
-        private ObjectTree _tree = new ObjectTree();
+        private readonly ObjectTree _tree = new ObjectTree();
         private static volatile ObjectRegistry instance;
-        private static object locker = new object();
+        private static readonly object locker = new object();
         
         private ObjectRegistry()
         {

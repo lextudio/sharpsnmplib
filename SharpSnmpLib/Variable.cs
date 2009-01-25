@@ -7,12 +7,11 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 
+using System;
+using System.Collections.Generic;
+
 namespace Lextm.SharpSnmpLib
 {
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    
     /// <summary>
     /// Variable bind.
     /// </summary>
@@ -21,8 +20,8 @@ namespace Lextm.SharpSnmpLib
     /// </remarks>
     public class Variable
     {
-        private ObjectIdentifier _oid;
-        private ISnmpData _data;
+        private readonly ObjectIdentifier _oid;
+        private readonly ISnmpData _data;
         
         /// <summary>
         /// Creates a <see cref="Variable"/> instance with a specific <see cref="ObjectIdentifier"/>.
@@ -33,7 +32,7 @@ namespace Lextm.SharpSnmpLib
         }
         
         /// <summary>
-        /// Creates a <see cref="Variable"/> instance with a specific <see cref="String"/>.
+        /// Creates a <see cref="Variable"/> instance with a specific <see cref="string"/>.
         /// </summary>
         /// <param name="textual">Textual IID string</param>
         public Variable(string textual) : this(new ObjectIdentifier(Mib.ObjectRegistry.Instance.Translate(textual)), null)
@@ -50,7 +49,7 @@ namespace Lextm.SharpSnmpLib
         }
         
         /// <summary>
-        /// Creates a <see cref="Variable"/> instance with a specific <see cref="String"/> and <see cref="ISnmpData"/>.
+        /// Creates a <see cref="Variable"/> instance with a specific <see cref="string"/> and <see cref="ISnmpData"/>.
         /// </summary>
         /// <param name="textual"></param>
         /// <param name="data"></param>
@@ -160,7 +159,7 @@ namespace Lextm.SharpSnmpLib
         }
         
         /// <summary>
-        /// Returns a <see cref="String"/> that represents this <see cref="Variable"/>.
+        /// Returns a <see cref="string"/> that represents this <see cref="Variable"/>.
         /// </summary>
         /// <returns></returns>
         public override string ToString()

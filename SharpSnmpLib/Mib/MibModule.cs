@@ -17,11 +17,11 @@ namespace Lextm.SharpSnmpLib.Mib
     /// </summary>
     internal sealed class MibModule
     {
-        private string _name;
-        private Imports _imports;
+        private readonly string _name;
+        private readonly Imports _imports;
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         private Exports _exports;
-        private IList<IConstruct> _tokens = new List<IConstruct>();
+        private readonly IList<IConstruct> _tokens = new List<IConstruct>();
         
         public MibModule(string name, IEnumerable<string> dependents)
         {

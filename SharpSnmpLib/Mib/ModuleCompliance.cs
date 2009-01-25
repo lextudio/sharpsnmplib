@@ -16,10 +16,10 @@ namespace Lextm.SharpSnmpLib.Mib
     /// </summary>
     internal sealed class ModuleCompliance : IEntity
     {
-        private string _module;
+        private readonly string _module;
         private string _parent;
-        private uint _value;
-        private string _name;
+        private readonly uint _value;
+        private readonly string _name;
 
         public ModuleCompliance(string module, IList<Symbol> header, Lexer lexer)
         {

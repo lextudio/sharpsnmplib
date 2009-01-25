@@ -7,8 +7,6 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 
-using System;
-
 namespace Lextm.SharpSnmpLib.Mib
 {
     /// <summary>
@@ -19,7 +17,7 @@ namespace Lextm.SharpSnmpLib.Mib
         private string _module;
         private string _name;
         private Symbol _last;
-        private Symbol _left;
+        private readonly Symbol _left;
         
         /// <summary>
         /// Creates an <see cref="TypeAssignment"/>.

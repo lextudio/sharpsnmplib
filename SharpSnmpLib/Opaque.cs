@@ -1,8 +1,5 @@
 using System;
-using System.Collections;
 using System.Globalization;
-using System.IO;
-using System.Net.Sockets;
 using System.Text;
 
 // ASN.1 BER encoding library by Malcolm Crowe at the University of the West of Scotland
@@ -28,7 +25,7 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public sealed class Opaque : ISnmpData, IEquatable<Opaque>
     {
-        private byte[] _raw;
+        private readonly byte[] _raw;
 
         /// <summary>
         /// Creates an <see cref="Opaque"/> from raw bytes.
@@ -143,8 +140,8 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
         public static bool Equals(Opaque left, Opaque right)
         {
-            object lo = left as object;
-            object ro = right as object;
+            object lo = left;
+            object ro = right;
             if (lo == ro)
             {
                 return true;

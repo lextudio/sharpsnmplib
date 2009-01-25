@@ -6,11 +6,10 @@
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
-using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using System.Text;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -20,12 +19,12 @@ namespace Lextm.SharpSnmpLib
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu")]
     public class ReportPdu : ISnmpPdu
     {
-        private Integer32 _errorStatus;
-        private Integer32 _errorIndex;
-        private IList<Variable> _variables;
-        private Integer32 _seq;
-        private byte[] _raw;
-        private Sequence _varbindSection;
+        private readonly Integer32 _errorStatus;
+        private readonly Integer32 _errorIndex;
+        private readonly IList<Variable> _variables;
+        private readonly Integer32 _seq;
+        private readonly byte[] _raw;
+        private readonly Sequence _varbindSection;
         private byte[] _bytes;
         
         /// <summary>
@@ -53,15 +52,9 @@ namespace Lextm.SharpSnmpLib
         /// Creates a <see cref="ReportPdu"/> with raw bytes.
         /// </summary>
         /// <param name="raw">Raw bytes</param>
-        public ReportPdu(byte[] raw)
+        private ReportPdu(byte[] raw): this(raw.Length, new MemoryStream(raw))
         {
-            _raw = raw;
-            MemoryStream m = new MemoryStream(raw);
-            _seq = (Integer32)DataFactory.CreateSnmpData(m);
-            _errorStatus = (Integer32)DataFactory.CreateSnmpData(m);
-            _errorIndex = (Integer32)DataFactory.CreateSnmpData(m);
-            _varbindSection = (Sequence)DataFactory.CreateSnmpData(m);
-            _variables = Variable.Transform(_varbindSection);
+
         }
         
         internal int SequenceNumber
@@ -84,6 +77,21 @@ namespace Lextm.SharpSnmpLib
         }
 
         #region ISnmpPdu Members
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ReportPdu"/> class.
+        /// </summary>
+        /// <param name="length">The length.</param>
+        /// <param name="stream">The stream.</param>
+        public ReportPdu(int length, Stream stream)
+        {
+            _seq = (Integer32)DataFactory.CreateSnmpData(stream);
+            _errorStatus = (Integer32)DataFactory.CreateSnmpData(stream);
+            _errorIndex = (Integer32)DataFactory.CreateSnmpData(stream);
+            _varbindSection = (Sequence)DataFactory.CreateSnmpData(stream);
+            _variables = Variable.Transform(_varbindSection);
+            _raw = ByteTool.ParseItems(_seq, _errorStatus, _errorIndex, _varbindSection);
+            Debug.Assert(length >= _raw.Length);
+        }
         /// <summary>
         /// Converts to message body.
         /// </summary>
@@ -127,7 +135,7 @@ namespace Lextm.SharpSnmpLib
         #endregion
         
         /// <summary>
-        /// Returns a <see cref="String"/> that represents this <see cref="ReportPdu"/>.
+        /// Returns a <see cref="string"/> that represents this <see cref="ReportPdu"/>.
         /// </summary>
         /// <returns></returns>
         public override string ToString()

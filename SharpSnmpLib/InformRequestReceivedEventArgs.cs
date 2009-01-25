@@ -8,8 +8,8 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public sealed class InformRequestReceivedEventArgs : EventArgs
     {
-        private InformRequestMessage _inform;
-        private IPEndPoint _sender;
+        private readonly InformRequestMessage _inform;
+        private readonly IPEndPoint _sender;
       
         /// <summary>
         /// Creates a <see cref="InformRequestReceivedEventArgs"/> 

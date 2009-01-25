@@ -19,7 +19,7 @@ namespace Lextm.SharpSnmpLib.Mib
     /// </summary>
     internal sealed class Lexer
     {
-        private IList<Symbol> _symbols = new List<Symbol>();
+        private readonly IList<Symbol> _symbols = new List<Symbol>();
 
         internal void Parse(TextReader stream)
         {
@@ -125,10 +125,10 @@ namespace Lextm.SharpSnmpLib.Mib
         private bool assignAhead;
 
         /// <summary>
-        /// Parses a list of <see cref="Char"/> to <see cref="Symbol"/>.
+        /// Parses a list of <see cref="char"/> to <see cref="Symbol"/>.
         /// </summary>
         /// <param name="file">File</param>
-        /// <param name="current">Current <see cref="Char"/></param>
+        /// <param name="current">Current <see cref="char"/></param>
         /// <param name="row">Row number</param>
         /// <param name="column">Column number</param>
         /// <param name="list"></param>

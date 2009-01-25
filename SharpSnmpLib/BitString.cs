@@ -15,22 +15,21 @@
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
+using System;
+using System.Diagnostics;
+
 namespace Lextm.SharpSnmpLib
 {
-    using System;
-    using System.Collections;
-    using System.Diagnostics;
-    
     /// <summary>
     /// BitString type.
     /// </summary>
     public sealed class BitString : ISnmpData, IEquatable<BitString> // BitArray seems to be bad news, so here goes
     {
-        private int _nbits;
-        private int _size;
-        private int[] _bits;
-        private byte[] _raw;
-        private byte[] _bytes;
+        private readonly int _nbits;
+        private readonly int _size;
+        private readonly int[] _bits;
+        private readonly byte[] _raw;
+        private readonly byte[] _bytes;
 
         /// <summary>
         /// Creates a <see cref="BitString"/> from raw bytes.
@@ -347,8 +346,8 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public static bool Equals(BitString left, BitString right)
         {
-            object lo = left as object;
-            object ro = right as object;
+            object lo = left;
+            object ro = right;
             if (lo == ro)
             {
                 return true;

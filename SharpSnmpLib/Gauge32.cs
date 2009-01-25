@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 
@@ -10,15 +9,14 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public sealed class Gauge32 : ISnmpData, IEquatable<Gauge32>
     {
-        private Counter32 _count;
+        private readonly Counter32 _count;
         
         /// <summary>
         /// Creates a <see cref="Gauge32"/> instance from raw bytes.
         /// </summary>
         /// <param name="raw"></param>
-        public Gauge32(byte[] raw)
+        internal Gauge32(byte[] raw): this(raw.Length, new MemoryStream(raw))
         {
-            _count = new Counter32(raw);
         }
         
         /// <summary>
@@ -29,6 +27,16 @@ namespace Lextm.SharpSnmpLib
         public Gauge32(uint value)
         {
             _count = new Counter32(value);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Gauge32"/> class.
+        /// </summary>
+        /// <param name="length">The length.</param>
+        /// <param name="stream">The stream.</param>
+        public Gauge32(int length, Stream stream)
+        {
+            _count = new Counter32(length, stream);
         }
 
         #region ISnmpData Members
@@ -133,8 +141,8 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
         public static bool Equals(Gauge32 left, Gauge32 right)
         {
-            object lo = left as object;
-            object ro = right as object;
+            object lo = left;
+            object ro = right;
             if (lo == ro)
             {
                 return true;

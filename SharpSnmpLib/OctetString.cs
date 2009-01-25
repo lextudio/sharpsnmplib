@@ -1,9 +1,10 @@
 using System;
 using System.Globalization;
-#if (!CF)
+using System.IO;
 using System.Net.NetworkInformation;
-#endif
 using System.Text;
+#if (!CF)
+#endif
 
 // ASN.1 BER encoding library by Malcolm Crowe at the University of the West of Scotland
 // See http://cis.paisley.ac.uk/crow-ci0
@@ -29,17 +30,16 @@ namespace Lextm.SharpSnmpLib
     public sealed class OctetString // This namespace has its own concept of string
         : ISnmpData, IEquatable<OctetString>
     {
-        private byte[] _raw;
-        private Encoding _encoding;
+        private readonly byte[] _raw;
+        private readonly Encoding _encoding;
         
         /// <summary>
         /// Creates an <see cref="OctetString"/> from raw bytes.
         /// </summary>
         /// <param name="raw">Raw bytes</param>
-        public OctetString(byte[] raw)
+        private OctetString(byte[] raw): this(raw.Length, new MemoryStream(raw))
         {
-            _raw = raw;
-            _encoding = DefaultEncoding;
+
         }
         
         /// <summary>
@@ -222,7 +222,19 @@ namespace Lextm.SharpSnmpLib
         }
         #endif 
         private static Encoding defaultEncoding = Encoding.ASCII;
-        
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OctetString"/> class.
+        /// </summary>
+        /// <param name="length">The length.</param>
+        /// <param name="stream">The stream.</param>
+        public OctetString(int length, Stream stream)
+        {
+            _raw = new byte[length];
+            stream.Read(_raw, 0, length);
+            _encoding = DefaultEncoding;
+        }
+
         /// <summary>
         /// Default encoding of <see cref="OctetString"/> type.
         /// </summary>
@@ -241,8 +253,8 @@ namespace Lextm.SharpSnmpLib
         /// Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
         public static bool Equals(OctetString left, OctetString right)
         {
-            object lo = left as object;
-            object ro = right as object;
+            object lo = left;
+            object ro = right;
             if (lo == ro)
             {
                 return true;
