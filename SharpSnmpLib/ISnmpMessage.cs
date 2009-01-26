@@ -12,7 +12,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// SNMP message.
     /// </summary>
-    public interface ISnmpMessage : ISnmpData
+    public interface ISnmpMessage
     {
         /// <summary>
         /// PDU section.
@@ -22,5 +22,11 @@ namespace Lextm.SharpSnmpLib
         {
             get;
         }
+
+        /// <summary>
+        /// Converts to the bytes.
+        /// </summary>
+        /// <returns></returns>
+        byte[] ToBytes();
     }
 }

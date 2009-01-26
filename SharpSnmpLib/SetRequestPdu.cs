@@ -119,7 +119,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="version">Prtocol version</param>
         /// <param name="community">Community name</param>
         /// <returns></returns>
-        public ISnmpData ToMessageBody(VersionCode version, OctetString community)
+        public Sequence ToMessageBody(VersionCode version, OctetString community)
         {
             return ByteTool.PackMessage(version, community, this);
         }
@@ -135,24 +135,24 @@ namespace Lextm.SharpSnmpLib
             get { return SnmpType.SetRequestPdu; }
         }
 
-        private byte[] _bytes;
-        
         /// <summary>
         /// Converts to byte format.
         /// </summary>
         /// <returns></returns>
-        public byte[] ToBytes()
+        private byte[] ToBytes()
         {
-            if (_bytes == null)
-            {
-                MemoryStream result = new MemoryStream();
-                result.WriteByte((byte)TypeCode);
-                ByteTool.WritePayloadLength(result, _raw.Length); // it seems that trap does not use this function
-                result.Write(_raw, 0, _raw.Length);
-                _bytes = result.ToArray();
-            }
-            
-            return _bytes;
+            MemoryStream result = new MemoryStream();
+            AppendBytesTo(result);
+            return result.ToArray();
+        }
+
+        /// <summary>
+        /// Appends the bytes to <see cref="Stream"/>.
+        /// </summary>
+        /// <param name="stream">The stream.</param>
+        public void AppendBytesTo(Stream stream)
+        {
+            ByteTool.AppendBytes(stream, TypeCode, _raw);
         }
 
         #endregion

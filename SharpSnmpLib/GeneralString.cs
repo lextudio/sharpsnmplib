@@ -8,6 +8,7 @@
  */
 
 using System;
+using System.IO;
 using System.Text;
 
 namespace Lextm.SharpSnmpLib
@@ -52,11 +53,22 @@ namespace Lextm.SharpSnmpLib
         /// Converts to byte format.
         /// </summary>
         /// <returns></returns>
-        public byte[] ToBytes()
+        private byte[] ToBytes()
         {
-            return ByteTool.ToBytes(TypeCode, _raw);
+            MemoryStream result = new MemoryStream();
+            AppendBytesTo(result);
+            return result.ToArray();
         }
-        
+
+        /// <summary>
+        /// Appends the bytes to <see cref="Stream"/>.
+        /// </summary>
+        /// <param name="stream">The stream.</param>
+        public void AppendBytesTo(Stream stream)
+        {
+            ByteTool.AppendBytes(stream, TypeCode, _raw);
+        }
+
         /// <summary>
         /// Determines whether the specified <see cref="Object"/> is equal to the current <see cref="GeneralString"/>.
         /// </summary>

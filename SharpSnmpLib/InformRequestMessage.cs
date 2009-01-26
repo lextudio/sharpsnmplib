@@ -133,7 +133,7 @@ namespace Lextm.SharpSnmpLib
             
             MemoryStream m = new MemoryStream(bytes, false);
             ISnmpMessage message = MessageFactory.ParseMessages(m)[0];
-            if (message.TypeCode != SnmpType.GetResponsePdu)
+            if (message.Pdu.TypeCode != SnmpType.GetResponsePdu)
             {
                 throw SharpOperationException.Create("wrong response type", receiver);
             }
@@ -173,7 +173,7 @@ namespace Lextm.SharpSnmpLib
         {
             return _bytes;
         }
-        
+
         /// <summary>
         /// PDU.
         /// </summary>

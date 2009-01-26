@@ -162,7 +162,7 @@ namespace Lextm.SharpSnmpLib
                 {
                     Socket watcher = ((UdpClient)e.Argument).Client;
                     IPEndPoint source = new IPEndPoint(IPAddress.Any, 0);
-                    EndPoint senderRemote = (EndPoint)source;
+                    EndPoint senderRemote = source;
                     #if CF
                     byte[] msg = new byte[8192];
                     #else
@@ -188,7 +188,7 @@ namespace Lextm.SharpSnmpLib
                         
                         watcher.ReceiveFrom(msg, ref senderRemote);
                         ISnmpMessage message = MessageFactory.ParseMessages(msg)[0];
-                        if (message.TypeCode != SnmpType.GetResponsePdu)
+                        if (message.Pdu.TypeCode != SnmpType.GetResponsePdu)
                         {
                             continue;
                         }
@@ -248,7 +248,7 @@ namespace Lextm.SharpSnmpLib
             
             MemoryStream m = new MemoryStream(bytes, false);
             ISnmpMessage message = MessageFactory.ParseMessages(m)[0];
-            if (message.TypeCode != SnmpType.GetResponsePdu)
+            if (message.Pdu.TypeCode != SnmpType.GetResponsePdu)
             {
                 throw SharpOperationException.Create("wrong response type", _agent);
             }
@@ -316,7 +316,7 @@ namespace Lextm.SharpSnmpLib
         {
             return _bytes;
         }
-        
+
         /// <summary>
         /// PDU.
         /// </summary>

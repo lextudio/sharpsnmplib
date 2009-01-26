@@ -110,11 +110,22 @@ namespace Lextm.SharpSnmpLib
         /// Converts to byte format.
         /// </summary>
         /// <returns></returns>
-        public byte[] ToBytes()
+        internal byte[] ToBytes()
         {
-            return ByteTool.ToBytes(SnmpType.Integer32, ByteTool.GetRawBytes(BitConverter.GetBytes(_int), _int < 0));
+            MemoryStream result = new MemoryStream();
+            AppendBytesTo(result);
+            return result.ToArray();
         }
-        
+
+        /// <summary>
+        /// Appends the bytes to <see cref="Stream"/>.
+        /// </summary>
+        /// <param name="stream">The stream.</param>
+        public void AppendBytesTo(Stream stream)
+        {
+            ByteTool.AppendBytes(stream, TypeCode, ByteTool.GetRawBytes(BitConverter.GetBytes(_int), _int < 0));
+        }
+
         /// <summary>
         /// Serves as a hash function for a particular type.
         /// </summary>

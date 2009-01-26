@@ -7,6 +7,7 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
+using System.IO;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -87,12 +88,21 @@ namespace Lextm.SharpSnmpLib
         /// Converts to byte format.
         /// </summary>
         /// <returns></returns>
-        public byte[] ToBytes()
+        private byte[] ToBytes()
         {
-            return _endOfMibView;
+            return endOfMibView;
         }
-        
-        private readonly static byte[] _endOfMibView = new byte[] { 0x80, 0x00 };
+
+        /// <summary>
+        /// Appends the bytes to <see cref="Stream"/>.
+        /// </summary>
+        /// <param name="stream">The stream.</param>
+        public void AppendBytesTo(Stream stream)
+        {
+            stream.Write(endOfMibView, 0, endOfMibView.Length);
+        }
+
+        private readonly static byte[] endOfMibView = new byte[] { 0x80, 0x00 };
         
         /// <summary>
         /// Returns a <see cref="String"/> that represents this <see cref="Null"/>.

@@ -131,12 +131,19 @@ namespace Lextm.SharpSnmpLib
         public byte[] ToBytes()
         {
             MemoryStream result = new MemoryStream();
-            result.WriteByte((byte)TypeCode);
-            ByteTool.WritePayloadLength(result, _raw.Length); // it seems that trap does not use this function
-            result.Write(_raw, 0, _raw.Length);
+            AppendBytesTo(result);
             return result.ToArray();
         }
-        
+
+        /// <summary>
+        /// Appends the bytes to <see cref="Stream"/>.
+        /// </summary>
+        /// <param name="stream">The stream.</param>
+        public void AppendBytesTo(Stream stream)
+        {
+            ByteTool.AppendBytes(stream, TypeCode, _raw);
+        }
+
         /// <summary>
         /// Returns a <see cref="string"/> that represents this <see cref="Sequence"/>.
         /// </summary>

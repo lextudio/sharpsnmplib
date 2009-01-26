@@ -89,9 +89,9 @@ namespace Lextm.SharpSnmpLib
         {
             get { return SnmpType.TrapV2Pdu; }
         }
-        
+
         /// <summary>
-        /// To byte format.
+        /// Converts to byte format.
         /// </summary>
         /// <returns></returns>
         public byte[] ToBytes()

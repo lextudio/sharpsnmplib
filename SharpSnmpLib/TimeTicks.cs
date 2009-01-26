@@ -84,12 +84,23 @@ namespace Lextm.SharpSnmpLib
         #region ISnmpData Members
 
         /// <summary>
-        /// To byte format.
+        /// Converts to byte format.
         /// </summary>
         /// <returns></returns>
-        public byte[] ToBytes()
+        internal byte[] ToBytes()
         {
-            return ByteTool.ToBytes(SnmpType.TimeTicks, _count.GetRaw());
+            MemoryStream result = new MemoryStream();
+            AppendBytesTo(result);
+            return result.ToArray();
+        }
+
+        /// <summary>
+        /// Appends the bytes to <see cref="Stream"/>.
+        /// </summary>
+        /// <param name="stream">The stream.</param>
+        public void AppendBytesTo(Stream stream)
+        {
+            ByteTool.AppendBytes(stream, TypeCode, _count.GetRaw());
         }
 
         #endregion

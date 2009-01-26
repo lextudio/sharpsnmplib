@@ -17,6 +17,7 @@
 
 using System;
 using System.Diagnostics;
+using System.IO;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -29,7 +30,6 @@ namespace Lextm.SharpSnmpLib
         private readonly int _size;
         private readonly int[] _bits;
         private readonly byte[] _raw;
-        private readonly byte[] _bytes;
 
         /// <summary>
         /// Creates a <see cref="BitString"/> from raw bytes.
@@ -56,7 +56,6 @@ namespace Lextm.SharpSnmpLib
             }
             
             _raw = raw;
-            _bytes = ByteTool.ToBytes(SnmpType.BitString, _raw);
         }
         
         /// <summary>
@@ -85,7 +84,6 @@ namespace Lextm.SharpSnmpLib
             _size = bits.Length;
             _bits = bits;
             _raw = ParseItem(_nbits, _bits);
-            _bytes = ByteTool.ToBytes(SnmpType.BitString, _raw);
         }
         
         /// <summary>
@@ -103,7 +101,6 @@ namespace Lextm.SharpSnmpLib
             _nbits = other._nbits;
             _size = other._size;
             _bits = (int[])other._bits.Clone();
-            _bytes = (byte[])other._bytes.Clone();
         }
         
         /// <summary>
@@ -113,7 +110,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns>Bit inside string at the specific index.</returns>
         public bool this[int index]
         {
-            get { return (_bits[index >> 5] & (1 << (31 - ((int)index & 31)))) != 0; }
+            get { return (_bits[index >> 5] & (1 << (31 - (index & 31)))) != 0; }
         }
         
         /// <summary>
@@ -260,11 +257,22 @@ namespace Lextm.SharpSnmpLib
         /// Converts to byte format.
         /// </summary>
         /// <returns></returns>
-        public byte[] ToBytes()
+        private byte[] ToBytes()
         {
-            return _bytes;
+            MemoryStream result = new MemoryStream();
+            AppendBytesTo(result);
+            return result.ToArray();
         }
-        
+
+        /// <summary>
+        /// Appends the bytes to <see cref="Stream"/>.
+        /// </summary>
+        /// <param name="stream">The stream.</param>
+        public void AppendBytesTo(Stream stream)
+        {
+            ByteTool.AppendBytes(stream, TypeCode, _raw);
+        }
+
         private static byte[] ParseItem(int nbits, int[] bits)
         {
             // encoding 8.6.2

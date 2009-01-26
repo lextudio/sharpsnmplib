@@ -46,7 +46,7 @@ namespace Lextm.SharpSnmpLib
 
             MemoryStream m = new MemoryStream(reply, false);
             ISnmpMessage message = MessageFactory.ParseMessages(m)[0];
-            if (message.TypeCode != SnmpType.GetResponsePdu)
+            if (message.Pdu.TypeCode != SnmpType.GetResponsePdu)
             {
                 throw SharpOperationException.Create("wrong response type", receiver.Address);
             }
@@ -150,7 +150,7 @@ namespace Lextm.SharpSnmpLib
             
             return true;
         }
-        
+
         internal static byte[] ParseItems(params ISnmpData[] items)
         {
             if (items == null)
@@ -161,8 +161,7 @@ namespace Lextm.SharpSnmpLib
             MemoryStream result = new MemoryStream();
             foreach (ISnmpData item in items)
             {
-                byte[] data = item.ToBytes();
-                result.Write(data, 0, data.Length);
+                item.AppendBytesTo(result);
             }
             
             return result.ToArray();
@@ -183,8 +182,7 @@ namespace Lextm.SharpSnmpLib
             MemoryStream result = new MemoryStream();
             foreach (ISnmpData item in items)
             {
-                byte[] data = item.ToBytes();
-                result.Write(data, 0, data.Length);
+                item.AppendBytesTo(result);
             }
             
             return result.ToArray();
@@ -262,13 +260,11 @@ namespace Lextm.SharpSnmpLib
             return (byte)n;
         }
         
-        internal static byte[] ToBytes(SnmpType typeCode, byte[] raw)
+        internal static void AppendBytes(Stream stream, SnmpType typeCode, byte[] raw)
         {
-            MemoryStream result = new MemoryStream();
-            result.WriteByte((byte)typeCode);
-            WritePayloadLength(result, raw.Length);
-            result.Write(raw, 0, raw.Length);
-            return result.ToArray();
+            stream.WriteByte((byte)typeCode);
+            WritePayloadLength(stream, raw.Length);
+            stream.Write(raw, 0, raw.Length);
         }
         
         internal static byte[] GetRawBytes(byte[] orig, bool negative)

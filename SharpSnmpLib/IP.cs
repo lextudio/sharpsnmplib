@@ -97,11 +97,22 @@ namespace Lextm.SharpSnmpLib
         /// Converts to byte format.
         /// </summary>
         /// <returns></returns>
-        public byte[] ToBytes()
+        internal byte[] ToBytes()
         {
-            return ByteTool.ToBytes(SnmpType.IPAddress, _ip.GetAddressBytes());
+            MemoryStream result = new MemoryStream();
+            AppendBytesTo(result);
+            return result.ToArray();
         }
-        
+
+        /// <summary>
+        /// Appends the bytes to <see cref="Stream"/>.
+        /// </summary>
+        /// <param name="stream">The stream.</param>
+        public void AppendBytesTo(Stream stream)
+        {
+            ByteTool.AppendBytes(stream, TypeCode, _ip.GetAddressBytes());
+        }
+
         /// <summary>
         /// Determines whether the specified <see cref="Object"/> is equal to the current <see cref="IP"/>.
         /// </summary>

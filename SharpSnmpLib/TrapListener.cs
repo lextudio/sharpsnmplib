@@ -181,7 +181,7 @@ namespace Lextm.SharpSnmpLib
             if (exception != null && handler != null)
             {
                 SocketException socket = exception as SocketException;
-                if (socket == null && socket.ErrorCode == 10048)
+                if (socket != null && socket.ErrorCode == 10048)
                 {
                     exception = new SharpSnmpException("Port is already used", socket);
                 }
@@ -200,7 +200,7 @@ namespace Lextm.SharpSnmpLib
             watcher.Bind(monitor);
 
             IPEndPoint agent = new IPEndPoint(IPAddress.Any, 0);
-            EndPoint senderRemote = (EndPoint)agent;
+            EndPoint senderRemote = agent;
             #if CF
             byte[] msg = new byte[8192];
             #else
@@ -235,7 +235,7 @@ namespace Lextm.SharpSnmpLib
 
             foreach (ISnmpMessage message in MessageFactory.ParseMessages(param.Bytes, 0, param.Number))
             {
-                switch (message.TypeCode)
+                switch (message.Pdu.TypeCode)
                 {
                     case SnmpType.TrapV1Pdu:
                         {

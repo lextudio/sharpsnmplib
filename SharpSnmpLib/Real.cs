@@ -1,5 +1,6 @@
 using System;
 using System.Globalization;
+using System.IO;
 using System.Text;
 
 // ASN.1 BER encoding library by Malcolm Crowe at the University of the West of Scotland
@@ -26,7 +27,6 @@ namespace Lextm.SharpSnmpLib
     public sealed class Real : ISnmpData, IEquatable<Real>
     {
         private readonly byte[] _raw;
-        private readonly byte[] _bytes;
         
         /// <summary>
         /// Creates a <see cref="Real"/> from raw bytes.
@@ -35,7 +35,6 @@ namespace Lextm.SharpSnmpLib
         public Real(byte[] raw)
         {
             _raw = raw;
-            _bytes = ByteTool.ToBytes(SnmpType.Real, _raw);
         }
         
         /// <summary>
@@ -55,8 +54,6 @@ namespace Lextm.SharpSnmpLib
                 _raw[0] = 0x0;
                 Encoding.ASCII.GetBytes(s, 0, s.Length, _raw, 1);
             }
-            
-            _bytes = ByteTool.ToBytes(SnmpType.Real, _raw);
         }
         
         private double ToDouble()
@@ -171,11 +168,22 @@ namespace Lextm.SharpSnmpLib
         /// Converts to byte format.
         /// </summary>
         /// <returns></returns>
-        public byte[] ToBytes()
+        private byte[] ToBytes()
         {
-            return _bytes;
+            MemoryStream result = new MemoryStream();
+            AppendBytesTo(result);
+            return result.ToArray();
         }
-        
+
+        /// <summary>
+        /// Appends the bytes to <see cref="Stream"/>.
+        /// </summary>
+        /// <param name="stream">The stream.</param>
+        public void AppendBytesTo(Stream stream)
+        {
+            ByteTool.AppendBytes(stream, TypeCode, _raw);
+        }
+
         /// <summary>
         /// Indicates whether the current object is equal to another object of the same type.
         /// </summary>

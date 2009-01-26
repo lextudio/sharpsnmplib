@@ -141,16 +141,27 @@ namespace Lextm.SharpSnmpLib
                 return SnmpType.OctetString;
             }
         }
-        
+
         /// <summary>
         /// Converts to byte format.
         /// </summary>
         /// <returns></returns>
-        public byte[] ToBytes()
+        internal byte[] ToBytes()
         {
-            return ByteTool.ToBytes(SnmpType.OctetString, _raw);
+            MemoryStream result = new MemoryStream();
+            AppendBytesTo(result);
+            return result.ToArray();
         }
-        
+
+        /// <summary>
+        /// Appends the bytes to <see cref="Stream"/>.
+        /// </summary>
+        /// <param name="stream">The stream.</param>
+        public void AppendBytesTo(Stream stream)
+        {
+            ByteTool.AppendBytes(stream, TypeCode, _raw);
+        }
+
         /// <summary>
         /// Indicates whether the current object is equal to another object of the same type.
         /// </summary>

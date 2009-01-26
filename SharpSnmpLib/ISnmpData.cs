@@ -7,6 +7,8 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 
+using System.IO;
+
 namespace Lextm.SharpSnmpLib
 {
     /// <summary>
@@ -21,12 +23,11 @@ namespace Lextm.SharpSnmpLib
         {
             get;
         }
-        
+
         /// <summary>
-        /// To byte format.
+        /// Appends the bytes to <see cref="Stream"/>.
         /// </summary>
-        /// <returns></returns>
-        /// <remarks>The byte format is used to construct PDU.</remarks>
-        byte[] ToBytes();
+        /// <param name="stream">The stream.</param>
+        void AppendBytesTo(Stream stream);
     }
 }

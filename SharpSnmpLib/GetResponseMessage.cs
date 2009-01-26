@@ -170,7 +170,7 @@ namespace Lextm.SharpSnmpLib
         {
             return _bytes;
         }
-        
+
         /// <summary>
         /// Returns a <see cref="string"/> that represents this <see cref="GetResponseMessage"/>.
         /// </summary>
