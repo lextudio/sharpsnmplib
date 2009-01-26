@@ -88,7 +88,7 @@ namespace Lextm.SharpSnmpLib
         /// Converts to byte format.
         /// </summary>
         /// <returns></returns>
-        private byte[] ToBytes()
+        internal byte[] ToBytes()
         {
             return endOfMibView;
         }

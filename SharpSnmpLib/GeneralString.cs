@@ -53,7 +53,7 @@ namespace Lextm.SharpSnmpLib
         /// Converts to byte format.
         /// </summary>
         /// <returns></returns>
-        private byte[] ToBytes()
+        internal byte[] ToBytes()
         {
             MemoryStream result = new MemoryStream();
             AppendBytesTo(result);

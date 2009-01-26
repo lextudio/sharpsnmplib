@@ -41,7 +41,7 @@ namespace Lextm.SharpSnmpLib.Tests
 0x69, 0x15, 0x00, 0x04, 0x0a, 0x49, 0x6e, 0x66, 0x6f, 0x72, 0x6d, 0x54, 0x65, 0x73, 0x74 };
 
 			IList<ISnmpMessage> messages = MessageFactory.ParseMessages(new MemoryStream(data));
-			Assert.AreEqual(SnmpType.InformRequestPdu, messages[0].TypeCode);
+			Assert.AreEqual(SnmpType.InformRequestPdu, messages[0].Pdu.TypeCode);
 			//Assert.AreEqual(4, messages[0].TimeStamp);
 		}
 		

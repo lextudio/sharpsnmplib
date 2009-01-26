@@ -29,7 +29,7 @@ namespace Lextm.SharpSnmpLib.Tests
 		{
 			byte[] expected = Resource.get;
 			ISnmpMessage message = MessageFactory.ParseMessages(expected)[0];
-            Assert.AreEqual(SnmpType.GetRequestPdu, message.TypeCode);
+            Assert.AreEqual(SnmpType.GetRequestPdu, message.Pdu.TypeCode);
             GetRequestPdu pdu = (GetRequestPdu)message.Pdu;
             Assert.AreEqual(1, pdu.Variables.Count);
             Variable v = pdu.Variables[0];

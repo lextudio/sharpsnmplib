@@ -82,7 +82,7 @@ namespace Lextm.SharpSnmpLib
             _community = (OctetString)body.Items[1];
             _version = (VersionCode)((Integer32)body.Items[0]).ToInt32();
             _pdu = (ISnmpPdu)body.Items[2];
-            if (_pdu.TypeCode != TypeCode)
+            if (_pdu.TypeCode != SnmpType.TrapV1Pdu)
             {
                 throw new ArgumentException("wrong message type");
             }
@@ -217,17 +217,6 @@ namespace Lextm.SharpSnmpLib
             get
             {
                 return _version;
-            }
-        }
-        
-        /// <summary>
-        /// Type code.
-        /// </summary>
-        public SnmpType TypeCode
-        {
-            get
-            {
-                return SnmpType.TrapV1Pdu;
             }
         }
         
