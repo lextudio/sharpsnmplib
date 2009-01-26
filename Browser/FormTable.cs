@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using System.Threading;
 using System.Globalization;
@@ -13,7 +9,7 @@ namespace Lextm.SharpSnmpLib.Browser
 {
     internal partial class FormTable : Form
     {
-        private IDefinition definition;
+        private readonly IDefinition definition;
         private bool columnCountSet;
         private Thread refreshThread;
 
@@ -36,10 +32,10 @@ namespace Lextm.SharpSnmpLib.Browser
             // InvokeRequired required compares the thread ID of the
             // calling thread to the thread ID of the creating thread.
             // If these threads are different, it returns true.
-            if (this.dataGridTable.InvokeRequired)
+            if (dataGridTable.InvokeRequired)
             {
-                RefreshTableCallback r = new RefreshTableCallback(PopulateGrid);
-                this.Invoke(r, new object[] { list });
+                RefreshTableCallback r =  PopulateGrid;
+                Invoke(r, new object[] { list });
             }
             else 
             {
@@ -68,7 +64,7 @@ namespace Lextm.SharpSnmpLib.Browser
 
                     dataGridTable.Rows.Add(row);
 
-                    this.Refresh();
+                    Refresh();
                 }
             }
         }
@@ -77,7 +73,7 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             if(checkBoxRefresh.Checked)
             {
-                refreshThread = new Thread(new ThreadStart(RefreshTable));
+                refreshThread = new Thread(RefreshTable);
                 refreshThread.Start();
             }
             else
@@ -101,14 +97,7 @@ namespace Lextm.SharpSnmpLib.Browser
 
             foreach (IDefinition def in d.Children)
             {
-                if(cbColumnDisplay.SelectedIndex == 0)
-                {
-                    dataGridTable.Columns[x++].Name = def.TextualForm;
-                }
-                else
-                {
-                    dataGridTable.Columns[x++].Name = def.Name;
-                }
+                dataGridTable.Columns[x++].Name = cbColumnDisplay.SelectedIndex == 0 ? def.TextualForm : def.Name;
             }
         }
 
@@ -117,23 +106,23 @@ namespace Lextm.SharpSnmpLib.Browser
             if (columnCountSet)
             {
                 createColumns();
-                this.Refresh();
+                Refresh();
             }
         }
 
         public void RefreshTable()
         {
+            // TODO: how to get rid of infinite loop?
             while (true)
             {
                 IList<Variable> list = new List<Variable>();
-                AgentProfile prof = Program.Mediator.Profiles.DefaultProfile;
-                int rows = 0;
+                AgentProfile prof = Program.Profiles.DefaultProfile;
 
                 Thread.Sleep(Convert.ToInt32(textBoxRefresh.Text, CultureInfo.CurrentCulture) * 1000);
-                rows = Manager.Walk(prof.VersionCode, prof.Agent, new OctetString(prof.GetCommunity), new ObjectIdentifier(definition.GetNumericalForm()), list, 1000, WalkMode.WithinSubtree);
+                int rows = Manager.Walk(prof.VersionCode, prof.Agent, new OctetString(prof.GetCommunity), new ObjectIdentifier(definition.GetNumericalForm()), list, 1000, WalkMode.WithinSubtree);
 
-                this.SetRows(rows);
-                this.PopulateGrid(list);
+                SetRows(rows);
+                PopulateGrid(list);
             }
         }
 

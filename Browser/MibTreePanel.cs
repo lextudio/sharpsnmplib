@@ -8,7 +8,6 @@
  */
 
 using System;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Lextm.SharpSnmpLib.Mib;
 using WeifenLuo.WinFormsUI.Docking;
@@ -58,7 +57,7 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             try
             {
-                Program.Mediator.Profiles.DefaultProfile.Get(manager1, GetTextualForm(treeView1.SelectedNode.Tag as IDefinition));
+                Program.Profiles.DefaultProfile.Get(manager1, GetTextualForm(treeView1.SelectedNode.Tag as IDefinition));
             }
             catch (Exception ex)
             {
@@ -69,22 +68,21 @@ namespace Lextm.SharpSnmpLib.Browser
             }
         }
 
-        private string GetTextualForm(IDefinition def)
+        private static string GetTextualForm(IDefinition def)
         {
             if (def.Type == DefinitionType.Scalar)
             {
                 return def.TextualForm + ".0";
             }
-            else
+
+            int index;
+            using (FormIndex form = new FormIndex())
             {
-                int index;
-                using (FormIndex form = new FormIndex())
-                {
-                    form.ShowDialog();
-                    index = form.Index;
-                }
-                return def.TextualForm + "." + index;
+                form.ShowDialog();
+                index = form.Index;
             }
+
+            return def.TextualForm + "." + index;
         }
 
         private void actGet_Update(object sender, EventArgs e)
@@ -98,7 +96,7 @@ namespace Lextm.SharpSnmpLib.Browser
             {
                 using (FormSet form = new FormSet())
                 {
-                    form.OldVal = Program.Mediator.Profiles.DefaultProfile.GetValue(manager1, GetTextualForm(treeView1.SelectedNode.Tag as IDefinition));
+                    form.OldVal = Program.Profiles.DefaultProfile.GetValue(manager1, GetTextualForm(treeView1.SelectedNode.Tag as IDefinition));
                     if (form.ShowDialog() == DialogResult.OK)
                     {
                         //
@@ -108,7 +106,7 @@ namespace Lextm.SharpSnmpLib.Browser
                         if (form.IsString)
                         {
                             OctetString newVal = new OctetString(form.NewVal);
-                            Program.Mediator.Profiles.DefaultProfile.Set(manager1, GetTextualForm(treeView1.SelectedNode.Tag as IDefinition), newVal);
+                            Program.Profiles.DefaultProfile.Set(manager1, GetTextualForm(treeView1.SelectedNode.Tag as IDefinition), newVal);
                         }
                         else
                         {
@@ -121,7 +119,7 @@ namespace Lextm.SharpSnmpLib.Browser
                             }
 
                             Integer32 newVal = new Integer32(result);
-                            Program.Mediator.Profiles.DefaultProfile.Set(manager1, GetTextualForm(treeView1.SelectedNode.Tag as IDefinition), newVal);
+                            Program.Profiles.DefaultProfile.Set(manager1, GetTextualForm(treeView1.SelectedNode.Tag as IDefinition), newVal);
                         }
 
                         //
@@ -145,22 +143,6 @@ namespace Lextm.SharpSnmpLib.Browser
             actSet.Enabled = Validate(treeView1.SelectedNode);
         }
 
-        static Regex ipRegex = new Regex(
-            "^(?<First>2[0-4]\\d|25[0-5]|[01]?\\d\\d?)\\.(?<Second>2[0-4]" +
-            "\\d|25[0-5]|[01]?\\d\\d?)\\.(?<Third>2[0-4]\\d|25[0-5]|[01]?" +
-            "\\d\\d?)\\.(?<Fourth>2[0-4]\\d|25[0-5]|[01]?\\d\\d?)$",
-            RegexOptions.IgnoreCase
-            | RegexOptions.Multiline
-            | RegexOptions.CultureInvariant
-            | RegexOptions.IgnorePatternWhitespace
-            | RegexOptions.Compiled
-           );
-
-        private static bool Validate(string ip)
-        {
-            return ipRegex.IsMatch(ip);
-        }
-
         private static bool Validate(TreeNode treeNode)
         {
             if (treeNode == null)
@@ -180,7 +162,7 @@ namespace Lextm.SharpSnmpLib.Browser
                 }
                 else
                 {
-                    Program.Mediator.Profiles.DefaultProfile.Walk(manager1, treeView1.SelectedNode.Tag as IDefinition);
+                    Program.Profiles.DefaultProfile.Walk(manager1, treeView1.SelectedNode.Tag as IDefinition);
                 }
 
             }
@@ -200,7 +182,7 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            tslblOID.Text = ObjectIdentifier.Convert((e.Node.Tag as IDefinition).GetNumericalForm());
+            tslblOID.Text = ObjectIdentifier.Convert(((IDefinition) e.Node.Tag).GetNumericalForm());
             if (Validate(e.Node))
             {
                 actGet_Execute(sender, e);
@@ -266,7 +248,7 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             try
             {
-                Program.Mediator.Profiles.DefaultProfile.Get(manager1, GetTextualForm(treeView1.SelectedNode.NextNode.Tag as IDefinition));
+                Program.Profiles.DefaultProfile.Get(manager1, GetTextualForm(treeView1.SelectedNode.NextNode.Tag as IDefinition));
             }
             catch (Exception ex)
             {
@@ -279,14 +261,7 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void actGetNext_Update(object sender, EventArgs e)
         {
-            if (treeView1.SelectedNode != null)
-            {
-                actGetNext.Enabled = Validate(treeView1.SelectedNode);
-            }
-            else
-            {
-                actGetNext.Enabled = false;
-            }
+            actGetNext.Enabled = treeView1.SelectedNode != null && Validate(treeView1.SelectedNode);
         }
 
 
@@ -299,17 +274,17 @@ namespace Lextm.SharpSnmpLib.Browser
                     switch (node.ImageIndex)
                     {
                         case 3:
-                            Program.Mediator.Profiles.DefaultProfile.Walk(manager1, node.Tag as IDefinition);
+                            Program.Profiles.DefaultProfile.Walk(manager1, node.Tag as IDefinition);
                             break;
                         default:
                             if (Validate(node))
                             {
-                                Program.Mediator.Profiles.DefaultProfile.Get(manager1, GetTextualForm(node.Tag as IDefinition));
+                                Program.Profiles.DefaultProfile.Get(manager1, GetTextualForm(node.Tag as IDefinition));
                             }
                             else
                             {
                                 //
-                                // TODO: I would like to be ablet to put headings for the parent of the child nodes
+                                // TODO: I would like to be able to put headings for the parent of the child nodes
                                 //
                                 ManualWalk(node.Nodes[0], false);
                             }

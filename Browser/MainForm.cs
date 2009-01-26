@@ -8,35 +8,16 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Net;
 using System.Windows.Forms;
-
-using Lextm.SharpSnmpLib;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace Lextm.SharpSnmpLib.Browser
 {
-    internal interface IMediator
-    {
-        ProfileRegistry Profiles
-        {
-            get;
-        }
-    }
 	/// <summary>
 	/// Description of MainForm.
 	/// </summary>
-	internal partial class MainForm : Form, IMediator
+	internal partial class MainForm : Form
 	{
-	    AgentProfilePanel agent = new AgentProfilePanel();
-	    
-	    public ProfileRegistry Profiles
-	    {
-	        get { return agent.Profiles; }
-	    }
-	    
 		public MainForm()
 		{
 			InitializeComponent();
@@ -49,7 +30,8 @@ namespace Lextm.SharpSnmpLib.Browser
             tree.Show(dockPanel1, DockState.Document);
             ModuleListPanel modules = new ModuleListPanel();
             modules.Show(dockPanel1, DockState.DockLeft);
-            
+
+            AgentProfilePanel agent = new AgentProfilePanel();
             agent.Show(dockPanel1, DockState.DockLeft);            
 		}
 

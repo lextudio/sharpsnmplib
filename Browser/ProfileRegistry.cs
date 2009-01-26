@@ -1,47 +1,29 @@
 using System;
 using System.Collections.Generic;
-using System.Collections;
-using System.Text;
 using System.IO;
 using System.Xml;
-using System.Xml.Serialization;
-using Lextm.SharpSnmpLib;
-using Lextm.SharpSnmpLib.Mib;
-using System.Windows.Forms;
 using System.Net;
 using System.Diagnostics;
 
 namespace Lextm.SharpSnmpLib.Browser
 {
-    internal class ProfileRegistry
+    internal class ProfileRegistry : IProfileRegistry
     {
-        //private IPEndPoint _default;
         private AgentProfile _defaultProfile;
-        //private string _defaultString;
-        
-//        internal AgentProfile GetProfile(IPEndPoint endpoint)
-//        {
-//            if (profiles.ContainsKey(endpoint))
-//            {
-//                return profiles[endpoint];
-//            }
-//
-//            return null;
-//        }
 
-        internal event EventHandler OnChanged;
+        public event EventHandler<EventArgs> OnChanged;
 
         internal IEnumerable<IPEndPoint> Names
         {
             get { return profiles.Keys; }
         }
 
-        internal IEnumerable<AgentProfile> Profiles
+        public IEnumerable<AgentProfile> Profiles
         {
             get { return profiles.Values; }
         }
 
-        internal AgentProfile DefaultProfile
+        public AgentProfile DefaultProfile
         {
             get { return _defaultProfile; }
             set
@@ -54,29 +36,8 @@ namespace Lextm.SharpSnmpLib.Browser
                 _defaultProfile = value;
             }
         }
-        
-//	    internal string DefaultString
-//	    {
-//	        get { return _defaultString; }
-//	    }
-//
-//	    internal IPEndPoint Default
-//	    {
-//	        get { return _default; }
-//	        set
-//	        {
-//	            if (value == null)
-//	            {
-//	                throw new ArgumentNullException("value");
-//	            }
-//
-//	            _defaultProfile = GetProfile(value);
-//	            _default = value;
-//	            _defaultString = value.ToString();
-//	        }
-//	    }
-        
-        internal void AddProfile(AgentProfile profile)
+
+        public void AddProfile(AgentProfile profile)
         {
             AddInternal(profile);
             if (OnChanged != null)
@@ -100,9 +61,9 @@ namespace Lextm.SharpSnmpLib.Browser
             }
         }
         
-        private IDictionary<IPEndPoint, AgentProfile> profiles = new Dictionary<IPEndPoint, AgentProfile>();
+        private readonly IDictionary<IPEndPoint, AgentProfile> profiles = new Dictionary<IPEndPoint, AgentProfile>();
 
-        internal void DeleteProfile(IPEndPoint profile)
+        public void DeleteProfile(IPEndPoint profile)
         {
             DeleteInternal(profile);
             if (OnChanged != null)
@@ -123,13 +84,13 @@ namespace Lextm.SharpSnmpLib.Browser
                 throw new BrowserException("Cannot delete the default endpoint!");
             }
 
-            else if(profiles.ContainsKey(profile))
+            if(profiles.ContainsKey(profile))
             {
                 profiles.Remove(profile);
             }
         }
 
-        internal void ReplaceProfile(AgentProfile agentProfile)
+        public void ReplaceProfile(AgentProfile agentProfile)
         {
             DeleteInternal(agentProfile.Agent, true);
             AddInternal(agentProfile);
@@ -139,7 +100,7 @@ namespace Lextm.SharpSnmpLib.Browser
             }
         }
 
-        internal void LoadProfiles()
+        public void LoadProfiles()
         {
             if (LoadProfilesFromFile() == 0)
             {
@@ -147,7 +108,7 @@ namespace Lextm.SharpSnmpLib.Browser
             }
         }
 
-        internal void SaveProfiles()
+        public void SaveProfiles()
         {
             ICollection<IPEndPoint> myKeys = profiles.Keys;
             XmlTextWriter objXmlTextWriter = new XmlTextWriter("Agents.xml", null);
@@ -224,8 +185,6 @@ namespace Lextm.SharpSnmpLib.Browser
             String get = "public";
             String set = "public";
             XmlTextReader objXmlTextReader = new XmlTextReader("Agents.xml");
-            bool bDefault = false;
-
             try
             {
                 string sName = "";
@@ -259,15 +218,19 @@ namespace Lextm.SharpSnmpLib.Browser
                                     set = objXmlTextReader.Value;
                                     break;
                                 case "Default":
-                                    AgentProfile prof = new AgentProfile(vc, new IPEndPoint(def, port), get, set, name);
-                                    
-                                    AddProfile(prof);
-
-                                    bDefault = objXmlTextReader.ReadContentAsBoolean();
-                                    if (bDefault)
+                                    if (def != null)
                                     {
-                                        DefaultProfile = prof;
+                                        // TODO: what about else.
+                                        AgentProfile prof = new AgentProfile(vc, new IPEndPoint(def, port), get, set, name);
+                                    
+                                        AddProfile(prof);
+
+                                        if (objXmlTextReader.ReadContentAsBoolean())
+                                        {
+                                            DefaultProfile = prof;
+                                        }
                                     }
+
                                     break;
                             }
                             break;

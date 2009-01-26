@@ -8,8 +8,10 @@
  */
 
 using System;
-using System.IO;
+using System.Configuration;
 using System.Windows.Forms;
+using Microsoft.Practices.Unity;
+using Microsoft.Practices.Unity.Configuration;
 
 namespace Lextm.SharpSnmpLib.Browser
 {
@@ -18,13 +20,13 @@ namespace Lextm.SharpSnmpLib.Browser
 	/// </summary>
 	internal static class Program
 	{
-	    private static IMediator _mediator;
-	    
-	    internal static IMediator Mediator
+	    private static IUnityContainer container;
+
+	    internal static IProfileRegistry Profiles
 	    {
 	        get
 	        {
-	            return _mediator;
+                return container.Resolve<IProfileRegistry>();
 	        }
 	    }
 		/// <summary>
@@ -32,12 +34,15 @@ namespace Lextm.SharpSnmpLib.Browser
 		/// </summary>
 		[STAThread]
 		private static void Main(string[] args)
-		{         
+		{
+            container = new UnityContainer();
+            UnityConfigurationSection section
+              = (UnityConfigurationSection)ConfigurationManager.GetSection("unity");
+            section.Containers.Default.Configure(container);
+
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			MainForm main = new MainForm();
-			_mediator = main;
-			Application.Run(main);
+		    Application.Run(new MainForm());
 		}
 		
 	}
