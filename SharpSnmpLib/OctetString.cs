@@ -1,9 +1,9 @@
 using System;
 using System.Globalization;
 using System.IO;
-using System.Net.NetworkInformation;
 using System.Text;
-#if (!CF)
+#if (!CF) && (!SILVERLIGHT)
+using System.Net.NetworkInformation;
 #endif
 
 // ASN.1 BER encoding library by Malcolm Crowe at the University of the West of Scotland
@@ -206,7 +206,7 @@ namespace Lextm.SharpSnmpLib
             return !(left == right);
         }
 
-        #if (!CF)
+        #if (!CF) && (!SILVERLIGHT)
         /// <summary>
         /// Converts octets to physical address.
         /// </summary>
@@ -221,7 +221,7 @@ namespace Lextm.SharpSnmpLib
             return new PhysicalAddress(_raw);
         }
         #endif 
-        private static Encoding defaultEncoding = Encoding.ASCII;
+        private static Encoding defaultEncoding = Encoding.GetEncoding("ASCII");
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OctetString"/> class.

@@ -9,8 +9,10 @@
 using System;
 using System.Globalization;
 using System.Net;
+#if (!SILVERLIGHT)
 using System.Runtime.Serialization;
-using System.Security.Permissions;
+using System.Security.Permissions; 
+#endif
 
 namespace Lextm.SharpSnmpLib
 {
@@ -54,16 +56,18 @@ namespace Lextm.SharpSnmpLib
         {
         }
 
-        private SharpTimeoutException(SerializationInfo info, StreamingContext context) : base(info, context) 
+#if (!SILVERLIGHT)
+        private SharpTimeoutException(SerializationInfo info, StreamingContext context)
+            : base(info, context)
         {
             if (info == null)
             {
                 throw new ArgumentNullException("info");
             }
-            
+
             _timeout = info.GetInt32("Timeout");
         }
-        
+
         /// <summary>
         /// Gets object data.
         /// </summary>
@@ -71,10 +75,11 @@ namespace Lextm.SharpSnmpLib
         /// <param name="context">Context</param>
         [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
-        {    
+        {
             base.GetObjectData(info, context);
             info.AddValue("Timeout", _timeout);
-        }
+        } 
+#endif
         
         /// <summary>
         /// Returns a <see cref="String"/> that represents this <see cref="SharpTimeoutException"/>.

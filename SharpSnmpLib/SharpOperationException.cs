@@ -8,8 +8,10 @@
  */
 using System;
 using System.Net;
+#if (!SILVERLIGHT)
 using System.Runtime.Serialization;
-using System.Security.Permissions;
+using System.Security.Permissions; 
+#endif
 
 namespace Lextm.SharpSnmpLib
 {
@@ -56,7 +58,7 @@ namespace Lextm.SharpSnmpLib
         public SharpOperationException(string message, Exception inner) : base(message, inner) 
         { 
         }
-    
+#if (!SILVERLIGHT)    
         /// <summary>
         /// Creates a <see cref="SharpOperationException"/>
         /// </summary>
@@ -83,7 +85,7 @@ namespace Lextm.SharpSnmpLib
             base.GetObjectData(info, context);
             info.AddValue("Agent", agentAddress);
         }
-     
+#endif
         /// <summary>
         /// Details on operation.
         /// </summary>

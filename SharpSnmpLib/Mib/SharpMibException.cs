@@ -9,8 +9,10 @@
 
 using System;
 using System.Globalization;
+#if (!SILVERLIGHT)
 using System.Runtime.Serialization;
-using System.Security.Permissions;
+using System.Security.Permissions; 
+#endif
 
 namespace Lextm.SharpSnmpLib.Mib
 {
@@ -55,7 +57,7 @@ namespace Lextm.SharpSnmpLib.Mib
             : base(message, inner)
         {
         }
-        
+#if (!SILVERLIGHT)        
         /// <summary>
         /// Creates a <see cref="SharpMibException"/> instance.
         /// </summary>
@@ -82,7 +84,7 @@ namespace Lextm.SharpSnmpLib.Mib
             base.GetObjectData(info, context);
             info.AddValue("Symbol", _symbol);
         }
-        
+#endif        
         /// <summary>
         /// Details on error.
         /// </summary>
@@ -122,7 +124,9 @@ namespace Lextm.SharpSnmpLib.Mib
                 throw new ArgumentNullException("symbol");
             }
 
+// ReSharper disable RedundantToStringCall
             SharpMibException ex = new SharpMibException(message + ". Wrong entity, " + symbol.ToString() + " in file \"" + symbol.File + "\". row: " + (symbol.Row + 1).ToString(CultureInfo.InvariantCulture) + "; column: " + (symbol.Column + 1).ToString(CultureInfo.InvariantCulture));
+// ReSharper restore RedundantToStringCall
             ex._symbol = symbol;
             return ex;
         }

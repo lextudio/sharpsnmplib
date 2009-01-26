@@ -9,8 +9,10 @@
 using System;
 using System.Globalization;
 using System.Net;
+#if (!SILVERLIGHT)
 using System.Runtime.Serialization;
-using System.Security.Permissions;
+using System.Security.Permissions; 
+#endif
 
 namespace Lextm.SharpSnmpLib
 {
@@ -72,7 +74,7 @@ namespace Lextm.SharpSnmpLib
             : base(message, inner)
         {
         }
-
+#if (!SILVERLIGHT)
         private SharpErrorException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
             if (info == null)
@@ -98,7 +100,7 @@ namespace Lextm.SharpSnmpLib
             info.AddValue("Index", _index);
             info.AddValue("Id", _id);
         }
-        
+#endif
         /// <summary>
         /// Details on error.
         /// </summary>
