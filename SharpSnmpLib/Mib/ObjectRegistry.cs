@@ -33,12 +33,15 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             if (string.IsNullOrEmpty(path))
             {
+                _path = DefaultPath;
                 LoadDefaultDocuments();
-                return;
             }
-
-            _path = path;
-            LoadDocuments(path);
+            else
+            {
+                _path = path;
+            }
+            
+            LoadDocuments(_path);
         }
 
         private void LoadDocuments(string folder)
@@ -97,7 +100,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <value>The path.</value>
         public string Path
         {
-            get { return _path ?? DefaultPath; }
+            get { return _path; }
         }
 
         private void LoadDefaultDocuments()
