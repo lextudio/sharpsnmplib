@@ -17,7 +17,7 @@ namespace Lextm.SharpSnmpLib.Mib
     /// <summary>
     /// Lexer class that parses MIB files into symbol list.
     /// </summary>
-    internal sealed class Lexer
+    public sealed class Lexer
     {
         private readonly IList<Symbol> _symbols = new List<Symbol>();
 
@@ -56,8 +56,7 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             line = line + "\n";
             int count = line.Length;
-            int i = 0;
-            for (i = 0; i < count; i++)
+            for (int i = 0; i < count; i++)
             {
                 char current = line[i];
                 bool moveNext = Parse(file, _symbols, current, row, i);
@@ -102,6 +101,10 @@ namespace Lextm.SharpSnmpLib.Mib
             }
         }
         
+        ///<summary>
+        ///</summary>
+        ///<param name="last"></param>
+        ///<exception cref="ArgumentException"></exception>
         public void Restore(Symbol last)
         {
             index--;
@@ -208,7 +211,7 @@ namespace Lextm.SharpSnmpLib.Mib
             return false;
         }
 
-        private static bool ParseLastSymbol(string file, IList<Symbol> list, ref StringBuilder builder, int row, int column)
+        private static bool ParseLastSymbol(string file, ICollection<Symbol> list, ref StringBuilder builder, int row, int column)
         {
             if (builder.Length > 0)
             {

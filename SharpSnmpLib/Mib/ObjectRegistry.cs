@@ -20,11 +20,26 @@ namespace Lextm.SharpSnmpLib.Mib
     public class ObjectRegistry : IObjectRegistry
     {
         private readonly ObjectTree _tree = new ObjectTree();
-        private static volatile ObjectRegistry _default;
+        private static volatile IObjectRegistry _default;
         private static readonly object locker = new object();
-        
-        private ObjectRegistry()
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ObjectRegistry"/> class.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        public ObjectRegistry(string path)
         {
+            if (string.IsNullOrEmpty(path))
+            {
+                LoadDefaultDocuments();
+                return;
+            }
+
+            // TODO: load .module files here instead of MIB documents.
+            foreach (string file in Directory.GetFiles(path))
+            {
+                Import(Compiler.Compile(file));
+            }
         }
 
         /// <summary>
@@ -47,7 +62,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <summary>
         /// Registry
         /// </summary>
-        public static ObjectRegistry Default
+        public static IObjectRegistry Default
         {
             get
             {
@@ -57,8 +72,7 @@ namespace Lextm.SharpSnmpLib.Mib
                     {
                         if (_default == null)
                         {
-                            _default = new ObjectRegistry();
-                            _default.LoadDefaultDocuments();
+                            _default = new ObjectRegistry(string.Empty);
                         }
                     }
                 }
@@ -164,8 +178,8 @@ namespace Lextm.SharpSnmpLib.Mib
             string name = Translate(id);
             return name.EndsWith("Table", StringComparison.Ordinal);
         }
-        
-        internal bool ValidateTable(ObjectIdentifier table)
+
+        public bool ValidateTable(ObjectIdentifier table)
         {
             try
             {
@@ -375,7 +389,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// Imports instances of <see cref="MibModule"/>.
         /// </summary>
         /// <param name="modules">Modules.</param>
-        internal void Import(IEnumerable<MibModule> modules)
+        public void Import(IEnumerable<MibModule> modules)
         {
             _tree.Import(modules);
         }
@@ -388,8 +402,8 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             // TODO:
         }
-        
-        internal void Refresh()
+
+        public void Refresh()
         {
             _tree.Refresh();
             EventHandler<EventArgs> handler = OnChanged;

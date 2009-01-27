@@ -24,7 +24,7 @@ namespace Lextm.SharpSnmpLib
         private int _timeout = 5000;
         private VersionCode _version;
         private TrapListener trapListener;
-        private ObjectRegistry _registry = ObjectRegistry.Default;
+        private IObjectRegistry _registry = ObjectRegistry.Default;
 
         /// <summary>
         /// Creates a <see cref="Manager"></see> instance.
@@ -92,7 +92,7 @@ namespace Lextm.SharpSnmpLib
         /// Gets or sets the objects.
         /// </summary>
         /// <value>The objects.</value>
-        public ObjectRegistry Objects
+        public IObjectRegistry Objects
         {
             get { return _registry; }
             set { _registry = value; }
@@ -359,7 +359,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Return", Justification = "ByDesign")]
         [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Body", Justification = "ByDesign")]
-        public static Variable[,] GetTable(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, int timeout, ObjectRegistry registry)
+        public static Variable[,] GetTable(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, int timeout, IObjectRegistry registry)
         {
             if (version == VersionCode.V3)
             {

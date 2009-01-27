@@ -15,7 +15,7 @@ namespace Lextm.SharpSnmpLib.Mib
     /// <summary>
     /// MIB module class.
     /// </summary>
-    internal sealed class MibModule
+    public sealed class MibModule
     {
         private readonly string _name;
         private readonly Imports _imports;

@@ -10,6 +10,7 @@ namespace Lextm.SharpSnmpLib
     public sealed class IP : ISnmpData, IEquatable<IP>
     {
         private readonly IPAddress _ip;
+        private const int DefaultLength = 4;
         
         /// <summary>
         /// Creates an <see cref="IP"/> with a specific <see cref="IPAddress"/>.
@@ -53,13 +54,13 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("stream");
             }
 
-            if (length != 4)
+            if (length != DefaultLength)
             {
                 throw new ArgumentException("bytes must contain 4 elements");
             }
 
-            byte[] raw = new byte[4];
-            stream.Read(raw, 0, 4);
+            byte[] raw = new byte[DefaultLength];
+            stream.Read(raw, 0, DefaultLength);
             _ip = new IPAddress(raw);
         }
 

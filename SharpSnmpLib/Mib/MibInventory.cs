@@ -19,14 +19,14 @@ namespace Lextm.SharpSnmpLib.Mib
     {
         private readonly string folder = Path.Combine(Directory.GetCurrentDirectory(), "mibs");
         private readonly IList<string> _existing = new List<string>();
-        private readonly ObjectRegistry _registry;
+        private readonly IObjectRegistry _registry;
         private readonly IDictionary<string, string> _moduleTable = new Dictionary<string, string>();
         
         /// <summary>
         /// Creates a <see cref="Inventory"/> object.
         /// </summary>
         /// <param name="registry">Registry to use this inventory.</param>
-        public Inventory(ObjectRegistry registry)
+        public Inventory(IObjectRegistry registry)
         {
             _registry = registry;
             

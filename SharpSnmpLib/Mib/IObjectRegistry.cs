@@ -62,5 +62,23 @@ namespace Lextm.SharpSnmpLib.Mib
         /// </summary>
         /// <param name="fileName">File name</param>
         void Compile(string fileName);
+
+        /// <summary>
+        /// Validates the table.
+        /// </summary>
+        /// <param name="identifier">The identifier.</param>
+        /// <returns></returns>
+        bool ValidateTable(ObjectIdentifier identifier);
+
+        /// <summary>
+        /// Refreshes this instance.
+        /// </summary>
+        void Refresh();
+
+        /// <summary>
+        /// Imports the specified modules.
+        /// </summary>
+        /// <param name="modules">The modules.</param>
+        void Import(IEnumerable<MibModule> modules);
     }
 }
