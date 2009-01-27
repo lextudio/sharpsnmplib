@@ -25,7 +25,7 @@ namespace Lextm.SharpSnmpLib
         {
             if (text.Contains("::"))
             {
-                return Mib.ObjectRegistry.Instance.Translate(text);
+                return Mib.ObjectRegistry.Default.Translate(text);
             }
 
             return Convert(text);
@@ -126,7 +126,7 @@ namespace Lextm.SharpSnmpLib
         {
             get
             {
-                return Mib.ObjectRegistry.Instance.Translate(_oid);
+                return Mib.ObjectRegistry.Default.Translate(_oid);
             }
         }
         

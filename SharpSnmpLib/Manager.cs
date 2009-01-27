@@ -19,10 +19,12 @@ namespace Lextm.SharpSnmpLib
     /// </remarks>
     public class Manager : Component
     {
-        private TrapListener trapListener;
-        private VersionCode _version;
-        private int _timeout = 5000;
+        private const int DefaultPort = 161;
         private readonly object locker = new object();
+        private int _timeout = 5000;
+        private VersionCode _version;
+        private TrapListener trapListener;
+        private ObjectRegistry _registry = ObjectRegistry.Default;
 
         /// <summary>
         /// Creates a <see cref="Manager"></see> instance.
@@ -42,21 +44,6 @@ namespace Lextm.SharpSnmpLib
         }
 
         /// <summary>
-        /// Occurs when a <see cref="TrapV1Message" /> is received.
-        /// </summary>
-        public event EventHandler<TrapV1ReceivedEventArgs> TrapV1Received;
-        
-        /// <summary>
-        /// Occurs when a <see cref="TrapV2Message"/> is received.
-        /// </summary>
-        public event EventHandler<TrapV2ReceivedEventArgs> TrapV2Received;
-        
-        /// <summary>
-        /// Occurs when a <see cref="InformRequestMessage"/> is received.
-        /// </summary>
-        public event EventHandler<InformRequestReceivedEventArgs> InformRequestReceived;
-        
-        /// <summary>
         /// Default protocol version for operations.
         /// </summary>
         /// <remarks>By default, the value is SNMP v1.</remarks>
@@ -75,7 +62,57 @@ namespace Lextm.SharpSnmpLib
                 }
             }
         }
+
+        /// <summary>
+        /// Trap listener.
+        /// </summary>
+        public TrapListener TrapListener
+        {
+            get { return trapListener; }
+        }
+
+        /// <summary>
+        /// Timeout value.
+        /// </summary>
+        /// <remarks>By default, the value is 5,000-milliseconds (5 seconds).</remarks>
+        public int Timeout
+        {
+            get
+            {
+                return _timeout;
+            }
+
+            set
+            {
+                Interlocked.Exchange(ref _timeout, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the objects.
+        /// </summary>
+        /// <value>The objects.</value>
+        public ObjectRegistry Objects
+        {
+            get { return _registry; }
+            set { _registry = value; }
+        }
+
+        /// <summary>
+        /// Occurs when a <see cref="TrapV1Message" /> is received.
+        /// </summary>
+        public event EventHandler<TrapV1ReceivedEventArgs> TrapV1Received;
         
+        /// <summary>
+        /// Occurs when a <see cref="TrapV2Message"/> is received.
+        /// </summary>
+        public event EventHandler<TrapV2ReceivedEventArgs> TrapV2Received;
+        
+        /// <summary>
+        /// Occurs when a <see cref="InformRequestMessage"/> is received.
+        /// </summary>
+        public event EventHandler<InformRequestReceivedEventArgs> InformRequestReceived;
+
         /// <summary>
         /// Discovers SNMP agents in the network
         /// </summary>
@@ -168,8 +205,6 @@ namespace Lextm.SharpSnmpLib
         {
             return GetSingle(new IPEndPoint(address, DefaultPort), community, variable);
         }
-        
-        private const int DefaultPort = 161;
 
         /// <summary>
         /// Gets a list of variable binds.
@@ -320,17 +355,18 @@ namespace Lextm.SharpSnmpLib
         /// <param name="community">Community name.</param>
         /// <param name="table">Table OID.</param>
         /// <param name="timeout">Timeout.</param>
+        /// <param name="registry">The registry.</param>
         /// <returns></returns>
         [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Return", Justification = "ByDesign")]
         [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Body", Justification = "ByDesign")]
-        public static Variable[,] GetTable(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, int timeout)
+        public static Variable[,] GetTable(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, int timeout, ObjectRegistry registry)
         {
             if (version == VersionCode.V3)
             {
                 throw new ArgumentException("only SNMP v1 or v2 is supported");
             }
 
-            bool canContinue = ObjectRegistry.ValidateTable(table);
+            bool canContinue = registry.ValidateTable(table);
             if (!canContinue)
             {
                 throw new ArgumentException("not a table OID: " + table);
@@ -369,17 +405,18 @@ namespace Lextm.SharpSnmpLib
         /// <param name="community">Community name.</param>
         /// <param name="table">Table OID.</param>
         /// <param name="timeout">Timeout.</param>
+        /// <param name="registry">The registry.</param>
         /// <returns></returns>
         [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Return", Justification = "ByDesign")]
         [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Body", Justification = "ByDesign")]
-        public static Variable[,] GetInnerTable(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, int timeout)
+        public static Variable[,] GetInnerTable(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, int timeout, ObjectRegistry registry)
         {
             if (version == VersionCode.V3)
             {
                 throw new ArgumentException("only SNMP v1 or v2 is supported");
             }
 
-            bool canContinue = ObjectRegistry.ValidateTable(table);
+            bool canContinue = registry.ValidateTable(table);
             if (!canContinue)
             {
                 throw new ArgumentException("not a table OID: " + table);
@@ -444,17 +481,18 @@ namespace Lextm.SharpSnmpLib
         /// <param name="community">Community name.</param>
         /// <param name="table">Table OID.</param>
         /// <param name="timeout">Timeout.</param>
+        /// <param name="registry">The registry.</param>
         /// <returns></returns>
         [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Return", Justification = "ByDesign")]
         [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Body", Justification = "ByDesign")]
-        public static TableCollection GetTable2(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, int timeout)
+        public static TableCollection GetTable2(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, int timeout, ObjectRegistry registry)
         {
             if (version == VersionCode.V3)
             {
                 throw new ArgumentException("only SNMP v1 or v2 is supported");
             }
 
-            bool canContinue = ObjectRegistry.ValidateTable(table);
+            bool canContinue = registry.ValidateTable(table);
             if (!canContinue)
             {
                 throw new ArgumentException("not a table OID: " + table);
@@ -475,7 +513,7 @@ namespace Lextm.SharpSnmpLib
         [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Return", Justification = "ByDesign")]
         public Variable[,] GetTable(IPEndPoint endpoint, string community, ObjectIdentifier table)
         {
-            return GetTable(DefaultVersion, endpoint, new OctetString(community), table, Timeout);
+            return GetTable(DefaultVersion, endpoint, new OctetString(community), table, Timeout, Objects);
         }
         
         /// <summary>
@@ -646,31 +684,6 @@ namespace Lextm.SharpSnmpLib
         public void Stop()
         {
             trapListener.Stop();
-        }
-
-        /// <summary>
-        /// Trap listener.
-        /// </summary>
-        public TrapListener TrapListener
-        {
-            get { return trapListener; }
-        }
-
-        /// <summary>
-        /// Timeout value.
-        /// </summary>
-        /// <remarks>By default, the value is 5,000-milliseconds (5 seconds).</remarks>
-        public int Timeout
-        {
-            get
-            {
-                return _timeout;
-            }
-
-            set
-            {
-                Interlocked.Exchange(ref _timeout, value);
-            }
         }
 
         /// <summary>

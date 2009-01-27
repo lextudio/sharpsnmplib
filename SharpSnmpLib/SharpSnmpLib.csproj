@@ -101,6 +101,7 @@
     <Compile Include="Mib\Imports.cs" />
     <Compile Include="Mib\ImportsFrom.cs" />
     <Compile Include="Mib\Integer.cs" />
+    <Compile Include="Mib\IObjectRegistry.cs" />
     <Compile Include="Mib\IObjectTree.cs" />
     <Compile Include="Mib\ITypeAssignment.cs" />
     <Compile Include="Mib\Macro.cs" />

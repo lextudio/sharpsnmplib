@@ -17,10 +17,10 @@ namespace Lextm.SharpSnmpLib.Mib
     /// <summary>
     /// Object registry.
     /// </summary>
-    public class ObjectRegistry
+    public class ObjectRegistry : IObjectRegistry
     {
         private readonly ObjectTree _tree = new ObjectTree();
-        private static volatile ObjectRegistry instance;
+        private static volatile ObjectRegistry _default;
         private static readonly object locker = new object();
         
         private ObjectRegistry()
@@ -47,23 +47,23 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <summary>
         /// Registry
         /// </summary>
-        public static ObjectRegistry Instance
+        public static ObjectRegistry Default
         {
             get
             {
-                if (instance == null)
+                if (_default == null)
                 {
                     lock (locker)
                     {
-                        if (instance == null)
+                        if (_default == null)
                         {
-                            instance = new ObjectRegistry();
-                            instance.LoadDefaultDocuments();
+                            _default = new ObjectRegistry();
+                            _default.LoadDefaultDocuments();
                         }
                     }
                 }
                 
-                return instance;
+                return _default;
             }
         }
         
@@ -153,30 +153,31 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <param name="id">OID</param>
         /// <returns></returns>
         [CLSCompliant(false)]
-        public bool IsTableId(uint[] id)
+        internal bool IsTableId(uint[] id)
         {
             if (id == null)
             {
                 throw new ArgumentNullException("id");
             }
             
+            // TODO: enhance checking here.
             string name = Translate(id);
             return name.EndsWith("Table", StringComparison.Ordinal);
         }
         
-        internal static bool ValidateTable(ObjectIdentifier table)
+        internal bool ValidateTable(ObjectIdentifier table)
         {
             try
             {
-                return Mib.ObjectRegistry.Instance.IsTableId(table.ToNumerical());
+                return IsTableId(table.ToNumerical());
             }
             catch (ArgumentOutOfRangeException)
             {
-                // if no matching definition found, continue.
-                return true;
+                // if no matching definition found, refuse to continue.
+                return false;
             }
         }
-        
+
         /// <summary>
         /// Gets numercial form from textual form.
         /// </summary>

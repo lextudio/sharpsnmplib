@@ -9,13 +9,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Media;
-using System.Net;
 using System.Windows.Forms;
-
-using Lextm.SharpSnmpLib;
 using Lextm.SharpSnmpLib.Mib;
 using WeifenLuo.WinFormsUI.Docking;
 
@@ -26,10 +22,10 @@ namespace Lextm.SharpSnmpLib.Compiler
 	/// </summary>
 	internal partial class MainForm : Form, IMediator
 	{
-        private OutputPanel _output;
-        private ModuleListPanel _modules; 
-        private Assembler _assembler;
-        private string root = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "modules");
+        private readonly OutputPanel _output;
+        private readonly ModuleListPanel _modules; 
+        private readonly Assembler _assembler;
+        private readonly string root = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "modules");
 
 		public MainForm()
 		{
@@ -154,19 +150,25 @@ namespace Lextm.SharpSnmpLib.Compiler
             if (dockPanel1.DocumentStyle == DocumentStyle.SystemMdi)
             {
                 foreach (Form form in MdiChildren)
+                {    
                     if (form.Text == fileName)
+                    {
                         return form as IDockContent;
+                    }
+                }
 
                 return null;
             }
-            else
-            {
-                foreach (IDockContent content in dockPanel1.Documents)
-                    if (content.DockHandler.TabText == fileName)
-                        return content;
 
-                return null;
+            foreach (IDockContent content in dockPanel1.Documents)
+            {    
+                if (content.DockHandler.TabText == fileName)
+                {
+                    return content;
+                }
             }
+
+            return null;
         }
 
         private void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)

@@ -7,7 +7,6 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
-using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
@@ -22,17 +21,17 @@ namespace Lextm.SharpSnmpLib.Browser
     /// </summary>
     public partial class ModuleListPanel : DockContent
     {
-        private Inventory _inventory = new Inventory(ObjectRegistry.Instance);
+        private readonly Inventory _inventory = new Inventory(ObjectRegistry.Default);
         
         public ModuleListPanel()
         {            
             InitializeComponent();        
-            ObjectRegistry.Instance.OnChanged += RefreshPanel;
+            ObjectRegistry.Default.OnChanged += RefreshPanel;
         }
         
         void ModuleListPanel_Load(object sender, EventArgs e)
         {
-            RefreshPanel(ObjectRegistry.Instance, EventArgs.Empty);
+            RefreshPanel(ObjectRegistry.Default, EventArgs.Empty);
         }
 
         private void RefreshPanel(object sender, EventArgs e)
