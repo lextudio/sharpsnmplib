@@ -23,8 +23,9 @@ namespace Lextm.SharpSnmpLib.Browser
         public MibTreePanel()
         {
             InitializeComponent();
-            RefreshPanel(ObjectRegistry.Default, EventArgs.Empty);
-            ObjectRegistry.Default.OnChanged += RefreshPanel;
+            manager1.Objects = Program.Objects;
+            RefreshPanel(Program.Objects, EventArgs.Empty);
+            Program.Objects.OnChanged += RefreshPanel;
         }
 
         private void RefreshPanel(object sender, EventArgs e)

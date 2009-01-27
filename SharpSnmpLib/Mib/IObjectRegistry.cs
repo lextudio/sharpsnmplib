@@ -20,6 +20,12 @@ namespace Lextm.SharpSnmpLib.Mib
         IObjectTree Tree { get; }
 
         /// <summary>
+        /// Gets the path.
+        /// </summary>
+        /// <value>The path.</value>
+        string Path { get; }
+
+        /// <summary>
         /// Gets numercial form from textual form.
         /// </summary>
         /// <param name="textual">Textual</param>

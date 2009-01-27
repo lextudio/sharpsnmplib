@@ -7,8 +7,11 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
+using System.IO;
 using System.Windows.Forms;
 
 using Lextm.SharpSnmpLib.Mib;
@@ -16,72 +19,103 @@ using WeifenLuo.WinFormsUI.Docking;
 
 namespace Lextm.SharpSnmpLib.Browser
 {
-    /// <summary>
-    /// Description of ModuleListPanel.
-    /// </summary>
-    public partial class ModuleListPanel : DockContent
-    {
-        private readonly Inventory _inventory = new Inventory(ObjectRegistry.Default);
-        
-        public ModuleListPanel()
-        {            
-            InitializeComponent();        
-            ObjectRegistry.Default.OnChanged += RefreshPanel;
-        }
-        
-        void ModuleListPanel_Load(object sender, EventArgs e)
-        {
-            RefreshPanel(ObjectRegistry.Default, EventArgs.Empty);
-        }
+	/// <summary>
+	/// Description of ModuleListPanel.
+	/// </summary>
+	public partial class ModuleListPanel : DockContent
+	{
+		public ModuleListPanel()
+		{
+			InitializeComponent();
+			Program.Objects.OnChanged += RefreshPanel;
+		}
+		
+		void ModuleListPanel_Load(object sender, EventArgs e)
+		{
+			RefreshPanel(Program.Objects, EventArgs.Empty);
+		}
 
-        private void RefreshPanel(object sender, EventArgs e)
-        {
-            ObjectRegistry reg = (ObjectRegistry)sender;
-            SuspendLayout();
-            listView1.Items.Clear();
-            foreach (string module in reg.Tree.LoadedModules)
-            {
-                ListViewItem item = listView1.Items.Add(module);
-                item.Group = listView1.Groups["lvgLoaded"];
-            }
-            foreach (string pending in reg.Tree.PendingModules)
-            {
-                ListViewItem item = listView1.Items.Add(pending);
-                item.BackColor = Color.LightGray;
-                item.Group = listView1.Groups["lvgPending"];
-            }
-            ResumeLayout();
-            listView1.Groups["lvgLoaded"].Header = string.Format(CultureInfo.CurrentCulture, "Loaded ({0})", reg.Tree.LoadedModules.Count);
-            listView1.Groups["lvgPending"].Header = string.Format(CultureInfo.CurrentCulture, "Pending ({0})", reg.Tree.PendingModules.Count);
-            tslblCount.Text = "loaded count: " + reg.Tree.LoadedModules.Count + "; pending count: " + reg.Tree.PendingModules.Count;
-        }
+		private void RefreshPanel(object sender, EventArgs e)
+		{
+			ObjectRegistry reg = (ObjectRegistry)sender;
+			SuspendLayout();
+			listView1.Items.Clear();
+			foreach (string module in reg.Tree.LoadedModules)
+			{
+				ListViewItem item = listView1.Items.Add(module);
+				item.Group = listView1.Groups["lvgLoaded"];
+			}
+			
+			foreach (string pending in reg.Tree.PendingModules)
+			{
+				ListViewItem item = listView1.Items.Add(pending);
+				item.BackColor = Color.LightGray;
+				item.Group = listView1.Groups["lvgPending"];
+			}
+			
+			ResumeLayout();
+			listView1.Groups["lvgLoaded"].Header = string.Format(CultureInfo.CurrentCulture, "Loaded ({0})", reg.Tree.LoadedModules.Count);
+			listView1.Groups["lvgPending"].Header = string.Format(CultureInfo.CurrentCulture, "Pending ({0})", reg.Tree.PendingModules.Count);
+			tslblCount.Text = "loaded count: " + reg.Tree.LoadedModules.Count + "; pending count: " + reg.Tree.PendingModules.Count;
+		}
 
-        private void actAdd_Execute(object sender, EventArgs e)
-        {
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                _inventory.AddFiles(openFileDialog1.FileNames);
-            }
-        }
+		private void actAdd_Execute(object sender, EventArgs e)
+		{
+			if (openFileDialog1.ShowDialog() != DialogResult.OK)
+			{
+				return;
+			}
+			
+			ICollection<string> files = openFileDialog1.FileNames;
+			if (files.Count == 0)
+			{
+				return;
+			}
+			
+			if (!Directory.Exists(Program.Objects.Path))
+			{
+				Directory.CreateDirectory(Program.Objects.Path);
+			}
+			
+			foreach (string file in files)
+			{
+				string name = Path.GetFileName(file);
+				string destFileName = Path.Combine(Program.Objects.Path, name);
+				if (File.Exists(destFileName))
+				{
+					TraceSource source = new TraceSource("Browser");
+					source.TraceInformation("File already exists: " + name);
+					source.Flush();
+					source.Close();
+				}
+				else
+				{
+					File.Copy(file, destFileName);
+				}
+			}
+			
+			Program.Objects.Refresh();
+		}
 
-        private void actRemove_Execute(object sender, EventArgs e)
-        {
-            string mib = listView1.SelectedItems[0].Text;
-            string fileName = _inventory[mib];
-            _inventory.RemoveFile(fileName);
-        }
+		private void actRemove_Execute(object sender, EventArgs e)
+		{
+			TraceSource source = new TraceSource("Browser");
+			source.TraceInformation("Deletion is not yet implemented: " + listView1.SelectedItems[0].Text);
+			source.Flush();
+			source.Close();
+		}
 
-        private void actRemove_Update(object sender, EventArgs e)
-        {
-            actRemove.Enabled = listView1.SelectedItems.Count == 1 && _inventory.Contains(listView1.SelectedItems[0].Text);
-        }
+		private void actRemove_Update(object sender, EventArgs e)
+		{
+			actRemove.Enabled = listView1.SelectedItems.Count == 1;
+		}
 
-        private void listView1_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
-                contextModuleMenu.Show(listView1, e.Location);
-            }
-        }
-    }
+		private void listView1_MouseDown(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right)
+			{
+				contextModuleMenu.Show(listView1, e.Location);
+			}
+		}
+	}
 }

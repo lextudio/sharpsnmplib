@@ -22,6 +22,8 @@ namespace Lextm.SharpSnmpLib.Mib
         private readonly ObjectTree _tree = new ObjectTree();
         private static volatile IObjectRegistry _default;
         private static readonly object locker = new object();
+        private readonly string _path;
+        private const string DefaultPath = "mibs";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ObjectRegistry"/> class.
@@ -35,11 +37,19 @@ namespace Lextm.SharpSnmpLib.Mib
                 return;
             }
 
+            _path = path;
+            LoadDocuments(path);
+        }
+
+        private void LoadDocuments(string folder)
+        {
             // TODO: load .module files here instead of MIB documents.
-            foreach (string file in Directory.GetFiles(path))
+            foreach (string file in Directory.GetFiles(folder))
             {
                 Import(Compiler.Compile(file));
             }
+
+            Refresh();
         }
 
         /// <summary>
@@ -80,7 +90,16 @@ namespace Lextm.SharpSnmpLib.Mib
                 return _default;
             }
         }
-        
+
+        /// <summary>
+        /// Gets the path.
+        /// </summary>
+        /// <value>The path.</value>
+        public string Path
+        {
+            get { return _path ?? DefaultPath; }
+        }
+
         private void LoadDefaultDocuments()
         {          
             // SMI v2

@@ -113,7 +113,7 @@ namespace Lextm.SharpSnmpLib.Tests
         {
             string name = "SNMPV2-MIB::sysORTable";
             uint[] id = ObjectRegistry.Default.Translate(name);
-            Assert.IsTrue(ObjectRegistry.Default.IsTableId(id));
+            Assert.IsTrue(((ObjectRegistry)ObjectRegistry.Default).IsTableId(id));
         }
         [Test]
         public void TestsysORTable0()
@@ -136,7 +136,7 @@ namespace Lextm.SharpSnmpLib.Tests
         {
             string name = "SNMPV2-MIB::snmpMIB";
             uint[] id = ObjectRegistry.Default.Translate(name);
-            Assert.IsFalse(ObjectRegistry.Default.IsTableId(id));
+            Assert.IsFalse(((ObjectRegistry)ObjectRegistry.Default).IsTableId(id));
         }
         
         [Test]

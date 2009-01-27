@@ -12,6 +12,7 @@ using System.Configuration;
 using System.Windows.Forms;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
+using Lextm.SharpSnmpLib.Mib;
 
 namespace Lextm.SharpSnmpLib.Browser
 {
@@ -30,6 +31,11 @@ namespace Lextm.SharpSnmpLib.Browser
 	    public static IOutputPanel OutputPanel
 	    {
             get { return container.Resolve<IOutputPanel>(); }
+	    }
+
+	    public static IObjectRegistry Objects
+	    {
+            get { return container.Resolve<IObjectRegistry>(); }
 	    }
 
 	    /// <summary>
