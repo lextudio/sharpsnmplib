@@ -15,7 +15,7 @@ namespace Lextm.SharpSnmpLib
         /// Creates a <see cref="Gauge32"/> instance from raw bytes.
         /// </summary>
         /// <param name="raw"></param>
-        internal Gauge32(byte[] raw): this(raw.Length, new MemoryStream(raw))
+        internal Gauge32(byte[] raw) : this(raw.Length, new MemoryStream(raw))
         {
         }
         

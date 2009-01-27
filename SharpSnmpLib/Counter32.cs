@@ -16,9 +16,8 @@ namespace Lextm.SharpSnmpLib
         /// Creates a <see cref="Counter32"/> instance from raw bytes.
         /// </summary>
         /// <param name="raw"></param>
-        internal Counter32(byte[] raw): this(raw.Length, new MemoryStream(raw))
+        internal Counter32(byte[] raw) : this(raw.Length, new MemoryStream(raw))
         {
-            
         }
         
         /// <summary>
@@ -50,6 +49,7 @@ namespace Lextm.SharpSnmpLib
 
             byte[] raw = new byte[length];
             stream.Read(raw, 0, raw.Length);
+
             // TODO: improve here to read from stream directly.
             if (length == 5 && raw[0] != 0)
             {

@@ -241,9 +241,9 @@ namespace Lextm.SharpSnmpLib.Mib
             for (int i = 1; i < content.Length; i++)
             {
                 uint value;
-                bool isUInt = uint.TryParse(content[i], out value);
+                bool numberFound = uint.TryParse(content[i], out value);
                 int currentCursor = rootId.Length + i - 1;
-                if (isUInt)
+                if (numberFound)
                 {
                     all[currentCursor] = value;
                     try

@@ -38,15 +38,6 @@ namespace Lextm.SharpSnmpLib
             _varbindSection = Variable.Transform(full);
             _raw = ByteTool.ParseItems(_version, new Integer32(0), new Integer32(0), _varbindSection);
         }
-     
-        /// <summary>
-        /// Creates a <see cref="TrapV2Pdu"/> instance from raw bytes.
-        /// </summary>
-        /// <param name="raw">Raw bytes</param>
-        private TrapV2Pdu(byte[] raw): this(raw.Length, new MemoryStream(raw))
-        {
-           
-        }
 
         #region ISnmpPdu Members
         /// <summary>
@@ -96,18 +87,7 @@ namespace Lextm.SharpSnmpLib
             _enterprise = (ObjectIdentifier)_variables[0].Data;
             _variables.RemoveAt(0);
             _raw = ByteTool.ParseItems(_version, temp1, temp2, _varbindSection);
-            Debug.Assert(length >= _raw.Length);
-        }
-
-        /// <summary>
-        /// Converts to byte format.
-        /// </summary>
-        /// <returns></returns>
-        private byte[] ToBytes()
-        {
-            MemoryStream result = new MemoryStream();
-            AppendBytesTo(result);
-            return result.ToArray();
+            Debug.Assert(length >= _raw.Length, "length not match");
         }
 
         /// <summary>

@@ -46,15 +46,6 @@ namespace Lextm.SharpSnmpLib
             _varbindSection = Variable.Transform(variables);
             _raw = ByteTool.ParseItems(_seq, _nonRepeaters, _maxRepetitions, _varbindSection);
         }
-        
-        /// <summary>
-        /// Creates a <see cref="GetBulkRequestPdu"/> with raw bytes.
-        /// </summary>
-        /// <param name="raw">Raw bytes</param>
-        private GetBulkRequestPdu(byte[] raw): this(raw.Length, new MemoryStream(raw))
-        {
-
-        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GetBulkRequestPdu"/> class.
@@ -69,7 +60,7 @@ namespace Lextm.SharpSnmpLib
             _varbindSection = (Sequence)DataFactory.CreateSnmpData(stream);
             _variables = Variable.Transform(_varbindSection);
             _raw = ByteTool.ParseItems(_seq, _nonRepeaters, _maxRepetitions, _varbindSection);
-            Debug.Assert(length >= _raw.Length);
+            Debug.Assert(length >= _raw.Length, "length not match");
         }
         
         internal int SequenceNumber
@@ -112,17 +103,6 @@ namespace Lextm.SharpSnmpLib
         public SnmpType TypeCode
         {
             get { return SnmpType.GetBulkRequestPdu; }
-        }
-
-        /// <summary>
-        /// Converts to byte format.
-        /// </summary>
-        /// <returns></returns>
-        private byte[] ToBytes()
-        {
-            MemoryStream result = new MemoryStream();
-            AppendBytesTo(result);
-            return result.ToArray();
         }
 
         /// <summary>

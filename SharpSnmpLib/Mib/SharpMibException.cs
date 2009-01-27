@@ -124,9 +124,9 @@ namespace Lextm.SharpSnmpLib.Mib
                 throw new ArgumentNullException("symbol");
             }
 
-// ReSharper disable RedundantToStringCall
+//// ReSharper disable RedundantToStringCall
             SharpMibException ex = new SharpMibException(message + ". Wrong entity, " + symbol.ToString() + " in file \"" + symbol.File + "\". row: " + (symbol.Row + 1).ToString(CultureInfo.InvariantCulture) + "; column: " + (symbol.Column + 1).ToString(CultureInfo.InvariantCulture));
-// ReSharper restore RedundantToStringCall
+//// ReSharper restore RedundantToStringCall
             ex._symbol = symbol;
             return ex;
         }

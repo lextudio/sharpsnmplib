@@ -24,12 +24,15 @@ namespace Lextm.SharpSnmpLib.Browser
 
 	    internal static IProfileRegistry Profiles
 	    {
-	        get
-	        {
-                return container.Resolve<IProfileRegistry>();
-	        }
+	        get { return container.Resolve<IProfileRegistry>(); }
 	    }
-		/// <summary>
+
+	    public static IOutputPanel OutputPanel
+	    {
+            get { return container.Resolve<IOutputPanel>(); }
+	    }
+
+	    /// <summary>
 		/// Program entry point.
 		/// </summary>
 		[STAThread]

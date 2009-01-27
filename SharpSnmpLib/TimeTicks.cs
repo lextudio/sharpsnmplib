@@ -26,7 +26,7 @@ namespace Lextm.SharpSnmpLib
         /// Creates a <see cref="TimeTicks"/> instance with raw bytes.
         /// </summary>
         /// <param name="raw">Raw bytes</param>
-        internal TimeTicks(byte[] raw): this(raw.Length, new MemoryStream(raw))
+        internal TimeTicks(byte[] raw) : this(raw.Length, new MemoryStream(raw))
         {
         }
 

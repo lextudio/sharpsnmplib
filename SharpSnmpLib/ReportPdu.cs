@@ -46,16 +46,7 @@ namespace Lextm.SharpSnmpLib
             _varbindSection = Variable.Transform(variables);
             _raw = ByteTool.ParseItems(_seq, _errorStatus, _errorIndex, _varbindSection);
         }
-        
-        /// <summary>
-        /// Creates a <see cref="ReportPdu"/> with raw bytes.
-        /// </summary>
-        /// <param name="raw">Raw bytes</param>
-        private ReportPdu(byte[] raw): this(raw.Length, new MemoryStream(raw))
-        {
 
-        }
-        
         internal int SequenceNumber
         {
             get
@@ -89,8 +80,9 @@ namespace Lextm.SharpSnmpLib
             _varbindSection = (Sequence)DataFactory.CreateSnmpData(stream);
             _variables = Variable.Transform(_varbindSection);
             _raw = ByteTool.ParseItems(_seq, _errorStatus, _errorIndex, _varbindSection);
-            Debug.Assert(length >= _raw.Length);
+            Debug.Assert(length >= _raw.Length, "length not match");
         }
+
         /// <summary>
         /// Converts to message body.
         /// </summary>
@@ -111,17 +103,6 @@ namespace Lextm.SharpSnmpLib
         public SnmpType TypeCode
         {
             get { return SnmpType.ReportPdu; }
-        }
-
-        /// <summary>
-        /// Converts to byte format.
-        /// </summary>
-        /// <returns></returns>
-        private byte[] ToBytes()
-        {
-            MemoryStream result = new MemoryStream();
-            AppendBytesTo(result);
-            return result.ToArray();
         }
 
         /// <summary>

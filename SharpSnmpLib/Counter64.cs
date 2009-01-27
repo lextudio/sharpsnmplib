@@ -16,9 +16,8 @@ namespace Lextm.SharpSnmpLib
         /// Creates a <see cref="Counter64"/> instance from raw bytes.
         /// </summary>
         /// <param name="raw"></param>
-        internal Counter64(byte[] raw): this(raw.Length, new MemoryStream(raw))
+        internal Counter64(byte[] raw) : this(raw.Length, new MemoryStream(raw))
         {
-            
         }
         
         /// <summary>

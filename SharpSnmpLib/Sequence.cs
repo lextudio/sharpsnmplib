@@ -72,9 +72,8 @@ namespace Lextm.SharpSnmpLib
         /// Creates an <see cref="Sequence"/> instance from raw bytes.
         /// </summary>
         /// <param name="raw">Raw bytes</param>
-        private Sequence(byte[] raw): this(raw.Length, new MemoryStream(raw))
+        private Sequence(byte[] raw) : this(raw.Length, new MemoryStream(raw))
         {
-            
         }
 
         /// <summary>
@@ -99,7 +98,7 @@ namespace Lextm.SharpSnmpLib
             }
 
             _raw = ByteTool.ParseItems(_list);
-            Debug.Assert(length >= _raw.Length);
+            Debug.Assert(length >= _raw.Length, "length not match");
         }
 
         /// <summary>

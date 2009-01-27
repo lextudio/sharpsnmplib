@@ -1,10 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Xml;
-using System.Xml.Serialization;
-
-using Lextm.SharpSnmpLib;
 using Lextm.SharpSnmpLib.Mib;
 using System.Net;
 using System.Diagnostics;
@@ -13,11 +7,11 @@ namespace Lextm.SharpSnmpLib.Browser
 {
     internal class AgentProfile
 	{
-        private string _get;
-	    private string _set;
-	    private VersionCode _version;
-        private IPEndPoint _agent;
-        private string _name;
+        private readonly string _get;
+	    private readonly string _set;
+	    private readonly VersionCode _version;
+        private readonly IPEndPoint _agent;
+        private readonly string _name;
 
 	    internal AgentProfile(VersionCode version, IPEndPoint agent, string getCommunity, string setCommunity, string name)
 	    {
@@ -107,9 +101,8 @@ namespace Lextm.SharpSnmpLib.Browser
 	    internal void Walk(Manager manager, IDefinition def)
 	    {
             IList<Variable> list = new List<Variable>();
-            int rows = 0;
 
-            rows = Manager.Walk(VersionCode, Agent, new OctetString(GetCommunity), new ObjectIdentifier(def.GetNumericalForm()), list, 1000, WalkMode.WithinSubtree);
+	        int rows = Manager.Walk(VersionCode, Agent, new OctetString(GetCommunity), new ObjectIdentifier(def.GetNumericalForm()), list, 1000, WalkMode.WithinSubtree);
             
             // 
             // How many rows are there?

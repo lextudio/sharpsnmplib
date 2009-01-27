@@ -28,17 +28,8 @@ namespace Lextm.SharpSnmpLib
         private readonly Integer32 _specific;
         private readonly TimeTicks _timestamp;
         private readonly Sequence _varbindSection;
-        private readonly IList<Variable> _variables;    
-      
-        /// <summary>
-        /// Creates a <see cref="TrapV1Pdu"/> instance with raw bytes.
-        /// </summary>
-        /// <param name="raw">Raw bytes</param>
-        private TrapV1Pdu(byte[] raw): this(raw.Length, new MemoryStream(raw))
-        {
+        private readonly IList<Variable> _variables;
 
-        }
-       
         /// <summary>
         /// Creates a <see cref="TrapV1Pdu"/> instance with PDU elements.
         /// </summary>
@@ -90,7 +81,7 @@ namespace Lextm.SharpSnmpLib
             _varbindSection = (Sequence)DataFactory.CreateSnmpData(stream);
             _variables = Variable.Transform(_varbindSection);
             _raw = ByteTool.ParseItems(_enterprise, _agent, _generic, _specific, _timestamp, _varbindSection);
-            Debug.Assert(length >= _raw.Length);
+            Debug.Assert(length >= _raw.Length, "length not match");
         }
 
         /// <summary>
@@ -102,17 +93,6 @@ namespace Lextm.SharpSnmpLib
             {
                 return SnmpType.TrapV1Pdu;
             }
-        }
-        
-        /// <summary>
-        /// To byte format.
-        /// </summary>
-        /// <returns></returns>
-        private byte[] ToBytes()
-        {
-            MemoryStream result = new MemoryStream();
-            AppendBytesTo(result);
-            return result.ToArray();
         }
 
         /// <summary>

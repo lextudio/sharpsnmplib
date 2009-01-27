@@ -4,8 +4,8 @@ using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Net;
-using Lextm.SharpSnmpLib.Mib;
 using System.Threading;
+using Lextm.SharpSnmpLib.Mib;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -337,7 +337,7 @@ namespace Lextm.SharpSnmpLib
             }
 
             IList<Variable> list = new List<Variable>();
-            int rows = SteveWalk(version, endpoint, community, table, list, timeout, WalkMode.WithinSubtree);
+            int rows = Walk(version, endpoint, community, table, list, timeout, WalkMode.WithinSubtree);
             
             // int rows = Walk(version, endpoint, community, table, list, timeout, WalkMode.WithinSubtree);
             if (rows == 0)
@@ -386,9 +386,7 @@ namespace Lextm.SharpSnmpLib
             }
 
             IList<Variable> list = new List<Variable>();
-            int rows = SteveWalk(version, endpoint, community, table, list, timeout, WalkMode.WithinSubtree);
-            
-            // int rows = Walk(version, endpoint, community, table, list, timeout, WalkMode.WithinSubtree);
+            int rows = Walk(version, endpoint, community, table, list, timeout, WalkMode.WithinSubtree);
             if (rows == 0)
             {
                 return new Variable[0, 0];
@@ -441,6 +439,35 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Gets a table of variables.
         /// </summary>
+        /// <param name="version">Protocol version.</param>
+        /// <param name="endpoint">Endpoint.</param>
+        /// <param name="community">Community name.</param>
+        /// <param name="table">Table OID.</param>
+        /// <param name="timeout">Timeout.</param>
+        /// <returns></returns>
+        [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Return", Justification = "ByDesign")]
+        [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Body", Justification = "ByDesign")]
+        public static TableCollection GetTable2(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, int timeout)
+        {
+            if (version == VersionCode.V3)
+            {
+                throw new ArgumentException("only SNMP v1 or v2 is supported");
+            }
+
+            bool canContinue = ObjectRegistry.ValidateTable(table);
+            if (!canContinue)
+            {
+                throw new ArgumentException("not a table OID: " + table);
+            }
+
+            int rank;
+            IList<Variable> list = WalkExt(version, endpoint, community, table, timeout, WalkMode.WithinSubtree, out rank);
+            return new TableCollection(table, list);
+        }
+
+        /// <summary>
+        /// Gets a table of variables.
+        /// </summary>
         /// <param name="endpoint">Endpoint.</param>
         /// <param name="community">Community name.</param>
         /// <param name="table">Table OID.</param>
@@ -478,27 +505,23 @@ namespace Lextm.SharpSnmpLib
         }
 
         /// <summary>
-        /// Walks.
+        /// Walks (experimental).
         /// </summary>
         /// <param name="version">Protocol version.</param>
         /// <param name="endpoint">Endpoint.</param>
         /// <param name="community">Community name.</param>
         /// <param name="table">OID.</param>
-        /// <param name="list">A list to hold the results.</param>
         /// <param name="timeout">Timeout.</param>
         /// <param name="mode">Walk mode.</param>
-        /// <returns>Returns row count if the OID is a table. Otherwise this value is meaningless.</returns>
-        public static int Walk(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, IList<Variable> list, int timeout, WalkMode mode)
+        /// <param name="rank">The rank.</param>
+        /// <returns></returns>
+        internal static IList<Variable> WalkExt(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, int timeout, WalkMode mode, out int rank)
         {
-            if (list == null)
-            {
-                throw new ArgumentNullException("list");
-            }
-
-            int result = 0;
+            List<Variable> result = new List<Variable>();
             Variable tableV = new Variable(table);
             Variable seed;
             Variable next = tableV;
+            rank = 0;
             do
             {
                 seed = next;
@@ -513,10 +536,14 @@ namespace Lextm.SharpSnmpLib
                     break;
                 }
 
-                list.Add(seed);
-                if (seed.Id.ToString().StartsWith(table + ".1.1.", StringComparison.Ordinal))
+                result.Add(seed);
+                if (rank == 0)
                 {
-                    result++;
+                    rank = seed.Id.ToNumerical().Length - tableV.Id.ToNumerical().Length;
+                }
+                else if (rank != seed.Id.ToNumerical().Length - tableV.Id.ToNumerical().Length)
+                {
+                    rank = -1; // no a table.
                 }
             }
             while (HasNext(version, endpoint, community, seed, timeout, out next));
@@ -524,7 +551,7 @@ namespace Lextm.SharpSnmpLib
         }
         
         /// <summary>
-        /// Steve Walks.
+        /// Walks.
         /// </summary>
         /// <param name="version">Protocol version.</param>
         /// <param name="endpoint">Endpoint.</param>
@@ -534,7 +561,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="timeout">Timeout.</param>
         /// <param name="mode">Walk mode.</param>
         /// <returns>Returns row count if the OID is a table. Otherwise this value is meaningless.</returns>
-        public static int SteveWalk(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, IList<Variable> list, int timeout, WalkMode mode)
+        public static int Walk(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, IList<Variable> list, int timeout, WalkMode mode)
         {
             if (list == null)
             {
@@ -652,9 +679,9 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public override string ToString()
         {
-// ReSharper disable RedundantToStringCall
+//// ReSharper disable RedundantToStringCall
             return "SNMP manager: timeout: " + Timeout.ToString(CultureInfo.InvariantCulture) + "; version: " + DefaultVersion.ToString() + "; " + trapListener;
-// ReSharper restore RedundantToStringCall
+//// ReSharper restore RedundantToStringCall
         }
 
         private void TrapListener_TrapV1Received(object sender, TrapV1ReceivedEventArgs e)
@@ -719,15 +746,14 @@ namespace Lextm.SharpSnmpLib
 
             return result;
         }
-// ReSharper disable all
+//// ReSharper disable all
         private void InitializeComponent()
         {
-
             this.trapListener = new SharpSnmpLib.TrapListener();
             this.trapListener.TrapV1Received += new System.EventHandler<SharpSnmpLib.TrapV1ReceivedEventArgs>(this.TrapListener_TrapV1Received);
             this.trapListener.TrapV2Received += new System.EventHandler<SharpSnmpLib.TrapV2ReceivedEventArgs>(this.TrapListener_TrapV2Received);
             this.trapListener.InformRequestReceived += new System.EventHandler<SharpSnmpLib.InformRequestReceivedEventArgs>(this.TrapListener_InformRequestReceived);
         }
-// ReSharper restore all
+//// ReSharper restore all
     }
 }

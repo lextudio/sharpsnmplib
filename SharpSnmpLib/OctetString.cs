@@ -1,10 +1,10 @@
 using System;
 using System.Globalization;
 using System.IO;
-using System.Text;
 #if (!CF) && (!SILVERLIGHT)
 using System.Net.NetworkInformation;
 #endif
+using System.Text;
 
 // ASN.1 BER encoding library by Malcolm Crowe at the University of the West of Scotland
 // See http://cis.paisley.ac.uk/crow-ci0
@@ -37,9 +37,8 @@ namespace Lextm.SharpSnmpLib
         /// Creates an <see cref="OctetString"/> from raw bytes.
         /// </summary>
         /// <param name="raw">Raw bytes</param>
-        private OctetString(byte[] raw): this(raw.Length, new MemoryStream(raw))
+        private OctetString(byte[] raw) : this(raw.Length, new MemoryStream(raw))
         {
-
         }
         
         /// <summary>

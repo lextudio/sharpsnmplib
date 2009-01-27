@@ -47,6 +47,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Agent.cs">
@@ -151,6 +153,7 @@
     <Compile Include="SharpTimeoutException.cs" />
     <Compile Include="SnmpDataFactory.cs" />
     <Compile Include="SnmpType.cs" />
+    <Compile Include="TableCollection.cs" />
     <Compile Include="TimeTicks.cs" />
     <Compile Include="GenericCode.cs" />
     <Compile Include="TrapV1Message.cs" />

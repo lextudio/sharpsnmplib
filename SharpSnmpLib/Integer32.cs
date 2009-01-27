@@ -32,9 +32,8 @@ namespace Lextm.SharpSnmpLib
         /// Creates an <see cref="Integer32"/> instance.
         /// </summary>
         /// <param name="raw">Raw bytes</param>
-        internal Integer32(byte[] raw): this(raw.Length, new MemoryStream(raw))
+        internal Integer32(byte[] raw) : this(raw.Length, new MemoryStream(raw))
         {
-            
         }
         
         /// <summary>

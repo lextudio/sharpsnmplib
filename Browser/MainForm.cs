@@ -22,9 +22,8 @@ namespace Lextm.SharpSnmpLib.Browser
 		{
 			InitializeComponent();
 
-            OutputPanel output = new OutputPanel();
+		    OutputPanel output = (OutputPanel) Program.OutputPanel;
             output.Show(dockPanel1, DockState.DockBottom);
-            OutputPanelTraceListener.Panel = output;
 
             MibTreePanel tree = new MibTreePanel();
             tree.Show(dockPanel1, DockState.Document);

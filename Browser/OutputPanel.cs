@@ -18,7 +18,7 @@ namespace Lextm.SharpSnmpLib.Browser
 	/// <summary>
 	/// Description of OutputPanel.
 	/// </summary>
-	internal partial class OutputPanel : DockContent
+	internal partial class OutputPanel : DockContent, IOutputPanel
 	{  
 		public OutputPanel()
 		{

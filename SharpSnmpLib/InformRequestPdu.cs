@@ -51,9 +51,8 @@ namespace Lextm.SharpSnmpLib
         /// Creates a <see cref="InformRequestPdu"/> with raw bytes.
         /// </summary>
         /// <param name="raw">Raw bytes</param>
-        private InformRequestPdu(byte[] raw): this(raw.Length, new MemoryStream(raw))
+        private InformRequestPdu(byte[] raw) : this(raw.Length, new MemoryStream(raw))
         {
-
         }
 
         /// <summary>
@@ -73,7 +72,7 @@ namespace Lextm.SharpSnmpLib
             _enterprise = (ObjectIdentifier)_variables[0].Data;
             _variables.RemoveAt(0);
             _raw = ByteTool.ParseItems(_seq, _errorStatus, _errorIndex, _varbindSection);
-            Debug.Assert(length >= _raw.Length);
+            Debug.Assert(length >= _raw.Length, "length not match");
         }
         
         internal int SequenceNumber
@@ -124,17 +123,6 @@ namespace Lextm.SharpSnmpLib
         public SnmpType TypeCode
         {
             get { return SnmpType.InformRequestPdu; }
-        }
-
-        /// <summary>
-        /// Converts to byte format.
-        /// </summary>
-        /// <returns></returns>
-        private byte[] ToBytes()
-        {
-            MemoryStream result = new MemoryStream();
-            AppendBytesTo(result);
-            return result.ToArray();
         }
 
         /// <summary>
