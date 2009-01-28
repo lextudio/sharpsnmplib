@@ -7,6 +7,7 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -124,6 +125,18 @@ namespace Lextm.SharpSnmpLib
         public void AppendBytesTo(Stream stream)
         {
             ByteTool.AppendBytes(stream, TypeCode, _raw);
+        }
+
+        /// <summary>
+        /// Converts to byte format.
+        /// </summary>
+        /// <returns></returns>
+        [Obsolete("Use AppendBytesTo instead.")]
+        public byte[] ToBytes()
+        {
+            MemoryStream result = new MemoryStream();
+            AppendBytesTo(result);
+            return result.ToArray();
         }
 
         /// <summary>

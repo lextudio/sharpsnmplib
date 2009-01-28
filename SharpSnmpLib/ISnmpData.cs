@@ -7,6 +7,7 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 
+using System;
 using System.IO;
 
 namespace Lextm.SharpSnmpLib
@@ -29,5 +30,12 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="stream">The stream.</param>
         void AppendBytesTo(Stream stream);
+
+        /// <summary>
+        /// Converts to the bytes.
+        /// </summary>
+        /// <returns></returns>
+        [Obsolete("Use AppendBytesTo instead.")]
+        byte[] ToBytes();
     }
 }

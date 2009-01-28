@@ -105,6 +105,18 @@ namespace Lextm.SharpSnmpLib
         }
 
         /// <summary>
+        /// Converts to byte format.
+        /// </summary>
+        /// <returns></returns>
+        [Obsolete("Use AppendBytesTo instead.")]
+        public byte[] ToBytes()
+        {
+            MemoryStream result = new MemoryStream();
+            AppendBytesTo(result);
+            return result.ToArray();
+        }
+
+        /// <summary>
         /// To message body.
         /// </summary>
         /// <param name="version">Protocol version</param>
