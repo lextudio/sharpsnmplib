@@ -21,7 +21,10 @@ namespace Lextm.SharpSnmpLib.Browser
 		public MainForm()
 		{
 			InitializeComponent();
-
+			
+            DockContent notification = Program.Container.Resolve<DockContent>("Notification");
+            notification.Show(dockPanel1, DockState.DockBottom);
+            
 		    DockContent output = Program.Container.Resolve<DockContent>("Output");
             output.Show(dockPanel1, DockState.DockBottom);
 
@@ -32,7 +35,7 @@ namespace Lextm.SharpSnmpLib.Browser
             modules.Show(dockPanel1, DockState.DockLeft);
 
             DockContent agent = Program.Container.Resolve<DockContent>("AgentProfile");
-            agent.Show(dockPanel1, DockState.DockLeft);            
+            agent.Show(dockPanel1, DockState.DockLeft);  
 		}
 
         private void actExit_Execute(object sender, EventArgs e)

@@ -108,6 +108,10 @@
     <Compile Include="ModuleListPanel.Designer.cs">
       <DependentUpon>ModuleListPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="NotificationPanel.cs" />
+    <Compile Include="NotificationPanel.Designer.cs">
+      <DependentUpon>NotificationPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="OutputPanel.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -156,6 +160,9 @@
     <EmbeddedResource Include="ModuleListPanel.resx">
       <DependentUpon>ModuleListPanel.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NotificationPanel.resx">
+      <DependentUpon>NotificationPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OutputPanel.resx">
       <DependentUpon>OutputPanel.cs</DependentUpon>
