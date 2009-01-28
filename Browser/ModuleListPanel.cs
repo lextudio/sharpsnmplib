@@ -23,7 +23,7 @@ namespace Lextm.SharpSnmpLib.Browser
 	/// <summary>
 	/// Description of ModuleListPanel.
 	/// </summary>
-	public partial class ModuleListPanel : DockContent
+	internal partial class ModuleListPanel : DockContent
 	{
 	    private IObjectRegistry _objects;
 

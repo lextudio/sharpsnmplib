@@ -78,6 +78,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <summary>
         /// Registry
         /// </summary>
+        [CLSCompliant(false)]
         public static IObjectRegistry Default
         {
             get
@@ -191,7 +192,6 @@ namespace Lextm.SharpSnmpLib.Mib
         /// </summary>
         /// <param name="id">OID</param>
         /// <returns></returns>
-        [CLSCompliant(false)]
         internal bool IsTableId(uint[] id)
         {
             if (id == null)
@@ -204,6 +204,11 @@ namespace Lextm.SharpSnmpLib.Mib
             return name.EndsWith("Table", StringComparison.Ordinal);
         }
 
+        /// <summary>
+        /// Validates if an <see cref="ObjectIdentifier"/> is a table.
+        /// </summary>
+        /// <param name="table">The object identifier.</param>
+        /// <returns></returns>
         public bool ValidateTable(ObjectIdentifier table)
         {
             try
@@ -428,6 +433,10 @@ namespace Lextm.SharpSnmpLib.Mib
             // TODO:
         }
 
+        /// <summary>
+        /// Refreshes.
+        /// </summary>
+        /// <remarks>This method raises an <see cref="OnChanged"/> event. </remarks>
         public void Refresh()
         {
             _tree.Refresh();

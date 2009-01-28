@@ -25,7 +25,7 @@ namespace Lextm.SharpSnmpLib.Tests
             ObjectIdentifier unknown = new ObjectIdentifier(new uint[] { 1, 3, 6, 8, 18579, 111111});
             Assert.IsTrue(ObjectRegistry.Default.ValidateTable(table));
             Assert.IsFalse(ObjectRegistry.Default.ValidateTable(entry));
-            Assert.IsTrue(ObjectRegistry.Default.ValidateTable(unknown));
+            Assert.IsFalse(ObjectRegistry.Default.ValidateTable(unknown));
         }
 
         [Test]

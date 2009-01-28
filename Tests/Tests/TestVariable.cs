@@ -7,10 +7,9 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 
-using System;
 using System.Collections.Generic;
 using NUnit.Framework;
-using NUnit.Framework.SyntaxHelpers;
+
 #pragma warning disable 1591
 namespace Lextm.SharpSnmpLib.Tests
 {

@@ -105,7 +105,6 @@
     <Compile Include="Mib\IObjectTree.cs" />
     <Compile Include="Mib\ITypeAssignment.cs" />
     <Compile Include="Mib\Macro.cs" />
-    <Compile Include="Mib\MibInventory.cs" />
     <Compile Include="Mib\ModuleCompliance.cs" />
     <Compile Include="Mib\ModuleIdentity.cs" />
     <Compile Include="Mib\NotificationGroup.cs" />

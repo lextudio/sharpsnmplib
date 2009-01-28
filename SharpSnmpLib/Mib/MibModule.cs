@@ -23,7 +23,7 @@ namespace Lextm.SharpSnmpLib.Mib
         private Exports _exports;
         private readonly IList<IConstruct> _tokens = new List<IConstruct>();
         
-        public MibModule(string name, IEnumerable<string> dependents)
+        internal MibModule(string name, IEnumerable<string> dependents)
         {
             _name = name;
             _imports = new Imports(dependents);

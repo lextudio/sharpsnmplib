@@ -17,6 +17,7 @@ namespace Lextm.SharpSnmpLib
     /// <para>Use <see cref="TrapListener" /> component if you only need TRAP operation.</para>
     /// <para>Currently only SNMP v1 and v2c operations are supported.</para>
     /// </remarks>
+    [CLSCompliant(false)]
     public class Manager : Component
     {
         private const int DefaultPort = 161;

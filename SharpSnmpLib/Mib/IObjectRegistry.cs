@@ -6,6 +6,7 @@ namespace Lextm.SharpSnmpLib.Mib
     ///<summary>
     /// Object registry interface.
     ///</summary>
+    [CLSCompliant(false)]
     public interface IObjectRegistry
     {
         /// <summary>
@@ -15,8 +16,7 @@ namespace Lextm.SharpSnmpLib.Mib
 
         /// <summary>
         /// Object tree.
-        /// </summary>
-        [CLSCompliant(false)]
+        /// </summary>        
         IObjectTree Tree { get; }
 
         /// <summary>
