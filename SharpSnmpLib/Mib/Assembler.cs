@@ -20,7 +20,10 @@ namespace Lextm.SharpSnmpLib.Mib
         private readonly ObjectTree _tree = new ObjectTree();
         private readonly string _folder;
 
-        internal string Folder
+        /// <summary>
+        /// Folder.
+        /// </summary>
+        public string Folder
         {
             get { return _folder; }
         }

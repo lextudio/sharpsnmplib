@@ -9,7 +9,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Diagnostics;
 using System.Media;
 using System.Windows.Forms;
 using Lextm.SharpSnmpLib.Mib;
@@ -20,184 +20,169 @@ namespace Lextm.SharpSnmpLib.Compiler
 	/// <summary>
 	/// Description of MainForm.
 	/// </summary>
-	internal partial class MainForm : Form, IMediator
+	internal partial class MainForm : Form
 	{
-        private readonly OutputPanel _output;
-        private readonly ModuleListPanel _modules; 
-        private readonly Assembler _assembler;
-        private readonly string root = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "modules");
+		private readonly ModuleListPanel modules;
+		private readonly DocumentListPanel files;
 
 		public MainForm()
 		{
 			InitializeComponent();
 
-            _assembler = new Assembler(root);
+			files = (DocumentListPanel) Program.Container.Resolve<DockContent>("DocumentList");
+			files.Show(dockPanel1, DockState.DockLeft);
 
-            _output = new OutputPanel();
-            _output.Show(dockPanel1, DockState.DockBottom);
-                        
-            _modules = new ModuleListPanel(this);
-            _modules.Show(dockPanel1, DockState.DockLeft);
+			DockContent output = Program.Container.Resolve<DockContent>("Output");
+			if (output != null)
+			{
+				output.Show(dockPanel1, DockState.DockBottom);
+			}
+
+			modules = (ModuleListPanel) Program.Container.Resolve<DockContent>("ModuleList");
+			if (modules != null)
+			{
+				modules.Show(dockPanel1, DockState.DockRight);
+			}
 		}
 
-        private void actExit_Execute(object sender, EventArgs e)
-        {
-            Close();
-        }
+		private void actExit_Execute(object sender, EventArgs e)
+		{
+			Close();
+		}
 
-        #region IMediator Members
+		public static void CloseAllDocuments(DockPanel panel)
+		{
+			IDockContent[] documents = panel.DocumentsToArray();
+			foreach (IDockContent content in documents)
+			{
+				content.DockHandler.Close();
+			}
+		}
 
-        public void CloseAllDocuments()
-        {
-            if (dockPanel1.DocumentStyle == DocumentStyle.SystemMdi)
-            {
-                foreach (Form form in MdiChildren)
-                    form.Close();
-            }
-            else
-            {
-                IDockContent[] documents = dockPanel1.DocumentsToArray();
-                foreach (IDockContent content in documents)
-                    content.DockHandler.Close();
-            }
-        }
+		public void OpenDocument(string fileName)
+		{
+			if (FindDocument(fileName) != null)
+			{
+				TraceSource source = new TraceSource("Compiler");
+				source.TraceInformation("The document: " + fileName + " has already opened!");
+				source.Flush();
+				source.Close();
+				return;
+			}
+			
+			DocumentPanel doc = new DocumentPanel(fileName);
+			doc.Show(dockPanel1, DockState.Document);
+		}
 
-        public void OpenDocument(string fileName)
-        {
-            DocumentPanel doc = new DocumentPanel(this, fileName);
-            doc.Show(dockPanel1, DockState.Document);
-        }
+		private void actOpen_Execute(object sender, EventArgs e)
+		{
+			if (openFileDialog1.ShowDialog() != DialogResult.OK)
+			{
+				return;
+			}
 
-        public IOutput Output
-        {
-            get { return _output; }
-        }
+			dockPanel1.SuspendLayout(true);
+			foreach (string file in openFileDialog1.FileNames)
+			{
+				files.Add(file);
+			}
 
-        public IObjectTree Tree
-        {
-            get { return _assembler.Tree; }
-        }
+			dockPanel1.ResumeLayout(true, true);
+		}
 
-        public string Root
-        {
-            get { return root; }
-        }
+		private void actCompile_Execute(object sender, EventArgs e)
+		{
+			IDockContent content = dockPanel1.ActiveDocument;
+			DocumentPanel doc = (DocumentPanel)content;
 
-        #endregion
+			List<string> sList = new List<string>(1);
+			sList.Add(doc.FileName);
 
-        private void actOpen_Execute(object sender, EventArgs e)
-        {
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                dockPanel1.SuspendLayout(true);
-                int limit = 100;
-                foreach (string file in openFileDialog1.FileNames)
-                {
-                    if (FindDocument(file) != null)
-                    {
-                        Output.ReportMessage("The document: " + file + " has already opened!");
-                        continue;
-                    }
+			backgroundWorker1.RunWorkerAsync(sList);
+		}
 
-                    OpenDocument(file);
-                    limit--;
-                    if (limit == 0) 
-                    {
-                        Output.ReportMessage("Only 100 files can be opened at a time.");
-                        SystemSounds.Asterisk.Play();
-                        break;
-                    }
-                }
-                dockPanel1.ResumeLayout(true, true);
-            }
-        }
+		private void actCompile_Update(object sender, EventArgs e)
+		{
+			actCompile.Enabled = dockPanel1.ActiveDocument != null && !backgroundWorker1.IsBusy;
+		}
 
-        private void actCompile_Execute(object sender, EventArgs e)
-        {
-            IDockContent content = dockPanel1.ActiveDocument;
-            DocumentPanel doc = (DocumentPanel)content;
+		private void actCompileAll_Execute(object sender, EventArgs e)
+		{	
+			backgroundWorker1.RunWorkerAsync(files.Files);
+		}
 
-            List<string> sList = new List<string>(1);
-            sList.Add(doc.FileName);
+		private void actCompileAll_Update(object sender, EventArgs e)
+		{
+			actCompileAll.Enabled = dockPanel1.DocumentsCount > 0 && !backgroundWorker1.IsBusy;
+		}
 
-            backgroundWorker1.RunWorkerAsync(sList);
-        }
+		private IDockContent FindDocument(string fileName)
+		{
+			if (dockPanel1.DocumentStyle == DocumentStyle.SystemMdi)
+			{
+				foreach (Form form in MdiChildren)
+				{
+					if (form.Text == fileName)
+					{
+						return form as IDockContent;
+					}
+				}
 
-        private void actCompile_Update(object sender, EventArgs e)
-        {
-            actCompile.Enabled = dockPanel1.ActiveDocument != null && !backgroundWorker1.IsBusy;
-        }
+				return null;
+			}
 
-        private void actCompileAll_Execute(object sender, EventArgs e)
-        {
-            List<string> docs = new List<string>(dockPanel1.DocumentsCount);
-            foreach (IDockContent content in dockPanel1.Documents)
-            {
-                DocumentPanel doc = (DocumentPanel)content;
-                docs.Add(doc.FileName);
-            }           
-            
-            backgroundWorker1.RunWorkerAsync(docs);
-        }
+			foreach (IDockContent content in dockPanel1.Documents)
+			{
+				if (content.DockHandler.TabText == fileName)
+				{
+					return content;
+				}
+			}
 
-        private void actCompileAll_Update(object sender, EventArgs e)
-        {
-            actCompileAll.Enabled = dockPanel1.DocumentsCount > 0 && !backgroundWorker1.IsBusy;
-        }
+			return null;
+		}
 
-        private IDockContent FindDocument(string fileName)
-        {
-            if (dockPanel1.DocumentStyle == DocumentStyle.SystemMdi)
-            {
-                foreach (Form form in MdiChildren)
-                {    
-                    if (form.Text == fileName)
-                    {
-                        return form as IDockContent;
-                    }
-                }
+		private void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+		{
+			Parser parser = Program.Container.Resolve<Parser>();
+			if (parser == null)
+			{
+				return;
+			}
 
-                return null;
-            }
+			IEnumerable<string> docs = (IEnumerable<string>)e.Argument;
+			try
+			{
+				parser.ParseToModules(docs);
+			}
+			catch (SharpMibException ex)
+			{
+				// on compiling errors
+				backgroundWorker1.ReportProgress(-1, ex);
+			}
+		}
 
-            foreach (IDockContent content in dockPanel1.Documents)
-            {    
-                if (content.DockHandler.TabText == fileName)
-                {
-                    return content;
-                }
-            }
+		private void backgroundWorker1_ProgressChanged(object sender, System.ComponentModel.ProgressChangedEventArgs e)
+		{
+			if (e.ProgressPercentage != -1)
+			{
+				return;
+			}
 
-            return null;
-        }
+			TraceSource source = new TraceSource("Compiler");
+			source.TraceInformation(((Exception)e.UserState).Message);
+			source.Flush();
+			source.Close();
+		}
 
-        private void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
-        {
-            IEnumerable<string> docs = (IEnumerable<string>)e.Argument;
-            Parser parser = new Parser(_assembler);
-            try 
-            {
-                parser.ParseToModules(docs); 
-            }
-            catch (SharpMibException ex)
-            {
-                // on compiling errors
-                backgroundWorker1.ReportProgress(-1, ex);
-            }            
-        }
+		private void backgroundWorker1_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+		{
+			if (modules != null)
+			{
+				modules.RefreshPanel(modules, EventArgs.Empty);
+			}
 
-        private void backgroundWorker1_ProgressChanged(object sender, System.ComponentModel.ProgressChangedEventArgs e)
-        {
-            if (e.ProgressPercentage == -1)
-            {
-                _output.ReportMessage(((Exception)e.UserState).Message);
-            }
-        }
-
-        private void backgroundWorker1_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
-        {
-            _modules.RefreshPanel(_modules, EventArgs.Empty);
-            SystemSounds.Beep.Play();
-        }
-    }
+			SystemSounds.Beep.Play();
+		}
+	}
 }

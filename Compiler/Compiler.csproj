@@ -36,7 +36,17 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\Crad.Windows.Forms.Actions.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Practices.ObjectBuilder2">
+      <HintPath>..\lib\Microsoft.Practices.ObjectBuilder2.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity">
+      <HintPath>..\lib\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration">
+      <HintPath>..\lib\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
@@ -46,13 +56,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DocumentListPanel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DocumentListPanel.Designer.cs">
+      <DependentUpon>DocumentListPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="DocumentPanel.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="DocumentPanel.Designer.cs">
       <DependentUpon>DocumentPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="IMediator.cs" />
     <Compile Include="IOutput.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -73,6 +88,7 @@
     <Compile Include="OutputPanel.Designer.cs">
       <DependentUpon>OutputPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="OutputPanelTraceListener.cs" />
     <Compile Include="Program.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -82,6 +98,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="DocumentListPanel.resx">
+      <DependentUpon>DocumentListPanel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DocumentPanel.resx">
       <DependentUpon>DocumentPanel.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -103,6 +122,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <None Include="app.config" />
     <None Include="license.txt" />
   </ItemGroup>
   <ItemGroup>

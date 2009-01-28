@@ -108,7 +108,9 @@
     <Compile Include="ModuleListPanel.Designer.cs">
       <DependentUpon>ModuleListPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="NotificationPanel.cs" />
+    <Compile Include="NotificationPanel.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="NotificationPanel.Designer.cs">
       <DependentUpon>NotificationPanel.cs</DependentUpon>
     </Compile>

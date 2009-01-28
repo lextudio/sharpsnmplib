@@ -19,14 +19,14 @@ namespace Lextm.SharpSnmpLib.Compiler
 	/// <summary>
 	/// Description of OutputPanel.
 	/// </summary>
-	partial class OutputPanel : DockContent, IOutput
+	partial class OutputPanel : DockContent, IOutputPanel
 	{
 		public OutputPanel()
 		{
 			InitializeComponent();
 		}
 
-        public void ReportMessage(string message)
+        public void WriteLine(string message)
         {
             txtMessages.AppendText(string.Format("[{0}] {1}", DateTime.Now, message));
             txtMessages.AppendText(Environment.NewLine);

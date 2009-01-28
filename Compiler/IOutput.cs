@@ -13,12 +13,12 @@ namespace Lextm.SharpSnmpLib.Compiler
     /// <summary>
     /// IOutput interface.
     /// </summary>
-    public interface IOutput
+    public interface IOutputPanel
     {        
         /// <summary>
         /// Reports a message.
         /// </summary>
         /// <param name="message">Message.</param>
-        void ReportMessage(string message); 
+        void WriteLine(string message); 
     }
 }
