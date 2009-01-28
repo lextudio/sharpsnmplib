@@ -31,7 +31,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <param name="path">The path.</param>
         public ObjectRegistry(string path)
         {
-            if (string.IsNullOrEmpty(path))
+            if (string.IsNullOrEmpty(path) || !Directory.Exists(path))
             {
                 _path = DefaultPath;
                 LoadDefaultDocuments();
@@ -41,7 +41,10 @@ namespace Lextm.SharpSnmpLib.Mib
                 _path = path;
             }
             
-            LoadDocuments(_path);
+            if (Directory.Exists(_path))
+            {
+                LoadDocuments(_path);
+            }
         }
 
         private void LoadDocuments(string folder)

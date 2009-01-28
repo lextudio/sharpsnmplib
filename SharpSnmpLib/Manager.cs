@@ -24,7 +24,8 @@ namespace Lextm.SharpSnmpLib
         private int _timeout = 5000;
         private VersionCode _version;
         private TrapListener trapListener;
-        private IObjectRegistry _registry = ObjectRegistry.Default;
+        //// TODO: get rid of default some day.
+        private IObjectRegistry _objects = ObjectRegistry.Default;
 
         /// <summary>
         /// Creates a <see cref="Manager"></see> instance.
@@ -94,8 +95,8 @@ namespace Lextm.SharpSnmpLib
         /// <value>The objects.</value>
         public IObjectRegistry Objects
         {
-            get { return _registry; }
-            set { _registry = value; }
+            get { return _objects; }
+            set { _objects = value; }
         }
 
         /// <summary>

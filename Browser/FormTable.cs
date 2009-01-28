@@ -115,9 +115,14 @@ namespace Lextm.SharpSnmpLib.Browser
             // TODO: how to get rid of infinite loop?
             while (true)
             {
-                IList<Variable> list = new List<Variable>();
-                AgentProfile prof = Program.Profiles.DefaultProfile;
+                IProfileRegistry registry = Program.Container.Resolve<IProfileRegistry>();
+                if (registry == null)
+                {
+                    break;
+                }
 
+                AgentProfile prof = registry.DefaultProfile;
+                IList<Variable> list = new List<Variable>();
                 Thread.Sleep(Convert.ToInt32(textBoxRefresh.Text, CultureInfo.CurrentCulture) * 1000);
                 int rows = Manager.Walk(prof.VersionCode, prof.Agent, new OctetString(prof.GetCommunity), new ObjectIdentifier(definition.GetNumericalForm()), list, 1000, WalkMode.WithinSubtree);
 

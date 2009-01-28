@@ -10,7 +10,7 @@
 using System;
 using System.Globalization;
 using System.Windows.Forms;
-
+using Microsoft.Practices.Unity;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace Lextm.SharpSnmpLib.Browser
@@ -19,20 +19,29 @@ namespace Lextm.SharpSnmpLib.Browser
 	/// Description of OutputPanel.
 	/// </summary>
 	internal partial class OutputPanel : DockContent, IOutputPanel
-	{  
-		public OutputPanel()
+	{
+	    private IProfileRegistry _profiles;
+
+	    public OutputPanel()
 		{
 			InitializeComponent();
 		}
 
         public void WriteLine(string message)
         {
-            txtMessages.AppendText(string.Format(CultureInfo.CurrentCulture, "[{2}] [{0}] {1}", DateTime.Now, message, Program.Profiles.DefaultProfile.Agent));
+            txtMessages.AppendText(string.Format(CultureInfo.CurrentCulture, "[{2}] [{0}] {1}", DateTime.Now, message, Profiles.DefaultProfile.Agent));
             txtMessages.AppendText(Environment.NewLine);
             txtMessages.ScrollToCaret();
         }
 
-        private void actClear_Execute(object sender, EventArgs e)
+        [Dependency]
+	    public IProfileRegistry Profiles
+	    {
+	        get { return _profiles; }
+	        set { _profiles = value; }
+	    }
+
+	    private void actClear_Execute(object sender, EventArgs e)
         {
             txtMessages.Clear();
         }

@@ -22,15 +22,16 @@ namespace Lextm.SharpSnmpLib.Browser
 		{
 			InitializeComponent();
 
-		    OutputPanel output = (OutputPanel) Program.OutputPanel;
+		    DockContent output = Program.Container.Resolve<DockContent>("Output");
             output.Show(dockPanel1, DockState.DockBottom);
 
-            MibTreePanel tree = new MibTreePanel();
+		    DockContent tree = Program.Container.Resolve<DockContent>("MibTree");
             tree.Show(dockPanel1, DockState.Document);
-            ModuleListPanel modules = new ModuleListPanel();
+
+            DockContent modules = Program.Container.Resolve<DockContent>("ModuleList");
             modules.Show(dockPanel1, DockState.DockLeft);
 
-            AgentProfilePanel agent = new AgentProfilePanel();
+            DockContent agent = Program.Container.Resolve<DockContent>("AgentProfile");
             agent.Show(dockPanel1, DockState.DockLeft);            
 		}
 

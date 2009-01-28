@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using WeifenLuo.WinFormsUI.Docking;
 
 namespace Lextm.SharpSnmpLib.Browser
 {
@@ -11,7 +12,11 @@ namespace Lextm.SharpSnmpLib.Browser
 
         public override void WriteLine(string message)
         {
-           Program.OutputPanel.WriteLine(message);
+            IOutputPanel content = Program.Container.Resolve<DockContent>("Output") as IOutputPanel;
+            if (content != null)
+            {
+                content.WriteLine(message);
+            }
         }
     }
 }

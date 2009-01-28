@@ -12,7 +12,7 @@ using System.Configuration;
 using System.Windows.Forms;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
-using Lextm.SharpSnmpLib.Mib;
+using WeifenLuo.WinFormsUI.Docking;
 
 namespace Lextm.SharpSnmpLib.Browser
 {
@@ -23,19 +23,9 @@ namespace Lextm.SharpSnmpLib.Browser
 	{
 	    private static IUnityContainer container;
 
-	    internal static IProfileRegistry Profiles
+	    internal static IUnityContainer Container
 	    {
-	        get { return container.Resolve<IProfileRegistry>(); }
-	    }
-
-	    public static IOutputPanel OutputPanel
-	    {
-            get { return container.Resolve<IOutputPanel>(); }
-	    }
-
-	    public static IObjectRegistry Objects
-	    {
-            get { return container.Resolve<IObjectRegistry>(); }
+	        get { return container; }
 	    }
 
 	    /// <summary>
@@ -47,12 +37,11 @@ namespace Lextm.SharpSnmpLib.Browser
             container = new UnityContainer();
             UnityConfigurationSection section
               = (UnityConfigurationSection)ConfigurationManager.GetSection("unity");
-            section.Containers.Default.Configure(container);
+            section.Containers.Default.Configure(Container);
 
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 		    Application.Run(new MainForm());
 		}
-		
 	}
 }

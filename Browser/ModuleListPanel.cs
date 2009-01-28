@@ -15,6 +15,7 @@ using System.IO;
 using System.Windows.Forms;
 
 using Lextm.SharpSnmpLib.Mib;
+using Microsoft.Practices.Unity;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace Lextm.SharpSnmpLib.Browser
@@ -24,18 +25,28 @@ namespace Lextm.SharpSnmpLib.Browser
 	/// </summary>
 	public partial class ModuleListPanel : DockContent
 	{
-		public ModuleListPanel()
+	    private IObjectRegistry _objects;
+
+	    public ModuleListPanel()
 		{
 			InitializeComponent();
-			Program.Objects.OnChanged += RefreshPanel;
+			
 		}
 		
 		void ModuleListPanel_Load(object sender, EventArgs e)
 		{
-			RefreshPanel(Program.Objects, EventArgs.Empty);
+            Objects.OnChanged += RefreshPanel;
+			RefreshPanel(Objects, EventArgs.Empty);
 		}
 
-		private void RefreshPanel(object sender, EventArgs e)
+        [Dependency]
+	    public IObjectRegistry Objects
+	    {
+	        get { return _objects; }
+	        set { _objects = value; }
+	    }
+
+	    private void RefreshPanel(object sender, EventArgs e)
 		{
 			ObjectRegistry reg = (ObjectRegistry)sender;
 			SuspendLayout();
@@ -72,15 +83,15 @@ namespace Lextm.SharpSnmpLib.Browser
 				return;
 			}
 			
-			if (!Directory.Exists(Program.Objects.Path))
+			if (!Directory.Exists(Objects.Path))
 			{
-				Directory.CreateDirectory(Program.Objects.Path);
+				Directory.CreateDirectory(Objects.Path);
 			}
 			
 			foreach (string file in files)
 			{
 				string name = Path.GetFileName(file);
-				string destFileName = Path.Combine(Program.Objects.Path, name);
+				string destFileName = Path.Combine(Objects.Path, name);
 				if (File.Exists(destFileName))
 				{
 					TraceSource source = new TraceSource("Browser");
@@ -94,7 +105,7 @@ namespace Lextm.SharpSnmpLib.Browser
 				}
 			}
 			
-			Program.Objects.Refresh();
+			Objects.Refresh();
 		}
 
 		private void actRemove_Execute(object sender, EventArgs e)
