@@ -23,6 +23,7 @@ namespace Lextm.SharpSnmpLib.Compiler
     internal partial class ModuleListPanel : DockContent
     {
         private Assembler _assembler;
+        private CompilerCore _compiler;
 
         public ModuleListPanel()
         {
@@ -33,6 +34,17 @@ namespace Lextm.SharpSnmpLib.Compiler
         {
             // TODO: bind this refresh to assembler event.
             RefreshPanel(this, EventArgs.Empty);
+            if (Compiler != null)
+            {
+                Compiler.RunCompilerCompleted += RefreshPanel;
+            }
+        }
+
+        [Dependency]
+        public CompilerCore Compiler
+        {
+            get { return _compiler; }
+            set { _compiler = value; }
         }
 
         public void RefreshPanel(object sender, EventArgs e)

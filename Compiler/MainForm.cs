@@ -9,69 +9,44 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Media;
 using System.Windows.Forms;
-using Lextm.SharpSnmpLib.Mib;
 using WeifenLuo.WinFormsUI.Docking;
+using Microsoft.Practices.Unity;
 
 namespace Lextm.SharpSnmpLib.Compiler
 {
+
 	/// <summary>
 	/// Description of MainForm.
 	/// </summary>
 	internal partial class MainForm : Form
 	{
-		private readonly ModuleListPanel modules;
-		private readonly DocumentListPanel files;
+	    private CompilerCore _compiler;
 
 		public MainForm()
 		{
 			InitializeComponent();
 
-			files = (DocumentListPanel) Program.Container.Resolve<DockContent>("DocumentList");
+			DockContent files = Program.Container.Resolve<DockContent>("DocumentList");
 			files.Show(dockPanel1, DockState.DockLeft);
 
 			DockContent output = Program.Container.Resolve<DockContent>("Output");
-			if (output != null)
-			{
-				output.Show(dockPanel1, DockState.DockBottom);
-			}
+    		output.Show(dockPanel1, DockState.DockBottom);
 
-			modules = (ModuleListPanel) Program.Container.Resolve<DockContent>("ModuleList");
-			if (modules != null)
-			{
-				modules.Show(dockPanel1, DockState.DockRight);
-			}
+			DockContent modules = Program.Container.Resolve<DockContent>("ModuleList");
+    		modules.Show(dockPanel1, DockState.DockRight);
 		}
 
-		private void actExit_Execute(object sender, EventArgs e)
+        [Dependency]
+	    public CompilerCore Compiler
+	    {
+	        get { return _compiler; }
+	        set { _compiler = value; }
+	    }
+
+	    private void actExit_Execute(object sender, EventArgs e)
 		{
 			Close();
-		}
-
-		public static void CloseAllDocuments(DockPanel panel)
-		{
-			IDockContent[] documents = panel.DocumentsToArray();
-			foreach (IDockContent content in documents)
-			{
-				content.DockHandler.Close();
-			}
-		}
-
-		public void OpenDocument(string fileName)
-		{
-			if (FindDocument(fileName) != null)
-			{
-				TraceSource source = new TraceSource("Compiler");
-				source.TraceInformation("The document: " + fileName + " has already opened!");
-				source.Flush();
-				source.Close();
-				return;
-			}
-			
-			DocumentPanel doc = new DocumentPanel(fileName);
-			doc.Show(dockPanel1, DockState.Document);
 		}
 
 		private void actOpen_Execute(object sender, EventArgs e)
@@ -82,10 +57,7 @@ namespace Lextm.SharpSnmpLib.Compiler
 			}
 
 			dockPanel1.SuspendLayout(true);
-			foreach (string file in openFileDialog1.FileNames)
-			{
-				files.Add(file);
-			}
+		    Compiler.Add(openFileDialog1.FileNames);
 
 			dockPanel1.ResumeLayout(true, true);
 		}
@@ -98,91 +70,22 @@ namespace Lextm.SharpSnmpLib.Compiler
 			List<string> sList = new List<string>(1);
 			sList.Add(doc.FileName);
 
-			backgroundWorker1.RunWorkerAsync(sList);
+			Compiler.Compile(sList);
 		}
 
 		private void actCompile_Update(object sender, EventArgs e)
 		{
-			actCompile.Enabled = dockPanel1.ActiveDocument != null && !backgroundWorker1.IsBusy;
+			actCompile.Enabled = dockPanel1.ActiveDocument != null && !Compiler.IsBusy;
 		}
 
 		private void actCompileAll_Execute(object sender, EventArgs e)
-		{	
-			backgroundWorker1.RunWorkerAsync(files.Files);
+		{
+			Compiler.CompileAll();
 		}
 
 		private void actCompileAll_Update(object sender, EventArgs e)
 		{
-			actCompileAll.Enabled = dockPanel1.DocumentsCount > 0 && !backgroundWorker1.IsBusy;
-		}
-
-		private IDockContent FindDocument(string fileName)
-		{
-			if (dockPanel1.DocumentStyle == DocumentStyle.SystemMdi)
-			{
-				foreach (Form form in MdiChildren)
-				{
-					if (form.Text == fileName)
-					{
-						return form as IDockContent;
-					}
-				}
-
-				return null;
-			}
-
-			foreach (IDockContent content in dockPanel1.Documents)
-			{
-				if (content.DockHandler.TabText == fileName)
-				{
-					return content;
-				}
-			}
-
-			return null;
-		}
-
-		private void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
-		{
-			Parser parser = Program.Container.Resolve<Parser>();
-			if (parser == null)
-			{
-				return;
-			}
-
-			IEnumerable<string> docs = (IEnumerable<string>)e.Argument;
-			try
-			{
-				parser.ParseToModules(docs);
-			}
-			catch (SharpMibException ex)
-			{
-				// on compiling errors
-				backgroundWorker1.ReportProgress(-1, ex);
-			}
-		}
-
-		private void backgroundWorker1_ProgressChanged(object sender, System.ComponentModel.ProgressChangedEventArgs e)
-		{
-			if (e.ProgressPercentage != -1)
-			{
-				return;
-			}
-
-			TraceSource source = new TraceSource("Compiler");
-			source.TraceInformation(((Exception)e.UserState).Message);
-			source.Flush();
-			source.Close();
-		}
-
-		private void backgroundWorker1_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
-		{
-			if (modules != null)
-			{
-				modules.RefreshPanel(modules, EventArgs.Empty);
-			}
-
-			SystemSounds.Beep.Play();
+			actCompileAll.Enabled = dockPanel1.DocumentsCount > 0 && !Compiler.IsBusy;
 		}
 	}
 }

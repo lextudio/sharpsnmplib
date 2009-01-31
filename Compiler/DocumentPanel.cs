@@ -23,7 +23,21 @@ namespace Lextm.SharpSnmpLib.Compiler
 
         private void closeAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MainForm.CloseAllDocuments(DockPanel);
+            CloseAllDocuments(DockPanel);
         }
+        
+        private static void CloseAllDocuments(DockPanel panel)
+		{
+        	if (panel.DocumentStyle == DocumentStyle.SystemMdi)
+        	{
+        		throw new InvalidOperationException("cannot work in System MDI mode");
+        	}
+        	
+			IDockContent[] documents = panel.DocumentsToArray();
+			foreach (IDockContent content in documents)
+			{
+				content.DockHandler.Close();
+			}
+		}
     }
 }

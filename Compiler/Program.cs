@@ -37,10 +37,12 @@ namespace Lextm.SharpSnmpLib.Compiler
 			UnityConfigurationSection section
 				= (UnityConfigurationSection)ConfigurationManager.GetSection("unity");
 			section.Containers.Default.Configure(Container);
-			
-			Application.EnableVisualStyles();
+
+		    Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new MainForm());
+
+            MainForm main = Container.Resolve<MainForm>();
+            Application.Run(main);
 		}
 	}
 }

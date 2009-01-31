@@ -67,6 +67,7 @@ namespace Lextm.SharpSnmpLib.Compiler
             this.Controls.Add(this.lvFiles);
             this.Name = "DocumentListPanel";
             this.TabText = "Document List";
+            this.Load += new System.EventHandler(this.DocumentListPanel_Load);
             this.ResumeLayout(false);
 
 		}

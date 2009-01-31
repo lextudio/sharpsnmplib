@@ -53,7 +53,6 @@ namespace Lextm.SharpSnmpLib.Compiler
             this.actCompile = new Crad.Windows.Forms.Actions.Action();
             this.actCompileAll = new Crad.Windows.Forms.Actions.Action();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.toolStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.actionList1)).BeginInit();
@@ -206,14 +205,6 @@ namespace Lextm.SharpSnmpLib.Compiler
             this.openFileDialog1.Filter = "Text files (*.txt)|*.txt|MIB files (*.mib)|*.mib|All files (*.*)|*.*";
             this.openFileDialog1.Multiselect = true;
             // 
-            // backgroundWorker1
-            // 
-            this.backgroundWorker1.WorkerReportsProgress = true;
-            this.backgroundWorker1.WorkerSupportsCancellation = true;
-            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
-            this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
-            this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -251,7 +242,6 @@ namespace Lextm.SharpSnmpLib.Compiler
         private Crad.Windows.Forms.Actions.Action actCompile;
         private System.Windows.Forms.ToolStripButton toolStripButton3;
         private Crad.Windows.Forms.Actions.Action actCompileAll;
-        private System.Windows.Forms.ToolStripButton toolStripButton4;
-        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.ToolStripButton toolStripButton4;      
 	}
 }

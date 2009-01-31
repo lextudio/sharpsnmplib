@@ -56,6 +56,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CompilerCore.cs" />
     <Compile Include="DocumentListPanel.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -68,6 +69,7 @@
     <Compile Include="DocumentPanel.Designer.cs">
       <DependentUpon>DocumentPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="FileAddedEventArgs.cs" />
     <Compile Include="IOutput.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
