@@ -24,6 +24,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// BitString type.
     /// </summary>
+    [Obsolete("The BIT STRING type has been temporarily defined in RFC 1442 and obsoleted by RFC 2578. Use OctetString (i.e. BITS syntax) instead.")]
     public sealed class BitString : ISnmpData, IEquatable<BitString> // BitArray seems to be bad news, so here goes
     {
         private readonly int _nbits;
