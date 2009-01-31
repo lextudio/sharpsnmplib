@@ -25,6 +25,11 @@ namespace Lextm.SharpSnmpLib.Mib
         private readonly string _path;
         private const string DefaultPath = "mibs";
 
+        private ObjectRegistry()
+        {
+        	_path = DefaultPath;
+        	LoadDefaultDocuments();
+        }
         /// <summary>
         /// Initializes a new instance of the <see cref="ObjectRegistry"/> class.
         /// </summary>
@@ -33,8 +38,7 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             if (string.IsNullOrEmpty(path) || !Directory.Exists(path))
             {
-                _path = DefaultPath;
-                LoadDefaultDocuments();
+                _path = DefaultPath;                
             }
             else
             {
@@ -89,7 +93,7 @@ namespace Lextm.SharpSnmpLib.Mib
                     {
                         if (_default == null)
                         {
-                            _default = new ObjectRegistry(string.Empty);
+                            _default = new ObjectRegistry();
                         }
                     }
                 }

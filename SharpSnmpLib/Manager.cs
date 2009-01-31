@@ -25,8 +25,7 @@ namespace Lextm.SharpSnmpLib
         private int _timeout = 5000;
         private VersionCode _version;
         private TrapListener trapListener;
-        //// TODO: get rid of default some day.
-        private IObjectRegistry _objects = ObjectRegistry.Default;
+        private IObjectRegistry _objects; // = ObjectRegistry.Default;
 
         /// <summary>
         /// Creates a <see cref="Manager"></see> instance.
@@ -363,6 +362,11 @@ namespace Lextm.SharpSnmpLib
         [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Body", Justification = "ByDesign")]
         public static Variable[,] GetTable(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, int timeout, IObjectRegistry registry)
         {
+        	if (registry == null)
+        	{
+        		throw new ArgumentNullException("registry");
+        	}
+        	
             if (version == VersionCode.V3)
             {
                 throw new ArgumentException("only SNMP v1 or v2 is supported");
@@ -515,7 +519,8 @@ namespace Lextm.SharpSnmpLib
         [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Return", Justification = "ByDesign")]
         public Variable[,] GetTable(IPEndPoint endpoint, string community, ObjectIdentifier table)
         {
-            return GetTable(DefaultVersion, endpoint, new OctetString(community), table, Timeout, Objects);
+        	IObjectRegistry objects = Objects?? ObjectRegistry.Default;
+            return GetTable(DefaultVersion, endpoint, new OctetString(community), table, Timeout, objects);
         }
         
         /// <summary>
