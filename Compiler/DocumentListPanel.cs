@@ -32,8 +32,8 @@ namespace Lextm.SharpSnmpLib.Compiler
             string fileName = lvFiles.SelectedItems[0].Tag.ToString();
             OpenDocument(fileName);
         }
-        
-        public void OpenDocument(string fileName)
+
+	    private void OpenDocument(string fileName)
 		{
             IDockContent opened = FindDocument(fileName);
 			if (opened != null)
@@ -93,5 +93,17 @@ namespace Lextm.SharpSnmpLib.Compiler
             get { return _compiler; }
             set { _compiler = value; }
 	    }
+
+        private void actDelete_Update(object sender, EventArgs e)
+        {
+            actDelete.Enabled = lvFiles.Items.Count > 0;
+        }
+
+        private void actDelete_Execute(object sender, EventArgs e)
+        {
+            string fileName = lvFiles.SelectedItems[0].Tag.ToString();
+            lvFiles.SelectedItems[0].Remove();
+            _compiler.Remove(fileName);
+        }
     }
 }

@@ -101,5 +101,10 @@ namespace Lextm.SharpSnmpLib.Compiler
 	    {
 	        Compile(_files);
 	    }
+
+	    public void Remove(string name)
+	    {
+	        _files.Remove(name);
+	    }
 	}
 }
