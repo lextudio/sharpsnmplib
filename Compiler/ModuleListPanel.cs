@@ -56,6 +56,7 @@ namespace Lextm.SharpSnmpLib.Compiler
                 ListViewItem item = listView1.Items.Add(module);
                 item.Group = listView1.Groups["lvgLoaded"];
             }
+            
             foreach (string pending in Assembler.Tree.PendingModules)
             {
                 ListViewItem item = listView1.Items.Add(pending);

@@ -23,6 +23,7 @@ namespace Lextm.SharpSnmpLib.Compiler
 	    private readonly IList<string> _files = new List<string>();
 	    private readonly BackgroundWorker worker = new BackgroundWorker();
 	    private Parser _parser;
+	    private Assembler _assembler;
 
 	    public CompilerCore()
 		{
@@ -44,6 +45,13 @@ namespace Lextm.SharpSnmpLib.Compiler
 	        set { _parser = value; }
 	    }
 
+	    [Dependency]
+	    public Assembler Assembler
+	    {
+            get { return _assembler; }
+            set { _assembler = value; }
+	    }
+
 	    public event EventHandler<EventArgs> RunCompilerCompleted;
 
 	    public event EventHandler<FileAddedEventArgs> FileAdded;
@@ -55,27 +63,44 @@ namespace Lextm.SharpSnmpLib.Compiler
 		
 		private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
 		{
-			IEnumerable<string> docs = (IEnumerable<string>)e.Argument;
-			Parser.ParseToModules(docs);
+		    IEnumerable<string> docs = (IEnumerable<string>)e.Argument;
+		    IList<SharpMibException> errors;
+		    CompileInternal(docs, out errors);
+		    e.Result = errors;
 		}
 
-	    private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-		{
-            if (e.Error != null)
+        private void CompileInternal(IEnumerable<string> docs, out IList<SharpMibException> errors)
+	    {
+	        IEnumerable<MibModule> modules = Parser.ParseToModules(docs, out errors);
+	        Assembler.Assemble(modules);
+	    }
+
+        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            TraceSource source = new TraceSource("Compiler");
+            if (e.Result != null)
             {
-                TraceSource source = new TraceSource("Compiler");
-                source.TraceInformation(e.Error.Message);
-                source.Flush();
-                source.Close();
+                IEnumerable<SharpMibException> errors = (IEnumerable<SharpMibException>) e.Result;
+                foreach (SharpMibException error in errors)
+                {
+                    source.TraceInformation(error.Message);
+                }
             }
 
-		    if (RunCompilerCompleted != null)
-			{
-				RunCompilerCompleted(this, EventArgs.Empty);
-			}
-	
-			SystemSounds.Beep.Play();
-		}
+            if (e.Error != null)
+            {
+                source.TraceInformation(e.Error.Message);
+            }
+
+            source.Flush();
+            source.Close();
+            if (RunCompilerCompleted != null)
+            {
+                RunCompilerCompleted(this, EventArgs.Empty);
+            }
+
+            SystemSounds.Beep.Play();
+        }
 
 	    public void Add(string[] files)
 	    {

@@ -89,7 +89,6 @@
     </Compile>
     <Compile Include="MessageFactory.cs" />
     <Compile Include="Mib\Assembler.cs" />
-    <Compile Include="Mib\Compiler.cs" />
     <Compile Include="Mib\ConstructHelper.cs" />
     <Compile Include="Mib\AgentCapabilities.cs" />
     <Compile Include="Mib\Choice.cs" />

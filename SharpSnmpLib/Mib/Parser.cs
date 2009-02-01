@@ -9,6 +9,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 
 namespace Lextm.SharpSnmpLib.Mib
@@ -18,99 +19,97 @@ namespace Lextm.SharpSnmpLib.Mib
     /// </summary>
     public sealed class Parser
     {
-        private readonly Assembler _assembler;
-        
-        /// <summary>
-        /// Creates a <see cref="Parser"/>.
-        /// </summary>
-        /// <param name="assembler"></param>
-        public Parser(Assembler assembler)
-        {
-            _assembler = assembler;
-        }
-        
         /// <summary>
         /// Parses MIB documents to module files (*.module).
         /// </summary>
-        /// <param name="files"></param>
-        public void ParseToModules(IEnumerable<string> files)
-        {
+        /// <param name="files">The files.</param>
+        /// <param name="errors">The errors.</param>
+        /// <returns></returns>
+        public List<MibModule> ParseToModules(IEnumerable<string> files, out IList<SharpMibException> errors)
+        { 
             if (files == null)
             {
                 throw new ArgumentNullException("files");
             }
-            
+
+            errors = new List<SharpMibException>();
             TraceSource source = new TraceSource("Library");
             List<MibModule> modules = new List<MibModule>();
             foreach (string file in files)
             {
-                foreach (MibModule module in Compiler.Compile(file))
+                try
                 {
-                    if (_assembler.Tree.LoadedModules.Contains(module.Name) || _assembler.Tree.PendingModules.Contains(module.Name))
-                    {
-                        source.TraceInformation(module.Name + " ignored");
-                        continue;
-                    }
-                    
-                    modules.Add(module);
+                    modules.AddRange(Compile(file));
                 }
-                
-                source.TraceInformation(file + " compiled");
-            }
-            
-            source.TraceInformation("loading new modules started");
-            _assembler.RealTree.Import(modules);
-            _assembler.RealTree.Refresh();
-            source.TraceInformation("loading new modules ended");
-            foreach (MibModule module in modules)
-            {
-                if (_assembler.Tree.PendingModules.Contains(module.Name))
+                catch (SharpMibException ex)
                 {
-                    source.TraceInformation(module.Name + " pending");
+                    errors.Add(ex);
                 }
-                else
-                {                    
-                    PersistModuleToFile(_assembler.Folder, module, _assembler.Tree);
-                    source.TraceInformation(module.Name + " parsed");
+                finally
+                {
+                    source.TraceInformation(file + " compiled");
                 }
             }
-            
+
             source.Flush();
             source.Close();
+            return modules;
         }
-        
-        internal static void PersistModuleToFile(string folder, MibModule module, IObjectTree tree)
+
+        /// <summary>
+        /// Loads a MIB file.
+        /// </summary>
+        /// <param name="fileName">File name</param>
+        public static IList<MibModule> Compile(string fileName)
         {
-            string fileName = Path.Combine(folder, module.Name + ".module");
-            using (StreamWriter writer = new StreamWriter(fileName))
+            if (fileName == null)
             {
-                writer.Write("#");
-                foreach (string dependent in module.Dependents)
-                {
-                    writer.Write(dependent);
-                    writer.Write(',');
-                }
-                
-                writer.WriteLine();
-                foreach (IEntity entity in module.Entities)
-                {
-                    IDefinition node = tree.Find(module.Name, entity.Name);
-                    if (node == null)
-                    {
-                        continue;
-                    }
-                    
-                    uint[] id = node.GetNumericalForm();
-                    /* 0: id
-                     * 1: type
-                     * 2: name
-                     * 3: parent name
-                     */
-                    writer.WriteLine(ObjectIdentifier.Convert(id) + "," + entity.GetType() + "," + entity.Name + "," + entity.Parent);
-                }
-                
-                writer.Close();
+                throw new ArgumentNullException("fileName");
             }
+
+            if (fileName.Length == 0)
+            {
+                throw new ArgumentException("fileName cannot be empty");
+            }
+
+            if (!File.Exists(fileName))
+            {
+                throw new ArgumentException("file does not exist: " + fileName);
+            }
+
+            return Compile(fileName, File.OpenText(fileName));
+        }
+
+        internal static IList<MibModule> Compile(string file, TextReader stream)
+        {
+            try
+            {
+                return CompileToModules(file, stream);
+            }
+            finally
+            {
+                stream.Close();
+            }
+        }
+
+        internal static IList<MibModule> Compile(TextReader stream)
+        {
+            return Compile(string.Empty, stream);
+        }
+
+        private static IList<MibModule> CompileToModules(string file, TextReader stream)
+        {
+            TraceSource source = new TraceSource("Library");
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+            Lexer lexer = new Lexer();
+            lexer.Parse(file, stream);
+            MibDocument doc = new MibDocument(lexer);
+            source.TraceInformation(watch.ElapsedMilliseconds.ToString(CultureInfo.InvariantCulture) + "-ms used to parse " + file);
+            watch.Stop();
+            source.Flush();
+            source.Close();
+            return doc.Modules;
         }
     }
 }
