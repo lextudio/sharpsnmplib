@@ -36,76 +36,77 @@ namespace Lextm.SharpSnmpLib.Compiler
 		/// </summary>
 		private void InitializeComponent()
 		{
-            this.components = new System.ComponentModel.Container();
-            this.lvFiles = new System.Windows.Forms.ListView();
-            this.chFileName = new System.Windows.Forms.ColumnHeader();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.actionList1 = new Crad.Windows.Forms.Actions.ActionList();
-            this.actDelete = new Crad.Windows.Forms.Actions.Action();
-            this.contextMenuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.actionList1)).BeginInit();
-            this.SuspendLayout();
-            // 
-            // lvFiles
-            // 
-            this.lvFiles.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.chFileName});
-            this.lvFiles.ContextMenuStrip = this.contextMenuStrip1;
-            this.lvFiles.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lvFiles.FullRowSelect = true;
-            this.lvFiles.Location = new System.Drawing.Point(0, 0);
-            this.lvFiles.Name = "lvFiles";
-            this.lvFiles.Size = new System.Drawing.Size(284, 262);
-            this.lvFiles.TabIndex = 0;
-            this.lvFiles.UseCompatibleStateImageBehavior = false;
-            this.lvFiles.View = System.Windows.Forms.View.Details;
-            this.lvFiles.DoubleClick += new System.EventHandler(this.lvFiles_DoubleClick);
-            // 
-            // chFileName
-            // 
-            this.chFileName.Text = "Filename";
-            this.chFileName.Width = 274;
-            // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.deleteToolStripMenuItem});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(108, 26);
-            // 
-            // deleteToolStripMenuItem
-            // 
-            this.actionList1.SetAction(this.deleteToolStripMenuItem, this.actDelete);
-            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
-            this.deleteToolStripMenuItem.Text = "Delete";
-            // 
-            // actionList1
-            // 
-            this.actionList1.Actions.Add(this.actDelete);
-            this.actionList1.ContainerControl = this;
-            // 
-            // actDelete
-            // 
-            this.actDelete.Text = "Delete";
-            this.actDelete.ToolTipText = "Delete";
-            this.actDelete.Update += new System.EventHandler(this.actDelete_Update);
-            this.actDelete.Execute += new System.EventHandler(this.actDelete_Execute);
-            // 
-            // DocumentListPanel
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 262);
-            this.Controls.Add(this.lvFiles);
-            this.Name = "DocumentListPanel";
-            this.TabText = "Document List";
-            this.Load += new System.EventHandler(this.DocumentListPanel_Load);
-            this.contextMenuStrip1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.actionList1)).EndInit();
-            this.ResumeLayout(false);
-
+			this.components = new System.ComponentModel.Container();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DocumentListPanel));
+			this.lvFiles = new System.Windows.Forms.ListView();
+			this.chFileName = new System.Windows.Forms.ColumnHeader();
+			this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.actionList1 = new Crad.Windows.Forms.Actions.ActionList();
+			this.actDelete = new Crad.Windows.Forms.Actions.Action();
+			this.contextMenuStrip1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.actionList1)).BeginInit();
+			this.SuspendLayout();
+			// 
+			// lvFiles
+			// 
+			this.lvFiles.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+									this.chFileName});
+			this.lvFiles.ContextMenuStrip = this.contextMenuStrip1;
+			this.lvFiles.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lvFiles.FullRowSelect = true;
+			this.lvFiles.Location = new System.Drawing.Point(0, 0);
+			this.lvFiles.Name = "lvFiles";
+			this.lvFiles.Size = new System.Drawing.Size(284, 262);
+			this.lvFiles.TabIndex = 0;
+			this.lvFiles.UseCompatibleStateImageBehavior = false;
+			this.lvFiles.View = System.Windows.Forms.View.Details;
+			this.lvFiles.DoubleClick += new System.EventHandler(this.lvFiles_DoubleClick);
+			// 
+			// chFileName
+			// 
+			this.chFileName.Text = "Filename";
+			this.chFileName.Width = 274;
+			// 
+			// contextMenuStrip1
+			// 
+			this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+									this.deleteToolStripMenuItem});
+			this.contextMenuStrip1.Name = "contextMenuStrip1";
+			this.contextMenuStrip1.Size = new System.Drawing.Size(108, 26);
+			// 
+			// deleteToolStripMenuItem
+			// 
+			this.actionList1.SetAction(this.deleteToolStripMenuItem, this.actDelete);
+			this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+			this.deleteToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+			this.deleteToolStripMenuItem.Text = "Delete";
+			// 
+			// actionList1
+			// 
+			this.actionList1.Actions.Add(this.actDelete);
+			this.actionList1.ContainerControl = this;
+			// 
+			// actDelete
+			// 
+			this.actDelete.Text = "Delete";
+			this.actDelete.ToolTipText = "Delete";
+			this.actDelete.Update += new System.EventHandler(this.actDelete_Update);
+			this.actDelete.Execute += new System.EventHandler(this.actDelete_Execute);
+			// 
+			// DocumentListPanel
+			// 
+			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.ClientSize = new System.Drawing.Size(284, 262);
+			this.Controls.Add(this.lvFiles);
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+			this.Name = "DocumentListPanel";
+			this.TabText = "Document List";
+			this.Load += new System.EventHandler(this.DocumentListPanel_Load);
+			this.contextMenuStrip1.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.actionList1)).EndInit();
+			this.ResumeLayout(false);
 		}
 		private Crad.Windows.Forms.Actions.ActionList actionList1;
 		private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;

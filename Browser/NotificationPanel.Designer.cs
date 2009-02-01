@@ -36,6 +36,7 @@ namespace Lextm.SharpSnmpLib.Browser
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NotificationPanel));
 			this.SuspendLayout();
 			// 
 			// NotificationPanel
@@ -43,6 +44,7 @@ namespace Lextm.SharpSnmpLib.Browser
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(284, 262);
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "NotificationPanel";
 			this.TabText = "Notification";
 			this.Load += new System.EventHandler(this.NotificationPanel_Load);

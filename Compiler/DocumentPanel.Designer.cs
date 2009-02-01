@@ -28,47 +28,48 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.txtDocument = new System.Windows.Forms.RichTextBox();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.closeAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextMenuStrip1.SuspendLayout();
-            this.SuspendLayout();
-            // 
-            // txtDocument
-            // 
-            this.txtDocument.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtDocument.Location = new System.Drawing.Point(0, 0);
-            this.txtDocument.Name = "txtDocument";
-            this.txtDocument.Size = new System.Drawing.Size(284, 264);
-            this.txtDocument.TabIndex = 0;
-            this.txtDocument.Text = "";
-            // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.closeAllToolStripMenuItem});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(153, 48);
-            // 
-            // closeAllToolStripMenuItem
-            // 
-            this.closeAllToolStripMenuItem.Name = "closeAllToolStripMenuItem";
-            this.closeAllToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.closeAllToolStripMenuItem.Text = "Close All";
-            this.closeAllToolStripMenuItem.Click += new System.EventHandler(this.closeAllToolStripMenuItem_Click);
-            // 
-            // DocumentPanel
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 264);
-            this.Controls.Add(this.txtDocument);
-            this.Name = "DocumentPanel";
-            this.TabPageContextMenuStrip = this.contextMenuStrip1;
-            this.contextMenuStrip1.ResumeLayout(false);
-            this.ResumeLayout(false);
-
+        	this.components = new System.ComponentModel.Container();
+        	System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DocumentPanel));
+        	this.txtDocument = new System.Windows.Forms.RichTextBox();
+        	this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+        	this.closeAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+        	this.contextMenuStrip1.SuspendLayout();
+        	this.SuspendLayout();
+        	// 
+        	// txtDocument
+        	// 
+        	this.txtDocument.Dock = System.Windows.Forms.DockStyle.Fill;
+        	this.txtDocument.Location = new System.Drawing.Point(0, 0);
+        	this.txtDocument.Name = "txtDocument";
+        	this.txtDocument.Size = new System.Drawing.Size(284, 286);
+        	this.txtDocument.TabIndex = 0;
+        	this.txtDocument.Text = "";
+        	// 
+        	// contextMenuStrip1
+        	// 
+        	this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+        	        	        	this.closeAllToolStripMenuItem});
+        	this.contextMenuStrip1.Name = "contextMenuStrip1";
+        	this.contextMenuStrip1.Size = new System.Drawing.Size(121, 26);
+        	// 
+        	// closeAllToolStripMenuItem
+        	// 
+        	this.closeAllToolStripMenuItem.Name = "closeAllToolStripMenuItem";
+        	this.closeAllToolStripMenuItem.Size = new System.Drawing.Size(120, 22);
+        	this.closeAllToolStripMenuItem.Text = "Close All";
+        	this.closeAllToolStripMenuItem.Click += new System.EventHandler(this.closeAllToolStripMenuItem_Click);
+        	// 
+        	// DocumentPanel
+        	// 
+        	this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+        	this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+        	this.ClientSize = new System.Drawing.Size(284, 286);
+        	this.Controls.Add(this.txtDocument);
+        	this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+        	this.Name = "DocumentPanel";
+        	this.TabPageContextMenuStrip = this.contextMenuStrip1;
+        	this.contextMenuStrip1.ResumeLayout(false);
+        	this.ResumeLayout(false);
         }
 
         #endregion

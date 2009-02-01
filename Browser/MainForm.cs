@@ -32,7 +32,7 @@ namespace Lextm.SharpSnmpLib.Browser
             tree.Show(dockPanel1, DockState.Document);
 
             DockContent modules = Program.Container.Resolve<DockContent>("ModuleList");
-            modules.Show(dockPanel1, DockState.DockLeft);
+            modules.Show(dockPanel1, DockState.DockRight);
 
             DockContent agent = Program.Container.Resolve<DockContent>("AgentProfile");
             agent.Show(dockPanel1, DockState.DockLeft);  
