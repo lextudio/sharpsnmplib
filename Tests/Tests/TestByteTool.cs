@@ -11,7 +11,7 @@ using System;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 using System.IO;
-#pragma warning disable 1591
+#pragma warning disable 1591, 0618
 namespace Lextm.SharpSnmpLib.Tests
 {
     [TestFixture]
@@ -61,4 +61,4 @@ namespace Lextm.SharpSnmpLib.Tests
         }
     }
 }
-#pragma warning restore 1591
+#pragma warning restore 1591, 0618

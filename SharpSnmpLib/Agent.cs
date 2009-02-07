@@ -21,6 +21,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Message monitor.
         /// </summary>
+        [Obsolete("Use a stand alone TrapListener component")]
         public TrapListener Monitor
         {
             get { return trapListener; }
@@ -29,26 +30,31 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Occurs when an exception is raised.
         /// </summary>
+        [Obsolete("Use a stand alone TrapListener component")]
         public event EventHandler<ExceptionRaisedEventArgs> ExceptionRaised;
         
         /// <summary>
         /// Occurs when a GET request is received.
         /// </summary>
+        [Obsolete("Use a stand alone TrapListener component")]
         public event EventHandler<GetRequestReceivedEventArgs> GetRequestReceived;
         
         /// <summary>
         /// Occurs when a SET request is received.
         /// </summary>
+        [Obsolete("Use a stand alone TrapListener component")]
         public event EventHandler<SetRequestReceivedEventArgs> SetRequestReceived;
         
         /// <summary>
         /// Occurs when a GET NEXT request is received.
         /// </summary>
+        [Obsolete("Use a stand alone TrapListener component")]
         public event EventHandler<GetNextRequestReceivedEventArgs> GetNextRequestReceived;
         
         /// <summary>
         /// Occurs when a GET BULK request is received.
         /// </summary>
+        [Obsolete("Use a stand alone TrapListener component")]
         public event EventHandler<GetBulkRequestReceivedEventArgs> GetBulkRequestReceived;
 
         /// <summary>
@@ -146,7 +152,7 @@ namespace Lextm.SharpSnmpLib
             this.trapListener.ExceptionRaised += new EventHandler<ExceptionRaisedEventArgs>(TrapListener_ExceptionRaised);
         }
 // ReSharper restore all
-        void TrapListener_ExceptionRaised(object sender, ExceptionRaisedEventArgs e)
+        private void TrapListener_ExceptionRaised(object sender, ExceptionRaisedEventArgs e)
         {
             EventHandler<ExceptionRaisedEventArgs> handler = ExceptionRaised;
             if (handler != null)

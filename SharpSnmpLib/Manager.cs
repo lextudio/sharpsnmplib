@@ -38,7 +38,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Returns a value if the listener is still working.
         /// </summary>
-        [Obsolete("Use TrapListener property instead.")]
+        [Obsolete("Use a stand alone TrapListener component")]
         public bool Active
         {
             get { return trapListener.Active; }
@@ -67,6 +67,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Trap listener.
         /// </summary>
+        [Obsolete("Use a stand alone TrapListener component")]
         public TrapListener TrapListener
         {
             get { return trapListener; }
@@ -102,16 +103,19 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Occurs when a <see cref="TrapV1Message" /> is received.
         /// </summary>
+        [Obsolete("Use a stand alone TrapListener component")]
         public event EventHandler<TrapV1ReceivedEventArgs> TrapV1Received;
         
         /// <summary>
         /// Occurs when a <see cref="TrapV2Message"/> is received.
         /// </summary>
+        [Obsolete("Use a stand alone TrapListener component")]
         public event EventHandler<TrapV2ReceivedEventArgs> TrapV2Received;
         
         /// <summary>
         /// Occurs when a <see cref="InformRequestMessage"/> is received.
         /// </summary>
+        [Obsolete("Use a stand alone TrapListener component")]
         public event EventHandler<InformRequestReceivedEventArgs> InformRequestReceived;
 
         /// <summary>
@@ -668,7 +672,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Starts trap listener.
         /// </summary>
-        [Obsolete("Use TrapListener property instead.")]
+        [Obsolete("Use a stand alone TrapListener component")]
         public void Start()
         {
             trapListener.Start();
@@ -678,7 +682,7 @@ namespace Lextm.SharpSnmpLib
         /// Starts trap listener on a specific port.
         /// </summary>
         /// <param name="port">Manager port number</param>
-        [Obsolete("Use TrapListener property instead.")]
+        [Obsolete("Use a stand alone TrapListener component")]
         public void Start(int port)
         {
             trapListener.Start(port);
@@ -687,7 +691,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Stops trap listener.
         /// </summary>
-        [Obsolete("Use TrapListener property instead.")]
+        [Obsolete("Use a stand alone TrapListener component")]
         public void Stop()
         {
             trapListener.Stop();

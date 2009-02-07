@@ -25,8 +25,7 @@ namespace Lextm.SharpSnmpLib
     /// </remarks>
     public class TrapListener : Component
     {
-        // TODO: [Obsolete]
-        private int _port = DEFAULTPORT;
+        private int _port;
         private BackgroundWorker worker;
         private const int DEFAULTPORT = 162;
         private readonly IPEndPoint defaultEndPoint = new IPEndPoint(IPAddress.Any, DEFAULTPORT);
@@ -82,17 +81,11 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Port number.
         /// </summary>
-        [Obsolete("Specify port number in Start instead.")]
         public int Port
         {
             get
             {
                 return _port;
-            }
-            
-            set
-            {
-                _port = value;
             }
         }
         

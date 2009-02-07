@@ -17,7 +17,7 @@ namespace Lextm.SharpSnmpLib.Browser
 	/// </summary>
 	internal partial class NotificationPanel : DockContent
 	{
-		private Manager _manager;
+		private TrapListener _listener;
 		
 		public NotificationPanel()
 		{
@@ -25,30 +25,36 @@ namespace Lextm.SharpSnmpLib.Browser
 		}
 		
 		[Dependency]
-		public Manager Manager
+		public TrapListener Listener
 		{
-			get { return _manager; }
-			set { _manager = value; }
+			get { return _listener; }
+			set { _listener = value; }
 		}
 		
-		void NotificationPanel_Load(object sender, EventArgs e)
+		private void NotificationPanel_Load(object sender, EventArgs e)
 		{
-			Manager.TrapV1Received += new EventHandler<TrapV1ReceivedEventArgs>(Manager_TrapV1Received);
-			Manager.TrapV2Received += new EventHandler<TrapV2ReceivedEventArgs>(Manager_TrapV2Received);
-			Manager.InformRequestReceived += new EventHandler<InformRequestReceivedEventArgs>(Manager_InformRequestReceived);
+            Listener.ExceptionRaised += Listener_ExceptionRaised;
+			Listener.TrapV1Received += Manager_TrapV1Received;
+			Listener.TrapV2Received += Manager_TrapV2Received;
+			Listener.InformRequestReceived += Manager_InformRequestReceived;
 		}
 
-		void Manager_InformRequestReceived(object sender, InformRequestReceivedEventArgs e)
+	    private void Listener_ExceptionRaised(object sender, ExceptionRaisedEventArgs e)
+	    {
+	        
+	    }
+
+	    private void Manager_InformRequestReceived(object sender, InformRequestReceivedEventArgs e)
 		{
 			
 		}
 
-		void Manager_TrapV2Received(object sender, TrapV2ReceivedEventArgs e)
+        private void Manager_TrapV2Received(object sender, TrapV2ReceivedEventArgs e)
 		{
 			
 		}
 
-		void Manager_TrapV1Received(object sender, TrapV1ReceivedEventArgs e)
+        private void Manager_TrapV1Received(object sender, TrapV1ReceivedEventArgs e)
 		{
 			
 		}

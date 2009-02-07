@@ -8,7 +8,7 @@
  */
 using System;
 using NUnit.Framework;
-#pragma warning disable 1591
+#pragma warning disable 1591,0618
 namespace Lextm.SharpSnmpLib.Tests
 {
     /// <summary>
@@ -90,4 +90,4 @@ namespace Lextm.SharpSnmpLib.Tests
         }
     }
 }
-#pragma warning restore 1591
+#pragma warning restore 1591,0618

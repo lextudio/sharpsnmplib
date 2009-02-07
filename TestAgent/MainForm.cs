@@ -29,7 +29,7 @@ namespace TestAgent
 
 		private void btnStart_Click(object sender, EventArgs e)
 		{
-			agent1.Monitor.Start(161);
+			trapListener1.Start(161);
 			UpdateButtons(true);
 		}
 
@@ -41,7 +41,7 @@ namespace TestAgent
 
 		private void btnStop_Click(object sender, EventArgs e)
 		{
-			agent1.Monitor.Stop();
+			trapListener1.Stop();
 			UpdateButtons(false);
 		}
 
