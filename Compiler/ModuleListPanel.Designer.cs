@@ -39,7 +39,6 @@ namespace Lextm.SharpSnmpLib.Compiler
         	this.components = new System.ComponentModel.Container();
         	System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("Loaded", System.Windows.Forms.HorizontalAlignment.Left);
         	System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("Pending", System.Windows.Forms.HorizontalAlignment.Left);
-        	System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ModuleListPanel));
         	this.listView1 = new System.Windows.Forms.ListView();
         	this.chName = new System.Windows.Forms.ColumnHeader();
         	this.actionList1 = new Crad.Windows.Forms.Actions.ActionList();
@@ -128,7 +127,7 @@ namespace Lextm.SharpSnmpLib.Compiler
         	this.ClientSize = new System.Drawing.Size(465, 299);
         	this.Controls.Add(this.listView1);
         	this.Controls.Add(this.statusStrip1);
-        	this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+        	this.Icon = global::Lextm.SharpSnmpLib.Compiler.Properties.Resources.preferences_system_windows;
         	this.Name = "ModuleListPanel";
         	this.TabText = "Module List";
         	this.Load += new System.EventHandler(this.ModuleListPanel_Load);

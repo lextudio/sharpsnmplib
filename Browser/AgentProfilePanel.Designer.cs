@@ -128,7 +128,7 @@
         	// toolStripButton3
         	// 
         	this.actionList1.SetAction(this.toolStripButton3, this.actEdit);
-        	this.toolStripButton3.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.document_properties;
+        	this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
         	this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
         	this.toolStripButton3.Name = "toolStripButton3";
         	this.toolStripButton3.Size = new System.Drawing.Size(47, 22);
@@ -173,7 +173,7 @@
         	// 
         	// actEdit
         	// 
-        	this.actEdit.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.document_properties;
+        	this.actEdit.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.document_properties_1;
         	this.actEdit.Text = "Edit";
         	this.actEdit.ToolTipText = "Edit Profile";
         	this.actEdit.Update += new System.EventHandler(this.actEdit_Update);
@@ -243,7 +243,7 @@
         	this.Controls.Add(this.listView1);
         	this.Controls.Add(this.toolStrip1);
         	this.Controls.Add(this.statusStrip1);
-        	this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+        	this.Icon = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.network_server;
         	this.Name = "AgentProfilePanel";
         	this.TabText = "Agent Profiles";
         	this.Load += new System.EventHandler(this.AgentProfilePanel_Load);

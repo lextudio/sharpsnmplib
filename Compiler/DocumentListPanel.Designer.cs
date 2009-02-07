@@ -37,7 +37,6 @@ namespace Lextm.SharpSnmpLib.Compiler
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DocumentListPanel));
 			this.lvFiles = new System.Windows.Forms.ListView();
 			this.chFileName = new System.Windows.Forms.ColumnHeader();
 			this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -100,7 +99,7 @@ namespace Lextm.SharpSnmpLib.Compiler
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(284, 262);
 			this.Controls.Add(this.lvFiles);
-			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+			this.Icon = global::Lextm.SharpSnmpLib.Compiler.Properties.Resources.document_new;
 			this.Name = "DocumentListPanel";
 			this.TabText = "Document List";
 			this.Load += new System.EventHandler(this.DocumentListPanel_Load);

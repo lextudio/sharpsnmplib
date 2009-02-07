@@ -36,7 +36,6 @@ namespace Lextm.SharpSnmpLib.Compiler
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			this.dockPanel1 = new WeifenLuo.WinFormsUI.Docking.DockPanel();
 			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
 			this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
@@ -215,7 +214,7 @@ namespace Lextm.SharpSnmpLib.Compiler
 			this.Controls.Add(this.dockPanel1);
 			this.Controls.Add(this.toolStrip1);
 			this.Controls.Add(this.menuStrip1);
-			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+			this.Icon = global::Lextm.SharpSnmpLib.Compiler.Properties.Resources.accessories_text_editor;
 			this.IsMdiContainer = true;
 			this.MainMenuStrip = this.menuStrip1;
 			this.Name = "MainForm";

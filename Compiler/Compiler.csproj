@@ -13,7 +13,7 @@
     <AssemblyOriginatorKeyFile>..\SharpSnmpLib\sharpsnmplib.snk</AssemblyOriginatorKeyFile>
     <DelaySign>False</DelaySign>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
-    <ApplicationIcon>F:\Incoming\tango-icon-theme-0.8.1\32x32\apps\accessories-text-editor.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\accessories-text-editor.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <OutputPath>bin\Debug\</OutputPath>
@@ -145,5 +145,32 @@
       <Project>{286DE6DB-8F95-4BD4-86A2-86488D2E0EE1}</Project>
       <Name>SharpSnmpLib</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\accessories-text-editor.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\preferences-system-windows.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\utilities-terminal.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\document-new.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\document-properties.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\internet-web-browser.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\x-office-spreadsheet.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\network-server.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dialog-information.ico" />
   </ItemGroup>
 </Project>

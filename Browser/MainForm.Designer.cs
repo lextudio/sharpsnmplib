@@ -127,7 +127,7 @@ namespace Lextm.SharpSnmpLib.Browser
 			this.Controls.Add(this.dockPanel1);
 			this.Controls.Add(this.toolStrip1);
 			this.Controls.Add(this.menuStrip1);
-			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+			this.Icon = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.internet_web_browser;
 			this.MainMenuStrip = this.menuStrip1;
 			this.Name = "MainForm";
 			this.Text = "#SNMP MIB Browser";

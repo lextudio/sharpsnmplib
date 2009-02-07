@@ -156,7 +156,7 @@ namespace Lextm.SharpSnmpLib.Browser
         	this.ClientSize = new System.Drawing.Size(465, 299);
         	this.Controls.Add(this.listView1);
         	this.Controls.Add(this.toolStrip1);
-        	this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+        	this.Icon = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.preferences_system_windows;
         	this.Name = "ModuleListPanel";
         	this.TabText = "Module List";
         	this.Load += new System.EventHandler(this.ModuleListPanel_Load);

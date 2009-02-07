@@ -37,7 +37,6 @@ namespace Lextm.SharpSnmpLib.Browser
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OutputPanel));
 			this.txtMessages = new System.Windows.Forms.RichTextBox();
 			this.contextOuputMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -88,7 +87,7 @@ namespace Lextm.SharpSnmpLib.Browser
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(511, 154);
 			this.Controls.Add(this.txtMessages);
-			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+			this.Icon = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.utilities_terminal;
 			this.Name = "OutputPanel";
 			this.TabText = "Output";
 			this.contextOuputMenu.ResumeLayout(false);

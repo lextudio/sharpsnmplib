@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
         	this.components = new System.ComponentModel.Container();
-        	System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DocumentPanel));
         	this.txtDocument = new System.Windows.Forms.RichTextBox();
         	this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
         	this.closeAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -65,7 +64,7 @@
         	this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         	this.ClientSize = new System.Drawing.Size(284, 286);
         	this.Controls.Add(this.txtDocument);
-        	this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+        	this.Icon = global::Lextm.SharpSnmpLib.Compiler.Properties.Resources.document_properties;
         	this.Name = "DocumentPanel";
         	this.TabPageContextMenuStrip = this.contextMenuStrip1;
         	this.contextMenuStrip1.ResumeLayout(false);

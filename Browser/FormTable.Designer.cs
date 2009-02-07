@@ -31,7 +31,6 @@
         	System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
         	System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
         	System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-        	System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormTable));
         	this.dataGridTable = new System.Windows.Forms.DataGridView();
         	this.checkBoxRefresh = new System.Windows.Forms.CheckBox();
         	this.label1 = new System.Windows.Forms.Label();
@@ -137,7 +136,7 @@
         	this.Controls.Add(this.textBoxRefresh);
         	this.Controls.Add(this.checkBoxRefresh);
         	this.Controls.Add(this.dataGridTable);
-        	this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+        	this.Icon = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.x_office_spreadsheet1;
         	this.MinimumSize = new System.Drawing.Size(440, 400);
         	this.Name = "FormTable";
         	this.Text = "FormTable";
