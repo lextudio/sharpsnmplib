@@ -76,7 +76,7 @@ namespace Lextm.SharpSnmpLib.Mib
 			}
 			else
 			{
-				_tree = new ObjectTree(LoadDefaultModules());
+				_tree = new ObjectTree();
 			}
 		}
 
