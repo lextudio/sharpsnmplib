@@ -10,12 +10,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Compiler")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Compiler")]
-[assembly: AssemblyCopyright("")]
+[assembly: AssemblyTitle("SharpSnmpCompiler")]
+[assembly: AssemblyDescription("#SNMP MIB Compiler")]
+[assembly: AssemblyConfiguration("MIT/X11")]
+[assembly: AssemblyCompany("LeXtudio")]
+[assembly: AssemblyProduct("#SNMPCompiler")]
+[assembly: AssemblyCopyright("(C) 2008-2009 Lex Li and other contributors.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
