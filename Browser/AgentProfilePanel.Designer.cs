@@ -176,6 +176,7 @@
         	this.actEdit.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.document_properties_1;
         	this.actEdit.Text = "Edit";
         	this.actEdit.ToolTipText = "Edit Profile";
+        	this.actEdit.Visible = false;
         	this.actEdit.Update += new System.EventHandler(this.actEdit_Update);
         	this.actEdit.Execute += new System.EventHandler(this.actEdit_Execute);
         	// 

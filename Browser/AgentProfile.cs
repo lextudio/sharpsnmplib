@@ -62,7 +62,7 @@ namespace Lextm.SharpSnmpLib.Browser
 	
         internal string Get(Manager manager, string textual)
         {
-            Variable var = new Variable(textual);
+            Variable var = new Variable(textual, manager.Objects);
             TraceSource source = new TraceSource("Browser");
             source.TraceInformation(manager.GetSingle(_agent, _get, var).ToString());
             source.Flush();
@@ -72,7 +72,7 @@ namespace Lextm.SharpSnmpLib.Browser
 
         internal string GetValue(Manager manager, string textual)
         {
-            Variable var = new Variable(textual);
+            Variable var = new Variable(textual, manager.Objects);
 
             return manager.GetSingle(_agent, _get, var).Data.ToString();
         }
@@ -90,7 +90,7 @@ namespace Lextm.SharpSnmpLib.Browser
         //
 	    internal void Set(Manager manager, string textual, ISnmpData data)
 	    {
-            manager.SetSingle(_agent, _set, new Variable(textual, data));
+            manager.SetSingle(_agent, _set, new Variable(textual, data, manager.Objects));
 	    }
 	
         internal static bool IsValidIPAddress(string address, out IPAddress ip)

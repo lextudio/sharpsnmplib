@@ -12,7 +12,6 @@ using System.Configuration;
 using System.Windows.Forms;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
-using WeifenLuo.WinFormsUI.Docking;
 
 namespace Lextm.SharpSnmpLib.Browser
 {

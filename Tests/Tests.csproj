@@ -13,10 +13,14 @@
     <AssemblyOriginatorKeyFile>..\SharpSnmpLib\sharpsnmplib.snk</AssemblyOriginatorKeyFile>
     <DelaySign>False</DelaySign>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <NoStdLib>False</NoStdLib>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <OutputPath>bin\Debug\</OutputPath>
-    <DebugSymbols>True</DebugSymbols>
+    <DebugSymbols>true</DebugSymbols>
     <DebugType>Full</DebugType>
     <Optimize>False</Optimize>
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
@@ -30,6 +34,13 @@
     <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <BaseAddress>4194304</BaseAddress>
+    <PlatformTarget>x86</PlatformTarget>
+    <FileAlignment>4096</FileAlignment>
+  </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <ItemGroup>
     <Reference Include="nunit.framework">
@@ -39,6 +50,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
     <Compile Include="Tests\TestManager.cs" />
     <Compile Include="Tests\TestByteTool.cs" />
     <Compile Include="Tests\TestConstructHelper.cs" />
@@ -71,5 +87,132 @@
       <Project>{286DE6DB-8F95-4BD4-86A2-86488D2E0EE1}</Project>
       <Name>SharpSnmpLib</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ACTONA-ACTASTOR-MIB.mib" />
+    <None Include="Resources\ADSL-LINE-MIB.mib" />
+    <None Include="Resources\ADSL-TC-MIB.mib" />
+    <None Include="Resources\AIRPORT-BASESTATION-3-MIB.mib" />
+    <None Include="Resources\ALLIEDTELESYN-MIB.mib" />
+    <None Include="Resources\ALVARION-DOT11-WLAN-MIB.mib" />
+    <None Include="Resources\APPC-MIB.mib" />
+    <None Include="Resources\ARRAYMANAGER-MIB.mib" />
+    <None Include="Resources\ARROWPOINT-IPV4-OSPF-MIB.mib" />
+    <None Include="Resources\ATM-TC-MIB.mib" />
+    <None Include="Resources\BASEBRDD_MIB-MIB.mib" />
+    <None Include="Resources\BRIDGE-MIB" />
+    <None Include="Resources\CISCO-AAA-SERVER-MIB.mib" />
+    <None Include="Resources\CISCO-BULK-FILE-MIB.mib" />
+    <None Include="Resources\CISCO-CSG-MIB.mib" />
+    <None Include="Resources\DMTF-DMI-MIB.mib" />
+    <None Include="Resources\fivevarbinds.dat" />
+    <None Include="Resources\get.dat" />
+    <None Include="Resources\getresponse.dat" />
+    <None Include="Resources\ianalist" />
+    <None Include="Resources\IEEE8021-PAE-MIB.mib" />
+    <None Include="Resources\IEEE802DOT11-MIB.mib" />
+    <None Include="Resources\JVM-MANAGEMENT-MIB.mib" />
+    <None Include="Resources\Makefile.in" />
+    <None Include="Resources\Makefile.mib" />
+    <None Include="Resources\makehtml.pl" />
+    <None Include="Resources\mibfetch" />
+    <None Include="Resources\nodemap" />
+    <None Include="Resources\novarbind.dat" />
+    <None Include="Resources\onevarbind.dat" />
+    <None Include="Resources\README.mibs" />
+    <None Include="Resources\RFC-1212" />
+    <None Include="Resources\RFC1157-SNMP.mib" />
+    <None Include="Resources\RFC1213-MIB" />
+    <None Include="Resources\RFC1271-MIB" />
+    <None Include="Resources\rfclist" />
+    <None Include="Resources\rfcmibs.diff" />
+    <None Include="Resources\smistrip" />
+    <None Include="Resources\SNMPV2-PDU.mib" />
+    <None Include="Resources\SYMMIB_MIB-MIB.mib" />
+    <None Include="Resources\twovarbinds.dat" />
+    <None Include="Resources\UCD-DEMO-MIB.inc" />
+    <None Include="Resources\UCD-DISKIO-MIB.inc" />
+    <None Include="Resources\UCD-DLMOD-MIB.inc" />
+    <None Include="Resources\UCD-IPFILTER-MIB.inc" />
+    <None Include="Resources\UCD-IPFWACC-MIB.inc" />
+    <None Include="Resources\UCD-SNMP-MIB.inc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\AGENTX-MIB.txt" />
+    <Content Include="Resources\DISMAN-EVENT-MIB.txt" />
+    <Content Include="Resources\DISMAN-EXPRESSION-MIB.txt" />
+    <Content Include="Resources\DISMAN-NSLOOKUP-MIB.txt" />
+    <Content Include="Resources\DISMAN-PING-MIB.txt" />
+    <Content Include="Resources\DISMAN-SCHEDULE-MIB.txt" />
+    <Content Include="Resources\DISMAN-SCRIPT-MIB.txt" />
+    <Content Include="Resources\DISMAN-TRACEROUTE-MIB.txt" />
+    <Content Include="Resources\EtherLike-MIB.txt" />
+    <Content Include="Resources\HCNUM-TC.txt" />
+    <Content Include="Resources\HOST-RESOURCES-MIB.txt" />
+    <Content Include="Resources\HOST-RESOURCES-TYPES.txt" />
+    <Content Include="Resources\IANA-ADDRESS-FAMILY-NUMBERS-MIB.txt" />
+    <Content Include="Resources\IANA-LANGUAGE-MIB.txt" />
+    <Content Include="Resources\IANA-RTPROTO-MIB.txt" />
+    <Content Include="Resources\IANAifType-MIB.txt" />
+    <Content Include="Resources\IF-INVERTED-STACK-MIB.txt" />
+    <Content Include="Resources\IF-MIB.txt" />
+    <Content Include="Resources\INET-ADDRESS-MIB.txt" />
+    <Content Include="Resources\IP-FORWARD-MIB.txt" />
+    <Content Include="Resources\IP-MIB.txt" />
+    <Content Include="Resources\IPV6-FLOW-LABEL-MIB.txt" />
+    <Content Include="Resources\IPV6-ICMP-MIB.txt" />
+    <Content Include="Resources\IPV6-MIB.txt" />
+    <Content Include="Resources\IPV6-TC.txt" />
+    <Content Include="Resources\IPV6-TCP-MIB.txt" />
+    <Content Include="Resources\IPV6-UDP-MIB.txt" />
+    <Content Include="Resources\LM-SENSORS-MIB.txt" />
+    <Content Include="Resources\MTA-MIB.txt" />
+    <Content Include="Resources\NET-SNMP-AGENT-MIB.txt" />
+    <Content Include="Resources\NET-SNMP-EXAMPLES-MIB.txt" />
+    <Content Include="Resources\NET-SNMP-EXTEND-MIB.txt" />
+    <Content Include="Resources\NET-SNMP-MIB.txt" />
+    <Content Include="Resources\NET-SNMP-MONITOR-MIB.txt" />
+    <Content Include="Resources\NET-SNMP-SYSTEM-MIB.txt" />
+    <Content Include="Resources\NET-SNMP-TC.txt" />
+    <Content Include="Resources\NET-SNMP-VACM-MIB.txt" />
+    <Content Include="Resources\NETWORK-SERVICES-MIB.txt" />
+    <Content Include="Resources\NOTIFICATION-LOG-MIB.txt" />
+    <Content Include="Resources\RFC-1215.txt" />
+    <Content Include="Resources\RFC1155-SMI.txt" />
+    <Content Include="Resources\RFC1213-MIB.txt" />
+    <Content Include="Resources\RMON-MIB.txt" />
+    <Content Include="Resources\SMUX-MIB.txt" />
+    <Content Include="Resources\SNMP-COMMUNITY-MIB.txt" />
+    <Content Include="Resources\SNMP-FRAMEWORK-MIB.txt" />
+    <Content Include="Resources\SNMP-MPD-MIB.txt" />
+    <Content Include="Resources\SNMP-NOTIFICATION-MIB.txt" />
+    <Content Include="Resources\SNMP-PROXY-MIB.txt" />
+    <Content Include="Resources\SNMP-TARGET-MIB.txt" />
+    <Content Include="Resources\SNMP-USER-BASED-SM-MIB.txt" />
+    <Content Include="Resources\SNMP-USM-AES-MIB.txt" />
+    <Content Include="Resources\SNMP-USM-DH-OBJECTS-MIB.txt" />
+    <Content Include="Resources\SNMP-VIEW-BASED-ACM-MIB.txt" />
+    <Content Include="Resources\SNMPv2-CONF.txt" />
+    <Content Include="Resources\SNMPv2-MIB.txt" />
+    <Content Include="Resources\SNMPv2-SMI.txt" />
+    <Content Include="Resources\SNMPv2-TC.txt" />
+    <Content Include="Resources\SNMPv2-TM.txt" />
+    <Content Include="Resources\TCP-MIB.txt" />
+    <Content Include="Resources\TRANSPORT-ADDRESS-MIB.txt" />
+    <Content Include="Resources\TUNNEL-MIB.txt" />
+    <Content Include="Resources\UCD-DEMO-MIB.txt" />
+    <Content Include="Resources\UCD-DISKIO-MIB.txt" />
+    <Content Include="Resources\UCD-DLMOD-MIB.txt" />
+    <Content Include="Resources\UCD-IPFILTER-MIB.txt" />
+    <Content Include="Resources\UCD-IPFWACC-MIB.txt" />
+    <Content Include="Resources\UCD-SNMP-MIB-OLD.txt" />
+    <Content Include="Resources\UCD-SNMP-MIB.txt" />
+    <Content Include="Resources\UDP-MIB.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

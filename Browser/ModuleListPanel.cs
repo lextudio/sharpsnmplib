@@ -25,9 +25,9 @@ namespace Lextm.SharpSnmpLib.Browser
 	/// </summary>
 	internal partial class ModuleListPanel : DockContent
 	{
-	    private IObjectRegistry _objects;
+		private IObjectRegistry _objects;
 
-	    public ModuleListPanel()
+		public ModuleListPanel()
 		{
 			InitializeComponent();
 			
@@ -35,18 +35,18 @@ namespace Lextm.SharpSnmpLib.Browser
 		
 		void ModuleListPanel_Load(object sender, EventArgs e)
 		{
-            Objects.OnChanged += RefreshPanel;
+			Objects.OnChanged += RefreshPanel;
 			RefreshPanel(Objects, EventArgs.Empty);
 		}
 
-        [Dependency]
-	    public IObjectRegistry Objects
-	    {
-	        get { return _objects; }
-	        set { _objects = value; }
-	    }
+		[Dependency]
+		public IObjectRegistry Objects
+		{
+			get { return _objects; }
+			set { _objects = value; }
+		}
 
-	    private void RefreshPanel(object sender, EventArgs e)
+		private void RefreshPanel(object sender, EventArgs e)
 		{
 			ObjectRegistry reg = (ObjectRegistry)sender;
 			SuspendLayout();
@@ -72,40 +72,44 @@ namespace Lextm.SharpSnmpLib.Browser
 
 		private void actAdd_Execute(object sender, EventArgs e)
 		{
-			if (openFileDialog1.ShowDialog() != DialogResult.OK)
-			{
-				return;
-			}
-			
-			ICollection<string> files = openFileDialog1.FileNames;
-			if (files.Count == 0)
-			{
-				return;
-			}
-			
-			if (!Directory.Exists(Objects.Path))
-			{
-				Directory.CreateDirectory(Objects.Path);
-			}
-			
-			foreach (string file in files)
-			{
-				string name = Path.GetFileName(file);
-				string destFileName = Path.Combine(Objects.Path, name);
-				if (File.Exists(destFileName))
-				{
-					TraceSource source = new TraceSource("Browser");
-					source.TraceInformation("File already exists: " + name);
-					source.Flush();
-					source.Close();
-				}
-				else
-				{
-					File.Copy(file, destFileName);
-				}
-			}
-			
-			Objects.Refresh();
+			TraceSource source = new TraceSource("Browser");
+			source.TraceInformation("Addition is not yet implemented: " + listView1.SelectedItems[0].Text);
+			source.Flush();
+			source.Close();
+//			if (openFileDialog1.ShowDialog() != DialogResult.OK)
+//			{
+//				return;
+//			}
+//
+//			ICollection<string> files = openFileDialog1.FileNames;
+//			if (files.Count == 0)
+//			{
+//				return;
+//			}
+//
+//			if (!Directory.Exists(Objects.Path))
+//			{
+//				Directory.CreateDirectory(Objects.Path);
+//			}
+//
+//			foreach (string file in files)
+//			{
+//				string name = Path.GetFileName(file);
+//				string destFileName = Path.Combine(Objects.Path, name);
+//				if (File.Exists(destFileName))
+//				{
+//					TraceSource source = new TraceSource("Browser");
+//					source.TraceInformation("File already exists: " + name);
+//					source.Flush();
+//					source.Close();
+//				}
+//				else
+//				{
+//					File.Copy(file, destFileName);
+//				}
+//			}
+//
+//			Objects.Refresh();
 		}
 
 		private void actRemove_Execute(object sender, EventArgs e)

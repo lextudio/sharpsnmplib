@@ -20,8 +20,8 @@ namespace Lextm.SharpSnmpLib.Tests
         [Test]
         public void TestValidateTable()
         {
-            ObjectIdentifier table = new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 2, 2 });
-            ObjectIdentifier entry = new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 2, 2, 1 });
+            ObjectIdentifier table = new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 1, 9 });
+            ObjectIdentifier entry = new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 1, 9, 1 });
             ObjectIdentifier unknown = new ObjectIdentifier(new uint[] { 1, 3, 6, 8, 18579, 111111});
             Assert.IsTrue(ObjectRegistry.Default.ValidateTable(table));
             Assert.IsFalse(ObjectRegistry.Default.ValidateTable(entry));

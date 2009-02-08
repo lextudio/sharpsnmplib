@@ -51,6 +51,7 @@ namespace Lextm.SharpSnmpLib.Browser
         	this.tslblCount = new System.Windows.Forms.ToolStripLabel();
         	this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
         	this.contextModuleMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+        	this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
         	((System.ComponentModel.ISupportInitialize)(this.actionList1)).BeginInit();
         	this.toolStrip1.SuspendLayout();
         	this.contextModuleMenu.SuspendLayout();
@@ -98,6 +99,7 @@ namespace Lextm.SharpSnmpLib.Browser
         	// 
         	// actRemove
         	// 
+        	this.actRemove.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.list_remove;
         	this.actRemove.Text = "Remove";
         	this.actRemove.ToolTipText = "Remove Mib File";
         	this.actRemove.Update += new System.EventHandler(this.actRemove_Update);
@@ -109,12 +111,13 @@ namespace Lextm.SharpSnmpLib.Browser
         	this.tsbtnAdd.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnAdd.Image")));
         	this.tsbtnAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
         	this.tsbtnAdd.Name = "tsbtnAdd";
-        	this.tsbtnAdd.Size = new System.Drawing.Size(49, 22);
-        	this.tsbtnAdd.Text = "Add";
+        	this.tsbtnAdd.Size = new System.Drawing.Size(53, 22);
+        	this.tsbtnAdd.Text = "Load";
         	// 
         	// removeToolStripMenuItem
         	// 
         	this.actionList1.SetAction(this.removeToolStripMenuItem, this.actRemove);
+        	this.removeToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("removeToolStripMenuItem.Image")));
         	this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
         	this.removeToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
         	this.removeToolStripMenuItem.Text = "Remove";
@@ -123,7 +126,8 @@ namespace Lextm.SharpSnmpLib.Browser
         	// 
         	this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
         	        	        	this.tsbtnAdd,
-        	        	        	this.tslblCount});
+        	        	        	this.tslblCount,
+        	        	        	this.toolStripButton1});
         	this.toolStrip1.Location = new System.Drawing.Point(0, 0);
         	this.toolStrip1.Name = "toolStrip1";
         	this.toolStrip1.Size = new System.Drawing.Size(465, 25);
@@ -149,6 +153,15 @@ namespace Lextm.SharpSnmpLib.Browser
         	this.contextModuleMenu.Name = "contextModuleMenu";
         	this.contextModuleMenu.Size = new System.Drawing.Size(118, 26);
         	// 
+        	// toolStripButton1
+        	// 
+        	this.actionList1.SetAction(this.toolStripButton1, this.actRemove);
+        	this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+        	this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+        	this.toolStripButton1.Name = "toolStripButton1";
+        	this.toolStripButton1.Size = new System.Drawing.Size(65, 22);
+        	this.toolStripButton1.Text = "Unload";
+        	// 
         	// ModuleListPanel
         	// 
         	this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -167,6 +180,7 @@ namespace Lextm.SharpSnmpLib.Browser
         	this.ResumeLayout(false);
         	this.PerformLayout();
         }
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ListView listView1;
         private Crad.Windows.Forms.Actions.ActionList actionList1;
         private Crad.Windows.Forms.Actions.Action actAdd;
