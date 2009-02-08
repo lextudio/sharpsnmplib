@@ -96,7 +96,7 @@ namespace Lextm.SharpSnmpLib
         /// <value>The objects.</value>
         public IObjectRegistry Objects
         {
-            get { return _objects; }
+            get { return _objects ?? ObjectRegistry.Default; ; }
             set { _objects = value; }
         }
 
@@ -523,8 +523,7 @@ namespace Lextm.SharpSnmpLib
         [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Return", Justification = "ByDesign")]
         public Variable[,] GetTable(IPEndPoint endpoint, string community, ObjectIdentifier table)
         {
-        	IObjectRegistry objects = Objects?? ObjectRegistry.Default;
-            return GetTable(DefaultVersion, endpoint, new OctetString(community), table, Timeout, objects);
+            return GetTable(DefaultVersion, endpoint, new OctetString(community), table, Timeout, Objects);
         }
         
         /// <summary>

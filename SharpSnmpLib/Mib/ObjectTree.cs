@@ -31,10 +31,53 @@ namespace Lextm.SharpSnmpLib.Mib
 			nameTable.Add(joint_iso_ccitt.TextualForm, joint_iso_ccitt);
 		}
 		
-		public ObjectTree(string[] files) : this()
+		public ObjectTree(ICollection<ModuleLoader> loaders): this()
 		{
-			ImportFiles(files);
+			if (loaders == null)
+			{
+				throw new ArgumentNullException("loaders");
+			}
+			
+			TraceSource source = new TraceSource("Library");
+			source.TraceInformation(loaders.Count + " module files found");
+			source.Flush();
+			source.Close();
+
+			List<Definition> defines = new List<Definition>();
+			foreach (ModuleLoader loader in loaders)
+			{
+				Import(loader.Module);
+				defines.AddRange(loader.Nodes);
+			}
+			
+			AddNodes(defines);
 			Refresh();
+		}
+		
+		public ObjectTree(string[] files) : this(PrepareFiles(files))
+		{
+			
+		}
+		
+		private static ICollection<ModuleLoader> PrepareFiles(string[] files)
+		{
+			if (files == null)
+			{
+				throw new ArgumentNullException("files");
+			}
+
+			IList<ModuleLoader> result = new List<ModuleLoader>();
+			foreach (string file in files)
+			{
+				string moduleName = Path.GetFileNameWithoutExtension(file);
+				using (StreamReader reader = new StreamReader(file))
+				{
+					result.Add(new ModuleLoader(reader, moduleName));
+					reader.Close();
+				}
+			}
+
+			return result;
 		}
 		
 		/// <summary>
@@ -379,7 +422,7 @@ namespace Lextm.SharpSnmpLib.Mib
 			TraceSource source = new TraceSource("Library");
 			if (LoadedModules.Contains(module.Name) || PendingModules.Contains(module.Name))
 			{
-				source.TraceInformation(module.Name + " ignored");				
+				source.TraceInformation(module.Name + " ignored");
 			}
 			else
 			{
@@ -404,20 +447,6 @@ namespace Lextm.SharpSnmpLib.Mib
 		public ICollection<string> PendingModules
 		{
 			get { return _pendings.Keys; }
-		}
-
-		private void ImportFiles(ICollection<string> files)
-		{
-			TraceSource source = new TraceSource("Library");
-			source.TraceInformation(files.Count + " module files found");
-
-			foreach (string file in files)
-			{
-				List<string> dependents;
-				IEnumerable<Definition> nodes = ExtractNodes(file, out dependents);
-				MibModule module = new MibModule(Path.GetFileNameWithoutExtension(file), dependents);
-				Import(module);
-			}
 		}
 
 		private void AddNodes(IEnumerable<Definition> nodes)
@@ -448,6 +477,7 @@ namespace Lextm.SharpSnmpLib.Mib
 
 					node.DetermineType(def);
 					((Definition)def).Append(node);
+					AddToTable(node);
 					parsed.Add(node);
 				}
 
@@ -463,48 +493,7 @@ namespace Lextm.SharpSnmpLib.Mib
 				}
 			}
 		}
-
-		private static IEnumerable<Definition> ExtractNodes(string fileName, out List<string> dependents)
-		{
-			List<Definition> result = new List<Definition>();
-			dependents = new List<string>();
-			using (StreamReader reader = new StreamReader(fileName))
-			{
-				string line;
-				while ((line = reader.ReadLine()) != null)
-				{
-					if (line.StartsWith("#", StringComparison.Ordinal))
-					{
-						dependents.AddRange(ParseDependents(line));
-						continue;
-					}
-
-					result.Add(ParseLine(line, fileName));
-				}
-				
-				reader.Close();
-			}
-			
-			return result;
-		}
-
-		private static IEnumerable<string> ParseDependents(string line)
-		{
-			return line.Substring(1).Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-		}
-
-		private static Definition ParseLine(string line, string module)
-		{
-			string[] content = line.Split(',');
-			/* 0: id
-			 * 1: type
-			 * 2: name
-			 * 3: parent name
-			 */
-			uint[] id = ObjectIdentifier.Convert(content[0]);
-			return new Definition(id, content[2], content[3], module, content[1]);
-		}
-
+		
 		#region IObjectTree Members
 
 		public void Remove(string module)

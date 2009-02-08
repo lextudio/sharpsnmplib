@@ -1,0 +1,17 @@
+#
+.1.3,Lextm.SharpSnmpLib.Mib.OidValueAssignment,org,iso
+.1.3.6,Lextm.SharpSnmpLib.Mib.OidValueAssignment,dod,org
+.1.3.6.1,Lextm.SharpSnmpLib.Mib.OidValueAssignment,internet,dod
+.1.3.6.1.1,Lextm.SharpSnmpLib.Mib.OidValueAssignment,directory,internet
+.1.3.6.1.2,Lextm.SharpSnmpLib.Mib.OidValueAssignment,mgmt,internet
+.1.3.6.1.2.1,Lextm.SharpSnmpLib.Mib.OidValueAssignment,mib-2,mgmt
+.1.3.6.1.2.1.10,Lextm.SharpSnmpLib.Mib.OidValueAssignment,transmission,mib-2
+.1.3.6.1.3,Lextm.SharpSnmpLib.Mib.OidValueAssignment,experimental,internet
+.1.3.6.1.4,Lextm.SharpSnmpLib.Mib.OidValueAssignment,private,internet
+.1.3.6.1.4.1,Lextm.SharpSnmpLib.Mib.OidValueAssignment,enterprises,private
+.1.3.6.1.5,Lextm.SharpSnmpLib.Mib.OidValueAssignment,security,internet
+.1.3.6.1.6,Lextm.SharpSnmpLib.Mib.OidValueAssignment,snmpV2,internet
+.1.3.6.1.6.1,Lextm.SharpSnmpLib.Mib.OidValueAssignment,snmpDomains,snmpV2
+.1.3.6.1.6.2,Lextm.SharpSnmpLib.Mib.OidValueAssignment,snmpProxys,snmpV2
+.1.3.6.1.6.3,Lextm.SharpSnmpLib.Mib.OidValueAssignment,snmpModules,snmpV2
+.0.0,Lextm.SharpSnmpLib.Mib.ObjectIdentity,zeroDotZero,ccitt

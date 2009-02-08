@@ -9,6 +9,7 @@
 
 using System;
 using System.Collections.Generic;
+using Lextm.SharpSnmpLib.Mib;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -30,12 +31,14 @@ namespace Lextm.SharpSnmpLib
         public Variable(ObjectIdentifier id) : this(id, null)     
         { 
         }
-        
+
         /// <summary>
         /// Creates a <see cref="Variable"/> instance with a specific <see cref="string"/>.
         /// </summary>
         /// <param name="textual">Textual IID string</param>
-        public Variable(string textual) : this(new ObjectIdentifier(Mib.ObjectRegistry.Default.Translate(textual)), null)
+        /// <param name="registry">The registry.</param>
+        [CLSCompliant(false)]
+        public Variable(string textual, IObjectRegistry registry) : this(new ObjectIdentifier(registry.Translate(textual)), null)
         {  
         }
         
@@ -47,14 +50,16 @@ namespace Lextm.SharpSnmpLib
         public Variable(uint[] id) : this(new ObjectIdentifier(id)) 
         {
         }
-        
+
         /// <summary>
         /// Creates a <see cref="Variable"/> instance with a specific <see cref="string"/> and <see cref="ISnmpData"/>.
         /// </summary>
-        /// <param name="textual"></param>
-        /// <param name="data"></param>
-        public Variable(string textual, ISnmpData data)
-            : this(new ObjectIdentifier(Mib.ObjectRegistry.Default.Translate(textual)), data)
+        /// <param name="textual">The textual.</param>
+        /// <param name="data">The data.</param>
+        /// <param name="registry">The registry.</param>
+        [CLSCompliant(false)]
+        public Variable(string textual, ISnmpData data, IObjectRegistry registry)
+            : this(new ObjectIdentifier(registry.Translate(textual)), data)
         {
         }
         

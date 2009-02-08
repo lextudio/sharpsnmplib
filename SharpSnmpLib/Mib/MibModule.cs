@@ -21,7 +21,7 @@ namespace Lextm.SharpSnmpLib.Mib
         private readonly Imports _imports;
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         private Exports _exports;
-        private readonly IList<IConstruct> _tokens = new List<IConstruct>();
+        private readonly List<IConstruct> _tokens = new List<IConstruct>();
         
         internal MibModule(string name, IEnumerable<string> dependents)
         {
