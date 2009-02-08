@@ -12,7 +12,6 @@
     </PropertyGroup>
     <ItemGroup>
         <LibraryOutputs Include=".\SharpSnmpLib\bin\Release\sharpsnmplib.*" />
-        <BrowserOutputs Include=".\Browser\bin\Release\*.*" Exclude="*.pdb" />
         <!-- <CFOutputs Include=".\SharpSnmpLib\bin\Release\sharpsnmplib.cf*"/>-->
     </ItemGroup>
     <Target Name="Gendarme" DependsOnTargets="Release">
@@ -33,8 +32,4 @@
     <!--<Target Name="CF">
         <MSBuild Projects="sharpsnmplib.cf35.sln" Properties="Configuration=Release"/>
     </Target>-->
-    <Target Name="Package" DependsOnTargets="Release">
-        <!-- <Copy SourceFiles="@(CFOutputs)" DestinationFiles="@(CFOutputs->'$(ReleaseFolder)\%(RecursiveDir)%(Filename)%(Extension)')"/>-->
-        <Copy SourceFiles="@(BrowserOutputs)" DestinationFiles="@(BrowserOutputs-&gt;'$(ReleaseFolder)\%(RecursiveDir)%(Filename)%(Extension)')" />
-    </Target>
 </Project>
