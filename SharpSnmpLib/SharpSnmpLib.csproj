@@ -175,6 +175,7 @@
     <None Include="Resources\SNMPV2-TM.module" />
     <EmbeddedResource Include="Resource.resx">
       <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -193,8 +194,5 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="sharpsnmplib.snk" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources" />
   </ItemGroup>
 </Project>

@@ -376,11 +376,11 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentException("only SNMP v1 or v2 is supported");
             }
 
-            bool canContinue = registry.ValidateTable(table);
-            if (!canContinue)
-            {
-                throw new ArgumentException("not a table OID: " + table);
-            }
+            //bool canContinue = registry.ValidateTable(table);
+            //if (!canContinue)
+            //{
+            //    throw new ArgumentException("not a table OID: " + table);
+            //}
 
             IList<Variable> list = new List<Variable>();
             int rows = Walk(version, endpoint, community, table, list, timeout, WalkMode.WithinSubtree);
@@ -734,7 +734,7 @@ namespace Lextm.SharpSnmpLib
             }
         }
 
-        private static bool HasNext(VersionCode version, IPEndPoint endpoint, OctetString community, Variable seed, int timeout, out Variable next)
+        public static bool HasNext(VersionCode version, IPEndPoint endpoint, OctetString community, Variable seed, int timeout, out Variable next)
         {
             bool result;
             try

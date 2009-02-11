@@ -114,6 +114,7 @@
     </Compile>
     <EmbeddedResource Include="DocumentListPanel.resx">
       <DependentUpon>DocumentListPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="DocumentPanel.resx">
       <DependentUpon>DocumentPanel.cs</DependentUpon>
