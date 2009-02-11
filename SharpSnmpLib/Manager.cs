@@ -645,6 +645,13 @@ namespace Lextm.SharpSnmpLib
                 {
                     oldWay = true;
                 }
+                else if(first)
+                {
+                    string part = seed.Id.ToString().Replace(table.ToString(), null).Remove(0, 1);
+                    int end = part.IndexOf('.');
+                    index = Int32.Parse(part.Substring(0, end), CultureInfo.InvariantCulture);
+                }
+
 
                 first = false;
 
@@ -657,9 +664,8 @@ namespace Lextm.SharpSnmpLib
                     string part = seed.Id.ToString().Replace(table.ToString(), null).Remove(0, 1);
                     int end = part.IndexOf('.');
                     int newIndex = Int32.Parse(part.Substring(0, end), CultureInfo.InvariantCulture);
-                    if (index != newIndex)
+                    if (index == newIndex)
                     {
-                        index = newIndex;
                         result++;
                     }
                 }
