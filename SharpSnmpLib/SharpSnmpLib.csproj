@@ -31,7 +31,7 @@
     <OutputPath>bin\Release\</OutputPath>
     <DebugSymbols>false</DebugSymbols>
     <DebugType>PdbOnly</DebugType>
-    <Optimize>False</Optimize>
+    <Optimize>True</Optimize>
     <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
