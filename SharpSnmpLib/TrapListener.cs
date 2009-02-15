@@ -23,6 +23,7 @@ namespace Lextm.SharpSnmpLib
     /// <para>This component is for TRAP operation only.</para>
     /// <para>Currently only SNMP v1 TRAP is supported.</para>
     /// </remarks>
+    [Obsolete("Use Listener component instead.")]
     public class TrapListener : Component
     {
         private int _port;

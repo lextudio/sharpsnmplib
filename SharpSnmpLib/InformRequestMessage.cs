@@ -101,7 +101,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public GetResponseMessage GetResponse(int timeout, IPEndPoint receiver)
         {
-            return ByteTool.GetResponse(this, receiver, _bytes, SequenceNumber, timeout);
+            return ByteTool.GetResponse(receiver, _bytes, SequenceNumber, timeout);
         }
         
         /// <summary>

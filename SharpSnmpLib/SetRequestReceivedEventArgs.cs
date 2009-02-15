@@ -14,6 +14,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// Provides data for a SET request received event.
     /// </summary>
+    [Obsolete("Use MessageReceivedEventArgs instead.")]
     public sealed class SetRequestReceivedEventArgs : EventArgs
     {
         private readonly SetRequestMessage _request;

@@ -14,6 +14,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// Provides data for a GET BULK request received event.
     /// </summary>
+    [Obsolete("Use MessageReceivedEventArgs instead.")]
     public sealed class GetBulkRequestReceivedEventArgs : EventArgs
     {
         private readonly GetBulkRequestMessage _request;

@@ -22,8 +22,8 @@ namespace Lextm.SharpSnmpLib
     /// <remarks>Represents SMIv1 SEQUENCE.</remarks>
     public class Sequence : ISnmpData
     {
-        private readonly byte[] _raw;
-        private readonly IList<ISnmpData> _list = new List<ISnmpData>();
+        private byte[] _raw;
+        private readonly List<ISnmpData> _list = new List<ISnmpData>();
         
         /// <summary>
         /// Creates an <see cref="Sequence"/> instance with varied <see cref="ISnmpData"/> instances.
@@ -36,19 +36,16 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("items");
             }
 
-            foreach (ISnmpData item in items)
-            {
-                _list.Add(item);
-            }
+			_list.AddRange(items);
             
-            _raw = ByteTool.ParseItems(items);
+			//_raw = ByteTool.ParseItems(items);
         }
         
         /// <summary>
         /// Creates an <see cref="Sequence"/> instance with varied <see cref="ISnmpData"/> instances.
         /// </summary>
         /// <param name="items"></param>
-        public Sequence(IEnumerable items)
+		public Sequence(IEnumerable items)
         {
             if (items == null)
             {
@@ -60,12 +57,9 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentException("objects must be IEnumerable<ISnmpData>");
             }
             
-            foreach (ISnmpData item in items)
-            {
-                _list.Add(item);
-            }
+			_list.AddRange((IEnumerable<ISnmpData>)items);
             
-            _raw = ByteTool.ParseItems(items);
+			//_raw = ByteTool.ParseItems(items);
         }
         
         /// <summary>
@@ -97,8 +91,8 @@ namespace Lextm.SharpSnmpLib
                 }
             }
 
-            _raw = ByteTool.ParseItems(_list);
-            Debug.Assert(length >= _raw.Length, "length not match");
+			//_raw = ByteTool.ParseItems(_list);
+			//Debug.Assert(length >= _raw.Length, "length not match");
         }
 
         /// <summary>
@@ -140,6 +134,11 @@ namespace Lextm.SharpSnmpLib
         /// <param name="stream">The stream.</param>
         public void AppendBytesTo(Stream stream)
         {
+			if(_raw == null)
+			{
+				_raw = ByteTool.ParseItems(_list);
+			}
+
             ByteTool.AppendBytes(stream, TypeCode, _raw);
         }
 

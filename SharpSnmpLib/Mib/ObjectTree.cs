@@ -11,7 +11,7 @@ namespace Lextm.SharpSnmpLib.Mib
 	/// </summary>
 	internal sealed class ObjectTree : IObjectTree
 	{
-		private readonly IDictionary<string, MibModule> _loaded = new SortedDictionary<string, MibModule>();
+		private readonly IDictionary<string, MibModule> _loaded = new Dictionary<string, MibModule>();
 		private readonly IDictionary<string, MibModule> _pendings = new Dictionary<string, MibModule>();
 		private readonly IDictionary<string, IDefinition> nameTable;
 		private readonly Definition root;
@@ -127,16 +127,19 @@ namespace Lextm.SharpSnmpLib.Mib
 				throw new ArgumentException("numerical cannot be empty");
 			}
 			
-			int i = 0;
-			IDefinition result;
-			IDefinition temp = root;
-			do
-			{
-				result = temp.GetChildAt(numerical[i]);
-				temp = result;
-				i++;
-			}
-			while (i < numerical.Length);
+			IDefinition result = root;
+			for (int i = 0; i < numerical.Length; i++)
+				result = result.GetChildAt(numerical[i]);
+			//int i = 0;
+			//IDefinition result;
+			//IDefinition temp = root;
+			//do
+			//{
+			//    result = temp.GetChildAt(numerical[i]);
+			//    temp = result;
+			//    i++;
+			//}
+			//while (i < numerical.Length);
 			return result;
 		}
 		
@@ -281,7 +284,7 @@ namespace Lextm.SharpSnmpLib.Mib
 			IDefinition node = Find(StringUtility.ExtractName(content[0]));
 			uint[] rootId = node.GetNumericalForm();
 			uint[] all = new uint[content.Length + rootId.Length - 1];
-			for (int j = 0; j < rootId.Length; j++)
+			for (int j = rootId.Length - 1; j >= 0; j--)
 			{
 				all[j] = rootId[j];
 			}

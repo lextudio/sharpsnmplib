@@ -24,7 +24,7 @@ namespace Lextm.SharpSnmpLib
         private readonly Integer32 _errorIndex;
         private readonly IList<Variable> _variables;
         private readonly Integer32 _seq;
-        private readonly byte[] _raw;
+        private byte[] _raw;
         private readonly Sequence _varbindSection;
         private readonly TimeTicks _time;
         private readonly ObjectIdentifier _enterprise;
@@ -45,14 +45,15 @@ namespace Lextm.SharpSnmpLib
             full.Insert(0, new Variable(new uint[] { 1, 3, 6, 1, 2, 1, 1, 3, 0 }, _time));
             full.Insert(1, new Variable(new uint[] { 1, 3, 6, 1, 6, 3, 1, 1, 4, 1, 0 }, _enterprise));
             _varbindSection = Variable.Transform(full);
-            _raw = ByteTool.ParseItems(_seq, new Integer32(0), new Integer32(0), _varbindSection);
+			//_raw = ByteTool.ParseItems(_seq, new Integer32(0), new Integer32(0), _varbindSection);
         }        
 
         /// <summary>
         /// Creates a <see cref="InformRequestPdu"/> with raw bytes.
         /// </summary>
         /// <param name="raw">Raw bytes</param>
-        private InformRequestPdu(byte[] raw) : this(raw.Length, new MemoryStream(raw))
+		private InformRequestPdu(byte[] raw)
+			: this(raw.Length, new MemoryStream(raw))
         {
         }
 
@@ -72,8 +73,8 @@ namespace Lextm.SharpSnmpLib
             _variables.RemoveAt(0);
             _enterprise = (ObjectIdentifier)_variables[0].Data;
             _variables.RemoveAt(0);
-            _raw = ByteTool.ParseItems(_seq, _errorStatus, _errorIndex, _varbindSection);
-            Debug.Assert(length >= _raw.Length, "length not match");
+			//_raw = ByteTool.ParseItems(_seq, _errorStatus, _errorIndex, _varbindSection);
+			//Debug.Assert(length >= _raw.Length, "length not match");
         }
         
         internal int SequenceNumber
@@ -132,6 +133,11 @@ namespace Lextm.SharpSnmpLib
         /// <param name="stream">The stream.</param>
         public void AppendBytesTo(Stream stream)
         {
+			if (_raw == null)
+			{
+				_raw = ByteTool.ParseItems(_seq, new Integer32(0), new Integer32(0), _varbindSection);
+			}
+
             ByteTool.AppendBytes(stream, TypeCode, _raw);            
         }
 

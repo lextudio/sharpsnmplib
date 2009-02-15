@@ -6,6 +6,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// Provides data for a trap received event.
     /// </summary>
+    [Obsolete("Use MessageReceivedEventArgs instead.")]
     public sealed class TrapV2ReceivedEventArgs : EventArgs
     {
         private readonly TrapV2Message _trap;

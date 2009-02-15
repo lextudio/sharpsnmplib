@@ -38,7 +38,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Returns a value if the listener is still working.
         /// </summary>
-        [Obsolete("Use a stand alone TrapListener component")]
+        [Obsolete("Use a stand alone Listener component")]
         public bool Active
         {
             get { return trapListener.Active; }
@@ -67,7 +67,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Trap listener.
         /// </summary>
-        [Obsolete("Use a stand alone TrapListener component")]
+        [Obsolete("Use a stand alone Listener component")]
         public TrapListener TrapListener
         {
             get { return trapListener; }
@@ -103,19 +103,19 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Occurs when a <see cref="TrapV1Message" /> is received.
         /// </summary>
-        [Obsolete("Use a stand alone TrapListener component")]
+        [Obsolete("Use a stand alone Listener component")]
         public event EventHandler<TrapV1ReceivedEventArgs> TrapV1Received;
         
         /// <summary>
         /// Occurs when a <see cref="TrapV2Message"/> is received.
         /// </summary>
-        [Obsolete("Use a stand alone TrapListener component")]
+        [Obsolete("Use a stand alone Listener component")]
         public event EventHandler<TrapV2ReceivedEventArgs> TrapV2Received;
         
         /// <summary>
         /// Occurs when a <see cref="InformRequestMessage"/> is received.
         /// </summary>
-        [Obsolete("Use a stand alone TrapListener component")]
+        [Obsolete("Use a stand alone Listener component")]
         public event EventHandler<InformRequestReceivedEventArgs> InformRequestReceived;
 
         /// <summary>
@@ -141,6 +141,28 @@ namespace Lextm.SharpSnmpLib
             return message.Broadcast(timeout, endpoint);
         }
         
+        /// <summary>
+		/// Gets a list of variable binds asynchronously.
+		/// </summary>
+		/// <param name="version">Protocol version.</param>
+		/// <param name="endpoint">Endpoint.</param>
+		/// <param name="community">Community name.</param>
+		/// <param name="variables">Variable binds.</param>
+		/// <param name="timeout">Timeout.</param>
+		/// <param name="callBack">The callback called once the response has been received.</param>
+		/// <returns></returns>
+		public static void BeginGet(VersionCode version, IPEndPoint endpoint, OctetString community, IList<Variable> variables, int timeout,
+			GetResponseCallback callBack)
+		{
+			if (version == VersionCode.V3)
+			{
+				throw new ArgumentException("you can only use SNMP v1 or v2 in this version");
+			}
+
+			GetRequestMessage message = new GetRequestMessage(version, community, variables);
+			message.BeginGetResponse(timeout, endpoint, callBack);
+		}
+
         /// <summary>
         /// Gets a list of variable binds.
         /// </summary>

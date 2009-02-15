@@ -6,6 +6,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// Provides data for a INFORM request received event.
     /// </summary>
+    [Obsolete("Use MessageReceivedEventArgs instead.")]
     public sealed class InformRequestReceivedEventArgs : EventArgs
     {
         private readonly InformRequestMessage _inform;

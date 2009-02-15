@@ -90,8 +90,10 @@
     <Compile Include="ISnmpData.cs" />
     <Compile Include="ISnmpMessage.cs" />
     <Compile Include="ISnmpPdu.cs" />
+    <Compile Include="Listener.cs" />
     <Compile Include="Manager.cs" />
     <Compile Include="MessageFactory.cs" />
+    <Compile Include="MessagetReceivedEventArgs.cs" />
     <Compile Include="Mib\AgentCapabilities.cs" />
     <Compile Include="Mib\Assembler.cs" />
     <Compile Include="Mib\Choice.cs" />
@@ -176,6 +178,9 @@
     <Compile Include="WalkMode.cs" />
     <EmbeddedResource Include="Agent.resx">
       <DependentUpon>Agent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Listener.resx">
+      <DependentUpon>Listener.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Manager.resx">
       <DependentUpon>Manager.cs</DependentUpon>

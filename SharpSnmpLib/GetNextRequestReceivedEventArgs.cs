@@ -14,6 +14,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// Provides data for a GET NEXT request received event.
     /// </summary>
+    [Obsolete("Use MessageReceivedEventArgs instead.")]
     public sealed class GetNextRequestReceivedEventArgs : EventArgs
     {
         private readonly GetNextRequestMessage _request;

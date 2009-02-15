@@ -29,7 +29,7 @@ namespace Lextm.SharpSnmpLib
         private readonly IList<Variable> _variables;
         private readonly VersionCode _version;
         private readonly ISnmpPdu _pdu;
-        private readonly byte[] _bytes;
+        private byte[] _bytes;
         
         /// <summary>
         /// Creates a <see cref="TrapV1Message"/> with all content.
@@ -94,7 +94,7 @@ namespace Lextm.SharpSnmpLib
             _specific = trapPdu.Specific;
             _time = trapPdu.TimeStamp.ToUInt32();
             _variables = _pdu.Variables;
-            _bytes = body.ToBytes();
+			//_bytes = body.ToBytes();
         }
 
         /// <summary>
@@ -105,13 +105,13 @@ namespace Lextm.SharpSnmpLib
         [Obsolete("Please use overload version instead.")]
         public void Send(IPAddress manager, int port)
         {
-            byte[] bytes = _bytes;
+			byte[] bytes = ToBytes();
             ByteTool.Capture(bytes);
             IPEndPoint endpoint = new IPEndPoint(manager, port);
             using (UdpClient udp = new UdpClient())
             {
                 udp.Send(bytes, bytes.Length, endpoint);
-                udp.Close();
+				//udp.Close();	// Not needed: we're in a using statement
             }
         }
 
@@ -121,12 +121,12 @@ namespace Lextm.SharpSnmpLib
         /// <param name="manager">Manager</param>
         public void Send(IPEndPoint manager)
         {
-            byte[] bytes = _bytes;
+			byte[] bytes = ToBytes();
             ByteTool.Capture(bytes);
             using (UdpClient udp = new UdpClient())
             {
                 udp.Send(bytes, bytes.Length, manager);
-                udp.Close();
+				//udp.Close();	// Not needed: we're in a using statement
             }
         } 
     
@@ -226,6 +226,11 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public byte[] ToBytes()
         {
+			if(_bytes == null)
+			{
+				_bytes = _pdu.ToMessageBody(_version, _community).ToBytes();
+			}
+
             return _bytes;
         }
 

@@ -60,38 +60,72 @@ namespace Lextm.SharpSnmpLib {
 			}
 		}
 		
-		internal static byte[] SNMPV2_CONF {
+		/// <summary>
+		///   Looks up a localized string similar to #SNMPV2-SMI,
+		///.
+		/// </summary>
+		internal static string SNMPv2_CONF {
 			get {
-				object obj = ResourceManager.GetObject("SNMPV2-CONF", resourceCulture);
-				return ((byte[])(obj));
+				return ResourceManager.GetString("SNMPv2_CONF", resourceCulture);
 			}
 		}
 		
-		internal static byte[] SNMPV2_MIB {
+		/// <summary>
+		///   Looks up a localized string similar to #SNMPV2-SMI,SNMPV2-TC,SNMPV2-CONF,
+		///.1.3.6.1.6.3.1,Lextm.SharpSnmpLib.Mib.ModuleIdentity,snmpMIB,snmpModules
+		///.1.3.6.1.6.3.1.1,Lextm.SharpSnmpLib.Mib.OidValueAssignment,snmpMIBObjects,snmpMIB
+		///.1.3.6.1.2.1.1,Lextm.SharpSnmpLib.Mib.OidValueAssignment,system,mib-2
+		///.1.3.6.1.2.1.1.1,Lextm.SharpSnmpLib.Mib.ObjectType,sysDescr,system
+		///.1.3.6.1.2.1.1.2,Lextm.SharpSnmpLib.Mib.ObjectType,sysObjectID,system
+		///.1.3.6.1.2.1.1.3,Lextm.SharpSnmpLib.Mib.ObjectType,sysUpTime,system
+		///.1.3.6.1.2.1.1.4,Lextm.SharpSnmpLib.Mib. [rest of string was truncated]&quot;;.
+		/// </summary>
+		internal static string SNMPv2_MIB {
 			get {
-				object obj = ResourceManager.GetObject("SNMPV2-MIB", resourceCulture);
-				return ((byte[])(obj));
+				return ResourceManager.GetString("SNMPv2_MIB", resourceCulture);
 			}
 		}
 		
-		internal static byte[] SNMPV2_SMI {
+		/// <summary>
+		///   Looks up a localized string similar to #
+		///.1.3,Lextm.SharpSnmpLib.Mib.OidValueAssignment,org,iso
+		///.1.3.6,Lextm.SharpSnmpLib.Mib.OidValueAssignment,dod,org
+		///.1.3.6.1,Lextm.SharpSnmpLib.Mib.OidValueAssignment,internet,dod
+		///.1.3.6.1.1,Lextm.SharpSnmpLib.Mib.OidValueAssignment,directory,internet
+		///.1.3.6.1.2,Lextm.SharpSnmpLib.Mib.OidValueAssignment,mgmt,internet
+		///.1.3.6.1.2.1,Lextm.SharpSnmpLib.Mib.OidValueAssignment,mib-2,mgmt
+		///.1.3.6.1.2.1.10,Lextm.SharpSnmpLib.Mib.OidValueAssignment,transmission,mib-2
+		///.1.3.6.1.3,Lextm.SharpSnmpLib.Mib.OidValueAs [rest of string was truncated]&quot;;.
+		/// </summary>
+		internal static string SNMPv2_SMI {
 			get {
-				object obj = ResourceManager.GetObject("SNMPV2-SMI", resourceCulture);
-				return ((byte[])(obj));
+				return ResourceManager.GetString("SNMPv2_SMI", resourceCulture);
 			}
 		}
 		
-		internal static byte[] SNMPV2_TC {
+		/// <summary>
+		///   Looks up a localized string similar to #SNMPV2-SMI,
+		///.
+		/// </summary>
+		internal static string SNMPv2_TC {
 			get {
-				object obj = ResourceManager.GetObject("SNMPV2-TC", resourceCulture);
-				return ((byte[])(obj));
+				return ResourceManager.GetString("SNMPv2_TC", resourceCulture);
 			}
 		}
 		
-		internal static byte[] SNMPV2_TM {
+		/// <summary>
+		///   Looks up a localized string similar to #SNMPV2-SMI,SNMPV2-TC,
+		///.1.3.6.1.6.3.19,Lextm.SharpSnmpLib.Mib.ModuleIdentity,snmpv2tm,snmpModules
+		///.1.3.6.1.6.1.1,Lextm.SharpSnmpLib.Mib.ObjectIdentity,snmpUDPDomain,snmpDomains
+		///.1.3.6.1.6.1.2,Lextm.SharpSnmpLib.Mib.ObjectIdentity,snmpCLNSDomain,snmpDomains
+		///.1.3.6.1.6.1.3,Lextm.SharpSnmpLib.Mib.ObjectIdentity,snmpCONSDomain,snmpDomains
+		///.1.3.6.1.6.1.4,Lextm.SharpSnmpLib.Mib.ObjectIdentity,snmpDDPDomain,snmpDomains
+		///.1.3.6.1.6.1.5,Lextm.SharpSnmpLib.Mib.ObjectIdentity,snmpIPXDomain,snmpDomains
+		///.1.3.6.1.6 [rest of string was truncated]&quot;;.
+		/// </summary>
+		internal static string SNMPv2_TM {
 			get {
-				object obj = ResourceManager.GetObject("SNMPV2-TM", resourceCulture);
-				return ((byte[])(obj));
+				return ResourceManager.GetString("SNMPv2_TM", resourceCulture);
 			}
 		}
 	}

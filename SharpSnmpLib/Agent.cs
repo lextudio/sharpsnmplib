@@ -21,7 +21,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Message monitor.
         /// </summary>
-        [Obsolete("Use a stand alone TrapListener component")]
+        [Obsolete("Use a stand alone Listener component")]
         public TrapListener Monitor
         {
             get { return trapListener; }
@@ -30,31 +30,31 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Occurs when an exception is raised.
         /// </summary>
-        [Obsolete("Use a stand alone TrapListener component")]
+        [Obsolete("Use a stand alone Listener component")]
         public event EventHandler<ExceptionRaisedEventArgs> ExceptionRaised;
         
         /// <summary>
         /// Occurs when a GET request is received.
         /// </summary>
-        [Obsolete("Use a stand alone TrapListener component")]
+        [Obsolete("Use a stand alone Listener component")]
         public event EventHandler<GetRequestReceivedEventArgs> GetRequestReceived;
         
         /// <summary>
         /// Occurs when a SET request is received.
         /// </summary>
-        [Obsolete("Use a stand alone TrapListener component")]
+        [Obsolete("Use a stand alone Listener component")]
         public event EventHandler<SetRequestReceivedEventArgs> SetRequestReceived;
         
         /// <summary>
         /// Occurs when a GET NEXT request is received.
         /// </summary>
-        [Obsolete("Use a stand alone TrapListener component")]
+        [Obsolete("Use a stand alone Listener component")]
         public event EventHandler<GetNextRequestReceivedEventArgs> GetNextRequestReceived;
         
         /// <summary>
         /// Occurs when a GET BULK request is received.
         /// </summary>
-        [Obsolete("Use a stand alone TrapListener component")]
+        [Obsolete("Use a stand alone Listener component")]
         public event EventHandler<GetBulkRequestReceivedEventArgs> GetBulkRequestReceived;
 
         /// <summary>

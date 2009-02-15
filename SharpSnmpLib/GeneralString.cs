@@ -21,14 +21,24 @@ namespace Lextm.SharpSnmpLib
         private readonly byte[] _raw;
         
         /// <summary>
-        /// Creates a <see cref="GeneralString"/> from raw bytes.
+        /// Creates a <see cref="GeneralString"/> from raw bytes (by cloning them).
         /// </summary>
         /// <param name="raw">Raw bytes</param>
         public GeneralString(byte[] raw)
         {
-            _raw = raw;
         }
-        
+
+		/// <summary>
+		/// Creates a <see cref="GeneralString"/> from raw bytes (by cloning them).
+		/// </summary>
+		/// <param name="raw">Raw bytes</param>
+		/// <param name="doCloning">true to clone the raw bytes, false to use them directly.</param>
+		//[Obsolete("raw constructor obsolete", true)]
+		public GeneralString(byte[] raw, bool doCloning)
+		{
+			_raw = doCloning ? (byte[])raw.Clone() : raw;
+		}
+
         /// <summary>
         /// Type code.
         /// </summary>

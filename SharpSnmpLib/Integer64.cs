@@ -16,7 +16,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// Integer64 type.
     /// </summary>
-    internal sealed class Integer64 : IEquatable<Integer64>
+    internal sealed class Integer64 : IEquatable<Integer64>	// This is not a ISnmpData but is used by Real class
     {
         private readonly byte[] _raw;
         

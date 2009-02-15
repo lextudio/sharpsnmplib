@@ -6,6 +6,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// Provides data for a GET request received event.
     /// </summary>
+    [Obsolete("Use MessageReceivedEventArgs instead.")]
     public sealed class GetRequestReceivedEventArgs : EventArgs
     {
         private readonly GetRequestMessage _request;

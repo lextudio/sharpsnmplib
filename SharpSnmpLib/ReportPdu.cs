@@ -24,7 +24,7 @@ namespace Lextm.SharpSnmpLib
         private readonly Integer32 _errorIndex;
         private readonly IList<Variable> _variables;
         private readonly Integer32 _seq;
-        private readonly byte[] _raw;
+        private byte[] _raw;
         private readonly Sequence _varbindSection;
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Lextm.SharpSnmpLib
             _errorIndex = errorIndex;
             _variables = variables;
             _varbindSection = Variable.Transform(variables);
-            _raw = ByteTool.ParseItems(_seq, _errorStatus, _errorIndex, _varbindSection);
+			//_raw = ByteTool.ParseItems(_seq, _errorStatus, _errorIndex, _varbindSection);
         }
 
         internal int SequenceNumber
@@ -80,8 +80,8 @@ namespace Lextm.SharpSnmpLib
             _errorIndex = (Integer32)DataFactory.CreateSnmpData(stream);
             _varbindSection = (Sequence)DataFactory.CreateSnmpData(stream);
             _variables = Variable.Transform(_varbindSection);
-            _raw = ByteTool.ParseItems(_seq, _errorStatus, _errorIndex, _varbindSection);
-            Debug.Assert(length >= _raw.Length, "length not match");
+			//_raw = ByteTool.ParseItems(_seq, _errorStatus, _errorIndex, _varbindSection);
+			//Debug.Assert(length >= _raw.Length, "length not match");
         }
 
         /// <summary>
@@ -112,6 +112,11 @@ namespace Lextm.SharpSnmpLib
         /// <param name="stream">The stream.</param>
         public void AppendBytesTo(Stream stream)
         {
+			if (_raw == null)
+			{
+				_raw = ByteTool.ParseItems(_seq, _errorStatus, _errorIndex, _varbindSection);
+			}
+
             ByteTool.AppendBytes(stream, TypeCode, _raw);
         }
 

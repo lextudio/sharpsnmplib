@@ -84,10 +84,12 @@
     <Compile Include="ISnmpData.cs" />
     <Compile Include="IP.cs" />
     <Compile Include="ISnmpPdu.cs" />
+    <Compile Include="Listener.cs" />
     <Compile Include="Manager.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="MessageFactory.cs" />
+    <Compile Include="MessagetReceivedEventArgs.cs" />
     <Compile Include="Mib\Assembler.cs" />
     <Compile Include="Mib\ConstructHelper.cs" />
     <Compile Include="Mib\AgentCapabilities.cs" />
@@ -173,6 +175,9 @@
     <None Include="Resources\SNMPV2-SMI.module" />
     <None Include="Resources\SNMPV2-TC.module" />
     <None Include="Resources\SNMPV2-TM.module" />
+    <EmbeddedResource Include="Listener.resx">
+      <DependentUpon>Listener.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resource.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>

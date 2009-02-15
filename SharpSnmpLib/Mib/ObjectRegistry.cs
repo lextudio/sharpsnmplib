@@ -34,21 +34,21 @@ namespace Lextm.SharpSnmpLib.Mib
 		private IList<ModuleLoader> LoadDefaultModules()
 		{
 			IList<ModuleLoader> result = new List<ModuleLoader>(5);
-			result.Add(LoadSingle(Resource.SNMPV2_SMI, "SNMPV2-SMI"));
-			result.Add(LoadSingle(Resource.SNMPV2_CONF, "SNMPV2-CONF"));
-			result.Add(LoadSingle(Resource.SNMPV2_TC, "SNMPV2-TC"));
-			result.Add(LoadSingle(Resource.SNMPV2_MIB, "SNMPV2-MIB"));
-			result.Add(LoadSingle(Resource.SNMPV2_TM, "SNMPV2-TM"));
+			result.Add(LoadSingle(Resource.SNMPv2_SMI, "SNMPV2-SMI"));
+			result.Add(LoadSingle(Resource.SNMPv2_CONF, "SNMPV2-CONF"));
+			result.Add(LoadSingle(Resource.SNMPv2_TC, "SNMPV2-TC"));
+			result.Add(LoadSingle(Resource.SNMPv2_MIB, "SNMPV2-MIB"));
+			result.Add(LoadSingle(Resource.SNMPv2_TM, "SNMPV2-TM"));
 			return result;
 		}
 		
-		private ModuleLoader LoadSingle(byte[] bytes, string name)
+		private ModuleLoader LoadSingle(string mibFileContent, string name)
 		{
 			ModuleLoader result;
-			using (StreamReader reader = new StreamReader(new MemoryStream(bytes)))
+			using (TextReader reader = new StringReader(mibFileContent))
 			{
 				result = new ModuleLoader(reader, name);
-				reader.Close();
+				//reader.Close();	// Not needed: we're in a 'using' statement.
 			}
 			
 			return result;
@@ -350,11 +350,7 @@ namespace Lextm.SharpSnmpLib.Mib
 		private static uint[] GetParent(uint[] id)
 		{
 			uint[] result = new uint[id.Length - 1];
-			for (int i = 0; i < result.Length; i++)
-			{
-				result[i] = id[i];
-			}
-			
+			Array.Copy(id, result, id.Length - 1);
 			return result;
 		}
 		

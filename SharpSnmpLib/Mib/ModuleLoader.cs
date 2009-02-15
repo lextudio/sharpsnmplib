@@ -21,7 +21,7 @@ namespace Lextm.SharpSnmpLib.Mib
 		private List<string> dependents;
 		private MibModule module;
 		
-		public ModuleLoader(StreamReader reader, string moduleName)
+		public ModuleLoader(TextReader reader, string moduleName)
 		{
 			nodes = new List<Definition>();
 			dependents = new List<string>();

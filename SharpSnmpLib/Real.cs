@@ -26,17 +26,28 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public sealed class Real : ISnmpData, IEquatable<Real>
     {
-        private readonly byte[] _raw;
+        private byte[] _raw;
         
         /// <summary>
-        /// Creates a <see cref="Real"/> from raw bytes.
+        /// Creates a <see cref="Real"/> from raw bytes (these bytes are cloned).
         /// </summary>
         /// <param name="raw">Raw bytes</param>
-        public Real(byte[] raw)
+		//[Obsolete("raw constructor obsolete", true)]
+        public Real(byte[] raw) : this(raw, true)
         {
-            _raw = raw;
         }
-        
+
+		/// <summary>
+		/// Creates a <see cref="Real"/> from raw bytes.
+		/// </summary>
+		/// <param name="raw">Raw bytes</param>
+		/// <param name="doCloning">true to clone the raw bytes, false to use them directly.</param>
+		//[Obsolete("raw constructor obsolete", true)]
+		public Real(byte[] raw, bool doCloning)
+		{
+			_raw = doCloning ? (byte[])raw.Clone() : raw;
+		}
+
         /// <summary>
         /// Creates a <see cref="Real"/> with a specific <see cref="Double"/>.
         /// </summary>
@@ -51,7 +62,7 @@ namespace Lextm.SharpSnmpLib
             {
                 string s = value.ToString("E", CultureInfo.InvariantCulture); // hope this is acceptable..
                 _raw = new byte[s.Length + 1];
-                _raw[0] = 0x0;
+				//_raw[0] = 0x0;	// Useless
                 Encoding.ASCII.GetBytes(s, 0, s.Length, _raw, 1);
             }
         }

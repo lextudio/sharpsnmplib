@@ -121,9 +121,13 @@ namespace Lextm.SharpSnmpLib
                 yr = (yr * 256) + _raw[1];
                 uint mo = _raw[2];
                 uint dy = _raw[3];
-                if (yr < 2005 && yr > 1990 && mo < 13 && dy < 32)
+				//if (yr < 2005 && yr > 1990 && mo < 13 && dy < 32)
+				//{
+				//    return dy.ToString(CultureInfo.InvariantCulture) + "/" + mo.ToString(CultureInfo.InvariantCulture) + "/" + yr.ToString(CultureInfo.InvariantCulture);
+				//}
+				if (yr > 1990 && mo < 13 && dy < 32)
                 {
-                    return dy.ToString(CultureInfo.InvariantCulture) + "/" + mo.ToString(CultureInfo.InvariantCulture) + "/" + yr.ToString(CultureInfo.InvariantCulture);
+					return new DateTime((int)yr, (int)mo, (int)dy).ToString();
                 }
             }
             
@@ -232,6 +236,7 @@ namespace Lextm.SharpSnmpLib
             return new PhysicalAddress(_raw);
         }
         #endif 
+        // IMPORTANT: use GetEncoding because of CF.
         private static Encoding defaultEncoding = Encoding.GetEncoding("ASCII");
 
         /// <summary>

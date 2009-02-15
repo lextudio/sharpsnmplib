@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Text;
@@ -10,66 +11,64 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// ObjectIdentifier type.
     /// </summary>
+    #if (!CF)
+	[TypeConverter(typeof(ObjectIdentifierConverter))]
+	#endif
+	[Serializable]
     public sealed class ObjectIdentifier : ISnmpData, IEquatable<ObjectIdentifier>
     {
-        private readonly uint[] _oid;
-        
-        /// <summary>
-        /// Creates an <see cref="ObjectIdentifier"/> instance from textual ID.
-        /// </summary>
-        /// <param name="text">String in one of the formats, "[module]:[name]" or "*.*.*.*".</param>
-        public ObjectIdentifier(string text) : this(text, null)
-        {
-        }
+        private uint[] _oid;
+		[NonSerialized]
+		private int _hashcode;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ObjectIdentifier"/> class.
-        /// </summary>
-        /// <param name="text">The text.</param>
-        /// <param name="registry">The registry.</param>
-        [CLSCompliant(false)]
-        public ObjectIdentifier(string text, IObjectRegistry registry): this(ParseString(text, registry))
-        {
-            
-        }
+		#region Constructor
 
-        private static uint[] ParseString(string text, IObjectRegistry registry)
-        {
-            IObjectRegistry objects = registry ?? ObjectRegistry.Default;
-            if (text.Contains("::"))
-            {
-                return objects.Translate(text);
-            }
+		/// <summary>
+		/// Creates an <see cref="ObjectIdentifier"/> instance from textual ID.
+		/// </summary>
+		/// <param name="text">String in one of the formats, "[module]:[name]" or "*.*.*.*".</param>
+		public ObjectIdentifier(string text)
+			: this(text, null)
+		{
+		}
 
-            return Convert(text);
-        }
-        
-        /// <summary>
-        /// Creates an <see cref="ObjectIdentifier"/> instance from numerical ID.
-        /// </summary>
-        /// <param name="id">OID <see cref="uint"/> array</param>
-        [CLSCompliant(false)]
-        public ObjectIdentifier(uint[] id)
-        {
-            if (id == null)
-            {
-                throw new ArgumentNullException("id");
-            }
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ObjectIdentifier"/> class.
+		/// </summary>
+		/// <param name="text">The text.</param>
+		/// <param name="registry">The registry.</param>
+		[CLSCompliant(false)]
+		public ObjectIdentifier(string text, IObjectRegistry registry)
+			: this(ParseString(text, registry))
+		{
+		}
 
-            if (id.Length < 2)
-            {
-                throw new ArgumentException("The length of the shortest identifier is two", "id");
-            }
+		/// <summary>
+		/// Creates an <see cref="ObjectIdentifier"/> instance from numerical ID.
+		/// </summary>
+		/// <param name="id">OID <see cref="uint"/> array</param>
+		[CLSCompliant(false)]
+		public ObjectIdentifier(uint[] id)
+		{
+			if (id == null)
+			{
+				throw new ArgumentNullException("id");
+			}
 
-            if (id[0] > 2)
-            {
-                throw new ArgumentException("The first sub-identifier must be 0, 1, or 2.", "id");
-            }
+			if (id.Length < 2)
+			{
+				throw new ArgumentException("The length of the shortest identifier is two", "id");
+			}
 
-            if (id[1] > 39)
-            {
-                throw new ArgumentException("The second sub-identifier must be less than 40", "id");
-            }
+			if (id[0] > 2)
+			{
+				throw new ArgumentException("The first sub-identifier must be 0, 1, or 2.", "id");
+			}
+
+			if (id[1] > 39)
+			{
+				throw new ArgumentException("The second sub-identifier must be less than 40", "id");
+			}
 
             _oid = id;
         }
@@ -122,7 +121,20 @@ namespace Lextm.SharpSnmpLib
             _oid = result.ToArray();
         }
 
-        /// <summary>
+		#endregion Constructor
+
+		private static uint[] ParseString(string text, IObjectRegistry registry)
+		{
+			IObjectRegistry objects = registry ?? ObjectRegistry.Default;
+			if (text.Contains("::"))
+			{
+				return objects.Translate(text);
+			}
+
+			return Convert(text);
+		}
+		
+		/// <summary>
         /// Convers to numerical ID.
         /// </summary>
         /// <returns></returns>
@@ -217,10 +229,12 @@ namespace Lextm.SharpSnmpLib
         [Obsolete("Use AppendBytesTo instead.")]
         public byte[] ToBytes()
         {
-            MemoryStream result = new MemoryStream();
-            AppendBytesTo(result);
-            return result.ToArray();
-        }
+			using (MemoryStream result = new MemoryStream())
+			{
+				AppendBytesTo(result);
+  	        	return result.ToArray();
+  	    	}
+		}
 
         /// <summary>
         /// Appends the bytes to <see cref="Stream"/>.
@@ -292,7 +306,16 @@ namespace Lextm.SharpSnmpLib
         /// <returns>A hash code for the current <see cref="ObjectIdentifier"/>.</returns>
         public override int GetHashCode()
         {
-            return ToString().GetHashCode();
+			//return ToString().GetHashCode();
+			if (_hashcode == 0)
+			{
+				int hash = 0;
+				for (int i = _oid.Length - 1; i >= 0; i--)
+					hash ^= (int)_oid[i];
+				_hashcode = hash != 0 ? hash : 1;	// Very unlikely that hash=0, but I prefer to foresee the case.
+			}
+
+			return _hashcode;
         }
         
         /// <summary>
@@ -342,5 +365,86 @@ namespace Lextm.SharpSnmpLib
             
             return ByteTool.CompareArray(left._oid, right._oid);
         }
+
+		#region Nested class: ObjectIdentifierConverter
+#if (!CF)
+		/// <summary>
+		/// The <see cref="TypeConverter"/> dedicated for the <see cref="ObjectIdentifier"/> class.
+		/// </summary>
+		public class ObjectIdentifierConverter : TypeConverter
+		{
+			/// <summary>
+			/// Returns whether this converter can convert an object of the given type to the type of this converter.
+			/// </summary>
+			/// <param name="context"></param>
+			/// <param name="sourceType"></param>
+			/// <returns></returns>
+			public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
+			{
+				if (sourceType == typeof(string))
+					return true;
+
+				return base.CanConvertFrom(context, sourceType);
+			}
+
+			/// <summary>
+			/// Returns whether this converter can convert the object to the specified type.
+			/// </summary>
+			/// <param name="context"></param>
+			/// <param name="destinationType"></param>
+			/// <returns></returns>
+			public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
+			{
+				if (destinationType == typeof(string))
+					return true;
+
+				return base.CanConvertTo(context, destinationType);
+			}
+
+			/// <summary>
+			/// Converts the given object to the type of this converter, using the specified context and culture information.
+			/// </summary>
+			/// <param name="context"></param>
+			/// <param name="culture"></param>
+			/// <param name="value"></param>
+			/// <returns></returns>
+			public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
+			{
+				if (value is string)
+				{
+					try
+					{
+						uint[] oidVal = ParseString((string)value, null);
+						return new ObjectIdentifier(oidVal);
+					}
+					catch
+					{
+					}
+				}
+
+				return base.ConvertFrom(context, culture, value);
+			}
+
+			/// <summary>
+			/// Converts the given value object to the specified type, using the arguments.
+			/// </summary>
+			/// <param name="context"></param>
+			/// <param name="culture"></param>
+			/// <param name="value"></param>
+			/// <param name="destinationType"></param>
+			/// <returns></returns>
+			public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
+			{
+				if (destinationType == typeof(string) && value is ObjectIdentifier)
+				{
+					ObjectIdentifier oid = (ObjectIdentifier)value;
+					return oid.GetTextual(null);
+				}
+
+				return base.ConvertTo(context, culture, value, destinationType);
+			}
+		}
+#endif
+		#endregion Nested class: ObjectIdentifierConverter
     }
 }
