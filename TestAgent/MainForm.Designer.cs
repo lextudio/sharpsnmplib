@@ -46,7 +46,7 @@ namespace TestAgent
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.btnInform = new System.Windows.Forms.Button();
-            this.trapListener1 = new Lextm.SharpSnmpLib.TrapListener();
+            this.listener1 = new Lextm.SharpSnmpLib.Listener();
             this.SuspendLayout();
             // 
             // btnStart
@@ -131,10 +131,10 @@ namespace TestAgent
             this.btnInform.UseVisualStyleBackColor = true;
             this.btnInform.Click += new System.EventHandler(this.BtnInformClick);
             // 
-            // trapListener1
+            // listener1
             // 
-            this.trapListener1.GetRequestReceived += new System.EventHandler<Lextm.SharpSnmpLib.GetRequestReceivedEventArgs>(this.agent1_GetRequestReceived);
-            this.trapListener1.ExceptionRaised += new System.EventHandler<Lextm.SharpSnmpLib.ExceptionRaisedEventArgs>(this.agent1_ExceptionRaised);
+            this.listener1.GetRequestReceived += new System.EventHandler<Lextm.SharpSnmpLib.MessageReceivedEventArgs<Lextm.SharpSnmpLib.GetRequestMessage>>(this.agent1_GetRequestReceived);
+            this.listener1.ExceptionRaised += new System.EventHandler<Lextm.SharpSnmpLib.ExceptionRaisedEventArgs>(this.agent1_ExceptionRaised);
             // 
             // MainForm
             // 
@@ -167,6 +167,6 @@ namespace TestAgent
         private Lextm.SharpSnmpLib.Agent agent1;
         private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.Button btnStop;
-        private Lextm.SharpSnmpLib.TrapListener trapListener1;
+        private Lextm.SharpSnmpLib.Listener listener1;
     }
 }

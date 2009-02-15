@@ -56,7 +56,7 @@ namespace Lextm.SharpSnmpLib.Parser
             watch.Start();
             
             Mib.Parser parser = new Mib.Parser();
-            IList<SharpMibException> errors;
+            IEnumerable<SharpMibException> errors;
             IEnumerable<MibModule> modules = parser.ParseToModules(files, out errors);
             Assembler assembler = new Assembler(root);
             assembler.Assemble(modules);

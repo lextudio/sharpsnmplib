@@ -29,7 +29,7 @@ namespace TestAgent
 
 		private void btnStart_Click(object sender, EventArgs e)
 		{
-			trapListener1.Start(161);
+			listener1.Start(161);
 			UpdateButtons(true);
 		}
 
@@ -41,13 +41,13 @@ namespace TestAgent
 
 		private void btnStop_Click(object sender, EventArgs e)
 		{
-			trapListener1.Stop();
+			listener1.Stop();
 			UpdateButtons(false);
 		}
 
-		private void agent1_GetRequestReceived(object sender, Lextm.SharpSnmpLib.GetRequestReceivedEventArgs e)
+		private void agent1_GetRequestReceived(object sender, Lextm.SharpSnmpLib.MessageReceivedEventArgs<GetRequestMessage> e)
 		{
-			GetRequestMessage message = e.Request;
+			GetRequestMessage message = e.Message;
 			// you may validate message version number and/or community name here.
 			if (message.Variables.Count != 1)
 			{

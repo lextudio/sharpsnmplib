@@ -17,10 +17,10 @@ namespace test
 		{
             Console.WriteLine("Start watcher");
 
-            TrapListener watcher = new TrapListener();
-            watcher.TrapV1Received += new EventHandler<TrapV1ReceivedEventArgs>(watcher_TrapReceived);
-            watcher.TrapV2Received += new EventHandler<TrapV2ReceivedEventArgs>(watcher_TrapV2Received);
-            watcher.InformRequestReceived += new EventHandler<InformRequestReceivedEventArgs>(watcher_InformRequestReceived);
+            Listener watcher = new Listener();
+            watcher.TrapV1Received += new EventHandler<MessageReceivedEventArgs<TrapV1Message>>(watcher_TrapV1Received);
+            watcher.TrapV2Received += new EventHandler<MessageReceivedEventArgs<TrapV2Message>>(watcher_TrapV2Received);
+            watcher.InformRequestReceived += new EventHandler<MessageReceivedEventArgs<InformRequestMessage>>(watcher_InformRequestReceived);
             watcher.Start();
 
             Console.WriteLine("Press any key to stop . . . ");
@@ -30,19 +30,20 @@ namespace test
             Console.Read();
 		}
 
-        static void watcher_TrapV2Received(object sender, TrapV2ReceivedEventArgs e)
-        {
-            Console.WriteLine(e);
-        }
+		static void watcher_InformRequestReceived(object sender, MessageReceivedEventArgs<InformRequestMessage> e)
+		{
+			Console.WriteLine(e);
+		}
 
-        static void watcher_TrapReceived(object sender, TrapV1ReceivedEventArgs e)
-        {
-            Console.WriteLine(e);
-        }
-        
-        static void watcher_InformRequestReceived(object sender, InformRequestReceivedEventArgs e)
-        {
-            Console.WriteLine(e);
-        }
+		static void watcher_TrapV2Received(object sender, MessageReceivedEventArgs<TrapV2Message> e)
+		{
+			Console.WriteLine(e);
+		}
+
+		static void watcher_TrapV1Received(object sender, MessageReceivedEventArgs<TrapV1Message> e)
+		{
+			Console.WriteLine(e);
+		}
+
 	}
 }
