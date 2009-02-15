@@ -71,7 +71,7 @@ namespace Lextm.SharpSnmpLib
 		{
 			Capture(bytes); // log request
 
-			IPEndPoint from = new IPEndPoint(IPAddress.Any, 0);
+			//IPEndPoint from = new IPEndPoint(IPAddress.Any, 0);
 			#if CF
 			int bufSize = 8192;
 			#else

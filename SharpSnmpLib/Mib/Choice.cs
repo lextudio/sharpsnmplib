@@ -20,6 +20,9 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <param name="module"></param>
         /// <param name="name"></param>
         /// <param name="lexer"></param>
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "name")]
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "module")]
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "temp")]
         public Choice(string module, string name, Lexer lexer)
         {
             Symbol temp;

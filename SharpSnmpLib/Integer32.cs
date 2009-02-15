@@ -91,7 +91,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public override string ToString()
         {
-			return _int.ToString();
+			return _int.ToString(CultureInfo.InvariantCulture);
         }
         
         /// <summary>

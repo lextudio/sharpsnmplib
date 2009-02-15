@@ -30,7 +30,7 @@ namespace Lextm.SharpSnmpLib
 		/// <summary>
 		/// 1 = true, 0 = false
 		/// </summary>
-		private long _isActive = 0;
+		private long _isActive; // = 0
 		private bool disposed;
 		private int _port;
 
@@ -74,7 +74,7 @@ namespace Lextm.SharpSnmpLib
 		public void Dispose()
 		{
 			Dispose(true);
-			GC.SuppressFinalize(true);
+			GC.SuppressFinalize(this);
 		}
 
 		#endregion Constructor
@@ -173,7 +173,7 @@ namespace Lextm.SharpSnmpLib
 			{
 				_socket.Bind(endpoint);
 			}
-			catch (Exception ex)
+			catch (SocketException ex)
 			{
 				Interlocked.Exchange(ref _isActive, 0);
 				HandleException(ex);
@@ -309,15 +309,20 @@ namespace Lextm.SharpSnmpLib
 
 		private void HandleException(Exception exception)
 		{
-			Debug.WriteLine(exception.ToString());
-			Console.WriteLine(exception.ToString());
+			//Debug.WriteLine(exception.ToString());
+			//Console.WriteLine(exception.ToString());
 
 			EventHandler<ExceptionRaisedEventArgs> handler = ExceptionRaised;
 			if (handler == null)
+			{
 				return;
+			}
 
-			if (exception is SocketException && ((SocketException)exception).ErrorCode == 10048)
+			SocketException ex = exception as SocketException;
+			if (ex != null && ex.ErrorCode == 10048)
+			{
 				exception = new SharpSnmpException("Port is already used", exception);
+			}
 
 			handler(this, new ExceptionRaisedEventArgs(exception));
 		}

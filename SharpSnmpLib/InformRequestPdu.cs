@@ -52,7 +52,7 @@ namespace Lextm.SharpSnmpLib
         /// Creates a <see cref="InformRequestPdu"/> with raw bytes.
         /// </summary>
         /// <param name="raw">Raw bytes</param>
-		private InformRequestPdu(byte[] raw)
+		internal InformRequestPdu(byte[] raw)
 			: this(raw.Length, new MemoryStream(raw))
         {
         }

@@ -52,12 +52,13 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("items");
             }
 
-            if (!(items is IEnumerable<ISnmpData>))
+            IEnumerable<ISnmpData> list = items as IEnumerable<ISnmpData>;
+            if (list == null)
             {
                 throw new ArgumentException("objects must be IEnumerable<ISnmpData>");
             }
             
-			_list.AddRange((IEnumerable<ISnmpData>)items);
+			_list.AddRange(list);
             
 			//_raw = ByteTool.ParseItems(items);
         }
@@ -66,7 +67,7 @@ namespace Lextm.SharpSnmpLib
         /// Creates an <see cref="Sequence"/> instance from raw bytes.
         /// </summary>
         /// <param name="raw">Raw bytes</param>
-        private Sequence(byte[] raw) : this(raw.Length, new MemoryStream(raw))
+        internal Sequence(byte[] raw) : this(raw.Length, new MemoryStream(raw))
         {
         }
 

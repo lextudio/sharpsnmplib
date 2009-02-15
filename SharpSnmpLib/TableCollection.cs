@@ -24,7 +24,6 @@ namespace Lextm.SharpSnmpLib
             _root = root;
             if (list.Count == 0)
             {
-                _count = 0;
                 return;
             }
 

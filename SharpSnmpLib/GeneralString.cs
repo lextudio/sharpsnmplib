@@ -24,7 +24,7 @@ namespace Lextm.SharpSnmpLib
         /// Creates a <see cref="GeneralString"/> from raw bytes (by cloning them).
         /// </summary>
         /// <param name="raw">Raw bytes</param>
-        public GeneralString(byte[] raw)
+        public GeneralString(byte[] raw) : this(raw, true)
         {
         }
 

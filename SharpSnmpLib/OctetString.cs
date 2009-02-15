@@ -37,7 +37,7 @@ namespace Lextm.SharpSnmpLib
         /// Creates an <see cref="OctetString"/> from raw bytes.
         /// </summary>
         /// <param name="raw">Raw bytes</param>
-        private OctetString(byte[] raw) : this(raw.Length, new MemoryStream(raw))
+        internal OctetString(byte[] raw) : this(raw.Length, new MemoryStream(raw))
         {
         }
         

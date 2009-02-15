@@ -302,9 +302,9 @@ namespace Lextm.SharpSnmpLib
 		/// <param name="timeout">Timeout.</param>
 		/// <param name="receiver">Agent.</param>
 		/// <param name="callBack">The callback called once the response has been received.</param>
-		public void BeginGetResponse(int timeout, IPEndPoint receiver, GetResponseCallback callBack)
+		public void BeginGetResponse(int timeout, IPEndPoint receiver, GetResponseCallback callback)
 		{
-			ByteTool.BeginGetResponse(receiver, _bytes, SequenceNumber, timeout, callBack);
+			ByteTool.BeginGetResponse(receiver, _bytes, SequenceNumber, timeout, callback);
 		}
 
 		/// <summary>
@@ -314,9 +314,9 @@ namespace Lextm.SharpSnmpLib
 		/// <param name="receiver">Agent.</param>
 		/// <param name="callBack">The callback called once the response has been received.</param>
 		/// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
-		public void BeginGetResponse(int timeout, IPEndPoint receiver, GetResponseCallback callBack, Socket udpSocket)
+		public void BeginGetResponse(int timeout, IPEndPoint receiver, GetResponseCallback callback, Socket udpSocket)
 		{
-			ByteTool.BeginGetResponse(receiver, _bytes, SequenceNumber, timeout, callBack, udpSocket);
+			ByteTool.BeginGetResponse(receiver, _bytes, SequenceNumber, timeout, callback, udpSocket);
 		}
 
 		/// <summary>
@@ -326,9 +326,9 @@ namespace Lextm.SharpSnmpLib
 		/// <param name="receiver">Agent.</param>
 		/// <param name="callBack">The callback called once the response has been received.</param>
 		/// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
-		public void BeginGetResponseRaw(int timeout, IPEndPoint receiver, GetResponseRawCallback callBack, Socket udpSocket)
+		public void BeginGetResponseRaw(int timeout, IPEndPoint receiver, GetResponseRawCallback callback, Socket udpSocket)
 		{
-			ByteTool.BeginGetResponseRaw(receiver, _bytes, SequenceNumber, timeout, callBack, udpSocket);
+			ByteTool.BeginGetResponseRaw(receiver, _bytes, SequenceNumber, timeout, callback, udpSocket);
         }
 
         /// <summary>

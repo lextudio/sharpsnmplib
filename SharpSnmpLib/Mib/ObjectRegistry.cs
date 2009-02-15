@@ -31,7 +31,7 @@ namespace Lextm.SharpSnmpLib.Mib
 			_tree = new ObjectTree(LoadDefaultModules());
 		}
 		
-		private IList<ModuleLoader> LoadDefaultModules()
+		private static IList<ModuleLoader> LoadDefaultModules()
 		{
 			IList<ModuleLoader> result = new List<ModuleLoader>(5);
 			result.Add(LoadSingle(Resource.SNMPv2_SMI, "SNMPV2-SMI"));
@@ -42,7 +42,7 @@ namespace Lextm.SharpSnmpLib.Mib
 			return result;
 		}
 		
-		private ModuleLoader LoadSingle(string mibFileContent, string name)
+		private static ModuleLoader LoadSingle(string mibFileContent, string name)
 		{
 			ModuleLoader result;
 			using (TextReader reader = new StringReader(mibFileContent))
@@ -229,13 +229,13 @@ namespace Lextm.SharpSnmpLib.Mib
 		/// <summary>
 		/// Validates if an <see cref="ObjectIdentifier"/> is a table.
 		/// </summary>
-		/// <param name="table">The object identifier.</param>
+		/// <param name="identifier">The object identifier.</param>
 		/// <returns></returns>
-		public bool ValidateTable(ObjectIdentifier table)
+		public bool ValidateTable(ObjectIdentifier identifier)
 		{
 			try
 			{
-				return IsTableId(table.ToNumerical());
+				return IsTableId(identifier.ToNumerical());
 			}
 			catch (ArgumentOutOfRangeException)
 			{
@@ -274,18 +274,18 @@ namespace Lextm.SharpSnmpLib.Mib
 		/// <summary>
 		/// Gets numerical form from textual form.
 		/// </summary>
-		/// <param name="module">Module name</param>
+		/// <param name="moduleName">Module name</param>
 		/// <param name="name">Object name</param>
 		/// <returns></returns>
 		[CLSCompliant(false)]
-		public uint[] Translate(string module, string name)
+		public uint[] Translate(string moduleName, string name)
 		{
-			if (module == null)
+			if (moduleName == null)
 			{
-				throw new ArgumentNullException("module");
+				throw new ArgumentNullException("moduleName");
 			}
 			
-			if (module.Length == 0)
+			if (moduleName.Length == 0)
 			{
 				throw new ArgumentException("module cannot be empty");
 			}
@@ -302,7 +302,7 @@ namespace Lextm.SharpSnmpLib.Mib
 			
 			if (!name.Contains("."))
 			{
-				return _tree.Find(module, name).GetNumericalForm();
+				return _tree.Find(moduleName, name).GetNumericalForm();
 			}
 			
 			string[] content = name.Split('.');
@@ -318,7 +318,7 @@ namespace Lextm.SharpSnmpLib.Mib
 				throw new ArgumentException("not a decimal after dot");
 			}
 			
-			uint[] oid = _tree.Find(module, content[0]).GetNumericalForm();
+			uint[] oid = _tree.Find(moduleName, content[0]).GetNumericalForm();
 			return Definition.AppendTo(oid, (uint)value);
 		}
 		

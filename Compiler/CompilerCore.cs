@@ -64,12 +64,12 @@ namespace Lextm.SharpSnmpLib.Compiler
 		private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
 		{
 		    IEnumerable<string> docs = (IEnumerable<string>)e.Argument;
-		    IList<SharpMibException> errors;
+		    IEnumerable<SharpMibException> errors;
 		    CompileInternal(docs, out errors);
 		    e.Result = errors;
 		}
 
-        private void CompileInternal(IEnumerable<string> docs, out IList<SharpMibException> errors)
+        private void CompileInternal(IEnumerable<string> docs, out IEnumerable<SharpMibException> errors)
 	    {
 	        IEnumerable<MibModule> modules = Parser.ParseToModules(docs, out errors);
 	        Assembler.Assemble(modules);

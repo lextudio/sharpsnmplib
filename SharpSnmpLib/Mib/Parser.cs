@@ -25,14 +25,15 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <param name="files">The files.</param>
         /// <param name="errors">The errors.</param>
         /// <returns></returns>
-        public List<MibModule> ParseToModules(IEnumerable<string> files, out IList<SharpMibException> errors)
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1021:AvoidOutParameters", MessageId = "1#")]
+        public ICollection<MibModule> ParseToModules(IEnumerable<string> files, out IEnumerable<SharpMibException> errors)
         { 
             if (files == null)
             {
                 throw new ArgumentNullException("files");
             }
 
-            errors = new List<SharpMibException>();
+            IList<SharpMibException> list = new List<SharpMibException>();
             TraceSource source = new TraceSource("Library");
             List<MibModule> modules = new List<MibModule>();
             foreach (string file in files)
@@ -43,13 +44,15 @@ namespace Lextm.SharpSnmpLib.Mib
                 }
                 catch (SharpMibException ex)
                 {
-                    errors.Add(ex);
+                    list.Add(ex);
                 }
                 finally
                 {
                     source.TraceInformation(file + " compiled");
                 }
             }
+            
+            errors = list;
 
             source.Flush();
             source.Close();

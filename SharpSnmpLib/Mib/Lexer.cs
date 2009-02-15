@@ -17,6 +17,7 @@ namespace Lextm.SharpSnmpLib.Mib
     /// <summary>
     /// Lexer class that parses MIB files into symbol list.
     /// </summary>
+	[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Lexer")]
     public sealed class Lexer
     {
         private readonly IList<Symbol> _symbols = new List<Symbol>();
@@ -72,6 +73,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <summary>
         /// Next <see cref="Symbol"/> which is not <see cref="Symbol.EOL"/>.
         /// </summary>
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "EOL")]
         public Symbol NextNonEOLSymbol
         {
             get

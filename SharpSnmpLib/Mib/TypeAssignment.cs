@@ -14,8 +14,11 @@ namespace Lextm.SharpSnmpLib.Mib
     /// </summary>
     internal sealed class TypeAssignment : ITypeAssignment
     {
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         private string _module;
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         private string _name;
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         private Symbol _last;
         private readonly Symbol _left;
         

@@ -36,11 +36,11 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <summary>
         /// Gets numerical form from textual form.
         /// </summary>
-        /// <param name="module">Module name</param>
-        /// <param name="name">Object name</param>
+        /// <param name="moduleName">Module name.</param>
+        /// <param name="name">Object name.</param>
         /// <returns></returns>
         [CLSCompliant(false)]
-        uint[] Translate(string module, string name);
+        uint[] Translate(string moduleName, string name);
 
         /// <summary>
         /// Gets textual form from numerical form.

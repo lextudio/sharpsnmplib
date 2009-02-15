@@ -2,6 +2,8 @@
 {
     internal sealed class TextualConvention : IConstruct
     {
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "module")]
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "name")]
         public TextualConvention(string module, string name, Lexer lexer)
         {
             Symbol temp;

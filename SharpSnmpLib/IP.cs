@@ -31,7 +31,7 @@ namespace Lextm.SharpSnmpLib
         /// Creates an <see cref="IP"/> from raw bytes.
         /// </summary>
         /// <param name="raw">Raw bytes</param>
-        private IP(byte[] raw) : this(raw.Length, new MemoryStream(raw))
+        internal IP(byte[] raw) : this(raw.Length, new MemoryStream(raw))
         {
         }
         

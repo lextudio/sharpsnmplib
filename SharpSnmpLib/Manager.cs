@@ -152,7 +152,7 @@ namespace Lextm.SharpSnmpLib
 		/// <param name="callBack">The callback called once the response has been received.</param>
 		/// <returns></returns>
 		public static void BeginGet(VersionCode version, IPEndPoint endpoint, OctetString community, IList<Variable> variables, int timeout,
-			GetResponseCallback callBack)
+			GetResponseCallback callback)
 		{
 			if (version == VersionCode.V3)
 			{
@@ -160,7 +160,7 @@ namespace Lextm.SharpSnmpLib
 			}
 
 			GetRequestMessage message = new GetRequestMessage(version, community, variables);
-			message.BeginGetResponse(timeout, endpoint, callBack);
+			message.BeginGetResponse(timeout, endpoint, callback);
 		}
 
         /// <summary>
@@ -762,6 +762,7 @@ namespace Lextm.SharpSnmpLib
             }
         }
 
+		[SuppressMessage("Microsoft.Design", "CA1021:AvoidOutParameters", MessageId = "5#")]
         public static bool HasNext(VersionCode version, IPEndPoint endpoint, OctetString community, Variable seed, int timeout, out Variable next)
         {
             bool result;
