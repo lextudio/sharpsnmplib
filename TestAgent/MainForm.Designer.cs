@@ -47,11 +47,13 @@ namespace TestAgent
             this.label2 = new System.Windows.Forms.Label();
             this.btnInform = new System.Windows.Forms.Button();
             this.listener1 = new Lextm.SharpSnmpLib.Listener();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtAgentPort = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btnStart
             // 
-            this.btnStart.Location = new System.Drawing.Point(30, 13);
+            this.btnStart.Location = new System.Drawing.Point(30, 54);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(75, 23);
             this.btnStart.TabIndex = 0;
@@ -61,7 +63,7 @@ namespace TestAgent
             // 
             // btnStop
             // 
-            this.btnStop.Location = new System.Drawing.Point(246, 13);
+            this.btnStop.Location = new System.Drawing.Point(246, 54);
             this.btnStop.Name = "btnStop";
             this.btnStop.Size = new System.Drawing.Size(75, 23);
             this.btnStop.TabIndex = 1;
@@ -71,7 +73,7 @@ namespace TestAgent
             // 
             // btnTrap
             // 
-            this.btnTrap.Location = new System.Drawing.Point(30, 129);
+            this.btnTrap.Location = new System.Drawing.Point(30, 167);
             this.btnTrap.Name = "btnTrap";
             this.btnTrap.Size = new System.Drawing.Size(93, 23);
             this.btnTrap.TabIndex = 2;
@@ -81,7 +83,7 @@ namespace TestAgent
             // 
             // btnTrap2
             // 
-            this.btnTrap2.Location = new System.Drawing.Point(129, 129);
+            this.btnTrap2.Location = new System.Drawing.Point(129, 167);
             this.btnTrap2.Name = "btnTrap2";
             this.btnTrap2.Size = new System.Drawing.Size(93, 23);
             this.btnTrap2.TabIndex = 3;
@@ -91,7 +93,7 @@ namespace TestAgent
             // 
             // txtIP
             // 
-            this.txtIP.Location = new System.Drawing.Point(110, 55);
+            this.txtIP.Location = new System.Drawing.Point(110, 93);
             this.txtIP.Name = "txtIP";
             this.txtIP.Size = new System.Drawing.Size(100, 20);
             this.txtIP.TabIndex = 4;
@@ -99,7 +101,7 @@ namespace TestAgent
             // 
             // txtPort
             // 
-            this.txtPort.Location = new System.Drawing.Point(110, 90);
+            this.txtPort.Location = new System.Drawing.Point(110, 128);
             this.txtPort.Name = "txtPort";
             this.txtPort.Size = new System.Drawing.Size(49, 20);
             this.txtPort.TabIndex = 5;
@@ -107,7 +109,7 @@ namespace TestAgent
             // 
             // label1
             // 
-            this.label1.Location = new System.Drawing.Point(30, 58);
+            this.label1.Location = new System.Drawing.Point(30, 96);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(66, 23);
             this.label1.TabIndex = 6;
@@ -115,7 +117,7 @@ namespace TestAgent
             // 
             // label2
             // 
-            this.label2.Location = new System.Drawing.Point(66, 93);
+            this.label2.Location = new System.Drawing.Point(66, 131);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(38, 23);
             this.label2.TabIndex = 7;
@@ -123,7 +125,7 @@ namespace TestAgent
             // 
             // btnInform
             // 
-            this.btnInform.Location = new System.Drawing.Point(228, 129);
+            this.btnInform.Location = new System.Drawing.Point(228, 167);
             this.btnInform.Name = "btnInform";
             this.btnInform.Size = new System.Drawing.Size(93, 23);
             this.btnInform.TabIndex = 8;
@@ -136,11 +138,30 @@ namespace TestAgent
             this.listener1.GetRequestReceived += new System.EventHandler<Lextm.SharpSnmpLib.MessageReceivedEventArgs<Lextm.SharpSnmpLib.GetRequestMessage>>(this.agent1_GetRequestReceived);
             this.listener1.ExceptionRaised += new System.EventHandler<Lextm.SharpSnmpLib.ExceptionRaisedEventArgs>(this.agent1_ExceptionRaised);
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(30, 13);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(57, 13);
+            this.label3.TabIndex = 9;
+            this.label3.Text = "Agent Port";
+            // 
+            // txtAgentPort
+            // 
+            this.txtAgentPort.Location = new System.Drawing.Point(110, 10);
+            this.txtAgentPort.Name = "txtAgentPort";
+            this.txtAgentPort.Size = new System.Drawing.Size(100, 20);
+            this.txtAgentPort.TabIndex = 10;
+            this.txtAgentPort.Text = "161";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(353, 172);
+            this.ClientSize = new System.Drawing.Size(353, 208);
+            this.Controls.Add(this.txtAgentPort);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.btnInform);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -168,5 +189,7 @@ namespace TestAgent
         private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.Button btnStop;
         private Lextm.SharpSnmpLib.Listener listener1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox txtAgentPort;
     }
 }

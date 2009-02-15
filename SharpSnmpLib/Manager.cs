@@ -14,7 +14,6 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     /// <remarks>
     /// <para>Drag this component into your form in designer, or create an instance in code.</para>
-    /// <para>Use <see cref="TrapListener" /> component if you only need TRAP operation.</para>
     /// <para>Currently only SNMP v1 and v2c operations are supported.</para>
     /// </remarks>
     [CLSCompliant(false)]
@@ -96,7 +95,7 @@ namespace Lextm.SharpSnmpLib
         /// <value>The objects.</value>
         public IObjectRegistry Objects
         {
-            get { return _objects ?? ObjectRegistry.Default; ; }
+            get { return _objects ?? ObjectRegistry.Default; }
             set { _objects = value; }
         }
 
@@ -140,17 +139,16 @@ namespace Lextm.SharpSnmpLib
             GetRequestMessage message = new GetRequestMessage(version, community, variables);
             return message.Broadcast(timeout, endpoint);
         }
-        
+
         /// <summary>
-		/// Gets a list of variable binds asynchronously.
-		/// </summary>
-		/// <param name="version">Protocol version.</param>
-		/// <param name="endpoint">Endpoint.</param>
-		/// <param name="community">Community name.</param>
-		/// <param name="variables">Variable binds.</param>
-		/// <param name="timeout">Timeout.</param>
-		/// <param name="callBack">The callback called once the response has been received.</param>
-		/// <returns></returns>
+        /// Gets a list of variable binds asynchronously.
+        /// </summary>
+        /// <param name="version">Protocol version.</param>
+        /// <param name="endpoint">Endpoint.</param>
+        /// <param name="community">Community name.</param>
+        /// <param name="variables">Variable binds.</param>
+        /// <param name="timeout">Timeout.</param>
+        /// <param name="callback">The callback.</param>
 		public static void BeginGet(VersionCode version, IPEndPoint endpoint, OctetString community, IList<Variable> variables, int timeout,
 			GetResponseCallback callback)
 		{
@@ -762,6 +760,18 @@ namespace Lextm.SharpSnmpLib
             }
         }
 
+        /// <summary>
+        /// Determines whether the specified seed has next item.
+        /// </summary>
+        /// <param name="version">The version.</param>
+        /// <param name="endpoint">The endpoint.</param>
+        /// <param name="community">The community.</param>
+        /// <param name="seed">The seed.</param>
+        /// <param name="timeout">The timeout.</param>
+        /// <param name="next">The next.</param>
+        /// <returns>
+        /// 	<c>true</c> if the specified seed has next item; otherwise, <c>false</c>.
+        /// </returns>
 		[SuppressMessage("Microsoft.Design", "CA1021:AvoidOutParameters", MessageId = "5#")]
         public static bool HasNext(VersionCode version, IPEndPoint endpoint, OctetString community, Variable seed, int timeout, out Variable next)
         {

@@ -8,7 +8,6 @@
  */
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Net;
 using System.Windows.Forms;
 
@@ -24,25 +23,23 @@ namespace TestAgent
 		public MainForm()
 		{
 			InitializeComponent();
-			UpdateButtons(false);
+            Application.Idle += Application_Idle;
 		}
+
+        void Application_Idle(object sender, EventArgs e)
+        {
+            btnStart.Enabled = !listener1.Active;
+            btnStop.Enabled = listener1.Active;
+        }
 
 		private void btnStart_Click(object sender, EventArgs e)
 		{
-			listener1.Start(161);
-			UpdateButtons(true);
+			listener1.Start(int.Parse(txtAgentPort.Text));
 		}
 
-		private void UpdateButtons(bool started)
-		{
-			btnStart.Enabled = !started;
-			btnStop.Enabled = started;
-		}
-
-		private void btnStop_Click(object sender, EventArgs e)
+        private void btnStop_Click(object sender, EventArgs e)
 		{
 			listener1.Stop();
-			UpdateButtons(false);
 		}
 
 		private void agent1_GetRequestReceived(object sender, Lextm.SharpSnmpLib.MessageReceivedEventArgs<GetRequestMessage> e)
@@ -65,7 +62,7 @@ namespace TestAgent
 			response.Send(e.Sender.Port);
 		}
 
-		private static ObjectIdentifier sysDescr = new ObjectIdentifier("1.3.6.1.2.1.1.1.0");
+		private static readonly ObjectIdentifier sysDescr = new ObjectIdentifier("1.3.6.1.2.1.1.1.0");
 
 		private void agent1_ExceptionRaised(object sender, ExceptionRaisedEventArgs e)
 		{

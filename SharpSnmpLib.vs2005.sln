@@ -1,6 +1,7 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 9.00
-# Visual C# Express 2005
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+# SharpDevelop 4.0.0.3805
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{669DE011-7BAD-44D5-93A4-204CFB8F4AD5}"
 	ProjectSection(SolutionItems) = preProject
 		readme.txt = readme.txt

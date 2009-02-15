@@ -301,7 +301,7 @@ namespace Lextm.SharpSnmpLib
 		/// </summary>
 		/// <param name="timeout">Timeout.</param>
 		/// <param name="receiver">Agent.</param>
-		/// <param name="callBack">The callback called once the response has been received.</param>
+		/// <param name="callback">The callback called once the response has been received.</param>
 		public void BeginGetResponse(int timeout, IPEndPoint receiver, GetResponseCallback callback)
 		{
 			ByteTool.BeginGetResponse(receiver, _bytes, SequenceNumber, timeout, callback);
@@ -312,7 +312,7 @@ namespace Lextm.SharpSnmpLib
 		/// </summary>
 		/// <param name="timeout">Timeout.</param>
 		/// <param name="receiver">Agent.</param>
-		/// <param name="callBack">The callback called once the response has been received.</param>
+		/// <param name="callback">The callback called once the response has been received.</param>
 		/// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
 		public void BeginGetResponse(int timeout, IPEndPoint receiver, GetResponseCallback callback, Socket udpSocket)
 		{
@@ -324,7 +324,7 @@ namespace Lextm.SharpSnmpLib
 		/// </summary>
 		/// <param name="timeout">Timeout.</param>
 		/// <param name="receiver">Agent.</param>
-		/// <param name="callBack">The callback called once the response has been received.</param>
+		/// <param name="callback">The callback called once the response has been received.</param>
 		/// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
 		public void BeginGetResponseRaw(int timeout, IPEndPoint receiver, GetResponseRawCallback callback, Socket udpSocket)
 		{

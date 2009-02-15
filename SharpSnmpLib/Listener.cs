@@ -11,7 +11,6 @@ using System.ComponentModel;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
-using System.Diagnostics;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -21,10 +20,10 @@ namespace Lextm.SharpSnmpLib
 	/// <remarks>
 	/// Drag this component into your form in designer, or create an instance in code.
 	/// </remarks>
-	public sealed class Listener : IDisposable
+	public sealed class Listener : Component
 	{
 		private const int DEFAULTPORT = 162;
-		private IPEndPoint defaultEndPoint = new IPEndPoint(IPAddress.Any, DEFAULTPORT);
+		private readonly IPEndPoint defaultEndPoint = new IPEndPoint(IPAddress.Any, DEFAULTPORT);
 		private Socket _socket;
 		private int _bufferSize;
 		/// <summary>
@@ -36,19 +35,11 @@ namespace Lextm.SharpSnmpLib
 
 		#region Constructor
 
-		/// <summary>
-		/// Creates a <see cref="Listener" /> instance.
-		/// </summary>
-		public Listener()
-		{
-		}
-		
-		~Listener()
-		{
-			Dispose(false);
-		}
-		
-		private void Dispose(bool disposing)
+        /// <summary>
+        /// Releases the unmanaged resources used by the <see cref="T:System.ComponentModel.Component"/> and optionally releases the managed resources.
+        /// </summary>
+        /// <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
+	    protected override void Dispose(bool disposing)
 		{
 			if (disposed)
 			{
@@ -61,20 +52,11 @@ namespace Lextm.SharpSnmpLib
 				if (_socket != null)
 				{
 					_socket.Close();	// Note that closing the socket releases the _socket.ReceiveFrom call.
-					(_socket as IDisposable).Dispose();
 				}
 			}
 			
+            base.Dispose(disposing);
 			disposed = true;
-		}
-
-		/// <summary>
-		/// Dispose the <see cref="Listener" />.
-		/// </summary>
-		public void Dispose()
-		{
-			Dispose(true);
-			GC.SuppressFinalize(this);
 		}
 
 		#endregion Constructor
@@ -130,6 +112,11 @@ namespace Lextm.SharpSnmpLib
 		{
 			get
 			{
+                if (disposed)
+                {
+                    throw new ObjectDisposedException("Listener");
+                }
+
 				return _port;
 			}
 		}
@@ -161,6 +148,11 @@ namespace Lextm.SharpSnmpLib
 			{
 				throw new ArgumentNullException("endpoint");
 			}
+
+            if (disposed)
+            {
+                throw new ObjectDisposedException("Listener");
+            }
 
 			long isActiveBeforeChg = Interlocked.CompareExchange(ref _isActive, 1, 0);
 			if (isActiveBeforeChg == 1)	// If already started, we've nothing to do.
@@ -198,10 +190,18 @@ namespace Lextm.SharpSnmpLib
 		/// </summary>
 		public void Stop()
 		{
+            if (disposed)
+            {
+                throw new ObjectDisposedException("Listener");
+            }
+
 			long isActiveBeforeChg = Interlocked.CompareExchange(ref _isActive, 0, 1);
 
 			if (isActiveBeforeChg == 1)
+			{
 				_socket.Close();	// Note that closing the socket releases the _socket.ReceiveFrom call.
+			    _socket = null;
+            }
 		}
 
 		#if ASYNC
@@ -263,8 +263,6 @@ namespace Lextm.SharpSnmpLib
 		#else
 		void AsyncReceive(object dummy)
 		{
-			//uint loops = 0;
-
 			while (true)
 			{
 				//If no more active, then stop.
@@ -273,23 +271,6 @@ namespace Lextm.SharpSnmpLib
 
 				try
 				{
-					// Not needed and use CPU (note that the Windows TaskMgr is not enough precise to show it.
-					// But use SpinWait(20 * 1000) instead and you'll see...
-					//int number = _socket.Available;
-					//if (number == 0)
-					//{
-					//    if (Environment.ProcessorCount == 1 || unchecked(++loops % 100) == 0)
-					//    {
-					//        Thread.Sleep(1);
-					//    }
-					//    else
-					//    {
-					//        Thread.SpinWait(20);
-					//    }
-
-					//    continue;
-					//}
-
 					byte[] buffer = new byte[_bufferSize];
 					EndPoint remote = new IPEndPoint(IPAddress.Any, 0);
 					int count = _socket.ReceiveFrom(buffer, ref remote);
@@ -309,9 +290,6 @@ namespace Lextm.SharpSnmpLib
 
 		private void HandleException(Exception exception)
 		{
-			//Debug.WriteLine(exception.ToString());
-			//Console.WriteLine(exception.ToString());
-
 			EventHandler<ExceptionRaisedEventArgs> handler = ExceptionRaised;
 			if (handler == null)
 			{
@@ -427,11 +405,16 @@ namespace Lextm.SharpSnmpLib
 		}
 
 		/// <summary>
-		/// Returns a <see cref="String"/> that represents a <see cref="TrapListener"/>.
+		/// Returns a <see cref="String"/> that represents a <see cref="Listener"/>.
 		/// </summary>
 		/// <returns></returns>
 		public override string ToString()
 		{
+            if (disposed)
+            {
+                throw new ObjectDisposedException("Listener");
+            }
+
 			return "Listener";
 		}
 
@@ -442,6 +425,11 @@ namespace Lextm.SharpSnmpLib
 		{
 			get
 			{
+                if (disposed)
+                {
+                    throw new ObjectDisposedException("Listener");
+                }
+
 				return Interlocked.Read(ref _isActive) == 1;
 			}
 		}

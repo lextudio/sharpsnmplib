@@ -84,7 +84,9 @@
     <Compile Include="ISnmpData.cs" />
     <Compile Include="IP.cs" />
     <Compile Include="ISnmpPdu.cs" />
-    <Compile Include="Listener.cs" />
+    <Compile Include="Listener.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Manager.cs">
       <SubType>Component</SubType>
     </Compile>

@@ -27,7 +27,7 @@ namespace Lextm.SharpSnmpLib.Tests
 		[Test]
 		public void Test()
 		{
-			byte[] expected = Resource.get;
+			byte[] expected = TestResources.get;
 			ISnmpMessage message = MessageFactory.ParseMessages(expected)[0];
             Assert.AreEqual(SnmpType.GetRequestPdu, message.Pdu.TypeCode);
             GetRequestPdu pdu = (GetRequestPdu)message.Pdu;
@@ -44,7 +44,7 @@ namespace Lextm.SharpSnmpLib.Tests
             List<Variable> list = new List<Variable>(1);
             list.Add(new Variable(new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 1, 6, 0 }), new Null()));
             GetRequestMessage message = new GetRequestMessage(VersionCode.V2, new OctetString("public"), list);
-            Assert.GreaterOrEqual(Resource.get.Length, message.ToBytes().Length);
+            Assert.GreaterOrEqual(TestResources.get.Length, message.ToBytes().Length);
         }
 	}
 }
