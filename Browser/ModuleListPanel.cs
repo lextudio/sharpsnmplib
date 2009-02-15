@@ -51,13 +51,17 @@ namespace Lextm.SharpSnmpLib.Browser
 			ObjectRegistry reg = (ObjectRegistry)sender;
 			SuspendLayout();
 			listView1.Items.Clear();
-			foreach (string module in reg.Tree.LoadedModules)
+			List<string> loaded = new List<string>(reg.Tree.LoadedModules);
+			loaded.Sort();
+			foreach (string module in loaded)
 			{
 				ListViewItem item = listView1.Items.Add(module);
 				item.Group = listView1.Groups["lvgLoaded"];
 			}
 			
-			foreach (string pending in reg.Tree.PendingModules)
+		    List<string> pendings = new List<string>(reg.Tree.PendingModules);
+			pendings.Sort();
+			foreach (string pending in pendings)
 			{
 				ListViewItem item = listView1.Items.Add(pending);
 				item.BackColor = Color.LightGray;

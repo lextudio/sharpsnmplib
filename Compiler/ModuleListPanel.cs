@@ -6,14 +6,16 @@
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
-using System.Diagnostics;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
+
 using Lextm.SharpSnmpLib.Mib;
 using Microsoft.Practices.Unity;
 using WeifenLuo.WinFormsUI.Docking;
-using System.IO;
 
 namespace Lextm.SharpSnmpLib.Compiler
 {
@@ -51,13 +53,17 @@ namespace Lextm.SharpSnmpLib.Compiler
         {
             SuspendLayout();
             listView1.Items.Clear();
-            foreach (string module in Assembler.Tree.LoadedModules)
+            List<string> loaded = new List<string>(Assembler.Tree.LoadedModules);
+			loaded.Sort();
+            foreach (string module in loaded)
             {
                 ListViewItem item = listView1.Items.Add(module);
                 item.Group = listView1.Groups["lvgLoaded"];
             }
             
-            foreach (string pending in Assembler.Tree.PendingModules)
+            List<string> pendings = new List<string>(Assembler.Tree.PendingModules);
+			pendings.Sort();
+            foreach (string pending in pendings)
             {
                 ListViewItem item = listView1.Items.Add(pending);
                 item.BackColor = Color.LightGray;
