@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics.CodeAnalysis;
 
 // SNMP library for .NET by Malcolm Crowe at University of the West of Scotland
@@ -18,6 +19,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// SNMP type code. The values are tag values for SNMP types.
     /// </summary>
+    [Serializable]
     public enum SnmpType // RFC1213 subset of ASN.1
     { 
         EndMarker = 0x00,

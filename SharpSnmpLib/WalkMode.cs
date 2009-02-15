@@ -8,9 +8,11 @@
  */
 namespace Lextm.SharpSnmpLib
 {
+	using System;
     /// <summary>
     /// Walk mode.
     /// </summary>
+    [Serializable]
     public enum WalkMode
     {
         /// <summary>

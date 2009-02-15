@@ -91,9 +91,9 @@ namespace Lextm.SharpSnmpLib.Mib
 			}
 		}
 
-		public IDefinition Find(string module, string name)
+		public IDefinition Find(string moduleName, string name)
 		{
-			string full = module + "::" + name;
+			string full = moduleName + "::" + name;
 			if (nameTable.ContainsKey(full))
 			{
 				return nameTable[full];
@@ -499,16 +499,16 @@ namespace Lextm.SharpSnmpLib.Mib
 		
 		#region IObjectTree Members
 
-		public void Remove(string module)
+		public void Remove(string moduleName)
 		{
-			if (_loaded.ContainsKey(module))
+			if (_loaded.ContainsKey(moduleName))
 			{
-				_loaded.Remove(module);
+				_loaded.Remove(moduleName);
 			}
 
-			if (_pendings.ContainsKey(module))
+			if (_pendings.ContainsKey(moduleName))
 			{
-				_pendings.Remove(module);
+				_pendings.Remove(moduleName);
 			}
 
 			// TODO: remove all those nodes

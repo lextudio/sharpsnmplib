@@ -21,6 +21,12 @@ namespace Lextm.SharpSnmpLib.Tests
         {
             Assert.AreEqual(false, new Null().Equals(null));
         }
+        
+        [Test]
+        public void TestToBytes()
+        {
+        	Assert.AreEqual(new byte[] { 0x05, 0x00 }, new Null().ToBytes());
+        }
     }
 }
 #pragma warning restore 1591

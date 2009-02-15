@@ -233,6 +233,11 @@ namespace Lextm.SharpSnmpLib.Mib
 		/// <returns></returns>
 		public bool ValidateTable(ObjectIdentifier identifier)
 		{
+			if (identifier == null)
+			{
+				throw new ArgumentNullException("identifier");
+			}
+				
 			try
 			{
 				return IsTableId(identifier.ToNumerical());

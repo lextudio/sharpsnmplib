@@ -135,6 +135,7 @@
     <Compile Include="Null.cs" />
     <Compile Include="ObjectIdentifier.cs" />
     <Compile Include="Mib\ObjectRegistry.cs" />
+    <Compile Include="ObjectIdentifierConverter.cs" />
     <Compile Include="OctetString.cs" />
     <Compile Include="Integer32.cs" />
     <Compile Include="Opaque.cs" />

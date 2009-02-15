@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tests\TestEndOfMibView.cs" />
     <Compile Include="Tests\TestManager.cs" />
     <Compile Include="Tests\TestByteTool.cs" />
     <Compile Include="Tests\TestConstructHelper.cs" />
@@ -63,6 +64,8 @@
     <Compile Include="Tests\TestLexer.cs" />
     <Compile Include="Tests\TestMessageFactory.cs" />
     <Compile Include="Tests\TestMibDocument.cs" />
+    <Compile Include="Tests\TestNoSuchInstance.cs" />
+    <Compile Include="Tests\TestNoSuchObject.cs" />
     <Compile Include="Tests\TestNull.cs" />
     <Compile Include="Tests\TestObjectIdentifier.cs" />
     <Compile Include="Tests\TestObjectRegistry.cs" />

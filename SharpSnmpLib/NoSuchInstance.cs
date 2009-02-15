@@ -90,7 +90,9 @@ namespace Lextm.SharpSnmpLib
         [Obsolete("Use AppendBytesTo instead.")]
         public byte[] ToBytes()
         {
-            return constantNoSuchInstance;
+            MemoryStream result = new MemoryStream();
+            AppendBytesTo(result);
+            return result.ToArray();
         }
 
         /// <summary>
@@ -99,10 +101,8 @@ namespace Lextm.SharpSnmpLib
         /// <param name="stream">The stream.</param>
         public void AppendBytesTo(Stream stream)
         {
-            stream.Write(constantNoSuchInstance, 0, constantNoSuchInstance.Length);
+            ByteTool.AppendBytes(stream, TypeCode, new byte[0]);
         }
-
-        private readonly static byte[] constantNoSuchInstance = new byte[] { 0x81, 0x00 };
         
         /// <summary>
         /// Returns a <see cref="String"/> that represents this <see cref="NoSuchInstance"/>.

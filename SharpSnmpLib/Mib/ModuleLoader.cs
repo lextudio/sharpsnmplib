@@ -15,7 +15,7 @@ namespace Lextm.SharpSnmpLib.Mib
 	/// <summary>
 	/// Description of ModuleLoader.
 	/// </summary>
-	internal class ModuleLoader
+	internal sealed class ModuleLoader
 	{
 		private List<Definition> nodes;
 		private List<string> dependents;

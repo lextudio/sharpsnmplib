@@ -8,9 +8,12 @@
  */
 namespace Lextm.SharpSnmpLib
 {
+	using System;
+	
     /// <summary>
     /// Generic trap code.
     /// </summary>
+    [Serializable]
     public enum GenericCode
     {
         /// <summary>

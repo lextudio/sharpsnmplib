@@ -35,7 +35,9 @@ namespace Lextm.SharpSnmpLib
         [Obsolete("Use AppendBytesTo instead.")]
         public byte[] ToBytes()
         {
-            return _null;
+            MemoryStream result = new MemoryStream();
+            AppendBytesTo(result);
+            return result.ToArray();
         }
 
         /// <summary>
@@ -44,10 +46,8 @@ namespace Lextm.SharpSnmpLib
         /// <param name="stream">The stream.</param>
         public void AppendBytesTo(Stream stream)
         {
-            stream.Write(_null, 0, _null.Length);
+            ByteTool.AppendBytes(stream, TypeCode, new byte[0]);
         }
-
-        private readonly static byte[] _null = new byte[] { 0x05, 0x00 };
         
         /// <summary>
         /// Determines whether the specified <see cref="Object"/> is equal to the current <see cref="Null"/>.

@@ -253,7 +253,7 @@ namespace Lextm.SharpSnmpLib
         {
             return string.Format(
                 CultureInfo.InvariantCulture,
-                "SNMPv1 trap: " + _pdu);
+                "SNMPv1 trap: {0}", _pdu);
         }
     }
 }

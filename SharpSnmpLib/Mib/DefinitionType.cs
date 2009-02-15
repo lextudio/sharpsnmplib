@@ -1,8 +1,10 @@
 ﻿namespace Lextm.SharpSnmpLib.Mib
 {
+	using System;
     /// <summary>
     /// Definition type.
     /// </summary>
+    [Serializable]
     public enum DefinitionType
     {
         /// <summary>

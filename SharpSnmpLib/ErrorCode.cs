@@ -1,8 +1,10 @@
 ﻿namespace Lextm.SharpSnmpLib
 {
+	using System;
     /// <summary>
     /// Error code for SNMP operations.
     /// </summary>
+    [Serializable]
     public enum ErrorCode
     {
         /// <summary>

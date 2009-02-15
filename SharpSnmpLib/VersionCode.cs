@@ -1,8 +1,10 @@
 ﻿namespace Lextm.SharpSnmpLib
 {
+	using System;
     /// <summary>
     /// Protocol version code.
     /// </summary>
+    [Serializable]
     public enum VersionCode
     {
         /// <summary>

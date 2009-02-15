@@ -455,6 +455,11 @@ namespace Lextm.SharpSnmpLib
 		
 		internal static void AppendBytes(Stream stream, SnmpType typeCode, byte[] raw)
 		{
+			if (stream == null)
+			{
+				throw new ArgumentNullException("stream");
+			}
+			
 			stream.WriteByte((byte)typeCode);
 			WritePayloadLength(stream, raw.Length);
 			stream.Write(raw, 0, raw.Length);
