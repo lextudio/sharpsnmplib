@@ -84,15 +84,16 @@ namespace Lextm.SharpSnmpLib
         /// <param name="enterprise">Enterprise OID.</param>
         /// <param name="timestamp">Timestamp.</param>
         /// <param name="variables">Variable bindings.</param>
+        /// <param name="requestId">Request ID.</param>
         [CLSCompliant(false)]
-        public static void SendTrapV2(VersionCode version, IPEndPoint receiver, OctetString community, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables)
+        public static void SendTrapV2(int requestId, VersionCode version, IPEndPoint receiver, OctetString community, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables)
         {
             if (version == VersionCode.V1)
             {
                 throw new ArgumentException("SNMP v1 is not support", "version");
             }
 
-            TrapV2Message message = new TrapV2Message(version, community, enterprise, timestamp, variables);
+            TrapV2Message message = new TrapV2Message(requestId, version, community, enterprise, timestamp, variables);
             message.Send(receiver);
         }
 

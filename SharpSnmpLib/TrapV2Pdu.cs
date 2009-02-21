@@ -13,7 +13,7 @@ namespace Lextm.SharpSnmpLib
     public class TrapV2Pdu : ISnmpPdu
     {
         private readonly IList<Variable> _variables;
-        private readonly Integer32 _version;
+        private readonly Integer32 _requestId;
         private byte[] _raw;
         private readonly Sequence _varbindSection;
         private readonly TimeTicks _time;
@@ -22,14 +22,14 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Creates a <see cref="TrapV2Pdu"/> instance with all content.
         /// </summary>
-        /// <param name="version">Version code</param>
-        /// <param name="enterprise">Enterprise</param>
-        /// <param name="time">Time stamp</param>
-        /// <param name="variables">Variables</param>
-        public TrapV2Pdu(Integer32 version, ObjectIdentifier enterprise, TimeTicks time, IList<Variable> variables)
+        /// <param name="requestId">Request ID.</param>
+        /// <param name="enterprise">Enterprise.</param>
+        /// <param name="time">Time stamp.</param>
+        /// <param name="variables">Variables.</param>
+        public TrapV2Pdu(Integer32 requestId, ObjectIdentifier enterprise, TimeTicks time, IList<Variable> variables)
         {
             _enterprise = enterprise;
-            _version = version;
+            _requestId = requestId;
             _time = time;
             _variables = variables;
             IList<Variable> full = new List<Variable>(variables);
@@ -79,7 +79,7 @@ namespace Lextm.SharpSnmpLib
 		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "temp1")]
         public TrapV2Pdu(int length, Stream stream)
         {
-            _version = (Integer32)DataFactory.CreateSnmpData(stream); // version number v2c
+            _requestId = (Integer32)DataFactory.CreateSnmpData(stream); // request
             Integer32 temp1 = (Integer32) DataFactory.CreateSnmpData(stream); // 0
             Integer32 temp2 = (Integer32) DataFactory.CreateSnmpData(stream); // 0
             _varbindSection = (Sequence)DataFactory.CreateSnmpData(stream);
@@ -100,7 +100,7 @@ namespace Lextm.SharpSnmpLib
         {
 			if (_raw == null)
 			{
-				_raw = ByteTool.ParseItems(_version, new Integer32(0), new Integer32(0), _varbindSection);
+				_raw = ByteTool.ParseItems(_requestId, new Integer32(0), new Integer32(0), _varbindSection);
 			}
 
             ByteTool.AppendBytes(stream, TypeCode, _raw);
@@ -145,10 +145,11 @@ namespace Lextm.SharpSnmpLib
         {
             return string.Format(
                 CultureInfo.InvariantCulture,
-                "TRAP v2 PDU: enterprise: {0}; time stamp: {1}; variable count: {2}",
+                "TRAP v2 PDU: request ID: {3}; enterprise: {0}; time stamp: {1}; variable count: {2}",
                 _enterprise, 
                 _time, 
-                _variables.Count.ToString(CultureInfo.InvariantCulture));
+                _variables.Count.ToString(CultureInfo.InvariantCulture),
+                _requestId);
         }
     }
 }

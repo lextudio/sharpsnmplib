@@ -22,20 +22,21 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Creates a <see cref="TrapV2Message"/> instance with all content.
         /// </summary>
-        /// <param name="version">Version code</param>
-        /// <param name="community">Community</param>
-        /// <param name="enterprise">Enterprise</param>
-        /// <param name="time">Time stamp</param>
-        /// <param name="variables">Variables</param>
+        /// <param name="version">Version code.</param>
+        /// <param name="community">Community.</param>
+        /// <param name="enterprise">Enterprise.</param>
+        /// <param name="time">Time stamp.</param>
+        /// <param name="variables">Variables.</param>
+        /// <param name="requestId">Request ID.</param>
         [CLSCompliant(false)]
-        public TrapV2Message(VersionCode version, OctetString community, ObjectIdentifier enterprise, uint time, IList<Variable> variables)
+        public TrapV2Message(int requestId, VersionCode version, OctetString community, ObjectIdentifier enterprise, uint time, IList<Variable> variables)
         {
             _version = version;
             _community = community;
             _enterprise = enterprise;
             _time = time;
             _variables = variables;
-            _pdu = new TrapV2Pdu(new Integer32((int)_version), _enterprise, new TimeTicks(_time), _variables);
+            _pdu = new TrapV2Pdu(new Integer32(requestId), _enterprise, new TimeTicks(_time), _variables);
 			//_bytes = _pdu.ToMessageBody(_version, _community).ToBytes();
         }
         
