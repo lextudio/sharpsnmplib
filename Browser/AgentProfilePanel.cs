@@ -181,13 +181,5 @@ namespace Lextm.SharpSnmpLib.Browser
                 contextAgentMenu.Show(listView1, e.Location);
             }
         }
-
-        private void listView1_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left && listView1.SelectedItems.Count == 1)
-            {
-                actEdit.DoExecute();
-            }
-        }
     }
 }

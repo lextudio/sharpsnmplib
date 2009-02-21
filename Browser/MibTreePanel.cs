@@ -8,6 +8,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using Lextm.SharpSnmpLib.Mib;
 using Microsoft.Practices.Unity;
@@ -56,11 +57,22 @@ namespace Lextm.SharpSnmpLib.Browser
             node.SelectedImageIndex = (int)definition.Type;
             node.ToolTipText = definition.TextualForm + Environment.NewLine + definition.Value;
 
-            foreach (IDefinition def in definition.Children)
+            List<IDefinition> list = new List<IDefinition>(definition.Children);
+            list.Sort(new DefinitionComparer());
+            foreach (IDefinition def in list)
             {
                 node.Nodes.Add(Wrap(def));
             }
+
             return node;
+        }
+        
+        private class DefinitionComparer: IComparer<IDefinition>
+        {      	        	
+			public int Compare(IDefinition x, IDefinition y)
+			{
+				return x.Value.CompareTo(y.Value);
+			}
         }
 
         private void actGet_Execute(object sender, EventArgs e)

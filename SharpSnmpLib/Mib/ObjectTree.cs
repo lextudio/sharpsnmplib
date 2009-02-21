@@ -231,8 +231,11 @@ namespace Lextm.SharpSnmpLib.Mib
 
 						// create all place holders.
 						IDefinition unknown = CreateExtraNodes(module.Name, node.Parent);
-						node.Parent = unknown.Name;
-						AddToTable(CreateSelf(node));
+						if (unknown != null)
+						{
+							node.Parent = unknown.Name;
+							AddToTable(CreateSelf(node));
+						}
 					}
 					else
 					{
@@ -325,8 +328,18 @@ namespace Lextm.SharpSnmpLib.Mib
 					string parent = content[i - 1];
 					IEntity extra = new OidValueAssignment(module, StringUtility.ExtractName(self), StringUtility.ExtractName(parent), StringUtility.ExtractValue(self));
 					node = CreateSelf(extra);
-					AddToTable(node);
-					all[currentCursor] = node.Value;
+					if (node != null)
+					{
+						AddToTable(node);
+						all[currentCursor] = node.Value;
+					}
+					else
+					{
+						TraceSource source = new TraceSource("Library");
+						source.TraceInformation("ignored " + longParent + " in module " + module);
+						source.Flush();
+						source.Close();
+					}
 				}
 			}
 
