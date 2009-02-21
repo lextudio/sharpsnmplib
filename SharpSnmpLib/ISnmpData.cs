@@ -37,5 +37,11 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         [Obsolete("Use AppendBytesTo instead.")]
         byte[] ToBytes();
+        
+        /// <summary>
+        /// Returns a <see cref="String"/> that represents this object.
+        /// </summary>
+        /// <returns></returns>
+        string ToString();
     }
 }
