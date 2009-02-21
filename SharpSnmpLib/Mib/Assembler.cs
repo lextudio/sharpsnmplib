@@ -75,11 +75,15 @@ namespace Lextm.SharpSnmpLib.Mib
 			RealTree.Import(modules);
 			RealTree.Refresh();
 
-			foreach (string module in Tree.LoadedModules)
+			foreach (MibModule module in modules)
 			{
-				MibModule m = null;
-				source.TraceInformation(module + " is parsed");
-				PersistModuleToFile(Folder, m, Tree);
+				if (Tree.PendingModules.Contains(module.Name))
+				{
+					continue;
+				}
+				
+				source.TraceInformation(module.Name + " is parsed");
+				PersistModuleToFile(Folder, module, Tree);
 			}
 			
 			foreach (string module in Tree.PendingModules)
