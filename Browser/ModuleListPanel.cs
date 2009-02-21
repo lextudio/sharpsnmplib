@@ -80,40 +80,6 @@ namespace Lextm.SharpSnmpLib.Browser
 			source.TraceInformation("Addition is not yet implemented: " + listView1.SelectedItems[0].Text);
 			source.Flush();
 			source.Close();
-//			if (openFileDialog1.ShowDialog() != DialogResult.OK)
-//			{
-//				return;
-//			}
-//
-//			ICollection<string> files = openFileDialog1.FileNames;
-//			if (files.Count == 0)
-//			{
-//				return;
-//			}
-//
-//			if (!Directory.Exists(Objects.Path))
-//			{
-//				Directory.CreateDirectory(Objects.Path);
-//			}
-//
-//			foreach (string file in files)
-//			{
-//				string name = Path.GetFileName(file);
-//				string destFileName = Path.Combine(Objects.Path, name);
-//				if (File.Exists(destFileName))
-//				{
-//					TraceSource source = new TraceSource("Browser");
-//					source.TraceInformation("File already exists: " + name);
-//					source.Flush();
-//					source.Close();
-//				}
-//				else
-//				{
-//					File.Copy(file, destFileName);
-//				}
-//			}
-//
-//			Objects.Refresh();
 		}
 
 		private void actRemove_Execute(object sender, EventArgs e)

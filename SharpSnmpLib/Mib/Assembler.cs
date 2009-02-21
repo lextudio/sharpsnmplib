@@ -54,7 +54,7 @@ namespace Lextm.SharpSnmpLib.Mib
 		/// <param name="folder">Folder.</param>
 		public Assembler(string folder)
 		{
-			_folder = folder;
+			_folder = Path.GetFullPath(folder);
 			if (!Directory.Exists(_folder))
 			{
 				Directory.CreateDirectory(_folder);

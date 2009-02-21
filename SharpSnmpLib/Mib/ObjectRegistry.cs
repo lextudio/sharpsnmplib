@@ -23,7 +23,7 @@ namespace Lextm.SharpSnmpLib.Mib
 		private static volatile IObjectRegistry _default;
 		private static readonly object locker = new object();
 		private readonly string _path;
-		private const string DefaultPath = "modules";
+		private readonly static string DefaultPath = System.IO.Path.GetFullPath("modules");
 
 		private ObjectRegistry()
 		{
@@ -67,7 +67,7 @@ namespace Lextm.SharpSnmpLib.Mib
 			}
 			else
 			{
-				_path = path;
+				_path = System.IO.Path.GetFullPath(path);
 			}
 
 			if (Directory.Exists(_path))
@@ -376,9 +376,11 @@ namespace Lextm.SharpSnmpLib.Mib
 				throw new ArgumentException("folder cannot be empty");
 			}
 			
-			if (!Directory.Exists(folder))
+			string path = System.IO.Path.GetFullPath(folder);
+			
+			if (!Directory.Exists(path))
 			{
-				throw new ArgumentException("folder does not exist: " + folder);
+				throw new ArgumentException("folder does not exist: " + path);
 			}
 			
 			if (pattern == null)
@@ -391,7 +393,7 @@ namespace Lextm.SharpSnmpLib.Mib
 				throw new ArgumentException("pattern cannot be empty");
 			}
 			
-			CompileFiles(Directory.GetFiles(folder, pattern));
+			CompileFiles(Directory.GetFiles(path, pattern));
 		}
 
 		/// <summary>
