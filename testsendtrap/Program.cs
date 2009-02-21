@@ -41,7 +41,7 @@ namespace TestSendTrap
             //Thread.Sleep(50);
 
 
-            Agent.SendTrapV2(VersionCode.V2, new IPEndPoint(address, 162), 
+            Agent.SendTrapV2(0, VersionCode.V2, new IPEndPoint(address, 162), 
                                                  new OctetString("public"),
                                                       new ObjectIdentifier(new uint[] { 1, 3, 6 }),
                                                       0,

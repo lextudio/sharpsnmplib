@@ -26,24 +26,30 @@ namespace Lextm.SharpSnmpLib.Compiler
 			InitializeComponent();
 		}
 
-        public void WriteLine(string message)
-        {
-            txtMessages.AppendText(string.Format("[{0}] {1}", DateTime.Now, message));
-            txtMessages.AppendText(Environment.NewLine);
-            txtMessages.ScrollToCaret();
-        }
+		public void WriteLine(string message)
+		{
+			if (InvokeRequired)
+			{
+				Invoke((MethodInvoker)delegate { WriteLine(message); });
+				return;
+			}
 
-        private void actClear_Execute(object sender, EventArgs e)
-        {
-            txtMessages.Clear();
-        }
+			txtMessages.AppendText(string.Format("[{0}] {1}", DateTime.Now, message));
+			txtMessages.AppendText(Environment.NewLine);
+			txtMessages.ScrollToCaret();
+		}
 
-        private void txtMessages_MouseUp(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
-                contextOuputMenu.Show(txtMessages, e.Location);
-            }
-        }
+		private void actClear_Execute(object sender, EventArgs e)
+		{
+			txtMessages.Clear();
+		}
+
+		private void txtMessages_MouseUp(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right)
+			{
+				contextOuputMenu.Show(txtMessages, e.Location);
+			}
+		}
 	}
 }

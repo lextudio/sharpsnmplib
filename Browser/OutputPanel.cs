@@ -20,38 +20,44 @@ namespace Lextm.SharpSnmpLib.Browser
 	/// </summary>
 	internal partial class OutputPanel : DockContent, IOutputPanel
 	{
-	    private IProfileRegistry _profiles;
+		private IProfileRegistry _profiles;
 
-	    public OutputPanel()
+		public OutputPanel()
 		{
 			InitializeComponent();
 		}
 
-        public void WriteLine(string message)
-        {
-            txtMessages.AppendText(string.Format(CultureInfo.CurrentCulture, "[{2}] [{0}] {1}", DateTime.Now, message, Profiles.DefaultProfile.Agent));
-            txtMessages.AppendText(Environment.NewLine);
-            txtMessages.ScrollToCaret();
-        }
+		public void WriteLine(string message)
+		{
+			if (InvokeRequired)
+			{
+				Invoke((MethodInvoker)delegate { WriteLine(message); });
+				return;
+			}
+			
+			txtMessages.AppendText(string.Format(CultureInfo.CurrentCulture, "[{2}] [{0}] {1}", DateTime.Now, message, Profiles.DefaultProfile.Agent));
+			txtMessages.AppendText(Environment.NewLine);
+			txtMessages.ScrollToCaret();
+		}
 
-        [Dependency]
-	    public IProfileRegistry Profiles
-	    {
-	        get { return _profiles; }
-	        set { _profiles = value; }
-	    }
+		[Dependency]
+		public IProfileRegistry Profiles
+		{
+			get { return _profiles; }
+			set { _profiles = value; }
+		}
 
-	    private void actClear_Execute(object sender, EventArgs e)
-        {
-            txtMessages.Clear();
-        }
+		private void actClear_Execute(object sender, EventArgs e)
+		{
+			txtMessages.Clear();
+		}
 
-        private void txtMessages_MouseUp(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
-                contextOuputMenu.Show(txtMessages, e.Location);
-            }
-        }
+		private void txtMessages_MouseUp(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right)
+			{
+				contextOuputMenu.Show(txtMessages, e.Location);
+			}
+		}
 	}
 }
