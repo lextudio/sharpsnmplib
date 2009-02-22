@@ -627,6 +627,11 @@ namespace Lextm.SharpSnmpLib
         [SuppressMessage("Microsoft.Design", "CA1021:AvoidOutParameters", MessageId = "5#")]
         public static bool HasNext(VersionCode version, IPEndPoint endpoint, OctetString community, Variable seed, int timeout, out Variable next)
         {
+            if (seed == null)
+            {
+                throw new ArgumentNullException("seed");
+            }
+            
             List<Variable> variables = new List<Variable>();
             variables.Add(new Variable(seed.Id));
 

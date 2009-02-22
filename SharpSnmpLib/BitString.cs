@@ -254,9 +254,11 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public byte[] ToBytes()
         {
-            MemoryStream result = new MemoryStream();
-            AppendBytesTo(result);
-            return result.ToArray();
+            using (MemoryStream result = new MemoryStream())
+            {
+                AppendBytesTo(result);
+                return result.ToArray();
+            }
         }
 
         /// <summary>
@@ -304,7 +306,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns><value>true</value> if the specified <see cref="Object"/> is equal to the current <see cref="BitString"/>; otherwise, <value>false</value>.
         /// </returns>
         public override bool Equals(object obj)
-        {            
+        {
             return Equals(this, obj as BitString);
         }
         

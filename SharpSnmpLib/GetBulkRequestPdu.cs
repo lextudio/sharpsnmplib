@@ -52,9 +52,8 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Initializes a new instance of the <see cref="GetBulkRequestPdu"/> class.
         /// </summary>
-        /// <param name="length">The length.</param>
         /// <param name="stream">The stream.</param>
-        public GetBulkRequestPdu(int length, Stream stream)
+        public GetBulkRequestPdu(Stream stream)
         {
             _requestId = (Integer32)DataFactory.CreateSnmpData(stream);
             _nonRepeaters = (Integer32)DataFactory.CreateSnmpData(stream);
@@ -137,9 +136,11 @@ namespace Lextm.SharpSnmpLib
         [Obsolete("Use AppendBytesTo instead.")]
         public byte[] ToBytes()
         {
-            MemoryStream result = new MemoryStream();
-            AppendBytesTo(result);
-            return result.ToArray();
+            using (MemoryStream result = new MemoryStream())
+            {
+                AppendBytesTo(result);
+                return result.ToArray();
+            }
         }
 
         #endregion

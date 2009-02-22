@@ -77,10 +77,10 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
-            if (destinationType == typeof(string) && value is ObjectIdentifier)
+            ObjectIdentifier oid = value as ObjectIdentifier;
+            if (destinationType == typeof(string) && oid != null)
             {
-                ObjectIdentifier oid = (ObjectIdentifier)value;
-                return oid.GetTextual(null);
+                 return oid.GetTextual(null);
             }
     
             return base.ConvertTo(context, culture, value, destinationType);

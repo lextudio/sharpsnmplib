@@ -35,6 +35,11 @@ namespace Lextm.SharpSnmpLib
         /// <param name="cloning">true to clone the raw bytes, false to use them directly.</param>
         public GeneralString(byte[] raw, bool cloning)
         {
+            if (raw == null)
+            {
+                throw new ArgumentNullException("raw");
+            }
+            
             _raw = cloning ? (byte[])raw.Clone() : raw;
         }
 
@@ -65,9 +70,11 @@ namespace Lextm.SharpSnmpLib
         [Obsolete("Use AppendBytesTo instead.")]
         public byte[] ToBytes()
         {
-            MemoryStream result = new MemoryStream();
-            AppendBytesTo(result);
-            return result.ToArray();
+            using (MemoryStream result = new MemoryStream())
+            {
+                AppendBytesTo(result);
+                return result.ToArray();
+            }
         }
 
         /// <summary>

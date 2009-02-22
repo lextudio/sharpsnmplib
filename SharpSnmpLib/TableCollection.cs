@@ -21,6 +21,16 @@ namespace Lextm.SharpSnmpLib
         /// <param name="list">The list.</param>
         public TableCollection(ObjectIdentifier root, IList<Variable> list)
         {
+            if (root == null)
+            {
+                throw new ArgumentNullException("root");
+            }
+            
+            if (list == null)
+            {
+                throw new ArgumentNullException("list");
+            }
+            
             _root = root;
             if (list.Count == 0)
             {

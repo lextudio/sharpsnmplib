@@ -48,6 +48,21 @@ namespace Lextm.SharpSnmpLib
             _varbindSection = Variable.Transform(variables);
             ////_raw = ByteTool.ParseItems(_seq, _errorStatus, _errorIndex, _varbindSection);
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ReportPdu"/> class.
+        /// </summary>        
+        /// <param name="stream">The stream.</param>
+        public ReportPdu( Stream stream)
+        {
+            _requestId = (Integer32)DataFactory.CreateSnmpData(stream);
+            _errorStatus = (Integer32)DataFactory.CreateSnmpData(stream);
+            _errorIndex = (Integer32)DataFactory.CreateSnmpData(stream);
+            _varbindSection = (Sequence)DataFactory.CreateSnmpData(stream);
+            _variables = Variable.Transform(_varbindSection);
+            ////_raw = ByteTool.ParseItems(_seq, _errorStatus, _errorIndex, _varbindSection);
+            ////Debug.Assert(length >= _raw.Length, "length not match");
+        }
 
         [Obsolete("Use RequestId instead.")]
         internal int SequenceNumber
@@ -75,22 +90,7 @@ namespace Lextm.SharpSnmpLib
         }
 
         #region ISnmpPdu Members
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ReportPdu"/> class.
-        /// </summary>
-        /// <param name="length">The length.</param>
-        /// <param name="stream">The stream.</param>
-        public ReportPdu(int length, Stream stream)
-        {
-            _requestId = (Integer32)DataFactory.CreateSnmpData(stream);
-            _errorStatus = (Integer32)DataFactory.CreateSnmpData(stream);
-            _errorIndex = (Integer32)DataFactory.CreateSnmpData(stream);
-            _varbindSection = (Sequence)DataFactory.CreateSnmpData(stream);
-            _variables = Variable.Transform(_varbindSection);
-            ////_raw = ByteTool.ParseItems(_seq, _errorStatus, _errorIndex, _varbindSection);
-            ////Debug.Assert(length >= _raw.Length, "length not match");
-        }
-
+        
         /// <summary>
         /// Converts to message body.
         /// </summary>
@@ -134,9 +134,11 @@ namespace Lextm.SharpSnmpLib
         [Obsolete("Use AppendBytesTo instead.")]
         public byte[] ToBytes()
         {
-            MemoryStream result = new MemoryStream();
-            AppendBytesTo(result);
-            return result.ToArray();
+            using (MemoryStream result = new MemoryStream())
+            {
+                AppendBytesTo(result);
+                return result.ToArray();
+            }
         }
 
         #endregion

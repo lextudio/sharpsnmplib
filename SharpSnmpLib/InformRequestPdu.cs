@@ -54,16 +54,15 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="raw">Raw bytes</param>
         internal InformRequestPdu(byte[] raw)
-            : this(raw.Length, new MemoryStream(raw))
+            : this(new MemoryStream(raw))
         {
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InformRequestPdu"/> class.
-        /// </summary>
-        /// <param name="length">The length.</param>
+        /// </summary>    
         /// <param name="stream">The stream.</param>
-        public InformRequestPdu(int length, Stream stream)
+        public InformRequestPdu(Stream stream)
         {
             _requestId = (Integer32)DataFactory.CreateSnmpData(stream);
             _errorStatus = (Integer32)DataFactory.CreateSnmpData(stream);
@@ -155,9 +154,11 @@ namespace Lextm.SharpSnmpLib
         [Obsolete("Use AppendBytesTo instead.")]
         public byte[] ToBytes()
         {
-            MemoryStream result = new MemoryStream();
-            AppendBytesTo(result);
-            return result.ToArray();
+            using (MemoryStream result = new MemoryStream())
+            {
+                AppendBytesTo(result);
+                return result.ToArray();
+            }
         }
 
         #endregion

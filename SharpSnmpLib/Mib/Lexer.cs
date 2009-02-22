@@ -34,6 +34,11 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <param name="stream">File stream</param>
         public void Parse(string file, TextReader stream)
         {
+            if (stream == null)
+            {
+                throw new ArgumentNullException("stream");
+            }
+            
             assignAhead = false;
             assignSection = false;
             stringSection = false;
@@ -140,6 +145,11 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <returns><code>true</code> if no need to process this line. Otherwise, <code>false</code> is returned.</returns>
         public bool Parse(string file, IList<Symbol> list, char current, int row, int column)
         {
+            if (list == null)
+            {
+                throw new ArgumentNullException("list");
+            }
+
             switch (current)
             {
                 case '\n':

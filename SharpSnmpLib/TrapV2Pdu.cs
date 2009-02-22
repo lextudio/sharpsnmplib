@@ -39,6 +39,28 @@ namespace Lextm.SharpSnmpLib
             
             ////_raw = ByteTool.ParseItems(_version, new Integer32(0), new Integer32(0), _varbindSection);
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TrapV2Pdu"/> class.
+        /// </summary>
+        /// <param name="stream">The stream.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "temp2")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "temp1")]
+        public TrapV2Pdu(Stream stream)
+        {
+            _requestId = (Integer32)DataFactory.CreateSnmpData(stream); // request
+            Integer32 temp1 = (Integer32) DataFactory.CreateSnmpData(stream); // 0
+            Integer32 temp2 = (Integer32) DataFactory.CreateSnmpData(stream); // 0
+            _varbindSection = (Sequence)DataFactory.CreateSnmpData(stream);
+            _variables = Variable.Transform(_varbindSection); // v[0] is timestamp. v[1] oid, v[2] value.
+            _time = (TimeTicks)_variables[0].Data;
+            _variables.RemoveAt(0);
+            _enterprise = (ObjectIdentifier)_variables[0].Data;
+            _variables.RemoveAt(0);
+            
+            ////_raw = ByteTool.ParseItems(_version, temp1, temp2, _varbindSection);
+            ////Debug.Assert(length >= _raw.Length, "length not match");
+        }
 
         #region ISnmpPdu Members
         /// <summary>
@@ -70,30 +92,7 @@ namespace Lextm.SharpSnmpLib
         {
             get { return SnmpType.TrapV2Pdu; }
         }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TrapV2Pdu"/> class.
-        /// </summary>
-        /// <param name="length">The length.</param>
-        /// <param name="stream">The stream.</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "temp2")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "temp1")]
-        public TrapV2Pdu(int length, Stream stream)
-        {
-            _requestId = (Integer32)DataFactory.CreateSnmpData(stream); // request
-            Integer32 temp1 = (Integer32) DataFactory.CreateSnmpData(stream); // 0
-            Integer32 temp2 = (Integer32) DataFactory.CreateSnmpData(stream); // 0
-            _varbindSection = (Sequence)DataFactory.CreateSnmpData(stream);
-            _variables = Variable.Transform(_varbindSection); // v[0] is timestamp. v[1] oid, v[2] value.
-            _time = (TimeTicks)_variables[0].Data;
-            _variables.RemoveAt(0);
-            _enterprise = (ObjectIdentifier)_variables[0].Data;
-            _variables.RemoveAt(0);
-            
-            ////_raw = ByteTool.ParseItems(_version, temp1, temp2, _varbindSection);
-            ////Debug.Assert(length >= _raw.Length, "length not match");
-        }
-
+        
         /// <summary>
         /// Appends the bytes to <see cref="Stream"/>.
         /// </summary>
@@ -115,9 +114,11 @@ namespace Lextm.SharpSnmpLib
         [Obsolete("Use AppendBytesTo instead.")]
         public byte[] ToBytes()
         {
-            MemoryStream result = new MemoryStream();
-            AppendBytesTo(result);
-            return result.ToArray();
+            using (MemoryStream result = new MemoryStream())
+            {
+                AppendBytesTo(result);
+                return result.ToArray();
+            }
         }
 
         #endregion

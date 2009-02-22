@@ -7,6 +7,7 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 
+using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
@@ -38,6 +39,16 @@ namespace Lextm.SharpSnmpLib.Mib
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "lexer")]
         public MibModule(string name, Lexer lexer)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException("name");
+            }
+            
+            if (lexer == null)
+            {
+                throw new ArgumentNullException("lexer");
+            }
+            
             _name = name.ToUpperInvariant(); // all module name are uppercase.
             Symbol temp = lexer.NextNonEOLSymbol;
             ConstructHelper.Expect(temp, Symbol.Definitions);

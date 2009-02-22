@@ -74,23 +74,23 @@ namespace Lextm.SharpSnmpLib
                 case SnmpType.Sequence:
                     return new Sequence(length, stream);
                 case SnmpType.TrapV1Pdu:
-                    return new TrapV1Pdu(length, stream);
+                    return new TrapV1Pdu(stream);
                 case SnmpType.TrapV2Pdu:
-                    return new TrapV2Pdu(length, stream);
+                    return new TrapV2Pdu(stream);
                 case SnmpType.GetRequestPdu:
-                    return new GetRequestPdu(length, stream);
+                    return new GetRequestPdu(stream);
                 case SnmpType.GetResponsePdu:
-                    return new GetResponsePdu(length, stream);
+                    return new GetResponsePdu(stream);
                 case SnmpType.GetBulkRequestPdu:
-                    return new GetBulkRequestPdu(length, stream);
+                    return new GetBulkRequestPdu(stream);
                 case SnmpType.GetNextRequestPdu:
-                    return new GetNextRequestPdu(length, stream);
+                    return new GetNextRequestPdu(stream);
                 case SnmpType.SetRequestPdu:
-                    return new SetRequestPdu(length, stream);
+                    return new SetRequestPdu(stream);
                 case SnmpType.InformRequestPdu:
-                    return new InformRequestPdu(length, stream);
+                    return new InformRequestPdu(stream);
                 case SnmpType.ReportPdu:
-                    return new ReportPdu(length, stream);
+                    return new ReportPdu(stream);
                 case SnmpType.EndMarker:
                     return null;
                 default:
@@ -107,8 +107,10 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public static ISnmpData CreateSnmpData(byte[] buffer, int index, int count)
         {
-            MemoryStream m = new MemoryStream(buffer, index, count, false);
-            return CreateSnmpData(m);
+            using (MemoryStream m = new MemoryStream(buffer, index, count, false))
+            {
+                return CreateSnmpData(m);
+            }
         }
         
         /// <summary>

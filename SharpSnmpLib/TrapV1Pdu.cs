@@ -69,9 +69,8 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Initializes a new instance of the <see cref="TrapV1Pdu"/> class.
         /// </summary>
-        /// <param name="length">The length.</param>
         /// <param name="stream">The stream.</param>
-        public TrapV1Pdu(int length, Stream stream)
+        public TrapV1Pdu(Stream stream)
         {
             _enterprise = (ObjectIdentifier)DataFactory.CreateSnmpData(stream);
             _agent = (IP)DataFactory.CreateSnmpData(stream);
@@ -116,9 +115,11 @@ namespace Lextm.SharpSnmpLib
         [Obsolete("Use AppendBytesTo instead.")]
         public byte[] ToBytes()
         {
-            MemoryStream result = new MemoryStream();
-            AppendBytesTo(result);
-            return result.ToArray();
+            using (MemoryStream result = new MemoryStream())
+            {
+                AppendBytesTo(result);
+                return result.ToArray();
+            }
         }
 
         /// <summary>

@@ -52,9 +52,8 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Initializes a new instance of the <see cref="GetNextRequestPdu"/> class.
         /// </summary>
-        /// <param name="length">The length.</param>
         /// <param name="stream">The stream.</param>
-        public GetNextRequestPdu(int length, Stream stream)
+        public GetNextRequestPdu(Stream stream)
         {
             _requestId = (Integer32)DataFactory.CreateSnmpData(stream);
             _errorStatus = (Integer32)DataFactory.CreateSnmpData(stream);
