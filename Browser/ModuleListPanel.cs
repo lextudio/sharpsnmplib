@@ -59,40 +59,62 @@ namespace Lextm.SharpSnmpLib.Browser
 				item.Group = listView1.Groups["lvgLoaded"];
 			}
 			
-		    List<string> pendings = new List<string>(reg.Tree.PendingModules);
-			pendings.Sort();
-			foreach (string pending in pendings)
+			string[] files = Directory.GetFiles(reg.Path, "*.module");
+			foreach (string file in files)
 			{
-				ListViewItem item = listView1.Items.Add(pending);
+				string name = Path.GetFileNameWithoutExtension(file);
+				if (loaded.Contains(name))
+				{
+					continue;
+				}
+				
+				ListViewItem item = listView1.Items.Add(name);
 				item.BackColor = Color.LightGray;
 				item.Group = listView1.Groups["lvgPending"];
 			}
 			
 			ResumeLayout();
-			listView1.Groups["lvgLoaded"].Header = string.Format(CultureInfo.CurrentCulture, "Loaded ({0})", reg.Tree.LoadedModules.Count);
-			listView1.Groups["lvgPending"].Header = string.Format(CultureInfo.CurrentCulture, "Pending ({0})", reg.Tree.PendingModules.Count);
-			tslblCount.Text = "loaded count: " + reg.Tree.LoadedModules.Count + "; pending count: " + reg.Tree.PendingModules.Count;
-		}
+			listView1.Groups["lvgLoaded"].Header = string.Format(CultureInfo.CurrentCulture, "Loaded ({0})", listView1.Groups["lvgLoaded"].Items.Count);
+			listView1.Groups["lvgPending"].Header = string.Format(CultureInfo.CurrentCulture, "Unloaded ({0})", listView1.Groups["lvgPending"].Items.Count);
+			tslblCount.Text = "loaded count: " + listView1.Groups["lvgLoaded"].Items.Count + "; unloaded count: " + listView1.Groups["lvgPending"].Items.Count;
+    	}
 
 		private void actAdd_Execute(object sender, EventArgs e)
 		{
-			TraceSource source = new TraceSource("Browser");
-			source.TraceInformation("Addition is not yet implemented: " + listView1.SelectedItems[0].Text);
-			source.Flush();
-			source.Close();
+			string name = listView1.SelectedItems[0].Text.ToUpperInvariant();
+			string index = Path.Combine(Objects.Path, "index");
+			List<string> list = new List<string>(File.ReadAllLines(index));
+			if (!list.Contains(name))
+			{
+				list.Add(name);
+				File.WriteAllLines(index, list.ToArray());
+			}
+			
+			Objects.Reload();
 		}
 
 		private void actRemove_Execute(object sender, EventArgs e)
 		{
-			TraceSource source = new TraceSource("Browser");
-			source.TraceInformation("Deletion is not yet implemented: " + listView1.SelectedItems[0].Text);
-			source.Flush();
-			source.Close();
+			string name = listView1.SelectedItems[0].Text.ToUpperInvariant();
+			string index = Path.Combine(Objects.Path, "index");
+			List<string> list = new List<string>(File.ReadAllLines(index));
+			if (list.Contains(name))
+			{
+				list.Remove(name);
+				File.WriteAllLines(index, list.ToArray());
+			}
+			
+			Objects.Reload();
 		}
 
 		private void actRemove_Update(object sender, EventArgs e)
 		{
-			actRemove.Enabled = listView1.SelectedItems.Count == 1;
+			actRemove.Enabled = listView1.SelectedItems.Count == 1 && listView1.SelectedItems[0].Group.Name == "lvgLoaded";
+		}
+		
+	    private void actAdd_Update(object sender, EventArgs e)
+		{
+			actAdd.Enabled = listView1.SelectedItems.Count == 1 && listView1.SelectedItems[0].Group.Name == "lvgPending";
 		}
 
 		private void listView1_MouseDown(object sender, MouseEventArgs e)

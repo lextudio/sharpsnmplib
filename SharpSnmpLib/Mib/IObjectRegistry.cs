@@ -41,6 +41,8 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <returns></returns>
         [CLSCompliant(false)]
         uint[] Translate(string moduleName, string name);
+        
+        void Reload();
 
         /// <summary>
         /// Gets textual form from numerical form.

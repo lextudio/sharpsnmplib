@@ -189,6 +189,9 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="license.txt" />
+    <None Include="modules\index">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="modules\SNMPV2-CONF.module">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
