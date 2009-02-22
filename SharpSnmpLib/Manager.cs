@@ -26,7 +26,7 @@ namespace Lextm.SharpSnmpLib
         private VersionCode _version;
         private TrapListener trapListener;
         private IObjectRegistry _objects; // = ObjectRegistry.Default;
-        private int _maxRepetitions;
+        private int _maxRepetitions = 10;
 
         /// <summary>
         /// Creates a <see cref="Manager"></see> instance.
