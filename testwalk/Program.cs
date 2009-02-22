@@ -18,10 +18,12 @@ namespace TestWalk
     {
         public static void Main(string[] args)
         {
-            using (StreamWriter writer = new StreamWriter(File.OpenWrite("within.txt")))
+            //*
+            using (StreamWriter writer = new StreamWriter("within.txt"))
             {
                 writer.WriteLine("within subtree mode");
                 IList<Variable> list = new List<Variable>();
+                writer.WriteLine("V1 walk");                
                 try
                 {
                     Manager.Walk(VersionCode.V1, new IPEndPoint(IPAddress.Loopback, 161), new OctetString("public"), new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 7, 5 }), list, 1000, WalkMode.WithinSubtree);
@@ -35,20 +37,56 @@ namespace TestWalk
                 {
                     writer.WriteLine(v);
                 }
-                writer.Close();
-            }
-            
-            using (StreamWriter writer = new StreamWriter(File.OpenWrite("default.txt"))) 
-            {
-                IList<Variable> list = new List<Variable>();
-                writer.WriteLine("default mode");
+                
+                list = new List<Variable>();
+                writer.WriteLine("V2 walk");
                 try
                 {
-                    Manager.Walk(VersionCode.V1, new IPEndPoint(IPAddress.Loopback, 161), new OctetString("public"), new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 2, 2 }), list, 1000, WalkMode.Default);
+                    Manager.BulkWalk(VersionCode.V2, new IPEndPoint(IPAddress.Loopback, 161), new OctetString("public"), new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 7, 5 }), list, 1000, 10, WalkMode.WithinSubtree);
+                } 
+                catch (SharpTimeoutException ex)
+                {
+                    Console.WriteLine(ex.Details);
+                }
+
+                foreach (Variable v in list)
+                {
+                    writer.WriteLine(v);
+                }
+                writer.Close();
+            }
+            //*/
+            
+            using (StreamWriter writer = new StreamWriter("default.txt")) 
+            {
+                writer.WriteLine("default mode");
+                IList<Variable> list = new List<Variable>();
+                writer.WriteLine("V1 walk");
+                ObjectIdentifier o = new ObjectIdentifier("1.3.6.1.2.1.25.2.3.1.6.3");
+
+                try
+                {
+                    Manager.Walk(VersionCode.V1, new IPEndPoint(IPAddress.Loopback, 161), new OctetString("public"), o, list, 1000, WalkMode.Default);
+                }
+                catch (SharpTimeoutException ex)
+                {
+                    writer.WriteLine(ex.Details);
+                }
+
+                foreach (Variable v in list)
+                {
+                    writer.WriteLine(v);
+                }
+                
+                list = new List<Variable>();
+                writer.WriteLine("V2 walk");
+                try
+                {
+                    Manager.BulkWalk(VersionCode.V2, new IPEndPoint(IPAddress.Loopback, 161), new OctetString("public"), o, list, 2000, 10, WalkMode.Default);
                 }
                 catch (SharpTimeoutException ex) 
                 {
-                    Console.WriteLine(ex.Details);
+                    writer.WriteLine(ex.Details);
                 }
 
                 foreach (Variable v in list)
