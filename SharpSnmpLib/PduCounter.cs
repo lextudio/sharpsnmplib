@@ -8,12 +8,11 @@ namespace Lextm.SharpSnmpLib
     /// <remarks>The sequence number is used to identifier PDU sessions.</remarks>
     internal static class PduCounter
     {      
-        internal static Integer32 NextCount
+        internal static int NextCount
         {
             get
             {
-                int latest = Interlocked.Increment(ref count);                    
-                return new Integer32(latest);               
+                return Interlocked.Increment(ref count);
             }
         }
         

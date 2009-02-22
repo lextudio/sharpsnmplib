@@ -76,7 +76,7 @@ namespace Lextm.SharpSnmpLib
             }
             
             GetResponsePdu pdu = (GetResponsePdu)_pdu;
-            _sequenceNumber = pdu.SequenceNumber;
+            _sequenceNumber = pdu.RequestId;
             _errorStatus = pdu.ErrorStatus;
             _errorIndex = pdu.ErrorIndex;
             _variables = _pdu.Variables;

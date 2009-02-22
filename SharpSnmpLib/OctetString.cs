@@ -121,13 +121,10 @@ namespace Lextm.SharpSnmpLib
                 yr = (yr * 256) + _raw[1];
                 uint mo = _raw[2];
                 uint dy = _raw[3];
-				//if (yr < 2005 && yr > 1990 && mo < 13 && dy < 32)
-				//{
-				//    return dy.ToString(CultureInfo.InvariantCulture) + "/" + mo.ToString(CultureInfo.InvariantCulture) + "/" + yr.ToString(CultureInfo.InvariantCulture);
-				//}
-				if (yr > 1990 && mo < 13 && dy < 32)
+
+                if (yr > 1990 && mo < 13 && dy < 32)
                 {
-					return new DateTime((int)yr, (int)mo, (int)dy).ToString();
+                    return new DateTime((int)yr, (int)mo, (int)dy).ToString();
                 }
             }
             

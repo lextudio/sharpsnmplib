@@ -17,38 +17,20 @@ using System.Security.Permissions;
 namespace Lextm.SharpSnmpLib
 {
     /// <summary>
-    /// Error exception of #SNMP.
+    /// Error exception of #SNMP. Raised when an error message is received.
     /// </summary>
     [Serializable]
     public sealed class SharpErrorException : SharpOperationException
     {
-        private ErrorCode _status;
-        private int _index;
-        private ObjectIdentifier _id;
+        private GetResponseMessage _body;
         
         /// <summary>
-        /// Error status.
+        /// Message body.
         /// </summary>
-        public ErrorCode Status
+        public GetResponseMessage Body
         {
-            get { return _status; }
-        }
-        
-        /// <summary>
-        /// Error index.
-        /// </summary>
-        public int Index
-        {
-            get { return _index; }
-        }
-        
-        /// <summary>
-        /// Error item OID.
-        /// </summary>
-        public ObjectIdentifier Id
-        {
-            get { return _id; }
-        }
+            get { return _body; }
+        }        
         
         /// <summary>
         /// Creates a <see cref="SharpErrorException"/> instance.
@@ -82,9 +64,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("info");
             }
             
-            _status = (ErrorCode)info.GetValue("Status", typeof(ErrorCode));
-            _index = info.GetInt32("Index");
-            _id = (ObjectIdentifier)info.GetValue("Id", typeof(ObjectIdentifier));
+            _body = (GetResponseMessage)info.GetValue("Body", typeof(GetResponseMessage));
         }
         
         /// <summary>
@@ -96,9 +76,7 @@ namespace Lextm.SharpSnmpLib
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);
-            info.AddValue("Status", _status);
-            info.AddValue("Index", _index);
-            info.AddValue("Id", _id);
+            info.AddValue("Body", _body);
         }
 #endif
         /// <summary>
@@ -112,9 +90,9 @@ namespace Lextm.SharpSnmpLib
                     CultureInfo.InvariantCulture,
                     "{0}. {1}. Index: {2}. Errored Object ID: {3}",
                     Message,
-                    Status,
-                    Index.ToString(CultureInfo.InvariantCulture),
-                    Id);
+                    Body.ErrorStatus,
+                    Body.ErrorIndex.ToString(CultureInfo.InvariantCulture),
+                    Body.ErrorIndex == 0 ? null : Body.Variables[Body.ErrorIndex - 1].Id);
             }
         }
         
@@ -130,19 +108,15 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Creates a <see cref="SharpErrorException"/>.
         /// </summary>
-        /// <param name="message">Message</param>
-        /// <param name="agent">Agent address</param>
-        /// <param name="status">Error status</param>
-        /// <param name="index">Error index</param>
-        /// <param name="id">ID</param>
-        /// <returns></returns>
-        public static SharpErrorException Create(string message, IPAddress agent, ErrorCode status, int index, ObjectIdentifier id)
+        /// <param name="message">Message.</param>
+        /// <param name="agent">Agent address.</param>
+        /// <param name="body">Error message body.</param>
+            /// <returns></returns>
+        public static SharpErrorException Create(string message, IPAddress agent, GetResponseMessage body)
         {
             SharpErrorException ex = new SharpErrorException(message);
             ex.Agent = agent;
-            ex._status = status;
-            ex._index = index;
-            ex._id = id;
+            ex._body = body;
             return ex;
         }
     }

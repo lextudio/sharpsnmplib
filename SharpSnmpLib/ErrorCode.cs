@@ -1,6 +1,7 @@
 ﻿namespace Lextm.SharpSnmpLib
 {
-	using System;
+    using System;
+    
     /// <summary>
     /// Error code for SNMP operations.
     /// </summary>

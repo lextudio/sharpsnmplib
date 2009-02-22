@@ -51,7 +51,7 @@ namespace Lextm.SharpSnmpLib.Mib
 
             _parentNode = parent;
             uint[] id = string.IsNullOrEmpty(parent.Name) ?
-				null : parent._id; // null for root node	(use _id rather than GetNumericalForm to avoid the Clone)
+                null : parent._id; // null for root node    (use _id rather than GetNumericalForm to avoid the Clone)
             _id = AppendTo(id, entity.Value);
             _parent = parent.Name;
             _name = entity.Name;
@@ -141,12 +141,13 @@ namespace Lextm.SharpSnmpLib.Mib
         /// </summary>
         public IDefinition GetChildAt(uint index)
         {
-			// Since this method is very often used (when parsing OID, and so when displaying a MIB tree),
-			// we avoid to call d.GetNumericalForm (which clones the uint[] of the OID) but cast 'd' as a Definition
-			// and then call directly it _id field (without modifying it of course).
-            foreach (Definition d in _children.Values)	// Assume all IDefinition are Definition
+            // Since this method is very often used (when parsing OID, and so when displaying a MIB tree),
+            // we avoid to call d.GetNumericalForm (which clones the uint[] of the OID) but cast 'd' as a Definition
+            // and then call directly it _id field (without modifying it of course).
+            // Assume all IDefinition are Definition
+            foreach (Definition d in _children.Values)   
             {
-                uint[] id = d._id;	// use _id rather than GetNumericalForm to avoid the Clone.
+                uint[] id = d._id;    // use _id rather than GetNumericalForm to avoid the Clone.
                 if (id[id.Length - 1] == index)
                 {
                     return d;
@@ -230,22 +231,24 @@ namespace Lextm.SharpSnmpLib.Mib
         
         internal static uint[] AppendTo(uint[] parentId, uint value)
         {
-			if (parentId == null)
-				return new uint[] { value };
+            if (parentId == null)
+            {
+                return new uint[] { value };
+            }
 
-			// Old method with List<uint> dropped as it incurred two copies of the array (vs 1 for this method).
-			int length = parentId.Length;
-			uint[] tmp = new uint[length + 1];
-			Array.Copy(parentId, tmp, length);
-			tmp[length] = value;
-			return tmp;
+            // Old method with List<uint> dropped as it incurred two copies of the array (vs 1 for this method).
+            int length = parentId.Length;
+            uint[] tmp = new uint[length + 1];
+            Array.Copy(parentId, tmp, length);
+            tmp[length] = value;
+            return tmp;
         }
         
-		internal static uint[] GetParent(IDefinition definition)	// Assume all IDefinition are Definition
+        internal static uint[] GetParent(IDefinition definition)    // Assume all IDefinition are Definition
         {
-			uint[] self = ((Definition)definition)._id;		// use _id rather than GetNumericalForm to avoid the Clone.
+            uint[] self = ((Definition)definition)._id;        // use _id rather than GetNumericalForm to avoid the Clone.
             uint[] result = new uint[self.Length - 1];
-			Array.Copy(self, result, self.Length - 1);            
+            Array.Copy(self, result, self.Length - 1);            
             return result;
         }
     }

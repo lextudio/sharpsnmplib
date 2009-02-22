@@ -32,21 +32,19 @@ namespace Lextm.SharpSnmpLib
         /// Creates a <see cref="Real"/> from raw bytes (these bytes are cloned).
         /// </summary>
         /// <param name="raw">Raw bytes</param>
-		//[Obsolete("raw constructor obsolete", true)]
         public Real(byte[] raw) : this(raw, true)
         {
         }
 
-		/// <summary>
-		/// Creates a <see cref="Real"/> from raw bytes.
-		/// </summary>
-		/// <param name="raw">Raw bytes</param>
-		/// <param name="doCloning">true to clone the raw bytes, false to use them directly.</param>
-		//[Obsolete("raw constructor obsolete", true)]
-		public Real(byte[] raw, bool doCloning)
-		{
-			_raw = doCloning ? (byte[])raw.Clone() : raw;
-		}
+        /// <summary>
+        /// Creates a <see cref="Real"/> from raw bytes.
+        /// </summary>
+        /// <param name="raw">Raw bytes</param>
+        /// <param name="cloning">true to clone the raw bytes, false to use them directly.</param>
+        public Real(byte[] raw, bool cloning)
+        {
+            _raw = cloning ? (byte[])raw.Clone() : raw;
+        }
 
         /// <summary>
         /// Creates a <see cref="Real"/> with a specific <see cref="Double"/>.
@@ -62,7 +60,7 @@ namespace Lextm.SharpSnmpLib
             {
                 string s = value.ToString("E", CultureInfo.InvariantCulture); // hope this is acceptable..
                 _raw = new byte[s.Length + 1];
-				//_raw[0] = 0x0;	// Useless
+                ////_raw[0] = 0x0;    // Useless
                 Encoding.ASCII.GetBytes(s, 0, s.Length, _raw, 1);
             }
         }

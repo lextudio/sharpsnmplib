@@ -136,7 +136,7 @@ namespace Lextm.SharpSnmpLib
             List<Variable> variables = new List<Variable>();
             variables.Add(v);
 
-            GetRequestMessage message = new GetRequestMessage(version, community, variables);
+            GetRequestMessage message = new GetRequestMessage(PduCounter.NextCount, version, community, variables);
             return message.Broadcast(timeout, endpoint);
         }
 
@@ -149,17 +149,16 @@ namespace Lextm.SharpSnmpLib
         /// <param name="variables">Variable binds.</param>
         /// <param name="timeout">Timeout.</param>
         /// <param name="callback">The callback.</param>
-		public static void BeginGet(VersionCode version, IPEndPoint endpoint, OctetString community, IList<Variable> variables, int timeout,
-			GetResponseCallback callback)
-		{
-			if (version == VersionCode.V3)
-			{
-				throw new ArgumentException("you can only use SNMP v1 or v2 in this version");
-			}
+        public static void BeginGet(VersionCode version, IPEndPoint endpoint, OctetString community, IList<Variable> variables, int timeout, GetResponseCallback callback)
+        {
+            if (version == VersionCode.V3)
+            {
+                throw new ArgumentException("you can only use SNMP v1 or v2 in this version");
+            }
 
-			GetRequestMessage message = new GetRequestMessage(version, community, variables);
-			message.BeginGetResponse(timeout, endpoint, callback);
-		}
+            GetRequestMessage message = new GetRequestMessage(PduCounter.NextCount, version, community, variables);
+            message.BeginGetResponse(timeout, endpoint, callback);
+        }
 
         /// <summary>
         /// Gets a list of variable binds.
@@ -177,16 +176,14 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentException("you can only use SNMP v1 or v2 in this version");
             }
 
-            GetRequestMessage message = new GetRequestMessage(version, community, variables);
+            GetRequestMessage message = new GetRequestMessage(PduCounter.NextCount, version, community, variables);
             GetResponseMessage response = message.GetResponse(timeout, endpoint);
             if (response.ErrorStatus != ErrorCode.NoError)
             {
                 throw SharpErrorException.Create(
                     "error in response",
                     endpoint.Address,
-                    response.ErrorStatus,
-                    response.ErrorIndex,
-                    response.Variables[response.ErrorIndex - 1].Id);
+                    response);
             }
 
             return response.Variables;
@@ -283,7 +280,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentException("you can only use SNMP v1 or v2 in this version");
             }
 
-            SetRequestMessage message = new SetRequestMessage(version, community, variables);
+            SetRequestMessage message = new SetRequestMessage(PduCounter.NextCount, version, community, variables);
             GetResponseMessage response = message.GetResponse(timeout, endpoint);
 
             if (response.ErrorStatus != ErrorCode.NoError)
@@ -291,9 +288,7 @@ namespace Lextm.SharpSnmpLib
                 throw SharpErrorException.Create(
                     "error in response",
                     endpoint.Address,
-                    response.ErrorStatus,
-                    response.ErrorIndex,
-                    response.Variables[response.ErrorIndex - 1].Id);
+                    response);
             }
         }
 
@@ -386,22 +381,21 @@ namespace Lextm.SharpSnmpLib
         [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Body", Justification = "ByDesign")]
         public static Variable[,] GetTable(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, int timeout, IObjectRegistry registry)
         {
-        	if (registry == null)
-        	{
-        		throw new ArgumentNullException("registry");
-        	}
-        	
+            if (registry == null)
+            {
+                throw new ArgumentNullException("registry");
+            }
+            
             if (version == VersionCode.V3)
             {
                 throw new ArgumentException("only SNMP v1 or v2 is supported");
             }
 
-            //bool canContinue = registry.ValidateTable(table);
-            //if (!canContinue)
-            //{
+            // bool canContinue = registry.ValidateTable(table);
+            // if (!canContinue)
+            // {
             //    throw new ArgumentException("not a table OID: " + table);
-            //}
-
+            // }
             IList<Variable> list = new List<Variable>();
             int rows = Walk(version, endpoint, community, table, list, timeout, WalkMode.WithinSubtree);
             
@@ -665,16 +659,14 @@ namespace Lextm.SharpSnmpLib
                 {
                     oldWay = true;
                 }
-                else if(first)
+                else if (first)
                 {
                     string part = seed.Id.ToString().Replace(table.ToString(), null).Remove(0, 1);
                     int end = part.IndexOf('.');
                     index = Int32.Parse(part.Substring(0, end), CultureInfo.InvariantCulture);
                 }
 
-
                 first = false;
-
                 if (oldWay && seed.Id.ToString().StartsWith(table + ".1.1.", StringComparison.Ordinal))
                 {
                     result++;
@@ -770,9 +762,9 @@ namespace Lextm.SharpSnmpLib
         /// <param name="timeout">The timeout.</param>
         /// <param name="next">The next.</param>
         /// <returns>
-        /// 	<c>true</c> if the specified seed has next item; otherwise, <c>false</c>.
+        ///     <c>true</c> if the specified seed has next item; otherwise, <c>false</c>.
         /// </returns>
-		[SuppressMessage("Microsoft.Design", "CA1021:AvoidOutParameters", MessageId = "5#")]
+        [SuppressMessage("Microsoft.Design", "CA1021:AvoidOutParameters", MessageId = "5#")]
         public static bool HasNext(VersionCode version, IPEndPoint endpoint, OctetString community, Variable seed, int timeout, out Variable next)
         {
             bool result;
@@ -782,6 +774,7 @@ namespace Lextm.SharpSnmpLib
                 variables.Add(new Variable(seed.Id));
 
                 GetNextRequestMessage message = new GetNextRequestMessage(
+                    PduCounter.NextCount,
                     version,
                     community,
                     variables);
@@ -792,9 +785,7 @@ namespace Lextm.SharpSnmpLib
                     throw SharpErrorException.Create(
                         "error in response",
                         endpoint.Address,
-                        response.ErrorStatus,
-                        response.ErrorIndex,
-                        response.Variables[response.ErrorIndex - 1].Id);
+                        response);
                 }
 
                 next = response.Variables[0];

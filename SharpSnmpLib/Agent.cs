@@ -100,6 +100,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Sends INFORM message.
         /// </summary>
+        /// <param name="requestId">The request id.</param>
         /// <param name="version">Protocol version.</param>
         /// <param name="receiver">Receiver.</param>
         /// <param name="community">Community name.</param>
@@ -108,18 +109,16 @@ namespace Lextm.SharpSnmpLib
         /// <param name="variables">Variable bindings.</param>
         /// <param name="timeout">Timeout.</param>
         [CLSCompliant(false)]
-        public static void SendInform(VersionCode version, IPEndPoint receiver, OctetString community, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables, int timeout)
+        public static void SendInform(int requestId, VersionCode version, IPEndPoint receiver, OctetString community, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables, int timeout)
         {
-            InformRequestMessage message = new InformRequestMessage(version, community, enterprise, timestamp, variables);
+            InformRequestMessage message = new InformRequestMessage(requestId, version, community, enterprise, timestamp, variables);
             GetResponseMessage response = message.GetResponse(timeout, receiver);
             if (response.ErrorStatus != ErrorCode.NoError)
             {
                 throw SharpErrorException.Create(
                     "error in response",
                     receiver.Address,
-                    response.ErrorStatus,
-                    response.ErrorIndex,
-                    response.Variables[response.ErrorIndex - 1].Id);
+                    response);
             }
         }
 

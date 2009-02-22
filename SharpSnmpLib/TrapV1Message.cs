@@ -94,7 +94,7 @@ namespace Lextm.SharpSnmpLib
             _specific = trapPdu.Specific;
             _time = trapPdu.TimeStamp.ToUInt32();
             _variables = _pdu.Variables;
-			//_bytes = body.ToBytes();
+            ////_bytes = body.ToBytes();
         }
 
         /// <summary>
@@ -105,13 +105,12 @@ namespace Lextm.SharpSnmpLib
         [Obsolete("Please use overload version instead.")]
         public void Send(IPAddress manager, int port)
         {
-			byte[] bytes = ToBytes();
+            byte[] bytes = ToBytes();
             ByteTool.Capture(bytes);
             IPEndPoint endpoint = new IPEndPoint(manager, port);
             using (UdpClient udp = new UdpClient())
             {
-                udp.Send(bytes, bytes.Length, endpoint);
-				//udp.Close();	// Not needed: we're in a using statement
+                udp.Send(bytes, bytes.Length, endpoint);                
             }
         }
 
@@ -121,12 +120,11 @@ namespace Lextm.SharpSnmpLib
         /// <param name="manager">Manager</param>
         public void Send(IPEndPoint manager)
         {
-			byte[] bytes = ToBytes();
+            byte[] bytes = ToBytes();
             ByteTool.Capture(bytes);
             using (UdpClient udp = new UdpClient())
             {
                 udp.Send(bytes, bytes.Length, manager);
-				//udp.Close();	// Not needed: we're in a using statement
             }
         } 
     
@@ -226,10 +224,10 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public byte[] ToBytes()
         {
-			if(_bytes == null)
-			{
-				_bytes = _pdu.ToMessageBody(_version, _community).ToBytes();
-			}
+            if (_bytes == null)
+            {
+                _bytes = _pdu.ToMessageBody(_version, _community).ToBytes();
+            }
 
             return _bytes;
         }
@@ -253,7 +251,8 @@ namespace Lextm.SharpSnmpLib
         {
             return string.Format(
                 CultureInfo.InvariantCulture,
-                "SNMPv1 trap: {0}", _pdu);
+                "SNMPv1 trap: {0}", 
+                _pdu);
         }
     }
 }

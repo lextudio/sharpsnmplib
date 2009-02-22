@@ -8,8 +8,8 @@
  */
 namespace Lextm.SharpSnmpLib
 {
-	using System;
-	
+    using System;
+    
     /// <summary>
     /// Generic trap code.
     /// </summary>

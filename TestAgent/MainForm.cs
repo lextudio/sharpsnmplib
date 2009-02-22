@@ -95,7 +95,7 @@ namespace TestAgent
 		{
 			try
 			{
-				Agent.SendInform(VersionCode.V2, 
+				Agent.SendInform(0, VersionCode.V2, 
 				                 new IPEndPoint(IPAddress.Parse(txtIP.Text), int.Parse(txtPort.Text)),
 				                 new OctetString("public"),
 				                 new ObjectIdentifier(new uint[] { 1, 3, 6 }),

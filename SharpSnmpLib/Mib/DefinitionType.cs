@@ -1,6 +1,7 @@
 ﻿namespace Lextm.SharpSnmpLib.Mib
 {
-	using System;
+    using System;
+    
     /// <summary>
     /// Definition type.
     /// </summary>

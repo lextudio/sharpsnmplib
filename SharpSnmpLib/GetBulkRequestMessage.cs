@@ -27,7 +27,7 @@ namespace Lextm.SharpSnmpLib
         private readonly IPAddress _agent;
         private readonly OctetString _community;
         private readonly ISnmpPdu _pdu;
-        private readonly int _sequenceNumber;
+        private readonly int _requestId;
         
         /// <summary>
         /// Creates a <see cref="GetBulkRequestMessage"/> with all contents.
@@ -46,31 +46,34 @@ namespace Lextm.SharpSnmpLib
             _community = community;
             _variables = variables;
             GetBulkRequestPdu pdu = new GetBulkRequestPdu(
+                PduCounter.NextCount,
                 nonRepeaters,
                 maxRepetitions,
                 _variables);
-            _sequenceNumber = pdu.SequenceNumber;
+            _requestId = pdu.RequestId;
             _bytes = pdu.ToMessageBody(_version, _community).ToBytes();
         }
 
         /// <summary>
         /// Creates a <see cref="GetBulkRequestMessage"/> with all contents.
         /// </summary>
+        /// <param name="requestId">The request id.</param>
         /// <param name="version">Protocol version.</param>
+        /// <param name="community">Community name.</param>
         /// <param name="nonRepeaters">Non-repeaters.</param>
         /// <param name="maxRepetitions">Max repetitions.</param>
-        /// <param name="community">Community name.</param>
         /// <param name="variables">Variables.</param>
-        public GetBulkRequestMessage(VersionCode version, OctetString community, int nonRepeaters, int maxRepetitions, IList<Variable> variables)
+        public GetBulkRequestMessage(int requestId, VersionCode version, OctetString community, int nonRepeaters, int maxRepetitions, IList<Variable> variables)
         {
             _version = version;
             _community = community;
             _variables = variables;
             GetBulkRequestPdu pdu = new GetBulkRequestPdu(
+                requestId,
                 nonRepeaters,
                 maxRepetitions,
                 _variables);
-            _sequenceNumber = pdu.SequenceNumber;
+            _requestId = requestId;
             _bytes = pdu.ToMessageBody(_version, _community).ToBytes();
         }
 
@@ -98,7 +101,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentException("wrong message type");
             }
             
-            _sequenceNumber = ((GetBulkRequestPdu)_pdu).SequenceNumber;
+            _requestId = ((GetBulkRequestPdu)_pdu).RequestId;
             _variables = _pdu.Variables;
             _bytes = body.ToBytes();
         }
@@ -122,7 +125,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public GetResponseMessage GetResponse(int timeout, IPEndPoint receiver)
         {
-            return ByteTool.GetResponse(receiver, _bytes, SequenceNumber, timeout);
+            return ByteTool.GetResponse(receiver, _bytes, RequestId, timeout);
         }
         
         /// <summary>
@@ -169,20 +172,24 @@ namespace Lextm.SharpSnmpLib
                 throw SharpErrorException.Create(
                     "error in response",
                     _agent,
-                    response.ErrorStatus,
-                    response.ErrorIndex,
-                    response.Variables[response.ErrorIndex - 1].Id);
+                    response);
             }
             
             return response.Variables;
         }
         
+        [Obsolete("Use RequestId instead.")]
         internal int SequenceNumber
         {
             get
             {
-                return _sequenceNumber;
+                return _requestId;
             }
+        }
+        
+        internal int RequestId
+        {
+            get { return _requestId; }
         }
         
         /// <summary>

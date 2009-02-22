@@ -25,23 +25,24 @@ namespace Lextm.SharpSnmpLib
         private readonly OctetString _community;
         private readonly ISnmpPdu _pdu;
         private readonly int _sequenceNumber;
-        
+
         /// <summary>
         /// Creates a <see cref="InformRequestMessage"/> with all contents.
         /// </summary>
+        /// <param name="requestId">The request id.</param>
         /// <param name="version">Protocol version.</param>
         /// <param name="community">Community name.</param>
         /// <param name="enterprise">Enterprise.</param>
         /// <param name="time">Time ticks.</param>
         /// <param name="variables">Variables.</param>
         [CLSCompliant(false)]
-        public InformRequestMessage(VersionCode version, OctetString community, ObjectIdentifier enterprise, uint time, IList<Variable> variables)
+        public InformRequestMessage(int requestId, VersionCode version, OctetString community, ObjectIdentifier enterprise, uint time, IList<Variable> variables)
         {
             _version = version;
             _community = community;
             _variables = variables;
-            InformRequestPdu pdu = new InformRequestPdu(enterprise, new TimeTicks(time), _variables);
-            _sequenceNumber = pdu.SequenceNumber;
+            InformRequestPdu pdu = new InformRequestPdu(new Integer32(requestId), enterprise, new TimeTicks(time), _variables);
+            _sequenceNumber = requestId;
             _bytes = pdu.ToMessageBody(_version, _community).ToBytes();
         }
         
@@ -70,7 +71,7 @@ namespace Lextm.SharpSnmpLib
             }
             
             InformRequestPdu pdu = (InformRequestPdu)_pdu;
-            _sequenceNumber = pdu.SequenceNumber;
+            _sequenceNumber = pdu.RequestId;
             _variables = _pdu.Variables;
             _bytes = body.ToBytes();
         }
@@ -149,9 +150,7 @@ namespace Lextm.SharpSnmpLib
                 throw SharpErrorException.Create(
                     "error in response",
                     receiver,
-                    response.ErrorStatus,
-                    response.ErrorIndex,
-                    response.Variables[response.ErrorIndex - 1].Id);
+                    response);
             }
             
             ByteTool.Capture(bytes); // log response

@@ -19,7 +19,7 @@ namespace Lextm.SharpSnmpLib
         private readonly IPAddress _agent;
         private readonly OctetString _community;
         private readonly IList<Variable> _variables;
-        private readonly int _sequenceNumber;
+        private readonly int _requestId;
         
         /// <summary>
         /// Creates a <see cref="SetRequestMessage"/> with all contents.
@@ -36,29 +36,32 @@ namespace Lextm.SharpSnmpLib
             _community = community;
             _variables = variables;
             SetRequestPdu pdu = new SetRequestPdu(
+                PduCounter.NextCount,
                 ErrorCode.NoError,
                 0,
                 _variables);
-            _sequenceNumber = pdu.SequenceNumber;
+            _requestId = pdu.SequenceNumber;
             _bytes = pdu.ToMessageBody(_version, _community).ToBytes();
         }
 
         /// <summary>
         /// Creates a <see cref="SetRequestMessage"/> with all contents.
         /// </summary>
+        /// <param name="requestId">The request id.</param>
         /// <param name="version">Protocol version</param>
         /// <param name="community">Community name</param>
         /// <param name="variables">Variables</param>
-        public SetRequestMessage(VersionCode version, OctetString community, IList<Variable> variables)
+        public SetRequestMessage(int requestId, VersionCode version, OctetString community, IList<Variable> variables)
         {
             _version = version;
             _community = community;
             _variables = variables;
             SetRequestPdu pdu = new SetRequestPdu(
+                requestId,
                 ErrorCode.NoError,
                 0,
                 _variables);
-            _sequenceNumber = pdu.SequenceNumber;
+            _requestId = requestId;
             _bytes = pdu.ToMessageBody(_version, _community).ToBytes();
         }    
     
@@ -105,9 +108,7 @@ namespace Lextm.SharpSnmpLib
                 throw SharpErrorException.Create(
                     "error in response",
                     _agent,
-                    response.ErrorStatus,
-                    response.ErrorIndex,
-                    response.Variables[response.ErrorIndex - 1].Id);
+                    response);
             }
         }
 
@@ -119,7 +120,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public GetResponseMessage GetResponse(int timeout, IPEndPoint receiver)
         {
-            return ByteTool.GetResponse(receiver, _bytes, SequenceNumber, timeout);
+            return ByteTool.GetResponse(receiver, _bytes, RequestId, timeout);
         } 
         
         /// <summary>
@@ -146,7 +147,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentException("wrong message type");
             }
             
-            _sequenceNumber = ((SetRequestPdu)_pdu).SequenceNumber;
+            _requestId = ((SetRequestPdu)_pdu).RequestId;
             _variables = _pdu.Variables;
             _bytes = body.ToBytes();
         }
@@ -160,12 +161,18 @@ namespace Lextm.SharpSnmpLib
             return "SET request message: version: " + _version + "; " + _community + "; " + _pdu;
         }
         
+        [Obsolete("Use RequestId instead.")]
         internal int SequenceNumber
         {
             get
             {
-                return _sequenceNumber;
+                return _requestId;
             }
+        }
+        
+        internal int RequestId
+        {
+            get { return _requestId; }
         }
         
         /// <summary>

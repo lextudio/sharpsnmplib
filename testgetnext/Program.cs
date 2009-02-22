@@ -22,7 +22,8 @@ namespace TestGetNext
                 List<Variable> vList = new List<Variable>();
                 vList.Add(new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.6.0")));
                 IPEndPoint endpoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 161);
-                GetNextRequestMessage message = new GetNextRequestMessage(VersionCode.V1,
+                GetNextRequestMessage message = new GetNextRequestMessage(0, 
+                                                                          VersionCode.V1,
                                                                           new OctetString("public"),
                                                                           vList);
                 GetResponseMessage response = message.GetResponse(1000, endpoint);
@@ -31,9 +32,7 @@ namespace TestGetNext
                     throw SharpErrorException.Create(
                         "error in response",
                         endpoint.Address,
-                        response.ErrorStatus,
-                        response.ErrorIndex,
-                        response.Variables[response.ErrorIndex - 1].Id);
+                        response);
                 }
 
                 Variable variable = response.Variables[0];

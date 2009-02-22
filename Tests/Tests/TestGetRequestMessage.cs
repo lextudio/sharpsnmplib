@@ -43,7 +43,7 @@ namespace Lextm.SharpSnmpLib.Tests
         {
             List<Variable> list = new List<Variable>(1);
             list.Add(new Variable(new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 1, 6, 0 }), new Null()));
-            GetRequestMessage message = new GetRequestMessage(VersionCode.V2, new OctetString("public"), list);
+            GetRequestMessage message = new GetRequestMessage(0, VersionCode.V2, new OctetString("public"), list);
             Assert.GreaterOrEqual(TestResources.get.Length, message.ToBytes().Length);
         }
 	}

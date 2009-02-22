@@ -15,7 +15,7 @@ namespace Lextm.SharpSnmpLib.Mib
     /// <summary>
     /// MIB module class.
     /// </summary>
-	[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Mib")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Mib")]
     public sealed class MibModule
     {
         private readonly string _name;
@@ -35,7 +35,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// </summary>
         /// <param name="name">Module name</param>
         /// <param name="lexer">Lexer</param>
-		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "lexer")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "lexer")]
         public MibModule(string name, Lexer lexer)
         {
             _name = name.ToUpperInvariant(); // all module name are uppercase.

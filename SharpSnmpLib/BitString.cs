@@ -18,6 +18,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -56,7 +57,7 @@ namespace Lextm.SharpSnmpLib
                 _bits[j] = (raw[4 * j] << 24) | (raw[(4 * j) + 1] << 16) | (raw[(4 * j) + 2] << 8) | raw[(4 * j) + 3];
             }
             
-			//_raw = raw;
+            ////_raw = raw;
         }
         
         /// <summary>
@@ -84,7 +85,7 @@ namespace Lextm.SharpSnmpLib
             _nbits = number;
             _size = bits.Length;
             _bits = bits;
-			//_raw = ParseItem(_nbits, _bits);
+            ////_raw = ParseItem(_nbits, _bits);
         }
         
         /// <summary>
@@ -98,7 +99,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("other");
             }
 
-			//_raw = (byte[])other._raw.Clone();
+            ////_raw = (byte[])other._raw.Clone();
             _nbits = other._nbits;
             _size = other._size;
             _bits = (int[])other._bits.Clone();
@@ -227,11 +228,13 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         public override string ToString()
         {
-            string r = string.Empty;
+            StringBuilder r = new StringBuilder();
             for (int i = 0; i < _nbits; i++)
-				r += ((_bits[i >> 5] & (1 << (i & 31))) != 0) ? '1' : '0';
+            {
+                r.Append(((_bits[i >> 5] & (1 << (i & 31))) != 0) ? '1' : '0');
+            }
             
-            return r;
+            return r.ToString();
         }
         
         /// <summary>
@@ -262,10 +265,10 @@ namespace Lextm.SharpSnmpLib
         /// <param name="stream">The stream.</param>
         public void AppendBytesTo(Stream stream)
         {
-			if (_raw == null)
-			{
-				_raw = ParseItem(_nbits, _bits);
-			}
+            if (_raw == null)
+            {
+                _raw = ParseItem(_nbits, _bits);
+            }
 
             ByteTool.AppendBytes(stream, TypeCode, _raw);
         }
@@ -362,9 +365,8 @@ namespace Lextm.SharpSnmpLib
             {
                 return false;
             }
-            
-			//return ByteTool.CompareArray(left._raw, right._raw);
-			return left._nbits == right._nbits && ByteTool.CompareArray(left._bits, right._bits);
+
+            return left._nbits == right._nbits && ByteTool.CompareArray(left._bits, right._bits);
         }
     }
 }

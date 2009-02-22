@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
-    ///<summary>
+    /// <summary>
     /// Object registry interface.
-    ///</summary>
+    /// </summary>
     [CLSCompliant(false)]
     public interface IObjectRegistry
     {
@@ -42,6 +42,9 @@ namespace Lextm.SharpSnmpLib.Mib
         [CLSCompliant(false)]
         uint[] Translate(string moduleName, string name);
         
+        /// <summary>
+        /// Reloads the registry.
+        /// </summary>
         void Reload();
 
         /// <summary>

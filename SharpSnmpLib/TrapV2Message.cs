@@ -37,7 +37,7 @@ namespace Lextm.SharpSnmpLib
             _time = time;
             _variables = variables;
             _pdu = new TrapV2Pdu(new Integer32(requestId), _enterprise, new TimeTicks(_time), _variables);
-			//_bytes = _pdu.ToMessageBody(_version, _community).ToBytes();
+            ////_bytes = _pdu.ToMessageBody(_version, _community).ToBytes();
         }
         
         /// <summary>
@@ -68,7 +68,7 @@ namespace Lextm.SharpSnmpLib
             TrapV2Pdu pdu = (TrapV2Pdu)_pdu;
             _time = pdu.TimeStamp;
             _enterprise = pdu.Enterprise;
-			//_bytes = body.ToBytes();
+            ////_bytes = body.ToBytes();
         }
 
         #region ISnmpMessage Members
@@ -90,10 +90,10 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public byte[] ToBytes()
         {
-			if(_bytes == null)
-			{
-				_bytes = _pdu.ToMessageBody(_version, _community).ToBytes();
-			}
+            if (_bytes == null)
+            {
+                _bytes = _pdu.ToMessageBody(_version, _community).ToBytes();
+            }
 
             return _bytes;
         }
@@ -108,7 +108,7 @@ namespace Lextm.SharpSnmpLib
         [Obsolete("Please use overload version instead.")]
         public void Send(IPAddress manager, int port)
         {
-			byte[] bytes = ToBytes();
+            byte[] bytes = ToBytes();
             ByteTool.Capture(bytes); // log response
             IPEndPoint endpoint = new IPEndPoint(manager, port);
             using (UdpClient udp = new UdpClient()) 
@@ -124,7 +124,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="manager">Manager.</param>
         public void Send(IPEndPoint manager)
         {
-			byte[] bytes = ToBytes();
+            byte[] bytes = ToBytes();
             ByteTool.Capture(bytes); // log response
             using (UdpClient udp = new UdpClient())
             {

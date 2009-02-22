@@ -29,8 +29,7 @@ namespace Lextm.SharpSnmpLib.Browser
 
 		public ModuleListPanel()
 		{
-			InitializeComponent();
-			
+			InitializeComponent();			
 		}
 		
 		void ModuleListPanel_Load(object sender, EventArgs e)

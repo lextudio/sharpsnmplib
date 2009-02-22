@@ -63,7 +63,7 @@ namespace Lextm.SharpSnmpLib
             _timestamp = timestamp;
             _varbindSection = Variable.Transform(variables);
             _variables = variables;
-			//_raw = ByteTool.ParseItems(_enterprise, _agent, _generic, _specific, _timestamp, _varbindSection);
+            ////_raw = ByteTool.ParseItems(_enterprise, _agent, _generic, _specific, _timestamp, _varbindSection);
         }
 
         /// <summary>
@@ -80,8 +80,8 @@ namespace Lextm.SharpSnmpLib
             _timestamp = (TimeTicks)DataFactory.CreateSnmpData(stream);
             _varbindSection = (Sequence)DataFactory.CreateSnmpData(stream);
             _variables = Variable.Transform(_varbindSection);
-			//_raw = ByteTool.ParseItems(_enterprise, _agent, _generic, _specific, _timestamp, _varbindSection);
-			//Debug.Assert(length >= _raw.Length, "length not match");
+            ////_raw = ByteTool.ParseItems(_enterprise, _agent, _generic, _specific, _timestamp, _varbindSection);
+            ////Debug.Assert(length >= _raw.Length, "length not match");
         }
 
         /// <summary>
@@ -101,10 +101,10 @@ namespace Lextm.SharpSnmpLib
         /// <param name="stream">The stream.</param>
         public void AppendBytesTo(Stream stream)
         {
-			if (_raw == null)
-			{
-				_raw = ByteTool.ParseItems(_enterprise, _agent, _generic, _specific, _timestamp, _varbindSection);
-			}
+            if (_raw == null)
+            {
+                _raw = ByteTool.ParseItems(_enterprise, _agent, _generic, _specific, _timestamp, _varbindSection);
+            }
 
             ByteTool.AppendBytes(stream, TypeCode, _raw);
         }

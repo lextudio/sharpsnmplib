@@ -8,7 +8,8 @@
  */
 namespace Lextm.SharpSnmpLib
 {
-	using System;
+    using System;
+    
     /// <summary>
     /// Walk mode.
     /// </summary>

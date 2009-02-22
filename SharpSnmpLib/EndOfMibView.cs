@@ -102,7 +102,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="stream">The stream.</param>
         public void AppendBytesTo(Stream stream)
         {
-        	ByteTool.AppendBytes(stream, TypeCode, new byte[0]);
+            ByteTool.AppendBytes(stream, TypeCode, new byte[0]);
         }
         
         /// <summary>

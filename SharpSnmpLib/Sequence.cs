@@ -36,16 +36,16 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("items");
             }
 
-			_list.AddRange(items);
+            _list.AddRange(items);
             
-			//_raw = ByteTool.ParseItems(items);
+            ////_raw = ByteTool.ParseItems(items);
         }
         
         /// <summary>
         /// Creates an <see cref="Sequence"/> instance with varied <see cref="ISnmpData"/> instances.
         /// </summary>
         /// <param name="items"></param>
-		public Sequence(IEnumerable items)
+        public Sequence(IEnumerable items)
         {
             if (items == null)
             {
@@ -58,9 +58,9 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentException("objects must be IEnumerable<ISnmpData>");
             }
             
-			_list.AddRange(list);
+            _list.AddRange(list);
             
-			//_raw = ByteTool.ParseItems(items);
+            ////_raw = ByteTool.ParseItems(items);
         }
         
         /// <summary>
@@ -92,8 +92,8 @@ namespace Lextm.SharpSnmpLib
                 }
             }
 
-			//_raw = ByteTool.ParseItems(_list);
-			//Debug.Assert(length >= _raw.Length, "length not match");
+            ////_raw = ByteTool.ParseItems(_list);
+            ////Debug.Assert(length >= _raw.Length, "length not match");
         }
 
         /// <summary>
@@ -135,10 +135,10 @@ namespace Lextm.SharpSnmpLib
         /// <param name="stream">The stream.</param>
         public void AppendBytesTo(Stream stream)
         {
-			if(_raw == null)
-			{
-				_raw = ByteTool.ParseItems(_list);
-			}
+            if (_raw == null)
+            {
+                _raw = ByteTool.ParseItems(_list);
+            }
 
             ByteTool.AppendBytes(stream, TypeCode, _raw);
         }

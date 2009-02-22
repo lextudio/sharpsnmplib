@@ -22,24 +22,26 @@ namespace Lextm.SharpSnmpLib
         private readonly byte[] _bytes;
         private readonly OctetString _community;
         private readonly ISnmpPdu _pdu;
-        private readonly int _sequenceNumber;
-        
+        private readonly int _requestId;
+
         /// <summary>
         /// Creates a <see cref="ReportMessage"/> with all contents.
         /// </summary>
+        /// <param name="requestId">The request id.</param>
         /// <param name="version">Protocol version</param>
         /// <param name="community">Community name</param>
         /// <param name="variables">Variables</param>
-        public ReportMessage(VersionCode version, OctetString community, IList<Variable> variables)
+        public ReportMessage(int requestId, VersionCode version, OctetString community, IList<Variable> variables)
         {
             _version = version;
             _community = community;
             _variables = variables;
             ReportPdu pdu = new ReportPdu(
+                requestId,
                 ErrorCode.NoError,
                 0,
                 _variables);
-            _sequenceNumber = pdu.SequenceNumber;
+            _requestId = pdu.RequestId;
             _bytes = pdu.ToMessageBody(_version, _community).ToBytes();
         }
         
@@ -90,15 +92,21 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public GetResponseMessage GetResponse(int timeout, IPEndPoint receiver)
         {
-            return ByteTool.GetResponse(receiver, _bytes, SequenceNumber, timeout);
+            return ByteTool.GetResponse(receiver, _bytes, RequestId, timeout);
         }
         
+        [Obsolete("Use RequestId instead.")]
         internal int SequenceNumber
         {
             get
             {
-                return _sequenceNumber;
+                return _requestId;
             }
+        }
+        
+        internal int RequestId
+        {
+            get { return _requestId; }
         }
         
         /// <summary>
