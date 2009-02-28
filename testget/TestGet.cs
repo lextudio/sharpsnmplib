@@ -3,48 +3,52 @@ using System.Net;
 using Lextm.SharpSnmpLib;
 using System.Text;
 using System.Collections.Generic;
+using NDesk.Options;
 
 class TestGet
 {
-	// get system.sysLocation on localhost
-	static void Main(string[] args)
-	{
-	    string ip;
-	    if (args.Length == 0)
-	    {
-	        ip = "127.0.0.1";
-	    }
-	    else 
-	    {
-	        ip = args[0];
-	    }
+    // get system.sysLocation on localhost
+    static void Main(string[] args)
+    {
+        string community = "public";
+        bool show_help   = false;
+        VersionCode version = VersionCode.V1;
+        int timeout = 1000;
 
-        Variable test = new Variable(new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 1, 1, 0 }));
-        List<Variable> vList = new List<Variable>();
-        vList.Add(test);
-
-        try
+        OptionSet p = new OptionSet ()
+            .Add ("c:", delegate (string v) { if (v != null) community = v; })
+            .Add ("h|?|help",  delegate (string v) { show_help = v != null; })
+            .Add ("t:", delegate (string v) { timeout = int.Parse(v) * 1000; })
+            .Add ("V|version:",   delegate (string v) { version = (VersionCode)Enum.Parse(typeof(VersionCode), v, true); });
+        
+        List<string> extra = p.Parse (args);
+        
+        if (show_help)
         {
- 
-            Variable variable = Manager.Get(VersionCode.V1, new IPEndPoint(IPAddress.Parse(ip), 161), new OctetString("public"), vList, 5000)[0];
-            Console.WriteLine(variable.Data);
+            Console.WriteLine("The syntax is similar to Net-SNMP. http://www.net-snmp.org/docs/man/snmpget.html");
+            return;
         }
-        catch (SharpSnmpException ex)
+
+        if (extra.Count < 2)
         {
-            if (ex is SharpOperationException)
-            {
-                Console.WriteLine((ex as SharpOperationException).Details);
-            }
-            else
-            {
-                Console.WriteLine(ex);
-            }
+            Console.WriteLine("The syntax is similar to Net-SNMP. http://www.net-snmp.org/docs/man/snmpget.html");
+            return;
+        }
+        
+        string ip = extra[0];
+        List<Variable> vList = new List<Variable>();
+        for (int i = 1; i < extra.Count; i++)
+        {
+            Variable test = new Variable(new ObjectIdentifier(extra[i]));
+            vList.Add(test);
         }
         
         try
-        {  
-            Variable v2 = Manager.Get(VersionCode.V2, new IPEndPoint(IPAddress.Parse(ip), 161), new OctetString("public"), vList, 5000)[0];
-            Console.WriteLine(v2.Data);
+        {            
+            foreach (Variable variable in Manager.Get(version, new IPEndPoint(IPAddress.Parse(ip), 161), new OctetString(community), vList, timeout))
+            {
+                Console.WriteLine(variable);
+            }
         }
         catch (SharpSnmpException ex)
         {
@@ -56,9 +60,7 @@ class TestGet
             {
                 Console.WriteLine(ex);
             }
-        }        
-        Console.WriteLine("Press any key to exit...");
-        Console.Read();
-	}
-} 
+        }
+    }
+}
 

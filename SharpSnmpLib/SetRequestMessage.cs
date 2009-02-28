@@ -63,8 +63,8 @@ namespace Lextm.SharpSnmpLib
                 _variables);
             _requestId = requestId;
             _bytes = pdu.ToMessageBody(_version, _community).ToBytes();
-        }    
-    
+        }
+        
         /// <summary>
         /// Sends this <see cref="SetRequestMessage"/> and handles the response from agent.
         /// </summary>
@@ -93,25 +93,25 @@ namespace Lextm.SharpSnmpLib
             using (MemoryStream m = new MemoryStream(bytes, false))
             {
                 ISnmpMessage message = MessageFactory.ParseMessages(m)[0];
-            }
-            
-            if (message.Pdu.TypeCode != SnmpType.GetResponsePdu)
-            {
-                throw SharpOperationException.Create("wrong response type", _agent);
-            }
-            
-            GetResponseMessage response = (GetResponseMessage)message;
-            if (response.SequenceNumber != SequenceNumber)
-            {
-                throw SharpOperationException.Create("wrong response sequence", _agent);
-            }
-            
-            if (response.ErrorStatus != ErrorCode.NoError)
-            {
-                throw SharpErrorException.Create(
-                    "error in response",
-                    _agent,
-                    response);
+
+                if (message.Pdu.TypeCode != SnmpType.GetResponsePdu)
+                {
+                    throw SharpOperationException.Create("wrong response type", _agent);
+                }
+                
+                GetResponseMessage response = (GetResponseMessage)message;
+                if (response.SequenceNumber != SequenceNumber)
+                {
+                    throw SharpOperationException.Create("wrong response sequence", _agent);
+                }
+                
+                if (response.ErrorStatus != ErrorCode.NoError)
+                {
+                    throw SharpErrorException.Create(
+                        "error in response",
+                        _agent,
+                        response);
+                }
             }
         }
 
@@ -124,7 +124,7 @@ namespace Lextm.SharpSnmpLib
         public GetResponseMessage GetResponse(int timeout, IPEndPoint receiver)
         {
             return ByteTool.GetResponse(receiver, _bytes, RequestId, timeout);
-        } 
+        }
         
         /// <summary>
         /// Creates a <see cref="SetRequestMessage"/> with a specific <see cref="Sequence"/>.

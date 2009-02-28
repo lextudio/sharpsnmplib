@@ -113,7 +113,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="port">Port number.</param>
         [Obsolete("Please use GetResponse instead. Otherwise, make sure you called the obsolete constructor for this object.")]
         public void Send(IPAddress receiver, int timeout, int port)
-        {           
+        {
             byte[] bytes = _bytes;
             ByteTool.Capture(bytes); // log request
             IPEndPoint agent = new IPEndPoint(receiver, port);
@@ -135,28 +135,28 @@ namespace Lextm.SharpSnmpLib
             using (MemoryStream m = new MemoryStream(bytes, false))
             {
                 ISnmpMessage message = MessageFactory.ParseMessages(m)[0];
+                
+                if (message.Pdu.TypeCode != SnmpType.GetResponsePdu)
+                {
+                    throw SharpOperationException.Create("wrong response type", receiver);
+                }
+                
+                GetResponseMessage response = (GetResponseMessage)message;
+                if (response.SequenceNumber != SequenceNumber)
+                {
+                    throw SharpOperationException.Create("wrong response sequence", receiver);
+                }
+                
+                if (response.ErrorStatus != ErrorCode.NoError)
+                {
+                    throw SharpErrorException.Create(
+                        "error in response",
+                        receiver,
+                        response);
+                }
+                
+                ByteTool.Capture(bytes); // log response
             }
-            
-            if (message.Pdu.TypeCode != SnmpType.GetResponsePdu)
-            {
-                throw SharpOperationException.Create("wrong response type", receiver);
-            }
-            
-            GetResponseMessage response = (GetResponseMessage)message;
-            if (response.SequenceNumber != SequenceNumber)
-            {
-                throw SharpOperationException.Create("wrong response sequence", receiver);
-            }
-            
-            if (response.ErrorStatus != ErrorCode.NoError)
-            {
-                throw SharpErrorException.Create(
-                    "error in response",
-                    receiver,
-                    response);
-            }
-            
-            ByteTool.Capture(bytes); // log response
         }
         
         internal int SequenceNumber

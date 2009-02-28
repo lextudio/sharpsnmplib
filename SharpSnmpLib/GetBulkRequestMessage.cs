@@ -157,28 +157,28 @@ namespace Lextm.SharpSnmpLib
             using (MemoryStream m = new MemoryStream(bytes, false))
             {
                 ISnmpMessage message = MessageFactory.ParseMessages(m)[0];
+                
+                if (message.Pdu.TypeCode != SnmpType.GetResponsePdu)
+                {
+                    throw SharpOperationException.Create("wrong response type", _agent);
+                }
+                
+                GetResponseMessage response = (GetResponseMessage)message;
+                if (response.SequenceNumber != SequenceNumber)
+                {
+                    throw SharpOperationException.Create("wrong response sequence", _agent);
+                }
+                
+                if (response.ErrorStatus != ErrorCode.NoError)
+                {
+                    throw SharpErrorException.Create(
+                        "error in response",
+                        _agent,
+                        response);
+                }
+                
+                return response.Variables;
             }
-            
-            if (message.Pdu.TypeCode != SnmpType.GetResponsePdu)
-            {
-                throw SharpOperationException.Create("wrong response type", _agent);
-            }
-            
-            GetResponseMessage response = (GetResponseMessage)message;
-            if (response.SequenceNumber != SequenceNumber)
-            {
-                throw SharpOperationException.Create("wrong response sequence", _agent);
-            }
-            
-            if (response.ErrorStatus != ErrorCode.NoError)
-            {
-                throw SharpErrorException.Create(
-                    "error in response",
-                    _agent,
-                    response);
-            }
-            
-            return response.Variables;
         }
         
         [Obsolete("Use RequestId instead.")]
