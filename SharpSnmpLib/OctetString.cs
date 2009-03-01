@@ -128,7 +128,7 @@ namespace Lextm.SharpSnmpLib
                 }
             }
             
-            return null;
+            return string.Empty;
         }
 
         /// <summary>

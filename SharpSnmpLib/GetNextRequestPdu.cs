@@ -34,15 +34,15 @@ namespace Lextm.SharpSnmpLib
         /// <param name="errorStatus">Error status</param>
         /// <param name="errorIndex">Error index</param>
         /// <param name="variables">Variables</param>
-        public GetNextRequestPdu(int requestId, ErrorCode errorStatus, int errorIndex, IList<Variable> variables) 
+        public GetNextRequestPdu(int requestId, ErrorCode errorStatus, int errorIndex, IList<Variable> variables)
             : this(new Integer32(requestId), new Integer32((int)errorStatus), new Integer32(errorIndex), variables)
         {
         }
         
         private GetNextRequestPdu(Integer32 requestId, Integer32 errorStatus, Integer32 errorIndex, IList<Variable> variables)
         {
-            _requestId = requestId;                      
-            _errorStatus = errorStatus; 
+            _requestId = requestId;
+            _errorStatus = errorStatus;
             _errorIndex = errorIndex;
             _variables = variables;
             _varbindSection = Variable.Transform(variables);
@@ -133,9 +133,11 @@ namespace Lextm.SharpSnmpLib
         [Obsolete("Use AppendBytesTo instead.")]
         public byte[] ToBytes()
         {
-            MemoryStream result = new MemoryStream();
-            AppendBytesTo(result);
-            return result.ToArray();
+            using (MemoryStream result = new MemoryStream())
+            {
+                AppendBytesTo(result);
+                return result.ToArray();
+            }
         }
 
         #endregion
@@ -148,9 +150,9 @@ namespace Lextm.SharpSnmpLib
             return string.Format(
                 CultureInfo.InvariantCulture,
                 "GET NEXT request PDU: seq: {0}; status: {1}; index: {2}; variable count: {3}",
-                _requestId, 
-                _errorStatus, 
-                _errorIndex, 
+                _requestId,
+                _errorStatus,
+                _errorIndex,
                 _variables.Count.ToString(CultureInfo.InvariantCulture));
         }
     }

@@ -138,7 +138,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="timeout">The timeout above which, if the response is not received, a <see cref="SharpTimeoutException"/> is thrown.</param>
         /// <param name="callback">The callback called once the response has been received.</param>
         /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
-        internal static void BeginGetResponse(IPEndPoint receiver, byte[] bytes, int number, int timeout, GetResponseCallback callback, Socket udpSocket)
+        internal static void BeginGetResponse(EndPoint receiver, byte[] bytes, int number, int timeout, GetResponseCallback callback, Socket udpSocket)
         {
             Capture(bytes); // log request
 
@@ -153,9 +153,9 @@ namespace Lextm.SharpSnmpLib
             udpSocket.SendTo(bytes, receiver);
             udpSocket.BeginReceive(
                 reply,
-                0, 
-                bufSize, 
-                SocketFlags.None, 
+                0,
+                bufSize,
+                SocketFlags.None,
                 GetResponseInternalCallback,
                 new object[] { udpSocket, reply, receiver, timeout, callback, number });
         }
@@ -170,7 +170,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="timeout">The timeout above which, if the response is not received, a <see cref="SharpTimeoutException"/> is thrown.</param>
         /// <param name="callback">The callback called once the response has been received.</param>
         /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
-        internal static void BeginGetResponseRaw(IPEndPoint receiver, byte[] bytes, int number, int timeout, GetResponseRawCallback callback, Socket udpSocket)
+        internal static void BeginGetResponseRaw(EndPoint receiver, byte[] bytes, int number, int timeout, GetResponseRawCallback callback, Socket udpSocket)
         {
             Capture(bytes); // log request
 
@@ -184,9 +184,9 @@ namespace Lextm.SharpSnmpLib
             // Whatever you change, try to keep the Send and the BeginReceive close to each other.
             udpSocket.SendTo(bytes, receiver);
             udpSocket.BeginReceive(
-                reply, 
+                reply,
                 0,
-                bufSize, 
+                bufSize,
                 SocketFlags.None,
                 GetResponseRawInternalCallback,
                 new object[] { udpSocket, reply, receiver, timeout, callback });
@@ -363,13 +363,15 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("items");
             }
 
-            MemoryStream result = new MemoryStream();
-            foreach (ISnmpData item in items)
+            using (MemoryStream result = new MemoryStream())
             {
-                item.AppendBytesTo(result);
+                foreach (ISnmpData item in items)
+                {
+                    item.AppendBytesTo(result);
+                }
+                
+                return result.ToArray();
             }
-            
-            return result.ToArray();
         }
         
         internal static byte[] ParseItems(IEnumerable items)
@@ -384,13 +386,15 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentException("items must be IEnumerable<ISnmpData>");
             }
             
-            MemoryStream result = new MemoryStream();
-            foreach (ISnmpData item in items)
+            using (MemoryStream result = new MemoryStream())
             {
-                item.AppendBytesTo(result);
+                foreach (ISnmpData item in items)
+                {
+                    item.AppendBytesTo(result);
+                }
+                
+                return result.ToArray();
             }
-            
-            return result.ToArray();
         }
         
         internal static void WritePayloadLength(Stream stream, int length) // excluding initial octet
