@@ -50,7 +50,6 @@ class TestGet
         bool parsed = IPAddress.TryParse(extra[0], out ip);
         if (!parsed)
         {
-            ip = IPAddress.Loopback;
             foreach (IPAddress address in Dns.GetHostAddresses(extra[0]))
             {
                 if (address.AddressFamily == AddressFamily.InterNetwork)
@@ -59,19 +58,22 @@ class TestGet
                     break;
                 }
             }
+            
+            if (ip == null)
+            {
+                Console.WriteLine("invalid host or wrong IP address found: " + extra[0]);
+                return;
+            }
         }
         
         try
-        {
-            List<Variable> vList = new List<Variable>();
+        {            
             for (int i = 1; i < extra.Count; i++)
             {
+                List<Variable> vList = new List<Variable>();
                 Variable test = new Variable(new ObjectIdentifier(extra[i]));
                 vList.Add(test);
-            }
-            
-            foreach (Variable variable in Manager.Get(version, new IPEndPoint(ip, 161), new OctetString(community), vList, timeout))
-            {
+                Variable variable = Manager.Get(version, new IPEndPoint(ip, 161), new OctetString(community), vList, timeout)[0];
                 Console.WriteLine(variable);
             }
         }
