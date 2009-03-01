@@ -42,7 +42,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("stream");
             }
 
-            if (length == 0 || length > 5)
+            if (length < 1 || length > 5)
             {
                 throw new ArgumentException("byte length must between 1 and 5");
             }

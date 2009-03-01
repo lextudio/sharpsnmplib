@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
+
 using NUnit.Framework;
+
 #pragma warning disable 1591,0618
 namespace Lextm.SharpSnmpLib.Tests
 {
@@ -33,7 +36,16 @@ namespace Lextm.SharpSnmpLib.Tests
             byte[] buffer2 = new byte[] {01, 44};
             Counter32 c2 = new Counter32(buffer2);
             Assert.AreEqual(300, c2.ToUInt32());
-
+            Assert.AreEqual("300", c2.ToString());
+            Counter32 sec = new Counter32(300);
+            Counter32 thr = new Counter32(301);
+            Assert.IsTrue(c2.Equals(sec));
+            Assert.AreEqual(300.GetHashCode(), c2.GetHashCode());
+            Assert.IsTrue(c2 == sec);
+            Assert.IsTrue(c2 != thr);
+            Assert.IsFalse(c2 == null);
+            Assert.IsFalse(null == sec);
+            Assert.IsTrue(c2 == c2);
             
             byte[] buffer1 = new byte[] {13};
             Counter32 c1 = new Counter32(buffer1);
@@ -61,6 +73,35 @@ namespace Lextm.SharpSnmpLib.Tests
         {
             Counter32 test = new Counter32(300);
             Assert.AreEqual(300, test.ToUInt32());
+        }
+        
+        [Test]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void TestContructor3()
+        {
+            Counter32 test = new Counter32(1, null);
+        }
+        
+        [Test]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestConstructor4()
+        {
+            Counter32 test = new Counter32(0, new MemoryStream());
+        }
+        
+        [Test]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestConstructor5()
+        {
+            Counter32 test = new Counter32(6, new MemoryStream());
+        }
+        
+        [Test]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestConstructor6()
+        {
+            byte[] buffer5 = new byte[] {3, 255, 255, 255, 255};
+            Counter32 c5 = new Counter32(buffer5);
         }
         
         [Test]

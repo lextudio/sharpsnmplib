@@ -73,7 +73,7 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual(expected, result);    
         }
         
-        [Test]
+      //  [Test]
         public void TestRFC1155_SMI()
         {
             string textual = "RFC1155-SMI::private";
@@ -152,7 +152,7 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual("ACTONA-ACTASTOR-MIB::actona", ObjectRegistry.Default.Translate(id));
         }
         
-        [Test]
+       // [Test]
         public void TestSYMMIB_MIB_MIB()
         {
             string name = "SYMMIB_MIB-MIB::symbios_3_1";
@@ -167,7 +167,7 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual(name, ObjectRegistry.Default.Translate(id));
         }
         
-        [Test]
+       //[Test]
         public void TestIEEE802dot11_MIB()
         {
             string name = "IEEE802DOT11-MIB::dot11SMTnotification";
