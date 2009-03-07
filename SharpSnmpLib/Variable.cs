@@ -10,6 +10,7 @@
 using System;
 using System.Collections.Generic;
 using Lextm.SharpSnmpLib.Mib;
+using System.Diagnostics;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -153,12 +154,13 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         internal static Sequence Transform(IList<Variable> variables)
         {
-            IList<ISnmpData> varbinds = new List<ISnmpData>(2 * variables.Count);
+            List<ISnmpData> varbinds = new List<ISnmpData>(variables.Count);
             foreach (Variable v in variables)
             {
                 varbinds.Add(new Sequence(v.Id, v.Data));
             }
             
+            //Debug.Assert(varbinds.Capacity == varbinds.Count, "capacity is " + varbinds.Capacity + "; count is " + varbinds.Count);
             Sequence result = new Sequence(varbinds);
             return result;
         }
