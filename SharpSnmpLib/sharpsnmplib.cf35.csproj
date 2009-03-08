@@ -27,7 +27,7 @@
     <DefineConstants>DEBUG;TRACE;CF;NET_2_0</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\bin\</OutputPath>
     <DebugSymbols>false</DebugSymbols>
     <DebugType>PdbOnly</DebugType>
     <Optimize>True</Optimize>
@@ -49,7 +49,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Agent.cs" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="AsyncOperation.cs" />
     <Compile Include="AsyncOperationManager.cs" />
@@ -90,49 +89,8 @@
     <Compile Include="ISnmpData.cs" />
     <Compile Include="ISnmpMessage.cs" />
     <Compile Include="ISnmpPdu.cs" />
-    <Compile Include="Listener.cs" />
-    <Compile Include="Manager.cs" />
     <Compile Include="MessageFactory.cs" />
     <Compile Include="MessagetReceivedEventArgs.cs" />
-    <Compile Include="Mib\AgentCapabilities.cs" />
-    <Compile Include="Mib\Assembler.cs" />
-    <Compile Include="Mib\Choice.cs" />
-    <Compile Include="Mib\ConstructHelper.cs" />
-    <Compile Include="Mib\Definition.cs" />
-    <Compile Include="Mib\DefinitionType.cs" />
-    <Compile Include="Mib\Exports.cs" />
-    <Compile Include="Mib\IConstruct.cs" />
-    <Compile Include="Mib\IDefinition.cs" />
-    <Compile Include="Mib\IEntity.cs" />
-    <Compile Include="Mib\Imports.cs" />
-    <Compile Include="Mib\ImportsFrom.cs" />
-    <Compile Include="Mib\Integer.cs" />
-    <Compile Include="Mib\IObjectRegistry.cs" />
-    <Compile Include="Mib\IObjectTree.cs" />
-    <Compile Include="Mib\ITypeAssignment.cs" />
-    <Compile Include="Mib\Lexer.cs" />
-    <Compile Include="Mib\Macro.cs" />
-    <Compile Include="Mib\MibDocument.cs" />
-    <Compile Include="Mib\MibModule.cs" />
-    <Compile Include="Mib\ModuleCompliance.cs" />
-    <Compile Include="Mib\ModuleIdentity.cs" />
-    <Compile Include="Mib\ModuleLoader.cs" />
-    <Compile Include="Mib\NotificationGroup.cs" />
-    <Compile Include="Mib\NotificationType.cs" />
-    <Compile Include="Mib\ObjectGroup.cs" />
-    <Compile Include="Mib\ObjectIdentity.cs" />
-    <Compile Include="Mib\ObjectRegistry.cs" />
-    <Compile Include="Mib\ObjectTree.cs" />
-    <Compile Include="Mib\ObjectType.cs" />
-    <Compile Include="Mib\OidValueAssignment.cs" />
-    <Compile Include="Mib\Parser.cs" />
-    <Compile Include="Mib\Sequence.cs" />
-    <Compile Include="Mib\SharpMibException.cs" />
-    <Compile Include="Mib\StringUtility.cs" />
-    <Compile Include="Mib\Symbol.cs" />
-    <Compile Include="Mib\TextualConvention.cs" />
-    <Compile Include="Mib\TrapType.cs" />
-    <Compile Include="Mib\TypeAssignment.cs" />
     <Compile Include="NoSuchInstance.cs" />
     <Compile Include="NoSuchObject.cs" />
     <Compile Include="Null.cs" />
@@ -146,9 +104,6 @@
     <Compile Include="Real.cs" />
     <Compile Include="ReportMessage.cs" />
     <Compile Include="ReportPdu.cs" />
-    <Compile Include="Resource.Designer.cs">
-      <DependentUpon>Resource.resx</DependentUpon>
-    </Compile>
     <Compile Include="RunWorkerCompletedEventArgs.cs" />
     <Compile Include="RunWorkerCompletedEventHandler.cs" />
     <Compile Include="Sequence.cs" />
@@ -165,7 +120,6 @@
     <Compile Include="TableCollection.cs" />
     <Compile Include="TimeTicks.cs" />
     <Compile Include="TraceSource.cs" />
-    <Compile Include="TrapListener.cs" />
     <Compile Include="TrapV1Message.cs" />
     <Compile Include="TrapV1Pdu.cs" />
     <Compile Include="TrapV1ReceivedEventArgs.cs" />
@@ -176,31 +130,7 @@
     <Compile Include="Variable.cs" />
     <Compile Include="VersionCode.cs" />
     <Compile Include="WalkMode.cs" />
-    <EmbeddedResource Include="Agent.resx">
-      <DependentUpon>Agent.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Listener.resx">
-      <DependentUpon>Listener.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Manager.resx">
-      <DependentUpon>Manager.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resource.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TrapListener.resx">
-      <DependentUpon>TrapListener.cs</DependentUpon>
-    </EmbeddedResource>
     <None Include="Microsoft.VersionNumber.targets" />
-    <None Include="Resources\SNMPV2-CONF.module" />
-    <None Include="Resources\SNMPV2-MIB.module" />
-    <None Include="Resources\SNMPV2-SMI.module" />
-    <None Include="Resources\SNMPV2-TC.module" />
-    <None Include="Resources\SNMPV2-TM.module" />
     <None Include="sharpsnmplib.snk" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Mib" />
-    <Folder Include="Resources" />
   </ItemGroup>
 </Project>
