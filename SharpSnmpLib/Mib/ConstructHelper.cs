@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Text;
+using System.Configuration;
+using System.Globalization;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
@@ -92,42 +94,58 @@ namespace Lextm.SharpSnmpLib.Mib
             bool condition = !IsValidIdentifier(current.ToString(), out message);
             Validate(current, condition, message);
         }
-        
+
         internal static bool IsValidIdentifier(string name, out string message)
         {
-            // TODO: enable this later.
-            //            if (name.Length < 1 || name.Length > 64)
-            //            {
-            //                message = "an identifier must consist of 1 to 64 letters, digits, and hyphens";
-            //                return false;
-            //            }            
+            if (UseStricterValidation && (name.Length < 1 || name.Length > 64))
+            {
+                message = "an identifier must consist of 1 to 64 letters, digits, and hyphens";
+                return false;
+            }
+
             if (!char.IsLetter(name[0]))
             {
                 message = "the initial character must be a letter";
                 return false;
             }
-            
+
             if (name.EndsWith("-", StringComparison.Ordinal))
             {
                 message = "a hyphen cannot be the last character of an identifier";
                 return false;
             }
-            
+
             if (name.Contains("--"))
             {
                 message = "a hyphen cannot be immediately followed by another hyphen in an identifier";
                 return false;
             }
-            
-            // TODO: enable this later.
-            //            if (name.Contains("_"))
-            //            {
-            //                message = "underscores are not allowed in identifiers";
-            //                return false;
-            //            } 
+
+            if (UseStricterValidation && name.Contains("_"))
+            {
+                message = "underscores are not allowed in identifiers";
+                return false;
+            }
+
             // TODO: SMIv2 forbids "-" except in module names and keywords
             message = null;
             return true;
+        }
+
+        private static bool? useStricterValidation;
+
+        private static bool UseStricterValidation
+        {
+            get
+            {
+                if (useStricterValidation == null)
+                {
+                    object setting = ConfigurationManager.AppSettings["StricterValidationEnabled"];
+                    useStricterValidation = setting != null && Convert.ToBoolean(setting.ToString(), CultureInfo.InvariantCulture);
+                }
+
+                return useStricterValidation.Value;
+            }
         }
     }
 }

@@ -43,6 +43,22 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public static class ByteTool
     {
+        private static bool? captureNeeded;
+
+        private static bool CaptureNeeded
+        {
+            get
+            {
+                if (captureNeeded == null)
+                {
+                    object setting = ConfigurationManager.AppSettings["CaptureEnabled"];
+                    captureNeeded = setting != null && Convert.ToBoolean(setting.ToString(), CultureInfo.InvariantCulture);
+                }
+
+                return captureNeeded.Value;
+            }
+        }
+
         /// <summary>
         /// Sends an SNMP message and wait for its responses.
         /// </summary>
@@ -269,12 +285,8 @@ namespace Lextm.SharpSnmpLib
         // TODO: add this method to all message exchanges.
         internal static void Capture(ISnmpMessage message)
         {
-            object setting = ConfigurationManager.AppSettings["CaptureEnabled"];
-            if (setting != null && Convert.ToBoolean(setting.ToString(), CultureInfo.InvariantCulture))
-            {
-                byte[] buffer = message.ToBytes();
-                CaptureInner(buffer, buffer.Length);
-            }
+            byte[] buffer = message.ToBytes();
+            Capture(buffer);
         }
 
         internal static void Capture(byte[] buffer)
@@ -284,28 +296,24 @@ namespace Lextm.SharpSnmpLib
 
         public static void Capture(byte[] buffer, int length)
         {
-            object setting = ConfigurationManager.AppSettings["CaptureEnabled"];
-            if (setting != null && Convert.ToBoolean(setting.ToString(), CultureInfo.InvariantCulture))
+            if (!CaptureNeeded)
             {
-                CaptureInner(buffer, length);
+                return;
             }
-        }
-        
-        private static void CaptureInner(byte[] buffer, int length)
-        {
+
             TraceSource source = new TraceSource("Library");
             StringBuilder builder = new StringBuilder();
             for (int i = 0; i < length; i++)
             {
                 builder.AppendFormat("{0:X2} ", buffer[i]);
             }
-            
+
             source.TraceInformation("SNMP packet captured at {0}, length {1}", DateTime.Now, length);
             source.TraceInformation(builder.ToString());
             source.Flush();
             source.Close();
         }
-
+        
         internal static byte[] ParseByteString(string bytes)
         {
             List<byte> result = new List<byte>();
