@@ -5,8 +5,6 @@ using System.Globalization;
 using System.IO;
 using System.Text;
 
-using Lextm.SharpSnmpLib.Mib;
-
 namespace Lextm.SharpSnmpLib
 {
     /// <summary>
@@ -27,20 +25,9 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Creates an <see cref="ObjectIdentifier"/> instance from textual ID.
         /// </summary>
-        /// <param name="text">String in one of the formats, "[module]:[name]" or "*.*.*.*".</param>
+        /// <param name="text">String in this format, "*.*.*.*".</param>
         public ObjectIdentifier(string text)
-            : this(text, null)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ObjectIdentifier"/> class.
-        /// </summary>
-        /// <param name="text">The text.</param>
-        /// <param name="registry">The registry.</param>
-        [CLSCompliant(false)]
-        public ObjectIdentifier(string text, IObjectRegistry registry)
-            : this(ParseString(text, registry))
+            : this(ParseString(text))
         {
         }
 
@@ -124,13 +111,13 @@ namespace Lextm.SharpSnmpLib
 
         #endregion Constructor
 
-        internal static uint[] ParseString(string text, IObjectRegistry registry)
+        internal static uint[] ParseString(string text)
         {
-            IObjectRegistry objects = registry ?? ObjectRegistry.Default;
-            if (text.Contains("::"))
-            {
-                return objects.Translate(text);
-            }
+            //IObjectRegistry objects = registry ?? ObjectRegistry.Default;
+            //if (text.Contains("::"))
+            //{
+            //    return objects.Translate(text);
+            //}
 
             return Convert(text);
         }
@@ -145,29 +132,29 @@ namespace Lextm.SharpSnmpLib
             return _oid;
         }
         
-        /// <summary>
-        /// Textual ID.
-        /// </summary>
-        [Obsolete("Use GetTextual instead.")]
-        public string Textual
-        {
-            get
-            {
-                return ObjectRegistry.Default.Translate(_oid);
-            }
-        }
+        ///// <summary>
+        ///// Textual ID.
+        ///// </summary>
+        //[Obsolete("Use GetTextual instead.")]
+        //public string Textual
+        //{
+        //    get
+        //    {
+        //        return ObjectRegistry.Default.Translate(_oid);
+        //    }
+        //}
 
-        /// <summary>
-        /// Gets the textual.
-        /// </summary>
-        /// <param name="registry">The registry.</param>
-        /// <returns></returns>
-        [CLSCompliant(false)]
-        public string GetTextual(IObjectRegistry registry)
-        {
-            IObjectRegistry objects = registry ?? ObjectRegistry.Default;
-            return objects.Translate(_oid);
-        }
+        ///// <summary>
+        ///// Gets the textual.
+        ///// </summary>
+        ///// <param name="registry">The registry.</param>
+        ///// <returns></returns>
+        //[CLSCompliant(false)]
+        //public string GetTextual(IObjectRegistry registry)
+        //{
+        //    IObjectRegistry objects = registry ?? ObjectRegistry.Default;
+        //    return objects.Translate(_oid);
+        //}
         
         /// <summary>
         /// Returns a <see cref="String"/> that represents this <see cref="ObjectIdentifier"/>.

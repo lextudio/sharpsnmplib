@@ -26,6 +26,21 @@ namespace Lextm.SharpSnmpLib.Mib
         string Path { get; }
 
         /// <summary>
+        /// Creates a variable.
+        /// </summary>
+        /// <param name="textual">The textual ID.</param>
+        /// <returns></returns>
+        Variable CreateVariable(string textual);
+
+        /// <summary>
+        /// Creates a variable.
+        /// </summary>
+        /// <param name="textual">The textual ID.</param>
+        /// <param name="data">The data.</param>
+        /// <returns></returns>
+        Variable CreateVariable(string textual, ISnmpData data);
+
+        /// <summary>
         /// Gets numercial form from textual form.
         /// </summary>
         /// <param name="textual">Textual</param>

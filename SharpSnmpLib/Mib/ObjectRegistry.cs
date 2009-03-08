@@ -413,5 +413,30 @@ namespace Lextm.SharpSnmpLib.Mib
                 handler(this, EventArgs.Empty);
             }
         }
+
+        #region IObjectRegistry Members
+
+        /// <summary>
+        /// Creates a variable.
+        /// </summary>
+        /// <param name="textual">The textual.</param>
+        /// <returns></returns>
+        public Variable CreateVariable(string textual)
+        {
+            return CreateVariable(textual, null);
+        }
+
+        /// <summary>
+        /// Creates a variable.
+        /// </summary>
+        /// <param name="textual">The textual ID.</param>
+        /// <param name="data">The data.</param>
+        /// <returns></returns>
+        public Variable CreateVariable(string textual, ISnmpData data)
+        {
+            return new Variable(Translate(textual), data);
+        }
+
+        #endregion
     }
 }

@@ -250,9 +250,17 @@
     <None Include="Resources\preferences-desktop-theme.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SharpSnmpLib\SharpSnmpLib.Controls.csproj">
+      <Project>{B2E8F73F-072C-4F5B-A42B-315F84A45374}</Project>
+      <Name>SharpSnmpLib.Controls</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SharpSnmpLib\SharpSnmpLib.csproj">
       <Project>{286DE6DB-8F95-4BD4-86A2-86488D2E0EE1}</Project>
       <Name>SharpSnmpLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SharpSnmpLib\SharpSnmpLib.Mib.csproj">
+      <Project>{CBE20411-5DB7-487D-825D-7694267BB6F5}</Project>
+      <Name>SharpSnmpLib.Mib</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

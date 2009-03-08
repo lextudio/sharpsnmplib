@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{AA1CC969-B74E-4D58-BBDB-84EB5C1B0383}</ProjectGuid>
     <OutputType>Exe</OutputType>
@@ -44,6 +44,10 @@
     <ProjectReference Include="..\SharpSnmpLib\SharpSnmpLib.csproj">
       <Project>{286DE6DB-8F95-4BD4-86A2-86488D2E0EE1}</Project>
       <Name>SharpSnmpLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SharpSnmpLib\SharpSnmpLib.Mib.csproj">
+      <Project>{CBE20411-5DB7-487D-825D-7694267BB6F5}</Project>
+      <Name>SharpSnmpLib.Mib</Name>
     </ProjectReference>
     <ProjectReference Include="..\Tests\Tests.csproj">
       <Project>{FE484004-0780-4730-9D91-D4597341B56E}</Project>

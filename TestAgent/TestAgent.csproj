@@ -45,6 +45,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SharpSnmpLib\SharpSnmpLib.Controls.csproj">
+      <Project>{B2E8F73F-072C-4F5B-A42B-315F84A45374}</Project>
+      <Name>SharpSnmpLib.Controls</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SharpSnmpLib\SharpSnmpLib.csproj">
       <Project>{286DE6DB-8F95-4BD4-86A2-86488D2E0EE1}</Project>
       <Name>SharpSnmpLib</Name>

@@ -86,8 +86,12 @@ namespace Lextm.SharpSnmpLib
                 return _variables;
             }
         }
-        
-        internal void SendResponse(IPEndPoint receiver)
+
+        /// <summary>
+        /// Sends the response.
+        /// </summary>
+        /// <param name="receiver">The receiver.</param>
+        public void SendResponse(IPEndPoint receiver)
         {
             // TODO: make more efficient here.
             InformRequestPdu pdu = (InformRequestPdu)_pdu;

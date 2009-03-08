@@ -41,7 +41,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// Description of ByteTool.
     /// </summary>
-    internal static class ByteTool
+    public static class ByteTool
     {
         /// <summary>
         /// Sends an SNMP message and wait for its responses.
@@ -282,7 +282,7 @@ namespace Lextm.SharpSnmpLib
             Capture(buffer, buffer.Length);
         }
 
-        internal static void Capture(byte[] buffer, int length)
+        public static void Capture(byte[] buffer, int length)
         {
             object setting = ConfigurationManager.AppSettings["CaptureEnabled"];
             if (setting != null && Convert.ToBoolean(setting.ToString(), CultureInfo.InvariantCulture))

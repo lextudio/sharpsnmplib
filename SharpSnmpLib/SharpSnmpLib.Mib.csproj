@@ -1,0 +1,122 @@
+﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{CBE20411-5DB7-487D-825D-7694267BB6F5}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Lextm.SharpSnmpLib</RootNamespace>
+    <AssemblyName>SharpSnmpLib.Mib</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>sharpsnmplib.snk</AssemblyOriginatorKeyFile>
+    <DocumentationFile>bin\Release\SharpSnmpLib.xml</DocumentationFile>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <NoStdLib>False</NoStdLib>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DelaySign>False</DelaySign>
+    <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
+    <SourceAnalysisOverrideSettingsFile>D:\lextm\documents\SharpDevelop Projects\SharpSnmpLib\SharpSnmpLib\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
+    <RunSourceAnalysis>False</RunSourceAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>false</DebugSymbols>
+    <DebugType>PdbOnly</DebugType>
+    <Optimize>True</Optimize>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <BaseAddress>4194304</BaseAddress>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <FileAlignment>4096</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DocumentationFile>bin\Release\SharpSnmpLib.Mib.xml</DocumentationFile>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Mib\Assembler.cs" />
+    <Compile Include="Mib\ConstructHelper.cs" />
+    <Compile Include="Mib\AgentCapabilities.cs" />
+    <Compile Include="Mib\Choice.cs" />
+    <Compile Include="Mib\DefinitionType.cs" />
+    <Compile Include="Mib\Exports.cs" />
+    <Compile Include="Mib\IConstruct.cs" />
+    <Compile Include="Mib\IDefinition.cs" />
+    <Compile Include="Mib\IEntity.cs" />
+    <Compile Include="Mib\Imports.cs" />
+    <Compile Include="Mib\ImportsFrom.cs" />
+    <Compile Include="Mib\Integer.cs" />
+    <Compile Include="Mib\IObjectRegistry.cs" />
+    <Compile Include="Mib\IObjectTree.cs" />
+    <Compile Include="Mib\ITypeAssignment.cs" />
+    <Compile Include="Mib\Macro.cs" />
+    <Compile Include="Mib\ModuleCompliance.cs" />
+    <Compile Include="Mib\ModuleIdentity.cs" />
+    <Compile Include="Mib\ModuleLoader.cs" />
+    <Compile Include="Mib\NotificationGroup.cs" />
+    <Compile Include="Mib\NotificationType.cs" />
+    <Compile Include="Mib\ObjectGroup.cs" />
+    <Compile Include="Mib\ObjectIdentity.cs" />
+    <Compile Include="Mib\ObjectType.cs" />
+    <Compile Include="Mib\OidValueAssignment.cs" />
+    <Compile Include="Mib\Parser.cs" />
+    <Compile Include="Mib\Sequence.cs" />
+    <Compile Include="Mib\StringUtility.cs" />
+    <Compile Include="Mib\TextualConvention.cs" />
+    <Compile Include="Mib\TrapType.cs" />
+    <Compile Include="Mib\TypeAssignment.cs" />
+    <Compile Include="Mib\Definition.cs" />
+    <Compile Include="Mib\Lexer.cs" />
+    <Compile Include="Mib\MibDocument.cs" />
+    <Compile Include="Mib\MibModule.cs" />
+    <Compile Include="Mib\ObjectTree.cs" />
+    <Compile Include="Mib\SharpMibException.cs" />
+    <Compile Include="Mib\Symbol.cs" />
+    <Compile Include="Mib\ObjectRegistry.cs" />
+    <Compile Include="Resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="SharpSnmpLib.csproj">
+      <Project>{286DE6DB-8F95-4BD4-86A2-86488D2E0EE1}</Project>
+      <Name>SharpSnmpLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SNMPV2-CONF.module" />
+    <None Include="Resources\SNMPV2-MIB.module" />
+    <None Include="Resources\SNMPV2-SMI.module" />
+    <None Include="Resources\SNMPV2-TC.module" />
+    <None Include="Resources\SNMPV2-TM.module" />
+    <None Include="sharpsnmplib.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>

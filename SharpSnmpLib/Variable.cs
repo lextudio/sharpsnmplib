@@ -9,7 +9,6 @@
 
 using System;
 using System.Collections.Generic;
-using Lextm.SharpSnmpLib.Mib;
 using System.Diagnostics;
 
 namespace Lextm.SharpSnmpLib
@@ -33,15 +32,14 @@ namespace Lextm.SharpSnmpLib
         { 
         }
 
-        /// <summary>
-        /// Creates a <see cref="Variable"/> instance with a specific <see cref="string"/>.
-        /// </summary>
-        /// <param name="textual">Textual IID string</param>
-        /// <param name="registry">The registry.</param>
-        [CLSCompliant(false)]
-        public Variable(string textual, IObjectRegistry registry) : this(new ObjectIdentifier(registry.Translate(textual)), null)
-        {  
-        }
+        ///// <summary>
+        ///// Creates a <see cref="Variable"/> instance with a specific <see cref="string"/>.
+        ///// </summary>
+        ///// <param name="textual">Textual IID string</param>
+        //[CLSCompliant(false)]
+        //public Variable(string textual) : this(new ObjectIdentifier(registry.Translate(textual)), null)
+        //{  
+        //}
         
         /// <summary>
         /// Creates a <see cref="Variable"/> instance with a specific object identifier.
@@ -52,17 +50,17 @@ namespace Lextm.SharpSnmpLib
         {
         }
 
-        /// <summary>
-        /// Creates a <see cref="Variable"/> instance with a specific <see cref="string"/> and <see cref="ISnmpData"/>.
-        /// </summary>
-        /// <param name="textual">The textual.</param>
-        /// <param name="data">The data.</param>
-        /// <param name="registry">The registry.</param>
-        [CLSCompliant(false)]
-        public Variable(string textual, ISnmpData data, IObjectRegistry registry)
-            : this(new ObjectIdentifier(registry.Translate(textual)), data)
-        {
-        }
+        ///// <summary>
+        ///// Creates a <see cref="Variable"/> instance with a specific <see cref="string"/> and <see cref="ISnmpData"/>.
+        ///// </summary>
+        ///// <param name="textual">The textual.</param>
+        ///// <param name="data">The data.</param>
+        ///// <param name="registry">The registry.</param>
+        //[CLSCompliant(false)]
+        //public Variable(string textual, ISnmpData data)
+        //    : this(new ObjectIdentifier(registry.Translate(textual)), data)
+        //{
+        //}
         
         /// <summary>
         /// Creates a <see cref="Variable"/> instance with a specific <see cref="ObjectIdentifier"/> and <see cref="ISnmpData"/>.

@@ -56,7 +56,7 @@ namespace Lextm.SharpSnmpLib
             {
                 try
                 {
-                    uint[] oidVal = ObjectIdentifier.ParseString(s, null);
+                    uint[] oidVal = ObjectIdentifier.ParseString(s);
                     return new ObjectIdentifier(oidVal);
                 }
                 catch
@@ -80,7 +80,7 @@ namespace Lextm.SharpSnmpLib
             ObjectIdentifier oid = value as ObjectIdentifier;
             if (destinationType == typeof(string) && oid != null)
             {
-                 return oid.GetTextual(null);
+                return oid.ToString(); // GetTextual(null);
             }
     
             return base.ConvertTo(context, culture, value, destinationType);

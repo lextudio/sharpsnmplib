@@ -6,9 +6,9 @@ namespace Lextm.SharpSnmpLib
     /// A counter that generates PDU sequence number.
     /// </summary>
     /// <remarks>The sequence number is used to identifier PDU sessions.</remarks>
-    internal static class PduCounter
+    public static class PduCounter
     {      
-        internal static int NextCount
+        public static int NextCount
         {
             get
             {

@@ -51,9 +51,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Agent.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="BitString.cs" />
     <Compile Include="Bool.cs" />
@@ -84,57 +81,12 @@
     <Compile Include="ISnmpData.cs" />
     <Compile Include="IP.cs" />
     <Compile Include="ISnmpPdu.cs" />
-    <Compile Include="Listener.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Manager.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="MessageFactory.cs" />
     <Compile Include="MessagetReceivedEventArgs.cs" />
-    <Compile Include="Mib\Assembler.cs" />
-    <Compile Include="Mib\ConstructHelper.cs" />
-    <Compile Include="Mib\AgentCapabilities.cs" />
-    <Compile Include="Mib\Choice.cs" />
-    <Compile Include="Mib\DefinitionType.cs" />
-    <Compile Include="Mib\Exports.cs" />
-    <Compile Include="Mib\IConstruct.cs" />
-    <Compile Include="Mib\IDefinition.cs" />
-    <Compile Include="Mib\IEntity.cs" />
-    <Compile Include="Mib\Imports.cs" />
-    <Compile Include="Mib\ImportsFrom.cs" />
-    <Compile Include="Mib\Integer.cs" />
-    <Compile Include="Mib\IObjectRegistry.cs" />
-    <Compile Include="Mib\IObjectTree.cs" />
-    <Compile Include="Mib\ITypeAssignment.cs" />
-    <Compile Include="Mib\Macro.cs" />
-    <Compile Include="Mib\ModuleCompliance.cs" />
-    <Compile Include="Mib\ModuleIdentity.cs" />
-    <Compile Include="Mib\ModuleLoader.cs" />
-    <Compile Include="Mib\NotificationGroup.cs" />
-    <Compile Include="Mib\NotificationType.cs" />
-    <Compile Include="Mib\ObjectGroup.cs" />
-    <Compile Include="Mib\ObjectIdentity.cs" />
-    <Compile Include="Mib\ObjectType.cs" />
-    <Compile Include="Mib\OidValueAssignment.cs" />
-    <Compile Include="Mib\Parser.cs" />
-    <Compile Include="Mib\Sequence.cs" />
-    <Compile Include="Mib\StringUtility.cs" />
-    <Compile Include="Mib\TextualConvention.cs" />
-    <Compile Include="Mib\TrapType.cs" />
-    <Compile Include="Mib\TypeAssignment.cs" />
-    <Compile Include="Mib\Definition.cs" />
-    <Compile Include="Mib\Lexer.cs" />
-    <Compile Include="Mib\MibDocument.cs" />
-    <Compile Include="Mib\MibModule.cs" />
-    <Compile Include="Mib\ObjectTree.cs" />
-    <Compile Include="Mib\SharpMibException.cs" />
-    <Compile Include="Mib\Symbol.cs" />
     <Compile Include="NoSuchInstance.cs" />
     <Compile Include="NoSuchObject.cs" />
     <Compile Include="Null.cs" />
     <Compile Include="ObjectIdentifier.cs" />
-    <Compile Include="Mib\ObjectRegistry.cs" />
     <Compile Include="ObjectIdentifierConverter.cs" />
     <Compile Include="OctetString.cs" />
     <Compile Include="Integer32.cs" />
@@ -143,9 +95,6 @@
     <Compile Include="Real.cs" />
     <Compile Include="ReportMessage.cs" />
     <Compile Include="ReportPdu.cs" />
-    <Compile Include="Resource.Designer.cs">
-      <DependentUpon>Resource.resx</DependentUpon>
-    </Compile>
     <Compile Include="Sequence.cs" />
     <Compile Include="SetRequestMessage.cs" />
     <Compile Include="SetRequestPdu.cs" />
@@ -160,9 +109,6 @@
     <Compile Include="TimeTicks.cs" />
     <Compile Include="GenericCode.cs" />
     <Compile Include="TrapV1Message.cs" />
-    <Compile Include="TrapListener.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="TrapV1Pdu.cs" />
     <Compile Include="TrapV1ReceivedEventArgs.cs" />
     <Compile Include="TrapV2Message.cs" />
@@ -173,32 +119,6 @@
     <Compile Include="WalkMode.cs" />
     <None Include="license.txt" />
     <None Include="Microsoft.VersionNumber.targets" />
-    <None Include="Resources\SNMPV2-CONF.module" />
-    <None Include="Resources\SNMPV2-MIB.module" />
-    <None Include="Resources\SNMPV2-SMI.module" />
-    <None Include="Resources\SNMPV2-TC.module" />
-    <None Include="Resources\SNMPV2-TM.module" />
-    <EmbeddedResource Include="Listener.resx">
-      <DependentUpon>Listener.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resource.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Agent.resx">
-      <DependentUpon>Agent.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Manager.resx">
-      <DependentUpon>Manager.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TrapListener.resx">
-      <DependentUpon>TrapListener.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="sharpsnmplib.snk" />
