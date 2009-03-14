@@ -70,9 +70,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentException("position cannot be empty", "position");
             }
 
-//// ReSharper disable RedundantToStringCall
-            StringBuilder key = new StringBuilder(_root.ToString() + ".1.");
-//// ReSharper restore RedundantToStringCall
+            StringBuilder key = new StringBuilder(_root + ".1.");
             foreach (int index in position)
             {
                 key.Append("." + (index + 1));

@@ -22,7 +22,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Creates a <see cref="SharpSnmpException"/>.
         /// </summary>
-        public SharpSnmpException() 
+        protected SharpSnmpException() 
         { 
         }
         

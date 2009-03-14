@@ -41,7 +41,7 @@ namespace Lextm.SharpSnmpLib
                     if (n < 256 && n >= 128)
                     {
                         v.Add((byte)n);
-                        v.Add((byte)0);
+                        v.Add(0);
                         break;
                     }
                     
@@ -72,7 +72,7 @@ namespace Lextm.SharpSnmpLib
             long result = ((_raw[0] & 0x80) == 0x80) ? -1 : 0; // sign extended! Guy McIlroy
             for (int j = 0; j < _raw.Length; j++)
             {
-                result = (result << 8) | (long)_raw[j];
+                result = (result << 8) | _raw[j];
             }
             
             return result;

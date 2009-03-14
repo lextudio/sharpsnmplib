@@ -26,7 +26,7 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public sealed class Real : ISnmpData, IEquatable<Real>
     {
-        private byte[] _raw;
+        private readonly byte[] _raw;
         
         /// <summary>
         /// Creates a <see cref="Real"/> from raw bytes (these bytes are cloned).

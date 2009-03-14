@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -332,7 +332,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
         public void BeginGetResponseRaw(int timeout, IPEndPoint receiver, GetResponseRawCallback callback, Socket udpSocket)
         {
-            ByteTool.BeginGetResponseRaw(receiver, _bytes, SequenceNumber, timeout, callback, udpSocket);
+            ByteTool.BeginGetResponseRaw(receiver, _bytes, timeout, callback, udpSocket);
         }
 
         /// <summary>

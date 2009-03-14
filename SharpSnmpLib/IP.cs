@@ -9,7 +9,7 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public sealed class IP : ISnmpData, IEquatable<IP>
     {
-        private IPAddress _ip;
+        private readonly IPAddress _ip;
         private const int IPv4Length = 4;
         private const int IPv6Length = 16;
         

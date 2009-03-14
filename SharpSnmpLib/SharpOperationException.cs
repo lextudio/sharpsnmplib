@@ -29,16 +29,16 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Agent address.
         /// </summary>
-        public IPAddress Agent
+        protected IPAddress Agent
         {
             get { return agentAddress; }
-            protected set { agentAddress = value; }
+            set { agentAddress = value; }
         }
         
         /// <summary>
         /// Creates a <see cref="SharpOperationException"/> instance.
         /// </summary>
-        public SharpOperationException()
+        protected SharpOperationException()
         {
         }
         
@@ -46,7 +46,7 @@ namespace Lextm.SharpSnmpLib
         /// Creates a <see cref="SharpOperationException"/> instance with a specific <see cref="string"/>.
         /// </summary>
         /// <param name="message"></param>
-        public SharpOperationException(string message) : base(message)
+        protected SharpOperationException(string message) : base(message)
         {
         }
         
@@ -55,7 +55,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="message"></param>
         /// <param name="inner"></param>
-        public SharpOperationException(string message, Exception inner) : base(message, inner) 
+        protected SharpOperationException(string message, Exception inner) : base(message, inner) 
         { 
         }
 #if (!SILVERLIGHT)    

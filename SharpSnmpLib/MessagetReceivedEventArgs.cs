@@ -8,8 +8,8 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public class MessageReceivedEventArgs<T> : EventArgs where T : ISnmpMessage
     {
-        private ISnmpMessage _message;
-        private IPEndPoint _sender;
+        private readonly ISnmpMessage _message;
+        private readonly IPEndPoint _sender;
         
         /// <summary>
         /// Creates a <see cref="MessageReceivedEventArgs{T}"/>.

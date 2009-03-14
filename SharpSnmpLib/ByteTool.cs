@@ -98,7 +98,9 @@ namespace Lextm.SharpSnmpLib
             // Whatever you change, try to keep the Send and the BeginReceive close to each other.
             udpSocket.SendTo(bytes, receiver);
             IAsyncResult result = udpSocket.BeginReceive(reply, 0, bufSize, SocketFlags.None, null, null);
+// ReSharper disable PossibleNullReferenceException
             result.AsyncWaitHandle.WaitOne(timeout, false);
+// ReSharper restore PossibleNullReferenceException
             if (!result.IsCompleted)
             {
                 throw SharpTimeoutException.Create(receiver.Address, timeout);
@@ -182,11 +184,10 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="receiver">The IP address and port of the target to talk to.</param>
         /// <param name="bytes">The byte array representing the SNMP message.</param>
-        /// <param name="number">The <see cref="GetResponseMessage.SequenceNumber"/> of the SNMP message.</param>
         /// <param name="timeout">The timeout above which, if the response is not received, a <see cref="SharpTimeoutException"/> is thrown.</param>
         /// <param name="callback">The callback called once the response has been received.</param>
         /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
-        internal static void BeginGetResponseRaw(EndPoint receiver, byte[] bytes, int number, int timeout, GetResponseRawCallback callback, Socket udpSocket)
+        internal static void BeginGetResponseRaw(EndPoint receiver, byte[] bytes, int timeout, GetResponseRawCallback callback, Socket udpSocket)
         {
             Capture(bytes); // log request
 
@@ -445,11 +446,11 @@ namespace Lextm.SharpSnmpLib
             return ReadLength(stream, (byte)first);
         }
 
-        internal static byte[] IgnoreBytes(Stream stream, int length)
+        internal static void IgnoreBytes(Stream stream, int length)
         {
             byte[] bytes = new byte[length];
             stream.Read(bytes, 0, length);
-            return bytes;
+            return;
         }
         
         // copied from universal
