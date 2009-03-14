@@ -8,6 +8,9 @@ namespace Lextm.SharpSnmpLib
     /// <remarks>The sequence number is used to identifier PDU sessions.</remarks>
     public static class PduCounter
     {      
+        /// <summary>
+        /// Returns next number for request ID.
+        /// </summary>
         public static int NextCount
         {
             get

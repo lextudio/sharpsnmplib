@@ -294,6 +294,11 @@ namespace Lextm.SharpSnmpLib
             Capture(buffer, buffer.Length);
         }
 
+        /// <summary>
+        /// Captures a byte array in the log.
+        /// </summary>
+        /// <param name="buffer">Byte buffer.</param>
+        /// <param name="length">Length to log.</param>
         public static void Capture(byte[] buffer, int length)
         {
             if (!CaptureNeeded)
