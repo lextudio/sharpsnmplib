@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Net;
-
+#pragma warning disable 612,618
 namespace Lextm.SharpSnmpLib
 {
     /// <summary>
@@ -193,3 +193,4 @@ namespace Lextm.SharpSnmpLib
         }
     }
 }
+#pragma warning restore 612,618

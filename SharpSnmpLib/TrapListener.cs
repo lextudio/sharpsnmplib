@@ -140,12 +140,12 @@ namespace Lextm.SharpSnmpLib
 
         private void InitializeComponent()
         {
-            this.worker = new BackgroundWorker();
-            this.worker.WorkerReportsProgress = true;
-            this.worker.WorkerSupportsCancellation = true;
-            this.worker.DoWork += new System.ComponentModel.DoWorkEventHandler(Worker_DoWork);
-            this.worker.ProgressChanged += new ProgressChangedEventHandler(TrapListener_ProgressChanged);
-            this.worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(TrapListener_RunWorkerCompleted);
+            worker = new BackgroundWorker();
+            worker.WorkerReportsProgress = true;
+            worker.WorkerSupportsCancellation = true;
+            worker.DoWork += Worker_DoWork;
+            worker.ProgressChanged += TrapListener_ProgressChanged;
+            worker.RunWorkerCompleted += TrapListener_RunWorkerCompleted;
         }
 
         private void TrapListener_ProgressChanged(object sender, ProgressChangedEventArgs e)

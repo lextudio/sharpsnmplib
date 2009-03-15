@@ -8,6 +8,7 @@ using System.Threading;
 
 using Lextm.SharpSnmpLib.Mib;
 
+#pragma warning disable 612,618
 namespace Lextm.SharpSnmpLib
 {
     /// <summary>
@@ -580,9 +581,9 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public override string ToString()
         {
-//// ReSharper disable RedundantToStringCall
+// ReSharper disable RedundantToStringCall
             return "SNMP manager: timeout: " + Timeout.ToString(CultureInfo.InvariantCulture) + "; version: " + DefaultVersion.ToString() + "; " + trapListener;
-//// ReSharper restore RedundantToStringCall
+// ReSharper restore RedundantToStringCall
         }
 
         private void TrapListener_TrapV1Received(object sender, TrapV1ReceivedEventArgs e)
@@ -745,14 +746,21 @@ end:
             return next.Count != 0;
         }
 
-//// ReSharper disable all
-        private void InitializeComponent()
-        {
+        // ReSharper disable RedundantNameQualifier
+        // ReSharper disable RedundantThisQualifier
+        // ReSharper disable RedundantDelegateCreation
+        private void InitializeComponent(){
+
             this.trapListener = new SharpSnmpLib.TrapListener();
             this.trapListener.TrapV1Received += new System.EventHandler<SharpSnmpLib.TrapV1ReceivedEventArgs>(this.TrapListener_TrapV1Received);
             this.trapListener.TrapV2Received += new System.EventHandler<SharpSnmpLib.TrapV2ReceivedEventArgs>(this.TrapListener_TrapV2Received);
+
             this.trapListener.InformRequestReceived += new System.EventHandler<SharpSnmpLib.InformRequestReceivedEventArgs>(this.TrapListener_InformRequestReceived);
+
         }
-//// ReSharper restore all
+        // ReSharper restore RedundantDelegateCreation
+        // ReSharper restore RedundantThisQualifier
+        // ReSharper restore RedundantNameQualifier
     }
 }
+#pragma warning restore 612,618
