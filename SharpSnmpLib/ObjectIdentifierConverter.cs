@@ -49,6 +49,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="culture"></param>
         /// <param name="value"></param>
         /// <returns></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
             string s = value as string;
@@ -56,7 +57,7 @@ namespace Lextm.SharpSnmpLib
             {
                 try
                 {
-                    uint[] oidVal = ObjectIdentifier.ParseString(s);
+                    uint[] oidVal = ObjectIdentifier.Convert(s);
                     return new ObjectIdentifier(oidVal);
                 }
 // ReSharper disable EmptyGeneralCatchClause

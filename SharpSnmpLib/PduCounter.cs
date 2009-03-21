@@ -3,10 +3,10 @@
 namespace Lextm.SharpSnmpLib
 {
     /// <summary>
-    /// A counter that generates PDU sequence number.
+    /// A counter that generates request ID.
     /// </summary>
-    /// <remarks>The sequence number is used to identifier PDU sessions.</remarks>
-    public static class PduCounter
+    /// <remarks>The request ID is used to identifier sessions.</remarks>
+    public static class RequestCounter
     {      
         /// <summary>
         /// Returns next number for request ID.

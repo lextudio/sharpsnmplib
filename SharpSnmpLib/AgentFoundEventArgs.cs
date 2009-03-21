@@ -6,7 +6,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// Event arguments for agent found event.
     /// </summary>
-    public class AgentFoundEventArgs: EventArgs
+    public class AgentFoundEventArgs : EventArgs
     {
         private readonly IPEndPoint _agent;
 

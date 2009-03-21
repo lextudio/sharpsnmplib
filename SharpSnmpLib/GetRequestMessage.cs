@@ -21,7 +21,7 @@ namespace Lextm.SharpSnmpLib
         private readonly IPAddress _agent;
         private readonly OctetString _community;
         private readonly ISnmpPdu _pdu;
-        private readonly int _sequenceNumber;
+        private readonly int _requestId;
         
         /// <summary>
         /// Creates a <see cref="GetRequestMessage"/> with all contents.
@@ -38,11 +38,11 @@ namespace Lextm.SharpSnmpLib
             _community = community;
             _variables = variables;
             GetRequestPdu pdu = new GetRequestPdu(
-                PduCounter.NextCount,
+                RequestCounter.NextCount,
                 ErrorCode.NoError,
                 0,
                 _variables);
-            _sequenceNumber = pdu.RequestId;
+            _requestId = pdu.RequestId;
             _bytes = pdu.ToMessageBody(_version, _community).ToBytes();
         }
 
@@ -63,7 +63,7 @@ namespace Lextm.SharpSnmpLib
                 ErrorCode.NoError,
                 0,
                 _variables);
-            _sequenceNumber = pdu.RequestId;
+            _requestId = pdu.RequestId;
             _bytes = pdu.ToMessageBody(_version, _community).ToBytes();
         }
 
@@ -91,7 +91,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentException("wrong message type");
             }
             
-            _sequenceNumber = ((GetRequestPdu)_pdu).RequestId;
+            _requestId = ((GetRequestPdu)_pdu).RequestId;
             _variables = _pdu.Variables;
             _bytes = body.ToBytes();
         }
@@ -113,7 +113,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="timeout">Timeout.</param>
         /// <param name="port">Port number.</param>
         /// <returns></returns>
-        [Obsolete("Please use the overload version. Otherwise, make sure you called the obsolete constructor for this object.")]
+        [Obsolete("Use Discoverer instead.")]
         public IDictionary<IPEndPoint, Variable> Broadcast(int timeout, int port)
         {
             byte[] bytes = _bytes;
@@ -138,6 +138,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="timeout">Timeout.</param>
         /// <param name="receiver">Agents.</param>
         /// <returns></returns>
+        [Obsolete("Use Discoverer instead.")]
         public IDictionary<IPEndPoint, Variable> Broadcast(int timeout, IPEndPoint receiver)
         {
             byte[] bytes = _bytes;
@@ -197,7 +198,7 @@ namespace Lextm.SharpSnmpLib
                         }
                         
                         GetResponseMessage response = (GetResponseMessage)message;
-                        if (response.SequenceNumber != SequenceNumber)
+                        if (response.RequestId != RequestId)
                         {
                             continue;
                         }
@@ -285,7 +286,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public GetResponseMessage GetResponse(int timeout, IPEndPoint receiver)
         {
-            return ByteTool.GetResponse(receiver, _bytes, SequenceNumber, timeout);
+            return ByteTool.GetResponse(receiver, _bytes, RequestId, timeout);
         }
 
         /// <summary>
@@ -297,7 +298,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public GetResponseMessage GetResponse(int timeout, IPEndPoint receiver, Socket udpSocket)
         {
-            return ByteTool.GetResponse(receiver, _bytes, SequenceNumber, timeout, udpSocket);
+            return ByteTool.GetResponse(receiver, _bytes, RequestId, timeout, udpSocket);
         }
 
         /// <summary>
@@ -308,7 +309,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="callback">The callback called once the response has been received.</param>
         public void BeginGetResponse(int timeout, IPEndPoint receiver, GetResponseCallback callback)
         {
-            ByteTool.BeginGetResponse(receiver, _bytes, SequenceNumber, timeout, callback);
+            ByteTool.BeginGetResponse(receiver, _bytes, RequestId, timeout, callback);
         }
 
         /// <summary>
@@ -320,7 +321,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
         public void BeginGetResponse(int timeout, IPEndPoint receiver, GetResponseCallback callback, Socket udpSocket)
         {
-            ByteTool.BeginGetResponse(receiver, _bytes, SequenceNumber, timeout, callback, udpSocket);
+            ByteTool.BeginGetResponse(receiver, _bytes, RequestId, timeout, callback, udpSocket);
         }
 
         /// <summary>
@@ -346,9 +347,18 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Sequence number.
         /// </summary>
+        [Obsolete("Use RequestId instead.")]
         public int SequenceNumber
         {
-            get { return _sequenceNumber; }
+            get { return _requestId; }
+        }
+        
+        /// <summary>
+        /// Request ID.
+        /// </summary>
+        public int RequestId
+        {
+            get { return _requestId; }
         }
 
         /// <summary>

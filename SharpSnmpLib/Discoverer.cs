@@ -59,11 +59,11 @@ namespace Lextm.SharpSnmpLib
                 throw new NotSupportedException("SNMP v3 is not supported");
             }
 
-            Variable v = new Variable(new ObjectIdentifier(new uint[] {1, 3, 6, 1, 2, 1, 1, 1, 0}));
+            Variable v = new Variable(new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 1, 1, 0 }));
             List<Variable> variables = new List<Variable>();
             variables.Add(v);
 
-            requestId = PduCounter.NextCount;
+            requestId = RequestCounter.NextCount;
             GetRequestMessage message = new GetRequestMessage(requestId, version, community, variables);
             byte[] bytes = message.ToBytes();
             using (UdpClient udp = new UdpClient())
@@ -102,10 +102,9 @@ namespace Lextm.SharpSnmpLib
         {
             Receive((Socket) dummy);
         }
-
+        
         private void Receive(Socket socket)
-        {
-            
+        {            
             while (true)
             {
                 // If no more active, then stop.
@@ -121,7 +120,7 @@ namespace Lextm.SharpSnmpLib
                     int count = socket.ReceiveFrom(buffer, ref remote);
                     ThreadPool.QueueUserWorkItem(HandleMessage, new MessageParams(buffer, count, remote));
                 }
-                catch (Exception ex)
+                catch (SocketException ex)
                 {
                     // If the SnmpTrapListener was active, marks it as stopped and call HandleException.
                     // If it was inactive, the exception is likely to result from this, and we raise nothing.
@@ -168,7 +167,7 @@ namespace Lextm.SharpSnmpLib
                 }
 
                 GetResponseMessage response = (GetResponseMessage) message;
-                if (response.SequenceNumber != requestId)
+                if (response.RequestId != requestId)
                 {
                     continue;
                 }

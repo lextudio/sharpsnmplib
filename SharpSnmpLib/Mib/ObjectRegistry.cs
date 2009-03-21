@@ -412,6 +412,19 @@ namespace Lextm.SharpSnmpLib.Mib
             {
                 handler(this, EventArgs.Empty);
             }
+        }        
+                
+        /// <summary>
+        /// Gets the textual format.
+        /// </summary>
+        /// <param name="registry">The registry.</param>
+        /// <param name="id">Object ID.</param>
+        /// <returns></returns>
+        [CLSCompliant(false)]
+        public static string GetTextual(ObjectIdentifier id, IObjectRegistry registry)
+        {
+            IObjectRegistry objects = registry ?? ObjectRegistry.Default;
+            return objects.Translate(id.ToNumerical());
         }
 
         #region IObjectRegistry Members

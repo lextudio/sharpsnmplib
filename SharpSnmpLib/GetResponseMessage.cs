@@ -19,7 +19,7 @@ namespace Lextm.SharpSnmpLib
     public class GetResponseMessage : ISnmpMessage
     {
         private readonly ISnmpPdu _pdu;
-        private readonly int _sequenceNumber;
+        private readonly int _requestId;
         private readonly ErrorCode _errorStatus;
         private readonly int _errorIndex;
         private readonly IList<Variable> _variables;
@@ -34,20 +34,20 @@ namespace Lextm.SharpSnmpLib
         /// <param name="version">Protocol version.</param>
         /// <param name="receiver">Receiver address.</param>
         /// <param name="community">Community name.</param>
-        /// <param name="sequenceNumber">Sequence number.</param>
+        /// <param name="requestId">Request ID.</param>
         /// <param name="variables">Variables.</param>
-        public GetResponseMessage(int sequenceNumber, VersionCode version, IPAddress receiver, OctetString community, IList<Variable> variables)
+        public GetResponseMessage(int requestId, VersionCode version, IPAddress receiver, OctetString community, IList<Variable> variables)
         {
             _version = version;
             _receiver = receiver;
             _community = community;
             _variables = variables;
             GetResponsePdu pdu = new GetResponsePdu(
-                new Integer32(sequenceNumber),
+                new Integer32(requestId),
                 ErrorCode.NoError,
                 new Integer32(0),
                 _variables);
-            _sequenceNumber = sequenceNumber;
+            _requestId = requestId;
             _bytes = pdu.ToMessageBody(_version, _community).ToBytes();
         }
                 
@@ -76,7 +76,7 @@ namespace Lextm.SharpSnmpLib
             }
             
             GetResponsePdu pdu = (GetResponsePdu)_pdu;
-            _sequenceNumber = pdu.RequestId;
+            _requestId = pdu.RequestId;
             _errorStatus = pdu.ErrorStatus;
             _errorIndex = pdu.ErrorIndex;
             _variables = _pdu.Variables;
@@ -104,10 +104,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         public ErrorCode ErrorStatus
         {
-            get
-            {
-                return _errorStatus;
-            }
+            get { return _errorStatus; }
         }
         
         /// <summary>
@@ -115,18 +112,24 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         public int ErrorIndex
         {
-            get
-            {
-                return _errorIndex;
-            }
+            get { return _errorIndex; }
         }
 
+        /// <summary>
+        /// Sequence number.
+        /// </summary>
+        [Obsolete("Use RequestId")]
         public int SequenceNumber
         {
-            get
-            {
-                return _sequenceNumber;
-            }
+            get { return _requestId; }
+        }
+        
+        /// <summary>
+        /// Request ID.
+        /// </summary>
+        public int RequestId
+        {
+            get { return _requestId; }
         }
         
         /// <summary>
@@ -134,10 +137,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         public IList<Variable> Variables
         {
-            get
-            {
-                return _variables;
-            }
+            get { return _variables; }
         }
         
         /// <summary>
@@ -145,10 +145,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         public ISnmpPdu Pdu 
         {
-            get 
-            {
-                return _pdu;
-            }
+            get { return _pdu; }
         }
         
         /// <summary>

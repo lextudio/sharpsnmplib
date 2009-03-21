@@ -258,7 +258,7 @@ namespace Lextm.SharpSnmpLib
                 {
                     iar = _socket.BeginReceiveFrom(buffer, 0, _bufferSize, SocketFlags.None, ref remote, AsyncEndReceive, buffer);
                 }
-                catch (Exception ex)
+                catch (SocketException ex)
                 {
                     Interlocked.Exchange(ref _active, 0);    // If there is an exception here, mark the TrapListener as inactive.
                     HandleException(ex);
@@ -286,7 +286,7 @@ namespace Lextm.SharpSnmpLib
                 int count = _socket.EndReceiveFrom(iar, ref remote);
                 HandleMessage(new MessageParams(buffer, count, remote));
             }
-            catch (Exception ex)
+            catch (SocketException ex)
             {
                 HandleException(ex);
             }
@@ -309,7 +309,7 @@ namespace Lextm.SharpSnmpLib
                     int count = _socket.ReceiveFrom(buffer, ref remote);
                     ThreadPool.QueueUserWorkItem(HandleMessage, new MessageParams(buffer, count, remote));
                 }
-                catch (Exception ex)
+                catch (SocketException ex)
                 {
                     // If the SnmpTrapListener was active, marks it as stopped and call HandleException.
                     // If it was inactive, the exception is likely to result from this, and we raise nothing.

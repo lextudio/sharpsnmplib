@@ -151,7 +151,7 @@ namespace Lextm.SharpSnmpLib
             List<Variable> variables = new List<Variable>();
             variables.Add(v);
 
-            GetRequestMessage message = new GetRequestMessage(PduCounter.NextCount, version, community, variables);
+            GetRequestMessage message = new GetRequestMessage(RequestCounter.NextCount, version, community, variables);
             return message.Broadcast(timeout, endpoint);
         }
 
@@ -171,7 +171,7 @@ namespace Lextm.SharpSnmpLib
                 throw new NotSupportedException("SNMP v3 is not supported");
             }
 
-            GetRequestMessage message = new GetRequestMessage(PduCounter.NextCount, version, community, variables);
+            GetRequestMessage message = new GetRequestMessage(RequestCounter.NextCount, version, community, variables);
             message.BeginGetResponse(timeout, endpoint, callback);
         }
 
@@ -191,7 +191,7 @@ namespace Lextm.SharpSnmpLib
                 throw new NotSupportedException("SNMP v3 is not supported");
             }
 
-            GetRequestMessage message = new GetRequestMessage(PduCounter.NextCount, version, community, variables);
+            GetRequestMessage message = new GetRequestMessage(RequestCounter.NextCount, version, community, variables);
             GetResponseMessage response = message.GetResponse(timeout, endpoint);
             if (response.ErrorStatus != ErrorCode.NoError)
             {
@@ -295,7 +295,7 @@ namespace Lextm.SharpSnmpLib
                 throw new NotSupportedException("SNMP v3 is not supported");
             }
 
-            SetRequestMessage message = new SetRequestMessage(PduCounter.NextCount, version, community, variables);
+            SetRequestMessage message = new SetRequestMessage(RequestCounter.NextCount, version, community, variables);
             GetResponseMessage response = message.GetResponse(timeout, endpoint);
 
             if (response.ErrorStatus != ErrorCode.NoError)
@@ -649,7 +649,7 @@ namespace Lextm.SharpSnmpLib
             variables.Add(new Variable(seed.Id));
 
             GetNextRequestMessage message = new GetNextRequestMessage(
-                PduCounter.NextCount,
+                RequestCounter.NextCount,
                 version,
                 community,
                 variables);
@@ -738,7 +738,7 @@ end:
             variables.Add(new Variable(seed.Id));
 
             GetBulkRequestMessage message = new GetBulkRequestMessage(
-                PduCounter.NextCount,
+                RequestCounter.NextCount,
                 version,
                 community,
                 0,

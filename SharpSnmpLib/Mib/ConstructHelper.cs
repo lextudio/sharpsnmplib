@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Text;
 using System.Configuration;
 using System.Globalization;
+using System.Text;
 
 namespace Lextm.SharpSnmpLib.Mib
 {

@@ -52,7 +52,7 @@ namespace Lextm.SharpSnmpLib
         /// Initializes a new instance of the <see cref="ReportPdu"/> class.
         /// </summary>        
         /// <param name="stream">The stream.</param>
-        public ReportPdu( Stream stream)
+        public ReportPdu(Stream stream)
         {
             _requestId = (Integer32)DataFactory.CreateSnmpData(stream);
             _errorStatus = (Integer32)DataFactory.CreateSnmpData(stream);

@@ -35,8 +35,8 @@ namespace Lextm.SharpSnmpLib
     /// <param name="from">The <see cref="IPAddress"/> of the equipment from which comes the response.</param>
     /// <param name="rawResponseBuffer">The buffer where the response is stored, non-deserialized and with extra bytes
     /// (the buffer may contain more bytes than the response itself).</param>
-    /// <param name="byteReadCount">The number of useful byte to read from <paramref name="rawResponseBuffer"/>.</param>
-    public delegate void GetResponseRawCallback(IPAddress from, byte[] rawResponseBuffer, int byteReadCount);
+    /// <param name="byteCount">The number of useful byte to read from <paramref name="rawResponseBuffer"/>.</param>
+    public delegate void GetResponseRawCallback(IPAddress from, byte[] rawResponseBuffer, int byteCount);
 
     /// <summary>
     /// Description of ByteTool.
@@ -122,7 +122,7 @@ namespace Lextm.SharpSnmpLib
             }
 
             GetResponseMessage response = (GetResponseMessage)message;
-            if (response.SequenceNumber != number)
+            if (response.RequestId != number)
             {
                 throw SharpOperationException.Create("wrong response sequence", receiver.Address);
             }
@@ -247,7 +247,7 @@ namespace Lextm.SharpSnmpLib
             }
 
             GetResponseMessage response = (GetResponseMessage)message;
-            if (response.SequenceNumber != number)
+            if (response.RequestId != number)
             {
                 // Wrong response sequence -> return null. Can't throw exception in this thread.
                 // throw SharpOperationException.Create("wrong response sequence", receiver.Address);
@@ -536,6 +536,19 @@ namespace Lextm.SharpSnmpLib
         internal static Sequence PackMessage(VersionCode version, OctetString community, ISnmpPdu pdu)
         {
             return new Sequence(new Integer32((int)version), community, pdu);
+        }
+        
+        /// <summary>
+        /// Converts to byte format.
+        /// </summary>
+        /// <returns></returns>
+        public static byte[] ToBytes(ISnmpData data)
+        {
+            using (MemoryStream result = new MemoryStream())
+            {
+                data.AppendBytesTo(result);
+                return result.ToArray();
+            }
         }
     }
 }

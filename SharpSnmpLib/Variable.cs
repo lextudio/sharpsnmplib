@@ -30,16 +30,7 @@ namespace Lextm.SharpSnmpLib
         public Variable(ObjectIdentifier id) : this(id, null)     
         { 
         }
-
-        ///// <summary>
-        ///// Creates a <see cref="Variable"/> instance with a specific <see cref="string"/>.
-        ///// </summary>
-        ///// <param name="textual">Textual IID string</param>
-        //[CLSCompliant(false)]
-        //public Variable(string textual) : this(new ObjectIdentifier(registry.Translate(textual)), null)
-        //{  
-        //}
-        
+      
         /// <summary>
         /// Creates a <see cref="Variable"/> instance with a specific object identifier.
         /// </summary>
@@ -48,18 +39,6 @@ namespace Lextm.SharpSnmpLib
         public Variable(uint[] id) : this(new ObjectIdentifier(id)) 
         {
         }
-
-        ///// <summary>
-        ///// Creates a <see cref="Variable"/> instance with a specific <see cref="string"/> and <see cref="ISnmpData"/>.
-        ///// </summary>
-        ///// <param name="textual">The textual.</param>
-        ///// <param name="data">The data.</param>
-        ///// <param name="registry">The registry.</param>
-        //[CLSCompliant(false)]
-        //public Variable(string textual, ISnmpData data)
-        //    : this(new ObjectIdentifier(registry.Translate(textual)), data)
-        //{
-        //}
         
         /// <summary>
         /// Creates a <see cref="Variable"/> instance with a specific <see cref="ObjectIdentifier"/> and <see cref="ISnmpData"/>.
@@ -157,7 +136,7 @@ namespace Lextm.SharpSnmpLib
                 varbinds.Add(new Sequence(v.Id, v.Data));
             }
             
-            //Debug.Assert(varbinds.Capacity == varbinds.Count, "capacity is " + varbinds.Capacity + "; count is " + varbinds.Count);
+            //// Debug.Assert(varbinds.Capacity == varbinds.Count, "capacity is " + varbinds.Capacity + "; count is " + varbinds.Count);
             Sequence result = new Sequence(varbinds);
             return result;
         }

@@ -27,7 +27,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="text">String in this format, "*.*.*.*".</param>
         public ObjectIdentifier(string text)
-            : this(ParseString(text))
+            : this(Convert(text))
         {
         }
 
@@ -110,18 +110,7 @@ namespace Lextm.SharpSnmpLib
         }
 
         #endregion Constructor
-
-        internal static uint[] ParseString(string text)
-        {
-            //IObjectRegistry objects = registry ?? ObjectRegistry.Default;
-            //if (text.Contains("::"))
-            //{
-            //    return objects.Translate(text);
-            //}
-
-            return Convert(text);
-        }
-        
+     
         /// <summary>
         /// Convers to numerical ID.
         /// </summary>
@@ -131,30 +120,6 @@ namespace Lextm.SharpSnmpLib
         {
             return _oid;
         }
-        
-        ///// <summary>
-        ///// Textual ID.
-        ///// </summary>
-        //[Obsolete("Use GetTextual instead.")]
-        //public string Textual
-        //{
-        //    get
-        //    {
-        //        return ObjectRegistry.Default.Translate(_oid);
-        //    }
-        //}
-
-        ///// <summary>
-        ///// Gets the textual.
-        ///// </summary>
-        ///// <param name="registry">The registry.</param>
-        ///// <returns></returns>
-        //[CLSCompliant(false)]
-        //public string GetTextual(IObjectRegistry registry)
-        //{
-        //    IObjectRegistry objects = registry ?? ObjectRegistry.Default;
-        //    return objects.Translate(_oid);
-        //}
         
         /// <summary>
         /// Returns a <see cref="String"/> that represents this <see cref="ObjectIdentifier"/>.

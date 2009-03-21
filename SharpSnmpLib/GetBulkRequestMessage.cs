@@ -46,7 +46,7 @@ namespace Lextm.SharpSnmpLib
             _community = community;
             _variables = variables;
             GetBulkRequestPdu pdu = new GetBulkRequestPdu(
-                PduCounter.NextCount,
+                RequestCounter.NextCount,
                 nonRepeaters,
                 maxRepetitions,
                 _variables);
