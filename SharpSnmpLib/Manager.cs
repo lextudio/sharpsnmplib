@@ -36,6 +36,17 @@ namespace Lextm.SharpSnmpLib
         {
             InitializeComponent();
         }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Manager"/> class.
+        /// </summary>
+        /// <param name="container">The container.</param>
+        public Manager(IContainer container)
+        {
+            container.Add(this);
+
+            InitializeComponent();
+        }
         
         /// <summary>
         /// Returns a value if the listener is still working.
@@ -128,6 +139,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="community">Comunity name.</param>
         /// <param name="timeout">Timeout.</param>
         /// <returns></returns>
+        [Obsolete("Use Discoverer component instead.")]
         public static IDictionary<IPEndPoint, Variable> Discover(VersionCode version, IPEndPoint endpoint, OctetString community, int timeout)
         {
             if (version == VersionCode.V3)

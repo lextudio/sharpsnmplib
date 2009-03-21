@@ -120,8 +120,8 @@ namespace Lextm.SharpSnmpLib
                 return _errorIndex;
             }
         }
-        
-        internal int SequenceNumber
+
+        public int SequenceNumber
         {
             get
             {

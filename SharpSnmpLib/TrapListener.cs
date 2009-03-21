@@ -38,6 +38,17 @@ namespace Lextm.SharpSnmpLib
         {
             InitializeComponent();
         }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TrapListener"/> class.
+        /// </summary>
+        /// <param name="container">The container.</param>
+        public TrapListener(IContainer container)
+        {
+            container.Add(this);
+
+            InitializeComponent();
+        }
         
         /// <summary>
         /// Occurs when a <see cref="TrapV1Message" /> is received.

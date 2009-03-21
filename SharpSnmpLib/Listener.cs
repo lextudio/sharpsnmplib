@@ -37,6 +37,33 @@ namespace Lextm.SharpSnmpLib
         #region Constructor
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Listener"/> class.
+        /// </summary>
+        public Listener()
+        {
+            InitializeComponent();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Listener"/> class.
+        /// </summary>
+        /// <param name="container">The container.</param>
+        public Listener(IContainer container)
+        {
+            container.Add(this);
+
+            InitializeComponent();
+        }
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+        }
+
+        /// <summary>
         /// Releases the unmanaged resources used by the <see cref="T:System.ComponentModel.Component"/> and optionally releases the managed resources.
         /// </summary>
         /// <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
@@ -434,20 +461,6 @@ namespace Lextm.SharpSnmpLib
                 }
 
                 return Interlocked.Read(ref _active) == 1;
-            }
-        }
-
-        private sealed class MessageParams
-        {
-            internal readonly int Number;
-            internal readonly byte[] Bytes;
-            internal readonly IPEndPoint Sender;
-
-            public MessageParams(byte[] bytes, int number, EndPoint sender)
-            {
-                Bytes = bytes;
-                Number = number;
-                Sender = (IPEndPoint)sender;
             }
         }
     }

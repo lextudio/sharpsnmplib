@@ -19,6 +19,17 @@ namespace Lextm.SharpSnmpLib
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Agent"/> class.
+        /// </summary>
+        /// <param name="container">The container.</param>
+        public Agent(IContainer container)
+        {
+            container.Add(this);
+
+            InitializeComponent();
+        }
+
+        /// <summary>
         /// Message monitor.
         /// </summary>
         [Obsolete("Use a stand alone Listener component")]

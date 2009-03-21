@@ -56,13 +56,21 @@
     <Compile Include="Agent.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="AgentFoundEventArgs.cs" />
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Discoverer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Discoverer.Designer.cs">
+      <DependentUpon>Discoverer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Listener.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Manager.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="MessageParams.cs" />
     <Compile Include="TrapListener.cs">
       <SubType>Component</SubType>
     </Compile>
