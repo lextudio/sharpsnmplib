@@ -8,7 +8,6 @@
  */
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
@@ -80,40 +79,59 @@ namespace Lextm.SharpSnmpLib.Browser
 
 		private void actAdd_Execute(object sender, EventArgs e)
 		{
-			string name = listView1.SelectedItems[0].Text.ToUpperInvariant();
-			string index = Path.Combine(Objects.Path, "index");
-			List<string> list = new List<string>(File.ReadAllLines(index));
-			if (!list.Contains(name))
-			{
-				list.Add(name);
-				File.WriteAllLines(index, list.ToArray());
-			}
-			
-			Objects.Reload();
+            string index = Path.Combine(Objects.Path, "index");
+		    foreach (ListViewItem item in listView1.SelectedItems)
+		    {
+		        string name = item.Text.ToUpperInvariant();
+                List<string> list = new List<string>(File.ReadAllLines(index));
+		        if (!list.Contains(name))
+		        {
+		            list.Add(name);
+		            File.WriteAllLines(index, list.ToArray());
+		        }
+		    }
+
+		    Objects.Reload();
 		}
 
-		private void actRemove_Execute(object sender, EventArgs e)
+	    private void actRemove_Execute(object sender, EventArgs e)
 		{
-			string name = listView1.SelectedItems[0].Text.ToUpperInvariant();
 			string index = Path.Combine(Objects.Path, "index");
-			List<string> list = new List<string>(File.ReadAllLines(index));
-			if (list.Contains(name))
-			{
-				list.Remove(name);
-				File.WriteAllLines(index, list.ToArray());
-			}
-			
-			Objects.Reload();
+            foreach (ListViewItem item in listView1.SelectedItems)
+            {
+                string name = item.Text.ToUpperInvariant();
+                List<string> list = new List<string>(File.ReadAllLines(index));
+                if (list.Contains(name))
+                {
+                    list.Remove(name);
+                    File.WriteAllLines(index, list.ToArray());
+                }
+            }
+
+	        Objects.Reload();
 		}
 
 		private void actRemove_Update(object sender, EventArgs e)
 		{
-			actRemove.Enabled = listView1.SelectedItems.Count == 1 && listView1.SelectedItems[0].Group.Name == "lvgLoaded";
+			actRemove.Enabled = listView1.SelectedItems.Count >0 && ItemsInGroup(listView1.SelectedItems, "lvgLoaded");
 		}
-		
+
+	    private static bool ItemsInGroup(ListView.SelectedListViewItemCollection collection, string group)
+	    {
+            foreach (ListViewItem item in collection)
+            {
+                if (item.Group.Name != group)
+                {
+                    return false;
+                }
+            }
+
+	        return true;
+	    }
+
 	    private void actAdd_Update(object sender, EventArgs e)
 		{
-			actAdd.Enabled = listView1.SelectedItems.Count == 1 && listView1.SelectedItems[0].Group.Name == "lvgPending";
+			actAdd.Enabled = listView1.SelectedItems.Count > 0 && ItemsInGroup(listView1.SelectedItems, "lvgPending");
 		}
 
 		private void listView1_MouseDown(object sender, MouseEventArgs e)
