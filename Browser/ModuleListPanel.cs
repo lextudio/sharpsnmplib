@@ -74,7 +74,7 @@ namespace Lextm.SharpSnmpLib.Browser
 			ResumeLayout();
 			listView1.Groups["lvgLoaded"].Header = string.Format(CultureInfo.CurrentCulture, "Loaded ({0})", listView1.Groups["lvgLoaded"].Items.Count);
 			listView1.Groups["lvgPending"].Header = string.Format(CultureInfo.CurrentCulture, "Unloaded ({0})", listView1.Groups["lvgPending"].Items.Count);
-			tslblCount.Text = "loaded count: " + listView1.Groups["lvgLoaded"].Items.Count + "; unloaded count: " + listView1.Groups["lvgPending"].Items.Count;
+			tslblCount.Text = "loaded: " + listView1.Groups["lvgLoaded"].Items.Count + "; unloaded: " + listView1.Groups["lvgPending"].Items.Count;
     	}
 
 		private void actAdd_Execute(object sender, EventArgs e)

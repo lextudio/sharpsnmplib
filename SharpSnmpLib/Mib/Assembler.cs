@@ -70,30 +70,18 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <param name="modules">Modules.</param>
         public void Assemble(IEnumerable<MibModule> modules)
         {
-            TraceSource source = new TraceSource("Library");
-            source.TraceInformation("loading new modules started");
             RealTree.Import(modules);
-            RealTree.Refresh();
-
+            RealTree.Refresh();  
+            
             foreach (MibModule module in modules)
             {
                 if (Tree.PendingModules.Contains(module.Name))
                 {
                     continue;
                 }
-                
-                source.TraceInformation(module.Name + " is parsed");
+
                 PersistModuleToFile(Folder, module, Tree);
             }
-            
-            foreach (string module in Tree.PendingModules)
-            {
-                source.TraceInformation(module + " is pending");
-            }
-            
-            source.TraceInformation("loading new modules ended");
-            source.Flush();
-            source.Close();
         }
 
         internal static void PersistModuleToFile(string folder, MibModule module, IObjectTree tree)

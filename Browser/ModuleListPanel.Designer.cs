@@ -49,12 +49,14 @@ namespace Lextm.SharpSnmpLib.Browser
         	this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
         	this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
         	this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-        	this.tslblCount = new System.Windows.Forms.ToolStripLabel();
         	this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
         	this.contextModuleMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+        	this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+        	this.tslblCount = new System.Windows.Forms.ToolStripStatusLabel();
         	((System.ComponentModel.ISupportInitialize)(this.actionList1)).BeginInit();
         	this.toolStrip1.SuspendLayout();
         	this.contextModuleMenu.SuspendLayout();
+        	this.statusStrip1.SuspendLayout();
         	this.SuspendLayout();
         	// 
         	// listView1
@@ -135,20 +137,12 @@ namespace Lextm.SharpSnmpLib.Browser
         	// 
         	this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
         	        	        	this.tsbtnAdd,
-        	        	        	this.tslblCount,
         	        	        	this.toolStripButton1});
         	this.toolStrip1.Location = new System.Drawing.Point(0, 0);
         	this.toolStrip1.Name = "toolStrip1";
         	this.toolStrip1.Size = new System.Drawing.Size(465, 25);
         	this.toolStrip1.TabIndex = 1;
         	this.toolStrip1.Text = "toolStrip1";
-        	// 
-        	// tslblCount
-        	// 
-        	this.tslblCount.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-        	this.tslblCount.Name = "tslblCount";
-        	this.tslblCount.Size = new System.Drawing.Size(10, 22);
-        	this.tslblCount.Text = " ";
         	// 
         	// openFileDialog1
         	// 
@@ -162,11 +156,28 @@ namespace Lextm.SharpSnmpLib.Browser
         	this.contextModuleMenu.Name = "contextModuleMenu";
         	this.contextModuleMenu.Size = new System.Drawing.Size(113, 26);
         	// 
+        	// statusStrip1
+        	// 
+        	this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+        	        	        	this.tslblCount});
+        	this.statusStrip1.Location = new System.Drawing.Point(0, 277);
+        	this.statusStrip1.Name = "statusStrip1";
+        	this.statusStrip1.Size = new System.Drawing.Size(465, 22);
+        	this.statusStrip1.TabIndex = 2;
+        	this.statusStrip1.Text = "statusStrip1";
+        	// 
+        	// tslblCount
+        	// 
+        	this.tslblCount.Name = "tslblCount";
+        	this.tslblCount.Size = new System.Drawing.Size(10, 17);
+        	this.tslblCount.Text = " ";
+        	// 
         	// ModuleListPanel
         	// 
         	this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
         	this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         	this.ClientSize = new System.Drawing.Size(465, 299);
+        	this.Controls.Add(this.statusStrip1);
         	this.Controls.Add(this.listView1);
         	this.Controls.Add(this.toolStrip1);
         	this.Icon = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.preferences_system_windows;
@@ -177,9 +188,12 @@ namespace Lextm.SharpSnmpLib.Browser
         	this.toolStrip1.ResumeLayout(false);
         	this.toolStrip1.PerformLayout();
         	this.contextModuleMenu.ResumeLayout(false);
+        	this.statusStrip1.ResumeLayout(false);
+        	this.statusStrip1.PerformLayout();
         	this.ResumeLayout(false);
         	this.PerformLayout();
         }
+        private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ListView listView1;
         private Crad.Windows.Forms.Actions.ActionList actionList1;
@@ -187,7 +201,7 @@ namespace Lextm.SharpSnmpLib.Browser
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton tsbtnAdd;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.Windows.Forms.ToolStripLabel tslblCount;
+        private System.Windows.Forms.ToolStripStatusLabel tslblCount;
         private System.Windows.Forms.ColumnHeader chName;
         private System.Windows.Forms.ContextMenuStrip contextModuleMenu;
         private Crad.Windows.Forms.Actions.Action actRemove;

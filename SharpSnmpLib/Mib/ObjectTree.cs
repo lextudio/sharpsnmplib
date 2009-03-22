@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using System.Text;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
@@ -55,7 +56,7 @@ namespace Lextm.SharpSnmpLib.Mib
         }
         
         public ObjectTree(string[] files) : this(PrepareFiles(files))
-        {            
+        {
         }
         
         private static ICollection<ModuleLoader> PrepareFiles(string[] files)
@@ -128,7 +129,7 @@ namespace Lextm.SharpSnmpLib.Mib
             
             IDefinition result = root;
             for (int i = 0; i < numerical.Length; i++)
-            {   
+            {
                 result = result.GetChildAt(numerical[i]);
             }
 
@@ -360,6 +361,7 @@ namespace Lextm.SharpSnmpLib.Mib
         internal void Refresh()
         {
             TraceSource source = new TraceSource("Library");
+            source.TraceInformation("loading modules started");
             Stopwatch watch = new Stopwatch();
             watch.Start();
             int previous;
@@ -393,6 +395,29 @@ namespace Lextm.SharpSnmpLib.Mib
             }
             
             watch.Stop();
+            
+            foreach (string loaded in _loaded.Keys)
+            {   
+                source.TraceInformation(loaded + " is parsed");
+            }
+            
+            foreach (MibModule module in _pendings.Values)
+            {
+                StringBuilder builder = new StringBuilder(module.Name);
+                builder.Append(" is pending. Missing dependencies: ");
+                foreach (string depend in module.Dependents)
+                {
+                    if (!LoadedModules.Contains(depend))
+                    {
+                        builder.Append(depend);
+                        builder.Append(' ');
+                    }
+                }
+                
+                source.TraceInformation(builder.ToString());
+            }
+            
+            source.TraceInformation("loading modules ended");
             source.Flush();
             source.Close();
         }

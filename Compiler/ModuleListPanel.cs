@@ -72,7 +72,7 @@ namespace Lextm.SharpSnmpLib.Compiler
             ResumeLayout();
             listView1.Groups["lvgLoaded"].Header = string.Format("Loaded ({0})", Assembler.Tree.LoadedModules.Count);
             listView1.Groups["lvgPending"].Header = string.Format("Pending ({0})", Assembler.Tree.PendingModules.Count);
-            tslblCount.Text = "loaded count: " + Assembler.Tree.LoadedModules.Count + "; pending count: " + Assembler.Tree.PendingModules.Count;
+            tslblCount.Text = "loaded: " + Assembler.Tree.LoadedModules.Count + "; unloaded: " + Assembler.Tree.PendingModules.Count;
         }
 
         [Dependency]
