@@ -423,6 +423,11 @@ namespace Lextm.SharpSnmpLib.Mib
         [CLSCompliant(false)]
         public static string GetTextual(ObjectIdentifier id, IObjectRegistry registry)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException("id");
+            }
+            
             IObjectRegistry objects = registry ?? ObjectRegistry.Default;
             return objects.Translate(id.ToNumerical());
         }

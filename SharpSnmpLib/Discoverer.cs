@@ -30,8 +30,12 @@ namespace Lextm.SharpSnmpLib
         /// <param name="container">The container.</param>
         public Discoverer(IContainer container)
         {
+            if (container == null)
+            {
+                throw new ArgumentNullException("container");
+            }
+            
             container.Add(this);
-
             InitializeComponent();
         }
 
@@ -157,9 +161,9 @@ namespace Lextm.SharpSnmpLib
 
         private void HandleMessage(MessageParams param)
         {
-            ByteTool.Capture(param.Bytes, param.Number);
+            ByteTool.Capture(param.GetBytes(), param.Number);
 
-            foreach (ISnmpMessage message in MessageFactory.ParseMessages(param.Bytes, 0, param.Number))
+            foreach (ISnmpMessage message in MessageFactory.ParseMessages(param.GetBytes(), 0, param.Number))
             {
                 if (message.Pdu.TypeCode != SnmpType.GetResponsePdu)
                 {

@@ -45,8 +45,12 @@ namespace Lextm.SharpSnmpLib
         /// <param name="container">The container.</param>
         public TrapListener(IContainer container)
         {
+            if (container == null)
+            {
+                throw new ArgumentNullException("container");
+            }
+            
             container.Add(this);
-
             InitializeComponent();
         }
         

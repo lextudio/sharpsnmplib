@@ -43,8 +43,12 @@ namespace Lextm.SharpSnmpLib
         /// <param name="container">The container.</param>
         public Manager(IContainer container)
         {
+            if (container == null)
+            {
+                throw new ArgumentNullException("container");
+            }
+            
             container.Add(this);
-
             InitializeComponent();
         }
         
@@ -593,9 +597,9 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public override string ToString()
         {
-// ReSharper disable RedundantToStringCall
+            // ReSharper disable RedundantToStringCall
             return "SNMP manager: timeout: " + Timeout.ToString(CultureInfo.InvariantCulture) + "; version: " + DefaultVersion.ToString() + "; " + trapListener;
-// ReSharper restore RedundantToStringCall
+            // ReSharper restore RedundantToStringCall
         }
 
         private void TrapListener_TrapV1Received(object sender, TrapV1ReceivedEventArgs e)
@@ -709,7 +713,7 @@ namespace Lextm.SharpSnmpLib
                 seed = next[next.Count - 1];
             }
             
-end:
+        end:
             return result;
         }
 

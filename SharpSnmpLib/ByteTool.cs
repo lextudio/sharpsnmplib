@@ -302,6 +302,16 @@ namespace Lextm.SharpSnmpLib
         /// <param name="length">Length to log.</param>
         public static void Capture(byte[] buffer, int length)
         {
+            if (buffer == null)
+            {
+                throw new ArgumentNullException("buffer");
+            }
+            
+            if (length > buffer.Length)
+            {
+                throw new ArgumentException("length is too long.");
+            }
+            
             if (!CaptureNeeded)
             {
                 return;
@@ -544,6 +554,11 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public static byte[] ToBytes(ISnmpData data)
         {
+            if (data == null)
+            {
+                throw new ArgumentNullException("data");
+            }
+                
             using (MemoryStream result = new MemoryStream())
             {
                 data.AppendBytesTo(result);

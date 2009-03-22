@@ -24,8 +24,12 @@ namespace Lextm.SharpSnmpLib
         /// <param name="container">The container.</param>
         public Agent(IContainer container)
         {
+            if (container == null)
+            {
+                throw new ArgumentNullException("container");
+            }
+            
             container.Add(this);
-
             InitializeComponent();
         }
 

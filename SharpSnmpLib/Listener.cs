@@ -50,8 +50,12 @@ namespace Lextm.SharpSnmpLib
         /// <param name="container">The container.</param>
         public Listener(IContainer container)
         {
+            if (container == null)
+            {
+                throw new ArgumentNullException("container");
+            }
+            
             container.Add(this);
-
             InitializeComponent();
         }
 
@@ -183,7 +187,7 @@ namespace Lextm.SharpSnmpLib
             }
 
             long activeBefore = Interlocked.CompareExchange(ref _active, 1, 0);
-            if (activeBefore == 1)   
+            if (activeBefore == 1)
             {
                 // If already started, we've nothing to do.
                 return;
@@ -347,9 +351,9 @@ namespace Lextm.SharpSnmpLib
 
         private void HandleMessage(MessageParams param)
         {
-            ByteTool.Capture(param.Bytes, param.Number);
+            ByteTool.Capture(param.GetBytes(), param.Number);
 
-            foreach (ISnmpMessage message in MessageFactory.ParseMessages(param.Bytes, 0, param.Number))
+            foreach (ISnmpMessage message in MessageFactory.ParseMessages(param.GetBytes(), 0, param.Number))
             {
                 switch (message.Pdu.TypeCode)
                 {

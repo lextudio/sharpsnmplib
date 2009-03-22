@@ -93,6 +93,11 @@ namespace Lextm.SharpSnmpLib
         /// <param name="receiver">The receiver.</param>
         public void SendResponse(IPEndPoint receiver)
         {
+            if (receiver == null)
+            {
+                throw new ArgumentNullException("receiver");
+            }
+            
             // TODO: make more efficient here.
             InformRequestPdu pdu = (InformRequestPdu)_pdu;
             new GetResponseMessage(_sequenceNumber, _version, receiver.Address, _community, pdu.AllVariables).Send(receiver.Port);

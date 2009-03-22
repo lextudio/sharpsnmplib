@@ -15,9 +15,9 @@ namespace Lextm.SharpSnmpLib
             _sender = (IPEndPoint)sender;
         }
 
-        public byte[] Bytes
+        public byte[] GetBytes()
         {
-            get { return _bytes; }
+           return _bytes;
         }
 
         public IPEndPoint Sender
