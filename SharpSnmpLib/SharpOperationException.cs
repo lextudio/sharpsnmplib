@@ -38,8 +38,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Creates a <see cref="SharpOperationException"/> instance.
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1032:ImplementStandardExceptionConstructors")]
-        protected SharpOperationException()
+        public SharpOperationException()
         {
         }
         
@@ -47,8 +46,7 @@ namespace Lextm.SharpSnmpLib
         /// Creates a <see cref="SharpOperationException"/> instance with a specific <see cref="string"/>.
         /// </summary>
         /// <param name="message"></param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1032:ImplementStandardExceptionConstructors")]
-        protected SharpOperationException(string message) : base(message)
+        public SharpOperationException(string message) : base(message)
         {
         }
         
@@ -57,8 +55,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="message"></param>
         /// <param name="inner"></param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1032:ImplementStandardExceptionConstructors")]
-        protected SharpOperationException(string message, Exception inner) : base(message, inner) 
+        public SharpOperationException(string message, Exception inner) : base(message, inner) 
         { 
         }
 #if (!SILVERLIGHT)    

@@ -134,6 +134,23 @@ namespace Lextm.SharpSnmpLib
         }
 
         /// <summary>
+        /// Sends this <see cref="TrapV2Message"/>.
+        /// </summary>
+        /// <param name="manager">Manager.</param>
+        /// <param name="socket">The socket.</param>
+        public void Send(IPEndPoint manager, Socket socket)
+        {
+            if (socket == null)
+            {
+                throw new ArgumentNullException("socket");
+            }
+            
+            byte[] bytes = ToBytes();
+            ByteTool.Capture(bytes); // log response
+            socket.SendTo(bytes, manager);
+        }
+
+        /// <summary>
         /// Community name.
         /// </summary>
         public OctetString Community

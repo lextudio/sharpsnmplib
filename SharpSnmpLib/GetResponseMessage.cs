@@ -98,6 +98,23 @@ namespace Lextm.SharpSnmpLib
                 udp.Close();
             }
         }
+
+        /// <summary>
+        /// Sends this <see cref="GetRequestMessage"/> and handles the response from agent.
+        /// </summary>
+        /// <param name="port">Port number.</param>
+        /// <param name="socket">The socket.</param>
+        public void Send(int port, Socket socket)
+        {
+            if (socket == null)
+            {
+                throw new ArgumentNullException("socket");
+            }
+            
+            byte[] bytes = _bytes;
+            IPEndPoint receiver = new IPEndPoint(_receiver, port);
+            socket.SendTo(bytes, receiver);
+        }
         
         /// <summary>
         /// Error status.

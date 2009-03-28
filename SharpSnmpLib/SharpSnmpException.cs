@@ -22,8 +22,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Creates a <see cref="SharpSnmpException"/>.
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1032:ImplementStandardExceptionConstructors")]
-        protected SharpSnmpException() 
+        public SharpSnmpException() 
         { 
         }
         

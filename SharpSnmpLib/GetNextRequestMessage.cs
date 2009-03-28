@@ -218,7 +218,19 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public GetResponseMessage GetResponse(int timeout, IPEndPoint receiver)
         {
-            return ByteTool.GetResponse(receiver, _bytes,  RequestId, timeout);
+            return ByteTool.GetResponse(receiver, _bytes, RequestId, timeout);
+        }
+
+        /// <summary>
+        /// Gets the response.
+        /// </summary>
+        /// <param name="timeout">The timeout.</param>
+        /// <param name="receiver">The receiver.</param>
+        /// <param name="socket">The socket.</param>
+        /// <returns></returns>
+        public GetResponseMessage GetResponse(int timeout, IPEndPoint receiver, Socket socket)
+        {
+            return ByteTool.GetResponse(receiver, _bytes, RequestId, timeout, socket);
         }
     }
 }

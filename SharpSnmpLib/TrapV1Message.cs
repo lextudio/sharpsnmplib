@@ -126,7 +126,24 @@ namespace Lextm.SharpSnmpLib
             {
                 udp.Send(bytes, bytes.Length, manager);
             }
-        } 
+        }
+
+        /// <summary>
+        /// Sends this <see cref="TrapV1Message"/>.
+        /// </summary>
+        /// <param name="manager">Manager</param>
+        /// <param name="socket">The socket.</param>
+        public void Send(IPEndPoint manager, Socket socket)
+        {
+            if (socket == null)
+            {
+                throw new ArgumentNullException("socket");
+            }
+
+            byte[] bytes = ToBytes();
+            ByteTool.Capture(bytes);
+            socket.SendTo(bytes, manager);
+        }
     
         /// <summary>
         /// Time stamp.

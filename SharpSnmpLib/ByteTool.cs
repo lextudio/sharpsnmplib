@@ -64,7 +64,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="receiver">The IP address and port of the target to talk to.</param>
         /// <param name="bytes">The byte array representing the SNMP message.</param>
-        /// <param name="number">The <see cref="GetResponseMessage.SequenceNumber"/> of the SNMP message.</param>
+        /// <param name="number">The <see cref="GetResponseMessage.RequestId"/> of the SNMP message.</param>
         /// <param name="timeout">The timeout above which, if the response is not received, a <see cref="SharpTimeoutException"/> is thrown.</param>
         /// <returns>The response message (<see cref="GetResponseMessage"/>).</returns>
         internal static GetResponseMessage GetResponse(IPEndPoint receiver, byte[] bytes, int number, int timeout)
@@ -80,24 +80,29 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="receiver">The IP address and port of the target to talk to.</param>
         /// <param name="bytes">The byte array representing the SNMP message.</param>
-        /// <param name="number">The <see cref="GetResponseMessage.SequenceNumber"/> of the SNMP message.</param>
+        /// <param name="number">The <see cref="GetResponseMessage.RequestId"/> of the SNMP message.</param>
         /// <param name="timeout">The timeout above which, if the response is not received, a <see cref="SharpTimeoutException"/> is thrown.</param>
-        /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
+        /// <param name="socket">The UDP <see cref="Socket"/> to use to send/receive.</param>
         /// <returns>The response message (<see cref="GetResponseMessage"/>).</returns>
-        internal static GetResponseMessage GetResponse(IPEndPoint receiver, byte[] bytes, int number, int timeout, Socket udpSocket)
+        internal static GetResponseMessage GetResponse(IPEndPoint receiver, byte[] bytes, int number, int timeout, Socket socket)
         {
+            if (socket == null)
+            {
+                throw new ArgumentNullException("socket");
+            }
+            
             Capture(bytes); // log request
 
             #if CF
             int bufSize = 8192;
             #else
-            int bufSize = udpSocket.ReceiveBufferSize;
+            int bufSize = socket.ReceiveBufferSize;
             #endif
             byte[] reply = new byte[bufSize];
 
             // Whatever you change, try to keep the Send and the BeginReceive close to each other.
-            udpSocket.SendTo(bytes, receiver);
-            IAsyncResult result = udpSocket.BeginReceive(reply, 0, bufSize, SocketFlags.None, null, null);
+            socket.SendTo(bytes, receiver);
+            IAsyncResult result = socket.BeginReceive(reply, 0, bufSize, SocketFlags.None, null, null);
 // ReSharper disable PossibleNullReferenceException
             result.AsyncWaitHandle.WaitOne(timeout, false);
 // ReSharper restore PossibleNullReferenceException
@@ -106,7 +111,7 @@ namespace Lextm.SharpSnmpLib
                 throw SharpTimeoutException.Create(receiver.Address, timeout);
             }
 
-            int count = udpSocket.EndReceive(result);
+            int count = socket.EndReceive(result);
 
             ISnmpMessage message;
             
@@ -136,7 +141,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="receiver">The IP address and port of the target to talk to.</param>
         /// <param name="bytes">The byte array representing the SNMP message.</param>
-        /// <param name="number">The <see cref="GetResponseMessage.SequenceNumber"/> of the SNMP message.</param>
+        /// <param name="number">The <see cref="GetResponseMessage.RequestId"/> of the SNMP message.</param>
         /// <param name="timeout">The timeout above which, if the response is not received, a <see cref="SharpTimeoutException"/> is thrown.</param>
         /// <param name="callback">The callback called once the response has been received.</param>
         internal static void BeginGetResponse(IPEndPoint receiver, byte[] bytes, int number, int timeout, GetResponseCallback callback)
@@ -152,7 +157,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="receiver">The IP address and port of the target to talk to.</param>
         /// <param name="bytes">The byte array representing the SNMP message.</param>
-        /// <param name="number">The <see cref="GetResponseMessage.SequenceNumber"/> of the SNMP message.</param>
+        /// <param name="number">The <see cref="GetResponseMessage.RequestId"/> of the SNMP message.</param>
         /// <param name="timeout">The timeout above which, if the response is not received, a <see cref="SharpTimeoutException"/> is thrown.</param>
         /// <param name="callback">The callback called once the response has been received.</param>
         /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>

@@ -9,6 +9,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Net.Sockets;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -93,6 +94,18 @@ namespace Lextm.SharpSnmpLib
         public GetResponseMessage GetResponse(int timeout, IPEndPoint receiver)
         {
             return ByteTool.GetResponse(receiver, _bytes, RequestId, timeout);
+        }
+
+        /// <summary>
+        /// Sends this <see cref="ReportMessage"/> and handles the response from agent.
+        /// </summary>
+        /// <param name="timeout">Timeout.</param>
+        /// <param name="receiver">Agent.</param>
+        /// <param name="socket">The socket.</param>
+        /// <returns></returns>
+        public GetResponseMessage GetResponse(int timeout, IPEndPoint receiver, Socket socket)
+        {
+            return ByteTool.GetResponse(receiver, _bytes, RequestId, timeout, socket);
         }
         
         [Obsolete("Use RequestId instead.")]

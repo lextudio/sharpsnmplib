@@ -125,6 +125,18 @@ namespace Lextm.SharpSnmpLib
         {
             return ByteTool.GetResponse(receiver, _bytes, RequestId, timeout);
         }
+
+        /// <summary>
+        /// Sends this <see cref="SetRequestMessage"/> and handles the response from agent.
+        /// </summary>
+        /// <param name="timeout">Timeout.</param>
+        /// <param name="receiver">Agent.</param>
+        /// <param name="socket">The socket.</param>
+        /// <returns></returns>
+        public GetResponseMessage GetResponse(int timeout, IPEndPoint receiver, Socket socket)
+        {
+            return ByteTool.GetResponse(receiver, _bytes, RequestId, timeout, socket);
+        }
         
         /// <summary>
         /// Creates a <see cref="SetRequestMessage"/> with a specific <see cref="Sequence"/>.
