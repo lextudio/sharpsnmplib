@@ -11,9 +11,7 @@ namespace Lextm.SharpSnmpLib
     /// Agent component.
     /// </summary>
     public class Agent : Component
-    {
-        private static readonly Socket udp = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            
+    {           
         /// <summary>
         /// Initiates an <see cref="Agent"/> instance.
         /// </summary>
@@ -91,7 +89,7 @@ namespace Lextm.SharpSnmpLib
         public static void SendTrapV1(IPEndPoint receiver, IPAddress agent, OctetString community, ObjectIdentifier enterprise, GenericCode generic, int specific, uint timestamp, IList<Variable> variables)
         {
             TrapV1Message message = new TrapV1Message(VersionCode.V1, agent, community, enterprise, generic, specific, timestamp, variables);
-            message.Send(receiver, udp);
+            message.Send(receiver);
         }
 
         /// <summary>
@@ -113,7 +111,7 @@ namespace Lextm.SharpSnmpLib
             }
 
             TrapV2Message message = new TrapV2Message(requestId, version, community, enterprise, timestamp, variables);
-            message.Send(receiver, udp);
+            message.Send(receiver);
         }
 
         /// <summary>
@@ -131,7 +129,7 @@ namespace Lextm.SharpSnmpLib
         public static void SendInform(int requestId, VersionCode version, IPEndPoint receiver, OctetString community, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables, int timeout)
         {
             InformRequestMessage message = new InformRequestMessage(requestId, version, community, enterprise, timestamp, variables);
-            GetResponseMessage response = message.GetResponse(timeout, receiver, udp);
+            GetResponseMessage response = message.GetResponse(timeout, receiver);
             if (response.ErrorStatus != ErrorCode.NoError)
             {
                 throw SharpErrorException.Create(

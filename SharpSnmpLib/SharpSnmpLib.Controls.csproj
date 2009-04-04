@@ -71,6 +71,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="MessageParams.cs" />
+    <Compile Include="Messenger.cs" />
     <Compile Include="TrapListener.cs">
       <SubType>Component</SubType>
     </Compile>

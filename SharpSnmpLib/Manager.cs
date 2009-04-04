@@ -29,7 +29,6 @@ namespace Lextm.SharpSnmpLib
         private TrapListener trapListener;
         private IObjectRegistry _objects; // = ObjectRegistry.Default;
         private int _maxRepetitions = 10;
-        private static readonly Socket udp = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
  
         /// <summary>
         /// Creates a <see cref="Manager"></see> instance.
@@ -198,7 +197,7 @@ namespace Lextm.SharpSnmpLib
             }
 
             GetRequestMessage message = new GetRequestMessage(RequestCounter.NextCount, version, community, variables);
-            GetResponseMessage response = message.GetResponse(timeout, endpoint, udp);
+            GetResponseMessage response = message.GetResponse(timeout, endpoint);
             if (response.ErrorStatus != ErrorCode.NoError)
             {
                 throw SharpErrorException.Create(
@@ -302,7 +301,7 @@ namespace Lextm.SharpSnmpLib
             }
 
             SetRequestMessage message = new SetRequestMessage(RequestCounter.NextCount, version, community, variables);
-            GetResponseMessage response = message.GetResponse(timeout, endpoint, udp);
+            GetResponseMessage response = message.GetResponse(timeout, endpoint);
 
             if (response.ErrorStatus != ErrorCode.NoError)
             {
@@ -419,7 +418,7 @@ namespace Lextm.SharpSnmpLib
             //    throw new ArgumentException("not a table OID: " + table);
             // }
             IList<Variable> list = new List<Variable>();
-            int rows = version == VersionCode.V1 ? Walk(version, endpoint, community, table, list, timeout, WalkMode.WithinSubtree, udp) : BulkWalk(version, endpoint, community, table, list, timeout, maxRepetitions, WalkMode.WithinSubtree, udp);
+            int rows = version == VersionCode.V1 ? Walk(version, endpoint, community, table, list, timeout, WalkMode.WithinSubtree) : BulkWalk(version, endpoint, community, table, list, timeout, maxRepetitions, WalkMode.WithinSubtree);
             
             if (rows == 0)
             {
@@ -503,29 +502,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="mode">Walk mode.</param>
         /// <returns>Returns row count if the OID is a table. Otherwise this value is meaningless.</returns>
         public static int Walk(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, IList<Variable> list, int timeout, WalkMode mode)
-        {
-            using (Socket udpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp))
-            {
-                return Walk(version, endpoint, community, table, list, timeout, mode, udpSocket);
-            }
-        }
-
-        /// <summary>
-        /// Walks.
-        /// </summary>
-        /// <param name="version">Protocol version.</param>
-        /// <param name="endpoint">Endpoint.</param>
-        /// <param name="community">Community name.</param>
-        /// <param name="table">OID.</param>
-        /// <param name="list">A list to hold the results.</param>
-        /// <param name="timeout">Timeout.</param>
-        /// <param name="mode">Walk mode.</param>
-        /// <param name="socket">The socket.</param>
-        /// <returns>
-        /// Returns row count if the OID is a table. Otherwise this value is meaningless.
-        /// </returns>
-        public static int Walk(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, IList<Variable> list, int timeout, WalkMode mode, Socket socket)
-        {
+        {  
             if (list == null)
             {
                 throw new ArgumentNullException("list");
@@ -583,7 +560,7 @@ namespace Lextm.SharpSnmpLib
                     }
                 }
             }
-            while (HasNext(version, endpoint, community, seed, timeout, out next, socket));
+            while (HasNext(version, endpoint, community, seed, timeout, out next));
             return result;
         }
 
@@ -667,29 +644,7 @@ namespace Lextm.SharpSnmpLib
         /// </returns>
         [SuppressMessage("Microsoft.Design", "CA1021:AvoidOutParameters", MessageId = "5#")]
         public static bool HasNext(VersionCode version, IPEndPoint endpoint, OctetString community, Variable seed, int timeout, out Variable next)
-        {
-            using (Socket udpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp))
-            {
-                return HasNext(version, endpoint, community, seed, timeout, out next, udpSocket);
-            }
-        }
-
-        /// <summary>
-        /// Determines whether the specified seed has next item.
-        /// </summary>
-        /// <param name="version">The version.</param>
-        /// <param name="endpoint">The endpoint.</param>
-        /// <param name="community">The community.</param>
-        /// <param name="seed">The seed.</param>
-        /// <param name="timeout">The timeout.</param>
-        /// <param name="next">The next.</param>
-        /// <param name="socket">The socket.</param>
-        /// <returns>
-        /// 	<c>true</c> if the specified seed has next item; otherwise, <c>false</c>.
-        /// </returns>
-        [SuppressMessage("Microsoft.Design", "CA1021:AvoidOutParameters", MessageId = "5#")]
-        public static bool HasNext(VersionCode version, IPEndPoint endpoint, OctetString community, Variable seed, int timeout, out Variable next, Socket socket)
-        {
+        {        
             if (seed == null)
             {
                 throw new ArgumentNullException("seed");
@@ -704,7 +659,7 @@ namespace Lextm.SharpSnmpLib
                 community,
                 variables);
 
-            GetResponseMessage response = message.GetResponse(timeout, endpoint, socket);
+            GetResponseMessage response = message.GetResponse(timeout, endpoint);
             next = response.ErrorStatus == ErrorCode.NoSuchName ? null : response.Variables[0];
             return response.ErrorStatus != ErrorCode.NoSuchName;
         }
@@ -721,28 +676,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="maxRepetitions">The max repetitions.</param>
         /// <param name="mode">Walk mode.</param>
         public static int BulkWalk(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, IList<Variable> list, int timeout, int maxRepetitions, WalkMode mode)
-        {
-            using (Socket udpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp))
-            {
-                return BulkWalk(version, endpoint, community, table, list, timeout, maxRepetitions, mode, udpSocket);
-            }
-        }
-
-        /// <summary>
-        /// Walks.
-        /// </summary>
-        /// <param name="version">Protocol version.</param>
-        /// <param name="endpoint">Endpoint.</param>
-        /// <param name="community">Community name.</param>
-        /// <param name="table">OID.</param>
-        /// <param name="list">A list to hold the results.</param>
-        /// <param name="timeout">Timeout.</param>
-        /// <param name="maxRepetitions">The max repetitions.</param>
-        /// <param name="mode">Walk mode.</param>
-        /// <param name="socket">The socket.</param>
-        /// <returns></returns>
-        public static int BulkWalk(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, IList<Variable> list, int timeout, int maxRepetitions, WalkMode mode, Socket socket)
-        {
+        {            
             if (list == null)
             {
                 throw new ArgumentNullException("list");
@@ -752,7 +686,7 @@ namespace Lextm.SharpSnmpLib
             Variable seed = tableV;
             IList<Variable> next;
             int result = 0;
-            while (BulkHasNext(version, endpoint, community, seed, timeout, maxRepetitions, out next, socket))
+            while (BulkHasNext(version, endpoint, community, seed, timeout, maxRepetitions, out next))
             {
                 foreach (Variable v in next)
                 {
@@ -794,12 +728,11 @@ namespace Lextm.SharpSnmpLib
         /// <param name="timeout">The timeout.</param>
         /// <param name="maxRepetitions">The max repetitions.</param>
         /// <param name="next">The next.</param>
-        /// <param name="socket">The socket.</param>
         /// <returns>
         /// 	<c>true</c> if the specified seed has next item; otherwise, <c>false</c>.
         /// </returns>
         [SuppressMessage("Microsoft.Design", "CA1021:AvoidOutParameters", MessageId = "5#")]
-        private static bool BulkHasNext(VersionCode version, IPEndPoint endpoint, OctetString community, Variable seed, int timeout, int maxRepetitions, out IList<Variable> next, Socket socket)
+        private static bool BulkHasNext(VersionCode version, IPEndPoint endpoint, OctetString community, Variable seed, int timeout, int maxRepetitions, out IList<Variable> next)
         {
             if (version != VersionCode.V2)
             {
@@ -817,7 +750,7 @@ namespace Lextm.SharpSnmpLib
                 maxRepetitions,
                 variables);
 
-            GetResponseMessage response = message.GetResponse(timeout, endpoint, socket);
+            GetResponseMessage response = message.GetResponse(timeout, endpoint);
             if (response.ErrorStatus != ErrorCode.NoError)
             {
                 throw SharpErrorException.Create(
