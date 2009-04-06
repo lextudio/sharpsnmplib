@@ -46,5 +46,22 @@ namespace Lextm.SharpSnmpLib.Mib
         /// </summary>
         /// <param name="moduleName"></param>
         void Remove(string moduleName);
+
+        /// <summary>
+        /// Finds the specified numerical.
+        /// </summary>
+        /// <param name="numerical">The numerical.</param>
+        IDefinition Find(uint[] numerical);
+
+        /// <summary>
+        /// Imports the specified enumerable.
+        /// </summary>
+        /// <param name="enumerable">The enumerable.</param>
+        void Import(IEnumerable<MibModule> enumerable);
+
+        /// <summary>
+        /// Refreshes this instance.
+        /// </summary>
+        void Refresh();
     }
 }

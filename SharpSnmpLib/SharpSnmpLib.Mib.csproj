@@ -58,6 +58,7 @@
     <Compile Include="Mib\ConstructHelper.cs" />
     <Compile Include="Mib\AgentCapabilities.cs" />
     <Compile Include="Mib\Choice.cs" />
+    <Compile Include="Mib\DefaultObjectRegistry.cs" />
     <Compile Include="Mib\DefinitionType.cs" />
     <Compile Include="Mib\Exports.cs" />
     <Compile Include="Mib\IConstruct.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="Mib\NotificationType.cs" />
     <Compile Include="Mib\ObjectGroup.cs" />
     <Compile Include="Mib\ObjectIdentity.cs" />
+    <Compile Include="Mib\ObjectRegistryBase.cs" />
     <Compile Include="Mib\ObjectType.cs" />
     <Compile Include="Mib\OidValueAssignment.cs" />
     <Compile Include="Mib\Parser.cs" />
@@ -92,7 +94,7 @@
     <Compile Include="Mib\ObjectTree.cs" />
     <Compile Include="Mib\SharpMibException.cs" />
     <Compile Include="Mib\Symbol.cs" />
-    <Compile Include="Mib\ObjectRegistry.cs" />
+    <Compile Include="Mib\ReloadableObjectRegistry.cs" />
     <Compile Include="Resource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

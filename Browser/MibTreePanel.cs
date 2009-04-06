@@ -40,7 +40,7 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void RefreshPanel(object sender, EventArgs e)
         {
-            ObjectRegistry repository = (ObjectRegistry)sender;
+            ReloadableObjectRegistry repository = (ReloadableObjectRegistry)sender;
             treeView1.Nodes.Clear();
             TreeNode root = Wrap(repository.Tree.Root);
             foreach (TreeNode node in root.Nodes)

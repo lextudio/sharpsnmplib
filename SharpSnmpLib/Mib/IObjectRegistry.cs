@@ -20,12 +20,6 @@ namespace Lextm.SharpSnmpLib.Mib
         IObjectTree Tree { get; }
 
         /// <summary>
-        /// Gets the path.
-        /// </summary>
-        /// <value>The path.</value>
-        string Path { get; }
-
-        /// <summary>
         /// Creates a variable.
         /// </summary>
         /// <param name="textual">The textual ID.</param>
@@ -56,11 +50,6 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <returns></returns>
         [CLSCompliant(false)]
         uint[] Translate(string moduleName, string name);
-        
-        /// <summary>
-        /// Reloads the registry.
-        /// </summary>
-        void Reload();
 
         /// <summary>
         /// Gets textual form from numerical form.

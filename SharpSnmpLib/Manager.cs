@@ -1,10 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Net;
-using System.Net.Sockets;
 using System.Threading;
 
 using Lextm.SharpSnmpLib.Mib;
@@ -114,7 +113,7 @@ namespace Lextm.SharpSnmpLib
         /// <value>The objects.</value>
         public IObjectRegistry Objects
         {
-            get { return _objects ?? ObjectRegistry.Default; }
+            get { return _objects ?? DefaultObjectRegistry.Instance; }
             set { _objects = value; }
         }
 

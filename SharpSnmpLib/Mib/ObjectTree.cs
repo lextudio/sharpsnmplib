@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -55,11 +55,11 @@ namespace Lextm.SharpSnmpLib.Mib
             Refresh();
         }
         
-        public ObjectTree(string[] files) : this(PrepareFiles(files))
+        public ObjectTree(IEnumerable<string> files) : this(PrepareFiles(files))
         {
         }
         
-        private static ICollection<ModuleLoader> PrepareFiles(string[] files)
+        private static ICollection<ModuleLoader> PrepareFiles(IEnumerable<string> files)
         {
             if (files == null)
             {
@@ -115,7 +115,7 @@ namespace Lextm.SharpSnmpLib.Mib
             return null;
         }
 
-        internal IDefinition Find(uint[] numerical)
+        public IDefinition Find(uint[] numerical)
         {
             if (numerical == null)
             {
@@ -207,11 +207,10 @@ namespace Lextm.SharpSnmpLib.Mib
 
             // parse indirect nodes.
             int current = pendingNodes.Count;
-            int previous;
             while (current != 0)
             {
                 List<IEntity> parsed = new List<IEntity>();
-                previous = current;
+                int previous = current;
                 foreach (IEntity node in pendingNodes)
                 {
                     if (node.Parent.Contains("."))
@@ -357,18 +356,17 @@ namespace Lextm.SharpSnmpLib.Mib
                 nameTable.Add(result.TextualForm, result);
             }
         }
-        
-        internal void Refresh()
+
+        public void Refresh()
         {
             TraceSource source = new TraceSource("Library");
             source.TraceInformation("loading modules started");
             Stopwatch watch = new Stopwatch();
             watch.Start();
-            int previous;
             int current = _pendings.Count;
             while (current != 0)
             {
-                previous = current;
+                int previous = current;
                 IList<string> parsed = new List<string>();
                 foreach (MibModule pending in _pendings.Values)
                 {
@@ -422,7 +420,7 @@ namespace Lextm.SharpSnmpLib.Mib
             source.Close();
         }
 
-        internal void Import(IEnumerable<MibModule> modules)
+        public void Import(IEnumerable<MibModule> modules)
         {
             if (modules == null)
             {
@@ -486,10 +484,9 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             List<Definition> pendings = new List<Definition>(nodes);
             int current = pendings.Count;
-            int previous;
             while (current != 0)
             {
-                previous = current;
+                int previous = current;
                 List<Definition> parsed = new List<Definition>();
                 foreach (Definition node in pendings)
                 {
