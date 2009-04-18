@@ -2,7 +2,7 @@ using System.Net;
 
 namespace Lextm.SharpSnmpLib
 {
-    sealed class MessageParams
+    internal sealed class MessageParams
     {
         private readonly int _number;
         private readonly byte[] _bytes;

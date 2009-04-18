@@ -126,7 +126,7 @@ namespace TestSet
                     vList.Add(test);
                 }
 
-                Manager.Set(version, new IPEndPoint(ip, 161), new OctetString(community), vList, timeout);
+                Messenger.Set(version, new IPEndPoint(ip, 161), new OctetString(community), vList, timeout);
             }
             catch (SharpSnmpException ex)
             {

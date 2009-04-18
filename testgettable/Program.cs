@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Lextm.SharpSnmpLib;
 using System.Net;
 using System.IO;
@@ -14,8 +14,8 @@ namespace TestGetTable
         {
             try
             {
-                Variable[,] table = Manager.GetTable(VersionCode.V1, new IPEndPoint(IPAddress.Loopback, 161), new OctetString("public"),
-                    new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 2, 2 }), 5000, 10, ObjectRegistry.Default);
+                Variable[,] table = Messenger.GetTable(VersionCode.V1, new IPEndPoint(IPAddress.Loopback, 161), new OctetString("public"),
+                    new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 2, 2 }), 5000, 10, DefaultObjectRegistry.Instance);
                 writer.WriteLine("V1 table");
                 for (int row = 0; row < table.GetUpperBound(0); row++)
                 {
@@ -26,8 +26,8 @@ namespace TestGetTable
                     writer.WriteLine();
                 }
 
-                table = Manager.GetTable(VersionCode.V2, new IPEndPoint(IPAddress.Loopback, 161), new OctetString("public"),
-                    new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 2, 2 }), 5000, 10, ObjectRegistry.Default);
+                table = Messenger.GetTable(VersionCode.V2, new IPEndPoint(IPAddress.Loopback, 161), new OctetString("public"),
+                    new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 2, 2 }), 5000, 10, DefaultObjectRegistry.Instance);
                 writer.WriteLine("V2 table");
                 for (int row = 0; row < table.GetUpperBound(0); row++)
                 {

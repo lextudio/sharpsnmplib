@@ -133,7 +133,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="manager">Manager</param>
         /// <param name="socket">The socket.</param>
-        public void Send(IPEndPoint manager, Socket socket)
+        public void Send(EndPoint manager, Socket socket)
         {
             if (socket == null)
             {

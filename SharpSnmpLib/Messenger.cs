@@ -6,13 +6,14 @@
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
-using Lextm.SharpSnmpLib.Mib;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Net;
 using System.Net.Sockets;
+
+using Lextm.SharpSnmpLib.Mib;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -168,7 +169,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="timeout">The timeout.</param>
         /// <param name="next">The next.</param>
         /// <returns>
-        /// 	<c>true</c> if the specified seed has next item; otherwise, <c>false</c>.
+        ///     <c>true</c> if the specified seed has next item; otherwise, <c>false</c>.
         /// </returns>
         [SuppressMessage("Microsoft.Design", "CA1021:AvoidOutParameters", MessageId = "5#")]
         public static bool HasNext(VersionCode version, IPEndPoint endpoint, OctetString community, Variable seed, int timeout, out Variable next)
@@ -258,7 +259,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="maxRepetitions">The max repetitions.</param>
         /// <param name="next">The next.</param>
         /// <returns>
-        /// 	<c>true</c> if the specified seed has next item; otherwise, <c>false</c>.
+        ///     <c>true</c> if the specified seed has next item; otherwise, <c>false</c>.
         /// </returns>
         [SuppressMessage("Microsoft.Design", "CA1021:AvoidOutParameters", MessageId = "5#")]
         private static bool BulkHasNext(VersionCode version, IPEndPoint endpoint, OctetString community, Variable seed, int timeout, int maxRepetitions, out IList<Variable> next)
@@ -304,7 +305,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="timestamp">Timestamp.</param>
         /// <param name="variables">Variable bindings.</param>
         [CLSCompliant(false)]
-        public static void SendTrapV1(IPEndPoint receiver, IPAddress agent, OctetString community, ObjectIdentifier enterprise, GenericCode generic, int specific, uint timestamp, IList<Variable> variables)
+        public static void SendTrapV1(EndPoint receiver, IPAddress agent, OctetString community, ObjectIdentifier enterprise, GenericCode generic, int specific, uint timestamp, IList<Variable> variables)
         {
             TrapV1Message message = new TrapV1Message(VersionCode.V1, agent, community, enterprise, generic, specific, timestamp, variables);
             message.Send(receiver, udp);
@@ -321,7 +322,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="variables">Variable bindings.</param>
         /// <param name="requestId">Request ID.</param>
         [CLSCompliant(false)]
-        public static void SendTrapV2(int requestId, VersionCode version, IPEndPoint receiver, OctetString community, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables)
+        public static void SendTrapV2(int requestId, VersionCode version, EndPoint receiver, OctetString community, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables)
         {
             if (version == VersionCode.V1)
             {

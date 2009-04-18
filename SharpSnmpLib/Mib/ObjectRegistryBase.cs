@@ -277,7 +277,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <summary>
         /// Refreshes.
         /// </summary>
-        /// <remarks>This method raises an <see cref="ReloadableObjectRegistry.OnChanged"/> event. </remarks>
+        /// <remarks>This method raises an <see cref="OnChanged"/> event. </remarks>
         public void Refresh()
         {
             _tree.Refresh();

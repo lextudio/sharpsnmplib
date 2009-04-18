@@ -35,7 +35,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentException("raw must be one item");
             }
             
-            _boolean = (raw[0] > 0);
+            _boolean = raw[0] > 0;
         }
         
         /// <summary>

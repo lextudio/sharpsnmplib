@@ -71,7 +71,7 @@ namespace TestAgent
 		
 		private void BtnTrapClick(object sender, EventArgs e)
 		{
-			Agent.SendTrapV1(new IPEndPoint(IPAddress.Parse(txtIP.Text), int.Parse(txtPort.Text)),
+			Messenger.SendTrapV1(new IPEndPoint(IPAddress.Parse(txtIP.Text), int.Parse(txtPort.Text)),
 			                 IPAddress.Loopback, // here should be IP of the current machine.
 			                 new OctetString("public"),
 			                 new ObjectIdentifier(new uint[] { 1, 3, 6 }),
@@ -83,7 +83,7 @@ namespace TestAgent
 		
 		private void BtnTrap2Click(object sender, EventArgs e)
 		{
-			Agent.SendTrapV2(0, VersionCode.V2,
+			Messenger.SendTrapV2(0, VersionCode.V2,
 			                 new IPEndPoint(IPAddress.Parse(txtIP.Text), int.Parse(txtPort.Text)),
 			                 new OctetString("public"),
 			                 new ObjectIdentifier(new uint[] { 1, 3, 6 }),
@@ -95,7 +95,7 @@ namespace TestAgent
 		{
 			try
 			{
-				Agent.SendInform(0, VersionCode.V2, 
+				Messenger.SendInform(0, VersionCode.V2, 
 				                 new IPEndPoint(IPAddress.Parse(txtIP.Text), int.Parse(txtPort.Text)),
 				                 new OctetString("public"),
 				                 new ObjectIdentifier(new uint[] { 1, 3, 6 }),

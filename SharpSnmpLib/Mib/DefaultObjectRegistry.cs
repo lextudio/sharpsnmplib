@@ -7,7 +7,7 @@ namespace Lextm.SharpSnmpLib.Mib
     /// <summary>
     /// Default object registry.
     /// </summary>
-    public class DefaultObjectRegistry : ObjectRegistryBase
+    public sealed class DefaultObjectRegistry : ObjectRegistryBase
     {
         private static volatile DefaultObjectRegistry _instance;
         private static readonly object locker = new object();

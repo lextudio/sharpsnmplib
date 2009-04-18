@@ -77,7 +77,7 @@ namespace TestGet
 
                 foreach (
                     Variable variable in
-                        Manager.Get(version, new IPEndPoint(ip, 161), new OctetString(community), vList, timeout))
+                        Messenger.Get(version, new IPEndPoint(ip, 161), new OctetString(community), vList, timeout))
                 {
                     Console.WriteLine(variable);
                 }

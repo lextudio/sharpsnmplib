@@ -1,6 +1,6 @@
 ﻿namespace Lextm.SharpSnmpLib
 {
-    partial class Discoverer
+    public partial class Discoverer
     {
         /// <summary>
         /// Required designer variable.
@@ -17,6 +17,7 @@
             {
                 components.Dispose();
             }
+            
             base.Dispose(disposing);
         }
 

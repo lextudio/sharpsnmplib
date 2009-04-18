@@ -30,7 +30,7 @@ namespace TestSendTrap
                 address = IPAddress.Loopback;
             }
 
-            Agent.SendTrapV1(new IPEndPoint(address, 162), IPAddress.Loopback,
+            Messenger.SendTrapV1(new IPEndPoint(address, 162), IPAddress.Loopback,
                                                       new OctetString("public"),
                                                       new ObjectIdentifier(new uint[] { 1, 3, 6 }),
                                                       GenericCode.ColdStart,
@@ -41,7 +41,7 @@ namespace TestSendTrap
             //Thread.Sleep(50);
 
 
-            Agent.SendTrapV2(0, VersionCode.V2, new IPEndPoint(address, 162), 
+            Messenger.SendTrapV2(0, VersionCode.V2, new IPEndPoint(address, 162), 
                                                  new OctetString("public"),
                                                       new ObjectIdentifier(new uint[] { 1, 3, 6 }),
                                                       0,
@@ -50,7 +50,7 @@ namespace TestSendTrap
 
             try
             {
-                Agent.SendInform(0, VersionCode.V2, new IPEndPoint(address, 162), new OctetString("public"), new ObjectIdentifier(new uint[] { 1, 3, 6 }),
+                Messenger.SendInform(0, VersionCode.V2, new IPEndPoint(address, 162), new OctetString("public"), new ObjectIdentifier(new uint[] { 1, 3, 6 }),
                                           0,
                                           new List<Variable>(), 2000);
             }

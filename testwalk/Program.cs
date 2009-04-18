@@ -26,7 +26,7 @@ namespace TestWalk
                 writer.WriteLine("V1 walk");                
                 try
                 {
-                    Manager.Walk(VersionCode.V1, new IPEndPoint(IPAddress.Loopback, 161), new OctetString("public"), new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 7, 5 }), list, 1000, WalkMode.WithinSubtree);
+                    Messenger.Walk(VersionCode.V1, new IPEndPoint(IPAddress.Loopback, 161), new OctetString("public"), new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 7, 5 }), list, 1000, WalkMode.WithinSubtree);
                 } 
                 catch (SharpTimeoutException ex)
                 {
@@ -42,7 +42,7 @@ namespace TestWalk
                 writer.WriteLine("V2 walk");
                 try
                 {
-                    Manager.BulkWalk(VersionCode.V2, new IPEndPoint(IPAddress.Loopback, 161), new OctetString("public"), new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 7, 5 }), list, 1000, 10, WalkMode.WithinSubtree);
+                    Messenger.BulkWalk(VersionCode.V2, new IPEndPoint(IPAddress.Loopback, 161), new OctetString("public"), new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 7, 5 }), list, 1000, 10, WalkMode.WithinSubtree);
                 } 
                 catch (SharpTimeoutException ex)
                 {
@@ -66,7 +66,7 @@ namespace TestWalk
 
                 try
                 {
-                    Manager.Walk(VersionCode.V1, new IPEndPoint(IPAddress.Loopback, 161), new OctetString("public"), o, list, 1000, WalkMode.Default);
+                    Messenger.Walk(VersionCode.V1, new IPEndPoint(IPAddress.Loopback, 161), new OctetString("public"), o, list, 1000, WalkMode.Default);
                 }
                 catch (SharpTimeoutException ex)
                 {
@@ -82,7 +82,7 @@ namespace TestWalk
                 writer.WriteLine("V2 walk");
                 try
                 {
-                    Manager.BulkWalk(VersionCode.V2, new IPEndPoint(IPAddress.Loopback, 161), new OctetString("public"), o, list, 2000, 10, WalkMode.Default);
+                    Messenger.BulkWalk(VersionCode.V2, new IPEndPoint(IPAddress.Loopback, 161), new OctetString("public"), o, list, 2000, 10, WalkMode.Default);
                 }
                 catch (SharpTimeoutException ex) 
                 {

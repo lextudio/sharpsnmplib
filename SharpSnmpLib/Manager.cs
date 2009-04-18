@@ -188,6 +188,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="variables">Variable binds.</param>
         /// <param name="timeout">Timeout.</param>
         /// <returns></returns>
+        [Obsolete("Please use Messenger class instead.")]
         public static IList<Variable> Get(VersionCode version, IPEndPoint endpoint, OctetString community, IList<Variable> variables, int timeout)
         {
             if (version == VersionCode.V3)
@@ -292,6 +293,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="variables">Variable binds.</param>
         /// <param name="timeout">Timeout.</param>
         /// <returns></returns>
+        [Obsolete("Please use Messenger class instead.")]
         public static void Set(VersionCode version, IPEndPoint endpoint, OctetString community, IList<Variable> variables, int timeout)
         {
             if (version == VersionCode.V3)
@@ -399,6 +401,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Return", Justification = "ByDesign")]
         [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Body", Justification = "ByDesign")]
+        [Obsolete("Please use Messenger class instead.")]
         public static Variable[,] GetTable(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, int timeout, int maxRepetitions, IObjectRegistry registry)
         {
             if (registry == null)
@@ -500,6 +503,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="timeout">Timeout.</param>
         /// <param name="mode">Walk mode.</param>
         /// <returns>Returns row count if the OID is a table. Otherwise this value is meaningless.</returns>
+        [Obsolete("Please use Messenger class instead.")]
         public static int Walk(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, IList<Variable> list, int timeout, WalkMode mode)
         {  
             if (list == null)
@@ -599,6 +603,7 @@ namespace Lextm.SharpSnmpLib
         {
             // ReSharper disable RedundantToStringCall
             return "SNMP manager: timeout: " + Timeout.ToString(CultureInfo.InvariantCulture) + "; version: " + DefaultVersion.ToString() + "; " + trapListener;
+            
             // ReSharper restore RedundantToStringCall
         }
 
@@ -642,6 +647,7 @@ namespace Lextm.SharpSnmpLib
         ///     <c>true</c> if the specified seed has next item; otherwise, <c>false</c>.
         /// </returns>
         [SuppressMessage("Microsoft.Design", "CA1021:AvoidOutParameters", MessageId = "5#")]
+        [Obsolete("Please use Messenger class instead.")]
         public static bool HasNext(VersionCode version, IPEndPoint endpoint, OctetString community, Variable seed, int timeout, out Variable next)
         {        
             if (seed == null)
@@ -674,6 +680,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="timeout">Timeout.</param>
         /// <param name="maxRepetitions">The max repetitions.</param>
         /// <param name="mode">Walk mode.</param>
+        [Obsolete("Please use Messenger class instead.")]
         public static int BulkWalk(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, IList<Variable> list, int timeout, int maxRepetitions, WalkMode mode)
         {            
             if (list == null)
@@ -728,7 +735,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="maxRepetitions">The max repetitions.</param>
         /// <param name="next">The next.</param>
         /// <returns>
-        /// 	<c>true</c> if the specified seed has next item; otherwise, <c>false</c>.
+        ///     <c>true</c> if the specified seed has next item; otherwise, <c>false</c>.
         /// </returns>
         [SuppressMessage("Microsoft.Design", "CA1021:AvoidOutParameters", MessageId = "5#")]
         private static bool BulkHasNext(VersionCode version, IPEndPoint endpoint, OctetString community, Variable seed, int timeout, int maxRepetitions, out IList<Variable> next)
@@ -765,15 +772,15 @@ namespace Lextm.SharpSnmpLib
         // ReSharper disable RedundantNameQualifier
         // ReSharper disable RedundantThisQualifier
         // ReSharper disable RedundantDelegateCreation
-        private void InitializeComponent(){
-
+        private void InitializeComponent()
+        {
             this.trapListener = new SharpSnmpLib.TrapListener();
             this.trapListener.TrapV1Received += new System.EventHandler<SharpSnmpLib.TrapV1ReceivedEventArgs>(this.TrapListener_TrapV1Received);
             this.trapListener.TrapV2Received += new System.EventHandler<SharpSnmpLib.TrapV2ReceivedEventArgs>(this.TrapListener_TrapV2Received);
 
             this.trapListener.InformRequestReceived += new System.EventHandler<SharpSnmpLib.InformRequestReceivedEventArgs>(this.TrapListener_InformRequestReceived);
-
         }
+        
         // ReSharper restore RedundantDelegateCreation
         // ReSharper restore RedundantThisQualifier
         // ReSharper restore RedundantNameQualifier

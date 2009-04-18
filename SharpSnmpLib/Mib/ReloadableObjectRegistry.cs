@@ -16,6 +16,7 @@ namespace Lextm.SharpSnmpLib.Mib
     /// <summary>
     /// Object registry.
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Reloadable", Justification = "By design")]
     public class ReloadableObjectRegistry : ObjectRegistryBase
     {
         private readonly string _path;

@@ -85,6 +85,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="timestamp">Timestamp.</param>
         /// <param name="variables">Variable bindings.</param>
         [CLSCompliant(false)]
+        [Obsolete("Please use Messenger class instead.")]
         public static void SendTrapV1(IPEndPoint receiver, IPAddress agent, OctetString community, ObjectIdentifier enterprise, GenericCode generic, int specific, uint timestamp, IList<Variable> variables)
         {
             TrapV1Message message = new TrapV1Message(VersionCode.V1, agent, community, enterprise, generic, specific, timestamp, variables);
@@ -102,6 +103,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="variables">Variable bindings.</param>
         /// <param name="requestId">Request ID.</param>
         [CLSCompliant(false)]
+        [Obsolete("Please use Messenger class instead.")]
         public static void SendTrapV2(int requestId, VersionCode version, IPEndPoint receiver, OctetString community, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables)
         {
             if (version == VersionCode.V1)
@@ -125,6 +127,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="variables">Variable bindings.</param>
         /// <param name="timeout">Timeout.</param>
         [CLSCompliant(false)]
+        [Obsolete("Please use Messenger class instead.")]
         public static void SendInform(int requestId, VersionCode version, IPEndPoint receiver, OctetString community, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables, int timeout)
         {
             InformRequestMessage message = new InformRequestMessage(requestId, version, community, enterprise, timestamp, variables);
