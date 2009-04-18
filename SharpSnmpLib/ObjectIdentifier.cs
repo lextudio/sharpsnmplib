@@ -10,9 +10,9 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// ObjectIdentifier type.
     /// </summary>
-    #if (!CF)
+#if (!CF)
     [TypeConverter(typeof(ObjectIdentifierConverter))]
-    #endif
+#endif
     [Serializable]
     public sealed class ObjectIdentifier : ISnmpData, IEquatable<ObjectIdentifier>
     {
@@ -60,12 +60,13 @@ namespace Lextm.SharpSnmpLib
 
             _oid = id;
         }
-        
+
         /// <summary>
         /// Creates an <see cref="ObjectIdentifier"/> instance from raw bytes.
         /// </summary>
         /// <param name="raw">Raw bytes</param>
-        internal ObjectIdentifier(byte[] raw) : this(raw.Length, new MemoryStream(raw))
+        internal ObjectIdentifier(byte[] raw)
+            : this(raw.Length, new MemoryStream(raw))
         {
         }
 
@@ -105,12 +106,12 @@ namespace Lextm.SharpSnmpLib
                     buffer += (uint)(raw[i] & 0x7F);
                 }
             }
-            
+
             _oid = result.ToArray();
         }
 
         #endregion Constructor
-     
+
         /// <summary>
         /// Convers to numerical ID.
         /// </summary>
@@ -120,7 +121,7 @@ namespace Lextm.SharpSnmpLib
         {
             return _oid;
         }
-        
+
         /// <summary>
         /// Returns a <see cref="String"/> that represents this <see cref="ObjectIdentifier"/>.
         /// </summary>
@@ -171,10 +172,10 @@ namespace Lextm.SharpSnmpLib
             {
                 result[i] = uint.Parse(parts[i], CultureInfo.InvariantCulture);
             }
-            
+
             return result;
         }
-        
+
         /// <summary>
         /// Converts to byte format.
         /// </summary>
@@ -215,11 +216,11 @@ namespace Lextm.SharpSnmpLib
             {
                 result.Add((byte)((subIdentifier & 0x7F) | 0x80));
             }
-            
+
             result.Reverse();
             return result;
         }
-        
+
         /// <summary>
         /// Type code.
         /// </summary>
@@ -230,7 +231,7 @@ namespace Lextm.SharpSnmpLib
                 return SnmpType.ObjectIdentifier;
             }
         }
-        
+
         /// <summary>
         /// Determines whether the specified <see cref="Object"/> is equal to the current <see cref="ObjectIdentifier"/>.
         /// </summary>
@@ -241,7 +242,7 @@ namespace Lextm.SharpSnmpLib
         {
             return Equals(this, obj as ObjectIdentifier);
         }
-        
+
         /// <summary>
         /// Indicates whether the current object is equal to another object of the same type.
         /// </summary>
@@ -252,7 +253,7 @@ namespace Lextm.SharpSnmpLib
         {
             return Equals(this, other);
         }
-        
+
         /// <summary>
         /// Serves as a hash function for a particular type.
         /// </summary>
@@ -264,7 +265,10 @@ namespace Lextm.SharpSnmpLib
                 int hash = 0;
                 for (int i = _oid.Length - 1; i >= 0; i--)
                 {
-                    hash ^= (int)_oid[i];
+                    unchecked
+                    {
+                        hash ^= (int)_oid[i];
+                    }
                 }
                 
                 _hashcode = hash != 0 ? hash : 1;    // Very unlikely that hash=0, but I prefer to foresee the case.
