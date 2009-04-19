@@ -193,8 +193,8 @@ namespace Lextm.SharpSnmpLib
                 return;
             }
             
-            _port = endpoint.Port;
-            _socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            _port = endpoint.Port;            
+            _socket = new Socket(endpoint.AddressFamily, SocketType.Dgram, ProtocolType.Udp);
 
             try
             {
@@ -309,7 +309,16 @@ namespace Lextm.SharpSnmpLib
                 try
                 {
                     byte[] buffer = new byte[_bufferSize];
-                    EndPoint remote = new IPEndPoint(IPAddress.Any, 0);
+                    EndPoint remote;
+                    if (_socket.AddressFamily == AddressFamily.InterNetwork)
+                    {
+                        remote = new IPEndPoint(IPAddress.Any, 0);
+                    }
+                    else
+                    {
+                        remote = new IPEndPoint(IPAddress.IPv6Any, 0);
+                    }
+
                     int count = _socket.ReceiveFrom(buffer, ref remote);
                     ThreadPool.QueueUserWorkItem(HandleMessage, new MessageParams(buffer, count, remote));
                 }

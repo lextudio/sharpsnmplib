@@ -126,7 +126,7 @@ namespace Lextm.SharpSnmpLib
         {
             byte[] bytes = ToBytes();
             ByteTool.Capture(bytes); // log response
-            using (UdpClient udp = new UdpClient())
+            using (UdpClient udp = new UdpClient(manager.AddressFamily))
             {
                 udp.Send(bytes, bytes.Length, manager);
                 udp.Close();

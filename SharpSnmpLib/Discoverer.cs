@@ -70,7 +70,7 @@ namespace Lextm.SharpSnmpLib
             requestId = RequestCounter.NextCount;
             GetRequestMessage message = new GetRequestMessage(requestId, version, community, variables);
             byte[] bytes = message.ToBytes();
-            using (UdpClient udp = new UdpClient())
+            using (UdpClient udp = new UdpClient(broadcastAddress.AddressFamily))
             {
                 #if (!CF)
                 udp.EnableBroadcast = true;

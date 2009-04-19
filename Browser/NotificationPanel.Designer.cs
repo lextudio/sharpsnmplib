@@ -39,6 +39,11 @@ namespace Lextm.SharpSnmpLib.Browser
             this.txtLog = new System.Windows.Forms.RichTextBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+            this.tscbIP = new System.Windows.Forms.ToolStripComboBox();
+            this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
+            this.tstxtPort = new System.Windows.Forms.ToolStripTextBox();
             this.alNotification = new Crad.Windows.Forms.Actions.ActionList();
             this.actEnabled = new Crad.Windows.Forms.Actions.Action();
             this.toolStrip1.SuspendLayout();
@@ -50,17 +55,22 @@ namespace Lextm.SharpSnmpLib.Browser
             this.txtLog.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtLog.Location = new System.Drawing.Point(0, 25);
             this.txtLog.Name = "txtLog";
-            this.txtLog.Size = new System.Drawing.Size(284, 237);
+            this.txtLog.Size = new System.Drawing.Size(411, 237);
             this.txtLog.TabIndex = 0;
             this.txtLog.Text = "";
             // 
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton1});
+            this.toolStripButton1,
+            this.toolStripSeparator1,
+            this.toolStripLabel1,
+            this.tscbIP,
+            this.toolStripLabel2,
+            this.tstxtPort});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(284, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(411, 25);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -73,6 +83,34 @@ namespace Lextm.SharpSnmpLib.Browser
             this.toolStripButton1.Name = "toolStripButton1";
             this.toolStripButton1.Size = new System.Drawing.Size(72, 22);
             this.toolStripButton1.Text = "Disabled";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripLabel1
+            // 
+            this.toolStripLabel1.Name = "toolStripLabel1";
+            this.toolStripLabel1.Size = new System.Drawing.Size(17, 22);
+            this.toolStripLabel1.Text = "IP";
+            // 
+            // tscbIP
+            // 
+            this.tscbIP.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.tscbIP.Name = "tscbIP";
+            this.tscbIP.Size = new System.Drawing.Size(150, 25);
+            // 
+            // toolStripLabel2
+            // 
+            this.toolStripLabel2.Name = "toolStripLabel2";
+            this.toolStripLabel2.Size = new System.Drawing.Size(29, 22);
+            this.toolStripLabel2.Text = "Port";
+            // 
+            // tstxtPort
+            // 
+            this.tstxtPort.Name = "tstxtPort";
+            this.tstxtPort.Size = new System.Drawing.Size(40, 25);
             // 
             // alNotification
             // 
@@ -92,7 +130,7 @@ namespace Lextm.SharpSnmpLib.Browser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 262);
+            this.ClientSize = new System.Drawing.Size(411, 262);
             this.Controls.Add(this.txtLog);
             this.Controls.Add(this.toolStrip1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -112,5 +150,10 @@ namespace Lextm.SharpSnmpLib.Browser
         private Crad.Windows.Forms.Actions.ActionList alNotification;
         private Crad.Windows.Forms.Actions.Action actEnabled;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
+        private System.Windows.Forms.ToolStripComboBox tscbIP;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel2;
+        private System.Windows.Forms.ToolStripTextBox tstxtPort;
 	}
 }

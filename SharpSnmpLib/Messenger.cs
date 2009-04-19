@@ -24,7 +24,19 @@ namespace Lextm.SharpSnmpLib
     public static class Messenger
     {
         private static readonly Socket udp = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-        
+        private static readonly Socket udpV6 = new Socket(AddressFamily.InterNetworkV6, SocketType.Dgram, ProtocolType.Udp);
+
+        private static Socket GetSocket(AddressFamily family)
+        {
+            if (family == AddressFamily.InterNetwork)
+            {
+                return udp;
+            }
+            else
+            {
+                return udpV6;
+            }
+        }
         /// <summary>
         /// Gets a list of variable binds.
         /// </summary>
@@ -42,7 +54,7 @@ namespace Lextm.SharpSnmpLib
             }
 
             GetRequestMessage message = new GetRequestMessage(RequestCounter.NextCount, version, community, variables);
-            GetResponseMessage response = message.GetResponse(timeout, endpoint, udp);
+            GetResponseMessage response = message.GetResponse(timeout, endpoint, GetSocket(endpoint.AddressFamily));
             if (response.ErrorStatus != ErrorCode.NoError)
             {
                 throw SharpErrorException.Create(
@@ -71,7 +83,7 @@ namespace Lextm.SharpSnmpLib
             }
 
             SetRequestMessage message = new SetRequestMessage(RequestCounter.NextCount, version, community, variables);
-            GetResponseMessage response = message.GetResponse(timeout, endpoint, udp);
+            GetResponseMessage response = message.GetResponse(timeout, endpoint, GetSocket(endpoint.AddressFamily));
             if (response.ErrorStatus != ErrorCode.NoError)
             {
                 throw SharpErrorException.Create(
@@ -188,7 +200,7 @@ namespace Lextm.SharpSnmpLib
                 community,
                 variables);
 
-            GetResponseMessage response = message.GetResponse(timeout, endpoint, udp);
+            GetResponseMessage response = message.GetResponse(timeout, endpoint, GetSocket(endpoint.AddressFamily));
             next = response.ErrorStatus == ErrorCode.NoSuchName ? null : response.Variables[0];
             return response.ErrorStatus != ErrorCode.NoSuchName;
         }
@@ -280,7 +292,7 @@ namespace Lextm.SharpSnmpLib
                 maxRepetitions,
                 variables);
 
-            GetResponseMessage response = message.GetResponse(timeout, endpoint, udp);
+            GetResponseMessage response = message.GetResponse(timeout, endpoint, GetSocket(endpoint.AddressFamily));
             if (response.ErrorStatus != ErrorCode.NoError)
             {
                 throw SharpErrorException.Create(
@@ -308,7 +320,7 @@ namespace Lextm.SharpSnmpLib
         public static void SendTrapV1(EndPoint receiver, IPAddress agent, OctetString community, ObjectIdentifier enterprise, GenericCode generic, int specific, uint timestamp, IList<Variable> variables)
         {
             TrapV1Message message = new TrapV1Message(VersionCode.V1, agent, community, enterprise, generic, specific, timestamp, variables);
-            message.Send(receiver, udp);
+            message.Send(receiver, GetSocket(receiver.AddressFamily));
         }
 
         /// <summary>
@@ -330,7 +342,7 @@ namespace Lextm.SharpSnmpLib
             }
 
             TrapV2Message message = new TrapV2Message(requestId, version, community, enterprise, timestamp, variables);
-            message.Send(receiver, udp);
+            message.Send(receiver, GetSocket(receiver.AddressFamily));
         }
 
         /// <summary>
@@ -348,7 +360,7 @@ namespace Lextm.SharpSnmpLib
         public static void SendInform(int requestId, VersionCode version, IPEndPoint receiver, OctetString community, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables, int timeout)
         {
             InformRequestMessage message = new InformRequestMessage(requestId, version, community, enterprise, timestamp, variables);
-            GetResponseMessage response = message.GetResponse(timeout, receiver, udp);
+            GetResponseMessage response = message.GetResponse(timeout, receiver, GetSocket(receiver.AddressFamily));
             if (response.ErrorStatus != ErrorCode.NoError)
             {
                 throw SharpErrorException.Create(

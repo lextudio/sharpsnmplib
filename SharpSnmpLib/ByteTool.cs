@@ -69,7 +69,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns>The response message (<see cref="GetResponseMessage"/>).</returns>
         internal static GetResponseMessage GetResponse(IPEndPoint receiver, byte[] bytes, int number, int timeout)
         {
-            using (Socket udpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp))
+            using (Socket udpSocket = new Socket(receiver.AddressFamily, SocketType.Dgram, ProtocolType.Udp))
             {
                 return GetResponse(receiver, bytes, number, timeout, udpSocket);
             }
@@ -146,7 +146,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="callback">The callback called once the response has been received.</param>
         internal static void BeginGetResponse(IPEndPoint receiver, byte[] bytes, int number, int timeout, GetResponseCallback callback)
         {
-            using (Socket udpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp))
+            using (Socket udpSocket = new Socket(receiver.AddressFamily, SocketType.Dgram, ProtocolType.Udp))
             {
                 BeginGetResponse(receiver, bytes, number, timeout, callback, udpSocket);
             }

@@ -92,7 +92,7 @@ namespace Lextm.SharpSnmpLib
         {
             byte[] bytes = _bytes;
             IPEndPoint receiver = new IPEndPoint(_receiver, port);
-            using (UdpClient udp = new UdpClient())
+            using (UdpClient udp = new UdpClient(receiver.AddressFamily))
             {
                 udp.Send(bytes, bytes.Length, receiver);
                 udp.Close();
