@@ -36,18 +36,81 @@ namespace Lextm.SharpSnmpLib.Browser
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.SuspendLayout();
-			// 
-			// NotificationPanel
-			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(284, 262);
-			this.Icon = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.dialog_information;
-			this.Name = "NotificationPanel";
-			this.TabText = "Notification";
-			this.Load += new System.EventHandler(this.NotificationPanel_Load);
-			this.ResumeLayout(false);
+            this.txtLog = new System.Windows.Forms.RichTextBox();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.alNotification = new Crad.Windows.Forms.Actions.ActionList();
+            this.actEnabled = new Crad.Windows.Forms.Actions.Action();
+            this.toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.alNotification)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // txtLog
+            // 
+            this.txtLog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtLog.Location = new System.Drawing.Point(0, 25);
+            this.txtLog.Name = "txtLog";
+            this.txtLog.Size = new System.Drawing.Size(284, 237);
+            this.txtLog.TabIndex = 0;
+            this.txtLog.Text = "";
+            // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButton1});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(284, 25);
+            this.toolStrip1.TabIndex = 1;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // toolStripButton1
+            // 
+            this.alNotification.SetAction(this.toolStripButton1, this.actEnabled);
+            this.toolStripButton1.CheckOnClick = true;
+            this.toolStripButton1.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.face_monkey;
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(72, 22);
+            this.toolStripButton1.Text = "Disabled";
+            // 
+            // alNotification
+            // 
+            this.alNotification.Actions.Add(this.actEnabled);
+            this.alNotification.ContainerControl = this;
+            // 
+            // actEnabled
+            // 
+            this.actEnabled.CheckOnClick = true;
+            this.actEnabled.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.face_monkey;
+            this.actEnabled.Text = "Disabled";
+            this.actEnabled.ToolTipText = "Enable/disable this panel";
+            this.actEnabled.Update += new System.EventHandler(this.actEnabled_Update);
+            this.actEnabled.Execute += new System.EventHandler(this.actEnabled_Execute);
+            // 
+            // NotificationPanel
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(284, 262);
+            this.Controls.Add(this.txtLog);
+            this.Controls.Add(this.toolStrip1);
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Icon = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.dialog_information;
+            this.Name = "NotificationPanel";
+            this.TabText = "Notification";
+            this.Load += new System.EventHandler(this.NotificationPanel_Load);
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.alNotification)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
 		}
+		private System.Windows.Forms.ToolStrip toolStrip1;
+		private System.Windows.Forms.RichTextBox txtLog;
+        private Crad.Windows.Forms.Actions.ActionList alNotification;
+        private Crad.Windows.Forms.Actions.Action actEnabled;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
 	}
 }

@@ -37,27 +37,47 @@ namespace Lextm.SharpSnmpLib.Browser
 			Listener.TrapV1Received += new EventHandler<MessageReceivedEventArgs<TrapV1Message>>(Listener_TrapV1Received);;
 			Listener.TrapV2Received += new EventHandler<MessageReceivedEventArgs<TrapV2Message>>(Listener_TrapV2Received);
 			Listener.InformRequestReceived += new EventHandler<MessageReceivedEventArgs<InformRequestMessage>>(Listener_InformRequestReceived);
+			//Listener.Start();
 		}
 
 		private void Listener_InformRequestReceived(object sender, MessageReceivedEventArgs<InformRequestMessage> e)
 		{
-			
+		    txtLog.AppendText(e.Message.ToString() + Environment.NewLine);
 		}
 
 		private void Listener_TrapV2Received(object sender, MessageReceivedEventArgs<TrapV2Message> e)
 		{
-			
+			txtLog.AppendText(e.Message.ToString() + Environment.NewLine);
 		}
 
 		private void Listener_TrapV1Received(object sender, MessageReceivedEventArgs<TrapV1Message> e)
 		{
-			
+			txtLog.AppendText(e.Message.ToString() + Environment.NewLine);
 		}
 
 	    private void Listener_ExceptionRaised(object sender, ExceptionRaisedEventArgs e)
 	    {
-	        
+	        txtLog.AppendText(e.Exception.ToString() + Environment.NewLine);
 	    }
+
+        private void actEnabled_Update(object sender, EventArgs e)
+        {
+            actEnabled.Checked = Listener != null && Listener.Active;
+        }
+
+        private void actEnabled_Execute(object sender, EventArgs e)
+        {
+            if (actEnabled.Checked)
+            {
+                Listener.Start();
+                actEnabled.Text = "Enabled";
+            }
+            else
+            {
+                Listener.Stop();
+                actEnabled.Text = "Disabled";
+            }
+        }
 	    
 	}
 }

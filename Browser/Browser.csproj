@@ -234,6 +234,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="changes.txt" />
+    <None Include="Resources\face-monkey.png" />
     <None Include="Resources\dialog-information.ico" />
     <None Include="Resources\network-server.ico" />
     <None Include="Resources\x-office-spreadsheet.ico" />
