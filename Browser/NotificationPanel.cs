@@ -20,7 +20,7 @@ namespace Lextm.SharpSnmpLib.Browser
 	internal partial class NotificationPanel : DockContent
 	{
         private const string STR_AllUnassigned = "All Unassigned";
-        private const string STR_Sends = "{0} sends {1}";
+        private const string STR_Sends = "[{1}] [{0}] {2}";
 		private Listener _listener;
 		
 		public NotificationPanel()
@@ -58,17 +58,17 @@ namespace Lextm.SharpSnmpLib.Browser
 
 		private void Listener_InformRequestReceived(object sender, MessageReceivedEventArgs<InformRequestMessage> e)
 		{
-		    LogMessage(string.Format(STR_Sends, e.Sender, e.Message.ToString()));
+		    LogMessage(string.Format(STR_Sends, DateTime.Now, e.Sender, e.Message.ToString()));
 		}
 
 		private void Listener_TrapV2Received(object sender, MessageReceivedEventArgs<TrapV2Message> e)
 		{
-			LogMessage(string.Format(STR_Sends, e.Sender, e.Message.ToString()));
+            LogMessage(string.Format(STR_Sends, DateTime.Now, e.Sender, e.Message.ToString()));
 		}
 
 		private void Listener_TrapV1Received(object sender, MessageReceivedEventArgs<TrapV1Message> e)
 		{
-			LogMessage(string.Format(STR_Sends, e.Sender, e.Message.ToString()));
+            LogMessage(string.Format(STR_Sends, DateTime.Now, e.Sender, e.Message.ToString()));
 		}
 
 	    private void Listener_ExceptionRaised(object sender, ExceptionRaisedEventArgs e)
