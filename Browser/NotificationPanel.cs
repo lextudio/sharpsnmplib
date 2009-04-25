@@ -7,25 +7,28 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
+using System.Net;
+using System.Net.Sockets;
+using System.Windows.Forms;
+
 using Microsoft.Practices.Unity;
 using WeifenLuo.WinFormsUI.Docking;
-using System.Net;
-using System.Windows.Forms;
 
 namespace Lextm.SharpSnmpLib.Browser
 {
-	/// <summary>
-	/// Description of NotificationPanel.
-	/// </summary>
-	internal partial class NotificationPanel : DockContent
-	{
+    /// <summary>
+    /// Description of NotificationPanel.
+    /// </summary>
+    internal partial class NotificationPanel : DockContent
+    {
         private const string STR_AllUnassigned = "All Unassigned";
         private const string STR_Sends = "[{1}] [{0}] {2}";
-		private Listener _listener;
-		
-		public NotificationPanel()
-		{
-			InitializeComponent();
+        private Listener _listener;
+        private Listener _listenerV6;
+        
+        public NotificationPanel()
+        {
+            InitializeComponent();
             tstxtPort.Text = "162";
             tscbIP.Items.Add(STR_AllUnassigned);
             foreach (IPAddress address in Dns.GetHostEntry("").AddressList)
@@ -39,42 +42,54 @@ namespace Lextm.SharpSnmpLib.Browser
             }
 
             tscbIP.SelectedIndex = 0;
-		}
-		
-		[Dependency]
-		public Listener Listener
-		{
-			get { return _listener; }
-			set { _listener = value; }
-		}
-		
-		private void NotificationPanel_Load(object sender, EventArgs e)
-		{
+        }
+        
+        [Dependency]
+        public Listener Listener
+        {
+            get { return _listener; }
+            set { _listener = value; }
+        }
+        
+        [Dependency]
+        public Listener ListenerV6
+        {
+            get { return _listenerV6; }
+            set { _listenerV6 = value; }
+        }
+        
+        private void NotificationPanel_Load(object sender, EventArgs e)
+        {
             Listener.ExceptionRaised += Listener_ExceptionRaised;
-			Listener.TrapV1Received += new EventHandler<MessageReceivedEventArgs<TrapV1Message>>(Listener_TrapV1Received);;
-			Listener.TrapV2Received += new EventHandler<MessageReceivedEventArgs<TrapV2Message>>(Listener_TrapV2Received);
-			Listener.InformRequestReceived += new EventHandler<MessageReceivedEventArgs<InformRequestMessage>>(Listener_InformRequestReceived);
-		}
+            Listener.TrapV1Received += new EventHandler<MessageReceivedEventArgs<TrapV1Message>>(Listener_TrapV1Received);;
+            Listener.TrapV2Received += new EventHandler<MessageReceivedEventArgs<TrapV2Message>>(Listener_TrapV2Received);
+            Listener.InformRequestReceived += new EventHandler<MessageReceivedEventArgs<InformRequestMessage>>(Listener_InformRequestReceived);
+            
+            ListenerV6.ExceptionRaised += Listener_ExceptionRaised;
+            ListenerV6.TrapV1Received += new EventHandler<MessageReceivedEventArgs<TrapV1Message>>(Listener_TrapV1Received);;
+            ListenerV6.TrapV2Received += new EventHandler<MessageReceivedEventArgs<TrapV2Message>>(Listener_TrapV2Received);
+            ListenerV6.InformRequestReceived += new EventHandler<MessageReceivedEventArgs<InformRequestMessage>>(Listener_InformRequestReceived);
+        }
 
-		private void Listener_InformRequestReceived(object sender, MessageReceivedEventArgs<InformRequestMessage> e)
-		{
-		    LogMessage(string.Format(STR_Sends, DateTime.Now, e.Sender, e.Message.ToString()));
-		}
-
-		private void Listener_TrapV2Received(object sender, MessageReceivedEventArgs<TrapV2Message> e)
-		{
+        private void Listener_InformRequestReceived(object sender, MessageReceivedEventArgs<InformRequestMessage> e)
+        {
             LogMessage(string.Format(STR_Sends, DateTime.Now, e.Sender, e.Message.ToString()));
-		}
+        }
 
-		private void Listener_TrapV1Received(object sender, MessageReceivedEventArgs<TrapV1Message> e)
-		{
+        private void Listener_TrapV2Received(object sender, MessageReceivedEventArgs<TrapV2Message> e)
+        {
             LogMessage(string.Format(STR_Sends, DateTime.Now, e.Sender, e.Message.ToString()));
-		}
+        }
 
-	    private void Listener_ExceptionRaised(object sender, ExceptionRaisedEventArgs e)
-	    {
-	        LogMessage(e.Exception.ToString());
-	    }
+        private void Listener_TrapV1Received(object sender, MessageReceivedEventArgs<TrapV1Message> e)
+        {
+            LogMessage(string.Format(STR_Sends, DateTime.Now, e.Sender, e.Message.ToString()));
+        }
+
+        private void Listener_ExceptionRaised(object sender, ExceptionRaisedEventArgs e)
+        {
+            LogMessage(e.Exception.ToString());
+        }
 
         public void LogMessage(string message)
         {
@@ -93,30 +108,47 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             if (actEnabled.Checked)
             {
-                Listener.Start(GetIPEndPoint());
+                StartListeners();
                 actEnabled.Text = "Enabled";
             }
             else
             {
-                Listener.Stop();
+                StopListeners();
                 actEnabled.Text = "Disabled";
             }
         }
 
-        private IPEndPoint GetIPEndPoint()
+        private void StopListeners()
         {
+            Listener.Stop();
+            ListenerV6.Stop();
+        }
+
+        private void StartListeners()
+        {
+            int port = int.Parse(tstxtPort.Text);
             if (tscbIP.Text == STR_AllUnassigned)
             {
-                return new IPEndPoint(IPAddress.Any, int.Parse(tstxtPort.Text));
+                Listener.Start(new IPEndPoint(IPAddress.Any, port));
+                ListenerV6.Start(new IPEndPoint(IPAddress.IPv6Any, port));
+                return;
             }
 
-            return new IPEndPoint(IPAddress.Parse(tscbIP.Text), int.Parse(tstxtPort.Text));
+            IPAddress address = IPAddress.Parse(tscbIP.Text);
+            if (address.AddressFamily == AddressFamily.InterNetworkV6)
+            {
+                ListenerV6.Start(new IPEndPoint(address, port));
+            }
+            else
+            {
+                Listener.Start(new IPEndPoint(address, port));
+            }
         }
 
         private void actEnabled_Update(object sender, EventArgs e)
         {
             tscbIP.Enabled = !actEnabled.Checked;
             tstxtPort.Enabled = !actEnabled.Checked;
-        }	    
-	}
+        }
+    }
 }

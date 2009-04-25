@@ -156,6 +156,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Starts.
         /// </summary>
+        /// <remarks><para>This function will only monitor IP v4 incoming packets. IP v6 packets will be ignored. </para><para>If you actually need to monitor IP v6 packets, please use the overloading version that requires an IPEndpoint object.</para></remarks>
         public void Start()
         {
             Start(defaultEndPoint);
@@ -165,6 +166,7 @@ namespace Lextm.SharpSnmpLib
         /// Starts on a specific port number.
         /// </summary>
         /// <param name="port">Port number.</param>
+        /// <remarks><para>This function will only monitor IP v4 incoming packets. IP v6 packets will be ignored. </para><para>If you actually need to monitor IP v6 packets, please use the overloading version that requires an IPEndpoint object.</para></remarks>
         public void Start(int port)
         {
             Start(new IPEndPoint(IPAddress.Any, port));
@@ -174,6 +176,7 @@ namespace Lextm.SharpSnmpLib
         /// Starts on a specific end point.
         /// </summary>
         /// <param name="endpoint">End point.</param>
+        /// <remarks>This function supports both IP v4 and v6 packets.</remarks>
         public void Start(IPEndPoint endpoint)
         {
             if (endpoint == null)
@@ -184,6 +187,11 @@ namespace Lextm.SharpSnmpLib
             if (_disposed)
             {
                 throw new ObjectDisposedException("Listener");
+            }
+            
+            if (endpoint.AddressFamily == AddressFamily.InterNetworkV6 && !Socket.OSSupportsIPv6)
+            {
+                throw new InvalidOperationException("cannot use IP v6 when it is not supported on this configuration");
             }
 
             long activeBefore = Interlocked.CompareExchange(ref _active, 1, 0);
