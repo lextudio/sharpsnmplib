@@ -1,6 +1,8 @@
-﻿<project schemaVersion="1.6.0.2">
+﻿<project schemaVersion="1.6.0.7">
     <assemblies>
-        <assembly assemblyPath=".\SharpSnmpLib\bin\Release\SharpSnmpLib.dll" xmlCommentsPath=".\SharpSnmpLib\bin\Release\SharpSnmpLib.xml" commentsOnly="False" />
+        <assembly assemblyPath=".\bin\SharpSnmpLib.Controls.dll" xmlCommentsPath=".\bin\SharpSnmpLib.Controls.xml" commentsOnly="False" />
+        <assembly assemblyPath=".\bin\SharpSnmpLib.dll" xmlCommentsPath=".\bin\SharpSnmpLib.xml" commentsOnly="False" />
+        <assembly assemblyPath=".\bin\SharpSnmpLib.Mib.dll" xmlCommentsPath=".\bin\SharpSnmpLib.Mib.xml" commentsOnly="False" />
     </assemblies>
     <namespaceSummaries>
         <namespaceSummaryItem name="" isDocumented="False" />
@@ -12,7 +14,7 @@
         <dependencyItem depPath=".\lib\*.*" />
     </dependencies>
     <ProjectSummary />
-    <MissingTags>Summary, Parameter, Returns, AutoDocumentCtors, Namespace</MissingTags>
+    <MissingTags>Summary, Parameter, Returns, AutoDocumentCtors, Namespace, TypeParameter</MissingTags>
     <VisibleItems>InheritedMembers, InheritedFrameworkMembers, Protected, SealedProtected</VisibleItems>
     <HtmlHelp1xCompilerPath path="" />
     <HtmlHelp2xCompilerPath path="" />
@@ -21,12 +23,11 @@
     <WorkingPath path="" />
     <CleanIntermediates>True</CleanIntermediates>
     <KeepLogFile>True</KeepLogFile>
-    <HelpFileFormat>HtmlHelp1x</HelpFileFormat>
-    <PurgeDuplicateTopics>True</PurgeDuplicateTopics>
+    <BuildLogFile path="" />
+    <HelpFileFormat>Help1xAndHelp2x</HelpFileFormat>
     <CppCommentsFixup>False</CppCommentsFixup>
     <FrameworkVersion>2.0.50727</FrameworkVersion>
-    <BinaryTOC>True</BinaryTOC>
-    <IncludeFavorites>True</IncludeFavorites>
+    <IndentHtml>False</IndentHtml>
     <Preliminary>False</Preliminary>
     <RootNamespaceContainer>False</RootNamespaceContainer>
     <RootNamespaceTitle />
@@ -35,7 +36,8 @@
     <Language>en-US</Language>
     <CopyrightHref />
     <CopyrightText />
-    <FeedbackEMailAddress />
+    <FeedbackEMailAddress>lextudio@gmail.com</FeedbackEMailAddress>
+    <FeedbackEMailLinkText />
     <HeaderText />
     <FooterText />
     <ProjectLinkType>Local</ProjectLinkType>
@@ -44,8 +46,12 @@
     <PresentationStyle>vs2005</PresentationStyle>
     <NamingMethod>Guid</NamingMethod>
     <SyntaxFilters>Standard</SyntaxFilters>
-    <ShowFeedbackControl>False</ShowFeedbackControl>
+    <ShowFeedbackControl>True</ShowFeedbackControl>
+    <BinaryTOC>True</BinaryTOC>
+    <IncludeFavorites>True</IncludeFavorites>
+    <CollectionTocStyle>Hierarchical</CollectionTocStyle>
+    <IncludeStopWordList>True</IncludeStopWordList>
+    <PlugInNamespaces>ms.vsipcc+, ms.vsexpresscc+</PlugInNamespaces>
+    <HelpFileVersion>1.0.0.0</HelpFileVersion>
     <ContentPlacement>AboveNamespaces</ContentPlacement>
-    <ContentSiteMap path="" />
-    <TopicFileTransform path="" />
 </project>
