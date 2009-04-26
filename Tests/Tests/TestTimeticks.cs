@@ -22,6 +22,7 @@ namespace Lextm.SharpSnmpLib.Tests
             TimeTicks time = new TimeTicks(15);
             Assert.AreEqual(15, time.ToUInt32());
         }
+        
         [Test]
         public void TestConstructor2()
         {
@@ -37,6 +38,18 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual(16352, ((TimeTicks)data).ToUInt32());
             
             Assert.AreEqual(new byte[] {0x43, 0x05, 0x00, 0x93, 0xA3, 0x41, 0x4B}, new TimeTicks(2476949835).ToBytes());
+        }
+        
+        [Test]
+        public void TestToDateTime()
+        {
+            TimeTicks time = new TimeTicks(171447);
+            DateTime result = time.ToDateTime();
+            Assert.AreEqual(0, result.Hour);
+            Assert.AreEqual(28, result.Minute);
+            Assert.AreEqual(34, result.Second);
+            Assert.AreEqual(470, result.Millisecond);
+            Assert.AreEqual(DateTimeKind.Unspecified, result.Kind);
         }
     }
 }

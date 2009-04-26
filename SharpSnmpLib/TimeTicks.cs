@@ -49,7 +49,14 @@ namespace Lextm.SharpSnmpLib
         {
             return _count.ToUInt32();
         }
-
+        
+        public DateTime ToDateTime()
+        {
+            long root = ToUInt32();
+            root *= 100000;
+            return new DateTime(root, DateTimeKind.Unspecified);
+        }
+            
         /// <summary>
         /// Type code.
         /// </summary>
