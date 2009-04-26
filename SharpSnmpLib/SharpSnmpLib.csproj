@@ -91,6 +91,8 @@
     <Compile Include="Real.cs" />
     <Compile Include="ReportMessage.cs" />
     <Compile Include="ReportPdu.cs" />
+    <Compile Include="SecurityLevel.cs" />
+    <Compile Include="SecurityModel.cs" />
     <Compile Include="Sequence.cs" />
     <Compile Include="SetRequestMessage.cs" />
     <Compile Include="SetRequestPdu.cs" />
