@@ -108,15 +108,6 @@ namespace Lextm.SharpSnmpLib
             return ByteTool.GetResponse(receiver, _bytes, RequestId, timeout, socket);
         }
         
-        [Obsolete("Use RequestId instead.")]
-        internal int SequenceNumber
-        {
-            get
-            {
-                return _requestId;
-            }
-        }
-        
         internal int RequestId
         {
             get { return _requestId; }

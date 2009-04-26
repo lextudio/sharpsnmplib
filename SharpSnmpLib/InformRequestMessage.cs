@@ -24,7 +24,7 @@ namespace Lextm.SharpSnmpLib
         private readonly byte[] _bytes;
         private readonly OctetString _community;
         private readonly ISnmpPdu _pdu;
-        private readonly int _sequenceNumber;
+        private readonly int _requestId;
 
         /// <summary>
         /// Creates a <see cref="InformRequestMessage"/> with all contents.
@@ -42,7 +42,7 @@ namespace Lextm.SharpSnmpLib
             _community = community;
             _variables = variables;
             InformRequestPdu pdu = new InformRequestPdu(new Integer32(requestId), enterprise, new TimeTicks(time), _variables);
-            _sequenceNumber = requestId;
+            _requestId = requestId;
             _bytes = pdu.ToMessageBody(_version, _community).ToBytes();
         }
         
@@ -71,7 +71,7 @@ namespace Lextm.SharpSnmpLib
             }
             
             InformRequestPdu pdu = (InformRequestPdu)_pdu;
-            _sequenceNumber = pdu.RequestId;
+            _requestId = pdu.RequestId;
             _variables = _pdu.Variables;
             _bytes = body.ToBytes();
         }
@@ -100,7 +100,7 @@ namespace Lextm.SharpSnmpLib
             
             // TODO: make more efficient here.
             InformRequestPdu pdu = (InformRequestPdu)_pdu;
-            new GetResponseMessage(_sequenceNumber, _version, receiver.Address, _community, pdu.AllVariables).Send(receiver.Port);
+            new GetResponseMessage(_requestId, _version, receiver.Address, _community, pdu.AllVariables).Send(receiver.Port);
         }
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public GetResponseMessage GetResponse(int timeout, IPEndPoint receiver)
         {
-            return ByteTool.GetResponse(receiver, _bytes, SequenceNumber, timeout);
+            return ByteTool.GetResponse(receiver, _bytes, RequestId, timeout);
         }
 
         /// <summary>
@@ -123,68 +123,14 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public GetResponseMessage GetResponse(int timeout, IPEndPoint receiver, Socket socket)
         {
-            return ByteTool.GetResponse(receiver, _bytes, SequenceNumber, timeout, socket);
-        }
+            return ByteTool.GetResponse(receiver, _bytes, RequestId, timeout, socket);
+        }        
         
-        /// <summary>
-        /// Sends this <see cref="InformRequestMessage"/> and handles the response from receiver (managers or agents).
-        /// </summary>
-        /// <param name="receiver">Receiver address.</param>
-        /// <param name="timeout">Timeout.</param>
-        /// <param name="port">Port number.</param>
-        [Obsolete("Please use GetResponse instead. Otherwise, make sure you called the obsolete constructor for this object.")]
-        public void Send(IPAddress receiver, int timeout, int port)
-        {
-            byte[] bytes = _bytes;
-            ByteTool.Capture(bytes); // log request
-            IPEndPoint agent = new IPEndPoint(receiver, port);
-            using (UdpClient udp = new UdpClient())
-            {
-                udp.Send(bytes, bytes.Length, agent);
-                IPEndPoint from = new IPEndPoint(IPAddress.Any, 0);
-                IAsyncResult result = udp.BeginReceive(null, this);
-                result.AsyncWaitHandle.WaitOne(timeout, false);
-                if (!result.IsCompleted)
-                {
-                    throw SharpTimeoutException.Create(receiver, timeout);
-                }
-                
-                bytes = udp.EndReceive(result, ref from);
-                udp.Close();
-            }
-            
-            using (MemoryStream m = new MemoryStream(bytes, false))
-            {
-                ISnmpMessage message = MessageFactory.ParseMessages(m)[0];
-                
-                if (message.Pdu.TypeCode != SnmpType.GetResponsePdu)
-                {
-                    throw SharpOperationException.Create("wrong response type", receiver);
-                }
-                
-                GetResponseMessage response = (GetResponseMessage)message;
-                if (response.SequenceNumber != SequenceNumber)
-                {
-                    throw SharpOperationException.Create("wrong response sequence", receiver);
-                }
-                
-                if (response.ErrorStatus != ErrorCode.NoError)
-                {
-                    throw SharpErrorException.Create(
-                        "error in response",
-                        receiver,
-                        response);
-                }
-                
-                ByteTool.Capture(bytes); // log response
-            }
-        }
-        
-        internal int SequenceNumber
+        internal int RequestId
         {
             get
             {
-                return _sequenceNumber;
+                return _requestId;
             }
         }
         

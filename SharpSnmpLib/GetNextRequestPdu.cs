@@ -63,15 +63,6 @@ namespace Lextm.SharpSnmpLib
             ////Debug.Assert(length >= _raw.Length, "length not match");
         }
         
-        [Obsolete("Use RequestId instead.")]
-        internal int SequenceNumber
-        {
-            get
-            {
-                return _requestId.ToInt32();
-            }
-        }
-        
         internal int RequestId
         {
             get { return _requestId.ToInt32(); }

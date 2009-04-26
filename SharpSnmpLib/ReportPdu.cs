@@ -62,15 +62,6 @@ namespace Lextm.SharpSnmpLib
             ////_raw = ByteTool.ParseItems(_seq, _errorStatus, _errorIndex, _varbindSection);
             ////Debug.Assert(length >= _raw.Length, "length not match");
         }
-
-        [Obsolete("Use RequestId instead.")]
-        internal int SequenceNumber
-        {
-            get
-            {
-                return _requestId.ToInt32();
-            }
-        }
         
         internal int RequestId
         {

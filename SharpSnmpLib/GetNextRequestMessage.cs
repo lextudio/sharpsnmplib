@@ -23,36 +23,10 @@ namespace Lextm.SharpSnmpLib
         private readonly VersionCode _version;
         private readonly IList<Variable> _variables;
         private readonly byte[] _bytes;
-        
-        // TODO: [Obsolete]
-        private readonly IPAddress _agent;
         private readonly OctetString _community;
         private readonly ISnmpPdu _pdu;
-        private readonly int _requestId;
+        private readonly int _requestId;        
         
-        /// <summary>
-        /// Creates a <see cref="GetNextRequestMessage"/> with all contents.
-        /// </summary>
-        /// <param name="version">Protocol version</param>
-        /// <param name="agent">Agent address</param>
-        /// <param name="community">Community name</param>
-        /// <param name="variables">Variables</param>
-        [Obsolete("Please use overload version instead.")]
-        public GetNextRequestMessage(VersionCode version, IPAddress agent, OctetString community, IList<Variable> variables)
-        {
-            _version = version;
-            _agent = agent;
-            _community = community;
-            _variables = variables;
-            GetNextRequestPdu pdu = new GetNextRequestPdu(
-                RequestCounter.NextCount,
-                ErrorCode.NoError,
-                0,
-                _variables);
-            _requestId = pdu.RequestId;
-            _bytes = pdu.ToMessageBody(_version, _community).ToBytes();
-        }
-
         /// <summary>
         /// Creates a <see cref="GetNextRequestMessage"/> with all contents.
         /// </summary>
@@ -112,70 +86,8 @@ namespace Lextm.SharpSnmpLib
             {
                 return _variables;
             }
-        }
-        
-        /// <summary>
-        /// Sends this <see cref="GetNextRequestMessage"/> and handles the response from agent.
-        /// </summary>
-        /// <param name="timeout">Timeout.</param>
-        /// <param name="port">Port number.</param>
-        /// <returns></returns>
-        [Obsolete("Please use GetResponse instead. Otherwise, make sure you called the obsolete constructor for this object.")]
-        public IList<Variable> Send(int timeout, int port)
-        {
-            byte[] bytes = _bytes;
-            IPEndPoint agent = new IPEndPoint(_agent, port);
-            using (UdpClient udp = new UdpClient())
-            {
-                udp.Send(bytes, bytes.Length, agent);
-                IPEndPoint from = new IPEndPoint(IPAddress.Any, 0);
-                IAsyncResult result = udp.BeginReceive(null, this);
-                result.AsyncWaitHandle.WaitOne(timeout, false);
-                if (!result.IsCompleted)
-                {
-                    throw SharpTimeoutException.Create(_agent, timeout);
-                }
-                
-                bytes = udp.EndReceive(result, ref from);
-                udp.Close();
-            }
-            
-            using (MemoryStream m = new MemoryStream(bytes, false))
-            {
-                ISnmpMessage message = MessageFactory.ParseMessages(m)[0];
-                
-                if (message.Pdu.TypeCode != SnmpType.GetResponsePdu)
-                {
-                    throw SharpOperationException.Create("wrong response type", _agent);
-                }
-                
-                GetResponseMessage response = (GetResponseMessage)message;
-                if (response.SequenceNumber != SequenceNumber)
-                {
-                    throw SharpOperationException.Create("wrong response sequence", _agent);
-                }
-                
-                if (response.ErrorStatus != ErrorCode.NoError)
-                {
-                    throw SharpErrorException.Create(
-                        "error in response",
-                        _agent,
-                        response);
-                }
-                
-                return response.Variables;
-            }
-        }
-        
-        [Obsolete("Use RequestId instead.")]
-        internal int SequenceNumber
-        {
-            get
-            {
-                return _requestId;
-            }
-        }
-        
+        }        
+              
         internal int RequestId
         {
             get { return _requestId; }

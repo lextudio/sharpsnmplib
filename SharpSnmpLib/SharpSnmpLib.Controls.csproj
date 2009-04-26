@@ -72,9 +72,6 @@
     </Compile>
     <Compile Include="MessageParams.cs" />
     <Compile Include="Messenger.cs" />
-    <Compile Include="TrapListener.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <None Include="license.txt" />
     <None Include="sharpsnmplib.snk" />
     <EmbeddedResource Include="Listener.resx">
@@ -88,10 +85,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Manager.resx">
       <DependentUpon>Manager.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TrapListener.resx">
-      <DependentUpon>TrapListener.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>

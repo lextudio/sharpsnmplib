@@ -84,15 +84,6 @@ namespace Lextm.SharpSnmpLib
                 _errorIndex,
                 _variables.Count.ToString(CultureInfo.InvariantCulture));
         }
-
-        [Obsolete("Use RequestId instead.")]
-        internal int SequenceNumber
-        {
-            get
-            {
-                return _requestId.ToInt32();
-            }
-        }
         
         internal int RequestId
         {

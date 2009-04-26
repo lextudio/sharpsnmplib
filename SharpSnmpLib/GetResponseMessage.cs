@@ -133,15 +133,6 @@ namespace Lextm.SharpSnmpLib
         }
 
         /// <summary>
-        /// Sequence number.
-        /// </summary>
-        [Obsolete("Use RequestId")]
-        public int SequenceNumber
-        {
-            get { return _requestId; }
-        }
-        
-        /// <summary>
         /// Request ID.
         /// </summary>
         public int RequestId
