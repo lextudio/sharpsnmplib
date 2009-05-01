@@ -105,36 +105,66 @@ namespace Lextm.SharpSnmpLib
             }
             
             Sequence body = (Sequence)array;
-            if (body.Items.Count != 3)
+            if (body.Items.Count == 3)
             {
-                throw new ArgumentException("not an SNMP message");
-            }
-            
-            ISnmpData pdu = body.Items[2];
+                ISnmpData pdu = body.Items[2];
 
-            switch (pdu.TypeCode)
-            {
-                case SnmpType.TrapV1Pdu:
-                    return new TrapV1Message(body);
-                case SnmpType.TrapV2Pdu:
-                    return new TrapV2Message(body);
-                case SnmpType.GetRequestPdu:
-                    return new GetRequestMessage(body);
-                case SnmpType.GetResponsePdu:
-                    return new GetResponseMessage(body);
-                case SnmpType.SetRequestPdu:
-                    return new SetRequestMessage(body);
-                case SnmpType.GetNextRequestPdu:
-                    return new GetNextRequestMessage(body);
-                case SnmpType.GetBulkRequestPdu:
-                    return new GetBulkRequestMessage(body);
-                case SnmpType.ReportPdu:
-                    return new ReportMessage(body);
-                case SnmpType.InformRequestPdu:
-                    return new InformRequestMessage(body);
-                default:
-                    throw new SharpSnmpException("unsupported pdu: " + pdu.TypeCode);
+                switch (pdu.TypeCode)
+                {
+                    case SnmpType.TrapV1Pdu:
+                        return new TrapV1Message(body);
+                    case SnmpType.TrapV2Pdu:
+                        return new TrapV2Message(body);
+                    case SnmpType.GetRequestPdu:
+                        return new GetRequestMessage(body);
+                    case SnmpType.GetResponsePdu:
+                        return new GetResponseMessage(body);
+                    case SnmpType.SetRequestPdu:
+                        return new SetRequestMessage(body);
+                    case SnmpType.GetNextRequestPdu:
+                        return new GetNextRequestMessage(body);
+                    case SnmpType.GetBulkRequestPdu:
+                        return new GetBulkRequestMessage(body);
+                    case SnmpType.ReportPdu:
+                        return new ReportMessage(body);
+                    case SnmpType.InformRequestPdu:
+                        return new InformRequestMessage(body);
+                    default:
+                        throw new SharpSnmpException("unsupported pdu: " + pdu.TypeCode);
+                }
             }
+
+            if (body.Items.Count == 4)
+            {
+                Sequence inner = (Sequence)body.Items[3];
+                ISnmpData pdu = inner.Items[2];
+
+                switch (pdu.TypeCode)
+                {
+                    case SnmpType.TrapV1Pdu:
+                        return new TrapV1Message(body);
+                    case SnmpType.TrapV2Pdu:
+                        return new TrapV2Message(body);
+                    case SnmpType.GetRequestPdu:
+                        return new GetRequestMessage(body);
+                    case SnmpType.GetResponsePdu:
+                        return new GetResponseMessage(body);
+                    case SnmpType.SetRequestPdu:
+                        return new SetRequestMessage(body);
+                    case SnmpType.GetNextRequestPdu:
+                        return new GetNextRequestMessage(body);
+                    case SnmpType.GetBulkRequestPdu:
+                        return new GetBulkRequestMessage(body);
+                    case SnmpType.ReportPdu:
+                        return new ReportMessage(body);
+                    case SnmpType.InformRequestPdu:
+                        return new InformRequestMessage(body);
+                    default:
+                        throw new SharpSnmpException("unsupported pdu: " + pdu.TypeCode);
+                }
+            }
+
+            throw new SharpSnmpException("not an SNMP message");
         }
     }
 }

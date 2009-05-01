@@ -93,7 +93,7 @@ namespace Lextm.SharpSnmpLib
         internal static IList<Variable> Transform(Sequence varbindSection)
         {
             IList<Variable> result = new List<Variable>(varbindSection.Items.Count);
-            foreach (ISnmpData item in varbindSection.Items)
+            foreach (ISnmpData item in varbindSection)
             {
                 if (item.TypeCode != SnmpType.Sequence)
                 {

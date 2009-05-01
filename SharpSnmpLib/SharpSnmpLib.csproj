@@ -100,6 +100,13 @@
     <Compile Include="ReportPdu.cs" />
     <Compile Include="SecurityLevel.cs" />
     <Compile Include="SecurityModel.cs" />
+    <Compile Include="Security\DefaultAuthenticationProvider.cs" />
+    <Compile Include="Security\DefaultPrivacyProvider.cs" />
+    <Compile Include="Security\DESPrivacyProvider.cs" />
+    <Compile Include="Security\IAuthenticationProvider.cs" />
+    <Compile Include="Security\IPrivacyProvider.cs" />
+    <Compile Include="Security\MD5AuthenticationProvider.cs" />
+    <Compile Include="Security\SHA1AuthenticationProvider.cs" />
     <Compile Include="Sequence.cs" />
     <Compile Include="SetRequestMessage.cs" />
     <Compile Include="SetRequestPdu.cs" />
@@ -124,8 +131,5 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="sharpsnmplib.snk" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Mib" />
   </ItemGroup>
 </Project>

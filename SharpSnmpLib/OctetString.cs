@@ -68,6 +68,11 @@ namespace Lextm.SharpSnmpLib
         {
             get { return _encoding; }
         }
+
+        internal byte[] GetRaw()
+        {
+            return _raw;
+        }
         
         /// <summary>
         /// Returns a <see cref="String"/> in a hex form that represents this <see cref="OctetString"/>.

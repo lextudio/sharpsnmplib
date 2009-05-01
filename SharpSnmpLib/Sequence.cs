@@ -23,6 +23,18 @@ namespace Lextm.SharpSnmpLib
     {
         private byte[] _raw;
         private readonly List<ISnmpData> _list = new List<ISnmpData>();
+
+        /// <summary>
+        /// Gets the enumerator.
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerator GetEnumerator()
+        {
+            foreach (ISnmpData data in _list)
+            {
+                yield return data;
+            }
+        }
         
         /// <summary>
         /// Creates an <see cref="Sequence"/> instance with varied <see cref="ISnmpData"/> instances.
@@ -98,11 +110,26 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// <see cref="ISnmpData"/> instances containing in this <see cref="Sequence"/>
         /// </summary>
+        [Obsolete("Use indexer directly.")]
         public IList<ISnmpData> Items
+        {
+            get { return _list; }
+        }
+
+        public int Count
+        {
+            get { return _list.Count; }
+        }
+
+        /// <summary>
+        /// Gets the <see cref="Lextm.SharpSnmpLib.ISnmpData"/> at the specified index.
+        /// </summary>
+        /// <value></value>
+        public ISnmpData this[int index]
         {
             get
             {
-                return _list;
+                return _list[index];
             }
         }
         
@@ -151,7 +178,7 @@ namespace Lextm.SharpSnmpLib
         public override string ToString()
         {
             StringBuilder result = new StringBuilder("SNMP SEQUENCE: ");
-            foreach (ISnmpData item in Items)
+            foreach (ISnmpData item in _list)
             {
                 result.Append(item + "; ");
             }

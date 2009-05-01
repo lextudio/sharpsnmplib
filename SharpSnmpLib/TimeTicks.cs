@@ -49,7 +49,11 @@ namespace Lextm.SharpSnmpLib
         {
             return _count.ToUInt32();
         }
-        
+
+        /// <summary>
+        /// Returns <see cref="DateTime"/> representation.
+        /// </summary>
+        /// <returns></returns>
         public DateTime ToDateTime()
         {
             long root = ToUInt32();

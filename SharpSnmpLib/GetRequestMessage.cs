@@ -5,6 +5,7 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using Lextm.SharpSnmpLib.Security;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -13,12 +14,16 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public class GetRequestMessage : ISnmpMessage
     {
+        private int _messageId = 0;
         private readonly VersionCode _version;
-        private readonly IList<Variable> _variables;
+        private IList<Variable> _variables;
         private readonly byte[] _bytes;
         private readonly OctetString _community;
-        private readonly ISnmpPdu _pdu;
-        private readonly int _requestId;        
+        private ISnmpPdu _pdu;
+        private int _requestId;
+        private SecurityLevel _level;
+        private IPrivacyProvider _privacy = DefaultPrivacyProvider.Instance;
+        private IAuthenticationProvider _authentication = DefaultAuthenticationProvider.Instance;
 
         /// <summary>
         /// Creates a <see cref="GetRequestMessage"/> with all contents.
@@ -52,22 +57,94 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("body");
             }
             
-            if (body.Items.Count != 3)
+            if (body.Items.Count != 3 && body.Items.Count != 4)
             {
                 throw new ArgumentException("wrong message body");
             }
-            
-            _community = (OctetString)body.Items[1];
+               
             _version = (VersionCode)((Integer32)body.Items[0]).ToInt32();
-            _pdu = (ISnmpPdu)body.Items[2];
+            _bytes = body.ToBytes();
+            _community = (OctetString)body[body.Items.Count - 2]; // re-used for securityParameters
+ 
+            if (body.Items.Count == 3)
+            {
+                ProcessPdu(body.Items[2]);
+                _messageId = _requestId;
+                _level = SecurityLevel.None;
+                return;
+            }
+            
+            Sequence headerData = (Sequence)body.Items[1];
+            _messageId = ((Integer32)headerData.Items[0]).ToInt32();
+            Integer32 maxMessageSize = (Integer32)headerData.Items[1]; // 0xFF E3
+            byte messageFlags = ((OctetString)headerData.Items[2]).GetRaw()[0];
+            int authFlag = messageFlags & 0x1;
+            int PrivFlag = messageFlags & 0x10;
+            int reportableFlag = messageFlags & 0x100;
+            _level = (SecurityLevel)messageFlags;
+
+            SecurityModel model = (SecurityModel)((Integer32)headerData.Items[3]).ToInt32();
+
+            Sequence scopedPdu = Privacy.Decrypt(body[3]);            
+            OctetString contextEngineID = (OctetString)scopedPdu[0];
+            OctetString contextName = (OctetString)scopedPdu[1];
+
+            ProcessPdu(scopedPdu[2]);
+        }
+
+        private void ProcessPdu(ISnmpData pdu)
+        {
+            _pdu = (ISnmpPdu)pdu;
             if (_pdu.TypeCode != SnmpType.GetRequestPdu)
             {
                 throw new ArgumentException("wrong message type");
             }
-            
+
             _requestId = ((GetRequestPdu)_pdu).RequestId;
             _variables = _pdu.Variables;
-            _bytes = body.ToBytes();
+        }
+
+        /// <summary>
+        /// Gets or sets the privacy method.
+        /// </summary>
+        /// <value>The privacy method.</value>
+        public IPrivacyProvider Privacy
+        {
+            get { return _privacy; }
+            set { _privacy = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the authentication method.
+        /// </summary>
+        /// <value>The authentication method.</value>
+        public IAuthenticationProvider Authentication
+        {
+            get { return _authentication; }
+            set { _authentication = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets security level.
+        /// </summary>
+        /// <value>The level.</value>
+        public SecurityLevel Level
+        {
+            get { return _level; }
+            set { _level = value; }
+        }
+
+        /// <summary>
+        /// Gets the message ID.
+        /// </summary>
+        /// <value>The message ID.</value>
+        /// <remarks>For v3, message ID is different from request ID. For v1 and v2c, they are the same.</remarks>
+        public int MessageId
+        {
+            get
+            {
+                return _messageId;
+            }
         }
         
         /// <summary>

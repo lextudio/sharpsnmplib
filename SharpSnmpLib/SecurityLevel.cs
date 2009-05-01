@@ -4,19 +4,24 @@ using System.Text;
 
 namespace Lextm.SharpSnmpLib
 {
+    [Flags]
     public enum SecurityLevel
     {
         /// <summary>
         /// Without authentication and without privacy.
         /// </summary>
-        noAuthNoPriv = 0, 
+        None = 0x00, 
         /// <summary>
-        /// With authentication but without privacy.
+        /// Authentication flag.
         /// </summary>
-        authNoPriv, 
+        Authentication = 0x01, 
         /// <summary>
-        /// With authentication and with privacy.
+        /// Privacy flag.
         /// </summary>
-        authPriv 
+        Privacy = 0x10,
+        /// <summary>
+        /// Reportable flag.
+        /// </summary>
+        Reportable = 0x100
     }
 }
