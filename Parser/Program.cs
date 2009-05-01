@@ -57,7 +57,7 @@ namespace Lextm.SharpSnmpLib.Parser
             
             Mib.Parser parser = new Mib.Parser();
             IEnumerable<SharpMibException> errors;
-            IEnumerable<MibModule> modules = parser.ParseToModules(files, out errors);
+            IEnumerable<IModule> modules = parser.ParseToModules(files, out errors);
             Assembler assembler = new Assembler(root);
             assembler.Assemble(modules);
             Console.WriteLine("total time " + watch.ElapsedMilliseconds.ToString());

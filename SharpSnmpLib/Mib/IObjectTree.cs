@@ -57,7 +57,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// Imports the specified enumerable.
         /// </summary>
         /// <param name="modules">The modules.</param>
-        void Import(IEnumerable<MibModule> modules);
+        void Import(IEnumerable<IModule> modules);
 
         /// <summary>
         /// Refreshes this instance.

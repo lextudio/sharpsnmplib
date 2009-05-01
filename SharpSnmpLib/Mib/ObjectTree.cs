@@ -420,7 +420,7 @@ namespace Lextm.SharpSnmpLib.Mib
             source.Close();
         }
 
-        public void Import(IEnumerable<MibModule> modules)
+        public void Import(IEnumerable<IModule> modules)
         {
             if (modules == null)
             {

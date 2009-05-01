@@ -17,7 +17,7 @@ namespace Lextm.SharpSnmpLib.Mib
     /// MIB module class.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Mib")]
-    public sealed class MibModule
+    internal sealed class MibModule : IModule
     {
         private readonly string _name;
         private readonly Imports _imports;
@@ -218,7 +218,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <summary>
         /// OID nodes.
         /// </summary>
-        internal IList<IEntity> Entities
+        public IList<IEntity> Entities
         {
             get
             {
@@ -239,11 +239,11 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <summary>
         /// OID nodes.
         /// </summary>
-        internal IList<ObjectType> Objects
+        public IList<IEntity> Objects
         {
             get
             {
-                IList<ObjectType> result = new List<ObjectType>();
+                IList<IEntity> result = new List<IEntity>();
                 foreach (IConstruct e in _tokens)
                 {
                     ObjectType entity = e as ObjectType;
@@ -257,7 +257,7 @@ namespace Lextm.SharpSnmpLib.Mib
             }
         }
         
-        internal IList<string> Dependents
+        public IList<string> Dependents
         {
             get
             {

@@ -130,19 +130,28 @@ namespace Lextm.SharpSnmpLib.Browser
             if (tscbIP.Text == STR_AllUnassigned)
             {
                 Listener.Start(new IPEndPoint(IPAddress.Any, port));
-                ListenerV6.Start(new IPEndPoint(IPAddress.IPv6Any, port));
+                if (Socket.OSSupportsIPv6)
+                {
+                    ListenerV6.Start(new IPEndPoint(IPAddress.IPv6Any, port));
+                }
+                 
                 return;
             }
 
             IPAddress address = IPAddress.Parse(tscbIP.Text);
-            if (address.AddressFamily == AddressFamily.InterNetworkV6)
+            if (address.AddressFamily == AddressFamily.InterNetwork)
             {
-                ListenerV6.Start(new IPEndPoint(address, port));
+                Listener.Start(new IPEndPoint(address, port)); 
+                return;
             }
-            else
+
+            if (!Socket.OSSupportsIPv6)
             {
-                Listener.Start(new IPEndPoint(address, port));
+                LogMessage(Listener.STR_CannotUseIPV6AsTheOSDoesNotSupportIt);
+                return;
             }
+                
+            ListenerV6.Start(new IPEndPoint(address, port));          
         }
 
         private void actEnabled_Update(object sender, EventArgs e)

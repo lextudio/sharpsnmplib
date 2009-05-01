@@ -68,7 +68,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// Assemblers modules.
         /// </summary>
         /// <param name="modules">Modules.</param>
-        public void Assemble(IEnumerable<MibModule> modules)
+        public void Assemble(IEnumerable<IModule> modules)
         {
             RealTree.Import(modules);
             RealTree.Refresh();  

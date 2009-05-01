@@ -30,12 +30,12 @@ namespace Lextm.SharpSnmpLib.Mib
             }
         }
         
-        private readonly IList<MibModule> _modules = new List<MibModule>();
+        private readonly IList<IModule> _modules = new List<IModule>();
         
         /// <summary>
         /// <see cref="MibModule"/> containing in this document.
         /// </summary>
-        public IList<MibModule> Modules
+        public IList<IModule> Modules
         {
             get
             {

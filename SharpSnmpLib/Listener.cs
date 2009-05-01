@@ -23,6 +23,11 @@ namespace Lextm.SharpSnmpLib
     public sealed class Listener : Component
     {
         private const int DEFAULTPORT = 162;
+
+        /// <summary>
+        /// Error message for non IP v6 OS.
+        /// </summary>
+        public const string STR_CannotUseIPV6AsTheOSDoesNotSupportIt = "cannot use IP v6 as the OS does not support it";
         private readonly IPEndPoint defaultEndPoint = new IPEndPoint(IPAddress.Any, DEFAULTPORT);
         private Socket _socket;
         private int _bufferSize;
@@ -191,7 +196,7 @@ namespace Lextm.SharpSnmpLib
             
             if (endpoint.AddressFamily == AddressFamily.InterNetworkV6 && !Socket.OSSupportsIPv6)
             {
-                throw new InvalidOperationException("cannot use IP v6 when it is not supported on this configuration");
+                throw new InvalidOperationException(STR_CannotUseIPV6AsTheOSDoesNotSupportIt);
             }
 
             long activeBefore = Interlocked.CompareExchange(ref _active, 1, 0);

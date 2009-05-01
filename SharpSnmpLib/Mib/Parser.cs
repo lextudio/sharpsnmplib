@@ -26,7 +26,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <param name="errors">The errors.</param>
         /// <returns></returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1021:AvoidOutParameters", MessageId = "1#")]
-        public ICollection<MibModule> ParseToModules(IEnumerable<string> files, out IEnumerable<SharpMibException> errors)
+        public ICollection<IModule> ParseToModules(IEnumerable<string> files, out IEnumerable<SharpMibException> errors)
         { 
             if (files == null)
             {
@@ -35,7 +35,7 @@ namespace Lextm.SharpSnmpLib.Mib
 
             IList<SharpMibException> list = new List<SharpMibException>();
             TraceSource source = new TraceSource("Library");
-            List<MibModule> modules = new List<MibModule>();
+            List<IModule> modules = new List<IModule>();
             foreach (string file in files)
             {
                 try
@@ -63,7 +63,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// Loads a MIB file.
         /// </summary>
         /// <param name="fileName">File name</param>
-        public static IList<MibModule> Compile(string fileName)
+        public static IList<IModule> Compile(string fileName)
         {
             if (fileName == null)
             {
@@ -83,7 +83,7 @@ namespace Lextm.SharpSnmpLib.Mib
             return Compile(fileName, File.OpenText(fileName));
         }
 
-        internal static IList<MibModule> Compile(string file, TextReader stream)
+        internal static IList<IModule> Compile(string file, TextReader stream)
         {
             try
             {
@@ -95,12 +95,12 @@ namespace Lextm.SharpSnmpLib.Mib
             }
         }
 
-        internal static IList<MibModule> Compile(TextReader stream)
+        internal static IList<IModule> Compile(TextReader stream)
         {
             return Compile(string.Empty, stream);
         }
 
-        private static IList<MibModule> CompileToModules(string file, TextReader stream)
+        private static IList<IModule> CompileToModules(string file, TextReader stream)
         {
             TraceSource source = new TraceSource("Library");
             Stopwatch watch = new Stopwatch();

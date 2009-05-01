@@ -24,7 +24,7 @@ namespace Lextm.SharpSnmpLib
     public static class Messenger
     {
         private static readonly Socket udp = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-        private static readonly Socket udpV6 = new Socket(AddressFamily.InterNetworkV6, SocketType.Dgram, ProtocolType.Udp);
+        private static Socket udpV6;
 
         private static Socket GetSocket(AddressFamily family)
         {
@@ -34,7 +34,7 @@ namespace Lextm.SharpSnmpLib
             }
             else
             {
-                return udpV6;
+                return UdpV6;
             }
         }
         /// <summary>
@@ -423,6 +423,29 @@ namespace Lextm.SharpSnmpLib
             }
 
             return result;
+        }
+
+        private static object root = new object();
+
+        private static Socket UdpV6
+        {
+            get
+            {
+                if (!Socket.OSSupportsIPv6)
+                {
+                    throw new InvalidOperationException(Listener.STR_CannotUseIPV6AsTheOSDoesNotSupportIt);
+                }
+
+                lock (root)
+                {
+                    if (udpV6 == null)
+                    {
+                        udpV6 = new Socket(AddressFamily.InterNetworkV6, SocketType.Dgram, ProtocolType.Udp);
+                    }
+                }
+
+                return udpV6;
+            }
         }
     }
 }

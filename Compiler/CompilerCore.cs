@@ -71,7 +71,7 @@ namespace Lextm.SharpSnmpLib.Compiler
 
         private void CompileInternal(IEnumerable<string> docs, out IEnumerable<SharpMibException> errors)
 	    {
-	        IEnumerable<MibModule> modules = Parser.ParseToModules(docs, out errors);
+	        IEnumerable<IModule> modules = Parser.ParseToModules(docs, out errors);
 	        Assembler.Assemble(modules);
 	    }
 

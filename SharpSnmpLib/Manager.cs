@@ -92,9 +92,10 @@ namespace Lextm.SharpSnmpLib
         /// Gets or sets the objects.
         /// </summary>
         /// <value>The objects.</value>
+        /// <remarks>Changed from 2.0: it will return null if not set.</remarks>
         public IObjectRegistry Objects
         {
-            get { return _objects ?? DefaultObjectRegistry.Instance; }
+            get { return _objects; }
             set { _objects = value; }
         }
 
