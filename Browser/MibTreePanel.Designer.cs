@@ -50,12 +50,16 @@ namespace Lextm.SharpSnmpLib.Browser
             this.actGetNext = new Crad.Windows.Forms.Actions.Action();
             this.actSet = new Crad.Windows.Forms.Actions.Action();
             this.actWalk = new Crad.Windows.Forms.Actions.Action();
+            this.actNumber = new Crad.Windows.Forms.Actions.Action();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tslblOID = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.actionList1)).BeginInit();
             this.statusStrip1.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // treeView1
@@ -64,11 +68,11 @@ namespace Lextm.SharpSnmpLib.Browser
             this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeView1.ImageIndex = 0;
             this.treeView1.ImageList = this.imageList1;
-            this.treeView1.Location = new System.Drawing.Point(0, 0);
+            this.treeView1.Location = new System.Drawing.Point(0, 25);
             this.treeView1.Name = "treeView1";
             this.treeView1.SelectedImageIndex = 0;
             this.treeView1.ShowNodeToolTips = true;
-            this.treeView1.Size = new System.Drawing.Size(284, 264);
+            this.treeView1.Size = new System.Drawing.Size(284, 239);
             this.treeView1.TabIndex = 0;
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
             // 
@@ -127,6 +131,7 @@ namespace Lextm.SharpSnmpLib.Browser
             this.actionList1.Actions.Add(this.actSet);
             this.actionList1.Actions.Add(this.actWalk);
             this.actionList1.Actions.Add(this.actGetNext);
+            this.actionList1.Actions.Add(this.actNumber);
             this.actionList1.ContainerControl = this;
             // 
             // actGet
@@ -157,6 +162,14 @@ namespace Lextm.SharpSnmpLib.Browser
             this.actWalk.Update += new System.EventHandler(this.actWalk_Update);
             this.actWalk.Execute += new System.EventHandler(this.actWalk_Execute);
             // 
+            // actNumber
+            // 
+            this.actNumber.CheckOnClick = true;
+            this.actNumber.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.office_calendar;
+            this.actNumber.Text = "Show ID";
+            this.actNumber.ToolTipText = "Show object ID";
+            this.actNumber.Execute += new System.EventHandler(this.actNumber_Execute);
+            // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -173,19 +186,43 @@ namespace Lextm.SharpSnmpLib.Browser
             this.tslblOID.Size = new System.Drawing.Size(10, 17);
             this.tslblOID.Text = " ";
             // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButton2});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(284, 25);
+            this.toolStrip1.TabIndex = 2;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // toolStripButton2
+            // 
+            this.actionList1.SetAction(this.toolStripButton2, this.actNumber);
+            this.toolStripButton2.CheckOnClick = true;
+            this.toolStripButton2.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.office_calendar;
+            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton2.Name = "toolStripButton2";
+            this.toolStripButton2.Size = new System.Drawing.Size(70, 22);
+            this.toolStripButton2.Text = "Show ID";
+            // 
             // MibTreePanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 286);
             this.Controls.Add(this.treeView1);
+            this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.statusStrip1);
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "MibTreePanel";
             this.Load += new System.EventHandler(this.MibTreePanel_Load);
             this.contextMenuStrip1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.actionList1)).EndInit();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -205,5 +242,8 @@ namespace Lextm.SharpSnmpLib.Browser
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.ToolStripMenuItem getNextToolStripMenuItem;
         private Crad.Windows.Forms.Actions.Action actGetNext;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private Crad.Windows.Forms.Actions.Action actNumber;
+        private System.Windows.Forms.ToolStripButton toolStripButton2;
 	}
 }

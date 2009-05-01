@@ -144,6 +144,13 @@ namespace Lextm.SharpSnmpLib.Browser.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap office_calendar {
+            get {
+                object obj = ResourceManager.GetObject("office-calendar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap package_x_generic {
             get {
                 object obj = ResourceManager.GetObject("package_x_generic", resourceCulture);
@@ -197,6 +204,13 @@ namespace Lextm.SharpSnmpLib.Browser.Properties {
             get {
                 object obj = ResourceManager.GetObject("utilities_terminal", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap view_refresh {
+            get {
+                object obj = ResourceManager.GetObject("view-refresh", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

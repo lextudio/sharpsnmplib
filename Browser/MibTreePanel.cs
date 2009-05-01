@@ -49,9 +49,10 @@ namespace Lextm.SharpSnmpLib.Browser
             }
         }
 
-        private static TreeNode Wrap(IDefinition definition)
+        private TreeNode Wrap(IDefinition definition)
         {
-            TreeNode node = new TreeNode(definition.Name);
+            string name = showNumber ? string.Format("{0}({1})", definition.Name, definition.Value) : definition.Name;
+            TreeNode node = new TreeNode(name);
             node.Tag = definition;
             node.ImageIndex = (int)definition.Type;
             node.SelectedImageIndex = (int)definition.Type;
@@ -346,6 +347,14 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             RefreshPanel(Objects, EventArgs.Empty);
             Objects.OnChanged += RefreshPanel;
+        }
+
+        private bool showNumber;
+
+        private void actNumber_Execute(object sender, EventArgs e)
+        {
+            showNumber = !showNumber;
+            RefreshPanel(Objects, EventArgs.Empty);
         }
     }
 }
