@@ -89,6 +89,10 @@ namespace Lextm.SharpSnmpLib.Tests
 "2B 06 01 02  01 01 03 00  05 00";
             IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes);
             Assert.AreEqual(1, messages.Count);
+            GetRequestMessage get = (GetRequestMessage)messages[0];
+            Assert.AreEqual(27144, get.MessageId);
+            //Assert.AreEqual(SecurityLevel.None | SecurityLevel.Reportable, get.Level);
+            Assert.AreEqual("lextm", get.Community.ToString());
         }
 
         [Test]

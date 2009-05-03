@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -9,11 +10,17 @@ namespace Lextm.SharpSnmpLib
     public interface ISnmpPdu : ISnmpData
     {
         /// <summary>
+        /// Gets the request ID.
+        /// </summary>
+        /// <value>The request ID.</value>
+        int RequestId { get; }
+        /// <summary>
         /// Converts the PDU to index complete message.
         /// </summary>
-        /// <param name="version"></param>
-        /// <param name="community"></param>
+        /// <param name="version">Protocol version.</param>
+        /// <param name="community">Community name.</param>
         /// <returns></returns>
+        [Obsolete("Use ByteTool.PackMessage instead")]
         Sequence ToMessageBody(VersionCode version, OctetString community);
         
         /// <summary>

@@ -47,8 +47,14 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("items");
             }
 
-            _list.AddRange(items);
-            
+            foreach (ISnmpData data in items)
+            {
+                if (data != null)
+                {
+                    _list.Add(data);
+                }
+            }
+
             ////_raw = ByteTool.ParseItems(items);
         }
         
@@ -68,8 +74,14 @@ namespace Lextm.SharpSnmpLib
             {
                 throw new ArgumentException("objects must be IEnumerable<ISnmpData>");
             }
-            
-            _list.AddRange(list);
+
+            foreach (ISnmpData data in items)
+            {
+                if (data != null)
+                {
+                    _list.Add(data);
+                }
+            }
             
             ////_raw = ByteTool.ParseItems(items);
         }
@@ -116,6 +128,9 @@ namespace Lextm.SharpSnmpLib
             get { return _list; }
         }
 
+        /// <summary>
+        /// Data count in this <see cref="Sequence"/>.
+        /// </summary>
         public int Count
         {
             get { return _list.Count; }

@@ -19,10 +19,17 @@ namespace Lextm.SharpSnmpLib.Security
         }
 
         /// <summary>
+        /// Encrypts the specified scope.
+        /// </summary>
+        /// <param name="scope">The scope.</param>
+        /// <returns></returns>
+        ISnmpData Encrypt(Scope scope);
+
+        /// <summary>
         /// Decrypts the specified data.
         /// </summary>
         /// <param name="data">The data.</param>
         /// <returns></returns>
-        Sequence Decrypt(ISnmpData data);
+        Scope Decrypt(ISnmpData data);
     }
 }

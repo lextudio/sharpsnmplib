@@ -42,16 +42,16 @@ namespace Lextm.SharpSnmpLib.Tests
             ISnmpData data = DataFactory.CreateSnmpData(bytes);
             Assert.AreEqual(SnmpType.Sequence, data.TypeCode);
             Sequence array = (Sequence)data;
-            Assert.AreEqual(1, array.Items.Count);
-            ISnmpData item = array.Items[0];
+            Assert.AreEqual(1, array.Count);
+            ISnmpData item = array[0];
             Assert.AreEqual(SnmpType.Sequence, item.TypeCode);
             Sequence v = (Sequence)item;
-            Assert.AreEqual(2, v.Items.Count);
-            Assert.AreEqual(SnmpType.ObjectIdentifier, v.Items[0].TypeCode);
-            ObjectIdentifier o = (ObjectIdentifier)v.Items[0];
+            Assert.AreEqual(2, v.Count);
+            Assert.AreEqual(SnmpType.ObjectIdentifier, v[0].TypeCode);
+            ObjectIdentifier o = (ObjectIdentifier)v[0];
             Assert.AreEqual(new uint[] {1,3,6,1,4,1,2162,1001,21,0}, o.ToNumerical());
-            Assert.AreEqual(SnmpType.OctetString, v.Items[1].TypeCode);
-            Assert.AreEqual("TrapTest", v.Items[1].ToString());
+            Assert.AreEqual(SnmpType.OctetString, v[1].TypeCode);
+            Assert.AreEqual("TrapTest", v[1].ToString());
         }
     }
 }

@@ -6,6 +6,7 @@
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
+using Lextm.SharpSnmpLib.Security;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -19,12 +20,14 @@ namespace Lextm.SharpSnmpLib
     public class ReportMessage : ISnmpMessage
     {
         private readonly VersionCode _version;
-        private readonly IList<Variable> _variables;
+        private IList<Variable> _variables;
         private readonly byte[] _bytes;
         private readonly OctetString _community;
-        private readonly ISnmpPdu _pdu;
-        private readonly int _requestId;
-
+        private ISnmpPdu _pdu;
+        private int _requestId;
+        private SecurityParameters _parameters;
+        private ISegment _scope;
+        
         /// <summary>
         /// Creates a <see cref="ReportMessage"/> with all contents.
         /// </summary>
@@ -43,7 +46,7 @@ namespace Lextm.SharpSnmpLib
                 0,
                 _variables);
             _requestId = pdu.RequestId;
-            _bytes = pdu.ToMessageBody(_version, _community).ToBytes();
+            _bytes = ByteTool.PackMessage(_version, _community, pdu).ToBytes();
         }
         
         /// <summary>
@@ -57,21 +60,55 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("body");
             }
             
-            if (body.Items.Count != 3)
+            if (body.Count != 4)
             {
                 throw new ArgumentException("wrong message body");
-            }
+            }            
             
-            _community = (OctetString)body.Items[1];
-            _version = (VersionCode)((Integer32)body.Items[0]).ToInt32();
-            _pdu = (ISnmpPdu)body.Items[2];
+            int v = ((Integer32)body[0]).ToInt32() - 1;
+            _version = (VersionCode)v;
+            if (_version != VersionCode.V3)
+            {
+                throw new ArgumentException("REPORT message is for v3 only");
+            }
+
+            _bytes = body.ToBytes();
+            
+            // TODO: ignore header as it is default.
+            // Sequence headerData = (Sequence)body[1];
+            // _messageId = ((Integer32)headerData[0]).ToInt32();
+            // Integer32 maxMessageSize = (Integer32)headerData[1]; // 0xFF E3
+            
+//            byte messageFlags = ((OctetString)headerData[2]).GetRaw()[0];
+//            _level = (SecurityLevel)messageFlags;
+//            SecurityModel model = (SecurityModel)((Integer32)headerData[3]).ToInt32();
+            
+            SecurityParameters securityParameters = DefaultAuthenticationProvider.Instance.Decrypt(body[2]);
+            _community = securityParameters.User;
+
+            Scope scope = DefaultPrivacyProvider.Instance.Decrypt(body[3]);
+
+            ProcessPdu(scope.Pdu);
+        }
+
+        private void ProcessPdu(ISnmpData pdu)
+        {
+            _pdu = (ISnmpPdu)pdu;
             if (_pdu.TypeCode != SnmpType.ReportPdu)
             {
                 throw new ArgumentException("wrong message type");
             }
-            
+
+            _requestId = ((ReportPdu)_pdu).RequestId;
             _variables = _pdu.Variables;
-            _bytes = body.ToBytes();
+        }
+        
+        /// <summary>
+        /// Security parameters.
+        /// </summary>
+        public SecurityParameters Parameters 
+        {
+            get { return _parameters; }
         }
         
         /// <summary>
@@ -79,10 +116,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         public IList<Variable> Variables
         {
-            get
-            {
-                return _variables;
-            }
+            get { return _variables; }
         }
         
         /// <summary>
@@ -112,7 +146,18 @@ namespace Lextm.SharpSnmpLib
         {
             get { return _requestId; }
         }
-        
+
+        /// <summary>
+        /// Gets the scope.
+        /// </summary>
+        /// <value>The scope.</value>
+        public ISegment Scope
+        {
+            get
+            {
+                return _scope;
+            }
+        }
         /// <summary>
         /// Converts to byte format.
         /// </summary>
@@ -127,10 +172,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         public ISnmpPdu Pdu
         {
-            get
-            {
-                return _pdu;
-            }
+            get { return _pdu; }
         }
         
         /// <summary>

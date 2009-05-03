@@ -88,10 +88,10 @@ namespace Lextm.SharpSnmpLib.Tests
             ISnmpData data = DataFactory.CreateSnmpData(expected);
             Assert.AreEqual(SnmpType.Sequence, data.TypeCode);
             Sequence a = (Sequence)data;
-            Assert.AreEqual(2, a.Items.Count);
+            Assert.AreEqual(2, a.Count);
             
-            ISnmpData oid = a.Items[0];
-            ISnmpData name = a.Items[1];
+            ISnmpData oid = a[0];
+            ISnmpData name = a[1];
             Assert.AreEqual(SnmpType.ObjectIdentifier, oid.TypeCode);
             Assert.AreEqual(SnmpType.OctetString, name.TypeCode);
             ObjectIdentifier o = (ObjectIdentifier)oid;
@@ -110,8 +110,8 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual(SnmpType.Sequence, data.TypeCode);
             
             Sequence a = (Sequence)data;
-            Assert.AreEqual(1, a.Items.Count);
-            ISnmpData varbind = a.Items[0];
+            Assert.AreEqual(1, a.Count);
+            ISnmpData varbind = a[0];
             Assert.AreEqual(SnmpType.Sequence, varbind.TypeCode);
         }
         [Test]
@@ -159,14 +159,14 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual(SnmpType.Sequence, data.TypeCode);
             
             Sequence t = (Sequence)data;
-            Assert.AreEqual(3, t.Items.Count);
-            ISnmpData version = t.Items[0];
+            Assert.AreEqual(3, t.Count);
+            ISnmpData version = t[0];
             Assert.AreEqual(SnmpType.Integer32, version.TypeCode);
             Assert.AreEqual(1, 1 + ((Integer32)version).ToInt32());
-            ISnmpData community = t.Items[1];
+            ISnmpData community = t[1];
             Assert.AreEqual(SnmpType.OctetString, community.TypeCode);
             Assert.AreEqual("public", ((OctetString)community).ToString());
-            ISnmpData pdu = t.Items[2];
+            ISnmpData pdu = t[2];
             Assert.AreEqual(SnmpType.TrapV1Pdu, pdu.TypeCode);
         }
     }

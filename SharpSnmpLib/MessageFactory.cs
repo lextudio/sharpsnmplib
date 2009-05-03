@@ -105,9 +105,9 @@ namespace Lextm.SharpSnmpLib
             }
             
             Sequence body = (Sequence)array;
-            if (body.Items.Count == 3)
+            if (body.Count == 3)
             {
-                ISnmpData pdu = body.Items[2];
+                ISnmpData pdu = body[2];
 
                 switch (pdu.TypeCode)
                 {
@@ -134,10 +134,10 @@ namespace Lextm.SharpSnmpLib
                 }
             }
 
-            if (body.Items.Count == 4)
+            if (body.Count == 4)
             {
-                Sequence inner = (Sequence)body.Items[3];
-                ISnmpData pdu = inner.Items[2];
+                Sequence inner = (Sequence)body[3];
+                ISnmpData pdu = inner[2];
 
                 switch (pdu.TypeCode)
                 {

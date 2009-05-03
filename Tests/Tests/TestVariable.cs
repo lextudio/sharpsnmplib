@@ -26,9 +26,9 @@ namespace Lextm.SharpSnmpLib.Tests
             vList.Add(v);
 
             Sequence varbindSection = Variable.Transform(vList);
-            Assert.AreEqual(1, varbindSection.Items.Count);
-            Sequence varbind = (Sequence)varbindSection.Items[0];
-            Assert.AreEqual(2, varbind.Items.Count);
+            Assert.AreEqual(1, varbindSection.Count);
+            Sequence varbind = (Sequence)varbindSection[0];
+            Assert.AreEqual(2, varbind.Count);
         }
     }
 }

@@ -14,14 +14,11 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public class GetRequestMessage : ISnmpMessage
     {
-        private int _messageId = 0;
+        private Header _header;
+        private SecurityParameters _parameters;
+        private Scope _scope;
         private readonly VersionCode _version;
-        private IList<Variable> _variables;
-        private readonly byte[] _bytes;
-        private readonly OctetString _community;
-        private ISnmpPdu _pdu;
-        private int _requestId;
-        private SecurityLevel _level;
+        private byte[] _bytes;
         private IPrivacyProvider _privacy = DefaultPrivacyProvider.Instance;
         private IAuthenticationProvider _authentication = DefaultAuthenticationProvider.Instance;
 
@@ -35,15 +32,13 @@ namespace Lextm.SharpSnmpLib
         public GetRequestMessage(int requestId, VersionCode version, OctetString community, IList<Variable> variables)
         {
             _version = version;
-            _community = community;
-            _variables = variables;
+            _parameters = new SecurityParameters(null, null, null, community, null, null);
             GetRequestPdu pdu = new GetRequestPdu(
                 requestId,
                 ErrorCode.NoError,
                 0,
-                _variables);
-            _requestId = pdu.RequestId;
-            _bytes = pdu.ToMessageBody(_version, _community).ToBytes();
+                variables);
+            _scope = new Scope(null, null, pdu);
         }
 
         /// <summary>
@@ -57,52 +52,27 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("body");
             }
             
-            if (body.Items.Count != 3 && body.Items.Count != 4)
+            _version = (VersionCode)((Integer32)body[0]).ToInt32();
+            
+            if (body.Count == 3)
             {
-                throw new ArgumentException("wrong message body");
-            }
-               
-            _version = (VersionCode)((Integer32)body.Items[0]).ToInt32();
-            _bytes = body.ToBytes();
-            _community = (OctetString)body[body.Items.Count - 2]; // re-used for securityParameters
- 
-            if (body.Items.Count == 3)
-            {
-                ProcessPdu(body.Items[2]);
-                _messageId = _requestId;
-                _level = SecurityLevel.None;
+                _header = null;
+                _parameters = new SecurityParameters(null, null, null, (OctetString)body[1], null, null);
+                _scope = new Scope(null, null, (ISnmpPdu)body[2]);
                 return;
             }
-            
-            Sequence headerData = (Sequence)body.Items[1];
-            _messageId = ((Integer32)headerData.Items[0]).ToInt32();
-            Integer32 maxMessageSize = (Integer32)headerData.Items[1]; // 0xFF E3
-            byte messageFlags = ((OctetString)headerData.Items[2]).GetRaw()[0];
-            int authFlag = messageFlags & 0x1;
-            int PrivFlag = messageFlags & 0x10;
-            int reportableFlag = messageFlags & 0x100;
-            _level = (SecurityLevel)messageFlags;
 
-            SecurityModel model = (SecurityModel)((Integer32)headerData.Items[3]).ToInt32();
-
-            Sequence scopedPdu = Privacy.Decrypt(body[3]);            
-            OctetString contextEngineID = (OctetString)scopedPdu[0];
-            OctetString contextName = (OctetString)scopedPdu[1];
-
-            ProcessPdu(scopedPdu[2]);
-        }
-
-        private void ProcessPdu(ISnmpData pdu)
-        {
-            _pdu = (ISnmpPdu)pdu;
-            if (_pdu.TypeCode != SnmpType.GetRequestPdu)
+            if (body.Count == 4)
             {
-                throw new ArgumentException("wrong message type");
+                _header = new Header((Sequence)body[1]);
+                _parameters = Authentication.Decrypt(body[2]);
+                _scope = Privacy.Decrypt(body[3]);
+                return;
             }
 
-            _requestId = ((GetRequestPdu)_pdu).RequestId;
-            _variables = _pdu.Variables;
+            throw new ArgumentException("wrong message body");
         }
+
 
         /// <summary>
         /// Gets or sets the privacy method.
@@ -123,17 +93,7 @@ namespace Lextm.SharpSnmpLib
             get { return _authentication; }
             set { _authentication = value; }
         }
-
-        /// <summary>
-        /// Gets or sets security level.
-        /// </summary>
-        /// <value>The level.</value>
-        public SecurityLevel Level
-        {
-            get { return _level; }
-            set { _level = value; }
-        }
-
+        
         /// <summary>
         /// Gets the message ID.
         /// </summary>
@@ -143,7 +103,7 @@ namespace Lextm.SharpSnmpLib
         {
             get
             {
-                return _messageId;
+                return (_header == null) ? RequestId : _header.MessageId;
             }
         }
         
@@ -154,7 +114,7 @@ namespace Lextm.SharpSnmpLib
         {
             get
             {
-                return _variables;
+                return _scope.Pdu.Variables;
             }
         }
 
@@ -179,6 +139,22 @@ namespace Lextm.SharpSnmpLib
         public GetResponseMessage GetResponse(int timeout, IPEndPoint receiver, Socket udpSocket)
         {
             return ByteTool.GetResponse(receiver, _bytes, RequestId, timeout, udpSocket);
+        }
+        
+        public GetResponseMessage GetResponseV3(int timeout, IPEndPoint receiver, Socket udpSocket)
+        {
+            Discover(timeout, receiver, udpSocket);
+            return ByteTool.GetResponse(receiver, ToBytes(), RequestId, timeout, udpSocket);
+        }
+        
+        private ISegment[] Discover(int timeout, IPEndPoint receiver, Socket socket)
+        {          
+            GetRequestMessage discovery = new GetRequestMessage(new Random().Next(), VersionCode.V3, new OctetString(string.Empty), new List<Variable>());
+            ReportMessage report = (ReportMessage)ByteTool.GetReply(receiver, discovery.ToBytes(), new Random().Next(), timeout, socket);
+
+            ObjectIdentifier oid = report.Pdu.Variables[0].Id;
+            Counter32 value = (Counter32)report.Pdu.Variables[0].Data;
+            return new ISegment[] { report.Parameters, report.Scope };
         }
 
         /// <summary>
@@ -229,7 +205,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         public int RequestId
         {
-            get { return _requestId; }
+            get { return _scope.Pdu.RequestId; }
         }
 
         /// <summary>
@@ -237,7 +213,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         public OctetString Community
         {
-            get { return _community; }
+            get { return _parameters.User; }
         }
         
         /// <summary>
@@ -246,9 +222,21 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public byte[] ToBytes()
         {
+            if (_bytes != null)
+            {
+                return _bytes;
+            }
+
+            //if (_version != VersionCode.V3)
+            //{
+            //    _bytes = ByteTool.PackMessage(_version, _community, _pdu).ToBytes();
+            //    return _bytes;
+            //}
+ 
+            _bytes = ByteTool.PackMessage(_version, _header, _parameters, _scope).ToBytes();
             return _bytes;
         }
-
+        
         /// <summary>
         /// PDU.
         /// </summary>
@@ -256,7 +244,7 @@ namespace Lextm.SharpSnmpLib
         {
             get
             {
-                return _pdu;
+                return _scope.Pdu;
             }
         }
 
@@ -266,7 +254,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public override string ToString()
         {
-            return "GET request message: version: " + _version + "; " + _community + "; " + _pdu;
+            return "GET request message: version: " + _version + "; " + Community + "; " + Pdu;
         }
     }
 }

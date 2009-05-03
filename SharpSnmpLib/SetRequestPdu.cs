@@ -84,8 +84,12 @@ namespace Lextm.SharpSnmpLib
                 _errorIndex,
                 _variables.Count.ToString(CultureInfo.InvariantCulture));
         }
-        
-        internal int RequestId
+
+        /// <summary>
+        /// Gets the request ID.
+        /// </summary>
+        /// <value>The request ID.</value>
+        public int RequestId
         {
             get { return _requestId.ToInt32(); }
         }
@@ -108,6 +112,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="version">Prtocol version</param>
         /// <param name="community">Community name</param>
         /// <returns></returns>
+        [Obsolete("Use ByteTool.PackMessage instead")]
         public Sequence ToMessageBody(VersionCode version, OctetString community)
         {
             return ByteTool.PackMessage(version, community, this);

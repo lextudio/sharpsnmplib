@@ -37,6 +37,12 @@ namespace Lextm.SharpSnmpLib.Tests
         {
             Assert.AreEqual(2, new OctetString("").ToBytes().Length);
         }
+        
+        [Test]
+        public void TestEmpty()
+        {
+            Assert.AreEqual("", new OctetString(string.Empty).ToString());
+        }
     }
 }
 #pragma warning restore 1591,0618

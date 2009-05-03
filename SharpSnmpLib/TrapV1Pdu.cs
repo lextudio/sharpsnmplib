@@ -83,6 +83,15 @@ namespace Lextm.SharpSnmpLib
         }
 
         /// <summary>
+        /// Gets the request ID.
+        /// </summary>
+        /// <value>The request ID.</value>
+        public int RequestId
+        {
+            get { return -1; }
+        }
+
+        /// <summary>
         /// Type code.
         /// </summary>
         public SnmpType TypeCode 
@@ -127,6 +136,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="version">Protocol version</param>
         /// <param name="community">Community name</param>
         /// <returns></returns>
+        [Obsolete("Use ByteTool.PackMessage instead")]
         public Sequence ToMessageBody(VersionCode version, OctetString community)
         {
             return ByteTool.PackMessage(version, community, this);

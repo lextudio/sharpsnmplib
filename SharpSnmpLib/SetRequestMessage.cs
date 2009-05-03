@@ -36,7 +36,7 @@ namespace Lextm.SharpSnmpLib
                 0,
                 _variables);
             _requestId = requestId;
-            _bytes = pdu.ToMessageBody(_version, _community).ToBytes();
+            _bytes = ByteTool.PackMessage(_version, _community, pdu).ToBytes();
         }
 
         /// <summary>
@@ -73,14 +73,14 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("body");
             }
             
-            if (body.Items.Count != 3)
+            if (body.Count != 3)
             {
                 throw new ArgumentException("wrong message body");
             }
             
-            _community = (OctetString)body.Items[1];
-            _version = (VersionCode)((Integer32)body.Items[0]).ToInt32();
-            _pdu = (ISnmpPdu)body.Items[2];
+            _community = (OctetString)body[1];
+            _version = (VersionCode)((Integer32)body[0]).ToInt32();
+            _pdu = (ISnmpPdu)body[2];
             if (_pdu.TypeCode != SnmpType.SetRequestPdu)
             {
                 throw new ArgumentException("wrong message type");

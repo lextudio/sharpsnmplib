@@ -70,9 +70,11 @@
     <Compile Include="GetRequestPdu.cs" />
     <Compile Include="GetResponseMessage.cs" />
     <Compile Include="GetResponsePdu.cs" />
+    <Compile Include="Header.cs" />
     <Compile Include="InformRequestMessage.cs" />
     <Compile Include="InformRequestPdu.cs" />
     <Compile Include="Integer64.cs" />
+    <Compile Include="ISegment.cs" />
     <Compile Include="ISnmpMessage.cs" />
     <Compile Include="ISnmpData.cs" />
     <Compile Include="IP.cs" />
@@ -98,6 +100,7 @@
     <Compile Include="Real.cs" />
     <Compile Include="ReportMessage.cs" />
     <Compile Include="ReportPdu.cs" />
+    <Compile Include="Scope.cs" />
     <Compile Include="SecurityLevel.cs" />
     <Compile Include="SecurityModel.cs" />
     <Compile Include="Security\DefaultAuthenticationProvider.cs" />
@@ -106,6 +109,7 @@
     <Compile Include="Security\IAuthenticationProvider.cs" />
     <Compile Include="Security\IPrivacyProvider.cs" />
     <Compile Include="Security\MD5AuthenticationProvider.cs" />
+    <Compile Include="SecurityParameters.cs" />
     <Compile Include="Security\SHA1AuthenticationProvider.cs" />
     <Compile Include="Sequence.cs" />
     <Compile Include="SetRequestMessage.cs" />

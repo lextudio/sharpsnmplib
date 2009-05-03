@@ -92,7 +92,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         internal static IList<Variable> Transform(Sequence varbindSection)
         {
-            IList<Variable> result = new List<Variable>(varbindSection.Items.Count);
+            IList<Variable> result = new List<Variable>(varbindSection.Count);
             foreach (ISnmpData item in varbindSection)
             {
                 if (item.TypeCode != SnmpType.Sequence)
@@ -103,12 +103,12 @@ namespace Lextm.SharpSnmpLib
                 Sequence varbind = item as Sequence;
                 if (null != varbind)
                 {
-                    if (varbind.Items.Count != 2 || varbind.Items[0].TypeCode != SnmpType.ObjectIdentifier)
+                    if (varbind.Count != 2 || varbind[0].TypeCode != SnmpType.ObjectIdentifier)
                     {
                         throw new ArgumentException("wrong varbind data");
                     }
                     
-                    result.Add(new Variable((ObjectIdentifier)varbind.Items[0], varbind.Items[1]));
+                    result.Add(new Variable((ObjectIdentifier)varbind[0], varbind[1]));
                 }
                 else
                 {

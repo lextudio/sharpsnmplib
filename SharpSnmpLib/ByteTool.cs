@@ -136,6 +136,59 @@ namespace Lextm.SharpSnmpLib
             return response;
         }
 
+        internal static ISnmpMessage GetReply(IPEndPoint receiver, byte[] bytes, int number, int timeout, Socket socket)
+        {
+            if (socket == null)
+            {
+                throw new ArgumentNullException("socket");
+            }
+            
+            Capture(bytes); // log request
+
+            #if CF
+            int bufSize = 8192;
+            #else
+            int bufSize = socket.ReceiveBufferSize;
+            #endif
+            byte[] reply = new byte[bufSize];
+
+            // Whatever you change, try to keep the Send and the BeginReceive close to each other.
+            socket.SendTo(bytes, receiver);
+            IAsyncResult result = socket.BeginReceive(reply, 0, bufSize, SocketFlags.None, null, null);
+// ReSharper disable PossibleNullReferenceException
+            result.AsyncWaitHandle.WaitOne(timeout, false);
+// ReSharper restore PossibleNullReferenceException
+            if (!result.IsCompleted)
+            {
+                throw SharpTimeoutException.Create(receiver.Address, timeout);
+            }
+
+            int count = socket.EndReceive(result);
+
+            ISnmpMessage message;
+            
+            // Passing 'count' is not necessary because ParseMessages should ignore it, but it offer extra safety (and would avoid a bug if parsing >1 response).
+            using (MemoryStream m = new MemoryStream(reply, 0, count, false))
+            {
+                message = MessageFactory.ParseMessages(m)[0];
+            }
+
+            // TODO: disbled for v3.
+//            if (message.Pdu.TypeCode != SnmpType.GetResponsePdu)
+//            {
+//                throw SharpOperationException.Create("wrong response type", receiver.Address);
+//            }
+
+//            GetResponseMessage response = (GetResponseMessage)message;
+//            if (response.RequestId != number)
+//            {
+//                throw SharpOperationException.Create("wrong response sequence", receiver.Address);
+//            }
+
+            Capture(reply); // log response
+            return message;
+        }
+        
         /// <summary>
         /// Sends an SNMP message and wait for its responses asynchronously.
         /// </summary>
@@ -548,9 +601,18 @@ namespace Lextm.SharpSnmpLib
             return list.ToArray();
         }
 
-        internal static Sequence PackMessage(VersionCode version, OctetString community, ISnmpPdu pdu)
+        /// <summary>
+        /// Packs the message.
+        /// </summary>
+        /// <param name="version">The protocol version.</param>
+        /// <param name="data">The data.</param>
+        /// <returns></returns>
+        public static Sequence PackMessage(VersionCode version, params ISnmpData[] data)
         {
-            return new Sequence(new Integer32((int)version), community, pdu);
+            List<ISnmpData> collection = new List<ISnmpData>(1 + data.Length);
+            collection.Add(new Integer32((int)version));
+            collection.AddRange(data);
+            return new Sequence(collection);
         }
         
         /// <summary>
@@ -569,6 +631,20 @@ namespace Lextm.SharpSnmpLib
                 data.AppendBytesTo(result);
                 return result.ToArray();
             }
+        }
+
+        internal static Sequence PackMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope)
+        {
+            List<ISnmpData> collection = new List<ISnmpData>(header == null ? 3 : 4);
+            collection.Add(new Integer32((int)version));
+            if (header != null)
+            {
+                collection.Add(header.GetData(version));
+            }
+
+            collection.Add(parameters.GetData(version));
+            collection.Add(scope.GetData(version));
+            return new Sequence(collection);
         }
     }
 }

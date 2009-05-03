@@ -26,7 +26,12 @@ namespace Lextm.SharpSnmpLib
         private static readonly Socket udp = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
         private static Socket udpV6;
 
-        private static Socket GetSocket(AddressFamily family)
+        /// <summary>
+        /// Gets the socket.
+        /// </summary>
+        /// <param name="family">The address family.</param>
+        /// <returns></returns>
+        public static Socket GetSocket(AddressFamily family)
         {
             if (family == AddressFamily.InterNetwork)
             {

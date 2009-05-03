@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Sockets;
 using Lextm.SharpSnmpLib;
 using Mono.Options;
+using Lextm.SharpSnmpLib.Security;
 
 namespace TestGet
 {
@@ -17,9 +18,26 @@ namespace TestGet
             VersionCode version = VersionCode.V1;
             int timeout = 1000; 
             int retry = 0;
+            SecurityLevel level = SecurityLevel.None | SecurityLevel.Reportable;
+            string user = string.Empty;
 
             OptionSet p = new OptionSet()
                 .Add("c:", "-c for community name, (default is public)", delegate (string v) { if (v != null) community = v; })
+                .Add("l:", "-l for security level, (default is noAuthNoPriv)", delegate (string v) {
+                    if (v == "noAuthNoPriv")
+                    {
+                        level = SecurityLevel.None | SecurityLevel.Reportable;
+                    }
+                    else if (v == "authNoPriv")
+                    {
+                        level = SecurityLevel.Authentication | SecurityLevel.Reportable;
+                    }
+                    else if (v == "authPriv")
+                    {
+                        level = SecurityLevel.Authentication | SecurityLevel.Privacy | SecurityLevel.Reportable;
+                    }
+                })
+                .Add("u:", "-u for security name", delegate(string v) { user = v; })
                 .Add("h|?|help", "-h, -?, -help for help.", delegate (string v) { show_help = v != null; })
                 .Add("v", "-v to display version number of this application.", delegate (string v) { show_version = v != null; })
                 .Add("t:", "-t for timeout value (unit is second).", delegate (string v) { timeout = int.Parse(v) * 1000; })
@@ -75,12 +93,37 @@ namespace TestGet
                     vList.Add(test);
                 }
 
-                foreach (
-                    Variable variable in
-                        Messenger.Get(version, new IPEndPoint(ip, 161), new OctetString(community), vList, timeout))
+                IPEndPoint receiver = new IPEndPoint(ip, 161);
+                if (version != VersionCode.V3)
                 {
-                    Console.WriteLine(variable);
+                    foreach (
+                        Variable variable in
+                            Messenger.Get(version, receiver, new OctetString(community), vList, timeout))
+                    {
+                        Console.WriteLine(variable);
+                    }
+
+                    return;
                 }
+
+                GetRequestMessage request = new GetRequestMessage(0, version, new OctetString(user), vList);
+                if ((level | SecurityLevel.Authentication) == SecurityLevel.Authentication)
+                {
+                }
+                else
+                {
+                    request.Authentication = DefaultAuthenticationProvider.Instance;
+                }
+
+                if ((level | SecurityLevel.Privacy) == SecurityLevel.Privacy)
+                {
+                }
+                else
+                {
+                    request.Privacy = DefaultPrivacyProvider.Instance;
+                }
+
+                GetResponseMessage response = request.GetResponseV3(timeout, receiver, Messenger.GetSocket(receiver.AddressFamily)); 
             }
             catch (SharpSnmpException ex)
             {
