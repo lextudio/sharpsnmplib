@@ -73,7 +73,6 @@ namespace Lextm.SharpSnmpLib
             throw new ArgumentException("wrong message body");
         }
 
-
         /// <summary>
         /// Gets or sets the privacy method.
         /// </summary>
@@ -213,7 +212,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         public OctetString Community
         {
-            get { return _parameters.User; }
+            get { return _parameters.UserName; }
         }
         
         /// <summary>

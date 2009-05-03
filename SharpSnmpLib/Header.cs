@@ -10,7 +10,7 @@ namespace Lextm.SharpSnmpLib
     public class Header : ISegment
     {
         private Integer32 _messageId;
-        private Integer32 _maxMessageSize;
+        private Integer32 _maxSize;
         private OctetString _flags;
         private Integer32 _securityModel;
 
@@ -21,7 +21,7 @@ namespace Lextm.SharpSnmpLib
         public Header(Sequence data)
         {
             _messageId = (Integer32) data[0];
-            _maxMessageSize = (Integer32) data[1];
+            _maxSize = (Integer32) data[1];
             _flags = (OctetString) data[2];
             _securityModel = (Integer32) data[3];
         }
@@ -36,7 +36,7 @@ namespace Lextm.SharpSnmpLib
         public Header(Integer32 messageId, Integer32 maxMessageSize, OctetString flags, Integer32 securityModel)
         {
             _messageId = messageId;
-            _maxMessageSize = maxMessageSize;
+            _maxSize = maxMessageSize;
             _flags = flags;
             _securityModel = securityModel;
         }
@@ -61,7 +61,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public Sequence ToSequence()
         {
-            return new Sequence(_messageId, _maxMessageSize, _flags, _securityModel);
+            return new Sequence(_messageId, _maxSize, _flags, _securityModel);
         }
 
         /// <summary>

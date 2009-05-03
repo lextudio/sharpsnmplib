@@ -20,34 +20,33 @@ namespace Lextm.SharpSnmpLib
     public class ReportMessage : ISnmpMessage
     {
         private readonly VersionCode _version;
-        private IList<Variable> _variables;
         private readonly byte[] _bytes;
-        private readonly OctetString _community;
-        private ISnmpPdu _pdu;
-        private int _requestId;
         private SecurityParameters _parameters;
-        private ISegment _scope;
+        private Scope _scope;
+        private Header _header;
+        private IPrivacyProvider _privacy = DefaultPrivacyProvider.Instance;
+        private IAuthenticationProvider _authentication = DefaultAuthenticationProvider.Instance;
         
-        /// <summary>
-        /// Creates a <see cref="ReportMessage"/> with all contents.
-        /// </summary>
-        /// <param name="requestId">The request id.</param>
-        /// <param name="version">Protocol version</param>
-        /// <param name="community">Community name</param>
-        /// <param name="variables">Variables</param>
-        public ReportMessage(int requestId, VersionCode version, OctetString community, IList<Variable> variables)
-        {
-            _version = version;
-            _community = community;
-            _variables = variables;
-            ReportPdu pdu = new ReportPdu(
-                requestId,
-                ErrorCode.NoError,
-                0,
-                _variables);
-            _requestId = pdu.RequestId;
-            _bytes = ByteTool.PackMessage(_version, _community, pdu).ToBytes();
-        }
+//        /// <summary>
+//        /// Creates a <see cref="ReportMessage"/> with all contents.
+//        /// </summary>
+//        /// <param name="requestId">The request id.</param>
+//        /// <param name="version">Protocol version</param>
+//        /// <param name="community">Community name</param>
+//        /// <param name="variables">Variables</param>
+//        public ReportMessage(int requestId, VersionCode version, OctetString community, IList<Variable> variables)
+//        {
+//            _version = version;
+//            _community = community;
+//            _variables = variables;
+//            ReportPdu pdu = new ReportPdu(
+//                requestId,
+//                ErrorCode.NoError,
+//                0,
+//                _variables);
+//            _requestId = pdu.RequestId;
+//            _bytes = ByteTool.PackMessage(_version, _community, pdu).ToBytes();
+//        }
         
         /// <summary>
         /// Creates a <see cref="ReportMessage"/> with a specific <see cref="Sequence"/>.
@@ -63,50 +62,38 @@ namespace Lextm.SharpSnmpLib
             if (body.Count != 4)
             {
                 throw new ArgumentException("wrong message body");
-            }            
-            
-            int v = ((Integer32)body[0]).ToInt32() - 1;
-            _version = (VersionCode)v;
-            if (_version != VersionCode.V3)
-            {
-                throw new ArgumentException("REPORT message is for v3 only");
             }
-
-            _bytes = body.ToBytes();
             
-            // TODO: ignore header as it is default.
-            // Sequence headerData = (Sequence)body[1];
-            // _messageId = ((Integer32)headerData[0]).ToInt32();
-            // Integer32 maxMessageSize = (Integer32)headerData[1]; // 0xFF E3
-            
-//            byte messageFlags = ((OctetString)headerData[2]).GetRaw()[0];
-//            _level = (SecurityLevel)messageFlags;
-//            SecurityModel model = (SecurityModel)((Integer32)headerData[3]).ToInt32();
-            
-            SecurityParameters securityParameters = DefaultAuthenticationProvider.Instance.Decrypt(body[2]);
-            _community = securityParameters.User;
-
-            Scope scope = DefaultPrivacyProvider.Instance.Decrypt(body[3]);
-
-            ProcessPdu(scope.Pdu);
+            _version = (VersionCode)((Integer32)body[0]).ToInt32();
+            _header = new Header((Sequence)body[1]);
+            _parameters = Authentication.Decrypt(body[2]);
+            _scope = Privacy.Decrypt(body[3]);
+        }
+        
+        /// <summary>
+        /// Gets or sets the privacy method.
+        /// </summary>
+        /// <value>The privacy method.</value>
+        public IPrivacyProvider Privacy
+        {
+            get { return _privacy; }
+            set { _privacy = value; }
         }
 
-        private void ProcessPdu(ISnmpData pdu)
+        /// <summary>
+        /// Gets or sets the authentication method.
+        /// </summary>
+        /// <value>The authentication method.</value>
+        public IAuthenticationProvider Authentication
         {
-            _pdu = (ISnmpPdu)pdu;
-            if (_pdu.TypeCode != SnmpType.ReportPdu)
-            {
-                throw new ArgumentException("wrong message type");
-            }
-
-            _requestId = ((ReportPdu)_pdu).RequestId;
-            _variables = _pdu.Variables;
+            get { return _authentication; }
+            set { _authentication = value; }
         }
         
         /// <summary>
         /// Security parameters.
         /// </summary>
-        public SecurityParameters Parameters 
+        public SecurityParameters Parameters
         {
             get { return _parameters; }
         }
@@ -116,7 +103,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         public IList<Variable> Variables
         {
-            get { return _variables; }
+            get { return _scope.Pdu.Variables; }
         }
         
         /// <summary>
@@ -144,7 +131,7 @@ namespace Lextm.SharpSnmpLib
         
         internal int RequestId
         {
-            get { return _requestId; }
+            get { return _scope.Pdu.RequestId; }
         }
 
         /// <summary>
@@ -172,7 +159,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         public ISnmpPdu Pdu
         {
-            get { return _pdu; }
+            get { return _scope.Pdu; }
         }
         
         /// <summary>
@@ -181,7 +168,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public override string ToString()
         {
-            return "REPORT request message: version: " + _version + "; " + _community + "; " + _pdu;
+            return "REPORT request message: version: " + _version + "; " + _parameters.UserName + "; " + _scope.Pdu;
         }
     }
 }

@@ -15,70 +15,70 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public class SecurityParameters : ISegment
     {
-        private OctetString _source;
+        private OctetString _engineId;
 
         /// <summary>
-        /// Gets the source.
+        /// Gets the engine ID.
         /// </summary>
-        /// <value>The source.</value>
-        public OctetString Source
+        /// <value>The engine ID.</value>
+        public OctetString EngineId
         {
-            get { return _source; }
+            get { return _engineId; }
         }
         
-        private Integer32 _reboot;
+        private Integer32 _engineBoots;
 
         /// <summary>
-        /// Gets the reboot count.
+        /// Gets the boot count.
         /// </summary>
-        /// <value>The reboot count.</value>
-        public Integer32 Reboot 
+        /// <value>The boot count.</value>
+        public Integer32 EngineBoots 
         {
-            get { return _reboot; }
+            get { return _engineBoots; }
         }
         
-        private Integer32 _ticks;
+        private Integer32 _engineTime;
 
         /// <summary>
-        /// Gets the ticks.
+        /// Gets the engine time.
         /// </summary>
-        /// <value>The ticks.</value>
-        public Integer32 Ticks
+        /// <value>The engine time.</value>
+        public Integer32 EngineTime
         {
-            get { return _ticks; }
+            get { return _engineTime; }
         }
         
-        private OctetString _user;
+        private OctetString _userName;
 
         /// <summary>
-        /// Gets the user.
+        /// Gets the user name.
         /// </summary>
-        /// <value>The user.</value>
-        public OctetString User 
+        /// <value>The user name.</value>
+        public OctetString UserName 
         {
-            get { return _user; }
+            get { return _userName; }
         }
         
-        private OctetString _string1;
+        private OctetString _authenticationParameters;
 
         /// <summary>
-        /// Gets the string1.
+        /// Gets the authentication parameters.
         /// </summary>
-        /// <value>The string1.</value>
-        public OctetString String1
+        /// <value>The authentication parameters.</value>
+        public OctetString AuthenticationParameters
         {
-            get { return _string1; }
+            get { return _authenticationParameters; }
         }
         
-        private OctetString _string2;
+        private OctetString _privacyParameters;
 
         /// <summary>
-        /// Gets the string2.
+        /// Gets the privacy parameters.
         /// </summary>
-        /// <value>The string2.</value>
-        public OctetString String2
+        /// <value>The privacy parameters.</value>
+        public OctetString PrivacyParameters
         {
-            get { return _string2; }
+            get { return _privacyParameters; }
         }
 
         /// <summary>
@@ -87,12 +87,12 @@ namespace Lextm.SharpSnmpLib
         /// <param name="parameters">The <see cref="Sequence"/> that contains parameters.</param>
         public SecurityParameters(Sequence parameters)
         {
-            _source = (OctetString)parameters[0];
-            _reboot = (Integer32)parameters[1];
-            _ticks = (Integer32)parameters[2];
-            _user = (OctetString)parameters[3];
-            _string1 = (OctetString)parameters[4];
-            _string2 = (OctetString)parameters[5];
+            _engineId = (OctetString)parameters[0];
+            _engineBoots = (Integer32)parameters[1];
+            _engineTime = (Integer32)parameters[2];
+            _userName = (OctetString)parameters[3];
+            _authenticationParameters = (OctetString)parameters[4];
+            _privacyParameters = (OctetString)parameters[5];
         }
 
         /// <summary>
@@ -106,12 +106,12 @@ namespace Lextm.SharpSnmpLib
         /// <param name="string2">The string2.</param>
         public SecurityParameters(OctetString source, Integer32 reboot, Integer32 ticks, OctetString user, OctetString string1, OctetString string2)
         {
-            _source = source;
-            _reboot = reboot;
-            _ticks = ticks;
-            _user = user;
-            _string1 = string1;
-            _string2 = string2;
+            _engineId = source;
+            _engineBoots = reboot;
+            _engineTime = ticks;
+            _userName = user;
+            _authenticationParameters = string1;
+            _privacyParameters = string2;
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public Sequence ToSequence()
         {
-            return new Sequence(_source, _reboot, _ticks, _user, _string1, _string2);
+            return new Sequence(_engineId, _engineBoots, _engineTime, _userName, _authenticationParameters, _privacyParameters);
         }
 
         #region ISegment Members
@@ -137,7 +137,7 @@ namespace Lextm.SharpSnmpLib
                 return ToSequence();
             }
 
-            return _user;
+            return _userName;
         }
 
         #endregion
