@@ -6,6 +6,7 @@
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
+using System;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -23,6 +24,9 @@ namespace Lextm.SharpSnmpLib
             get;
         }
 
+        SecurityParameters Parameters { get; }
+
+        Scope Scope { get; }
         /// <summary>
         /// Converts to the bytes.
         /// </summary>

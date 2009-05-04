@@ -80,6 +80,16 @@ namespace Lextm.SharpSnmpLib
             get { return _pdu; }
         }
 
+        public SecurityParameters Parameters
+        {
+            get { return null; }
+        }
+
+        public Scope Scope
+        {
+            get { return null; }
+        }
+
         #endregion
 
         #region ISnmpData Members

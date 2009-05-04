@@ -37,6 +37,11 @@ namespace Lextm.SharpSnmpLib
             _contextName = contextName;
             _pdu = pdu;
         }
+        
+        public Scope(ISnmpPdu pdu)
+        {
+            _pdu = pdu;
+        }
 
         /// <summary>
         /// Gets the PDU.
@@ -64,6 +69,17 @@ namespace Lextm.SharpSnmpLib
             return Pdu;
         }
 
+        public OctetString ContextName
+        {
+            get { return _contextName; }
+            set { _contextName = value; }
+        }
+
+        public OctetString ContextEngineId
+        {
+            get { return _contextEngineId; }
+            set { _contextEngineId = value; }
+        }
         /// <summary>
         /// Converts to <see cref="Sequence"/> object.
         /// </summary>

@@ -53,8 +53,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// <returns></returns>
         public SecurityParameters Decrypt(ISnmpData data)
         {
-            Sequence raw = (Sequence)DataFactory.CreateSnmpData(((OctetString)data).GetRaw());
-            return new SecurityParameters(raw);
+            return new SecurityParameters((OctetString)data);
         }
 
         #endregion

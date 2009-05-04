@@ -388,7 +388,7 @@ namespace Lextm.SharpSnmpLib
             source.Close();
         }
         
-        internal static byte[] ParseByteString(string bytes)
+        internal static byte[] ConvertByteString(string bytes)
         {
             List<byte> result = new List<byte>();
             StringBuilder buffer = new StringBuilder(2);
@@ -418,6 +418,18 @@ namespace Lextm.SharpSnmpLib
             }
             
             return result.ToArray();
+        }
+        
+        internal static string ConvertByteSting(byte[] bytes)
+        {
+            StringBuilder result = new StringBuilder();
+            foreach (byte b in bytes)
+            {
+                result.AppendFormat("{0:X2} ", b);
+            }
+            
+            result.Length--;
+            return result.ToString();
         }
         
         internal static bool CompareArray<T>(IList<T> left, IList<T> right) where T : IEquatable<T>
@@ -633,17 +645,15 @@ namespace Lextm.SharpSnmpLib
             }
         }
 
-        internal static Sequence PackMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope)
+        internal static Sequence PackMessage(VersionCode version, params ISegment[] segments)
         {
-            List<ISnmpData> collection = new List<ISnmpData>(header == null ? 3 : 4);
-            collection.Add(new Integer32((int)version));
-            if (header != null)
+            List<ISnmpData> collection = new List<ISnmpData>(segments.Length + 1);
+            collection.Add(new Integer32((int)version + 1));
+            foreach (ISegment segment in segments)
             {
-                collection.Add(header.GetData(version));
+                collection.Add(segment.GetData(version));
             }
-
-            collection.Add(parameters.GetData(version));
-            collection.Add(scope.GetData(version));
+            
             return new Sequence(collection);
         }
     }

@@ -136,7 +136,17 @@ namespace Lextm.SharpSnmpLib
                 return _pdu;
             }
         }
-        
+
+        public SecurityParameters Parameters
+        {
+            get { return null; }
+        }
+
+        public Scope Scope
+        {
+            get { return null; }
+        }
+
         /// <summary>
         /// Returns a <see cref="string"/> that represents this <see cref="GetBulkRequestMessage"/>.
         /// </summary>

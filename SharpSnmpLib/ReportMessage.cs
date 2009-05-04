@@ -20,7 +20,7 @@ namespace Lextm.SharpSnmpLib
     public class ReportMessage : ISnmpMessage
     {
         private readonly VersionCode _version;
-        private readonly byte[] _bytes;
+        private byte[] _bytes;
         private SecurityParameters _parameters;
         private Scope _scope;
         private Header _header;
@@ -138,7 +138,7 @@ namespace Lextm.SharpSnmpLib
         /// Gets the scope.
         /// </summary>
         /// <value>The scope.</value>
-        public ISegment Scope
+        public Scope Scope
         {
             get
             {
@@ -169,6 +169,16 @@ namespace Lextm.SharpSnmpLib
         public override string ToString()
         {
             return "REPORT request message: version: " + _version + "; " + _parameters.UserName + "; " + _scope.Pdu;
+        }
+
+        internal void Update(ISnmpMessage request)
+        {
+            request.Parameters.EngineId = Parameters.EngineId;
+            request.Parameters.EngineBoots = Parameters.EngineBoots;
+            request.Parameters.EngineTime = Parameters.EngineTime;
+
+            request.Scope.ContextEngineId = Scope.ContextEngineId;
+            request.Scope.ContextName = Scope.ContextName;
         }
     }
 }

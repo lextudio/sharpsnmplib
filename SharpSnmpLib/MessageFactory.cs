@@ -25,7 +25,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public static IList<ISnmpMessage> ParseMessages(string bytes)
         {
-            return ParseMessages(ByteTool.ParseByteString(bytes));
+            return ParseMessages(ByteTool.ConvertByteString(bytes));
         }
         
         /// <summary>

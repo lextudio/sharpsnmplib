@@ -74,6 +74,13 @@ namespace Lextm.SharpSnmpLib
             return _raw;
         }        
         
+        private static OctetString empty = new OctetString(string.Empty, Encoding.GetEncoding("ASCII"));
+        
+        public static OctetString Empty 
+        {
+            get { return empty; }
+        }        
+        
         /// <summary>
         /// Returns a <see cref="String"/> in a hex form that represents this <see cref="OctetString"/>.
         /// </summary>

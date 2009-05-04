@@ -105,25 +105,32 @@ namespace TestGet
 
                     return;
                 }
-
-                GetRequestMessage request = new GetRequestMessage(0, version, new OctetString(user), vList);
+                
+                IAuthenticationProvider auth;
                 if ((level | SecurityLevel.Authentication) == SecurityLevel.Authentication)
                 {
+                    auth = DefaultAuthenticationProvider.Instance;
                 }
                 else
                 {
-                    request.Authentication = DefaultAuthenticationProvider.Instance;
+                    auth = DefaultAuthenticationProvider.Instance;
                 }
 
+                IPrivacyProvider priv;
                 if ((level | SecurityLevel.Privacy) == SecurityLevel.Privacy)
                 {
+                    priv = DefaultPrivacyProvider.Instance;
                 }
                 else
                 {
-                    request.Privacy = DefaultPrivacyProvider.Instance;
+                    priv = DefaultPrivacyProvider.Instance;
                 }
 
-                GetResponseMessage response = request.GetResponseV3(timeout, receiver, Messenger.GetSocket(receiver.AddressFamily)); 
+                SecurityRecord record = new SecurityRecord(auth, priv);
+                Socket socket = Messenger.GetSocket(receiver.AddressFamily);
+                GetRequestMessage request = new GetRequestMessage(0, VersionCode.V3, 100, new OctetString(user), vList, record);
+                request.Discover(timeout, receiver, 1, 101, socket);
+                GetResponseMessage response = request.GetResponseV3(timeout, receiver, socket); 
             }
             catch (SharpSnmpException ex)
             {

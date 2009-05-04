@@ -110,6 +110,7 @@
     <Compile Include="Security\IPrivacyProvider.cs" />
     <Compile Include="Security\MD5AuthenticationProvider.cs" />
     <Compile Include="SecurityParameters.cs" />
+    <Compile Include="Security\SecurityRecord.cs" />
     <Compile Include="Security\SHA1AuthenticationProvider.cs" />
     <Compile Include="Sequence.cs" />
     <Compile Include="SetRequestMessage.cs" />

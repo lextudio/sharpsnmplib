@@ -23,7 +23,14 @@ namespace Lextm.SharpSnmpLib
         /// <value>The engine ID.</value>
         public OctetString EngineId
         {
-            get { return _engineId; }
+            get
+            {
+                return _engineId;
+            }
+            set
+            {
+                _engineId = value;
+            }
         }
         
         private Integer32 _engineBoots;
@@ -32,9 +39,16 @@ namespace Lextm.SharpSnmpLib
         /// Gets the boot count.
         /// </summary>
         /// <value>The boot count.</value>
-        public Integer32 EngineBoots 
+        public Integer32 EngineBoots
         {
-            get { return _engineBoots; }
+            get
+            {
+                return _engineBoots;
+            }
+            set
+            {
+                _engineBoots = value;
+            }
         }
         
         private Integer32 _engineTime;
@@ -45,7 +59,14 @@ namespace Lextm.SharpSnmpLib
         /// <value>The engine time.</value>
         public Integer32 EngineTime
         {
-            get { return _engineTime; }
+            get
+            {
+                return _engineTime;
+            }
+            set
+            {
+                _engineTime = value;
+            }
         }
         
         private OctetString _userName;
@@ -84,34 +105,40 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Initializes a new instance of the <see cref="SecurityParameters"/> class.
         /// </summary>
-        /// <param name="parameters">The <see cref="Sequence"/> that contains parameters.</param>
-        public SecurityParameters(Sequence parameters)
+        /// <param name="parameters">The <see cref="OctetString"/> that contains parameters.</param>
+        public SecurityParameters(OctetString parameters)
         {
-            _engineId = (OctetString)parameters[0];
-            _engineBoots = (Integer32)parameters[1];
-            _engineTime = (Integer32)parameters[2];
-            _userName = (OctetString)parameters[3];
-            _authenticationParameters = (OctetString)parameters[4];
-            _privacyParameters = (OctetString)parameters[5];
+            Sequence data = (Sequence)DataFactory.CreateSnmpData(parameters.GetRaw());
+            _engineId = (OctetString)data[0];
+            _engineBoots = (Integer32)data[1];
+            _engineTime = (Integer32)data[2];
+            _userName = (OctetString)data[3];
+            _authenticationParameters = (OctetString)data[4];
+            _privacyParameters = (OctetString)data[5];
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SecurityParameters"/> class.
         /// </summary>
-        /// <param name="source">The source.</param>
-        /// <param name="reboot">The reboot.</param>
-        /// <param name="ticks">The ticks.</param>
-        /// <param name="user">The user.</param>
-        /// <param name="string1">The string1.</param>
-        /// <param name="string2">The string2.</param>
-        public SecurityParameters(OctetString source, Integer32 reboot, Integer32 ticks, OctetString user, OctetString string1, OctetString string2)
+        /// <param name="engineId">The engine ID.</param>
+        /// <param name="engineBoots">The engine boots.</param>
+        /// <param name="engineTime">The engine time.</param>
+        /// <param name="userName">The user name.</param>
+        /// <param name="authenticationParameters">The authentication parameters.</param>
+        /// <param name="privacyParameters">The privacy parameters.</param>
+        public SecurityParameters(OctetString engineId, Integer32 engineBoots, Integer32 engineTime, OctetString userName, OctetString authenticationParameters, OctetString privacyParameters)
         {
-            _engineId = source;
-            _engineBoots = reboot;
-            _engineTime = ticks;
-            _userName = user;
-            _authenticationParameters = string1;
-            _privacyParameters = string2;
+            _engineId = engineId;
+            _engineBoots = engineBoots;
+            _engineTime = engineTime;
+            _userName = userName;
+            _authenticationParameters = authenticationParameters;
+            _privacyParameters = privacyParameters;
+        }
+        
+        public SecurityParameters(string userName)
+        {
+            _userName = new OctetString(userName);
         }
 
         /// <summary>
@@ -134,7 +161,7 @@ namespace Lextm.SharpSnmpLib
         {
             if (version == VersionCode.V3)
             {
-                return ToSequence();
+                return new OctetString(ToSequence().ToBytes());
             }
 
             return _userName;

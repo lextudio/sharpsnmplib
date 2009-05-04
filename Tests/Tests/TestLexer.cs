@@ -13,7 +13,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestParse()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(TestResources.SNMPv2_SMI);
+            MemoryStream m = new MemoryStream(Resources.SNMPv2_SMI);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);

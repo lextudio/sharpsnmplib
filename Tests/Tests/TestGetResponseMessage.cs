@@ -10,7 +10,7 @@
 using System;
 using System.IO;
 using NUnit.Framework;
-using NUnit.Framework.SyntaxHelpers;
+
 #pragma warning disable 1591
 namespace Lextm.SharpSnmpLib.Tests
 {
@@ -20,7 +20,7 @@ namespace Lextm.SharpSnmpLib.Tests
         [Test]
         public void TestMethod()
         {
-            MemoryStream m = new MemoryStream(TestResources.getresponse, false);
+            MemoryStream m = new MemoryStream(Resources.getresponse, false);
             ISnmpMessage message = MessageFactory.ParseMessages(m)[0];
             Assert.AreEqual(SnmpType.GetResponsePdu, message.Pdu.TypeCode);
             ISnmpPdu pdu = message.Pdu;

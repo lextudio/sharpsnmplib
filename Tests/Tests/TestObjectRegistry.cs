@@ -143,7 +143,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestActona()
         {
             const string name = "ACTONA-ACTASTOR-MIB::actona";
-            IList<IModule> modules = Parser.Compile(new StreamReader(new MemoryStream(TestResources.ACTONA_ACTASTOR_MIB)));
+            IList<IModule> modules = Parser.Compile(new StreamReader(new MemoryStream(Resources.ACTONA_ACTASTOR_MIB)));
             DefaultObjectRegistry.Instance.Import(modules);
             DefaultObjectRegistry.Instance.Refresh();
             uint[] id = DefaultObjectRegistry.Instance.Translate(name);
@@ -156,9 +156,9 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestSYMMIB_MIB_MIB()
         {
             const string name = "SYMMIB_MIB-MIB::symbios_3_1";
-            IList<IModule> modules = Parser.Compile(new StreamReader(new MemoryStream(TestResources.SYMMIB_MIB_MIB)));
+            IList<IModule> modules = Parser.Compile(new StreamReader(new MemoryStream(Resources.SYMMIB_MIB_MIB)));
             DefaultObjectRegistry.Instance.Import(modules);
-            modules = Parser.Compile(new StreamReader(new MemoryStream(TestResources.DMTF_DMI_MIB)));
+            modules = Parser.Compile(new StreamReader(new MemoryStream(Resources.DMTF_DMI_MIB)));
             DefaultObjectRegistry.Instance.Import(modules);
             DefaultObjectRegistry.Instance.Refresh();
             uint[] id = DefaultObjectRegistry.Instance.Translate(name);
@@ -171,7 +171,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestIEEE802dot11_MIB()
         {
             const string name = "IEEE802DOT11-MIB::dot11SMTnotification";
-            IList<IModule> modules = Parser.Compile(new StreamReader(new MemoryStream(TestResources.IEEE802DOT11_MIB)));
+            IList<IModule> modules = Parser.Compile(new StreamReader(new MemoryStream(Resources.IEEE802DOT11_MIB)));
             DefaultObjectRegistry.Instance.Import(modules);
             DefaultObjectRegistry.Instance.Refresh();
             uint[] id = DefaultObjectRegistry.Instance.Translate(name);

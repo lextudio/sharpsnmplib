@@ -135,5 +135,15 @@ namespace Lextm.SharpSnmpLib
                 return _pdu;
             }
         }
+
+        public SecurityParameters Parameters
+        {
+            get { return null; }
+        }
+
+        public Scope Scope
+        {
+            get { return null; }
+        }
     }
 }

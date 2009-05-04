@@ -9,7 +9,7 @@
 
 using System;
 using NUnit.Framework;
-using NUnit.Framework.SyntaxHelpers;
+
 #pragma warning disable 1591,0618
 namespace Lextm.SharpSnmpLib.Tests
 {
@@ -41,7 +41,7 @@ namespace Lextm.SharpSnmpLib.Tests
         [Test]
         public void TestEmpty()
         {
-            Assert.AreEqual("", new OctetString(string.Empty).ToString());
+            Assert.AreEqual("", OctetString.Empty.ToString());
         }
     }
 }

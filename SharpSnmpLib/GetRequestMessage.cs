@@ -19,8 +19,7 @@ namespace Lextm.SharpSnmpLib
         private Scope _scope;
         private readonly VersionCode _version;
         private byte[] _bytes;
-        private IPrivacyProvider _privacy = DefaultPrivacyProvider.Instance;
-        private IAuthenticationProvider _authentication = DefaultAuthenticationProvider.Instance;
+        private SecurityRecord _record;
 
         /// <summary>
         /// Creates a <see cref="GetRequestMessage"/> with all contents.
@@ -31,7 +30,13 @@ namespace Lextm.SharpSnmpLib
         /// <param name="variables">Variables</param>
         public GetRequestMessage(int requestId, VersionCode version, OctetString community, IList<Variable> variables)
         {
+            if (version == VersionCode.V3)
+            {
+                throw new ArgumentException("Please use overload constructor for v3", "version");
+            }
+            
             _version = version;
+            _header = Header.Empty;
             _parameters = new SecurityParameters(null, null, null, community, null, null);
             GetRequestPdu pdu = new GetRequestPdu(
                 requestId,
@@ -39,7 +44,41 @@ namespace Lextm.SharpSnmpLib
                 0,
                 variables);
             _scope = new Scope(null, null, pdu);
+            _record = SecurityRecord.Default;
         }
+
+        public GetRequestMessage(int requestId, VersionCode version, int messageId, OctetString userName, IList<Variable> variables, SecurityRecord record)
+        {
+            _version = version;
+            if (record == null)
+            {
+                throw new ArgumentException("record");
+            }
+
+            _record = record;
+            _header = new Header(new Integer32(messageId), new Integer32(0xFFE3), new OctetString(new byte[] { (byte)record.ToSecurityLevel() }), new Integer32(3));
+            _parameters = new SecurityParameters(OctetString.Empty, new Integer32(0), new Integer32(0), userName, OctetString.Empty, OctetString.Empty);
+            GetRequestPdu pdu = new GetRequestPdu(
+                requestId,
+                ErrorCode.NoError,
+                0,
+                variables);
+            _scope = new Scope(OctetString.Empty, OctetString.Empty, pdu);
+        }
+        
+        internal GetRequestMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, SecurityRecord record)
+        {
+            if (record == null)
+            {
+                throw new ArgumentException("record");
+            }
+
+            _version = version;
+            _header = header;
+            _parameters = parameters;
+            _scope = scope;
+            _record = record;
+        }        
 
         /// <summary>
         /// Creates a <see cref="GetRequestMessage"/> with a specific <see cref="Sequence"/>.
@@ -56,7 +95,7 @@ namespace Lextm.SharpSnmpLib
             
             if (body.Count == 3)
             {
-                _header = null;
+                _header = Header.Empty;
                 _parameters = new SecurityParameters(null, null, null, (OctetString)body[1], null, null);
                 _scope = new Scope(null, null, (ISnmpPdu)body[2]);
                 return;
@@ -64,33 +103,43 @@ namespace Lextm.SharpSnmpLib
 
             if (body.Count == 4)
             {
-                _header = new Header((Sequence)body[1]);
-                _parameters = Authentication.Decrypt(body[2]);
-                _scope = Privacy.Decrypt(body[3]);
+                _header = new Header(body[1]);
+                _parameters = _record.Authentication.Decrypt(body[2]);
+                _scope = _record.Privacy.Decrypt(body[3]);
                 return;
             }
 
             throw new ArgumentException("wrong message body");
         }
 
-        /// <summary>
-        /// Gets or sets the privacy method.
-        /// </summary>
-        /// <value>The privacy method.</value>
-        public IPrivacyProvider Privacy
+        public ISegment[] Discover(int timeout, IPEndPoint receiver, int requestId, int messageId, Socket socket)
         {
-            get { return _privacy; }
-            set { _privacy = value; }
-        }
+            GetRequestMessage discovery = new GetRequestMessage(
+                VersionCode.V3,
+                new Header(
+                    new Integer32(messageId),
+                    new Integer32(0xFFE3),
+                    new OctetString(new byte[] { (byte)SecurityLevel.Reportable }),
+                    new Integer32(3)),
+                new SecurityParameters(
+                    OctetString.Empty,
+                    new Integer32(0),
+                    new Integer32(0),
+                    OctetString.Empty,
+                    OctetString.Empty,
+                    OctetString.Empty),
+                new Scope(
+                    OctetString.Empty,
+                    OctetString.Empty,
+                    new GetRequestPdu(requestId, ErrorCode.NoError, 0, new List<Variable>())),
+                    SecurityRecord.Default
+               );
+            ReportMessage report = (ReportMessage)ByteTool.GetReply(receiver, discovery.ToBytes(), 0x2C6B, timeout, socket);
+            report.Update(this);
 
-        /// <summary>
-        /// Gets or sets the authentication method.
-        /// </summary>
-        /// <value>The authentication method.</value>
-        public IAuthenticationProvider Authentication
-        {
-            get { return _authentication; }
-            set { _authentication = value; }
+            ObjectIdentifier oid = report.Pdu.Variables[0].Id;
+            Counter32 value = (Counter32)report.Pdu.Variables[0].Data;
+            return new ISegment[] { report.Parameters, report.Scope };
         }
         
         /// <summary>
@@ -142,19 +191,9 @@ namespace Lextm.SharpSnmpLib
         
         public GetResponseMessage GetResponseV3(int timeout, IPEndPoint receiver, Socket udpSocket)
         {
-            Discover(timeout, receiver, udpSocket);
+            //Discover(timeout, receiver, udpSocket);
             return ByteTool.GetResponse(receiver, ToBytes(), RequestId, timeout, udpSocket);
-        }
-        
-        private ISegment[] Discover(int timeout, IPEndPoint receiver, Socket socket)
-        {          
-            GetRequestMessage discovery = new GetRequestMessage(new Random().Next(), VersionCode.V3, new OctetString(string.Empty), new List<Variable>());
-            ReportMessage report = (ReportMessage)ByteTool.GetReply(receiver, discovery.ToBytes(), new Random().Next(), timeout, socket);
-
-            ObjectIdentifier oid = report.Pdu.Variables[0].Id;
-            Counter32 value = (Counter32)report.Pdu.Variables[0].Data;
-            return new ISegment[] { report.Parameters, report.Scope };
-        }
+        }  
 
         /// <summary>
         /// Sends this <see cref="GetRequestMessage"/> and handles the response from agent asynchronously.
@@ -221,18 +260,11 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public byte[] ToBytes()
         {
-            if (_bytes != null)
-            {
-                return _bytes;
+            if (_bytes == null)
+            {                
+                _bytes = ByteTool.PackMessage(_version, _header, _parameters, _scope).ToBytes();
             }
-
-            //if (_version != VersionCode.V3)
-            //{
-            //    _bytes = ByteTool.PackMessage(_version, _community, _pdu).ToBytes();
-            //    return _bytes;
-            //}
- 
-            _bytes = ByteTool.PackMessage(_version, _header, _parameters, _scope).ToBytes();
+            
             return _bytes;
         }
         
@@ -245,6 +277,16 @@ namespace Lextm.SharpSnmpLib
             {
                 return _scope.Pdu;
             }
+        }
+
+        public SecurityParameters Parameters
+        {
+            get { return _parameters; }
+        }
+
+        public Scope Scope
+        {
+            get { return _scope; }
         }
 
         /// <summary>

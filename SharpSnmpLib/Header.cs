@@ -13,17 +13,28 @@ namespace Lextm.SharpSnmpLib
         private Integer32 _maxSize;
         private OctetString _flags;
         private Integer32 _securityModel;
+        private static Header empty = new Header();
+        
+        private Header()
+        {            
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Header"/> class.
         /// </summary>
         /// <param name="data">The data.</param>
-        public Header(Sequence data)
+        public Header(ISnmpData data)
         {
-            _messageId = (Integer32) data[0];
-            _maxSize = (Integer32) data[1];
-            _flags = (OctetString) data[2];
-            _securityModel = (Integer32) data[3];
+            if (data == null)
+            {
+                throw new ArgumentException("data");
+            }
+
+            Sequence container = (Sequence)data;
+            _messageId = (Integer32) container[0];
+            _maxSize = (Integer32) container[1];
+            _flags = (OctetString) container[2];
+            _securityModel = (Integer32) container[3];
         }
 
         /// <summary>
@@ -39,6 +50,14 @@ namespace Lextm.SharpSnmpLib
             _maxSize = maxMessageSize;
             _flags = flags;
             _securityModel = securityModel;
+        }
+        
+        /// <summary>
+        /// Empty header.
+        /// </summary>
+        public static Header Empty
+        {
+            get { return empty; }
         }
 
         /// <summary>
