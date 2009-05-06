@@ -50,6 +50,8 @@
       <HintPath>..\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -77,6 +79,7 @@
     <Compile Include="Tests\TestNull.cs" />
     <Compile Include="Tests\TestObjectIdentifier.cs" />
     <Compile Include="Tests\TestObjectRegistry.cs" />
+    <Compile Include="Tests\TestSecurityRecord.cs" />
     <Compile Include="Tests\TestStringUtilities.cs" />
     <Compile Include="Tests\TestOctetString.cs" />
     <Compile Include="Tests\TestOpaque.cs" />

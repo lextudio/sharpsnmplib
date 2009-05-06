@@ -12,6 +12,15 @@ namespace Lextm.SharpSnmpLib.Security
 
         public SecurityRecord(IAuthenticationProvider authentication, IPrivacyProvider privacy)
         {
+            if (authentication == DefaultAuthenticationProvider.Instance)
+            {
+                // FIXME: in this way privacy cannot be non-default.
+                if (privacy != DefaultPrivacyProvider.Instance)
+                {
+                    throw new ArgumentException("if authentication is off, then privacy cannot be used");
+                }
+            }
+
             _authentication = authentication;
             _privacy = privacy;
         }
@@ -29,17 +38,17 @@ namespace Lextm.SharpSnmpLib.Security
         public SecurityLevel ToSecurityLevel()
         {
             SecurityLevel flags;
-            if (this == SecurityRecord.Default)
+            if (_authentication == DefaultAuthenticationProvider.Instance)
             {
-                flags = SecurityLevel.Reportable;
+                flags = SecurityLevel.None;
             }
             else if (_privacy == DefaultPrivacyProvider.Instance)
             {
-                flags = SecurityLevel.Reportable | SecurityLevel.Authentication;
+                flags = SecurityLevel.Authentication;
             }
             else
             {
-                flags = SecurityLevel.Reportable | SecurityLevel.Authentication | SecurityLevel.Privacy;
+                flags = SecurityLevel.Authentication | SecurityLevel.Privacy;
             }
 
             return flags;

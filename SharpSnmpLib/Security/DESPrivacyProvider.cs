@@ -9,6 +9,25 @@ namespace Lextm.SharpSnmpLib.Security
     /// </summary>
     public class DESPrivacyProvider : IPrivacyProvider
     {
+        private static DESPrivacyProvider instance;
+        private static object root = new object();
+
+        public static DESPrivacyProvider Instance
+        {
+            get
+            {
+                lock (root)
+                {
+                    if (instance == null)
+                    {
+                        instance = new DESPrivacyProvider();
+                    }
+                }
+
+                return instance;
+            }
+        }
+
         #region IPrivacyProvider Members
 
         /// <summary>
@@ -17,7 +36,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// <value>The name.</value>
         public string Name
         {
-            get { return "DES"; }
+            get { return "DES privacy provider"; }
         }
 
         /// <summary>

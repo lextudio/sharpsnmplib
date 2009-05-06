@@ -56,7 +56,10 @@ namespace Lextm.SharpSnmpLib
             }
 
             _record = record;
-            _header = new Header(new Integer32(messageId), new Integer32(0xFFE3), new OctetString(new byte[] { (byte)record.ToSecurityLevel() }), new Integer32(3));
+            SecurityLevel recordToSecurityLevel = record.ToSecurityLevel();
+            recordToSecurityLevel |= SecurityLevel.Reportable;
+            byte b = (byte)recordToSecurityLevel;
+            _header = new Header(new Integer32(messageId), new Integer32(0xFFE3), new OctetString(new byte[] { b }), new Integer32(3));
             _parameters = new SecurityParameters(OctetString.Empty, new Integer32(0), new Integer32(0), userName, OctetString.Empty, OctetString.Empty);
             GetRequestPdu pdu = new GetRequestPdu(
                 requestId,
@@ -112,7 +115,7 @@ namespace Lextm.SharpSnmpLib
             throw new ArgumentException("wrong message body");
         }
 
-        public ISegment[] Discover(int timeout, IPEndPoint receiver, int requestId, int messageId, Socket socket)
+        public ReportMessage Discover(int timeout, IPEndPoint receiver, int requestId, int messageId, Socket socket)
         {
             GetRequestMessage discovery = new GetRequestMessage(
                 VersionCode.V3,
@@ -135,11 +138,8 @@ namespace Lextm.SharpSnmpLib
                     SecurityRecord.Default
                );
             ReportMessage report = (ReportMessage)ByteTool.GetReply(receiver, discovery.ToBytes(), 0x2C6B, timeout, socket);
-            report.Update(this);
-
-            ObjectIdentifier oid = report.Pdu.Variables[0].Id;
-            Counter32 value = (Counter32)report.Pdu.Variables[0].Data;
-            return new ISegment[] { report.Parameters, report.Scope };
+            report.Update(this); // {.1.3.6.1.6.3.15.1.1.4.0} Counter (number of counts)
+            return report;
         }
         
         /// <summary>
