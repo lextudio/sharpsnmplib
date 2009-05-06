@@ -13,7 +13,11 @@ namespace Lextm.SharpSnmpLib
         /// Gets the request ID.
         /// </summary>
         /// <value>The request ID.</value>
-        int RequestId { get; }
+        Integer32 RequestId { get; }
+        
+        Integer32 ErrorStatus { get; }
+
+        Integer32 ErrorIndex { get; }
         /// <summary>
         /// Converts the PDU to index complete message.
         /// </summary>

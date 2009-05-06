@@ -71,7 +71,7 @@ namespace Lextm.SharpSnmpLib
             }
             
             InformRequestPdu pdu = (InformRequestPdu)_pdu;
-            _requestId = pdu.RequestId;
+            _requestId = pdu.RequestId.ToInt32();
             _variables = _pdu.Variables;
             _bytes = body.ToBytes();
         }
@@ -100,7 +100,7 @@ namespace Lextm.SharpSnmpLib
             
             // TODO: make more efficient here.
             InformRequestPdu pdu = (InformRequestPdu)_pdu;
-            new GetResponseMessage(_requestId, _version, receiver.Address, _community, pdu.AllVariables).Send(receiver.Port);
+            new GetResponseMessage(_requestId, _version, _community, pdu.AllVariables).Send(receiver);
         }
 
         /// <summary>

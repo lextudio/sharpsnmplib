@@ -86,9 +86,19 @@ namespace Lextm.SharpSnmpLib
         /// Gets the request ID.
         /// </summary>
         /// <value>The request ID.</value>
-        public int RequestId
+        public Integer32 RequestId
         {
-            get { return -1; }
+            get { throw new NotSupportedException(); }
+        }
+
+        public Integer32 ErrorIndex
+        {
+            get { throw new NotSupportedException(); }
+        }
+
+        public Integer32 ErrorStatus
+        {
+            get { throw new NotSupportedException(); }
         }
 
         /// <summary>

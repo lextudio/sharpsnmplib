@@ -71,8 +71,8 @@ namespace Lextm.SharpSnmpLib.Tests
                 new Scope(
                     OctetString.Empty,
                     OctetString.Empty,
-                    new GetRequestPdu(0x2C6B, ErrorCode.NoError, 0, new List<Variable>())),
-                    null
+                    new GetRequestPdu(new Integer32(0x2C6B), ErrorCode.NoError, new Integer32(0), new List<Variable>())),
+                    Security.SecurityRecord.Default
                );
             Assert.AreEqual(bytes, ByteTool.ConvertByteSting(request.ToBytes()));
         }

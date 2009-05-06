@@ -39,9 +39,9 @@ namespace Lextm.SharpSnmpLib
             _header = Header.Empty;
             _parameters = new SecurityParameters(null, null, null, community, null, null);
             GetRequestPdu pdu = new GetRequestPdu(
-                requestId,
+                new Integer32(requestId),
                 ErrorCode.NoError,
-                0,
+                new Integer32(0),
                 variables);
             _scope = new Scope(null, null, pdu);
             _record = SecurityRecord.Default;
@@ -62,9 +62,9 @@ namespace Lextm.SharpSnmpLib
             _header = new Header(new Integer32(messageId), new Integer32(0xFFE3), new OctetString(new byte[] { b }), new Integer32(3));
             _parameters = new SecurityParameters(OctetString.Empty, new Integer32(0), new Integer32(0), userName, OctetString.Empty, OctetString.Empty);
             GetRequestPdu pdu = new GetRequestPdu(
-                requestId,
+                new Integer32(requestId),
                 ErrorCode.NoError,
-                0,
+                new Integer32(0),
                 variables);
             _scope = new Scope(OctetString.Empty, OctetString.Empty, pdu);
         }
@@ -107,8 +107,9 @@ namespace Lextm.SharpSnmpLib
             if (body.Count == 4)
             {
                 _header = new Header(body[1]);
-                _parameters = _record.Authentication.Decrypt(body[2]);
-                _scope = _record.Privacy.Decrypt(body[3]);
+                // TODO: 
+                _parameters = DefaultAuthenticationProvider.Instance.Decrypt(body[2]);
+                _scope = DefaultPrivacyProvider.Instance.Decrypt(body[3]);
                 return;
             }
 
@@ -134,7 +135,7 @@ namespace Lextm.SharpSnmpLib
                 new Scope(
                     OctetString.Empty,
                     OctetString.Empty,
-                    new GetRequestPdu(requestId, ErrorCode.NoError, 0, new List<Variable>())),
+                    new GetRequestPdu(new Integer32(requestId), ErrorCode.NoError, new Integer32(0), new List<Variable>())),
                     SecurityRecord.Default
                );
             ReportMessage report = (ReportMessage)ByteTool.GetReply(receiver, discovery.ToBytes(), 0x2C6B, timeout, socket);
@@ -243,7 +244,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         public int RequestId
         {
-            get { return _scope.Pdu.RequestId; }
+            get { return _scope.Pdu.RequestId.ToInt32(); }
         }
 
         /// <summary>

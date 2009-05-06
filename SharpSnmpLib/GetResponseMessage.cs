@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
+using Lextm.SharpSnmpLib.Security;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -18,16 +19,13 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public class GetResponseMessage : ISnmpMessage
     {
-        private readonly ISnmpPdu _pdu;
-        private readonly int _requestId;
-        private readonly ErrorCode _errorStatus;
-        private readonly int _errorIndex;
-        private readonly IList<Variable> _variables;
-        private readonly byte[] _bytes;
+        private Header _header;
+        private SecurityParameters _parameters;
+        private Scope _scope;
         private readonly VersionCode _version;
-        private readonly OctetString _community;
-        private readonly IPAddress _receiver;
-        
+        private byte[] _bytes;
+        private SecurityRecord _record;
+       
         /// <summary>
         /// Creates a <see cref="GetResponseMessage"/> with all contents.
         /// </summary>
@@ -36,20 +34,60 @@ namespace Lextm.SharpSnmpLib
         /// <param name="community">Community name.</param>
         /// <param name="requestId">Request ID.</param>
         /// <param name="variables">Variables.</param>
-        public GetResponseMessage(int requestId, VersionCode version, IPAddress receiver, OctetString community, IList<Variable> variables)
+        public GetResponseMessage(int requestId, VersionCode version, OctetString community, IList<Variable> variables)
         {
+            if (version == VersionCode.V3)
+            {
+                throw new ArgumentException("Please use overload constructor for v3", "version");
+            }
+
             _version = version;
-            _receiver = receiver;
-            _community = community;
-            _variables = variables;
+            _header = Header.Empty;
+            _parameters = new SecurityParameters(null, null, null, community, null, null);
             GetResponsePdu pdu = new GetResponsePdu(
                 new Integer32(requestId),
                 ErrorCode.NoError,
                 new Integer32(0),
-                _variables);
-            _requestId = requestId;
-            _bytes = ByteTool.PackMessage(_version, _community, pdu).ToBytes();
+                variables);
+            _scope = new Scope(null, null, pdu);
+            _record = SecurityRecord.Default;
         }
+
+        public GetResponseMessage(int requestId, VersionCode version, int messageId, OctetString userName, IList<Variable> variables, SecurityRecord record)
+        {
+            _version = version;
+            if (record == null)
+            {
+                throw new ArgumentException("record");
+            }
+
+            _record = record;
+            SecurityLevel recordToSecurityLevel = record.ToSecurityLevel();
+            recordToSecurityLevel |= SecurityLevel.Reportable;
+            byte b = (byte)recordToSecurityLevel;
+            _header = new Header(new Integer32(messageId), new Integer32(0xFFE3), new OctetString(new byte[] { b }), new Integer32(3));
+            _parameters = new SecurityParameters(OctetString.Empty, new Integer32(0), new Integer32(0), userName, OctetString.Empty, OctetString.Empty);
+            GetRequestPdu pdu = new GetRequestPdu(
+                new Integer32(requestId),
+                ErrorCode.NoError,
+                new Integer32(0),
+                variables);
+            _scope = new Scope(OctetString.Empty, OctetString.Empty, pdu);
+        }
+
+        internal GetResponseMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, SecurityRecord record)
+        {
+            if (record == null)
+            {
+                throw new ArgumentException("record");
+            }
+
+            _version = version;
+            _header = header;
+            _parameters = parameters;
+            _scope = scope;
+            _record = record;
+        } 
                 
         /// <summary>
         /// Creates a <see cref="GetResponseMessage"/> with a specific <see cref="Sequence"/>.
@@ -61,26 +99,27 @@ namespace Lextm.SharpSnmpLib
             {
                 throw new ArgumentNullException("body");
             }
-            
-            if (body.Count != 3)
+
+            _version = (VersionCode)((Integer32)body[0]).ToInt32();
+
+            if (body.Count == 3)
             {
-                throw new ArgumentException("wrong message body");
+                _header = Header.Empty;
+                _parameters = new SecurityParameters(null, null, null, (OctetString)body[1], null, null);
+                _scope = new Scope(null, null, (ISnmpPdu)body[2]);
+                return;
             }
-            
-            _community = (OctetString)body[1];
-            _version = (VersionCode)((Integer32)body[0]).ToInt32();    
-            _pdu = (ISnmpPdu)body[2];
-            if (_pdu.TypeCode != SnmpType.GetResponsePdu)
+
+            if (body.Count == 4)
             {
-                throw new ArgumentException("wrong message type");
+                _header = new Header(body[1]);
+                // TODO: update here later.
+                _parameters = DefaultAuthenticationProvider.Instance.Decrypt(body[2]);
+                _scope = DefaultPrivacyProvider.Instance.Decrypt(body[3]);
+                return;
             }
-            
-            GetResponsePdu pdu = (GetResponsePdu)_pdu;
-            _requestId = pdu.RequestId;
-            _errorStatus = pdu.ErrorStatus;
-            _errorIndex = pdu.ErrorIndex;
-            _variables = _pdu.Variables;
-            _bytes = body.ToBytes();
+
+            throw new ArgumentException("wrong message body");
         }
         
         /// <summary>
@@ -88,10 +127,9 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="port">Port number.</param>
         /// <returns></returns>
-        public void Send(int port)
+        public void Send(IPEndPoint receiver)
         {
             byte[] bytes = _bytes;
-            IPEndPoint receiver = new IPEndPoint(_receiver, port);
             using (UdpClient udp = new UdpClient(receiver.AddressFamily))
             {
                 udp.Send(bytes, bytes.Length, receiver);
@@ -104,7 +142,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="port">Port number.</param>
         /// <param name="socket">The socket.</param>
-        public void Send(int port, Socket socket)
+        public void Send(IPEndPoint receiver, Socket socket)
         {
             if (socket == null)
             {
@@ -112,7 +150,6 @@ namespace Lextm.SharpSnmpLib
             }
             
             byte[] bytes = _bytes;
-            IPEndPoint receiver = new IPEndPoint(_receiver, port);
             socket.SendTo(bytes, receiver);
         }
         
@@ -121,7 +158,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         public ErrorCode ErrorStatus
         {
-            get { return _errorStatus; }
+            get { return (ErrorCode)_scope.Pdu.ErrorStatus.ToInt32(); }
         }
         
         /// <summary>
@@ -129,7 +166,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         public int ErrorIndex
         {
-            get { return _errorIndex; }
+            get { return _scope.Pdu.ErrorIndex.ToInt32(); }
         }
 
         /// <summary>
@@ -137,7 +174,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         public int RequestId
         {
-            get { return _requestId; }
+            get { return _scope.Pdu.RequestId.ToInt32(); }
         }
         
         /// <summary>
@@ -145,7 +182,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         public IList<Variable> Variables
         {
-            get { return _variables; }
+            get { return _scope.Pdu.Variables; }
         }
         
         /// <summary>
@@ -153,7 +190,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         public ISnmpPdu Pdu 
         {
-            get { return _pdu; }
+            get { return _scope.Pdu; }
         }
 
         public SecurityParameters Parameters
@@ -172,6 +209,11 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public byte[] ToBytes()
         {
+            if (_bytes == null)
+            {
+                _bytes = ByteTool.PackMessage(_version, _header, _parameters, _scope).ToBytes();
+            }
+
             return _bytes;
         }
 
@@ -181,7 +223,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public override string ToString()
         {
-            return "GET response message: version: " + _version + "; " + _community + "; " + _pdu;
+            return "GET response message: version: " + _version + "; " + _parameters.UserName + "; " + _scope.Pdu;
         }
     }
 }

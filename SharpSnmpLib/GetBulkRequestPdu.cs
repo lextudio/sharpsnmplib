@@ -67,12 +67,22 @@ namespace Lextm.SharpSnmpLib
         /// Gets the request ID.
         /// </summary>
         /// <value>The request ID.</value>
-        public int RequestId
+        public Integer32 RequestId
         {
             get
             {
-                return _requestId.ToInt32();
+                return _requestId;
             }
+        }
+
+        public Integer32 ErrorStatus
+        {
+            get { return _nonRepeaters; }
+        }
+
+        public Integer32 ErrorIndex
+        {
+            get { return _maxRepetitions; }
         }
         
         /// <summary>

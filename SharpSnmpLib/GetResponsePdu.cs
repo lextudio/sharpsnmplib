@@ -34,9 +34,9 @@ namespace Lextm.SharpSnmpLib
         /// <param name="errorIndex">Error index.</param>
         /// <param name="sequenceNumber">Sequence number.</param>
         /// <param name="variables">Variables.</param>
-        public GetResponsePdu(Integer32 sequenceNumber, ErrorCode errorStatus, Integer32 errorIndex, IList<Variable> variables)
+        public GetResponsePdu(Integer32 requestId, ErrorCode errorStatus, Integer32 errorIndex, IList<Variable> variables)
         {
-            _requestId = sequenceNumber;
+            _requestId = requestId;
             _errorStatus = new Integer32((int)errorStatus);
             _errorIndex = errorIndex;
             _variables = variables;
@@ -63,25 +63,25 @@ namespace Lextm.SharpSnmpLib
         /// Gets the request ID.
         /// </summary>
         /// <value>The request ID.</value>
-        public int RequestId
+        public Integer32 RequestId
         {
-            get { return _requestId.ToInt32(); }
+            get { return _requestId; }
         }
         
         /// <summary>
         /// Error status.
         /// </summary>
-        public ErrorCode ErrorStatus
+        public Integer32 ErrorStatus
         {
-            get { return (ErrorCode)_errorStatus.ToInt32(); }
+            get { return _errorStatus; }
         }
         
         /// <summary>
         /// Error index.
         /// </summary>
-        public int ErrorIndex
+        public Integer32 ErrorIndex
         {
-            get { return _errorIndex.ToInt32(); }
+            get { return _errorIndex; }
         }
         
         /// <summary>

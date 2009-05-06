@@ -131,7 +131,7 @@ namespace Lextm.SharpSnmpLib
         
         internal int RequestId
         {
-            get { return _scope.Pdu.RequestId; }
+            get { return _scope.Pdu.RequestId.ToInt32(); }
         }
 
         /// <summary>

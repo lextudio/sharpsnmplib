@@ -26,8 +26,8 @@ namespace Lextm.SharpSnmpLib.Tests
             ISnmpPdu pdu = message.Pdu;
             Assert.AreEqual(SnmpType.GetResponsePdu, pdu.TypeCode);
             GetResponsePdu response = (GetResponsePdu)pdu;
-            Assert.AreEqual(ErrorCode.NoError, response.ErrorStatus);
-            Assert.AreEqual(0, response.ErrorIndex);
+            Assert.AreEqual(new Integer32(0), response.ErrorStatus);
+            Assert.AreEqual(0, response.ErrorIndex.ToInt32());
             Assert.AreEqual(1, response.Variables.Count);
             Variable v = response.Variables[0];
             Assert.AreEqual(new uint[] { 1, 3, 6, 1, 2, 1, 1, 6, 0 }, v.Id.ToNumerical());

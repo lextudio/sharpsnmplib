@@ -73,7 +73,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentException("wrong message type");
             }
             
-            _requestId = ((GetBulkRequestPdu)_pdu).RequestId;
+            _requestId = _pdu.RequestId.ToInt32();
             _variables = _pdu.Variables;
             _bytes = body.ToBytes();
         }
