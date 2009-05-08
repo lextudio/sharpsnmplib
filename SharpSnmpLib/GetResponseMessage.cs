@@ -195,12 +195,12 @@ namespace Lextm.SharpSnmpLib
 
         public SecurityParameters Parameters
         {
-            get { return null; }
+            get { return _parameters; }
         }
 
         public Scope Scope
         {
-            get { return null; }
+            get { return _scope; }
         }
         
         /// <summary>

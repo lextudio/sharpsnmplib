@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.IO;
 
 using NUnit.Framework;
+using System.Security.Cryptography;
 
 #pragma warning disable 1591
 namespace Lextm.SharpSnmpLib.Tests
@@ -93,6 +94,41 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual(27144, get.MessageId);
             //Assert.AreEqual(SecurityLevel.None | SecurityLevel.Reportable, get.Level);
             Assert.AreEqual("lextm", get.Community.ToString());
+        }
+
+        [Test]
+        public void TestGetRequestV3Auth()
+        {
+            string bytes ="30 73"+ 
+	"02 01  03 "+
+	"30 0F "+
+		"02  02 35 41 "+
+		"02  03 00 FF E3"+
+        "04 01 05"+ 
+		"02  01 03"+ 
+	"04 2E  "+
+		"30 2C"+ 
+			"04 0D  80 00 1F 88 80 E9 63 00  00 D6 1F F4  49 "+
+			"02 01 0D  "+
+			"02 01 57 "+
+			"04 05 6C 65 78  6C 69 "+
+			"04 0C  1C 6D 67 BF  B2 38 ED 63 DF 0A 05 24  "+
+			"04 00 "+
+	"30 2D  "+
+		"04 0D 80 00  1F 88 80 E9 63 00 00 D6  1F F4 49 "+
+		"04  00 "+
+		"A0 1A 02  02 01 AF 02 01 00 02 01  00 30 0E 30  0C 06 08 2B  06 01 02 01 01 03 00 05  00";
+            IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes);
+            Assert.AreEqual(1, messages.Count);
+            GetRequestMessage get = (GetRequestMessage)messages[0];
+            Assert.AreEqual(13633, get.MessageId);
+            //Assert.AreEqual(SecurityLevel.None | SecurityLevel.Reportable, get.Level);
+            Assert.AreEqual("lexli", get.Community.ToString());
+                        System.Security.Cryptography.MD5CryptoServiceProvider x = new System.Security.Cryptography.MD5CryptoServiceProvider();
+            byte[] bs = System.Text.Encoding.UTF8.GetBytes("testpass");
+            bs = x.ComputeHash(bs);
+
+            Assert.AreEqual(bs, get.Parameters.AuthenticationParameters.GetRaw());
         }
 
         [Test]
