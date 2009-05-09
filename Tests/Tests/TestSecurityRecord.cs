@@ -28,7 +28,7 @@ namespace Lextm.SharpSnmpLib.Tests
         [Test]
         public void TestAuthenticationOnly()
         {
-            Assert.AreEqual(SecurityLevel.Authentication, new SecurityRecord(MD5AuthenticationProvider.Instance, DefaultPrivacyProvider.Instance).ToSecurityLevel());
+            Assert.AreEqual(SecurityLevel.Authentication, new SecurityRecord(new MD5AuthenticationProvider(new OctetString("test")), DefaultPrivacyProvider.Instance).ToSecurityLevel());
         }
     }
 }

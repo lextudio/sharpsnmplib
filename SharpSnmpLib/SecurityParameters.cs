@@ -32,7 +32,7 @@ namespace Lextm.SharpSnmpLib
                 _engineId = value;
             }
         }
-        
+
         private Integer32 _engineBoots;
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Lextm.SharpSnmpLib
                 _engineBoots = value;
             }
         }
-        
+
         private Integer32 _engineTime;
 
         /// <summary>
@@ -68,18 +68,18 @@ namespace Lextm.SharpSnmpLib
                 _engineTime = value;
             }
         }
-        
+
         private OctetString _userName;
 
         /// <summary>
         /// Gets the user name.
         /// </summary>
         /// <value>The user name.</value>
-        public OctetString UserName 
+        public OctetString UserName
         {
             get { return _userName; }
         }
-        
+
         private OctetString _authenticationParameters;
 
         /// <summary>
@@ -88,9 +88,16 @@ namespace Lextm.SharpSnmpLib
         /// <value>The authentication parameters.</value>
         public OctetString AuthenticationParameters
         {
-            get { return _authenticationParameters; }
+            get
+            {
+                return _authenticationParameters;
+            }
+            set
+            {
+                _authenticationParameters = value;
+            }
         }
-        
+
         private OctetString _privacyParameters;
 
         /// <summary>
@@ -135,7 +142,7 @@ namespace Lextm.SharpSnmpLib
             _authenticationParameters = authenticationParameters;
             _privacyParameters = privacyParameters;
         }
-        
+
         public SecurityParameters(string userName)
         {
             _userName = new OctetString(userName);
@@ -168,5 +175,16 @@ namespace Lextm.SharpSnmpLib
         }
 
         #endregion
+
+        internal SecurityParameters Clone()
+        {
+            return new SecurityParameters(
+                _engineId,
+                _engineBoots,
+                _engineTime,
+                _userName,
+                new OctetString(new byte[12]),
+                _privacyParameters);
+        }
     }
 }

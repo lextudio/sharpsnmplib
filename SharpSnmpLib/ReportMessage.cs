@@ -66,7 +66,7 @@ namespace Lextm.SharpSnmpLib
             
             _version = (VersionCode)((Integer32)body[0]).ToInt32();
             _header = new Header((Sequence)body[1]);
-            _parameters = Authentication.Decrypt(body[2]);
+            _parameters = new SecurityParameters((OctetString)body[2]);
             _scope = Privacy.Decrypt(body[3]);
         }
         

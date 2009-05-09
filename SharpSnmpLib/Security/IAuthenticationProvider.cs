@@ -1,6 +1,8 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Text;
+using System;
 
 namespace Lextm.SharpSnmpLib.Security
 {
@@ -18,11 +20,8 @@ namespace Lextm.SharpSnmpLib.Security
             get;
         }
 
-        /// <summary>
-        /// Decrypts the specified data.
-        /// </summary>
-        /// <param name="data">The data.</param>
-        /// <returns></returns>
-        SecurityParameters Decrypt(ISnmpData data);
+        OctetString CleanDigest { get; }
+
+        OctetString ComputeHash(GetRequestMessage message);
     }
 }

@@ -420,7 +420,7 @@ namespace Lextm.SharpSnmpLib
             return result.ToArray();
         }
         
-        internal static string ConvertByteSting(byte[] bytes)
+        internal static string ConvertByteString(byte[] bytes)
         {
             StringBuilder result = new StringBuilder();
             foreach (byte b in bytes)

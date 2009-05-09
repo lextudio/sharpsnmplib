@@ -47,7 +47,7 @@ namespace Lextm.SharpSnmpLib
             _record = SecurityRecord.Default;
         }
 
-        public GetRequestMessage(int requestId, VersionCode version, int messageId, OctetString userName, IList<Variable> variables, SecurityRecord record)
+        public GetRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName, IList<Variable> variables, SecurityRecord record)
         {
             _version = version;
             if (record == null)
@@ -60,7 +60,7 @@ namespace Lextm.SharpSnmpLib
             recordToSecurityLevel |= SecurityLevel.Reportable;
             byte b = (byte)recordToSecurityLevel;
             _header = new Header(new Integer32(messageId), new Integer32(0xFFE3), new OctetString(new byte[] { b }), new Integer32(3));
-            _parameters = new SecurityParameters(OctetString.Empty, new Integer32(0), new Integer32(0), userName, OctetString.Empty, OctetString.Empty);
+            _parameters = new SecurityParameters(OctetString.Empty, new Integer32(0), new Integer32(0), userName, _record.Authentication.CleanDigest, OctetString.Empty);
             GetRequestPdu pdu = new GetRequestPdu(
                 new Integer32(requestId),
                 ErrorCode.NoError,
@@ -81,7 +81,26 @@ namespace Lextm.SharpSnmpLib
             _parameters = parameters;
             _scope = scope;
             _record = record;
-        }        
+        }
+
+        internal GetRequestMessage(GetRequestMessage message)
+        {
+            if (message == null)
+            {
+                throw new ArgumentNullException("message");
+            }
+
+            if (message.Version != VersionCode.V3)
+            {
+                throw new ArgumentException("only v3 message can be cloned", "message");
+            }
+
+            _version = message._version;
+            _header = message._header;//.Clone();
+            _parameters = message._parameters.Clone();
+            _scope = message._scope;//.Clone;
+            _record = SecurityRecord.Default;
+        }
 
         /// <summary>
         /// Creates a <see cref="GetRequestMessage"/> with a specific <see cref="Sequence"/>.
@@ -94,13 +113,14 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("body");
             }
             
-            _version = (VersionCode)((Integer32)body[0]).ToInt32();
+            _version = (VersionCode)(((Integer32)body[0]).ToInt32() - 1);
             
             if (body.Count == 3)
             {
                 _header = Header.Empty;
                 _parameters = new SecurityParameters(null, null, null, (OctetString)body[1], null, null);
                 _scope = new Scope(null, null, (ISnmpPdu)body[2]);
+                _record = SecurityRecord.Default;
                 return;
             }
 
@@ -108,7 +128,7 @@ namespace Lextm.SharpSnmpLib
             {
                 _header = new Header(body[1]);
                 // TODO: 
-                _parameters = DefaultAuthenticationProvider.Instance.Decrypt(body[2]);
+                _parameters = new SecurityParameters((OctetString)body[2]);
                 _scope = DefaultPrivacyProvider.Instance.Decrypt(body[3]);
                 return;
             }
@@ -141,6 +161,11 @@ namespace Lextm.SharpSnmpLib
             ReportMessage report = (ReportMessage)ByteTool.GetReply(receiver, discovery.ToBytes(), 0x2C6B, timeout, socket);
             report.Update(this); // {.1.3.6.1.6.3.15.1.1.4.0} Counter (number of counts)
             return report;
+        }
+
+        public void Authenticate()
+        {
+            _parameters.AuthenticationParameters = _record.Authentication.ComputeHash(this);
         }
         
         /// <summary>
@@ -193,6 +218,7 @@ namespace Lextm.SharpSnmpLib
         public GetResponseMessage GetResponseV3(int timeout, IPEndPoint receiver, Socket udpSocket)
         {
             //Discover(timeout, receiver, udpSocket);
+            Authenticate();
             return ByteTool.GetResponse(receiver, ToBytes(), RequestId, timeout, udpSocket);
         }  
 
@@ -254,21 +280,28 @@ namespace Lextm.SharpSnmpLib
         {
             get { return _parameters.UserName; }
         }
-        
+
+        public SecurityLevel Level
+        {
+            get
+            {
+                return _record.ToSecurityLevel();
+            }
+        }
         /// <summary>
         /// Converts to byte format.
         /// </summary>
         /// <returns></returns>
         public byte[] ToBytes()
         {
-            if (_bytes == null)
-            {                
+            //if (_bytes == null)
+            //{
                 _bytes = ByteTool.PackMessage(_version, _header, _parameters, _scope).ToBytes();
-            }
+            //}
             
             return _bytes;
         }
-        
+
         /// <summary>
         /// PDU.
         /// </summary>

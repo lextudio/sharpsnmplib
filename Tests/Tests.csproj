@@ -72,6 +72,7 @@
     <Compile Include="Tests\TestInteger32.cs" />
     <Compile Include="Tests\TestIP.cs" />
     <Compile Include="Tests\TestLexer.cs" />
+    <Compile Include="Tests\TestMD5AuthenticationProvider.cs" />
     <Compile Include="Tests\TestMessageFactory.cs" />
     <Compile Include="Tests\TestMibDocument.cs" />
     <Compile Include="Tests\TestNoSuchInstance.cs" />

@@ -46,14 +46,14 @@ namespace Lextm.SharpSnmpLib.Security
             get { return "Default: NoAuth"; }
         }
 
-        /// <summary>
-        /// Decrypts the specified data.
-        /// </summary>
-        /// <param name="data">The data.</param>
-        /// <returns></returns>
-        public SecurityParameters Decrypt(ISnmpData data)
+        public OctetString ComputeHash(GetRequestMessage message)
         {
-            return new SecurityParameters((OctetString)data);
+            return OctetString.Empty;
+        }
+
+        public OctetString CleanDigest
+        {
+            get { return OctetString.Empty; }
         }
 
         #endregion

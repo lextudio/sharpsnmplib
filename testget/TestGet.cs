@@ -20,6 +20,8 @@ namespace TestGet
             int retry = 0;
             SecurityLevel level = SecurityLevel.None | SecurityLevel.Reportable;
             string user = string.Empty;
+            string authentication = string.Empty;
+            string authPhrase = string.Empty;
 
             OptionSet p = new OptionSet()
                 .Add("c:", "-c for community name, (default is public)", delegate (string v) { if (v != null) community = v; })
@@ -37,6 +39,8 @@ namespace TestGet
                         level = SecurityLevel.Authentication | SecurityLevel.Privacy | SecurityLevel.Reportable;
                     }
                 })
+                .Add("a:", "-a for authentication method", delegate (string v) { authentication = v; })
+                .Add("A:", "-A for authentication passphrase", delegate(string v) { authPhrase = v; })
                 .Add("u:", "-u for security name", delegate(string v) { user = v; })
                 .Add("h|?|help", "-h, -?, -help for help.", delegate (string v) { show_help = v != null; })
                 .Add("v", "-v to display version number of this application.", delegate (string v) { show_version = v != null; })
@@ -107,9 +111,9 @@ namespace TestGet
                 }
                 
                 IAuthenticationProvider auth;
-                if ((level | SecurityLevel.Authentication) == SecurityLevel.Authentication)
+                if ((level & SecurityLevel.Authentication) == SecurityLevel.Authentication)
                 {
-                    auth = DefaultAuthenticationProvider.Instance;
+                    auth = GetAuthenticationProviderByName(authentication, authPhrase);
                 }
                 else
                 {
@@ -117,7 +121,7 @@ namespace TestGet
                 }
 
                 IPrivacyProvider priv;
-                if ((level | SecurityLevel.Privacy) == SecurityLevel.Privacy)
+                if ((level & SecurityLevel.Privacy) == SecurityLevel.Privacy)
                 {
                     priv = DefaultPrivacyProvider.Instance;
                 }
@@ -128,7 +132,7 @@ namespace TestGet
 
                 SecurityRecord record = new SecurityRecord(auth, priv);
                 Socket socket = Messenger.GetSocket(receiver.AddressFamily);
-                GetRequestMessage request = new GetRequestMessage(0, VersionCode.V3, 100, new OctetString(user), vList, record);
+                GetRequestMessage request = new GetRequestMessage(VersionCode.V3, 100, 0, new OctetString(user), vList, record);
                 request.Discover(timeout, receiver, 1, 101, socket);
                 GetResponseMessage response = request.GetResponseV3(timeout, receiver, socket); 
             }
@@ -143,6 +147,16 @@ namespace TestGet
                     Console.WriteLine(ex);
                 }
             }
+        }
+
+        private static IAuthenticationProvider GetAuthenticationProviderByName(string authentication, string phrase)
+        {
+            if (authentication.ToUpper() == "MD5")
+            {
+                return new MD5AuthenticationProvider(new OctetString(phrase));
+            }
+
+            throw new ArgumentException("unknown name", "authentication");
         }
     }
 }

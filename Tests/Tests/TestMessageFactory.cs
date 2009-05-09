@@ -13,6 +13,7 @@ using System.IO;
 
 using NUnit.Framework;
 using System.Security.Cryptography;
+using Lextm.SharpSnmpLib.Security;
 
 #pragma warning disable 1591
 namespace Lextm.SharpSnmpLib.Tests
@@ -124,11 +125,9 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual(13633, get.MessageId);
             //Assert.AreEqual(SecurityLevel.None | SecurityLevel.Reportable, get.Level);
             Assert.AreEqual("lexli", get.Community.ToString());
-                        System.Security.Cryptography.MD5CryptoServiceProvider x = new System.Security.Cryptography.MD5CryptoServiceProvider();
-            byte[] bs = System.Text.Encoding.UTF8.GetBytes("testpass");
-            bs = x.ComputeHash(bs);
+            OctetString digest = new MD5AuthenticationProvider(new OctetString("testpass")).ComputeHash(get);
 
-            Assert.AreEqual(bs, get.Parameters.AuthenticationParameters.GetRaw());
+            Assert.AreEqual(digest, get.Parameters.AuthenticationParameters);
         }
 
         [Test]

@@ -114,7 +114,7 @@ namespace Lextm.SharpSnmpLib
             {
                 _header = new Header(body[1]);
                 // TODO: update here later.
-                _parameters = DefaultAuthenticationProvider.Instance.Decrypt(body[2]);
+                _parameters = new SecurityParameters((OctetString)body[2]);
                 _scope = DefaultPrivacyProvider.Instance.Decrypt(body[3]);
                 return;
             }
