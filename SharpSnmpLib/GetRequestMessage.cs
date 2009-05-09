@@ -136,7 +136,7 @@ namespace Lextm.SharpSnmpLib
             throw new ArgumentException("wrong message body");
         }
 
-        public ReportMessage Discover(int timeout, IPEndPoint receiver, int requestId, int messageId, Socket socket)
+        public ReportMessage Discover(int timeout, IPEndPoint receiver, int requestId, int messageId)
         {
             GetRequestMessage discovery = new GetRequestMessage(
                 VersionCode.V3,
@@ -158,7 +158,7 @@ namespace Lextm.SharpSnmpLib
                     new GetRequestPdu(new Integer32(requestId), ErrorCode.NoError, new Integer32(0), new List<Variable>())),
                     SecurityRecord.Default
                );
-            ReportMessage report = (ReportMessage)ByteTool.GetReply(receiver, discovery.ToBytes(), 0x2C6B, timeout, socket);
+            ReportMessage report = (ReportMessage)ByteTool.GetReply(receiver, discovery.ToBytes(), 0x2C6B, timeout, Messenger.GetSocket(receiver));
             report.Update(this); // {.1.3.6.1.6.3.15.1.1.4.0} Counter (number of counts)
             return report;
         }
@@ -200,7 +200,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public GetResponseMessage GetResponse(int timeout, IPEndPoint receiver)
         {
-            return ByteTool.GetResponse(receiver, _bytes, RequestId, timeout);
+            return GetResponse(timeout, receiver, Messenger.GetSocket(receiver));
         }
 
         /// <summary>
@@ -212,15 +212,13 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public GetResponseMessage GetResponse(int timeout, IPEndPoint receiver, Socket udpSocket)
         {
-            return ByteTool.GetResponse(receiver, _bytes, RequestId, timeout, udpSocket);
-        }
-        
-        public GetResponseMessage GetResponseV3(int timeout, IPEndPoint receiver, Socket udpSocket)
-        {
-            //Discover(timeout, receiver, udpSocket);
-            Authenticate();
+            if (Version == VersionCode.V3)
+            {
+                Authenticate();
+            }
+            
             return ByteTool.GetResponse(receiver, ToBytes(), RequestId, timeout, udpSocket);
-        }  
+        }
 
         /// <summary>
         /// Sends this <see cref="GetRequestMessage"/> and handles the response from agent asynchronously.

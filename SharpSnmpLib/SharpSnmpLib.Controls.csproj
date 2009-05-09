@@ -71,7 +71,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="MessageParams.cs" />
-    <Compile Include="Messenger.cs" />
     <None Include="license.txt" />
     <None Include="sharpsnmplib.snk" />
     <EmbeddedResource Include="Listener.resx">

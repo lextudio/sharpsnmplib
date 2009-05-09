@@ -12,16 +12,16 @@ namespace Lextm.SharpSnmpLib.Security
     public interface IAuthenticationProvider
     {
         /// <summary>
-        /// Gets the name.
+        /// Gets the clean digest.
         /// </summary>
-        /// <value>The name.</value>
-        string Name
-        {
-            get;
-        }
-
+        /// <value>The clean digest.</value>
         OctetString CleanDigest { get; }
 
+        /// <summary>
+        /// Computes the hash.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <returns></returns>
         OctetString ComputeHash(GetRequestMessage message);
     }
 }

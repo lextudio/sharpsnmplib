@@ -39,18 +39,19 @@ namespace Lextm.SharpSnmpLib.Security
         #region IAuthenticationProvider Members
 
         /// <summary>
-        /// Provider name.
+        /// Computes the hash.
         /// </summary>
-        public string Name
-        {
-            get { return "Default: NoAuth"; }
-        }
-
+        /// <param name="message">The message.</param>
+        /// <returns></returns>
         public OctetString ComputeHash(GetRequestMessage message)
         {
             return OctetString.Empty;
         }
 
+        /// <summary>
+        /// Gets the clean digest.
+        /// </summary>
+        /// <value>The clean digest.</value>
         public OctetString CleanDigest
         {
             get { return OctetString.Empty; }

@@ -59,21 +59,21 @@ namespace Lextm.SharpSnmpLib
             }
         }
 
-        /// <summary>
-        /// Sends an SNMP message and wait for its responses.
-        /// </summary>
-        /// <param name="receiver">The IP address and port of the target to talk to.</param>
-        /// <param name="bytes">The byte array representing the SNMP message.</param>
-        /// <param name="number">The <see cref="GetResponseMessage.RequestId"/> of the SNMP message.</param>
-        /// <param name="timeout">The timeout above which, if the response is not received, a <see cref="SharpTimeoutException"/> is thrown.</param>
-        /// <returns>The response message (<see cref="GetResponseMessage"/>).</returns>
-        internal static GetResponseMessage GetResponse(IPEndPoint receiver, byte[] bytes, int number, int timeout)
-        {
-            using (Socket udpSocket = new Socket(receiver.AddressFamily, SocketType.Dgram, ProtocolType.Udp))
-            {
-                return GetResponse(receiver, bytes, number, timeout, udpSocket);
-            }
-        }
+        ///// <summary>
+        ///// Sends an SNMP message and wait for its responses.
+        ///// </summary>
+        ///// <param name="receiver">The IP address and port of the target to talk to.</param>
+        ///// <param name="bytes">The byte array representing the SNMP message.</param>
+        ///// <param name="number">The <see cref="GetResponseMessage.RequestId"/> of the SNMP message.</param>
+        ///// <param name="timeout">The timeout above which, if the response is not received, a <see cref="SharpTimeoutException"/> is thrown.</param>
+        ///// <returns>The response message (<see cref="GetResponseMessage"/>).</returns>
+        //internal static GetResponseMessage GetResponse(IPEndPoint receiver, byte[] bytes, int number, int timeout)
+        //{
+        //    using (Socket udpSocket = new Socket(receiver.AddressFamily, SocketType.Dgram, ProtocolType.Udp))
+        //    {
+        //        return GetResponse(receiver, bytes, number, timeout, udpSocket);
+        //    }
+        //}
 
         /// <summary>
         /// Sends an SNMP message and wait for its responses.

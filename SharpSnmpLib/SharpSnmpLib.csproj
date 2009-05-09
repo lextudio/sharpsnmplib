@@ -81,6 +81,7 @@
     <Compile Include="ISnmpPdu.cs" />
     <Compile Include="MessageFactory.cs" />
     <Compile Include="MessagetReceivedEventArgs.cs" />
+    <Compile Include="Messenger.cs" />
     <Compile Include="Mib\DefinitionType.cs" />
     <Compile Include="Mib\IConstruct.cs" />
     <Compile Include="Mib\IDefinition.cs" />

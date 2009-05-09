@@ -25,15 +25,16 @@ namespace Lextm.SharpSnmpLib
     {
         private static readonly Socket udp = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
         private static Socket udpV6;
+        private const string STR_CannotUseIPV6AsTheOSDoesNotSupportIt = "cannot use IP v6 as the OS does not support it";
 
         /// <summary>
         /// Gets the socket.
         /// </summary>
-        /// <param name="family">The address family.</param>
+        /// <param name="endpoint">The endpoint.</param>
         /// <returns></returns>
-        public static Socket GetSocket(AddressFamily family)
+        public static Socket GetSocket(EndPoint endpoint)
         {
-            if (family == AddressFamily.InterNetwork)
+            if (endpoint.AddressFamily == AddressFamily.InterNetwork)
             {
                 return udp;
             }
@@ -59,7 +60,7 @@ namespace Lextm.SharpSnmpLib
             }
 
             GetRequestMessage message = new GetRequestMessage(RequestCounter.NextCount, version, community, variables);
-            GetResponseMessage response = message.GetResponse(timeout, endpoint, GetSocket(endpoint.AddressFamily));
+            GetResponseMessage response = message.GetResponse(timeout, endpoint, GetSocket(endpoint));
             if (response.ErrorStatus != ErrorCode.NoError)
             {
                 throw SharpErrorException.Create(
@@ -88,7 +89,7 @@ namespace Lextm.SharpSnmpLib
             }
 
             SetRequestMessage message = new SetRequestMessage(RequestCounter.NextCount, version, community, variables);
-            GetResponseMessage response = message.GetResponse(timeout, endpoint, GetSocket(endpoint.AddressFamily));
+            GetResponseMessage response = message.GetResponse(timeout, endpoint, GetSocket(endpoint));
             if (response.ErrorStatus != ErrorCode.NoError)
             {
                 throw SharpErrorException.Create(
@@ -205,7 +206,7 @@ namespace Lextm.SharpSnmpLib
                 community,
                 variables);
 
-            GetResponseMessage response = message.GetResponse(timeout, endpoint, GetSocket(endpoint.AddressFamily));
+            GetResponseMessage response = message.GetResponse(timeout, endpoint, GetSocket(endpoint));
             next = response.ErrorStatus == ErrorCode.NoSuchName ? null : response.Variables[0];
             return response.ErrorStatus != ErrorCode.NoSuchName;
         }
@@ -297,7 +298,7 @@ namespace Lextm.SharpSnmpLib
                 maxRepetitions,
                 variables);
 
-            GetResponseMessage response = message.GetResponse(timeout, endpoint, GetSocket(endpoint.AddressFamily));
+            GetResponseMessage response = message.GetResponse(timeout, endpoint, GetSocket(endpoint));
             if (response.ErrorStatus != ErrorCode.NoError)
             {
                 throw SharpErrorException.Create(
@@ -325,7 +326,7 @@ namespace Lextm.SharpSnmpLib
         public static void SendTrapV1(EndPoint receiver, IPAddress agent, OctetString community, ObjectIdentifier enterprise, GenericCode generic, int specific, uint timestamp, IList<Variable> variables)
         {
             TrapV1Message message = new TrapV1Message(VersionCode.V1, agent, community, enterprise, generic, specific, timestamp, variables);
-            message.Send(receiver, GetSocket(receiver.AddressFamily));
+            message.Send(receiver, GetSocket(receiver));
         }
 
         /// <summary>
@@ -347,7 +348,7 @@ namespace Lextm.SharpSnmpLib
             }
 
             TrapV2Message message = new TrapV2Message(requestId, version, community, enterprise, timestamp, variables);
-            message.Send(receiver, GetSocket(receiver.AddressFamily));
+            message.Send(receiver, GetSocket(receiver));
         }
 
         /// <summary>
@@ -365,7 +366,7 @@ namespace Lextm.SharpSnmpLib
         public static void SendInform(int requestId, VersionCode version, IPEndPoint receiver, OctetString community, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables, int timeout)
         {
             InformRequestMessage message = new InformRequestMessage(requestId, version, community, enterprise, timestamp, variables);
-            GetResponseMessage response = message.GetResponse(timeout, receiver, GetSocket(receiver.AddressFamily));
+            GetResponseMessage response = message.GetResponse(timeout, receiver, GetSocket(receiver));
             if (response.ErrorStatus != ErrorCode.NoError)
             {
                 throw SharpErrorException.Create(
@@ -438,7 +439,7 @@ namespace Lextm.SharpSnmpLib
             {
                 if (!Socket.OSSupportsIPv6)
                 {
-                    throw new InvalidOperationException(Listener.STR_CannotUseIPV6AsTheOSDoesNotSupportIt);
+                    throw new InvalidOperationException(STR_CannotUseIPV6AsTheOSDoesNotSupportIt);
                 }
 
                 lock (root)

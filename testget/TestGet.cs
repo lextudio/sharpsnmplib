@@ -131,10 +131,9 @@ namespace TestGet
                 }
 
                 SecurityRecord record = new SecurityRecord(auth, priv);
-                Socket socket = Messenger.GetSocket(receiver.AddressFamily);
                 GetRequestMessage request = new GetRequestMessage(VersionCode.V3, 100, 0, new OctetString(user), vList, record);
-                request.Discover(timeout, receiver, 1, 101, socket);
-                GetResponseMessage response = request.GetResponseV3(timeout, receiver, socket); 
+                request.Discover(timeout, receiver, 1, 101);
+                GetResponseMessage response = request.GetResponse(timeout, receiver); 
             }
             catch (SharpSnmpException ex)
             {

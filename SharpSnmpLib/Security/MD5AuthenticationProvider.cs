@@ -15,31 +15,6 @@ namespace Lextm.SharpSnmpLib.Security
             _password = phrase.GetRaw();
         }
 
-        #region IAuthenticationProvider Members
-
-        public string Name
-        {
-            get { return "MD5 authentication provider"; }
-        }
-
-        public SecurityParameters Decrypt(ISnmpData data)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
-
-        public OctetString ComputeHash(GetRequestMessage message)
-        {
-            byte[] key = PasswordToKey(_password, message.Parameters.EngineId.GetRaw());
-            HMACMD5 md5 = new HMACMD5(key);
-            byte[] buffer = message.ToBytes();
-            byte[] hash = md5.ComputeHash(buffer);
-            byte[] result = new byte[12];
-            Array.Copy(hash, result, result.Length);
-            return new OctetString(result);
-        }
-
         internal static byte[] PasswordToKey(byte[] userPassword, byte[] engineID)
         {
             // key length has to be at least 8 bytes long (RFC3414)
@@ -76,10 +51,20 @@ namespace Lextm.SharpSnmpLib.Security
 
         #region IAuthenticationProvider Members
 
-
         public OctetString CleanDigest
         {
             get { return new OctetString(new byte[12]); }
+        }
+
+        public OctetString ComputeHash(GetRequestMessage message)
+        {
+            byte[] key = PasswordToKey(_password, message.Parameters.EngineId.GetRaw());
+            HMACMD5 md5 = new HMACMD5(key);
+            byte[] buffer = message.ToBytes();
+            byte[] hash = md5.ComputeHash(buffer);
+            byte[] result = new byte[12];
+            Array.Copy(hash, result, result.Length);
+            return new OctetString(result);
         }
 
         #endregion
