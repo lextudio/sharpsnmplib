@@ -134,6 +134,10 @@ namespace TestGet
                 GetRequestMessage request = new GetRequestMessage(VersionCode.V3, 100, 0, new OctetString(user), vList, record);
                 request.Discover(timeout, receiver, 1, 101);
                 GetResponseMessage response = request.GetResponse(timeout, receiver); 
+                foreach (Variable v in response.Variables)
+                {
+                    Console.WriteLine(v);
+                }
             }
             catch (SharpSnmpException ex)
             {
@@ -153,6 +157,11 @@ namespace TestGet
             if (authentication.ToUpper() == "MD5")
             {
                 return new MD5AuthenticationProvider(new OctetString(phrase));
+            }
+            
+            if (authentication.ToUpper() == "SHA")
+            {
+                return new SHA1AuthenticationProvider(new OctetString(phrase));
             }
 
             throw new ArgumentException("unknown name", "authentication");
