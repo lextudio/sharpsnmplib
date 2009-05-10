@@ -7,7 +7,6 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 
-using System;
 using System.Collections.Generic;
 using NUnit.Framework;
 
@@ -32,7 +31,7 @@ namespace Lextm.SharpSnmpLib.Tests
                                           new TimeTicks(16352),
                                           vList);
             byte[] bytes = ByteTool.PackMessage(VersionCode.V1, new OctetString("public"), pdu).ToBytes();
-            TrapV1Message message = (TrapV1Message)MessageFactory.ParseMessages(bytes)[0];
+            TrapV1Message message = (TrapV1Message)MessageFactory.ParseMessages(bytes, new Lextm.SharpSnmpLib.Security.SecurityRegistry())[0];
             Assert.AreEqual("127.0.0.1", message.AgentAddress.ToString());
             Assert.AreEqual(GenericCode.EnterpriseSpecific, message.Generic);
             Assert.AreEqual(12, message.Specific);

@@ -1,8 +1,7 @@
-﻿using Lextm.SharpSnmpLib;
-using System.IO;
+﻿using System.IO;
 using Lextm.SharpSnmpLib.Mib;
 using NUnit.Framework;
-using System;
+
 #pragma warning disable 1591
 namespace Lextm.SharpSnmpLib.Tests
 {

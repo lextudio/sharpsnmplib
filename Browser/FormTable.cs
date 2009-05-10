@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
-using System.Threading;
 using System.Globalization;
+using System.Threading;
+using System.Windows.Forms;
 using Lextm.SharpSnmpLib.Mib;
 
 namespace Lextm.SharpSnmpLib.Browser

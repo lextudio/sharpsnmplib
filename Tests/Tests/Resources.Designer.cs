@@ -8,10 +8,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Lextm.SharpSnmpLib.Tests {
-    using System;
-    
-    
+namespace Lextm.SharpSnmpLib.Tests
+{
+
+
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>

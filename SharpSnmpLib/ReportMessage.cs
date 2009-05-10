@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Net.Sockets;
 /*
  * Created by SharpDevelop.
  * User: lextm
@@ -7,10 +11,6 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using Lextm.SharpSnmpLib.Security;
-using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Sockets;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -67,7 +67,7 @@ namespace Lextm.SharpSnmpLib
             _version = (VersionCode)((Integer32)body[0]).ToInt32();
             _header = new Header((Sequence)body[1]);
             _parameters = new SecurityParameters((OctetString)body[2]);
-            _scope = Privacy.Decrypt(body[3]);
+            _scope = Privacy.Decrypt(body[3], _parameters);
         }
         
         /// <summary>
@@ -114,7 +114,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public GetResponseMessage GetResponse(int timeout, IPEndPoint receiver)
         {
-            return ByteTool.GetResponse(receiver, _bytes, RequestId, timeout, Messenger.GetSocket(receiver));
+            return ByteTool.GetResponse(receiver, _bytes, RequestId, timeout, new SecurityRegistry(), Messenger.GetSocket(receiver));
         }
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public GetResponseMessage GetResponse(int timeout, IPEndPoint receiver, Socket socket)
         {
-            return ByteTool.GetResponse(receiver, _bytes, RequestId, timeout, socket);
+            return ByteTool.GetResponse(receiver, _bytes, RequestId, timeout, new SecurityRegistry(), socket);
         }
         
         internal int RequestId

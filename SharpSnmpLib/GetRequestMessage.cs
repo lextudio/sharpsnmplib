@@ -1,10 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
 using System.Net;
 using System.Net.Sockets;
-using System.Threading;
 using Lextm.SharpSnmpLib.Security;
 
 namespace Lextm.SharpSnmpLib
@@ -129,7 +126,7 @@ namespace Lextm.SharpSnmpLib
                 _header = new Header(body[1]);
                 // TODO: 
                 _parameters = new SecurityParameters((OctetString)body[2]);
-                _scope = DefaultPrivacyProvider.Instance.Decrypt(body[3]);
+                _scope = DefaultPrivacyProvider.Instance.Decrypt(body[3], _parameters);
                 return;
             }
 
@@ -158,7 +155,7 @@ namespace Lextm.SharpSnmpLib
                     new GetRequestPdu(new Integer32(requestId), ErrorCode.NoError, new Integer32(0), new List<Variable>())),
                     SecurityRecord.Default
                );
-            ReportMessage report = (ReportMessage)ByteTool.GetReply(receiver, discovery.ToBytes(), 0x2C6B, timeout, Messenger.GetSocket(receiver));
+            ReportMessage report = (ReportMessage)ByteTool.GetReply(receiver, discovery.ToBytes(), 0x2C6B, timeout, new SecurityRegistry(), Messenger.GetSocket(receiver));
             report.Update(this); // {.1.3.6.1.6.3.15.1.1.4.0} Counter (number of counts)
             return report;
         }
@@ -212,36 +209,38 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public GetResponseMessage GetResponse(int timeout, IPEndPoint receiver, Socket udpSocket)
         {
+            SecurityRegistry registry = new SecurityRegistry();
             if (Version == VersionCode.V3)
             {
                 Authenticate();
+                registry.Add(_parameters.UserName, _record);
             }
-            
-            return ByteTool.GetResponse(receiver, ToBytes(), RequestId, timeout, udpSocket);
+
+            return ByteTool.GetResponse(receiver, ToBytes(), RequestId, timeout, registry, udpSocket);
         }
 
-        /// <summary>
-        /// Sends this <see cref="GetRequestMessage"/> and handles the response from agent asynchronously.
-        /// </summary>
-        /// <param name="timeout">Timeout.</param>
-        /// <param name="receiver">Agent.</param>
-        /// <param name="callback">The callback called once the response has been received.</param>
-        public void BeginGetResponse(int timeout, IPEndPoint receiver, GetResponseCallback callback)
-        {
-            ByteTool.BeginGetResponse(receiver, _bytes, RequestId, timeout, callback);
-        }
+        ///// <summary>
+        ///// Sends this <see cref="GetRequestMessage"/> and handles the response from agent asynchronously.
+        ///// </summary>
+        ///// <param name="timeout">Timeout.</param>
+        ///// <param name="receiver">Agent.</param>
+        ///// <param name="callback">The callback called once the response has been received.</param>
+        //public void BeginGetResponse(int timeout, IPEndPoint receiver, GetResponseCallback callback)
+        //{
+        //    ByteTool.BeginGetResponse(receiver, _bytes, RequestId, timeout, callback);
+        //}
 
-        /// <summary>
-        /// Sends this <see cref="GetRequestMessage"/> and handles the response from agent asynchronously.
-        /// </summary>
-        /// <param name="timeout">Timeout.</param>
-        /// <param name="receiver">Agent.</param>
-        /// <param name="callback">The callback called once the response has been received.</param>
-        /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
-        public void BeginGetResponse(int timeout, IPEndPoint receiver, GetResponseCallback callback, Socket udpSocket)
-        {
-            ByteTool.BeginGetResponse(receiver, _bytes, RequestId, timeout, callback, udpSocket);
-        }
+        ///// <summary>
+        ///// Sends this <see cref="GetRequestMessage"/> and handles the response from agent asynchronously.
+        ///// </summary>
+        ///// <param name="timeout">Timeout.</param>
+        ///// <param name="receiver">Agent.</param>
+        ///// <param name="callback">The callback called once the response has been received.</param>
+        ///// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
+        //public void BeginGetResponse(int timeout, IPEndPoint receiver, GetResponseCallback callback, Socket udpSocket)
+        //{
+        //    ByteTool.BeginGetResponse(receiver, _bytes, RequestId, timeout, callback, udpSocket);
+        //}
 
         /// <summary>
         /// Sends this <see cref="GetRequestMessage"/> and handles the response from agent asynchronously.
@@ -294,7 +293,7 @@ namespace Lextm.SharpSnmpLib
         {
             //if (_bytes == null)
             //{
-                _bytes = ByteTool.PackMessage(_version, _header, _parameters, _scope).ToBytes();
+                _bytes = ByteTool.PackMessage(_version, _record.Privacy, _header, _parameters, _scope).ToBytes();
             //}
             
             return _bytes;

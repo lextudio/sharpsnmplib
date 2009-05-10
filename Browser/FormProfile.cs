@@ -1,8 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.Net;
 using System.Windows.Forms;
-using System.Globalization;
 
 namespace Lextm.SharpSnmpLib.Browser
 {

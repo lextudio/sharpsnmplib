@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Lextm.SharpSnmpLib.Security
 {
@@ -55,6 +53,17 @@ namespace Lextm.SharpSnmpLib.Security
         public OctetString CleanDigest
         {
             get { return OctetString.Empty; }
+        }
+
+        /// <summary>
+        /// Converts password to key.
+        /// </summary>
+        /// <param name="password"></param>
+        /// <param name="engineId"></param>
+        /// <returns></returns>
+        public byte[] PasswordToKey(byte[] password, byte[] engineId)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

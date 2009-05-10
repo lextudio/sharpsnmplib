@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using Lextm.SharpSnmpLib.Security;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -163,7 +164,7 @@ namespace Lextm.SharpSnmpLib
         {
             ByteTool.Capture(param.GetBytes(), param.Number);
 
-            foreach (ISnmpMessage message in MessageFactory.ParseMessages(param.GetBytes(), 0, param.Number))
+            foreach (ISnmpMessage message in MessageFactory.ParseMessages(param.GetBytes(), 0, param.Number, new SecurityRegistry()))
             {
                 if (message.Pdu.TypeCode != SnmpType.GetResponsePdu)
                 {

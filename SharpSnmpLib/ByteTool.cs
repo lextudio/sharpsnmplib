@@ -17,6 +17,7 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using Lextm.SharpSnmpLib.Security;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -84,7 +85,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="timeout">The timeout above which, if the response is not received, a <see cref="SharpTimeoutException"/> is thrown.</param>
         /// <param name="socket">The UDP <see cref="Socket"/> to use to send/receive.</param>
         /// <returns>The response message (<see cref="GetResponseMessage"/>).</returns>
-        internal static GetResponseMessage GetResponse(IPEndPoint receiver, byte[] bytes, int number, int timeout, Socket socket)
+        internal static GetResponseMessage GetResponse(IPEndPoint receiver, byte[] bytes, int number, int timeout, SecurityRegistry registry, Socket socket)
         {
             if (socket == null)
             {
@@ -118,7 +119,7 @@ namespace Lextm.SharpSnmpLib
             // Passing 'count' is not necessary because ParseMessages should ignore it, but it offer extra safety (and would avoid a bug if parsing >1 response).
             using (MemoryStream m = new MemoryStream(reply, 0, count, false))
             {
-                message = MessageFactory.ParseMessages(m)[0];
+                message = MessageFactory.ParseMessages(m, registry)[0];
             }
 
             if (message.Pdu.TypeCode != SnmpType.GetResponsePdu)
@@ -136,7 +137,7 @@ namespace Lextm.SharpSnmpLib
             return response;
         }
 
-        internal static ISnmpMessage GetReply(IPEndPoint receiver, byte[] bytes, int number, int timeout, Socket socket)
+        internal static ISnmpMessage GetReply(IPEndPoint receiver, byte[] bytes, int number, int timeout, SecurityRegistry registry, Socket socket)
         {
             if (socket == null)
             {
@@ -170,7 +171,7 @@ namespace Lextm.SharpSnmpLib
             // Passing 'count' is not necessary because ParseMessages should ignore it, but it offer extra safety (and would avoid a bug if parsing >1 response).
             using (MemoryStream m = new MemoryStream(reply, 0, count, false))
             {
-                message = MessageFactory.ParseMessages(m)[0];
+                message = MessageFactory.ParseMessages(m, registry)[0];
             }
 
             // TODO: disbled for v3.
@@ -189,52 +190,52 @@ namespace Lextm.SharpSnmpLib
             return message;
         }
         
-        /// <summary>
-        /// Sends an SNMP message and wait for its responses asynchronously.
-        /// </summary>
-        /// <param name="receiver">The IP address and port of the target to talk to.</param>
-        /// <param name="bytes">The byte array representing the SNMP message.</param>
-        /// <param name="number">The <see cref="GetResponseMessage.RequestId"/> of the SNMP message.</param>
-        /// <param name="timeout">The timeout above which, if the response is not received, a <see cref="SharpTimeoutException"/> is thrown.</param>
-        /// <param name="callback">The callback called once the response has been received.</param>
-        internal static void BeginGetResponse(IPEndPoint receiver, byte[] bytes, int number, int timeout, GetResponseCallback callback)
-        {
-            using (Socket udpSocket = new Socket(receiver.AddressFamily, SocketType.Dgram, ProtocolType.Udp))
-            {
-                BeginGetResponse(receiver, bytes, number, timeout, callback, udpSocket);
-            }
-        }
+        ///// <summary>
+        ///// Sends an SNMP message and wait for its responses asynchronously.
+        ///// </summary>
+        ///// <param name="receiver">The IP address and port of the target to talk to.</param>
+        ///// <param name="bytes">The byte array representing the SNMP message.</param>
+        ///// <param name="number">The <see cref="GetResponseMessage.RequestId"/> of the SNMP message.</param>
+        ///// <param name="timeout">The timeout above which, if the response is not received, a <see cref="SharpTimeoutException"/> is thrown.</param>
+        ///// <param name="callback">The callback called once the response has been received.</param>
+        //internal static void BeginGetResponse(IPEndPoint receiver, byte[] bytes, int number, int timeout, GetResponseCallback callback)
+        //{
+        //    using (Socket udpSocket = new Socket(receiver.AddressFamily, SocketType.Dgram, ProtocolType.Udp))
+        //    {
+        //        BeginGetResponse(receiver, bytes, number, timeout, callback, udpSocket);
+        //    }
+        //}
 
-        /// <summary>
-        /// Sends an SNMP message and wait for its responses asynchronously.
-        /// </summary>
-        /// <param name="receiver">The IP address and port of the target to talk to.</param>
-        /// <param name="bytes">The byte array representing the SNMP message.</param>
-        /// <param name="number">The <see cref="GetResponseMessage.RequestId"/> of the SNMP message.</param>
-        /// <param name="timeout">The timeout above which, if the response is not received, a <see cref="SharpTimeoutException"/> is thrown.</param>
-        /// <param name="callback">The callback called once the response has been received.</param>
-        /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
-        internal static void BeginGetResponse(EndPoint receiver, byte[] bytes, int number, int timeout, GetResponseCallback callback, Socket udpSocket)
-        {
-            Capture(bytes); // log request
+        ///// <summary>
+        ///// Sends an SNMP message and wait for its responses asynchronously.
+        ///// </summary>
+        ///// <param name="receiver">The IP address and port of the target to talk to.</param>
+        ///// <param name="bytes">The byte array representing the SNMP message.</param>
+        ///// <param name="number">The <see cref="GetResponseMessage.RequestId"/> of the SNMP message.</param>
+        ///// <param name="timeout">The timeout above which, if the response is not received, a <see cref="SharpTimeoutException"/> is thrown.</param>
+        ///// <param name="callback">The callback called once the response has been received.</param>
+        ///// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
+        //internal static void BeginGetResponse(EndPoint receiver, byte[] bytes, int number, int timeout, GetResponseCallback callback, Socket udpSocket)
+        //{
+        //    Capture(bytes); // log request
 
-            #if CF
-            int bufSize = 8192;
-            #else
-            int bufSize = udpSocket.ReceiveBufferSize;
-            #endif
-            byte[] reply = new byte[bufSize];
+        //    #if CF
+        //    int bufSize = 8192;
+        //    #else
+        //    int bufSize = udpSocket.ReceiveBufferSize;
+        //    #endif
+        //    byte[] reply = new byte[bufSize];
 
-            // Whatever you change, try to keep the Send and the BeginReceive close to each other.
-            udpSocket.SendTo(bytes, receiver);
-            udpSocket.BeginReceive(
-                reply,
-                0,
-                bufSize,
-                SocketFlags.None,
-                GetResponseInternalCallback,
-                new object[] { udpSocket, reply, receiver, timeout, callback, number });
-        }
+        //    // Whatever you change, try to keep the Send and the BeginReceive close to each other.
+        //    udpSocket.SendTo(bytes, receiver);
+        //    udpSocket.BeginReceive(
+        //        reply,
+        //        0,
+        //        bufSize,
+        //        SocketFlags.None,
+        //        GetResponseInternalCallback,
+        //        new object[] { udpSocket, reply, receiver, timeout, callback, number });
+        //}
 
         /// <summary>
         /// Sends an SNMP message and wait for its responses asynchronously.
@@ -267,56 +268,56 @@ namespace Lextm.SharpSnmpLib
                 new object[] { udpSocket, reply, receiver, timeout, callback });
         }
 
-        private static void GetResponseInternalCallback(IAsyncResult result)
-        {
-            object[] data = (object[])result.AsyncState;
-            Socket udpSocket = (Socket)data[0];
-            byte[] reply = (byte[])data[1];
-            IPEndPoint receiver = (IPEndPoint)data[2];
-            int timeout = (int)data[3];
-            GetResponseCallback callback = (GetResponseCallback)data[4];
-            int number = (int)data[5];
+        //private static void GetResponseInternalCallback(IAsyncResult result)
+        //{
+        //    object[] data = (object[])result.AsyncState;
+        //    Socket udpSocket = (Socket)data[0];
+        //    byte[] reply = (byte[])data[1];
+        //    IPEndPoint receiver = (IPEndPoint)data[2];
+        //    int timeout = (int)data[3];
+        //    GetResponseCallback callback = (GetResponseCallback)data[4];
+        //    int number = (int)data[5];
 
-            result.AsyncWaitHandle.WaitOne(timeout, false);
-            if (!result.IsCompleted)
-            {
-                // Timeout -> return null. Can't throw exception in this thread.
-                // throw SharpTimeoutException.Create(receiver.Address, timeout);
-                callback(receiver.Address, null);
-                return;
-            }
+        //    result.AsyncWaitHandle.WaitOne(timeout, false);
+        //    if (!result.IsCompleted)
+        //    {
+        //        // Timeout -> return null. Can't throw exception in this thread.
+        //        // throw SharpTimeoutException.Create(receiver.Address, timeout);
+        //        callback(receiver.Address, null);
+        //        return;
+        //    }
 
-            int count = udpSocket.EndReceive(result);
+        //    int count = udpSocket.EndReceive(result);
 
-            ISnmpMessage message;
+        //    ISnmpMessage message;
             
-            // Passing 'count' is not necessary because ParseMessages should ignore it, but it offer extra safety (and would avoid a bug if parsing >1 response).
-            using (MemoryStream m = new MemoryStream(reply, 0, count, false))
-            {
-                message = MessageFactory.ParseMessages(m)[0];
-            }
+        //    // Passing 'count' is not necessary because ParseMessages should ignore it, but it offer extra safety (and would avoid a bug if parsing >1 response).
+        //    using (MemoryStream m = new MemoryStream(reply, 0, count, false))
+        //    {
+        //        message = MessageFactory.ParseMessages(m, registry)[0];
+        //    }
 
-            if (message.Pdu.TypeCode != SnmpType.GetResponsePdu)
-            {
-                // Wrong response type -> return null. Can't throw exception in this thread.
-                // throw SharpOperationException.Create("wrong response type", receiver.Address);
-                callback(receiver.Address, null);
-                return;
-            }
+        //    if (message.Pdu.TypeCode != SnmpType.GetResponsePdu)
+        //    {
+        //        // Wrong response type -> return null. Can't throw exception in this thread.
+        //        // throw SharpOperationException.Create("wrong response type", receiver.Address);
+        //        callback(receiver.Address, null);
+        //        return;
+        //    }
 
-            GetResponseMessage response = (GetResponseMessage)message;
-            if (response.RequestId != number)
-            {
-                // Wrong response sequence -> return null. Can't throw exception in this thread.
-                // throw SharpOperationException.Create("wrong response sequence", receiver.Address);
-                callback(receiver.Address, null);
-                return;
-            }
+        //    GetResponseMessage response = (GetResponseMessage)message;
+        //    if (response.RequestId != number)
+        //    {
+        //        // Wrong response sequence -> return null. Can't throw exception in this thread.
+        //        // throw SharpOperationException.Create("wrong response sequence", receiver.Address);
+        //        callback(receiver.Address, null);
+        //        return;
+        //    }
 
-            Capture(reply); // log response
+        //    Capture(reply); // log response
 
-            callback(receiver.Address, response);
-        }
+        //    callback(receiver.Address, response);
+        //}
 
         private static void GetResponseRawInternalCallback(IAsyncResult result)
         {
@@ -654,6 +655,16 @@ namespace Lextm.SharpSnmpLib
                 collection.Add(segment.GetData(version));
             }
             
+            return new Sequence(collection);
+        }
+
+        internal static Sequence PackMessage(VersionCode version, IPrivacyProvider privacy, Header header, SecurityParameters parameters, Scope scope)
+        {
+            List<ISnmpData> collection = new List<ISnmpData>(4);
+            collection.Add(new Integer32((int)version + 1));
+            collection.Add(header.GetData(version));
+            collection.Add(parameters.GetData(version));
+            collection.Add(privacy.Encrypt(scope, parameters));
             return new Sequence(collection);
         }
     }

@@ -8,7 +8,6 @@
  */
 
 using Lextm.SharpSnmpLib.Mib;
-using System;
 using NUnit.Framework;
 
 

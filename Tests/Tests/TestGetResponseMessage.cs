@@ -7,7 +7,6 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 
-using System;
 using System.IO;
 using NUnit.Framework;
 
@@ -21,7 +20,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestMethod()
         {
             MemoryStream m = new MemoryStream(Resources.getresponse, false);
-            ISnmpMessage message = MessageFactory.ParseMessages(m)[0];
+            ISnmpMessage message = MessageFactory.ParseMessages(m, new Lextm.SharpSnmpLib.Security.SecurityRegistry())[0];
             Assert.AreEqual(SnmpType.GetResponsePdu, message.Pdu.TypeCode);
             ISnmpPdu pdu = message.Pdu;
             Assert.AreEqual(SnmpType.GetResponsePdu, pdu.TypeCode);

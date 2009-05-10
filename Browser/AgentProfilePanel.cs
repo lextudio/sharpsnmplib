@@ -3,9 +3,8 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Net;
 using System.Windows.Forms;
-
-using WeifenLuo.WinFormsUI.Docking;
 using Microsoft.Practices.Unity;
+using WeifenLuo.WinFormsUI.Docking;
 
 namespace Lextm.SharpSnmpLib.Browser
 {

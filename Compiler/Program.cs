@@ -7,11 +7,11 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 
-using System.Configuration;
-using Microsoft.Practices.Unity.Configuration;
 using System;
+using System.Configuration;
 using System.Windows.Forms;
 using Microsoft.Practices.Unity;
+using Microsoft.Practices.Unity.Configuration;
 
 namespace Lextm.SharpSnmpLib.Compiler
 {

@@ -9,11 +9,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows.Forms;
 using Lextm.SharpSnmpLib.Mib;
 using Microsoft.Practices.Unity;
 using WeifenLuo.WinFormsUI.Docking;
-using System.Diagnostics;
 
 namespace Lextm.SharpSnmpLib.Browser
 {

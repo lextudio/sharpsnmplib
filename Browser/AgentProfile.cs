@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using Lextm.SharpSnmpLib.Mib;
-using System.Net;
 using System.Diagnostics;
+using System.Net;
+using Lextm.SharpSnmpLib.Mib;
 
 namespace Lextm.SharpSnmpLib.Browser
 {

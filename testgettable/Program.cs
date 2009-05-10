@@ -1,7 +1,7 @@
 using System;
-using Lextm.SharpSnmpLib;
-using System.Net;
 using System.IO;
+using System.Net;
+using Lextm.SharpSnmpLib;
 using Lextm.SharpSnmpLib.Mib;
 
 namespace TestGetTable

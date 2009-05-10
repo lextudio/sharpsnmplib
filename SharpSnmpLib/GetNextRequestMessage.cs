@@ -9,9 +9,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Net;
 using System.Net.Sockets;
+using Lextm.SharpSnmpLib.Security;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -140,7 +140,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public GetResponseMessage GetResponse(int timeout, IPEndPoint receiver)
         {
-            return ByteTool.GetResponse(receiver, _bytes, RequestId, timeout, Messenger.GetSocket(receiver));
+            return ByteTool.GetResponse(receiver, _bytes, RequestId, timeout, new SecurityRegistry(), Messenger.GetSocket(receiver));
         }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public GetResponseMessage GetResponse(int timeout, IPEndPoint receiver, Socket socket)
         {
-            return ByteTool.GetResponse(receiver, _bytes, RequestId, timeout, socket);
+            return ByteTool.GetResponse(receiver, _bytes, RequestId, timeout, new SecurityRegistry(), socket);
         }
     }
 }

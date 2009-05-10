@@ -1,6 +1,6 @@
-﻿using NUnit.Framework;
+﻿using System;
 using Lextm.SharpSnmpLib.Security;
-using System;
+using NUnit.Framework;
 
 namespace Lextm.SharpSnmpLib.Tests
 {
@@ -22,7 +22,7 @@ namespace Lextm.SharpSnmpLib.Tests
         [Test]
         public void TestException()
         {
-            Assert.Throws<ArgumentException>(delegate { new SecurityRecord(DefaultAuthenticationProvider.Instance, DESPrivacyProvider.Instance); });
+            Assert.Throws<ArgumentException>(delegate { new SecurityRecord(DefaultAuthenticationProvider.Instance, new DESPrivacyProvider(new OctetString(""), DefaultAuthenticationProvider.Instance)); });
         }
 
         [Test]

@@ -10,8 +10,8 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using WeifenLuo.WinFormsUI.Docking;
 using Microsoft.Practices.Unity;
+using WeifenLuo.WinFormsUI.Docking;
 
 namespace Lextm.SharpSnmpLib.Compiler
 {

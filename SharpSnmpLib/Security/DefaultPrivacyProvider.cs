@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿
 namespace Lextm.SharpSnmpLib.Security
 {
     /// <summary>
@@ -39,20 +36,12 @@ namespace Lextm.SharpSnmpLib.Security
         #region IPrivacyProvider Members
 
         /// <summary>
-        /// Gets the name.
-        /// </summary>
-        /// <value>The name.</value>
-        public string Name
-        {
-            get { return "Default: NoPriv"; }
-        }
-
-        /// <summary>
         /// Decrypts the specified data.
         /// </summary>
         /// <param name="data">The data.</param>
+        /// <param name="parameters">The parameters.</param>
         /// <returns></returns>
-        public Scope Decrypt(ISnmpData data)
+        public Scope Decrypt(ISnmpData data, SecurityParameters parameters)
         {
             return new Scope((Sequence)data);
         }
@@ -62,9 +51,9 @@ namespace Lextm.SharpSnmpLib.Security
         /// </summary>
         /// <param name="scope">The scope.</param>
         /// <returns></returns>
-        public ISnmpData Encrypt(Scope scope)
+        public ISnmpData Encrypt(Scope scope, SecurityParameters parameters)
         {
-            return new OctetString(scope.ToSequence().ToBytes());
+            return scope.ToSequence();
         }
 
         #endregion

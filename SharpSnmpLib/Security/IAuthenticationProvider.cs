@@ -1,8 +1,4 @@
 ﻿
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System;
 
 namespace Lextm.SharpSnmpLib.Security
 {
@@ -23,5 +19,13 @@ namespace Lextm.SharpSnmpLib.Security
         /// <param name="message">The message.</param>
         /// <returns></returns>
         OctetString ComputeHash(GetRequestMessage message);
+
+        /// <summary>
+        /// Converts password to key.
+        /// </summary>
+        /// <param name="_phrase">The password phrase.</param>
+        /// <param name="octetString">The engine ID.</param>
+        /// <returns></returns>
+        byte[] PasswordToKey(byte[] password, byte[] engineId);
     }
 }

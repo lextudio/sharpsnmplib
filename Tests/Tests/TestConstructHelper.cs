@@ -8,10 +8,9 @@
  */
 
 using System;
+using System.IO;
 using Lextm.SharpSnmpLib.Mib;
 using NUnit.Framework;
-
-using System.IO;
 
 namespace Lextm.SharpSnmpLib.Tests
 {

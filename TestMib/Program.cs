@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Lextm.SharpSnmpLib.Mib;
 using Lextm.SharpSnmpLib.Tests;
-using System.IO;
 
 namespace TestMib
 {

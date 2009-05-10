@@ -8,9 +8,9 @@
  */
 using System;
 using System.Collections.Generic;
-using Lextm.SharpSnmpLib;
-using System.Net;
 using System.IO;
+using System.Net;
+using Lextm.SharpSnmpLib;
 
 namespace TestWalk
 {

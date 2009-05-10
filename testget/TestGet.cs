@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using Lextm.SharpSnmpLib;
-using Mono.Options;
 using Lextm.SharpSnmpLib.Security;
+using Mono.Options;
 
 namespace TestGet
 {
@@ -22,10 +22,13 @@ namespace TestGet
             string user = string.Empty;
             string authentication = string.Empty;
             string authPhrase = string.Empty;
+            string privacy = string.Empty;
+            string privPhrase = string.Empty;
 
             OptionSet p = new OptionSet()
                 .Add("c:", "-c for community name, (default is public)", delegate (string v) { if (v != null) community = v; })
-                .Add("l:", "-l for security level, (default is noAuthNoPriv)", delegate (string v) {
+                .Add("l:", "-l for security level, (default is noAuthNoPriv)", delegate (string v) 
+                {
                     if (v == "noAuthNoPriv")
                     {
                         level = SecurityLevel.None | SecurityLevel.Reportable;
@@ -41,12 +44,18 @@ namespace TestGet
                 })
                 .Add("a:", "-a for authentication method", delegate (string v) { authentication = v; })
                 .Add("A:", "-A for authentication passphrase", delegate(string v) { authPhrase = v; })
+                .Add("x:", "-x for privacy method", delegate (string v) { privacy = v; })
+                .Add("X:", "-X for privacy passphrase", delegate (string v) { privPhrase = v; })
                 .Add("u:", "-u for security name", delegate(string v) { user = v; })
                 .Add("h|?|help", "-h, -?, -help for help.", delegate (string v) { show_help = v != null; })
-                .Add("v", "-v to display version number of this application.", delegate (string v) { show_version = v != null; })
+                .Add("V", "-V to display version number of this application.", delegate (string v) { show_version = v != null; })
                 .Add("t:", "-t for timeout value (unit is second).", delegate (string v) { timeout = int.Parse(v) * 1000; })
                 .Add("r:", "-r for retry count (default is 0)", delegate (string v) { retry = int.Parse(v); })
-                .Add("V|version:", "-V or -version for SNMP version (v1, v2 are currently supported)", delegate (string v) { version = (VersionCode)Enum.Parse(typeof(VersionCode), v, true); });
+                .Add("v|version:", "-v for SNMP version (v1, v2 are currently supported)", delegate (string v) 
+                {
+                    int count = int.Parse(v);
+                    version = (VersionCode)(count - 1); 
+                });
         
             List<string> extra = p.Parse (args);
         
@@ -123,7 +132,7 @@ namespace TestGet
                 IPrivacyProvider priv;
                 if ((level & SecurityLevel.Privacy) == SecurityLevel.Privacy)
                 {
-                    priv = DefaultPrivacyProvider.Instance;
+                    priv = new DESPrivacyProvider(new OctetString(privPhrase), auth);
                 }
                 else
                 {

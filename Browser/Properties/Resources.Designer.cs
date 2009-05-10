@@ -8,10 +8,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Lextm.SharpSnmpLib.Browser.Properties {
-    using System;
-    
-    
+namespace Lextm.SharpSnmpLib.Browser.Properties
+{
+
+
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>

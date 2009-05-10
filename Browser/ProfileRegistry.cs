@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Xml;
-using System.Net;
 using System.Diagnostics;
+using System.IO;
+using System.Net;
+using System.Xml;
 
 namespace Lextm.SharpSnmpLib.Browser
 {

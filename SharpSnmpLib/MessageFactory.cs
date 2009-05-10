@@ -10,6 +10,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Lextm.SharpSnmpLib.Security;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -23,9 +24,9 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="bytes">Byte string.</param>
         /// <returns></returns>
-        public static IList<ISnmpMessage> ParseMessages(string bytes)
+        public static IList<ISnmpMessage> ParseMessages(string bytes, SecurityRegistry registry)
         {
-            return ParseMessages(ByteTool.ConvertByteString(bytes));
+            return ParseMessages(ByteTool.ConvertByteString(bytes), registry);
         }
         
         /// <summary>
@@ -35,9 +36,9 @@ namespace Lextm.SharpSnmpLib
         /// <param name="index">Index.</param>
         /// <param name="count">Byte count.</param>
         /// <returns></returns>
-        public static IList<ISnmpMessage> ParseMessages(byte[] buffer, int index, int count)
+        public static IList<ISnmpMessage> ParseMessages(byte[] buffer, int index, int count, SecurityRegistry registry)
         {
-            return ParseMessages(new MemoryStream(buffer, index, count, false));
+            return ParseMessages(new MemoryStream(buffer, index, count, false), registry);
         }
         
         /// <summary>
@@ -45,14 +46,14 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="buffer">Buffer.</param>
         /// <returns></returns>
-        public static IList<ISnmpMessage> ParseMessages(byte[] buffer)
+        public static IList<ISnmpMessage> ParseMessages(byte[] buffer, SecurityRegistry registry)
         {
             if (buffer == null)
             {
                 throw new ArgumentNullException("buffer");
             }
 
-            return ParseMessages(buffer, 0, buffer.Length);
+            return ParseMessages(buffer, 0, buffer.Length, registry);
         }
         
         /// <summary>
@@ -60,7 +61,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="stream">Stream.</param>
         /// <returns></returns>
-        public static IList<ISnmpMessage> ParseMessages(Stream stream)
+        public static IList<ISnmpMessage> ParseMessages(Stream stream, SecurityRegistry registry)
         {
             if (stream == null)
             {
@@ -71,7 +72,7 @@ namespace Lextm.SharpSnmpLib
             int first;
             while ((first = stream.ReadByte()) != -1)
             {
-                ISnmpMessage message = ParseMessage(first, stream);
+                ISnmpMessage message = ParseMessage(first, stream, registry);
                 if (message != null)
                 {
                     result.Add(message);
@@ -81,8 +82,8 @@ namespace Lextm.SharpSnmpLib
             
             return result;
         }
-        
-        private static ISnmpMessage ParseMessage(int first, Stream stream)
+
+        private static ISnmpMessage ParseMessage(int first, Stream stream, SecurityRegistry registry)
         {
             ISnmpData array;
             try
@@ -93,7 +94,7 @@ namespace Lextm.SharpSnmpLib
             {
                 throw new SharpSnmpException("Invalid message bytes found. Use tracing to analyze the bytes.");
             }
-            
+
             if (array == null)
             {
                 return null;
@@ -103,68 +104,48 @@ namespace Lextm.SharpSnmpLib
             {
                 throw new ArgumentException("not an SNMP message");
             }
-            
+
             Sequence body = (Sequence)array;
-            if (body.Count == 3)
+            if (body.Count != 3 && body.Count != 4)
             {
-                ISnmpData pdu = body[2];
-
-                switch (pdu.TypeCode)
-                {
-                    case SnmpType.TrapV1Pdu:
-                        return new TrapV1Message(body);
-                    case SnmpType.TrapV2Pdu:
-                        return new TrapV2Message(body);
-                    case SnmpType.GetRequestPdu:
-                        return new GetRequestMessage(body);
-                    case SnmpType.GetResponsePdu:
-                        return new GetResponseMessage(body);
-                    case SnmpType.SetRequestPdu:
-                        return new SetRequestMessage(body);
-                    case SnmpType.GetNextRequestPdu:
-                        return new GetNextRequestMessage(body);
-                    case SnmpType.GetBulkRequestPdu:
-                        return new GetBulkRequestMessage(body);
-                    case SnmpType.ReportPdu:
-                        return new ReportMessage(body);
-                    case SnmpType.InformRequestPdu:
-                        return new InformRequestMessage(body);
-                    default:
-                        throw new SharpSnmpException("unsupported pdu: " + pdu.TypeCode);
-                }
+                throw new SharpSnmpException("not an SNMP message");
             }
 
-            if (body.Count == 4)
+            VersionCode version = (VersionCode)(((Integer32)body[0]).ToInt32() - 1);
+            Header header = body.Count == 3 ? Header.Empty : new Header(body[1]);
+            SecurityParameters parameters = body.Count == 3
+                ? new SecurityParameters(null, null, null, (OctetString)body[1], null, null)
+                : new SecurityParameters((OctetString)body[2]);
+            SecurityRecord record = body.Count == 3 ? SecurityRecord.Default :
+                registry.Find(parameters.UserName);
+            Scope scope = body.Count == 3
+                ? new Scope(null, null, (ISnmpPdu)body[2])
+                : record.Privacy.Decrypt(body[3], parameters);
+            ISnmpPdu pdu = scope.Pdu;
+
+            switch (pdu.TypeCode)
             {
-                Sequence inner = (Sequence)body[3];
-                ISnmpData pdu = inner[2];
-
-                switch (pdu.TypeCode)
-                {
-                    case SnmpType.TrapV1Pdu:
-                        return new TrapV1Message(body);
-                    case SnmpType.TrapV2Pdu:
-                        return new TrapV2Message(body);
-                    case SnmpType.GetRequestPdu:
-                        return new GetRequestMessage(body);
-                    case SnmpType.GetResponsePdu:
-                        return new GetResponseMessage(body);
-                    case SnmpType.SetRequestPdu:
-                        return new SetRequestMessage(body);
-                    case SnmpType.GetNextRequestPdu:
-                        return new GetNextRequestMessage(body);
-                    case SnmpType.GetBulkRequestPdu:
-                        return new GetBulkRequestMessage(body);
-                    case SnmpType.ReportPdu:
-                        return new ReportMessage(body);
-                    case SnmpType.InformRequestPdu:
-                        return new InformRequestMessage(body);
-                    default:
-                        throw new SharpSnmpException("unsupported pdu: " + pdu.TypeCode);
-                }
+                case SnmpType.TrapV1Pdu:
+                    return new TrapV1Message(body);
+                case SnmpType.TrapV2Pdu:
+                    return new TrapV2Message(body);
+                case SnmpType.GetRequestPdu:
+                    return new GetRequestMessage(version, header, parameters, scope, record);
+                case SnmpType.GetResponsePdu:
+                    return new GetResponseMessage(body);
+                case SnmpType.SetRequestPdu:
+                    return new SetRequestMessage(body);
+                case SnmpType.GetNextRequestPdu:
+                    return new GetNextRequestMessage(body);
+                case SnmpType.GetBulkRequestPdu:
+                    return new GetBulkRequestMessage(body);
+                case SnmpType.ReportPdu:
+                    return new ReportMessage(body);
+                case SnmpType.InformRequestPdu:
+                    return new InformRequestMessage(body);
+                default:
+                    throw new SharpSnmpException("unsupported pdu: " + pdu.TypeCode);
             }
-
-            throw new SharpSnmpException("not an SNMP message");
         }
     }
 }

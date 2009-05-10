@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Security.Cryptography;
 using System.IO;
+using System.Security.Cryptography;
 
 namespace Lextm.SharpSnmpLib.Security
 {
@@ -15,7 +13,7 @@ namespace Lextm.SharpSnmpLib.Security
             _password = phrase.GetRaw();
         }
 
-        internal static byte[] PasswordToKey(byte[] userPassword, byte[] engineID)
+        public byte[] PasswordToKey(byte[] userPassword, byte[] engineID)
         {
             // key length has to be at least 8 bytes long (RFC3414)
             if (userPassword == null || userPassword.Length < 8)
