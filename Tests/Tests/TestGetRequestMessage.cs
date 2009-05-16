@@ -132,10 +132,10 @@ namespace Lextm.SharpSnmpLib.Tests
                     new OctetString(ByteTool.ConvertByteString("80 00 1F 88 80 E9 63 00  00 D6 1F F4  49")),
                     OctetString.Empty,
                     new GetRequestPdu(
-                        new Integer32(431),
+                        new Integer32(0x3A25),
                         ErrorCode.NoError,
                         new Integer32(0),
-                        new List<Variable>(1) { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0"), new Null()) })),
+                        new List<Variable>(1) { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0")) })),
                 new SecurityRecord(
                     new MD5AuthenticationProvider(new OctetString("testpass")), 
                     new DESPrivacyProvider(new OctetString("passtest"), auth)));

@@ -213,7 +213,6 @@ namespace Lextm.SharpSnmpLib.Security
 
             // decode encrypted packet
             byte[] decrypted = Decrypt(bytes, pkey, parameters.EngineBoots.ToInt32(), parameters.EngineTime.ToInt32(), parameters.PrivacyParameters.GetRaw());
-            //string test = ByteTool.ConvertByteString(decrypted); 
             return new Scope((Sequence)DataFactory.CreateSnmpData(decrypted));
         }
 
@@ -236,7 +235,6 @@ namespace Lextm.SharpSnmpLib.Security
             }
 
             bytes = stream.ToArray();
-            string test = ByteTool.ConvertByteString(bytes);
             byte[] encrypted = Encrypt(bytes, pkey, parameters.EngineBoots.ToInt32(), parameters.EngineTime.ToInt32(), parameters.PrivacyParameters.GetRaw());
             return new OctetString(encrypted);
         }

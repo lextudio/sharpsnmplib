@@ -132,7 +132,7 @@ namespace Lextm.SharpSnmpLib
                 case SnmpType.GetRequestPdu:
                     return new GetRequestMessage(version, header, parameters, scope, record);
                 case SnmpType.GetResponsePdu:
-                    return new GetResponseMessage(body);
+                    return new GetResponseMessage(version, header, parameters, scope, record);
                 case SnmpType.SetRequestPdu:
                     return new SetRequestMessage(body);
                 case SnmpType.GetNextRequestPdu:

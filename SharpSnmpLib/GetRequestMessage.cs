@@ -57,7 +57,14 @@ namespace Lextm.SharpSnmpLib
             recordToSecurityLevel |= SecurityLevel.Reportable;
             byte b = (byte)recordToSecurityLevel;
             _header = new Header(new Integer32(messageId), new Integer32(0xFFE3), new OctetString(new byte[] { b }), new Integer32(3));
-            _parameters = new SecurityParameters(OctetString.Empty, new Integer32(0), new Integer32(0), userName, _record.Authentication.CleanDigest, OctetString.Empty);
+            // TODO: add salt later.
+            _parameters = new SecurityParameters(
+                OctetString.Empty, 
+                new Integer32(0), 
+                new Integer32(0), 
+                userName, 
+                _record.Authentication.CleanDigest, 
+                new OctetString(ByteTool.ConvertByteString("00 00 00  01 44 2C A3 B5")));
             GetRequestPdu pdu = new GetRequestPdu(
                 new Integer32(requestId),
                 ErrorCode.NoError,
