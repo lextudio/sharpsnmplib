@@ -33,7 +33,11 @@ namespace Lextm.SharpSnmpLib
             _contextName = contextName;
             _pdu = pdu;
         }
-        
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Scope"/> class.
+        /// </summary>
+        /// <param name="pdu">The pdu.</param>
         public Scope(ISnmpPdu pdu)
         {
             _pdu = pdu;
@@ -65,12 +69,20 @@ namespace Lextm.SharpSnmpLib
             return Pdu;
         }
 
+        /// <summary>
+        /// Gets or sets the name of the context.
+        /// </summary>
+        /// <value>The name of the context.</value>
         public OctetString ContextName
         {
             get { return _contextName; }
             set { _contextName = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the context engine id.
+        /// </summary>
+        /// <value>The context engine id.</value>
         public OctetString ContextEngineId
         {
             get { return _contextEngineId; }

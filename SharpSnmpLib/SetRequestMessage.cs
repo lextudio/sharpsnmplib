@@ -47,7 +47,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public GetResponseMessage GetResponse(int timeout, IPEndPoint receiver)
         {
-            return ByteTool.GetResponse(receiver, _bytes, RequestId, timeout, new SecurityRegistry(), Messenger.GetSocket(receiver));
+            return ByteTool.GetResponse(receiver, _bytes, RequestId, timeout, new UserRegistry(), Messenger.GetSocket(receiver));
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public GetResponseMessage GetResponse(int timeout, IPEndPoint receiver, Socket socket)
         {
-            return ByteTool.GetResponse(receiver, _bytes, RequestId, timeout, new SecurityRegistry(), socket);
+            return ByteTool.GetResponse(receiver, _bytes, RequestId, timeout, new UserRegistry(), socket);
         }
         
         /// <summary>
@@ -136,11 +136,19 @@ namespace Lextm.SharpSnmpLib
             }
         }
 
+        /// <summary>
+        /// Gets the parameters.
+        /// </summary>
+        /// <value>The parameters.</value>
         public SecurityParameters Parameters
         {
             get { return null; }
         }
 
+        /// <summary>
+        /// Gets the scope.
+        /// </summary>
+        /// <value>The scope.</value>
         public Scope Scope
         {
             get { return null; }

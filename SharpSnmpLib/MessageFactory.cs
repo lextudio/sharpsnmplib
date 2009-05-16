@@ -23,30 +23,33 @@ namespace Lextm.SharpSnmpLib
         /// Creates <see cref="ISnmpMessage"/> instances from a string.
         /// </summary>
         /// <param name="bytes">Byte string.</param>
+        /// <param name="registry">The registry.</param>
         /// <returns></returns>
-        public static IList<ISnmpMessage> ParseMessages(string bytes, SecurityRegistry registry)
+        public static IList<ISnmpMessage> ParseMessages(string bytes, UserRegistry registry)
         {
             return ParseMessages(ByteTool.ConvertByteString(bytes), registry);
         }
-        
+
         /// <summary>
         /// Creates <see cref="ISnmpMessage"/> instances from buffer.
         /// </summary>
         /// <param name="buffer">Buffer.</param>
         /// <param name="index">Index.</param>
         /// <param name="count">Byte count.</param>
+        /// <param name="registry">The registry.</param>
         /// <returns></returns>
-        public static IList<ISnmpMessage> ParseMessages(byte[] buffer, int index, int count, SecurityRegistry registry)
+        public static IList<ISnmpMessage> ParseMessages(byte[] buffer, int index, int count, UserRegistry registry)
         {
             return ParseMessages(new MemoryStream(buffer, index, count, false), registry);
         }
-        
+
         /// <summary>
         /// Creates <see cref="ISnmpMessage"/> instances from buffer.
         /// </summary>
         /// <param name="buffer">Buffer.</param>
+        /// <param name="registry">The registry.</param>
         /// <returns></returns>
-        public static IList<ISnmpMessage> ParseMessages(byte[] buffer, SecurityRegistry registry)
+        public static IList<ISnmpMessage> ParseMessages(byte[] buffer, UserRegistry registry)
         {
             if (buffer == null)
             {
@@ -55,13 +58,14 @@ namespace Lextm.SharpSnmpLib
 
             return ParseMessages(buffer, 0, buffer.Length, registry);
         }
-        
+
         /// <summary>
         /// Creates <see cref="ISnmpMessage"/> instances from stream.
         /// </summary>
         /// <param name="stream">Stream.</param>
+        /// <param name="registry">The registry.</param>
         /// <returns></returns>
-        public static IList<ISnmpMessage> ParseMessages(Stream stream, SecurityRegistry registry)
+        public static IList<ISnmpMessage> ParseMessages(Stream stream, UserRegistry registry)
         {
             if (stream == null)
             {
@@ -83,7 +87,7 @@ namespace Lextm.SharpSnmpLib
             return result;
         }
 
-        private static ISnmpMessage ParseMessage(int first, Stream stream, SecurityRegistry registry)
+        private static ISnmpMessage ParseMessage(int first, Stream stream, UserRegistry registry)
         {
             ISnmpData array;
             try
@@ -116,7 +120,7 @@ namespace Lextm.SharpSnmpLib
             SecurityParameters parameters = body.Count == 3
                 ? new SecurityParameters(null, null, null, (OctetString)body[1], null, null)
                 : new SecurityParameters((OctetString)body[2]);
-            SecurityRecord record = body.Count == 3 ? SecurityRecord.Default :
+            ProviderPair record = body.Count == 3 ? ProviderPair.Default :
                 registry.Find(parameters.UserName);
             Scope scope = body.Count == 3
                 ? new Scope(null, null, (ISnmpPdu)body[2])
@@ -126,23 +130,23 @@ namespace Lextm.SharpSnmpLib
             switch (pdu.TypeCode)
             {
                 case SnmpType.TrapV1Pdu:
-                    return new TrapV1Message(body);
+                    return new TrapV1Message(body);//(version, header, parameters, scope, record);
                 case SnmpType.TrapV2Pdu:
-                    return new TrapV2Message(body);
+                    return new TrapV2Message(body);//(version, header, parameters, scope, record);
                 case SnmpType.GetRequestPdu:
                     return new GetRequestMessage(version, header, parameters, scope, record);
                 case SnmpType.GetResponsePdu:
                     return new GetResponseMessage(version, header, parameters, scope, record);
                 case SnmpType.SetRequestPdu:
-                    return new SetRequestMessage(body);
+                    return new SetRequestMessage(body);//(version, header, parameters, scope, record);
                 case SnmpType.GetNextRequestPdu:
-                    return new GetNextRequestMessage(body);
+                    return new GetNextRequestMessage(body);//(version, header, parameters, scope, record);
                 case SnmpType.GetBulkRequestPdu:
-                    return new GetBulkRequestMessage(body);
+                    return new GetBulkRequestMessage(body);//(version, header, parameters, scope, record);
                 case SnmpType.ReportPdu:
-                    return new ReportMessage(body);
+                    return new ReportMessage(body);//(version, header, parameters, scope, record);
                 case SnmpType.InformRequestPdu:
-                    return new InformRequestMessage(body);
+                    return new InformRequestMessage(body);//(version, header, parameters, scope, record);
                 default:
                     throw new SharpSnmpException("unsupported pdu: " + pdu.TypeCode);
             }

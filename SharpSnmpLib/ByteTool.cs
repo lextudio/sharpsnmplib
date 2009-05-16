@@ -83,9 +83,12 @@ namespace Lextm.SharpSnmpLib
         /// <param name="bytes">The byte array representing the SNMP message.</param>
         /// <param name="number">The <see cref="GetResponseMessage.RequestId"/> of the SNMP message.</param>
         /// <param name="timeout">The timeout above which, if the response is not received, a <see cref="SharpTimeoutException"/> is thrown.</param>
+        /// <param name="registry">The registry.</param>
         /// <param name="socket">The UDP <see cref="Socket"/> to use to send/receive.</param>
-        /// <returns>The response message (<see cref="GetResponseMessage"/>).</returns>
-        internal static GetResponseMessage GetResponse(IPEndPoint receiver, byte[] bytes, int number, int timeout, SecurityRegistry registry, Socket socket)
+        /// <returns>
+        /// The response message (<see cref="GetResponseMessage"/>).
+        /// </returns>
+        internal static GetResponseMessage GetResponse(IPEndPoint receiver, byte[] bytes, int number, int timeout, UserRegistry registry, Socket socket)
         {
             if (socket == null)
             {
@@ -137,7 +140,7 @@ namespace Lextm.SharpSnmpLib
             return response;
         }
 
-        internal static ISnmpMessage GetReply(IPEndPoint receiver, byte[] bytes, int number, int timeout, SecurityRegistry registry, Socket socket)
+        internal static ISnmpMessage GetReply(IPEndPoint receiver, byte[] bytes, int number, int timeout, UserRegistry registry, Socket socket)
         {
             if (socket == null)
             {

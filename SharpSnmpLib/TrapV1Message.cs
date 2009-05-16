@@ -243,11 +243,19 @@ namespace Lextm.SharpSnmpLib
             }
         }
 
+        /// <summary>
+        /// Gets the parameters.
+        /// </summary>
+        /// <value>The parameters.</value>
         public SecurityParameters Parameters
         {
             get { return null; }
         }
 
+        /// <summary>
+        /// Gets the scope.
+        /// </summary>
+        /// <value>The scope.</value>
         public Scope Scope
         {
             get { return null; }

@@ -3,16 +3,24 @@ using System.Collections.Generic;
 
 namespace Lextm.SharpSnmpLib.Security
 {
-    public class SecurityRegistry
+    /// <summary>
+    /// A repository to store user information for providers.
+    /// </summary>
+    public class UserRegistry
     {
-        private IDictionary<OctetString, SecurityRecord> _users = new Dictionary<OctetString, SecurityRecord>();
+        private IDictionary<OctetString, ProviderPair> _users = new Dictionary<OctetString, ProviderPair>();
 
-        public void Add(OctetString userName, SecurityRecord record)
+        /// <summary>
+        /// Adds the specified user name.
+        /// </summary>
+        /// <param name="userName">Name of the user.</param>
+        /// <param name="pair">The pair.</param>
+        public void Add(OctetString userName, ProviderPair pair)
         {
-            _users.Add(userName, record);
+            _users.Add(userName, pair);
         }
 
-        internal SecurityRecord Find(OctetString userName)
+        internal ProviderPair Find(OctetString userName)
         {
             if (userName == null)
             {
@@ -21,7 +29,7 @@ namespace Lextm.SharpSnmpLib.Security
 
             if (userName == OctetString.Empty)
             {
-                return SecurityRecord.Default;
+                return ProviderPair.Default;
             }
 
             if (_users.ContainsKey(userName))

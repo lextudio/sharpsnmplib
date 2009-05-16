@@ -16,7 +16,7 @@ namespace Lextm.SharpSnmpLib
         private Scope _scope;
         private readonly VersionCode _version;
         private byte[] _bytes;
-        private SecurityRecord _record;
+        private ProviderPair _record;
 
         /// <summary>
         /// Creates a <see cref="GetRequestMessage"/> with all contents.
@@ -41,10 +41,19 @@ namespace Lextm.SharpSnmpLib
                 new Integer32(0),
                 variables);
             _scope = new Scope(null, null, pdu);
-            _record = SecurityRecord.Default;
+            _record = ProviderPair.Default;
         }
 
-        public GetRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName, IList<Variable> variables, SecurityRecord record)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetRequestMessage"/> class.
+        /// </summary>
+        /// <param name="version">The version.</param>
+        /// <param name="messageId">The message id.</param>
+        /// <param name="requestId">The request id.</param>
+        /// <param name="userName">Name of the user.</param>
+        /// <param name="variables">The variables.</param>
+        /// <param name="record">The record.</param>
+        public GetRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName, IList<Variable> variables, ProviderPair record)
         {
             _version = version;
             if (record == null)
@@ -63,17 +72,17 @@ namespace Lextm.SharpSnmpLib
                 new Integer32(0), 
                 new Integer32(0), 
                 userName, 
-                _record.Authentication.CleanDigest, 
-                new OctetString(ByteTool.ConvertByteString("00 00 00  01 44 2C A3 B5")));
+                _record.Authentication.CleanDigest,
+                new OctetString(_record.Privacy.Salt));
             GetRequestPdu pdu = new GetRequestPdu(
-                new Integer32(requestId),
+                new Integer32(requestId), 
                 ErrorCode.NoError,
                 new Integer32(0),
                 variables);
             _scope = new Scope(OctetString.Empty, OctetString.Empty, pdu);
         }
         
-        internal GetRequestMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, SecurityRecord record)
+        internal GetRequestMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, ProviderPair record)
         {
             if (record == null)
             {
@@ -103,43 +112,17 @@ namespace Lextm.SharpSnmpLib
             _header = message._header;//.Clone();
             _parameters = message._parameters.Clone();
             _scope = message._scope;//.Clone;
-            _record = SecurityRecord.Default;
+            _record = ProviderPair.Default;
         }
 
         /// <summary>
-        /// Creates a <see cref="GetRequestMessage"/> with a specific <see cref="Sequence"/>.
+        /// Discovers the specified timeout.
         /// </summary>
-        /// <param name="body">Message body</param>
-        public GetRequestMessage(Sequence body)
-        {
-            if (body == null)
-            {
-                throw new ArgumentNullException("body");
-            }
-            
-            _version = (VersionCode)(((Integer32)body[0]).ToInt32() - 1);
-            
-            if (body.Count == 3)
-            {
-                _header = Header.Empty;
-                _parameters = new SecurityParameters(null, null, null, (OctetString)body[1], null, null);
-                _scope = new Scope(null, null, (ISnmpPdu)body[2]);
-                _record = SecurityRecord.Default;
-                return;
-            }
-
-            if (body.Count == 4)
-            {
-                _header = new Header(body[1]);
-                // TODO: 
-                _parameters = new SecurityParameters((OctetString)body[2]);
-                _scope = DefaultPrivacyProvider.Instance.Decrypt(body[3], _parameters);
-                return;
-            }
-
-            throw new ArgumentException("wrong message body");
-        }
-
+        /// <param name="timeout">The timeout.</param>
+        /// <param name="receiver">The receiver.</param>
+        /// <param name="requestId">The request id.</param>
+        /// <param name="messageId">The message id.</param>
+        /// <returns></returns>
         public ReportMessage Discover(int timeout, IPEndPoint receiver, int requestId, int messageId)
         {
             GetRequestMessage discovery = new GetRequestMessage(
@@ -160,13 +143,16 @@ namespace Lextm.SharpSnmpLib
                     OctetString.Empty,
                     OctetString.Empty,
                     new GetRequestPdu(new Integer32(requestId), ErrorCode.NoError, new Integer32(0), new List<Variable>())),
-                    SecurityRecord.Default
+                    ProviderPair.Default
                );
-            ReportMessage report = (ReportMessage)ByteTool.GetReply(receiver, discovery.ToBytes(), 0x2C6B, timeout, new SecurityRegistry(), Messenger.GetSocket(receiver));
+            ReportMessage report = (ReportMessage)ByteTool.GetReply(receiver, discovery.ToBytes(), 0x2C6B, timeout, new UserRegistry(), Messenger.GetSocket(receiver));
             report.Update(this); // {.1.3.6.1.6.3.15.1.1.4.0} Counter (number of counts)
             return report;
         }
 
+        /// <summary>
+        /// Authenticates this instance.
+        /// </summary>
         public void Authenticate()
         {
             _parameters.AuthenticationParameters = _record.Authentication.ComputeHash(this);
@@ -216,7 +202,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public GetResponseMessage GetResponse(int timeout, IPEndPoint receiver, Socket udpSocket)
         {
-            SecurityRegistry registry = new SecurityRegistry();
+            UserRegistry registry = new UserRegistry();
             if (Version == VersionCode.V3)
             {
                 Authenticate();
@@ -285,6 +271,10 @@ namespace Lextm.SharpSnmpLib
             get { return _parameters.UserName; }
         }
 
+        /// <summary>
+        /// Gets the level.
+        /// </summary>
+        /// <value>The level.</value>
         public SecurityLevel Level
         {
             get
@@ -317,11 +307,19 @@ namespace Lextm.SharpSnmpLib
             }
         }
 
+        /// <summary>
+        /// Gets the parameters.
+        /// </summary>
+        /// <value>The parameters.</value>
         public SecurityParameters Parameters
         {
             get { return _parameters; }
         }
 
+        /// <summary>
+        /// Gets the scope.
+        /// </summary>
+        /// <value>The scope.</value>
         public Scope Scope
         {
             get { return _scope; }

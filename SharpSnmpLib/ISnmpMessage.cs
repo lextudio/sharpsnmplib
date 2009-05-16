@@ -23,8 +23,16 @@ namespace Lextm.SharpSnmpLib
             get;
         }
 
+        /// <summary>
+        /// Gets the parameters.
+        /// </summary>
+        /// <value>The parameters.</value>
         SecurityParameters Parameters { get; }
 
+        /// <summary>
+        /// Gets the scope.
+        /// </summary>
+        /// <value>The scope.</value>
         Scope Scope { get; }
         /// <summary>
         /// Converts to the bytes.

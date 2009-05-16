@@ -14,10 +14,19 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <value>The request ID.</value>
         Integer32 RequestId { get; }
-        
+
+        /// <summary>
+        /// Gets the error status.
+        /// </summary>
+        /// <value>The error status.</value>
         Integer32 ErrorStatus { get; }
 
+        /// <summary>
+        /// Gets the index of the error.
+        /// </summary>
+        /// <value>The index of the error.</value>
         Integer32 ErrorIndex { get; }
+
         /// <summary>
         /// Converts the PDU to index complete message.
         /// </summary>

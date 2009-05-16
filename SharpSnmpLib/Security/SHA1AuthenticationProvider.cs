@@ -4,15 +4,29 @@ using System.Security.Cryptography;
 
 namespace Lextm.SharpSnmpLib.Security
 {
+    /// <summary>
+    /// Authentication provider using SHA-1.
+    /// </summary>
     public class SHA1AuthenticationProvider : IAuthenticationProvider
     {
         private byte[] _password;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SHA1AuthenticationProvider"/> class.
+        /// </summary>
+        /// <param name="phrase">The phrase.</param>
         public SHA1AuthenticationProvider(OctetString phrase)
         {
             _password = phrase.GetRaw();
         }
 
+        #region IAuthenticationProvider Members
+        /// <summary>
+        /// Passwords to key.
+        /// </summary>
+        /// <param name="userPassword">The user password.</param>
+        /// <param name="engineID">The engine ID.</param>
+        /// <returns></returns>
         public byte[] PasswordToKey(byte[] userPassword, byte[] engineID)
         {
             // key length has to be at least 8 bytes long (RFC3414)
@@ -47,8 +61,6 @@ namespace Lextm.SharpSnmpLib.Security
             return sha.ComputeHash(buffer.ToArray());
         }
 
-        #region IAuthenticationProvider Members
-
         /// <summary>
         /// Gets the clean digest.
         /// </summary>
@@ -58,6 +70,11 @@ namespace Lextm.SharpSnmpLib.Security
             get { return new OctetString(new byte[12]); }
         }
 
+        /// <summary>
+        /// Computes the hash.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <returns></returns>
         public OctetString ComputeHash(GetRequestMessage message)
         {
             byte[] key = PasswordToKey(_password, message.Parameters.EngineId.GetRaw());

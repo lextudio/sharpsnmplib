@@ -142,6 +142,10 @@ namespace Lextm.SharpSnmpLib
             _privacyParameters = privacyParameters;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SecurityParameters"/> class.
+        /// </summary>
+        /// <param name="userName">Name of the user.</param>
         public SecurityParameters(string userName)
         {
             _userName = new OctetString(userName);

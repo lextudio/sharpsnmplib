@@ -24,15 +24,14 @@ namespace Lextm.SharpSnmpLib
         private Scope _scope;
         private readonly VersionCode _version;
         private byte[] _bytes;
-        private SecurityRecord _record;
-       
+        private ProviderPair _record;
+
         /// <summary>
         /// Creates a <see cref="GetResponseMessage"/> with all contents.
         /// </summary>
-        /// <param name="version">Protocol version.</param>
-        /// <param name="receiver">Receiver address.</param>
-        /// <param name="community">Community name.</param>
         /// <param name="requestId">Request ID.</param>
+        /// <param name="version">Protocol version.</param>
+        /// <param name="community">Community name.</param>
         /// <param name="variables">Variables.</param>
         public GetResponseMessage(int requestId, VersionCode version, OctetString community, IList<Variable> variables)
         {
@@ -50,10 +49,19 @@ namespace Lextm.SharpSnmpLib
                 new Integer32(0),
                 variables);
             _scope = new Scope(null, null, pdu);
-            _record = SecurityRecord.Default;
+            _record = ProviderPair.Default;
         }
 
-        public GetResponseMessage(int requestId, VersionCode version, int messageId, OctetString userName, IList<Variable> variables, SecurityRecord record)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetResponseMessage"/> class.
+        /// </summary>
+        /// <param name="version">The version.</param>
+        /// <param name="requestId">The request id.</param>
+        /// <param name="messageId">The message id.</param>
+        /// <param name="userName">Name of the user.</param>
+        /// <param name="variables">The variables.</param>
+        /// <param name="record">The record.</param>
+        public GetResponseMessage(VersionCode version, int requestId, int messageId, OctetString userName, IList<Variable> variables, ProviderPair record)
         {
             _version = version;
             if (record == null)
@@ -75,7 +83,7 @@ namespace Lextm.SharpSnmpLib
             _scope = new Scope(OctetString.Empty, OctetString.Empty, pdu);
         }
 
-        internal GetResponseMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, SecurityRecord record)
+        internal GetResponseMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, ProviderPair record)
         {
             if (record == null)
             {
@@ -121,12 +129,11 @@ namespace Lextm.SharpSnmpLib
 
             throw new ArgumentException("wrong message body");
         }
-        
+
         /// <summary>
         /// Sends this <see cref="GetRequestMessage"/> and handles the response from agent.
         /// </summary>
-        /// <param name="port">Port number.</param>
-        /// <returns></returns>
+        /// <param name="receiver">The receiver.</param>
         public void Send(IPEndPoint receiver)
         {
             byte[] bytes = _bytes;
@@ -140,7 +147,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Sends this <see cref="GetRequestMessage"/> and handles the response from agent.
         /// </summary>
-        /// <param name="port">Port number.</param>
+        /// <param name="receiver">The receiver.</param>
         /// <param name="socket">The socket.</param>
         public void Send(IPEndPoint receiver, Socket socket)
         {
@@ -193,11 +200,19 @@ namespace Lextm.SharpSnmpLib
             get { return _scope.Pdu; }
         }
 
+        /// <summary>
+        /// Gets the parameters.
+        /// </summary>
+        /// <value>The parameters.</value>
         public SecurityParameters Parameters
         {
             get { return _parameters; }
         }
 
+        /// <summary>
+        /// Gets the scope.
+        /// </summary>
+        /// <value>The scope.</value>
         public Scope Scope
         {
             get { return _scope; }

@@ -23,8 +23,8 @@ namespace Lextm.SharpSnmpLib.Security
         /// <summary>
         /// Converts password to key.
         /// </summary>
-        /// <param name="_phrase">The password phrase.</param>
-        /// <param name="octetString">The engine ID.</param>
+        /// <param name="password">The password.</param>
+        /// <param name="engineId">The engine id.</param>
         /// <returns></returns>
         byte[] PasswordToKey(byte[] password, byte[] engineId);
     }

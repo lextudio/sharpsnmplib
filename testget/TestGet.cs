@@ -139,7 +139,7 @@ namespace TestGet
                     priv = DefaultPrivacyProvider.Instance;
                 }
 
-                SecurityRecord record = new SecurityRecord(auth, priv);
+                ProviderPair record = new ProviderPair(auth, priv);
                 GetRequestMessage request = new GetRequestMessage(VersionCode.V3, 100, 0, new OctetString(user), vList, record);
                 request.Discover(timeout, receiver, 1, 101);
                 GetResponseMessage response = request.GetResponse(timeout, receiver); 

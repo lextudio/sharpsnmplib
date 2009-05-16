@@ -26,28 +26,7 @@ namespace Lextm.SharpSnmpLib
         private Header _header;
         private IPrivacyProvider _privacy = DefaultPrivacyProvider.Instance;
         private IAuthenticationProvider _authentication = DefaultAuthenticationProvider.Instance;
-        
-//        /// <summary>
-//        /// Creates a <see cref="ReportMessage"/> with all contents.
-//        /// </summary>
-//        /// <param name="requestId">The request id.</param>
-//        /// <param name="version">Protocol version</param>
-//        /// <param name="community">Community name</param>
-//        /// <param name="variables">Variables</param>
-//        public ReportMessage(int requestId, VersionCode version, OctetString community, IList<Variable> variables)
-//        {
-//            _version = version;
-//            _community = community;
-//            _variables = variables;
-//            ReportPdu pdu = new ReportPdu(
-//                requestId,
-//                ErrorCode.NoError,
-//                0,
-//                _variables);
-//            _requestId = pdu.RequestId;
-//            _bytes = ByteTool.PackMessage(_version, _community, pdu).ToBytes();
-//        }
-        
+      
         /// <summary>
         /// Creates a <see cref="ReportMessage"/> with a specific <see cref="Sequence"/>.
         /// </summary>
@@ -114,7 +93,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public GetResponseMessage GetResponse(int timeout, IPEndPoint receiver)
         {
-            return ByteTool.GetResponse(receiver, _bytes, RequestId, timeout, new SecurityRegistry(), Messenger.GetSocket(receiver));
+            return ByteTool.GetResponse(receiver, _bytes, RequestId, timeout, new UserRegistry(), Messenger.GetSocket(receiver));
         }
 
         /// <summary>
@@ -126,7 +105,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public GetResponseMessage GetResponse(int timeout, IPEndPoint receiver, Socket socket)
         {
-            return ByteTool.GetResponse(receiver, _bytes, RequestId, timeout, new SecurityRegistry(), socket);
+            return ByteTool.GetResponse(receiver, _bytes, RequestId, timeout, new UserRegistry(), socket);
         }
         
         internal int RequestId

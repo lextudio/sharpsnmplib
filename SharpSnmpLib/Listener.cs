@@ -376,7 +376,7 @@ namespace Lextm.SharpSnmpLib
         {
             ByteTool.Capture(param.GetBytes(), param.Number);
 
-            foreach (ISnmpMessage message in MessageFactory.ParseMessages(param.GetBytes(), 0, param.Number, new SecurityRegistry()))
+            foreach (ISnmpMessage message in MessageFactory.ParseMessages(param.GetBytes(), 0, param.Number, new UserRegistry()))
             {
                 switch (message.Pdu.TypeCode)
                 {

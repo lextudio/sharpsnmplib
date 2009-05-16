@@ -97,7 +97,9 @@
     <Compile Include="OctetString.cs" />
     <Compile Include="Integer32.cs" />
     <Compile Include="Opaque.cs" />
-    <Compile Include="PduCounter.cs" />
+    <Compile Include="PduCounter.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Real.cs" />
     <Compile Include="ReportMessage.cs" />
     <Compile Include="ReportPdu.cs" />
@@ -111,6 +113,7 @@
     <Compile Include="Security\IPrivacyProvider.cs" />
     <Compile Include="Security\MD5AuthenticationProvider.cs" />
     <Compile Include="SecurityParameters.cs" />
+    <Compile Include="Security\SaltGenerator.cs" />
     <Compile Include="Security\SecurityRecord.cs" />
     <Compile Include="Security\SecurityRegistry.cs" />
     <Compile Include="Security\SHA1AuthenticationProvider.cs" />

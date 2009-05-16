@@ -91,11 +91,19 @@ namespace Lextm.SharpSnmpLib
             get { throw new NotSupportedException(); }
         }
 
+        /// <summary>
+        /// Gets the index of the error.
+        /// </summary>
+        /// <value>The index of the error.</value>
         public Integer32 ErrorIndex
         {
             get { throw new NotSupportedException(); }
         }
 
+        /// <summary>
+        /// Gets the error status.
+        /// </summary>
+        /// <value>The error status.</value>
         public Integer32 ErrorStatus
         {
             get { throw new NotSupportedException(); }

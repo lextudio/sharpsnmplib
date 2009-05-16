@@ -85,11 +85,19 @@ namespace Lextm.SharpSnmpLib
             get { return _requestId; }
         }
 
+        /// <summary>
+        /// Gets the error status.
+        /// </summary>
+        /// <value>The error status.</value>
         public Integer32 ErrorStatus
         {
             get { return _errorStatus; }
         }
 
+        /// <summary>
+        /// Gets the index of the error.
+        /// </summary>
+        /// <value>The index of the error.</value>
         public Integer32 ErrorIndex
         {
             get { return _errorIndex; }

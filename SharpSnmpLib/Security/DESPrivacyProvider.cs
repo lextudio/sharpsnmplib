@@ -10,8 +10,14 @@ namespace Lextm.SharpSnmpLib.Security
     public class DESPrivacyProvider : IPrivacyProvider
     {
         private IAuthenticationProvider _auth;
+        private SaltGenerator _salt = new SaltGenerator();
         private OctetString _phrase;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DESPrivacyProvider"/> class.
+        /// </summary>
+        /// <param name="phrase">The phrase.</param>
+        /// <param name="auth">The auth.</param>
         public DESPrivacyProvider(OctetString phrase, IAuthenticationProvider auth)
         {
             _phrase = phrase;
@@ -22,8 +28,6 @@ namespace Lextm.SharpSnmpLib.Security
         /// Encrypt ScopedPdu using DES encryption protocol
         /// </summary>
         /// <param name="unencryptedData">Unencrypted ScopedPdu byte array</param>
-        /// <param name="offset">Offset to start encryption</param>
-        /// <param name="length">Length of data to encrypt</param>
         /// <param name="key">Encryption key. Key has to be at least 32 bytes is length</param>
         /// <param name="engineBoots">Authoritative engine boots value</param>
         /// <param name="engineTime">Authoritative engine time value. Not used for DES</param>
@@ -82,8 +86,6 @@ namespace Lextm.SharpSnmpLib.Security
         /// Decrypt DES encrypted ScopedPdu
         /// </summary>
         /// <param name="encryptedData">Source data buffer</param>
-        /// <param name="offset">Offset within the buffer to start decryption process</param>
-        /// <param name="length">Length of data to decrypt</param>
         /// <param name="key">Decryption key. Key length has to be 32 bytes in length or longer (bytes beyond 32 bytes are ignored).</param>
         /// <param name="engineBoots">Authoritative engine boots value</param>
         /// <param name="engineTime">Authoritative engine time value</param>
@@ -132,8 +134,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// </summary>
         /// <param name="privacyKey">16 byte privacy key</param>
         /// <param name="salt">Salt value returned by GetSalt method</param>
-        /// <returns>IV value used in the encryption process</returns>
-        /// <exception cref="SnmpPrivacyException">Thrown when privacy key is less then 16 bytes long.</exception>
+        /// <returns>IV value used in the encryption process</returns>        
         private byte[] GetIV(byte[] privacyKey, byte[] salt)
         {
             if (privacyKey.Length < 16)
@@ -148,13 +149,11 @@ namespace Lextm.SharpSnmpLib.Security
 
         /// <summary>
         /// Extract and return DES encryption key.
-        /// 
         /// Privacy password is 16 bytes in length. Only the first 8 bytes are used as DES password. Remaining
         /// 8 bytes are used as pre-IV value.
         /// </summary>
         /// <param name="privacyPassword">16 byte privacy password</param>
-        /// <returns>8 byte DES encryption password</returns>
-        /// <exception cref="SnmpPrivacyException">Thrown when privacy password is less then 16 bytes long</exception>
+        /// <returns>8 byte DES encryption password</returns>       
         private byte[] GetKey(byte[] privacyPassword)
         {
             if (privacyPassword == null || privacyPassword.Length < 16)
@@ -198,6 +197,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// Decrypts the specified data.
         /// </summary>
         /// <param name="data">The data.</param>
+        /// <param name="parameters">The parameters.</param>
         /// <returns></returns>
         public Scope Decrypt(ISnmpData data, SecurityParameters parameters)
         {
@@ -220,11 +220,12 @@ namespace Lextm.SharpSnmpLib.Security
         /// Encrypts the specified scope.
         /// </summary>
         /// <param name="scope">The scope.</param>
+        /// <param name="parameters">The parameters.</param>
         /// <returns></returns>
         public ISnmpData Encrypt(Scope scope, SecurityParameters parameters)
         {
             byte[] pkey = _auth.PasswordToKey(_phrase.GetRaw(), parameters.EngineId.GetRaw());
-            byte[] bytes = scope.GetData(VersionCode.V3).ToBytes();
+            byte[] bytes = ByteTool.ToBytes(scope.GetData(VersionCode.V3));
             int reminder = bytes.Length % 8;
             int count = reminder == 0 ? 0 : 8 - reminder;
             MemoryStream stream = new MemoryStream();
@@ -237,6 +238,15 @@ namespace Lextm.SharpSnmpLib.Security
             bytes = stream.ToArray();
             byte[] encrypted = Encrypt(bytes, pkey, parameters.EngineBoots.ToInt32(), parameters.EngineTime.ToInt32(), parameters.PrivacyParameters.GetRaw());
             return new OctetString(encrypted);
+        }
+
+        /// <summary>
+        /// Gets the salt.
+        /// </summary>
+        /// <value>The salt.</value>
+        public byte[] Salt
+        {
+            get { return _salt.GetSaltBytes(); }
         }
 
         #endregion

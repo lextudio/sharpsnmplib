@@ -75,7 +75,11 @@ namespace Lextm.SharpSnmpLib
         }        
         
         private static OctetString empty = new OctetString(string.Empty, Encoding.GetEncoding("ASCII"));
-        
+
+        /// <summary>
+        /// Gets the empty string.
+        /// </summary>
+        /// <value>The empty.</value>
         public static OctetString Empty 
         {
             get { return empty; }

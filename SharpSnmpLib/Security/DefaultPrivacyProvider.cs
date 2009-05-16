@@ -50,10 +50,20 @@ namespace Lextm.SharpSnmpLib.Security
         /// Encrypts the specified scope.
         /// </summary>
         /// <param name="scope">The scope.</param>
+        /// <param name="parameters">The parameters.</param>
         /// <returns></returns>
         public ISnmpData Encrypt(Scope scope, SecurityParameters parameters)
         {
             return scope.ToSequence();
+        }
+
+        /// <summary>
+        /// Gets the salt.
+        /// </summary>
+        /// <value>The salt.</value>
+        public byte[] Salt
+        {
+            get { return new byte[0]; }
         }
 
         #endregion

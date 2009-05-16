@@ -1,4 +1,5 @@
-﻿
+﻿using System;
+
 namespace Lextm.SharpSnmpLib.Security
 {
     /// <summary>
@@ -10,8 +11,15 @@ namespace Lextm.SharpSnmpLib.Security
         /// Encrypts the specified scope.
         /// </summary>
         /// <param name="scope">The scope.</param>
+        /// <param name="parameters">The parameters.</param>
         /// <returns></returns>
         ISnmpData Encrypt(Scope scope, SecurityParameters parameters);
+
+        /// <summary>
+        /// Gets the salt.
+        /// </summary>
+        /// <value>The salt.</value>
+        byte[] Salt { get; }
 
         /// <summary>
         /// Decrypts the specified data.

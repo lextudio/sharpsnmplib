@@ -1,6 +1,5 @@
 ﻿using System.Threading;
 
-// TODO: move this class to Controls after removing obsolete items.
 namespace Lextm.SharpSnmpLib
 {
     /// <summary>

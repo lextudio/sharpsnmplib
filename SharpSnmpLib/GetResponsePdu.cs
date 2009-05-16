@@ -26,13 +26,13 @@ namespace Lextm.SharpSnmpLib
         private readonly IList<Variable> _variables;
         private readonly Sequence _varbindSection;
         private byte[] _raw;
-                
+
         /// <summary>
         /// Creates a <see cref="GetResponsePdu"/> with all contents.
         /// </summary>
+        /// <param name="requestId">The request ID.</param>
         /// <param name="errorStatus">Error status.</param>
         /// <param name="errorIndex">Error index.</param>
-        /// <param name="sequenceNumber">Sequence number.</param>
         /// <param name="variables">Variables.</param>
         public GetResponsePdu(Integer32 requestId, ErrorCode errorStatus, Integer32 errorIndex, IList<Variable> variables)
         {

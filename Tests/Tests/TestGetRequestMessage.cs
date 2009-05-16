@@ -25,7 +25,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void Test()
         {
             byte[] expected = Resources.get;
-            ISnmpMessage message = MessageFactory.ParseMessages(expected, new Lextm.SharpSnmpLib.Security.SecurityRegistry())[0];
+            ISnmpMessage message = MessageFactory.ParseMessages(expected, new Lextm.SharpSnmpLib.Security.UserRegistry())[0];
             Assert.AreEqual(SnmpType.GetRequestPdu, message.Pdu.TypeCode);
             GetRequestPdu pdu = (GetRequestPdu)message.Pdu;
             Assert.AreEqual(1, pdu.Variables.Count);
@@ -72,7 +72,7 @@ namespace Lextm.SharpSnmpLib.Tests
                 0x01AF,
                 new OctetString("lexli"),
                 new List<Variable>(1) { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0"))},
-                new SecurityRecord(new MD5AuthenticationProvider(new OctetString("testpass")), DefaultPrivacyProvider.Instance));
+                new ProviderPair(new MD5AuthenticationProvider(new OctetString("testpass")), DefaultPrivacyProvider.Instance));
                 //new Header(
                 //    new Integer32(13633),
                 //    new Integer32(0xFFE3),
@@ -136,7 +136,7 @@ namespace Lextm.SharpSnmpLib.Tests
                         ErrorCode.NoError,
                         new Integer32(0),
                         new List<Variable>(1) { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0")) })),
-                new SecurityRecord(
+                new ProviderPair(
                     new MD5AuthenticationProvider(new OctetString("testpass")), 
                     new DESPrivacyProvider(new OctetString("passtest"), auth)));
             Assert.AreEqual(SecurityLevel.Authentication | SecurityLevel.Privacy, request.Level);
@@ -189,7 +189,7 @@ namespace Lextm.SharpSnmpLib.Tests
                         ErrorCode.NoError,
                         new Integer32(0),
                         new List<Variable>(1) { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0"), new Null() )})),
-                new SecurityRecord(new MD5AuthenticationProvider(new OctetString("testpass")), DefaultPrivacyProvider.Instance));
+                new ProviderPair(new MD5AuthenticationProvider(new OctetString("testpass")), DefaultPrivacyProvider.Instance));
             Assert.AreEqual(SecurityLevel.Authentication, request.Level);
             request.Authenticate();
             string test = ByteTool.ConvertByteString(request.ToBytes());
@@ -230,7 +230,7 @@ namespace Lextm.SharpSnmpLib.Tests
                         ErrorCode.NoError,
                         new Integer32(0),
                         new List<Variable>(1) { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0"), new Null()) })),
-                new SecurityRecord(new SHA1AuthenticationProvider(new OctetString("password")), DefaultPrivacyProvider.Instance));
+                new ProviderPair(new SHA1AuthenticationProvider(new OctetString("password")), DefaultPrivacyProvider.Instance));
             Assert.AreEqual(SecurityLevel.Authentication, request.Level);
             request.Authenticate();
             string test = ByteTool.ConvertByteString(request.ToBytes());
@@ -262,7 +262,7 @@ namespace Lextm.SharpSnmpLib.Tests
                     OctetString.Empty,
                     OctetString.Empty,
                     new GetRequestPdu(new Integer32(0x2C6B), ErrorCode.NoError, new Integer32(0), new List<Variable>())),
-                    Security.SecurityRecord.Default
+                    Security.ProviderPair.Default
                );
             string test = ByteTool.ConvertByteString(request.ToBytes());
             Assert.AreEqual(bytes, test);
