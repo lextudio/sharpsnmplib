@@ -165,7 +165,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         public ErrorCode ErrorStatus
         {
-            get { return (ErrorCode)_scope.Pdu.ErrorStatus.ToInt32(); }
+            get { return _scope.Pdu.ErrorStatus.ToErrorCode(); }
         }
         
         /// <summary>

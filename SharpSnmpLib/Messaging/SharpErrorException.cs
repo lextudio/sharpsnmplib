@@ -22,12 +22,12 @@ namespace Lextm.SharpSnmpLib.Messaging
     [Serializable]
     public sealed class SharpErrorException : SharpOperationException
     {
-        private GetResponseMessage _body;
+        private ISnmpMessage _body;
         
         /// <summary>
         /// Message body.
         /// </summary>
-        public GetResponseMessage Body
+        public ISnmpMessage Body
         {
             get { return _body; }
         }        
@@ -86,13 +86,14 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             get
             {
+                int index = Body.Pdu.ErrorIndex.ToInt32();
                 return string.Format(
                     CultureInfo.InvariantCulture,
                     "{0}. {1}. Index: {2}. Errored Object ID: {3}",
                     Message,
-                    Body.ErrorStatus,
-                    Body.ErrorIndex.ToString(CultureInfo.InvariantCulture),
-                    Body.ErrorIndex == 0 ? null : Body.Variables[Body.ErrorIndex - 1].Id);
+                    Body.Pdu.ErrorStatus.ToErrorCode().ToString(),
+                    index.ToString(CultureInfo.InvariantCulture),
+                    index == 0 ? null : Body.Pdu.Variables[index - 1].Id);
             }
         }
         
@@ -112,7 +113,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="agent">Agent address.</param>
         /// <param name="body">Error message body.</param>
             /// <returns></returns>
-        public static SharpErrorException Create(string message, IPAddress agent, GetResponseMessage body)
+        public static SharpErrorException Create(string message, IPAddress agent, ISnmpMessage body)
         {
             SharpErrorException ex = new SharpErrorException(message);
             ex.Agent = agent;

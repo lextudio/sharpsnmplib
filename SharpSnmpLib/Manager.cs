@@ -363,8 +363,8 @@ namespace Lextm.SharpSnmpLib
                 maxRepetitions,
                 variables);
 
-            GetResponseMessage response = message.GetResponse(timeout, endpoint);
-            if (response.ErrorStatus != ErrorCode.NoError)
+            ISnmpMessage response = message.GetResponse(timeout, endpoint);
+            if (response.Pdu.ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
             {
                 throw SharpErrorException.Create(
                     "error in response",
@@ -372,7 +372,7 @@ namespace Lextm.SharpSnmpLib
                     response);
             }
 
-            next = response.Variables;
+            next = response.Pdu.Variables;
             return next.Count != 0;
         }
 

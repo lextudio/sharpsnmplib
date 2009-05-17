@@ -86,6 +86,20 @@ namespace Lextm.SharpSnmpLib
         }
 
         /// <summary>
+        /// Converts to <see cref="ErrorCode"/>.
+        /// </summary>
+        /// <returns></returns>
+        public ErrorCode ToErrorCode()
+        {
+            if (_int > 19 || _int < 0)
+            {
+                throw new InvalidOperationException();
+            }
+
+            return (ErrorCode)_int;
+        }
+
+        /// <summary>
         /// Returns a <see cref="String"/> that represents this <see cref="Integer32"/>.
         /// </summary>
         /// <returns></returns>

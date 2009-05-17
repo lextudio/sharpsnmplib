@@ -121,8 +121,8 @@ namespace TestGetNext
                                                                               version,
                                                                               new OctetString(community),
                                                                               vList);
-                    GetResponseMessage response = message.GetResponse(timeout, receiver);
-                    if (response.ErrorStatus != ErrorCode.NoError)
+                    ISnmpMessage response = message.GetResponse(timeout, receiver);
+                    if (response.Pdu.ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
                     {
                         throw SharpErrorException.Create(
                             "error in response",
@@ -130,7 +130,7 @@ namespace TestGetNext
                             response);
                     }
 
-                    foreach (Variable variable in response.Variables)
+                    foreach (Variable variable in response.Pdu.Variables)
                     {
                         Console.WriteLine(variable);
                     }
@@ -157,10 +157,18 @@ namespace TestGetNext
                 }
 
                 ProviderPair record = new ProviderPair(auth, priv);
-                GetRequestMessage request = new GetRequestMessage(VersionCode.V3, 100, 0, new OctetString(user), vList, record);
+                GetNextRequestMessage request = new GetNextRequestMessage(VersionCode.V3, 100, 0, new OctetString(user), vList, record);
                 request.Discover(timeout, receiver, 1, 101);
-                GetResponseMessage reply = request.GetResponse(timeout, receiver);
-                foreach (Variable v in reply.Variables)
+                ISnmpMessage reply = request.GetResponse(timeout, receiver);
+                if (reply.Pdu.ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
+                {
+                    throw SharpErrorException.Create(
+                        "error in response",
+                        receiver.Address,
+                        reply);
+                }
+
+                foreach (Variable v in reply.Pdu.Variables)
                 {
                     Console.WriteLine(v);
                 }

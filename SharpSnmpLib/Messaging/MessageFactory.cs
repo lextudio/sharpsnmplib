@@ -226,9 +226,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="registry">The registry.</param>
         /// <param name="socket">The UDP <see cref="Socket"/> to use to send/receive.</param>
         /// <returns>
-        /// The response message (<see cref="GetResponseMessage"/>).
+        /// The response message (<see cref="ISnmpMessage"/>).
         /// </returns>
-        internal static GetResponseMessage GetResponse(IPEndPoint receiver, byte[] bytes, int number, int timeout, UserRegistry registry, Socket socket)
+        internal static ISnmpMessage GetResponse(IPEndPoint receiver, byte[] bytes, int number, int timeout, UserRegistry registry, Socket socket)
         {
             if (socket == null)
             {
@@ -265,19 +265,18 @@ namespace Lextm.SharpSnmpLib.Messaging
                 message = MessageFactory.ParseMessages(m, registry)[0];
             }
 
-            if (message.Pdu.TypeCode != SnmpType.GetResponsePdu)
+            if (message.Pdu.TypeCode == SnmpType.GetResponsePdu || message.Pdu.TypeCode == SnmpType.ReportPdu)
             {
-                throw SharpOperationException.Create("wrong response type", receiver.Address);
-            }
+                if (message.Pdu.RequestId.ToInt32() != number)
+                {
+                    throw SharpOperationException.Create("wrong response sequence", receiver.Address);
+                }
 
-            GetResponseMessage response = (GetResponseMessage)message;
-            if (response.RequestId != number)
-            {
-                throw SharpOperationException.Create("wrong response sequence", receiver.Address);
+                ByteTool.Capture(reply); // log response
+                return message;
             }
-
-            ByteTool.Capture(reply); // log response
-            return response;
+             
+            throw SharpOperationException.Create("wrong response type", receiver.Address);
         }
 
         internal static ISnmpMessage GetReply(IPEndPoint receiver, byte[] bytes, int number, int timeout, UserRegistry registry, Socket socket)

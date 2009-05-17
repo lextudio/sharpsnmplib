@@ -244,9 +244,9 @@ namespace Lextm.SharpSnmpLib.Security
         /// Gets the salt.
         /// </summary>
         /// <value>The salt.</value>
-        public byte[] Salt
+        public OctetString Salt
         {
-            get { return _salt.GetSaltBytes(); }
+            get { return new OctetString(_salt.GetSaltBytes()); }
         }
 
         #endregion

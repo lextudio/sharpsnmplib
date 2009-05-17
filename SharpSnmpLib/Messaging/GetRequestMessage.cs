@@ -16,7 +16,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         private Scope _scope;
         private readonly VersionCode _version;
         private byte[] _bytes;
-        private ProviderPair _record;
+        private ProviderPair _pair;
 
         /// <summary>
         /// Creates a <see cref="GetRequestMessage"/> with all contents.
@@ -41,7 +41,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 new Integer32(0),
                 variables);
             _scope = new Scope(null, null, pdu);
-            _record = ProviderPair.Default;
+            _pair = ProviderPair.Default;
         }
 
         /// <summary>
@@ -53,27 +53,27 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="userName">Name of the user.</param>
         /// <param name="variables">The variables.</param>
         /// <param name="record">The record.</param>
-        public GetRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName, IList<Variable> variables, ProviderPair record)
+        public GetRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName, IList<Variable> variables, ProviderPair pair)
         {
             _version = version;
-            if (record == null)
+            if (pair == null)
             {
-                throw new ArgumentException("record");
+                throw new ArgumentException("pair");
             }
 
-            _record = record;
-            SecurityLevel recordToSecurityLevel = record.ToSecurityLevel();
+            _pair = pair;
+            SecurityLevel recordToSecurityLevel = pair.ToSecurityLevel();
             recordToSecurityLevel |= SecurityLevel.Reportable;
             byte b = (byte)recordToSecurityLevel;
+            // TODO: define more constants.
             _header = new Header(new Integer32(messageId), new Integer32(0xFFE3), new OctetString(new byte[] { b }), new Integer32(3));
-            // TODO: add salt later.
             _parameters = new SecurityParameters(
                 OctetString.Empty, 
                 new Integer32(0), 
                 new Integer32(0), 
                 userName, 
-                _record.Authentication.CleanDigest,
-                new OctetString(_record.Privacy.Salt));
+                _pair.Authentication.CleanDigest,
+                _pair.Privacy.Salt);
             GetRequestPdu pdu = new GetRequestPdu(
                 new Integer32(requestId), 
                 ErrorCode.NoError,
@@ -93,7 +93,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             _header = header;
             _parameters = parameters;
             _scope = scope;
-            _record = record;
+            _pair = record;
         }
 
         internal GetRequestMessage(GetRequestMessage message)
@@ -112,7 +112,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             _header = message._header;//.Clone();
             _parameters = message._parameters.Clone();
             _scope = message._scope;//.Clone;
-            _record = ProviderPair.Default;
+            _pair = ProviderPair.Default;
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         public void Authenticate()
         {
-            _parameters.AuthenticationParameters = _record.Authentication.ComputeHash(this);
+            _parameters.AuthenticationParameters = _pair.Authentication.ComputeHash(this);
         }
         
         /// <summary>
@@ -188,7 +188,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="timeout">Timeout.</param>
         /// <param name="receiver">Agent.</param>
         /// <returns></returns>
-        public GetResponseMessage GetResponse(int timeout, IPEndPoint receiver)
+        public ISnmpMessage GetResponse(int timeout, IPEndPoint receiver)
         {
             return GetResponse(timeout, receiver, Messenger.GetSocket(receiver));
         }
@@ -200,13 +200,13 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="receiver">Agent.</param>
         /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
         /// <returns></returns>
-        public GetResponseMessage GetResponse(int timeout, IPEndPoint receiver, Socket udpSocket)
+        public ISnmpMessage GetResponse(int timeout, IPEndPoint receiver, Socket udpSocket)
         {
             UserRegistry registry = new UserRegistry();
             if (Version == VersionCode.V3)
             {
                 Authenticate();
-                registry.Add(_parameters.UserName, _record);
+                registry.Add(_parameters.UserName, _pair);
             }
 
             return MessageFactory.GetResponse(receiver, ToBytes(), RequestId, timeout, registry, udpSocket);
@@ -279,7 +279,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             get
             {
-                return _record.ToSecurityLevel();
+                return _pair.ToSecurityLevel();
             }
         }
         /// <summary>
@@ -290,7 +290,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             //if (_bytes == null)
             //{
-                _bytes = MessageFactory.PackMessage(_version, _record.Privacy, _header, _parameters, _scope).ToBytes();
+                _bytes = MessageFactory.PackMessage(_version, _pair.Privacy, _header, _parameters, _scope).ToBytes();
             //}
             
             return _bytes;

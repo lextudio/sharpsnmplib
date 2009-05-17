@@ -61,9 +61,9 @@ namespace Lextm.SharpSnmpLib.Security
         /// Gets the salt.
         /// </summary>
         /// <value>The salt.</value>
-        public byte[] Salt
+        public OctetString Salt
         {
-            get { return new byte[0]; }
+            get { return OctetString.Empty; }
         }
 
         #endregion

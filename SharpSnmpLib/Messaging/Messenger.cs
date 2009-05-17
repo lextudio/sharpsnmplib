@@ -60,8 +60,8 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             GetRequestMessage message = new GetRequestMessage(RequestCounter.NextCount, version, community, variables);
-            GetResponseMessage response = message.GetResponse(timeout, endpoint, GetSocket(endpoint));
-            if (response.ErrorStatus != ErrorCode.NoError)
+            ISnmpMessage response = message.GetResponse(timeout, endpoint, GetSocket(endpoint));
+            if (response.Pdu.ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
             {
                 throw SharpErrorException.Create(
                     "error in response",
@@ -69,7 +69,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                     response);
             }
 
-            return response.Variables;
+            return response.Pdu.Variables;
         }
         
         /// <summary>
@@ -89,8 +89,8 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             SetRequestMessage message = new SetRequestMessage(RequestCounter.NextCount, version, community, variables);
-            GetResponseMessage response = message.GetResponse(timeout, endpoint, GetSocket(endpoint));
-            if (response.ErrorStatus != ErrorCode.NoError)
+            ISnmpMessage response = message.GetResponse(timeout, endpoint, GetSocket(endpoint));
+            if (response.Pdu.ErrorStatus.ToInt32() != 0) // != noError
             {
                 throw SharpErrorException.Create(
                     "error in response",
@@ -98,7 +98,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                     response);
             }
             
-            return response.Variables;
+            return response.Pdu.Variables;
         }
         
         /// <summary>
@@ -205,10 +205,11 @@ namespace Lextm.SharpSnmpLib.Messaging
                 version,
                 community,
                 variables);
-
-            GetResponseMessage response = message.GetResponse(timeout, endpoint, GetSocket(endpoint));
-            next = response.ErrorStatus == ErrorCode.NoSuchName ? null : response.Variables[0];
-            return response.ErrorStatus != ErrorCode.NoSuchName;
+           
+            ISnmpMessage response = message.GetResponse(timeout, endpoint, GetSocket(endpoint));
+            bool noSuchName = response.Pdu.ErrorStatus.ToErrorCode() == ErrorCode.NoSuchName;
+            next = noSuchName ? null : response.Pdu.Variables[0];
+            return !noSuchName;
         }
         
         /// <summary>
@@ -298,8 +299,8 @@ namespace Lextm.SharpSnmpLib.Messaging
                 maxRepetitions,
                 variables);
 
-            GetResponseMessage response = message.GetResponse(timeout, endpoint, GetSocket(endpoint));
-            if (response.ErrorStatus != ErrorCode.NoError)
+            ISnmpMessage response = message.GetResponse(timeout, endpoint, GetSocket(endpoint));
+            if (response.Pdu.ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
             {
                 throw SharpErrorException.Create(
                     "error in response",
@@ -307,7 +308,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                     response);
             }
 
-            next = response.Variables;
+            next = response.Pdu.Variables;
             return next.Count != 0;
         }
         
@@ -366,8 +367,8 @@ namespace Lextm.SharpSnmpLib.Messaging
         public static void SendInform(int requestId, VersionCode version, IPEndPoint receiver, OctetString community, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables, int timeout)
         {
             InformRequestMessage message = new InformRequestMessage(requestId, version, community, enterprise, timestamp, variables);
-            GetResponseMessage response = message.GetResponse(timeout, receiver, GetSocket(receiver));
-            if (response.ErrorStatus != ErrorCode.NoError)
+            ISnmpMessage response = message.GetResponse(timeout, receiver, GetSocket(receiver));
+            if (response.Pdu.ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
             {
                 throw SharpErrorException.Create(
                     "error in response",

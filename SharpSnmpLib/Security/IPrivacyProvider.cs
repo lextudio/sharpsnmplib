@@ -19,7 +19,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// Gets the salt.
         /// </summary>
         /// <value>The salt.</value>
-        byte[] Salt { get; }
+        OctetString Salt { get; }
 
         /// <summary>
         /// Decrypts the specified data.

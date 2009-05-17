@@ -109,7 +109,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="timeout">Timeout.</param>
         /// <param name="receiver">Receiver.</param>
         /// <returns></returns>
-        public GetResponseMessage GetResponse(int timeout, IPEndPoint receiver)
+        public ISnmpMessage GetResponse(int timeout, IPEndPoint receiver)
         {
             return MessageFactory.GetResponse(receiver, _bytes, RequestId, timeout, new UserRegistry(), Messenger.GetSocket(receiver));
         }
@@ -121,7 +121,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="receiver">Receiver.</param>
         /// <param name="socket">The socket.</param>
         /// <returns></returns>
-        public GetResponseMessage GetResponse(int timeout, IPEndPoint receiver, Socket socket)
+        public ISnmpMessage GetResponse(int timeout, IPEndPoint receiver, Socket socket)
         {
             return MessageFactory.GetResponse(receiver, _bytes, RequestId, timeout, new UserRegistry(), socket);
         }        

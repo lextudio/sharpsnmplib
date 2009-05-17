@@ -48,6 +48,10 @@ namespace Lextm.SharpSnmpLib.Messaging
             _bytes = MessageFactory.PackMessage(_version, _community, pdu).ToBytes();
         }
 
+        public GetNextRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName, List<Variable> variable, ProviderPair pair)
+        {
+            throw new NotImplementedException();
+        }
         /// <summary>
         /// Creates a <see cref="GetNextRequestMessage"/> with a specific <see cref="Sequence"/>.
         /// </summary>
@@ -146,7 +150,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="timeout">Timeout.</param>
         /// <param name="receiver">Port number.</param>
         /// <returns></returns>
-        public GetResponseMessage GetResponse(int timeout, IPEndPoint receiver)
+        public ISnmpMessage GetResponse(int timeout, IPEndPoint receiver)
         {
             return MessageFactory.GetResponse(receiver, _bytes, RequestId, timeout, new UserRegistry(), Messenger.GetSocket(receiver));
         }
@@ -158,9 +162,14 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="receiver">The receiver.</param>
         /// <param name="socket">The socket.</param>
         /// <returns></returns>
-        public GetResponseMessage GetResponse(int timeout, IPEndPoint receiver, Socket socket)
+        public ISnmpMessage GetResponse(int timeout, IPEndPoint receiver, Socket socket)
         {
             return MessageFactory.GetResponse(receiver, _bytes, RequestId, timeout, new UserRegistry(), socket);
+        }
+
+        public void Discover(int timeout, IPEndPoint receiver, int p, int p_4)
+        {
+            throw new NotImplementedException();
         }
     }
 }
