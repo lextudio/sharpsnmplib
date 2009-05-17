@@ -179,7 +179,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                     new GetRequestPdu(requestId, ErrorCode.NoError, 0, new List<Variable>())),
                     ProviderPair.Default
                );
-            ReportMessage report = (ReportMessage)MessageFactory.GetReply(receiver, discovery.ToBytes(), 0x2C6B, timeout, new UserRegistry(), Messenger.GetSocket(receiver));
+            ReportMessage report = (ReportMessage)MessageFactory.GetResponse(receiver, discovery.ToBytes(), requestId, timeout, new UserRegistry(), Messenger.GetSocket(receiver));
             report.Update(message); // {.1.3.6.1.6.3.15.1.1.4.0} Counter (number of counts)
             return report;
         }

@@ -159,7 +159,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 case SnmpType.GetResponsePdu:
                     return new GetResponseMessage(version, header, parameters, scope, record);
                 case SnmpType.SetRequestPdu:
-                    return new SetRequestMessage(body);//(version, header, parameters, scope, record);
+                    return new SetRequestMessage(version, header, parameters, scope, record);
                 case SnmpType.GetNextRequestPdu:
                     return new GetNextRequestMessage(version, header, parameters, scope, record);
                 case SnmpType.GetBulkRequestPdu:
@@ -279,44 +279,44 @@ namespace Lextm.SharpSnmpLib.Messaging
             throw SharpOperationException.Create("wrong response type", receiver.Address);
         }
 
-        internal static ISnmpMessage GetReply(IPEndPoint receiver, byte[] bytes, int number, int timeout, UserRegistry registry, Socket socket)
-        {
-            if (socket == null)
-            {
-                throw new ArgumentNullException("socket");
-            }
+//        internal static ISnmpMessage GetReply(IPEndPoint receiver, byte[] bytes, int number, int timeout, UserRegistry registry, Socket socket)
+//        {
+//            if (socket == null)
+//            {
+//                throw new ArgumentNullException("socket");
+//            }
             
-            ByteTool.Capture(bytes); // log request
+//            ByteTool.Capture(bytes); // log request
 
-            #if CF
-            int bufSize = 8192;
-            #else
-            int bufSize = socket.ReceiveBufferSize;
-            #endif
-            byte[] reply = new byte[bufSize];
+//            #if CF
+//            int bufSize = 8192;
+//            #else
+//            int bufSize = socket.ReceiveBufferSize;
+//            #endif
+//            byte[] reply = new byte[bufSize];
 
-            // Whatever you change, try to keep the Send and the BeginReceive close to each other.
-            socket.SendTo(bytes, receiver);
-            IAsyncResult result = socket.BeginReceive(reply, 0, bufSize, SocketFlags.None, null, null);
-// ReSharper disable PossibleNullReferenceException
-            result.AsyncWaitHandle.WaitOne(timeout, false);
-// ReSharper restore PossibleNullReferenceException
-            if (!result.IsCompleted)
-            {
-                throw SharpTimeoutException.Create(receiver.Address, timeout);
-            }
+//            // Whatever you change, try to keep the Send and the BeginReceive close to each other.
+//            socket.SendTo(bytes, receiver);
+//            IAsyncResult result = socket.BeginReceive(reply, 0, bufSize, SocketFlags.None, null, null);
+//// ReSharper disable PossibleNullReferenceException
+//            result.AsyncWaitHandle.WaitOne(timeout, false);
+//// ReSharper restore PossibleNullReferenceException
+//            if (!result.IsCompleted)
+//            {
+//                throw SharpTimeoutException.Create(receiver.Address, timeout);
+//            }
 
-            int count = socket.EndReceive(result);
+//            int count = socket.EndReceive(result);
 
-            ISnmpMessage message;
+//            ISnmpMessage message;
             
-            // Passing 'count' is not necessary because ParseMessages should ignore it, but it offer extra safety (and would avoid a bug if parsing >1 response).
-            using (MemoryStream m = new MemoryStream(reply, 0, count, false))
-            {
-                message = MessageFactory.ParseMessages(m, registry)[0];
-            }
+//            // Passing 'count' is not necessary because ParseMessages should ignore it, but it offer extra safety (and would avoid a bug if parsing >1 response).
+//            using (MemoryStream m = new MemoryStream(reply, 0, count, false))
+//            {
+//                message = MessageFactory.ParseMessages(m, registry)[0];
+//            }
 
-            // TODO: disbled for v3.
+//            // TODO: disbled for v3.
 //            if (message.Pdu.TypeCode != SnmpType.GetResponsePdu)
 //            {
 //                throw SharpOperationException.Create("wrong response type", receiver.Address);
@@ -328,9 +328,9 @@ namespace Lextm.SharpSnmpLib.Messaging
 //                throw SharpOperationException.Create("wrong response sequence", receiver.Address);
 //            }
 
-            ByteTool.Capture(reply); // log response
-            return message;
-        }
+//            ByteTool.Capture(reply); // log response
+//            return message;
+//        }
 
         /// <summary>
         /// Authenticates this instance.

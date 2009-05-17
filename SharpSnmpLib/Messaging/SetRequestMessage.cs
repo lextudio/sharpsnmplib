@@ -11,12 +11,11 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// </summary>
     public class SetRequestMessage : ISnmpMessage
     {
-        private readonly byte[] _bytes;
-        private readonly ISnmpPdu _pdu;
         private readonly VersionCode _version;
-        private readonly OctetString _community;
-        private readonly IList<Variable> _variables;
-        private readonly int _requestId;        
+        private Header _header;
+        private SecurityParameters _parameters;
+        private Scope _scope;
+        private ProviderPair _pair;       
 
         /// <summary>
         /// Creates a <see cref="SetRequestMessage"/> with all contents.
@@ -27,16 +26,78 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="variables">Variables</param>
         public SetRequestMessage(int requestId, VersionCode version, OctetString community, IList<Variable> variables)
         {
+            if (version == VersionCode.V3)
+            {
+                throw new ArgumentException("only v1 and v2c are supported", "version");
+            }
+            
             _version = version;
-            _community = community;
-            _variables = variables;
-            SetRequestPdu pdu = new SetRequestPdu(
+            _header = Header.Empty;
+            _parameters = new SecurityParameters(null, null, null, community, null, null);
+            GetRequestPdu pdu = new GetRequestPdu(
                 requestId,
                 ErrorCode.NoError,
                 0,
-                _variables);
-            _requestId = requestId;
-            _bytes = MessageFactory.PackMessage(_version, _community, pdu).ToBytes();
+                variables);
+            _scope = new Scope(null, null, pdu);
+            _pair = ProviderPair.Default;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SetRequestMessage"/> class.
+        /// </summary>
+        /// <param name="version">The version.</param>
+        /// <param name="messageId">The message id.</param>
+        /// <param name="requestId">The request id.</param>
+        /// <param name="userName">Name of the user.</param>
+        /// <param name="variables">The variables.</param>
+        /// <param name="pair">The pair.</param>
+        public SetRequestMessage(VersionCode version, int messageId, int requestId, Lextm.SharpSnmpLib.OctetString userName, List<Variable> variables, ProviderPair pair)
+        {
+            if (version != VersionCode.V3)
+            {
+                throw new ArgumentException("only v3 is supported", "version");
+            }
+
+            _version = version;
+            if (pair == null)
+            {
+                throw new ArgumentException("pair");
+            }
+
+            _pair = pair;
+            SecurityLevel recordToSecurityLevel = pair.ToSecurityLevel();
+            recordToSecurityLevel |= SecurityLevel.Reportable;
+            byte b = (byte)recordToSecurityLevel;
+            // TODO: define more constants.
+            _header = new Header(new Integer32(messageId), new Integer32(0xFFE3), new OctetString(new byte[] { b }), new Integer32(3));
+            _parameters = new SecurityParameters(
+                OctetString.Empty, 
+                new Integer32(0), 
+                new Integer32(0), 
+                userName, 
+                _pair.Authentication.CleanDigest,
+                _pair.Privacy.Salt);
+            GetRequestPdu pdu = new GetRequestPdu(
+                requestId, 
+                ErrorCode.NoError,
+                0,
+                variables);
+            _scope = new Scope(OctetString.Empty, OctetString.Empty, pdu);
+        }
+
+        internal SetRequestMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, ProviderPair record)
+        {
+            if (record == null)
+            {
+                throw new ArgumentException("record");
+            }
+
+            _version = version;
+            _header = header;
+            _parameters = parameters;
+            _scope = scope;
+            _pair = record;
         }
 
         /// <summary>
@@ -47,7 +108,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public ISnmpMessage GetResponse(int timeout, IPEndPoint receiver)
         {
-            return MessageFactory.GetResponse(receiver, _bytes, RequestId, timeout, new UserRegistry(), Messenger.GetSocket(receiver));
+            return GetResponse(timeout, receiver, Messenger.GetSocket(receiver));
         }
 
         /// <summary>
@@ -55,40 +116,18 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         /// <param name="timeout">Timeout.</param>
         /// <param name="receiver">Agent.</param>
-        /// <param name="socket">The socket.</param>
+        /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
         /// <returns></returns>
-        public ISnmpMessage GetResponse(int timeout, IPEndPoint receiver, Socket socket)
+        public ISnmpMessage GetResponse(int timeout, IPEndPoint receiver, Socket udpSocket)
         {
-            return MessageFactory.GetResponse(receiver, _bytes, RequestId, timeout, new UserRegistry(), socket);
-        }
-        
-        /// <summary>
-        /// Creates a <see cref="SetRequestMessage"/> with a specific <see cref="Sequence"/>.
-        /// </summary>
-        /// <param name="body">Message body</param>
-        public SetRequestMessage(Sequence body)
-        {
-            if (body == null)
+            UserRegistry registry = new UserRegistry();
+            if (Version == VersionCode.V3)
             {
-                throw new ArgumentNullException("body");
+                MessageFactory.Authenticate(this, _pair);
+                registry.Add(_parameters.UserName, _pair);
             }
-            
-            if (body.Count != 3)
-            {
-                throw new ArgumentException("wrong message body");
-            }
-            
-            _community = (OctetString)body[1];
-            _version = (VersionCode)((Integer32)body[0]).ToInt32();
-            _pdu = (ISnmpPdu)body[2];
-            if (_pdu.TypeCode != SnmpType.SetRequestPdu)
-            {
-                throw new ArgumentException("wrong message type");
-            }
-            
-            _requestId = _pdu.RequestId.ToInt32();
-            _variables = _pdu.Variables;
-            _bytes = body.ToBytes();
+
+            return MessageFactory.GetResponse(receiver, ToBytes(), RequestId, timeout, registry, udpSocket);
         }
         
         /// <summary>
@@ -97,12 +136,12 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public override string ToString()
         {
-            return "SET request message: version: " + _version + "; " + _community + "; " + _pdu;
+            return "SET request message: version: " + _version + "; " + _parameters.UserName + "; " + _scope.Pdu;
         }
         
         internal int RequestId
         {
-            get { return _requestId; }
+            get { return _scope.Pdu.RequestId.ToInt32(); }
         }
         
         /// <summary>
@@ -112,7 +151,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             get
             {
-                return _variables;
+                return _scope.Pdu.Variables;
             }
         }
         
@@ -122,7 +161,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public byte[] ToBytes()
         {
-            return _bytes;
+            return MessageFactory.PackMessage(_version, _pair.Privacy, _header, _parameters, _scope).ToBytes();
         }
 
         /// <summary>
@@ -132,7 +171,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             get
             {
-                return _pdu;
+                return _scope.Pdu;
             }
         }
 
@@ -142,7 +181,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <value>The parameters.</value>
         public SecurityParameters Parameters
         {
-            get { return null; }
+            get { return _parameters; }
         }
 
         /// <summary>
@@ -151,7 +190,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <value>The scope.</value>
         public Scope Scope
         {
-            get { return null; }
+            get { return _scope; }
         }
 
         /// <summary>
