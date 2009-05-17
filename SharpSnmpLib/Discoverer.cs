@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using Lextm.SharpSnmpLib.Security;
+using Lextm.SharpSnmpLib.Messaging;
 
 namespace Lextm.SharpSnmpLib
 {

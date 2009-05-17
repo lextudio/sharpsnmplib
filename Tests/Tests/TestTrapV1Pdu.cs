@@ -9,6 +9,7 @@
 
 using System.Collections.Generic;
 using NUnit.Framework;
+using Lextm.SharpSnmpLib.Messaging;
 
 #pragma warning disable 1591
 namespace Lextm.SharpSnmpLib.Tests
@@ -30,7 +31,7 @@ namespace Lextm.SharpSnmpLib.Tests
                                           new Integer32(12),
                                           new TimeTicks(16352),
                                           vList);
-            byte[] bytes = ByteTool.PackMessage(VersionCode.V1, new OctetString("public"), pdu).ToBytes();
+            byte[] bytes = MessageFactory.PackMessage(VersionCode.V1, new OctetString("public"), pdu).ToBytes();
             TrapV1Message message = (TrapV1Message)MessageFactory.ParseMessages(bytes, new Lextm.SharpSnmpLib.Security.UserRegistry())[0];
             Assert.AreEqual("127.0.0.1", message.AgentAddress.ToString());
             Assert.AreEqual(GenericCode.EnterpriseSpecific, message.Generic);

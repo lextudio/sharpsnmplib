@@ -10,6 +10,7 @@
 using System.Collections.Generic;
 using Lextm.SharpSnmpLib.Security;
 using NUnit.Framework;
+using Lextm.SharpSnmpLib.Messaging;
 
 #pragma warning disable 1591
 

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Net;
 using NUnit.Framework;
+using Lextm.SharpSnmpLib.Messaging;
 #pragma warning disable 1591
 namespace Lextm.SharpSnmpLib.Tests
 {

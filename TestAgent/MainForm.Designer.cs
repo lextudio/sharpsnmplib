@@ -6,6 +6,8 @@
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
+using Lextm.SharpSnmpLib.Messaging;
+using Lextm.SharpSnmpLib;
 namespace TestAgent
 {
     partial class MainForm
@@ -136,8 +138,8 @@ namespace TestAgent
         	// 
         	// listener1
         	// 
-        	this.listener1.GetRequestReceived += new System.EventHandler<Lextm.SharpSnmpLib.MessageReceivedEventArgs<Lextm.SharpSnmpLib.GetRequestMessage>>(this.agent1_GetRequestReceived);
-        	this.listener1.ExceptionRaised += new System.EventHandler<Lextm.SharpSnmpLib.ExceptionRaisedEventArgs>(this.agent1_ExceptionRaised);
+        	this.listener1.GetRequestReceived += new System.EventHandler<MessageReceivedEventArgs<GetRequestMessage>>(this.agent1_GetRequestReceived);
+        	this.listener1.ExceptionRaised += new System.EventHandler<ExceptionRaisedEventArgs>(this.agent1_ExceptionRaised);
         	// 
         	// label3
         	// 

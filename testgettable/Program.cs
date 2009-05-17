@@ -3,6 +3,7 @@ using System.IO;
 using System.Net;
 using Lextm.SharpSnmpLib;
 using Lextm.SharpSnmpLib.Mib;
+using Lextm.SharpSnmpLib.Messaging;
 
 namespace TestGetTable
 {

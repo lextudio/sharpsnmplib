@@ -9,6 +9,7 @@
 
 using System.IO;
 using NUnit.Framework;
+using Lextm.SharpSnmpLib.Messaging;
 
 #pragma warning disable 1591
 namespace Lextm.SharpSnmpLib.Tests

@@ -12,6 +12,7 @@ using System.Net;
 using System.Net.Sockets;
 using Lextm.SharpSnmpLib;
 using Mono.Options;
+using Lextm.SharpSnmpLib.Messaging;
 
 namespace TestSet
 {

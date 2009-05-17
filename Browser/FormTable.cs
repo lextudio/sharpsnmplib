@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Threading;
 using System.Windows.Forms;
 using Lextm.SharpSnmpLib.Mib;
+using Lextm.SharpSnmpLib.Messaging;
 
 namespace Lextm.SharpSnmpLib.Browser
 {

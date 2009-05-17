@@ -13,6 +13,7 @@ using System.Windows.Forms;
 
 using Microsoft.Practices.Unity;
 using WeifenLuo.WinFormsUI.Docking;
+using Lextm.SharpSnmpLib.Messaging;
 
 namespace Lextm.SharpSnmpLib.Browser
 {

@@ -12,6 +12,7 @@ using System.Net;
 using System.Windows.Forms;
 
 using Lextm.SharpSnmpLib;
+using Lextm.SharpSnmpLib.Messaging;
 
 namespace TestAgent
 {
@@ -42,7 +43,7 @@ namespace TestAgent
 			listener1.Stop();
 		}
 
-		private void agent1_GetRequestReceived(object sender, Lextm.SharpSnmpLib.MessageReceivedEventArgs<GetRequestMessage> e)
+		private void agent1_GetRequestReceived(object sender, MessageReceivedEventArgs<GetRequestMessage> e)
 		{
 			GetRequestMessage message = e.Message;
 			// you may validate message version number and/or community name here.

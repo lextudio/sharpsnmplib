@@ -48,7 +48,7 @@ namespace Lextm.SharpSnmpLib.Tests
             SecurityParameters parameters = new SecurityParameters(engineId, new Integer32(0x14), new Integer32(0x35), new OctetString("lexmark"), new OctetString(new byte[12]), new OctetString(ByteTool.ConvertByteString("00 00 00  01 44 2C A3 B5")));
             ISnmpData data = priv.Encrypt(scope, parameters);
             Assert.AreEqual(SnmpType.OctetString, data.TypeCode);
-            Assert.AreEqual(expected, data.ToBytes());
+            Assert.AreEqual(expected, ByteTool.ToBytes(data));
         }
     }
 }

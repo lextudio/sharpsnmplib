@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using Lextm.SharpSnmpLib;
+using Lextm.SharpSnmpLib.Messaging;
 
 namespace TestWalk
 {

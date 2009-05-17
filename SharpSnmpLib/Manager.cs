@@ -7,6 +7,7 @@ using System.Net;
 using System.Threading;
 
 using Lextm.SharpSnmpLib.Mib;
+using Lextm.SharpSnmpLib.Messaging;
 
 #pragma warning disable 612,618
 namespace Lextm.SharpSnmpLib

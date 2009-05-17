@@ -8,6 +8,7 @@
  */
 using System;
 using Lextm.SharpSnmpLib;
+using Lextm.SharpSnmpLib.Messaging;
 
 namespace test
 {
