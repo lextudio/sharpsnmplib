@@ -18,7 +18,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// </summary>
         /// <param name="message">The message.</param>
         /// <returns></returns>
-        OctetString ComputeHash(GetRequestMessage message);
+        OctetString ComputeHash(ISnmpMessage message);
 
         /// <summary>
         /// Converts password to key.

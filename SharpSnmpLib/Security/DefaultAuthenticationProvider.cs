@@ -41,7 +41,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// </summary>
         /// <param name="message">The message.</param>
         /// <returns></returns>
-        public OctetString ComputeHash(GetRequestMessage message)
+        public OctetString ComputeHash(ISnmpMessage message)
         {
             return OctetString.Empty;
         }

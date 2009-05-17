@@ -17,28 +17,9 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using Lextm.SharpSnmpLib.Security;
 
 namespace Lextm.SharpSnmpLib
-{
-    /// <summary>
-    /// The signature of the callback method to use when calling BeginGetResponse,
-    /// ie the method used when we receive a response.
-    /// </summary>
-    /// <param name="from">The <see cref="IPAddress"/> of the equipment from which comes the response.</param>
-    /// <param name="responseMsg">The response itself.</param>
-    public delegate void GetResponseCallback(IPAddress from, GetResponseMessage responseMsg);
-    
-    /// <summary>
-    /// The signature of the callback method to use when calling BeginGetResponseRaw (ie before parsing bytes into a <see cref="ISnmpMessage"/>,
-    /// ie the method used when we receive a response.
-    /// </summary>
-    /// <param name="from">The <see cref="IPAddress"/> of the equipment from which comes the response.</param>
-    /// <param name="rawResponseBuffer">The buffer where the response is stored, non-deserialized and with extra bytes
-    /// (the buffer may contain more bytes than the response itself).</param>
-    /// <param name="byteCount">The number of useful byte to read from <paramref name="rawResponseBuffer"/>.</param>
-    public delegate void GetResponseRawCallback(IPAddress from, byte[] rawResponseBuffer, int byteCount);
-
+{    
     /// <summary>
     /// Description of ByteTool.
     /// </summary>
@@ -60,138 +41,7 @@ namespace Lextm.SharpSnmpLib
             }
         }
 
-        ///// <summary>
-        ///// Sends an SNMP message and wait for its responses.
-        ///// </summary>
-        ///// <param name="receiver">The IP address and port of the target to talk to.</param>
-        ///// <param name="bytes">The byte array representing the SNMP message.</param>
-        ///// <param name="number">The <see cref="GetResponseMessage.RequestId"/> of the SNMP message.</param>
-        ///// <param name="timeout">The timeout above which, if the response is not received, a <see cref="SharpTimeoutException"/> is thrown.</param>
-        ///// <returns>The response message (<see cref="GetResponseMessage"/>).</returns>
-        //internal static GetResponseMessage GetResponse(IPEndPoint receiver, byte[] bytes, int number, int timeout)
-        //{
-        //    using (Socket udpSocket = new Socket(receiver.AddressFamily, SocketType.Dgram, ProtocolType.Udp))
-        //    {
-        //        return GetResponse(receiver, bytes, number, timeout, udpSocket);
-        //    }
-        //}
-
-        /// <summary>
-        /// Sends an SNMP message and wait for its responses.
-        /// </summary>
-        /// <param name="receiver">The IP address and port of the target to talk to.</param>
-        /// <param name="bytes">The byte array representing the SNMP message.</param>
-        /// <param name="number">The <see cref="GetResponseMessage.RequestId"/> of the SNMP message.</param>
-        /// <param name="timeout">The timeout above which, if the response is not received, a <see cref="SharpTimeoutException"/> is thrown.</param>
-        /// <param name="registry">The registry.</param>
-        /// <param name="socket">The UDP <see cref="Socket"/> to use to send/receive.</param>
-        /// <returns>
-        /// The response message (<see cref="GetResponseMessage"/>).
-        /// </returns>
-        internal static GetResponseMessage GetResponse(IPEndPoint receiver, byte[] bytes, int number, int timeout, UserRegistry registry, Socket socket)
-        {
-            if (socket == null)
-            {
-                throw new ArgumentNullException("socket");
-            }
-            
-            Capture(bytes); // log request
-
-            #if CF
-            int bufSize = 8192;
-            #else
-            int bufSize = socket.ReceiveBufferSize;
-            #endif
-            byte[] reply = new byte[bufSize];
-
-            // Whatever you change, try to keep the Send and the BeginReceive close to each other.
-            socket.SendTo(bytes, receiver);
-            IAsyncResult result = socket.BeginReceive(reply, 0, bufSize, SocketFlags.None, null, null);
-// ReSharper disable PossibleNullReferenceException
-            result.AsyncWaitHandle.WaitOne(timeout, false);
-// ReSharper restore PossibleNullReferenceException
-            if (!result.IsCompleted)
-            {
-                throw SharpTimeoutException.Create(receiver.Address, timeout);
-            }
-
-            int count = socket.EndReceive(result);
-
-            ISnmpMessage message;
-            
-            // Passing 'count' is not necessary because ParseMessages should ignore it, but it offer extra safety (and would avoid a bug if parsing >1 response).
-            using (MemoryStream m = new MemoryStream(reply, 0, count, false))
-            {
-                message = MessageFactory.ParseMessages(m, registry)[0];
-            }
-
-            if (message.Pdu.TypeCode != SnmpType.GetResponsePdu)
-            {
-                throw SharpOperationException.Create("wrong response type", receiver.Address);
-            }
-
-            GetResponseMessage response = (GetResponseMessage)message;
-            if (response.RequestId != number)
-            {
-                throw SharpOperationException.Create("wrong response sequence", receiver.Address);
-            }
-
-            Capture(reply); // log response
-            return response;
-        }
-
-        internal static ISnmpMessage GetReply(IPEndPoint receiver, byte[] bytes, int number, int timeout, UserRegistry registry, Socket socket)
-        {
-            if (socket == null)
-            {
-                throw new ArgumentNullException("socket");
-            }
-            
-            Capture(bytes); // log request
-
-            #if CF
-            int bufSize = 8192;
-            #else
-            int bufSize = socket.ReceiveBufferSize;
-            #endif
-            byte[] reply = new byte[bufSize];
-
-            // Whatever you change, try to keep the Send and the BeginReceive close to each other.
-            socket.SendTo(bytes, receiver);
-            IAsyncResult result = socket.BeginReceive(reply, 0, bufSize, SocketFlags.None, null, null);
-// ReSharper disable PossibleNullReferenceException
-            result.AsyncWaitHandle.WaitOne(timeout, false);
-// ReSharper restore PossibleNullReferenceException
-            if (!result.IsCompleted)
-            {
-                throw SharpTimeoutException.Create(receiver.Address, timeout);
-            }
-
-            int count = socket.EndReceive(result);
-
-            ISnmpMessage message;
-            
-            // Passing 'count' is not necessary because ParseMessages should ignore it, but it offer extra safety (and would avoid a bug if parsing >1 response).
-            using (MemoryStream m = new MemoryStream(reply, 0, count, false))
-            {
-                message = MessageFactory.ParseMessages(m, registry)[0];
-            }
-
-            // TODO: disbled for v3.
-//            if (message.Pdu.TypeCode != SnmpType.GetResponsePdu)
-//            {
-//                throw SharpOperationException.Create("wrong response type", receiver.Address);
-//            }
-
-//            GetResponseMessage response = (GetResponseMessage)message;
-//            if (response.RequestId != number)
-//            {
-//                throw SharpOperationException.Create("wrong response sequence", receiver.Address);
-//            }
-
-            Capture(reply); // log response
-            return message;
-        }
+        
         
         ///// <summary>
         ///// Sends an SNMP message and wait for its responses asynchronously.
@@ -240,36 +90,36 @@ namespace Lextm.SharpSnmpLib
         //        new object[] { udpSocket, reply, receiver, timeout, callback, number });
         //}
 
-        /// <summary>
-        /// Sends an SNMP message and wait for its responses asynchronously.
-        /// With this raw overload, the callback simply returns a byte array and do not process it back into a <see cref="GetResponseMessage"/>.
-        /// </summary>
-        /// <param name="receiver">The IP address and port of the target to talk to.</param>
-        /// <param name="bytes">The byte array representing the SNMP message.</param>
-        /// <param name="timeout">The timeout above which, if the response is not received, a <see cref="SharpTimeoutException"/> is thrown.</param>
-        /// <param name="callback">The callback called once the response has been received.</param>
-        /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
-        internal static void BeginGetResponseRaw(EndPoint receiver, byte[] bytes, int timeout, GetResponseRawCallback callback, Socket udpSocket)
-        {
-            Capture(bytes); // log request
-
-            #if CF
-            int bufSize = 8192;
-            #else
-            int bufSize = udpSocket.ReceiveBufferSize;
-            #endif
-            byte[] reply = new byte[bufSize];
-
-            // Whatever you change, try to keep the Send and the BeginReceive close to each other.
-            udpSocket.SendTo(bytes, receiver);
-            udpSocket.BeginReceive(
-                reply,
-                0,
-                bufSize,
-                SocketFlags.None,
-                GetResponseRawInternalCallback,
-                new object[] { udpSocket, reply, receiver, timeout, callback });
-        }
+//        /// <summary>
+//        /// Sends an SNMP message and wait for its responses asynchronously.
+//        /// With this raw overload, the callback simply returns a byte array and do not process it back into a <see cref="GetResponseMessage"/>.
+//        /// </summary>
+//        /// <param name="receiver">The IP address and port of the target to talk to.</param>
+//        /// <param name="bytes">The byte array representing the SNMP message.</param>
+//        /// <param name="timeout">The timeout above which, if the response is not received, a <see cref="SharpTimeoutException"/> is thrown.</param>
+//        /// <param name="callback">The callback called once the response has been received.</param>
+//        /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
+//        internal static void BeginGetResponseRaw(EndPoint receiver, byte[] bytes, int timeout, GetResponseRawCallback callback, Socket udpSocket)
+//        {
+//            Capture(bytes); // log request
+//
+//            #if CF
+//            int bufSize = 8192;
+//            #else
+//            int bufSize = udpSocket.ReceiveBufferSize;
+//            #endif
+//            byte[] reply = new byte[bufSize];
+//
+//            // Whatever you change, try to keep the Send and the BeginReceive close to each other.
+//            udpSocket.SendTo(bytes, receiver);
+//            udpSocket.BeginReceive(
+//                reply,
+//                0,
+//                bufSize,
+//                SocketFlags.None,
+//                GetResponseRawInternalCallback,
+//                new object[] { udpSocket, reply, receiver, timeout, callback });
+//        }
 
         //private static void GetResponseInternalCallback(IAsyncResult result)
         //{
@@ -322,35 +172,28 @@ namespace Lextm.SharpSnmpLib
         //    callback(receiver.Address, response);
         //}
 
-        private static void GetResponseRawInternalCallback(IAsyncResult result)
-        {
-            object[] data = (object[])result.AsyncState;
-            Socket udpSocket = (Socket)data[0];
-            byte[] reply = (byte[])data[1];
-            IPEndPoint receiver = (IPEndPoint)data[2];
-            int timeout = (int)data[3];
-            GetResponseRawCallback callback = (GetResponseRawCallback)data[4];
-
-            result.AsyncWaitHandle.WaitOne(timeout, false);
-            if (!result.IsCompleted)
-            {
-                // Timeout -> return null. Can't throw exception in this thread.
-                // throw SharpTimeoutException.Create(receiver.Address, timeout);
-                callback(receiver.Address, null, 0);
-                return;
-            }
-
-            int count = udpSocket.EndReceive(result);
-
-            callback(receiver.Address, reply, count);
-        }
-
-        // TODO: add this method to all message exchanges.
-        internal static void Capture(ISnmpMessage message)
-        {
-            byte[] buffer = message.ToBytes();
-            Capture(buffer);
-        }
+//        private static void GetResponseRawInternalCallback(IAsyncResult result)
+//        {
+//            object[] data = (object[])result.AsyncState;
+//            Socket udpSocket = (Socket)data[0];
+//            byte[] reply = (byte[])data[1];
+//            IPEndPoint receiver = (IPEndPoint)data[2];
+//            int timeout = (int)data[3];
+//            GetResponseRawCallback callback = (GetResponseRawCallback)data[4];
+//
+//            result.AsyncWaitHandle.WaitOne(timeout, false);
+//            if (!result.IsCompleted)
+//            {
+//                // Timeout -> return null. Can't throw exception in this thread.
+//                // throw SharpTimeoutException.Create(receiver.Address, timeout);
+//                callback(receiver.Address, null, 0);
+//                return;
+//            }
+//
+//            int count = udpSocket.EndReceive(result);
+//
+//            callback(receiver.Address, reply, count);
+//        }        
 
         internal static void Capture(byte[] buffer)
         {
@@ -616,21 +459,7 @@ namespace Lextm.SharpSnmpLib
             list.Reverse();
             return list.ToArray();
         }
-
-        /// <summary>
-        /// Packs the message.
-        /// </summary>
-        /// <param name="version">The protocol version.</param>
-        /// <param name="data">The data.</param>
-        /// <returns></returns>
-        public static Sequence PackMessage(VersionCode version, params ISnmpData[] data)
-        {
-            List<ISnmpData> collection = new List<ISnmpData>(1 + data.Length);
-            collection.Add(new Integer32((int)version));
-            collection.AddRange(data);
-            return new Sequence(collection);
-        }
-        
+              
         /// <summary>
         /// Converts to byte format.
         /// </summary>
@@ -647,28 +476,6 @@ namespace Lextm.SharpSnmpLib
                 data.AppendBytesTo(result);
                 return result.ToArray();
             }
-        }
-
-        internal static Sequence PackMessage(VersionCode version, params ISegment[] segments)
-        {
-            List<ISnmpData> collection = new List<ISnmpData>(segments.Length + 1);
-            collection.Add(new Integer32((int)version + 1));
-            foreach (ISegment segment in segments)
-            {
-                collection.Add(segment.GetData(version));
-            }
-            
-            return new Sequence(collection);
-        }
-
-        internal static Sequence PackMessage(VersionCode version, IPrivacyProvider privacy, Header header, SecurityParameters parameters, Scope scope)
-        {
-            List<ISnmpData> collection = new List<ISnmpData>(4);
-            collection.Add(new Integer32((int)version + 1));
-            collection.Add(header.GetData(version));
-            collection.Add(parameters.GetData(version));
-            collection.Add(privacy.Encrypt(scope, parameters));
-            return new Sequence(collection);
         }
     }
 }

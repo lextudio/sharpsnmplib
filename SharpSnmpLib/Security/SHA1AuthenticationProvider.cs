@@ -75,7 +75,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// </summary>
         /// <param name="message">The message.</param>
         /// <returns></returns>
-        public OctetString ComputeHash(GetRequestMessage message)
+        public OctetString ComputeHash(ISnmpMessage message)
         {
             byte[] key = PasswordToKey(_password, message.Parameters.EngineId.GetRaw());
             HMACSHA1 sha1 = new HMACSHA1(key);
