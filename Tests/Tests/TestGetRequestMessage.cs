@@ -67,13 +67,14 @@ namespace Lextm.SharpSnmpLib.Tests
 "04 0D 80 00  1F 88 80 E9 63 00 00 D6  1F F4 49 " +
 "04  00 " +
 "A0 1A 02  02 01 AF 02 01 00 02 01  00 30 0E 30  0C 06 08 2B  06 01 02 01 01 03 00 05  00";
+            ProviderPair pair = new ProviderPair(new MD5AuthenticationProvider(new OctetString("testpass")), DefaultPrivacyProvider.Instance);
             GetRequestMessage request = new GetRequestMessage(
                 VersionCode.V3,
                 13633,
                 0x01AF,
                 new OctetString("lexli"),
-                new List<Variable>(1) { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0"))},
-                new ProviderPair(new MD5AuthenticationProvider(new OctetString("testpass")), DefaultPrivacyProvider.Instance));
+                new List<Variable>(1) { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0")) },
+                pair);
                 //new Header(
                 //    new Integer32(13633),
                 //    new Integer32(0xFFE3),
@@ -96,7 +97,7 @@ namespace Lextm.SharpSnmpLib.Tests
                 //        new List<Variable>(1) { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0"), new Null()) })),
                 //new SecurityRecord(new MD5AuthenticationProvider(new OctetString("testpass")), DefaultPrivacyProvider.Instance));
             Assert.AreEqual(SecurityLevel.Authentication, request.Level);
-            request.Authenticate();
+            MessageFactory.Authenticate(request, pair);
             string test = ByteTool.ConvertByteString(request.ToBytes());
             //Assert.AreEqual(ByteTool.ConvertByteString(bytes), request.ToBytes());
         }
@@ -115,6 +116,9 @@ namespace Lextm.SharpSnmpLib.Tests
                  "29 C5 A4 BC  32 DA 2E C7  65 A5 3D 71  06 3C 5B 56" +
                  "FB 04 A4";
             MD5AuthenticationProvider auth = new MD5AuthenticationProvider(new OctetString("testpass"));
+            ProviderPair pair = new ProviderPair(
+                                new MD5AuthenticationProvider(new OctetString("testpass")),
+                                new DESPrivacyProvider(new OctetString("passtest"), auth));
             GetRequestMessage request = new GetRequestMessage(
                 VersionCode.V3,
                 new Header(
@@ -133,15 +137,13 @@ namespace Lextm.SharpSnmpLib.Tests
                     new OctetString(ByteTool.ConvertByteString("80 00 1F 88 80 E9 63 00  00 D6 1F F4  49")),
                     OctetString.Empty,
                     new GetRequestPdu(
-                        new Integer32(0x3A25),
+                        0x3A25,
                         ErrorCode.NoError,
-                        new Integer32(0),
+                        0,
                         new List<Variable>(1) { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0")) })),
-                new ProviderPair(
-                    new MD5AuthenticationProvider(new OctetString("testpass")), 
-                    new DESPrivacyProvider(new OctetString("passtest"), auth)));
+                pair);
             Assert.AreEqual(SecurityLevel.Authentication | SecurityLevel.Privacy, request.Level);
-            request.Authenticate();
+            MessageFactory.Authenticate(request, pair);
             string test = ByteTool.ConvertByteString(request.ToBytes());
             Assert.AreEqual(ByteTool.ConvertByteString(bytes), request.ToBytes());
         }
@@ -168,6 +170,7 @@ namespace Lextm.SharpSnmpLib.Tests
 "04 0D 80 00  1F 88 80 E9 63 00 00 D6  1F F4 49 " +
 "04  00 " +
 "A0 1A 02  02 01 AF 02 01 00 02 01  00 30 0E 30  0C 06 08 2B  06 01 02 01 01 03 00 05  00";
+            ProviderPair pair = new ProviderPair(new MD5AuthenticationProvider(new OctetString("testpass")), DefaultPrivacyProvider.Instance);
             GetRequestMessage request = new GetRequestMessage(
                 VersionCode.V3,
                 new Header(
@@ -186,13 +189,13 @@ namespace Lextm.SharpSnmpLib.Tests
                     new OctetString(ByteTool.ConvertByteString("80 00 1F 88 80 E9 63 00  00 D6 1F F4  49")),
                     OctetString.Empty,
                     new GetRequestPdu(
-                        new Integer32(0x01AF),
+                        0x01AF,
                         ErrorCode.NoError,
-                        new Integer32(0),
-                        new List<Variable>(1) { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0"), new Null() )})),
-                new ProviderPair(new MD5AuthenticationProvider(new OctetString("testpass")), DefaultPrivacyProvider.Instance));
+                        0,
+                        new List<Variable>(1) { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0"), new Null()) })),
+                pair);
             Assert.AreEqual(SecurityLevel.Authentication, request.Level);
-            request.Authenticate();
+            MessageFactory.Authenticate(request, pair);
             string test = ByteTool.ConvertByteString(request.ToBytes());
             Assert.AreEqual(ByteTool.ConvertByteString(bytes), request.ToBytes());
         }
@@ -209,6 +212,7 @@ namespace Lextm.SharpSnmpLib.Tests
 "1F 88 80 E9  63 00 00 D6  1F F4 49 04  00 A0 1A 02" +
 "02 56 FF 02  01 00 02 01  00 30 0E 30  0C 06 08 2B" +
 "06 01 02 01  01 03 00 05  00";
+            ProviderPair pair = new ProviderPair(new SHA1AuthenticationProvider(new OctetString("password")), DefaultPrivacyProvider.Instance);
             GetRequestMessage request = new GetRequestMessage(
                 VersionCode.V3,
                 new Header(
@@ -227,13 +231,13 @@ namespace Lextm.SharpSnmpLib.Tests
                     new OctetString(ByteTool.ConvertByteString("80 00 1F 88 80 E9 63 00  00 D6 1F F4  49")),
                     OctetString.Empty,
                     new GetRequestPdu(
-                        new Integer32(0x56FF),
+                        0x56FF,
                         ErrorCode.NoError,
-                        new Integer32(0),
+                        0,
                         new List<Variable>(1) { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0"), new Null()) })),
-                new ProviderPair(new SHA1AuthenticationProvider(new OctetString("password")), DefaultPrivacyProvider.Instance));
+                pair);
             Assert.AreEqual(SecurityLevel.Authentication, request.Level);
-            request.Authenticate();
+            MessageFactory.Authenticate(request, pair);
             string test = ByteTool.ConvertByteString(request.ToBytes());
             Assert.AreEqual(ByteTool.ConvertByteString(bytes), request.ToBytes());
         }
@@ -262,7 +266,7 @@ namespace Lextm.SharpSnmpLib.Tests
                 new Scope(
                     OctetString.Empty,
                     OctetString.Empty,
-                    new GetRequestPdu(new Integer32(0x2C6B), ErrorCode.NoError, new Integer32(0), new List<Variable>())),
+                    new GetRequestPdu(0x2C6B, ErrorCode.NoError, 0, new List<Variable>())),
                     Security.ProviderPair.Default
                );
             string test = ByteTool.ConvertByteString(request.ToBytes());

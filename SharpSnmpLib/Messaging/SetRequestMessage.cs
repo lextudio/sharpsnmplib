@@ -153,5 +153,14 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             get { return null; }
         }
+
+        /// <summary>
+        /// Gets the version.
+        /// </summary>
+        /// <value>The version.</value>
+        public VersionCode Version
+        {
+            get { return _version; }
+        }
     }
 }

@@ -141,7 +141,7 @@ namespace TestGet
 
                 ProviderPair record = new ProviderPair(auth, priv);
                 GetRequestMessage request = new GetRequestMessage(VersionCode.V3, 100, 0, new OctetString(user), vList, record);
-                request.Discover(timeout, receiver, 1, 101);
+                ReportMessage.Discover(request, timeout, receiver, 1, 101);
                 ISnmpMessage response = request.GetResponse(timeout, receiver);
                 if (response.Pdu.ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
                 {

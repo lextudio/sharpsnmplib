@@ -20,12 +20,10 @@ namespace Lextm.SharpSnmpLib.Messaging
     public class ReportMessage : ISnmpMessage
     {
         private readonly VersionCode _version;
-        private byte[] _bytes;
         private SecurityParameters _parameters;
         private Scope _scope;
         private Header _header;
-        private IPrivacyProvider _privacy = DefaultPrivacyProvider.Instance;
-        private IAuthenticationProvider _authentication = DefaultAuthenticationProvider.Instance;
+        private ProviderPair _pair = ProviderPair.Default;
       
         /// <summary>
         /// Creates a <see cref="ReportMessage"/> with a specific <see cref="Sequence"/>.
@@ -46,27 +44,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             _version = (VersionCode)((Integer32)body[0]).ToInt32();
             _header = new Header((Sequence)body[1]);
             _parameters = new SecurityParameters((OctetString)body[2]);
-            _scope = Privacy.Decrypt(body[3], _parameters);
-        }
-        
-        /// <summary>
-        /// Gets or sets the privacy method.
-        /// </summary>
-        /// <value>The privacy method.</value>
-        public IPrivacyProvider Privacy
-        {
-            get { return _privacy; }
-            set { _privacy = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the authentication method.
-        /// </summary>
-        /// <value>The authentication method.</value>
-        public IAuthenticationProvider Authentication
-        {
-            get { return _authentication; }
-            set { _authentication = value; }
+            _scope = _pair.Privacy.Decrypt(body[3], _parameters);
         }
         
         /// <summary>
@@ -93,7 +71,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public ISnmpMessage GetResponse(int timeout, IPEndPoint receiver)
         {
-            return MessageFactory.GetResponse(receiver, _bytes, RequestId, timeout, new UserRegistry(), Messenger.GetSocket(receiver));
+            return MessageFactory.GetResponse(receiver, ToBytes(), RequestId, timeout, new UserRegistry(), Messenger.GetSocket(receiver));
         }
 
         /// <summary>
@@ -105,7 +83,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public ISnmpMessage GetResponse(int timeout, IPEndPoint receiver, Socket socket)
         {
-            return MessageFactory.GetResponse(receiver, _bytes, RequestId, timeout, new UserRegistry(), socket);
+            return MessageFactory.GetResponse(receiver, ToBytes(), RequestId, timeout, new UserRegistry(), socket);
         }
         
         internal int RequestId
@@ -124,13 +102,23 @@ namespace Lextm.SharpSnmpLib.Messaging
                 return _scope;
             }
         }
+
+        /// <summary>
+        /// Gets the version.
+        /// </summary>
+        /// <value>The version.</value>
+        public VersionCode Version
+        {
+            get { return _version; }
+        }
+
         /// <summary>
         /// Converts to byte format.
         /// </summary>
         /// <returns></returns>
         public byte[] ToBytes()
         {
-            return _bytes;
+            return MessageFactory.PackMessage(_version, _pair.Privacy, _header, _parameters, _scope).ToBytes();
         }
 
         /// <summary>
@@ -150,7 +138,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             return "REPORT request message: version: " + _version + "; " + _parameters.UserName + "; " + _scope.Pdu;
         }
 
-        internal void Update(ISnmpMessage request)
+        private void Update(ISnmpMessage request)
         {
             request.Parameters.EngineId = Parameters.EngineId;
             request.Parameters.EngineBoots = Parameters.EngineBoots;
@@ -158,6 +146,42 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             request.Scope.ContextEngineId = Scope.ContextEngineId;
             request.Scope.ContextName = Scope.ContextName;
+        }
+
+        /// <summary>
+        /// Discovers the specified timeout.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <param name="timeout">The timeout.</param>
+        /// <param name="receiver">The receiver.</param>
+        /// <param name="requestId">The request id.</param>
+        /// <param name="messageId">The message id.</param>
+        /// <returns></returns>
+        public static ReportMessage Discover(ISnmpMessage message, int timeout, IPEndPoint receiver, int requestId, int messageId)
+        {
+            GetRequestMessage discovery = new GetRequestMessage(
+                VersionCode.V3,
+                new Header(
+                    new Integer32(messageId),
+                    new Integer32(0xFFE3),
+                    new OctetString(new byte[] { (byte)SecurityLevel.Reportable }),
+                    new Integer32(3)),
+                new SecurityParameters(
+                    OctetString.Empty,
+                    new Integer32(0),
+                    new Integer32(0),
+                    OctetString.Empty,
+                    OctetString.Empty,
+                    OctetString.Empty),
+                new Scope(
+                    OctetString.Empty,
+                    OctetString.Empty,
+                    new GetRequestPdu(requestId, ErrorCode.NoError, 0, new List<Variable>())),
+                    ProviderPair.Default
+               );
+            ReportMessage report = (ReportMessage)MessageFactory.GetReply(receiver, discovery.ToBytes(), 0x2C6B, timeout, new UserRegistry(), Messenger.GetSocket(receiver));
+            report.Update(message); // {.1.3.6.1.6.3.15.1.1.4.0} Counter (number of counts)
+            return report;
         }
     }
 }

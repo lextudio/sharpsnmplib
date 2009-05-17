@@ -11,12 +11,11 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// </summary>
     public class GetRequestMessage : ISnmpMessage
     {
+        private readonly VersionCode _version;
         private Header _header;
         private SecurityParameters _parameters;
         private Scope _scope;
-        private readonly VersionCode _version;
-        private byte[] _bytes;
-        private ProviderPair _pair;
+        private ProviderPair _pair; 
 
         /// <summary>
         /// Creates a <see cref="GetRequestMessage"/> with all contents.
@@ -29,16 +28,16 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             if (version == VersionCode.V3)
             {
-                throw new ArgumentException("Please use overload constructor for v3", "version");
+                throw new ArgumentException("only v1 and v2c are supported", "version");
             }
             
             _version = version;
             _header = Header.Empty;
             _parameters = new SecurityParameters(null, null, null, community, null, null);
             GetRequestPdu pdu = new GetRequestPdu(
-                new Integer32(requestId),
+                requestId,
                 ErrorCode.NoError,
-                new Integer32(0),
+                0,
                 variables);
             _scope = new Scope(null, null, pdu);
             _pair = ProviderPair.Default;
@@ -52,9 +51,14 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="requestId">The request id.</param>
         /// <param name="userName">Name of the user.</param>
         /// <param name="variables">The variables.</param>
-        /// <param name="record">The record.</param>
+        /// <param name="pair">The pair.</param>
         public GetRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName, IList<Variable> variables, ProviderPair pair)
         {
+            if (version != VersionCode.V3)
+            {
+                throw new ArgumentException("only v3 is supported", "version");
+            }
+
             _version = version;
             if (pair == null)
             {
@@ -75,9 +79,9 @@ namespace Lextm.SharpSnmpLib.Messaging
                 _pair.Authentication.CleanDigest,
                 _pair.Privacy.Salt);
             GetRequestPdu pdu = new GetRequestPdu(
-                new Integer32(requestId), 
+                requestId, 
                 ErrorCode.NoError,
-                new Integer32(0),
+                0,
                 variables);
             _scope = new Scope(OctetString.Empty, OctetString.Empty, pdu);
         }
@@ -96,67 +100,24 @@ namespace Lextm.SharpSnmpLib.Messaging
             _pair = record;
         }
 
-        internal GetRequestMessage(GetRequestMessage message)
-        {
-            if (message == null)
-            {
-                throw new ArgumentNullException("message");
-            }
+        //internal GetRequestMessage(GetRequestMessage message)
+        //{
+        //    if (message == null)
+        //    {
+        //        throw new ArgumentNullException("message");
+        //    }
 
-            if (message.Version != VersionCode.V3)
-            {
-                throw new ArgumentException("only v3 message can be cloned", "message");
-            }
+        //    if (message.Version != VersionCode.V3)
+        //    {
+        //        throw new ArgumentException("only v3 message can be cloned", "message");
+        //    }
 
-            _version = message._version;
-            _header = message._header;//.Clone();
-            _parameters = message._parameters.Clone();
-            _scope = message._scope;//.Clone;
-            _pair = ProviderPair.Default;
-        }
-
-        /// <summary>
-        /// Discovers the specified timeout.
-        /// </summary>
-        /// <param name="timeout">The timeout.</param>
-        /// <param name="receiver">The receiver.</param>
-        /// <param name="requestId">The request id.</param>
-        /// <param name="messageId">The message id.</param>
-        /// <returns></returns>
-        public ReportMessage Discover(int timeout, IPEndPoint receiver, int requestId, int messageId)
-        {
-            GetRequestMessage discovery = new GetRequestMessage(
-                VersionCode.V3,
-                new Header(
-                    new Integer32(messageId),
-                    new Integer32(0xFFE3),
-                    new OctetString(new byte[] { (byte)SecurityLevel.Reportable }),
-                    new Integer32(3)),
-                new SecurityParameters(
-                    OctetString.Empty,
-                    new Integer32(0),
-                    new Integer32(0),
-                    OctetString.Empty,
-                    OctetString.Empty,
-                    OctetString.Empty),
-                new Scope(
-                    OctetString.Empty,
-                    OctetString.Empty,
-                    new GetRequestPdu(new Integer32(requestId), ErrorCode.NoError, new Integer32(0), new List<Variable>())),
-                    ProviderPair.Default
-               );
-            ReportMessage report = (ReportMessage)MessageFactory.GetReply(receiver, discovery.ToBytes(), 0x2C6B, timeout, new UserRegistry(), Messenger.GetSocket(receiver));
-            report.Update(this); // {.1.3.6.1.6.3.15.1.1.4.0} Counter (number of counts)
-            return report;
-        }
-
-        /// <summary>
-        /// Authenticates this instance.
-        /// </summary>
-        public void Authenticate()
-        {
-            _parameters.AuthenticationParameters = _pair.Authentication.ComputeHash(this);
-        }
+        //    _version = message._version;
+        //    _header = message._header;//.Clone();
+        //    _parameters = message._parameters.Clone();
+        //    _scope = message._scope;//.Clone;
+        //    _pair = ProviderPair.Default;
+        //}
         
         /// <summary>
         /// Gets the message ID.
@@ -205,7 +166,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             UserRegistry registry = new UserRegistry();
             if (Version == VersionCode.V3)
             {
-                Authenticate();
+                MessageFactory.Authenticate(this, _pair);
                 registry.Add(_parameters.UserName, _pair);
             }
 
@@ -288,12 +249,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public byte[] ToBytes()
         {
-            //if (_bytes == null)
-            //{
-                _bytes = MessageFactory.PackMessage(_version, _pair.Privacy, _header, _parameters, _scope).ToBytes();
-            //}
-            
-            return _bytes;
+            return MessageFactory.PackMessage(_version, _pair.Privacy, _header, _parameters, _scope).ToBytes();
         }
 
         /// <summary>

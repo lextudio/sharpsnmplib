@@ -88,6 +88,15 @@ namespace Lextm.SharpSnmpLib.Messaging
         }
 
         /// <summary>
+        /// Gets the version.
+        /// </summary>
+        /// <value>The version.</value>
+        public VersionCode Version
+        {
+            get { return _version; }
+        }
+
+        /// <summary>
         /// Sends the response.
         /// </summary>
         /// <param name="receiver">The receiver.</param>

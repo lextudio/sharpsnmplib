@@ -39,5 +39,11 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <returns></returns>
         byte[] ToBytes();
+
+        /// <summary>
+        /// Gets the version.
+        /// </summary>
+        /// <value>The version.</value>
+        VersionCode Version { get; }
     }
 }

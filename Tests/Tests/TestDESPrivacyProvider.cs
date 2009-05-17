@@ -44,7 +44,7 @@ namespace Lextm.SharpSnmpLib.Tests
      "FB 04 A4");
             OctetString engineId = new OctetString(ByteTool.ConvertByteString("80 00 1F 88 80  E9 63 00 00  D6 1F F4 49"));
             DESPrivacyProvider priv = new DESPrivacyProvider(new OctetString("passtest"), new MD5AuthenticationProvider(new OctetString("testpass")));
-            Scope scope = new Scope(engineId, OctetString.Empty, new GetRequestPdu(new Integer32(0x3A25), ErrorCode.NoError, new Integer32(0), new List<Variable>() { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0")) }));
+            Scope scope = new Scope(engineId, OctetString.Empty, new GetRequestPdu(0x3A25, ErrorCode.NoError, 0, new List<Variable>() { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0")) }));
             SecurityParameters parameters = new SecurityParameters(engineId, new Integer32(0x14), new Integer32(0x35), new OctetString("lexmark"), new OctetString(new byte[12]), new OctetString(ByteTool.ConvertByteString("00 00 00  01 44 2C A3 B5")));
             ISnmpData data = priv.Encrypt(scope, parameters);
             Assert.AreEqual(SnmpType.OctetString, data.TypeCode);

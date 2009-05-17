@@ -161,7 +161,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 case SnmpType.SetRequestPdu:
                     return new SetRequestMessage(body);//(version, header, parameters, scope, record);
                 case SnmpType.GetNextRequestPdu:
-                    return new GetNextRequestMessage(body);//(version, header, parameters, scope, record);
+                    return new GetNextRequestMessage(version, header, parameters, scope, record);
                 case SnmpType.GetBulkRequestPdu:
                     return new GetBulkRequestMessage(body);//(version, header, parameters, scope, record);
                 case SnmpType.ReportPdu:
@@ -330,6 +330,14 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             ByteTool.Capture(reply); // log response
             return message;
+        }
+
+        /// <summary>
+        /// Authenticates this instance.
+        /// </summary>
+        public static void Authenticate(ISnmpMessage message, ProviderPair pair)
+        {
+            message.Parameters.AuthenticationParameters = pair.Authentication.ComputeHash(message);
         }
     }
 }

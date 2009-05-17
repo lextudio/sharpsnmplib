@@ -76,9 +76,9 @@ namespace Lextm.SharpSnmpLib.Messaging
             _header = new Header(new Integer32(messageId), new Integer32(0xFFE3), new OctetString(new byte[] { b }), new Integer32(3));
             _parameters = new SecurityParameters(OctetString.Empty, new Integer32(0), new Integer32(0), userName, OctetString.Empty, OctetString.Empty);
             GetRequestPdu pdu = new GetRequestPdu(
-                new Integer32(requestId),
+                requestId,
                 ErrorCode.NoError,
-                new Integer32(0),
+                0,
                 variables);
             _scope = new Scope(OctetString.Empty, OctetString.Empty, pdu);
         }
@@ -174,6 +174,15 @@ namespace Lextm.SharpSnmpLib.Messaging
         public int ErrorIndex
         {
             get { return _scope.Pdu.ErrorIndex.ToInt32(); }
+        }
+
+        /// <summary>
+        /// Gets the version.
+        /// </summary>
+        /// <value>The version.</value>
+        public VersionCode Version
+        {
+            get { return _version; }
         }
 
         /// <summary>
