@@ -10,10 +10,10 @@ namespace Lextm.SharpSnmpLib.Security
         /// <summary>
         /// Encrypts the specified scope.
         /// </summary>
-        /// <param name="scope">The scope.</param>
+        /// <param name="data">The scope data.</param>
         /// <param name="parameters">The parameters.</param>
         /// <returns></returns>
-        ISnmpData Encrypt(Scope scope, SecurityParameters parameters);
+        ISnmpData Encrypt(ISnmpData data, SecurityParameters parameters);
 
         /// <summary>
         /// Gets the salt.
@@ -27,6 +27,6 @@ namespace Lextm.SharpSnmpLib.Security
         /// <param name="data">The data.</param>
         /// <param name="parameters">The parameters.</param>
         /// <returns></returns>
-        Scope Decrypt(ISnmpData data, SecurityParameters parameters);
+        ISnmpData Decrypt(ISnmpData data, SecurityParameters parameters);
     }
 }

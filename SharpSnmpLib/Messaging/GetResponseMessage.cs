@@ -95,41 +95,8 @@ namespace Lextm.SharpSnmpLib.Messaging
             _parameters = parameters;
             _scope = scope;
             _record = record;
-        } 
-                
-        /// <summary>
-        /// Creates a <see cref="GetResponseMessage"/> with a specific <see cref="Sequence"/>.
-        /// </summary>
-        /// <param name="body">Message body</param>
-        public GetResponseMessage(Sequence body)
-        {
-            if (body == null)
-            {
-                throw new ArgumentNullException("body");
-            }
-
-            _version = (VersionCode)((Integer32)body[0]).ToInt32();
-
-            if (body.Count == 3)
-            {
-                _header = Header.Empty;
-                _parameters = new SecurityParameters(null, null, null, (OctetString)body[1], null, null);
-                _scope = new Scope(null, null, (ISnmpPdu)body[2]);
-                return;
-            }
-
-            if (body.Count == 4)
-            {
-                _header = new Header(body[1]);
-                // TODO: update here later.
-                _parameters = new SecurityParameters((OctetString)body[2]);
-                _scope = DefaultPrivacyProvider.Instance.Decrypt(body[3], _parameters);
-                return;
-            }
-
-            throw new ArgumentException("wrong message body");
-        }
-
+        }                
+        
         /// <summary>
         /// Sends this <see cref="GetRequestMessage"/> and handles the response from agent.
         /// </summary>

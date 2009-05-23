@@ -272,6 +272,18 @@ namespace Lextm.SharpSnmpLib.Tests
             string test = ByteTool.ConvertByteString(request.ToBytes());
             Assert.AreEqual(bytes, test);
         }
+
+        [Test]
+        public void TestToBytes()
+        {
+            string s = "30 27 02 01  01 04 06 70  75 62 6C 69  63 A0 1A 02" +
+            "02 4B ED 02  01 00 02 01  00 30 0E 30  0C 06 08 2B" +
+            "06 01 02 01  01 01 00 05  00                      ";
+            byte[] expected = ByteTool.ConvertByteString(s);
+            GetRequestMessage message = new GetRequestMessage(0x4bed, VersionCode.V2, new OctetString("public"), new List<Variable>() { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) });
+            string test = ByteTool.ConvertByteString(message.ToBytes());
+            Assert.AreEqual(expected, message.ToBytes());
+        }
     }
 }
 #pragma warning restore 1591

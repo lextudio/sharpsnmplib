@@ -1,15 +1,23 @@
+﻿/*
+ * Created by SharpDevelop.
+ * User: lextm
+ * Date: 2008/5/11
+ * Time: 12:25
+ * 
+ * To change this template use Tools | Options | Coding | Edit Standard Headers.
+ */
 using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using Lextm.SharpSnmpLib;
-using Lextm.SharpSnmpLib.Security;
 using Mono.Options;
+using Lextm.SharpSnmpLib.Security;
 using Lextm.SharpSnmpLib.Messaging;
 
-namespace TestGet
+namespace TestGetBulk
 {
-    class TestGet
+    class TestGetBulk
     {
         static void Main(string[] args)
         {
@@ -25,11 +33,10 @@ namespace TestGet
             string authPhrase = string.Empty;
             string privacy = string.Empty;
             string privPhrase = string.Empty;
-            bool dump = false;
 
             OptionSet p = new OptionSet()
                 .Add("c:", "-c for community name, (default is public)", delegate (string v) { if (v != null) community = v; })
-                .Add("l:", "-l for security level, (default is noAuthNoPriv)", delegate (string v) 
+                .Add("l:", "-l for security level, (default is noAuthNoPriv)", delegate(string v)
                 {
                     if (v == "noAuthNoPriv")
                     {
@@ -44,17 +51,16 @@ namespace TestGet
                         level = SecurityLevel.Authentication | SecurityLevel.Privacy | SecurityLevel.Reportable;
                     }
                 })
-                .Add("a:", "-a for authentication method", delegate (string v) { authentication = v; })
+                .Add("a:", "-a for authentication method", delegate(string v) { authentication = v; })
                 .Add("A:", "-A for authentication passphrase", delegate(string v) { authPhrase = v; })
-                .Add("x:", "-x for privacy method", delegate (string v) { privacy = v; })
-                .Add("X:", "-X for privacy passphrase", delegate (string v) { privPhrase = v; })
+                .Add("x:", "-x for privacy method", delegate(string v) { privacy = v; })
+                .Add("X:", "-X for privacy passphrase", delegate(string v) { privPhrase = v; })
                 .Add("u:", "-u for security name", delegate(string v) { user = v; })
-                .Add("h|?|help", "-h, -?, -help for help.", delegate (string v) { show_help = v != null; })
+                .Add("h|?|help", "-h, -?, -help for help.", delegate(string v) { show_help = v != null; })
                 .Add("V", "-V to display version number of this application.", delegate (string v) { show_version = v != null; })
-                .Add("d", "-d to display message dump", delegate(string v) { dump = true; })
                 .Add("t:", "-t for timeout value (unit is second).", delegate (string v) { timeout = int.Parse(v) * 1000; })
                 .Add("r:", "-r for retry count (default is 0)", delegate (string v) { retry = int.Parse(v); })
-                .Add("v|version:", "-v for SNMP version (v1, v2 are currently supported)", delegate (string v) 
+                .Add("v:", "-v for SNMP version (v1, v2 are currently supported)", delegate (string v) 
                 {
                     switch (int.Parse(v))
                     {
@@ -124,16 +130,29 @@ namespace TestGet
                 IPEndPoint receiver = new IPEndPoint(ip, 161);
                 if (version != VersionCode.V3)
                 {
-                    foreach (
-                        Variable variable in
-                            Messenger.Get(version, receiver, new OctetString(community), vList, timeout))
+                    GetBulkRequestMessage message = new GetBulkRequestMessage(0,
+                                                                              version,
+                                                                              new OctetString(community),
+                                                                              0, 
+                                                                              2,
+                                                                              vList);
+                    ISnmpMessage response = message.GetResponse(timeout, receiver);
+                    if (response.Pdu.ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
+                    {
+                        throw SharpErrorException.Create(
+                            "error in response",
+                            receiver.Address,
+                            response);
+                    }
+
+                    foreach (Variable variable in response.Pdu.Variables)
                     {
                         Console.WriteLine(variable);
                     }
 
                     return;
                 }
-                
+
                 IAuthenticationProvider auth;
                 if ((level & SecurityLevel.Authentication) == SecurityLevel.Authentication)
                 {
@@ -155,23 +174,18 @@ namespace TestGet
                 }
 
                 ProviderPair record = new ProviderPair(auth, priv);
-                GetRequestMessage request = new GetRequestMessage(VersionCode.V3, 100, 0, new OctetString(user), vList, record);
+                GetBulkRequestMessage request = new GetBulkRequestMessage(VersionCode.V3, 100, 0, new OctetString(user), 0, 2, vList, record);
                 ReportMessage.Discover(request, timeout, receiver, 1, 101);
-                ISnmpMessage response = request.GetResponse(timeout, receiver);
-                if (dump)
-                {
-                    Console.WriteLine(ByteTool.ConvertByteString(request.ToBytes()));
-                }
-
-                if (response.Pdu.ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
+                ISnmpMessage reply = request.GetResponse(timeout, receiver);
+                if (reply.Pdu.ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
                 {
                     throw SharpErrorException.Create(
                         "error in response",
                         receiver.Address,
-                        response);
+                        reply);
                 }
 
-                foreach (Variable v in response.Pdu.Variables)
+                foreach (Variable v in reply.Pdu.Variables)
                 {
                     Console.WriteLine(v);
                 }
@@ -195,7 +209,7 @@ namespace TestGet
             {
                 return new MD5AuthenticationProvider(new OctetString(phrase));
             }
-            
+
             if (authentication.ToUpper() == "SHA")
             {
                 return new SHA1AuthenticationProvider(new OctetString(phrase));

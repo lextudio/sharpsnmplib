@@ -143,15 +143,6 @@ namespace Lextm.SharpSnmpLib
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SecurityParameters"/> class.
-        /// </summary>
-        /// <param name="userName">Name of the user.</param>
-        public SecurityParameters(string userName)
-        {
-            _userName = new OctetString(userName);
-        }
-
-        /// <summary>
         /// Converts to <see cref="Sequence"/>.
         /// </summary>
         /// <returns></returns>

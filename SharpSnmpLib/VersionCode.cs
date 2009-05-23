@@ -21,6 +21,6 @@
         /// <summary>
         /// SNMP v3.
         /// </summary>
-        V3 = 2
+        V3 = 3
     }
 }

@@ -199,7 +199,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// <param name="data">The data.</param>
         /// <param name="parameters">The parameters.</param>
         /// <returns></returns>
-        public Scope Decrypt(ISnmpData data, SecurityParameters parameters)
+        public ISnmpData Decrypt(ISnmpData data, SecurityParameters parameters)
         {
             OctetString octets = (OctetString)data;
             byte[] bytes = octets.GetRaw();
@@ -213,19 +213,19 @@ namespace Lextm.SharpSnmpLib.Security
 
             // decode encrypted packet
             byte[] decrypted = Decrypt(bytes, pkey, parameters.EngineBoots.ToInt32(), parameters.EngineTime.ToInt32(), parameters.PrivacyParameters.GetRaw());
-            return new Scope((Sequence)DataFactory.CreateSnmpData(decrypted));
+            return DataFactory.CreateSnmpData(decrypted);
         }
 
         /// <summary>
         /// Encrypts the specified scope.
         /// </summary>
-        /// <param name="scope">The scope.</param>
+        /// <param name="data">The scope data.</param>
         /// <param name="parameters">The parameters.</param>
         /// <returns></returns>
-        public ISnmpData Encrypt(Scope scope, SecurityParameters parameters)
+        public ISnmpData Encrypt(ISnmpData data, SecurityParameters parameters)
         {
             byte[] pkey = _auth.PasswordToKey(_phrase.GetRaw(), parameters.EngineId.GetRaw());
-            byte[] bytes = ByteTool.ToBytes(scope.GetData(VersionCode.V3));
+            byte[] bytes = ByteTool.ToBytes(data);
             int reminder = bytes.Length % 8;
             int count = reminder == 0 ? 0 : 8 - reminder;
             MemoryStream stream = new MemoryStream();

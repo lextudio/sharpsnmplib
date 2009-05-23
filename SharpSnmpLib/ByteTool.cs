@@ -235,7 +235,7 @@ namespace Lextm.SharpSnmpLib
             source.Close();
         }
         
-        internal static byte[] ConvertByteString(string bytes)
+        public static byte[] ConvertByteString(string bytes)
         {
             List<byte> result = new List<byte>();
             StringBuilder buffer = new StringBuilder(2);
@@ -267,7 +267,7 @@ namespace Lextm.SharpSnmpLib
             return result.ToArray();
         }
         
-        internal static string ConvertByteString(byte[] bytes)
+        public static string ConvertByteString(byte[] bytes)
         {
             StringBuilder result = new StringBuilder();
             foreach (byte b in bytes)

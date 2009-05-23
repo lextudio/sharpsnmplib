@@ -136,7 +136,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new SharpSnmpException("not an SNMP message");
             }
 
-            VersionCode version = (VersionCode)(((Integer32)body[0]).ToInt32() - 1);
+            VersionCode version = (VersionCode)(((Integer32)body[0]).ToInt32());
             Header header = body.Count == 3 ? Header.Empty : new Header(body[1]);
             SecurityParameters parameters = body.Count == 3
                 ? new SecurityParameters(null, null, null, (OctetString)body[1], null, null)
@@ -145,7 +145,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 registry.Find(parameters.UserName);
             Scope scope = body.Count == 3
                 ? new Scope(null, null, (ISnmpPdu)body[2])
-                : record.Privacy.Decrypt(body[3], parameters);
+                : new Scope((Sequence)record.Privacy.Decrypt(body[3], parameters));
             ISnmpPdu pdu = scope.Pdu;
 
             switch (pdu.TypeCode)
@@ -163,9 +163,9 @@ namespace Lextm.SharpSnmpLib.Messaging
                 case SnmpType.GetNextRequestPdu:
                     return new GetNextRequestMessage(version, header, parameters, scope, record);
                 case SnmpType.GetBulkRequestPdu:
-                    return new GetBulkRequestMessage(body);//(version, header, parameters, scope, record);
+                    return new GetBulkRequestMessage(version, header, parameters, scope, record);
                 case SnmpType.ReportPdu:
-                    return new ReportMessage(body);//(version, header, parameters, scope, record);
+                    return new ReportMessage(version, header, parameters, scope, record);
                 case SnmpType.InformRequestPdu:
                     return new InformRequestMessage(body);//(version, header, parameters, scope, record);
                 default:
@@ -188,10 +188,10 @@ namespace Lextm.SharpSnmpLib.Messaging
         internal static Sequence PackMessage(VersionCode version, IPrivacyProvider privacy, Header header, SecurityParameters parameters, Scope scope)
         {
             List<ISnmpData> collection = new List<ISnmpData>(4);
-            collection.Add(new Integer32((int)version + 1));
+            collection.Add(new Integer32((int)version));
             collection.Add(header.GetData(version));
             collection.Add(parameters.GetData(version));
-            collection.Add(privacy.Encrypt(scope, parameters));
+            collection.Add(privacy.Encrypt(scope.GetData(version), parameters));
             return new Sequence(collection);
         }
 		
@@ -236,7 +236,6 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
             
             ByteTool.Capture(bytes); // log request
-
             #if CF
             int bufSize = 8192;
             #else

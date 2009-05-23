@@ -62,7 +62,20 @@ namespace TestGetNext
                 .Add("r:", "-r for retry count (default is 0)", delegate (string v) { retry = int.Parse(v); })
                 .Add("v:", "-v for SNMP version (v1, v2 are currently supported)", delegate (string v) 
                 {
-                    version = (VersionCode)(int.Parse(v) - 1); 
+                    switch (int.Parse(v))
+                    {
+                        case 1:
+                            version = VersionCode.V1;
+                            break;
+                        case 2:
+                            version = VersionCode.V2;
+                            break;
+                        case 3:
+                            version = VersionCode.V3;
+                            break;
+                        default:
+                            throw new ArgumentException("no such version: " + v);
+                    }
                 });
         
             List<string> extra = p.Parse (args);
@@ -134,6 +147,8 @@ namespace TestGetNext
                     {
                         Console.WriteLine(variable);
                     }
+
+                    return;
                 }
 
                 IAuthenticationProvider auth;

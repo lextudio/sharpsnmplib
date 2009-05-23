@@ -41,20 +41,20 @@ namespace Lextm.SharpSnmpLib.Security
         /// <param name="data">The data.</param>
         /// <param name="parameters">The parameters.</param>
         /// <returns></returns>
-        public Scope Decrypt(ISnmpData data, SecurityParameters parameters)
+        public ISnmpData Decrypt(ISnmpData data, SecurityParameters parameters)
         {
-            return new Scope((Sequence)data);
+            return data;
         }
 
         /// <summary>
         /// Encrypts the specified scope.
         /// </summary>
-        /// <param name="scope">The scope.</param>
+        /// <param name="data">The scope data.</param>
         /// <param name="parameters">The parameters.</param>
         /// <returns></returns>
-        public ISnmpData Encrypt(Scope scope, SecurityParameters parameters)
+        public ISnmpData Encrypt(ISnmpData data, SecurityParameters parameters)
         {
-            return scope.ToSequence();
+            return data;
         }
 
         /// <summary>

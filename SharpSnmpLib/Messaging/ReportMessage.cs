@@ -25,28 +25,20 @@ namespace Lextm.SharpSnmpLib.Messaging
         private Header _header;
         private ProviderPair _pair = ProviderPair.Default;
       
-        /// <summary>
-        /// Creates a <see cref="ReportMessage"/> with a specific <see cref="Sequence"/>.
-        /// </summary>
-        /// <param name="body">Message body</param>
-        public ReportMessage(Sequence body)
+        internal ReportMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, ProviderPair record)
         {
-            if (body == null)
+            if (record == null)
             {
-                throw new ArgumentNullException("body");
+                throw new ArgumentException("record");
             }
-            
-            if (body.Count != 4)
-            {
-                throw new ArgumentException("wrong message body");
-            }
-            
-            _version = (VersionCode)((Integer32)body[0]).ToInt32();
-            _header = new Header((Sequence)body[1]);
-            _parameters = new SecurityParameters((OctetString)body[2]);
-            _scope = _pair.Privacy.Decrypt(body[3], _parameters);
+
+            _version = version;
+            _header = header;
+            _parameters = parameters;
+            _scope = scope;
+            _pair = record;
         }
-        
+
         /// <summary>
         /// Security parameters.
         /// </summary>

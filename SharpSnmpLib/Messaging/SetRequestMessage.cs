@@ -34,7 +34,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             _version = version;
             _header = Header.Empty;
             _parameters = new SecurityParameters(null, null, null, community, null, null);
-            GetRequestPdu pdu = new GetRequestPdu(
+            SetRequestPdu pdu = new SetRequestPdu(
                 requestId,
                 ErrorCode.NoError,
                 0,
@@ -78,7 +78,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 userName, 
                 _pair.Authentication.CleanDigest,
                 _pair.Privacy.Salt);
-            GetRequestPdu pdu = new GetRequestPdu(
+            SetRequestPdu pdu = new SetRequestPdu(
                 requestId, 
                 ErrorCode.NoError,
                 0,
