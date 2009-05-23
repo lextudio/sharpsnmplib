@@ -81,6 +81,7 @@ namespace Lextm.SharpSnmpLib.Security
             HMACSHA1 sha1 = new HMACSHA1(key);
             byte[] buffer = message.ToBytes();
             byte[] hash = sha1.ComputeHash(buffer);
+            sha1.Clear();
             byte[] result = new byte[12];
             Array.Copy(hash, result, result.Length);
             return new OctetString(result);

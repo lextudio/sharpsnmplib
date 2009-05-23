@@ -82,6 +82,7 @@ namespace Lextm.SharpSnmpLib.Security
             HMACMD5 md5 = new HMACMD5(key);
             byte[] buffer = message.ToBytes();
             byte[] hash = md5.ComputeHash(buffer);
+            md5.Clear();
             byte[] result = new byte[12];
             Array.Copy(hash, result, result.Length);
             return new OctetString(result);
