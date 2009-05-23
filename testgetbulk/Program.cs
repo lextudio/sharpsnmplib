@@ -33,6 +33,8 @@ namespace TestGetBulk
             string authPhrase = string.Empty;
             string privacy = string.Empty;
             string privPhrase = string.Empty;
+            int maxRepetitions = 10;
+            int nonRepeaters = 0;
 
             OptionSet p = new OptionSet()
                 .Add("c:", "-c for community name, (default is public)", delegate (string v) { if (v != null) community = v; })
@@ -51,6 +53,8 @@ namespace TestGetBulk
                         level = SecurityLevel.Authentication | SecurityLevel.Privacy | SecurityLevel.Reportable;
                     }
                 })
+                .Add("Cn:", "-Cn for non-repeaters (default is 0)", delegate(string v) { nonRepeaters = int.Parse(v); })
+                .Add("Cr:", "-Cr for max-repetitions (default is 10)", delegate(string v) { maxRepetitions = int.Parse(v); })
                 .Add("a:", "-a for authentication method", delegate(string v) { authentication = v; })
                 .Add("A:", "-A for authentication passphrase", delegate(string v) { authPhrase = v; })
                 .Add("x:", "-x for privacy method", delegate(string v) { privacy = v; })
@@ -133,8 +137,8 @@ namespace TestGetBulk
                     GetBulkRequestMessage message = new GetBulkRequestMessage(0,
                                                                               version,
                                                                               new OctetString(community),
-                                                                              0, 
-                                                                              2,
+                                                                              nonRepeaters, 
+                                                                              maxRepetitions,
                                                                               vList);
                     ISnmpMessage response = message.GetResponse(timeout, receiver);
                     if (response.Pdu.ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
@@ -174,7 +178,7 @@ namespace TestGetBulk
                 }
 
                 ProviderPair record = new ProviderPair(auth, priv);
-                GetBulkRequestMessage request = new GetBulkRequestMessage(VersionCode.V3, 100, 0, new OctetString(user), 0, 2, vList, record);
+                GetBulkRequestMessage request = new GetBulkRequestMessage(VersionCode.V3, 100, 0, new OctetString(user), nonRepeaters, maxRepetitions, vList, record);
                 ReportMessage.Discover(request, timeout, receiver, 1, 101);
                 ISnmpMessage reply = request.GetResponse(timeout, receiver);
                 if (reply.Pdu.ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
