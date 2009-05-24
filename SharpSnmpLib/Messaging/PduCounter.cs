@@ -1,29 +1,38 @@
 ﻿using System.Threading;
+using System;
 
 namespace Lextm.SharpSnmpLib.Messaging
 {
     /// <summary>
-    /// A counter that generates request ID.
+    /// A counter that generates ID.
     /// </summary>
     /// <remarks>The request ID is used to identifier sessions.</remarks>
-    public static class RequestCounter
+    public sealed class IdGenerator
     {      
         /// <summary>
-        /// Returns next number for request ID.
+        /// Returns next ID.
         /// </summary>
-        public static int NextCount
+        public int NextId
         {
             get
             {
-                return Interlocked.Increment(ref count);
+                lock (root)
+                {
+                    if (_salt == int.MaxValue)
+                    {
+                        _salt = 1;
+                    }
+                    else
+                    {
+                        _salt++;
+                    }
+                }
+
+                return _salt;
             }
         }
-        
-        internal static void Clear()
-        {
-            Interlocked.Exchange(ref count, 0);
-        }
 
-        private static int count;
+        private object root = new object();
+        private int _salt = new Random().Next(1, int.MaxValue);
     }
 }

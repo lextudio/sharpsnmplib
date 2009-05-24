@@ -53,20 +53,20 @@ namespace Lextm.SharpSnmpLib.Security
         /// Toes the security level.
         /// </summary>
         /// <returns></returns>
-        public SecurityLevel ToSecurityLevel()
+        public Levels ToSecurityLevel()
         {
-            SecurityLevel flags;
+            Levels flags;
             if (_authentication == DefaultAuthenticationProvider.Instance)
             {
-                flags = SecurityLevel.None;
+                flags = Levels.None;
             }
             else if (_privacy == DefaultPrivacyProvider.Instance)
             {
-                flags = SecurityLevel.Authentication;
+                flags = Levels.Authentication;
             }
             else
             {
-                flags = SecurityLevel.Authentication | SecurityLevel.Privacy;
+                flags = Levels.Authentication | Levels.Privacy;
             }
 
             return flags;

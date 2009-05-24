@@ -25,7 +25,7 @@ namespace Lextm.SharpSnmpLib
         {
             if (data == null)
             {
-                throw new ArgumentException("data");
+                throw new ArgumentNullException("data");
             }
 
             Sequence container = (Sequence)data;
@@ -40,13 +40,13 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="messageId">The message id.</param>
         /// <param name="maxMessageSize">Size of the max message.</param>
-        /// <param name="flags">The flags.</param>
+        /// <param name="securityBits">The flags.</param>
         /// <param name="securityModel">The security model.</param>
-        public Header(Integer32 messageId, Integer32 maxMessageSize, OctetString flags, Integer32 securityModel)
+        public Header(Integer32 messageId, Integer32 maxMessageSize, OctetString securityBits, Integer32 securityModel)
         {
             _messageId = messageId;
             _maxSize = maxMessageSize;
-            _flags = flags;
+            _flags = securityBits;
             _securityModel = securityModel;
         }
         

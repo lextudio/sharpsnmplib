@@ -329,53 +329,8 @@ namespace Lextm.SharpSnmpLib
             return "SNMP manager: timeout: " + Timeout.ToString(CultureInfo.InvariantCulture) + "; version: " + DefaultVersion.ToString();
             
             // ReSharper restore RedundantToStringCall
-        } 
+        }         
         
-        /// <summary>
-        /// Determines whether the specified seed has next item.
-        /// </summary>
-        /// <param name="version">The version.</param>
-        /// <param name="endpoint">The endpoint.</param>
-        /// <param name="community">The community.</param>
-        /// <param name="seed">The seed.</param>
-        /// <param name="timeout">The timeout.</param>
-        /// <param name="maxRepetitions">The max repetitions.</param>
-        /// <param name="next">The next.</param>
-        /// <returns>
-        ///     <c>true</c> if the specified seed has next item; otherwise, <c>false</c>.
-        /// </returns>
-        [SuppressMessage("Microsoft.Design", "CA1021:AvoidOutParameters", MessageId = "5#")]
-        private static bool BulkHasNext(VersionCode version, IPEndPoint endpoint, OctetString community, Variable seed, int timeout, int maxRepetitions, out IList<Variable> next)
-        {
-            if (version != VersionCode.V2)
-            {
-                throw new NotSupportedException("SNMP v1 and v3 is not supported");
-            }
-
-            List<Variable> variables = new List<Variable>();
-            variables.Add(new Variable(seed.Id));
-
-            GetBulkRequestMessage message = new GetBulkRequestMessage(
-                RequestCounter.NextCount,
-                version,
-                community,
-                0,
-                maxRepetitions,
-                variables);
-
-            ISnmpMessage response = message.GetResponse(timeout, endpoint);
-            if (response.Pdu.ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
-            {
-                throw SharpErrorException.Create(
-                    "error in response",
-                    endpoint.Address,
-                    response);
-            }
-
-            next = response.Pdu.Variables;
-            return next.Count != 0;
-        }
-
         // ReSharper disable RedundantNameQualifier
         // ReSharper disable RedundantThisQualifier
         // ReSharper disable RedundantDelegateCreation

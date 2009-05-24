@@ -101,9 +101,9 @@ namespace Lextm.SharpSnmpLib.Tests
                 pair,
                 report);
                 
-            Assert.AreEqual(SecurityLevel.Authentication, request.Level);
-            MessageFactory.Authenticate(request, pair);
-            string test = ByteTool.ConvertByteString(request.ToBytes());
+            Assert.AreEqual(Levels.Authentication, request.Level);
+            Helper.Authenticate(request, pair);
+            string test = ByteTool.Convert(request.ToBytes());
             Assert.AreEqual(ByteTool.ConvertByteString(bytes), request.ToBytes());
         }
 
@@ -147,9 +147,9 @@ namespace Lextm.SharpSnmpLib.Tests
                         0,
                         new List<Variable>(1) { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0")) })),
                 pair);
-            Assert.AreEqual(SecurityLevel.Authentication | SecurityLevel.Privacy, request.Level);
-            MessageFactory.Authenticate(request, pair);
-            string test = ByteTool.ConvertByteString(request.ToBytes());
+            Assert.AreEqual(Levels.Authentication | Levels.Privacy, request.Level);
+            Helper.Authenticate(request, pair);
+            string test = ByteTool.Convert(request.ToBytes());
             Assert.AreEqual(ByteTool.ConvertByteString(bytes), request.ToBytes());
         }
 
@@ -199,9 +199,9 @@ namespace Lextm.SharpSnmpLib.Tests
                         0,
                         new List<Variable>(1) { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0"), new Null()) })),
                 pair);
-            Assert.AreEqual(SecurityLevel.Authentication, request.Level);
-            MessageFactory.Authenticate(request, pair);
-            string test = ByteTool.ConvertByteString(request.ToBytes());
+            Assert.AreEqual(Levels.Authentication, request.Level);
+            Helper.Authenticate(request, pair);
+            string test = ByteTool.Convert(request.ToBytes());
             Assert.AreEqual(ByteTool.ConvertByteString(bytes), request.ToBytes());
         }
 
@@ -241,9 +241,9 @@ namespace Lextm.SharpSnmpLib.Tests
                         0,
                         new List<Variable>(1) { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0"), new Null()) })),
                 pair);
-            Assert.AreEqual(SecurityLevel.Authentication, request.Level);
-            MessageFactory.Authenticate(request, pair);
-            string test = ByteTool.ConvertByteString(request.ToBytes());
+            Assert.AreEqual(Levels.Authentication, request.Level);
+            Helper.Authenticate(request, pair);
+            string test = ByteTool.Convert(request.ToBytes());
             Assert.AreEqual(ByteTool.ConvertByteString(bytes), request.ToBytes());
         }
         
@@ -274,7 +274,7 @@ namespace Lextm.SharpSnmpLib.Tests
                     new GetRequestPdu(0x2C6B, ErrorCode.NoError, 0, new List<Variable>())),
                     Security.ProviderPair.Default
                );
-            string test = ByteTool.ConvertByteString(request.ToBytes());
+            string test = ByteTool.Convert(request.ToBytes());
             Assert.AreEqual(bytes, test);
         }
 
@@ -286,7 +286,7 @@ namespace Lextm.SharpSnmpLib.Tests
             "06 01 02 01  01 01 00 05  00                      ";
             byte[] expected = ByteTool.ConvertByteString(s);
             GetRequestMessage message = new GetRequestMessage(0x4bed, VersionCode.V2, new OctetString("public"), new List<Variable>() { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) });
-            string test = ByteTool.ConvertByteString(message.ToBytes());
+            string test = ByteTool.Convert(message.ToBytes());
             Assert.AreEqual(expected, message.ToBytes());
         }
     }

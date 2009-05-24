@@ -1,3 +1,4 @@
+using System;
 /*
  * Created by SharpDevelop.
  * User: lextm
@@ -22,14 +23,8 @@ namespace Lextm.SharpSnmpLib
         /// <value>The engine ID.</value>
         public OctetString EngineId
         {
-            get
-            {
-                return _engineId;
-            }
-            set
-            {
-                _engineId = value;
-            }
+            get { return _engineId; }
+            set { _engineId = value; }
         }
 
         private Integer32 _engineBoots;
@@ -40,14 +35,8 @@ namespace Lextm.SharpSnmpLib
         /// <value>The boot count.</value>
         public Integer32 EngineBoots
         {
-            get
-            {
-                return _engineBoots;
-            }
-            set
-            {
-                _engineBoots = value;
-            }
+            get { return _engineBoots; }
+            set { _engineBoots = value; }
         }
 
         private Integer32 _engineTime;
@@ -58,14 +47,8 @@ namespace Lextm.SharpSnmpLib
         /// <value>The engine time.</value>
         public Integer32 EngineTime
         {
-            get
-            {
-                return _engineTime;
-            }
-            set
-            {
-                _engineTime = value;
-            }
+            get { return _engineTime; }
+            set { _engineTime = value; }
         }
 
         private OctetString _userName;
@@ -87,14 +70,8 @@ namespace Lextm.SharpSnmpLib
         /// <value>The authentication parameters.</value>
         public OctetString AuthenticationParameters
         {
-            get
-            {
-                return _authenticationParameters;
-            }
-            set
-            {
-                _authenticationParameters = value;
-            }
+            get { return _authenticationParameters; }
+            set { _authenticationParameters = value; }
         }
 
         private OctetString _privacyParameters;
@@ -114,6 +91,11 @@ namespace Lextm.SharpSnmpLib
         /// <param name="parameters">The <see cref="OctetString"/> that contains parameters.</param>
         public SecurityParameters(OctetString parameters)
         {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            
             Sequence data = (Sequence)DataFactory.CreateSnmpData(parameters.GetRaw());
             _engineId = (OctetString)data[0];
             _engineBoots = (Integer32)data[1];

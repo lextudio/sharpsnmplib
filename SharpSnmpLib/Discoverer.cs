@@ -10,7 +10,7 @@ using Lextm.SharpSnmpLib.Messaging;
 namespace Lextm.SharpSnmpLib
 {
     /// <summary>
-    /// Class to discover SNMP agents in the same network.
+    /// Discoverer class to discover SNMP agents in the same network.
     /// </summary>
     public partial class Discoverer : Component
     {
@@ -69,7 +69,7 @@ namespace Lextm.SharpSnmpLib
             List<Variable> variables = new List<Variable>();
             variables.Add(v);
 
-            requestId = RequestCounter.NextCount;
+            requestId = Messenger.RequestCounter.NextId;
             GetRequestMessage message = new GetRequestMessage(requestId, version, community, variables);
             byte[] bytes = message.ToBytes();
             using (UdpClient udp = new UdpClient(broadcastAddress.AddressFamily))

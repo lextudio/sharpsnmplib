@@ -80,10 +80,15 @@
     <Compile Include="Messaging\GetNextRequestMessage.cs" />
     <Compile Include="Messaging\GetRequestMessage.cs" />
     <Compile Include="Messaging\GetResponseMessage.cs" />
+    <Compile Include="Messaging\Helper.cs" />
     <Compile Include="Messaging\InformRequestMessage.cs" />
-    <Compile Include="Messaging\MessageFactory.cs" />
+    <Compile Include="Messaging\MessageFactory.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Messaging\MessagetReceivedEventArgs.cs" />
-    <Compile Include="Messaging\Messenger.cs" />
+    <Compile Include="Messaging\Messenger.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Messaging\PduCounter.cs" />
     <Compile Include="Messaging\ReportMessage.cs" />
     <Compile Include="Messaging\SetRequestMessage.cs" />

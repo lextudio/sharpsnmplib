@@ -10,9 +10,9 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// ObjectIdentifier type.
     /// </summary>
-#if (!CF)
+    #if (!CF)
     [TypeConverter(typeof(ObjectIdentifierConverter))]
-#endif
+    #endif
     [Serializable]
     public sealed class ObjectIdentifier : ISnmpData, IEquatable<ObjectIdentifier>
     {
@@ -260,20 +260,22 @@ namespace Lextm.SharpSnmpLib
         /// <returns>A hash code for the current <see cref="ObjectIdentifier"/>.</returns>
         public override int GetHashCode()
         {
-            if (_hashcode == 0)
+            unchecked
             {
-                int hash = 0;
-                for (int i = _oid.Length - 1; i >= 0; i--)
+                if (_hashcode == 0)
                 {
-                    unchecked
+                    int hash = 0;
+                    for (int i = _oid.Length - 1; i >= 0; i--)
                     {
+                        
                         hash ^= (int)_oid[i];
+                        
                     }
+                    
+                    _hashcode = hash != 0 ? hash : 1;    // Very unlikely that hash=0, but I prefer to foresee the case.
                 }
-                
-                _hashcode = hash != 0 ? hash : 1;    // Very unlikely that hash=0, but I prefer to foresee the case.
             }
-
+            
             return _hashcode;
         }
         

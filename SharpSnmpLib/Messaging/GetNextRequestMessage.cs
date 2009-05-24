@@ -61,23 +61,30 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="userName">Name of the user.</param>
         /// <param name="variables">The variables.</param>
         /// <param name="pair">The pair.</param>
-        public GetNextRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName, List<Variable> variables, ProviderPair pair, ReportMessage report)
+        /// <param name="report">The report.</param>
+        public GetNextRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName, IList<Variable> variables, ProviderPair pair, ReportMessage report)
         {
             if (version != VersionCode.V3)
             {
                 throw new ArgumentException("only v3 is supported", "version");
             }
-
-            _version = version;
+            
+            if (report == null)
+            {
+                throw new ArgumentNullException("report");
+            }
+            
             if (pair == null)
             {
-                throw new ArgumentException("pair");
+                throw new ArgumentNullException("pair");
             }
-
+            
+            _version = version;
             _pair = pair;
-            SecurityLevel recordToSecurityLevel = pair.ToSecurityLevel();
-            recordToSecurityLevel |= SecurityLevel.Reportable;
+            Levels recordToSecurityLevel = pair.ToSecurityLevel();
+            recordToSecurityLevel |= Levels.Reportable;
             byte b = (byte)recordToSecurityLevel;
+            
             // TODO: define more constants.
             _header = new Header(new Integer32(messageId), new Integer32(0xFFE3), new OctetString(new byte[] { b }), new Integer32(3));
             _parameters = new SecurityParameters(
@@ -99,7 +106,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             if (record == null)
             {
-                throw new ArgumentException("record");
+                throw new ArgumentNullException("record");
             }
 
             _version = version;
@@ -131,7 +138,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public byte[] ToBytes()
         {
-            return MessageFactory.PackMessage(_version, _pair.Privacy, _header, _parameters, _scope).ToBytes();
+            return Helper.PackMessage(_version, _pair.Privacy, _header, _parameters, _scope).ToBytes();
         }
 
         /// <summary>
@@ -189,7 +196,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public ISnmpMessage GetResponse(int timeout, IPEndPoint receiver)
         {
-            return GetResponse(timeout, receiver, Messenger.GetSocket(receiver));
+            return GetResponse(timeout, receiver, Helper.GetSocket(receiver));
         }
 
         /// <summary>
@@ -204,7 +211,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             UserRegistry registry = new UserRegistry();
             if (Version == VersionCode.V3)
             {
-                MessageFactory.Authenticate(this, _pair);
+                Helper.Authenticate(this, _pair);
                 registry.Add(_parameters.UserName, _pair);
             }
 

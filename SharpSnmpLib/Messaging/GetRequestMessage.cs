@@ -52,6 +52,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="userName">Name of the user.</param>
         /// <param name="variables">The variables.</param>
         /// <param name="pair">The pair.</param>
+        /// <param name="report">The report.</param>
         public GetRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName, IList<Variable> variables, ProviderPair pair, ReportMessage report)
         {
             if (version != VersionCode.V3)
@@ -59,16 +60,22 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentException("only v3 is supported", "version");
             }
 
-            _version = version;
+            if (report == null)
+            {
+                throw new ArgumentNullException("report");
+            }
+            
             if (pair == null)
             {
-                throw new ArgumentException("pair");
+                throw new ArgumentNullException("pair");
             }       
 
+            _version = version;
             _pair = pair;
-            SecurityLevel recordToSecurityLevel = pair.ToSecurityLevel();
-            recordToSecurityLevel |= SecurityLevel.Reportable;
+            Levels recordToSecurityLevel = pair.ToSecurityLevel();
+            recordToSecurityLevel |= Levels.Reportable;
             byte b = (byte)recordToSecurityLevel;
+            
             // TODO: define more constants.
             _header = new Header(new Integer32(messageId), new Integer32(0xFFE3), new OctetString(new byte[] { b }), new Integer32(3));
             _parameters = new SecurityParameters(
@@ -90,7 +97,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             if (record == null)
             {
-                throw new ArgumentException("record");
+                throw new ArgumentNullException("record");
             }
 
             _version = version;
@@ -100,25 +107,6 @@ namespace Lextm.SharpSnmpLib.Messaging
             _pair = record;
         }
 
-        //internal GetRequestMessage(GetRequestMessage message)
-        //{
-        //    if (message == null)
-        //    {
-        //        throw new ArgumentNullException("message");
-        //    }
-
-        //    if (message.Version != VersionCode.V3)
-        //    {
-        //        throw new ArgumentException("only v3 message can be cloned", "message");
-        //    }
-
-        //    _version = message._version;
-        //    _header = message._header;//.Clone();
-        //    _parameters = message._parameters.Clone();
-        //    _scope = message._scope;//.Clone;
-        //    _pair = ProviderPair.Default;
-        //}
-        
         /// <summary>
         /// Gets the message ID.
         /// </summary>
@@ -151,7 +139,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public ISnmpMessage GetResponse(int timeout, IPEndPoint receiver)
         {
-            return GetResponse(timeout, receiver, Messenger.GetSocket(receiver));
+            return GetResponse(timeout, receiver, Helper.GetSocket(receiver));
         }
 
         /// <summary>
@@ -166,47 +154,12 @@ namespace Lextm.SharpSnmpLib.Messaging
             UserRegistry registry = new UserRegistry();
             if (Version == VersionCode.V3)
             {
-                MessageFactory.Authenticate(this, _pair);
+                Helper.Authenticate(this, _pair);
                 registry.Add(_parameters.UserName, _pair);
             }
 
             return MessageFactory.GetResponse(receiver, ToBytes(), RequestId, timeout, registry, udpSocket);
         }
-
-        ///// <summary>
-        ///// Sends this <see cref="GetRequestMessage"/> and handles the response from agent asynchronously.
-        ///// </summary>
-        ///// <param name="timeout">Timeout.</param>
-        ///// <param name="receiver">Agent.</param>
-        ///// <param name="callback">The callback called once the response has been received.</param>
-        //public void BeginGetResponse(int timeout, IPEndPoint receiver, GetResponseCallback callback)
-        //{
-        //    ByteTool.BeginGetResponse(receiver, _bytes, RequestId, timeout, callback);
-        //}
-
-        ///// <summary>
-        ///// Sends this <see cref="GetRequestMessage"/> and handles the response from agent asynchronously.
-        ///// </summary>
-        ///// <param name="timeout">Timeout.</param>
-        ///// <param name="receiver">Agent.</param>
-        ///// <param name="callback">The callback called once the response has been received.</param>
-        ///// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
-        //public void BeginGetResponse(int timeout, IPEndPoint receiver, GetResponseCallback callback, Socket udpSocket)
-        //{
-        //    ByteTool.BeginGetResponse(receiver, _bytes, RequestId, timeout, callback, udpSocket);
-        //}
-
-//        /// <summary>
-//        /// Sends this <see cref="GetRequestMessage"/> and handles the response from agent asynchronously.
-//        /// </summary>
-//        /// <param name="timeout">Timeout.</param>
-//        /// <param name="receiver">Agent.</param>
-//        /// <param name="callback">The callback called once the response has been received.</param>
-//        /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
-//        public void BeginGetResponseRaw(int timeout, IPEndPoint receiver, GetResponseRawCallback callback, Socket udpSocket)
-//        {
-//            BeginGetResponseRaw(receiver, _bytes, timeout, callback, udpSocket);
-//        }
 
         /// <summary>
         /// Version.
@@ -236,20 +189,21 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Gets the level.
         /// </summary>
         /// <value>The level.</value>
-        public SecurityLevel Level
+        public Levels Level
         {
             get
             {
                 return _pair.ToSecurityLevel();
             }
         }
+        
         /// <summary>
         /// Converts to byte format.
         /// </summary>
         /// <returns></returns>
         public byte[] ToBytes()
         {
-            return MessageFactory.PackMessage(_version, _pair.Privacy, _header, _parameters, _scope).ToBytes();
+            return Helper.PackMessage(_version, _pair.Privacy, _header, _parameters, _scope).ToBytes();
         }
 
         /// <summary>

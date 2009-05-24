@@ -214,16 +214,17 @@ namespace Lextm.SharpSnmpLib
         /// <returns>A hash code for the current <see cref="BitString"/>.</returns>
         public override int GetHashCode()
         {
-            int n = 0;
-            for (uint j = 0; j < _size; j++)
+            unchecked
             {
-                unchecked
+                int n = 0;
+                for (uint j = 0; j < _size; j++)
                 {
+                    
                     n += _bits[j];
                 }
-            }
-            
-            return n;
+                
+                return n;
+            }  
         }
         
         /// <summary>

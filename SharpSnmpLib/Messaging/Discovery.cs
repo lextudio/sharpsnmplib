@@ -15,12 +15,17 @@ using Lextm.SharpSnmpLib.Security;
 namespace Lextm.SharpSnmpLib.Messaging
 {
     /// <summary>
-    /// Description of Discovery.
+    /// Discovery class that participates in SNMP v3 discovery process.
     /// </summary>
     public class Discovery
     {
         private GetRequestMessage discovery;
-        
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Discovery"/> class.
+        /// </summary>
+        /// <param name="requestId">The request id.</param>
+        /// <param name="messageId">The message id.</param>
         public Discovery(int requestId, int messageId)
         {
             discovery = new GetRequestMessage(
@@ -28,7 +33,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 new Header(
                     new Integer32(messageId),
                     new Integer32(0xFFE3),
-                    new OctetString(new byte[] { (byte)SecurityLevel.Reportable }),
+                    new OctetString(new byte[] { (byte)Levels.Reportable }),
                     new Integer32(3)),
                 new SecurityParameters(
                     OctetString.Empty,
@@ -41,13 +46,18 @@ namespace Lextm.SharpSnmpLib.Messaging
                     OctetString.Empty,
                     OctetString.Empty,
                     new GetRequestPdu(requestId, ErrorCode.NoError, 0, new List<Variable>())),
-                    ProviderPair.Default
-               );
+                ProviderPair.Default);
         }
-        
+
+        /// <summary>
+        /// Gets the response.
+        /// </summary>
+        /// <param name="timeout">The timeout.</param>
+        /// <param name="receiver">The receiver.</param>
+        /// <returns></returns>
         public ReportMessage GetResponse(int timeout, IPEndPoint receiver)
         {
-            return (ReportMessage)MessageFactory.GetResponse(receiver, discovery.ToBytes(), discovery.RequestId, timeout, new UserRegistry(), Messenger.GetSocket(receiver));
+            return (ReportMessage)MessageFactory.GetResponse(receiver, discovery.ToBytes(), discovery.RequestId, timeout, new UserRegistry(), Helper.GetSocket(receiver));
         }
     }
 }

@@ -110,7 +110,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             if (_bytes == null)
             {
-                _bytes = MessageFactory.PackMessage(_version, _community,_pdu).ToBytes();
+                _bytes = Helper.PackMessage(_version, _community, _pdu).ToBytes();
             }
 
             return _bytes;
@@ -122,15 +122,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Sends this <see cref="TrapV2Message"/>.
         /// </summary>
         /// <param name="manager">Manager.</param>
-        public void Send(IPEndPoint manager)
+        public void Send(EndPoint manager)
         {
-            byte[] bytes = ToBytes();
-            ByteTool.Capture(bytes); // log response
-            using (UdpClient udp = new UdpClient(manager.AddressFamily))
-            {
-                udp.Send(bytes, bytes.Length, manager);
-                udp.Close();
-            }
+            Send(manager, Helper.GetSocket(manager));
         }
 
         /// <summary>

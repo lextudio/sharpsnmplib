@@ -34,6 +34,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <value>The scope.</value>
         Scope Scope { get; }
+        
         /// <summary>
         /// Converts to the bytes.
         /// </summary>

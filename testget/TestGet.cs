@@ -19,7 +19,7 @@ namespace TestGet
             VersionCode version = VersionCode.V1;
             int timeout = 1000; 
             int retry = 0;
-            SecurityLevel level = SecurityLevel.None | SecurityLevel.Reportable;
+            Levels level = Levels.None | Levels.Reportable;
             string user = string.Empty;
             string authentication = string.Empty;
             string authPhrase = string.Empty;
@@ -33,15 +33,15 @@ namespace TestGet
                 {
                     if (v == "noAuthNoPriv")
                     {
-                        level = SecurityLevel.None | SecurityLevel.Reportable;
+                        level = Levels.None | Levels.Reportable;
                     }
                     else if (v == "authNoPriv")
                     {
-                        level = SecurityLevel.Authentication | SecurityLevel.Reportable;
+                        level = Levels.Authentication | Levels.Reportable;
                     }
                     else if (v == "authPriv")
                     {
-                        level = SecurityLevel.Authentication | SecurityLevel.Privacy | SecurityLevel.Reportable;
+                        level = Levels.Authentication | Levels.Privacy | Levels.Reportable;
                     }
                 })
                 .Add("a:", "-a for authentication method", delegate (string v) { authentication = v; })
@@ -135,7 +135,7 @@ namespace TestGet
                 }
                 
                 IAuthenticationProvider auth;
-                if ((level & SecurityLevel.Authentication) == SecurityLevel.Authentication)
+                if ((level & Levels.Authentication) == Levels.Authentication)
                 {
                     auth = GetAuthenticationProviderByName(authentication, authPhrase);
                 }
@@ -145,7 +145,7 @@ namespace TestGet
                 }
 
                 IPrivacyProvider priv;
-                if ((level & SecurityLevel.Privacy) == SecurityLevel.Privacy)
+                if ((level & Levels.Privacy) == Levels.Privacy)
                 {
                     priv = new DESPrivacyProvider(new OctetString(privPhrase), auth);
                 }
@@ -163,7 +163,7 @@ namespace TestGet
                 ISnmpMessage response = request.GetResponse(timeout, receiver);
                 if (dump)
                 {
-                    Console.WriteLine(ByteTool.ConvertByteString(request.ToBytes()));
+                    Console.WriteLine(ByteTool.Convert(request.ToBytes()));
                 }
 
                 if (response.Pdu.ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError

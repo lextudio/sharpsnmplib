@@ -17,6 +17,11 @@ namespace Lextm.SharpSnmpLib.Security
         /// <param name="phrase">The phrase.</param>
         public MD5AuthenticationProvider(OctetString phrase)
         {
+            if (phrase == null)
+            {
+                throw new ArgumentNullException("phrase");
+            }
+            
             _password = phrase.GetRaw();
         }
         
@@ -25,41 +30,57 @@ namespace Lextm.SharpSnmpLib.Security
         /// <summary>
         /// Passwords to key.
         /// </summary>
-        /// <param name="userPassword">The user password.</param>
-        /// <param name="engineID">The engine ID.</param>
+        /// <param name="password">The user password.</param>
+        /// <param name="engineId">The engine ID.</param>
         /// <returns></returns>
-        public byte[] PasswordToKey(byte[] userPassword, byte[] engineID)
+        public byte[] PasswordToKey(byte[] password, byte[] engineId)
         {
             // key length has to be at least 8 bytes long (RFC3414)
-            if (userPassword == null || userPassword.Length < 8)
-                throw new ArgumentException("Secret key is too short.", "userPassword");
+            if (password == null)
+            {
+                throw new ArgumentNullException("password");
+            }
+            
+            if (password.Length < 8)
+            {
+                throw new ArgumentException("Secret key is too short.", "password");
+            }
+            
+            if (engineId == null)
+            {
+                throw new ArgumentNullException("engineId");
+            }
 
             int password_index = 0;
             int count = 0;
-            MD5 md5 = new MD5CryptoServiceProvider();
-
-            /* Use while loop until we've done 1 Megabyte */
-            byte[] sourceBuffer = new byte[1048576];
-            byte[] buf = new byte[64];
-            while (count < 1048576)
+            using (MD5 md5 = new MD5CryptoServiceProvider())
             {
-                for (int i = 0; i < 64; ++i)
+                /* Use while loop until we've done 1 Megabyte */
+                byte[] sourceBuffer = new byte[1048576];
+                byte[] buf = new byte[64];
+                while (count < 1048576)
                 {
-                    // Take the next octet of the password, wrapping
-                    // to the beginning of the password as necessary.
-                    buf[i] = userPassword[password_index++ % userPassword.Length];
+                    for (int i = 0; i < 64; ++i)
+                    {
+                        // Take the next octet of the password, wrapping
+                        // to the beginning of the password as necessary.
+                        buf[i] = password[password_index++ % password.Length];
+                    }
+                    
+                    Array.Copy(buf, 0, sourceBuffer, count, buf.Length);
+                    count += 64;
                 }
-                Array.Copy(buf, 0, sourceBuffer, count, buf.Length);
-                count += 64;
+
+                byte[] digest = md5.ComputeHash(sourceBuffer);
+
+                using (MemoryStream buffer = new MemoryStream())
+                {
+                    buffer.Write(digest, 0, digest.Length);
+                    buffer.Write(engineId, 0, engineId.Length);
+                    buffer.Write(digest, 0, digest.Length);
+                    return md5.ComputeHash(buffer.ToArray());
+                }
             }
-
-            byte[] digest = md5.ComputeHash(sourceBuffer);
-
-            MemoryStream buffer = new MemoryStream();
-            buffer.Write(digest, 0, digest.Length);
-            buffer.Write(engineID, 0, engineID.Length);
-            buffer.Write(digest, 0, digest.Length);
-            return md5.ComputeHash(buffer.ToArray());
         }
 
         /// <summary>
@@ -78,14 +99,21 @@ namespace Lextm.SharpSnmpLib.Security
         /// <returns></returns>
         public OctetString ComputeHash(ISnmpMessage message)
         {
+            if (message == null)
+            {
+                throw new ArgumentNullException("message");
+            }
+            
             byte[] key = PasswordToKey(_password, message.Parameters.EngineId.GetRaw());
-            HMACMD5 md5 = new HMACMD5(key);
-            byte[] buffer = message.ToBytes();
-            byte[] hash = md5.ComputeHash(buffer);
-            md5.Clear();
-            byte[] result = new byte[12];
-            Array.Copy(hash, result, result.Length);
-            return new OctetString(result);
+            using (HMACMD5 md5 = new HMACMD5(key))
+            {
+                byte[] buffer = message.ToBytes();
+                byte[] hash = md5.ComputeHash(buffer);
+                md5.Clear();                
+                byte[] result = new byte[12];
+                Array.Copy(hash, result, result.Length);
+                return new OctetString(result);
+            }
         }
 
         #endregion

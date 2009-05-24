@@ -43,7 +43,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             _variables = variables;
             InformRequestPdu pdu = new InformRequestPdu(new Integer32(requestId), enterprise, new TimeTicks(time), _variables);
             _requestId = requestId;
-            _bytes = MessageFactory.PackMessage(_version, _community, pdu).ToBytes();
+            _bytes = Helper.PackMessage(_version, _community, pdu).ToBytes();
         }
         
         /// <summary>
@@ -120,7 +120,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public ISnmpMessage GetResponse(int timeout, IPEndPoint receiver)
         {
-            return MessageFactory.GetResponse(receiver, _bytes, RequestId, timeout, new UserRegistry(), Messenger.GetSocket(receiver));
+            return MessageFactory.GetResponse(receiver, _bytes, RequestId, timeout, new UserRegistry(), Helper.GetSocket(receiver));
         }
 
         /// <summary>

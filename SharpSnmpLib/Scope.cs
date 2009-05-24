@@ -1,4 +1,5 @@
-﻿
+﻿using System;
+
 namespace Lextm.SharpSnmpLib
 {
     /// <summary>
@@ -16,6 +17,11 @@ namespace Lextm.SharpSnmpLib
         /// <param name="data">The data.</param>
         public Scope(Sequence data)
         {
+            if (data == null)
+            {
+                throw new ArgumentNullException("data");
+            }
+            
             _contextEngineId = (OctetString)data[0];
             _contextName = (OctetString)data[1];
             _pdu = (ISnmpPdu)data[2];
@@ -27,6 +33,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="contextEngineId">The context engine ID.</param>
         /// <param name="contextName">Name of the context.</param>
         /// <param name="pdu">The PDU.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "pdu", Justification = "definition")]
         public Scope(OctetString contextEngineId, OctetString contextName, ISnmpPdu pdu)
         {
             _contextEngineId = contextEngineId;
@@ -38,6 +45,7 @@ namespace Lextm.SharpSnmpLib
         /// Initializes a new instance of the <see cref="Scope"/> class.
         /// </summary>
         /// <param name="pdu">The pdu.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "pdu", Justification = "definition")]
         public Scope(ISnmpPdu pdu)
         {
             _pdu = pdu;
@@ -47,6 +55,7 @@ namespace Lextm.SharpSnmpLib
         /// Gets the PDU.
         /// </summary>
         /// <value>The PDU.</value>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu", Justification = "definition")]
         public ISnmpPdu Pdu
         {
             get { return _pdu; }
@@ -88,6 +97,7 @@ namespace Lextm.SharpSnmpLib
             get { return _contextEngineId; }
             set { _contextEngineId = value; }
         }
+        
         /// <summary>
         /// Converts to <see cref="Sequence"/> object.
         /// </summary>

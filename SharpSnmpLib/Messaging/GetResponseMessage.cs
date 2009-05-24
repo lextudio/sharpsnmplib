@@ -23,7 +23,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         private SecurityParameters _parameters;
         private Scope _scope;
         private readonly VersionCode _version;
-        private byte[] _bytes;
         private ProviderPair _record;
 
         /// <summary>
@@ -62,16 +61,16 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="variables">The variables.</param>
         /// <param name="record">The record.</param>
         public GetResponseMessage(VersionCode version, int requestId, int messageId, OctetString userName, IList<Variable> variables, ProviderPair record)
-        {
-            _version = version;
+        {            
             if (record == null)
             {
-                throw new ArgumentException("record");
+                throw new ArgumentNullException("record");
             }
 
+            _version = version;
             _record = record;
-            SecurityLevel recordToSecurityLevel = record.ToSecurityLevel();
-            recordToSecurityLevel |= SecurityLevel.Reportable;
+            Levels recordToSecurityLevel = record.ToSecurityLevel();
+            recordToSecurityLevel |= Levels.Reportable;
             byte b = (byte)recordToSecurityLevel;
             _header = new Header(new Integer32(messageId), new Integer32(0xFFE3), new OctetString(new byte[] { b }), new Integer32(3));
             _parameters = new SecurityParameters(OctetString.Empty, new Integer32(0), new Integer32(0), userName, OctetString.Empty, OctetString.Empty);
@@ -87,7 +86,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             if (record == null)
             {
-                throw new ArgumentException("record");
+                throw new ArgumentNullException("record");
             }
 
             _version = version;
@@ -101,14 +100,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Sends this <see cref="GetRequestMessage"/> and handles the response from agent.
         /// </summary>
         /// <param name="receiver">The receiver.</param>
-        public void Send(IPEndPoint receiver)
+        public void Send(EndPoint receiver)
         {
-            byte[] bytes = _bytes;
-            using (UdpClient udp = new UdpClient(receiver.AddressFamily))
-            {
-                udp.Send(bytes, bytes.Length, receiver);
-                udp.Close();
-            }
+            Send(receiver, Helper.GetSocket(receiver));
         }
 
         /// <summary>
@@ -116,15 +110,14 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         /// <param name="receiver">The receiver.</param>
         /// <param name="socket">The socket.</param>
-        public void Send(IPEndPoint receiver, Socket socket)
+        public void Send(EndPoint receiver, Socket socket)
         {
             if (socket == null)
             {
                 throw new ArgumentNullException("socket");
             }
             
-            byte[] bytes = _bytes;
-            socket.SendTo(bytes, receiver);
+            socket.SendTo(ToBytes(), receiver);
         }
         
         /// <summary>
@@ -200,12 +193,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public byte[] ToBytes()
         {
-            if (_bytes == null)
-            {
-                _bytes = MessageFactory.PackMessage(_version, _header, _parameters, _scope).ToBytes();
-            }
-
-            return _bytes;
+            return Helper.PackMessage(_version, _record.Privacy, _header, _parameters, _scope).ToBytes();
         }
 
         /// <summary>

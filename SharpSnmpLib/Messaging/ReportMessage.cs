@@ -29,7 +29,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             if (record == null)
             {
-                throw new ArgumentException("record");
+                throw new ArgumentNullException("record");
             }
             
             if (version != VersionCode.V3)
@@ -68,7 +68,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public ISnmpMessage GetResponse(int timeout, IPEndPoint receiver)
         {
-            return MessageFactory.GetResponse(receiver, ToBytes(), RequestId, timeout, new UserRegistry(), Messenger.GetSocket(receiver));
+            return GetResponse(timeout, receiver, Helper.GetSocket(receiver));
         }
 
         /// <summary>
@@ -115,7 +115,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public byte[] ToBytes()
         {
-            return MessageFactory.PackMessage(_version, _pair.Privacy, _header, _parameters, _scope).ToBytes();
+            return Helper.PackMessage(_version, _pair.Privacy, _header, _parameters, _scope).ToBytes();
         }
 
         /// <summary>
@@ -133,16 +133,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         public override string ToString()
         {
             return "REPORT request message: version: " + _version + "; " + _parameters.UserName + "; " + _scope.Pdu;
-        }
-
-        internal void Update(ISnmpMessage request)
-        {
-            request.Parameters.EngineId = Parameters.EngineId;
-            request.Parameters.EngineBoots = Parameters.EngineBoots;
-            request.Parameters.EngineTime = Parameters.EngineTime;
-
-            request.Scope.ContextEngineId = Scope.ContextEngineId;
-            request.Scope.ContextName = Scope.ContextName;
         }
     }
 }
