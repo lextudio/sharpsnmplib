@@ -75,6 +75,7 @@
     <Compile Include="IP.cs" />
     <Compile Include="ISnmpMessage.cs" />
     <Compile Include="ISnmpPdu.cs" />
+    <Compile Include="Messaging\Discovery.cs" />
     <Compile Include="Messaging\GetBulkRequestMessage.cs" />
     <Compile Include="Messaging\GetNextRequestMessage.cs" />
     <Compile Include="Messaging\GetRequestMessage.cs" />

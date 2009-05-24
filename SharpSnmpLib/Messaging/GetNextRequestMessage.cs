@@ -61,7 +61,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="userName">Name of the user.</param>
         /// <param name="variables">The variables.</param>
         /// <param name="pair">The pair.</param>
-        public GetNextRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName, List<Variable> variables, ProviderPair pair)
+        public GetNextRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName, List<Variable> variables, ProviderPair pair, ReportMessage report)
         {
             if (version != VersionCode.V3)
             {
@@ -81,9 +81,9 @@ namespace Lextm.SharpSnmpLib.Messaging
             // TODO: define more constants.
             _header = new Header(new Integer32(messageId), new Integer32(0xFFE3), new OctetString(new byte[] { b }), new Integer32(3));
             _parameters = new SecurityParameters(
-                OctetString.Empty,
-                new Integer32(0),
-                new Integer32(0),
+                report.Parameters.EngineId, 
+                report.Parameters.EngineBoots, 
+                report.Parameters.EngineTime,
                 userName,
                 _pair.Authentication.CleanDigest,
                 _pair.Privacy.Salt);
@@ -92,7 +92,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 ErrorCode.NoError,
                 0,
                 variables);
-            _scope = new Scope(OctetString.Empty, OctetString.Empty, pdu);
+            _scope = new Scope(report.Scope.ContextEngineId, report.Scope.ContextName, pdu);
         }
 
         internal GetNextRequestMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, ProviderPair record)

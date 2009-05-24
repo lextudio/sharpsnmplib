@@ -47,9 +47,9 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values or you can use the default the Revision and
 // Build Numbers by using the '*' as shown below:
-[assembly: AssemblyVersion("2.2.010523.19")]
+[assembly: AssemblyVersion("2.2.010524.14")]
 #if (!CF)
-[assembly: AssemblyFileVersion("2.2.010523.19")]
+[assembly: AssemblyFileVersion("2.2.010524.14")]
 #endif
 [assembly: NeutralResourcesLanguage("en-US")]
 [assembly: CLSCompliant(true)]

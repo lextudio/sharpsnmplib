@@ -45,7 +45,7 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.GreaterOrEqual(Resources.get.Length, message.ToBytes().Length);
         }
 
-        // [Test]
+        [Test]
         public void TestConstructorV3Auth1()
         {
             string bytes = "30 73" +
@@ -67,6 +67,30 @@ namespace Lextm.SharpSnmpLib.Tests
 "04 0D 80 00  1F 88 80 E9 63 00 00 D6  1F F4 49 " +
 "04  00 " +
 "A0 1A 02  02 01 AF 02 01 00 02 01  00 30 0E 30  0C 06 08 2B  06 01 02 01 01 03 00 05  00";
+            ReportMessage report = new ReportMessage(
+                VersionCode.V3,
+                new Header(
+                    new Integer32(13633),
+                    new Integer32(0xFFE3),
+                    new OctetString(new byte[] { 0x0 }),
+                    new Integer32(3)),
+                new SecurityParameters(
+                    new OctetString(ByteTool.ConvertByteString("80 00 1F 88 80 E9 63 00  00 D6 1F F4  49")),
+                    new Integer32(0x0d),
+                    new Integer32(0x57),
+                    new OctetString("lexli"),
+                    new OctetString(new byte[12]),
+                    OctetString.Empty),
+                new Scope(
+                    new OctetString(ByteTool.ConvertByteString("80 00 1F 88 80 E9 63 00  00 D6 1F F4  49")),
+                    OctetString.Empty,
+                    new ReportPdu(
+                        0x01AF,
+                        ErrorCode.NoError,
+                        0,
+                        new List<Variable>(1) { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0")) })),
+               ProviderPair.Default);
+               
             ProviderPair pair = new ProviderPair(new MD5AuthenticationProvider(new OctetString("testpass")), DefaultPrivacyProvider.Instance);
             GetRequestMessage request = new GetRequestMessage(
                 VersionCode.V3,
@@ -74,32 +98,13 @@ namespace Lextm.SharpSnmpLib.Tests
                 0x01AF,
                 new OctetString("lexli"),
                 new List<Variable>(1) { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0")) },
-                pair);
-                //new Header(
-                //    new Integer32(13633),
-                //    new Integer32(0xFFE3),
-                //    new OctetString(new byte[] { 0x5 }),
-                //    new Integer32(3)),
-                //new SecurityParameters(
-                //    new OctetString(ByteTool.ConvertByteString("80 00 1F 88 80 E9 63 00  00 D6 1F F4  49")),
-                //    new Integer32(0x0d),
-                //    new Integer32(0x57),
-                //    new OctetString("lexli"),
-                //    new OctetString(new byte[12]),
-                //    OctetString.Empty),
-                //new Scope(
-                //    new OctetString(ByteTool.ConvertByteString("80 00 1F 88 80 E9 63 00  00 D6 1F F4  49")),
-                //    OctetString.Empty,
-                //    new GetRequestPdu(
-                //        new Integer32(0x01AF),
-                //        ErrorCode.NoError,
-                //        new Integer32(0),
-                //        new List<Variable>(1) { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0"), new Null()) })),
-                //new SecurityRecord(new MD5AuthenticationProvider(new OctetString("testpass")), DefaultPrivacyProvider.Instance));
+                pair,
+                report);
+                
             Assert.AreEqual(SecurityLevel.Authentication, request.Level);
             MessageFactory.Authenticate(request, pair);
             string test = ByteTool.ConvertByteString(request.ToBytes());
-            //Assert.AreEqual(ByteTool.ConvertByteString(bytes), request.ToBytes());
+            Assert.AreEqual(ByteTool.ConvertByteString(bytes), request.ToBytes());
         }
 
         [Test]

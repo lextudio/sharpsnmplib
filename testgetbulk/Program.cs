@@ -25,7 +25,7 @@ namespace TestGetBulk
             bool show_help   = false;
             bool show_version = false;
             VersionCode version = VersionCode.V1;
-            int timeout = 1000; 
+            int timeout = 1000;
             int retry = 0;
             SecurityLevel level = SecurityLevel.None | SecurityLevel.Reportable;
             string user = string.Empty;
@@ -39,20 +39,20 @@ namespace TestGetBulk
             OptionSet p = new OptionSet()
                 .Add("c:", "-c for community name, (default is public)", delegate (string v) { if (v != null) community = v; })
                 .Add("l:", "-l for security level, (default is noAuthNoPriv)", delegate(string v)
-                {
-                    if (v == "noAuthNoPriv")
-                    {
-                        level = SecurityLevel.None | SecurityLevel.Reportable;
-                    }
-                    else if (v == "authNoPriv")
-                    {
-                        level = SecurityLevel.Authentication | SecurityLevel.Reportable;
-                    }
-                    else if (v == "authPriv")
-                    {
-                        level = SecurityLevel.Authentication | SecurityLevel.Privacy | SecurityLevel.Reportable;
-                    }
-                })
+                     {
+                         if (v == "noAuthNoPriv")
+                         {
+                             level = SecurityLevel.None | SecurityLevel.Reportable;
+                         }
+                         else if (v == "authNoPriv")
+                         {
+                             level = SecurityLevel.Authentication | SecurityLevel.Reportable;
+                         }
+                         else if (v == "authPriv")
+                         {
+                             level = SecurityLevel.Authentication | SecurityLevel.Privacy | SecurityLevel.Reportable;
+                         }
+                     })
                 .Add("Cn:", "-Cn for non-repeaters (default is 0)", delegate(string v) { nonRepeaters = int.Parse(v); })
                 .Add("Cr:", "-Cr for max-repetitions (default is 10)", delegate(string v) { maxRepetitions = int.Parse(v); })
                 .Add("a:", "-a for authentication method", delegate(string v) { authentication = v; })
@@ -64,32 +64,32 @@ namespace TestGetBulk
                 .Add("V", "-V to display version number of this application.", delegate (string v) { show_version = v != null; })
                 .Add("t:", "-t for timeout value (unit is second).", delegate (string v) { timeout = int.Parse(v) * 1000; })
                 .Add("r:", "-r for retry count (default is 0)", delegate (string v) { retry = int.Parse(v); })
-                .Add("v:", "-v for SNMP version (v1, v2 are currently supported)", delegate (string v) 
-                {
-                    switch (int.Parse(v))
-                    {
-                        case 1:
-                            version = VersionCode.V1;
-                            break;
-                        case 2:
-                            version = VersionCode.V2;
-                            break;
-                        case 3:
-                            version = VersionCode.V3;
-                            break;
-                        default:
-                            throw new ArgumentException("no such version: " + v);
-                    }
-                });
-        
+                .Add("v:", "-v for SNMP version (v1, v2 are currently supported)", delegate (string v)
+                     {
+                         switch (int.Parse(v))
+                         {
+                             case 1:
+                                 version = VersionCode.V1;
+                                 break;
+                             case 2:
+                                 version = VersionCode.V2;
+                                 break;
+                             case 3:
+                                 version = VersionCode.V3;
+                                 break;
+                             default:
+                                 throw new ArgumentException("no such version: " + v);
+                         }
+                     });
+            
             List<string> extra = p.Parse (args);
-        
+            
             if (show_help)
             {
                 Console.WriteLine("The syntax is similar to Net-SNMP. http://www.net-snmp.org/docs/man/snmpget.html");
                 return;
             }
-        
+            
             if (show_version)
             {
                 Console.WriteLine(System.Reflection.Assembly.GetExecutingAssembly().GetName().Version);
@@ -101,7 +101,7 @@ namespace TestGetBulk
                 Console.WriteLine("The syntax is similar to Net-SNMP. http://www.net-snmp.org/docs/man/snmpget.html");
                 return;
             }
-        
+            
             IPAddress ip;
             bool parsed = IPAddress.TryParse(extra[0], out ip);
             if (!parsed)
@@ -114,7 +114,7 @@ namespace TestGetBulk
                         break;
                     }
                 }
-            
+                
                 if (ip == null)
                 {
                     Console.WriteLine("invalid host or wrong IP address found: " + extra[0]);
@@ -137,7 +137,7 @@ namespace TestGetBulk
                     GetBulkRequestMessage message = new GetBulkRequestMessage(0,
                                                                               version,
                                                                               new OctetString(community),
-                                                                              nonRepeaters, 
+                                                                              nonRepeaters,
                                                                               maxRepetitions,
                                                                               vList);
                     ISnmpMessage response = message.GetResponse(timeout, receiver);
@@ -176,10 +176,13 @@ namespace TestGetBulk
                 {
                     priv = DefaultPrivacyProvider.Instance;
                 }
+                
+                Discovery discovery = new Discovery(1, 101);
+                ReportMessage report = discovery.GetResponse(timeout, receiver);
 
                 ProviderPair record = new ProviderPair(auth, priv);
-                GetBulkRequestMessage request = new GetBulkRequestMessage(VersionCode.V3, 100, 0, new OctetString(user), nonRepeaters, maxRepetitions, vList, record);
-                ReportMessage.Discover(request, timeout, receiver, 1, 101);
+                GetBulkRequestMessage request = new GetBulkRequestMessage(VersionCode.V3, 100, 0, new OctetString(user), nonRepeaters, maxRepetitions, vList, record, report);
+
                 ISnmpMessage reply = request.GetResponse(timeout, receiver);
                 if (reply.Pdu.ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
                 {

@@ -201,10 +201,13 @@ namespace TestSet
                 {
                     priv = DefaultPrivacyProvider.Instance;
                 }
-
+                
+                Discovery discovery = new Discovery(1, 101);
+                ReportMessage report = discovery.GetResponse(timeout, receiver);
+                
                 ProviderPair record = new ProviderPair(auth, priv);
-                SetRequestMessage request = new SetRequestMessage(VersionCode.V3, 100, 0, new OctetString(user), vList, record);
-                ReportMessage.Discover(request, timeout, receiver, 1, 101);
+                SetRequestMessage request = new SetRequestMessage(VersionCode.V3, 100, 0, new OctetString(user), vList, record, report);
+
                 ISnmpMessage response = request.GetResponse(timeout, receiver);
                 if (response.Pdu.ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
                 {

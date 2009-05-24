@@ -31,6 +31,11 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new ArgumentException("record");
             }
+            
+            if (version != VersionCode.V3)
+            {
+                throw new ArgumentException("only v3 is supported", "version");
+            }
 
             _version = version;
             _header = header;
@@ -130,7 +135,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             return "REPORT request message: version: " + _version + "; " + _parameters.UserName + "; " + _scope.Pdu;
         }
 
-        private void Update(ISnmpMessage request)
+        internal void Update(ISnmpMessage request)
         {
             request.Parameters.EngineId = Parameters.EngineId;
             request.Parameters.EngineBoots = Parameters.EngineBoots;
@@ -138,42 +143,6 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             request.Scope.ContextEngineId = Scope.ContextEngineId;
             request.Scope.ContextName = Scope.ContextName;
-        }
-
-        /// <summary>
-        /// Discovers the specified timeout.
-        /// </summary>
-        /// <param name="message">The message.</param>
-        /// <param name="timeout">The timeout.</param>
-        /// <param name="receiver">The receiver.</param>
-        /// <param name="requestId">The request id.</param>
-        /// <param name="messageId">The message id.</param>
-        /// <returns></returns>
-        public static ReportMessage Discover(ISnmpMessage message, int timeout, IPEndPoint receiver, int requestId, int messageId)
-        {
-            GetRequestMessage discovery = new GetRequestMessage(
-                VersionCode.V3,
-                new Header(
-                    new Integer32(messageId),
-                    new Integer32(0xFFE3),
-                    new OctetString(new byte[] { (byte)SecurityLevel.Reportable }),
-                    new Integer32(3)),
-                new SecurityParameters(
-                    OctetString.Empty,
-                    new Integer32(0),
-                    new Integer32(0),
-                    OctetString.Empty,
-                    OctetString.Empty,
-                    OctetString.Empty),
-                new Scope(
-                    OctetString.Empty,
-                    OctetString.Empty,
-                    new GetRequestPdu(requestId, ErrorCode.NoError, 0, new List<Variable>())),
-                    ProviderPair.Default
-               );
-            ReportMessage report = (ReportMessage)MessageFactory.GetResponse(receiver, discovery.ToBytes(), requestId, timeout, new UserRegistry(), Messenger.GetSocket(receiver));
-            report.Update(message); // {.1.3.6.1.6.3.15.1.1.4.0} Counter (number of counts)
-            return report;
         }
     }
 }
