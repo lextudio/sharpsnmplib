@@ -92,7 +92,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public static IList<ISnmpMessage> ParseMessages(string bytes, UserRegistry registry)
         {
-            return ParseMessages(ByteTool.ConvertByteString(bytes), registry);
+            return ParseMessages(ByteTool.Convert(bytes), registry);
         }
 
         /// <summary>

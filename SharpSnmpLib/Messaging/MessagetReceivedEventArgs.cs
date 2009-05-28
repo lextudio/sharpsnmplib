@@ -6,7 +6,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// <summary>
     /// The <see cref="EventArgs"/> for one kind of <see cref="ISnmpMessage"/>, used when that kind of message is received.
     /// </summary>
-    public class MessageReceivedEventArgs<T> : EventArgs where T : ISnmpMessage
+    public sealed class MessageReceivedEventArgs<T> : EventArgs where T : ISnmpMessage
     {
         private readonly ISnmpMessage _message;
         private readonly IPEndPoint _sender;

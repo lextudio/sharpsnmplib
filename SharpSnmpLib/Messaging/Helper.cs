@@ -15,7 +15,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     {
         private static readonly Socket udp = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
         private static Socket udpV6;
-        private const string STR_CannotUseIPV6AsTheOSDoesNotSupportIt = "cannot use IP v6 as the OS does not support it";
+        private const string STR_IPV6NotSupport = "the OS does not support it";
         private static object root = new object();
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 #if !(CF)
                 if (!Socket.OSSupportsIPv6)
                 {
-                    throw new InvalidOperationException(STR_CannotUseIPV6AsTheOSDoesNotSupportIt);
+                    throw new InvalidOperationException(STR_IPV6NotSupport);
                 }
 #endif
                 if (udpV6 == null)

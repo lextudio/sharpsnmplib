@@ -64,6 +64,7 @@
     <Compile Include="Messaging\Discoverer.Designer.cs">
       <DependentUpon>Discoverer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Messaging\ExceptionRaisedEventArgs.cs" />
     <Compile Include="Messaging\Listener.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -71,8 +72,10 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Messaging\MessageParams.cs" />
+    <Compile Include="Messaging\MessagetReceivedEventArgs.cs" />
     <Compile Include="Messaging\Messenger.cs" />
     <Compile Include="Messaging\PduCounter.cs" />
+    <Compile Include="Messaging\WalkMode.cs" />
     <None Include="license.txt" />
     <None Include="sharpsnmplib.snk" />
     <EmbeddedResource Include="Messaging\Agent.resx">

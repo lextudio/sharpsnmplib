@@ -86,7 +86,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="description">The description.</param>
         /// <returns></returns>
-        public static byte[] ConvertByteString(string description)
+        public static byte[] Convert(string description)
         {
             List<byte> result = new List<byte>();
             StringBuilder buffer = new StringBuilder(2);

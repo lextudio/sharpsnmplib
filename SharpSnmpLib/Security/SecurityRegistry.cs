@@ -6,7 +6,7 @@ namespace Lextm.SharpSnmpLib.Security
     /// <summary>
     /// A repository to store user information for providers.
     /// </summary>
-    public class UserRegistry
+    public sealed class UserRegistry
     {
         private IDictionary<OctetString, ProviderPair> _users = new Dictionary<OctetString, ProviderPair>();
 

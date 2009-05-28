@@ -5,7 +5,7 @@ namespace Lextm.SharpSnmpLib.Security
     /// <summary>
     /// A pair of providers. One is for authentication, and the other is for privacy.
     /// </summary>
-    public class ProviderPair
+    public sealed class ProviderPair
     {
         private IAuthenticationProvider _authentication;
         private static Lextm.SharpSnmpLib.Security.ProviderPair _default = new ProviderPair(DefaultAuthenticationProvider.Instance, DefaultPrivacyProvider.Instance);

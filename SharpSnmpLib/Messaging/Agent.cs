@@ -7,7 +7,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// <summary>
     /// Agent component.
     /// </summary>
-    public class Agent : Component
+    public sealed class Agent : Component
     {           
         /// <summary>
         /// Initiates an <see cref="Agent"/> instance.

@@ -5,7 +5,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// Header segment.
     /// </summary>
-    public class Header : ISegment
+    public sealed class Header : ISegment
     {
         private Integer32 _messageId;
         private Integer32 _maxSize;

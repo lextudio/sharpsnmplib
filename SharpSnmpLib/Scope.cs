@@ -5,7 +5,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// Scope segment.
     /// </summary>
-    public class Scope : ISegment
+    public sealed class Scope : ISegment
     {
         private ISnmpPdu _pdu;
         private OctetString _contextEngineId;

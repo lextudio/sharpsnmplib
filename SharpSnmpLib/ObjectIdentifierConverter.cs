@@ -8,7 +8,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// The <see cref="TypeConverter"/> dedicated for the <see cref="ObjectIdentifier"/> class.
     /// </summary>
-    public class ObjectIdentifierConverter : TypeConverter
+    public sealed class ObjectIdentifierConverter : TypeConverter
     {
         /// <summary>
         /// Returns whether this converter can convert an object of the given type to the type of this converter.

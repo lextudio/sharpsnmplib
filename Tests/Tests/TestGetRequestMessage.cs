@@ -75,14 +75,14 @@ namespace Lextm.SharpSnmpLib.Tests
                     new OctetString(new byte[] { 0x0 }),
                     new Integer32(3)),
                 new SecurityParameters(
-                    new OctetString(ByteTool.ConvertByteString("80 00 1F 88 80 E9 63 00  00 D6 1F F4  49")),
+                    new OctetString(ByteTool.Convert("80 00 1F 88 80 E9 63 00  00 D6 1F F4  49")),
                     new Integer32(0x0d),
                     new Integer32(0x57),
                     new OctetString("lexli"),
                     new OctetString(new byte[12]),
                     OctetString.Empty),
                 new Scope(
-                    new OctetString(ByteTool.ConvertByteString("80 00 1F 88 80 E9 63 00  00 D6 1F F4  49")),
+                    new OctetString(ByteTool.Convert("80 00 1F 88 80 E9 63 00  00 D6 1F F4  49")),
                     OctetString.Empty,
                     new ReportPdu(
                         0x01AF,
@@ -104,7 +104,7 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual(Levels.Authentication, request.Level);
             Helper.Authenticate(request, pair);
             string test = ByteTool.Convert(request.ToBytes());
-            Assert.AreEqual(ByteTool.ConvertByteString(bytes), request.ToBytes());
+            Assert.AreEqual(ByteTool.Convert(bytes), request.ToBytes());
         }
 
         [Test]
@@ -132,14 +132,14 @@ namespace Lextm.SharpSnmpLib.Tests
                     new OctetString(new byte[] { 0x7 }),
                     new Integer32(3)),
                 new SecurityParameters(
-                    new OctetString(ByteTool.ConvertByteString("80 00 1F 88 80 E9 63 00  00 D6 1F F4  49")),
+                    new OctetString(ByteTool.Convert("80 00 1F 88 80 E9 63 00  00 D6 1F F4  49")),
                     new Integer32(0x14),
                     new Integer32(0x35),
                     new OctetString("lexmark"),
                     new OctetString(new byte[12]),
-                    new OctetString(ByteTool.ConvertByteString("00 00 00  01 44 2C A3 B5"))),
+                    new OctetString(ByteTool.Convert("00 00 00  01 44 2C A3 B5"))),
                 new Scope(
-                    new OctetString(ByteTool.ConvertByteString("80 00 1F 88 80 E9 63 00  00 D6 1F F4  49")),
+                    new OctetString(ByteTool.Convert("80 00 1F 88 80 E9 63 00  00 D6 1F F4  49")),
                     OctetString.Empty,
                     new GetRequestPdu(
                         0x3A25,
@@ -150,7 +150,7 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual(Levels.Authentication | Levels.Privacy, request.Level);
             Helper.Authenticate(request, pair);
             string test = ByteTool.Convert(request.ToBytes());
-            Assert.AreEqual(ByteTool.ConvertByteString(bytes), request.ToBytes());
+            Assert.AreEqual(ByteTool.Convert(bytes), request.ToBytes());
         }
 
         [Test]
@@ -184,14 +184,14 @@ namespace Lextm.SharpSnmpLib.Tests
                     new OctetString(new byte[] { 0x5 }),
                     new Integer32(3)),
                 new SecurityParameters(
-                    new OctetString(ByteTool.ConvertByteString("80 00 1F 88 80 E9 63 00  00 D6 1F F4  49")),
+                    new OctetString(ByteTool.Convert("80 00 1F 88 80 E9 63 00  00 D6 1F F4  49")),
                     new Integer32(0x0d),
                     new Integer32(0x57),
                     new OctetString("lexli"),
                     new OctetString(new byte[12]),
                     OctetString.Empty),
                 new Scope(
-                    new OctetString(ByteTool.ConvertByteString("80 00 1F 88 80 E9 63 00  00 D6 1F F4  49")),
+                    new OctetString(ByteTool.Convert("80 00 1F 88 80 E9 63 00  00 D6 1F F4  49")),
                     OctetString.Empty,
                     new GetRequestPdu(
                         0x01AF,
@@ -202,7 +202,7 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual(Levels.Authentication, request.Level);
             Helper.Authenticate(request, pair);
             string test = ByteTool.Convert(request.ToBytes());
-            Assert.AreEqual(ByteTool.ConvertByteString(bytes), request.ToBytes());
+            Assert.AreEqual(ByteTool.Convert(bytes), request.ToBytes());
         }
 
         [Test]
@@ -226,14 +226,14 @@ namespace Lextm.SharpSnmpLib.Tests
                     new OctetString(new byte[] { 0x5 }),
                     new Integer32(3)),
                 new SecurityParameters(
-                    new OctetString(ByteTool.ConvertByteString("80 00 1F 88 80 E9 63 00  00 D6 1F F4  49")),
+                    new OctetString(ByteTool.Convert("80 00 1F 88 80 E9 63 00  00 D6 1F F4  49")),
                     new Integer32(0x15),
                     new Integer32(0x015B),
                     new OctetString("lextudio"),
                     new OctetString(new byte[12]),
                     OctetString.Empty),
                 new Scope(
-                    new OctetString(ByteTool.ConvertByteString("80 00 1F 88 80 E9 63 00  00 D6 1F F4  49")),
+                    new OctetString(ByteTool.Convert("80 00 1F 88 80 E9 63 00  00 D6 1F F4  49")),
                     OctetString.Empty,
                     new GetRequestPdu(
                         0x56FF,
@@ -244,7 +244,7 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual(Levels.Authentication, request.Level);
             Helper.Authenticate(request, pair);
             string test = ByteTool.Convert(request.ToBytes());
-            Assert.AreEqual(ByteTool.ConvertByteString(bytes), request.ToBytes());
+            Assert.AreEqual(ByteTool.Convert(bytes), request.ToBytes());
         }
         
         [Test]
@@ -284,7 +284,7 @@ namespace Lextm.SharpSnmpLib.Tests
             string s = "30 27 02 01  01 04 06 70  75 62 6C 69  63 A0 1A 02" +
             "02 4B ED 02  01 00 02 01  00 30 0E 30  0C 06 08 2B" +
             "06 01 02 01  01 01 00 05  00                      ";
-            byte[] expected = ByteTool.ConvertByteString(s);
+            byte[] expected = ByteTool.Convert(s);
             GetRequestMessage message = new GetRequestMessage(0x4bed, VersionCode.V2, new OctetString("public"), new List<Variable>() { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) });
             string test = ByteTool.Convert(message.ToBytes());
             Assert.AreEqual(expected, message.ToBytes());

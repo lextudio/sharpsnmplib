@@ -17,7 +17,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// <summary>
     /// Discovery class that participates in SNMP v3 discovery process.
     /// </summary>
-    public class Discovery
+    public sealed class Discovery
     {
         private GetRequestMessage discovery;
 

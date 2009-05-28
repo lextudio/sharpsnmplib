@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<NDepend AppName="New Project" Platform="DotNet">
+<NDepend AppName="#SNMP" Platform="DotNet">
   <OutputDir KeepHistoric="True" KeepXmlFiles="True" ViewReport="True">D:\lextm\documents\SharpDevelop Projects\SharpSnmpLib\NDependOut</OutputDir>
   <Assemblies>
     <Name>SharpSnmpLib.Controls</Name>
     <Name>SharpSnmpLib</Name>
-    <Name>SharpSnmpLib.Mib</Name>
   </Assemblies>
   <FrameworkAssemblies>
     <Name>System</Name>
@@ -29,7 +28,7 @@
     <Section Enabled="True">NDepend information and warnings</Section>
     <Section Enabled="True">CQL Queries and Constraints</Section>
     <Section Enabled="True">Types Metrics</Section>
-    <Section Enabled="False">Types Dependencies</Section>
+    <Section Enabled="True">Types Dependencies</Section>
   </Report>
   <BuildComparisonSetting ProjectMode="DontCompare" BuildMode="MostRecentBuildAvailable" ProjectFileToCompareWith="" BuildFileToCompareWith="" NDaysAgo="1" />
   <CoverageFiles UncoverableAttribute="" />
