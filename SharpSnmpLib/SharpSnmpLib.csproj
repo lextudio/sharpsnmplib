@@ -86,10 +86,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Messaging\MessagetReceivedEventArgs.cs" />
-    <Compile Include="Messaging\Messenger.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Messaging\PduCounter.cs" />
     <Compile Include="Messaging\ReportMessage.cs" />
     <Compile Include="Messaging\SetRequestMessage.cs" />
     <Compile Include="Messaging\SharpErrorException.cs" />

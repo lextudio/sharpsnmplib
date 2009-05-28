@@ -1,4 +1,7 @@
-﻿/*
+﻿using Lextm.SharpSnmpLib;
+using Lextm.SharpSnmpLib.Messaging;
+
+/*
  * Created by SharpDevelop.
  * User: lexli
  * Date: 2008-12-14
@@ -6,8 +9,7 @@
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
-using Lextm.SharpSnmpLib.Messaging;
-using Lextm.SharpSnmpLib;
+
 namespace TestAgent
 {
     partial class MainForm
@@ -41,7 +43,7 @@ namespace TestAgent
         	this.components = new System.ComponentModel.Container();
         	this.btnStart = new System.Windows.Forms.Button();
         	this.btnStop = new System.Windows.Forms.Button();
-        	this.agent1 = new Lextm.SharpSnmpLib.Agent(this.components);
+        	this.agent1 = new Lextm.SharpSnmpLib.Messaging.Agent(this.components);
         	this.btnTrap = new System.Windows.Forms.Button();
         	this.btnTrap2 = new System.Windows.Forms.Button();
         	this.txtIP = new System.Windows.Forms.TextBox();
@@ -49,7 +51,7 @@ namespace TestAgent
         	this.label1 = new System.Windows.Forms.Label();
         	this.label2 = new System.Windows.Forms.Label();
         	this.btnInform = new System.Windows.Forms.Button();
-        	this.listener1 = new Lextm.SharpSnmpLib.Listener(this.components);
+        	this.listener1 = new Lextm.SharpSnmpLib.Messaging.Listener(this.components);
         	this.label3 = new System.Windows.Forms.Label();
         	this.txtAgentPort = new System.Windows.Forms.TextBox();
         	this.SuspendLayout();
@@ -187,10 +189,10 @@ namespace TestAgent
         private System.Windows.Forms.Button btnTrap2;
         private System.Windows.Forms.Button btnTrap;
 
-        private Lextm.SharpSnmpLib.Agent agent1;
+        private Lextm.SharpSnmpLib.Messaging.Agent agent1;
         private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.Button btnStop;
-        private Lextm.SharpSnmpLib.Listener listener1;
+        private Lextm.SharpSnmpLib.Messaging.Listener listener1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtAgentPort;
     }

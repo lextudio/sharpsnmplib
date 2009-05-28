@@ -53,36 +53,36 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Agent.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="AgentFoundEventArgs.cs" />
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="Discoverer.cs">
+    <Compile Include="Messaging\Agent.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Discoverer.Designer.cs">
+    <Compile Include="Messaging\AgentFoundEventArgs.cs" />
+    <Compile Include="Messaging\Discoverer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Messaging\Discoverer.Designer.cs">
       <DependentUpon>Discoverer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Listener.cs">
+    <Compile Include="Messaging\Listener.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Manager.cs">
+    <Compile Include="Messaging\Manager.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="MessageParams.cs" />
+    <Compile Include="Messaging\MessageParams.cs" />
+    <Compile Include="Messaging\Messenger.cs" />
+    <Compile Include="Messaging\PduCounter.cs" />
     <None Include="license.txt" />
     <None Include="sharpsnmplib.snk" />
-    <EmbeddedResource Include="Listener.resx">
-      <DependentUpon>Listener.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Agent.resx">
+    <EmbeddedResource Include="Messaging\Agent.resx">
       <DependentUpon>Agent.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Manager.resx">
+    <EmbeddedResource Include="Messaging\Listener.resx">
+      <DependentUpon>Listener.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Messaging\Manager.resx">
       <DependentUpon>Manager.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -92,5 +92,6 @@
       <Project>{286DE6DB-8F95-4BD4-86A2-86488D2E0EE1}</Project>
       <Name>SharpSnmpLib</Name>
     </ProjectReference>
+    <Folder Include="Messaging" />
   </ItemGroup>
 </Project>

@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
+using Lextm.SharpSnmpLib.Messaging;
 using Lextm.SharpSnmpLib.Mib;
 using Microsoft.Practices.Unity;
 using WeifenLuo.WinFormsUI.Docking;

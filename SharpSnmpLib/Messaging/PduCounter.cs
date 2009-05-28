@@ -1,5 +1,4 @@
-﻿using System.Threading;
-using System;
+﻿using System;
 
 namespace Lextm.SharpSnmpLib.Messaging
 {
