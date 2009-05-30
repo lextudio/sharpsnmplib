@@ -151,9 +151,7 @@ namespace Lextm.SharpSnmpLib.Security
             for (int i = 0; i < 8; ++i)
             {
                 iv[i] = (byte)(key[8 + i] ^ privacyParameters[i]);
-            }
-            
-            byte[] decryptedData;
+            }     
             
             using (DES des = new DESCryptoServiceProvider())
             {
@@ -168,13 +166,11 @@ namespace Lextm.SharpSnmpLib.Security
                 des.IV = iv;
                 using (ICryptoTransform transform = des.CreateDecryptor())
                 {
-                    decryptedData = transform.TransformFinalBlock(encryptedData, 0, encryptedData.Length);
+                    byte[] decryptedData = transform.TransformFinalBlock(encryptedData, 0, encryptedData.Length);
+                    des.Clear();
+                    return decryptedData;
                 }
-                
-                des.Clear();
             }
-
-            return decryptedData;
         }
 
         /// <summary>

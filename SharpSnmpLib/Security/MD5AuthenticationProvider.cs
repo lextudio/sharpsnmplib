@@ -10,6 +10,7 @@ namespace Lextm.SharpSnmpLib.Security
     public class MD5AuthenticationProvider : IAuthenticationProvider
     {
         private byte[] _password;
+        private const int digestLength = 12;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MD5AuthenticationProvider"/> class.
@@ -51,10 +52,10 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentNullException("engineId");
             }
 
-            int password_index = 0;
-            int count = 0;
             using (MD5 md5 = new MD5CryptoServiceProvider())
             {
+                int password_index = 0;
+                int count = 0;
                 /* Use while loop until we've done 1 Megabyte */
                 byte[] sourceBuffer = new byte[1048576];
                 byte[] buf = new byte[64];
@@ -89,7 +90,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// <value>The clean digest.</value>
         public OctetString CleanDigest
         {
-            get { return new OctetString(new byte[12]); }
+            get { return new OctetString(new byte[digestLength]); }
         }
 
         /// <summary>
@@ -109,8 +110,8 @@ namespace Lextm.SharpSnmpLib.Security
             {
                 byte[] buffer = message.ToBytes();
                 byte[] hash = md5.ComputeHash(buffer);
-                md5.Clear();                
-                byte[] result = new byte[12];
+                md5.Clear();
+                byte[] result = new byte[digestLength];
                 Array.Copy(hash, result, result.Length);
                 return new OctetString(result);
             }

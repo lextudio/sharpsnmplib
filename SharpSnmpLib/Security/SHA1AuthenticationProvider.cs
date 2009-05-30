@@ -11,6 +11,7 @@ namespace Lextm.SharpSnmpLib.Security
     public class SHA1AuthenticationProvider : IAuthenticationProvider
     {
         private byte[] _password;
+        private const int digestLength = 12;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SHA1AuthenticationProvider"/> class.
@@ -49,12 +50,12 @@ namespace Lextm.SharpSnmpLib.Security
             if (engineId == null)
             {
                 throw new ArgumentNullException("engineId");
-            }
-
-            int password_index = 0;
-            int count = 0;
+            }            
+            
             using (SHA1 sha = new SHA1CryptoServiceProvider())
             {
+                int password_index = 0;
+                int count = 0;
                 /* Use while loop until we've done 1 Megabyte */
                 byte[] sourceBuffer = new byte[1048576];
                 byte[] buf = new byte[64];
@@ -89,7 +90,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// <value>The clean digest.</value>
         public OctetString CleanDigest
         {
-            get { return new OctetString(new byte[12]); }
+            get { return new OctetString(new byte[digestLength]); }
         }
 
         /// <summary>
@@ -110,7 +111,7 @@ namespace Lextm.SharpSnmpLib.Security
                 byte[] buffer = message.ToBytes();
                 byte[] hash = sha1.ComputeHash(buffer);
                 sha1.Clear();
-                byte[] result = new byte[12];
+                byte[] result = new byte[digestLength];
                 Array.Copy(hash, result, result.Length);
                 return new OctetString(result);
             }
