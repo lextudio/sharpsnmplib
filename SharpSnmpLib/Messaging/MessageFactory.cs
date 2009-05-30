@@ -187,9 +187,24 @@ namespace Lextm.SharpSnmpLib.Messaging
                 : new SecurityParameters((OctetString)body[2]);
             ProviderPair record = body.Count == 3 ? ProviderPair.Default :
                 registry.Find(parameters.UserName);
-            Scope scope = body.Count == 3
-                ? new Scope(null, null, (ISnmpPdu)body[2])
-                : new Scope((Sequence)record.Privacy.Decrypt(body[3], parameters));
+            
+            Scope scope;
+            if (body.Count == 3)
+            {            
+                scope = new Scope(null, null, (ISnmpPdu)body[2]);
+            }
+            else
+            {
+                try 
+                {
+                    scope = new Scope((Sequence)record.Privacy.Decrypt(body[3], parameters));
+                } 
+                catch (SharpSnmpException)
+                {
+                    scope = new Scope((Sequence)DefaultPrivacyProvider.Instance.Decrypt(body[3], parameters));
+                }
+            }
+            
             ISnmpPdu pdu = scope.Pdu;
 
             switch (pdu.TypeCode)

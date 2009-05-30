@@ -259,6 +259,11 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentNullException("parameters");
             }
             
+            if (data.TypeCode != SnmpType.OctetString)
+            {
+                throw new SharpSnmpException("cannot decrypt the scope data");
+            }
+            
             OctetString octets = (OctetString)data;
             byte[] bytes = octets.GetRaw();
             byte[] pkey = _auth.PasswordToKey(_phrase.GetRaw(), parameters.EngineId.GetRaw());
