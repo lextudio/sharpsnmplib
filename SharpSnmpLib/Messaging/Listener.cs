@@ -30,7 +30,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Error message for non IP v6 OS.
         /// </summary>
-        public const string STR_IPV6NotSupported = "cannot use IP v6 as the OS does not support it";
+        public static readonly string STR_IPV6NotSupported = "cannot use IP v6 as the OS does not support it";
         private readonly IPEndPoint defaultEndPoint = new IPEndPoint(IPAddress.Any, DEFAULTPORT);
         private Socket _socket;
         private int _bufferSize;

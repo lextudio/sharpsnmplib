@@ -1,4 +1,5 @@
-﻿
+﻿using System;
+
 namespace Lextm.SharpSnmpLib.Security
 {
     /// <summary>
@@ -54,7 +55,12 @@ namespace Lextm.SharpSnmpLib.Security
         /// <returns></returns>
         public ISnmpData Encrypt(ISnmpData data, SecurityParameters parameters)
         {
-            return data;
+            if (data.TypeCode == SnmpType.Sequence || data is ISnmpPdu)
+            {
+                return data;                
+            }
+            
+            throw new ArgumentException("unencrypted data is expected.", "data");
         }
 
         /// <summary>

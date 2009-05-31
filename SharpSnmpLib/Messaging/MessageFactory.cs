@@ -22,7 +22,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// </summary>
     public static class MessageFactory
     {
-	    /// <summary>
+        /// <summary>
         /// Sends an SNMP message and wait for its responses.
         /// </summary>
         /// <param name="receiver">The IP address and port of the target to talk to.</param>
@@ -42,11 +42,11 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             ByteTool.Capture(bytes); // log request
-#if CF
+            #if CF
             int bufSize = 8192;
-#else
+            #else
             int bufSize = socket.ReceiveBufferSize;
-#endif
+            #endif
             byte[] reply = new byte[bufSize];
 
             // Whatever you change, try to keep the Send and the BeginReceive close to each other.
@@ -83,7 +83,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             throw SharpOperationException.Create("wrong response type", receiver.Address);
         }
-		
+        
         /// <summary>
         /// Creates <see cref="ISnmpMessage"/> instances from a string.
         /// </summary>
@@ -190,19 +190,20 @@ namespace Lextm.SharpSnmpLib.Messaging
             
             Scope scope;
             if (body.Count == 3)
-            {            
+            {
                 scope = new Scope(null, null, (ISnmpPdu)body[2]);
+            }
+            else if (body[3].TypeCode == SnmpType.Sequence)
+            {
+                scope = new Scope((Sequence)body[3]);
+            }
+            else if (body[3].TypeCode == SnmpType.OctetString)
+            {
+                scope = new Scope((Sequence)record.Privacy.Decrypt(body[3], parameters));
             }
             else
             {
-                try 
-                {
-                    scope = new Scope((Sequence)record.Privacy.Decrypt(body[3], parameters));
-                } 
-                catch (SharpSnmpException)
-                {
-                    scope = new Scope((Sequence)DefaultPrivacyProvider.Instance.Decrypt(body[3], parameters));
-                }
+                throw new SharpSnmpException("invalid v3 packets scoped data: " + body[3].TypeCode);
             }
             
             ISnmpPdu pdu = scope.Pdu;
@@ -231,12 +232,12 @@ namespace Lextm.SharpSnmpLib.Messaging
                     throw new SharpSnmpException("unsupported pdu: " + pdu.TypeCode);
             }
         }
- 
+        
         // TODO: add this method to all message exchanges.
         internal static void Capture(ISnmpMessage message)
         {
             byte[] buffer = message.ToBytes();
             ByteTool.Capture(buffer);
-        }       
+        }
     }
 }

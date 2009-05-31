@@ -63,6 +63,11 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new NotSupportedException("SNMP v3 is not supported");
             }
+            
+            if (broadcastAddress == null)
+            {
+                throw new ArgumentNullException("broadcastAddress");
+            }
 
             Variable v = new Variable(new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 1, 1, 0 }));
             List<Variable> variables = new List<Variable>();

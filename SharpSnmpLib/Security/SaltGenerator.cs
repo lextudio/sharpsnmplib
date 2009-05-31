@@ -33,6 +33,10 @@ namespace Lextm.SharpSnmpLib.Security
             return _salt;
         }
 
+        /// <summary>
+        /// Gets salt bytes.
+        /// </summary>
+        /// <returns></returns>
         public byte[] GetSaltBytes()
         {
             byte[] buffer = BitConverter.GetBytes(NextSalt());
