@@ -20,11 +20,10 @@ namespace Lextm.SharpSnmpLib.Messaging
     public class InformRequestMessage : ISnmpMessage
     {
         private readonly VersionCode _version;
-        private readonly IList<Variable> _variables;
-        private readonly byte[] _bytes;
-        private readonly OctetString _community;
-        private readonly ISnmpPdu _pdu;
-        private readonly int _requestId;
+        private Header _header;
+        private SecurityParameters _parameters;
+        private Scope _scope;
+        private ProviderPair _pair;
 
         /// <summary>
         /// Creates a <see cref="InformRequestMessage"/> with all contents.
@@ -38,42 +37,35 @@ namespace Lextm.SharpSnmpLib.Messaging
         [CLSCompliant(false)]
         public InformRequestMessage(int requestId, VersionCode version, OctetString community, ObjectIdentifier enterprise, uint time, IList<Variable> variables)
         {
+            if (version == VersionCode.V3)
+            {
+                throw new ArgumentException("only v1 and v2c are supported", "version");
+            }
+            
             _version = version;
-            _community = community;
-            _variables = variables;
-            InformRequestPdu pdu = new InformRequestPdu(new Integer32(requestId), enterprise, new TimeTicks(time), _variables);
-            _requestId = requestId;
-            _bytes = Helper.PackMessage(_version, _community, pdu).ToBytes();
+            _header = Header.Empty;
+            _parameters = new SecurityParameters(null, null, null, community, null, null);
+            InformRequestPdu pdu = new InformRequestPdu(
+                requestId,
+                enterprise,
+                time,
+                variables);
+            _scope = new Scope(null, null, pdu);
+            _pair = ProviderPair.Default;
         }
         
-        /// <summary>
-        /// Creates a <see cref="InformRequestMessage"/> with a specific <see cref="Sequence"/>.
-        /// </summary>
-        /// <param name="body">Message body</param>
-        public InformRequestMessage(Sequence body)
+        internal InformRequestMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, ProviderPair record)
         {
-            if (body == null)
+            if (record == null)
             {
-                throw new ArgumentNullException("body");
+                throw new ArgumentNullException("record");
             }
-            
-            if (body.Count != 3)
-            {
-                throw new ArgumentException("wrong message body");
-            }
-            
-            _community = (OctetString)body[1];
-            _version = (VersionCode)((Integer32)body[0]).ToInt32();
-            _pdu = (ISnmpPdu)body[2];
-            if (_pdu.TypeCode != SnmpType.InformRequestPdu)
-            {
-                throw new ArgumentException("wrong message type");
-            }
-            
-            InformRequestPdu pdu = (InformRequestPdu)_pdu;
-            _requestId = pdu.RequestId.ToInt32();
-            _variables = _pdu.Variables;
-            _bytes = body.ToBytes();
+
+            _version = version;
+            _header = header;
+            _parameters = parameters;
+            _scope = scope;
+            _pair = record;
         }
         
         /// <summary>
@@ -83,7 +75,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             get
             {
-                return _variables;
+                return _scope.Pdu.Variables;
             }
         }
 
@@ -108,8 +100,15 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
             
             // TODO: make more efficient here.
-            InformRequestPdu pdu = (InformRequestPdu)_pdu;
-            new GetResponseMessage(_requestId, _version, _community, pdu.AllVariables).Send(receiver);
+            if (_version == VersionCode.V2)
+            {
+                InformRequestPdu pdu = (InformRequestPdu)_scope.Pdu;                
+                new GetResponseMessage(_scope.Pdu.RequestId.ToInt32(), _version, _parameters.UserName, pdu.AllVariables).Send(receiver);
+            }
+            else
+            {
+                // TODO: do it for v3
+            }
         }
 
         /// <summary>
@@ -120,7 +119,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public ISnmpMessage GetResponse(int timeout, IPEndPoint receiver)
         {
-            return MessageFactory.GetResponse(receiver, _bytes, RequestId, timeout, new UserRegistry(), Helper.GetSocket(receiver));
+            return MessageFactory.GetResponse(receiver, ToBytes(), RequestId, timeout, new UserRegistry(), Helper.GetSocket(receiver));
         }
 
         /// <summary>
@@ -132,14 +131,14 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public ISnmpMessage GetResponse(int timeout, IPEndPoint receiver, Socket socket)
         {
-            return MessageFactory.GetResponse(receiver, _bytes, RequestId, timeout, new UserRegistry(), socket);
-        }        
+            return MessageFactory.GetResponse(receiver, ToBytes(), RequestId, timeout, new UserRegistry(), socket);
+        }
         
         internal int RequestId
         {
             get
             {
-                return _requestId;
+                return _scope.Pdu.RequestId.ToInt32();
             }
         }
         
@@ -149,7 +148,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public byte[] ToBytes()
         {
-            return _bytes;
+            return Helper.PackMessage(_version, _pair.Privacy, _header, _parameters, _scope).ToBytes();
         }
 
         /// <summary>
@@ -159,7 +158,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             get
             {
-                return _pdu;
+                return _scope.Pdu;
             }
         }
 
@@ -187,7 +186,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public override string ToString()
         {
-            return "INFORM request message: version: " + _version + "; " + _community + "; " + _pdu;
+            return "INFORM request message: version: " + _version + "; " + _parameters.UserName + "; " + _scope.Pdu;
         }
     }
 }

@@ -213,7 +213,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 case SnmpType.TrapV1Pdu:
                     return new TrapV1Message(body);
                 case SnmpType.TrapV2Pdu:
-                    return new TrapV2Message(body); // (version, header, parameters, scope, record);
+                    return new TrapV2Message(version, header, parameters, scope, record);
                 case SnmpType.GetRequestPdu:
                     return new GetRequestMessage(version, header, parameters, scope, record);
                 case SnmpType.GetResponsePdu:
@@ -227,7 +227,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 case SnmpType.ReportPdu:
                     return new ReportMessage(version, header, parameters, scope, record);
                 case SnmpType.InformRequestPdu:
-                    return new InformRequestMessage(body); // (version, header, parameters, scope, record);
+                    return new InformRequestMessage(version, header, parameters, scope, record);
                 default:
                     throw new SharpSnmpException("unsupported pdu: " + pdu.TypeCode);
             }

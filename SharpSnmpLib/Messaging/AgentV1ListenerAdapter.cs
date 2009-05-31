@@ -30,6 +30,11 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         public event EventHandler<MessageReceivedEventArgs<GetNextRequestMessage>> GetNextRequestReceived;
 
+        /// <summary>
+        /// Processes the message.
+        /// </summary>
+        /// <param name="message">Message.</param>
+        /// <param name="sender">Sender.</param>
         public void Process(ISnmpMessage message, System.Net.IPEndPoint sender)
         {
             if (message == null)

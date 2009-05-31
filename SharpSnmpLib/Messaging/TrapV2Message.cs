@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Lextm.SharpSnmpLib.Security;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Net;
@@ -11,13 +12,14 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// </summary>
     public class TrapV2Message : ISnmpMessage
     {
-        private byte[] _bytes;
-        private readonly ISnmpPdu _pdu;
         private readonly VersionCode _version;
-        private readonly OctetString _community;
-        private readonly IList<Variable> _variables;
-        private readonly ObjectIdentifier _enterprise;
-        private readonly uint _time;
+        private Header _header;
+        private SecurityParameters _parameters;
+        private Scope _scope;
+        private ProviderPair _pair;
+        
+        private ObjectIdentifier _enterprise;
+        private uint _time;
         
         /// <summary>
         /// Creates a <see cref="TrapV2Message"/> instance with all content.
@@ -31,53 +33,49 @@ namespace Lextm.SharpSnmpLib.Messaging
         [CLSCompliant(false)]
         public TrapV2Message(int requestId, VersionCode version, OctetString community, ObjectIdentifier enterprise, uint time, IList<Variable> variables)
         {
+            if (version == VersionCode.V3)
+            {
+                throw new ArgumentException("only v1 and v2c are supported", "version");
+            }
+            
             _version = version;
-            _community = community;
+            _header = Header.Empty;
+            _parameters = new SecurityParameters(null, null, null, community, null, null);
+            TrapV2Pdu pdu = new TrapV2Pdu(
+                requestId,
+                enterprise, 
+                time, 
+                variables);
+            _scope = new Scope(null, null, pdu);
+            _pair = ProviderPair.Default;
             _enterprise = enterprise;
             _time = time;
-            _variables = variables;
-            _pdu = new TrapV2Pdu(new Integer32(requestId), _enterprise, new TimeTicks(_time), _variables);
-            ////_bytes = _pdu.ToMessageBody(_version, _community).ToBytes();
         }
         
-        /// <summary>
-        /// Creates a <see cref="TrapV2Message"/> with a specific <see cref="Sequence"/>.
-        /// </summary>
-        /// <param name="body">Message body</param>
-        public TrapV2Message(Sequence body)
+        internal TrapV2Message(VersionCode version, Header header, SecurityParameters parameters, Scope scope, ProviderPair record)
         {
-            if (body == null)
+            if (record == null)
             {
-                throw new ArgumentNullException("body");
+                throw new ArgumentNullException("record");
             }
-            
-            if (body.Count != 3)
-            {
-                throw new ArgumentException("wrong message body");
-            }    
-            
-            _community = (OctetString)body[1];
-            _version = (VersionCode)((Integer32)body[0]).ToInt32();
-            _pdu = (ISnmpPdu)body[2];
-            if (_pdu.TypeCode != SnmpType.TrapV2Pdu)
-            {
-                throw new ArgumentException("wrong message type");
-            }
-            
-            _variables = _pdu.Variables;
-            TrapV2Pdu pdu = (TrapV2Pdu)_pdu;
-            _time = pdu.TimeStamp;
-            _enterprise = pdu.Enterprise;
-            ////_bytes = body.ToBytes();
-        }
 
+            _version = version;
+            _header = header;
+            _parameters = parameters;
+            _scope = scope;
+            _pair = record;
+            TrapV2Pdu pdu = (TrapV2Pdu)_scope.Pdu;
+            _enterprise = pdu.Enterprise;
+            _time = pdu.TimeStamp;
+        }
+        
         #region ISnmpMessage Members
         /// <summary>
         /// PDU.
         /// </summary>
         public ISnmpPdu Pdu
         {
-            get { return _pdu; }
+            get { return _scope.Pdu; }
         }
 
         /// <summary>
@@ -108,12 +106,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public byte[] ToBytes()
         {
-            if (_bytes == null)
-            {
-                _bytes = Helper.PackMessage(_version, _community, _pdu).ToBytes();
-            }
-
-            return _bytes;
+            return Helper.PackMessage(_version, _pair.Privacy, _header, _parameters, _scope).ToBytes();
         }
 
         #endregion
@@ -149,7 +142,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         public OctetString Community
         {
-            get { return _community; }
+            get { return _parameters.UserName; }
         }
         
         /// <summary>
@@ -175,7 +168,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         public IList<Variable> Variables
         {
-            get { return _variables; }
+            get { return _scope.Pdu.Variables; }
         }
 
         /// <summary>
@@ -197,8 +190,8 @@ namespace Lextm.SharpSnmpLib.Messaging
                 CultureInfo.InvariantCulture,
                 "SNMPv2 trap: time stamp: {0}; community: {1}; enterprise: {2}; varbind count: {3}",
                 TimeStamp.ToString(CultureInfo.InvariantCulture),
-                Community, 
-                Enterprise, 
+                Community,
+                Enterprise,
                 Variables.Count.ToString(CultureInfo.InvariantCulture));
         }
     }

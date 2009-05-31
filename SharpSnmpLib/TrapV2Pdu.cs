@@ -25,11 +25,12 @@ namespace Lextm.SharpSnmpLib
         /// <param name="enterprise">Enterprise.</param>
         /// <param name="time">Time stamp.</param>
         /// <param name="variables">Variables.</param>
-        public TrapV2Pdu(Integer32 requestId, ObjectIdentifier enterprise, TimeTicks time, IList<Variable> variables)
+        [CLSCompliant(false)]
+        public TrapV2Pdu(int requestId, ObjectIdentifier enterprise, uint time, IList<Variable> variables)
         {
             _enterprise = enterprise;
-            _requestId = requestId;
-            _time = time;
+            _requestId = new Integer32(requestId);
+            _time = new TimeTicks(time);
             _variables = variables;
             IList<Variable> full = new List<Variable>(variables);
             full.Insert(0, new Variable(new uint[] { 1, 3, 6, 1, 2, 1, 1, 3, 0 }, _time));

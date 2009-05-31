@@ -20,6 +20,11 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         public event EventHandler<MessageReceivedEventArgs<TrapV1Message>> TrapV1Received;
         
+        /// <summary>
+        /// Processes the message.
+        /// </summary>
+        /// <param name="message">Message.</param>
+        /// <param name="sender">Sender.</param>
         public void Process(ISnmpMessage message, System.Net.IPEndPoint sender)
         {
             if (message == null)
