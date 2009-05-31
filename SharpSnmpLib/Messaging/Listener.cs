@@ -7,10 +7,12 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+
 using Lextm.SharpSnmpLib.Security;
 
 namespace Lextm.SharpSnmpLib.Messaging
@@ -32,6 +34,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         private readonly IPEndPoint defaultEndPoint = new IPEndPoint(IPAddress.Any, DEFAULTPORT);
         private Socket _socket;
         private int _bufferSize;
+        private IList<IListenerAdapter> _adapters = new List<IListenerAdapter>();
         
         /// <summary>
         /// 1 = true, 0 = false
@@ -39,6 +42,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         private long _active; // = 0
         private bool _disposed;
         private int _port;
+        private UserRegistry _users = new UserRegistry();
 
         #region Constructor
 
@@ -104,36 +108,43 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Occurs when a <see cref="TrapV1Message" /> is received.
         /// </summary>
+        [Obsolete("Please use a listener adapter instead.")]
         public event EventHandler<MessageReceivedEventArgs<TrapV1Message>> TrapV1Received;
 
         /// <summary>
         /// Occurs when a <see cref="TrapV2Message"/> is received.
         /// </summary>
+        [Obsolete("Please use a listener adapter instead.")]
         public event EventHandler<MessageReceivedEventArgs<TrapV2Message>> TrapV2Received;
 
         /// <summary>
         /// Occurs when a <see cref="InformRequestMessage"/> is received.
         /// </summary>
+        [Obsolete("Please use a listener adapter instead.")]
         public event EventHandler<MessageReceivedEventArgs<InformRequestMessage>> InformRequestReceived;
 
         /// <summary>
         /// Occurs when a <see cref="GetRequestMessage"/> is received.
         /// </summary>
+        [Obsolete("Please use a listener adapter instead.")]
         public event EventHandler<MessageReceivedEventArgs<GetRequestMessage>> GetRequestReceived;
 
         /// <summary>
         /// Occurs when a SET request is received.
         /// </summary>
+        [Obsolete("Please use a listener adapter instead.")]
         public event EventHandler<MessageReceivedEventArgs<SetRequestMessage>> SetRequestReceived;
 
         /// <summary>
         /// Occurs when a GET NEXT request is received.
         /// </summary>
+        [Obsolete("Please use a listener adapter instead.")]
         public event EventHandler<MessageReceivedEventArgs<GetNextRequestMessage>> GetNextRequestReceived;
 
         /// <summary>
         /// Occurs when a GET BULK request is received.
         /// </summary>
+        [Obsolete("Please use a listener adapter instead.")]
         public event EventHandler<MessageReceivedEventArgs<GetBulkRequestMessage>> GetBulkRequestReceived;
 
         /// <summary>
@@ -207,7 +218,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 return;
             }
             
-            _port = endpoint.Port;            
+            _port = endpoint.Port;
             _socket = new Socket(endpoint.AddressFamily, SocketType.Dgram, ProtocolType.Udp);
 
             try
@@ -375,94 +386,14 @@ namespace Lextm.SharpSnmpLib.Messaging
         private void HandleMessage(MessageParams param)
         {
             ByteTool.Capture(param.GetBytes(), param.Number);
-
-            foreach (ISnmpMessage message in MessageFactory.ParseMessages(param.GetBytes(), 0, param.Number, new UserRegistry()))
+            
+            // TODO: use listener adapters instead in future versions.
+            foreach (ISnmpMessage message in MessageFactory.ParseMessages(param.GetBytes(), 0, param.Number, _users))
             {
-                switch (message.Pdu.TypeCode)
+                foreach (IListenerAdapter adapter in _adapters)
                 {
-                    case SnmpType.TrapV1Pdu:
-                        {
-                            EventHandler<MessageReceivedEventArgs<TrapV1Message>> handler = TrapV1Received;
-                            if (handler != null)
-                            {
-                                handler(this, new MessageReceivedEventArgs<TrapV1Message>(param.Sender, (TrapV1Message)message));
-                            }
-
-                            break;
-                        }
-
-                    case SnmpType.TrapV2Pdu:
-                        {
-                            EventHandler<MessageReceivedEventArgs<TrapV2Message>> handler = TrapV2Received;
-                            if (handler != null)
-                            {
-                                handler(this, new MessageReceivedEventArgs<TrapV2Message>(param.Sender, (TrapV2Message)message));
-                            }
-
-                            break;
-                        }
-
-                    case SnmpType.InformRequestPdu:
-                        {
-                            InformRequestMessage inform = (InformRequestMessage)message;
-                            inform.SendResponse(param.Sender);
-
-                            EventHandler<MessageReceivedEventArgs<InformRequestMessage>> handler = InformRequestReceived;
-                            if (handler != null)
-                            {
-                                handler(this, new MessageReceivedEventArgs<InformRequestMessage>(param.Sender, inform));
-                            }
-
-                            break;
-                        }
-
-                    case SnmpType.GetRequestPdu:
-                        {
-                            EventHandler<MessageReceivedEventArgs<GetRequestMessage>> handler = GetRequestReceived;
-                            if (handler != null)
-                            {
-                                handler(this, new MessageReceivedEventArgs<GetRequestMessage>(param.Sender, (GetRequestMessage)message));
-                            }
-
-                            break;
-                        }
-
-                    case SnmpType.SetRequestPdu:
-                        {
-                            EventHandler<MessageReceivedEventArgs<SetRequestMessage>> handler = SetRequestReceived;
-                            if (handler != null)
-                            {
-                                handler(this, new MessageReceivedEventArgs<SetRequestMessage>(param.Sender, (SetRequestMessage)message));
-                            }
-
-                            break;
-                        }
-
-                    case SnmpType.GetNextRequestPdu:
-                        {
-                            EventHandler<MessageReceivedEventArgs<GetNextRequestMessage>> handler = GetNextRequestReceived;
-                            if (handler != null)
-                            {
-                                handler(this, new MessageReceivedEventArgs<GetNextRequestMessage>(param.Sender, (GetNextRequestMessage)message));
-                            }
-
-                            break;
-                        }
-
-                    case SnmpType.GetBulkRequestPdu:
-                        {
-                            EventHandler<MessageReceivedEventArgs<GetBulkRequestMessage>> handler = GetBulkRequestReceived;
-                            if (handler != null)
-                            {
-                                handler(this, new MessageReceivedEventArgs<GetBulkRequestMessage>(param.Sender, (GetBulkRequestMessage)message));
-                            }
-
-                            break;
-                        }
-
-                    default:
-                        break;
-                }
+                    adapter.Process(message, param.Sender);
+                }               
             }
         }
 
@@ -489,6 +420,14 @@ namespace Lextm.SharpSnmpLib.Messaging
 
                 return Interlocked.Read(ref _active) == 1;
             }
+        }
+        
+        /// <summary>
+        /// Adapters.
+        /// </summary>
+        public IList<IListenerAdapter> Adapters
+        {
+            get { return _adapters; }
         }
     }
 }

@@ -4,7 +4,10 @@ using System.Text;
 
 namespace Lextm.SharpSnmpLib.Security
 {
-    internal sealed class SaltGenerator
+    /// <summary>
+    /// Salt generator.
+    /// </summary>
+    public sealed class SaltGenerator
     {
         private long _salt = Convert.ToInt64(new Random().Next(1, int.MaxValue));
         private object root = new object();

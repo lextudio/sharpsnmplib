@@ -138,11 +138,6 @@ namespace TestAgent
         	this.btnInform.UseVisualStyleBackColor = true;
         	this.btnInform.Click += new System.EventHandler(this.BtnInformClick);
         	// 
-        	// listener1
-        	// 
-        	this.listener1.GetRequestReceived += new System.EventHandler<MessageReceivedEventArgs<GetRequestMessage>>(this.agent1_GetRequestReceived);
-        	this.listener1.ExceptionRaised += new System.EventHandler<ExceptionRaisedEventArgs>(this.agent1_ExceptionRaised);
-        	// 
         	// label3
         	// 
         	this.label3.AutoSize = true;
@@ -195,5 +190,6 @@ namespace TestAgent
         private Lextm.SharpSnmpLib.Messaging.Listener listener1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtAgentPort;
+
     }
 }

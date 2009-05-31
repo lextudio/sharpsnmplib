@@ -24,6 +24,10 @@ namespace TestAgent
 		public MainForm()
 		{
 			InitializeComponent();
+            listener1.ExceptionRaised += agent1_ExceptionRaised;
+            DefaultListenerAdapter adapter = new DefaultListenerAdapter();
+            listener1.Adapters.Add(adapter);
+            adapter.GetRequestReceived += agent1_GetRequestReceived;
             Application.Idle += Application_Idle;
 		}
 

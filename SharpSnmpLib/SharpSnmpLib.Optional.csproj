@@ -1,15 +1,15 @@
 ﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <ProjectGuid>{B2E8F73F-072C-4F5B-A42B-315F84A45374}</ProjectGuid>
+    <ProjectGuid>{CBE20411-5DB7-487D-825D-7694267BB6F5}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <OutputType>Library</OutputType>
     <RootNamespace>Lextm.SharpSnmpLib</RootNamespace>
-    <AssemblyName>SharpSnmpLib.Controls</AssemblyName>
+    <AssemblyName>SharpSnmpLib.Optional</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>sharpsnmplib.snk</AssemblyOriginatorKeyFile>
-    <DocumentationFile>bin\Release\SharpSnmpLib.Controls.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\SharpSnmpLib.Mib.xml</DocumentationFile>
     <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
     <NoStdLib>False</NoStdLib>
     <WarningLevel>4</WarningLevel>
@@ -32,7 +32,7 @@
     <DebugSymbols>false</DebugSymbols>
     <DebugType>PdbOnly</DebugType>
     <Optimize>True</Optimize>
-    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
@@ -43,7 +43,7 @@
     <FileAlignment>4096</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DocumentationFile>bin\Release\SharpSnmpLib.Controls.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\SharpSnmpLib.Mib.xml</DocumentationFile>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <ItemGroup>
@@ -54,55 +54,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="Messaging\Agent.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Messaging\AgentFoundEventArgs.cs" />
-    <Compile Include="Messaging\AgentV1ListenerAdapter.cs" />
-    <Compile Include="Messaging\AgentV2ListenerAdapter.cs" />
-    <Compile Include="Messaging\AgentV3ListenerAdapter.cs" />
-    <Compile Include="Messaging\DefaultListenerAdapter.cs" />
-    <Compile Include="Messaging\Discoverer.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Messaging\Discoverer.Designer.cs">
-      <DependentUpon>Discoverer.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Messaging\ExceptionRaisedEventArgs.cs" />
-    <Compile Include="Messaging\IListenerAdapter.cs" />
-    <Compile Include="Messaging\Listener.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Messaging\Manager.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Messaging\ManagerV1ListenerAdapter.cs" />
-    <Compile Include="Messaging\ManagerV2ListenerAdapter.cs" />
-    <Compile Include="Messaging\ManagerV3ListenerAdapter.cs" />
-    <Compile Include="Messaging\MessageParams.cs" />
-    <Compile Include="Messaging\MessageReceivedEventArgs.cs" />
-    <Compile Include="Messaging\Messenger.cs" />
-    <Compile Include="Messaging\PduCounter.cs" />
-    <Compile Include="Messaging\WalkMode.cs" />
-    <None Include="license.txt" />
-    <None Include="sharpsnmplib.snk" />
-    <EmbeddedResource Include="Messaging\Agent.resx">
-      <DependentUpon>Agent.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Messaging\Listener.resx">
-      <DependentUpon>Listener.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Messaging\Manager.resx">
-      <DependentUpon>Manager.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
+    <Compile Include="Security\AESPrivacyProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="SharpSnmpLib.csproj">
       <Project>{286DE6DB-8F95-4BD4-86A2-86488D2E0EE1}</Project>
       <Name>SharpSnmpLib</Name>
     </ProjectReference>
-    <Folder Include="Messaging" />
+    <Folder Include="Security" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="sharpsnmplib.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="license.txt" />
   </ItemGroup>
 </Project>

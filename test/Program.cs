@@ -19,9 +19,11 @@ namespace test
             Console.WriteLine("Start watcher");
 
             Listener watcher = new Listener();
-            watcher.TrapV1Received += new EventHandler<MessageReceivedEventArgs<TrapV1Message>>(watcher_TrapV1Received);
-            watcher.TrapV2Received += new EventHandler<MessageReceivedEventArgs<TrapV2Message>>(watcher_TrapV2Received);
-            watcher.InformRequestReceived += new EventHandler<MessageReceivedEventArgs<InformRequestMessage>>(watcher_InformRequestReceived);
+            DefaultListenerAdapter adapter = new DefaultListenerAdapter();
+            watcher.Adapters.Add(adapter);
+            adapter.TrapV1Received += new EventHandler<MessageReceivedEventArgs<TrapV1Message>>(watcher_TrapV1Received);
+            adapter.TrapV2Received += new EventHandler<MessageReceivedEventArgs<TrapV2Message>>(watcher_TrapV2Received);
+            adapter.InformRequestReceived += new EventHandler<MessageReceivedEventArgs<InformRequestMessage>>(watcher_InformRequestReceived);
             watcher.Start();
 
             Console.WriteLine("Press any key to stop . . . ");

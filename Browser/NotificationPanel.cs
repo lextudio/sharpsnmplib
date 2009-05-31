@@ -62,14 +62,14 @@ namespace Lextm.SharpSnmpLib.Browser
         private void NotificationPanel_Load(object sender, EventArgs e)
         {
             Listener.ExceptionRaised += Listener_ExceptionRaised;
-            Listener.TrapV1Received += new EventHandler<MessageReceivedEventArgs<TrapV1Message>>(Listener_TrapV1Received);;
-            Listener.TrapV2Received += new EventHandler<MessageReceivedEventArgs<TrapV2Message>>(Listener_TrapV2Received);
-            Listener.InformRequestReceived += new EventHandler<MessageReceivedEventArgs<InformRequestMessage>>(Listener_InformRequestReceived);
+            DefaultListenerAdapter adapter = new DefaultListenerAdapter();
+            Listener.Adapters.Add(adapter);
+            adapter.TrapV1Received += new EventHandler<MessageReceivedEventArgs<TrapV1Message>>(Listener_TrapV1Received);;
+            adapter.TrapV2Received += new EventHandler<MessageReceivedEventArgs<TrapV2Message>>(Listener_TrapV2Received);
+            adapter.InformRequestReceived += new EventHandler<MessageReceivedEventArgs<InformRequestMessage>>(Listener_InformRequestReceived);
             
             ListenerV6.ExceptionRaised += Listener_ExceptionRaised;
-            ListenerV6.TrapV1Received += new EventHandler<MessageReceivedEventArgs<TrapV1Message>>(Listener_TrapV1Received);;
-            ListenerV6.TrapV2Received += new EventHandler<MessageReceivedEventArgs<TrapV2Message>>(Listener_TrapV2Received);
-            ListenerV6.InformRequestReceived += new EventHandler<MessageReceivedEventArgs<InformRequestMessage>>(Listener_InformRequestReceived);
+            ListenerV6.Adapters.Add(adapter);
         }
 
         private void Listener_InformRequestReceived(object sender, MessageReceivedEventArgs<InformRequestMessage> e)
