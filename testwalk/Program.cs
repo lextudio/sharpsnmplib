@@ -43,7 +43,8 @@ namespace TestWalk
                 writer.WriteLine("V2 walk");
                 try
                 {
-                    Messenger.BulkWalk(VersionCode.V2, new IPEndPoint(IPAddress.Loopback, 161), new OctetString("public"), new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 7, 5 }), list, 1000, 10, WalkMode.WithinSubtree);
+                    Messenger.BulkWalk(VersionCode.V2, new IPEndPoint(IPAddress.Parse("120.89.90.0"),//IPAddress.Loopback,
+                                                                      161), new OctetString("public"), new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 7, 5 }), list, 1000, 10, WalkMode.WithinSubtree);
                 } 
                 catch (SharpTimeoutException ex)
                 {

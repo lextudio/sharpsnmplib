@@ -169,6 +169,20 @@ namespace Lextm.SharpSnmpLib.Messaging
                 return _port;
             }
         }
+		
+		/// <summary>
+		/// Sends a response message. 
+		/// </summary>
+		/// <param name="response">
+		/// A <see cref="GetResponseMessage"/>
+		/// </param>
+		public void SendResponse(GetResponseMessage response, EndPoint receiver)
+		{
+			if (_socket != null)
+			{
+				_socket.SendTo(response.ToBytes(), receiver);
+			}
+		}
 
         /// <summary>
         /// Starts.

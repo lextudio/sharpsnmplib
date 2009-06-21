@@ -100,6 +100,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Sends this <see cref="GetRequestMessage"/> and handles the response from agent.
         /// </summary>
         /// <param name="receiver">The receiver.</param>
+        [Obsolete("Use Listener.SendResponse instead")]
         public void Send(EndPoint receiver)
         {
             Send(receiver, Helper.GetSocket(receiver));
@@ -110,7 +111,8 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         /// <param name="receiver">The receiver.</param>
         /// <param name="socket">The socket.</param>
-        public void Send(EndPoint receiver, Socket socket)
+        [Obsolete("Use Listener.SendResponse instead")]
+		public void Send(EndPoint receiver, Socket socket)
         {
             if (socket == null)
             {

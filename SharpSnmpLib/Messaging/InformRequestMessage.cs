@@ -92,7 +92,8 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Sends the response.
         /// </summary>
         /// <param name="receiver">The receiver.</param>
-        public void SendResponse(IPEndPoint receiver)
+  		[Obsolete("Use Listener.SendResponse instead")]      
+		public void SendResponse(IPEndPoint receiver)
         {
             if (receiver == null)
             {

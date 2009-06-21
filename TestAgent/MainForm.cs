@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Created by SharpDevelop.
  * User: lexli
  * Date: 2008-12-14
@@ -64,7 +64,7 @@ namespace TestAgent
 			list.Add(new Variable(sysDescr, new OctetString("Test Description")));
 
 			GetResponseMessage response = new GetResponseMessage(message.RequestId, message.Version, message.Community, list);
-			response.Send(e.Sender);
+			listener1.SendResponse(response, e.Sender);
 		}
 
 		private static readonly ObjectIdentifier sysDescr = new ObjectIdentifier("1.3.6.1.2.1.1.1.0");
