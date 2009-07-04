@@ -76,14 +76,15 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("endpoint");
             }
             
-            if (endpoint.AddressFamily == AddressFamily.InterNetwork)
-            {
-                return udp;
-            }
-            else
-            {
-                return UdpV6;
-            }
+//            if (endpoint.AddressFamily == AddressFamily.InterNetwork)
+//            {
+//                return udp;
+//            }
+//            else
+//            {
+//                return UdpV6;
+//            }
+            return new Socket(endpoint.AddressFamily, SocketType.Dgram, ProtocolType.Udp);
         }
 
         private static Socket UdpV6

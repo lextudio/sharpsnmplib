@@ -34,11 +34,11 @@ namespace Lextm.SharpSnmpLib
         /// <param name="errorStatus">Error status.</param>
         /// <param name="errorIndex">Error index.</param>
         /// <param name="variables">Variables.</param>
-        public GetResponsePdu(Integer32 requestId, ErrorCode errorStatus, Integer32 errorIndex, IList<Variable> variables)
+        public GetResponsePdu(int requestId, ErrorCode errorStatus, int errorIndex, IList<Variable> variables)
         {
-            _requestId = requestId;
+            _requestId = new Integer32(requestId);
             _errorStatus = new Integer32((int)errorStatus);
-            _errorIndex = errorIndex;
+            _errorIndex = new Integer32(errorIndex);
             _variables = variables;
             _varbindSection = Variable.Transform(variables);
             ////_raw = ByteTool.ParseItems(_sequenceNumber, _errorStatus, _errorIndex, _varbindSection);

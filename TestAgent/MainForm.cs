@@ -63,7 +63,7 @@ namespace TestAgent
 			List<Variable> list = new List<Variable>();
 			list.Add(new Variable(sysDescr, new OctetString("Test Description")));
 
-			GetResponseMessage response = new GetResponseMessage(message.RequestId, message.Version, message.Community, list);
+			GetResponseMessage response = new GetResponseMessage(message.RequestId, message.Version, message.Community, ErrorCode.NoError, 0, list);
 			listener1.SendResponse(response, e.Sender);
 		}
 

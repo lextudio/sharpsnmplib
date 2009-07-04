@@ -174,8 +174,9 @@ namespace Lextm.SharpSnmpLib.Messaging
 		/// Sends a response message. 
 		/// </summary>
 		/// <param name="response">
-		/// A <see cref="GetResponseMessage"/>
+		/// A <see cref="GetResponseMessage"/>.
 		/// </param>
+		/// <param name="receiver">Receiver.</param>
 		public void SendResponse(GetResponseMessage response, EndPoint receiver)
 		{
 			if (_socket != null)

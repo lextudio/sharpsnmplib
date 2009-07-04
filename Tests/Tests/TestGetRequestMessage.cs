@@ -7,10 +7,14 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 
+using System;
 using System.Collections.Generic;
+using System.Net;
+
+using Lextm.SharpSnmpLib.Messaging;
 using Lextm.SharpSnmpLib.Security;
 using NUnit.Framework;
-using Lextm.SharpSnmpLib.Messaging;
+using System.Net.Sockets;
 
 #pragma warning disable 1591
 
@@ -288,6 +292,28 @@ namespace Lextm.SharpSnmpLib.Tests
             GetRequestMessage message = new GetRequestMessage(0x4bed, VersionCode.V2, new OctetString("public"), new List<Variable>() { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) });
             string test = ByteTool.Convert(message.ToBytes());
             Assert.AreEqual(expected, message.ToBytes());
+        }
+        
+        [Test]
+        public void TestTimeOut()
+        {
+            GetRequestMessage message = new GetRequestMessage(0x4bed, VersionCode.V2, new OctetString("public"), new List<Variable>() { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) });
+            int tick = Environment.TickCount;
+            int now = 0;
+            try
+            {
+                //IMPORTANT: test against an agent that doesn't exist.
+                message.GetResponse(5000, new IPEndPoint(IPAddress.Parse("192.168.0.233"), 161));
+            } 
+            catch (SharpTimeoutException)
+            {
+                now = Environment.TickCount;
+            }
+            
+            //FIXME: these values are valid on my machine. (lex)
+            Assert.AreNotEqual(tick + 5000, now);
+            int difference = tick + 5000 - now;
+            Assert.LessOrEqual(Math.Abs(difference), 1500);
         }
     }
 }

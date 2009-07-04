@@ -31,8 +31,10 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="requestId">Request ID.</param>
         /// <param name="version">Protocol version.</param>
         /// <param name="community">Community name.</param>
+        /// <param name="error">Error code.</param>
+        /// <param name="index">Error index.</param>
         /// <param name="variables">Variables.</param>
-        public GetResponseMessage(int requestId, VersionCode version, OctetString community, IList<Variable> variables)
+        public GetResponseMessage(int requestId, VersionCode version, OctetString community, ErrorCode error, int index, IList<Variable> variables)
         {
             if (version == VersionCode.V3)
             {
@@ -43,9 +45,9 @@ namespace Lextm.SharpSnmpLib.Messaging
             _header = Header.Empty;
             _parameters = new SecurityParameters(null, null, null, community, null, null);
             GetResponsePdu pdu = new GetResponsePdu(
-                new Integer32(requestId),
-                ErrorCode.NoError,
-                new Integer32(0),
+                requestId,
+                error,
+                index,
                 variables);
             _scope = new Scope(null, null, pdu);
             _record = ProviderPair.Default;
@@ -58,9 +60,11 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="requestId">The request id.</param>
         /// <param name="messageId">The message id.</param>
         /// <param name="userName">Name of the user.</param>
+        /// <param name="error">Error code.</param>
+        /// <param name="index">Error index.</param>
         /// <param name="variables">The variables.</param>
         /// <param name="record">The record.</param>
-        public GetResponseMessage(VersionCode version, int requestId, int messageId, OctetString userName, IList<Variable> variables, ProviderPair record)
+        public GetResponseMessage(VersionCode version, int requestId, int messageId, OctetString userName, ErrorCode error, int index, IList<Variable> variables, ProviderPair record)
         {            
             if (record == null)
             {
@@ -74,10 +78,10 @@ namespace Lextm.SharpSnmpLib.Messaging
             byte b = (byte)recordToSecurityLevel;
             _header = new Header(new Integer32(messageId), new Integer32(0xFFE3), new OctetString(new byte[] { b }), new Integer32(3));
             _parameters = new SecurityParameters(OctetString.Empty, new Integer32(0), new Integer32(0), userName, OctetString.Empty, OctetString.Empty);
-            GetRequestPdu pdu = new GetRequestPdu(
+            GetResponsePdu pdu = new GetResponsePdu(
                 requestId,
-                ErrorCode.NoError,
-                0,
+                error,
+                index,
                 variables);
             _scope = new Scope(OctetString.Empty, OctetString.Empty, pdu);
         }

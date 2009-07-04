@@ -104,7 +104,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             if (_version == VersionCode.V2)
             {
                 InformRequestPdu pdu = (InformRequestPdu)_scope.Pdu;                
-                new GetResponseMessage(_scope.Pdu.RequestId.ToInt32(), _version, _parameters.UserName, pdu.AllVariables).Send(receiver);
+                new GetResponseMessage(_scope.Pdu.RequestId.ToInt32(), _version, _parameters.UserName, ErrorCode.NoError, 0, pdu.AllVariables).Send(receiver);
             }
             else
             {

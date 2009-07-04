@@ -51,16 +51,32 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             // Whatever you change, try to keep the Send and the BeginReceive close to each other.
             socket.SendTo(bytes, receiver);
-            IAsyncResult result = socket.BeginReceive(reply, 0, bufSize, SocketFlags.None, null, null);
-            // ReSharper disable PossibleNullReferenceException
-            result.AsyncWaitHandle.WaitOne(timeout, false);
-            // ReSharper restore PossibleNullReferenceException
-            if (!result.IsCompleted)
+//            IAsyncResult result = socket.BeginReceive(reply, 0, bufSize, SocketFlags.None, null, null);
+//            // ReSharper disable PossibleNullReferenceException
+//            result.AsyncWaitHandle.WaitOne(timeout, false);
+//            // ReSharper restore PossibleNullReferenceException
+//            if (!result.IsCompleted)
+//            {
+//                throw SharpTimeoutException.Create(receiver.Address, timeout);
+//            }
+//
+//            int count = socket.EndReceive(result);
+            socket.ReceiveTimeout = timeout;
+            
+            int count;
+            try 
             {
-                throw SharpTimeoutException.Create(receiver.Address, timeout);
+                count = socket.Receive(reply, 0, bufSize, SocketFlags.None);
             }
+            catch (SocketException ex)
+            {
+                if (ex.SocketErrorCode == SocketError.TimedOut)
+                {
+                    throw SharpTimeoutException.Create(receiver.Address, timeout);
+                }
 
-            int count = socket.EndReceive(result);
+                throw ex;
+            }
 
             ISnmpMessage message;
 
