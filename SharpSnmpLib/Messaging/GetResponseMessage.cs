@@ -116,14 +116,15 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="receiver">The receiver.</param>
         /// <param name="socket">The socket.</param>
         [Obsolete("Use Listener.SendResponse instead")]
-		public void Send(EndPoint receiver, Socket socket)
+        public void Send(EndPoint receiver, Socket socket)
         {
             if (socket == null)
             {
                 throw new ArgumentNullException("socket");
             }
             
-            socket.SendTo(ToBytes(), receiver);
+            byte[] buffer = ToBytes();
+            socket.BeginSendTo(buffer, 0, buffer.Length, 0, receiver, null, null);
         }
         
         /// <summary>

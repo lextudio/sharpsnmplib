@@ -1,9 +1,10 @@
-﻿using Lextm.SharpSnmpLib.Security;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Net;
 using System.Net.Sockets;
+
+using Lextm.SharpSnmpLib.Security;
 
 namespace Lextm.SharpSnmpLib.Messaging
 {
@@ -84,7 +85,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <value>The parameters.</value>
         public SecurityParameters Parameters
         {
-            get { return null; }
+            get { return _parameters; }
         }
 
         /// <summary>
@@ -93,7 +94,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <value>The scope.</value>
         public Scope Scope
         {
-            get { return null; }
+            get { return _scope; }
         }
 
         #endregion

@@ -148,7 +148,7 @@ namespace Lextm.SharpSnmpLib.Browser
 
             if (!Socket.OSSupportsIPv6)
             {
-                LogMessage(Listener.STR_IPV6NotSupported);
+                LogMessage(Listener.IPv6NotSupported);
                 return;
             }
                 

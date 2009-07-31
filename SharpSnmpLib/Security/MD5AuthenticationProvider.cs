@@ -10,7 +10,7 @@ namespace Lextm.SharpSnmpLib.Security
     public class MD5AuthenticationProvider : IAuthenticationProvider
     {
         private byte[] _password;
-        private const int digestLength = 12;
+        private const int DigestLength = 12;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MD5AuthenticationProvider"/> class.
@@ -90,7 +90,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// <value>The clean digest.</value>
         public OctetString CleanDigest
         {
-            get { return new OctetString(new byte[digestLength]); }
+            get { return new OctetString(new byte[DigestLength]); }
         }
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace Lextm.SharpSnmpLib.Security
                 byte[] buffer = message.ToBytes();
                 byte[] hash = md5.ComputeHash(buffer);
                 md5.Clear();
-                byte[] result = new byte[digestLength];
+                byte[] result = new byte[DigestLength];
                 Array.Copy(hash, result, result.Length);
                 return new OctetString(result);
             }

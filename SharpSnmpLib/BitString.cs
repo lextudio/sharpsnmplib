@@ -218,8 +218,7 @@ namespace Lextm.SharpSnmpLib
             {
                 int n = 0;
                 for (uint j = 0; j < _size; j++)
-                {
-                    
+                {                    
                     n += _bits[j];
                 }
                 

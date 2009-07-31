@@ -60,9 +60,7 @@ namespace Lextm.SharpSnmpLib
                     uint[] oidVal = ObjectIdentifier.Convert(s);
                     return new ObjectIdentifier(oidVal);
                 }
-// ReSharper disable EmptyGeneralCatchClause
                 catch
-// ReSharper restore EmptyGeneralCatchClause
                 {
                 }
             }

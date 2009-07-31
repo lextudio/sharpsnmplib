@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Net.Sockets;
 using System.Net;
+using System.Net.Sockets;
+
 using Lextm.SharpSnmpLib.Security;
-using System.IO;
 
 namespace Lextm.SharpSnmpLib.Messaging
 {
@@ -12,10 +11,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// Helper class.
     /// </summary>
     public static class Helper
-    {
-        private static readonly Socket udp = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-        private static Socket udpV6;
-        private const string STR_IPV6NotSupport = "the OS does not support it";
+    {    
         private static object root = new object();
 
         /// <summary>
@@ -64,6 +60,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             collection.AddRange(data);
             return new Sequence(collection);
         }
+        
         /// <summary>
         /// Gets the socket.
         /// </summary>
@@ -75,41 +72,8 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new ArgumentNullException("endpoint");
             }
-            
-//            if (endpoint.AddressFamily == AddressFamily.InterNetwork)
-//            {
-//                return udp;
-//            }
-//            else
-//            {
-//                return UdpV6;
-//            }
+
             return new Socket(endpoint.AddressFamily, SocketType.Dgram, ProtocolType.Udp);
-        }
-
-        private static Socket UdpV6
-        {
-            get
-            {
-#if !(CF)
-                if (!Socket.OSSupportsIPv6)
-                {
-                    throw new InvalidOperationException(STR_IPV6NotSupport);
-                }
-#endif
-                if (udpV6 == null)
-                {
-                    lock (root)
-                    {
-                        if (udpV6 == null)
-                        {
-                            udpV6 = new Socket(AddressFamily.InterNetworkV6, SocketType.Dgram, ProtocolType.Udp);
-                        }
-                    }
-                }
-
-                return udpV6;
-            }
-        }
+        }        
     }
 }

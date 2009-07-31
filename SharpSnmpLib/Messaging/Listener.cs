@@ -30,7 +30,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Error message for non IP v6 OS.
         /// </summary>
-        public static readonly string STR_IPV6NotSupported = "cannot use IP v6 as the OS does not support it";
+        public static readonly string IPv6NotSupported = "cannot use IP v6 as the OS does not support it";
         private readonly IPEndPoint defaultEndPoint = new IPEndPoint(IPAddress.Any, DEFAULTPORT);
         private Socket _socket;
         private int _bufferSize;
@@ -169,21 +169,22 @@ namespace Lextm.SharpSnmpLib.Messaging
                 return _port;
             }
         }
-		
-		/// <summary>
-		/// Sends a response message. 
-		/// </summary>
-		/// <param name="response">
-		/// A <see cref="GetResponseMessage"/>.
-		/// </param>
-		/// <param name="receiver">Receiver.</param>
-		public void SendResponse(GetResponseMessage response, EndPoint receiver)
-		{
-			if (_socket != null)
-			{
-				_socket.SendTo(response.ToBytes(), receiver);
-			}
-		}
+        
+        /// <summary>
+        /// Sends a response message. 
+        /// </summary>
+        /// <param name="response">
+        /// A <see cref="GetResponseMessage"/>.
+        /// </param>
+        /// <param name="receiver">Receiver.</param>
+        public void SendResponse(GetResponseMessage response, EndPoint receiver)
+        {
+            if (_socket != null)
+            {
+                byte[] buffer = response.ToBytes();
+                _socket.BeginSendTo(buffer, 0, buffer.Length, 0, receiver, null, null);
+            }
+        }
 
         /// <summary>
         /// Starts.
@@ -223,7 +224,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             
             if (endpoint.AddressFamily == AddressFamily.InterNetworkV6 && !Socket.OSSupportsIPv6)
             {
-                throw new InvalidOperationException(STR_IPV6NotSupported);
+                throw new InvalidOperationException(IPv6NotSupported);
             }
 
             long activeBefore = Interlocked.CompareExchange(ref _active, 1, 0);

@@ -266,10 +266,8 @@ namespace Lextm.SharpSnmpLib
                 {
                     int hash = 0;
                     for (int i = _oid.Length - 1; i >= 0; i--)
-                    {
-                        
-                        hash ^= (int)_oid[i];
-                        
+                    {                        
+                        hash ^= (int)_oid[i];                        
                     }
                     
                     _hashcode = hash != 0 ? hash : 1;    // Very unlikely that hash=0, but I prefer to foresee the case.

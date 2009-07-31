@@ -92,8 +92,8 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Sends the response.
         /// </summary>
         /// <param name="receiver">The receiver.</param>
-  		[Obsolete("Use Listener.SendResponse instead")]      
-		public void SendResponse(IPEndPoint receiver)
+          [Obsolete("Use Listener.SendResponse instead")]      
+        public void SendResponse(IPEndPoint receiver)
         {
             if (receiver == null)
             {
@@ -169,7 +169,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <value>The parameters.</value>
         public SecurityParameters Parameters
         {
-            get { return null; }
+            get { return _parameters; }
         }
 
         /// <summary>
@@ -178,7 +178,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <value>The scope.</value>
         public Scope Scope
         {
-            get { return null; }
+            get { return _scope; }
         }
         
         /// <summary>

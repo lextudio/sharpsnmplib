@@ -99,26 +99,6 @@ namespace Lextm.SharpSnmpLib.Messaging
             set { _objects = value; }
         }
 
-        ///// <summary>
-        ///// Gets a list of variable binds asynchronously.
-        ///// </summary>
-        ///// <param name="version">Protocol version.</param>
-        ///// <param name="endpoint">Endpoint.</param>
-        ///// <param name="community">Community name.</param>
-        ///// <param name="variables">Variable binds.</param>
-        ///// <param name="timeout">Timeout.</param>
-        ///// <param name="callback">The callback.</param>
-        //public static void BeginGet(VersionCode version, IPEndPoint endpoint, OctetString community, IList<Variable> variables, int timeout, GetResponseCallback callback)
-        //{
-        //    if (version == VersionCode.V3)
-        //    {
-        //        throw new NotSupportedException("SNMP v3 is not supported");
-        //    }
-
-        //    GetRequestMessage message = new GetRequestMessage(RequestCounter.NextCount, version, community, variables);
-        //    message.BeginGetResponse(timeout, endpoint, callback);
-        //}
-
         /// <summary>
         /// Gets a variable bind.
         /// </summary>

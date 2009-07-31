@@ -247,6 +247,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Gets the parameters.
         /// </summary>
         /// <value>The parameters.</value>
+        /// <remarks><see cref="TrapV1Message"/> returns null here.</remarks>
         public SecurityParameters Parameters
         {
             get { return null; }
@@ -256,6 +257,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Gets the scope.
         /// </summary>
         /// <value>The scope.</value>
+        /// <remarks><see cref="TrapV1Message"/> returns null here.</remarks>
         public Scope Scope
         {
             get { return null; }
