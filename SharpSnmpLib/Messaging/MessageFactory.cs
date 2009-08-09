@@ -51,8 +51,9 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             // Whatever you change, try to keep the Send and the Receive close to each other.
             socket.SendTo(bytes, receiver);
+            #if !(CF)
             socket.ReceiveTimeout = timeout;
-            
+            #endif
             int count;
             try 
             {
@@ -60,7 +61,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
             catch (SocketException ex)
             {
-                if (ex.SocketErrorCode == SocketError.TimedOut)
+                if (ex.ErrorCode == 10060)
                 {
                     throw SharpTimeoutException.Create(receiver.Address, timeout);
                 }
