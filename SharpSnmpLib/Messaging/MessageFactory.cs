@@ -41,7 +41,6 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("socket");
             }
 
-            ByteTool.Capture(bytes); // log request
             #if CF
             int bufSize = 8192;
             #else
@@ -84,7 +83,6 @@ namespace Lextm.SharpSnmpLib.Messaging
                     throw SharpOperationException.Create("wrong response sequence", receiver.Address);
                 }
 
-                ByteTool.Capture(reply); // log response
                 return message;
             }
 
@@ -238,13 +236,6 @@ namespace Lextm.SharpSnmpLib.Messaging
                 default:
                     throw new SharpSnmpException("unsupported pdu: " + pdu.TypeCode);
             }
-        }
-        
-        // TODO: add this method to all message exchanges.
-        internal static void Capture(ISnmpMessage message)
-        {
-            byte[] buffer = message.ToBytes();
-            ByteTool.Capture(buffer);
         }
     }
 }

@@ -124,7 +124,6 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             byte[] bytes = ToBytes();
-            ByteTool.Capture(bytes);
             socket.SendTo(bytes, manager);
         }
     

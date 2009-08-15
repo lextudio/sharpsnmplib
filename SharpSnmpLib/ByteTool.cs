@@ -25,62 +25,6 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public static class ByteTool
     {
-        private static bool? captureNeeded;
-
-        private static bool CaptureNeeded
-        {
-            get
-            {
-                if (captureNeeded == null)
-                {
-                    object setting = ConfigurationManager.AppSettings["CaptureEnabled"];
-                    captureNeeded = setting != null && System.Convert.ToBoolean(setting.ToString(), CultureInfo.InvariantCulture);
-                }
-
-                return captureNeeded.Value;
-            }
-        }  
-
-        internal static void Capture(byte[] buffer)
-        {
-            Capture(buffer, buffer.Length);
-        }
-
-        /// <summary>
-        /// Captures a byte array in the log.
-        /// </summary>
-        /// <param name="buffer">Byte buffer.</param>
-        /// <param name="length">Length to log.</param>
-        public static void Capture(byte[] buffer, int length)
-        {
-            if (buffer == null)
-            {
-                throw new ArgumentNullException("buffer");
-            }
-            
-            if (length > buffer.Length)
-            {
-                throw new ArgumentException("length is too long.");
-            }
-            
-            if (!CaptureNeeded)
-            {
-                return;
-            }
-
-            TraceSource source = new TraceSource("Library");
-            StringBuilder builder = new StringBuilder();
-            for (int i = 0; i < length; i++)
-            {
-                builder.AppendFormat("{0:X2} ", buffer[i]);
-            }
-
-            source.TraceInformation("SNMP packet captured at {0}, length {1}", DateTime.Now, length);
-            source.TraceInformation(builder.ToString());
-            source.Flush();
-            source.Close();
-        }
-
         /// <summary>
         /// Converts the byte string.
         /// </summary>

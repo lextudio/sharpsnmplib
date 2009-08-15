@@ -400,9 +400,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         }
 
         private void HandleMessage(MessageParams param)
-        {
-            ByteTool.Capture(param.GetBytes(), param.Number);
-            
+        {            
             // TODO: use listener adapters instead in future versions.
             foreach (ISnmpMessage message in MessageFactory.ParseMessages(param.GetBytes(), 0, param.Number, _users))
             {

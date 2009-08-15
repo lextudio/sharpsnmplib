@@ -167,8 +167,6 @@ namespace Lextm.SharpSnmpLib.Messaging
 
         private void HandleMessage(MessageParams param)
         {
-            ByteTool.Capture(param.GetBytes(), param.Number);
-
             foreach (ISnmpMessage message in MessageFactory.ParseMessages(param.GetBytes(), 0, param.Number, new UserRegistry()))
             {
                 if (message.Pdu.TypeCode != SnmpType.GetResponsePdu)
