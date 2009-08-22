@@ -10,96 +10,235 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Net.Sockets;
+
 using Lextm.SharpSnmpLib;
 using Lextm.SharpSnmpLib.Messaging;
+using Lextm.SharpSnmpLib.Security;
+using Mono.Options;
 
 namespace TestWalk
 {
-    class Program
+    class TestWalk
     {
-        public static void Main(string[] args)
+        static void Main(string[] args)
         {
-            //*
-            using (StreamWriter writer = new StreamWriter("within.txt"))
+            string community = "public";
+            bool show_help   = false;
+            bool show_version = false;
+            VersionCode version = VersionCode.V1;
+            int timeout = 1000; 
+            int retry = 0;
+            Levels level = Levels.None | Levels.Reportable;
+            string user = string.Empty;
+            string authentication = string.Empty;
+            string authPhrase = string.Empty;
+            string privacy = string.Empty;
+            string privPhrase = string.Empty;
+            bool dump = false;
+            WalkMode mode = WalkMode.WithinSubtree;
+
+            OptionSet p = new OptionSet()
+                .Add("c:", "-c for community name, (default is public)", delegate (string v) { if (v != null) community = v; })
+                .Add("l:", "-l for security level, (default is noAuthNoPriv)", delegate (string v) 
+                {
+                    if (v == "noAuthNoPriv")
+                    {
+                        level = Levels.None | Levels.Reportable;
+                    }
+                    else if (v == "authNoPriv")
+                    {
+                        level = Levels.Authentication | Levels.Reportable;
+                    }
+                    else if (v == "authPriv")
+                    {
+                        level = Levels.Authentication | Levels.Privacy | Levels.Reportable;
+                    }
+                })
+                .Add("a:", "-a for authentication method", delegate (string v) { authentication = v; })
+                .Add("A:", "-A for authentication passphrase", delegate(string v) { authPhrase = v; })
+                .Add("x:", "-x for privacy method", delegate (string v) { privacy = v; })
+                .Add("X:", "-X for privacy passphrase", delegate (string v) { privPhrase = v; })
+                .Add("u:", "-u for security name", delegate(string v) { user = v; })
+                .Add("h|?|help", "-h, -?, -help for help.", delegate (string v) { show_help = v != null; })
+                .Add("V", "-V to display version number of this application.", delegate (string v) { show_version = v != null; })
+                .Add("d", "-d to display message dump", delegate(string v) { dump = true; })
+                .Add("t:", "-t for timeout value (unit is second).", delegate (string v) { timeout = int.Parse(v) * 1000; })
+                .Add("r:", "-r for retry count (default is 0)", delegate (string v) { retry = int.Parse(v); })
+                .Add("v|version:", "-v for SNMP version (v1, v2 are currently supported)", delegate (string v) 
+                {
+                    switch (int.Parse(v))
+                    {
+                        case 1:
+                            version = VersionCode.V1;
+                            break;
+                        case 2:
+                            version = VersionCode.V2;
+                            break;
+                        case 3:
+                            version = VersionCode.V3;
+                            break;
+                        default:
+                            throw new ArgumentException("no such version: " + v);
+                    }
+                });
+        
+            List<string> extra = p.Parse (args);
+        
+            if (show_help)
             {
-                writer.WriteLine("within subtree mode");
-                IList<Variable> list = new List<Variable>();
-                writer.WriteLine("V1 walk");                
-                try
-                {
-                    Messenger.Walk(VersionCode.V1, new IPEndPoint(IPAddress.Loopback, 161), new OctetString("public"), new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 7, 5 }), list, 1000, WalkMode.WithinSubtree);
-                } 
-                catch (SharpTimeoutException ex)
-                {
-                    Console.WriteLine(ex.Details);
-                }
-
-                foreach (Variable v in list)
-                {
-                    writer.WriteLine(v);
-                }
-                
-                list = new List<Variable>();
-                writer.WriteLine("V2 walk");
-                try
-                {
-                    Messenger.BulkWalk(VersionCode.V2, new IPEndPoint(IPAddress.Parse("120.89.90.0"),//IPAddress.Loopback,
-                                                                      161), new OctetString("public"), new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 7, 5 }), list, 1000, 10, WalkMode.WithinSubtree);
-                } 
-                catch (SharpTimeoutException ex)
-                {
-                    Console.WriteLine(ex.Details);
-                }
-
-                foreach (Variable v in list)
-                {
-                    writer.WriteLine(v);
-                }
-                writer.Close();
+                Console.WriteLine("The syntax is similar to Net-SNMP. http://www.net-snmp.org/docs/man/snmpget.html");
+                return;
             }
-            //*/
+        
+            if (show_version)
+            {
+                Console.WriteLine(System.Reflection.Assembly.GetExecutingAssembly().GetName().Version);
+                return;
+            }
+
+            if (extra.Count < 1 || extra.Count > 2)
+            {
+                Console.WriteLine("The syntax is similar to Net-SNMP. http://www.net-snmp.org/docs/man/snmpwalk.html");
+                return;
+            }
+        
+            IPAddress ip;
+            bool parsed = IPAddress.TryParse(extra[0], out ip);
+            if (!parsed)
+            {
+                foreach (IPAddress address in Dns.GetHostAddresses(extra[0]))
+                {
+                    if (address.AddressFamily == AddressFamily.InterNetwork)
+                    {
+                        ip = address;
+                        break;
+                    }
+                }
             
-            using (StreamWriter writer = new StreamWriter("default.txt")) 
+                if (ip == null)
+                {
+                    Console.WriteLine("invalid host or wrong IP address found: " + extra[0]);
+                    return;
+                }
+            }
+
+            try
             {
-                writer.WriteLine("default mode");
-                IList<Variable> list = new List<Variable>();
-                writer.WriteLine("V1 walk");
-                ObjectIdentifier o = new ObjectIdentifier("1.3.6.1.2.1.25.2.3.1.6.3");
-
-                try
+                ObjectIdentifier test;
+                if (extra.Count == 1)
                 {
-                    Messenger.Walk(VersionCode.V1, new IPEndPoint(IPAddress.Loopback, 161), new OctetString("public"), o, list, 1000, WalkMode.Default);
+                    test = new ObjectIdentifier("1.3.6.1.2.1");
                 }
-                catch (SharpTimeoutException ex)
+                else 
                 {
-                    writer.WriteLine(ex.Details);
+                    test = new ObjectIdentifier(extra[1]);
                 }
 
-                foreach (Variable v in list)
+                IPEndPoint receiver = new IPEndPoint(ip, 161);
+                if (version == VersionCode.V1)
                 {
-                    writer.WriteLine(v);
+                    IList<Variable> result = new List<Variable>();
+                    Messenger.Walk(version, receiver, new OctetString(community), test, result, timeout, mode);
+                    foreach (Variable variable in result)
+                    {
+                        Console.WriteLine(variable);
+                    }
+
+                    return;
                 }
                 
-                list = new List<Variable>();
-                writer.WriteLine("V2 walk");
-                try
+                if (version == VersionCode.V2)
                 {
-                    Messenger.BulkWalk(VersionCode.V2, new IPEndPoint(IPAddress.Loopback, 161), new OctetString("public"), o, list, 2000, 10, WalkMode.Default);
+                    IList<Variable> result = new List<Variable>();
+                    Messenger.BulkWalk(version, receiver, new OctetString(community), test, result, timeout, retry, mode);
+                    foreach (Variable variable in result)
+                    {
+                        Console.WriteLine(variable);
+                    }
+
+                    return;
                 }
-                catch (SharpTimeoutException ex) 
+                
+                if (version == VersionCode.V3)
                 {
-                    writer.WriteLine(ex.Details);
+                    Console.WriteLine("Not yet implemented for v3");
+                    return;
+                }
+                
+                /*
+                IAuthenticationProvider auth;
+                if ((level & Levels.Authentication) == Levels.Authentication)
+                {
+                    auth = GetAuthenticationProviderByName(authentication, authPhrase);
+                }
+                else
+                {
+                    auth = DefaultAuthenticationProvider.Instance;
                 }
 
-                foreach (Variable v in list)
+                IPrivacyProvider priv;
+                if ((level & Levels.Privacy) == Levels.Privacy)
                 {
-                    writer.WriteLine(v);
+                    priv = new DESPrivacyProvider(new OctetString(privPhrase), auth);
+                }
+                else
+                {
+                    priv = DefaultPrivacyProvider.Instance;
                 }
 
-                writer.Close();
+                Discovery discovery = new Discovery(1, 101);
+                ReportMessage report = discovery.GetResponse(timeout, receiver);
+                
+                ProviderPair record = new ProviderPair(auth, priv);
+                GetRequestMessage request = new GetRequestMessage(VersionCode.V3, 100, 0, new OctetString(user), vList, record, report);
+
+                ISnmpMessage response = request.GetResponse(timeout, receiver);
+                if (dump)
+                {
+                    Console.WriteLine(ByteTool.Convert(request.ToBytes()));
+                }
+
+                if (response.Pdu.ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
+                {
+                    throw SharpErrorException.Create(
+                        "error in response",
+                        receiver.Address,
+                        response);
+                }
+
+                foreach (Variable v in response.Pdu.Variables)
+                {
+                    Console.WriteLine(v);
+                }
+                // */
             }
-            Console.Write("Press any key to continue . . . ");
-            Console.ReadKey(true);
+            catch (SharpSnmpException ex)
+            {
+                if (ex is SharpOperationException)
+                {
+                    Console.WriteLine((ex as SharpOperationException).Details);
+                }
+                else
+                {
+                    Console.WriteLine(ex);
+                }
+            }            
+        }
+
+        private static IAuthenticationProvider GetAuthenticationProviderByName(string authentication, string phrase)
+        {
+            if (authentication.ToUpper() == "MD5")
+            {
+                return new MD5AuthenticationProvider(new OctetString(phrase));
+            }
+            
+            if (authentication.ToUpper() == "SHA")
+            {
+                return new SHA1AuthenticationProvider(new OctetString(phrase));
+            }
+
+            throw new ArgumentException("unknown name", "authentication");
         }
     }
 }
