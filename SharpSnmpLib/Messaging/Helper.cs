@@ -12,8 +12,6 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// </summary>
     public static class Helper
     {    
-        private static object root = new object();
-
         /// <summary>
         /// Authenticates this message.
         /// </summary>

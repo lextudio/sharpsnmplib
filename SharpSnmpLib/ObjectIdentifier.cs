@@ -17,7 +17,9 @@ namespace Lextm.SharpSnmpLib
     public sealed class ObjectIdentifier : ISnmpData, IEquatable<ObjectIdentifier>
     {
         private readonly uint[] _oid;
+        #if (CF)
         [NonSerialized]
+        #endif
         private int _hashcode;
 
         #region Constructor

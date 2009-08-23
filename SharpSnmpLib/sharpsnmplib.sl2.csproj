@@ -16,6 +16,26 @@
     <ThrowErrorsInValidation>false</ThrowErrorsInValidation>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>sharpsnmplib.snk</AssemblyOriginatorKeyFile>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -56,109 +76,50 @@
     <Compile Include="Counter64.cs" />
     <Compile Include="EndOfMibView.cs" />
     <Compile Include="ErrorCode.cs" />
-    <Compile Include="ExceptionRaisedEventArgs.cs" />
     <Compile Include="Gauge32.cs" />
     <Compile Include="GeneralString.cs" />
     <Compile Include="GenericCode.cs" />
-    <Compile Include="GetBulkRequestMessage.cs" />
     <Compile Include="GetBulkRequestPdu.cs" />
-    <Compile Include="GetBulkRequestReceivedEventArgs.cs" />
-    <Compile Include="GetNextRequestMessage.cs" />
     <Compile Include="GetNextRequestPdu.cs" />
-    <Compile Include="GetNextRequestReceivedEventArgs.cs" />
-    <Compile Include="GetRequestMessage.cs" />
     <Compile Include="GetRequestPdu.cs" />
-    <Compile Include="GetRequestReceivedEventArg.cs" />
-    <Compile Include="GetResponseMessage.cs" />
     <Compile Include="GetResponsePdu.cs" />
-    <Compile Include="InformRequestMessage.cs" />
+    <Compile Include="Header.cs" />
     <Compile Include="InformRequestPdu.cs" />
-    <Compile Include="InformRequestReceivedEventArgs.cs" />
     <Compile Include="Integer32.cs" />
     <Compile Include="Integer64.cs" />
     <Compile Include="IP.cs" />
+    <Compile Include="ISegment.cs" />
     <Compile Include="ISnmpData.cs" />
     <Compile Include="ISnmpMessage.cs" />
     <Compile Include="ISnmpPdu.cs" />
-    <Compile Include="MessageFactory.cs" />
-    <Compile Include="Mib\AgentCapabilities.cs" />
-    <Compile Include="Mib\Assembler.cs" />
-    <Compile Include="Mib\Choice.cs" />
-    <Compile Include="Mib\Compiler.cs" />
-    <Compile Include="Mib\ConstructHelper.cs" />
-    <Compile Include="Mib\Definition.cs" />
-    <Compile Include="Mib\DefinitionType.cs" />
-    <Compile Include="Mib\Exports.cs" />
-    <Compile Include="Mib\IConstruct.cs" />
-    <Compile Include="Mib\IDefinition.cs" />
-    <Compile Include="Mib\IEntity.cs" />
-    <Compile Include="Mib\Imports.cs" />
-    <Compile Include="Mib\ImportsFrom.cs" />
-    <Compile Include="Mib\Integer.cs" />
-    <Compile Include="Mib\IObjectTree.cs" />
-    <Compile Include="Mib\ITypeAssignment.cs" />
-    <Compile Include="Mib\Lexer.cs" />
-    <Compile Include="Mib\Macro.cs" />
-    <Compile Include="Mib\MibDocument.cs" />
-    <Compile Include="Mib\MibInventory.cs" />
-    <Compile Include="Mib\MibModule.cs" />
-    <Compile Include="Mib\ModuleCompliance.cs" />
-    <Compile Include="Mib\ModuleIdentity.cs" />
-    <Compile Include="Mib\NotificationGroup.cs" />
-    <Compile Include="Mib\NotificationType.cs" />
-    <Compile Include="Mib\ObjectGroup.cs" />
-    <Compile Include="Mib\ObjectIdentity.cs" />
-    <Compile Include="Mib\ObjectRegistry.cs" />
-    <Compile Include="Mib\ObjectTree.cs" />
-    <Compile Include="Mib\ObjectType.cs" />
-    <Compile Include="Mib\OidValueAssignment.cs" />
-    <Compile Include="Mib\Parser.cs" />
-    <Compile Include="Mib\Sequence.cs" />
-    <Compile Include="Mib\SharpMibException.cs" />
-    <Compile Include="Mib\StringUtility.cs" />
-    <Compile Include="Mib\Symbol.cs" />
-    <Compile Include="Mib\TextualConvention.cs" />
-    <Compile Include="Mib\TrapType.cs" />
-    <Compile Include="Mib\TypeAssignment.cs" />
     <Compile Include="NoSuchInstance.cs" />
     <Compile Include="NoSuchObject.cs" />
     <Compile Include="Null.cs" />
     <Compile Include="ObjectIdentifier.cs" />
+    <Compile Include="ObjectIdentifierConverter.cs" />
     <Compile Include="OctetString.cs" />
     <Compile Include="Opaque.cs" />
-    <Compile Include="PduCounter.cs" />
-    <Compile Include="RBTree.cs" />
     <Compile Include="Real.cs" />
-    <Compile Include="ReportMessage.cs" />
     <Compile Include="ReportPdu.cs" />
     <Compile Include="Resource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
+    <Compile Include="Scope.cs" />
+    <Compile Include="SecurityParameters.cs" />
     <Compile Include="Sequence.cs" />
     <Compile Include="SerializableAttribute.cs" />
-    <Compile Include="SetRequestMessage.cs" />
     <Compile Include="SetRequestPdu.cs" />
-    <Compile Include="SetRequestReceivedEventArgs.cs" />
-    <Compile Include="SharpErrorException.cs" />
     <Compile Include="SharpOperationException.cs" />
     <Compile Include="SharpSnmpException.cs" />
-    <Compile Include="SharpTimeoutException.cs" />
     <Compile Include="SnmpDataFactory.cs" />
     <Compile Include="SnmpType.cs" />
-    <Compile Include="SortedDictionary.cs" />
     <Compile Include="TimeTicks.cs" />
-    <Compile Include="TrapV1Message.cs" />
     <Compile Include="TrapV1Pdu.cs" />
-    <Compile Include="TrapV1ReceivedEventArgs.cs" />
-    <Compile Include="TrapV2Message.cs" />
     <Compile Include="TrapV2Pdu.cs" />
-    <Compile Include="TrapV2ReceivedEventArgs.cs" />
-    <Compile Include="UdpClient.cs" />
     <Compile Include="Variable.cs" />
     <Compile Include="VersionCode.cs" />
-    <Compile Include="WalkMode.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resource.resx">
@@ -291,9 +252,41 @@
     <None Include="sharpsnmplib.snk" />
   </ItemGroup>
   <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="Properties\" />
   </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight\v2.0\Microsoft.Silverlight.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\v3.0\Microsoft.Silverlight.CSharp.targets" Condition="" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
