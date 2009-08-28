@@ -1681,6 +1681,7 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual(2, node.Value);
             Assert.AreEqual("ifCompliances", node.Parent.ToString());
         }
+        
         [Test]
         public void TestINET_ADDRESS_MIB()
         {

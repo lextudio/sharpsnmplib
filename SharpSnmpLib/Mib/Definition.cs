@@ -110,6 +110,11 @@ namespace Lextm.SharpSnmpLib.Mib
             set { }
         }
         
+        public IDefinition ParentDefinition
+        {
+            get { return _parentNode; }
+        }
+        
         /// <summary>
         /// Children definitions.
         /// </summary>

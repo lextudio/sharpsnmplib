@@ -47,7 +47,7 @@ namespace Lextm.SharpSnmpLib.Tests
         {
             uint[] oid = new uint[] {1,3,6,1,2,1,1};
             string result = DefaultObjectRegistry.Instance.Translate(oid);
-            Assert.AreEqual("SNMPV2-MIB::system", result);
+            Assert.AreEqual("SNMPV2-MIB::system", result);            
         }
         [Test]
         public void TestSNMPv2TMTextual()
@@ -187,4 +187,3 @@ namespace Lextm.SharpSnmpLib.Tests
     }
 }
 #pragma warning restore 1591
-

@@ -33,6 +33,14 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             get;
         }
+        
+        /// <summary>
+        /// Parent definition.
+        /// </summary>
+        IDefinition ParentDefinition
+        {
+            get;
+        }
 
         /// <summary>
         /// Indexer.
