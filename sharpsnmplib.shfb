@@ -7,7 +7,9 @@
     <namespaceSummaries>
         <namespaceSummaryItem name="" isDocumented="False" />
         <namespaceSummaryItem name="Lextm.SharpSnmpLib" isDocumented="True" />
+        <namespaceSummaryItem name="Lextm.SharpSnmpLib.Messaging" isDocumented="True" />
         <namespaceSummaryItem name="Lextm.SharpSnmpLib.Mib" isDocumented="True" />
+        <namespaceSummaryItem name="Lextm.SharpSnmpLib.Security" isDocumented="True" />
         <namespaceSummaryItem name="Lextm.SharpSnmpLib.Tests" isDocumented="False" />
     </namespaceSummaries>
     <dependencies>
@@ -18,7 +20,7 @@
     <VisibleItems>InheritedMembers, InheritedFrameworkMembers, Protected, SealedProtected</VisibleItems>
     <HtmlHelp1xCompilerPath path="" />
     <HtmlHelp2xCompilerPath path="" />
-    <OutputPath>.\Help\</OutputPath>
+    <OutputPath>.\bin\Help\</OutputPath>
     <SandcastlePath path="" />
     <WorkingPath path="" />
     <CleanIntermediates>True</CleanIntermediates>
