@@ -8,6 +8,7 @@
  */
 
 using NUnit.Framework;
+using System.Text;
 
 #pragma warning disable 1591,0618
 namespace Lextm.SharpSnmpLib.Tests
@@ -41,6 +42,12 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestEmpty()
         {
             Assert.AreEqual("", OctetString.Empty.ToString());
+        }
+        
+        [Test]
+        public void TestChinese()
+        {
+            Assert.AreEqual("中国", new OctetString("中国", Encoding.Unicode).ToString(Encoding.Unicode));
         }
     }
 }

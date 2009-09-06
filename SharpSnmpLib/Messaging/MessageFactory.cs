@@ -160,15 +160,8 @@ namespace Lextm.SharpSnmpLib.Messaging
         private static ISnmpMessage ParseMessage(int first, Stream stream, UserRegistry registry)
         {
             ISnmpData array;
-            try
-            {
-                array = DataFactory.CreateSnmpData(first, stream);
-            }
-            catch (Exception)
-            {
-                throw new SharpSnmpException("Invalid message bytes found. Use tracing to analyze the bytes.");
-            }
-
+            array = DataFactory.CreateSnmpData(first, stream);
+            
             if (array == null)
             {
                 return null;

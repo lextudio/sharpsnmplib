@@ -171,7 +171,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         }
         
         /// <summary>
-        /// Sends a response message. 
+        /// Sends a response message.
         /// </summary>
         /// <param name="response">
         /// A <see cref="GetResponseMessage"/>.
@@ -400,14 +400,23 @@ namespace Lextm.SharpSnmpLib.Messaging
         }
 
         private void HandleMessage(MessageParams param)
-        {            
-            // TODO: use listener adapters instead in future versions.
-            foreach (ISnmpMessage message in MessageFactory.ParseMessages(param.GetBytes(), 0, param.Number, _users))
+        {
+            try
             {
-                foreach (IListenerAdapter adapter in _adapters)
+                // TODO: use listener adapters instead in future versions.
+                foreach (ISnmpMessage message in MessageFactory.ParseMessages(param.GetBytes(), 0, param.Number, _users))
                 {
-                    adapter.Process(message, param.Sender);
-                }               
+                    foreach (IListenerAdapter adapter in _adapters)
+                    {
+                        adapter.Process(message, param.Sender);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                SharpMessageFactoryException exception = new SharpMessageFactoryException("Invalid message bytes found. Use tracing to analyze the bytes.", ex);
+                exception.Bytes = param.GetBytes();
+                HandleException(exception);
             }
         }
 

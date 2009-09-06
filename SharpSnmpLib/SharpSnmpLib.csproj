@@ -87,6 +87,7 @@
     <Compile Include="Messaging\ReportMessage.cs" />
     <Compile Include="Messaging\SetRequestMessage.cs" />
     <Compile Include="Messaging\SharpErrorException.cs" />
+    <Compile Include="Messaging\SharpMessageFactoryException.cs" />
     <Compile Include="Messaging\SharpTimeoutException.cs" />
     <Compile Include="Messaging\TrapV1Message.cs" />
     <Compile Include="Messaging\TrapV2Message.cs" />
