@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
-using Lextm.SharpSnmpLib.Mib;
+
 using Lextm.SharpSnmpLib.Messaging;
+using Lextm.SharpSnmpLib.Mib;
 
 namespace Lextm.SharpSnmpLib.Browser
 {
@@ -13,14 +15,21 @@ namespace Lextm.SharpSnmpLib.Browser
 	    private readonly VersionCode _version;
         private readonly IPEndPoint _agent;
         private readonly string _name;
+        private readonly Guid _id;
 
-	    internal AgentProfile(VersionCode version, IPEndPoint agent, string getCommunity, string setCommunity, string name)
+	    internal AgentProfile(Guid id, VersionCode version, IPEndPoint agent, string getCommunity, string setCommunity, string name)
 	    {
+	    	_id = id;
 	        _get = getCommunity;
 	        _set = setCommunity;
 	        _version = version;
             _agent = agent;
             _name = name;
+	    }
+	    
+	    internal Guid Id
+	    {
+	    	get { return _id; }
 	    }
 
         internal string Name
@@ -63,19 +72,18 @@ namespace Lextm.SharpSnmpLib.Browser
 	
         internal string Get(Manager manager, string textual)
         {
-            Variable var = manager.Objects.CreateVariable(textual);
+            Variable result = manager.Objects.CreateVariable(textual);
             TraceSource source = new TraceSource("Browser");
-            source.TraceInformation(manager.GetSingle(_agent, _get, var).ToString());
+            source.TraceInformation(manager.GetSingle(_agent, _get, result).ToString());
             source.Flush();
             source.Close();
-            return var.ToString();
+            return result.ToString();
         }
 
         internal string GetValue(Manager manager, string textual)
         {
-            Variable var = manager.Objects.CreateVariable(textual);
-
-            return manager.GetSingle(_agent, _get, var).Data.ToString();
+            Variable result = manager.Objects.CreateVariable(textual);
+            return manager.GetSingle(_agent, _get, result).Data.ToString();
         }
 
         internal string GetNext(Manager manager, string textual)
@@ -102,7 +110,6 @@ namespace Lextm.SharpSnmpLib.Browser
 	    internal void Walk(Manager manager, IDefinition def)
 	    {
             IList<Variable> list = new List<Variable>();
-
 	        int rows = Messenger.Walk(VersionCode, Agent, new OctetString(GetCommunity), new ObjectIdentifier(def.GetNumericalForm()), list, 1000, WalkMode.WithinSubtree);
             
             // 

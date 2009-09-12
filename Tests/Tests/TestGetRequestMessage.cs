@@ -297,6 +297,7 @@ namespace Lextm.SharpSnmpLib.Tests
         [Test]
         public void TestTimeOut()
         {
+        	//IMPORTANT: this test case requires a local SNMP agent such as Net-SNMP agent.
             Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             GetRequestMessage message = new GetRequestMessage(0x4bed, VersionCode.V2, new OctetString("public"), new List<Variable>() { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) });
             int tick = Environment.TickCount;

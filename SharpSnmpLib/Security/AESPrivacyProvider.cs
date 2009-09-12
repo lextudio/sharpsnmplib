@@ -21,6 +21,7 @@ namespace Lextm.SharpSnmpLib.Security
         private IAuthenticationProvider _auth;
         private SaltGenerator _salt = new SaltGenerator();
         private OctetString _phrase;
+        private int _keyBytes = 16;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AESPrivacyProvider"/> class.
@@ -43,15 +44,26 @@ namespace Lextm.SharpSnmpLib.Security
         /// in the USM header to store this information</param>
         /// <returns>Encrypted byte array</returns>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when encryption key is null or length of the encryption key is too short.</exception>
-        public byte[] Encrypt(byte[] unencryptedData, int offset, int length, byte[] key, int engineBoots, int engineTime, out byte[] privacyParameters, byte[] authDigest)
+        public byte[] Encrypt(byte[] unencryptedData, byte[] key, int engineBoots, int engineTime, byte[] privacyParameters, byte[] authDigest)
 		{
 			// check the key before doing anything else
-			if (key == null || key.Length < _keyBytes)
+			if (key == null)
+			{
+				throw new ArgumentNullException("key");
+			}
+			
+			if (key.Length < _keyBytes)
+			{
 				throw new ArgumentOutOfRangeException("encryptionKey", "Invalid key length");
-
+			}
+			
+			if (unencryptedData == null)
+            {
+                throw new ArgumentNullException("unencryptedData");
+            }
+			
 			byte[] iv = new byte[16];
-			Int64 salt = NextSalt();
-			privacyParameters = new byte[PrivacyParametersLength];
+			// Set privacy parameters to the local 64 bit salt value
 			byte[] bootsBytes = BitConverter.GetBytes(engineBoots);
 			iv[0] = bootsBytes[3];
 			iv[1] = bootsBytes[2];
@@ -62,17 +74,6 @@ namespace Lextm.SharpSnmpLib.Security
 			iv[5] = timeBytes[2];
 			iv[6] = timeBytes[1];
 			iv[7] = timeBytes[0];
-
-			// Set privacy parameters to the local 64 bit salt value
-			byte[] saltBytes = BitConverter.GetBytes(salt);
-			privacyParameters[0] = saltBytes[7];
-			privacyParameters[1] = saltBytes[6];
-			privacyParameters[2] = saltBytes[5];
-			privacyParameters[3] = saltBytes[4];
-			privacyParameters[4] = saltBytes[3];
-			privacyParameters[5] = saltBytes[2];
-			privacyParameters[6] = saltBytes[1];
-			privacyParameters[7] = saltBytes[0];
 
 			// Copy salt value to the iv array
 			Array.Copy(privacyParameters, 0, iv, 8, 8);
@@ -90,7 +91,7 @@ namespace Lextm.SharpSnmpLib.Security
 			rm.Key = pkey;
 			rm.IV = iv;
 			ICryptoTransform cryptor = rm.CreateEncryptor();
-			byte[] encryptedData = cryptor.TransformFinalBlock(unencryptedData, offset, length);
+			byte[] encryptedData = cryptor.TransformFinalBlock(unencryptedData, 0, unencryptedData.Length);
 			// check if encrypted data is the same length as source data
 			if (encryptedData.Length != unencryptedData.Length)
 			{
@@ -112,7 +113,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// <exception cref="ArgumentNullException">Thrown when encrypted data is null or length == 0</exception>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when encryption key length is less then 32 byte or if privacy parameters
         /// argument is null or length other then 8 bytes</exception>
-		public byte[] Decrypt(byte[] cryptedData, int offset, int length, byte[] key, int engineBoots, int engineTime, byte[] privacyParameters)
+		public byte[] Decrypt(byte[] cryptedData, byte[] key, int engineBoots, int engineTime, byte[] privacyParameters)
 		{
 			if (key == null || key.Length < _keyBytes)
 				throw new ArgumentOutOfRangeException("decryptionKey", "Invalid key length");
@@ -159,24 +160,24 @@ namespace Lextm.SharpSnmpLib.Security
 			// We need to make sure that cryptedData is a collection of 128 byte blocks
 			if ((cryptedData.Length % _keyBytes) != 0)
 			{
-				byte[] buffer = new byte[length];
-				Array.Copy(cryptedData, offset, buffer, 0, length);
+				byte[] buffer = new byte[cryptedData.Length];
+				Array.Copy(cryptedData, 0, buffer, 0, cryptedData.Length);
 				int div = (int)Math.Floor(buffer.Length / (double)16);
 				int newLength = (div + 1) * 16;
 				byte[] decryptBuffer = new byte[newLength];
 				Array.Copy(buffer, decryptBuffer, buffer.Length);
 				decryptedData = cryptor.TransformFinalBlock(decryptBuffer, 0, decryptBuffer.Length);
 				// now remove padding
-				Array.Copy(decryptedData, buffer, length);
+				Array.Copy(decryptedData, buffer, cryptedData.Length);
 				return buffer;
 			}
 
-			decryptedData = cryptor.TransformFinalBlock(cryptedData, offset, length);
+			decryptedData = cryptor.TransformFinalBlock(cryptedData, 0, cryptedData.Length);
 			return decryptedData;
 		}
        
         /// <summary>
-        /// Returns the length of privacyParameters USM header field. For DES, field length is 8.
+        /// Returns the length of privacyParameters USM header field. For AES, field length is 8.
         /// </summary>
         public static int PrivacyParametersLength
         {
@@ -230,7 +231,7 @@ namespace Lextm.SharpSnmpLib.Security
             byte[] pkey = _auth.PasswordToKey(_phrase.GetRaw(), parameters.EngineId.GetRaw());
 
             // decode encrypted packet
-            byte[] decrypted = Decrypt(bytes, pkey, parameters.PrivacyParameters.GetRaw());
+            byte[] decrypted = Decrypt(bytes, pkey, parameters.EngineBoots.ToInt32(), parameters.EngineTime.ToInt32(), parameters.PrivacyParameters.GetRaw());
             return DataFactory.CreateSnmpData(decrypted);
         }
 
@@ -262,7 +263,7 @@ namespace Lextm.SharpSnmpLib.Security
                 bytes = stream.ToArray();
             }
             
-            byte[] encrypted = Encrypt(bytes, pkey, parameters.PrivacyParameters.GetRaw());
+            byte[] encrypted = Encrypt(bytes, pkey, parameters.EngineBoots.ToInt32(), parameters.EngineTime.ToInt32(), parameters.PrivacyParameters.GetRaw(), null);
             return new OctetString(encrypted);
         }
 

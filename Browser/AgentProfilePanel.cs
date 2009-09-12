@@ -146,7 +146,7 @@ namespace Lextm.SharpSnmpLib.Browser
                 {
                     try
                     {
-                        Profiles.AddProfile(new AgentProfile(editor.VersionCode, new IPEndPoint(editor.IP, editor.Port), editor.GetCommunity, editor.SetCommunity, editor.AgentName));
+                    	Profiles.AddProfile(new AgentProfile(Guid.NewGuid(), editor.VersionCode, new IPEndPoint(editor.IP, editor.Port), editor.GetCommunity, editor.SetCommunity, editor.AgentName));
                         Profiles.SaveProfiles();
                     }
                     catch (BrowserException ex)
@@ -167,7 +167,7 @@ namespace Lextm.SharpSnmpLib.Browser
             {
                 if (editor.ShowDialog() == DialogResult.OK)
                 {
-                    Profiles.ReplaceProfile(new AgentProfile(editor.VersionCode, new IPEndPoint(editor.IP, editor.Port), editor.GetCommunity, editor.SetCommunity, editor.AgentName));
+                    Profiles.ReplaceProfile(new AgentProfile(profile.Id, editor.VersionCode, new IPEndPoint(editor.IP, editor.Port), editor.GetCommunity, editor.SetCommunity, editor.AgentName));
                     Profiles.SaveProfiles();
                 }
             }
