@@ -82,7 +82,7 @@ namespace TestSet
 
             if (show_help)
             {
-                Console.WriteLine("The syntax is similar to Net-SNMP. http://www.net-snmp.org/docs/man/snmpget.html");
+                Console.WriteLine("The syntax is similar to Net-SNMP. http://www.net-snmp.org/docs/man/snmpset.html");
                 return;
             }
 
@@ -94,7 +94,7 @@ namespace TestSet
 
             if (extra.Count < 2)
             {
-                Console.WriteLine("The syntax is similar to Net-SNMP. http://www.net-snmp.org/docs/man/snmpget.html");
+                Console.WriteLine("The syntax is similar to Net-SNMP. http://www.net-snmp.org/docs/man/snmpset.html");
                 return;
             }
 

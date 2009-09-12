@@ -39,8 +39,8 @@ namespace TestWalk
             WalkMode mode = WalkMode.WithinSubtree;
 
             OptionSet p = new OptionSet()
-                .Add("c:", "-c for community name, (default is public)", delegate (string v) { if (v != null) community = v; })
-                .Add("l:", "-l for security level, (default is noAuthNoPriv)", delegate (string v) 
+                .Add("c:", "-c for community name, (default is public)", delegate(string v) { if (v != null) community = v; })
+                .Add("l:", "-l for security level, (default is noAuthNoPriv)", delegate(string v)
                 {
                     if (v == "noAuthNoPriv")
                     {
@@ -55,17 +55,17 @@ namespace TestWalk
                         level = Levels.Authentication | Levels.Privacy | Levels.Reportable;
                     }
                 })
-                .Add("a:", "-a for authentication method", delegate (string v) { authentication = v; })
+                .Add("a:", "-a for authentication method", delegate(string v) { authentication = v; })
                 .Add("A:", "-A for authentication passphrase", delegate(string v) { authPhrase = v; })
-                .Add("x:", "-x for privacy method", delegate (string v) { privacy = v; })
-                .Add("X:", "-X for privacy passphrase", delegate (string v) { privPhrase = v; })
+                .Add("x:", "-x for privacy method", delegate(string v) { privacy = v; })
+                .Add("X:", "-X for privacy passphrase", delegate(string v) { privPhrase = v; })
                 .Add("u:", "-u for security name", delegate(string v) { user = v; })
-                .Add("h|?|help", "-h, -?, -help for help.", delegate (string v) { show_help = v != null; })
-                .Add("V", "-V to display version number of this application.", delegate (string v) { show_version = v != null; })
+                .Add("h|?|help", "-h, -?, -help for help.", delegate(string v) { show_help = v != null; })
+                .Add("V", "-V to display version number of this application.", delegate(string v) { show_version = v != null; })
                 .Add("d", "-d to display message dump", delegate(string v) { dump = true; })
-                .Add("t:", "-t for timeout value (unit is second).", delegate (string v) { timeout = int.Parse(v) * 1000; })
-                .Add("r:", "-r for retry count (default is 0)", delegate (string v) { retry = int.Parse(v); })
-                .Add("v|version:", "-v for SNMP version (v1, v2 are currently supported)", delegate (string v) 
+                .Add("t:", "-t for timeout value (unit is second).", delegate(string v) { timeout = int.Parse(v) * 1000; })
+                .Add("r:", "-r for retry count (default is 0)", delegate(string v) { retry = int.Parse(v); })
+                .Add("v|version:", "-v for SNMP version (v1, v2 are currently supported)", delegate(string v)
                 {
                     switch (int.Parse(v))
                     {
@@ -81,13 +81,28 @@ namespace TestWalk
                         default:
                             throw new ArgumentException("no such version: " + v);
                     }
+                })
+                .Add("m|mode:", "-m for WALK mode (subtree, all are supported)", delegate(string v)
+                {
+                    if (v == "subtree")
+                    {
+                        mode = WalkMode.WithinSubtree;
+                    }
+                    else if (v == "all")
+                    {
+                        mode = WalkMode.Default;
+                    }
+                    else
+                    {
+                        throw new ArgumentException("unknown argument: " + v);
+                    }
                 });
         
             List<string> extra = p.Parse (args);
         
             if (show_help)
             {
-                Console.WriteLine("The syntax is similar to Net-SNMP. http://www.net-snmp.org/docs/man/snmpget.html");
+                Console.WriteLine("The syntax is similar to Net-SNMP. http://www.net-snmp.org/docs/man/snmpwalk.html");
                 return;
             }
         
