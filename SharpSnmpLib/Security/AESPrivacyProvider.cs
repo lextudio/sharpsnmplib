@@ -44,7 +44,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// in the USM header to store this information</param>
         /// <returns>Encrypted byte array</returns>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when encryption key is null or length of the encryption key is too short.</exception>
-        public byte[] Encrypt(byte[] unencryptedData, byte[] key, int engineBoots, int engineTime, byte[] privacyParameters, byte[] authDigest)
+        public byte[] Encrypt(byte[] unencryptedData, byte[] key, int engineBoots, int engineTime, byte[] privacyParameters)
 		{
 			// check the key before doing anything else
 			if (key == null)
@@ -113,7 +113,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// <exception cref="ArgumentNullException">Thrown when encrypted data is null or length == 0</exception>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when encryption key length is less then 32 byte or if privacy parameters
         /// argument is null or length other then 8 bytes</exception>
-		public byte[] Decrypt(byte[] cryptedData, byte[] key, int engineBoots, int engineTime, byte[] privacyParameters)
+		public byte[] Decrypt(byte[] encryptedData, byte[] key, int engineBoots, int engineTime, byte[] privacyParameters)
 		{
 			if (key == null || key.Length < _keyBytes)
 				throw new ArgumentOutOfRangeException("decryptionKey", "Invalid key length");
@@ -158,21 +158,21 @@ namespace Lextm.SharpSnmpLib.Security
 			cryptor = rm.CreateDecryptor();
 
 			// We need to make sure that cryptedData is a collection of 128 byte blocks
-			if ((cryptedData.Length % _keyBytes) != 0)
+			if ((encryptedData.Length % _keyBytes) != 0)
 			{
-				byte[] buffer = new byte[cryptedData.Length];
-				Array.Copy(cryptedData, 0, buffer, 0, cryptedData.Length);
+				byte[] buffer = new byte[encryptedData.Length];
+				Array.Copy(encryptedData, 0, buffer, 0, encryptedData.Length);
 				int div = (int)Math.Floor(buffer.Length / (double)16);
 				int newLength = (div + 1) * 16;
 				byte[] decryptBuffer = new byte[newLength];
 				Array.Copy(buffer, decryptBuffer, buffer.Length);
 				decryptedData = cryptor.TransformFinalBlock(decryptBuffer, 0, decryptBuffer.Length);
 				// now remove padding
-				Array.Copy(decryptedData, buffer, cryptedData.Length);
+				Array.Copy(decryptedData, buffer, encryptedData.Length);
 				return buffer;
 			}
 
-			decryptedData = cryptor.TransformFinalBlock(cryptedData, 0, cryptedData.Length);
+			decryptedData = cryptor.TransformFinalBlock(encryptedData, 0, encryptedData.Length);
 			return decryptedData;
 		}
        
@@ -263,7 +263,7 @@ namespace Lextm.SharpSnmpLib.Security
                 bytes = stream.ToArray();
             }
             
-            byte[] encrypted = Encrypt(bytes, pkey, parameters.EngineBoots.ToInt32(), parameters.EngineTime.ToInt32(), parameters.PrivacyParameters.GetRaw(), null);
+            byte[] encrypted = Encrypt(bytes, pkey, parameters.EngineBoots.ToInt32(), parameters.EngineTime.ToInt32(), parameters.PrivacyParameters.GetRaw());
             return new OctetString(encrypted);
         }
 

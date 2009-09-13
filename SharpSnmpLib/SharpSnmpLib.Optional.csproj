@@ -1,6 +1,6 @@
 ﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <ProjectGuid>{CBE20411-5DB7-487D-825D-7694267BB6F5}</ProjectGuid>
+    <ProjectGuid>{33110773-3E28-4963-8956-C07FB8A5F7E3}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <OutputType>Library</OutputType>
@@ -61,7 +61,6 @@
       <Project>{286DE6DB-8F95-4BD4-86A2-86488D2E0EE1}</Project>
       <Name>SharpSnmpLib</Name>
     </ProjectReference>
-    <Folder Include="Security" />
   </ItemGroup>
   <ItemGroup>
     <None Include="sharpsnmplib.snk" />

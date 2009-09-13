@@ -16,6 +16,13 @@ namespace Lextm.SharpSnmpLib.Tests
     public class TestByteTool
     {
         [Test]
+        public void TestConvertDecimal()
+        {
+            byte[] b = ByteTool.ConvertDecimal(" 16 18 ");
+            Assert.AreEqual(new byte[] { 0x10, 0x12 }, b);
+        }
+
+        [Test]
         public void TestReadShortLength()
         {
             MemoryStream m = new MemoryStream();

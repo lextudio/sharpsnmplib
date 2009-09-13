@@ -144,8 +144,7 @@ namespace TestSet
                             data = new Integer32(int.Parse(extra[i + 2]));
                             break;
                         case 'u':
-                            // TODO: add Counter64, Gauge support later.
-                            data = new Counter32(uint.Parse(extra[i + 2]));
+                            data = new Gauge32(uint.Parse(extra[i + 2]));
                             break;
                         case 't':
                             data = new TimeTicks(uint.Parse(extra[i + 2]));
@@ -156,10 +155,17 @@ namespace TestSet
                         case 'o':
                             data = new ObjectIdentifier(extra[i + 2]);
                             break;
-                        case 's':
-                        case 'x':
-                        case 'd':
+                        case 'x':                        
+                            data = new OctetString(ByteTool.Convert(extra[i + 2]));
+                            break;
+                        case 's':                        
                             data = new OctetString(extra[i + 2]);
+                            break;
+                        case 'd':
+                            data = new OctetString(ByteTool.ConvertDecimal(extra[i + 2]));
+                            break;
+                        case 'n':
+                            data = new Null();
                             break;
                         default:
                             Console.WriteLine("unknown type string: " + type[0]);

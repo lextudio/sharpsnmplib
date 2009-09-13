@@ -25,6 +25,37 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public static class ByteTool
     {
+        public static byte[] ConvertDecimal(string description)
+        {
+            List<byte> result = new List<byte>();
+            StringBuilder buffer = new StringBuilder(2);
+            foreach (char c in description)
+            {
+                if (char.IsWhiteSpace(c))
+                {
+                    continue;
+                }
+
+                if (!char.IsDigit(c))
+                {
+                    throw new ArgumentException("illegal character found", "description");
+                }
+
+                buffer.Append(c);
+                if (buffer.Length == 2)
+                {
+                    result.Add(byte.Parse(buffer.ToString(), NumberStyles.Integer, CultureInfo.InvariantCulture));
+                    buffer.Length = 0;
+                }
+            }
+
+            if (buffer.Length != 0)
+            {
+                throw new ArgumentException("not a complete byte string", "description");
+            }
+
+            return result.ToArray();
+        }
         /// <summary>
         /// Converts the byte string.
         /// </summary>
