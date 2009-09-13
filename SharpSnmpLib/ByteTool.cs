@@ -25,33 +25,18 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public static class ByteTool
     {
+    	/// <summary>
+    	/// Converts decimal string to bytes.
+    	/// </summary>
+    	/// <param name="description">The decimal string.</param>
+    	/// <returns></returns>
         public static byte[] ConvertDecimal(string description)
         {
             List<byte> result = new List<byte>();
-            StringBuilder buffer = new StringBuilder(2);
-            foreach (char c in description)
+            string[] content = description.Split(new char[]{' '}, StringSplitOptions.RemoveEmptyEntries);
+            foreach (string part in content)
             {
-                if (char.IsWhiteSpace(c))
-                {
-                    continue;
-                }
-
-                if (!char.IsDigit(c))
-                {
-                    throw new ArgumentException("illegal character found", "description");
-                }
-
-                buffer.Append(c);
-                if (buffer.Length == 2)
-                {
-                    result.Add(byte.Parse(buffer.ToString(), NumberStyles.Integer, CultureInfo.InvariantCulture));
-                    buffer.Length = 0;
-                }
-            }
-
-            if (buffer.Length != 0)
-            {
-                throw new ArgumentException("not a complete byte string", "description");
+                result.Add(byte.Parse(part, NumberStyles.Integer, CultureInfo.InvariantCulture));
             }
 
             return result.ToArray();
@@ -59,7 +44,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Converts the byte string.
         /// </summary>
-        /// <param name="description">The description.</param>
+        /// <param name="description">The HEX string.</param>
         /// <returns></returns>
         public static byte[] Convert(string description)
         {
@@ -96,7 +81,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Converts the byte string.
         /// </summary>
-        /// <param name="buffer">The buffer.</param>
+        /// <param name="buffer">The bytes.</param>
         /// <returns></returns>
         public static string Convert(byte[] buffer)
         {
