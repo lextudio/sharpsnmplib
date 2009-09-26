@@ -18,7 +18,7 @@ namespace Lextm.SharpSnmpLib.Tests
     [TestFixture]
     public class TestMibDocument
     {
-    	[Test]
+    	// [Test]
     	public void TestEmpty()
     	{
     		Lexer lexer = new Lexer();
