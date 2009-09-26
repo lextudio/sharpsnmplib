@@ -115,7 +115,10 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public ISnmpMessage GetResponse(int timeout, IPEndPoint receiver)
         {
-            return GetResponse(timeout, receiver, Helper.GetSocket(receiver));
+        				using (Socket socket = Helper.GetSocket(receiver))
+			{
+            return GetResponse(timeout, receiver, socket);
+        }
         }
 
         /// <summary>

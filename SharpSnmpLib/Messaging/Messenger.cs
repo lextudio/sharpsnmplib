@@ -42,7 +42,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             GetRequestMessage message = new GetRequestMessage(RequestCounter.NextId, version, community, variables);
-            ISnmpMessage response = message.GetResponse(timeout, endpoint, Helper.GetSocket(endpoint));
+            ISnmpMessage response = message.GetResponse(timeout, endpoint);
             if (response.Pdu.ErrorStatus.ToInt32() != 0)
             {
                 throw SharpErrorException.Create(
@@ -71,7 +71,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             SetRequestMessage message = new SetRequestMessage(RequestCounter.NextId, version, community, variables);
-            ISnmpMessage response = message.GetResponse(timeout, endpoint, Helper.GetSocket(endpoint));
+            ISnmpMessage response = message.GetResponse(timeout, endpoint);
             if (response.Pdu.ErrorStatus.ToInt32() != 0)
             {
                 throw SharpErrorException.Create(
@@ -188,7 +188,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 community,
                 variables);
 
-            ISnmpMessage response = message.GetResponse(timeout, endpoint, Helper.GetSocket(endpoint));
+            ISnmpMessage response = message.GetResponse(timeout, endpoint);
             bool errorFound = response.Pdu.ErrorStatus.ToErrorCode() == ErrorCode.NoSuchName;
             next = errorFound ? null : response.Pdu.Variables[0];
             return !errorFound;
@@ -281,7 +281,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 maxRepetitions,
                 variables);
 
-            ISnmpMessage response = message.GetResponse(timeout, endpoint, Helper.GetSocket(endpoint));
+            ISnmpMessage response = message.GetResponse(timeout, endpoint);
             if (response.Pdu.ErrorStatus.ToInt32() != 0)
             {
                 throw SharpErrorException.Create(
@@ -309,7 +309,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         public static void SendTrapV1(EndPoint receiver, IPAddress agent, OctetString community, ObjectIdentifier enterprise, GenericCode generic, int specific, uint timestamp, IList<Variable> variables)
         {
             TrapV1Message message = new TrapV1Message(VersionCode.V1, agent, community, enterprise, generic, specific, timestamp, variables);
-            message.Send(receiver, Helper.GetSocket(receiver));
+            message.Send(receiver);
         }
 
         /// <summary>
@@ -331,7 +331,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             TrapV2Message message = new TrapV2Message(requestId, version, community, enterprise, timestamp, variables);
-            message.Send(receiver, Helper.GetSocket(receiver));
+            message.Send(receiver);
         }
 
         /// <summary>
@@ -349,7 +349,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         public static void SendInform(int requestId, VersionCode version, IPEndPoint receiver, OctetString community, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables, int timeout)
         {
             InformRequestMessage message = new InformRequestMessage(requestId, version, community, enterprise, timestamp, variables);
-            ISnmpMessage response = message.GetResponse(timeout, receiver, Helper.GetSocket(receiver));
+            ISnmpMessage response = message.GetResponse(timeout, receiver);
             if (response.Pdu.ErrorStatus.ToInt32() != 0)
             {
                 throw SharpErrorException.Create(

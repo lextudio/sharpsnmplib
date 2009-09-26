@@ -18,6 +18,22 @@ namespace Lextm.SharpSnmpLib.Tests
     [TestFixture]
     public class TestMibDocument
     {
+    	[Test]
+    	public void TestEmpty()
+    	{
+    		Lexer lexer = new Lexer();
+            MemoryStream m = new MemoryStream(Resources.empty);
+            using (StreamReader reader = new StreamReader(m))
+            {
+                lexer.Parse(reader);
+                reader.Close();
+            }
+            MibDocument file = new MibDocument(lexer);
+            Assert.AreEqual("SNMPv2-CONF", file.Modules[0].Name);
+            Assert.AreEqual(0, file.Modules[0].Dependents.Count);
+            Assert.AreEqual(0, file.Modules[0].Entities.Count);
+    	}
+    	
         // TODO: [Test]
         public void TestSNMPv2_PDU()
         {
