@@ -1,3 +1,5 @@
+#SNMP is available at http://sharpsnmplib.codeplex.com
+
 Source Code Notice
 
 The #SNMP Library source code (for SharpSnmpLib*.dll) is released under Less GPL 2.1.

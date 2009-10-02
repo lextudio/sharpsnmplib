@@ -19,9 +19,9 @@ using Mono.Options;
 
 namespace TestWalk
 {
-    class TestWalk
+    internal class TestWalk
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             string community = "public";
             bool show_help   = false;
@@ -102,7 +102,7 @@ namespace TestWalk
         
             if (show_help)
             {
-                Console.WriteLine("The syntax is similar to Net-SNMP. http://www.net-snmp.org/docs/man/snmpwalk.html");
+            	ShowHelp();
                 return;
             }
         
@@ -114,7 +114,7 @@ namespace TestWalk
 
             if (extra.Count < 1 || extra.Count > 2)
             {
-                Console.WriteLine("The syntax is similar to Net-SNMP. http://www.net-snmp.org/docs/man/snmpwalk.html");
+            	ShowHelp();
                 return;
             }
         
@@ -255,5 +255,10 @@ namespace TestWalk
 
             throw new ArgumentException("unknown name", "authentication");
         }
+        
+        private static void ShowHelp()
+		{
+			Console.WriteLine("#SNMP is available at http://sharpsnmplib.codeplex.com");
+		}
     }
 }

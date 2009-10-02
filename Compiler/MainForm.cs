@@ -87,5 +87,10 @@ namespace Lextm.SharpSnmpLib.Compiler
 		{
 			actCompileAll.Enabled = dockPanel1.DocumentsCount > 0 && !Compiler.IsBusy;
 		}
+		
+		private void actAbout_Execute(object sender, EventArgs e)
+		{
+			Help.ShowHelp(this, "http://sharpsnmplib.codeplex.com");
+		}
 	}
 }

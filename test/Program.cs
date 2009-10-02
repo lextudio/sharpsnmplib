@@ -12,12 +12,11 @@ using Lextm.SharpSnmpLib.Messaging;
 
 namespace test
 {
-	class Program
+	internal class Program
 	{
 		public static void Main(string[] args)
 		{
-            Console.WriteLine("Start watcher");
-
+            Console.WriteLine("#SNMP is available at http://sharpsnmplib.codeplex.com");
             Listener watcher = new Listener();
             DefaultListenerAdapter adapter = new DefaultListenerAdapter();
             watcher.Adapters.Add(adapter);
@@ -25,28 +24,23 @@ namespace test
             adapter.TrapV2Received += new EventHandler<MessageReceivedEventArgs<TrapV2Message>>(watcher_TrapV2Received);
             adapter.InformRequestReceived += new EventHandler<MessageReceivedEventArgs<InformRequestMessage>>(watcher_InformRequestReceived);
             watcher.Start();
-
             Console.WriteLine("Press any key to stop . . . ");
-            Console.ReadKey(true);
-            watcher.Stop();
-            Console.WriteLine("Press any key to exit . . . ");
             Console.Read();
 		}
 
-		static void watcher_InformRequestReceived(object sender, MessageReceivedEventArgs<InformRequestMessage> e)
+		private static void watcher_InformRequestReceived(object sender, MessageReceivedEventArgs<InformRequestMessage> e)
 		{
 			Console.WriteLine(e);
 		}
 
-		static void watcher_TrapV2Received(object sender, MessageReceivedEventArgs<TrapV2Message> e)
+		private static void watcher_TrapV2Received(object sender, MessageReceivedEventArgs<TrapV2Message> e)
 		{
 			Console.WriteLine(e);
 		}
 
-		static void watcher_TrapV1Received(object sender, MessageReceivedEventArgs<TrapV1Message> e)
+		private static void watcher_TrapV1Received(object sender, MessageReceivedEventArgs<TrapV1Message> e)
 		{
 			Console.WriteLine(e);
 		}
-
 	}
 }
