@@ -8,46 +8,47 @@
  */
 
 using System;
+using System.Globalization;
 using System.Windows.Forms;
 
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace Lextm.SharpSnmpLib.Compiler
 {
-	/// <summary>
-	/// Description of OutputPanel.
-	/// </summary>
-	partial class OutputPanel : DockContent, IOutputPanel
-	{
-		public OutputPanel()
-		{
-			InitializeComponent();
-		}
+    /// <summary>
+    /// Description of OutputPanel.
+    /// </summary>
+    internal partial class OutputPanel : DockContent, IOutputPanel
+    {
+        public OutputPanel()
+        {
+            InitializeComponent();
+        }
 
-		public void WriteLine(string message)
-		{
-			if (InvokeRequired)
-			{
-				Invoke((MethodInvoker)delegate { WriteLine(message); });
-				return;
-			}
+        public void WriteLine(string message)
+        {
+            if (InvokeRequired)
+            {
+                Invoke((MethodInvoker)delegate { WriteLine(message); });
+                return;
+            }
 
-			txtMessages.AppendText(string.Format("[{0}] {1}", DateTime.Now, message));
-			txtMessages.AppendText(Environment.NewLine);
-			txtMessages.ScrollToCaret();
-		}
+            txtMessages.AppendText(string.Format(CultureInfo.InvariantCulture, "[{0}] {1}", DateTime.Now, message));
+            txtMessages.AppendText(Environment.NewLine);
+            txtMessages.ScrollToCaret();
+        }
 
-		private void actClear_Execute(object sender, EventArgs e)
-		{
-			txtMessages.Clear();
-		}
+        private void actClear_Execute(object sender, EventArgs e)
+        {
+            txtMessages.Clear();
+        }
 
-		private void txtMessages_MouseUp(object sender, MouseEventArgs e)
-		{
-			if (e.Button == MouseButtons.Right)
-			{
-				contextOuputMenu.Show(txtMessages, e.Location);
-			}
-		}
-	}
+        private void txtMessages_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                contextOuputMenu.Show(txtMessages, e.Location);
+            }
+        }
+    }
 }

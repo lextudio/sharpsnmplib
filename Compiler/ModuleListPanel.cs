@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
 
@@ -22,6 +23,7 @@ namespace Lextm.SharpSnmpLib.Compiler
     /// <summary>
     /// Description of ModuleListPanel.
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
     internal partial class ModuleListPanel : DockContent
     {
         private Assembler _assembler;
@@ -54,7 +56,7 @@ namespace Lextm.SharpSnmpLib.Compiler
             SuspendLayout();
             listView1.Items.Clear();
             List<string> loaded = new List<string>(Assembler.Tree.LoadedModules);
-			loaded.Sort();
+            loaded.Sort();
             foreach (string module in loaded)
             {
                 ListViewItem item = listView1.Items.Add(module);
@@ -62,16 +64,17 @@ namespace Lextm.SharpSnmpLib.Compiler
             }
             
             List<string> pendings = new List<string>(Assembler.Tree.PendingModules);
-			pendings.Sort();
+            pendings.Sort();
             foreach (string pending in pendings)
             {
                 ListViewItem item = listView1.Items.Add(pending);
                 item.BackColor = Color.LightGray;
                 item.Group = listView1.Groups["lvgPending"];
             }
+            
             ResumeLayout();
-            listView1.Groups["lvgLoaded"].Header = string.Format("Loaded ({0})", Assembler.Tree.LoadedModules.Count);
-            listView1.Groups["lvgPending"].Header = string.Format("Pending ({0})", Assembler.Tree.PendingModules.Count);
+            listView1.Groups["lvgLoaded"].Header = string.Format(CultureInfo.InvariantCulture, "Loaded ({0})", Assembler.Tree.LoadedModules.Count);
+            listView1.Groups["lvgPending"].Header = string.Format(CultureInfo.InvariantCulture, "Pending ({0})", Assembler.Tree.PendingModules.Count);
             tslblCount.Text = "loaded: " + Assembler.Tree.LoadedModules.Count + "; unloaded: " + Assembler.Tree.PendingModules.Count;
         }
 

@@ -18,62 +18,63 @@ using Microsoft.Practices.Unity;
 
 namespace Lextm.SharpSnmpLib.Compiler
 {
-	internal class CompilerCore
-	{
-	    private readonly IList<string> _files = new List<string>();
-	    private readonly BackgroundWorker worker = new BackgroundWorker();
-	    private Parser _parser;
-	    private Assembler _assembler;
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
+    internal class CompilerCore : IDisposable
+    {
+        private readonly IList<string> _files = new List<string>();
+        private readonly BackgroundWorker worker = new BackgroundWorker();
+        private Parser _parser;
+        private Assembler _assembler;
 
-	    public CompilerCore()
-		{
-			worker.WorkerReportsProgress = true;
-			worker.WorkerSupportsCancellation = true;
-			worker.DoWork += backgroundWorker1_DoWork;
-			worker.RunWorkerCompleted += backgroundWorker1_RunWorkerCompleted;
-		}
+        public CompilerCore()
+        {
+            worker.WorkerReportsProgress = true;
+            worker.WorkerSupportsCancellation = true;
+            worker.DoWork += backgroundWorker1_DoWork;
+            worker.RunWorkerCompleted += backgroundWorker1_RunWorkerCompleted;
+        }
 
-	    public bool IsBusy
-	    {
-	        get { return worker.IsBusy; }
-	    }
+        public bool IsBusy
+        {
+            get { return worker.IsBusy; }
+        }
 
-	    [Dependency]
-	    public Parser Parser
-	    {
-	        get { return _parser; }
-	        set { _parser = value; }
-	    }
+        [Dependency]
+        public Parser Parser
+        {
+            get { return _parser; }
+            set { _parser = value; }
+        }
 
-	    [Dependency]
-	    public Assembler Assembler
-	    {
+        [Dependency]
+        public Assembler Assembler
+        {
             get { return _assembler; }
             set { _assembler = value; }
-	    }
+        }
 
-	    public event EventHandler<EventArgs> RunCompilerCompleted;
+        public event EventHandler<EventArgs> RunCompilerCompleted;
 
-	    public event EventHandler<FileAddedEventArgs> FileAdded;
+        public event EventHandler<FileAddedEventArgs> FileAdded;
 
-	    public void Compile(IEnumerable<string> files)
-		{
-			worker.RunWorkerAsync(files);
-		}
-		
-		private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
-		{
-		    IEnumerable<string> docs = (IEnumerable<string>)e.Argument;
-		    IEnumerable<SharpMibException> errors;
-		    CompileInternal(docs, out errors);
-		    e.Result = errors;
-		}
+        public void Compile(IEnumerable<string> files)
+        {
+            worker.RunWorkerAsync(files);
+        }
+        
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+            IEnumerable<string> docs = (IEnumerable<string>)e.Argument;
+            IEnumerable<SharpMibException> errors;
+            CompileInternal(docs, out errors);
+            e.Result = errors;
+        }
 
         private void CompileInternal(IEnumerable<string> docs, out IEnumerable<SharpMibException> errors)
-	    {
-	        IEnumerable<IModule> modules = Parser.ParseToModules(docs, out errors);
-	        Assembler.Assemble(modules);
-	    }
+        {
+            IEnumerable<IModule> modules = Parser.ParseToModules(docs, out errors);
+            Assembler.Assemble(modules);
+        }
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
@@ -102,8 +103,8 @@ namespace Lextm.SharpSnmpLib.Compiler
             SystemSounds.Beep.Play();
         }
 
-	    public void Add(string[] files)
-	    {
+        public void Add(string[] files)
+        {
             IList<string> filered = new List<string>();
             foreach (string file in files)
             {
@@ -116,20 +117,26 @@ namespace Lextm.SharpSnmpLib.Compiler
                 filered.Add(file);
             }
 
-	        if (FileAdded != null)
-	        {
-	            FileAdded(this, new FileAddedEventArgs(filered));
-	        }
-	    }
+            if (FileAdded != null)
+            {
+                FileAdded(this, new FileAddedEventArgs(filered));
+            }
+        }
 
-	    public void CompileAll()
-	    {
-	        Compile(_files);
-	    }
+        public void CompileAll()
+        {
+            Compile(_files);
+        }
 
-	    public void Remove(string name)
-	    {
-	        _files.Remove(name);
-	    }
-	}
+        public void Remove(string name)
+        {
+            _files.Remove(name);
+        }
+        
+        public void Dispose()
+        {
+            worker.Dispose();
+            GC.SuppressFinalize(this);
+        }
+    }
 }

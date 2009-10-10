@@ -27,17 +27,17 @@ namespace Lextm.SharpSnmpLib.Compiler
         }
         
         private static void CloseAllDocuments(DockPanel panel)
-		{
-        	if (panel.DocumentStyle == DocumentStyle.SystemMdi)
-        	{
-        		throw new InvalidOperationException("cannot work in System MDI mode");
-        	}
-        	
-			IDockContent[] documents = panel.DocumentsToArray();
-			foreach (IDockContent content in documents)
-			{
-				content.DockHandler.Close();
-			}
-		}
+        {
+            if (panel.DocumentStyle == DocumentStyle.SystemMdi)
+            {
+                throw new InvalidOperationException("cannot work in System MDI mode");
+            }
+            
+            IDockContent[] documents = panel.DocumentsToArray();
+            foreach (IDockContent content in documents)
+            {
+                content.DockHandler.Close();
+            }
+        }
     }
 }

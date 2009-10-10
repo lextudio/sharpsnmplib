@@ -15,34 +15,35 @@ using Microsoft.Practices.Unity.Configuration;
 
 namespace Lextm.SharpSnmpLib.Compiler
 {
-	/// <summary>
-	/// Class with program entry point.
-	/// </summary>
-	internal sealed class Program
-	{
-		private static IUnityContainer container;
+    /// <summary>
+    /// Class with program entry point.
+    /// </summary>
+    internal sealed class Program
+    {
+        private static IUnityContainer container;
 
-		internal static IUnityContainer Container
-		{
-			get { return container; }
-		}
-		
-		/// <summary>
-		/// Program entry point.
-		/// </summary>
-		[STAThread]
-		private static void Main(string[] args)
-		{
-			container = new UnityContainer();
-			UnityConfigurationSection section
-				= (UnityConfigurationSection)ConfigurationManager.GetSection("unity");
-			section.Containers.Default.Configure(Container);
+        internal static IUnityContainer Container
+        {
+            get { return container; }
+        }
+        
+        /// <summary>
+        /// Program entry point.
+        /// </summary>
+        [STAThread]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "args")]
+        private static void Main(string[] args)
+        {
+            container = new UnityContainer();
+            UnityConfigurationSection section
+                = (UnityConfigurationSection)ConfigurationManager.GetSection("unity");
+            section.Containers.Default.Configure(Container);
 
-		    Application.EnableVisualStyles();
-			Application.SetCompatibleTextRenderingDefault(false);
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
 
             MainForm main = Container.Resolve<MainForm>();
             Application.Run(main);
-		}
-	}
+        }
+    }
 }

@@ -8,15 +8,18 @@
  */
 using System;
 using System.Runtime.Serialization;
+using System.Security.Permissions;
 
 namespace Lextm.SharpSnmpLib.Messaging
 {
     /// <summary>
     /// Description of MessageFactoryException.
     /// </summary>
+    [Serializable]
     public class SharpMessageFactoryException : SharpSnmpException
     {
         private byte[] _bytes;
+        
         /// <summary>
         /// Creates a <see cref="SharpMessageFactoryException"/>.
         /// </summary>
@@ -51,12 +54,31 @@ namespace Lextm.SharpSnmpLib.Messaging
         protected SharpMessageFactoryException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
+            if (info == null)
+            {
+                throw new ArgumentNullException("info");
+            }
+            
+            _bytes = (byte[])info.GetValue("Bytes", typeof(byte[]));
+        }
+        
+        /// <summary>
+        /// Gets object data.
+        /// </summary>
+        /// <param name="info">Info</param>
+        /// <param name="context">Context</param>
+        [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            base.GetObjectData(info, context);
+            info.AddValue("Bytes", _bytes);
         }
         #endif
         
         /// <summary>
         /// Bytes.
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
         public byte[] Bytes
         {
             get { return _bytes; }

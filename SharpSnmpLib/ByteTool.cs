@@ -25,15 +25,15 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public static class ByteTool
     {
-    	/// <summary>
-    	/// Converts decimal string to bytes.
-    	/// </summary>
-    	/// <param name="description">The decimal string.</param>
-    	/// <returns></returns>
+        /// <summary>
+        /// Converts decimal string to bytes.
+        /// </summary>
+        /// <param name="description">The decimal string.</param>
+        /// <returns></returns>
         public static byte[] ConvertDecimal(string description)
         {
             List<byte> result = new List<byte>();
-            string[] content = description.Split(new char[]{' '}, StringSplitOptions.RemoveEmptyEntries);
+            string[] content = description.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             foreach (string part in content)
             {
                 result.Add(byte.Parse(part, NumberStyles.Integer, CultureInfo.InvariantCulture));
@@ -41,6 +41,7 @@ namespace Lextm.SharpSnmpLib
 
             return result.ToArray();
         }
+        
         /// <summary>
         /// Converts the byte string.
         /// </summary>

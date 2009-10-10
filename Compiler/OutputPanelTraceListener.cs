@@ -3,7 +3,7 @@ using WeifenLuo.WinFormsUI.Docking;
 
 namespace Lextm.SharpSnmpLib.Compiler
 {
-    public class OutputPanelTraceListener: TraceListener
+    public class OutputPanelTraceListener : TraceListener
     {
         public override void Write(string message)
         {
