@@ -69,6 +69,11 @@ namespace Lextm.SharpSnmpLib.Mib
             IList<ModuleLoader> result = new List<ModuleLoader>();
             foreach (string file in files)
             {
+                if (!File.Exists(file))
+                {
+                    continue;
+                }
+
                 string moduleName = Path.GetFileNameWithoutExtension(file);
                 using (StreamReader reader = new StreamReader(file))
                 {
@@ -407,8 +412,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 {
                     if (!LoadedModules.Contains(depend))
                     {
-                        builder.Append(depend);
-                        builder.Append(' ');
+                        builder.Append(depend).Append(' ');
                     }
                 }
                 

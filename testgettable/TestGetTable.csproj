@@ -8,8 +8,8 @@
     <ProjectGuid>{5C4FB369-4491-45BA-81D1-8CAE684F73F0}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TestGetTable</RootNamespace>
-    <AssemblyName>TestGetTable</AssemblyName>
+    <RootNamespace>SnmpGetTable</RootNamespace>
+    <AssemblyName>snmpgettable</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SourceAnalysisOverrideSettingsFile>C:\Users\lextm\AppData\Roaming\ICSharpCode/SharpDevelop3.0\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>

@@ -4,8 +4,8 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <OutputType>Exe</OutputType>
-    <RootNamespace>TestSendTrap</RootNamespace>
-    <AssemblyName>TestSendTrap</AssemblyName>
+    <RootNamespace>SnmpSendTrap</RootNamespace>
+    <AssemblyName>snmpsendtrap</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
   </PropertyGroup>
@@ -42,8 +42,5 @@
       <Project>{286DE6DB-8F95-4BD4-86A2-86488D2E0EE1}</Project>
       <Name>SharpSnmpLib</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
   </ItemGroup>
 </Project>

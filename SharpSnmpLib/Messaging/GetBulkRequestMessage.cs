@@ -130,7 +130,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
         }
 
-        internal int RequestId
+        public int RequestId
         {
             get { return _scope.Pdu.RequestId.ToInt32(); }
         }
@@ -180,6 +180,14 @@ namespace Lextm.SharpSnmpLib.Messaging
         public VersionCode Version
         {
             get { return _version; }
+        }
+
+        /// <summary>
+        /// Community name.
+        /// </summary>
+        public OctetString Community
+        {
+            get { return _parameters.UserName; }
         }
 
         /// <summary>

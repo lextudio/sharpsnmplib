@@ -41,6 +41,12 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void RefreshPanel(object sender, EventArgs e)
         {
+            if (InvokeRequired)
+            {
+                Invoke((MethodInvoker) delegate { RefreshPanel(sender, e); });
+                return;
+            }
+
             ReloadableObjectRegistry repository = (ReloadableObjectRegistry)sender;
             treeView1.Nodes.Clear();
             TreeNode root = Wrap(repository.Tree.Root);
@@ -52,7 +58,7 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private TreeNode Wrap(IDefinition definition)
         {
-            string name = showNumber ? string.Format("{0}({1})", definition.Name, definition.Value) : definition.Name;
+            string name = _showNumber ? string.Format("{0}({1})", definition.Name, definition.Value) : definition.Name;
             TreeNode node = new TreeNode(name);
             node.Tag = definition;
             node.ImageIndex = (int)definition.Type;
@@ -77,16 +83,21 @@ namespace Lextm.SharpSnmpLib.Browser
 			}
         }
 
-        private void actGet_Execute(object sender, EventArgs e)
+        private void ActGetExecute(object sender, EventArgs e)
         {
+            TraceSource source = new TraceSource("Browser");
             try
             {
+                source.TraceInformation("==== Begin GET ====");
                 Profiles.DefaultProfile.Get(Manager, GetTextualForm(treeView1.SelectedNode.Tag as IDefinition));
+                source.TraceInformation("==== End GET ====");
             }
             catch (Exception ex)
             {
-                TraceSource source = new TraceSource("Browser");
                 source.TraceInformation(ex.ToString());
+            }
+            finally
+            {
                 source.Flush();
                 source.Close();
             }
@@ -123,60 +134,69 @@ namespace Lextm.SharpSnmpLib.Browser
             return def.TextualForm + "." + index;
         }
 
-        private void actGet_Update(object sender, EventArgs e)
+        private void ActGetUpdate(object sender, EventArgs e)
         {
             actGet.Enabled = Validate(treeView1.SelectedNode);
         }
 
-        private void actSet_Execute(object sender, EventArgs e)
+        private void ActSetExecute(object sender, EventArgs e)
         {
+            TraceSource source = new TraceSource("Browser");
             try
             {
                 using (FormSet form = new FormSet())
                 {
-                    form.OldVal = Profiles.DefaultProfile.GetValue(Manager, GetTextualForm(treeView1.SelectedNode.Tag as IDefinition));
-                    if (form.ShowDialog() == DialogResult.OK)
+                    form.OldVal = Profiles.DefaultProfile.GetValue(Manager,
+                                                                   GetTextualForm(
+                                                                       treeView1.SelectedNode.Tag as IDefinition));
+                    if (form.ShowDialog() != DialogResult.OK)
                     {
-                        //
-                        // If its a string we will send the value as an OctetString, otherwise an Integer32... we might have to update this
-                        // to support other data types later
-                        //
-                        if (form.IsString)
-                        {
-                            OctetString newVal = new OctetString(form.NewVal);
-                            Profiles.DefaultProfile.Set(Manager, GetTextualForm(treeView1.SelectedNode.Tag as IDefinition), newVal);
-                        }
-                        else
-                        {
-                            int result;
-
-                            if (!int.TryParse(form.NewVal, out result))
-                            {
-                                MessageBox.Show("Value entered was not an Integer!", "SNMP Set Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                return;
-                            }
-
-                            Integer32 newVal = new Integer32(result);
-                            Profiles.DefaultProfile.Set(Manager, GetTextualForm(treeView1.SelectedNode.Tag as IDefinition), newVal);
-                        }
-
-                        //
-                        // For now so we can see the change occured
-                        //
-                        actGet_Execute(null, null);
+                        return;
                     }
+
+                    //
+                    // If its a string we will send the value as an OctetString, otherwise an Integer32... we might have to update this
+                    // to support other data types later
+                    //
+                    if (form.IsString)
+                    {
+                        Profiles.DefaultProfile.Set(Manager,
+                                                    GetTextualForm(treeView1.SelectedNode.Tag as IDefinition),
+                                                    new OctetString(form.NewVal));
+                        return;
+                    }
+
+                    int result;
+
+                    if (!int.TryParse(form.NewVal, out result))
+                    {
+                        MessageBox.Show("Value entered was not an Integer!", "SNMP Set Error",
+                                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    Profiles.DefaultProfile.Set(Manager,
+                                                GetTextualForm(treeView1.SelectedNode.Tag as IDefinition),
+                                                new Integer32(result));
+
+                    //
+                    // For now so we can see the change occured
+                    //
+                    ActGetExecute(null, null);
                 }
             }
             catch (Exception ex)
             {
-                TraceSource source = new TraceSource("Browser");
                 source.TraceInformation(ex.ToString());
+            }
+            finally
+            {
                 source.Flush();
                 source.Close();
             }
         }
 
-        private void actSet_Update(object sender, EventArgs e)
+        private void ActSetUpdate(object sender, EventArgs e)
         {
             actSet.Enabled = Validate(treeView1.SelectedNode);
         }
@@ -187,22 +207,16 @@ namespace Lextm.SharpSnmpLib.Browser
             {
                 return false;
             }
+
+            //  Scalar or Column. (see DefinitionType.cs)
             return treeNode.ImageIndex == 2 || treeNode.ImageIndex == 5;
         }
 
-        private void actWalk_Execute(object sender, EventArgs e)
+        private void ActGetTableExecute(object sender, EventArgs e)
         {
             try
             {
-                if (actGet.Enabled == false)
-                {
-                    ManualWalk(treeView1.SelectedNode, true);
-                }
-                else
-                {
-                    Profiles.DefaultProfile.Walk(Manager, treeView1.SelectedNode.Tag as IDefinition);
-                }
-
+                Profiles.DefaultProfile.GetTable(Manager, treeView1.SelectedNode.Tag as IDefinition);
             }
             catch (Exception ex)
             {
@@ -213,96 +227,51 @@ namespace Lextm.SharpSnmpLib.Browser
             }
         }
 
-        private void actWalk_Update(object sender, EventArgs e)
+        private void ActGetTableUpdate(object sender, EventArgs e)
         {
-            actWalk.Enabled = !Validate(treeView1.SelectedNode);
+            actGetTable.Enabled = treeView1.SelectedNode != null && treeView1.SelectedNode.ImageIndex == 3;
         }
 
-        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+        private void TreeView1AfterSelect(object sender, TreeViewEventArgs e)
         {
             tslblOID.Text = ObjectIdentifier.Convert(((IDefinition) e.Node.Tag).GetNumericalForm());
             if (Validate(e.Node))
             {
-                actGet_Execute(sender, e);
+                ActGetExecute(sender, e);
             }
             else if (e.Node.ImageIndex == 3)
             {
-                actWalk_Execute(sender, e);
+                ActGetTableExecute(sender, e);
             }
         }
 
-        private void treeView1_NodeMouseHover(object sender, TreeNodeMouseHoverEventArgs e)
-        {/*
-            if (e.Node.Tag.ToString() != toolTip1.GetToolTip(this.treeView1))
-            {
-                try
-                {
-                    toolTip1.SetToolTip(this.treeView1, ProfileRegistry.Instance.DefaultProfile.Get(manager1, GetTextualForm(e.Node.Tag as IDefinition)));
-                }
-                catch (Exception ex)
-                {
-                }
-            }*/
-        }
-
-        private void treeView1_MouseMove(object sender, MouseEventArgs e)
-        {/*
-            TreeNode theNode = this.treeView1.GetNodeAt(e.X, e.Y);
-
-            // Set a ToolTip only if the mouse pointer is actually paused on a node.
-            if ((theNode != null))
-            {
-                // Verify that the tag property is not "null".
-                if (theNode.Tag != null)
-                {
-                    // Change the ToolTip only if the pointer moved to a new node.
-                    if (theNode.Tag.ToString() != this.toolTip1.GetToolTip(this.treeView1))
-                    {
-                        this.toolTip1.SetToolTip(this.treeView1, theNode.Tag.ToString());
-                    }
-                }
-                else
-                {
-                    this.toolTip1.SetToolTip(this.treeView1, "");
-                }
-            }
-            else     // Pointer is not over a node so clear the ToolTip.
-            {
-                this.toolTip1.SetToolTip(this.treeView1, "");
-            }*/
-        }
-
-        private void treeView1_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void ActGetNextExecute(object sender, EventArgs e)
         {
-            TreeNode theNode = this.treeView1.GetNodeAt(e.X, e.Y);
-
-            if (e.Button == MouseButtons.Left && theNode != null && !Validate(theNode))
-            {
-                actWalk_Execute(sender, e);
-            }
-        }
-
-        private void actGetNext_Execute(object sender, EventArgs e)
-        {
+            TraceSource source = new TraceSource("Browser");
             try
             {
-                Profiles.DefaultProfile.Get(Manager, GetTextualForm(treeView1.SelectedNode.NextNode.Tag as IDefinition));
+                source.TraceInformation("==== Begin GET NEXT ====");
+                Profiles.DefaultProfile.GetNext(Manager, GetTextualForm(treeView1.SelectedNode.Tag as IDefinition));
+                source.TraceInformation("==== End GET NEXT ====");
             }
             catch (Exception ex)
             {
-                TraceSource source = new TraceSource("Browser");
                 source.TraceInformation(ex.ToString());
+            }
+            finally
+            {
                 source.Flush();
                 source.Close();
             }
         }
 
-        private void actGetNext_Update(object sender, EventArgs e)
+        private void ActGetNextUpdate(object sender, EventArgs e)
         {
             actGetNext.Enabled = treeView1.SelectedNode != null && Validate(treeView1.SelectedNode);
         }
 
 
+/*
         private void ManualWalk(TreeNode node, bool first)
         {
             if (node != null)
@@ -312,7 +281,7 @@ namespace Lextm.SharpSnmpLib.Browser
                     switch (node.ImageIndex)
                     {
                         case 3:
-                            Profiles.DefaultProfile.Walk(Manager, node.Tag as IDefinition);
+                            Profiles.DefaultProfile.GetTable(Manager, node.Tag as IDefinition);
                             break;
                         default:
                             if (Validate(node))
@@ -343,6 +312,7 @@ namespace Lextm.SharpSnmpLib.Browser
                 }
             }
         }
+*/
 
         private void MibTreePanel_Load(object sender, EventArgs e)
         {
@@ -350,12 +320,37 @@ namespace Lextm.SharpSnmpLib.Browser
             Objects.OnChanged += RefreshPanel;
         }
 
-        private bool showNumber;
+        private bool _showNumber;
 
-        private void actNumber_Execute(object sender, EventArgs e)
+        private void ActNumberExecute(object sender, EventArgs e)
         {
-            showNumber = !showNumber;
+            _showNumber = !_showNumber;
             RefreshPanel(Objects, EventArgs.Empty);
+        }
+
+        private void ActWalkExecute(object sender, EventArgs e)
+        {
+            TraceSource source = new TraceSource("Browser");
+            try
+            {
+                source.TraceInformation("==== Begin WALK ====");
+                Profiles.DefaultProfile.Walk(Manager, (treeView1.SelectedNode.Tag as IDefinition));
+                source.TraceInformation("==== End WALK ====");
+            }
+            catch (Exception ex)
+            {
+                source.TraceInformation(ex.ToString());
+            }
+            finally
+            {
+                source.Flush();
+                source.Close();
+            }
+        }
+
+        private void ActWalkUpdate(object sender, EventArgs e)
+        {
+            actWalk.Enabled = treeView1.SelectedNode != null && treeView1.SelectedNode.Level > 0;
         }
     }
 }

@@ -46,8 +46,7 @@ namespace Lextm.SharpSnmpLib.Mib
                     // numerical way
                     while ((temp = lexer.NextNonEOLSymbol) != Symbol.CloseBracket)
                     {
-                        longParent.Append(".");
-                        longParent.Append(value);
+                        longParent.Append(".").Append(value);
                         succeeded = uint.TryParse(temp.ToString(), out value);
                         Validate(temp, !succeeded, "not a decimal");
                     }

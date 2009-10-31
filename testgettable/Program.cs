@@ -5,9 +5,9 @@ using Lextm.SharpSnmpLib;
 using Lextm.SharpSnmpLib.Mib;
 using Lextm.SharpSnmpLib.Messaging;
 
-namespace TestGetTable
+namespace SnmpGetTable
 {
-    class Program
+    internal static class Program
     {
         static readonly StreamWriter writer = new StreamWriter("result.txt");
 
@@ -16,7 +16,7 @@ namespace TestGetTable
             try
             {
                 Variable[,] table = Messenger.GetTable(VersionCode.V1, new IPEndPoint(IPAddress.Loopback, 161), new OctetString("public"),
-                    new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 2, 2 }), 5000, 10, DefaultObjectRegistry.Instance);
+                                                       new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 2, 2 }), 5000, 10, DefaultObjectRegistry.Instance);
                 writer.WriteLine("V1 table");
                 for (int row = 0; row <= table.GetUpperBound(0); row++)
                 {
@@ -28,7 +28,7 @@ namespace TestGetTable
                 }
 
                 table = Messenger.GetTable(VersionCode.V2, new IPEndPoint(IPAddress.Loopback, 161), new OctetString("public"),
-                    new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 2, 2 }), 5000, 10, DefaultObjectRegistry.Instance);
+                                           new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 2, 2 }), 5000, 10, DefaultObjectRegistry.Instance);
                 writer.WriteLine("V2 table");
                 for (int row = 0; row <= table.GetUpperBound(0); row++)
                 {

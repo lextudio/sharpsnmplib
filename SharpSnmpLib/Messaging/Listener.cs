@@ -25,16 +25,16 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// </remarks>
     public sealed class Listener : Component
     {
-        private const int DEFAULTPORT = 162;
+        private const int Defaultport = 162;
 
         /// <summary>
         /// Error message for non IP v6 OS.
         /// </summary>
-        public static readonly string IPv6NotSupported = "cannot use IP v6 as the OS does not support it";
-        private readonly IPEndPoint defaultEndPoint = new IPEndPoint(IPAddress.Any, DEFAULTPORT);
+        public const string ErrorIPv6NotSupported = "cannot use IP v6 as the OS does not support it";
+        private readonly IPEndPoint _defaultEndPoint = new IPEndPoint(IPAddress.Any, Defaultport);
         private Socket _socket;
         private int _bufferSize;
-        private IList<IListenerAdapter> _adapters = new List<IListenerAdapter>();
+        private readonly IList<IListenerAdapter> _adapters = new List<IListenerAdapter>();
         
         /// <summary>
         /// 1 = true, 0 = false
@@ -42,7 +42,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         private long _active; // = 0
         private bool _disposed;
         private int _port;
-        private UserRegistry _users = new UserRegistry();
+        private readonly UserRegistry _users = new UserRegistry();
 
         #region Constructor
 
@@ -106,48 +106,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         #region Events
 
         /// <summary>
-        /// Occurs when a <see cref="TrapV1Message" /> is received.
-        /// </summary>
-        [Obsolete("Please use a listener adapter instead.")]
-        public event EventHandler<MessageReceivedEventArgs<TrapV1Message>> TrapV1Received;
-
-        /// <summary>
-        /// Occurs when a <see cref="TrapV2Message"/> is received.
-        /// </summary>
-        [Obsolete("Please use a listener adapter instead.")]
-        public event EventHandler<MessageReceivedEventArgs<TrapV2Message>> TrapV2Received;
-
-        /// <summary>
-        /// Occurs when a <see cref="InformRequestMessage"/> is received.
-        /// </summary>
-        [Obsolete("Please use a listener adapter instead.")]
-        public event EventHandler<MessageReceivedEventArgs<InformRequestMessage>> InformRequestReceived;
-
-        /// <summary>
-        /// Occurs when a <see cref="GetRequestMessage"/> is received.
-        /// </summary>
-        [Obsolete("Please use a listener adapter instead.")]
-        public event EventHandler<MessageReceivedEventArgs<GetRequestMessage>> GetRequestReceived;
-
-        /// <summary>
-        /// Occurs when a SET request is received.
-        /// </summary>
-        [Obsolete("Please use a listener adapter instead.")]
-        public event EventHandler<MessageReceivedEventArgs<SetRequestMessage>> SetRequestReceived;
-
-        /// <summary>
-        /// Occurs when a GET NEXT request is received.
-        /// </summary>
-        [Obsolete("Please use a listener adapter instead.")]
-        public event EventHandler<MessageReceivedEventArgs<GetNextRequestMessage>> GetNextRequestReceived;
-
-        /// <summary>
-        /// Occurs when a GET BULK request is received.
-        /// </summary>
-        [Obsolete("Please use a listener adapter instead.")]
-        public event EventHandler<MessageReceivedEventArgs<GetBulkRequestMessage>> GetBulkRequestReceived;
-
-        /// <summary>
         /// Occurs when an exception is raised.
         /// </summary>
         public event EventHandler<ExceptionRaisedEventArgs> ExceptionRaised;
@@ -174,10 +132,10 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Sends a response message.
         /// </summary>
         /// <param name="response">
-        /// A <see cref="GetResponseMessage"/>.
+        /// A <see cref="ISnmpMessage"/>.
         /// </param>
         /// <param name="receiver">Receiver.</param>
-        public void SendResponse(GetResponseMessage response, EndPoint receiver)
+        public void SendResponse(ISnmpMessage response, EndPoint receiver)
         {
             if (_socket != null)
             {
@@ -192,7 +150,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <remarks><para>This function will only monitor IP v4 incoming packets. IP v6 packets will be ignored. </para><para>If you actually need to monitor IP v6 packets, please use the overloading version that requires an IPEndpoint object.</para></remarks>
         public void Start()
         {
-            Start(defaultEndPoint);
+            Start(_defaultEndPoint);
         }
 
         /// <summary>
@@ -224,7 +182,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             
             if (endpoint.AddressFamily == AddressFamily.InterNetworkV6 && !Socket.OSSupportsIPv6)
             {
-                throw new InvalidOperationException(IPv6NotSupported);
+                throw new InvalidOperationException(ErrorIPv6NotSupported);
             }
 
             long activeBefore = Interlocked.CompareExchange(ref _active, 1, 0);

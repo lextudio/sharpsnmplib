@@ -24,7 +24,10 @@ namespace Lextm.SharpSnmpLib.Browser
     /// </summary>
     internal partial class ModuleListPanel : DockContent
     {
+        private const string Filter = "*.module";
         private IObjectRegistry _objects;
+        private FileSystemWatcher _watcher;
+        private WatchDog _dog;
 
         public ModuleListPanel()
         {
@@ -35,6 +38,27 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             Objects.OnChanged += RefreshPanel;
             RefreshPanel(Objects, EventArgs.Empty);
+
+            _dog = new WatchDog(10000d);
+            _dog.Bark += DogBark;
+            _dog.Enabled = actEnableMonitor.Checked;
+
+            _watcher = new FileSystemWatcher(((ReloadableObjectRegistry)Objects).Path, Filter);
+            _watcher.IncludeSubdirectories = false;
+            _watcher.Changed += OnChanged;
+            _watcher.Created += OnChanged;
+            _watcher.Deleted += OnChanged;
+            _watcher.EnableRaisingEvents = actEnableMonitor.Checked;
+        }
+
+        private void DogBark(object sender, EventArgs e)
+        {
+            ((ReloadableObjectRegistry)Objects).Reload();
+        }
+
+        private void OnChanged(object sender, FileSystemEventArgs e)
+        {
+            _dog.Feed();
         }
 
         [Dependency]
@@ -46,6 +70,12 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void RefreshPanel(object sender, EventArgs e)
         {
+            if (InvokeRequired)
+            {
+                Invoke((MethodInvoker) delegate { RefreshPanel(sender, e); });
+                return;
+            }
+
             ReloadableObjectRegistry reg = (ReloadableObjectRegistry)sender;
             SuspendLayout();
             listView1.Items.Clear();
@@ -57,7 +87,7 @@ namespace Lextm.SharpSnmpLib.Browser
                 item.Group = listView1.Groups["lvgLoaded"];
             }
             
-            string[] files = Directory.GetFiles(reg.Path, "*.module");
+            string[] files = Directory.GetFiles(reg.Path, Filter);
             foreach (string file in files)
             {
                 string name = Path.GetFileNameWithoutExtension(file);
@@ -77,7 +107,7 @@ namespace Lextm.SharpSnmpLib.Browser
             tslblCount.Text = "loaded: " + listView1.Groups["lvgLoaded"].Items.Count + "; unloaded: " + listView1.Groups["lvgPending"].Items.Count;
         }
 
-        private void actAdd_Execute(object sender, EventArgs e)
+        private void ActAddExecute(object sender, EventArgs e)
         {
             ReloadableObjectRegistry reg = (ReloadableObjectRegistry)Objects;
             string index = Path.Combine(reg.Path, "index");
@@ -95,7 +125,7 @@ namespace Lextm.SharpSnmpLib.Browser
             reg.Reload();
         }
 
-        private void actRemove_Execute(object sender, EventArgs e)
+        private void ActRemoveExecute(object sender, EventArgs e)
         {
             ReloadableObjectRegistry reg = (ReloadableObjectRegistry)Objects;
             string index = Path.Combine(reg.Path, "index");
@@ -113,7 +143,7 @@ namespace Lextm.SharpSnmpLib.Browser
             reg.Reload();
         }
 
-        private void actRemove_Update(object sender, EventArgs e)
+        private void ActRemoveUpdate(object sender, EventArgs e)
         {
             actRemove.Enabled = listView1.SelectedItems.Count >0 && ItemsInGroup(listView1.SelectedItems, "lvgLoaded");
         }
@@ -131,17 +161,23 @@ namespace Lextm.SharpSnmpLib.Browser
             return true;
         }
 
-        private void actAdd_Update(object sender, EventArgs e)
+        private void ActAddUpdate(object sender, EventArgs e)
         {
             actAdd.Enabled = listView1.SelectedItems.Count > 0 && ItemsInGroup(listView1.SelectedItems, "lvgPending");
         }
 
-        private void listView1_MouseDown(object sender, MouseEventArgs e)
+        private void ListView1MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
                 contextModuleMenu.Show(listView1, e.Location);
             }
+        }
+
+        private void ActEnableMonitorExecute(object sender, EventArgs e)
+        {
+            _dog.Enabled = actEnableMonitor.Checked;
+            _watcher.EnableRaisingEvents = actEnableMonitor.Checked;
         }
     }
 }

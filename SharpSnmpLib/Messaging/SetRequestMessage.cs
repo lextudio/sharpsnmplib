@@ -12,10 +12,10 @@ namespace Lextm.SharpSnmpLib.Messaging
     public class SetRequestMessage : ISnmpMessage
     {
         private readonly VersionCode _version;
-        private Header _header;
-        private SecurityParameters _parameters;
-        private Scope _scope;
-        private ProviderPair _pair;       
+        private readonly Header _header;
+        private readonly SecurityParameters _parameters;
+        private readonly Scope _scope;
+        private readonly ProviderPair _pair;       
 
         /// <summary>
         /// Creates a <see cref="SetRequestMessage"/> with all contents.
@@ -77,7 +77,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             byte b = (byte)recordToSecurityLevel;
             
             // TODO: define more constants.
-            _header = new Header(new Integer32(messageId), new Integer32(0xFFE3), new OctetString(new byte[] { b }), new Integer32(3));
+            _header = new Header(new Integer32(messageId), new Integer32(0xFFE3), new OctetString(new[] { b }), new Integer32(3));
             _parameters = new SecurityParameters(
                 report.Parameters.EngineId, 
                 report.Parameters.EngineBoots, 
@@ -128,7 +128,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="receiver">Agent.</param>
         /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
         /// <returns></returns>
-        public ISnmpMessage GetResponse(int timeout, IPEndPoint receiver, Socket udpSocket)
+        private ISnmpMessage GetResponse(int timeout, IPEndPoint receiver, Socket udpSocket)
         {
             UserRegistry registry = new UserRegistry();
             if (Version == VersionCode.V3)
@@ -148,8 +148,12 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             return "SET request message: version: " + _version + "; " + _parameters.UserName + "; " + _scope.Pdu;
         }
-        
-        internal int RequestId
+
+        /// <summary>
+        /// Gets the request ID.
+        /// </summary>
+        /// <value>The request ID.</value>
+        public int RequestId
         {
             get { return _scope.Pdu.RequestId.ToInt32(); }
         }
@@ -210,6 +214,15 @@ namespace Lextm.SharpSnmpLib.Messaging
         public VersionCode Version
         {
             get { return _version; }
+        }
+
+        /// <summary>
+        /// Community name.
+        /// </summary>
+        /// <value>The community.</value>
+        public OctetString Community
+        {
+            get { return _parameters.UserName; }
         }
     }
 }

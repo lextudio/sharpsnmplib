@@ -9,19 +9,16 @@ namespace Lextm.SharpSnmpLib.Browser
 {
 	internal class ProfileRegistry : IProfileRegistry
 	{
-		private const string settingFile = "Agents2.xml";
+		private const string SettingFile = "Agents3.xml";
 		private AgentProfile _defaultProfile;
+		// private readonly IDictionary<IPEndPoint, AgentProfile> _profiles = new Dictionary<IPEndPoint, AgentProfile>();
+		private readonly IDictionary<Guid, AgentProfile> _profiles = new Dictionary<Guid, AgentProfile>();
 
 		public event EventHandler<EventArgs> OnChanged;
 
-		internal IEnumerable<IPEndPoint> Names
-		{
-			get { return profiles.Keys; }
-		}
-
 		public IEnumerable<AgentProfile> Profiles
 		{
-			get { return profiles.Values; }
+			get { return _profiles.Values; }
 		}
 
 		public AgentProfile DefaultProfile
@@ -49,12 +46,12 @@ namespace Lextm.SharpSnmpLib.Browser
 
 		private void AddInternal(AgentProfile profile)
 		{
-			if (profiles.ContainsKey(profile.Agent))
+			if (_profiles.ContainsKey(profile.Id))
 			{
 				throw new BrowserException("This endpoint is already registered");
 			}
 
-			profiles.Add(profile.Agent, profile);
+			_profiles.Add(profile.Id, profile);
 
 			if (DefaultProfile == null)
 			{
@@ -62,38 +59,36 @@ namespace Lextm.SharpSnmpLib.Browser
 			}
 		}
 		
-		private readonly IDictionary<IPEndPoint, AgentProfile> profiles = new Dictionary<IPEndPoint, AgentProfile>();
-
-		public void DeleteProfile(IPEndPoint profile)
+		public void DeleteProfile(AgentProfile profile)
 		{
-			DeleteInternal(profile);
+			DeleteInternal(profile.Id);
 			if (OnChanged != null)
 			{
 				OnChanged(null, EventArgs.Empty);
 			}
 		}
 
-		private void DeleteInternal(IPEndPoint profile)
+		private void DeleteInternal(Guid id)
 		{
-			DeleteInternal(profile, false);
+			DeleteInternal(id, false);
 		}
 
-		private void DeleteInternal(IPEndPoint profile, bool replace)
+		private void DeleteInternal(Guid id, bool replace)
 		{
-			if (profile.Equals(DefaultProfile.Agent) && !replace)
+			if (id.Equals(DefaultProfile.Id) && !replace)
 			{
 				throw new BrowserException("Cannot delete the default endpoint!");
 			}
 
-			if(profiles.ContainsKey(profile))
+			if(_profiles.ContainsKey(id))
 			{
-				profiles.Remove(profile);
+				_profiles.Remove(id);
 			}
 		}
 
 		public void ReplaceProfile(AgentProfile agentProfile)
 		{
-			DeleteInternal(agentProfile.Agent, true);
+			DeleteInternal(agentProfile.Id, true);
 			AddInternal(agentProfile);
 			if (OnChanged != null)
 			{
@@ -111,8 +106,8 @@ namespace Lextm.SharpSnmpLib.Browser
 
 		public void SaveProfiles()
 		{
-			ICollection<IPEndPoint> myKeys = profiles.Keys;
-			using (XmlTextWriter writer = new XmlTextWriter(settingFile, null))
+			ICollection<Guid> myKeys = _profiles.Keys;
+			using (XmlTextWriter writer = new XmlTextWriter(SettingFile, null))
 			{
 				writer.Formatting = Formatting.Indented;
 				writer.WriteStartDocument();
@@ -121,33 +116,53 @@ namespace Lextm.SharpSnmpLib.Browser
 				writer.WriteString(_defaultProfile.Id.ToString());
 				writer.WriteEndAttribute();
 
-				foreach (IPEndPoint k in myKeys)
+				foreach (Guid k in myKeys)
 				{
 					writer.WriteStartElement("add");
 					
 					writer.WriteStartAttribute("id");
-					writer.WriteString(profiles[k].Id.ToString());
+					writer.WriteString(_profiles[k].Id.ToString());
 					writer.WriteEndAttribute();
 					
 					writer.WriteStartAttribute("name");
-					writer.WriteString(profiles[k].Name);
+					writer.WriteString(_profiles[k].Name);
 					writer.WriteEndAttribute();
 					
 					writer.WriteStartAttribute("binding");
-					writer.WriteString(profiles[k].Agent.Address.ToString() + ":" + profiles[k].Agent.Port);
+					writer.WriteString(string.Format("{0}:{1}", _profiles[k].Agent.Address, _profiles[k].Agent.Port));
 					writer.WriteEndAttribute();
 					
 					writer.WriteStartAttribute("version");
-					writer.WriteValue((int)(profiles[k]).VersionCode);
+					writer.WriteValue((int)(_profiles[k]).VersionCode);
 					writer.WriteEndAttribute();
 					
 					writer.WriteStartAttribute("getCommunity");
-					writer.WriteString(profiles[k].GetCommunity);
+					writer.WriteString(_profiles[k].GetCommunity);
 					writer.WriteEndAttribute();
 					
 					writer.WriteStartAttribute("setCommunity");
-					writer.WriteString(profiles[k].SetCommunity);
+					writer.WriteString(_profiles[k].SetCommunity);
 					writer.WriteEndAttribute();
+
+                    writer.WriteStartAttribute("authenticationPassphrase");
+                    writer.WriteString(_profiles[k].AuthenticationPassphrase);
+                    writer.WriteEndAttribute();
+
+                    writer.WriteStartAttribute("privacyPassphrase");
+                    writer.WriteString(_profiles[k].PrivacyPassphrase);
+                    writer.WriteEndAttribute();
+
+                    writer.WriteStartAttribute("autheticationMethod");
+                    writer.WriteString(_profiles[k].AuthenticationMethod);
+                    writer.WriteEndAttribute();
+
+                    writer.WriteStartAttribute("privacyMethod");
+                    writer.WriteString(_profiles[k].PrivacyMethod);
+                    writer.WriteEndAttribute();
+
+                    writer.WriteStartAttribute("userName");
+                    writer.WriteString(_profiles[k].UserName);
+                    writer.WriteEndAttribute();
 
 					writer.WriteEndElement();
 				}
@@ -159,29 +174,22 @@ namespace Lextm.SharpSnmpLib.Browser
 			}
 		}
 
-		internal void LoadDefaultProfile()
+	    private void LoadDefaultProfile()
 		{
-			AgentProfile first = new AgentProfile(Guid.Empty, VersionCode.V1, new IPEndPoint(IPAddress.Loopback, 161), "public", "public", "Localhost");
+			AgentProfile first = new AgentProfile(Guid.Empty, VersionCode.V1, new IPEndPoint(IPAddress.Loopback, 161), "public", "public", "localhost", string.Empty, string.Empty, "MD5", "DES", string.Empty);
 			AddProfile(first);
 			DefaultProfile = first;
 		}
 
-		internal int LoadProfilesFromFile()
+	    private int LoadProfilesFromFile()
 		{
-			if (!File.Exists(settingFile))
+			if (!File.Exists(SettingFile))
 			{
 				return 0;
 			}
-			
-			VersionCode vc = VersionCode.V1;
-			String name = string.Empty;
-			IPAddress def = IPAddress.Loopback;
-			int port = 161;
-			String get = "public";
-			String set = "public";
-			Guid id = Guid.Empty;
-			Guid defaultId = Guid.Empty;
-			using (XmlTextReader reader = new XmlTextReader(settingFile))
+
+		    Guid defaultId = Guid.Empty;
+			using (XmlTextReader reader = new XmlTextReader(SettingFile))
 			{
 				try
 				{
@@ -197,15 +205,28 @@ namespace Lextm.SharpSnmpLib.Browser
 									}
 									else if (reader.Name == "add")
 									{
-										name = reader.GetAttribute("name");
-										id = new Guid(reader.GetAttribute("id"));
-										string[] parts = reader.GetAttribute("binding").Split(new char[] {':'});
-										def = IPAddress.Parse(parts[0]);
-										port = int.Parse(parts[1]);
-										vc = (VersionCode)int.Parse(reader.GetAttribute("version"));
-										get = reader.GetAttribute("getCommunity");
-										set = reader.GetAttribute("setCommunity");
-										AgentProfile profile = new AgentProfile(id, vc, new IPEndPoint(def, port), get, set, name);
+										string name = reader.GetAttribute("name");
+										Guid id = new Guid(reader.GetAttribute("id"));
+									    string[] parts = reader.GetAttribute("binding").Split(new[] {':'});
+										IPAddress def = IPAddress.Parse(parts[0]);
+										int port = int.Parse(parts[1]);
+										VersionCode vc = (VersionCode)int.Parse(reader.GetAttribute("version"));
+										string get = reader.GetAttribute("getCommunity");
+										string set = reader.GetAttribute("setCommunity");
+									    string authenticationPassphrase = reader.GetAttribute("authenticationPassphrase");
+									    string privacyPassphrase = reader.GetAttribute("privacyPassphrase");
+									    string authenticationMethod = reader.GetAttribute("authenticationMethod");
+									    string privacyMethod = reader.GetAttribute("privacyMethod");
+									    string userName = reader.GetAttribute("userName");
+
+                                        if (def == null)
+                                        {
+                                            break;
+                                        }
+
+									    AgentProfile profile = new AgentProfile(id, vc, new IPEndPoint(def, port), get, set, name,
+									                                            authenticationPassphrase, privacyPassphrase, authenticationMethod,
+									                                            privacyMethod, userName);
 										if (id == defaultId)
 										{
 											DefaultProfile = profile;
@@ -235,7 +256,7 @@ namespace Lextm.SharpSnmpLib.Browser
 				}
 			}
 			
-			foreach (AgentProfile profile in profiles.Values)
+			foreach (AgentProfile profile in _profiles.Values)
 			{
 				if (profile.Id == defaultId)
 				{
@@ -243,7 +264,7 @@ namespace Lextm.SharpSnmpLib.Browser
 				}
 			}
 
-			return profiles.Count;
+			return _profiles.Count;
 		}
 	}
 }

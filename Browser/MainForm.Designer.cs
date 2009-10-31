@@ -217,14 +217,14 @@ namespace Lextm.SharpSnmpLib.Browser
 			this.actExit.Image = ((System.Drawing.Image)(resources.GetObject("actExit.Image")));
 			this.actExit.Text = "E&xit";
 			this.actExit.ToolTipText = "Exit Browser";
-			this.actExit.Execute += new System.EventHandler(this.actExit_Execute);
+			this.actExit.Execute += new System.EventHandler(this.ActExitExecute);
 			// 
 			// actAbout
 			// 
 			this.actAbout.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.help_browser;
 			this.actAbout.Text = "About";
 			this.actAbout.ToolTipText = "About #SNMP";
-			this.actAbout.Execute += new System.EventHandler(this.actAbout_Execute);
+			this.actAbout.Execute += new System.EventHandler(this.ActAboutExecute);
 			// 
 			// MainForm
 			// 

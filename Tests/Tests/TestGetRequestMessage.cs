@@ -30,7 +30,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void Test()
         {
             byte[] expected = Resources.get;
-            ISnmpMessage message = MessageFactory.ParseMessages(expected, new Lextm.SharpSnmpLib.Security.UserRegistry())[0];
+            ISnmpMessage message = MessageFactory.ParseMessages(expected, new UserRegistry())[0];
             Assert.AreEqual(SnmpType.GetRequestPdu, message.Pdu.TypeCode);
             GetRequestPdu pdu = (GetRequestPdu)message.Pdu;
             Assert.AreEqual(1, pdu.Variables.Count);
@@ -52,25 +52,25 @@ namespace Lextm.SharpSnmpLib.Tests
         [Test]
         public void TestConstructorV3Auth1()
         {
-            string bytes = "30 73" +
-                "02 01  03 " +
-                "30 0F " +
-                "02  02 35 41 " +
-                "02  03 00 FF E3" +
-                "04 01 05" +
-                "02  01 03" +
-                "04 2E  " +
-                "30 2C" +
-                "04 0D  80 00 1F 88 80 E9 63 00  00 D6 1F F4  49 " +
-                "02 01 0D  " +
-                "02 01 57 " +
-                "04 05 6C 65 78  6C 69 " +
-                "04 0C  1C 6D 67 BF  B2 38 ED 63 DF 0A 05 24  " +
-                "04 00 " +
-                "30 2D  " +
-                "04 0D 80 00  1F 88 80 E9 63 00 00 D6  1F F4 49 " +
-                "04  00 " +
-                "A0 1A 02  02 01 AF 02 01 00 02 01  00 30 0E 30  0C 06 08 2B  06 01 02 01 01 03 00 05  00";
+            const string bytes = "30 73" +
+                                 "02 01  03 " +
+                                 "30 0F " +
+                                 "02  02 35 41 " +
+                                 "02  03 00 FF E3" +
+                                 "04 01 05" +
+                                 "02  01 03" +
+                                 "04 2E  " +
+                                 "30 2C" +
+                                 "04 0D  80 00 1F 88 80 E9 63 00  00 D6 1F F4  49 " +
+                                 "02 01 0D  " +
+                                 "02 01 57 " +
+                                 "04 05 6C 65 78  6C 69 " +
+                                 "04 0C  1C 6D 67 BF  B2 38 ED 63 DF 0A 05 24  " +
+                                 "04 00 " +
+                                 "30 2D  " +
+                                 "04 0D 80 00  1F 88 80 E9 63 00 00 D6  1F F4 49 " +
+                                 "04  00 " +
+                                 "A0 1A 02  02 01 AF 02 01 00 02 01  00 30 0E 30  0C 06 08 2B  06 01 02 01 01 03 00 05  00";
             ReportMessage report = new ReportMessage(
                 VersionCode.V3,
                 new Header(
@@ -107,23 +107,21 @@ namespace Lextm.SharpSnmpLib.Tests
             
             Assert.AreEqual(Levels.Authentication, request.Level);
             Helper.Authenticate(request, pair);
-            string test = ByteTool.Convert(request.ToBytes());
             Assert.AreEqual(ByteTool.Convert(bytes), request.ToBytes());
         }
 
         [Test]
         public void TestConstructorV2AuthMD5PrivDES()
         {
-            string bytes =
-                "30 81 80 02  01 03 30 0F  02 02 6C 99  02 03 00 FF" +
-                "E3 04 01 07  02 01 03 04  38 30 36 04  0D 80 00 1F" +
-                "88 80 E9 63  00 00 D6 1F  F4 49 02 01  14 02 01 35" +
-                "04 07 6C 65  78 6D 61 72  6B 04 0C 80  50 D9 A1 E7" +
-                "81 B6 19 80  4F 06 C0 04  08 00 00 00  01 44 2C A3" +
-                "B5 04 30 4B  4F 10 3B 73  E1 E4 BD 91  32 1B CB 41" +
-                "1B A1 C1 D1  1D 2D B7 84  16 CA 41 BF  B3 62 83 C4" +
-                "29 C5 A4 BC  32 DA 2E C7  65 A5 3D 71  06 3C 5B 56" +
-                "FB 04 A4";
+            const string bytes = "30 81 80 02  01 03 30 0F  02 02 6C 99  02 03 00 FF" +
+                                 "E3 04 01 07  02 01 03 04  38 30 36 04  0D 80 00 1F" +
+                                 "88 80 E9 63  00 00 D6 1F  F4 49 02 01  14 02 01 35" +
+                                 "04 07 6C 65  78 6D 61 72  6B 04 0C 80  50 D9 A1 E7" +
+                                 "81 B6 19 80  4F 06 C0 04  08 00 00 00  01 44 2C A3" +
+                                 "B5 04 30 4B  4F 10 3B 73  E1 E4 BD 91  32 1B CB 41" +
+                                 "1B A1 C1 D1  1D 2D B7 84  16 CA 41 BF  B3 62 83 C4" +
+                                 "29 C5 A4 BC  32 DA 2E C7  65 A5 3D 71  06 3C 5B 56" +
+                                 "FB 04 A4";
             MD5AuthenticationProvider auth = new MD5AuthenticationProvider(new OctetString("testpass"));
             ProviderPair pair = new ProviderPair(
                 new MD5AuthenticationProvider(new OctetString("testpass")),
@@ -153,32 +151,31 @@ namespace Lextm.SharpSnmpLib.Tests
                 pair);
             Assert.AreEqual(Levels.Authentication | Levels.Privacy, request.Level);
             Helper.Authenticate(request, pair);
-            string test = ByteTool.Convert(request.ToBytes());
             Assert.AreEqual(ByteTool.Convert(bytes), request.ToBytes());
         }
 
         [Test]
         public void TestConstructorV3AuthMD5()
         {
-            string bytes = "30 73" +
-                "02 01  03 " +
-                "30 0F " +
-                "02  02 35 41 " +
-                "02  03 00 FF E3" +
-                "04 01 05" +
-                "02  01 03" +
-                "04 2E  " +
-                "30 2C" +
-                "04 0D  80 00 1F 88 80 E9 63 00  00 D6 1F F4  49 " +
-                "02 01 0D  " +
-                "02 01 57 " +
-                "04 05 6C 65 78  6C 69 " +
-                "04 0C  1C 6D 67 BF  B2 38 ED 63 DF 0A 05 24  " +
-                "04 00 " +
-                "30 2D  " +
-                "04 0D 80 00  1F 88 80 E9 63 00 00 D6  1F F4 49 " +
-                "04  00 " +
-                "A0 1A 02  02 01 AF 02 01 00 02 01  00 30 0E 30  0C 06 08 2B  06 01 02 01 01 03 00 05  00";
+            const string bytes = "30 73" +
+                                 "02 01  03 " +
+                                 "30 0F " +
+                                 "02  02 35 41 " +
+                                 "02  03 00 FF E3" +
+                                 "04 01 05" +
+                                 "02  01 03" +
+                                 "04 2E  " +
+                                 "30 2C" +
+                                 "04 0D  80 00 1F 88 80 E9 63 00  00 D6 1F F4  49 " +
+                                 "02 01 0D  " +
+                                 "02 01 57 " +
+                                 "04 05 6C 65 78  6C 69 " +
+                                 "04 0C  1C 6D 67 BF  B2 38 ED 63 DF 0A 05 24  " +
+                                 "04 00 " +
+                                 "30 2D  " +
+                                 "04 0D 80 00  1F 88 80 E9 63 00 00 D6  1F F4 49 " +
+                                 "04  00 " +
+                                 "A0 1A 02  02 01 AF 02 01 00 02 01  00 30 0E 30  0C 06 08 2B  06 01 02 01 01 03 00 05  00";
             ProviderPair pair = new ProviderPair(new MD5AuthenticationProvider(new OctetString("testpass")), DefaultPrivacyProvider.Instance);
             GetRequestMessage request = new GetRequestMessage(
                 VersionCode.V3,
@@ -205,22 +202,20 @@ namespace Lextm.SharpSnmpLib.Tests
                 pair);
             Assert.AreEqual(Levels.Authentication, request.Level);
             Helper.Authenticate(request, pair);
-            string test = ByteTool.Convert(request.ToBytes());
             Assert.AreEqual(ByteTool.Convert(bytes), request.ToBytes());
         }
 
         [Test]
         public void TestConstructorV3AuthSHA()
         {
-            string bytes =
-                "30 77 02 01  03 30 0F 02  02 47 21 02  03 00 FF E3" +
-                "04 01 05 02  01 03 04 32  30 30 04 0D  80 00 1F 88" +
-                "80 E9 63 00  00 D6 1F F4  49 02 01 15  02 02 01 5B" +
-                "04 08 6C 65  78 74 75 64  69 6F 04 0C  7B 62 65 AE" +
-                "D3 8F E3 7D  58 45 5C 6C  04 00 30 2D  04 0D 80 00" +
-                "1F 88 80 E9  63 00 00 D6  1F F4 49 04  00 A0 1A 02" +
-                "02 56 FF 02  01 00 02 01  00 30 0E 30  0C 06 08 2B" +
-                "06 01 02 01  01 03 00 05  00";
+            const string bytes = "30 77 02 01  03 30 0F 02  02 47 21 02  03 00 FF E3" +
+                                 "04 01 05 02  01 03 04 32  30 30 04 0D  80 00 1F 88" +
+                                 "80 E9 63 00  00 D6 1F F4  49 02 01 15  02 02 01 5B" +
+                                 "04 08 6C 65  78 74 75 64  69 6F 04 0C  7B 62 65 AE" +
+                                 "D3 8F E3 7D  58 45 5C 6C  04 00 30 2D  04 0D 80 00" +
+                                 "1F 88 80 E9  63 00 00 D6  1F F4 49 04  00 A0 1A 02" +
+                                 "02 56 FF 02  01 00 02 01  00 30 0E 30  0C 06 08 2B" +
+                                 "06 01 02 01  01 03 00 05  00";
             ProviderPair pair = new ProviderPair(new SHA1AuthenticationProvider(new OctetString("password")), DefaultPrivacyProvider.Instance);
             GetRequestMessage request = new GetRequestMessage(
                 VersionCode.V3,
@@ -247,17 +242,16 @@ namespace Lextm.SharpSnmpLib.Tests
                 pair);
             Assert.AreEqual(Levels.Authentication, request.Level);
             Helper.Authenticate(request, pair);
-            string test = ByteTool.Convert(request.ToBytes());
             Assert.AreEqual(ByteTool.Convert(bytes), request.ToBytes());
         }
         
         [Test]
         public void TestConstructorV3()
         {
-            string bytes = "30 3A 02 01 03 30 0F 02 02 6A 09 02 03 00 FF E3" +
-                " 04 01 04 02 01 03 04 10 30 0E 04 00 02 01 00 02" +
-                " 01 00 04 00 04 00 04 00 30 12 04 00 04 00 A0 0C" +
-                " 02 02 2C 6B 02 01 00 02 01 00 30 00";
+            const string bytes = "30 3A 02 01 03 30 0F 02 02 6A 09 02 03 00 FF E3" +
+                                 " 04 01 04 02 01 03 04 10 30 0E 04 00 02 01 00 02" +
+                                 " 01 00 04 00 04 00 04 00 30 12 04 00 04 00 A0 0C" +
+                                 " 02 02 2C 6B 02 01 00 02 01 00 30 00";
             GetRequestMessage request = new GetRequestMessage(
                 VersionCode.V3,
                 new Header(
@@ -276,7 +270,7 @@ namespace Lextm.SharpSnmpLib.Tests
                     OctetString.Empty,
                     OctetString.Empty,
                     new GetRequestPdu(0x2C6B, ErrorCode.NoError, 0, new List<Variable>())),
-                Security.ProviderPair.Default
+                ProviderPair.Default
                );
             string test = ByteTool.Convert(request.ToBytes());
             Assert.AreEqual(bytes, test);
@@ -285,21 +279,20 @@ namespace Lextm.SharpSnmpLib.Tests
         [Test]
         public void TestToBytes()
         {
-            string s = "30 27 02 01  01 04 06 70  75 62 6C 69  63 A0 1A 02" +
-                "02 4B ED 02  01 00 02 01  00 30 0E 30  0C 06 08 2B" +
-                "06 01 02 01  01 01 00 05  00                      ";
+            const string s = "30 27 02 01  01 04 06 70  75 62 6C 69  63 A0 1A 02" +
+                             "02 4B ED 02  01 00 02 01  00 30 0E 30  0C 06 08 2B" +
+                             "06 01 02 01  01 01 00 05  00                      ";
             byte[] expected = ByteTool.Convert(s);
-            GetRequestMessage message = new GetRequestMessage(0x4bed, VersionCode.V2, new OctetString("public"), new List<Variable>() { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) });
-            string test = ByteTool.Convert(message.ToBytes());
+            GetRequestMessage message = new GetRequestMessage(0x4bed, VersionCode.V2, new OctetString("public"), new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) });
             Assert.AreEqual(expected, message.ToBytes());
         }
         
         [Test]
         public void TestTimeOut()
         {
-        	//IMPORTANT: this test case requires a local SNMP agent such as Net-SNMP agent.
+        	//IMPORTANT: this test case requires a local SNMP agent such as Windows SNMP agent service, Net-SNMP agent, or snmp4j agent.
             Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            GetRequestMessage message = new GetRequestMessage(0x4bed, VersionCode.V2, new OctetString("public"), new List<Variable>() { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) });
+            GetRequestMessage message = new GetRequestMessage(0x4bed, VersionCode.V2, new OctetString("public"), new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) });
             int tick = Environment.TickCount;
             int now = 0;
             bool hasException = false;

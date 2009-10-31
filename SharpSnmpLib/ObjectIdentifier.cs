@@ -149,7 +149,7 @@ namespace Lextm.SharpSnmpLib
             StringBuilder result = new StringBuilder();
             for (int k = 0; k < numerical.Length; k++)
             {
-                result.Append("." + numerical[k].ToString(CultureInfo.InvariantCulture));
+                result.Append(".").Append(numerical[k].ToString(CultureInfo.InvariantCulture));
             }
 
             return result.ToString();

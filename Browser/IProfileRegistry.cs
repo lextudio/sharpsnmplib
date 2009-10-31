@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Net;
 
 namespace Lextm.SharpSnmpLib.Browser
 {
@@ -9,8 +8,8 @@ namespace Lextm.SharpSnmpLib.Browser
         AgentProfile DefaultProfile { get; set; }
         IEnumerable<AgentProfile> Profiles { get; }
         void AddProfile(AgentProfile profile);
-        void DeleteProfile(IPEndPoint profile);
-        void ReplaceProfile(AgentProfile agentProfile);
+        void DeleteProfile(AgentProfile profile);
+        void ReplaceProfile(AgentProfile profile);
         void LoadProfiles();
         void SaveProfiles();
         event EventHandler<EventArgs> OnChanged;

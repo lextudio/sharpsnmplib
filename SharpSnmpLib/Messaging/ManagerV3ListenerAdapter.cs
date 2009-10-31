@@ -15,6 +15,17 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// </summary>
     public class ManagerV3ListenerAdapter : IListenerAdapter
     {
+        private readonly Listener _listener;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ManagerV3ListenerAdapter"/> class.
+        /// </summary>
+        /// <param name="listener">The listener.</param>
+        public ManagerV3ListenerAdapter(Listener listener)
+        {
+            _listener = listener;
+        }
+
         /// <summary>
         /// Occurs when a <see cref="TrapV2Message"/> is received.
         /// </summary>
@@ -63,7 +74,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 case SnmpType.InformRequestPdu:
                     {
                         InformRequestMessage inform = (InformRequestMessage)message;
-                        inform.SendResponse(sender);
+                        _listener.SendResponse(inform, sender);
 
                         EventHandler<MessageReceivedEventArgs<InformRequestMessage>> handler = InformRequestReceived;
                         if (handler != null)

@@ -195,7 +195,7 @@ namespace Lextm.SharpSnmpLib
             StringBuilder result = new StringBuilder("SNMP SEQUENCE: ");
             foreach (ISnmpData item in _list)
             {
-                result.Append(item + "; ");
+                result.Append(item).Append("; ");
             }
             
             return result.ToString();

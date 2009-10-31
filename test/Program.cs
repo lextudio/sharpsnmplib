@@ -7,40 +7,44 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
-using Lextm.SharpSnmpLib;
 using Lextm.SharpSnmpLib.Messaging;
 
-namespace test
+namespace SnmpTrapD
 {
-	internal class Program
-	{
-		public static void Main(string[] args)
-		{
+    internal static class Program
+    {
+        public static void Main(string[] args)
+        {
+            if (args.Length != 0)
+            {
+                return;
+            }
+
             Console.WriteLine("#SNMP is available at http://sharpsnmplib.codeplex.com");
             Listener watcher = new Listener();
-            DefaultListenerAdapter adapter = new DefaultListenerAdapter();
+            DefaultListenerAdapter adapter = new DefaultListenerAdapter(watcher);
             watcher.Adapters.Add(adapter);
-            adapter.TrapV1Received += new EventHandler<MessageReceivedEventArgs<TrapV1Message>>(watcher_TrapV1Received);
-            adapter.TrapV2Received += new EventHandler<MessageReceivedEventArgs<TrapV2Message>>(watcher_TrapV2Received);
-            adapter.InformRequestReceived += new EventHandler<MessageReceivedEventArgs<InformRequestMessage>>(watcher_InformRequestReceived);
+            adapter.TrapV1Received += WatcherTrapV1Received;
+            adapter.TrapV2Received += WatcherTrapV2Received;
+            adapter.InformRequestReceived += WatcherInformRequestReceived;
             watcher.Start();
             Console.WriteLine("Press any key to stop . . . ");
             Console.Read();
-		}
+        }
 
-		private static void watcher_InformRequestReceived(object sender, MessageReceivedEventArgs<InformRequestMessage> e)
-		{
-			Console.WriteLine(e);
-		}
+        private static void WatcherInformRequestReceived(object sender, MessageReceivedEventArgs<InformRequestMessage> e)
+        {
+            Console.WriteLine(e);
+        }
 
-		private static void watcher_TrapV2Received(object sender, MessageReceivedEventArgs<TrapV2Message> e)
-		{
-			Console.WriteLine(e);
-		}
+        private static void WatcherTrapV2Received(object sender, MessageReceivedEventArgs<TrapV2Message> e)
+        {
+            Console.WriteLine(e);
+        }
 
-		private static void watcher_TrapV1Received(object sender, MessageReceivedEventArgs<TrapV1Message> e)
-		{
-			Console.WriteLine(e);
-		}
-	}
+        private static void WatcherTrapV1Received(object sender, MessageReceivedEventArgs<TrapV1Message> e)
+        {
+            Console.WriteLine(e);
+        }
+    }
 }

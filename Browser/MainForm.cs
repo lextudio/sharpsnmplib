@@ -38,12 +38,12 @@ namespace Lextm.SharpSnmpLib.Browser
             modules.Show(dockPanel1, DockState.DockRight);
 		}
 
-        private void actExit_Execute(object sender, EventArgs e)
+        private void ActExitExecute(object sender, EventArgs e)
         {
             Close();
         }
 		
-		private void actAbout_Execute(object sender, EventArgs e)
+		private void ActAboutExecute(object sender, EventArgs e)
 		{
 			Help.ShowHelp(this, "http://sharpsnmplib.codeplex.com");
 		}

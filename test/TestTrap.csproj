@@ -4,14 +4,15 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <OutputType>Exe</OutputType>
-    <RootNamespace>test</RootNamespace>
+    <RootNamespace>SnmpTrapD</RootNamespace>
     <AssemblyName>snmptrapd</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
-    <SourceAnalysisOverrideSettingsFile>C:\Users\lextm\AppData\Roaming\ICSharpCode/SharpDevelop3.0\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
+    <SourceAnalysisOverrideSettingsFile>D:\documents\SharpDevelop Projects\sharpsnmplib\SharpSnmpLib\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
     <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
     <NoStdLib>False</NoStdLib>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <RunSourceAnalysis>False</RunSourceAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <OutputPath>bin\Debug\</OutputPath>
@@ -53,8 +54,5 @@
       <Project>{286DE6DB-8F95-4BD4-86A2-86488D2E0EE1}</Project>
       <Name>SharpSnmpLib</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
   </ItemGroup>
 </Project>

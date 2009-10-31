@@ -11,10 +11,21 @@ using System;
 namespace Lextm.SharpSnmpLib.Messaging
 {
     /// <summary>
-    /// Description of DefaultListenerAdapter.
+    /// Default listener adapter implementation.
     /// </summary>
     public class DefaultListenerAdapter : IListenerAdapter
     {
+        private readonly Listener _listener;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DefaultListenerAdapter"/> class.
+        /// </summary>
+        /// <param name="listener">The listener.</param>
+        public DefaultListenerAdapter(Listener listener)
+        {
+            _listener = listener;
+        }
+
         /// <summary>
         /// Occurs when a <see cref="TrapV1Message" /> is received.
         /// </summary>
@@ -94,7 +105,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 case SnmpType.InformRequestPdu:
                     {
                         InformRequestMessage inform = (InformRequestMessage)message;
-                        inform.SendResponse(sender);
+                        _listener.SendResponse(inform, sender);
 
                         EventHandler<MessageReceivedEventArgs<InformRequestMessage>> handler = InformRequestReceived;
                         if (handler != null)

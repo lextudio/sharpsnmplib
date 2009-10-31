@@ -60,8 +60,7 @@ namespace Lextm.SharpSnmpLib.Mib
             StringBuilder result = new StringBuilder(names[0]);
             for (int i = 1; i < names.Count; i++)
             {
-                result.Append(".");
-                result.Append(names[i]);
+                result.Append(".").Append(names[i]);
             }
             
             return result.ToString();

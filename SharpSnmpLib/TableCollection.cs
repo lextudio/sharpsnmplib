@@ -70,10 +70,10 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentException("position cannot be empty", "position");
             }
 
-            StringBuilder key = new StringBuilder(_root + ".1.");
+            StringBuilder key = new StringBuilder(_root.ToString()).Append(".1.");
             foreach (int index in position)
             {
-                key.Append("." + (index + 1));
+                key.Append(".").Append(index + 1);
             }
 
             ObjectIdentifier keyId = new ObjectIdentifier(key.ToString());

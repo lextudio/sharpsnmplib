@@ -16,11 +16,21 @@ namespace Lextm.SharpSnmpLib.Browser
 		private readonly IPEndPoint _agent;
 		private readonly string _name;
 		private readonly Guid _id;
+	    private readonly string _authenticationPassphrase;
+	    private readonly string _privacyPassphrase;
+	    private readonly string _authenticationMethod;
+	    private readonly string _privacyMethod;
+	    private readonly string _userName;
 
-		internal AgentProfile(Guid id, VersionCode version, IPEndPoint agent, string getCommunity, string setCommunity, string name)
+	    internal AgentProfile(Guid id, VersionCode version, IPEndPoint agent, string getCommunity, string setCommunity, string name, string authenticationPassphrase, string privacyPassphrase, string authenticationMethod, string privacyMethod, string userName)
 		{
 			_id = id;
-			_get = getCommunity;
+	        _userName = userName;
+	        _privacyMethod = privacyMethod;
+	        _authenticationMethod = authenticationMethod;
+	        _privacyPassphrase = privacyPassphrase;
+	        _authenticationPassphrase = authenticationPassphrase;
+	        _get = getCommunity;
 			_set = setCommunity;
 			_version = version;
 			_agent = agent;
@@ -37,22 +47,9 @@ namespace Lextm.SharpSnmpLib.Browser
 			get { return _name; }
 		}
 
-//	    internal int Port
-//	    {
-//	        get { return _agent.Port; }
-//	    }
-//
-//	    internal IPAddress IP
-//	    {
-//	        get { return _agent.Address; }
-//	    }
-
 		internal IPEndPoint Agent
 		{
-			get
-			{
-				return _agent;
-			}
+			get { return _agent; }
 		}
 
 		internal VersionCode VersionCode
@@ -69,32 +66,67 @@ namespace Lextm.SharpSnmpLib.Browser
 		{
 			get { return _set; }
 		}
-		
-		internal string Get(Manager manager, string textual)
+
+	    public string AuthenticationPassphrase
+	    {
+	        get { return _authenticationPassphrase; }
+	    }
+
+	    public string PrivacyPassphrase
+	    {
+	        get { return _privacyPassphrase;}
+	    }
+
+	    public string AuthenticationMethod
+	    {
+	        get { return _authenticationMethod; }
+	    }
+
+	    public string PrivacyMethod
+	    {
+            get { return _privacyMethod; }
+	    }
+
+	    public string UserName
+	    {
+	        get {
+	            return _userName;
+	        }
+	    }
+
+	    internal void Get(Manager manager, string textual)
 		{
 			Variable result = manager.Objects.CreateVariable(textual);
 			TraceSource source = new TraceSource("Browser");
-			source.TraceInformation(manager.GetSingle(_agent, _get, result).ToString());
+			source.TraceInformation(manager.GetSingle(Agent, GetCommunity, result).ToString());
 			source.Flush();
 			source.Close();
-			return result.ToString();
 		}
 
 		internal string GetValue(Manager manager, string textual)
 		{
 			Variable result = manager.Objects.CreateVariable(textual);
-			return manager.GetSingle(_agent, _get, result).Data.ToString();
+			return manager.GetSingle(Agent, GetCommunity, result).Data.ToString();
 		}
 
-		internal string GetNext(Manager manager, string textual)
+		internal void GetNext(Manager manager, string textual)
 		{
-			//            Variable result = manager.Objects.CreateVariable(textual);
-			//            TraceSource source = new TraceSource("Browser");
-			//            source.TraceInformation(Messenger.GetNext(_agent, _get, result).ToString());
-			//            source.Flush();
-			//            source.Close();
-			//            return result.ToString();
-			return string.Empty;
+			Variable result = manager.Objects.CreateVariable(textual);
+			TraceSource source = new TraceSource("Browser");
+		    GetNextRequestMessage message = new GetNextRequestMessage(Messenger.NextId, VersionCode, new OctetString(GetCommunity),
+		                                                              new List<Variable> {result});
+		    ISnmpMessage response = message.GetResponse(manager.Timeout, _agent);
+            if (response.Pdu.ErrorStatus.ToInt32() != 0)
+            {
+                throw SharpErrorException.Create(
+                    "error in response",
+                    Agent.Address,
+                    response);
+            }
+
+            source.TraceInformation(response.Pdu.Variables[0].ToString());
+            source.Flush();
+		    source.Close();
 		}
 		
 		//
@@ -102,7 +134,7 @@ namespace Lextm.SharpSnmpLib.Browser
 		//
 		internal void Set(Manager manager, string textual, ISnmpData data)
 		{
-			manager.SetSingle(_agent, _set, manager.Objects.CreateVariable(textual, data));
+			manager.SetSingle(Agent, SetCommunity, manager.Objects.CreateVariable(textual, data));
 		}
 		
 		internal static bool IsValidIPAddress(string address, out IPAddress ip)
@@ -110,10 +142,10 @@ namespace Lextm.SharpSnmpLib.Browser
 			return IPAddress.TryParse(address, out ip);
 		}
 		
-		internal void Walk(Manager manager, IDefinition def)
+		internal void GetTable(Manager manager, IDefinition def)
 		{
 			IList<Variable> list = new List<Variable>();
-			int rows = Messenger.Walk(VersionCode, Agent, new OctetString(GetCommunity), new ObjectIdentifier(def.GetNumericalForm()), list, 1000, WalkMode.WithinSubtree);
+			int rows = Messenger.Walk(VersionCode, Agent, new OctetString(GetCommunity), new ObjectIdentifier(def.GetNumericalForm()), list, manager.Timeout, WalkMode.WithinSubtree);
 			
 			// 
 			// How many rows are there?
@@ -138,5 +170,19 @@ namespace Lextm.SharpSnmpLib.Browser
 			}
 
 		}
+
+	    public void Walk(Manager manager, IDefinition definition)
+	    {
+            TraceSource source = new TraceSource("Browser");
+            IList<Variable> list = new List<Variable>();
+            Messenger.Walk(VersionCode, Agent, new OctetString(GetCommunity), new ObjectIdentifier(definition.GetNumericalForm()), list, manager.Timeout, WalkMode.WithinSubtree);
+            foreach (Variable v in list)
+            {
+                source.TraceInformation(v.ToString());
+            }
+
+	        source.Flush();
+            source.Close();
+	    }
 	}
 }

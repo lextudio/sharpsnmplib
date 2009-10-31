@@ -38,7 +38,7 @@ namespace Lextm.SharpSnmpLib.Browser
             {
                 string display = profile.Name.Length != 0 ? profile.Name : profile.Agent.ToString();
 
-                ListViewItem item = new ListViewItem(new string[] { display, profile.Agent.ToString() });
+                ListViewItem item = new ListViewItem(new[] { display, profile.Agent.ToString() });
                 listView1.Items.Add(item);
                 item.Tag = profile;
 
@@ -126,7 +126,7 @@ namespace Lextm.SharpSnmpLib.Browser
 
             try
             {
-                Profiles.DeleteProfile(((AgentProfile) listView1.SelectedItems[0].Tag).Agent);
+                Profiles.DeleteProfile(((AgentProfile) listView1.SelectedItems[0].Tag));
                 Profiles.SaveProfiles();
             }
             catch (BrowserException ex)
@@ -146,7 +146,12 @@ namespace Lextm.SharpSnmpLib.Browser
                 {
                     try
                     {
-                    	Profiles.AddProfile(new AgentProfile(Guid.NewGuid(), editor.VersionCode, new IPEndPoint(editor.IP, editor.Port), editor.GetCommunity, editor.SetCommunity, editor.AgentName));
+                        Profiles.AddProfile(new AgentProfile(Guid.NewGuid(), editor.VersionCode,
+                                                             new IPEndPoint(editor.IP, editor.Port), editor.GetCommunity,
+                                                             editor.SetCommunity, editor.AgentName,
+                                                             editor.AuthenticationPassphrase, editor.PrivacyPassphrase,
+                                                             editor.AuthenticationMethod, editor.PrivacyMethod,
+                                                             editor.UserName));
                         Profiles.SaveProfiles();
                     }
                     catch (BrowserException ex)
@@ -167,8 +172,8 @@ namespace Lextm.SharpSnmpLib.Browser
             {
                 if (editor.ShowDialog() == DialogResult.OK)
                 {
-                    Profiles.ReplaceProfile(new AgentProfile(profile.Id, editor.VersionCode, new IPEndPoint(editor.IP, editor.Port), editor.GetCommunity, editor.SetCommunity, editor.AgentName));
-                    Profiles.SaveProfiles();
+                    //Profiles.ReplaceProfile(new AgentProfile(profile.Id, editor.VersionCode, new IPEndPoint(editor.IP, editor.Port), editor.GetCommunity, editor.SetCommunity, editor.AgentName));
+                    //Profiles.SaveProfiles();
                 }
             }
         }

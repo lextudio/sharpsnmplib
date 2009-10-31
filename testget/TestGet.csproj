@@ -7,7 +7,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <OutputType>Exe</OutputType>
-    <RootNamespace>TestGet</RootNamespace>
+    <RootNamespace>SnmpGet</RootNamespace>
     <AssemblyName>snmpget</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <SourceAnalysisOverrideSettingsFile>C:\Users\lextm\AppData\Roaming\ICSharpCode/SharpDevelop3.0\AddIns\MattEverson.SourceAnalysis\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>

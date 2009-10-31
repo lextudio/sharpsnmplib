@@ -22,7 +22,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     public class Manager : Component
     {
         private const int DefaultPort = 161;
-        private readonly object locker = new object();
+        private readonly object _locker = new object();
         private int _timeout = 5000;
         private VersionCode _version;
         private IObjectRegistry _objects; // = ObjectRegistry.Default;
@@ -64,7 +64,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             set
             {
-                lock (locker)
+                lock (_locker)
                 {
                     _version = value;
                 }
@@ -181,12 +181,12 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="community">Community name.</param>
         /// <param name="variable">Variable bind.</param>
         /// <returns></returns>
-        public void SetSingle(IPEndPoint endpoint, string community, Variable variable)
+        public IList<Variable> SetSingle(IPEndPoint endpoint, string community, Variable variable)
         {
             List<Variable> variables = new List<Variable>();
             variables.Add(variable);
 
-            Messenger.Set(_version, endpoint, new OctetString(community), variables, _timeout);
+            return Messenger.Set(_version, endpoint, new OctetString(community), variables, _timeout);
         }
         
         /// <summary>
@@ -196,9 +196,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="community">Community name.</param>
         /// <param name="variable">Variable bind.</param>
         /// <returns></returns>
-        public void SetSingle(IPAddress address, string community, Variable variable)
+        public IList<Variable> SetSingle(IPAddress address, string community, Variable variable)
         {
-            SetSingle(new IPEndPoint(address, DefaultPort), community, variable);
+            return SetSingle(new IPEndPoint(address, DefaultPort), community, variable);
         }
         
         /// <summary>
@@ -208,9 +208,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="community">Community name.</param>
         /// <param name="variable">Variable bind.</param>
         /// <returns></returns>
-        public void SetSingle(string address, string community, Variable variable)
+        public IList<Variable> SetSingle(string address, string community, Variable variable)
         {
-            SetSingle(IPAddress.Parse(address), community, variable);
+            return SetSingle(IPAddress.Parse(address), community, variable);
         }
 
         /// <summary>
@@ -220,9 +220,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="community">Community name.</param>
         /// <param name="variables">Variable binds.</param>
         /// <returns></returns>
-        public void Set(IPEndPoint endpoint, string community, IList<Variable> variables)
+        public IList<Variable> Set(IPEndPoint endpoint, string community, IList<Variable> variables)
         {
-            Messenger.Set(_version, endpoint, new OctetString(community), variables, _timeout);
+            return Messenger.Set(_version, endpoint, new OctetString(community), variables, _timeout);
         }
         
         /// <summary>
@@ -232,9 +232,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="community">Community name.</param>
         /// <param name="variables">Variable binds.</param>
         /// <returns></returns>
-        public void Set(string address, string community, IList<Variable> variables)
+        public IList<Variable> Set(string address, string community, IList<Variable> variables)
         {
-            Set(IPAddress.Parse(address), community, variables);
+            return Set(IPAddress.Parse(address), community, variables);
         }
         
         /// <summary>
@@ -244,9 +244,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="community">Community name.</param>
         /// <param name="variables">Variable binds.</param>
         /// <returns></returns>
-        public void Set(IPAddress address, string community, IList<Variable> variables)
+        public IList<Variable> Set(IPAddress address, string community, IList<Variable> variables)
         {
-            Set(new IPEndPoint(address, DefaultPort), community, variables);
+            return Set(new IPEndPoint(address, DefaultPort), community, variables);
         }
 
         /// <summary>
@@ -304,22 +304,12 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public override string ToString()
         {
-            // ReSharper disable RedundantToStringCall
             return "SNMP manager: timeout: " + Timeout.ToString(CultureInfo.InvariantCulture) + "; version: " + DefaultVersion.ToString();
-            
-            // ReSharper restore RedundantToStringCall
         }         
         
-        // ReSharper disable RedundantNameQualifier
-        // ReSharper disable RedundantThisQualifier
-        // ReSharper disable RedundantDelegateCreation
         private void InitializeComponent()
         {
         }
-        
-        // ReSharper restore RedundantDelegateCreation
-        // ReSharper restore RedundantThisQualifier
-        // ReSharper restore RedundantNameQualifier
     }
 }
 #pragma warning restore 612,618

@@ -50,12 +50,14 @@ namespace Lextm.SharpSnmpLib.Browser
             this.actGetNext = new Crad.Windows.Forms.Actions.Action();
             this.actSet = new Crad.Windows.Forms.Actions.Action();
             this.actWalk = new Crad.Windows.Forms.Actions.Action();
+            this.actGetTable = new Crad.Windows.Forms.Actions.Action();
             this.actNumber = new Crad.Windows.Forms.Actions.Action();
+            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tslblOID = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.getTableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.actionList1)).BeginInit();
             this.statusStrip1.SuspendLayout();
@@ -74,7 +76,7 @@ namespace Lextm.SharpSnmpLib.Browser
             this.treeView1.ShowNodeToolTips = true;
             this.treeView1.Size = new System.Drawing.Size(284, 239);
             this.treeView1.TabIndex = 0;
-            this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
+            this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeView1AfterSelect);
             // 
             // contextMenuStrip1
             // 
@@ -82,36 +84,37 @@ namespace Lextm.SharpSnmpLib.Browser
             this.getToolStripMenuItem,
             this.getNextToolStripMenuItem,
             this.setToolStripMenuItem,
-            this.walkToolStripMenuItem});
+            this.walkToolStripMenuItem,
+            this.getTableToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(120, 92);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(125, 114);
             // 
             // getToolStripMenuItem
             // 
             this.actionList1.SetAction(this.getToolStripMenuItem, this.actGet);
             this.getToolStripMenuItem.Name = "getToolStripMenuItem";
-            this.getToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
+            this.getToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.getToolStripMenuItem.Text = "Get";
             // 
             // getNextToolStripMenuItem
             // 
             this.actionList1.SetAction(this.getNextToolStripMenuItem, this.actGetNext);
             this.getNextToolStripMenuItem.Name = "getNextToolStripMenuItem";
-            this.getNextToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
+            this.getNextToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.getNextToolStripMenuItem.Text = "Get Next";
             // 
             // setToolStripMenuItem
             // 
             this.actionList1.SetAction(this.setToolStripMenuItem, this.actSet);
             this.setToolStripMenuItem.Name = "setToolStripMenuItem";
-            this.setToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
+            this.setToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.setToolStripMenuItem.Text = "Set";
             // 
             // walkToolStripMenuItem
             // 
             this.actionList1.SetAction(this.walkToolStripMenuItem, this.actWalk);
             this.walkToolStripMenuItem.Name = "walkToolStripMenuItem";
-            this.walkToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
+            this.walkToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.walkToolStripMenuItem.Text = "Walk";
             // 
             // imageList1
@@ -130,6 +133,7 @@ namespace Lextm.SharpSnmpLib.Browser
             this.actionList1.Actions.Add(this.actGet);
             this.actionList1.Actions.Add(this.actSet);
             this.actionList1.Actions.Add(this.actWalk);
+            this.actionList1.Actions.Add(this.actGetTable);
             this.actionList1.Actions.Add(this.actGetNext);
             this.actionList1.Actions.Add(this.actNumber);
             this.actionList1.ContainerControl = this;
@@ -138,29 +142,36 @@ namespace Lextm.SharpSnmpLib.Browser
             // 
             this.actGet.Text = "Get";
             this.actGet.ToolTipText = "Get";
-            this.actGet.Update += new System.EventHandler(this.actGet_Update);
-            this.actGet.Execute += new System.EventHandler(this.actGet_Execute);
+            this.actGet.Update += new System.EventHandler(this.ActGetUpdate);
+            this.actGet.Execute += new System.EventHandler(this.ActGetExecute);
             // 
             // actGetNext
             // 
             this.actGetNext.Text = "Get Next";
             this.actGetNext.ToolTipText = "Get Next";
-            this.actGetNext.Update += new System.EventHandler(this.actGetNext_Update);
-            this.actGetNext.Execute += new System.EventHandler(this.actGetNext_Execute);
+            this.actGetNext.Update += new System.EventHandler(this.ActGetNextUpdate);
+            this.actGetNext.Execute += new System.EventHandler(this.ActGetNextExecute);
             // 
             // actSet
             // 
             this.actSet.Text = "Set";
             this.actSet.ToolTipText = "Set";
-            this.actSet.Update += new System.EventHandler(this.actSet_Update);
-            this.actSet.Execute += new System.EventHandler(this.actSet_Execute);
+            this.actSet.Update += new System.EventHandler(this.ActSetUpdate);
+            this.actSet.Execute += new System.EventHandler(this.ActSetExecute);
             // 
             // actWalk
             // 
             this.actWalk.Text = "Walk";
             this.actWalk.ToolTipText = "Walk";
-            this.actWalk.Update += new System.EventHandler(this.actWalk_Update);
-            this.actWalk.Execute += new System.EventHandler(this.actWalk_Execute);
+            this.actWalk.Update += new System.EventHandler(this.ActWalkUpdate);
+            this.actWalk.Execute += new System.EventHandler(this.ActWalkExecute);
+            // 
+            // actGetTable
+            // 
+            this.actGetTable.Text = "Get Table";
+            this.actGetTable.ToolTipText = "Get Table";
+            this.actGetTable.Update += new System.EventHandler(this.ActGetTableUpdate);
+            this.actGetTable.Execute += new System.EventHandler(this.ActGetTableExecute);
             // 
             // actNumber
             // 
@@ -168,7 +179,17 @@ namespace Lextm.SharpSnmpLib.Browser
             this.actNumber.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.office_calendar;
             this.actNumber.Text = "Show ID";
             this.actNumber.ToolTipText = "Show object ID";
-            this.actNumber.Execute += new System.EventHandler(this.actNumber_Execute);
+            this.actNumber.Execute += new System.EventHandler(this.ActNumberExecute);
+            // 
+            // toolStripButton2
+            // 
+            this.actionList1.SetAction(this.toolStripButton2, this.actNumber);
+            this.toolStripButton2.CheckOnClick = true;
+            this.toolStripButton2.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.office_calendar;
+            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton2.Name = "toolStripButton2";
+            this.toolStripButton2.Size = new System.Drawing.Size(70, 22);
+            this.toolStripButton2.Text = "Show ID";
             // 
             // statusStrip1
             // 
@@ -196,15 +217,12 @@ namespace Lextm.SharpSnmpLib.Browser
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // toolStripButton2
+            // getTableToolStripMenuItem
             // 
-            this.actionList1.SetAction(this.toolStripButton2, this.actNumber);
-            this.toolStripButton2.CheckOnClick = true;
-            this.toolStripButton2.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.office_calendar;
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(70, 22);
-            this.toolStripButton2.Text = "Show ID";
+            this.actionList1.SetAction(this.getTableToolStripMenuItem, this.actGetTable);
+            this.getTableToolStripMenuItem.Name = "getTableToolStripMenuItem";
+            this.getTableToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.getTableToolStripMenuItem.Text = "Get Table";
             // 
             // MibTreePanel
             // 
@@ -245,5 +263,7 @@ namespace Lextm.SharpSnmpLib.Browser
         private System.Windows.Forms.ToolStrip toolStrip1;
         private Crad.Windows.Forms.Actions.Action actNumber;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
+        private Crad.Windows.Forms.Actions.Action actGetTable;
+        private System.Windows.Forms.ToolStripMenuItem getTableToolStripMenuItem;
 	}
 }

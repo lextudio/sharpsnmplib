@@ -8,7 +8,7 @@ namespace Lextm.SharpSnmpLib.Browser
 {
     internal partial class FormProfile : Form
     {
-        private AgentProfile _profile;
+        private readonly AgentProfile _profile;
 
         public FormProfile(AgentProfile agent)
         {
@@ -46,28 +46,68 @@ namespace Lextm.SharpSnmpLib.Browser
             get { return int.Parse(txtPort.Text, CultureInfo.CurrentCulture); }
         }
 
+        public string AuthenticationPassphrase
+        {
+            get { return txtAuthentication.Text; }
+        }
+
+        public string PrivacyPassphrase
+        {
+            get { return txtPrivacy.Text; }
+        }
+
+        public string AuthenticationMethod
+        {
+            get
+            {
+                if (cbAuthentication.SelectedIndex == 0)
+                {
+                    return "MD5";
+                }
+
+                return "SHA1";
+            }
+        }
+
+        public string PrivacyMethod
+        {
+            get { return "DES"; }
+        }
+
+        public string UserName
+        {
+            get { return txtUserName.Text; }
+        }
+
         private void FormProfile_Load(object sender, EventArgs e)
         {
-            if (_profile != null)
-            {
-                txtIP.Text = _profile.Agent.Address.ToString();
-                txtIP.ReadOnly = true;
-                txtGet.Text = _profile.GetCommunity;
-                txtSet.Text = _profile.SetCommunity;
-                txtName.Text = _profile.Name;
-                cbVersionCode.SelectedIndex = (int)_profile.VersionCode;
-            }
-            else
+            if (_profile == null)
             {
                 cbVersionCode.SelectedIndex = 1;
+                cbAuthentication.SelectedIndex = 0;
+                cbPrivacy.SelectedIndex = 0;
+                return;
             }
+            
+            txtIP.Text = _profile.Agent.Address.ToString();
+            txtIP.ReadOnly = true;
+            txtGet.Text = _profile.GetCommunity;
+            txtSet.Text = _profile.SetCommunity;
+            txtName.Text = _profile.Name;
+            cbVersionCode.SelectedIndex = (int)_profile.VersionCode;
+            // TODO: load and save profile v3.
+            txtAuthentication.Text = _profile.AuthenticationPassphrase;
+            txtPrivacy.Text = _profile.PrivacyPassphrase;
+            cbAuthentication.SelectedIndex = (_profile.AuthenticationMethod == "MD5") ? 0 : 1;
+            cbPrivacy.SelectedIndex = 0;
+            txtUserName.Text = _profile.UserName;
         }
         
         private void txtPort_Validating(object sender, CancelEventArgs e)
         {
             int result;
             bool isInt = int.TryParse(txtPort.Text, out result);
-            if (!isInt || result < 0)
+            if (!isInt || result <= 0)
             {
                 e.Cancel = true;
                 txtPort.SelectAll();
@@ -82,12 +122,7 @@ namespace Lextm.SharpSnmpLib.Browser
         
         private void txtSet_Validating(object sender, CancelEventArgs e)
         {
-            if (txtSet.Text.Length == 0)
-            {
-                e.Cancel = true;
-                txtSet.SelectAll();
-                errorProvider1.SetError(txtSet, "Community name cannot be empty");
-            }
+            ValidatingTextBox(txtSet, e);
         }
         
         private void txtSet_Validated(object sender, EventArgs e)
@@ -97,12 +132,7 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void txtGet_Validating(object sender, CancelEventArgs e)
         {
-            if (txtGet.Text.Length ==0)
-            {
-                e.Cancel = true;
-                txtGet.SelectAll();
-                errorProvider1.SetError(txtGet, "Community name cannot be empty");
-            }
+            ValidatingTextBox(txtGet, e);
         }
         
         private void txtGet_Validated(object sender, EventArgs e)
@@ -149,6 +179,69 @@ namespace Lextm.SharpSnmpLib.Browser
                 
                 ValidateAllChildren(c);
             }
+        }
+
+        private void CbVersionCodeSelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateV3Controls(cbVersionCode.SelectedIndex == 2);
+        }
+
+        private void UpdateV3Controls(bool isV3)
+        {
+            cbAuthentication.Enabled = isV3;
+            cbPrivacy.Enabled = isV3;
+            txtAuthentication.Enabled = isV3;
+            txtPrivacy.Enabled = isV3;
+            txtUserName.Enabled = isV3;
+            txtGet.Enabled = !isV3;
+            txtSet.Enabled = !isV3;
+        }
+
+        private void txtAuthentication_Validated(object sender, EventArgs e)
+        {
+            errorProvider1.SetError(txtAuthentication, string.Empty);
+        }
+
+        private void txtAuthentication_Validating(object sender, CancelEventArgs e)
+        {
+            ValidatingTextBox(txtAuthentication, e);
+        }
+
+        private void txtPrivacy_Validated(object sender, EventArgs e)
+        {
+            errorProvider1.SetError(txtPrivacy, string.Empty);
+        }
+
+        private void txtPrivacy_Validating(object sender, CancelEventArgs e)
+        {
+            ValidatingTextBox(txtPrivacy, e);
+        }
+
+        private void txtUserName_Validated(object sender, EventArgs e)
+        {
+            errorProvider1.SetError(txtUserName, string.Empty);
+        }
+
+        private void txtUserName_Validating(object sender, CancelEventArgs e)
+        {
+            ValidatingTextBox(txtUserName, e);
+        }
+
+        private void ValidatingTextBox(TextBox control, CancelEventArgs e)
+        {
+            if (!control.Enabled)
+            {
+                return;
+            }
+
+            if (control.Text.Length != 0)
+            {
+                return;
+            }
+
+            e.Cancel = true;
+            control.SelectAll();
+            errorProvider1.SetError(control, "Text box cannot be empty");
         }
     }
 }

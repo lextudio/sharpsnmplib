@@ -9,7 +9,7 @@
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <SourceAnalysisOverrideSettingsFile>C:\Users\lextm\AppData\Roaming\ICSharpCode/SharpDevelop3.0\AddIns\MattEverson.SourceAnalysis\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
-    <SignAssembly>True</SignAssembly>
+    <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\SharpSnmpLib\sharpsnmplib.snk</AssemblyOriginatorKeyFile>
     <DelaySign>False</DelaySign>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
@@ -90,6 +90,7 @@
     <Compile Include="Tests\TestTrapMessage.cs" />
     <Compile Include="Tests\TestTrapV1Pdu.cs" />
     <Compile Include="Tests\TestVariable.cs" />
+    <Compile Include="Tests\TestWatchDog.cs" />
     <None Include="Resources\empty.txt" />
     <EmbeddedResource Include="Tests\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -217,6 +218,10 @@
     <Content Include="Resources\UDP-MIB.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Browser\Browser.csproj">
+      <Project>{60EA8A71-EE0B-4F0E-9485-B30B71D454D7}</Project>
+      <Name>Browser</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SharpSnmpLib\SharpSnmpLib.Controls.csproj">
       <Project>{B2E8F73F-072C-4F5B-A42B-315F84A45374}</Project>
       <Name>SharpSnmpLib.Controls</Name>

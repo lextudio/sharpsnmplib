@@ -123,8 +123,8 @@ namespace Lextm.SharpSnmpLib.Browser
             this.actEnabled.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.face_monkey;
             this.actEnabled.Text = "Disabled";
             this.actEnabled.ToolTipText = "Enable/disable this panel";
-            this.actEnabled.Update += new System.EventHandler(this.actEnabled_Update);
-            this.actEnabled.Execute += new System.EventHandler(this.actEnabled_Execute);
+            this.actEnabled.Update += new System.EventHandler(this.ActEnabledUpdate);
+            this.actEnabled.Execute += new System.EventHandler(this.ActEnabledExecute);
             // 
             // NotificationPanel
             // 

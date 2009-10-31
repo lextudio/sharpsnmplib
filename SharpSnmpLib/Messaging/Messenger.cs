@@ -11,8 +11,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Net;
-using System.Net.Sockets;
-
 using Lextm.SharpSnmpLib.Mib;
 
 namespace Lextm.SharpSnmpLib.Messaging
@@ -23,7 +21,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// </summary>
     public static class Messenger
     {
-        private static IdGenerator requestCounter = new IdGenerator();
+        private static readonly IdGenerator RequestCounter = new IdGenerator();
        
         /// <summary>
         /// Gets a list of variable binds.
@@ -111,6 +109,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             bool first = true;
             bool oldWay = false;
 
+            // TODO: roll back to old style.
             do
             {
                 seed = next;
@@ -172,7 +171,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         ///     <c>true</c> if the specified seed has next item; otherwise, <c>false</c>.
         /// </returns>
         [SuppressMessage("Microsoft.Design", "CA1021:AvoidOutParameters", MessageId = "5#")]
-        public static bool HasNext(VersionCode version, IPEndPoint endpoint, OctetString community, Variable seed, int timeout, out Variable next)
+        private static bool HasNext(VersionCode version, IPEndPoint endpoint, OctetString community, Variable seed, int timeout, out Variable next)
         {
             if (seed == null)
             {
@@ -418,11 +417,11 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Gets the request counter.
         /// </summary>
         /// <value>The request counter.</value>
-        public static IdGenerator RequestCounter
+        public static int NextId
         {
             get
             {
-                return requestCounter;
+                return RequestCounter.NextId;
             }
         } 
     }

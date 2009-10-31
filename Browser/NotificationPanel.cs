@@ -22,8 +22,8 @@ namespace Lextm.SharpSnmpLib.Browser
     /// </summary>
     internal partial class NotificationPanel : DockContent
     {
-        private const string STR_AllUnassigned = "All Unassigned";
-        private const string STR_Sends = "[{1}] [{0}] {2}";
+        private const string StrAllUnassigned = "All Unassigned";
+        private const string StrSends = "[{1}] [{0}] {2}";
         private Listener _listener;
         private Listener _listenerV6;
         
@@ -31,7 +31,7 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             InitializeComponent();
             tstxtPort.Text = "162";
-            tscbIP.Items.Add(STR_AllUnassigned);
+            tscbIP.Items.Add(StrAllUnassigned);
             foreach (IPAddress address in Dns.GetHostEntry("").AddressList)
             {
                 if (address.IsIPv6LinkLocal)
@@ -62,11 +62,11 @@ namespace Lextm.SharpSnmpLib.Browser
         private void NotificationPanel_Load(object sender, EventArgs e)
         {
             Listener.ExceptionRaised += Listener_ExceptionRaised;
-            DefaultListenerAdapter adapter = new DefaultListenerAdapter();
+            DefaultListenerAdapter adapter = new DefaultListenerAdapter(Listener);
             Listener.Adapters.Add(adapter);
-            adapter.TrapV1Received += new EventHandler<MessageReceivedEventArgs<TrapV1Message>>(Listener_TrapV1Received);;
-            adapter.TrapV2Received += new EventHandler<MessageReceivedEventArgs<TrapV2Message>>(Listener_TrapV2Received);
-            adapter.InformRequestReceived += new EventHandler<MessageReceivedEventArgs<InformRequestMessage>>(Listener_InformRequestReceived);
+            adapter.TrapV1Received += Listener_TrapV1Received;
+            adapter.TrapV2Received += Listener_TrapV2Received;
+            adapter.InformRequestReceived += Listener_InformRequestReceived;
             
             ListenerV6.ExceptionRaised += Listener_ExceptionRaised;
             ListenerV6.Adapters.Add(adapter);
@@ -74,17 +74,17 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void Listener_InformRequestReceived(object sender, MessageReceivedEventArgs<InformRequestMessage> e)
         {
-            LogMessage(string.Format(STR_Sends, DateTime.Now, e.Sender, e.Message.ToString()));
+            LogMessage(string.Format(StrSends, DateTime.Now, e.Sender, e.Message));
         }
 
         private void Listener_TrapV2Received(object sender, MessageReceivedEventArgs<TrapV2Message> e)
         {
-            LogMessage(string.Format(STR_Sends, DateTime.Now, e.Sender, e.Message.ToString()));
+            LogMessage(string.Format(StrSends, DateTime.Now, e.Sender, e.Message));
         }
 
         private void Listener_TrapV1Received(object sender, MessageReceivedEventArgs<TrapV1Message> e)
         {
-            LogMessage(string.Format(STR_Sends, DateTime.Now, e.Sender, e.Message.ToString()));
+            LogMessage(string.Format(StrSends, DateTime.Now, e.Sender, e.Message));
         }
 
         private void Listener_ExceptionRaised(object sender, ExceptionRaisedEventArgs e)
@@ -96,7 +96,7 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             if (InvokeRequired)
             {
-                Invoke((MethodInvoker)delegate { LogMessage(message); });
+                Invoke((MethodInvoker) delegate { LogMessage(message); });
                 return;
             }
             
@@ -105,7 +105,7 @@ namespace Lextm.SharpSnmpLib.Browser
             txtLog.ScrollToCaret();
         }
 
-        private void actEnabled_Execute(object sender, EventArgs e)
+        private void ActEnabledExecute(object sender, EventArgs e)
         {
             if (actEnabled.Checked)
             {
@@ -128,7 +128,7 @@ namespace Lextm.SharpSnmpLib.Browser
         private void StartListeners()
         {
             int port = int.Parse(tstxtPort.Text);
-            if (tscbIP.Text == STR_AllUnassigned)
+            if (tscbIP.Text == StrAllUnassigned)
             {
                 Listener.Start(new IPEndPoint(IPAddress.Any, port));
                 if (Socket.OSSupportsIPv6)
@@ -140,6 +140,11 @@ namespace Lextm.SharpSnmpLib.Browser
             }
 
             IPAddress address = IPAddress.Parse(tscbIP.Text);
+            if (address == null)
+            {
+                return;
+            }
+
             if (address.AddressFamily == AddressFamily.InterNetwork)
             {
                 Listener.Start(new IPEndPoint(address, port)); 
@@ -148,14 +153,14 @@ namespace Lextm.SharpSnmpLib.Browser
 
             if (!Socket.OSSupportsIPv6)
             {
-                LogMessage(Listener.IPv6NotSupported);
+                LogMessage(Listener.ErrorIPv6NotSupported);
                 return;
             }
                 
             ListenerV6.Start(new IPEndPoint(address, port));          
         }
 
-        private void actEnabled_Update(object sender, EventArgs e)
+        private void ActEnabledUpdate(object sender, EventArgs e)
         {
             tscbIP.Enabled = !actEnabled.Checked;
             tstxtPort.Enabled = !actEnabled.Checked;

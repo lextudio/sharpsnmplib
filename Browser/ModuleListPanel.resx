@@ -126,38 +126,15 @@
   <metadata name="actRemove.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>642, 17</value>
   </metadata>
+  <metadata name="actEnableMonitor.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>133, 54</value>
+  </metadata>
   <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 54</value>
   </metadata>
   <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>132, 17</value>
   </metadata>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="tsbtnAdd.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACjSURBVDhPY2AYtMAkdfEZk9Ql/yF48RmSHQrSuP3cMzAG
-        sYeAAah+hvgd2QuI8MARJiAFBy6/+L/74vP/e4AYphlGbzv77P/WM8/+bwNirGECEtxy5un/qdtv/5+y
-        7fb/SVtu/Z+w+db/trU3/zevuvG/fsX1/7XLrv+fv+8BLgOQow3iBZBmEEZ1PpHRCgsDmAFkRyPFBlCQ
-        kChMyiT7mVwNAEfg1zskaaR0AAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="toolStripButton1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAB3SURBVDhPY2AYBYMoBExSF58xSV3ynzi8+AyG00EaD1x+
-        8X/3xef/9wDx9nPPUPC2s8/+bz3z7P82IAapxWrAljNP/0/dfvv/lG23/0/acuv/hM23/retvfm/edWN
-        //Urrv+vXXb9//x9D3AZQKEXBlF0jDynAACWu38nZViT9wAAAABJRU5ErkJggg==
-</value>
-  </data>
-  <data name="removeToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAB3SURBVDhPY2AYBYMoBExSF58xSV3ynzi8+AyG00EaD1x+
-        8X/3xef/9wDx9nPPUPC2s8/+bz3z7P82IAapxWrAljNP/0/dfvv/lG23/0/acuv/hM23/retvfm/edWN
-        //Urrv+vXXb9//x9D3AZQKEXBlF0jDynAACWu38nZViT9wAAAABJRU5ErkJggg==
-</value>
-  </data>
   <metadata name="openFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>336, 17</value>
   </metadata>

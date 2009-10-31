@@ -4,7 +4,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <OutputType>Exe</OutputType>
-    <RootNamespace>TestGetNext</RootNamespace>
+    <RootNamespace>SnmpGetNext</RootNamespace>
     <AssemblyName>snmpgetnext</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <SourceAnalysisOverrideSettingsFile>C:\Users\lextm\AppData\Roaming\ICSharpCode/SharpDevelop3.0\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>

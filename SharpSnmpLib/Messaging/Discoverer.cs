@@ -15,7 +15,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     {
         private long _active;
         private int _bufferSize;
-        private int requestId;
+        private int _requestId;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Discoverer"/> class.
@@ -73,8 +73,8 @@ namespace Lextm.SharpSnmpLib.Messaging
             List<Variable> variables = new List<Variable>();
             variables.Add(v);
 
-            requestId = Messenger.RequestCounter.NextId;
-            GetRequestMessage message = new GetRequestMessage(requestId, version, community, variables);
+            _requestId = Messenger.NextId;
+            GetRequestMessage message = new GetRequestMessage(_requestId, version, community, variables);
             byte[] bytes = message.ToBytes();
             using (UdpClient udp = new UdpClient(broadcastAddress.AddressFamily))
             {
@@ -175,7 +175,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 }
 
                 GetResponseMessage response = (GetResponseMessage) message;
-                if (response.RequestId != requestId)
+                if (response.RequestId != _requestId)
                 {
                     continue;
                 }
