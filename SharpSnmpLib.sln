@@ -49,6 +49,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestGetBulk", "testgetbulk\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpSnmpLib.Optional", "SharpSnmpLib\SharpSnmpLib.Optional.csproj", "{33110773-3E28-4963-8956-C07FB8A5F7E3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpSnmpLib.AST", "SharpSnmpLib\SharpSnmpLib.AST.csproj", "{F35C7321-929B-4238-959A-A60A890F10BA}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -132,9 +134,13 @@ Global
 		{A3D5CC49-DD4A-4FD6-A165-7D5AF60CDD15}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3D5CC49-DD4A-4FD6-A165-7D5AF60CDD15}.Release|Any CPU.Build.0 = Release|Any CPU
 		{33110773-3E28-4963-8956-C07FB8A5F7E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{33110773-3E28-4963-8956-C07FB8A5F7E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33110773-3E28-4963-8956-C07FB8A5F7E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33110773-3E28-4963-8956-C07FB8A5F7E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33110773-3E28-4963-8956-C07FB8A5F7E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F35C7321-929B-4238-959A-A60A890F10BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F35C7321-929B-4238-959A-A60A890F10BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F35C7321-929B-4238-959A-A60A890F10BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F35C7321-929B-4238-959A-A60A890F10BA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
