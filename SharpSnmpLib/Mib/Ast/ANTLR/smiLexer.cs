@@ -1,4 +1,4 @@
-// $ANTLR 3.1.2 smi.g 2009-11-04 20:19:52
+// $ANTLR 3.1.2 Smi.g 2009-11-07 08:33:18
 
 // The variable 'variable' is assigned but its value is never used.
 #pragma warning disable 168, 219
@@ -19,7 +19,7 @@ using IDictionary	= System.Collections.IDictionary;
 using Hashtable 	= System.Collections.Hashtable;
 namespace  Lextm.SharpSnmpLib.Mib.Ast.ANTLR 
 {
-public partial class smiLexer : Lexer {
+public partial class SmiLexer : Lexer {
     public const int EOF = -1;
     public const int T__126 = 126;
     public const int T__127 = 127;
@@ -219,14 +219,14 @@ public partial class smiLexer : Lexer {
     // delegates
     // delegators
 
-    public smiLexer() 
+    public SmiLexer() 
     {
 		InitializeCyclicDFAs();
     }
-    public smiLexer(ICharStream input)
+    public SmiLexer(ICharStream input)
 		: this(input, null) {
     }
-    public smiLexer(ICharStream input, RecognizerSharedState state)
+    public SmiLexer(ICharStream input, RecognizerSharedState state)
 		: base(input, state) {
 		InitializeCyclicDFAs(); 
 
@@ -234,7 +234,7 @@ public partial class smiLexer : Lexer {
     
     override public string GrammarFileName
     {
-    	get { return "smi.g";} 
+    	get { return "Smi.g";} 
     }
 
     // $ANTLR start "T__126"
@@ -244,8 +244,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__126;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:15:10: ( 'ABSTRACT-BIND' )
-            // smi.g:15:10: 'ABSTRACT-BIND'
+            // Smi.g:15:10: ( 'ABSTRACT-BIND' )
+            // Smi.g:15:10: 'ABSTRACT-BIND'
             {
             	Match("ABSTRACT-BIND"); if (state.failed) return ;
 
@@ -268,8 +268,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__127;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:16:10: ( 'ABSTRACT-ERROR' )
-            // smi.g:16:10: 'ABSTRACT-ERROR'
+            // Smi.g:16:10: ( 'ABSTRACT-ERROR' )
+            // Smi.g:16:10: 'ABSTRACT-ERROR'
             {
             	Match("ABSTRACT-ERROR"); if (state.failed) return ;
 
@@ -292,8 +292,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__128;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:17:10: ( 'ABSTRACT-OPERATION' )
-            // smi.g:17:10: 'ABSTRACT-OPERATION'
+            // Smi.g:17:10: ( 'ABSTRACT-OPERATION' )
+            // Smi.g:17:10: 'ABSTRACT-OPERATION'
             {
             	Match("ABSTRACT-OPERATION"); if (state.failed) return ;
 
@@ -316,8 +316,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__129;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:18:10: ( 'ABSTRACT-UNBIND' )
-            // smi.g:18:10: 'ABSTRACT-UNBIND'
+            // Smi.g:18:10: ( 'ABSTRACT-UNBIND' )
+            // Smi.g:18:10: 'ABSTRACT-UNBIND'
             {
             	Match("ABSTRACT-UNBIND"); if (state.failed) return ;
 
@@ -340,8 +340,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__130;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:19:10: ( 'ACCESS' )
-            // smi.g:19:10: 'ACCESS'
+            // Smi.g:19:10: ( 'ACCESS' )
+            // Smi.g:19:10: 'ACCESS'
             {
             	Match("ACCESS"); if (state.failed) return ;
 
@@ -364,8 +364,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__131;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:20:10: ( 'AGENT-CAPABILITIES' )
-            // smi.g:20:10: 'AGENT-CAPABILITIES'
+            // Smi.g:20:10: ( 'AGENT-CAPABILITIES' )
+            // Smi.g:20:10: 'AGENT-CAPABILITIES'
             {
             	Match("AGENT-CAPABILITIES"); if (state.failed) return ;
 
@@ -388,8 +388,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__132;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:21:10: ( 'ALGORITHM' )
-            // smi.g:21:10: 'ALGORITHM'
+            // Smi.g:21:10: ( 'ALGORITHM' )
+            // Smi.g:21:10: 'ALGORITHM'
             {
             	Match("ALGORITHM"); if (state.failed) return ;
 
@@ -412,8 +412,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__133;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:22:10: ( 'APPLICATION-CONTEXT' )
-            // smi.g:22:10: 'APPLICATION-CONTEXT'
+            // Smi.g:22:10: ( 'APPLICATION-CONTEXT' )
+            // Smi.g:22:10: 'APPLICATION-CONTEXT'
             {
             	Match("APPLICATION-CONTEXT"); if (state.failed) return ;
 
@@ -436,8 +436,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__134;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:23:10: ( 'APPLICATION-SERVICE-ELEMENT' )
-            // smi.g:23:10: 'APPLICATION-SERVICE-ELEMENT'
+            // Smi.g:23:10: ( 'APPLICATION-SERVICE-ELEMENT' )
+            // Smi.g:23:10: 'APPLICATION-SERVICE-ELEMENT'
             {
             	Match("APPLICATION-SERVICE-ELEMENT"); if (state.failed) return ;
 
@@ -460,8 +460,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__135;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:24:10: ( 'AUGMENTS' )
-            // smi.g:24:10: 'AUGMENTS'
+            // Smi.g:24:10: ( 'AUGMENTS' )
+            // Smi.g:24:10: 'AUGMENTS'
             {
             	Match("AUGMENTS"); if (state.failed) return ;
 
@@ -484,8 +484,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__136;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:25:10: ( 'BIND' )
-            // smi.g:25:10: 'BIND'
+            // Smi.g:25:10: ( 'BIND' )
+            // Smi.g:25:10: 'BIND'
             {
             	Match("BIND"); if (state.failed) return ;
 
@@ -508,8 +508,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__137;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:26:10: ( 'BITS' )
-            // smi.g:26:10: 'BITS'
+            // Smi.g:26:10: ( 'BITS' )
+            // Smi.g:26:10: 'BITS'
             {
             	Match("BITS"); if (state.failed) return ;
 
@@ -532,8 +532,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__138;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:27:10: ( 'CONTACT-INFO' )
-            // smi.g:27:10: 'CONTACT-INFO'
+            // Smi.g:27:10: ( 'CONTACT-INFO' )
+            // Smi.g:27:10: 'CONTACT-INFO'
             {
             	Match("CONTACT-INFO"); if (state.failed) return ;
 
@@ -556,8 +556,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__139;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:28:10: ( 'CREATION-REQUIRES' )
-            // smi.g:28:10: 'CREATION-REQUIRES'
+            // Smi.g:28:10: ( 'CREATION-REQUIRES' )
+            // Smi.g:28:10: 'CREATION-REQUIRES'
             {
             	Match("CREATION-REQUIRES"); if (state.failed) return ;
 
@@ -580,8 +580,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__140;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:29:10: ( 'DEFVAL' )
-            // smi.g:29:10: 'DEFVAL'
+            // Smi.g:29:10: ( 'DEFVAL' )
+            // Smi.g:29:10: 'DEFVAL'
             {
             	Match("DEFVAL"); if (state.failed) return ;
 
@@ -604,8 +604,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__141;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:30:10: ( 'DESCRIPTION' )
-            // smi.g:30:10: 'DESCRIPTION'
+            // Smi.g:30:10: ( 'DESCRIPTION' )
+            // Smi.g:30:10: 'DESCRIPTION'
             {
             	Match("DESCRIPTION"); if (state.failed) return ;
 
@@ -628,8 +628,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__142;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:31:10: ( 'DISPLAY-HINT' )
-            // smi.g:31:10: 'DISPLAY-HINT'
+            // Smi.g:31:10: ( 'DISPLAY-HINT' )
+            // Smi.g:31:10: 'DISPLAY-HINT'
             {
             	Match("DISPLAY-HINT"); if (state.failed) return ;
 
@@ -652,8 +652,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__143;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:32:10: ( 'ENCRYPTED' )
-            // smi.g:32:10: 'ENCRYPTED'
+            // Smi.g:32:10: ( 'ENCRYPTED' )
+            // Smi.g:32:10: 'ENCRYPTED'
             {
             	Match("ENCRYPTED"); if (state.failed) return ;
 
@@ -676,8 +676,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__144;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:33:10: ( 'ENTERPRISE' )
-            // smi.g:33:10: 'ENTERPRISE'
+            // Smi.g:33:10: ( 'ENTERPRISE' )
+            // Smi.g:33:10: 'ENTERPRISE'
             {
             	Match("ENTERPRISE"); if (state.failed) return ;
 
@@ -700,8 +700,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__145;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:34:10: ( 'EXTENDS' )
-            // smi.g:34:10: 'EXTENDS'
+            // Smi.g:34:10: ( 'EXTENDS' )
+            // Smi.g:34:10: 'EXTENDS'
             {
             	Match("EXTENDS"); if (state.failed) return ;
 
@@ -724,8 +724,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__146;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:35:10: ( 'EXTENSION' )
-            // smi.g:35:10: 'EXTENSION'
+            // Smi.g:35:10: ( 'EXTENSION' )
+            // Smi.g:35:10: 'EXTENSION'
             {
             	Match("EXTENSION"); if (state.failed) return ;
 
@@ -748,8 +748,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__147;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:36:10: ( 'EXTENSION-ATTRIBUTE' )
-            // smi.g:36:10: 'EXTENSION-ATTRIBUTE'
+            // Smi.g:36:10: ( 'EXTENSION-ATTRIBUTE' )
+            // Smi.g:36:10: 'EXTENSION-ATTRIBUTE'
             {
             	Match("EXTENSION-ATTRIBUTE"); if (state.failed) return ;
 
@@ -772,8 +772,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__148;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:37:10: ( 'EXTENSIONS' )
-            // smi.g:37:10: 'EXTENSIONS'
+            // Smi.g:37:10: ( 'EXTENSIONS' )
+            // Smi.g:37:10: 'EXTENSIONS'
             {
             	Match("EXTENSIONS"); if (state.failed) return ;
 
@@ -796,8 +796,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__149;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:38:10: ( 'GROUP' )
-            // smi.g:38:10: 'GROUP'
+            // Smi.g:38:10: ( 'GROUP' )
+            // Smi.g:38:10: 'GROUP'
             {
             	Match("GROUP"); if (state.failed) return ;
 
@@ -820,8 +820,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__150;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:39:10: ( 'INDEX' )
-            // smi.g:39:10: 'INDEX'
+            // Smi.g:39:10: ( 'INDEX' )
+            // Smi.g:39:10: 'INDEX'
             {
             	Match("INDEX"); if (state.failed) return ;
 
@@ -844,8 +844,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__151;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:40:10: ( 'INSTALL-ERRORS' )
-            // smi.g:40:10: 'INSTALL-ERRORS'
+            // Smi.g:40:10: ( 'INSTALL-ERRORS' )
+            // Smi.g:40:10: 'INSTALL-ERRORS'
             {
             	Match("INSTALL-ERRORS"); if (state.failed) return ;
 
@@ -868,8 +868,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__152;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:41:10: ( 'LAST-UPDATED' )
-            // smi.g:41:10: 'LAST-UPDATED'
+            // Smi.g:41:10: ( 'LAST-UPDATED' )
+            // Smi.g:41:10: 'LAST-UPDATED'
             {
             	Match("LAST-UPDATED"); if (state.failed) return ;
 
@@ -892,8 +892,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__153;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:42:10: ( 'MACRO' )
-            // smi.g:42:10: 'MACRO'
+            // Smi.g:42:10: ( 'MACRO' )
+            // Smi.g:42:10: 'MACRO'
             {
             	Match("MACRO"); if (state.failed) return ;
 
@@ -916,8 +916,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__154;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:43:10: ( 'MANDATORY-GROUPS' )
-            // smi.g:43:10: 'MANDATORY-GROUPS'
+            // Smi.g:43:10: ( 'MANDATORY-GROUPS' )
+            // Smi.g:43:10: 'MANDATORY-GROUPS'
             {
             	Match("MANDATORY-GROUPS"); if (state.failed) return ;
 
@@ -940,8 +940,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__155;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:44:10: ( 'MAX-ACCESS' )
-            // smi.g:44:10: 'MAX-ACCESS'
+            // Smi.g:44:10: ( 'MAX-ACCESS' )
+            // Smi.g:44:10: 'MAX-ACCESS'
             {
             	Match("MAX-ACCESS"); if (state.failed) return ;
 
@@ -964,8 +964,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__156;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:45:10: ( 'MIN-ACCESS' )
-            // smi.g:45:10: 'MIN-ACCESS'
+            // Smi.g:45:10: ( 'MIN-ACCESS' )
+            // Smi.g:45:10: 'MIN-ACCESS'
             {
             	Match("MIN-ACCESS"); if (state.failed) return ;
 
@@ -988,8 +988,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__157;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:46:10: ( 'MODULE' )
-            // smi.g:46:10: 'MODULE'
+            // Smi.g:46:10: ( 'MODULE' )
+            // Smi.g:46:10: 'MODULE'
             {
             	Match("MODULE"); if (state.failed) return ;
 
@@ -1012,8 +1012,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__158;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:47:10: ( 'MODULE-COMPLIANCE' )
-            // smi.g:47:10: 'MODULE-COMPLIANCE'
+            // Smi.g:47:10: ( 'MODULE-COMPLIANCE' )
+            // Smi.g:47:10: 'MODULE-COMPLIANCE'
             {
             	Match("MODULE-COMPLIANCE"); if (state.failed) return ;
 
@@ -1036,8 +1036,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__159;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:48:10: ( 'MODULE-IDENTITY' )
-            // smi.g:48:10: 'MODULE-IDENTITY'
+            // Smi.g:48:10: ( 'MODULE-IDENTITY' )
+            // Smi.g:48:10: 'MODULE-IDENTITY'
             {
             	Match("MODULE-IDENTITY"); if (state.failed) return ;
 
@@ -1060,8 +1060,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__160;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:49:10: ( 'NOTIFICATION-GROUP' )
-            // smi.g:49:10: 'NOTIFICATION-GROUP'
+            // Smi.g:49:10: ( 'NOTIFICATION-GROUP' )
+            // Smi.g:49:10: 'NOTIFICATION-GROUP'
             {
             	Match("NOTIFICATION-GROUP"); if (state.failed) return ;
 
@@ -1084,8 +1084,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__161;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:50:10: ( 'NOTIFICATIONS' )
-            // smi.g:50:10: 'NOTIFICATIONS'
+            // Smi.g:50:10: ( 'NOTIFICATIONS' )
+            // Smi.g:50:10: 'NOTIFICATIONS'
             {
             	Match("NOTIFICATIONS"); if (state.failed) return ;
 
@@ -1108,8 +1108,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__162;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:51:10: ( 'NOTIFICATION-TYPE' )
-            // smi.g:51:10: 'NOTIFICATION-TYPE'
+            // Smi.g:51:10: ( 'NOTIFICATION-TYPE' )
+            // Smi.g:51:10: 'NOTIFICATION-TYPE'
             {
             	Match("NOTIFICATION-TYPE"); if (state.failed) return ;
 
@@ -1132,8 +1132,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__163;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:52:10: ( 'OBJECT-GROUP' )
-            // smi.g:52:10: 'OBJECT-GROUP'
+            // Smi.g:52:10: ( 'OBJECT-GROUP' )
+            // Smi.g:52:10: 'OBJECT-GROUP'
             {
             	Match("OBJECT-GROUP"); if (state.failed) return ;
 
@@ -1156,8 +1156,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__164;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:53:10: ( 'OBJECT-IDENTITY' )
-            // smi.g:53:10: 'OBJECT-IDENTITY'
+            // Smi.g:53:10: ( 'OBJECT-IDENTITY' )
+            // Smi.g:53:10: 'OBJECT-IDENTITY'
             {
             	Match("OBJECT-IDENTITY"); if (state.failed) return ;
 
@@ -1180,8 +1180,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__165;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:54:10: ( 'OBJECTS' )
-            // smi.g:54:10: 'OBJECTS'
+            // Smi.g:54:10: ( 'OBJECTS' )
+            // Smi.g:54:10: 'OBJECTS'
             {
             	Match("OBJECTS"); if (state.failed) return ;
 
@@ -1204,8 +1204,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__166;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:55:10: ( 'OBJECT-TYPE' )
-            // smi.g:55:10: 'OBJECT-TYPE'
+            // Smi.g:55:10: ( 'OBJECT-TYPE' )
+            // Smi.g:55:10: 'OBJECT-TYPE'
             {
             	Match("OBJECT-TYPE"); if (state.failed) return ;
 
@@ -1228,8 +1228,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__167;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:56:10: ( 'ORGANIZATION' )
-            // smi.g:56:10: 'ORGANIZATION'
+            // Smi.g:56:10: ( 'ORGANIZATION' )
+            // Smi.g:56:10: 'ORGANIZATION'
             {
             	Match("ORGANIZATION"); if (state.failed) return ;
 
@@ -1252,8 +1252,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__168;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:57:10: ( 'PIB-ACCESS' )
-            // smi.g:57:10: 'PIB-ACCESS'
+            // Smi.g:57:10: ( 'PIB-ACCESS' )
+            // Smi.g:57:10: 'PIB-ACCESS'
             {
             	Match("PIB-ACCESS"); if (state.failed) return ;
 
@@ -1276,8 +1276,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__169;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:58:10: ( 'PIB-DEFINITIONS' )
-            // smi.g:58:10: 'PIB-DEFINITIONS'
+            // Smi.g:58:10: ( 'PIB-DEFINITIONS' )
+            // Smi.g:58:10: 'PIB-DEFINITIONS'
             {
             	Match("PIB-DEFINITIONS"); if (state.failed) return ;
 
@@ -1300,8 +1300,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__170;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:59:10: ( 'PIB-INDEX' )
-            // smi.g:59:10: 'PIB-INDEX'
+            // Smi.g:59:10: ( 'PIB-INDEX' )
+            // Smi.g:59:10: 'PIB-INDEX'
             {
             	Match("PIB-INDEX"); if (state.failed) return ;
 
@@ -1324,8 +1324,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__171;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:60:10: ( 'PIB-MIN-ACCESS' )
-            // smi.g:60:10: 'PIB-MIN-ACCESS'
+            // Smi.g:60:10: ( 'PIB-MIN-ACCESS' )
+            // Smi.g:60:10: 'PIB-MIN-ACCESS'
             {
             	Match("PIB-MIN-ACCESS"); if (state.failed) return ;
 
@@ -1348,8 +1348,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__172;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:61:10: ( 'PIB-REFERENCES' )
-            // smi.g:61:10: 'PIB-REFERENCES'
+            // Smi.g:61:10: ( 'PIB-REFERENCES' )
+            // Smi.g:61:10: 'PIB-REFERENCES'
             {
             	Match("PIB-REFERENCES"); if (state.failed) return ;
 
@@ -1372,8 +1372,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__173;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:62:10: ( 'PIB-TAG' )
-            // smi.g:62:10: 'PIB-TAG'
+            // Smi.g:62:10: ( 'PIB-TAG' )
+            // Smi.g:62:10: 'PIB-TAG'
             {
             	Match("PIB-TAG"); if (state.failed) return ;
 
@@ -1396,8 +1396,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__174;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:63:10: ( 'PORT' )
-            // smi.g:63:10: 'PORT'
+            // Smi.g:63:10: ( 'PORT' )
+            // Smi.g:63:10: 'PORT'
             {
             	Match("PORT"); if (state.failed) return ;
 
@@ -1420,8 +1420,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__175;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:64:10: ( 'PRODUCT-RELEASE' )
-            // smi.g:64:10: 'PRODUCT-RELEASE'
+            // Smi.g:64:10: ( 'PRODUCT-RELEASE' )
+            // Smi.g:64:10: 'PRODUCT-RELEASE'
             {
             	Match("PRODUCT-RELEASE"); if (state.failed) return ;
 
@@ -1444,8 +1444,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__176;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:65:10: ( 'PROTECTED' )
-            // smi.g:65:10: 'PROTECTED'
+            // Smi.g:65:10: ( 'PROTECTED' )
+            // Smi.g:65:10: 'PROTECTED'
             {
             	Match("PROTECTED"); if (state.failed) return ;
 
@@ -1468,8 +1468,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__177;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:66:10: ( 'REFERENCE' )
-            // smi.g:66:10: 'REFERENCE'
+            // Smi.g:66:10: ( 'REFERENCE' )
+            // Smi.g:66:10: 'REFERENCE'
             {
             	Match("REFERENCE"); if (state.failed) return ;
 
@@ -1492,8 +1492,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__178;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:67:10: ( 'REFINE' )
-            // smi.g:67:10: 'REFINE'
+            // Smi.g:67:10: ( 'REFINE' )
+            // Smi.g:67:10: 'REFINE'
             {
             	Match("REFINE"); if (state.failed) return ;
 
@@ -1516,8 +1516,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__179;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:68:10: ( 'RELATIVE-OID' )
-            // smi.g:68:10: 'RELATIVE-OID'
+            // Smi.g:68:10: ( 'RELATIVE-OID' )
+            // Smi.g:68:10: 'RELATIVE-OID'
             {
             	Match("RELATIVE-OID"); if (state.failed) return ;
 
@@ -1540,8 +1540,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__180;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:69:10: ( 'REVISION' )
-            // smi.g:69:10: 'REVISION'
+            // Smi.g:69:10: ( 'REVISION' )
+            // Smi.g:69:10: 'REVISION'
             {
             	Match("REVISION"); if (state.failed) return ;
 
@@ -1564,8 +1564,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__181;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:70:10: ( 'SECURITY-CATEGORY' )
-            // smi.g:70:10: 'SECURITY-CATEGORY'
+            // Smi.g:70:10: ( 'SECURITY-CATEGORY' )
+            // Smi.g:70:10: 'SECURITY-CATEGORY'
             {
             	Match("SECURITY-CATEGORY"); if (state.failed) return ;
 
@@ -1588,8 +1588,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__182;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:71:10: ( 'SIGNATURE' )
-            // smi.g:71:10: 'SIGNATURE'
+            // Smi.g:71:10: ( 'SIGNATURE' )
+            // Smi.g:71:10: 'SIGNATURE'
             {
             	Match("SIGNATURE"); if (state.failed) return ;
 
@@ -1612,8 +1612,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__183;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:72:10: ( 'SIGNED' )
-            // smi.g:72:10: 'SIGNED'
+            // Smi.g:72:10: ( 'SIGNED' )
+            // Smi.g:72:10: 'SIGNED'
             {
             	Match("SIGNED"); if (state.failed) return ;
 
@@ -1636,8 +1636,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__184;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:73:10: ( 'STATUS' )
-            // smi.g:73:10: 'STATUS'
+            // Smi.g:73:10: ( 'STATUS' )
+            // Smi.g:73:10: 'STATUS'
             {
             	Match("STATUS"); if (state.failed) return ;
 
@@ -1660,8 +1660,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__185;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:74:10: ( 'SUBJECT-CATEGORIES' )
-            // smi.g:74:10: 'SUBJECT-CATEGORIES'
+            // Smi.g:74:10: ( 'SUBJECT-CATEGORIES' )
+            // Smi.g:74:10: 'SUBJECT-CATEGORIES'
             {
             	Match("SUBJECT-CATEGORIES"); if (state.failed) return ;
 
@@ -1684,8 +1684,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__186;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:75:10: ( 'SUPPORTS' )
-            // smi.g:75:10: 'SUPPORTS'
+            // Smi.g:75:10: ( 'SUPPORTS' )
+            // Smi.g:75:10: 'SUPPORTS'
             {
             	Match("SUPPORTS"); if (state.failed) return ;
 
@@ -1708,8 +1708,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__187;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:76:10: ( 'SYNTAX' )
-            // smi.g:76:10: 'SYNTAX'
+            // Smi.g:76:10: ( 'SYNTAX' )
+            // Smi.g:76:10: 'SYNTAX'
             {
             	Match("SYNTAX"); if (state.failed) return ;
 
@@ -1732,8 +1732,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__188;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:77:10: ( 'TEXTUAL-CONVENTION' )
-            // smi.g:77:10: 'TEXTUAL-CONVENTION'
+            // Smi.g:77:10: ( 'TEXTUAL-CONVENTION' )
+            // Smi.g:77:10: 'TEXTUAL-CONVENTION'
             {
             	Match("TEXTUAL-CONVENTION"); if (state.failed) return ;
 
@@ -1756,8 +1756,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__189;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:78:10: ( 'TOKEN' )
-            // smi.g:78:10: 'TOKEN'
+            // Smi.g:78:10: ( 'TOKEN' )
+            // Smi.g:78:10: 'TOKEN'
             {
             	Match("TOKEN"); if (state.failed) return ;
 
@@ -1780,8 +1780,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__190;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:79:10: ( 'TOKEN-DATA' )
-            // smi.g:79:10: 'TOKEN-DATA'
+            // Smi.g:79:10: ( 'TOKEN-DATA' )
+            // Smi.g:79:10: 'TOKEN-DATA'
             {
             	Match("TOKEN-DATA"); if (state.failed) return ;
 
@@ -1804,8 +1804,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__191;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:80:10: ( 'TRAP-TYPE' )
-            // smi.g:80:10: 'TRAP-TYPE'
+            // Smi.g:80:10: ( 'TRAP-TYPE' )
+            // Smi.g:80:10: 'TRAP-TYPE'
             {
             	Match("TRAP-TYPE"); if (state.failed) return ;
 
@@ -1828,8 +1828,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__192;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:81:10: ( 'UNBIND' )
-            // smi.g:81:10: 'UNBIND'
+            // Smi.g:81:10: ( 'UNBIND' )
+            // Smi.g:81:10: 'UNBIND'
             {
             	Match("UNBIND"); if (state.failed) return ;
 
@@ -1852,8 +1852,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__193;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:82:10: ( 'UNIQUENESS' )
-            // smi.g:82:10: 'UNIQUENESS'
+            // Smi.g:82:10: ( 'UNIQUENESS' )
+            // Smi.g:82:10: 'UNIQUENESS'
             {
             	Match("UNIQUENESS"); if (state.failed) return ;
 
@@ -1876,8 +1876,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__194;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:83:10: ( 'UNITS' )
-            // smi.g:83:10: 'UNITS'
+            // Smi.g:83:10: ( 'UNITS' )
+            // Smi.g:83:10: 'UNITS'
             {
             	Match("UNITS"); if (state.failed) return ;
 
@@ -1900,8 +1900,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__195;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:84:10: ( 'VARIABLES' )
-            // smi.g:84:10: 'VARIABLES'
+            // Smi.g:84:10: ( 'VARIABLES' )
+            // Smi.g:84:10: 'VARIABLES'
             {
             	Match("VARIABLES"); if (state.failed) return ;
 
@@ -1924,8 +1924,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__196;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:85:10: ( 'VARIATION' )
-            // smi.g:85:10: 'VARIATION'
+            // Smi.g:85:10: ( 'VARIATION' )
+            // Smi.g:85:10: 'VARIATION'
             {
             	Match("VARIATION"); if (state.failed) return ;
 
@@ -1948,8 +1948,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T__197;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:86:10: ( 'WRITE-SYNTAX' )
-            // smi.g:86:10: 'WRITE-SYNTAX'
+            // Smi.g:86:10: ( 'WRITE-SYNTAX' )
+            // Smi.g:86:10: 'WRITE-SYNTAX'
             {
             	Match("WRITE-SYNTAX"); if (state.failed) return ;
 
@@ -1972,8 +1972,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = ABSENT_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:141:4: ( 'ABSENT' )
-            // smi.g:141:4: 'ABSENT'
+            // Smi.g:141:4: ( 'ABSENT' )
+            // Smi.g:141:4: 'ABSENT'
             {
             	Match("ABSENT"); if (state.failed) return ;
 
@@ -1996,8 +1996,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = ABSTRACT_SYNTAX_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:145:4: ( 'ABSTRACT-SYNTAX' )
-            // smi.g:145:4: 'ABSTRACT-SYNTAX'
+            // Smi.g:145:4: ( 'ABSTRACT-SYNTAX' )
+            // Smi.g:145:4: 'ABSTRACT-SYNTAX'
             {
             	Match("ABSTRACT-SYNTAX"); if (state.failed) return ;
 
@@ -2020,8 +2020,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = ALL_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:149:4: ( 'ALL' )
-            // smi.g:149:4: 'ALL'
+            // Smi.g:149:4: ( 'ALL' )
+            // Smi.g:149:4: 'ALL'
             {
             	Match("ALL"); if (state.failed) return ;
 
@@ -2044,8 +2044,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = ANY_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:153:4: ( 'ANY' )
-            // smi.g:153:4: 'ANY'
+            // Smi.g:153:4: ( 'ANY' )
+            // Smi.g:153:4: 'ANY'
             {
             	Match("ANY"); if (state.failed) return ;
 
@@ -2068,8 +2068,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = ARGUMENT_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:157:4: ( 'ARGUMENT' )
-            // smi.g:157:4: 'ARGUMENT'
+            // Smi.g:157:4: ( 'ARGUMENT' )
+            // Smi.g:157:4: 'ARGUMENT'
             {
             	Match("ARGUMENT"); if (state.failed) return ;
 
@@ -2092,8 +2092,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = APPLICATION_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:161:4: ( 'APPLICATION' )
-            // smi.g:161:4: 'APPLICATION'
+            // Smi.g:161:4: ( 'APPLICATION' )
+            // Smi.g:161:4: 'APPLICATION'
             {
             	Match("APPLICATION"); if (state.failed) return ;
 
@@ -2116,8 +2116,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = AUTOMATIC_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:165:4: ( 'AUTOMATIC' )
-            // smi.g:165:4: 'AUTOMATIC'
+            // Smi.g:165:4: ( 'AUTOMATIC' )
+            // Smi.g:165:4: 'AUTOMATIC'
             {
             	Match("AUTOMATIC"); if (state.failed) return ;
 
@@ -2140,8 +2140,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = BASED_NUM_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:169:4: ( 'BASEDNUM' )
-            // smi.g:169:4: 'BASEDNUM'
+            // Smi.g:169:4: ( 'BASEDNUM' )
+            // Smi.g:169:4: 'BASEDNUM'
             {
             	Match("BASEDNUM"); if (state.failed) return ;
 
@@ -2164,8 +2164,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = BEGIN_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:173:4: ( 'BEGIN' )
-            // smi.g:173:4: 'BEGIN'
+            // Smi.g:173:4: ( 'BEGIN' )
+            // Smi.g:173:4: 'BEGIN'
             {
             	Match("BEGIN"); if (state.failed) return ;
 
@@ -2188,8 +2188,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = BIT_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:177:4: ( 'BIT' )
-            // smi.g:177:4: 'BIT'
+            // Smi.g:177:4: ( 'BIT' )
+            // Smi.g:177:4: 'BIT'
             {
             	Match("BIT"); if (state.failed) return ;
 
@@ -2212,8 +2212,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = BMP_STR_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:181:4: ( 'BMPString' )
-            // smi.g:181:4: 'BMPString'
+            // Smi.g:181:4: ( 'BMPString' )
+            // Smi.g:181:4: 'BMPString'
             {
             	Match("BMPString"); if (state.failed) return ;
 
@@ -2236,8 +2236,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = BOOLEAN_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:185:4: ( 'BOOLEAN' )
-            // smi.g:185:4: 'BOOLEAN'
+            // Smi.g:185:4: ( 'BOOLEAN' )
+            // Smi.g:185:4: 'BOOLEAN'
             {
             	Match("BOOLEAN"); if (state.failed) return ;
 
@@ -2260,8 +2260,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = BY_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:189:4: ( 'BY' )
-            // smi.g:189:4: 'BY'
+            // Smi.g:189:4: ( 'BY' )
+            // Smi.g:189:4: 'BY'
             {
             	Match("BY"); if (state.failed) return ;
 
@@ -2284,8 +2284,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = CHARACTER_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:193:4: ( 'CHARACTER' )
-            // smi.g:193:4: 'CHARACTER'
+            // Smi.g:193:4: ( 'CHARACTER' )
+            // Smi.g:193:4: 'CHARACTER'
             {
             	Match("CHARACTER"); if (state.failed) return ;
 
@@ -2308,8 +2308,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = CHOICE_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:197:4: ( 'CHOICE' )
-            // smi.g:197:4: 'CHOICE'
+            // Smi.g:197:4: ( 'CHOICE' )
+            // Smi.g:197:4: 'CHOICE'
             {
             	Match("CHOICE"); if (state.failed) return ;
 
@@ -2332,8 +2332,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = CLASS_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:201:4: ( 'CLASS' )
-            // smi.g:201:4: 'CLASS'
+            // Smi.g:201:4: ( 'CLASS' )
+            // Smi.g:201:4: 'CLASS'
             {
             	Match("CLASS"); if (state.failed) return ;
 
@@ -2356,8 +2356,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = COMPONENTS_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:205:4: ( 'COMPONENTS' )
-            // smi.g:205:4: 'COMPONENTS'
+            // Smi.g:205:4: ( 'COMPONENTS' )
+            // Smi.g:205:4: 'COMPONENTS'
             {
             	Match("COMPONENTS"); if (state.failed) return ;
 
@@ -2380,8 +2380,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = COMPONENT_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:209:4: ( 'COMPONENT' )
-            // smi.g:209:4: 'COMPONENT'
+            // Smi.g:209:4: ( 'COMPONENT' )
+            // Smi.g:209:4: 'COMPONENT'
             {
             	Match("COMPONENT"); if (state.failed) return ;
 
@@ -2404,8 +2404,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = CONSTRAINED_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:213:4: ( 'CONSTRAINED' )
-            // smi.g:213:4: 'CONSTRAINED'
+            // Smi.g:213:4: ( 'CONSTRAINED' )
+            // Smi.g:213:4: 'CONSTRAINED'
             {
             	Match("CONSTRAINED"); if (state.failed) return ;
 
@@ -2428,8 +2428,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = DEFAULT_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:217:4: ( 'DEFAULT' )
-            // smi.g:217:4: 'DEFAULT'
+            // Smi.g:217:4: ( 'DEFAULT' )
+            // Smi.g:217:4: 'DEFAULT'
             {
             	Match("DEFAULT"); if (state.failed) return ;
 
@@ -2452,8 +2452,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = DEFINED_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:221:4: ( 'DEFINED' )
-            // smi.g:221:4: 'DEFINED'
+            // Smi.g:221:4: ( 'DEFINED' )
+            // Smi.g:221:4: 'DEFINED'
             {
             	Match("DEFINED"); if (state.failed) return ;
 
@@ -2476,8 +2476,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = DEFINITIONS_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:225:4: ( 'DEFINITIONS' )
-            // smi.g:225:4: 'DEFINITIONS'
+            // Smi.g:225:4: ( 'DEFINITIONS' )
+            // Smi.g:225:4: 'DEFINITIONS'
             {
             	Match("DEFINITIONS"); if (state.failed) return ;
 
@@ -2500,8 +2500,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = EMBEDDED_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:229:4: ( 'EMBEDDED' )
-            // smi.g:229:4: 'EMBEDDED'
+            // Smi.g:229:4: ( 'EMBEDDED' )
+            // Smi.g:229:4: 'EMBEDDED'
             {
             	Match("EMBEDDED"); if (state.failed) return ;
 
@@ -2524,8 +2524,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = END_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:233:4: ( 'END' )
-            // smi.g:233:4: 'END'
+            // Smi.g:233:4: ( 'END' )
+            // Smi.g:233:4: 'END'
             {
             	Match("END"); if (state.failed) return ;
 
@@ -2548,8 +2548,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = ENUMERATED_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:237:4: ( 'ENUMERATED' )
-            // smi.g:237:4: 'ENUMERATED'
+            // Smi.g:237:4: ( 'ENUMERATED' )
+            // Smi.g:237:4: 'ENUMERATED'
             {
             	Match("ENUMERATED"); if (state.failed) return ;
 
@@ -2572,8 +2572,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = ERROR_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:241:4: ( 'ERROR' )
-            // smi.g:241:4: 'ERROR'
+            // Smi.g:241:4: ( 'ERROR' )
+            // Smi.g:241:4: 'ERROR'
             {
             	Match("ERROR"); if (state.failed) return ;
 
@@ -2596,8 +2596,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = ERRORS_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:245:4: ( 'ERRORS' )
-            // smi.g:245:4: 'ERRORS'
+            // Smi.g:245:4: ( 'ERRORS' )
+            // Smi.g:245:4: 'ERRORS'
             {
             	Match("ERRORS"); if (state.failed) return ;
 
@@ -2620,8 +2620,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = EXCEPT_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:249:4: ( 'EXCEPT' )
-            // smi.g:249:4: 'EXCEPT'
+            // Smi.g:249:4: ( 'EXCEPT' )
+            // Smi.g:249:4: 'EXCEPT'
             {
             	Match("EXCEPT"); if (state.failed) return ;
 
@@ -2644,8 +2644,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = EXPLICIT_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:253:4: ( 'EXPLICIT' )
-            // smi.g:253:4: 'EXPLICIT'
+            // Smi.g:253:4: ( 'EXPLICIT' )
+            // Smi.g:253:4: 'EXPLICIT'
             {
             	Match("EXPLICIT"); if (state.failed) return ;
 
@@ -2668,8 +2668,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = EXPORTS_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:257:4: ( 'EXPORTS' )
-            // smi.g:257:4: 'EXPORTS'
+            // Smi.g:257:4: ( 'EXPORTS' )
+            // Smi.g:257:4: 'EXPORTS'
             {
             	Match("EXPORTS"); if (state.failed) return ;
 
@@ -2692,8 +2692,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = EXTENSIBILITY_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:261:4: ( 'EXTENSIBILITY' )
-            // smi.g:261:4: 'EXTENSIBILITY'
+            // Smi.g:261:4: ( 'EXTENSIBILITY' )
+            // Smi.g:261:4: 'EXTENSIBILITY'
             {
             	Match("EXTENSIBILITY"); if (state.failed) return ;
 
@@ -2716,8 +2716,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = EXTERNAL_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:265:4: ( 'EXTERNAL' )
-            // smi.g:265:4: 'EXTERNAL'
+            // Smi.g:265:4: ( 'EXTERNAL' )
+            // Smi.g:265:4: 'EXTERNAL'
             {
             	Match("EXTERNAL"); if (state.failed) return ;
 
@@ -2740,8 +2740,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = FALSE_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:269:4: ( 'FALSE' )
-            // smi.g:269:4: 'FALSE'
+            // Smi.g:269:4: ( 'FALSE' )
+            // Smi.g:269:4: 'FALSE'
             {
             	Match("FALSE"); if (state.failed) return ;
 
@@ -2764,8 +2764,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = FROM_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:273:4: ( 'FROM' )
-            // smi.g:273:4: 'FROM'
+            // Smi.g:273:4: ( 'FROM' )
+            // Smi.g:273:4: 'FROM'
             {
             	Match("FROM"); if (state.failed) return ;
 
@@ -2788,8 +2788,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = GENERALIZED_TIME_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:277:4: ( 'GeneralizedTime' )
-            // smi.g:277:4: 'GeneralizedTime'
+            // Smi.g:277:4: ( 'GeneralizedTime' )
+            // Smi.g:277:4: 'GeneralizedTime'
             {
             	Match("GeneralizedTime"); if (state.failed) return ;
 
@@ -2812,8 +2812,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = GENERAL_STR_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:281:4: ( 'GeneralString' )
-            // smi.g:281:4: 'GeneralString'
+            // Smi.g:281:4: ( 'GeneralString' )
+            // Smi.g:281:4: 'GeneralString'
             {
             	Match("GeneralString"); if (state.failed) return ;
 
@@ -2836,8 +2836,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = GRAPHIC_STR_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:285:4: ( 'GraphicString' )
-            // smi.g:285:4: 'GraphicString'
+            // Smi.g:285:4: ( 'GraphicString' )
+            // Smi.g:285:4: 'GraphicString'
             {
             	Match("GraphicString"); if (state.failed) return ;
 
@@ -2860,8 +2860,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = IA5_STRING_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:289:4: ( 'IA5String' )
-            // smi.g:289:4: 'IA5String'
+            // Smi.g:289:4: ( 'IA5String' )
+            // Smi.g:289:4: 'IA5String'
             {
             	Match("IA5String"); if (state.failed) return ;
 
@@ -2884,8 +2884,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = IDENTIFIER_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:293:4: ( 'IDENTIFIER' )
-            // smi.g:293:4: 'IDENTIFIER'
+            // Smi.g:293:4: ( 'IDENTIFIER' )
+            // Smi.g:293:4: 'IDENTIFIER'
             {
             	Match("IDENTIFIER"); if (state.failed) return ;
 
@@ -2908,8 +2908,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = IMPLICIT_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:297:4: ( 'IMPLICIT' )
-            // smi.g:297:4: 'IMPLICIT'
+            // Smi.g:297:4: ( 'IMPLICIT' )
+            // Smi.g:297:4: 'IMPLICIT'
             {
             	Match("IMPLICIT"); if (state.failed) return ;
 
@@ -2932,8 +2932,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = IMPLIED_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:301:4: ( 'IMPLIED' )
-            // smi.g:301:4: 'IMPLIED'
+            // Smi.g:301:4: ( 'IMPLIED' )
+            // Smi.g:301:4: 'IMPLIED'
             {
             	Match("IMPLIED"); if (state.failed) return ;
 
@@ -2956,8 +2956,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = IMPORTS_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:305:4: ( 'IMPORTS' )
-            // smi.g:305:4: 'IMPORTS'
+            // Smi.g:305:4: ( 'IMPORTS' )
+            // Smi.g:305:4: 'IMPORTS'
             {
             	Match("IMPORTS"); if (state.failed) return ;
 
@@ -2980,8 +2980,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = INCLUDES_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:309:4: ( 'INCLUDES' )
-            // smi.g:309:4: 'INCLUDES'
+            // Smi.g:309:4: ( 'INCLUDES' )
+            // Smi.g:309:4: 'INCLUDES'
             {
             	Match("INCLUDES"); if (state.failed) return ;
 
@@ -3004,8 +3004,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = INSTANCE_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:313:4: ( 'INSTANCE' )
-            // smi.g:313:4: 'INSTANCE'
+            // Smi.g:313:4: ( 'INSTANCE' )
+            // Smi.g:313:4: 'INSTANCE'
             {
             	Match("INSTANCE"); if (state.failed) return ;
 
@@ -3028,8 +3028,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = INTEGER_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:317:4: ( 'INTEGER' )
-            // smi.g:317:4: 'INTEGER'
+            // Smi.g:317:4: ( 'INTEGER' )
+            // Smi.g:317:4: 'INTEGER'
             {
             	Match("INTEGER"); if (state.failed) return ;
 
@@ -3052,8 +3052,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = INTERSECTION_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:321:4: ( 'INTERSECTION' )
-            // smi.g:321:4: 'INTERSECTION'
+            // Smi.g:321:4: ( 'INTERSECTION' )
+            // Smi.g:321:4: 'INTERSECTION'
             {
             	Match("INTERSECTION"); if (state.failed) return ;
 
@@ -3076,8 +3076,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = ISO646_STR_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:325:4: ( 'ISO646String' )
-            // smi.g:325:4: 'ISO646String'
+            // Smi.g:325:4: ( 'ISO646String' )
+            // Smi.g:325:4: 'ISO646String'
             {
             	Match("ISO646String"); if (state.failed) return ;
 
@@ -3100,8 +3100,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = LINKED_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:329:4: ( 'LINKED' )
-            // smi.g:329:4: 'LINKED'
+            // Smi.g:329:4: ( 'LINKED' )
+            // Smi.g:329:4: 'LINKED'
             {
             	Match("LINKED"); if (state.failed) return ;
 
@@ -3124,8 +3124,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = MAX_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:333:4: ( 'MAX' )
-            // smi.g:333:4: 'MAX'
+            // Smi.g:333:4: ( 'MAX' )
+            // Smi.g:333:4: 'MAX'
             {
             	Match("MAX"); if (state.failed) return ;
 
@@ -3148,8 +3148,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = MINUS_INFINITY_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:337:4: ( 'MINUSINFINITY' )
-            // smi.g:337:4: 'MINUSINFINITY'
+            // Smi.g:337:4: ( 'MINUSINFINITY' )
+            // Smi.g:337:4: 'MINUSINFINITY'
             {
             	Match("MINUSINFINITY"); if (state.failed) return ;
 
@@ -3172,8 +3172,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = MIN_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:341:4: ( 'MIN' )
-            // smi.g:341:4: 'MIN'
+            // Smi.g:341:4: ( 'MIN' )
+            // Smi.g:341:4: 'MIN'
             {
             	Match("MIN"); if (state.failed) return ;
 
@@ -3196,8 +3196,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = NULL_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:345:4: ( 'NULL' )
-            // smi.g:345:4: 'NULL'
+            // Smi.g:345:4: ( 'NULL' )
+            // Smi.g:345:4: 'NULL'
             {
             	Match("NULL"); if (state.failed) return ;
 
@@ -3220,8 +3220,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = NUMERIC_STR_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:349:4: ( 'NumericString' )
-            // smi.g:349:4: 'NumericString'
+            // Smi.g:349:4: ( 'NumericString' )
+            // Smi.g:349:4: 'NumericString'
             {
             	Match("NumericString"); if (state.failed) return ;
 
@@ -3244,8 +3244,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = OBJECT_DESCRIPTOR_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:353:4: ( 'ObjectDescriptor' )
-            // smi.g:353:4: 'ObjectDescriptor'
+            // Smi.g:353:4: ( 'ObjectDescriptor' )
+            // Smi.g:353:4: 'ObjectDescriptor'
             {
             	Match("ObjectDescriptor"); if (state.failed) return ;
 
@@ -3268,8 +3268,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = OBJECT_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:357:4: ( 'OBJECT' )
-            // smi.g:357:4: 'OBJECT'
+            // Smi.g:357:4: ( 'OBJECT' )
+            // Smi.g:357:4: 'OBJECT'
             {
             	Match("OBJECT"); if (state.failed) return ;
 
@@ -3292,8 +3292,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = OCTET_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:361:4: ( 'OCTET' )
-            // smi.g:361:4: 'OCTET'
+            // Smi.g:361:4: ( 'OCTET' )
+            // Smi.g:361:4: 'OCTET'
             {
             	Match("OCTET"); if (state.failed) return ;
 
@@ -3316,8 +3316,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = OPERATION_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:365:4: ( 'OPERATION' )
-            // smi.g:365:4: 'OPERATION'
+            // Smi.g:365:4: ( 'OPERATION' )
+            // Smi.g:365:4: 'OPERATION'
             {
             	Match("OPERATION"); if (state.failed) return ;
 
@@ -3340,8 +3340,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = OF_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:369:4: ( 'OF' )
-            // smi.g:369:4: 'OF'
+            // Smi.g:369:4: ( 'OF' )
+            // Smi.g:369:4: 'OF'
             {
             	Match("OF"); if (state.failed) return ;
 
@@ -3364,8 +3364,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = OID_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:373:4: ( 'OID' )
-            // smi.g:373:4: 'OID'
+            // Smi.g:373:4: ( 'OID' )
+            // Smi.g:373:4: 'OID'
             {
             	Match("OID"); if (state.failed) return ;
 
@@ -3388,8 +3388,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = OPTIONAL_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:377:4: ( 'OPTIONAL' )
-            // smi.g:377:4: 'OPTIONAL'
+            // Smi.g:377:4: ( 'OPTIONAL' )
+            // Smi.g:377:4: 'OPTIONAL'
             {
             	Match("OPTIONAL"); if (state.failed) return ;
 
@@ -3412,8 +3412,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = PARAMETER_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:381:4: ( 'PARAMETER' )
-            // smi.g:381:4: 'PARAMETER'
+            // Smi.g:381:4: ( 'PARAMETER' )
+            // Smi.g:381:4: 'PARAMETER'
             {
             	Match("PARAMETER"); if (state.failed) return ;
 
@@ -3436,8 +3436,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = PDV_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:385:4: ( 'PDV' )
-            // smi.g:385:4: 'PDV'
+            // Smi.g:385:4: ( 'PDV' )
+            // Smi.g:385:4: 'PDV'
             {
             	Match("PDV"); if (state.failed) return ;
 
@@ -3460,8 +3460,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = PLUS_INFINITY_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:389:4: ( 'PLUSINFINITY' )
-            // smi.g:389:4: 'PLUSINFINITY'
+            // Smi.g:389:4: ( 'PLUSINFINITY' )
+            // Smi.g:389:4: 'PLUSINFINITY'
             {
             	Match("PLUSINFINITY"); if (state.failed) return ;
 
@@ -3484,8 +3484,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = PRESENT_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:393:4: ( 'PRESENT' )
-            // smi.g:393:4: 'PRESENT'
+            // Smi.g:393:4: ( 'PRESENT' )
+            // Smi.g:393:4: 'PRESENT'
             {
             	Match("PRESENT"); if (state.failed) return ;
 
@@ -3508,8 +3508,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = PRINTABLE_STR_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:397:4: ( 'PrintableString' )
-            // smi.g:397:4: 'PrintableString'
+            // Smi.g:397:4: ( 'PrintableString' )
+            // Smi.g:397:4: 'PrintableString'
             {
             	Match("PrintableString"); if (state.failed) return ;
 
@@ -3532,8 +3532,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = PRIVATE_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:401:4: ( 'PRIVATE' )
-            // smi.g:401:4: 'PRIVATE'
+            // Smi.g:401:4: ( 'PRIVATE' )
+            // Smi.g:401:4: 'PRIVATE'
             {
             	Match("PRIVATE"); if (state.failed) return ;
 
@@ -3556,8 +3556,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = REAL_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:405:4: ( 'REAL' )
-            // smi.g:405:4: 'REAL'
+            // Smi.g:405:4: ( 'REAL' )
+            // Smi.g:405:4: 'REAL'
             {
             	Match("REAL"); if (state.failed) return ;
 
@@ -3580,8 +3580,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = RELATIVE_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:409:4: ( 'RELATIVE' )
-            // smi.g:409:4: 'RELATIVE'
+            // Smi.g:409:4: ( 'RELATIVE' )
+            // Smi.g:409:4: 'RELATIVE'
             {
             	Match("RELATIVE"); if (state.failed) return ;
 
@@ -3604,8 +3604,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = RESULT_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:413:4: ( 'RESULT' )
-            // smi.g:413:4: 'RESULT'
+            // Smi.g:413:4: ( 'RESULT' )
+            // Smi.g:413:4: 'RESULT'
             {
             	Match("RESULT"); if (state.failed) return ;
 
@@ -3628,8 +3628,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = SEQUENCE_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:417:4: ( 'SEQUENCE' )
-            // smi.g:417:4: 'SEQUENCE'
+            // Smi.g:417:4: ( 'SEQUENCE' )
+            // Smi.g:417:4: 'SEQUENCE'
             {
             	Match("SEQUENCE"); if (state.failed) return ;
 
@@ -3652,8 +3652,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = SET_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:421:4: ( 'SET' )
-            // smi.g:421:4: 'SET'
+            // Smi.g:421:4: ( 'SET' )
+            // Smi.g:421:4: 'SET'
             {
             	Match("SET"); if (state.failed) return ;
 
@@ -3676,8 +3676,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = SIZE_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:425:4: ( 'SIZE' )
-            // smi.g:425:4: 'SIZE'
+            // Smi.g:425:4: ( 'SIZE' )
+            // Smi.g:425:4: 'SIZE'
             {
             	Match("SIZE"); if (state.failed) return ;
 
@@ -3700,8 +3700,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = STRING_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:429:4: ( 'STRING' )
-            // smi.g:429:4: 'STRING'
+            // Smi.g:429:4: ( 'STRING' )
+            // Smi.g:429:4: 'STRING'
             {
             	Match("STRING"); if (state.failed) return ;
 
@@ -3724,8 +3724,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = TAGS_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:433:4: ( 'TAGS' )
-            // smi.g:433:4: 'TAGS'
+            // Smi.g:433:4: ( 'TAGS' )
+            // Smi.g:433:4: 'TAGS'
             {
             	Match("TAGS"); if (state.failed) return ;
 
@@ -3748,8 +3748,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = TELETEX_STR_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:437:4: ( 'TeletexString' )
-            // smi.g:437:4: 'TeletexString'
+            // Smi.g:437:4: ( 'TeletexString' )
+            // Smi.g:437:4: 'TeletexString'
             {
             	Match("TeletexString"); if (state.failed) return ;
 
@@ -3772,8 +3772,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = T61_STR_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:441:4: ( 'T61String' )
-            // smi.g:441:4: 'T61String'
+            // Smi.g:441:4: ( 'T61String' )
+            // Smi.g:441:4: 'T61String'
             {
             	Match("T61String"); if (state.failed) return ;
 
@@ -3796,8 +3796,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = TRUE_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:445:4: ( 'TRUE' )
-            // smi.g:445:4: 'TRUE'
+            // Smi.g:445:4: ( 'TRUE' )
+            // Smi.g:445:4: 'TRUE'
             {
             	Match("TRUE"); if (state.failed) return ;
 
@@ -3820,8 +3820,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = TYPE_IDENTIFIER_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:449:4: ( 'TYPE-IDENTIFIER' )
-            // smi.g:449:4: 'TYPE-IDENTIFIER'
+            // Smi.g:449:4: ( 'TYPE-IDENTIFIER' )
+            // Smi.g:449:4: 'TYPE-IDENTIFIER'
             {
             	Match("TYPE-IDENTIFIER"); if (state.failed) return ;
 
@@ -3844,8 +3844,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = UNION_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:453:4: ( 'UNION' )
-            // smi.g:453:4: 'UNION'
+            // Smi.g:453:4: ( 'UNION' )
+            // Smi.g:453:4: 'UNION'
             {
             	Match("UNION"); if (state.failed) return ;
 
@@ -3868,8 +3868,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = UNIQUE_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:457:4: ( 'UNIQUE' )
-            // smi.g:457:4: 'UNIQUE'
+            // Smi.g:457:4: ( 'UNIQUE' )
+            // Smi.g:457:4: 'UNIQUE'
             {
             	Match("UNIQUE"); if (state.failed) return ;
 
@@ -3892,8 +3892,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = UNIVERSAL_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:461:4: ( 'UNIVERSAL' )
-            // smi.g:461:4: 'UNIVERSAL'
+            // Smi.g:461:4: ( 'UNIVERSAL' )
+            // Smi.g:461:4: 'UNIVERSAL'
             {
             	Match("UNIVERSAL"); if (state.failed) return ;
 
@@ -3916,8 +3916,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = UNIVERSAL_STR_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:465:4: ( 'UniversalString' )
-            // smi.g:465:4: 'UniversalString'
+            // Smi.g:465:4: ( 'UniversalString' )
+            // Smi.g:465:4: 'UniversalString'
             {
             	Match("UniversalString"); if (state.failed) return ;
 
@@ -3940,8 +3940,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = UTC_TIME_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:469:4: ( 'UTCTime' )
-            // smi.g:469:4: 'UTCTime'
+            // Smi.g:469:4: ( 'UTCTime' )
+            // Smi.g:469:4: 'UTCTime'
             {
             	Match("UTCTime"); if (state.failed) return ;
 
@@ -3964,8 +3964,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = UTF8_STR_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:473:4: ( 'UTF8String' )
-            // smi.g:473:4: 'UTF8String'
+            // Smi.g:473:4: ( 'UTF8String' )
+            // Smi.g:473:4: 'UTF8String'
             {
             	Match("UTF8String"); if (state.failed) return ;
 
@@ -3988,8 +3988,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = VIDEOTEX_STR_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:477:4: ( 'VideotexString' )
-            // smi.g:477:4: 'VideotexString'
+            // Smi.g:477:4: ( 'VideotexString' )
+            // Smi.g:477:4: 'VideotexString'
             {
             	Match("VideotexString"); if (state.failed) return ;
 
@@ -4012,8 +4012,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = VISIBLE_STR_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:481:4: ( 'VisibleString' )
-            // smi.g:481:4: 'VisibleString'
+            // Smi.g:481:4: ( 'VisibleString' )
+            // Smi.g:481:4: 'VisibleString'
             {
             	Match("VisibleString"); if (state.failed) return ;
 
@@ -4036,8 +4036,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = WITH_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:485:4: ( 'WITH' )
-            // smi.g:485:4: 'WITH'
+            // Smi.g:485:4: ( 'WITH' )
+            // Smi.g:485:4: 'WITH'
             {
             	Match("WITH"); if (state.failed) return ;
 
@@ -4060,8 +4060,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = PATTERN_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:489:4: ( 'PATTERN' )
-            // smi.g:489:4: 'PATTERN'
+            // Smi.g:489:4: ( 'PATTERN' )
+            // Smi.g:489:4: 'PATTERN'
             {
             	Match("PATTERN"); if (state.failed) return ;
 
@@ -4084,8 +4084,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = ASSIGN_OP;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:494:12: ( '::=' )
-            // smi.g:494:12: '::='
+            // Smi.g:494:12: ( '::=' )
+            // Smi.g:494:12: '::='
             {
             	Match("::="); if (state.failed) return ;
 
@@ -4108,8 +4108,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = BAR;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:495:7: ( '|' )
-            // smi.g:495:7: '|'
+            // Smi.g:495:7: ( '|' )
+            // Smi.g:495:7: '|'
             {
             	Match('|'); if (state.failed) return ;
 
@@ -4131,8 +4131,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = COLON;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:496:9: ( ':' )
-            // smi.g:496:9: ':'
+            // Smi.g:496:9: ( ':' )
+            // Smi.g:496:9: ':'
             {
             	Match(':'); if (state.failed) return ;
 
@@ -4154,8 +4154,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = COMMA;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:497:9: ( ',' )
-            // smi.g:497:9: ','
+            // Smi.g:497:9: ( ',' )
+            // Smi.g:497:9: ','
             {
             	Match(','); if (state.failed) return ;
 
@@ -4177,8 +4177,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = COMMENT;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:498:10: ( '--' )
-            // smi.g:498:10: '--'
+            // Smi.g:498:10: ( '--' )
+            // Smi.g:498:10: '--'
             {
             	Match("--"); if (state.failed) return ;
 
@@ -4201,8 +4201,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = DOT;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:499:7: ( '.' )
-            // smi.g:499:7: '.'
+            // Smi.g:499:7: ( '.' )
+            // Smi.g:499:7: '.'
             {
             	Match('.'); if (state.failed) return ;
 
@@ -4224,8 +4224,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = DOTDOT;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:500:10: ( '..' )
-            // smi.g:500:10: '..'
+            // Smi.g:500:10: ( '..' )
+            // Smi.g:500:10: '..'
             {
             	Match(".."); if (state.failed) return ;
 
@@ -4248,8 +4248,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = DOTDOTDOT;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:502:4: ( '...' )
-            // smi.g:502:4: '...'
+            // Smi.g:502:4: ( '...' )
+            // Smi.g:502:4: '...'
             {
             	Match("..."); if (state.failed) return ;
 
@@ -4272,8 +4272,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = EXCLAMATION;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:504:14: ( '!' )
-            // smi.g:504:14: '!'
+            // Smi.g:504:14: ( '!' )
+            // Smi.g:504:14: '!'
             {
             	Match('!'); if (state.failed) return ;
 
@@ -4295,8 +4295,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = INTERSECTION;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:505:15: ( '^' )
-            // smi.g:505:15: '^'
+            // Smi.g:505:15: ( '^' )
+            // Smi.g:505:15: '^'
             {
             	Match('^'); if (state.failed) return ;
 
@@ -4318,8 +4318,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = LESS;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:506:8: ( '<' )
-            // smi.g:506:8: '<'
+            // Smi.g:506:8: ( '<' )
+            // Smi.g:506:8: '<'
             {
             	Match('<'); if (state.failed) return ;
 
@@ -4341,8 +4341,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = L_BRACE;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:507:10: ( '{' )
-            // smi.g:507:10: '{'
+            // Smi.g:507:10: ( '{' )
+            // Smi.g:507:10: '{'
             {
             	Match('{'); if (state.failed) return ;
 
@@ -4364,8 +4364,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = L_BRACKET;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:508:12: ( '[' )
-            // smi.g:508:12: '['
+            // Smi.g:508:12: ( '[' )
+            // Smi.g:508:12: '['
             {
             	Match('['); if (state.failed) return ;
 
@@ -4387,8 +4387,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = L_PAREN;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:509:10: ( '(' )
-            // smi.g:509:10: '('
+            // Smi.g:509:10: ( '(' )
+            // Smi.g:509:10: '('
             {
             	Match('('); if (state.failed) return ;
 
@@ -4410,8 +4410,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = MINUS;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:510:9: ( '-' )
-            // smi.g:510:9: '-'
+            // Smi.g:510:9: ( '-' )
+            // Smi.g:510:9: '-'
             {
             	Match('-'); if (state.failed) return ;
 
@@ -4433,8 +4433,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = PLUS;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:511:8: ( '+' )
-            // smi.g:511:8: '+'
+            // Smi.g:511:8: ( '+' )
+            // Smi.g:511:8: '+'
             {
             	Match('+'); if (state.failed) return ;
 
@@ -4456,8 +4456,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = R_BRACE;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:512:10: ( '}' )
-            // smi.g:512:10: '}'
+            // Smi.g:512:10: ( '}' )
+            // Smi.g:512:10: '}'
             {
             	Match('}'); if (state.failed) return ;
 
@@ -4479,8 +4479,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = R_BRACKET;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:513:12: ( ']' )
-            // smi.g:513:12: ']'
+            // Smi.g:513:12: ( ']' )
+            // Smi.g:513:12: ']'
             {
             	Match(']'); if (state.failed) return ;
 
@@ -4502,8 +4502,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = R_PAREN;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:514:10: ( ')' )
-            // smi.g:514:10: ')'
+            // Smi.g:514:10: ( ')' )
+            // Smi.g:514:10: ')'
             {
             	Match(')'); if (state.failed) return ;
 
@@ -4525,8 +4525,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = SEMI;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:515:8: ( ';' )
-            // smi.g:515:8: ';'
+            // Smi.g:515:8: ( ';' )
+            // Smi.g:515:8: ';'
             {
             	Match(';'); if (state.failed) return ;
 
@@ -4548,8 +4548,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = SINGLE_QUOTE;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:516:15: ( '\\'' )
-            // smi.g:516:15: '\\''
+            // Smi.g:516:15: ( '\\'' )
+            // Smi.g:516:15: '\\''
             {
             	Match('\''); if (state.failed) return ;
 
@@ -4571,8 +4571,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = CHARB;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:517:9: ( '\\'B' )
-            // smi.g:517:9: '\\'B'
+            // Smi.g:517:9: ( '\\'B' )
+            // Smi.g:517:9: '\\'B'
             {
             	Match("'B"); if (state.failed) return ;
 
@@ -4595,8 +4595,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = CHARH;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:518:9: ( '\\'H' )
-            // smi.g:518:9: '\\'H'
+            // Smi.g:518:9: ( '\\'H' )
+            // Smi.g:518:9: '\\'H'
             {
             	Match("'H"); if (state.failed) return ;
 
@@ -4619,10 +4619,10 @@ public partial class smiLexer : Lexer {
     		{
             int _type = WS;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:523:8: ( ( ' ' | '\\t' | '\\f' | ( '\\r\\n' | '\\r' | '\\n' ) )+ )
-            // smi.g:523:8: ( ' ' | '\\t' | '\\f' | ( '\\r\\n' | '\\r' | '\\n' ) )+
+            // Smi.g:523:8: ( ( ' ' | '\\t' | '\\f' | ( '\\r\\n' | '\\r' | '\\n' ) )+ )
+            // Smi.g:523:8: ( ' ' | '\\t' | '\\f' | ( '\\r\\n' | '\\r' | '\\n' ) )+
             {
-            	// smi.g:523:8: ( ' ' | '\\t' | '\\f' | ( '\\r\\n' | '\\r' | '\\n' ) )+
+            	// Smi.g:523:8: ( ' ' | '\\t' | '\\f' | ( '\\r\\n' | '\\r' | '\\n' ) )+
             	int cnt2 = 0;
             	do 
             	{
@@ -4656,30 +4656,30 @@ public partial class smiLexer : Lexer {
             	    switch (alt2) 
             		{
             			case 1 :
-            			    // smi.g:523:10: ' '
+            			    // Smi.g:523:10: ' '
             			    {
             			    	Match(' '); if (state.failed) return ;
 
             			    }
             			    break;
             			case 2 :
-            			    // smi.g:523:16: '\\t'
+            			    // Smi.g:523:16: '\\t'
             			    {
             			    	Match('\t'); if (state.failed) return ;
 
             			    }
             			    break;
             			case 3 :
-            			    // smi.g:523:23: '\\f'
+            			    // Smi.g:523:23: '\\f'
             			    {
             			    	Match('\f'); if (state.failed) return ;
 
             			    }
             			    break;
             			case 4 :
-            			    // smi.g:523:30: ( '\\r\\n' | '\\r' | '\\n' )
+            			    // Smi.g:523:30: ( '\\r\\n' | '\\r' | '\\n' )
             			    {
-            			    	// smi.g:523:30: ( '\\r\\n' | '\\r' | '\\n' )
+            			    	// Smi.g:523:30: ( '\\r\\n' | '\\r' | '\\n' )
             			    	int alt1 = 3;
             			    	int LA1_0 = input.LA(1);
 
@@ -4710,7 +4710,7 @@ public partial class smiLexer : Lexer {
             			    	switch (alt1) 
             			    	{
             			    	    case 1 :
-            			    	        // smi.g:524:4: '\\r\\n'
+            			    	        // Smi.g:524:4: '\\r\\n'
             			    	        {
             			    	        	Match("\r\n"); if (state.failed) return ;
 
@@ -4718,14 +4718,14 @@ public partial class smiLexer : Lexer {
             			    	        }
             			    	        break;
             			    	    case 2 :
-            			    	        // smi.g:525:4: '\\r'
+            			    	        // Smi.g:525:4: '\\r'
             			    	        {
             			    	        	Match('\r'); if (state.failed) return ;
 
             			    	        }
             			    	        break;
             			    	    case 3 :
-            			    	        // smi.g:526:4: '\\n'
+            			    	        // Smi.g:526:4: '\\n'
             			    	        {
             			    	        	Match('\n'); if (state.failed) return ;
 
@@ -4774,14 +4774,14 @@ public partial class smiLexer : Lexer {
     		{
             int _type = SL_COMMENT;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:533:4: ( ( COMMENT ({...}? '-' |~ ( '-' | '\\n' | '\\r' ) )* ( ( ( '\\r' )? '\\n' ) | COMMENT ) ) )
-            // smi.g:533:4: ( COMMENT ({...}? '-' |~ ( '-' | '\\n' | '\\r' ) )* ( ( ( '\\r' )? '\\n' ) | COMMENT ) )
+            // Smi.g:533:4: ( ( COMMENT ({...}? '-' |~ ( '-' | '\\n' | '\\r' ) )* ( ( ( '\\r' )? '\\n' ) | COMMENT ) ) )
+            // Smi.g:533:4: ( COMMENT ({...}? '-' |~ ( '-' | '\\n' | '\\r' ) )* ( ( ( '\\r' )? '\\n' ) | COMMENT ) )
             {
-            	// smi.g:533:4: ( COMMENT ({...}? '-' |~ ( '-' | '\\n' | '\\r' ) )* ( ( ( '\\r' )? '\\n' ) | COMMENT ) )
-            	// smi.g:534:4: COMMENT ({...}? '-' |~ ( '-' | '\\n' | '\\r' ) )* ( ( ( '\\r' )? '\\n' ) | COMMENT )
+            	// Smi.g:533:4: ( COMMENT ({...}? '-' |~ ( '-' | '\\n' | '\\r' ) )* ( ( ( '\\r' )? '\\n' ) | COMMENT ) )
+            	// Smi.g:534:4: COMMENT ({...}? '-' |~ ( '-' | '\\n' | '\\r' ) )* ( ( ( '\\r' )? '\\n' ) | COMMENT )
             	{
             		mCOMMENT(); if (state.failed) return ;
-            		// smi.g:534:12: ({...}? '-' |~ ( '-' | '\\n' | '\\r' ) )*
+            		// Smi.g:534:12: ({...}? '-' |~ ( '-' | '\\n' | '\\r' ) )*
             		do 
             		{
             		    int alt3 = 3;
@@ -4818,7 +4818,7 @@ public partial class smiLexer : Lexer {
             		    switch (alt3) 
             			{
             				case 1 :
-            				    // smi.g:534:15: {...}? '-'
+            				    // Smi.g:534:15: {...}? '-'
             				    {
             				    	if ( !(( input.LA(2)!='-' )) ) 
             				    	{
@@ -4830,7 +4830,7 @@ public partial class smiLexer : Lexer {
             				    }
             				    break;
             				case 2 :
-            				    // smi.g:534:44: ~ ( '-' | '\\n' | '\\r' )
+            				    // Smi.g:534:44: ~ ( '-' | '\\n' | '\\r' )
             				    {
             				    	if ( (input.LA(1) >= '\u0000' && input.LA(1) <= '\t') || (input.LA(1) >= '\u000B' && input.LA(1) <= '\f') || (input.LA(1) >= '\u000E' && input.LA(1) <= ',') || (input.LA(1) >= '.' && input.LA(1) <= '\uFFFF') ) 
             				    	{
@@ -4856,7 +4856,7 @@ public partial class smiLexer : Lexer {
             		loop3:
             			;	// Stops C# compiler whining that label 'loop3' has no statements
 
-            		// smi.g:534:63: ( ( ( '\\r' )? '\\n' ) | COMMENT )
+            		// Smi.g:534:63: ( ( ( '\\r' )? '\\n' ) | COMMENT )
             		int alt5 = 2;
             		int LA5_0 = input.LA(1);
 
@@ -4879,12 +4879,12 @@ public partial class smiLexer : Lexer {
             		switch (alt5) 
             		{
             		    case 1 :
-            		        // smi.g:534:65: ( ( '\\r' )? '\\n' )
+            		        // Smi.g:534:65: ( ( '\\r' )? '\\n' )
             		        {
-            		        	// smi.g:534:65: ( ( '\\r' )? '\\n' )
-            		        	// smi.g:534:66: ( '\\r' )? '\\n'
+            		        	// Smi.g:534:65: ( ( '\\r' )? '\\n' )
+            		        	// Smi.g:534:66: ( '\\r' )? '\\n'
             		        	{
-            		        		// smi.g:534:66: ( '\\r' )?
+            		        		// Smi.g:534:66: ( '\\r' )?
             		        		int alt4 = 2;
             		        		int LA4_0 = input.LA(1);
 
@@ -4895,7 +4895,7 @@ public partial class smiLexer : Lexer {
             		        		switch (alt4) 
             		        		{
             		        		    case 1 :
-            		        		        // smi.g:534:67: '\\r'
+            		        		        // Smi.g:534:67: '\\r'
             		        		        {
             		        		        	Match('\r'); if (state.failed) return ;
 
@@ -4912,7 +4912,7 @@ public partial class smiLexer : Lexer {
             		        }
             		        break;
             		    case 2 :
-            		        // smi.g:534:82: COMMENT
+            		        // Smi.g:534:82: COMMENT
             		        {
             		        	mCOMMENT(); if (state.failed) return ;
 
@@ -4947,8 +4947,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = BDIG;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:540:9: ( ( '0' | '1' ) )
-            // smi.g:
+            // Smi.g:540:9: ( ( '0' | '1' ) )
+            // Smi.g:
             {
             	if ( (input.LA(1) >= '0' && input.LA(1) <= '1') ) 
             	{
@@ -4981,8 +4981,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = HDIG;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:542:9: ( ( ( '0' .. '9' ) ) | ( 'A' .. 'F' ) | ( 'a' .. 'f' ) )
-            // smi.g:
+            // Smi.g:542:9: ( ( ( '0' .. '9' ) ) | ( 'A' .. 'F' ) | ( 'a' .. 'f' ) )
+            // Smi.g:
             {
             	if ( (input.LA(1) >= '0' && input.LA(1) <= '9') || (input.LA(1) >= 'A' && input.LA(1) <= 'F') || (input.LA(1) >= 'a' && input.LA(1) <= 'f') ) 
             	{
@@ -5015,10 +5015,10 @@ public partial class smiLexer : Lexer {
     		{
             int _type = NUMBER;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:546:10: ( ( '0' .. '9' )+ )
-            // smi.g:546:10: ( '0' .. '9' )+
+            // Smi.g:546:10: ( ( '0' .. '9' )+ )
+            // Smi.g:546:10: ( '0' .. '9' )+
             {
-            	// smi.g:546:10: ( '0' .. '9' )+
+            	// Smi.g:546:10: ( '0' .. '9' )+
             	int cnt6 = 0;
             	do 
             	{
@@ -5034,7 +5034,7 @@ public partial class smiLexer : Lexer {
             	    switch (alt6) 
             		{
             			case 1 :
-            			    // smi.g:
+            			    // Smi.g:
             			    {
             			    	if ( (input.LA(1) >= '0' && input.LA(1) <= '9') ) 
             			    	{
@@ -5084,8 +5084,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = UPPER;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:551:6: ( ( 'A' .. 'Z' ) ( ( 'a' .. 'z' | 'A' .. 'Z' | '-' | '0' .. '9' ) )* )
-            // smi.g:551:6: ( 'A' .. 'Z' ) ( ( 'a' .. 'z' | 'A' .. 'Z' | '-' | '0' .. '9' ) )*
+            // Smi.g:551:6: ( ( 'A' .. 'Z' ) ( ( 'a' .. 'z' | 'A' .. 'Z' | '-' | '0' .. '9' ) )* )
+            // Smi.g:551:6: ( 'A' .. 'Z' ) ( ( 'a' .. 'z' | 'A' .. 'Z' | '-' | '0' .. '9' ) )*
             {
             	if ( (input.LA(1) >= 'A' && input.LA(1) <= 'Z') ) 
             	{
@@ -5099,7 +5099,7 @@ public partial class smiLexer : Lexer {
             	    Recover(mse);
             	    throw mse;}
 
-            	// smi.g:552:3: ( ( 'a' .. 'z' | 'A' .. 'Z' | '-' | '0' .. '9' ) )*
+            	// Smi.g:552:3: ( ( 'a' .. 'z' | 'A' .. 'Z' | '-' | '0' .. '9' ) )*
             	do 
             	{
             	    int alt7 = 2;
@@ -5114,7 +5114,7 @@ public partial class smiLexer : Lexer {
             	    switch (alt7) 
             		{
             			case 1 :
-            			    // smi.g:
+            			    // Smi.g:
             			    {
             			    	if ( input.LA(1) == '-' || (input.LA(1) >= '0' && input.LA(1) <= '9') || (input.LA(1) >= 'A' && input.LA(1) <= 'Z') || (input.LA(1) >= 'a' && input.LA(1) <= 'z') ) 
             			    	{
@@ -5159,8 +5159,8 @@ public partial class smiLexer : Lexer {
     		{
             int _type = LOWER;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:556:4: ( ( 'a' .. 'z' ) ( ( 'a' .. 'z' | 'A' .. 'Z' | '-' | '0' .. '9' ) )* )
-            // smi.g:556:4: ( 'a' .. 'z' ) ( ( 'a' .. 'z' | 'A' .. 'Z' | '-' | '0' .. '9' ) )*
+            // Smi.g:556:4: ( ( 'a' .. 'z' ) ( ( 'a' .. 'z' | 'A' .. 'Z' | '-' | '0' .. '9' ) )* )
+            // Smi.g:556:4: ( 'a' .. 'z' ) ( ( 'a' .. 'z' | 'A' .. 'Z' | '-' | '0' .. '9' ) )*
             {
             	if ( (input.LA(1) >= 'a' && input.LA(1) <= 'z') ) 
             	{
@@ -5174,7 +5174,7 @@ public partial class smiLexer : Lexer {
             	    Recover(mse);
             	    throw mse;}
 
-            	// smi.g:557:3: ( ( 'a' .. 'z' | 'A' .. 'Z' | '-' | '0' .. '9' ) )*
+            	// Smi.g:557:3: ( ( 'a' .. 'z' | 'A' .. 'Z' | '-' | '0' .. '9' ) )*
             	do 
             	{
             	    int alt8 = 2;
@@ -5189,7 +5189,7 @@ public partial class smiLexer : Lexer {
             	    switch (alt8) 
             		{
             			case 1 :
-            			    // smi.g:
+            			    // Smi.g:
             			    {
             			    	if ( input.LA(1) == '-' || (input.LA(1) >= '0' && input.LA(1) <= '9') || (input.LA(1) >= 'A' && input.LA(1) <= 'Z') || (input.LA(1) >= 'a' && input.LA(1) <= 'z') ) 
             			    	{
@@ -5234,16 +5234,16 @@ public partial class smiLexer : Lexer {
     		{
             int _type = B_OR_H_STRING;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:568:4: ( (=> B_STRING | H_STRING ) )
-            // smi.g:568:4: (=> B_STRING | H_STRING )
+            // Smi.g:568:4: ( (=> B_STRING | H_STRING ) )
+            // Smi.g:568:4: (=> B_STRING | H_STRING )
             {
-            	// smi.g:568:4: (=> B_STRING | H_STRING )
+            	// Smi.g:568:4: (=> B_STRING | H_STRING )
             	int alt9 = 2;
             	alt9 = dfa9.Predict(input);
             	switch (alt9) 
             	{
             	    case 1 :
-            	        // smi.g:569:4: => B_STRING
+            	        // Smi.g:569:4: => B_STRING
             	        {
 
             	        	mB_STRING(); if (state.failed) return ;
@@ -5251,7 +5251,7 @@ public partial class smiLexer : Lexer {
             	        }
             	        break;
             	    case 2 :
-            	        // smi.g:570:5: H_STRING
+            	        // Smi.g:570:5: H_STRING
             	        {
             	        	mH_STRING(); if (state.failed) return ;
 
@@ -5277,11 +5277,11 @@ public partial class smiLexer : Lexer {
     {
     		try
     		{
-            // smi.g:576:14: ( SINGLE_QUOTE ( BDIG )* SINGLE_QUOTE ( 'B' | 'b' ) )
-            // smi.g:576:14: SINGLE_QUOTE ( BDIG )* SINGLE_QUOTE ( 'B' | 'b' )
+            // Smi.g:576:14: ( SINGLE_QUOTE ( BDIG )* SINGLE_QUOTE ( 'B' | 'b' ) )
+            // Smi.g:576:14: SINGLE_QUOTE ( BDIG )* SINGLE_QUOTE ( 'B' | 'b' )
             {
             	mSINGLE_QUOTE(); if (state.failed) return ;
-            	// smi.g:576:27: ( BDIG )*
+            	// Smi.g:576:27: ( BDIG )*
             	do 
             	{
             	    int alt10 = 2;
@@ -5296,7 +5296,7 @@ public partial class smiLexer : Lexer {
             	    switch (alt10) 
             		{
             			case 1 :
-            			    // smi.g:
+            			    // Smi.g:
             			    {
             			    	if ( (input.LA(1) >= '0' && input.LA(1) <= '1') ) 
             			    	{
@@ -5350,11 +5350,11 @@ public partial class smiLexer : Lexer {
     {
     		try
     		{
-            // smi.g:578:14: ( SINGLE_QUOTE ( HDIG )* SINGLE_QUOTE ( 'H' | 'h' ) )
-            // smi.g:578:14: SINGLE_QUOTE ( HDIG )* SINGLE_QUOTE ( 'H' | 'h' )
+            // Smi.g:578:14: ( SINGLE_QUOTE ( HDIG )* SINGLE_QUOTE ( 'H' | 'h' ) )
+            // Smi.g:578:14: SINGLE_QUOTE ( HDIG )* SINGLE_QUOTE ( 'H' | 'h' )
             {
             	mSINGLE_QUOTE(); if (state.failed) return ;
-            	// smi.g:578:27: ( HDIG )*
+            	// Smi.g:578:27: ( HDIG )*
             	do 
             	{
             	    int alt11 = 2;
@@ -5369,7 +5369,7 @@ public partial class smiLexer : Lexer {
             	    switch (alt11) 
             		{
             			case 1 :
-            			    // smi.g:
+            			    // Smi.g:
             			    {
             			    	if ( (input.LA(1) >= '0' && input.LA(1) <= '9') || (input.LA(1) >= 'A' && input.LA(1) <= 'F') || (input.LA(1) >= 'a' && input.LA(1) <= 'f') ) 
             			    	{
@@ -5425,11 +5425,11 @@ public partial class smiLexer : Lexer {
     		{
             int _type = C_STRING;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // smi.g:579:14: ( '\"' ( options {greedy=false; } : '\\r\\n' | '\\r' | '\\n' |~ ( '\\r' | '\\n' ) )* '\"' )
-            // smi.g:579:14: '\"' ( options {greedy=false; } : '\\r\\n' | '\\r' | '\\n' |~ ( '\\r' | '\\n' ) )* '\"'
+            // Smi.g:579:14: ( '\"' ( options {greedy=false; } : '\\r\\n' | '\\r' | '\\n' |~ ( '\\r' | '\\n' ) )* '\"' )
+            // Smi.g:579:14: '\"' ( options {greedy=false; } : '\\r\\n' | '\\r' | '\\n' |~ ( '\\r' | '\\n' ) )* '\"'
             {
             	Match('\"'); if (state.failed) return ;
-            	// smi.g:579:18: ( options {greedy=false; } : '\\r\\n' | '\\r' | '\\n' |~ ( '\\r' | '\\n' ) )*
+            	// Smi.g:579:18: ( options {greedy=false; } : '\\r\\n' | '\\r' | '\\n' |~ ( '\\r' | '\\n' ) )*
             	do 
             	{
             	    int alt12 = 5;
@@ -5467,7 +5467,7 @@ public partial class smiLexer : Lexer {
             	    switch (alt12) 
             		{
             			case 1 :
-            			    // smi.g:580:32: '\\r\\n'
+            			    // Smi.g:580:32: '\\r\\n'
             			    {
             			    	Match("\r\n"); if (state.failed) return ;
 
@@ -5475,21 +5475,21 @@ public partial class smiLexer : Lexer {
             			    }
             			    break;
             			case 2 :
-            			    // smi.g:581:32: '\\r'
+            			    // Smi.g:581:32: '\\r'
             			    {
             			    	Match('\r'); if (state.failed) return ;
 
             			    }
             			    break;
             			case 3 :
-            			    // smi.g:582:32: '\\n'
+            			    // Smi.g:582:32: '\\n'
             			    {
             			    	Match('\n'); if (state.failed) return ;
 
             			    }
             			    break;
             			case 4 :
-            			    // smi.g:583:32: ~ ( '\\r' | '\\n' )
+            			    // Smi.g:583:32: ~ ( '\\r' | '\\n' )
             			    {
             			    	if ( (input.LA(1) >= '\u0000' && input.LA(1) <= '\t') || (input.LA(1) >= '\u000B' && input.LA(1) <= '\f') || (input.LA(1) >= '\u000E' && input.LA(1) <= '\uFFFF') ) 
             			    	{
@@ -5530,1350 +5530,1350 @@ public partial class smiLexer : Lexer {
 
     override public void mTokens() // throws RecognitionException 
     {
-        // smi.g:1:10: ( T__126 | T__127 | T__128 | T__129 | T__130 | T__131 | T__132 | T__133 | T__134 | T__135 | T__136 | T__137 | T__138 | T__139 | T__140 | T__141 | T__142 | T__143 | T__144 | T__145 | T__146 | T__147 | T__148 | T__149 | T__150 | T__151 | T__152 | T__153 | T__154 | T__155 | T__156 | T__157 | T__158 | T__159 | T__160 | T__161 | T__162 | T__163 | T__164 | T__165 | T__166 | T__167 | T__168 | T__169 | T__170 | T__171 | T__172 | T__173 | T__174 | T__175 | T__176 | T__177 | T__178 | T__179 | T__180 | T__181 | T__182 | T__183 | T__184 | T__185 | T__186 | T__187 | T__188 | T__189 | T__190 | T__191 | T__192 | T__193 | T__194 | T__195 | T__196 | T__197 | ABSENT_KW | ABSTRACT_SYNTAX_KW | ALL_KW | ANY_KW | ARGUMENT_KW | APPLICATION_KW | AUTOMATIC_KW | BASED_NUM_KW | BEGIN_KW | BIT_KW | BMP_STR_KW | BOOLEAN_KW | BY_KW | CHARACTER_KW | CHOICE_KW | CLASS_KW | COMPONENTS_KW | COMPONENT_KW | CONSTRAINED_KW | DEFAULT_KW | DEFINED_KW | DEFINITIONS_KW | EMBEDDED_KW | END_KW | ENUMERATED_KW | ERROR_KW | ERRORS_KW | EXCEPT_KW | EXPLICIT_KW | EXPORTS_KW | EXTENSIBILITY_KW | EXTERNAL_KW | FALSE_KW | FROM_KW | GENERALIZED_TIME_KW | GENERAL_STR_KW | GRAPHIC_STR_KW | IA5_STRING_KW | IDENTIFIER_KW | IMPLICIT_KW | IMPLIED_KW | IMPORTS_KW | INCLUDES_KW | INSTANCE_KW | INTEGER_KW | INTERSECTION_KW | ISO646_STR_KW | LINKED_KW | MAX_KW | MINUS_INFINITY_KW | MIN_KW | NULL_KW | NUMERIC_STR_KW | OBJECT_DESCRIPTOR_KW | OBJECT_KW | OCTET_KW | OPERATION_KW | OF_KW | OID_KW | OPTIONAL_KW | PARAMETER_KW | PDV_KW | PLUS_INFINITY_KW | PRESENT_KW | PRINTABLE_STR_KW | PRIVATE_KW | REAL_KW | RELATIVE_KW | RESULT_KW | SEQUENCE_KW | SET_KW | SIZE_KW | STRING_KW | TAGS_KW | TELETEX_STR_KW | T61_STR_KW | TRUE_KW | TYPE_IDENTIFIER_KW | UNION_KW | UNIQUE_KW | UNIVERSAL_KW | UNIVERSAL_STR_KW | UTC_TIME_KW | UTF8_STR_KW | VIDEOTEX_STR_KW | VISIBLE_STR_KW | WITH_KW | PATTERN_KW | ASSIGN_OP | BAR | COLON | COMMA | COMMENT | DOT | DOTDOT | DOTDOTDOT | EXCLAMATION | INTERSECTION | LESS | L_BRACE | L_BRACKET | L_PAREN | MINUS | PLUS | R_BRACE | R_BRACKET | R_PAREN | SEMI | SINGLE_QUOTE | CHARB | CHARH | WS | SL_COMMENT | BDIG | HDIG | NUMBER | UPPER | LOWER | B_OR_H_STRING | C_STRING )
+        // Smi.g:1:10: ( T__126 | T__127 | T__128 | T__129 | T__130 | T__131 | T__132 | T__133 | T__134 | T__135 | T__136 | T__137 | T__138 | T__139 | T__140 | T__141 | T__142 | T__143 | T__144 | T__145 | T__146 | T__147 | T__148 | T__149 | T__150 | T__151 | T__152 | T__153 | T__154 | T__155 | T__156 | T__157 | T__158 | T__159 | T__160 | T__161 | T__162 | T__163 | T__164 | T__165 | T__166 | T__167 | T__168 | T__169 | T__170 | T__171 | T__172 | T__173 | T__174 | T__175 | T__176 | T__177 | T__178 | T__179 | T__180 | T__181 | T__182 | T__183 | T__184 | T__185 | T__186 | T__187 | T__188 | T__189 | T__190 | T__191 | T__192 | T__193 | T__194 | T__195 | T__196 | T__197 | ABSENT_KW | ABSTRACT_SYNTAX_KW | ALL_KW | ANY_KW | ARGUMENT_KW | APPLICATION_KW | AUTOMATIC_KW | BASED_NUM_KW | BEGIN_KW | BIT_KW | BMP_STR_KW | BOOLEAN_KW | BY_KW | CHARACTER_KW | CHOICE_KW | CLASS_KW | COMPONENTS_KW | COMPONENT_KW | CONSTRAINED_KW | DEFAULT_KW | DEFINED_KW | DEFINITIONS_KW | EMBEDDED_KW | END_KW | ENUMERATED_KW | ERROR_KW | ERRORS_KW | EXCEPT_KW | EXPLICIT_KW | EXPORTS_KW | EXTENSIBILITY_KW | EXTERNAL_KW | FALSE_KW | FROM_KW | GENERALIZED_TIME_KW | GENERAL_STR_KW | GRAPHIC_STR_KW | IA5_STRING_KW | IDENTIFIER_KW | IMPLICIT_KW | IMPLIED_KW | IMPORTS_KW | INCLUDES_KW | INSTANCE_KW | INTEGER_KW | INTERSECTION_KW | ISO646_STR_KW | LINKED_KW | MAX_KW | MINUS_INFINITY_KW | MIN_KW | NULL_KW | NUMERIC_STR_KW | OBJECT_DESCRIPTOR_KW | OBJECT_KW | OCTET_KW | OPERATION_KW | OF_KW | OID_KW | OPTIONAL_KW | PARAMETER_KW | PDV_KW | PLUS_INFINITY_KW | PRESENT_KW | PRINTABLE_STR_KW | PRIVATE_KW | REAL_KW | RELATIVE_KW | RESULT_KW | SEQUENCE_KW | SET_KW | SIZE_KW | STRING_KW | TAGS_KW | TELETEX_STR_KW | T61_STR_KW | TRUE_KW | TYPE_IDENTIFIER_KW | UNION_KW | UNIQUE_KW | UNIVERSAL_KW | UNIVERSAL_STR_KW | UTC_TIME_KW | UTF8_STR_KW | VIDEOTEX_STR_KW | VISIBLE_STR_KW | WITH_KW | PATTERN_KW | ASSIGN_OP | BAR | COLON | COMMA | COMMENT | DOT | DOTDOT | DOTDOTDOT | EXCLAMATION | INTERSECTION | LESS | L_BRACE | L_BRACKET | L_PAREN | MINUS | PLUS | R_BRACE | R_BRACKET | R_PAREN | SEMI | SINGLE_QUOTE | CHARB | CHARH | WS | SL_COMMENT | BDIG | HDIG | NUMBER | UPPER | LOWER | B_OR_H_STRING | C_STRING )
         int alt13 = 192;
         alt13 = dfa13.Predict(input);
         switch (alt13) 
         {
             case 1 :
-                // smi.g:1:10: T__126
+                // Smi.g:1:10: T__126
                 {
                 	mT__126(); if (state.failed) return ;
 
                 }
                 break;
             case 2 :
-                // smi.g:1:17: T__127
+                // Smi.g:1:17: T__127
                 {
                 	mT__127(); if (state.failed) return ;
 
                 }
                 break;
             case 3 :
-                // smi.g:1:24: T__128
+                // Smi.g:1:24: T__128
                 {
                 	mT__128(); if (state.failed) return ;
 
                 }
                 break;
             case 4 :
-                // smi.g:1:31: T__129
+                // Smi.g:1:31: T__129
                 {
                 	mT__129(); if (state.failed) return ;
 
                 }
                 break;
             case 5 :
-                // smi.g:1:38: T__130
+                // Smi.g:1:38: T__130
                 {
                 	mT__130(); if (state.failed) return ;
 
                 }
                 break;
             case 6 :
-                // smi.g:1:45: T__131
+                // Smi.g:1:45: T__131
                 {
                 	mT__131(); if (state.failed) return ;
 
                 }
                 break;
             case 7 :
-                // smi.g:1:52: T__132
+                // Smi.g:1:52: T__132
                 {
                 	mT__132(); if (state.failed) return ;
 
                 }
                 break;
             case 8 :
-                // smi.g:1:59: T__133
+                // Smi.g:1:59: T__133
                 {
                 	mT__133(); if (state.failed) return ;
 
                 }
                 break;
             case 9 :
-                // smi.g:1:66: T__134
+                // Smi.g:1:66: T__134
                 {
                 	mT__134(); if (state.failed) return ;
 
                 }
                 break;
             case 10 :
-                // smi.g:1:73: T__135
+                // Smi.g:1:73: T__135
                 {
                 	mT__135(); if (state.failed) return ;
 
                 }
                 break;
             case 11 :
-                // smi.g:1:80: T__136
+                // Smi.g:1:80: T__136
                 {
                 	mT__136(); if (state.failed) return ;
 
                 }
                 break;
             case 12 :
-                // smi.g:1:87: T__137
+                // Smi.g:1:87: T__137
                 {
                 	mT__137(); if (state.failed) return ;
 
                 }
                 break;
             case 13 :
-                // smi.g:1:94: T__138
+                // Smi.g:1:94: T__138
                 {
                 	mT__138(); if (state.failed) return ;
 
                 }
                 break;
             case 14 :
-                // smi.g:1:101: T__139
+                // Smi.g:1:101: T__139
                 {
                 	mT__139(); if (state.failed) return ;
 
                 }
                 break;
             case 15 :
-                // smi.g:1:108: T__140
+                // Smi.g:1:108: T__140
                 {
                 	mT__140(); if (state.failed) return ;
 
                 }
                 break;
             case 16 :
-                // smi.g:1:115: T__141
+                // Smi.g:1:115: T__141
                 {
                 	mT__141(); if (state.failed) return ;
 
                 }
                 break;
             case 17 :
-                // smi.g:1:122: T__142
+                // Smi.g:1:122: T__142
                 {
                 	mT__142(); if (state.failed) return ;
 
                 }
                 break;
             case 18 :
-                // smi.g:1:129: T__143
+                // Smi.g:1:129: T__143
                 {
                 	mT__143(); if (state.failed) return ;
 
                 }
                 break;
             case 19 :
-                // smi.g:1:136: T__144
+                // Smi.g:1:136: T__144
                 {
                 	mT__144(); if (state.failed) return ;
 
                 }
                 break;
             case 20 :
-                // smi.g:1:143: T__145
+                // Smi.g:1:143: T__145
                 {
                 	mT__145(); if (state.failed) return ;
 
                 }
                 break;
             case 21 :
-                // smi.g:1:150: T__146
+                // Smi.g:1:150: T__146
                 {
                 	mT__146(); if (state.failed) return ;
 
                 }
                 break;
             case 22 :
-                // smi.g:1:157: T__147
+                // Smi.g:1:157: T__147
                 {
                 	mT__147(); if (state.failed) return ;
 
                 }
                 break;
             case 23 :
-                // smi.g:1:164: T__148
+                // Smi.g:1:164: T__148
                 {
                 	mT__148(); if (state.failed) return ;
 
                 }
                 break;
             case 24 :
-                // smi.g:1:171: T__149
+                // Smi.g:1:171: T__149
                 {
                 	mT__149(); if (state.failed) return ;
 
                 }
                 break;
             case 25 :
-                // smi.g:1:178: T__150
+                // Smi.g:1:178: T__150
                 {
                 	mT__150(); if (state.failed) return ;
 
                 }
                 break;
             case 26 :
-                // smi.g:1:185: T__151
+                // Smi.g:1:185: T__151
                 {
                 	mT__151(); if (state.failed) return ;
 
                 }
                 break;
             case 27 :
-                // smi.g:1:192: T__152
+                // Smi.g:1:192: T__152
                 {
                 	mT__152(); if (state.failed) return ;
 
                 }
                 break;
             case 28 :
-                // smi.g:1:199: T__153
+                // Smi.g:1:199: T__153
                 {
                 	mT__153(); if (state.failed) return ;
 
                 }
                 break;
             case 29 :
-                // smi.g:1:206: T__154
+                // Smi.g:1:206: T__154
                 {
                 	mT__154(); if (state.failed) return ;
 
                 }
                 break;
             case 30 :
-                // smi.g:1:213: T__155
+                // Smi.g:1:213: T__155
                 {
                 	mT__155(); if (state.failed) return ;
 
                 }
                 break;
             case 31 :
-                // smi.g:1:220: T__156
+                // Smi.g:1:220: T__156
                 {
                 	mT__156(); if (state.failed) return ;
 
                 }
                 break;
             case 32 :
-                // smi.g:1:227: T__157
+                // Smi.g:1:227: T__157
                 {
                 	mT__157(); if (state.failed) return ;
 
                 }
                 break;
             case 33 :
-                // smi.g:1:234: T__158
+                // Smi.g:1:234: T__158
                 {
                 	mT__158(); if (state.failed) return ;
 
                 }
                 break;
             case 34 :
-                // smi.g:1:241: T__159
+                // Smi.g:1:241: T__159
                 {
                 	mT__159(); if (state.failed) return ;
 
                 }
                 break;
             case 35 :
-                // smi.g:1:248: T__160
+                // Smi.g:1:248: T__160
                 {
                 	mT__160(); if (state.failed) return ;
 
                 }
                 break;
             case 36 :
-                // smi.g:1:255: T__161
+                // Smi.g:1:255: T__161
                 {
                 	mT__161(); if (state.failed) return ;
 
                 }
                 break;
             case 37 :
-                // smi.g:1:262: T__162
+                // Smi.g:1:262: T__162
                 {
                 	mT__162(); if (state.failed) return ;
 
                 }
                 break;
             case 38 :
-                // smi.g:1:269: T__163
+                // Smi.g:1:269: T__163
                 {
                 	mT__163(); if (state.failed) return ;
 
                 }
                 break;
             case 39 :
-                // smi.g:1:276: T__164
+                // Smi.g:1:276: T__164
                 {
                 	mT__164(); if (state.failed) return ;
 
                 }
                 break;
             case 40 :
-                // smi.g:1:283: T__165
+                // Smi.g:1:283: T__165
                 {
                 	mT__165(); if (state.failed) return ;
 
                 }
                 break;
             case 41 :
-                // smi.g:1:290: T__166
+                // Smi.g:1:290: T__166
                 {
                 	mT__166(); if (state.failed) return ;
 
                 }
                 break;
             case 42 :
-                // smi.g:1:297: T__167
+                // Smi.g:1:297: T__167
                 {
                 	mT__167(); if (state.failed) return ;
 
                 }
                 break;
             case 43 :
-                // smi.g:1:304: T__168
+                // Smi.g:1:304: T__168
                 {
                 	mT__168(); if (state.failed) return ;
 
                 }
                 break;
             case 44 :
-                // smi.g:1:311: T__169
+                // Smi.g:1:311: T__169
                 {
                 	mT__169(); if (state.failed) return ;
 
                 }
                 break;
             case 45 :
-                // smi.g:1:318: T__170
+                // Smi.g:1:318: T__170
                 {
                 	mT__170(); if (state.failed) return ;
 
                 }
                 break;
             case 46 :
-                // smi.g:1:325: T__171
+                // Smi.g:1:325: T__171
                 {
                 	mT__171(); if (state.failed) return ;
 
                 }
                 break;
             case 47 :
-                // smi.g:1:332: T__172
+                // Smi.g:1:332: T__172
                 {
                 	mT__172(); if (state.failed) return ;
 
                 }
                 break;
             case 48 :
-                // smi.g:1:339: T__173
+                // Smi.g:1:339: T__173
                 {
                 	mT__173(); if (state.failed) return ;
 
                 }
                 break;
             case 49 :
-                // smi.g:1:346: T__174
+                // Smi.g:1:346: T__174
                 {
                 	mT__174(); if (state.failed) return ;
 
                 }
                 break;
             case 50 :
-                // smi.g:1:353: T__175
+                // Smi.g:1:353: T__175
                 {
                 	mT__175(); if (state.failed) return ;
 
                 }
                 break;
             case 51 :
-                // smi.g:1:360: T__176
+                // Smi.g:1:360: T__176
                 {
                 	mT__176(); if (state.failed) return ;
 
                 }
                 break;
             case 52 :
-                // smi.g:1:367: T__177
+                // Smi.g:1:367: T__177
                 {
                 	mT__177(); if (state.failed) return ;
 
                 }
                 break;
             case 53 :
-                // smi.g:1:374: T__178
+                // Smi.g:1:374: T__178
                 {
                 	mT__178(); if (state.failed) return ;
 
                 }
                 break;
             case 54 :
-                // smi.g:1:381: T__179
+                // Smi.g:1:381: T__179
                 {
                 	mT__179(); if (state.failed) return ;
 
                 }
                 break;
             case 55 :
-                // smi.g:1:388: T__180
+                // Smi.g:1:388: T__180
                 {
                 	mT__180(); if (state.failed) return ;
 
                 }
                 break;
             case 56 :
-                // smi.g:1:395: T__181
+                // Smi.g:1:395: T__181
                 {
                 	mT__181(); if (state.failed) return ;
 
                 }
                 break;
             case 57 :
-                // smi.g:1:402: T__182
+                // Smi.g:1:402: T__182
                 {
                 	mT__182(); if (state.failed) return ;
 
                 }
                 break;
             case 58 :
-                // smi.g:1:409: T__183
+                // Smi.g:1:409: T__183
                 {
                 	mT__183(); if (state.failed) return ;
 
                 }
                 break;
             case 59 :
-                // smi.g:1:416: T__184
+                // Smi.g:1:416: T__184
                 {
                 	mT__184(); if (state.failed) return ;
 
                 }
                 break;
             case 60 :
-                // smi.g:1:423: T__185
+                // Smi.g:1:423: T__185
                 {
                 	mT__185(); if (state.failed) return ;
 
                 }
                 break;
             case 61 :
-                // smi.g:1:430: T__186
+                // Smi.g:1:430: T__186
                 {
                 	mT__186(); if (state.failed) return ;
 
                 }
                 break;
             case 62 :
-                // smi.g:1:437: T__187
+                // Smi.g:1:437: T__187
                 {
                 	mT__187(); if (state.failed) return ;
 
                 }
                 break;
             case 63 :
-                // smi.g:1:444: T__188
+                // Smi.g:1:444: T__188
                 {
                 	mT__188(); if (state.failed) return ;
 
                 }
                 break;
             case 64 :
-                // smi.g:1:451: T__189
+                // Smi.g:1:451: T__189
                 {
                 	mT__189(); if (state.failed) return ;
 
                 }
                 break;
             case 65 :
-                // smi.g:1:458: T__190
+                // Smi.g:1:458: T__190
                 {
                 	mT__190(); if (state.failed) return ;
 
                 }
                 break;
             case 66 :
-                // smi.g:1:465: T__191
+                // Smi.g:1:465: T__191
                 {
                 	mT__191(); if (state.failed) return ;
 
                 }
                 break;
             case 67 :
-                // smi.g:1:472: T__192
+                // Smi.g:1:472: T__192
                 {
                 	mT__192(); if (state.failed) return ;
 
                 }
                 break;
             case 68 :
-                // smi.g:1:479: T__193
+                // Smi.g:1:479: T__193
                 {
                 	mT__193(); if (state.failed) return ;
 
                 }
                 break;
             case 69 :
-                // smi.g:1:486: T__194
+                // Smi.g:1:486: T__194
                 {
                 	mT__194(); if (state.failed) return ;
 
                 }
                 break;
             case 70 :
-                // smi.g:1:493: T__195
+                // Smi.g:1:493: T__195
                 {
                 	mT__195(); if (state.failed) return ;
 
                 }
                 break;
             case 71 :
-                // smi.g:1:500: T__196
+                // Smi.g:1:500: T__196
                 {
                 	mT__196(); if (state.failed) return ;
 
                 }
                 break;
             case 72 :
-                // smi.g:1:507: T__197
+                // Smi.g:1:507: T__197
                 {
                 	mT__197(); if (state.failed) return ;
 
                 }
                 break;
             case 73 :
-                // smi.g:1:514: ABSENT_KW
+                // Smi.g:1:514: ABSENT_KW
                 {
                 	mABSENT_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 74 :
-                // smi.g:1:524: ABSTRACT_SYNTAX_KW
+                // Smi.g:1:524: ABSTRACT_SYNTAX_KW
                 {
                 	mABSTRACT_SYNTAX_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 75 :
-                // smi.g:1:543: ALL_KW
+                // Smi.g:1:543: ALL_KW
                 {
                 	mALL_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 76 :
-                // smi.g:1:550: ANY_KW
+                // Smi.g:1:550: ANY_KW
                 {
                 	mANY_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 77 :
-                // smi.g:1:557: ARGUMENT_KW
+                // Smi.g:1:557: ARGUMENT_KW
                 {
                 	mARGUMENT_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 78 :
-                // smi.g:1:569: APPLICATION_KW
+                // Smi.g:1:569: APPLICATION_KW
                 {
                 	mAPPLICATION_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 79 :
-                // smi.g:1:584: AUTOMATIC_KW
+                // Smi.g:1:584: AUTOMATIC_KW
                 {
                 	mAUTOMATIC_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 80 :
-                // smi.g:1:597: BASED_NUM_KW
+                // Smi.g:1:597: BASED_NUM_KW
                 {
                 	mBASED_NUM_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 81 :
-                // smi.g:1:610: BEGIN_KW
+                // Smi.g:1:610: BEGIN_KW
                 {
                 	mBEGIN_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 82 :
-                // smi.g:1:619: BIT_KW
+                // Smi.g:1:619: BIT_KW
                 {
                 	mBIT_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 83 :
-                // smi.g:1:626: BMP_STR_KW
+                // Smi.g:1:626: BMP_STR_KW
                 {
                 	mBMP_STR_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 84 :
-                // smi.g:1:637: BOOLEAN_KW
+                // Smi.g:1:637: BOOLEAN_KW
                 {
                 	mBOOLEAN_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 85 :
-                // smi.g:1:648: BY_KW
+                // Smi.g:1:648: BY_KW
                 {
                 	mBY_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 86 :
-                // smi.g:1:654: CHARACTER_KW
+                // Smi.g:1:654: CHARACTER_KW
                 {
                 	mCHARACTER_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 87 :
-                // smi.g:1:667: CHOICE_KW
+                // Smi.g:1:667: CHOICE_KW
                 {
                 	mCHOICE_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 88 :
-                // smi.g:1:677: CLASS_KW
+                // Smi.g:1:677: CLASS_KW
                 {
                 	mCLASS_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 89 :
-                // smi.g:1:686: COMPONENTS_KW
+                // Smi.g:1:686: COMPONENTS_KW
                 {
                 	mCOMPONENTS_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 90 :
-                // smi.g:1:700: COMPONENT_KW
+                // Smi.g:1:700: COMPONENT_KW
                 {
                 	mCOMPONENT_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 91 :
-                // smi.g:1:713: CONSTRAINED_KW
+                // Smi.g:1:713: CONSTRAINED_KW
                 {
                 	mCONSTRAINED_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 92 :
-                // smi.g:1:728: DEFAULT_KW
+                // Smi.g:1:728: DEFAULT_KW
                 {
                 	mDEFAULT_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 93 :
-                // smi.g:1:739: DEFINED_KW
+                // Smi.g:1:739: DEFINED_KW
                 {
                 	mDEFINED_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 94 :
-                // smi.g:1:750: DEFINITIONS_KW
+                // Smi.g:1:750: DEFINITIONS_KW
                 {
                 	mDEFINITIONS_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 95 :
-                // smi.g:1:765: EMBEDDED_KW
+                // Smi.g:1:765: EMBEDDED_KW
                 {
                 	mEMBEDDED_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 96 :
-                // smi.g:1:777: END_KW
+                // Smi.g:1:777: END_KW
                 {
                 	mEND_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 97 :
-                // smi.g:1:784: ENUMERATED_KW
+                // Smi.g:1:784: ENUMERATED_KW
                 {
                 	mENUMERATED_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 98 :
-                // smi.g:1:798: ERROR_KW
+                // Smi.g:1:798: ERROR_KW
                 {
                 	mERROR_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 99 :
-                // smi.g:1:807: ERRORS_KW
+                // Smi.g:1:807: ERRORS_KW
                 {
                 	mERRORS_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 100 :
-                // smi.g:1:817: EXCEPT_KW
+                // Smi.g:1:817: EXCEPT_KW
                 {
                 	mEXCEPT_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 101 :
-                // smi.g:1:827: EXPLICIT_KW
+                // Smi.g:1:827: EXPLICIT_KW
                 {
                 	mEXPLICIT_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 102 :
-                // smi.g:1:839: EXPORTS_KW
+                // Smi.g:1:839: EXPORTS_KW
                 {
                 	mEXPORTS_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 103 :
-                // smi.g:1:850: EXTENSIBILITY_KW
+                // Smi.g:1:850: EXTENSIBILITY_KW
                 {
                 	mEXTENSIBILITY_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 104 :
-                // smi.g:1:867: EXTERNAL_KW
+                // Smi.g:1:867: EXTERNAL_KW
                 {
                 	mEXTERNAL_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 105 :
-                // smi.g:1:879: FALSE_KW
+                // Smi.g:1:879: FALSE_KW
                 {
                 	mFALSE_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 106 :
-                // smi.g:1:888: FROM_KW
+                // Smi.g:1:888: FROM_KW
                 {
                 	mFROM_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 107 :
-                // smi.g:1:896: GENERALIZED_TIME_KW
+                // Smi.g:1:896: GENERALIZED_TIME_KW
                 {
                 	mGENERALIZED_TIME_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 108 :
-                // smi.g:1:916: GENERAL_STR_KW
+                // Smi.g:1:916: GENERAL_STR_KW
                 {
                 	mGENERAL_STR_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 109 :
-                // smi.g:1:931: GRAPHIC_STR_KW
+                // Smi.g:1:931: GRAPHIC_STR_KW
                 {
                 	mGRAPHIC_STR_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 110 :
-                // smi.g:1:946: IA5_STRING_KW
+                // Smi.g:1:946: IA5_STRING_KW
                 {
                 	mIA5_STRING_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 111 :
-                // smi.g:1:960: IDENTIFIER_KW
+                // Smi.g:1:960: IDENTIFIER_KW
                 {
                 	mIDENTIFIER_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 112 :
-                // smi.g:1:974: IMPLICIT_KW
+                // Smi.g:1:974: IMPLICIT_KW
                 {
                 	mIMPLICIT_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 113 :
-                // smi.g:1:986: IMPLIED_KW
+                // Smi.g:1:986: IMPLIED_KW
                 {
                 	mIMPLIED_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 114 :
-                // smi.g:1:997: IMPORTS_KW
+                // Smi.g:1:997: IMPORTS_KW
                 {
                 	mIMPORTS_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 115 :
-                // smi.g:1:1008: INCLUDES_KW
+                // Smi.g:1:1008: INCLUDES_KW
                 {
                 	mINCLUDES_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 116 :
-                // smi.g:1:1020: INSTANCE_KW
+                // Smi.g:1:1020: INSTANCE_KW
                 {
                 	mINSTANCE_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 117 :
-                // smi.g:1:1032: INTEGER_KW
+                // Smi.g:1:1032: INTEGER_KW
                 {
                 	mINTEGER_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 118 :
-                // smi.g:1:1043: INTERSECTION_KW
+                // Smi.g:1:1043: INTERSECTION_KW
                 {
                 	mINTERSECTION_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 119 :
-                // smi.g:1:1059: ISO646_STR_KW
+                // Smi.g:1:1059: ISO646_STR_KW
                 {
                 	mISO646_STR_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 120 :
-                // smi.g:1:1073: LINKED_KW
+                // Smi.g:1:1073: LINKED_KW
                 {
                 	mLINKED_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 121 :
-                // smi.g:1:1083: MAX_KW
+                // Smi.g:1:1083: MAX_KW
                 {
                 	mMAX_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 122 :
-                // smi.g:1:1090: MINUS_INFINITY_KW
+                // Smi.g:1:1090: MINUS_INFINITY_KW
                 {
                 	mMINUS_INFINITY_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 123 :
-                // smi.g:1:1108: MIN_KW
+                // Smi.g:1:1108: MIN_KW
                 {
                 	mMIN_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 124 :
-                // smi.g:1:1115: NULL_KW
+                // Smi.g:1:1115: NULL_KW
                 {
                 	mNULL_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 125 :
-                // smi.g:1:1123: NUMERIC_STR_KW
+                // Smi.g:1:1123: NUMERIC_STR_KW
                 {
                 	mNUMERIC_STR_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 126 :
-                // smi.g:1:1138: OBJECT_DESCRIPTOR_KW
+                // Smi.g:1:1138: OBJECT_DESCRIPTOR_KW
                 {
                 	mOBJECT_DESCRIPTOR_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 127 :
-                // smi.g:1:1159: OBJECT_KW
+                // Smi.g:1:1159: OBJECT_KW
                 {
                 	mOBJECT_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 128 :
-                // smi.g:1:1169: OCTET_KW
+                // Smi.g:1:1169: OCTET_KW
                 {
                 	mOCTET_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 129 :
-                // smi.g:1:1178: OPERATION_KW
+                // Smi.g:1:1178: OPERATION_KW
                 {
                 	mOPERATION_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 130 :
-                // smi.g:1:1191: OF_KW
+                // Smi.g:1:1191: OF_KW
                 {
                 	mOF_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 131 :
-                // smi.g:1:1197: OID_KW
+                // Smi.g:1:1197: OID_KW
                 {
                 	mOID_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 132 :
-                // smi.g:1:1204: OPTIONAL_KW
+                // Smi.g:1:1204: OPTIONAL_KW
                 {
                 	mOPTIONAL_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 133 :
-                // smi.g:1:1216: PARAMETER_KW
+                // Smi.g:1:1216: PARAMETER_KW
                 {
                 	mPARAMETER_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 134 :
-                // smi.g:1:1229: PDV_KW
+                // Smi.g:1:1229: PDV_KW
                 {
                 	mPDV_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 135 :
-                // smi.g:1:1236: PLUS_INFINITY_KW
+                // Smi.g:1:1236: PLUS_INFINITY_KW
                 {
                 	mPLUS_INFINITY_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 136 :
-                // smi.g:1:1253: PRESENT_KW
+                // Smi.g:1:1253: PRESENT_KW
                 {
                 	mPRESENT_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 137 :
-                // smi.g:1:1264: PRINTABLE_STR_KW
+                // Smi.g:1:1264: PRINTABLE_STR_KW
                 {
                 	mPRINTABLE_STR_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 138 :
-                // smi.g:1:1281: PRIVATE_KW
+                // Smi.g:1:1281: PRIVATE_KW
                 {
                 	mPRIVATE_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 139 :
-                // smi.g:1:1292: REAL_KW
+                // Smi.g:1:1292: REAL_KW
                 {
                 	mREAL_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 140 :
-                // smi.g:1:1300: RELATIVE_KW
+                // Smi.g:1:1300: RELATIVE_KW
                 {
                 	mRELATIVE_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 141 :
-                // smi.g:1:1312: RESULT_KW
+                // Smi.g:1:1312: RESULT_KW
                 {
                 	mRESULT_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 142 :
-                // smi.g:1:1322: SEQUENCE_KW
+                // Smi.g:1:1322: SEQUENCE_KW
                 {
                 	mSEQUENCE_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 143 :
-                // smi.g:1:1334: SET_KW
+                // Smi.g:1:1334: SET_KW
                 {
                 	mSET_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 144 :
-                // smi.g:1:1341: SIZE_KW
+                // Smi.g:1:1341: SIZE_KW
                 {
                 	mSIZE_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 145 :
-                // smi.g:1:1349: STRING_KW
+                // Smi.g:1:1349: STRING_KW
                 {
                 	mSTRING_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 146 :
-                // smi.g:1:1359: TAGS_KW
+                // Smi.g:1:1359: TAGS_KW
                 {
                 	mTAGS_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 147 :
-                // smi.g:1:1367: TELETEX_STR_KW
+                // Smi.g:1:1367: TELETEX_STR_KW
                 {
                 	mTELETEX_STR_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 148 :
-                // smi.g:1:1382: T61_STR_KW
+                // Smi.g:1:1382: T61_STR_KW
                 {
                 	mT61_STR_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 149 :
-                // smi.g:1:1393: TRUE_KW
+                // Smi.g:1:1393: TRUE_KW
                 {
                 	mTRUE_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 150 :
-                // smi.g:1:1401: TYPE_IDENTIFIER_KW
+                // Smi.g:1:1401: TYPE_IDENTIFIER_KW
                 {
                 	mTYPE_IDENTIFIER_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 151 :
-                // smi.g:1:1420: UNION_KW
+                // Smi.g:1:1420: UNION_KW
                 {
                 	mUNION_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 152 :
-                // smi.g:1:1429: UNIQUE_KW
+                // Smi.g:1:1429: UNIQUE_KW
                 {
                 	mUNIQUE_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 153 :
-                // smi.g:1:1439: UNIVERSAL_KW
+                // Smi.g:1:1439: UNIVERSAL_KW
                 {
                 	mUNIVERSAL_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 154 :
-                // smi.g:1:1452: UNIVERSAL_STR_KW
+                // Smi.g:1:1452: UNIVERSAL_STR_KW
                 {
                 	mUNIVERSAL_STR_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 155 :
-                // smi.g:1:1469: UTC_TIME_KW
+                // Smi.g:1:1469: UTC_TIME_KW
                 {
                 	mUTC_TIME_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 156 :
-                // smi.g:1:1481: UTF8_STR_KW
+                // Smi.g:1:1481: UTF8_STR_KW
                 {
                 	mUTF8_STR_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 157 :
-                // smi.g:1:1493: VIDEOTEX_STR_KW
+                // Smi.g:1:1493: VIDEOTEX_STR_KW
                 {
                 	mVIDEOTEX_STR_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 158 :
-                // smi.g:1:1509: VISIBLE_STR_KW
+                // Smi.g:1:1509: VISIBLE_STR_KW
                 {
                 	mVISIBLE_STR_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 159 :
-                // smi.g:1:1524: WITH_KW
+                // Smi.g:1:1524: WITH_KW
                 {
                 	mWITH_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 160 :
-                // smi.g:1:1532: PATTERN_KW
+                // Smi.g:1:1532: PATTERN_KW
                 {
                 	mPATTERN_KW(); if (state.failed) return ;
 
                 }
                 break;
             case 161 :
-                // smi.g:1:1543: ASSIGN_OP
+                // Smi.g:1:1543: ASSIGN_OP
                 {
                 	mASSIGN_OP(); if (state.failed) return ;
 
                 }
                 break;
             case 162 :
-                // smi.g:1:1553: BAR
+                // Smi.g:1:1553: BAR
                 {
                 	mBAR(); if (state.failed) return ;
 
                 }
                 break;
             case 163 :
-                // smi.g:1:1557: COLON
+                // Smi.g:1:1557: COLON
                 {
                 	mCOLON(); if (state.failed) return ;
 
                 }
                 break;
             case 164 :
-                // smi.g:1:1563: COMMA
+                // Smi.g:1:1563: COMMA
                 {
                 	mCOMMA(); if (state.failed) return ;
 
                 }
                 break;
             case 165 :
-                // smi.g:1:1569: COMMENT
+                // Smi.g:1:1569: COMMENT
                 {
                 	mCOMMENT(); if (state.failed) return ;
 
                 }
                 break;
             case 166 :
-                // smi.g:1:1577: DOT
+                // Smi.g:1:1577: DOT
                 {
                 	mDOT(); if (state.failed) return ;
 
                 }
                 break;
             case 167 :
-                // smi.g:1:1581: DOTDOT
+                // Smi.g:1:1581: DOTDOT
                 {
                 	mDOTDOT(); if (state.failed) return ;
 
                 }
                 break;
             case 168 :
-                // smi.g:1:1588: DOTDOTDOT
+                // Smi.g:1:1588: DOTDOTDOT
                 {
                 	mDOTDOTDOT(); if (state.failed) return ;
 
                 }
                 break;
             case 169 :
-                // smi.g:1:1598: EXCLAMATION
+                // Smi.g:1:1598: EXCLAMATION
                 {
                 	mEXCLAMATION(); if (state.failed) return ;
 
                 }
                 break;
             case 170 :
-                // smi.g:1:1610: INTERSECTION
+                // Smi.g:1:1610: INTERSECTION
                 {
                 	mINTERSECTION(); if (state.failed) return ;
 
                 }
                 break;
             case 171 :
-                // smi.g:1:1623: LESS
+                // Smi.g:1:1623: LESS
                 {
                 	mLESS(); if (state.failed) return ;
 
                 }
                 break;
             case 172 :
-                // smi.g:1:1628: L_BRACE
+                // Smi.g:1:1628: L_BRACE
                 {
                 	mL_BRACE(); if (state.failed) return ;
 
                 }
                 break;
             case 173 :
-                // smi.g:1:1636: L_BRACKET
+                // Smi.g:1:1636: L_BRACKET
                 {
                 	mL_BRACKET(); if (state.failed) return ;
 
                 }
                 break;
             case 174 :
-                // smi.g:1:1646: L_PAREN
+                // Smi.g:1:1646: L_PAREN
                 {
                 	mL_PAREN(); if (state.failed) return ;
 
                 }
                 break;
             case 175 :
-                // smi.g:1:1654: MINUS
+                // Smi.g:1:1654: MINUS
                 {
                 	mMINUS(); if (state.failed) return ;
 
                 }
                 break;
             case 176 :
-                // smi.g:1:1660: PLUS
+                // Smi.g:1:1660: PLUS
                 {
                 	mPLUS(); if (state.failed) return ;
 
                 }
                 break;
             case 177 :
-                // smi.g:1:1665: R_BRACE
+                // Smi.g:1:1665: R_BRACE
                 {
                 	mR_BRACE(); if (state.failed) return ;
 
                 }
                 break;
             case 178 :
-                // smi.g:1:1673: R_BRACKET
+                // Smi.g:1:1673: R_BRACKET
                 {
                 	mR_BRACKET(); if (state.failed) return ;
 
                 }
                 break;
             case 179 :
-                // smi.g:1:1683: R_PAREN
+                // Smi.g:1:1683: R_PAREN
                 {
                 	mR_PAREN(); if (state.failed) return ;
 
                 }
                 break;
             case 180 :
-                // smi.g:1:1691: SEMI
+                // Smi.g:1:1691: SEMI
                 {
                 	mSEMI(); if (state.failed) return ;
 
                 }
                 break;
             case 181 :
-                // smi.g:1:1696: SINGLE_QUOTE
+                // Smi.g:1:1696: SINGLE_QUOTE
                 {
                 	mSINGLE_QUOTE(); if (state.failed) return ;
 
                 }
                 break;
             case 182 :
-                // smi.g:1:1709: CHARB
+                // Smi.g:1:1709: CHARB
                 {
                 	mCHARB(); if (state.failed) return ;
 
                 }
                 break;
             case 183 :
-                // smi.g:1:1715: CHARH
+                // Smi.g:1:1715: CHARH
                 {
                 	mCHARH(); if (state.failed) return ;
 
                 }
                 break;
             case 184 :
-                // smi.g:1:1721: WS
+                // Smi.g:1:1721: WS
                 {
                 	mWS(); if (state.failed) return ;
 
                 }
                 break;
             case 185 :
-                // smi.g:1:1724: SL_COMMENT
+                // Smi.g:1:1724: SL_COMMENT
                 {
                 	mSL_COMMENT(); if (state.failed) return ;
 
                 }
                 break;
             case 186 :
-                // smi.g:1:1735: BDIG
+                // Smi.g:1:1735: BDIG
                 {
                 	mBDIG(); if (state.failed) return ;
 
                 }
                 break;
             case 187 :
-                // smi.g:1:1740: HDIG
+                // Smi.g:1:1740: HDIG
                 {
                 	mHDIG(); if (state.failed) return ;
 
                 }
                 break;
             case 188 :
-                // smi.g:1:1745: NUMBER
+                // Smi.g:1:1745: NUMBER
                 {
                 	mNUMBER(); if (state.failed) return ;
 
                 }
                 break;
             case 189 :
-                // smi.g:1:1752: UPPER
+                // Smi.g:1:1752: UPPER
                 {
                 	mUPPER(); if (state.failed) return ;
 
                 }
                 break;
             case 190 :
-                // smi.g:1:1758: LOWER
+                // Smi.g:1:1758: LOWER
                 {
                 	mLOWER(); if (state.failed) return ;
 
                 }
                 break;
             case 191 :
-                // smi.g:1:1764: B_OR_H_STRING
+                // Smi.g:1:1764: B_OR_H_STRING
                 {
                 	mB_OR_H_STRING(); if (state.failed) return ;
 
                 }
                 break;
             case 192 :
-                // smi.g:1:1778: C_STRING
+                // Smi.g:1:1778: C_STRING
                 {
                 	mC_STRING(); if (state.failed) return ;
 
@@ -6884,24 +6884,24 @@ public partial class smiLexer : Lexer {
 
     }
 
-    // $ANTLR start "synpred1_smi"
-    public void synpred1_smi_fragment() {
-        // smi.g:569:4: ( B_STRING )
-        // smi.g:569:5: B_STRING
+    // $ANTLR start "synpred1_Smi"
+    public void synpred1_Smi_fragment() {
+        // Smi.g:569:4: ( B_STRING )
+        // Smi.g:569:5: B_STRING
         {
         	mB_STRING(); if (state.failed) return ;
 
         }
     }
-    // $ANTLR end "synpred1_smi"
+    // $ANTLR end "synpred1_Smi"
 
-   	public bool synpred1_smi() 
+   	public bool synpred1_Smi() 
    	{
    	    state.backtracking++;
    	    int start = input.Mark();
    	    try 
    	    {
-   	        synpred1_smi_fragment(); // can never throw exception
+   	        synpred1_Smi_fragment(); // can never throw exception
    	    }
    	    catch (RecognitionException re) 
    	    {
@@ -6991,7 +6991,7 @@ public partial class smiLexer : Lexer {
                    	int index9_3 = input.Index();
                    	input.Rewind();
                    	s = -1;
-                   	if ( (LA9_3 == 'B' || LA9_3 == 'b') && (synpred1_smi()) ) { s = 5; }
+                   	if ( (LA9_3 == 'B' || LA9_3 == 'b') && (synpred1_Smi()) ) { s = 5; }
 
                    	else if ( (LA9_3 == 'H' || LA9_3 == 'h') ) { s = 4; }
 

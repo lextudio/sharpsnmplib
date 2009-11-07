@@ -9,7 +9,7 @@
  * Derived from ASN.1 lexer/parser by Vivek Gupta (11 November 2003)
  *
  */
-grammar smi; 
+grammar Smi; 
 
 options
 {

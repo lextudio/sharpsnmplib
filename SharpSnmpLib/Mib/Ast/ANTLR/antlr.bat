@@ -1,2 +1,2 @@
-antlr3.exe smi.g
+antlr3.exe Smi.g
 Pause

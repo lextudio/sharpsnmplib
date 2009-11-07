@@ -5,9 +5,9 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <OutputType>Library</OutputType>
     <RootNamespace>Lextm.SharpSnmpLib</RootNamespace>
-    <AssemblyName>SharpSnmpLib.Mib</AssemblyName>
+    <AssemblyName>SharpSnmpLib.Mib.Ast</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>sharpsnmplib.snk</AssemblyOriginatorKeyFile>
     <DocumentationFile>bin\Release\SharpSnmpLib.Mib.xml</DocumentationFile>
     <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
