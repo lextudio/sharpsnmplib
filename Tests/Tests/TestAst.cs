@@ -41,9 +41,12 @@ namespace Lextm.SharpSnmpLib.Tests
             CommonTokenStream tokens = new CommonTokenStream(lex);
             Assert.AreEqual(5, tokens.GetTokens().Count);
             SmiParser parser = new SmiParser(tokens);
-            object tree = parser.module_definition().Tree;
+            CommonTree tree = (CommonTree)parser.module_definition().Tree;
             Assert.AreEqual(5, tokens.Size());
-            Assert.AreEqual(typeof(CommonTree), tree.GetType());
+            string moduleName = tree.Children[0].ToString();
+            
+            string expected = "ADSL-LINE-MIB";
+            Assert.AreEqual(expected, moduleName);
         }
     }
 }
