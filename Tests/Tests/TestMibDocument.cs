@@ -10,6 +10,7 @@
 using System.IO;
 using Lextm.SharpSnmpLib.Mib;
 using NUnit.Framework;
+using Lextm.SharpSnmpLib.Properties;
 
 
 #pragma warning disable 1591

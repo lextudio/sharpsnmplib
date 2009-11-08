@@ -127,6 +127,9 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
         }
 
+        /// <summary>
+        /// Request ID.
+        /// </summary>
         public int RequestId
         {
             get { return _scope.Pdu.RequestId.ToInt32(); }

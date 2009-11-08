@@ -15,6 +15,7 @@ using Lextm.SharpSnmpLib.Messaging;
 using Lextm.SharpSnmpLib.Security;
 using NUnit.Framework;
 using System.Net.Sockets;
+using Lextm.SharpSnmpLib.Properties;
 
 #pragma warning disable 1591
 

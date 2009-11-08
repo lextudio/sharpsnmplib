@@ -1,4 +1,4 @@
-// $ANTLR 3.1.2 Smi.g 2009-11-07 08:33:18
+// $ANTLR 3.1.2 Smi.g 2009-11-08 17:44:56
 
 // The variable 'variable' is assigned but its value is never used.
 #pragma warning disable 168, 219
@@ -1972,8 +1972,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = ABSENT_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:141:4: ( 'ABSENT' )
-            // Smi.g:141:4: 'ABSENT'
+            // Smi.g:142:4: ( 'ABSENT' )
+            // Smi.g:142:4: 'ABSENT'
             {
             	Match("ABSENT"); if (state.failed) return ;
 
@@ -1996,8 +1996,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = ABSTRACT_SYNTAX_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:145:4: ( 'ABSTRACT-SYNTAX' )
-            // Smi.g:145:4: 'ABSTRACT-SYNTAX'
+            // Smi.g:146:4: ( 'ABSTRACT-SYNTAX' )
+            // Smi.g:146:4: 'ABSTRACT-SYNTAX'
             {
             	Match("ABSTRACT-SYNTAX"); if (state.failed) return ;
 
@@ -2020,8 +2020,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = ALL_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:149:4: ( 'ALL' )
-            // Smi.g:149:4: 'ALL'
+            // Smi.g:150:4: ( 'ALL' )
+            // Smi.g:150:4: 'ALL'
             {
             	Match("ALL"); if (state.failed) return ;
 
@@ -2044,8 +2044,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = ANY_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:153:4: ( 'ANY' )
-            // Smi.g:153:4: 'ANY'
+            // Smi.g:154:4: ( 'ANY' )
+            // Smi.g:154:4: 'ANY'
             {
             	Match("ANY"); if (state.failed) return ;
 
@@ -2068,8 +2068,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = ARGUMENT_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:157:4: ( 'ARGUMENT' )
-            // Smi.g:157:4: 'ARGUMENT'
+            // Smi.g:158:4: ( 'ARGUMENT' )
+            // Smi.g:158:4: 'ARGUMENT'
             {
             	Match("ARGUMENT"); if (state.failed) return ;
 
@@ -2092,8 +2092,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = APPLICATION_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:161:4: ( 'APPLICATION' )
-            // Smi.g:161:4: 'APPLICATION'
+            // Smi.g:162:4: ( 'APPLICATION' )
+            // Smi.g:162:4: 'APPLICATION'
             {
             	Match("APPLICATION"); if (state.failed) return ;
 
@@ -2116,8 +2116,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = AUTOMATIC_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:165:4: ( 'AUTOMATIC' )
-            // Smi.g:165:4: 'AUTOMATIC'
+            // Smi.g:166:4: ( 'AUTOMATIC' )
+            // Smi.g:166:4: 'AUTOMATIC'
             {
             	Match("AUTOMATIC"); if (state.failed) return ;
 
@@ -2140,8 +2140,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = BASED_NUM_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:169:4: ( 'BASEDNUM' )
-            // Smi.g:169:4: 'BASEDNUM'
+            // Smi.g:170:4: ( 'BASEDNUM' )
+            // Smi.g:170:4: 'BASEDNUM'
             {
             	Match("BASEDNUM"); if (state.failed) return ;
 
@@ -2164,8 +2164,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = BEGIN_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:173:4: ( 'BEGIN' )
-            // Smi.g:173:4: 'BEGIN'
+            // Smi.g:174:4: ( 'BEGIN' )
+            // Smi.g:174:4: 'BEGIN'
             {
             	Match("BEGIN"); if (state.failed) return ;
 
@@ -2188,8 +2188,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = BIT_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:177:4: ( 'BIT' )
-            // Smi.g:177:4: 'BIT'
+            // Smi.g:178:4: ( 'BIT' )
+            // Smi.g:178:4: 'BIT'
             {
             	Match("BIT"); if (state.failed) return ;
 
@@ -2212,8 +2212,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = BMP_STR_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:181:4: ( 'BMPString' )
-            // Smi.g:181:4: 'BMPString'
+            // Smi.g:182:4: ( 'BMPString' )
+            // Smi.g:182:4: 'BMPString'
             {
             	Match("BMPString"); if (state.failed) return ;
 
@@ -2236,8 +2236,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = BOOLEAN_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:185:4: ( 'BOOLEAN' )
-            // Smi.g:185:4: 'BOOLEAN'
+            // Smi.g:186:4: ( 'BOOLEAN' )
+            // Smi.g:186:4: 'BOOLEAN'
             {
             	Match("BOOLEAN"); if (state.failed) return ;
 
@@ -2260,8 +2260,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = BY_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:189:4: ( 'BY' )
-            // Smi.g:189:4: 'BY'
+            // Smi.g:190:4: ( 'BY' )
+            // Smi.g:190:4: 'BY'
             {
             	Match("BY"); if (state.failed) return ;
 
@@ -2284,8 +2284,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = CHARACTER_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:193:4: ( 'CHARACTER' )
-            // Smi.g:193:4: 'CHARACTER'
+            // Smi.g:194:4: ( 'CHARACTER' )
+            // Smi.g:194:4: 'CHARACTER'
             {
             	Match("CHARACTER"); if (state.failed) return ;
 
@@ -2308,8 +2308,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = CHOICE_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:197:4: ( 'CHOICE' )
-            // Smi.g:197:4: 'CHOICE'
+            // Smi.g:198:4: ( 'CHOICE' )
+            // Smi.g:198:4: 'CHOICE'
             {
             	Match("CHOICE"); if (state.failed) return ;
 
@@ -2332,8 +2332,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = CLASS_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:201:4: ( 'CLASS' )
-            // Smi.g:201:4: 'CLASS'
+            // Smi.g:202:4: ( 'CLASS' )
+            // Smi.g:202:4: 'CLASS'
             {
             	Match("CLASS"); if (state.failed) return ;
 
@@ -2356,8 +2356,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = COMPONENTS_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:205:4: ( 'COMPONENTS' )
-            // Smi.g:205:4: 'COMPONENTS'
+            // Smi.g:206:4: ( 'COMPONENTS' )
+            // Smi.g:206:4: 'COMPONENTS'
             {
             	Match("COMPONENTS"); if (state.failed) return ;
 
@@ -2380,8 +2380,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = COMPONENT_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:209:4: ( 'COMPONENT' )
-            // Smi.g:209:4: 'COMPONENT'
+            // Smi.g:210:4: ( 'COMPONENT' )
+            // Smi.g:210:4: 'COMPONENT'
             {
             	Match("COMPONENT"); if (state.failed) return ;
 
@@ -2404,8 +2404,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = CONSTRAINED_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:213:4: ( 'CONSTRAINED' )
-            // Smi.g:213:4: 'CONSTRAINED'
+            // Smi.g:214:4: ( 'CONSTRAINED' )
+            // Smi.g:214:4: 'CONSTRAINED'
             {
             	Match("CONSTRAINED"); if (state.failed) return ;
 
@@ -2428,8 +2428,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = DEFAULT_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:217:4: ( 'DEFAULT' )
-            // Smi.g:217:4: 'DEFAULT'
+            // Smi.g:218:4: ( 'DEFAULT' )
+            // Smi.g:218:4: 'DEFAULT'
             {
             	Match("DEFAULT"); if (state.failed) return ;
 
@@ -2452,8 +2452,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = DEFINED_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:221:4: ( 'DEFINED' )
-            // Smi.g:221:4: 'DEFINED'
+            // Smi.g:222:4: ( 'DEFINED' )
+            // Smi.g:222:4: 'DEFINED'
             {
             	Match("DEFINED"); if (state.failed) return ;
 
@@ -2476,8 +2476,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = DEFINITIONS_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:225:4: ( 'DEFINITIONS' )
-            // Smi.g:225:4: 'DEFINITIONS'
+            // Smi.g:226:4: ( 'DEFINITIONS' )
+            // Smi.g:226:4: 'DEFINITIONS'
             {
             	Match("DEFINITIONS"); if (state.failed) return ;
 
@@ -2500,8 +2500,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = EMBEDDED_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:229:4: ( 'EMBEDDED' )
-            // Smi.g:229:4: 'EMBEDDED'
+            // Smi.g:230:4: ( 'EMBEDDED' )
+            // Smi.g:230:4: 'EMBEDDED'
             {
             	Match("EMBEDDED"); if (state.failed) return ;
 
@@ -2524,8 +2524,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = END_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:233:4: ( 'END' )
-            // Smi.g:233:4: 'END'
+            // Smi.g:234:4: ( 'END' )
+            // Smi.g:234:4: 'END'
             {
             	Match("END"); if (state.failed) return ;
 
@@ -2548,8 +2548,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = ENUMERATED_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:237:4: ( 'ENUMERATED' )
-            // Smi.g:237:4: 'ENUMERATED'
+            // Smi.g:238:4: ( 'ENUMERATED' )
+            // Smi.g:238:4: 'ENUMERATED'
             {
             	Match("ENUMERATED"); if (state.failed) return ;
 
@@ -2572,8 +2572,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = ERROR_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:241:4: ( 'ERROR' )
-            // Smi.g:241:4: 'ERROR'
+            // Smi.g:242:4: ( 'ERROR' )
+            // Smi.g:242:4: 'ERROR'
             {
             	Match("ERROR"); if (state.failed) return ;
 
@@ -2596,8 +2596,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = ERRORS_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:245:4: ( 'ERRORS' )
-            // Smi.g:245:4: 'ERRORS'
+            // Smi.g:246:4: ( 'ERRORS' )
+            // Smi.g:246:4: 'ERRORS'
             {
             	Match("ERRORS"); if (state.failed) return ;
 
@@ -2620,8 +2620,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = EXCEPT_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:249:4: ( 'EXCEPT' )
-            // Smi.g:249:4: 'EXCEPT'
+            // Smi.g:250:4: ( 'EXCEPT' )
+            // Smi.g:250:4: 'EXCEPT'
             {
             	Match("EXCEPT"); if (state.failed) return ;
 
@@ -2644,8 +2644,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = EXPLICIT_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:253:4: ( 'EXPLICIT' )
-            // Smi.g:253:4: 'EXPLICIT'
+            // Smi.g:254:4: ( 'EXPLICIT' )
+            // Smi.g:254:4: 'EXPLICIT'
             {
             	Match("EXPLICIT"); if (state.failed) return ;
 
@@ -2668,8 +2668,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = EXPORTS_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:257:4: ( 'EXPORTS' )
-            // Smi.g:257:4: 'EXPORTS'
+            // Smi.g:258:4: ( 'EXPORTS' )
+            // Smi.g:258:4: 'EXPORTS'
             {
             	Match("EXPORTS"); if (state.failed) return ;
 
@@ -2692,8 +2692,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = EXTENSIBILITY_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:261:4: ( 'EXTENSIBILITY' )
-            // Smi.g:261:4: 'EXTENSIBILITY'
+            // Smi.g:262:4: ( 'EXTENSIBILITY' )
+            // Smi.g:262:4: 'EXTENSIBILITY'
             {
             	Match("EXTENSIBILITY"); if (state.failed) return ;
 
@@ -2716,8 +2716,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = EXTERNAL_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:265:4: ( 'EXTERNAL' )
-            // Smi.g:265:4: 'EXTERNAL'
+            // Smi.g:266:4: ( 'EXTERNAL' )
+            // Smi.g:266:4: 'EXTERNAL'
             {
             	Match("EXTERNAL"); if (state.failed) return ;
 
@@ -2740,8 +2740,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = FALSE_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:269:4: ( 'FALSE' )
-            // Smi.g:269:4: 'FALSE'
+            // Smi.g:270:4: ( 'FALSE' )
+            // Smi.g:270:4: 'FALSE'
             {
             	Match("FALSE"); if (state.failed) return ;
 
@@ -2764,8 +2764,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = FROM_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:273:4: ( 'FROM' )
-            // Smi.g:273:4: 'FROM'
+            // Smi.g:274:4: ( 'FROM' )
+            // Smi.g:274:4: 'FROM'
             {
             	Match("FROM"); if (state.failed) return ;
 
@@ -2788,8 +2788,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = GENERALIZED_TIME_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:277:4: ( 'GeneralizedTime' )
-            // Smi.g:277:4: 'GeneralizedTime'
+            // Smi.g:278:4: ( 'GeneralizedTime' )
+            // Smi.g:278:4: 'GeneralizedTime'
             {
             	Match("GeneralizedTime"); if (state.failed) return ;
 
@@ -2812,8 +2812,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = GENERAL_STR_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:281:4: ( 'GeneralString' )
-            // Smi.g:281:4: 'GeneralString'
+            // Smi.g:282:4: ( 'GeneralString' )
+            // Smi.g:282:4: 'GeneralString'
             {
             	Match("GeneralString"); if (state.failed) return ;
 
@@ -2836,8 +2836,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = GRAPHIC_STR_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:285:4: ( 'GraphicString' )
-            // Smi.g:285:4: 'GraphicString'
+            // Smi.g:286:4: ( 'GraphicString' )
+            // Smi.g:286:4: 'GraphicString'
             {
             	Match("GraphicString"); if (state.failed) return ;
 
@@ -2860,8 +2860,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = IA5_STRING_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:289:4: ( 'IA5String' )
-            // Smi.g:289:4: 'IA5String'
+            // Smi.g:290:4: ( 'IA5String' )
+            // Smi.g:290:4: 'IA5String'
             {
             	Match("IA5String"); if (state.failed) return ;
 
@@ -2884,8 +2884,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = IDENTIFIER_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:293:4: ( 'IDENTIFIER' )
-            // Smi.g:293:4: 'IDENTIFIER'
+            // Smi.g:294:4: ( 'IDENTIFIER' )
+            // Smi.g:294:4: 'IDENTIFIER'
             {
             	Match("IDENTIFIER"); if (state.failed) return ;
 
@@ -2908,8 +2908,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = IMPLICIT_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:297:4: ( 'IMPLICIT' )
-            // Smi.g:297:4: 'IMPLICIT'
+            // Smi.g:298:4: ( 'IMPLICIT' )
+            // Smi.g:298:4: 'IMPLICIT'
             {
             	Match("IMPLICIT"); if (state.failed) return ;
 
@@ -2932,8 +2932,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = IMPLIED_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:301:4: ( 'IMPLIED' )
-            // Smi.g:301:4: 'IMPLIED'
+            // Smi.g:302:4: ( 'IMPLIED' )
+            // Smi.g:302:4: 'IMPLIED'
             {
             	Match("IMPLIED"); if (state.failed) return ;
 
@@ -2956,8 +2956,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = IMPORTS_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:305:4: ( 'IMPORTS' )
-            // Smi.g:305:4: 'IMPORTS'
+            // Smi.g:306:4: ( 'IMPORTS' )
+            // Smi.g:306:4: 'IMPORTS'
             {
             	Match("IMPORTS"); if (state.failed) return ;
 
@@ -2980,8 +2980,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = INCLUDES_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:309:4: ( 'INCLUDES' )
-            // Smi.g:309:4: 'INCLUDES'
+            // Smi.g:310:4: ( 'INCLUDES' )
+            // Smi.g:310:4: 'INCLUDES'
             {
             	Match("INCLUDES"); if (state.failed) return ;
 
@@ -3004,8 +3004,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = INSTANCE_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:313:4: ( 'INSTANCE' )
-            // Smi.g:313:4: 'INSTANCE'
+            // Smi.g:314:4: ( 'INSTANCE' )
+            // Smi.g:314:4: 'INSTANCE'
             {
             	Match("INSTANCE"); if (state.failed) return ;
 
@@ -3028,8 +3028,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = INTEGER_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:317:4: ( 'INTEGER' )
-            // Smi.g:317:4: 'INTEGER'
+            // Smi.g:318:4: ( 'INTEGER' )
+            // Smi.g:318:4: 'INTEGER'
             {
             	Match("INTEGER"); if (state.failed) return ;
 
@@ -3052,8 +3052,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = INTERSECTION_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:321:4: ( 'INTERSECTION' )
-            // Smi.g:321:4: 'INTERSECTION'
+            // Smi.g:322:4: ( 'INTERSECTION' )
+            // Smi.g:322:4: 'INTERSECTION'
             {
             	Match("INTERSECTION"); if (state.failed) return ;
 
@@ -3076,8 +3076,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = ISO646_STR_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:325:4: ( 'ISO646String' )
-            // Smi.g:325:4: 'ISO646String'
+            // Smi.g:326:4: ( 'ISO646String' )
+            // Smi.g:326:4: 'ISO646String'
             {
             	Match("ISO646String"); if (state.failed) return ;
 
@@ -3100,8 +3100,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = LINKED_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:329:4: ( 'LINKED' )
-            // Smi.g:329:4: 'LINKED'
+            // Smi.g:330:4: ( 'LINKED' )
+            // Smi.g:330:4: 'LINKED'
             {
             	Match("LINKED"); if (state.failed) return ;
 
@@ -3124,8 +3124,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = MAX_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:333:4: ( 'MAX' )
-            // Smi.g:333:4: 'MAX'
+            // Smi.g:334:4: ( 'MAX' )
+            // Smi.g:334:4: 'MAX'
             {
             	Match("MAX"); if (state.failed) return ;
 
@@ -3148,8 +3148,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = MINUS_INFINITY_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:337:4: ( 'MINUSINFINITY' )
-            // Smi.g:337:4: 'MINUSINFINITY'
+            // Smi.g:338:4: ( 'MINUSINFINITY' )
+            // Smi.g:338:4: 'MINUSINFINITY'
             {
             	Match("MINUSINFINITY"); if (state.failed) return ;
 
@@ -3172,8 +3172,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = MIN_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:341:4: ( 'MIN' )
-            // Smi.g:341:4: 'MIN'
+            // Smi.g:342:4: ( 'MIN' )
+            // Smi.g:342:4: 'MIN'
             {
             	Match("MIN"); if (state.failed) return ;
 
@@ -3196,8 +3196,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = NULL_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:345:4: ( 'NULL' )
-            // Smi.g:345:4: 'NULL'
+            // Smi.g:346:4: ( 'NULL' )
+            // Smi.g:346:4: 'NULL'
             {
             	Match("NULL"); if (state.failed) return ;
 
@@ -3220,8 +3220,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = NUMERIC_STR_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:349:4: ( 'NumericString' )
-            // Smi.g:349:4: 'NumericString'
+            // Smi.g:350:4: ( 'NumericString' )
+            // Smi.g:350:4: 'NumericString'
             {
             	Match("NumericString"); if (state.failed) return ;
 
@@ -3244,8 +3244,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = OBJECT_DESCRIPTOR_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:353:4: ( 'ObjectDescriptor' )
-            // Smi.g:353:4: 'ObjectDescriptor'
+            // Smi.g:354:4: ( 'ObjectDescriptor' )
+            // Smi.g:354:4: 'ObjectDescriptor'
             {
             	Match("ObjectDescriptor"); if (state.failed) return ;
 
@@ -3268,8 +3268,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = OBJECT_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:357:4: ( 'OBJECT' )
-            // Smi.g:357:4: 'OBJECT'
+            // Smi.g:358:4: ( 'OBJECT' )
+            // Smi.g:358:4: 'OBJECT'
             {
             	Match("OBJECT"); if (state.failed) return ;
 
@@ -3292,8 +3292,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = OCTET_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:361:4: ( 'OCTET' )
-            // Smi.g:361:4: 'OCTET'
+            // Smi.g:362:4: ( 'OCTET' )
+            // Smi.g:362:4: 'OCTET'
             {
             	Match("OCTET"); if (state.failed) return ;
 
@@ -3316,8 +3316,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = OPERATION_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:365:4: ( 'OPERATION' )
-            // Smi.g:365:4: 'OPERATION'
+            // Smi.g:366:4: ( 'OPERATION' )
+            // Smi.g:366:4: 'OPERATION'
             {
             	Match("OPERATION"); if (state.failed) return ;
 
@@ -3340,8 +3340,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = OF_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:369:4: ( 'OF' )
-            // Smi.g:369:4: 'OF'
+            // Smi.g:370:4: ( 'OF' )
+            // Smi.g:370:4: 'OF'
             {
             	Match("OF"); if (state.failed) return ;
 
@@ -3364,8 +3364,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = OID_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:373:4: ( 'OID' )
-            // Smi.g:373:4: 'OID'
+            // Smi.g:374:4: ( 'OID' )
+            // Smi.g:374:4: 'OID'
             {
             	Match("OID"); if (state.failed) return ;
 
@@ -3388,8 +3388,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = OPTIONAL_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:377:4: ( 'OPTIONAL' )
-            // Smi.g:377:4: 'OPTIONAL'
+            // Smi.g:378:4: ( 'OPTIONAL' )
+            // Smi.g:378:4: 'OPTIONAL'
             {
             	Match("OPTIONAL"); if (state.failed) return ;
 
@@ -3412,8 +3412,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = PARAMETER_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:381:4: ( 'PARAMETER' )
-            // Smi.g:381:4: 'PARAMETER'
+            // Smi.g:382:4: ( 'PARAMETER' )
+            // Smi.g:382:4: 'PARAMETER'
             {
             	Match("PARAMETER"); if (state.failed) return ;
 
@@ -3436,8 +3436,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = PDV_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:385:4: ( 'PDV' )
-            // Smi.g:385:4: 'PDV'
+            // Smi.g:386:4: ( 'PDV' )
+            // Smi.g:386:4: 'PDV'
             {
             	Match("PDV"); if (state.failed) return ;
 
@@ -3460,8 +3460,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = PLUS_INFINITY_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:389:4: ( 'PLUSINFINITY' )
-            // Smi.g:389:4: 'PLUSINFINITY'
+            // Smi.g:390:4: ( 'PLUSINFINITY' )
+            // Smi.g:390:4: 'PLUSINFINITY'
             {
             	Match("PLUSINFINITY"); if (state.failed) return ;
 
@@ -3484,8 +3484,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = PRESENT_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:393:4: ( 'PRESENT' )
-            // Smi.g:393:4: 'PRESENT'
+            // Smi.g:394:4: ( 'PRESENT' )
+            // Smi.g:394:4: 'PRESENT'
             {
             	Match("PRESENT"); if (state.failed) return ;
 
@@ -3508,8 +3508,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = PRINTABLE_STR_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:397:4: ( 'PrintableString' )
-            // Smi.g:397:4: 'PrintableString'
+            // Smi.g:398:4: ( 'PrintableString' )
+            // Smi.g:398:4: 'PrintableString'
             {
             	Match("PrintableString"); if (state.failed) return ;
 
@@ -3532,8 +3532,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = PRIVATE_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:401:4: ( 'PRIVATE' )
-            // Smi.g:401:4: 'PRIVATE'
+            // Smi.g:402:4: ( 'PRIVATE' )
+            // Smi.g:402:4: 'PRIVATE'
             {
             	Match("PRIVATE"); if (state.failed) return ;
 
@@ -3556,8 +3556,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = REAL_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:405:4: ( 'REAL' )
-            // Smi.g:405:4: 'REAL'
+            // Smi.g:406:4: ( 'REAL' )
+            // Smi.g:406:4: 'REAL'
             {
             	Match("REAL"); if (state.failed) return ;
 
@@ -3580,8 +3580,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = RELATIVE_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:409:4: ( 'RELATIVE' )
-            // Smi.g:409:4: 'RELATIVE'
+            // Smi.g:410:4: ( 'RELATIVE' )
+            // Smi.g:410:4: 'RELATIVE'
             {
             	Match("RELATIVE"); if (state.failed) return ;
 
@@ -3604,8 +3604,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = RESULT_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:413:4: ( 'RESULT' )
-            // Smi.g:413:4: 'RESULT'
+            // Smi.g:414:4: ( 'RESULT' )
+            // Smi.g:414:4: 'RESULT'
             {
             	Match("RESULT"); if (state.failed) return ;
 
@@ -3628,8 +3628,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = SEQUENCE_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:417:4: ( 'SEQUENCE' )
-            // Smi.g:417:4: 'SEQUENCE'
+            // Smi.g:418:4: ( 'SEQUENCE' )
+            // Smi.g:418:4: 'SEQUENCE'
             {
             	Match("SEQUENCE"); if (state.failed) return ;
 
@@ -3652,8 +3652,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = SET_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:421:4: ( 'SET' )
-            // Smi.g:421:4: 'SET'
+            // Smi.g:422:4: ( 'SET' )
+            // Smi.g:422:4: 'SET'
             {
             	Match("SET"); if (state.failed) return ;
 
@@ -3676,8 +3676,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = SIZE_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:425:4: ( 'SIZE' )
-            // Smi.g:425:4: 'SIZE'
+            // Smi.g:426:4: ( 'SIZE' )
+            // Smi.g:426:4: 'SIZE'
             {
             	Match("SIZE"); if (state.failed) return ;
 
@@ -3700,8 +3700,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = STRING_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:429:4: ( 'STRING' )
-            // Smi.g:429:4: 'STRING'
+            // Smi.g:430:4: ( 'STRING' )
+            // Smi.g:430:4: 'STRING'
             {
             	Match("STRING"); if (state.failed) return ;
 
@@ -3724,8 +3724,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = TAGS_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:433:4: ( 'TAGS' )
-            // Smi.g:433:4: 'TAGS'
+            // Smi.g:434:4: ( 'TAGS' )
+            // Smi.g:434:4: 'TAGS'
             {
             	Match("TAGS"); if (state.failed) return ;
 
@@ -3748,8 +3748,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = TELETEX_STR_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:437:4: ( 'TeletexString' )
-            // Smi.g:437:4: 'TeletexString'
+            // Smi.g:438:4: ( 'TeletexString' )
+            // Smi.g:438:4: 'TeletexString'
             {
             	Match("TeletexString"); if (state.failed) return ;
 
@@ -3772,8 +3772,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = T61_STR_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:441:4: ( 'T61String' )
-            // Smi.g:441:4: 'T61String'
+            // Smi.g:442:4: ( 'T61String' )
+            // Smi.g:442:4: 'T61String'
             {
             	Match("T61String"); if (state.failed) return ;
 
@@ -3796,8 +3796,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = TRUE_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:445:4: ( 'TRUE' )
-            // Smi.g:445:4: 'TRUE'
+            // Smi.g:446:4: ( 'TRUE' )
+            // Smi.g:446:4: 'TRUE'
             {
             	Match("TRUE"); if (state.failed) return ;
 
@@ -3820,8 +3820,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = TYPE_IDENTIFIER_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:449:4: ( 'TYPE-IDENTIFIER' )
-            // Smi.g:449:4: 'TYPE-IDENTIFIER'
+            // Smi.g:450:4: ( 'TYPE-IDENTIFIER' )
+            // Smi.g:450:4: 'TYPE-IDENTIFIER'
             {
             	Match("TYPE-IDENTIFIER"); if (state.failed) return ;
 
@@ -3844,8 +3844,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = UNION_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:453:4: ( 'UNION' )
-            // Smi.g:453:4: 'UNION'
+            // Smi.g:454:4: ( 'UNION' )
+            // Smi.g:454:4: 'UNION'
             {
             	Match("UNION"); if (state.failed) return ;
 
@@ -3868,8 +3868,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = UNIQUE_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:457:4: ( 'UNIQUE' )
-            // Smi.g:457:4: 'UNIQUE'
+            // Smi.g:458:4: ( 'UNIQUE' )
+            // Smi.g:458:4: 'UNIQUE'
             {
             	Match("UNIQUE"); if (state.failed) return ;
 
@@ -3892,8 +3892,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = UNIVERSAL_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:461:4: ( 'UNIVERSAL' )
-            // Smi.g:461:4: 'UNIVERSAL'
+            // Smi.g:462:4: ( 'UNIVERSAL' )
+            // Smi.g:462:4: 'UNIVERSAL'
             {
             	Match("UNIVERSAL"); if (state.failed) return ;
 
@@ -3916,8 +3916,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = UNIVERSAL_STR_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:465:4: ( 'UniversalString' )
-            // Smi.g:465:4: 'UniversalString'
+            // Smi.g:466:4: ( 'UniversalString' )
+            // Smi.g:466:4: 'UniversalString'
             {
             	Match("UniversalString"); if (state.failed) return ;
 
@@ -3940,8 +3940,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = UTC_TIME_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:469:4: ( 'UTCTime' )
-            // Smi.g:469:4: 'UTCTime'
+            // Smi.g:470:4: ( 'UTCTime' )
+            // Smi.g:470:4: 'UTCTime'
             {
             	Match("UTCTime"); if (state.failed) return ;
 
@@ -3964,8 +3964,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = UTF8_STR_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:473:4: ( 'UTF8String' )
-            // Smi.g:473:4: 'UTF8String'
+            // Smi.g:474:4: ( 'UTF8String' )
+            // Smi.g:474:4: 'UTF8String'
             {
             	Match("UTF8String"); if (state.failed) return ;
 
@@ -3988,8 +3988,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = VIDEOTEX_STR_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:477:4: ( 'VideotexString' )
-            // Smi.g:477:4: 'VideotexString'
+            // Smi.g:478:4: ( 'VideotexString' )
+            // Smi.g:478:4: 'VideotexString'
             {
             	Match("VideotexString"); if (state.failed) return ;
 
@@ -4012,8 +4012,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = VISIBLE_STR_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:481:4: ( 'VisibleString' )
-            // Smi.g:481:4: 'VisibleString'
+            // Smi.g:482:4: ( 'VisibleString' )
+            // Smi.g:482:4: 'VisibleString'
             {
             	Match("VisibleString"); if (state.failed) return ;
 
@@ -4036,8 +4036,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = WITH_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:485:4: ( 'WITH' )
-            // Smi.g:485:4: 'WITH'
+            // Smi.g:486:4: ( 'WITH' )
+            // Smi.g:486:4: 'WITH'
             {
             	Match("WITH"); if (state.failed) return ;
 
@@ -4060,8 +4060,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = PATTERN_KW;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:489:4: ( 'PATTERN' )
-            // Smi.g:489:4: 'PATTERN'
+            // Smi.g:490:4: ( 'PATTERN' )
+            // Smi.g:490:4: 'PATTERN'
             {
             	Match("PATTERN"); if (state.failed) return ;
 
@@ -4084,8 +4084,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = ASSIGN_OP;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:494:12: ( '::=' )
-            // Smi.g:494:12: '::='
+            // Smi.g:495:12: ( '::=' )
+            // Smi.g:495:12: '::='
             {
             	Match("::="); if (state.failed) return ;
 
@@ -4108,8 +4108,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = BAR;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:495:7: ( '|' )
-            // Smi.g:495:7: '|'
+            // Smi.g:496:7: ( '|' )
+            // Smi.g:496:7: '|'
             {
             	Match('|'); if (state.failed) return ;
 
@@ -4131,8 +4131,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = COLON;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:496:9: ( ':' )
-            // Smi.g:496:9: ':'
+            // Smi.g:497:9: ( ':' )
+            // Smi.g:497:9: ':'
             {
             	Match(':'); if (state.failed) return ;
 
@@ -4154,8 +4154,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = COMMA;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:497:9: ( ',' )
-            // Smi.g:497:9: ','
+            // Smi.g:498:9: ( ',' )
+            // Smi.g:498:9: ','
             {
             	Match(','); if (state.failed) return ;
 
@@ -4177,8 +4177,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = COMMENT;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:498:10: ( '--' )
-            // Smi.g:498:10: '--'
+            // Smi.g:499:10: ( '--' )
+            // Smi.g:499:10: '--'
             {
             	Match("--"); if (state.failed) return ;
 
@@ -4201,8 +4201,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = DOT;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:499:7: ( '.' )
-            // Smi.g:499:7: '.'
+            // Smi.g:500:7: ( '.' )
+            // Smi.g:500:7: '.'
             {
             	Match('.'); if (state.failed) return ;
 
@@ -4224,8 +4224,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = DOTDOT;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:500:10: ( '..' )
-            // Smi.g:500:10: '..'
+            // Smi.g:501:10: ( '..' )
+            // Smi.g:501:10: '..'
             {
             	Match(".."); if (state.failed) return ;
 
@@ -4248,8 +4248,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = DOTDOTDOT;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:502:4: ( '...' )
-            // Smi.g:502:4: '...'
+            // Smi.g:503:4: ( '...' )
+            // Smi.g:503:4: '...'
             {
             	Match("..."); if (state.failed) return ;
 
@@ -4272,8 +4272,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = EXCLAMATION;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:504:14: ( '!' )
-            // Smi.g:504:14: '!'
+            // Smi.g:505:14: ( '!' )
+            // Smi.g:505:14: '!'
             {
             	Match('!'); if (state.failed) return ;
 
@@ -4295,8 +4295,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = INTERSECTION;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:505:15: ( '^' )
-            // Smi.g:505:15: '^'
+            // Smi.g:506:15: ( '^' )
+            // Smi.g:506:15: '^'
             {
             	Match('^'); if (state.failed) return ;
 
@@ -4318,8 +4318,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = LESS;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:506:8: ( '<' )
-            // Smi.g:506:8: '<'
+            // Smi.g:507:8: ( '<' )
+            // Smi.g:507:8: '<'
             {
             	Match('<'); if (state.failed) return ;
 
@@ -4341,8 +4341,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = L_BRACE;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:507:10: ( '{' )
-            // Smi.g:507:10: '{'
+            // Smi.g:508:10: ( '{' )
+            // Smi.g:508:10: '{'
             {
             	Match('{'); if (state.failed) return ;
 
@@ -4364,8 +4364,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = L_BRACKET;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:508:12: ( '[' )
-            // Smi.g:508:12: '['
+            // Smi.g:509:12: ( '[' )
+            // Smi.g:509:12: '['
             {
             	Match('['); if (state.failed) return ;
 
@@ -4387,8 +4387,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = L_PAREN;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:509:10: ( '(' )
-            // Smi.g:509:10: '('
+            // Smi.g:510:10: ( '(' )
+            // Smi.g:510:10: '('
             {
             	Match('('); if (state.failed) return ;
 
@@ -4410,8 +4410,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = MINUS;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:510:9: ( '-' )
-            // Smi.g:510:9: '-'
+            // Smi.g:511:9: ( '-' )
+            // Smi.g:511:9: '-'
             {
             	Match('-'); if (state.failed) return ;
 
@@ -4433,8 +4433,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = PLUS;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:511:8: ( '+' )
-            // Smi.g:511:8: '+'
+            // Smi.g:512:8: ( '+' )
+            // Smi.g:512:8: '+'
             {
             	Match('+'); if (state.failed) return ;
 
@@ -4456,8 +4456,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = R_BRACE;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:512:10: ( '}' )
-            // Smi.g:512:10: '}'
+            // Smi.g:513:10: ( '}' )
+            // Smi.g:513:10: '}'
             {
             	Match('}'); if (state.failed) return ;
 
@@ -4479,8 +4479,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = R_BRACKET;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:513:12: ( ']' )
-            // Smi.g:513:12: ']'
+            // Smi.g:514:12: ( ']' )
+            // Smi.g:514:12: ']'
             {
             	Match(']'); if (state.failed) return ;
 
@@ -4502,8 +4502,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = R_PAREN;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:514:10: ( ')' )
-            // Smi.g:514:10: ')'
+            // Smi.g:515:10: ( ')' )
+            // Smi.g:515:10: ')'
             {
             	Match(')'); if (state.failed) return ;
 
@@ -4525,8 +4525,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = SEMI;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:515:8: ( ';' )
-            // Smi.g:515:8: ';'
+            // Smi.g:516:8: ( ';' )
+            // Smi.g:516:8: ';'
             {
             	Match(';'); if (state.failed) return ;
 
@@ -4548,8 +4548,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = SINGLE_QUOTE;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:516:15: ( '\\'' )
-            // Smi.g:516:15: '\\''
+            // Smi.g:517:15: ( '\\'' )
+            // Smi.g:517:15: '\\''
             {
             	Match('\''); if (state.failed) return ;
 
@@ -4571,8 +4571,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = CHARB;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:517:9: ( '\\'B' )
-            // Smi.g:517:9: '\\'B'
+            // Smi.g:518:9: ( '\\'B' )
+            // Smi.g:518:9: '\\'B'
             {
             	Match("'B"); if (state.failed) return ;
 
@@ -4595,8 +4595,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = CHARH;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:518:9: ( '\\'H' )
-            // Smi.g:518:9: '\\'H'
+            // Smi.g:519:9: ( '\\'H' )
+            // Smi.g:519:9: '\\'H'
             {
             	Match("'H"); if (state.failed) return ;
 
@@ -4619,10 +4619,10 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = WS;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:523:8: ( ( ' ' | '\\t' | '\\f' | ( '\\r\\n' | '\\r' | '\\n' ) )+ )
-            // Smi.g:523:8: ( ' ' | '\\t' | '\\f' | ( '\\r\\n' | '\\r' | '\\n' ) )+
+            // Smi.g:524:8: ( ( ' ' | '\\t' | '\\f' | ( '\\r\\n' | '\\r' | '\\n' ) )+ )
+            // Smi.g:524:8: ( ' ' | '\\t' | '\\f' | ( '\\r\\n' | '\\r' | '\\n' ) )+
             {
-            	// Smi.g:523:8: ( ' ' | '\\t' | '\\f' | ( '\\r\\n' | '\\r' | '\\n' ) )+
+            	// Smi.g:524:8: ( ' ' | '\\t' | '\\f' | ( '\\r\\n' | '\\r' | '\\n' ) )+
             	int cnt2 = 0;
             	do 
             	{
@@ -4656,30 +4656,30 @@ public partial class SmiLexer : Lexer {
             	    switch (alt2) 
             		{
             			case 1 :
-            			    // Smi.g:523:10: ' '
+            			    // Smi.g:524:10: ' '
             			    {
             			    	Match(' '); if (state.failed) return ;
 
             			    }
             			    break;
             			case 2 :
-            			    // Smi.g:523:16: '\\t'
+            			    // Smi.g:524:16: '\\t'
             			    {
             			    	Match('\t'); if (state.failed) return ;
 
             			    }
             			    break;
             			case 3 :
-            			    // Smi.g:523:23: '\\f'
+            			    // Smi.g:524:23: '\\f'
             			    {
             			    	Match('\f'); if (state.failed) return ;
 
             			    }
             			    break;
             			case 4 :
-            			    // Smi.g:523:30: ( '\\r\\n' | '\\r' | '\\n' )
+            			    // Smi.g:524:30: ( '\\r\\n' | '\\r' | '\\n' )
             			    {
-            			    	// Smi.g:523:30: ( '\\r\\n' | '\\r' | '\\n' )
+            			    	// Smi.g:524:30: ( '\\r\\n' | '\\r' | '\\n' )
             			    	int alt1 = 3;
             			    	int LA1_0 = input.LA(1);
 
@@ -4710,7 +4710,7 @@ public partial class SmiLexer : Lexer {
             			    	switch (alt1) 
             			    	{
             			    	    case 1 :
-            			    	        // Smi.g:524:4: '\\r\\n'
+            			    	        // Smi.g:525:4: '\\r\\n'
             			    	        {
             			    	        	Match("\r\n"); if (state.failed) return ;
 
@@ -4718,14 +4718,14 @@ public partial class SmiLexer : Lexer {
             			    	        }
             			    	        break;
             			    	    case 2 :
-            			    	        // Smi.g:525:4: '\\r'
+            			    	        // Smi.g:526:4: '\\r'
             			    	        {
             			    	        	Match('\r'); if (state.failed) return ;
 
             			    	        }
             			    	        break;
             			    	    case 3 :
-            			    	        // Smi.g:526:4: '\\n'
+            			    	        // Smi.g:527:4: '\\n'
             			    	        {
             			    	        	Match('\n'); if (state.failed) return ;
 
@@ -4774,14 +4774,14 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = SL_COMMENT;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:533:4: ( ( COMMENT ({...}? '-' |~ ( '-' | '\\n' | '\\r' ) )* ( ( ( '\\r' )? '\\n' ) | COMMENT ) ) )
-            // Smi.g:533:4: ( COMMENT ({...}? '-' |~ ( '-' | '\\n' | '\\r' ) )* ( ( ( '\\r' )? '\\n' ) | COMMENT ) )
+            // Smi.g:534:4: ( ( COMMENT ({...}? '-' |~ ( '-' | '\\n' | '\\r' ) )* ( ( ( '\\r' )? '\\n' ) | COMMENT ) ) )
+            // Smi.g:534:4: ( COMMENT ({...}? '-' |~ ( '-' | '\\n' | '\\r' ) )* ( ( ( '\\r' )? '\\n' ) | COMMENT ) )
             {
-            	// Smi.g:533:4: ( COMMENT ({...}? '-' |~ ( '-' | '\\n' | '\\r' ) )* ( ( ( '\\r' )? '\\n' ) | COMMENT ) )
-            	// Smi.g:534:4: COMMENT ({...}? '-' |~ ( '-' | '\\n' | '\\r' ) )* ( ( ( '\\r' )? '\\n' ) | COMMENT )
+            	// Smi.g:534:4: ( COMMENT ({...}? '-' |~ ( '-' | '\\n' | '\\r' ) )* ( ( ( '\\r' )? '\\n' ) | COMMENT ) )
+            	// Smi.g:535:4: COMMENT ({...}? '-' |~ ( '-' | '\\n' | '\\r' ) )* ( ( ( '\\r' )? '\\n' ) | COMMENT )
             	{
             		mCOMMENT(); if (state.failed) return ;
-            		// Smi.g:534:12: ({...}? '-' |~ ( '-' | '\\n' | '\\r' ) )*
+            		// Smi.g:535:12: ({...}? '-' |~ ( '-' | '\\n' | '\\r' ) )*
             		do 
             		{
             		    int alt3 = 3;
@@ -4818,7 +4818,7 @@ public partial class SmiLexer : Lexer {
             		    switch (alt3) 
             			{
             				case 1 :
-            				    // Smi.g:534:15: {...}? '-'
+            				    // Smi.g:535:15: {...}? '-'
             				    {
             				    	if ( !(( input.LA(2)!='-' )) ) 
             				    	{
@@ -4830,7 +4830,7 @@ public partial class SmiLexer : Lexer {
             				    }
             				    break;
             				case 2 :
-            				    // Smi.g:534:44: ~ ( '-' | '\\n' | '\\r' )
+            				    // Smi.g:535:44: ~ ( '-' | '\\n' | '\\r' )
             				    {
             				    	if ( (input.LA(1) >= '\u0000' && input.LA(1) <= '\t') || (input.LA(1) >= '\u000B' && input.LA(1) <= '\f') || (input.LA(1) >= '\u000E' && input.LA(1) <= ',') || (input.LA(1) >= '.' && input.LA(1) <= '\uFFFF') ) 
             				    	{
@@ -4856,7 +4856,7 @@ public partial class SmiLexer : Lexer {
             		loop3:
             			;	// Stops C# compiler whining that label 'loop3' has no statements
 
-            		// Smi.g:534:63: ( ( ( '\\r' )? '\\n' ) | COMMENT )
+            		// Smi.g:535:63: ( ( ( '\\r' )? '\\n' ) | COMMENT )
             		int alt5 = 2;
             		int LA5_0 = input.LA(1);
 
@@ -4879,12 +4879,12 @@ public partial class SmiLexer : Lexer {
             		switch (alt5) 
             		{
             		    case 1 :
-            		        // Smi.g:534:65: ( ( '\\r' )? '\\n' )
+            		        // Smi.g:535:65: ( ( '\\r' )? '\\n' )
             		        {
-            		        	// Smi.g:534:65: ( ( '\\r' )? '\\n' )
-            		        	// Smi.g:534:66: ( '\\r' )? '\\n'
+            		        	// Smi.g:535:65: ( ( '\\r' )? '\\n' )
+            		        	// Smi.g:535:66: ( '\\r' )? '\\n'
             		        	{
-            		        		// Smi.g:534:66: ( '\\r' )?
+            		        		// Smi.g:535:66: ( '\\r' )?
             		        		int alt4 = 2;
             		        		int LA4_0 = input.LA(1);
 
@@ -4895,7 +4895,7 @@ public partial class SmiLexer : Lexer {
             		        		switch (alt4) 
             		        		{
             		        		    case 1 :
-            		        		        // Smi.g:534:67: '\\r'
+            		        		        // Smi.g:535:67: '\\r'
             		        		        {
             		        		        	Match('\r'); if (state.failed) return ;
 
@@ -4912,7 +4912,7 @@ public partial class SmiLexer : Lexer {
             		        }
             		        break;
             		    case 2 :
-            		        // Smi.g:534:82: COMMENT
+            		        // Smi.g:535:82: COMMENT
             		        {
             		        	mCOMMENT(); if (state.failed) return ;
 
@@ -4947,7 +4947,7 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = BDIG;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:540:9: ( ( '0' | '1' ) )
+            // Smi.g:541:9: ( ( '0' | '1' ) )
             // Smi.g:
             {
             	if ( (input.LA(1) >= '0' && input.LA(1) <= '1') ) 
@@ -4981,7 +4981,7 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = HDIG;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:542:9: ( ( ( '0' .. '9' ) ) | ( 'A' .. 'F' ) | ( 'a' .. 'f' ) )
+            // Smi.g:543:9: ( ( ( '0' .. '9' ) ) | ( 'A' .. 'F' ) | ( 'a' .. 'f' ) )
             // Smi.g:
             {
             	if ( (input.LA(1) >= '0' && input.LA(1) <= '9') || (input.LA(1) >= 'A' && input.LA(1) <= 'F') || (input.LA(1) >= 'a' && input.LA(1) <= 'f') ) 
@@ -5015,10 +5015,10 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = NUMBER;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:546:10: ( ( '0' .. '9' )+ )
-            // Smi.g:546:10: ( '0' .. '9' )+
+            // Smi.g:547:10: ( ( '0' .. '9' )+ )
+            // Smi.g:547:10: ( '0' .. '9' )+
             {
-            	// Smi.g:546:10: ( '0' .. '9' )+
+            	// Smi.g:547:10: ( '0' .. '9' )+
             	int cnt6 = 0;
             	do 
             	{
@@ -5084,8 +5084,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = UPPER;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:551:6: ( ( 'A' .. 'Z' ) ( ( 'a' .. 'z' | 'A' .. 'Z' | '-' | '0' .. '9' ) )* )
-            // Smi.g:551:6: ( 'A' .. 'Z' ) ( ( 'a' .. 'z' | 'A' .. 'Z' | '-' | '0' .. '9' ) )*
+            // Smi.g:552:6: ( ( 'A' .. 'Z' ) ( ( 'a' .. 'z' | 'A' .. 'Z' | '-' | '0' .. '9' ) )* )
+            // Smi.g:552:6: ( 'A' .. 'Z' ) ( ( 'a' .. 'z' | 'A' .. 'Z' | '-' | '0' .. '9' ) )*
             {
             	if ( (input.LA(1) >= 'A' && input.LA(1) <= 'Z') ) 
             	{
@@ -5099,7 +5099,7 @@ public partial class SmiLexer : Lexer {
             	    Recover(mse);
             	    throw mse;}
 
-            	// Smi.g:552:3: ( ( 'a' .. 'z' | 'A' .. 'Z' | '-' | '0' .. '9' ) )*
+            	// Smi.g:553:3: ( ( 'a' .. 'z' | 'A' .. 'Z' | '-' | '0' .. '9' ) )*
             	do 
             	{
             	    int alt7 = 2;
@@ -5159,8 +5159,8 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = LOWER;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:556:4: ( ( 'a' .. 'z' ) ( ( 'a' .. 'z' | 'A' .. 'Z' | '-' | '0' .. '9' ) )* )
-            // Smi.g:556:4: ( 'a' .. 'z' ) ( ( 'a' .. 'z' | 'A' .. 'Z' | '-' | '0' .. '9' ) )*
+            // Smi.g:557:4: ( ( 'a' .. 'z' ) ( ( 'a' .. 'z' | 'A' .. 'Z' | '-' | '0' .. '9' ) )* )
+            // Smi.g:557:4: ( 'a' .. 'z' ) ( ( 'a' .. 'z' | 'A' .. 'Z' | '-' | '0' .. '9' ) )*
             {
             	if ( (input.LA(1) >= 'a' && input.LA(1) <= 'z') ) 
             	{
@@ -5174,7 +5174,7 @@ public partial class SmiLexer : Lexer {
             	    Recover(mse);
             	    throw mse;}
 
-            	// Smi.g:557:3: ( ( 'a' .. 'z' | 'A' .. 'Z' | '-' | '0' .. '9' ) )*
+            	// Smi.g:558:3: ( ( 'a' .. 'z' | 'A' .. 'Z' | '-' | '0' .. '9' ) )*
             	do 
             	{
             	    int alt8 = 2;
@@ -5234,16 +5234,16 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = B_OR_H_STRING;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:568:4: ( (=> B_STRING | H_STRING ) )
-            // Smi.g:568:4: (=> B_STRING | H_STRING )
+            // Smi.g:569:4: ( (=> B_STRING | H_STRING ) )
+            // Smi.g:569:4: (=> B_STRING | H_STRING )
             {
-            	// Smi.g:568:4: (=> B_STRING | H_STRING )
+            	// Smi.g:569:4: (=> B_STRING | H_STRING )
             	int alt9 = 2;
             	alt9 = dfa9.Predict(input);
             	switch (alt9) 
             	{
             	    case 1 :
-            	        // Smi.g:569:4: => B_STRING
+            	        // Smi.g:570:4: => B_STRING
             	        {
 
             	        	mB_STRING(); if (state.failed) return ;
@@ -5251,7 +5251,7 @@ public partial class SmiLexer : Lexer {
             	        }
             	        break;
             	    case 2 :
-            	        // Smi.g:570:5: H_STRING
+            	        // Smi.g:571:5: H_STRING
             	        {
             	        	mH_STRING(); if (state.failed) return ;
 
@@ -5277,11 +5277,11 @@ public partial class SmiLexer : Lexer {
     {
     		try
     		{
-            // Smi.g:576:14: ( SINGLE_QUOTE ( BDIG )* SINGLE_QUOTE ( 'B' | 'b' ) )
-            // Smi.g:576:14: SINGLE_QUOTE ( BDIG )* SINGLE_QUOTE ( 'B' | 'b' )
+            // Smi.g:577:14: ( SINGLE_QUOTE ( BDIG )* SINGLE_QUOTE ( 'B' | 'b' ) )
+            // Smi.g:577:14: SINGLE_QUOTE ( BDIG )* SINGLE_QUOTE ( 'B' | 'b' )
             {
             	mSINGLE_QUOTE(); if (state.failed) return ;
-            	// Smi.g:576:27: ( BDIG )*
+            	// Smi.g:577:27: ( BDIG )*
             	do 
             	{
             	    int alt10 = 2;
@@ -5350,11 +5350,11 @@ public partial class SmiLexer : Lexer {
     {
     		try
     		{
-            // Smi.g:578:14: ( SINGLE_QUOTE ( HDIG )* SINGLE_QUOTE ( 'H' | 'h' ) )
-            // Smi.g:578:14: SINGLE_QUOTE ( HDIG )* SINGLE_QUOTE ( 'H' | 'h' )
+            // Smi.g:579:14: ( SINGLE_QUOTE ( HDIG )* SINGLE_QUOTE ( 'H' | 'h' ) )
+            // Smi.g:579:14: SINGLE_QUOTE ( HDIG )* SINGLE_QUOTE ( 'H' | 'h' )
             {
             	mSINGLE_QUOTE(); if (state.failed) return ;
-            	// Smi.g:578:27: ( HDIG )*
+            	// Smi.g:579:27: ( HDIG )*
             	do 
             	{
             	    int alt11 = 2;
@@ -5425,11 +5425,11 @@ public partial class SmiLexer : Lexer {
     		{
             int _type = C_STRING;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Smi.g:579:14: ( '\"' ( options {greedy=false; } : '\\r\\n' | '\\r' | '\\n' |~ ( '\\r' | '\\n' ) )* '\"' )
-            // Smi.g:579:14: '\"' ( options {greedy=false; } : '\\r\\n' | '\\r' | '\\n' |~ ( '\\r' | '\\n' ) )* '\"'
+            // Smi.g:580:14: ( '\"' ( options {greedy=false; } : '\\r\\n' | '\\r' | '\\n' |~ ( '\\r' | '\\n' ) )* '\"' )
+            // Smi.g:580:14: '\"' ( options {greedy=false; } : '\\r\\n' | '\\r' | '\\n' |~ ( '\\r' | '\\n' ) )* '\"'
             {
             	Match('\"'); if (state.failed) return ;
-            	// Smi.g:579:18: ( options {greedy=false; } : '\\r\\n' | '\\r' | '\\n' |~ ( '\\r' | '\\n' ) )*
+            	// Smi.g:580:18: ( options {greedy=false; } : '\\r\\n' | '\\r' | '\\n' |~ ( '\\r' | '\\n' ) )*
             	do 
             	{
             	    int alt12 = 5;
@@ -5467,7 +5467,7 @@ public partial class SmiLexer : Lexer {
             	    switch (alt12) 
             		{
             			case 1 :
-            			    // Smi.g:580:32: '\\r\\n'
+            			    // Smi.g:581:32: '\\r\\n'
             			    {
             			    	Match("\r\n"); if (state.failed) return ;
 
@@ -5475,21 +5475,21 @@ public partial class SmiLexer : Lexer {
             			    }
             			    break;
             			case 2 :
-            			    // Smi.g:581:32: '\\r'
+            			    // Smi.g:582:32: '\\r'
             			    {
             			    	Match('\r'); if (state.failed) return ;
 
             			    }
             			    break;
             			case 3 :
-            			    // Smi.g:582:32: '\\n'
+            			    // Smi.g:583:32: '\\n'
             			    {
             			    	Match('\n'); if (state.failed) return ;
 
             			    }
             			    break;
             			case 4 :
-            			    // Smi.g:583:32: ~ ( '\\r' | '\\n' )
+            			    // Smi.g:584:32: ~ ( '\\r' | '\\n' )
             			    {
             			    	if ( (input.LA(1) >= '\u0000' && input.LA(1) <= '\t') || (input.LA(1) >= '\u000B' && input.LA(1) <= '\f') || (input.LA(1) >= '\u000E' && input.LA(1) <= '\uFFFF') ) 
             			    	{
@@ -6886,8 +6886,8 @@ public partial class SmiLexer : Lexer {
 
     // $ANTLR start "synpred1_Smi"
     public void synpred1_Smi_fragment() {
-        // Smi.g:569:4: ( B_STRING )
-        // Smi.g:569:5: B_STRING
+        // Smi.g:570:4: ( B_STRING )
+        // Smi.g:570:5: B_STRING
         {
         	mB_STRING(); if (state.failed) return ;
 
@@ -6972,7 +6972,7 @@ public partial class SmiLexer : Lexer {
 
         override public string Description
         {
-            get { return "568:4: (=> B_STRING | H_STRING )"; }
+            get { return "569:4: (=> B_STRING | H_STRING )"; }
         }
 
     }

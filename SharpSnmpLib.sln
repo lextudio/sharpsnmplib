@@ -1,7 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-# SharpDevelop 3.1.1.5048
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual C# Express 2010
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{669DE011-7BAD-44D5-93A4-204CFB8F4AD5}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpSnmpLib", "SharpSnmpLib\SharpSnmpLib.csproj", "{286DE6DB-8F95-4BD4-86A2-86488D2E0EE1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestTrap", "test\TestTrap.csproj", "{2BD083D3-01C9-46CA-9E9D-72A29240DBF3}"
@@ -17,15 +18,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestGetTable", "testgettable\TestGetTable.csproj", "{5C4FB369-4491-45BA-81D1-8CAE684F73F0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestMib", "TestMib\TestMib.csproj", "{AA1CC969-B74E-4D58-BBDB-84EB5C1B0383}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{669DE011-7BAD-44D5-93A4-204CFB8F4AD5}"
-	ProjectSection(SolutionItems) = preProject
-		Build.proj = Build.proj
-		gendarme.bat = gendarme.bat
-		NDepend.bat = NDepend.bat
-		package.bat = package.bat
-		readme.txt = readme.txt
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Browser", "Browser\Browser.csproj", "{60EA8A71-EE0B-4F0E-9485-B30B71D454D7}"
 EndProject
@@ -52,10 +44,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpSnmpLib.AST", "SharpSnmpLib\SharpSnmpLib.AST.csproj", "{F35C7321-929B-4238-959A-A60A890F10BA}"
 EndProject
 Global
-	GlobalSection(SubversionScc) = preSolution
-		Svn-Managed = True
-		Manager = AnkhSVN - Subversion Support for Visual Studio
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -144,5 +132,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
 	EndGlobalSection
 EndGlobal

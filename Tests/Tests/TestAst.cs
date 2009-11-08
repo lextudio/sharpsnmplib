@@ -7,6 +7,7 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
+using System.IO;
 using Antlr.Runtime;
 using Antlr.Runtime.Tree;
 using Lextm.SharpSnmpLib.Mib.Ast.ANTLR;
@@ -20,31 +21,42 @@ namespace Lextm.SharpSnmpLib.Tests
     [TestFixture]
     public class TestAst
     {
-        [Test]
-        public void TestLexer()
+        // [Test]
+        public void TestLexerOnMibs()
         {
-            string test = "my";
-            SmiLexer lex = new SmiLexer(new ANTLRStringStream(test));
+            TestMib(Properties.Resources.ACTONA_ACTASTOR_MIB);
+            TestMib(Properties.Resources.ADSL_LINE_MIB);
+            TestMib(Properties.Resources.ADSL_TC_MIB);
+            TestMib(Properties.Resources.AGENTX_MIB);
+        }
+        
+        private void TestMib(byte[] bytes)
+        {
+            SmiLexer lex = new SmiLexer(new ANTLRInputStream(new MemoryStream(bytes)));
             CommonTokenStream tokens = new CommonTokenStream(lex);
-            Assert.AreEqual(1, tokens.GetTokens().Count);
             SmiParser parser = new SmiParser(tokens);
-            CommonErrorNode error = (CommonErrorNode)parser.module_definition().Tree;
-            Assert.AreEqual(1, tokens.Size());
-            Assert.AreEqual("my", error.Text);
+            Assert.AreNotEqual(typeof(CommonErrorNode), parser.module_definition().Tree.GetType());
         }
         
         [Test]
         public void TestLexerOK()
         {
-            string test = "ADSL-LINE-MIB DEFINITIONS ::= BEGIN END";
+            string test = "ADSL-LINE-MIB DEFINITIONS ::= BEGIN" + Environment.NewLine +
+                "IMPORTS" + Environment.NewLine +
+                "MODULE-IDENTITY, OBJECT-TYPE," + Environment.NewLine +
+                "Counter32, Gauge32, Integer32," + Environment.NewLine +
+                "NOTIFICATION-TYPE," + Environment.NewLine +
+                "transmission           FROM SNMPv2-SMI;" + Environment.NewLine +
+                "END";
             SmiLexer lex = new SmiLexer(new ANTLRStringStream(test));
             CommonTokenStream tokens = new CommonTokenStream(lex);
-            Assert.AreEqual(5, tokens.GetTokens().Count);
             SmiParser parser = new SmiParser(tokens);
-            CommonTree tree = (CommonTree)parser.module_definition().Tree;
-            Assert.AreEqual(5, tokens.Size());
+            CommonTree tree = (CommonTree)parser.statement().Tree;
+            Assert.AreEqual(22, tokens.Size());
             string moduleName = tree.Children[0].ToString();
-            
+            CommonTreeNodeStream treeNodeStream = new CommonTreeNodeStream(tree);
+            SmiWalker treeWalker = new SmiWalker(treeNodeStream);
+            Lextm.SharpSnmpLib.Mib.Ast.ANTLR.SmiWalker.statement_return state = treeWalker.statement();
             string expected = "ADSL-LINE-MIB";
             Assert.AreEqual(expected, moduleName);
         }
