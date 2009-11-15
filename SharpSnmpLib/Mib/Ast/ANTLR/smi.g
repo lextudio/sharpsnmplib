@@ -591,7 +591,7 @@ C_STRING 	: 	'"' (options {greedy=false;}
 //*************************************************************************
 
 statement
-    : (SL_COMMENT)* (module_definition)* 
+    : (module_definition)* 
 	;
 	
 // Grammar Definitions
@@ -1019,8 +1019,8 @@ element_set_spec: intersections ( (BAR | UNION_KW) intersections )*
 intersections: constraint_elements (EXCEPT_KW constraint_elements)? 
                 ( (INTERSECTION | INTERSECTION_KW) constraint_elements (EXCEPT_KW constraint_elements)? )* ;
 
-constraint_elements: (value) => value 
-                   | (value_range) => value_range
+constraint_elements: (value_range) => value_range
+                   | (value) => value 
                    | SIZE_KW constraint 
                    | FROM_KW constraint 
                    | L_PAREN element_set_spec R_PAREN 

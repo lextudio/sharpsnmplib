@@ -1,4 +1,4 @@
-// $ANTLR 3.1.2 SmiWalker.g 2009-11-08 17:44:58
+// $ANTLR 3.1.2 SmiWalker.g 2009-11-14 17:28:13
 
 // The variable 'variable' is assigned but its value is never used.
 #pragma warning disable 168, 219
