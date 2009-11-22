@@ -15,11 +15,13 @@ namespace Lextm.SharpSnmpLib.Tests
                             {
                                 count++;
                             };
+            dog.Enabled = true;
             dog.Feed();
             dog.Feed();
             dog.Feed();
             dog.Feed();
             Thread.Sleep(1200);
+            dog.Enabled = false;
             Assert.AreEqual(1, count);
         }
     }

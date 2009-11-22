@@ -10,12 +10,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using System.Net;
-using System.Net.Sockets;
 using System.Text;
 
 namespace Lextm.SharpSnmpLib
@@ -33,7 +29,7 @@ namespace Lextm.SharpSnmpLib
         public static byte[] ConvertDecimal(string description)
         {
             List<byte> result = new List<byte>();
-            string[] content = description.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            string[] content = description.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             foreach (string part in content)
             {
                 result.Add(byte.Parse(part, NumberStyles.Integer, CultureInfo.InvariantCulture));
@@ -95,7 +91,7 @@ namespace Lextm.SharpSnmpLib
             result.Length--;
             return result.ToString();
         }
-        
+
         internal static bool CompareArray<T>(IList<T> left, IList<T> right) where T : IEquatable<T>
         {
             if (left.Count != right.Count)

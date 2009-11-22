@@ -42,6 +42,15 @@ namespace Lextm.SharpSnmpLib.Tests
          	ObjectIdentifier oid = new ObjectIdentifier(expected);
          	Assert.AreEqual(new byte[] {0x06, 0x04, 0x2B, 0x06, 0x99, 0x37}, oid.ToBytes());            
         }
+
+        [Test]
+        public void TestGreaterThan()
+        {
+            Assert.Greater(new ObjectIdentifier("1.1"), new ObjectIdentifier("0.0"));
+            Assert.Greater(new ObjectIdentifier("0.0.0"), new ObjectIdentifier("0.0"));
+            Assert.AreEqual(new ObjectIdentifier("0.0"), new ObjectIdentifier("0.0"));
+            Assert.AreEqual((ObjectIdentifier)null, (ObjectIdentifier)null);
+        }
     }
 }
 #pragma warning restore 1591,0618

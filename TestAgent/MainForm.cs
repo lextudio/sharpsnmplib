@@ -8,6 +8,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net;
 using System.Windows.Forms;
 
@@ -23,6 +24,7 @@ namespace Lextm.SharpSnmpLib.Agent
 	{
         private SecurityGuard _guard = new SecurityGuard(VersionCode.V1, new OctetString("public"), new OctetString("public"));
         private ObjectStore _store = new ObjectStore();
+        private Logger _logger = new Logger();
 
 		public MainForm()
 		{
@@ -39,6 +41,8 @@ namespace Lextm.SharpSnmpLib.Agent
 
 	    private void AdapterSetRequestReceived(object sender, MessageReceivedEventArgs<SetRequestMessage> e)
 	    {
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
             SetRequestMessage message = e.Message;
 
             if (!_guard.Allow(message))
@@ -57,10 +61,14 @@ namespace Lextm.SharpSnmpLib.Agent
 
             GetResponseMessage response = new GetResponseMessage(message.RequestId, message.Version, message.Community, ErrorCode.NoError, 0, result);
             listener1.SendResponse(response, e.Sender);
+            _logger.Log(listener1.Port, message.Pdu.TypeCode, response, e.Sender, watch.ElapsedMilliseconds);
+            watch.Stop();
 	    }
 
 	    private void AdapterGetBulkRequestReceived(object sender, MessageReceivedEventArgs<GetBulkRequestMessage> e)
 	    {
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
             GetBulkRequestMessage message = e.Message;
             // you may validate message version number and/or community name here.
             if (message.Variables.Count != 1)
@@ -78,10 +86,14 @@ namespace Lextm.SharpSnmpLib.Agent
 
             GetResponseMessage response = new GetResponseMessage(message.RequestId, message.Version, message.Community, ErrorCode.NoError, 0, list);
             listener1.SendResponse(response, e.Sender);
+            _logger.Log(listener1.Port, message.Pdu.TypeCode, response, e.Sender, watch.ElapsedMilliseconds);
+            watch.Stop();
 	    }
 
 	    private void AdapterGetNextRequestReceived(object sender, MessageReceivedEventArgs<GetNextRequestMessage> e)
         {
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
             GetNextRequestMessage message = e.Message;
 
             if (!_guard.Allow(message))
@@ -96,16 +108,7 @@ namespace Lextm.SharpSnmpLib.Agent
             foreach (Variable v in message.Variables)
             {  
                 index++;
-                ISnmpObject obj = _store.GetObject(v.Id);
-                
-                if (obj == null)
-                {
-                    hasError = true;
-                    result.Add(v);
-                    break;
-                }
-
-                ISnmpObject next = obj.Next;
+                ISnmpObject next = _store.GetNextObject(v.Id);
                 if (next == null)
                 {
                     hasError = true;
@@ -127,26 +130,14 @@ namespace Lextm.SharpSnmpLib.Agent
             }
 
             listener1.SendResponse(response, e.Sender);
+            _logger.Log(listener1.Port, message.Pdu.TypeCode, response, e.Sender, watch.ElapsedMilliseconds);
+            watch.Stop();
         }
 
-        private void Application_Idle(object sender, EventArgs e)
+        private void Agent1GetRequestReceived(object sender, MessageReceivedEventArgs<GetRequestMessage> e)
         {
-            btnStart.Enabled = !listener1.Active;
-            btnStop.Enabled = listener1.Active;
-        }
-
-		private void BtnStartClick(object sender, EventArgs e)
-		{
-			listener1.Start(int.Parse(txtAgentPort.Text));
-		}
-
-        private void BtnStopClick(object sender, EventArgs e)
-		{
-			listener1.Stop();
-		}
-
-		private void Agent1GetRequestReceived(object sender, MessageReceivedEventArgs<GetRequestMessage> e)
-		{
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
             GetRequestMessage message = e.Message;
 
             if (!_guard.Allow(message))
@@ -185,6 +176,24 @@ namespace Lextm.SharpSnmpLib.Agent
             }
 
             listener1.SendResponse(response, e.Sender);
+            _logger.Log(listener1.Port, message.Pdu.TypeCode, response, e.Sender, watch.ElapsedMilliseconds);
+            watch.Stop();
+        }
+
+        private void Application_Idle(object sender, EventArgs e)
+        {
+            btnStart.Enabled = !listener1.Active;
+            btnStop.Enabled = listener1.Active;
+        }
+
+		private void BtnStartClick(object sender, EventArgs e)
+		{
+			listener1.Start(int.Parse(txtAgentPort.Text));
+		}
+
+        private void BtnStopClick(object sender, EventArgs e)
+		{
+			listener1.Stop();
 		}
 
         private static readonly ObjectIdentifier SysDescr = new ObjectIdentifier("1.3.6.1.2.1.1.1.0");

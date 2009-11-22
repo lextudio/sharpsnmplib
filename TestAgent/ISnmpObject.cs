@@ -11,7 +11,5 @@ namespace Lextm.SharpSnmpLib.Agent
         void Set(ISnmpData data);
 
         ObjectIdentifier Id { get; }
-
-        ISnmpObject Next { get; set; }
     }
 }
