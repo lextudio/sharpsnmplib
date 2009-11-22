@@ -359,22 +359,30 @@ namespace Lextm.SharpSnmpLib.Messaging
 
         private void HandleMessage(MessageParams param)
         {
+            IList<ISnmpMessage> messages = null;
             try
             {
-                // TODO: use listener adapters instead in future versions.
-                foreach (ISnmpMessage message in MessageFactory.ParseMessages(param.GetBytes(), 0, param.Number, _users))
-                {
-                    foreach (IListenerAdapter adapter in _adapters)
-                    {
-                        adapter.Process(message, param.Sender);
-                    }
-                }
+                messages = MessageFactory.ParseMessages(param.GetBytes(), 0, param.Number, _users);
             }
             catch (Exception ex)
             {
                 SharpMessageFactoryException exception = new SharpMessageFactoryException("Invalid message bytes found. Use tracing to analyze the bytes.", ex);
                 exception.Bytes = param.GetBytes();
                 HandleException(exception);
+            }
+
+            if (messages == null)
+            {
+                return;
+            }
+
+            // TODO: use listener adapters instead in future versions.
+            foreach (ISnmpMessage message in messages)
+            {
+                foreach (IListenerAdapter adapter in _adapters)
+                {
+                    adapter.Process(message, param.Sender);
+                }
             }
         }
 

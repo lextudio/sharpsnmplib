@@ -5,8 +5,8 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>TestAgent</RootNamespace>
-    <AssemblyName>TestAgent</AssemblyName>
+    <RootNamespace>Lextm.SharpSnmpLib.Agent</RootNamespace>
+    <AssemblyName>snmpd</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileUpgradeFlags>
@@ -56,14 +56,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SysLocation.cs" />
+    <Compile Include="SysName.cs" />
+    <Compile Include="SysContact.cs" />
+    <Compile Include="SysUpTime.cs" />
+    <Compile Include="ISnmpObject.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ObjectStore.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScalarObject.cs" />
+    <Compile Include="SecurityGuard.cs" />
+    <Compile Include="SysDescr.cs" />
+    <Compile Include="SysObjectId.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SharpSnmpLib\SharpSnmpLib.Controls.csproj">

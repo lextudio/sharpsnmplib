@@ -14,13 +14,16 @@ using System.Windows.Forms;
 using Lextm.SharpSnmpLib;
 using Lextm.SharpSnmpLib.Messaging;
 
-namespace TestAgent
+namespace Lextm.SharpSnmpLib.Agent
 {
 	/// <summary>
 	/// Description of MainForm.
 	/// </summary>
 	public partial class MainForm : Form
 	{
+        private SecurityGuard _guard = new SecurityGuard(VersionCode.V1, new OctetString("public"), new OctetString("public"));
+        private ObjectStore _store = new ObjectStore();
+
 		public MainForm()
 		{
 			InitializeComponent();
@@ -37,18 +40,22 @@ namespace TestAgent
 	    private void AdapterSetRequestReceived(object sender, MessageReceivedEventArgs<SetRequestMessage> e)
 	    {
             SetRequestMessage message = e.Message;
-            // you may validate message version number and/or community name here.
-            if (message.Variables.Count != 1)
+
+            if (!_guard.Allow(message))
             {
+                // TODO: return error message.
                 return;
             }
 
-            if (message.Variables[0].Id != SysDescr)
+            IList<Variable> result = new List<Variable>();
+            foreach (Variable v in message.Variables)
             {
-                return;
+                ISnmpObject obj = _store.GetObject(v.Id);
+                obj.Set(v.Data);
+                result.Add(v);
             }
 
-            GetResponseMessage response = new GetResponseMessage(message.RequestId, message.Version, message.Community, ErrorCode.NoError, 0, message.Variables);
+            GetResponseMessage response = new GetResponseMessage(message.RequestId, message.Version, message.Community, ErrorCode.NoError, 0, result);
             listener1.SendResponse(response, e.Sender);
 	    }
 
@@ -76,21 +83,49 @@ namespace TestAgent
 	    private void AdapterGetNextRequestReceived(object sender, MessageReceivedEventArgs<GetNextRequestMessage> e)
         {
             GetNextRequestMessage message = e.Message;
-            // you may validate message version number and/or community name here.
-            if (message.Variables.Count != 1)
+
+            if (!_guard.Allow(message))
             {
+                // TODO: return error message.
                 return;
             }
 
-            if (message.Variables[0].Id != SysDescr)
-            {
-                return;
+            bool hasError = false;
+            int index = 0;
+            IList<Variable> result = new List<Variable>();
+            foreach (Variable v in message.Variables)
+            {  
+                index++;
+                ISnmpObject obj = _store.GetObject(v.Id);
+                
+                if (obj == null)
+                {
+                    hasError = true;
+                    result.Add(v);
+                    break;
+                }
+
+                ISnmpObject next = obj.Next;
+                if (next == null)
+                {
+                    hasError = true;
+                    result.Add(v);
+                    break;
+                }
+
+                result.Add(new Variable(next.Id, next.Get()));
             }
 
-            List<Variable> list = new List<Variable>();
-            list.Add(new Variable(SysDescr, new OctetString("Test Description")));
+            GetResponseMessage response;
+            if (hasError)
+            {
+                response = new GetResponseMessage(message.RequestId, message.Version, message.Community, ErrorCode.NoSuchName, index, result);
+            }
+            else
+            {
+                response = new GetResponseMessage(message.RequestId, message.Version, message.Community, ErrorCode.NoError, 0, result);
+            }
 
-            GetResponseMessage response = new GetResponseMessage(message.RequestId, message.Version, message.Community, ErrorCode.NoError, 0, list);
             listener1.SendResponse(response, e.Sender);
         }
 
@@ -112,26 +147,47 @@ namespace TestAgent
 
 		private void Agent1GetRequestReceived(object sender, MessageReceivedEventArgs<GetRequestMessage> e)
 		{
-			GetRequestMessage message = e.Message;
-			// you may validate message version number and/or community name here.
-			if (message.Variables.Count != 1)
-			{
-				return;
-			}
+            GetRequestMessage message = e.Message;
 
-			if (message.Variables[0].Id != SysDescr)
-			{
-				return;
-			}
+            if (!_guard.Allow(message))
+            {
+                // TODO: return error message.
+                return;
+            }
 
-			List<Variable> list = new List<Variable>();
-			list.Add(new Variable(SysDescr, new OctetString("Test Description")));
+            bool hasError = false;
+            int index = 0;
+            IList<Variable> result = new List<Variable>();
+            foreach (Variable v in message.Variables)
+            {
+                index++;
+                ISnmpObject obj = _store.GetObject(v.Id);
+                if (obj != null)
+                {
+                    result.Add(new Variable(v.Id, obj.Get()));
+                }
+                else
+                {
+                    hasError = true;
+                    result.Add(v);
+                    break;
+                }
+            }
 
-			GetResponseMessage response = new GetResponseMessage(message.RequestId, message.Version, message.Community, ErrorCode.NoError, 0, list);
-			listener1.SendResponse(response, e.Sender);
+            GetResponseMessage response;
+            if (hasError)
+            {
+                response = new GetResponseMessage(message.RequestId, message.Version, message.Community, ErrorCode.NoSuchName, index, result);
+            }
+            else
+            {
+                response = new GetResponseMessage(message.RequestId, message.Version, message.Community, ErrorCode.NoError, 0, result);
+            }
+
+            listener1.SendResponse(response, e.Sender);
 		}
 
-		private static readonly ObjectIdentifier SysDescr = new ObjectIdentifier("1.3.6.1.2.1.1.1.0");
+        private static readonly ObjectIdentifier SysDescr = new ObjectIdentifier("1.3.6.1.2.1.1.1.0");
 
 		private static void Agent1ExceptionRaised(object sender, ExceptionRaisedEventArgs e)
 		{

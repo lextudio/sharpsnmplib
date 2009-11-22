@@ -89,8 +89,7 @@ namespace Lextm.SharpSnmpLib.Browser
             try
             {
                 source.TraceInformation("==== Begin GET ====");
-                Profiles.DefaultProfile.Get(Manager, GetTextualForm(treeView1.SelectedNode.Tag as IDefinition));
-                source.TraceInformation("==== End GET ====");
+                Profiles.DefaultProfile.Get(Manager, GetTextualForm(treeView1.SelectedNode.Tag as IDefinition));                
             }
             catch (Exception ex)
             {
@@ -98,6 +97,7 @@ namespace Lextm.SharpSnmpLib.Browser
             }
             finally
             {
+                source.TraceInformation("==== End GET ====");
                 source.Flush();
                 source.Close();
             }
@@ -252,7 +252,6 @@ namespace Lextm.SharpSnmpLib.Browser
             {
                 source.TraceInformation("==== Begin GET NEXT ====");
                 Profiles.DefaultProfile.GetNext(Manager, GetTextualForm(treeView1.SelectedNode.Tag as IDefinition));
-                source.TraceInformation("==== End GET NEXT ====");
             }
             catch (Exception ex)
             {
@@ -260,6 +259,7 @@ namespace Lextm.SharpSnmpLib.Browser
             }
             finally
             {
+                source.TraceInformation("==== End GET NEXT ====");
                 source.Flush();
                 source.Close();
             }
@@ -334,8 +334,7 @@ namespace Lextm.SharpSnmpLib.Browser
             try
             {
                 source.TraceInformation("==== Begin WALK ====");
-                Profiles.DefaultProfile.Walk(Manager, (treeView1.SelectedNode.Tag as IDefinition));
-                source.TraceInformation("==== End WALK ====");
+                Profiles.DefaultProfile.Walk(Manager, (treeView1.SelectedNode.Tag as IDefinition));                
             }
             catch (Exception ex)
             {
@@ -343,6 +342,7 @@ namespace Lextm.SharpSnmpLib.Browser
             }
             finally
             {
+                source.TraceInformation("==== End WALK ====");
                 source.Flush();
                 source.Close();
             }

@@ -148,7 +148,6 @@
     <Compile Include="SharpOperationException.cs" />
     <Compile Include="SnmpDataFactory.cs" />
     <Compile Include="SnmpType.cs" />
-    <Compile Include="TableCollection.cs" />
     <Compile Include="TimeTicks.cs" />
     <Compile Include="TrapV1Pdu.cs" />
     <Compile Include="TrapV2Pdu.cs" />

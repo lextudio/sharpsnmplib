@@ -102,14 +102,10 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             int result = 0;
-            int index = -1;
             Variable tableV = new Variable(table);
             Variable seed;
             Variable next = tableV;
-            bool first = true;
-            bool oldWay = false;
 
-            // TODO: roll back to old style.
             do
             {
                 seed = next;
@@ -125,33 +121,9 @@ namespace Lextm.SharpSnmpLib.Messaging
                 }
 
                 list.Add(seed);
-
-                // Here we need to figure out which way we will be counting tables
-                if (first && seed.Id.ToString().StartsWith(table + ".1.1.", StringComparison.Ordinal))
-                {
-                    oldWay = true;
-                }
-                else if (first)
-                {
-                    string part = seed.Id.ToString().Replace(table.ToString(), null).Remove(0, 1);
-                    int end = part.IndexOf('.');
-                    index = Int32.Parse(part.Substring(0, end), CultureInfo.InvariantCulture);
-                }
-
-                first = false;
-                if (oldWay && seed.Id.ToString().StartsWith(table + ".1.1.", StringComparison.Ordinal))
+                if (seed.Id.ToString().StartsWith(table + ".1.1.", StringComparison.Ordinal))
                 {
                     result++;
-                }
-                else if (!oldWay)
-                {
-                    string part = seed.Id.ToString().Replace(table.ToString(), null).Remove(0, 1);
-                    int end = part.IndexOf('.');
-                    int newIndex = Int32.Parse(part.Substring(0, end), CultureInfo.InvariantCulture);
-                    if (index == newIndex)
-                    {
-                        result++;
-                    }
                 }
             }
             while (HasNext(version, endpoint, community, seed, timeout, out next));
