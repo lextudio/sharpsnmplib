@@ -15,7 +15,7 @@ namespace Lextm.SharpSnmpLib.Agent
 
         public void Set(ISnmpData data)
         {
-            throw new NotImplementedException();
+            throw new ReadOnlyException();
         }
 
         public ObjectIdentifier Id

@@ -51,14 +51,14 @@ namespace Lextm.SharpSnmpLib
         }
 
         /// <summary>
-        /// Returns <see cref="DateTime"/> representation.
+        /// Returns <see cref="TimeSpan"/> representation.
         /// </summary>
         /// <returns></returns>
-        public DateTime ToDateTime()
+        public TimeSpan ToTimeSpan()
         {
             long root = ToUInt32();
             root *= 100000;
-            return new DateTime(root, DateTimeKind.Unspecified);
+            return new TimeSpan(root);
         }
             
         /// <summary>
@@ -159,7 +159,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public override string ToString()
         {
-            return ToUInt32().ToString(CultureInfo.InvariantCulture);
+            return string.Format(CultureInfo.InvariantCulture, "{0} ({1})", ToUInt32(), ToTimeSpan());
         }
         
         /// <summary>

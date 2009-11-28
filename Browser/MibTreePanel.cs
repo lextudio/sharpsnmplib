@@ -83,26 +83,6 @@ namespace Lextm.SharpSnmpLib.Browser
 			}
         }
 
-        private void ActGetExecute(object sender, EventArgs e)
-        {
-            TraceSource source = new TraceSource("Browser");
-            try
-            {
-                source.TraceInformation("==== Begin GET ====");
-                Profiles.DefaultProfile.Get(Manager, GetTextualForm(treeView1.SelectedNode.Tag as IDefinition));                
-            }
-            catch (Exception ex)
-            {
-                source.TraceInformation(ex.ToString());
-            }
-            finally
-            {
-                source.TraceInformation("==== End GET ====");
-                source.Flush();
-                source.Close();
-            }
-        }
-
         [Dependency]
         public Manager Manager
         {
@@ -134,6 +114,26 @@ namespace Lextm.SharpSnmpLib.Browser
             return def.TextualForm + "." + index;
         }
 
+        private void ActGetExecute(object sender, EventArgs e)
+        {
+            TraceSource source = new TraceSource("Browser");
+            try
+            {
+                source.TraceInformation("==== Begin GET ====");
+                Profiles.DefaultProfile.Get(Manager, GetTextualForm(treeView1.SelectedNode.Tag as IDefinition));
+            }
+            catch (Exception ex)
+            {
+                source.TraceInformation(ex.ToString());
+            }
+            finally
+            {
+                source.TraceInformation("==== End GET ====");
+                source.Flush();
+                source.Close();
+            }
+        }
+
         private void ActGetUpdate(object sender, EventArgs e)
         {
             actGet.Enabled = Validate(treeView1.SelectedNode);
@@ -144,6 +144,7 @@ namespace Lextm.SharpSnmpLib.Browser
             TraceSource source = new TraceSource("Browser");
             try
             {
+                ISnmpData data;
                 using (FormSet form = new FormSet())
                 {
                     form.OldVal = Profiles.DefaultProfile.GetValue(Manager,
@@ -154,36 +155,29 @@ namespace Lextm.SharpSnmpLib.Browser
                         return;
                     }
 
-                    //
-                    // If its a string we will send the value as an OctetString, otherwise an Integer32... we might have to update this
-                    // to support other data types later
-                    //
+                    
                     if (form.IsString)
                     {
-                        Profiles.DefaultProfile.Set(Manager,
-                                                    GetTextualForm(treeView1.SelectedNode.Tag as IDefinition),
-                                                    new OctetString(form.NewVal));
-                        return;
+                        data = new OctetString(form.NewVal);
                     }
-
-                    int result;
-
-                    if (!int.TryParse(form.NewVal, out result))
+                    else
                     {
-                        MessageBox.Show("Value entered was not an Integer!", "SNMP Set Error",
-                                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
+                        int result;
+                        if (!int.TryParse(form.NewVal, out result))
+                        {
+                            MessageBox.Show("Value entered was not an Integer!", "SNMP Set Error",
+                                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+
+                        data = new Integer32(result);
                     }
-
-                    Profiles.DefaultProfile.Set(Manager,
-                                                GetTextualForm(treeView1.SelectedNode.Tag as IDefinition),
-                                                new Integer32(result));
-
-                    //
-                    // For now so we can see the change occured
-                    //
-                    ActGetExecute(null, null);
                 }
+
+                source.TraceInformation("==== Begin SET ====");
+                Profiles.DefaultProfile.Set(Manager,
+                                                GetTextualForm(treeView1.SelectedNode.Tag as IDefinition),
+                                                data);
             }
             catch (Exception ex)
             {
@@ -191,6 +185,7 @@ namespace Lextm.SharpSnmpLib.Browser
             }
             finally
             {
+                source.TraceInformation("==== End SET ====");
                 source.Flush();
                 source.Close();
             }

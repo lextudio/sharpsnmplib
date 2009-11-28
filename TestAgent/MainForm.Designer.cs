@@ -40,10 +40,8 @@ namespace Lextm.SharpSnmpLib.Agent
         /// </summary>
         private void InitializeComponent()
         {
-        	this.components = new System.ComponentModel.Container();
         	this.btnStart = new System.Windows.Forms.Button();
         	this.btnStop = new System.Windows.Forms.Button();
-        	this.agent1 = new Lextm.SharpSnmpLib.Messaging.Agent(this.components);
         	this.btnTrap = new System.Windows.Forms.Button();
         	this.btnTrap2 = new System.Windows.Forms.Button();
         	this.txtIP = new System.Windows.Forms.TextBox();
@@ -51,7 +49,6 @@ namespace Lextm.SharpSnmpLib.Agent
         	this.label1 = new System.Windows.Forms.Label();
         	this.label2 = new System.Windows.Forms.Label();
         	this.btnInform = new System.Windows.Forms.Button();
-        	this.listener1 = new Lextm.SharpSnmpLib.Messaging.Listener(this.components);
         	this.label3 = new System.Windows.Forms.Label();
         	this.txtAgentPort = new System.Windows.Forms.TextBox();
         	this.SuspendLayout();
@@ -184,10 +181,8 @@ namespace Lextm.SharpSnmpLib.Agent
         private System.Windows.Forms.Button btnTrap2;
         private System.Windows.Forms.Button btnTrap;
 
-        private Lextm.SharpSnmpLib.Messaging.Agent agent1;
         private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.Button btnStop;
-        private Lextm.SharpSnmpLib.Messaging.Listener listener1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtAgentPort;
 

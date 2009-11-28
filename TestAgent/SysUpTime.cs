@@ -6,23 +6,23 @@ namespace Lextm.SharpSnmpLib.Agent
 {
     internal class SysUpTime : IScalarObject
     {
-        private static readonly ObjectIdentifier id = new ObjectIdentifier("1.3.6.1.2.1.1.3.0");
+        private static readonly ObjectIdentifier _id = new ObjectIdentifier("1.3.6.1.2.1.1.3.0");
 
         public ISnmpData Get()
         {
-            return new TimeTicks((uint)Environment.TickCount / 100000);
+            return new TimeTicks((uint)Environment.TickCount / 10);
         }
 
         public void Set(ISnmpData data)
         {
-            throw new NotImplementedException();
+            throw new ReadOnlyException();
         }
 
         public ObjectIdentifier Id
         {
             get
             {
-                return id;
+                return _id;
             }
         }
     }

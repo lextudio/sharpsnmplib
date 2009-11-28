@@ -107,7 +107,6 @@
     <Compile Include="Messaging\Messenger.cs" />
     <Compile Include="Messaging\PduCounter.cs" />
     <Compile Include="Messaging\WalkMode.cs" />
-    <Compile Include="WatchDog.cs" />
     <None Include="license.txt" />
     <None Include="sharpsnmplib.snk" />
     <EmbeddedResource Include="Messaging\Agent.resx">

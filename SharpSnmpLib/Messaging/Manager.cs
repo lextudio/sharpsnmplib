@@ -181,12 +181,12 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="community">Community name.</param>
         /// <param name="variable">Variable bind.</param>
         /// <returns></returns>
-        public IList<Variable> SetSingle(IPEndPoint endpoint, string community, Variable variable)
+        public Variable SetSingle(IPEndPoint endpoint, string community, Variable variable)
         {
             List<Variable> variables = new List<Variable>();
             variables.Add(variable);
 
-            return Messenger.Set(_version, endpoint, new OctetString(community), variables, _timeout);
+            return Messenger.Set(_version, endpoint, new OctetString(community), variables, _timeout)[0];
         }
         
         /// <summary>
@@ -196,7 +196,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="community">Community name.</param>
         /// <param name="variable">Variable bind.</param>
         /// <returns></returns>
-        public IList<Variable> SetSingle(IPAddress address, string community, Variable variable)
+        public Variable SetSingle(IPAddress address, string community, Variable variable)
         {
             return SetSingle(new IPEndPoint(address, DefaultPort), community, variable);
         }
@@ -208,7 +208,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="community">Community name.</param>
         /// <param name="variable">Variable bind.</param>
         /// <returns></returns>
-        public IList<Variable> SetSingle(string address, string community, Variable variable)
+        public Variable SetSingle(string address, string community, Variable variable)
         {
             return SetSingle(IPAddress.Parse(address), community, variable);
         }

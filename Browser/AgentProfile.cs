@@ -129,12 +129,12 @@ namespace Lextm.SharpSnmpLib.Browser
 		    source.Close();
 		}
 		
-		//
-		// TODO: return success if it succeeded!
-		//
 		internal void Set(Manager manager, string textual, ISnmpData data)
 		{
-			manager.SetSingle(Agent, SetCommunity, manager.Objects.CreateVariable(textual, data));
+            TraceSource source = new TraceSource("Browser");
+            source.TraceInformation(manager.SetSingle(Agent, GetCommunity, manager.Objects.CreateVariable(textual, data)).ToString());
+            source.Flush();
+            source.Close();
 		}
 		
 		internal static bool IsValidIPAddress(string address, out IPAddress ip)

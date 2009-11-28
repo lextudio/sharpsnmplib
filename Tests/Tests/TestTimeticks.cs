@@ -41,15 +41,14 @@ namespace Lextm.SharpSnmpLib.Tests
         }
         
         [Test]
-        public void TestToDateTime()
+        public void TestToTimeSpan()
         {
             TimeTicks time = new TimeTicks(171447);
-            DateTime result = time.ToDateTime();
-            Assert.AreEqual(0, result.Hour);
-            Assert.AreEqual(28, result.Minute);
-            Assert.AreEqual(34, result.Second);
-            Assert.AreEqual(470, result.Millisecond);
-            Assert.AreEqual(DateTimeKind.Unspecified, result.Kind);
+            TimeSpan result = time.ToTimeSpan();
+            Assert.AreEqual(0, result.Hours);
+            Assert.AreEqual(28, result.Minutes);
+            Assert.AreEqual(34, result.Seconds);
+            Assert.AreEqual(470, result.Milliseconds);
         }
     }
 }

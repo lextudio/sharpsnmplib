@@ -12,7 +12,7 @@ using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
-
+using Lextm.Common;
 using Lextm.SharpSnmpLib.Mib;
 using Microsoft.Practices.Unity;
 using WeifenLuo.WinFormsUI.Docking;
@@ -104,7 +104,7 @@ namespace Lextm.SharpSnmpLib.Browser
             ResumeLayout();
             listView1.Groups["lvgLoaded"].Header = string.Format(CultureInfo.CurrentCulture, "Loaded ({0})", listView1.Groups["lvgLoaded"].Items.Count);
             listView1.Groups["lvgPending"].Header = string.Format(CultureInfo.CurrentCulture, "Unloaded ({0})", listView1.Groups["lvgPending"].Items.Count);
-            tslblCount.Text = "loaded: " + listView1.Groups["lvgLoaded"].Items.Count + "; unloaded: " + listView1.Groups["lvgPending"].Items.Count;
+            tslblCount.Text = string.Format(CultureInfo.InvariantCulture, "loaded: {0}; unloaded: {1}", listView1.Groups["lvgLoaded"].Items.Count, listView1.Groups["lvgPending"].Items.Count);
         }
 
         private void ActAddExecute(object sender, EventArgs e)
