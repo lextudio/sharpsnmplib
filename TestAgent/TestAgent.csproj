@@ -71,8 +71,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GetMessageHandler.cs" />
+    <Compile Include="GetNextMessageHandler.cs" />
+    <Compile Include="IMessageHandler.cs" />
     <Compile Include="Logger.cs" />
-    <Compile Include="ReadOnlyException.cs" />
+    <Compile Include="MessageHandlerFactory.cs" />
+    <Compile Include="AccessFailureException.cs" />
+    <Compile Include="SetMessageHandler.cs" />
     <Compile Include="SnmpDemon.cs" />
     <Compile Include="SysLocation.cs" />
     <Compile Include="SysName.cs" />

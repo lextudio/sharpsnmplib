@@ -20,10 +20,10 @@ namespace Lextm.SharpSnmpLib.Messaging
     public class InformRequestMessage : ISnmpMessage
     {
         private readonly VersionCode _version;
-        private Header _header;
-        private SecurityParameters _parameters;
-        private Scope _scope;
-        private ProviderPair _pair;
+        private readonly Header _header;
+        private readonly SecurityParameters _parameters;
+        private readonly Scope _scope;
+        private readonly ProviderPair _pair;
 
         /// <summary>
         /// Creates a <see cref="InformRequestMessage"/> with all contents.
@@ -137,8 +137,12 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             return MessageFactory.GetResponse(receiver, ToBytes(), RequestId, timeout, new UserRegistry(), socket);
         }
-        
-        internal int RequestId
+
+        /// <summary>
+        /// Gets the request ID.
+        /// </summary>
+        /// <value>The request ID.</value>
+        public int RequestId
         {
             get
             {

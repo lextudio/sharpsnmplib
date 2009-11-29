@@ -20,10 +20,10 @@ namespace Lextm.SharpSnmpLib.Messaging
     public class GetBulkRequestMessage : ISnmpMessage
     {
         private readonly VersionCode _version;
-        private Header _header;
-        private SecurityParameters _parameters;
-        private Scope _scope;
-        private ProviderPair _pair;
+        private readonly Header _header;
+        private readonly SecurityParameters _parameters;
+        private readonly Scope _scope;
+        private readonly ProviderPair _pair;
         
         /// <summary>
         /// Creates a <see cref="GetBulkRequestMessage"/> with all contents.

@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Lextm.SharpSnmpLib.Agent
 {
     internal class ObjectStore
     {
-        private IDictionary<ObjectIdentifier, ISnmpObject> _table = new Dictionary<ObjectIdentifier, ISnmpObject>();
-        private LinkedList<ObjectIdentifier> _list = new LinkedList<ObjectIdentifier>();
+        private readonly IDictionary<ObjectIdentifier, ISnmpObject> _table = new Dictionary<ObjectIdentifier, ISnmpObject>();
+        private readonly LinkedList<ObjectIdentifier> _list = new LinkedList<ObjectIdentifier>();
         
         public ObjectStore()
         {

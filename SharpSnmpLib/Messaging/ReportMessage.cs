@@ -20,10 +20,10 @@ namespace Lextm.SharpSnmpLib.Messaging
     public class ReportMessage : ISnmpMessage
     {
         private readonly VersionCode _version;
-        private SecurityParameters _parameters;
-        private Scope _scope;
-        private Header _header;
-        private ProviderPair _pair = ProviderPair.Default;
+        private readonly SecurityParameters _parameters;
+        private readonly Scope _scope;
+        private readonly Header _header;
+        private readonly ProviderPair _pair = ProviderPair.Default;
         
         internal ReportMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, ProviderPair record)
         {
@@ -85,8 +85,12 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             return MessageFactory.GetResponse(receiver, ToBytes(), RequestId, timeout, new UserRegistry(), socket);
         }
-        
-        internal int RequestId
+
+        /// <summary>
+        /// Gets the request ID.
+        /// </summary>
+        /// <value>The request ID.</value>
+        public int RequestId
         {
             get { return _scope.Pdu.RequestId.ToInt32(); }
         }

@@ -110,6 +110,10 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         public event EventHandler<ExceptionRaisedEventArgs> ExceptionRaised;
 
+        /// <summary>
+        /// Occurs when a message is received.
+        /// </summary>
+        public event EventHandler<MessageReceivedEventArgs<ISnmpMessage>> MessageReceived;
         #endregion Events
 
         /// <summary>
@@ -379,6 +383,12 @@ namespace Lextm.SharpSnmpLib.Messaging
             // TODO: use listener adapters instead in future versions.
             foreach (ISnmpMessage message in messages)
             {
+                EventHandler<MessageReceivedEventArgs<ISnmpMessage>> handler = MessageReceived;
+                if (handler != null)
+                {
+                    handler(this, new MessageReceivedEventArgs<ISnmpMessage>(param.Sender, message));
+                }
+                
                 foreach (IListenerAdapter adapter in _adapters)
                 {
                     adapter.Process(message, param.Sender);

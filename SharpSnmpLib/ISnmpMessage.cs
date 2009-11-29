@@ -46,5 +46,11 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <value>The version.</value>
         VersionCode Version { get; }
+
+        /// <summary>
+        /// Gets the request ID.
+        /// </summary>
+        /// <value>The request ID.</value>
+        int RequestId { get; }
     }
 }

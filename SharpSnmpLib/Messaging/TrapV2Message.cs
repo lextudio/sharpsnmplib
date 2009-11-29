@@ -14,14 +14,14 @@ namespace Lextm.SharpSnmpLib.Messaging
     public class TrapV2Message : ISnmpMessage
     {
         private readonly VersionCode _version;
-        private Header _header;
-        private SecurityParameters _parameters;
-        private Scope _scope;
-        private ProviderPair _pair;
+        private readonly Header _header;
+        private readonly SecurityParameters _parameters;
+        private readonly Scope _scope;
+        private readonly ProviderPair _pair;
         
-        private ObjectIdentifier _enterprise;
-        private uint _time;
-        
+        private readonly ObjectIdentifier _enterprise;
+        private readonly uint _time;
+
         /// <summary>
         /// Creates a <see cref="TrapV2Message"/> instance with all content.
         /// </summary>
@@ -181,6 +181,11 @@ namespace Lextm.SharpSnmpLib.Messaging
         public VersionCode Version
         {
             get { return _version; }
+        }
+
+        public int RequestId
+        {
+            get { return _scope.Pdu.RequestId.ToInt32(); }
         }
 
         /// <summary>

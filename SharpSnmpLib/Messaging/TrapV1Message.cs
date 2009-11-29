@@ -219,19 +219,23 @@ namespace Lextm.SharpSnmpLib.Messaging
                 return _version;
             }
         }
-        
+
+        /// <summary>
+        /// Gets the request ID.
+        /// </summary>
+        /// <value>The request ID.</value>
+        public int RequestId
+        {
+            get { throw new NotImplementedException(); }
+        }
+
         /// <summary>
         /// To byte format.
         /// </summary>
         /// <returns></returns>
         public byte[] ToBytes()
         {
-            if (_bytes == null)
-            {
-                _bytes = Helper.PackMessage(_version, _community, _pdu).ToBytes();
-            }
-
-            return _bytes;
+            return _bytes ?? (_bytes = Helper.PackMessage(_version, _community, _pdu).ToBytes());
         }
 
         /// <summary>

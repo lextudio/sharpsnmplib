@@ -19,11 +19,11 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// </summary>
     public class GetResponseMessage : ISnmpMessage
     {
-        private Header _header;
-        private SecurityParameters _parameters;
-        private Scope _scope;
+        private readonly Header _header;
+        private readonly SecurityParameters _parameters;
+        private readonly Scope _scope;
         private readonly VersionCode _version;
-        private ProviderPair _record;
+        private readonly ProviderPair _record;
 
         /// <summary>
         /// Creates a <see cref="GetResponseMessage"/> with all contents.
@@ -76,7 +76,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             Levels recordToSecurityLevel = record.ToSecurityLevel();
             recordToSecurityLevel |= Levels.Reportable;
             byte b = (byte)recordToSecurityLevel;
-            _header = new Header(new Integer32(messageId), new Integer32(0xFFE3), new OctetString(new byte[] { b }), new Integer32(3));
+            _header = new Header(new Integer32(messageId), new Integer32(0xFFE3), new OctetString(new[] { b }), new Integer32(3));
             _parameters = new SecurityParameters(OctetString.Empty, new Integer32(0), new Integer32(0), userName, OctetString.Empty, OctetString.Empty);
             GetResponsePdu pdu = new GetResponsePdu(
                 requestId,

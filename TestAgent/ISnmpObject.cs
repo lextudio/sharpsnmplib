@@ -6,10 +6,7 @@ namespace Lextm.SharpSnmpLib.Agent
 {
     internal interface ISnmpObject
     {
-        ISnmpData Get();
-
-        void Set(ISnmpData data);
-
+        ISnmpData Data { get; set; }
         ObjectIdentifier Id { get; }
     }
 }

@@ -1,35 +1,29 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Lextm.SharpSnmpLib.Agent
 {
     internal class SysName: IScalarObject
     {
         private static readonly ObjectIdentifier _id = new ObjectIdentifier("1.3.6.1.2.1.1.5.0");
-        private OctetString _name = OctetString.Empty;
-        
-        public ISnmpData Get()
-        {
-            return new OctetString(Environment.MachineName);
-        }
+        private OctetString _name = new OctetString(Environment.MachineName);
 
-        public void Set(ISnmpData data)
+        public ISnmpData Data
         {
-            if (data.TypeCode != SnmpType.OctetString)
+            get { return _name; }
+            set
             {
-                throw new ArgumentException("data");
+                if (value.TypeCode != SnmpType.OctetString)
+                {
+                    throw new ArgumentException("data");
+                }
+
+                _name = (OctetString)value;
             }
-            
-            _name = (OctetString)data;
         }
 
         public ObjectIdentifier Id
         {
-            get
-            {
-                return _id;
-            }
+            get { return _id; }
         }
     }
 }

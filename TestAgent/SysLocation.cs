@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Lextm.SharpSnmpLib.Agent
 {
@@ -8,28 +6,24 @@ namespace Lextm.SharpSnmpLib.Agent
     {
         private static readonly ObjectIdentifier _id = new ObjectIdentifier("1.3.6.1.2.1.1.6.0");
         private OctetString _location = OctetString.Empty;
-        
-        public ISnmpData Get()
-        {
-            return OctetString.Empty;
-        }
 
-        public void Set(ISnmpData data)
+        public ISnmpData Data
         {
-            if (data.TypeCode != SnmpType.OctetString)
+            get { return _location; }
+            set
             {
-                throw new ArgumentException("data");
+                if (value.TypeCode != SnmpType.OctetString)
+                {
+                    throw new ArgumentException("value");
+                }
+
+                _location = (OctetString)value;
             }
-            
-            _location = (OctetString)data;
         }
 
         public ObjectIdentifier Id
         {
-            get
-            {
-                return _id;
-            }
+            get { return _id; }
         }
     }
 }

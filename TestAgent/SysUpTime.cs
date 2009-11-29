@@ -1,29 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Lextm.SharpSnmpLib.Agent
 {
     internal class SysUpTime : IScalarObject
     {
         private static readonly ObjectIdentifier _id = new ObjectIdentifier("1.3.6.1.2.1.1.3.0");
+        private readonly ISnmpData _upTime = new TimeTicks((uint)Environment.TickCount / 10);
 
-        public ISnmpData Get()
+        public ISnmpData Data
         {
-            return new TimeTicks((uint)Environment.TickCount / 10);
-        }
-
-        public void Set(ISnmpData data)
-        {
-            throw new ReadOnlyException();
+            get { return _upTime; }
+            set { throw new AccessFailureException(); }
         }
 
         public ObjectIdentifier Id
         {
-            get
-            {
-                return _id;
-            }
+            get { return _id; }
         }
     }
 }
