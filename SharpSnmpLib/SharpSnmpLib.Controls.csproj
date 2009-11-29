@@ -77,9 +77,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="Messaging\Agent.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Messaging\AgentFoundEventArgs.cs" />
     <Compile Include="Messaging\AgentV1ListenerAdapter.cs" />
     <Compile Include="Messaging\AgentV2ListenerAdapter.cs" />
@@ -109,10 +106,6 @@
     <Compile Include="Messaging\WalkMode.cs" />
     <None Include="license.txt" />
     <None Include="sharpsnmplib.snk" />
-    <EmbeddedResource Include="Messaging\Agent.resx">
-      <DependentUpon>Agent.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Messaging\Listener.resx">
       <DependentUpon>Listener.cs</DependentUpon>
     </EmbeddedResource>

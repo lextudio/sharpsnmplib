@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Lextm.SharpSnmpLib.Security
+﻿namespace Lextm.SharpSnmpLib.Security
 {
     /// <summary>
     /// Privacy provider interface.

@@ -24,15 +24,15 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Agent address.
         /// </summary>
-        private IPAddress agentAddress;
+        private IPAddress _agentAddress;
         
         /// <summary>
         /// Agent address.
         /// </summary>
         protected IPAddress Agent
         {
-            get { return agentAddress; }
-            set { agentAddress = value; }
+            get { return _agentAddress; }
+            set { _agentAddress = value; }
         }
         
         /// <summary>
@@ -71,7 +71,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("info");
             }
             
-            agentAddress = (IPAddress)info.GetValue("Agent", typeof(IPAddress));
+            _agentAddress = (IPAddress)info.GetValue("Agent", typeof(IPAddress));
         }
         
         /// <summary>
@@ -83,7 +83,7 @@ namespace Lextm.SharpSnmpLib
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);
-            info.AddValue("Agent", agentAddress);
+            info.AddValue("Agent", _agentAddress);
         }
 #endif
         /// <summary>
@@ -114,7 +114,7 @@ namespace Lextm.SharpSnmpLib
         public static SharpOperationException Create(string message, IPAddress agent)
         {
             SharpOperationException ex = new SharpOperationException(message);
-            ex.agentAddress = agent;
+            ex._agentAddress = agent;
             return ex;
         }
     }

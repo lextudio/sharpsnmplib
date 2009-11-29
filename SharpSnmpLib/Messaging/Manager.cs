@@ -304,7 +304,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public override string ToString()
         {
-            return "SNMP manager: timeout: " + Timeout.ToString(CultureInfo.InvariantCulture) + "; version: " + DefaultVersion.ToString();
+            return "SNMP manager: timeout: " + Timeout.ToString(CultureInfo.InvariantCulture) + "; version: " + DefaultVersion;
         }         
         
         private void InitializeComponent()

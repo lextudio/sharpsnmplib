@@ -28,7 +28,7 @@ namespace Lextm.SharpSnmpLib.Compiler
             InitializeComponent();
         }
         
-        private void lvFiles_DoubleClick(object sender, EventArgs e)
+        private void LvFilesDoubleClick(object sender, EventArgs e)
         {
             string fileName = lvFiles.SelectedItems[0].Tag.ToString();
             OpenDocument(fileName);
@@ -95,12 +95,12 @@ namespace Lextm.SharpSnmpLib.Compiler
             set { _compiler = value; }
         }
 
-        private void actDelete_Update(object sender, EventArgs e)
+        private void ActDeleteUpdate(object sender, EventArgs e)
         {
             actDelete.Enabled = lvFiles.Items.Count > 0;
         }
 
-        private void actDelete_Execute(object sender, EventArgs e)
+        private void ActDeleteExecute(object sender, EventArgs e)
         {
             string fileName = lvFiles.SelectedItems[0].Tag.ToString();
             lvFiles.SelectedItems[0].Remove();

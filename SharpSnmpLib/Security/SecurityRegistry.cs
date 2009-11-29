@@ -8,7 +8,7 @@ namespace Lextm.SharpSnmpLib.Security
     /// </summary>
     public sealed class UserRegistry
     {
-        private IDictionary<OctetString, ProviderPair> _users = new Dictionary<OctetString, ProviderPair>();
+        private readonly IDictionary<OctetString, ProviderPair> _users = new Dictionary<OctetString, ProviderPair>();
 
         /// <summary>
         /// Adds the specified user name.

@@ -54,7 +54,7 @@ namespace Lextm.SharpSnmpLib.Compiler
 			this.txtMessages.Size = new System.Drawing.Size(511, 154);
 			this.txtMessages.TabIndex = 0;
 			this.txtMessages.Text = "";
-			this.txtMessages.MouseUp += new System.Windows.Forms.MouseEventHandler(this.txtMessages_MouseUp);
+			this.txtMessages.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TxtMessagesMouseUp);
 			// 
 			// contextOuputMenu
 			// 
@@ -79,7 +79,7 @@ namespace Lextm.SharpSnmpLib.Compiler
 			// 
 			this.actClear.Text = "Clear";
 			this.actClear.ToolTipText = "Clear Panel";
-			this.actClear.Execute += new System.EventHandler(this.actClear_Execute);
+			this.actClear.Execute += new System.EventHandler(this.ActClearExecute);
 			// 
 			// OutputPanel
 			// 

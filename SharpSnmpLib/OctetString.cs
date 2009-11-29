@@ -78,7 +78,7 @@ namespace Lextm.SharpSnmpLib
             return _raw;
         }        
         
-        private static OctetString empty = new OctetString(string.Empty, Encoding.GetEncoding("ASCII"));
+        private static readonly OctetString EmptyString = new OctetString(string.Empty, Encoding.GetEncoding("ASCII"));
 
         /// <summary>
         /// Gets the empty string.
@@ -86,7 +86,7 @@ namespace Lextm.SharpSnmpLib
         /// <value>The empty.</value>
         public static OctetString Empty 
         {
-            get { return empty; }
+            get { return EmptyString; }
         }        
         
         /// <summary>
@@ -256,7 +256,7 @@ namespace Lextm.SharpSnmpLib
         }
         #endif 
         // IMPORTANT: use GetEncoding because of CF.
-        private static Encoding defaultEncoding = Encoding.GetEncoding("ASCII");
+        private static Encoding _defaultEncoding = Encoding.GetEncoding("ASCII");
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OctetString"/> class.
@@ -280,8 +280,8 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         public static Encoding DefaultEncoding
         {
-            get { return defaultEncoding; }
-            set { defaultEncoding = value; }
+            get { return _defaultEncoding; }
+            set { _defaultEncoding = value; }
         }
         
         /// <summary>

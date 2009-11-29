@@ -183,6 +183,10 @@ namespace Lextm.SharpSnmpLib.Messaging
             get { return _version; }
         }
 
+        /// <summary>
+        /// Gets the request ID.
+        /// </summary>
+        /// <value>The request ID.</value>
         public int RequestId
         {
             get { return _scope.Pdu.RequestId.ToInt32(); }

@@ -43,12 +43,12 @@ namespace Lextm.SharpSnmpLib.Compiler
             set { _compiler = value; }
         }
 
-        private void actExit_Execute(object sender, EventArgs e)
+        private void ActExitExecute(object sender, EventArgs e)
         {
             Close();
         }
 
-        private void actOpen_Execute(object sender, EventArgs e)
+        private void ActOpenExecute(object sender, EventArgs e)
         {
             if (openFileDialog1.ShowDialog() != DialogResult.OK)
             {
@@ -61,7 +61,7 @@ namespace Lextm.SharpSnmpLib.Compiler
             dockPanel1.ResumeLayout(true, true);
         }
 
-        private void actCompile_Execute(object sender, EventArgs e)
+        private void ActCompileExecute(object sender, EventArgs e)
         {
             IDockContent content = dockPanel1.ActiveDocument;
             DocumentPanel doc = (DocumentPanel)content;
@@ -72,22 +72,22 @@ namespace Lextm.SharpSnmpLib.Compiler
             Compiler.Compile(fileList);
         }
 
-        private void actCompile_Update(object sender, EventArgs e)
+        private void ActCompileUpdate(object sender, EventArgs e)
         {
             actCompile.Enabled = dockPanel1.ActiveDocument != null && !Compiler.IsBusy;
         }
 
-        private void actCompileAll_Execute(object sender, EventArgs e)
+        private void ActCompileAllExecute(object sender, EventArgs e)
         {
             Compiler.CompileAll();
         }
 
-        private void actCompileAll_Update(object sender, EventArgs e)
+        private void ActCompileAllUpdate(object sender, EventArgs e)
         {
             actCompileAll.Enabled = dockPanel1.DocumentsCount > 0 && !Compiler.IsBusy;
         }
         
-        private void actAbout_Execute(object sender, EventArgs e)
+        private void ActAboutExecute(object sender, EventArgs e)
         {
             Help.ShowHelp(this, "http://sharpsnmplib.codeplex.com");
         }

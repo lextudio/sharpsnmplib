@@ -7,7 +7,7 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public sealed class Scope : ISegment
     {
-        private ISnmpPdu _pdu;
+        private readonly ISnmpPdu _pdu;
         private OctetString _contextEngineId;
         private OctetString _contextName;
 

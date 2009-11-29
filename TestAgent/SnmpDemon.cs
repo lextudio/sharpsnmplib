@@ -42,6 +42,7 @@ namespace Lextm.SharpSnmpLib.Agent
             if (!_guard.Allow(message))
             {
                 // TODO: handle error here.
+                // return TRAP saying authenticationFailed.
                 watch.Stop();
                 return;
             }

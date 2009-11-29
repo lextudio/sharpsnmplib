@@ -22,21 +22,21 @@ namespace Lextm.SharpSnmpLib.Compiler
     internal class CompilerCore : IDisposable
     {
         private readonly IList<string> _files = new List<string>();
-        private readonly BackgroundWorker worker = new BackgroundWorker();
+        private readonly BackgroundWorker _worker = new BackgroundWorker();
         private Parser _parser;
         private Assembler _assembler;
 
         public CompilerCore()
         {
-            worker.WorkerReportsProgress = true;
-            worker.WorkerSupportsCancellation = true;
-            worker.DoWork += backgroundWorker1_DoWork;
-            worker.RunWorkerCompleted += backgroundWorker1_RunWorkerCompleted;
+            _worker.WorkerReportsProgress = true;
+            _worker.WorkerSupportsCancellation = true;
+            _worker.DoWork += BackgroundWorker1DoWork;
+            _worker.RunWorkerCompleted += BackgroundWorker1RunWorkerCompleted;
         }
 
         public bool IsBusy
         {
-            get { return worker.IsBusy; }
+            get { return _worker.IsBusy; }
         }
 
         [Dependency]
@@ -59,10 +59,10 @@ namespace Lextm.SharpSnmpLib.Compiler
 
         public void Compile(IEnumerable<string> files)
         {
-            worker.RunWorkerAsync(files);
+            _worker.RunWorkerAsync(files);
         }
         
-        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        private void BackgroundWorker1DoWork(object sender, DoWorkEventArgs e)
         {
             IEnumerable<string> docs = (IEnumerable<string>)e.Argument;
             IEnumerable<SharpMibException> errors;
@@ -76,7 +76,7 @@ namespace Lextm.SharpSnmpLib.Compiler
             Assembler.Assemble(modules);
         }
 
-        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void BackgroundWorker1RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             TraceSource source = new TraceSource("Compiler");
             if (e.Result != null)
@@ -135,7 +135,7 @@ namespace Lextm.SharpSnmpLib.Compiler
         
         public void Dispose()
         {
-            worker.Dispose();
+            _worker.Dispose();
             GC.SuppressFinalize(this);
         }
     }

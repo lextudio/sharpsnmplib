@@ -226,7 +226,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <value>The request ID.</value>
         public int RequestId
         {
-            get { throw new NotImplementedException(); }
+            get { throw new InvalidOperationException(); }
         }
 
         /// <summary>

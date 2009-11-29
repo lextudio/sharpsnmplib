@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Lextm.SharpSnmpLib.Security
 {
@@ -10,7 +8,7 @@ namespace Lextm.SharpSnmpLib.Security
     public sealed class SaltGenerator
     {
         private long _salt = Convert.ToInt64(new Random().Next(1, int.MaxValue));
-        private object root = new object();
+        private readonly object _root = new object();
 
         /// <summary>
         /// Get next salt Int64 value. Used internally to encrypt data.
@@ -18,7 +16,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// <returns>Random Int64 value</returns>
         private long NextSalt()
         {
-            lock (root)
+            lock (_root)
             {
                 if (_salt == long.MaxValue)
                 {

@@ -7,11 +7,11 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public sealed class Header : ISegment
     {
-        private Integer32 _messageId;
-        private Integer32 _maxSize;
-        private OctetString _flags;
-        private Integer32 _securityModel;
-        private static Header empty = new Header();
+        private readonly Integer32 _messageId;
+        private readonly Integer32 _maxSize;
+        private readonly OctetString _flags;
+        private readonly Integer32 _securityModel;
+        private static readonly Header EmptyHeader = new Header();
         
         private Header()
         {            
@@ -55,7 +55,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         public static Header Empty
         {
-            get { return empty; }
+            get { return EmptyHeader; }
         }
 
         /// <summary>

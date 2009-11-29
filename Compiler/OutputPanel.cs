@@ -38,12 +38,12 @@ namespace Lextm.SharpSnmpLib.Compiler
             txtMessages.ScrollToCaret();
         }
 
-        private void actClear_Execute(object sender, EventArgs e)
+        private void ActClearExecute(object sender, EventArgs e)
         {
             txtMessages.Clear();
         }
 
-        private void txtMessages_MouseUp(object sender, MouseEventArgs e)
+        private void TxtMessagesMouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {

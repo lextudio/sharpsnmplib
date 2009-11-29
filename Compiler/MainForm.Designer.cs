@@ -277,37 +277,37 @@ namespace Lextm.SharpSnmpLib.Compiler
 			this.actExit.Image = global::Lextm.SharpSnmpLib.Compiler.Properties.Resources.system_log_out;
 			this.actExit.Text = "E&xit";
 			this.actExit.ToolTipText = "Exit Browser";
-			this.actExit.Execute += new System.EventHandler(this.actExit_Execute);
+			this.actExit.Execute += new System.EventHandler(this.ActExitExecute);
 			// 
 			// actOpen
 			// 
 			this.actOpen.Image = global::Lextm.SharpSnmpLib.Compiler.Properties.Resources.document_open;
 			this.actOpen.Text = "Open";
 			this.actOpen.ToolTipText = "Open";
-			this.actOpen.Execute += new System.EventHandler(this.actOpen_Execute);
+			this.actOpen.Execute += new System.EventHandler(this.ActOpenExecute);
 			// 
 			// actCompile
 			// 
 			this.actCompile.Image = global::Lextm.SharpSnmpLib.Compiler.Properties.Resources.go_bottom;
 			this.actCompile.Text = "Compile";
 			this.actCompile.ToolTipText = "Compile";
-			this.actCompile.Update += new System.EventHandler(this.actCompile_Update);
-			this.actCompile.Execute += new System.EventHandler(this.actCompile_Execute);
+			this.actCompile.Update += new System.EventHandler(this.ActCompileUpdate);
+			this.actCompile.Execute += new System.EventHandler(this.ActCompileExecute);
 			// 
 			// actCompileAll
 			// 
 			this.actCompileAll.Image = global::Lextm.SharpSnmpLib.Compiler.Properties.Resources.go_jump;
 			this.actCompileAll.Text = "Compile All";
 			this.actCompileAll.ToolTipText = "Compile All";
-			this.actCompileAll.Update += new System.EventHandler(this.actCompileAll_Update);
-			this.actCompileAll.Execute += new System.EventHandler(this.actCompileAll_Execute);
+			this.actCompileAll.Update += new System.EventHandler(this.ActCompileAllUpdate);
+			this.actCompileAll.Execute += new System.EventHandler(this.ActCompileAllExecute);
 			// 
 			// actAbout
 			// 
 			this.actAbout.Image = global::Lextm.SharpSnmpLib.Compiler.Properties.Resources.help_browser;
 			this.actAbout.Text = "About";
 			this.actAbout.ToolTipText = "About #SNMP";
-			this.actAbout.Execute += new System.EventHandler(this.actAbout_Execute);
+			this.actAbout.Execute += new System.EventHandler(this.ActAboutExecute);
 			// 
 			// openFileDialog1
 			// 

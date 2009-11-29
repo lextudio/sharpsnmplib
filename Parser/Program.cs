@@ -23,22 +23,22 @@ namespace Lextm.SharpSnmpLib.Parser
             string folder = null;
             string pattern = null;
             string root = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "modules");
-            const string FolderSwitch = "/folder:";
-            const string PatternSwitch = "/pattern:";
-            const string RootSwitch = "/root:";
+            const string folderSwitch = "/folder:";
+            const string patternSwitch = "/pattern:";
+            const string rootSwitch = "/root:";
             foreach (string arg in args)
             {
-                if (arg.StartsWith(FolderSwitch))
+                if (arg.StartsWith(folderSwitch))
                 {
-                    folder = arg.Substring(FolderSwitch.Length);
+                    folder = arg.Substring(folderSwitch.Length);
                 }
-                else if (arg.StartsWith(PatternSwitch))
+                else if (arg.StartsWith(patternSwitch))
                 {
-                    pattern = arg.Substring(PatternSwitch.Length);
+                    pattern = arg.Substring(patternSwitch.Length);
                 }
-                else if (arg.StartsWith(RootSwitch))
+                else if (arg.StartsWith(rootSwitch))
                 {
-                    root = arg.Substring(RootSwitch.Length);
+                    root = arg.Substring(rootSwitch.Length);
                 }
                 else
                 {
@@ -51,7 +51,7 @@ namespace Lextm.SharpSnmpLib.Parser
                 files.AddRange(Directory.GetFiles(folder, pattern));
             }
             
-            Console.WriteLine(files.Count.ToString() + " files found");
+            Console.WriteLine(files.Count + " files found");
             Stopwatch watch = new Stopwatch();
             watch.Start();
             
@@ -60,7 +60,7 @@ namespace Lextm.SharpSnmpLib.Parser
             IEnumerable<IModule> modules = parser.ParseToModules(files, out errors);
             Assembler assembler = new Assembler(root);
             assembler.Assemble(modules);
-            Console.WriteLine("total time " + watch.ElapsedMilliseconds.ToString());
+            Console.WriteLine("total time " + watch.ElapsedMilliseconds);
             watch.Stop();
             Console.WriteLine("Press any key to exit");
             Console.Read();

@@ -1,7 +1,4 @@
-﻿using Lextm.SharpSnmpLib;
-using Lextm.SharpSnmpLib.Messaging;
-
-/*
+﻿/*
  * Created by SharpDevelop.
  * User: lexli
  * Date: 2008-12-14

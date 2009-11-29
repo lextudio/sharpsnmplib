@@ -18,10 +18,7 @@ namespace Lextm.SharpSnmpLib
         /// PDU section.
         /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu")]
-        ISnmpPdu Pdu 
-        {
-            get;
-        }
+        ISnmpPdu Pdu { get; }
 
         /// <summary>
         /// Gets the parameters.

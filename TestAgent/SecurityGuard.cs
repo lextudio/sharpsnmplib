@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Lextm.SharpSnmpLib.Agent
+﻿namespace Lextm.SharpSnmpLib.Agent
 {
     internal class SecurityGuard
     {
-        private VersionCode _version;
-        private OctetString _get;
-        private OctetString _set;
+        private readonly VersionCode _version;
+        private readonly OctetString _get;
+        private readonly OctetString _set;
 
         public SecurityGuard(VersionCode version, OctetString getCommunity, OctetString setCommunity)
         {

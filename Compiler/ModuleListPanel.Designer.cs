@@ -71,7 +71,7 @@ namespace Lextm.SharpSnmpLib.Compiler
         	this.listView1.TabIndex = 0;
         	this.listView1.UseCompatibleStateImageBehavior = false;
         	this.listView1.View = System.Windows.Forms.View.Details;
-        	this.listView1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listView1_MouseDown);
+        	this.listView1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ListView1MouseDown);
         	// 
         	// chName
         	// 
@@ -87,8 +87,8 @@ namespace Lextm.SharpSnmpLib.Compiler
         	// 
         	this.actRemove.Text = "Remove";
         	this.actRemove.ToolTipText = "Remove";
-        	this.actRemove.Update += new System.EventHandler(this.actRemove_Update);
-        	this.actRemove.Execute += new System.EventHandler(this.actRemove_Execute);
+        	this.actRemove.Update += new System.EventHandler(this.ActRemoveUpdate);
+        	this.actRemove.Execute += new System.EventHandler(this.ActRemoveExecute);
         	// 
         	// removeToolStripMenuItem
         	// 

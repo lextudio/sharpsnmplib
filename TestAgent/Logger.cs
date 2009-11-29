@@ -10,25 +10,25 @@ namespace Lextm.SharpSnmpLib.Agent
 {
     internal class Logger : IDisposable
     {
-        private StreamWriter writer;
+        private readonly StreamWriter _writer;
 
         public Logger()
         {
-            writer = new StreamWriter(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "snmp.log"), true);
-            writer.WriteLine(string.Format(CultureInfo.InvariantCulture, "#Software: #SNMP Suite {0}", Assembly.GetEntryAssembly().GetName().Version));
-            writer.WriteLine("#Version: 1.0");
-            writer.WriteLine(string.Format(CultureInfo.InvariantCulture, "#Date: {0}", DateTime.UtcNow));
-            writer.WriteLine("#Fields: date time s-ip cs-method cs-uri-stem s-port cs-username c-ip sc-status time-taken");
-            writer.AutoFlush = true;
+            _writer = new StreamWriter(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "snmp.log"), true);
+            _writer.WriteLine(string.Format(CultureInfo.InvariantCulture, "#Software: #SNMP Suite {0}", Assembly.GetEntryAssembly().GetName().Version));
+            _writer.WriteLine("#Version: 1.0");
+            _writer.WriteLine(string.Format(CultureInfo.InvariantCulture, "#Date: {0}", DateTime.UtcNow));
+            _writer.WriteLine("#Fields: date time s-ip cs-method cs-uri-stem s-port cs-username c-ip sc-status time-taken");
+            _writer.AutoFlush = true;
         }
 
         public void Log(int port, SnmpType type, ISnmpMessage message, IPEndPoint client, long time)
         {
-            writer.WriteLine(string.Format(CultureInfo.InvariantCulture, "{0} {1} {2} {3} {4} {5} {6} {7} {8}", 
+            _writer.WriteLine(string.Format(CultureInfo.InvariantCulture, "{0} {1} {2} {3} {4} {5} {6} {7} {8}", 
                 DateTime.UtcNow, "-", type, GetStem(message.Pdu.Variables), port, message.Parameters.UserName, client.Address, message.Pdu.ErrorStatus.ToErrorCode(), time));
         }
 
-        private static string GetStem(IList<Variable> list)
+        private static string GetStem(IEnumerable<Variable> list)
         {
             StringBuilder result = new StringBuilder();
             foreach (Variable v in list)
@@ -46,7 +46,7 @@ namespace Lextm.SharpSnmpLib.Agent
 
         public void Dispose()
         {
-            writer.Dispose();
+            _writer.Dispose();
         }
     }
 }

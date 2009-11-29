@@ -42,7 +42,7 @@ namespace Lextm.SharpSnmpLib.Browser
             if (rbInteger.Checked && !Valid())
             {
                 MessageBox.Show("The new value is not an Integer", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                this.DialogResult = DialogResult.Cancel;
+                DialogResult = DialogResult.Cancel;
             }
             else
             {

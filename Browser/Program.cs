@@ -20,11 +20,11 @@ namespace Lextm.SharpSnmpLib.Browser
 	/// </summary>
 	internal static class Program
 	{
-	    private static IUnityContainer container;
+	    private static IUnityContainer _container;
 
 	    internal static IUnityContainer Container
 	    {
-	        get { return container; }
+	        get { return _container; }
 	    }
 
 	    /// <summary>
@@ -33,7 +33,12 @@ namespace Lextm.SharpSnmpLib.Browser
 		[STAThread]
 		private static void Main(string[] args)
 		{
-            container = new UnityContainer();
+            if (args.Length > 0)
+            {
+                return;
+            }
+
+            _container = new UnityContainer();
             UnityConfigurationSection section
               = (UnityConfigurationSection)ConfigurationManager.GetSection("unity");
             section.Containers.Default.Configure(Container);

@@ -9,7 +9,7 @@ namespace Lextm.SharpSnmpLib.Security
     /// </summary>
     public class MD5AuthenticationProvider : IAuthenticationProvider
     {
-        private byte[] _password;
+        private readonly byte[] _password;
         private const int DigestLength = 12;
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace Lextm.SharpSnmpLib.Security
 
             using (MD5 md5 = new MD5CryptoServiceProvider())
             {
-                int password_index = 0;
+                int passwordIndex = 0;
                 int count = 0;
                 /* Use while loop until we've done 1 Megabyte */
                 byte[] sourceBuffer = new byte[1048576];
@@ -65,7 +65,7 @@ namespace Lextm.SharpSnmpLib.Security
                     {
                         // Take the next octet of the password, wrapping
                         // to the beginning of the password as necessary.
-                        buf[i] = password[password_index++ % password.Length];
+                        buf[i] = password[passwordIndex++ % password.Length];
                     }
                     
                     Array.Copy(buf, 0, sourceBuffer, count, buf.Length);

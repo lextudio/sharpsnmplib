@@ -8,11 +8,8 @@
  */
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Net;
 using System.Windows.Forms;
-
-using Lextm.SharpSnmpLib;
 using Lextm.SharpSnmpLib.Messaging;
 
 namespace Lextm.SharpSnmpLib.Agent
@@ -22,7 +19,7 @@ namespace Lextm.SharpSnmpLib.Agent
 	/// </summary>
 	public partial class MainForm : Form
 	{
-	    private SnmpDemon _demon = new SnmpDemon();
+	    private readonly SnmpDemon _demon = new SnmpDemon();
 	    
 		public MainForm()
 		{

@@ -86,7 +86,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             byte b = (byte)recordToSecurityLevel;
             
             // TODO: define more constants.
-            _header = new Header(new Integer32(messageId), new Integer32(0xFFE3), new OctetString(new byte[] { b }), new Integer32(3));
+            _header = new Header(new Integer32(messageId), new Integer32(0xFFE3), new OctetString(new[] { b }), new Integer32(3));
             _parameters = new SecurityParameters(
                 report.Parameters.EngineId,
                 report.Parameters.EngineBoots,

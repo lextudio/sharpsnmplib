@@ -10,15 +10,15 @@ namespace Lextm.SharpSnmpLib.Browser
 {
     internal partial class FormTable : Form
     {
-        private readonly IDefinition definition;
-        private bool columnCountSet;
-        private Thread refreshThread;
+        private readonly IDefinition _definition;
+        private bool _columnCountSet;
+        private Thread _refreshThread;
 
         delegate void RefreshTableCallback(IList<Variable> list);
 
         public FormTable(IDefinition def)
         {
-            definition = def;
+            _definition = def;
             InitializeComponent();
             cbColumnDisplay.SelectedIndex = 1;
         }
@@ -44,12 +44,12 @@ namespace Lextm.SharpSnmpLib.Browser
 
                 dataGridTable.ColumnCount = (list.Count / dataGridTable.RowCount);
                 dataGridTable.RowCount = 0;
-                columnCountSet = true;
+                _columnCountSet = true;
 
                 //
                 // Create the column headers
                 //
-                createColumns();
+                CreateColumns();
 
                 //
                 // Fill in the tree itself
@@ -74,23 +74,23 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             if(checkBoxRefresh.Checked)
             {
-                refreshThread = new Thread(RefreshTable);
-                refreshThread.Start();
+                _refreshThread = new Thread(RefreshTable);
+                _refreshThread.Start();
             }
             else
             {
-                refreshThread.Abort();
+                _refreshThread.Abort();
             }
         }
 
-        internal void createColumns()
+        internal void CreateColumns()
         {
             int x = 0;
             
             //
             // We want to move into the table object here
             //
-            IEnumerator<IDefinition> i = definition.Children.GetEnumerator();
+            IEnumerator<IDefinition> i = _definition.Children.GetEnumerator();
             i.Reset();
             i.MoveNext();
             IDefinition d = i.Current;
@@ -104,9 +104,9 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void cbColumnDisplay_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (columnCountSet)
+            if (_columnCountSet)
             {
-                createColumns();
+                CreateColumns();
                 Refresh();
             }
         }
@@ -114,6 +114,7 @@ namespace Lextm.SharpSnmpLib.Browser
         public void RefreshTable()
         {
             // TODO: how to get rid of infinite loop?
+            // will use WatchDog class to optimize this.
             while (true)
             {
                 IProfileRegistry registry = Program.Container.Resolve<IProfileRegistry>();
@@ -125,7 +126,7 @@ namespace Lextm.SharpSnmpLib.Browser
                 AgentProfile prof = registry.DefaultProfile;
                 IList<Variable> list = new List<Variable>();
                 Thread.Sleep(Convert.ToInt32(textBoxRefresh.Text, CultureInfo.CurrentCulture) * 1000);
-                int rows = Messenger.Walk(prof.VersionCode, prof.Agent, new OctetString(prof.GetCommunity), new ObjectIdentifier(definition.GetNumericalForm()), list, 1000, WalkMode.WithinSubtree);
+                int rows = Messenger.Walk(prof.VersionCode, prof.Agent, new OctetString(prof.GetCommunity), new ObjectIdentifier(_definition.GetNumericalForm()), list, 1000, WalkMode.WithinSubtree);
 
                 SetRows(rows);
                 PopulateGrid(list);
@@ -146,9 +147,9 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void FormTable_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (refreshThread != null)
+            if (_refreshThread != null)
             {
-                refreshThread.Abort();
+                _refreshThread.Abort();
             }
         }
     }

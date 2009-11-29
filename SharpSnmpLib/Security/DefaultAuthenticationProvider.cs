@@ -11,7 +11,7 @@ namespace Lextm.SharpSnmpLib.Security
         {
         }
 
-        private static object root = new object();
+        private static readonly object Root = new object();
         private static IAuthenticationProvider _instance;
 
         /// <summary>
@@ -22,7 +22,7 @@ namespace Lextm.SharpSnmpLib.Security
         {
             get
             {
-                lock (root)
+                lock (Root)
                 {
                     if (_instance == null)
                     {

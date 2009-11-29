@@ -15,7 +15,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             get
             {
-                lock (root)
+                lock (_root)
                 {
                     if (_salt == int.MaxValue)
                     {
@@ -31,7 +31,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
         }
 
-        private object root = new object();
+        private readonly object _root = new object();
         private int _salt = new Random().Next(1, int.MaxValue);
     }
 }

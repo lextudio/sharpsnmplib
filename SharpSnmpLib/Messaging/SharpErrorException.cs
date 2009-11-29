@@ -91,7 +91,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                     CultureInfo.InvariantCulture,
                     "{0}. {1}. Index: {2}. Errored Object ID: {3}",
                     Message,
-                    Body.Pdu.ErrorStatus.ToErrorCode().ToString(),
+                    Body.Pdu.ErrorStatus.ToErrorCode(),
                     index.ToString(CultureInfo.InvariantCulture),
                     index == 0 ? null : Body.Pdu.Variables[index - 1].Id);
             }

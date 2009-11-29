@@ -10,9 +10,9 @@ namespace Lextm.SharpSnmpLib.Security
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "DES", Justification = "definition")]
     public class DESPrivacyProvider : IPrivacyProvider
     {
-        private IAuthenticationProvider _auth;
-        private SaltGenerator _salt = new SaltGenerator();
-        private OctetString _phrase;
+        private readonly IAuthenticationProvider _auth;
+        private readonly SaltGenerator _salt = new SaltGenerator();
+        private readonly OctetString _phrase;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DESPrivacyProvider"/> class.

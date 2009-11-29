@@ -4,7 +4,7 @@ namespace Lextm.SharpSnmpLib.Agent
 {
     internal class SysLocation : IScalarObject
     {
-        private static readonly ObjectIdentifier _id = new ObjectIdentifier("1.3.6.1.2.1.1.6.0");
+        private static readonly ObjectIdentifier Identifier = new ObjectIdentifier("1.3.6.1.2.1.1.6.0");
         private OctetString _location = OctetString.Empty;
 
         public ISnmpData Data
@@ -23,7 +23,7 @@ namespace Lextm.SharpSnmpLib.Agent
 
         public ObjectIdentifier Id
         {
-            get { return _id; }
+            get { return Identifier; }
         }
     }
 }

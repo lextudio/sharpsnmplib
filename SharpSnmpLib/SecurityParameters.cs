@@ -51,7 +51,7 @@ namespace Lextm.SharpSnmpLib
             set { _engineTime = value; }
         }
 
-        private OctetString _userName;
+        private readonly OctetString _userName;
 
         /// <summary>
         /// Gets the user name.
@@ -74,7 +74,7 @@ namespace Lextm.SharpSnmpLib
             set { _authenticationParameters = value; }
         }
 
-        private OctetString _privacyParameters;
+        private readonly OctetString _privacyParameters;
 
         /// <summary>
         /// Gets the privacy parameters.

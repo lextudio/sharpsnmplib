@@ -12,7 +12,7 @@ namespace Lextm.SharpSnmpLib.Security
         }
 
         private static IPrivacyProvider _instance;
-        private static object root = new object();
+        private static readonly object Root = new object();
 
         /// <summary>
         /// Gets the instance.
@@ -22,7 +22,7 @@ namespace Lextm.SharpSnmpLib.Security
         {
             get
             {
-                lock (root)
+                lock (Root)
                 {
                     if (_instance == null)
                     {

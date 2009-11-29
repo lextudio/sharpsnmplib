@@ -60,7 +60,7 @@ namespace Lextm.SharpSnmpLib.Compiler
 			this.lvFiles.TabIndex = 0;
 			this.lvFiles.UseCompatibleStateImageBehavior = false;
 			this.lvFiles.View = System.Windows.Forms.View.Details;
-			this.lvFiles.DoubleClick += new System.EventHandler(this.lvFiles_DoubleClick);
+			this.lvFiles.DoubleClick += new System.EventHandler(this.LvFilesDoubleClick);
 			// 
 			// chFileName
 			// 
@@ -90,8 +90,8 @@ namespace Lextm.SharpSnmpLib.Compiler
 			// 
 			this.actDelete.Text = "Delete";
 			this.actDelete.ToolTipText = "Delete";
-			this.actDelete.Update += new System.EventHandler(this.actDelete_Update);
-			this.actDelete.Execute += new System.EventHandler(this.actDelete_Execute);
+			this.actDelete.Update += new System.EventHandler(this.ActDeleteUpdate);
+			this.actDelete.Execute += new System.EventHandler(this.ActDeleteExecute);
 			// 
 			// DocumentListPanel
 			// 

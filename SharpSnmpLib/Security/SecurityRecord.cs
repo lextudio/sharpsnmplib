@@ -7,9 +7,9 @@ namespace Lextm.SharpSnmpLib.Security
     /// </summary>
     public sealed class ProviderPair
     {
-        private IAuthenticationProvider _authentication;
-        private static Lextm.SharpSnmpLib.Security.ProviderPair _default = new ProviderPair(DefaultAuthenticationProvider.Instance, DefaultPrivacyProvider.Instance);
-        private IPrivacyProvider _privacy;
+        private readonly IAuthenticationProvider _authentication;
+        private static readonly ProviderPair DefaultPair = new ProviderPair(DefaultAuthenticationProvider.Instance, DefaultPrivacyProvider.Instance);
+        private readonly IPrivacyProvider _privacy;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProviderPair"/> class.
@@ -76,11 +76,11 @@ namespace Lextm.SharpSnmpLib.Security
         /// Gets the default.
         /// </summary>
         /// <value>The default.</value>
-        public static Lextm.SharpSnmpLib.Security.ProviderPair Default
+        public static ProviderPair Default
         {
             get
             {
-                return _default;
+                return DefaultPair;
             }
         }
     }

@@ -6,7 +6,6 @@
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
-using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
@@ -20,7 +19,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// </summary>
     public sealed class Discovery
     {
-        private GetRequestMessage discovery;
+        private readonly GetRequestMessage _discovery;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Discovery"/> class.
@@ -29,12 +28,12 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="messageId">The message id.</param>
         public Discovery(int requestId, int messageId)
         {
-            discovery = new GetRequestMessage(
+            _discovery = new GetRequestMessage(
                 VersionCode.V3,
                 new Header(
                     new Integer32(messageId),
                     new Integer32(0xFFE3),
-                    new OctetString(new byte[] { (byte)Levels.Reportable }),
+                    new OctetString(new[] { (byte)Levels.Reportable }),
                     new Integer32(3)),
                 new SecurityParameters(
                     OctetString.Empty,
@@ -60,7 +59,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             using (Socket socket = Helper.GetSocket(receiver))
             {
-                return (ReportMessage)MessageFactory.GetResponse(receiver, discovery.ToBytes(), discovery.RequestId, timeout, new UserRegistry(), socket);
+                return (ReportMessage)MessageFactory.GetResponse(receiver, _discovery.ToBytes(), _discovery.RequestId, timeout, new UserRegistry(), socket);
             }
         }
     }

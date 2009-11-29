@@ -159,9 +159,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
         private static ISnmpMessage ParseMessage(int first, Stream stream, UserRegistry registry)
         {
-            ISnmpData array;
-            array = DataFactory.CreateSnmpData(first, stream);
-            
+            ISnmpData array = DataFactory.CreateSnmpData(first, stream);
             if (array == null)
             {
                 return null;
@@ -205,7 +203,6 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
             
             ISnmpPdu pdu = scope.Pdu;
-
             switch (pdu.TypeCode)
             {
                 case SnmpType.TrapV1Pdu:

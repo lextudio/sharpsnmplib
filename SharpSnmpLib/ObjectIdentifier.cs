@@ -321,9 +321,33 @@ namespace Lextm.SharpSnmpLib
             return _hashcode;
         }
 
+        /// <summary>
+        /// Compares the current instance with another object of the same type and returns an integer that indicates whether the current instance precedes, follows, or occurs in the same position in the sort order as the other object.
+        /// </summary>
+        /// <param name="obj">An object to compare with this instance.</param>
+        /// <returns>
+        /// A 32-bit signed integer that indicates the relative order of the objects being compared. The return value has these meanings:
+        /// Value
+        /// Meaning
+        /// Less than zero
+        /// This instance is less than <paramref name="obj"/>.
+        /// Zero
+        /// This instance is equal to <paramref name="obj"/>.
+        /// Greater than zero
+        /// This instance is greater than <paramref name="obj"/>.
+        /// </returns>
+        /// <exception cref="T:System.ArgumentException">
+        ///     <paramref name="obj"/> is not the same type as this instance.
+        /// </exception>
         public int CompareTo(object obj)
         {
-            return CompareTo((ObjectIdentifier)obj);
+            ObjectIdentifier o = obj as ObjectIdentifier;
+            if (o == null)
+            {
+                throw new ArgumentException("obj is not the same type as this instance", "obj");
+            }
+
+            return CompareTo(o);
         }
 
         /// <summary>
@@ -350,6 +374,16 @@ namespace Lextm.SharpSnmpLib
             return !(left == right);
         }
         
+        public static bool operator >(ObjectIdentifier left, ObjectIdentifier right)
+        {
+            return left.CompareTo(right) > 0;
+        }
+        
+        public static bool operator <(ObjectIdentifier left, ObjectIdentifier right)
+        {
+            return left.CompareTo(right) < 0;
+        }
+        
         /// <summary>
         /// The comparison.
         /// </summary>
@@ -372,7 +406,6 @@ namespace Lextm.SharpSnmpLib
             }
 
             return left.CompareTo(right) == 0;
-            //return ByteTool.CompareArray(left._oid, right._oid);
         }
     }
 }

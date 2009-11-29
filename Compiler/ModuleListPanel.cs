@@ -85,7 +85,7 @@ namespace Lextm.SharpSnmpLib.Compiler
             set { _assembler = value; }
         }
 
-        private void actRemove_Execute(object sender, EventArgs e)
+        private void ActRemoveExecute(object sender, EventArgs e)
         {
             string mib = listView1.SelectedItems[0].Text;
             File.Delete(Path.Combine(Assembler.Folder, mib + ".module"));
@@ -96,12 +96,12 @@ namespace Lextm.SharpSnmpLib.Compiler
             Assembler.Tree.Remove(mib);
         }
 
-        private void actRemove_Update(object sender, EventArgs e)
+        private void ActRemoveUpdate(object sender, EventArgs e)
         {
             actRemove.Enabled = listView1.SelectedItems.Count > 0;
         }
 
-        private void listView1_MouseDown(object sender, MouseEventArgs e)
+        private void ListView1MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {

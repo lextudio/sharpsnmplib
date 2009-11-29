@@ -18,10 +18,10 @@ namespace Lextm.SharpSnmpLib.Security
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "AES", Justification = "definition")]
     public class AESPrivacyProvider : IPrivacyProvider
     {
-        private IAuthenticationProvider _auth;
-        private SaltGenerator _salt = new SaltGenerator();
-        private OctetString _phrase;
-        private int _keyBytes = 16;
+        private readonly IAuthenticationProvider _auth;
+        private readonly SaltGenerator _salt = new SaltGenerator();
+        private readonly OctetString _phrase;
+        private const int KeyBytes = 16;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AESPrivacyProvider"/> class.
@@ -46,7 +46,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// in the USM header to store this information</param>
         /// <returns>Encrypted byte array</returns>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when encryption key is null or length of the encryption key is too short.</exception>
-        public byte[] Encrypt(byte[] unencryptedData, byte[] key, int engineBoots, int engineTime, byte[] privacyParameters)
+        public static byte[] Encrypt(byte[] unencryptedData, byte[] key, int engineBoots, int engineTime, byte[] privacyParameters)
         {
             // check the key before doing anything else
             if (key == null)
@@ -54,7 +54,7 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentNullException("key");
             }
             
-            if (key.Length < _keyBytes)
+            if (key.Length < KeyBytes)
             {
                 throw new ArgumentOutOfRangeException("key", "Invalid key length");
             }
@@ -82,7 +82,7 @@ namespace Lextm.SharpSnmpLib.Security
             Array.Copy(privacyParameters, 0, iv, 8, 8);
 
             Rijndael rm = new RijndaelManaged();
-            rm.KeySize = _keyBytes * 8;
+            rm.KeySize = KeyBytes * 8;
             rm.FeedbackSize = 128;
             rm.BlockSize = 128;
             
@@ -122,14 +122,14 @@ namespace Lextm.SharpSnmpLib.Security
         /// <exception cref="ArgumentNullException">Thrown when encrypted data is null or length == 0</exception>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when encryption key length is less then 32 byte or if privacy parameters
         /// argument is null or length other then 8 bytes</exception>
-        public byte[] Decrypt(byte[] encryptedData, byte[] key, int engineBoots, int engineTime, byte[] privacyParameters)
+        public static byte[] Decrypt(byte[] encryptedData, byte[] key, int engineBoots, int engineTime, byte[] privacyParameters)
         {
             if (key == null)
             {
                 throw new ArgumentNullException("key");
             }
                 
-            if (key.Length < _keyBytes)
+            if (key.Length < KeyBytes)
             {
                 throw new ArgumentOutOfRangeException("key", "Invalid key length");
             }
@@ -149,19 +149,19 @@ namespace Lextm.SharpSnmpLib.Security
             // Copy salt value to the iv array
             Array.Copy(privacyParameters, 0, iv, 8, 8);
 
-            byte[] decryptedData = null;
+            byte[] decryptedData;
 
             // now do CFB decryption of the encrypted data
             Rijndael rm = Rijndael.Create();
-            rm.KeySize = _keyBytes * 8;
+            rm.KeySize = KeyBytes * 8;
             rm.FeedbackSize = 128;
             rm.BlockSize = 128;
             rm.Padding = PaddingMode.Zeros;
             rm.Mode = CipherMode.CFB;
-            if (key.Length > _keyBytes)
+            if (key.Length > KeyBytes)
             {
-                byte[] normKey = new byte[_keyBytes];
-                Array.Copy(key, normKey, _keyBytes);
+                byte[] normKey = new byte[KeyBytes];
+                Array.Copy(key, normKey, KeyBytes);
                 rm.Key = normKey;
             }
             else
@@ -170,11 +170,10 @@ namespace Lextm.SharpSnmpLib.Security
             }
             
             rm.IV = iv;
-            System.Security.Cryptography.ICryptoTransform cryptor;
-            cryptor = rm.CreateDecryptor();
+            ICryptoTransform cryptor = rm.CreateDecryptor();
 
             // We need to make sure that cryptedData is a collection of 128 byte blocks
-            if ((encryptedData.Length % _keyBytes) != 0)
+            if ((encryptedData.Length % KeyBytes) != 0)
             {
                 byte[] buffer = new byte[encryptedData.Length];
                 Array.Copy(encryptedData, 0, buffer, 0, encryptedData.Length);
