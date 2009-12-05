@@ -4,7 +4,6 @@ using System.Text;
 using System.IO;
 using System.Reflection;
 using System.Globalization;
-using System.Net;
 
 namespace Lextm.SharpSnmpLib.Agent
 {
@@ -22,10 +21,21 @@ namespace Lextm.SharpSnmpLib.Agent
             _writer.AutoFlush = true;
         }
 
-        public void Log(int port, SnmpType type, ISnmpMessage message, IPEndPoint client, long time)
+        public void Log(SnmpContext context)
         {
-            _writer.WriteLine(string.Format(CultureInfo.InvariantCulture, "{0} {1} {2} {3} {4} {5} {6} {7} {8}", 
-                DateTime.UtcNow, "-", type, GetStem(message.Pdu.Variables), port, message.Parameters.UserName, client.Address, message.Pdu.ErrorStatus.ToErrorCode(), time));
+            TimeSpan timeTaken = DateTime.Now.Subtract(context.CreatedTime);
+            _writer.WriteLine(string.Format(CultureInfo.InvariantCulture, "{0} {1} {2} {3} {4} {5} {6} {7} {8}",
+                                            DateTime.UtcNow,
+                                            "-",
+                                            context.Request.Pdu.TypeCode,
+                                            GetStem(context.Request.Pdu.Variables),
+                                            context.Listener.Port,
+                                            context.Request.Parameters.UserName,
+                                            context.Sender.Address,
+                                            (context.Response == null)
+                                                ? "-"
+                                                : context.Response.Pdu.ErrorStatus.ToErrorCode().ToString(),
+                                            timeTaken));
         }
 
         private static string GetStem(IEnumerable<Variable> list)

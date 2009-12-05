@@ -5,23 +5,21 @@ namespace Lextm.SharpSnmpLib.Agent
 {
     internal class GetMessageHandler : IMessageHandler
     {
-        private readonly ISnmpMessage _message;
         private readonly ObjectStore _store;
         private ErrorCode _status;
         private int _index;
 
-        public GetMessageHandler(ISnmpMessage message, ObjectStore store)
+        public GetMessageHandler(ObjectStore store)
         {
             _store = store;
-            _message = message;
         }
 
-        public IList<Variable> Handle()
+        public IList<Variable> Handle(ISnmpMessage message)
         {
             _status = ErrorCode.NoError;
             _index = 0;
             IList<Variable> result = new List<Variable>();
-            foreach (Variable v in _message.Pdu.Variables)
+            foreach (Variable v in message.Pdu.Variables)
             {
                 _index++;
                 ISnmpObject obj = _store.GetObject(v.Id);

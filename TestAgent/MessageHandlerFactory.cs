@@ -7,6 +7,8 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 
+using System.Collections.Generic;
+
 namespace Lextm.SharpSnmpLib.Agent
 {
     /// <summary>
@@ -14,26 +16,28 @@ namespace Lextm.SharpSnmpLib.Agent
     /// </summary>
     internal class MessageHandlerFactory
     {
-        private readonly ObjectStore _store;
-        
+        private readonly IList<HandlerMapping> _mappings = new List<HandlerMapping>();
+        private readonly NullMessageHandler _nullHandler = new NullMessageHandler(null);
+
         public MessageHandlerFactory(ObjectStore store)
         {
-            _store = store;
+            _mappings.Add(new HandlerMapping("v1", "GET", "Lextm.SharpSnmpLib.Agent.GetMessageHandler", "snmpd", store));
+            _mappings.Add(new HandlerMapping("v1", "SET", "Lextm.SharpSnmpLib.Agent.SetMessageHandler", "snmpd", store));
+            _mappings.Add(new HandlerMapping("v1", "SET", "Lextm.SharpSnmpLib.Agent.GetNextMessageHandler", "snmpd", store));
+            _mappings.Add(new HandlerMapping("*", "*", "Lextm.SharpSnmpLib.Agent.NullMessageHandler", "snmpd", store));
         }
         
         public IMessageHandler GetHandler(ISnmpMessage message)
         {
-            switch (message.Pdu.TypeCode)
+            foreach (HandlerMapping mapping in _mappings)
             {
-                case SnmpType.GetRequestPdu:
-                    return new GetMessageHandler(message, _store);
-                case SnmpType.GetNextRequestPdu:
-                    return new GetNextMessageHandler(message, _store);
-                case SnmpType.SetRequestPdu:
-                    return new SetMessageHandler(message, _store);
-                default:
-                    return null;
+                if (mapping.CanHandle(message))
+                {
+                    return mapping.Handler;
+                }
             }
+
+            return _nullHandler;
         }
     }
 }

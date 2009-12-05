@@ -76,11 +76,16 @@
   <ItemGroup>
     <Compile Include="GetMessageHandler.cs" />
     <Compile Include="GetNextMessageHandler.cs" />
+    <Compile Include="HandlerMapping.cs" />
     <Compile Include="IMessageHandler.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="MessageHandlerFactory.cs" />
     <Compile Include="AccessFailureException.cs" />
+    <Compile Include="NullMessageHandler.cs" />
     <Compile Include="SetMessageHandler.cs" />
+    <Compile Include="SnmpApplication.cs" />
+    <Compile Include="SnmpApplicationFactory.cs" />
+    <Compile Include="SnmpContext.cs" />
     <Compile Include="SnmpDemon.cs" />
     <Compile Include="SysLocation.cs" />
     <Compile Include="SysName.cs" />

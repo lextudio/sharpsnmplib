@@ -12,7 +12,7 @@ namespace Lextm.SharpSnmpLib.Agent
 {
 	internal interface IMessageHandler
 	{
-		IList<Variable> Handle();
+		IList<Variable> Handle(ISnmpMessage message);
 		ErrorCode ErrorStatus { get; }
 		int ErrorIndex { get; }
 	}
