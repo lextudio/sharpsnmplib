@@ -6,9 +6,7 @@
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
-using System;
 using System.Windows.Forms;
-
 using Lextm.SharpSnmpLib.Messaging;
 
 namespace Lextm.SharpSnmpLib.Agent
@@ -19,7 +17,11 @@ namespace Lextm.SharpSnmpLib.Agent
     public class SnmpDemon
     {
         private readonly Listener _listener = new Listener();
-        private readonly SnmpApplicationFactory _factory = new SnmpApplicationFactory(); 
+        private readonly SnmpApplicationFactory _factory = new SnmpApplicationFactory(new Logger(), new ObjectStore(),
+                                                                                      new Version1MembershipProvider(
+                                                                                          VersionCode.V1,
+                                                                                          new OctetString("public"),
+                                                                                          new OctetString("public")));
 
         public SnmpDemon()
         {

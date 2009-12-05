@@ -79,6 +79,7 @@
     <Compile Include="HandlerMapping.cs" />
     <Compile Include="IMessageHandler.cs" />
     <Compile Include="Logger.cs" />
+    <Compile Include="MembershipProvider.cs" />
     <Compile Include="MessageHandlerFactory.cs" />
     <Compile Include="AccessFailureException.cs" />
     <Compile Include="NullMessageHandler.cs" />
@@ -102,7 +103,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScalarObject.cs" />
-    <Compile Include="SecurityGuard.cs" />
+    <Compile Include="Version1MembershipProvider.cs" />
     <Compile Include="SysDescr.cs" />
     <Compile Include="SysObjectId.cs" />
   </ItemGroup>

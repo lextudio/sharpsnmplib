@@ -8,15 +8,16 @@ namespace Lextm.SharpSnmpLib.Agent
         private readonly SnmpContext _context;
         private bool _finished;
         private readonly Logger _logger;
-        private readonly SecurityGuard _guard = new SecurityGuard(VersionCode.V1, new OctetString("public"), new OctetString("public"));
+        private readonly Version1MembershipProvider _provider;
         private readonly MessageHandlerFactory _factory;
         private IMessageHandler _handler;
         private const int MaxResponseSize = 1500;
         private readonly ObjectStore _store;
 
-        public SnmpApplication(SnmpContext context, Logger logger, ObjectStore store)
+        public SnmpApplication(SnmpContext context, Logger logger, ObjectStore store, Version1MembershipProvider provider)
         {
             _context = context;
+            _provider = provider;
             _logger = logger;
             _store = store;
             _factory = new MessageHandlerFactory(_store);
@@ -89,7 +90,7 @@ namespace Lextm.SharpSnmpLib.Agent
 
         private void OnAuthenticateRequest()
         {
-            if (!_guard.Allow(Context.Request))
+            if (!_provider.AuthenticateRequest(Context.Request))
             {
                 // TODO: handle error here.
                 // return TRAP saying authenticationFailed.
