@@ -23,11 +23,11 @@ namespace Lextm.SharpSnmpLib.Agent
                 string name = assembly.GetName().Name;
                 if (string.Compare(name, assemblyName, StringComparison.OrdinalIgnoreCase) == 0)
                 {
-                    return (IMessageHandler) Activator.CreateInstance(assembly.GetType(type), new object[] {store});
+                    return (IMessageHandler) Activator.CreateInstance(assembly.GetType(type));
                 }
             }
 
-            return (IMessageHandler)Activator.CreateInstance(AppDomain.CurrentDomain.Load(assemblyName).GetType(type), new object[] { store });
+            return (IMessageHandler)Activator.CreateInstance(AppDomain.CurrentDomain.Load(assemblyName).GetType(type));
         }
 
         public IMessageHandler Handler

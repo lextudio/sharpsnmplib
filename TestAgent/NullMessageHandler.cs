@@ -4,10 +4,7 @@ namespace Lextm.SharpSnmpLib.Agent
 {
     internal class NullMessageHandler : IMessageHandler
     {
-        public NullMessageHandler(ObjectStore store)
-        {}
-
-        public IList<Variable> Handle(ISnmpMessage message)
+        public IList<Variable> Handle(ISnmpMessage message, ObjectStore _store)
         {
             return null;
         }

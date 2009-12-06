@@ -48,7 +48,7 @@ namespace Lextm.SharpSnmpLib.Agent
                 return;
             }
 
-            IList<Variable> result = _handler.Handle(Context.Request);
+            IList<Variable> result = _handler.Handle(Context.Request, _store);
 
             GetResponseMessage response;
             if (_handler.ErrorStatus == ErrorCode.NoError)
@@ -81,7 +81,7 @@ namespace Lextm.SharpSnmpLib.Agent
             }
 
             _handler = _factory.GetHandler(Context.Request);
-            if (_handler == null)
+            if (_handler.GetType() == typeof(NullMessageHandler))
             {
                 // TODO: handle error here.
                 CompleteRequest();

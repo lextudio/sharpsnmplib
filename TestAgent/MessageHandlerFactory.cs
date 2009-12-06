@@ -17,13 +17,13 @@ namespace Lextm.SharpSnmpLib.Agent
     internal class MessageHandlerFactory
     {
         private readonly IList<HandlerMapping> _mappings = new List<HandlerMapping>();
-        private readonly NullMessageHandler _nullHandler = new NullMessageHandler(null);
+        private readonly NullMessageHandler _nullHandler = new NullMessageHandler();
 
         public MessageHandlerFactory(ObjectStore store)
         {
             _mappings.Add(new HandlerMapping("v1", "GET", "Lextm.SharpSnmpLib.Agent.GetMessageHandler", "snmpd", store));
             _mappings.Add(new HandlerMapping("v1", "SET", "Lextm.SharpSnmpLib.Agent.SetMessageHandler", "snmpd", store));
-            _mappings.Add(new HandlerMapping("v1", "SET", "Lextm.SharpSnmpLib.Agent.GetNextMessageHandler", "snmpd", store));
+            _mappings.Add(new HandlerMapping("v1", "GETNEXT", "Lextm.SharpSnmpLib.Agent.GetNextMessageHandler", "snmpd", store));
             _mappings.Add(new HandlerMapping("*", "*", "Lextm.SharpSnmpLib.Agent.NullMessageHandler", "snmpd", store));
         }
         
