@@ -242,6 +242,15 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
         }
 
+        /// <summary>
+        /// Closes this <see cref="Listener"/> instance and releases all resources.
+        /// </summary>
+        public void Close()
+        {
+            Stop();
+            Dispose();
+        }
+
         #if ASYNC
         private void AsyncBeginReceive(object dummy)
         {

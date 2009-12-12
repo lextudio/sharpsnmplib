@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using Microsoft.Practices.Unity;
 
 namespace Lextm.SharpSnmpLib.Agent
 {
@@ -9,14 +10,21 @@ namespace Lextm.SharpSnmpLib.Agent
         private readonly string _command;
         private readonly IMessageHandler _handler;
 
-        public HandlerMapping(string version, string command, string type, string assembly, ObjectStore store)
+        public HandlerMapping(string version, string command, IMessageHandler handler)
         {
             _version = version;
             _command = command;
-            _handler = CreateMessageHandler(assembly, type, store);
+            _handler = handler;
         }
 
-        private static IMessageHandler CreateMessageHandler(string assemblyName, string type, ObjectStore store)
+        public HandlerMapping(string version, string command, string type, string assembly)
+        {
+            _version = version;
+            _command = command;
+            _handler = CreateMessageHandler(assembly, type);
+        }
+
+        private static IMessageHandler CreateMessageHandler(string assemblyName, string type)
         {
             foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
             {

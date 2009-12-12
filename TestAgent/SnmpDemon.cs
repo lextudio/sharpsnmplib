@@ -14,17 +14,14 @@ namespace Lextm.SharpSnmpLib.Agent
     /// <summary>
     /// Description of SnmpDemon.
     /// </summary>
-    public class SnmpDemon
+    internal class SnmpDemon
     {
         private readonly Listener _listener = new Listener();
-        private readonly SnmpApplicationFactory _factory = new SnmpApplicationFactory(new Logger(), new ObjectStore(),
-                                                                                      new Version1MembershipProvider(
-                                                                                          VersionCode.V1,
-                                                                                          new OctetString("public"),
-                                                                                          new OctetString("public")));
+        private readonly SnmpApplicationFactory _factory;
 
-        public SnmpDemon()
+        public SnmpDemon(SnmpApplicationFactory factory)
         {
+            _factory = factory;
             _listener.ExceptionRaised += ListenerExceptionRaised;
             _listener.MessageReceived += ListenerMessageReceived;
         }

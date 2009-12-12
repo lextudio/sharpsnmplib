@@ -5,27 +5,29 @@ namespace Lextm.SharpSnmpLib.Agent
 {
     internal class SnmpApplication
     {
-        private readonly SnmpContext _context;
+        private SnmpContext _context;
         private bool _finished;
         private readonly Logger _logger;
-        private readonly Version1MembershipProvider _provider;
+        private readonly IMembershipProvider _provider;
         private readonly MessageHandlerFactory _factory;
         private IMessageHandler _handler;
         private const int MaxResponseSize = 1500;
         private readonly ObjectStore _store;
+        private SnmpApplicationFactory _owner;
 
-        public SnmpApplication(SnmpContext context, Logger logger, ObjectStore store, Version1MembershipProvider provider)
+        public SnmpApplication(SnmpApplicationFactory owner, Logger logger, ObjectStore store, IMembershipProvider provider, MessageHandlerFactory factory)
         {
-            _context = context;
+            _owner = owner;
             _provider = provider;
             _logger = logger;
             _store = store;
-            _factory = new MessageHandlerFactory(_store);
+            _factory = factory;
         }
 
         public SnmpContext Context
         {
             get { return _context; }
+            set { _context = value; }
         }
 
         public bool RequestFinished
@@ -39,6 +41,7 @@ namespace Lextm.SharpSnmpLib.Agent
             OnMapRequestHandler();
             OnRequestHandlerExecute();
             OnLogRequest();
+            _owner.Reuse(this);
         }
 
         private void OnRequestHandlerExecute()

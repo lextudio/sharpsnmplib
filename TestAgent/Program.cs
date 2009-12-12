@@ -8,6 +8,9 @@
  */
 using System;
 using System.Windows.Forms;
+using Microsoft.Practices.Unity;
+using Microsoft.Practices.Unity.Configuration;
+using System.Configuration;
 
 namespace Lextm.SharpSnmpLib.Agent
 {
@@ -16,6 +19,12 @@ namespace Lextm.SharpSnmpLib.Agent
     /// </summary>
     internal sealed class Program
     {
+        private static IUnityContainer _container;
+
+        internal static IUnityContainer Container
+        {
+            get { return _container; }
+        }
         /// <summary>
         /// Program entry point.
         /// </summary>
@@ -26,6 +35,11 @@ namespace Lextm.SharpSnmpLib.Agent
             {
                 return;
             }
+
+            _container = new UnityContainer();
+            UnityConfigurationSection section
+              = (UnityConfigurationSection)ConfigurationManager.GetSection("unity");
+            section.Containers.Default.Configure(Container);
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

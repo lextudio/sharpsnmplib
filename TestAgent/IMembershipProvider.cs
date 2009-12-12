@@ -1,6 +1,6 @@
 namespace Lextm.SharpSnmpLib.Agent
 {
-    internal interface MembershipProvider
+    internal interface IMembershipProvider
     {
         bool AuthenticateRequest(ISnmpMessage message);
     }
