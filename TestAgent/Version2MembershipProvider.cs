@@ -1,12 +1,12 @@
 ﻿namespace Lextm.SharpSnmpLib.Agent
 {
-    internal class Version1MembershipProvider : IMembershipProvider
+    internal class Version2MembershipProvider : IMembershipProvider
     {
-        private const VersionCode Version = VersionCode.V1;
+        private const VersionCode Version = VersionCode.V2;
         private readonly OctetString _get;
         private readonly OctetString _set;
 
-        public Version1MembershipProvider(OctetString getCommunity, OctetString setCommunity)
+        public Version2MembershipProvider(OctetString getCommunity, OctetString setCommunity)
         {
             _get = getCommunity;
             _set = setCommunity;
