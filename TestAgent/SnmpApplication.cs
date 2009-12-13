@@ -13,7 +13,7 @@ namespace Lextm.SharpSnmpLib.Agent
         private IMessageHandler _handler;
         private const int MaxResponseSize = 1500;
         private readonly ObjectStore _store;
-        private SnmpApplicationFactory _owner;
+        private readonly SnmpApplicationFactory _owner;
 
         public SnmpApplication(SnmpApplicationFactory owner, Logger logger, ObjectStore store, IMembershipProvider provider, MessageHandlerFactory factory)
         {
@@ -23,11 +23,17 @@ namespace Lextm.SharpSnmpLib.Agent
             _store = store;
             _factory = factory;
         }
+        
+        public void Init(SnmpContext context)
+        {
+            _context = context;
+            _finished = false;
+            _handler = null;
+        }
 
         public SnmpContext Context
         {
             get { return _context; }
-            set { _context = value; }
         }
 
         public bool RequestFinished

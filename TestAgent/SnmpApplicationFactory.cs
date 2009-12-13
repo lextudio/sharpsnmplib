@@ -34,7 +34,7 @@ namespace Lextm.SharpSnmpLib.Agent
                 result = new SnmpApplication(this, _logger, _store, _membershipProvider, _factory);              
             }
 
-            result.Context = context;
+            result.Init(context);
             return result;
         }
 
