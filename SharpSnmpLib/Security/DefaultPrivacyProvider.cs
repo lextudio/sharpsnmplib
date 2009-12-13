@@ -55,6 +55,11 @@ namespace Lextm.SharpSnmpLib.Security
         /// <returns></returns>
         public ISnmpData Encrypt(ISnmpData data, SecurityParameters parameters)
         {
+            if (data == null)
+            {
+                throw new ArgumentNullException("data");
+            }
+            
             if (data.TypeCode == SnmpType.Sequence || data is ISnmpPdu)
             {
                 return data;                

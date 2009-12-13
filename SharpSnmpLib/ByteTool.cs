@@ -28,6 +28,11 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public static byte[] ConvertDecimal(string description)
         {
+            if (description == null)
+            {
+                throw new ArgumentNullException("description");
+            }
+            
             List<byte> result = new List<byte>();
             string[] content = description.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             foreach (string part in content)

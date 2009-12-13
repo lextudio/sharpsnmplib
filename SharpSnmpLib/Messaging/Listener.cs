@@ -30,7 +30,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Error message for non IP v6 OS.
         /// </summary>
-        public const string ErrorIPv6NotSupported = "cannot use IP v6 as the OS does not support it";
+        public static readonly string ErrorIPv6NotSupported = "cannot use IP v6 as the OS does not support it";
         private readonly IPEndPoint _defaultEndPoint = new IPEndPoint(IPAddress.Any, Defaultport);
         private Socket _socket;
         private int _bufferSize;
@@ -141,6 +141,11 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="receiver">Receiver.</param>
         public void SendResponse(ISnmpMessage response, EndPoint receiver)
         {
+            if (response == null)
+            {
+                throw new ArgumentNullException("response");
+            }
+            
             if (_socket != null)
             {
                 byte[] buffer = response.ToBytes();
@@ -389,7 +394,6 @@ namespace Lextm.SharpSnmpLib.Messaging
                 return;
             }
 
-            // TODO: use listener adapters instead in future versions.
             foreach (ISnmpMessage message in messages)
             {
                 EventHandler<MessageReceivedEventArgs<ISnmpMessage>> handler = MessageReceived;
@@ -398,6 +402,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                     handler(this, new MessageReceivedEventArgs<ISnmpMessage>(param.Sender, message));
                 }
                 
+                // TODO: will remove listener adapters in the future.
                 foreach (IListenerAdapter adapter in _adapters)
                 {
                     adapter.Process(message, param.Sender);
@@ -432,7 +437,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         
         /// <summary>
         /// Adapters.
-        /// </summary>
+        /// </summary>      
         public IList<IListenerAdapter> Adapters
         {
             get { return _adapters; }

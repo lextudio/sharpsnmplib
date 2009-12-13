@@ -13,6 +13,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// <summary>
     /// Description of AgentV3ListenerAdapter.
     /// </summary>
+    [Obsolete("Use SnmpDemon instead.")]
     public class AgentV3ListenerAdapter : IListenerAdapter
     {
         /// <summary>

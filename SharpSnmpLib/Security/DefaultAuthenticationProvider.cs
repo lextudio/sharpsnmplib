@@ -63,7 +63,8 @@ namespace Lextm.SharpSnmpLib.Security
         /// <returns></returns>
         public byte[] PasswordToKey(byte[] password, byte[] engineId)
         {
-            throw new NotImplementedException();
+            // IMPORTANT: this is not needed in this class.
+            return null;
         }
 
         #endregion

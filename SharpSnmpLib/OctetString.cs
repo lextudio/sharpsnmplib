@@ -33,12 +33,40 @@ namespace Lextm.SharpSnmpLib
         private readonly byte[] _raw;
         private readonly Encoding _encoding;
         
+        // IMPORTANT: use GetEncoding because of CF.
+        private static Encoding _defaultEncoding = Encoding.GetEncoding("ASCII");
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OctetString"/> class.
+        /// </summary>
+        /// <param name="length">The length.</param>
+        /// <param name="stream">The stream.</param>
+        public OctetString(int length, Stream stream)
+        {
+            if (stream == null)
+            {
+                throw new ArgumentNullException("stream");
+            }
+
+            _raw = new byte[length];
+            stream.Read(_raw, 0, length);
+            _encoding = DefaultEncoding;
+        }
+        
         /// <summary>
         /// Creates an <see cref="OctetString"/> from raw bytes.
         /// </summary>
         /// <param name="raw">Raw bytes</param>
-        public OctetString(byte[] raw) : this(raw.Length, new MemoryStream(raw))
+        public OctetString(byte[] raw)
         {
+            if (raw == null)
+            {
+                throw new ArgumentNullException("raw");
+            }
+            
+            _raw = new byte[raw.Length];
+            Array.Copy(raw, _raw, raw.Length);
+            _encoding = DefaultEncoding;
         }
         
         /// <summary>
@@ -255,26 +283,7 @@ namespace Lextm.SharpSnmpLib
             return new PhysicalAddress(_raw);
         }
         #endif 
-        // IMPORTANT: use GetEncoding because of CF.
-        private static Encoding _defaultEncoding = Encoding.GetEncoding("ASCII");
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="OctetString"/> class.
-        /// </summary>
-        /// <param name="length">The length.</param>
-        /// <param name="stream">The stream.</param>
-        public OctetString(int length, Stream stream)
-        {
-            if (stream == null)
-            {
-                throw new ArgumentNullException("stream");
-            }
-
-            _raw = new byte[length];
-            stream.Read(_raw, 0, length);
-            _encoding = DefaultEncoding;
-        }
-
+        
         /// <summary>
         /// Default encoding of <see cref="OctetString"/> type.
         /// </summary>

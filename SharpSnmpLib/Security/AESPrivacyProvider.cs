@@ -81,33 +81,37 @@ namespace Lextm.SharpSnmpLib.Security
             // Copy salt value to the iv array
             Array.Copy(privacyParameters, 0, iv, 8, 8);
 
-            Rijndael rm = new RijndaelManaged();
-            rm.KeySize = KeyBytes * 8;
-            rm.FeedbackSize = 128;
-            rm.BlockSize = 128;
-            
-            // we have to use Zeros padding otherwise we get encrypt buffer size exception
-            rm.Padding = PaddingMode.Zeros;
-            rm.Mode = CipherMode.CFB;
-            
-            // make sure we have the right key length
-            byte[] pkey = new byte[MinimumKeyLength];
-            Array.Copy(key, pkey, MinimumKeyLength);
-            rm.Key = pkey;
-            rm.IV = iv;
-            ICryptoTransform cryptor = rm.CreateEncryptor();
-            byte[] encryptedData = cryptor.TransformFinalBlock(unencryptedData, 0, unencryptedData.Length);
-            
-            // check if encrypted data is the same length as source data
-            if (encryptedData.Length != unencryptedData.Length)
+            using (Rijndael rm = new RijndaelManaged())
             {
-                // cut out the padding
-                byte[] tmp = new byte[unencryptedData.Length];
-                Array.Copy(encryptedData, tmp, unencryptedData.Length);
-                return tmp;
+                rm.KeySize = KeyBytes * 8;
+                rm.FeedbackSize = 128;
+                rm.BlockSize = 128;
+                
+                // we have to use Zeros padding otherwise we get encrypt buffer size exception
+                rm.Padding = PaddingMode.Zeros;
+                rm.Mode = CipherMode.CFB;
+                
+                // make sure we have the right key length
+                byte[] pkey = new byte[MinimumKeyLength];
+                Array.Copy(key, pkey, MinimumKeyLength);
+                rm.Key = pkey;
+                rm.IV = iv;
+                using (ICryptoTransform cryptor = rm.CreateEncryptor())
+                {
+                    byte[] encryptedData = cryptor.TransformFinalBlock(unencryptedData, 0, unencryptedData.Length);
+                    
+                    // check if encrypted data is the same length as source data
+                    if (encryptedData.Length != unencryptedData.Length)
+                    {
+                        // cut out the padding
+                        byte[] tmp = new byte[unencryptedData.Length];
+                        Array.Copy(encryptedData, tmp, unencryptedData.Length);
+                        return tmp;
+                    }
+                    
+                    return encryptedData;
+                }
             }
-            
-            return encryptedData;
         }
 
         /// <summary>
@@ -128,7 +132,12 @@ namespace Lextm.SharpSnmpLib.Security
             {
                 throw new ArgumentNullException("key");
             }
-                
+            
+            if (encryptedData == null)
+            {
+                throw new ArgumentNullException("encryptedData");
+            }
+            
             if (key.Length < KeyBytes)
             {
                 throw new ArgumentOutOfRangeException("key", "Invalid key length");
@@ -152,46 +161,49 @@ namespace Lextm.SharpSnmpLib.Security
             byte[] decryptedData;
 
             // now do CFB decryption of the encrypted data
-            Rijndael rm = Rijndael.Create();
-            rm.KeySize = KeyBytes * 8;
-            rm.FeedbackSize = 128;
-            rm.BlockSize = 128;
-            rm.Padding = PaddingMode.Zeros;
-            rm.Mode = CipherMode.CFB;
-            if (key.Length > KeyBytes)
+            using (Rijndael rm = Rijndael.Create())
             {
-                byte[] normKey = new byte[KeyBytes];
-                Array.Copy(key, normKey, KeyBytes);
-                rm.Key = normKey;
-            }
-            else
-            {
-                rm.Key = key;
-            }
-            
-            rm.IV = iv;
-            ICryptoTransform cryptor = rm.CreateDecryptor();
-
-            // We need to make sure that cryptedData is a collection of 128 byte blocks
-            if ((encryptedData.Length % KeyBytes) != 0)
-            {
-                byte[] buffer = new byte[encryptedData.Length];
-                Array.Copy(encryptedData, 0, buffer, 0, encryptedData.Length);
-                int div = (int)Math.Floor(buffer.Length / (double)16);
-                int newLength = (div + 1) * 16;
-                byte[] decryptBuffer = new byte[newLength];
-                Array.Copy(buffer, decryptBuffer, buffer.Length);
-                decryptedData = cryptor.TransformFinalBlock(decryptBuffer, 0, decryptBuffer.Length);
+                rm.KeySize = KeyBytes * 8;
+                rm.FeedbackSize = 128;
+                rm.BlockSize = 128;
+                rm.Padding = PaddingMode.Zeros;
+                rm.Mode = CipherMode.CFB;
+                if (key.Length > KeyBytes)
+                {
+                    byte[] normKey = new byte[KeyBytes];
+                    Array.Copy(key, normKey, KeyBytes);
+                    rm.Key = normKey;
+                }
+                else
+                {
+                    rm.Key = key;
+                }
                 
-                // now remove padding
-                Array.Copy(decryptedData, buffer, encryptedData.Length);
-                return buffer;
-            }
+                rm.IV = iv;
+                using (ICryptoTransform cryptor = rm.CreateDecryptor())
+                {
+                    // We need to make sure that cryptedData is a collection of 128 byte blocks
+                    if ((encryptedData.Length % KeyBytes) != 0)
+                    {
+                        byte[] buffer = new byte[encryptedData.Length];
+                        Array.Copy(encryptedData, 0, buffer, 0, encryptedData.Length);
+                        int div = (int)Math.Floor(buffer.Length / (double)16);
+                        int newLength = (div + 1) * 16;
+                        byte[] decryptBuffer = new byte[newLength];
+                        Array.Copy(buffer, decryptBuffer, buffer.Length);
+                        decryptedData = cryptor.TransformFinalBlock(decryptBuffer, 0, decryptBuffer.Length);
+                        
+                        // now remove padding
+                        Array.Copy(decryptedData, buffer, encryptedData.Length);
+                        return buffer;
+                    }
 
-            decryptedData = cryptor.TransformFinalBlock(encryptedData, 0, encryptedData.Length);
-            return decryptedData;
+                    decryptedData = cryptor.TransformFinalBlock(encryptedData, 0, encryptedData.Length);
+                    return decryptedData;
+                }
+            }
         }
-       
+        
         /// <summary>
         /// Returns the length of privacyParameters USM header field. For AES, field length is 8.
         /// </summary>
@@ -235,6 +247,11 @@ namespace Lextm.SharpSnmpLib.Security
             if (parameters == null)
             {
                 throw new ArgumentNullException("parameters");
+            }
+            
+            if (data == null)
+            {
+                throw new ArgumentNullException("data");
             }
             
             if (data.TypeCode != SnmpType.OctetString)

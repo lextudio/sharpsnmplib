@@ -11,34 +11,11 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// <summary>
     /// Discoverer class to discover SNMP agents in the same network.
     /// </summary>
-    public partial class Discoverer : Component
+    public class Discoverer
     {
         private long _active;
         private int _bufferSize;
         private int _requestId;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Discoverer"/> class.
-        /// </summary>
-        public Discoverer()
-        {
-            InitializeComponent();
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Discoverer"/> class.
-        /// </summary>
-        /// <param name="container">The container.</param>
-        public Discoverer(IContainer container)
-        {
-            if (container == null)
-            {
-                throw new ArgumentNullException("container");
-            }
-            
-            container.Add(this);
-            InitializeComponent();
-        }
 
         /// <summary>
         /// Occurs when an SNMP agent is found.

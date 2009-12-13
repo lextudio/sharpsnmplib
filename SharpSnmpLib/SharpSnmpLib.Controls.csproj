@@ -85,9 +85,6 @@
     <Compile Include="Messaging\Discoverer.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Messaging\Discoverer.Designer.cs">
-      <DependentUpon>Discoverer.cs</DependentUpon>
-    </Compile>
     <Compile Include="Messaging\ExceptionRaisedEventArgs.cs" />
     <Compile Include="Messaging\IListenerAdapter.cs" />
     <Compile Include="Messaging\Listener.cs">
