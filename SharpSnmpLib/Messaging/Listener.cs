@@ -8,7 +8,6 @@
  */
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
@@ -392,7 +391,6 @@ namespace Lextm.SharpSnmpLib.Messaging
                     handler(this, new MessageReceivedEventArgs<ISnmpMessage>(param.Sender, message));
                 }
                 
-                // TODO: will remove listener adapters in the future.
                 foreach (IListenerAdapter adapter in _adapters)
                 {
                     adapter.Process(message, param.Sender);
