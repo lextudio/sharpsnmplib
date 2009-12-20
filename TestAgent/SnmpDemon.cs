@@ -6,6 +6,7 @@
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
+ using System;
 using System.Windows.Forms;
 using Lextm.SharpSnmpLib.Messaging;
 
@@ -14,7 +15,8 @@ namespace Lextm.SharpSnmpLib.Agent
     /// <summary>
     /// Description of SnmpDemon.
     /// </summary>
-    internal class SnmpDemon
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
+    internal class SnmpDemon : IDisposable
     {
         private readonly Listener _listener = new Listener();
         private readonly SnmpApplicationFactory _factory;
@@ -49,9 +51,16 @@ namespace Lextm.SharpSnmpLib.Agent
             get { return _listener.Active; }
         }
      
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1300:SpecifyMessageBoxOptions")]
         private static void ListenerExceptionRaised(object sender, ExceptionRaisedEventArgs e)
         {
             MessageBox.Show(e.Exception.Message);
+        }
+        
+        public void Dispose()
+        {
+            _listener.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 }

@@ -8,8 +8,10 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Net;
 using System.Windows.Forms;
+
 using Lextm.SharpSnmpLib.Messaging;
 
 namespace Lextm.SharpSnmpLib.Agent
@@ -36,7 +38,7 @@ namespace Lextm.SharpSnmpLib.Agent
 
         private void BtnStartClick(object sender, EventArgs e)
         {
-            _demon.Start(int.Parse(txtAgentPort.Text));
+            _demon.Start(int.Parse(txtAgentPort.Text, CultureInfo.InvariantCulture));
         }
 
         private void BtnStopClick(object sender, EventArgs e)
@@ -52,7 +54,7 @@ namespace Lextm.SharpSnmpLib.Agent
                 return;
             }
 
-            Messenger.SendTrapV1(new IPEndPoint(ip, int.Parse(txtPort.Text)),
+            Messenger.SendTrapV1(new IPEndPoint(ip, int.Parse(txtPort.Text, CultureInfo.InvariantCulture)),
                                  IPAddress.Loopback, // here should be IP of the current machine.
                                  new OctetString("public"),
                                  new ObjectIdentifier(new uint[] { 1, 3, 6 }),
@@ -71,13 +73,15 @@ namespace Lextm.SharpSnmpLib.Agent
             }
 
             Messenger.SendTrapV2(0, VersionCode.V2,
-                             new IPEndPoint(ip, int.Parse(txtPort.Text)),
+                             new IPEndPoint(ip, int.Parse(txtPort.Text, CultureInfo.InvariantCulture)),
                              new OctetString("public"),
                              new ObjectIdentifier(new uint[] { 1, 3, 6 }),
                              0,
                              new List<Variable>());
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1300:SpecifyMessageBoxOptions")]
         private void BtnInformClick(object sender, EventArgs e)
         {
             IPAddress ip = IPAddress.Parse(txtIP.Text);
@@ -89,7 +93,7 @@ namespace Lextm.SharpSnmpLib.Agent
             try
             {
                 Messenger.SendInform(0, VersionCode.V2,
-                                 new IPEndPoint(ip, int.Parse(txtPort.Text)),
+                                 new IPEndPoint(ip, int.Parse(txtPort.Text, CultureInfo.InvariantCulture)),
                                  new OctetString("public"),
                                  new ObjectIdentifier(new uint[] { 1, 3, 6 }),
                                  0,

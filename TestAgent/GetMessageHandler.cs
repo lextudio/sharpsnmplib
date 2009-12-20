@@ -8,6 +8,7 @@ namespace Lextm.SharpSnmpLib.Agent
         private ErrorCode _status;
         private int _index;
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         public IList<Variable> Handle(ISnmpMessage message, ObjectStore store)
         {
             _status = ErrorCode.NoError;

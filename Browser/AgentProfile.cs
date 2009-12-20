@@ -175,8 +175,20 @@ namespace Lextm.SharpSnmpLib.Browser
 	    {
             TraceSource source = new TraceSource("Browser");
             IList<Variable> list = new List<Variable>();
-            Messenger.Walk(VersionCode, Agent, new OctetString(GetCommunity), new ObjectIdentifier(definition.GetNumericalForm()), list, manager.Timeout, WalkMode.WithinSubtree);
-            foreach (Variable v in list)
+            if (VersionCode == VersionCode.V1)
+            {
+                Messenger.Walk(VersionCode, Agent, new OctetString(GetCommunity),
+                               new ObjectIdentifier(definition.GetNumericalForm()), list, manager.Timeout,
+                               WalkMode.WithinSubtree);
+            }
+            else
+            {
+                Messenger.BulkWalk(VersionCode, Agent, new OctetString(GetCommunity),
+                                   new ObjectIdentifier(definition.GetNumericalForm()), list, manager.Timeout, 10,
+                                   WalkMode.WithinSubtree);
+            }
+
+	        foreach (Variable v in list)
             {
                 source.TraceInformation(v.ToString());
             }

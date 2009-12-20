@@ -83,15 +83,12 @@
     <Compile Include="Messaging\AgentV3ListenerAdapter.cs" />
     <Compile Include="Messaging\DefaultListenerAdapter.cs" />
     <Compile Include="Messaging\Discoverer.cs">
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Messaging\ExceptionRaisedEventArgs.cs" />
     <Compile Include="Messaging\IListenerAdapter.cs" />
     <Compile Include="Messaging\Listener.cs">
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Messaging\Manager.cs">
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Messaging\ManagerV1ListenerAdapter.cs" />
     <Compile Include="Messaging\ManagerV2ListenerAdapter.cs" />
@@ -103,9 +100,6 @@
     <Compile Include="Messaging\WalkMode.cs" />
     <None Include="license.txt" />
     <None Include="sharpsnmplib.snk" />
-    <EmbeddedResource Include="Messaging\Listener.resx">
-      <DependentUpon>Listener.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Messaging\Manager.resx">
       <DependentUpon>Manager.cs</DependentUpon>
       <SubType>Designer</SubType>

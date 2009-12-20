@@ -10,11 +10,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SharpSnmpBrowser")]
+[assembly: AssemblyTitle("#SNMP MIB Browser")]
 [assembly: AssemblyDescription("#SNMP MIB Browser")]
 [assembly: AssemblyConfiguration("MIT/X11")]
 [assembly: AssemblyCompany("LeXtudio")]
-[assembly: AssemblyProduct("#SNMPBrowser")]
+[assembly: AssemblyProduct("#SNMP MIB Browser")]
 [assembly: AssemblyCopyright("(C) 2008-2009 Lex Li, Steve Santacroce, and other contributors.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

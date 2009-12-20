@@ -4,6 +4,7 @@ using Microsoft.Practices.Unity;
 
 namespace Lextm.SharpSnmpLib.Agent
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
     internal class HandlerMapping
     {
         private readonly string _version;

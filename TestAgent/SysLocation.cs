@@ -14,7 +14,7 @@ namespace Lextm.SharpSnmpLib.Agent
             {
                 if (value.TypeCode != SnmpType.OctetString)
                 {
-                    throw new ArgumentException("value");
+                    throw new ArgumentException("wrong data type", "value");
                 }
 
                 _location = (OctetString)value;

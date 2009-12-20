@@ -12,6 +12,7 @@ namespace Lextm.SharpSnmpLib.Agent
     /// <summary>
     /// Description of MessageHandlerFactory.
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
     internal class MessageHandlerFactory
     {
         private readonly HandlerMapping[] _mappings;

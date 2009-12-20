@@ -23,13 +23,14 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// <remarks>
     /// Drag this component into your form in designer, or create an instance in code.
     /// </remarks>
-    public sealed class Listener : Component
+    public sealed class Listener : IDisposable
     {
         private const int Defaultport = 162;
 
         /// <summary>
         /// Error message for non IP v6 OS.
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Pv")]
         public static readonly string ErrorIPv6NotSupported = "cannot use IP v6 as the OS does not support it";
         private readonly IPEndPoint _defaultEndPoint = new IPEndPoint(IPAddress.Any, Defaultport);
         private Socket _socket;
@@ -44,44 +45,11 @@ namespace Lextm.SharpSnmpLib.Messaging
         private int _port;
         private readonly UserRegistry _users = new UserRegistry();
 
-        #region Constructor
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Listener"/> class.
-        /// </summary>
-        public Listener()
-        {
-            InitializeComponent();
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Listener"/> class.
-        /// </summary>
-        /// <param name="container">The container.</param>
-        public Listener(IContainer container)
-        {
-            if (container == null)
-            {
-                throw new ArgumentNullException("container");
-            }
-            
-            container.Add(this);
-            InitializeComponent();
-        }
-
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
-        {
-        }
-
         /// <summary>
         /// Releases the unmanaged resources used by the <see cref="T:System.ComponentModel.Component"/> and optionally releases the managed resources.
         /// </summary>
         /// <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
-        protected override void Dispose(bool disposing)
+        private void Dispose(bool disposing)
         {
             if (_disposed)
             {
@@ -94,14 +62,30 @@ namespace Lextm.SharpSnmpLib.Messaging
                 if (_socket != null)
                 {
                     _socket.Close();    // Note that closing the socket releases the _socket.ReceiveFrom call.
+                    _socket = null;
                 }
             }
             
-            base.Dispose(disposing);
             _disposed = true;
         }
 
-        #endregion Constructor
+        /// <summary>
+        /// Releases unmanaged resources and performs other cleanup operations before the
+        /// <see cref="Listener"/> is reclaimed by garbage collection.
+        /// </summary>
+        ~Listener()
+        {
+            Dispose(false);
+        }
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
 
         #region Events
 
@@ -144,6 +128,11 @@ namespace Lextm.SharpSnmpLib.Messaging
             if (response == null)
             {
                 throw new ArgumentNullException("response");
+            }
+            
+            if (_disposed)
+            {
+                throw new ObjectDisposedException("Listener");
             }
             
             if (_socket != null)
@@ -375,6 +364,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             HandleMessage((MessageParams)o);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         private void HandleMessage(MessageParams param)
         {
             IList<ISnmpMessage> messages = null;
@@ -437,7 +427,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         
         /// <summary>
         /// Adapters.
-        /// </summary>      
+        /// </summary>
         public IList<IListenerAdapter> Adapters
         {
             get { return _adapters; }

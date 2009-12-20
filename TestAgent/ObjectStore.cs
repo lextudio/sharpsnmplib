@@ -2,6 +2,7 @@
 
 namespace Lextm.SharpSnmpLib.Agent
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
     internal class ObjectStore
     {
         private readonly IDictionary<ObjectIdentifier, ISnmpObject> _table = new Dictionary<ObjectIdentifier, ISnmpObject>();

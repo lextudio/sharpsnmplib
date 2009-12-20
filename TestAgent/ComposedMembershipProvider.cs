@@ -1,5 +1,6 @@
 ﻿namespace Lextm.SharpSnmpLib.Agent
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
     internal class ComposedMembershipProvider : IMembershipProvider
     {
         private readonly IMembershipProvider[] _providers;

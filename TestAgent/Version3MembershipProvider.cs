@@ -1,5 +1,6 @@
 ﻿namespace Lextm.SharpSnmpLib.Agent
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
     internal class Version3MembershipProvider : IMembershipProvider
     {
         private const VersionCode Version = VersionCode.V3;

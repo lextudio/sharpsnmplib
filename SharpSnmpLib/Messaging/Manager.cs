@@ -19,7 +19,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// <para>Currently only SNMP v1 and v2c operations are supported.</para>
     /// </remarks>
     [CLSCompliant(false)]
-    public class Manager : Component
+    public class Manager
     {
         private const int DefaultPort = 161;
         private readonly object _locker = new object();
@@ -28,29 +28,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         private IObjectRegistry _objects; // = ObjectRegistry.Default;
         private int _maxRepetitions = 10;
  
-        /// <summary>
-        /// Creates a <see cref="Manager"></see> instance.
-        /// </summary>
-        public Manager()
-        {
-            InitializeComponent();
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Manager"/> class.
-        /// </summary>
-        /// <param name="container">The container.</param>
-        public Manager(IContainer container)
-        {
-            if (container == null)
-            {
-                throw new ArgumentNullException("container");
-            }
-            
-            container.Add(this);
-            InitializeComponent();
-        }
-
         /// <summary>
         /// Default protocol version for operations.
         /// </summary>
@@ -306,10 +283,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             return "SNMP manager: timeout: " + Timeout.ToString(CultureInfo.InvariantCulture) + "; version: " + DefaultVersion;
         }         
-        
-        private void InitializeComponent()
-        {
-        }
     }
 }
 #pragma warning restore 612,618

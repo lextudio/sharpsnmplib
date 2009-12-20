@@ -7,9 +7,11 @@ using System.Globalization;
 
 namespace Lextm.SharpSnmpLib.Agent
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
     internal class Logger : IDisposable
     {
         private readonly StreamWriter _writer;
+        private const string _empty = "-";
 
         public Logger()
         {
@@ -17,24 +19,25 @@ namespace Lextm.SharpSnmpLib.Agent
             _writer.WriteLine(string.Format(CultureInfo.InvariantCulture, "#Software: #SNMP Suite {0}", Assembly.GetEntryAssembly().GetName().Version));
             _writer.WriteLine("#Version: 1.0");
             _writer.WriteLine(string.Format(CultureInfo.InvariantCulture, "#Date: {0}", DateTime.UtcNow));
-            _writer.WriteLine("#Fields: date time s-ip cs-method cs-uri-stem s-port cs-username c-ip sc-status time-taken");
+            _writer.WriteLine("#Fields: date time s-ip cs-method cs-uri-stem s-port cs-username c-ip sc-status version time-taken");
             _writer.AutoFlush = true;
         }
 
         public void Log(SnmpContext context)
         {
             TimeSpan timeTaken = DateTime.Now.Subtract(context.CreatedTime);
-            _writer.WriteLine(string.Format(CultureInfo.InvariantCulture, "{0} {1} {2} {3} {4} {5} {6} {7} {8}",
+            _writer.WriteLine(string.Format(CultureInfo.InvariantCulture, "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9}",
                                             DateTime.UtcNow,
-                                            "-",
+                                            _empty,
                                             context.Request.Pdu.TypeCode,
                                             GetStem(context.Request.Pdu.Variables),
                                             context.Listener.Port,
                                             context.Request.Parameters.UserName,
                                             context.Sender.Address,
                                             (context.Response == null)
-                                                ? "-"
+                                                ? _empty
                                                 : context.Response.Pdu.ErrorStatus.ToErrorCode().ToString(),
+                                            context.Request.Version.ToString(),
                                             timeTaken));
         }
 
@@ -57,6 +60,7 @@ namespace Lextm.SharpSnmpLib.Agent
         public void Dispose()
         {
             _writer.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 }

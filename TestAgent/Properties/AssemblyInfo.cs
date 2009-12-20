@@ -1,6 +1,8 @@
 ﻿#region Using directives
 
+using System;
 using System.Reflection;
+using System.Resources;
 using System.Runtime.InteropServices;
 
 #endregion
@@ -8,12 +10,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("TestAgent")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("TestAgent")]
-[assembly: AssemblyCopyright("Copyright 2008")]
+[assembly: AssemblyTitle("#SNMP Agent")]
+[assembly: AssemblyDescription("#SNMP Agent")]
+[assembly: AssemblyConfiguration("MIT/X11")]
+[assembly: AssemblyCompany("LeXtudio")]
+[assembly: AssemblyProduct("#SNMP Agent")]
+[assembly: AssemblyCopyright("(C) 2008-2009 Lex Li")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -27,4 +29,6 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values or you can use the default the Revision and 
 // Build Numbers by using the '*' as shown below:
-[assembly: AssemblyVersion("1.0.*")]
+[assembly: AssemblyVersion("2.0.*")]
+[assembly: CLSCompliant(true)]
+[assembly: NeutralResourcesLanguage("en-US")]

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 namespace Lextm.SharpSnmpLib.Agent
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
     internal class SnmpApplicationFactory
     {
         private readonly Logger _logger;
