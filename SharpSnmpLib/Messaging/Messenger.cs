@@ -15,13 +15,13 @@ using Lextm.SharpSnmpLib.Mib;
 namespace Lextm.SharpSnmpLib.Messaging
 {
     /// <summary>
-    /// Messenger class contains all static helper methods you need to send out SNMP messages. 
+    /// Messenger class contains all static helper methods you need to send out SNMP messages.
     /// Static methods in Manager or Agent class will be removed in the future.
     /// </summary>
     public static class Messenger
     {
         private static readonly IdGenerator RequestCounter = new IdGenerator();
-       
+        
         /// <summary>
         /// Gets a list of variable binds.
         /// </summary>
@@ -345,21 +345,17 @@ namespace Lextm.SharpSnmpLib.Messaging
         [CLSCompliant(false)]
         public static Variable[,] GetTable(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, int timeout, int maxRepetitions, IObjectRegistry registry)
         {
-            if (registry == null)
-            {
-                throw new ArgumentNullException("registry");
-            }
-            
             if (version == VersionCode.V3)
             {
                 throw new NotSupportedException("SNMP v3 is not supported");
             }
 
-            // bool canContinue = registry.ValidateTable(table);
-            // if (!canContinue)
-            // {
-            //    throw new ArgumentException("not a table OID: " + table);
-            // }
+            bool canContinue = registry == null || registry.ValidateTable(table);
+            if (!canContinue)
+            {
+                throw new ArgumentException("not a table OID: " + table);
+            }
+            
             IList<Variable> list = new List<Variable>();
             int rows = version == VersionCode.V1 ? Walk(version, endpoint, community, table, list, timeout, WalkMode.WithinSubtree) : BulkWalk(version, endpoint, community, table, list, timeout, maxRepetitions, WalkMode.WithinSubtree);
             
@@ -394,6 +390,6 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 return RequestCounter.NextId;
             }
-        } 
+        }
     }
 }
