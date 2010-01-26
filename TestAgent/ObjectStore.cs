@@ -2,12 +2,17 @@
 
 namespace Lextm.SharpSnmpLib.Agent
 {
+    /// <summary>
+    /// SNMP object store, who holds all implemented SNMP objects in the agent.
+    /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
     internal class ObjectStore
     {
-        private readonly IDictionary<ObjectIdentifier, ISnmpObject> _table = new Dictionary<ObjectIdentifier, ISnmpObject>();
-        private readonly LinkedList<ObjectIdentifier> _list = new LinkedList<ObjectIdentifier>();
-        
+        private readonly IList<ISnmpObject> _list = new List<ISnmpObject>();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ObjectStore"/> class.
+        /// </summary>
         public ObjectStore()
         {
             ISnmpObject descr = new SysDescr();
@@ -16,39 +21,47 @@ namespace Lextm.SharpSnmpLib.Agent
             ISnmpObject contact = new SysContact();
             ISnmpObject name = new SysName();
             ISnmpObject location = new SysLocation();
-            
-            _table.Add(descr.Id, descr);
-            _table.Add(objectId.Id, objectId);
-            _table.Add(upTime.Id, upTime);
-            _table.Add(contact.Id, contact);
-            _table.Add(name.Id, name);
-            _table.Add(location.Id, location);
-            
-            _list.AddLast(descr.Id);
-            _list.AddLast(objectId.Id);
-            _list.AddLast(upTime.Id);
-            _list.AddLast(contact.Id);
-            _list.AddLast(name.Id);
-            _list.AddLast(location.Id);
+    
+            _list.Add(descr);
+            _list.Add(objectId);
+            _list.Add(upTime);
+            _list.Add(contact);
+            _list.Add(name);
+            _list.Add(location);
         }
-        
+
+        /// <summary>
+        /// Gets the object.
+        /// </summary>
+        /// <param name="oid">The oid.</param>
+        /// <returns></returns>
         public ISnmpObject GetObject(ObjectIdentifier oid)
         {
-            if (_table.ContainsKey(oid))
+            foreach (ISnmpObject o in _list)
             {
-                return _table[oid];
+                if (o.MatchGet(oid))
+                {
+                    return o;
+                }
+
+                continue;
             }
 
             return null;
         }
-        
+
+        /// <summary>
+        /// Gets the next object.
+        /// </summary>
+        /// <param name="oid">The oid.</param>
+        /// <returns></returns>
         public ISnmpObject GetNextObject(ObjectIdentifier oid)
         {
-            foreach (ObjectIdentifier node in _list)
+            foreach (ISnmpObject o in _list)
             {
-                if (oid.CompareTo(node) < 0)
+                if (o.MatchGetNext(oid))
                 {
-                    return _table[node];
+                    return o;
                 }
                 
                 continue;

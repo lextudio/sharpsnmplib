@@ -2,12 +2,26 @@
 
 namespace Lextm.SharpSnmpLib.Agent
 {
-    internal class SysName: IScalarObject
+    /// <summary>
+    /// SysName object.
+    /// </summary>
+    internal class SysName: ScalarObject
     {
-        private static readonly ObjectIdentifier Identifier = new ObjectIdentifier("1.3.6.1.2.1.1.5.0");
         private OctetString _name = new OctetString(Environment.MachineName);
 
-        public ISnmpData Data
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SysName"/> class.
+        /// </summary>
+        public SysName()
+            : base(new ObjectIdentifier("1.3.6.1.2.1.1.5.0"))
+        {
+        }
+
+        /// <summary>
+        /// Gets or sets the data.
+        /// </summary>
+        /// <value>The data.</value>
+        public override ISnmpData Data
         {
             get { return _name; }
             set
@@ -19,11 +33,6 @@ namespace Lextm.SharpSnmpLib.Agent
 
                 _name = (OctetString)value;
             }
-        }
-
-        public ObjectIdentifier Id
-        {
-            get { return Identifier; }
         }
     }
 }

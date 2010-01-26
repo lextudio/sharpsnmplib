@@ -7,11 +7,14 @@ using System.Globalization;
 
 namespace Lextm.SharpSnmpLib.Agent
 {
+    /// <summary>
+    /// Logger class, who logs message processed to the log file.
+    /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
     internal class Logger : IDisposable
     {
         private readonly StreamWriter _writer;
-        private const string _empty = "-";
+        private const string Empty = "-";
 
         public Logger()
         {
@@ -28,16 +31,16 @@ namespace Lextm.SharpSnmpLib.Agent
             TimeSpan timeTaken = DateTime.Now.Subtract(context.CreatedTime);
             _writer.WriteLine(string.Format(CultureInfo.InvariantCulture, "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9}",
                                             DateTime.UtcNow,
-                                            _empty,
+                                            Empty,
                                             context.Request.Pdu.TypeCode,
                                             GetStem(context.Request.Pdu.Variables),
                                             context.Listener.Port,
                                             context.Request.Parameters.UserName,
                                             context.Sender.Address,
                                             (context.Response == null)
-                                                ? _empty
+                                                ? Empty
                                                 : context.Response.Pdu.ErrorStatus.ToErrorCode().ToString(),
-                                            context.Request.Version.ToString(),
+                                            context.Request.Version,
                                             timeTaken));
         }
 

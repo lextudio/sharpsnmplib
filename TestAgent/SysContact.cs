@@ -2,12 +2,25 @@
 
 namespace Lextm.SharpSnmpLib.Agent
 {
-    internal class SysContact : IScalarObject
+    /// <summary>
+    /// SysContact object.
+    /// </summary>
+    internal class SysContact : ScalarObject
     {
-        private static readonly ObjectIdentifier Identifier = new ObjectIdentifier("1.3.6.1.2.1.1.4.0");
         private OctetString _contact = new OctetString(Environment.UserName);
 
-        public ISnmpData Data
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SysContact"/> class.
+        /// </summary>
+        public SysContact() : base(new ObjectIdentifier("1.3.6.1.2.1.1.4.0"))
+        {
+        }
+
+        /// <summary>
+        /// Gets or sets the data.
+        /// </summary>
+        /// <value>The data.</value>
+        public override ISnmpData Data
         {
             get { return _contact; }
             set
@@ -19,11 +32,6 @@ namespace Lextm.SharpSnmpLib.Agent
 
                 _contact = (OctetString)value;
             }
-        }
-
-        public ObjectIdentifier Id
-        {
-            get { return Identifier; }
         }
     }
 }

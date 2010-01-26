@@ -249,10 +249,6 @@
     <Content Include="Resources\UDP-MIB.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SharpSnmpLib\SharpSnmpLib.AST.csproj">
-      <Project>{F35C7321-929B-4238-959A-A60A890F10BA}</Project>
-      <Name>SharpSnmpLib.AST</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SharpSnmpLib\SharpSnmpLib.Controls.csproj">
       <Project>{B2E8F73F-072C-4F5B-A42B-315F84A45374}</Project>
       <Name>SharpSnmpLib.Controls</Name>

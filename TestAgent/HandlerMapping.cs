@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Reflection;
-using Microsoft.Practices.Unity;
 
 namespace Lextm.SharpSnmpLib.Agent
 {
+    /// <summary>
+    /// Handler mapping class, who is used to map incoming messages to their handlers.
+    /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
     internal class HandlerMapping
     {
@@ -11,6 +13,12 @@ namespace Lextm.SharpSnmpLib.Agent
         private readonly string _command;
         private readonly IMessageHandler _handler;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HandlerMapping"/> class.
+        /// </summary>
+        /// <param name="version">The version.</param>
+        /// <param name="command">The command.</param>
+        /// <param name="handler">The handler.</param>
         public HandlerMapping(string version, string command, IMessageHandler handler)
         {
             _version = version;
@@ -18,6 +26,13 @@ namespace Lextm.SharpSnmpLib.Agent
             _handler = handler;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HandlerMapping"/> class.
+        /// </summary>
+        /// <param name="version">The version.</param>
+        /// <param name="command">The command.</param>
+        /// <param name="type">The type.</param>
+        /// <param name="assembly">The assembly.</param>
         public HandlerMapping(string version, string command, string type, string assembly)
         {
             _version = version;
@@ -39,11 +54,22 @@ namespace Lextm.SharpSnmpLib.Agent
             return (IMessageHandler)Activator.CreateInstance(AppDomain.CurrentDomain.Load(assemblyName).GetType(type));
         }
 
+        /// <summary>
+        /// Gets the handler.
+        /// </summary>
+        /// <value>The handler.</value>
         public IMessageHandler Handler
         {
             get { return _handler; }
         }
 
+        /// <summary>
+        /// Determines whether this instance can handle the specified message.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <returns>
+        /// 	<c>true</c> if this instance can handle the specified message; otherwise, <c>false</c>.
+        /// </returns>
         public bool CanHandle(ISnmpMessage message)
         {
             if (!VersionMatched(message))

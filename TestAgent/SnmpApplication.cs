@@ -3,6 +3,9 @@ using Lextm.SharpSnmpLib.Messaging;
 
 namespace Lextm.SharpSnmpLib.Agent
 {
+    /// <summary>
+    /// SNMP application class, who is a pipeline for message processing.
+    /// </summary>
     internal class SnmpApplication
     {
         private SnmpContext _context;
@@ -15,6 +18,14 @@ namespace Lextm.SharpSnmpLib.Agent
         private readonly ObjectStore _store;
         private readonly SnmpApplicationFactory _owner;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SnmpApplication"/> class.
+        /// </summary>
+        /// <param name="owner">The owner.</param>
+        /// <param name="logger">The logger.</param>
+        /// <param name="store">The store.</param>
+        /// <param name="provider">The provider.</param>
+        /// <param name="factory">The factory.</param>
         public SnmpApplication(SnmpApplicationFactory owner, Logger logger, ObjectStore store, IMembershipProvider provider, MessageHandlerFactory factory)
         {
             _owner = owner;
@@ -23,7 +34,11 @@ namespace Lextm.SharpSnmpLib.Agent
             _store = store;
             _factory = factory;
         }
-        
+
+        /// <summary>
+        /// Inits the specified context.
+        /// </summary>
+        /// <param name="context">The context.</param>
         public void Init(SnmpContext context)
         {
             _context = context;
@@ -31,19 +46,31 @@ namespace Lextm.SharpSnmpLib.Agent
             _handler = null;
         }
 
+        /// <summary>
+        /// Gets the context.
+        /// </summary>
+        /// <value>The context.</value>
         public SnmpContext Context
         {
             get { return _context; }
         }
 
-        public bool RequestFinished
+        /// <summary>
+        /// Gets a value indicating whether processing is finished.
+        /// </summary>
+        /// <value><c>true</c> if processing is finished; otherwise, <c>false</c>.</value>
+        public bool ProcessingFinished
         {
             get { return _finished; }
         }
 
+        /// <summary>
+        /// Processes an incoming request.
+        /// </summary>
         public void Process()
         {
             OnAuthenticateRequest();
+            // TODO: add authorization.
             OnMapRequestHandler();
             OnRequestHandlerExecute();
             OnLogRequest();
@@ -52,7 +79,7 @@ namespace Lextm.SharpSnmpLib.Agent
 
         private void OnRequestHandlerExecute()
         {
-            if (RequestFinished)
+            if (ProcessingFinished)
             {
                 return;
             }
@@ -84,7 +111,7 @@ namespace Lextm.SharpSnmpLib.Agent
 
         private void OnMapRequestHandler()
         {
-            if (RequestFinished)
+            if (ProcessingFinished)
             {
                 return;
             }
@@ -93,7 +120,7 @@ namespace Lextm.SharpSnmpLib.Agent
             if (_handler.GetType() == typeof(NullMessageHandler))
             {
                 // TODO: handle error here.
-                CompleteRequest();
+                CompleteProcessing();
             }
         }
 
@@ -103,7 +130,7 @@ namespace Lextm.SharpSnmpLib.Agent
             {
                 // TODO: handle error here.
                 // return TRAP saying authenticationFailed.
-                CompleteRequest();
+                CompleteProcessing();
             }
         }
 
@@ -112,7 +139,10 @@ namespace Lextm.SharpSnmpLib.Agent
             _logger.Log(Context);
         }
 
-        public void CompleteRequest()
+        /// <summary>
+        /// Completes the processing.
+        /// </summary>
+        public void CompleteProcessing()
         {
             _finished = true;
         }

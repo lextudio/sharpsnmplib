@@ -87,6 +87,7 @@
   <ItemGroup>
     <Compile Include="ComposedMembershipProvider.cs" />
     <Compile Include="GetBulkMessageHandler.cs" />
+    <Compile Include="SnmpObject.cs" />
     <Compile Include="Version3MembershipProvider.cs" />
     <Compile Include="Version2MembershipProvider.cs" />
     <Compile Include="GetMessageHandler.cs" />

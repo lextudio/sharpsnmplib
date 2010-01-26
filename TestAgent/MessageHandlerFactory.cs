@@ -10,7 +10,7 @@
 namespace Lextm.SharpSnmpLib.Agent
 {
     /// <summary>
-    /// Description of MessageHandlerFactory.
+    /// Message handler factory.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
     internal class MessageHandlerFactory
@@ -18,11 +18,20 @@ namespace Lextm.SharpSnmpLib.Agent
         private readonly HandlerMapping[] _mappings;
         private readonly NullMessageHandler _nullHandler = new NullMessageHandler();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MessageHandlerFactory"/> class.
+        /// </summary>
+        /// <param name="mappings">The mappings.</param>
         public MessageHandlerFactory(HandlerMapping[] mappings)
         {
             _mappings = mappings;
         }
-        
+
+        /// <summary>
+        /// Gets the handler.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <returns></returns>
         public IMessageHandler GetHandler(ISnmpMessage message)
         {
             foreach (HandlerMapping mapping in _mappings)

@@ -1,19 +1,28 @@
 ﻿namespace Lextm.SharpSnmpLib.Agent
 {
-    internal class SysObjectId : IScalarObject
+    /// <summary>
+    /// SysObjectId object.
+    /// </summary>
+    internal class SysObjectId : ScalarObject
     {
-        private static readonly ObjectIdentifier Identifier = new ObjectIdentifier("1.3.6.1.2.1.1.2.0");
         private readonly ObjectIdentifier _objectId = new ObjectIdentifier("1.3.6.1");
 
-        public ISnmpData Data
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SysObjectId"/> class.
+        /// </summary>
+        public SysObjectId()
+            : base(new ObjectIdentifier("1.3.6.1.2.1.1.2.0"))
+        {
+        }
+
+        /// <summary>
+        /// Gets or sets the data.
+        /// </summary>
+        /// <value>The data.</value>
+        public override ISnmpData Data
         {
             get { return _objectId; }
             set { throw new AccessFailureException(); }
-        }
-
-        public ObjectIdentifier Id
-        {
-            get { return Identifier; }
         }
     }
 }
