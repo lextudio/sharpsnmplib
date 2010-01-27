@@ -1,4 +1,4 @@
-﻿namespace Lextm.SharpSnmpLib.Agent
+namespace Lextm.SharpSnmpLib.Agent
 {
     /// <summary>
     /// SysObjectId object.
@@ -19,7 +19,7 @@
         /// Gets or sets the data.
         /// </summary>
         /// <value>The data.</value>
-        public override ISnmpData Data
+        protected internal override ISnmpData Data
         {
             get { return _objectId; }
             set { throw new AccessFailureException(); }

@@ -23,9 +23,10 @@ namespace Lextm.SharpSnmpLib.Browser
     /// </summary>
     internal partial class MibTreePanel : DockContent
     {
+        private Manager _manager;
         private IObjectRegistry _objects;
         private IProfileRegistry _profiles;
-        private Manager _manager;
+        private bool _showNumber;
 
         public MibTreePanel()
         {
@@ -37,6 +38,20 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             get { return _objects; }
             set { _objects = value; }
+        }
+
+        [Dependency]
+        public Manager Manager
+        {
+            get { return _manager; }
+            set { _manager = value; }
+        }
+
+        [Dependency]
+        public IProfileRegistry Profiles
+        {
+            get { return _profiles; }
+            set { _profiles = value; }
         }
 
         private void RefreshPanel(object sender, EventArgs e)
@@ -74,30 +89,8 @@ namespace Lextm.SharpSnmpLib.Browser
 
             return node;
         }
-        
-        private class DefinitionComparer: IComparer<IDefinition>
-        {      	        	
-			public int Compare(IDefinition x, IDefinition y)
-			{
-				return x.Value.CompareTo(y.Value);
-			}
-        }
 
-        [Dependency]
-        public Manager Manager
-        {
-            get { return _manager; }
-            set { _manager = value; }
-        }
-
-        [Dependency]
-        public IProfileRegistry Profiles
-        {
-            get { return _profiles; }
-            set { _profiles = value; }
-        }
-
-        private static string GetTextualForm(IDefinition def)
+        private static string TextualFormForGet(IDefinition def)
         {
             if (def.Type == DefinitionType.Scalar)
             {
@@ -114,13 +107,23 @@ namespace Lextm.SharpSnmpLib.Browser
             return def.TextualForm + "." + index;
         }
 
+        private static string TextualFormForGetNext(IDefinition def)
+        {
+            if (def.Type == DefinitionType.Scalar)
+            {
+                return def.TextualForm + ".0";
+            }
+
+            return def.TextualForm;
+        }
+
         private void ActGetExecute(object sender, EventArgs e)
         {
             TraceSource source = new TraceSource("Browser");
             try
             {
                 source.TraceInformation("==== Begin GET ====");
-                Profiles.DefaultProfile.Get(Manager, GetTextualForm(treeView1.SelectedNode.Tag as IDefinition));
+                Profiles.DefaultProfile.Get(Manager, TextualFormForGet(treeView1.SelectedNode.Tag as IDefinition));
             }
             catch (Exception ex)
             {
@@ -136,7 +139,7 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void ActGetUpdate(object sender, EventArgs e)
         {
-            actGet.Enabled = Validate(treeView1.SelectedNode);
+            actGet.Enabled = ValidForGet(treeView1.SelectedNode);
         }
 
         private void ActSetExecute(object sender, EventArgs e)
@@ -148,7 +151,7 @@ namespace Lextm.SharpSnmpLib.Browser
                 using (FormSet form = new FormSet())
                 {
                     form.OldVal = Profiles.DefaultProfile.GetValue(Manager,
-                                                                   GetTextualForm(
+                                                                   TextualFormForGet(
                                                                        treeView1.SelectedNode.Tag as IDefinition));
                     if (form.ShowDialog() != DialogResult.OK)
                     {
@@ -176,7 +179,7 @@ namespace Lextm.SharpSnmpLib.Browser
 
                 source.TraceInformation("==== Begin SET ====");
                 Profiles.DefaultProfile.Set(Manager,
-                                                GetTextualForm(treeView1.SelectedNode.Tag as IDefinition),
+                                                TextualFormForGet(treeView1.SelectedNode.Tag as IDefinition),
                                                 data);
             }
             catch (Exception ex)
@@ -193,18 +196,23 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void ActSetUpdate(object sender, EventArgs e)
         {
-            actSet.Enabled = Validate(treeView1.SelectedNode);
+            actSet.Enabled = ValidForGet(treeView1.SelectedNode);
         }
 
-        private static bool Validate(TreeNode treeNode)
+        private static bool ValidForGet(TreeNode node)
         {
-            if (treeNode == null)
+            if (node == null)
             {
                 return false;
             }
 
             //  Scalar or Column. (see DefinitionType.cs)
-            return treeNode.ImageIndex == 2 || treeNode.ImageIndex == 5;
+            return node.ImageIndex == 2 || node.ImageIndex == 5;
+        }
+
+        private static bool ValidForGetNext(TreeNode node)
+        {
+            return node != null && node.Level > 0;
         }
 
         private void ActGetTableExecute(object sender, EventArgs e)
@@ -230,14 +238,19 @@ namespace Lextm.SharpSnmpLib.Browser
         private void TreeView1AfterSelect(object sender, TreeViewEventArgs e)
         {
             tslblOID.Text = ObjectIdentifier.Convert(((IDefinition) e.Node.Tag).GetNumericalForm());
-            if (Validate(e.Node))
+            if (ValidForGet(e.Node))
             {
                 ActGetExecute(sender, e);
             }
-            else if (e.Node.ImageIndex == 3)
+            else if (ValidForGetTable(e.Node))
             {
                 ActGetTableExecute(sender, e);
             }
+        }
+
+        private static bool ValidForGetTable(TreeNode node)
+        {
+            return node != null && node.ImageIndex == 3;
         }
 
         private void ActGetNextExecute(object sender, EventArgs e)
@@ -246,7 +259,7 @@ namespace Lextm.SharpSnmpLib.Browser
             try
             {
                 source.TraceInformation("==== Begin GET NEXT ====");
-                Profiles.DefaultProfile.GetNext(Manager, GetTextualForm(treeView1.SelectedNode.Tag as IDefinition));
+                Profiles.DefaultProfile.GetNext(Manager, TextualFormForGetNext(treeView1.SelectedNode.Tag as IDefinition));
             }
             catch (Exception ex)
             {
@@ -262,7 +275,7 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void ActGetNextUpdate(object sender, EventArgs e)
         {
-            actGetNext.Enabled = treeView1.SelectedNode != null && Validate(treeView1.SelectedNode);
+            actGetNext.Enabled = ValidForGetNext(treeView1.SelectedNode);
         }
 
 
@@ -279,9 +292,9 @@ namespace Lextm.SharpSnmpLib.Browser
                             Profiles.DefaultProfile.GetTable(Manager, node.Tag as IDefinition);
                             break;
                         default:
-                            if (Validate(node))
+                            if (ValidForGet(node))
                             {
-                                Profiles.DefaultProfile.Get(Manager, GetTextualForm(node.Tag as IDefinition));
+                                Profiles.DefaultProfile.Get(Manager, TextualFormForGet(node.Tag as IDefinition));
                             }
                             else
                             {
@@ -315,8 +328,6 @@ namespace Lextm.SharpSnmpLib.Browser
             Objects.OnChanged += RefreshPanel;
         }
 
-        private bool _showNumber;
-
         private void ActNumberExecute(object sender, EventArgs e)
         {
             _showNumber = !_showNumber;
@@ -345,7 +356,23 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void ActWalkUpdate(object sender, EventArgs e)
         {
-            actWalk.Enabled = treeView1.SelectedNode != null && treeView1.SelectedNode.Level > 0;
+            actWalk.Enabled = ValidForGetNext(treeView1.SelectedNode);
         }
+
+        #region Nested type: DefinitionComparer
+
+        private class DefinitionComparer: IComparer<IDefinition>
+        {
+            #region IComparer<IDefinition> Members
+
+            public int Compare(IDefinition x, IDefinition y)
+            {
+                return x.Value.CompareTo(y.Value);
+            }
+
+            #endregion
+        }
+
+        #endregion
     }
 }

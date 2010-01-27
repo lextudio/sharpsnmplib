@@ -22,7 +22,7 @@ namespace Lextm.SharpSnmpLib.Agent
         /// Gets or sets the data.
         /// </summary>
         /// <value>The data.</value>
-        public override ISnmpData Data
+        protected internal override ISnmpData Data
         {
             get { return _description; }
             set { throw new AccessFailureException(); }

@@ -35,7 +35,7 @@ namespace Lextm.SharpSnmpLib.Agent
 			foreach (Variable v in message.Pdu.Variables) 
 			{
 				_index++;
-				ISnmpObject obj = store.GetObject(v.Id);
+                ScalarObject obj = store.GetObject(v.Id);
                 if (obj != null)
                 {
                     try

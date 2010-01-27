@@ -15,19 +15,15 @@ namespace Lextm.SharpSnmpLib.Agent
         /// </summary>
         public ObjectStore()
         {
-            ISnmpObject descr = new SysDescr();
-            ISnmpObject objectId = new SysObjectId();
-            ISnmpObject upTime = new SysUpTime();
-            ISnmpObject contact = new SysContact();
-            ISnmpObject name = new SysName();
-            ISnmpObject location = new SysLocation();
-    
-            _list.Add(descr);
-            _list.Add(objectId);
-            _list.Add(upTime);
-            _list.Add(contact);
-            _list.Add(name);
-            _list.Add(location);
+            _list.Add(new SysDescr());
+            _list.Add(new SysObjectId());
+            _list.Add(new SysUpTime());
+            _list.Add(new SysContact());
+            _list.Add(new SysName());
+            _list.Add(new SysLocation());
+            _list.Add(new SysServices());
+            _list.Add(new SysORLastChange());
+            _list.Add(new SysORTable());
         }
 
         /// <summary>
@@ -35,16 +31,15 @@ namespace Lextm.SharpSnmpLib.Agent
         /// </summary>
         /// <param name="oid">The oid.</param>
         /// <returns></returns>
-        public ISnmpObject GetObject(ObjectIdentifier oid)
+        public ScalarObject GetObject(ObjectIdentifier oid)
         {
             foreach (ISnmpObject o in _list)
             {
-                if (o.MatchGet(oid))
+                ScalarObject result = o.MatchGet(oid);
+                if (result != null)
                 {
-                    return o;
+                    return result;
                 }
-
-                continue;
             }
 
             return null;
@@ -55,16 +50,15 @@ namespace Lextm.SharpSnmpLib.Agent
         /// </summary>
         /// <param name="oid">The oid.</param>
         /// <returns></returns>
-        public ISnmpObject GetNextObject(ObjectIdentifier oid)
+        public ScalarObject GetNextObject(ObjectIdentifier oid)
         {
             foreach (ISnmpObject o in _list)
             {
-                if (o.MatchGetNext(oid))
+                ScalarObject result = o.MatchGetNext(oid);
+                if (result != null)
                 {
-                    return o;
+                    return result;
                 }
-                
-                continue;
             }
             
             return null;

@@ -24,7 +24,7 @@ namespace Lextm.SharpSnmpLib.Agent
             foreach (Variable v in message.Pdu.Variables)
             {
                 _index++;
-                ISnmpObject next = store.GetNextObject(v.Id);
+                ScalarObject next = store.GetNextObject(v.Id);
                 if (next == null)
                 {
                     _status = ErrorCode.NoSuchName;
@@ -32,7 +32,7 @@ namespace Lextm.SharpSnmpLib.Agent
                 else
                 {
                     // TODO: how to handle write only object here?
-                    result.Add(new Variable(next.Id, next.Data));
+                    result.Add(next.Variable);
                 }
 
                 if (_status != ErrorCode.NoError)

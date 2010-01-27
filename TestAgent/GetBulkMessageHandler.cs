@@ -28,7 +28,7 @@ namespace Lextm.SharpSnmpLib.Agent
             int total = message.Pdu.ErrorIndex.ToInt32();
             while (total-- > 0)
             {
-                ISnmpObject next = store.GetNextObject(temp.Id);
+                ScalarObject next = store.GetNextObject(temp.Id);
                 if (next == null)
                 {
                     temp = new Variable(temp.Id, new EndOfMibView());
@@ -37,7 +37,7 @@ namespace Lextm.SharpSnmpLib.Agent
                 }
 
                 // TODO: how to handle write only object here?
-                temp = new Variable(next.Id, next.Data);
+                temp = next.Variable;
                 result.Add(temp);
             }
 
