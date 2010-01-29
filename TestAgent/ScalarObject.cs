@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace Lextm.SharpSnmpLib.Agent
 {
     /// <summary>
@@ -10,12 +12,35 @@ namespace Lextm.SharpSnmpLib.Agent
         /// <summary>
         /// Initializes a new instance of the <see cref="ScalarObject"/> class.
         /// </summary>
-        /// <param name="id">The id.</param>
+        /// <param name="id">The ID.</param>
         protected ScalarObject(ObjectIdentifier id)
         {
             _id = id;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ScalarObject"/> class.
+        /// </summary>
+        /// <param name="dots">The ID string.</param>
+        protected ScalarObject(string dots)
+            : this(new ObjectIdentifier(dots))
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ScalarObject"/> class.
+        /// </summary>
+        /// <param name="dots">The ID string.</param>
+        /// <param name="index">The index.</param>
+        protected ScalarObject(string dots, int index)
+            : this(string.Format(CultureInfo.InvariantCulture, dots, index))
+        {
+        }
+
+        /// <summary>
+        /// Gets the variable.
+        /// </summary>
+        /// <value>The variable.</value>
         public Variable Variable
         {
             get { return new Variable(_id, Data); }

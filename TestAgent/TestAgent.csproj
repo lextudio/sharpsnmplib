@@ -86,12 +86,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ComposedMembershipProvider.cs" />
+    <Compile Include="EntryObject.cs" />
     <Compile Include="GetBulkMessageHandler.cs" />
     <Compile Include="SnmpObject.cs" />
+    <Compile Include="SysORDescr.cs" />
+    <Compile Include="SysORID.cs" />
+    <Compile Include="SysORIndex.cs" />
     <Compile Include="SysORLastChange.cs" />
     <Compile Include="SysORTable.cs" />
+    <Compile Include="SysORTableEntry.cs" />
+    <Compile Include="SysORUpTime.cs" />
     <Compile Include="SysServices.cs" />
-    <Compile Include="VectorObject.cs" />
+    <Compile Include="TableObject.cs" />
     <Compile Include="Version3MembershipProvider.cs" />
     <Compile Include="Version2MembershipProvider.cs" />
     <Compile Include="GetMessageHandler.cs" />

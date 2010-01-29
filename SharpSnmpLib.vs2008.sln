@@ -308,4 +308,7 @@ Global
 		Svn-Managed = True
 		Manager = AnkhSVN - Subversion Support for Visual Studio
 	EndGlobalSection
+	GlobalSection(NDepend) = preSolution
+		Project = ".\SharpSnmpLib.ndproj"
+	EndGlobalSection
 EndGlobal
