@@ -5,7 +5,7 @@ namespace Lextm.SharpSnmpLib.Agent
         private readonly ISnmpData _data;
 
         public SysORID(int index, ObjectIdentifier dots)
-            : base("1.3.6.1.2.1.1.9.1.{0}.2", index)
+            : base("1.3.6.1.2.1.1.9.1.2.{0}", index)
         {
             _data = dots;
         }

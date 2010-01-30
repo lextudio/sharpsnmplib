@@ -94,7 +94,6 @@
     <Compile Include="SysORIndex.cs" />
     <Compile Include="SysORLastChange.cs" />
     <Compile Include="SysORTable.cs" />
-    <Compile Include="SysORTableEntry.cs" />
     <Compile Include="SysORUpTime.cs" />
     <Compile Include="SysServices.cs" />
     <Compile Include="TableObject.cs" />

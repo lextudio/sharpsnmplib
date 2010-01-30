@@ -6,7 +6,7 @@ namespace Lextm.SharpSnmpLib.Agent
         private readonly ISnmpData _data;
 
         public SysORIndex(int index)
-            : base("1.3.6.1.2.1.1.9.1.{0}.1", index)
+            : base("1.3.6.1.2.1.1.9.1.1.{0}", index)
         {
             _data = new Integer32(index);
         }

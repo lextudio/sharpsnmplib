@@ -4,7 +4,7 @@ namespace Lextm.SharpSnmpLib.Agent
 {
     internal abstract class TableObject : SnmpObject
     {
-        protected abstract IEnumerable<EntryObject> Objects
+        protected abstract IEnumerable<ScalarObject> Objects
         { get; }
 
         /// <summary>
@@ -14,7 +14,7 @@ namespace Lextm.SharpSnmpLib.Agent
         /// <returns><c>null</c> if it does not match.</returns>
         public override ScalarObject MatchGetNext(ObjectIdentifier id)
         {
-            foreach (EntryObject o in Objects)
+            foreach (ScalarObject o in Objects)
             {
                 ScalarObject result = o.MatchGetNext(id);
                 if (result != null)
@@ -33,7 +33,7 @@ namespace Lextm.SharpSnmpLib.Agent
         /// <returns><c>null</c> if it does not match.</returns>
         public override ScalarObject MatchGet(ObjectIdentifier id)
         {
-            foreach (EntryObject o in Objects)
+            foreach (ScalarObject o in Objects)
             {
                 ScalarObject result = o.MatchGet(id);
                 if (result != null)
