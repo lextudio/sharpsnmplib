@@ -118,7 +118,7 @@ namespace Lextm.SharpSnmpLib.Browser
 		    ISnmpMessage response = message.GetResponse(manager.Timeout, _agent);
             if (response.Pdu.ErrorStatus.ToInt32() != 0)
             {
-                throw SharpErrorException.Create(
+                throw ErrorException.Create(
                     "error in response",
                     Agent.Address,
                     response);

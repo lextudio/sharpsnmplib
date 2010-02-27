@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+
 namespace Lextm.SharpSnmpLib.Agent
 {
     /// <summary>

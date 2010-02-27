@@ -3,7 +3,7 @@ namespace Lextm.SharpSnmpLib.Agent
     /// <summary>
     /// SNMP basic object.
     /// </summary>
-    internal abstract class SnmpObject: ISnmpObject
+    internal abstract class SnmpObject : ISnmpObject
     {
         /// <summary>
         /// Matches the GET NEXT criteria.

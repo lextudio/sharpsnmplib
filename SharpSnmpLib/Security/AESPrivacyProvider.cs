@@ -256,7 +256,7 @@ namespace Lextm.SharpSnmpLib.Security
             
             if (data.TypeCode != SnmpType.OctetString)
             {
-                throw new SharpSnmpException("cannot decrypt the scope data");
+                throw new SnmpException("cannot decrypt the scope data");
             }
             
             OctetString octets = (OctetString)data;

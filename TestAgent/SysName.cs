@@ -5,7 +5,7 @@ namespace Lextm.SharpSnmpLib.Agent
     /// <summary>
     /// SysName object.
     /// </summary>
-    internal class SysName: ScalarObject
+    internal class SysName : ScalarObject
     {
         private OctetString _name = new OctetString(Environment.MachineName);
 
@@ -23,7 +23,11 @@ namespace Lextm.SharpSnmpLib.Agent
         /// <value>The data.</value>
         protected internal override ISnmpData Data
         {
-            get { return _name; }
+            get 
+            { 
+                return _name; 
+            }
+            
             set
             {
                 if (value.TypeCode != SnmpType.OctetString)

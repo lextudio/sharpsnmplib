@@ -40,11 +40,11 @@ namespace SnmpGetTable
                 }
                 writer.Close(); 
             }
-            catch (SharpSnmpException ex)
+            catch (SnmpException ex)
             {
-                if (ex is SharpOperationException)
+                if (ex is OperationException)
                 {
-                    Console.WriteLine((ex as SharpOperationException).Details);
+                    Console.WriteLine((ex as OperationException).Details);
                 }
                 else
                 {

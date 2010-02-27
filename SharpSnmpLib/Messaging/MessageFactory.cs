@@ -1,3 +1,20 @@
+// Message factory type.
+// Copyright (C) 2008-2010 Malcolm Crowe, Lex Li, and other contributors.
+// 
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public
+// License as published by the Free Software Foundation; either
+// version 2.1 of the License, or (at your option) any later version.
+// 
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// Lesser General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
 /*
  * Created by SharpDevelop.
  * User: lextm
@@ -28,7 +45,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="receiver">The IP address and port of the target to talk to.</param>
         /// <param name="bytes">The byte array representing the SNMP message.</param>
         /// <param name="number">The <see cref="GetResponseMessage.RequestId"/> of the SNMP message.</param>
-        /// <param name="timeout">The timeout above which, if the response is not received, a <see cref="SharpTimeoutException"/> is thrown.</param>
+        /// <param name="timeout">The timeout above which, if the response is not received, a <see cref="TimeoutException"/> is thrown.</param>
         /// <param name="registry">The registry.</param>
         /// <param name="socket">The UDP <see cref="Socket"/> to use to send/receive.</param>
         /// <returns>
@@ -62,7 +79,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 if (ex.ErrorCode == 10060)
                 {
-                    throw SharpTimeoutException.Create(receiver.Address, timeout);
+                    throw TimeoutException.Create(receiver.Address, timeout);
                 }
 
                 throw;
@@ -80,13 +97,13 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 if (message.Pdu.RequestId.ToInt32() != number)
                 {
-                    throw SharpOperationException.Create("wrong response sequence", receiver.Address);
+                    throw OperationException.Create("wrong response sequence", receiver.Address);
                 }
 
                 return message;
             }
 
-            throw SharpOperationException.Create("wrong response type", receiver.Address);
+            throw OperationException.Create("wrong response type", receiver.Address);
         }
         
         /// <summary>
@@ -173,7 +190,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             Sequence body = (Sequence)array;
             if (body.Count != 3 && body.Count != 4)
             {
-                throw new SharpSnmpException("not an SNMP message");
+                throw new SnmpException("not an SNMP message");
             }
 
             VersionCode version = (VersionCode)((Integer32)body[0]).ToInt32();
@@ -199,7 +216,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
             else
             {
-                throw new SharpSnmpException("invalid v3 packets scoped data: " + body[3].TypeCode);
+                throw new SnmpException("invalid v3 packets scoped data: " + body[3].TypeCode);
             }
             
             ISnmpPdu pdu = scope.Pdu;
@@ -224,7 +241,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 case SnmpType.InformRequestPdu:
                     return new InformRequestMessage(version, header, parameters, scope, record);
                 default:
-                    throw new SharpSnmpException("unsupported pdu: " + pdu.TypeCode);
+                    throw new SnmpException("unsupported pdu: " + pdu.TypeCode);
             }
         }
     }

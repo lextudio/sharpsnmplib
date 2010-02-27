@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Configuration;
 using System.Globalization;
 using System.Text;
@@ -71,7 +71,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 previous = temp;
             }
             
-            throw SharpMibException.Create("end of file reached", previous);
+            throw MibException.Create("end of file reached", previous);
         }
         
         internal static void Expect(Symbol current, Symbol expected)
@@ -83,7 +83,7 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             if (condition)
             {
-                throw SharpMibException.Create(message, current);
+                throw MibException.Create(message, current);
             }
         }
         

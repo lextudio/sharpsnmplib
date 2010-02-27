@@ -207,7 +207,7 @@ namespace SnmpWalk
 
                 if (response.Pdu.ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
                 {
-                    throw SharpErrorException.Create(
+                    throw ErrorException.Create(
                         "error in response",
                         receiver.Address,
                         response);
@@ -219,11 +219,11 @@ namespace SnmpWalk
                 }
                 // */
             }
-            catch (SharpSnmpException ex)
+            catch (SnmpException ex)
             {
-                if (ex is SharpOperationException)
+                if (ex is OperationException)
                 {
-                    Console.WriteLine((ex as SharpOperationException).Details);
+                    Console.WriteLine((ex as OperationException).Details);
                 }
                 else
                 {

@@ -7,10 +7,11 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
+using System.Configuration;
 using System.Windows.Forms;
+
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
-using System.Configuration;
 
 namespace Lextm.SharpSnmpLib.Agent
 {
@@ -25,6 +26,7 @@ namespace Lextm.SharpSnmpLib.Agent
         {
             get { return _container; }
         }
+        
         /// <summary>
         /// Program entry point.
         /// </summary>
@@ -44,7 +46,6 @@ namespace Lextm.SharpSnmpLib.Agent
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());
-        }
-        
+        }        
     }
 }

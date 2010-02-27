@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Created by SharpDevelop.
  * User: lextm
  * Date: 2008/5/11
@@ -143,7 +143,7 @@ namespace SnmpBulkGet
                     ISnmpMessage response = message.GetResponse(timeout, receiver);
                     if (response.Pdu.ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
                     {
-                        throw SharpErrorException.Create(
+                        throw ErrorException.Create(
                             "error in response",
                             receiver.Address,
                             response);
@@ -186,7 +186,7 @@ namespace SnmpBulkGet
                 ISnmpMessage reply = request.GetResponse(timeout, receiver);
                 if (reply.Pdu.ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
                 {
-                    throw SharpErrorException.Create(
+                    throw ErrorException.Create(
                         "error in response",
                         receiver.Address,
                         reply);
@@ -197,11 +197,11 @@ namespace SnmpBulkGet
                     Console.WriteLine(v);
                 }
             }
-            catch (SharpSnmpException ex)
+            catch (SnmpException ex)
             {
-                if (ex is SharpOperationException)
+                if (ex is OperationException)
                 {
-                    Console.WriteLine((ex as SharpOperationException).Details);
+                    Console.WriteLine((ex as OperationException).Details);
                 }
                 else
                 {

@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Created by SharpDevelop.
  * User: lextm
  * Date: 2008/10/2
@@ -56,7 +56,7 @@ namespace Lextm.SharpSnmpLib.Parser
             watch.Start();
             
             Mib.Parser parser = new Mib.Parser();
-            IEnumerable<SharpMibException> errors;
+            IEnumerable<MibException> errors;
             IEnumerable<IModule> modules = parser.ParseToModules(files, out errors);
             Assembler assembler = new Assembler(root);
             assembler.Assemble(modules);

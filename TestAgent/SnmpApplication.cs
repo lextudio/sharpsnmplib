@@ -70,6 +70,7 @@ namespace Lextm.SharpSnmpLib.Agent
         public void Process()
         {
             OnAuthenticateRequest();
+            
             // TODO: add authorization.
             OnMapRequestHandler();
             OnRequestHandlerExecute();
@@ -89,21 +90,33 @@ namespace Lextm.SharpSnmpLib.Agent
             GetResponseMessage response;
             if (_handler.ErrorStatus == ErrorCode.NoError)
             {
-                response = new GetResponseMessage(Context.Request.RequestId, Context.Request.Version, Context.Request.Parameters.UserName,
-                                                  ErrorCode.NoError, 0, result);
+                response = new GetResponseMessage(
+                    Context.Request.RequestId,
+                    Context.Request.Version,
+                    Context.Request.Parameters.UserName,
+                    ErrorCode.NoError,
+                    0,
+                    result);
                 if (response.ToBytes().Length > MaxResponseSize)
                 {
-                    response = new GetResponseMessage(Context.Request.RequestId, Context.Request.Version,
-                                                      Context.Request.Parameters.UserName,
-                                                      ErrorCode.TooBig, 0, Context.Request.Pdu.Variables);
+                    response = new GetResponseMessage(
+                        Context.Request.RequestId, 
+                        Context.Request.Version,                                                      
+                        Context.Request.Parameters.UserName,                                                      
+                        ErrorCode.TooBig, 
+                        0, 
+                        Context.Request.Pdu.Variables);
                 }
             }
             else
             {
-                response = new GetResponseMessage(Context.Request.RequestId, Context.Request.Version,
-                                                  Context.Request.Parameters.UserName,
-                                                  _handler.ErrorStatus, _handler.ErrorIndex,
-                                                  Context.Request.Pdu.Variables);
+                response = new GetResponseMessage(
+                    Context.Request.RequestId, 
+                    Context.Request.Version,                                                  
+                    Context.Request.Parameters.UserName,                                                  
+                    _handler.ErrorStatus, 
+                    _handler.ErrorIndex,                                                  
+                    Context.Request.Pdu.Variables);
             }
 
             Context.Respond(response);

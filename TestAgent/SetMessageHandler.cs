@@ -11,13 +11,13 @@ using System.Collections.Generic;
 
 namespace Lextm.SharpSnmpLib.Agent
 {
-	/// <summary>
-	/// SET message handler.
-	/// </summary>
-	internal class SetMessageHandler : IMessageHandler
-	{
-	    private ErrorCode _status;
-	    private int _index;
+    /// <summary>
+    /// SET message handler.
+    /// </summary>
+    internal class SetMessageHandler : IMessageHandler
+    {
+        private ErrorCode _status;
+        private int _index;
 
         /// <summary>
         /// Handles the specified message.
@@ -26,15 +26,15 @@ namespace Lextm.SharpSnmpLib.Agent
         /// <param name="store">The object store.</param>
         /// <returns></returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-		public IList<Variable> Handle(ISnmpMessage message, ObjectStore store)
-		{
-			_index = 0;
-		    _status = ErrorCode.NoError;
+        public IList<Variable> Handle(ISnmpMessage message, ObjectStore store)
+        {
+            _index = 0;
+            _status = ErrorCode.NoError;
 
-			IList<Variable> result = new List<Variable>();
-			foreach (Variable v in message.Pdu.Variables) 
-			{
-				_index++;
+            IList<Variable> result = new List<Variable>();
+            foreach (Variable v in message.Pdu.Variables) 
+            {
+                _index++;
                 ScalarObject obj = store.GetObject(v.Id);
                 if (obj != null)
                 {
@@ -59,17 +59,17 @@ namespace Lextm.SharpSnmpLib.Agent
                 {
                     _status = ErrorCode.NoSuchName;
                 }
-			    
-				if (_status != ErrorCode.NoError)
-				{
-					return null;
-				}
+                
+                if (_status != ErrorCode.NoError)
+                {
+                    return null;
+                }
 
                 result.Add(v);
-			}
-			
-			return result;
-		}
+            }
+            
+            return result;
+        }
 
         /// <summary>
         /// Gets the error status.
@@ -88,5 +88,5 @@ namespace Lextm.SharpSnmpLib.Agent
         {
             get { return _index; }
         }
-	}
+    }
 }

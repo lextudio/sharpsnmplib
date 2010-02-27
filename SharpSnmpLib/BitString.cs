@@ -1,6 +1,6 @@
-// <summary>#SNMP Library. An open source SNMP implementation for .NET.</summary>
-// <copyright company="Lex Y. Li" file="BitString.cs">Copyright (C) 2008  Lex Y. Li</copyright>
-// 
+// Bit string type, which is not an SNMP built in type.
+// Copyright (C) 2008-2010 Malcolm Crowe, Lex Li, and other contributors.
+//
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
 // License as published by the Free Software Foundation; either

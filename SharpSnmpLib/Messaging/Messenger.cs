@@ -42,7 +42,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             ISnmpMessage response = message.GetResponse(timeout, endpoint);
             if (response.Pdu.ErrorStatus.ToInt32() != 0)
             {
-                throw SharpErrorException.Create(
+                throw ErrorException.Create(
                     "error in response",
                     endpoint.Address,
                     response);
@@ -71,7 +71,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             ISnmpMessage response = message.GetResponse(timeout, endpoint);
             if (response.Pdu.ErrorStatus.ToInt32() != 0)
             {
-                throw SharpErrorException.Create(
+                throw ErrorException.Create(
                     "error in response",
                     endpoint.Address,
                     response);
@@ -254,7 +254,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             ISnmpMessage response = message.GetResponse(timeout, endpoint);
             if (response.Pdu.ErrorStatus.ToInt32() != 0)
             {
-                throw SharpErrorException.Create(
+                throw ErrorException.Create(
                     "error in response",
                     endpoint.Address,
                     response);
@@ -322,7 +322,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             ISnmpMessage response = message.GetResponse(timeout, receiver);
             if (response.Pdu.ErrorStatus.ToInt32() != 0)
             {
-                throw SharpErrorException.Create(
+                throw ErrorException.Create(
                     "error in response",
                     receiver.Address,
                     response);

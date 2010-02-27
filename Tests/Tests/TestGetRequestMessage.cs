@@ -16,6 +16,7 @@ using Lextm.SharpSnmpLib.Security;
 using NUnit.Framework;
 using System.Net.Sockets;
 using Lextm.SharpSnmpLib.Properties;
+using TimeoutException = Lextm.SharpSnmpLib.Messaging.TimeoutException;
 
 #pragma warning disable 1591
 
@@ -302,7 +303,7 @@ namespace Lextm.SharpSnmpLib.Tests
                 //IMPORTANT: test against an agent that doesn't exist.
                 message.GetResponse(5000, new IPEndPoint(IPAddress.Parse("192.168.0.233"), 161), socket);
             }
-            catch (SharpTimeoutException)
+            catch (TimeoutException)
             {
                 hasException = true;
                 now = Environment.TickCount;
@@ -319,7 +320,7 @@ namespace Lextm.SharpSnmpLib.Tests
             {
                 message.GetResponse(5000, new IPEndPoint(IPAddress.Loopback, 161), socket);
             }
-            catch (SharpTimeoutException)
+            catch (TimeoutException)
             {
                 hasException = true;                
             }

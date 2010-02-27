@@ -23,7 +23,11 @@ namespace Lextm.SharpSnmpLib.Agent
         /// <value>The data.</value>
         protected internal override ISnmpData Data
         {
-            get { return _location; }
+            get 
+            { 
+                return _location; 
+            }
+            
             set
             {
                 if (value.TypeCode != SnmpType.OctetString)

@@ -1,3 +1,20 @@
+// Real data type, not an SNMP standard type.
+// Copyright (C) 2008-2010 Malcolm Crowe, Lex Li, and other contributors.
+// 
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public
+// License as published by the Free Software Foundation; either
+// version 2.1 of the License, or (at your option) any later version.
+// 
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// Lesser General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
 using System;
 using System.Globalization;
 using System.IO;
@@ -86,7 +103,7 @@ namespace Lextm.SharpSnmpLib
                 int b = (t == 0) ? 2 : (t == 1) ? 8 : 16;
                 if (t == 3)
                 {
-                    throw new SharpSnmpException("X690:8.5.5.2 reserved encoding");
+                    throw new SnmpException("X690:8.5.5.2 reserved encoding");
                 }
                 
                 int f = (c & 0xc) >> 2;
@@ -132,7 +149,7 @@ namespace Lextm.SharpSnmpLib
             {
                     case 0x40: return double.PositiveInfinity;
                     case 0x41: return double.NegativeInfinity;
-                    default: throw new SharpSnmpException("X690:8.5.7 reserved encoding");
+                    default: throw new SnmpException("X690:8.5.7 reserved encoding");
             }
         }
 

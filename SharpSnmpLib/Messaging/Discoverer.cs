@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Net;
@@ -131,7 +131,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             SocketException ex = exception as SocketException;
             if (ex != null && ex.ErrorCode == 10048)
             {
-                exception = new SharpSnmpException("Port is already used", exception);
+                exception = new SnmpException("Port is already used", exception);
             }
 
             handler(this, new ExceptionRaisedEventArgs(exception));

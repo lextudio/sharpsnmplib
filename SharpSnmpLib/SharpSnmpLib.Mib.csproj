@@ -107,7 +107,7 @@
     <Compile Include="Mib\MibDocument.cs" />
     <Compile Include="Mib\MibModule.cs" />
     <Compile Include="Mib\ObjectTree.cs" />
-    <Compile Include="Mib\SharpMibException.cs" />
+    <Compile Include="Mib\MibException.cs" />
     <Compile Include="Mib\Symbol.cs" />
     <Compile Include="Mib\ReloadableObjectRegistry.cs" />
     <Compile Include="Resource.Designer.cs">

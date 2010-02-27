@@ -54,14 +54,15 @@ namespace Lextm.SharpSnmpLib.Agent
                 return;
             }
 
-            Messenger.SendTrapV1(new IPEndPoint(ip, int.Parse(txtPort.Text, CultureInfo.InvariantCulture)),
-                                 IPAddress.Loopback, // here should be IP of the current machine.
-                                 new OctetString("public"),
-                                 new ObjectIdentifier(new uint[] { 1, 3, 6 }),
-                                 GenericCode.ColdStart,
-                                 0,
-                                 0,
-                                 new List<Variable>());
+            Messenger.SendTrapV1(
+                new IPEndPoint(ip, int.Parse(txtPort.Text, CultureInfo.InvariantCulture)),
+                IPAddress.Loopback, // here should be IP of the current machine.
+                new OctetString("public"),
+                new ObjectIdentifier(new uint[] { 1, 3, 6 }),
+                GenericCode.ColdStart,
+                0,
+                0,
+                new List<Variable>());
         }
 
         private void BtnTrap2Click(object sender, EventArgs e)
@@ -72,12 +73,14 @@ namespace Lextm.SharpSnmpLib.Agent
                 return;
             }
 
-            Messenger.SendTrapV2(0, VersionCode.V2,
-                             new IPEndPoint(ip, int.Parse(txtPort.Text, CultureInfo.InvariantCulture)),
-                             new OctetString("public"),
-                             new ObjectIdentifier(new uint[] { 1, 3, 6 }),
-                             0,
-                             new List<Variable>());
+            Messenger.SendTrapV2(
+                0,
+                VersionCode.V2,
+                new IPEndPoint(ip, int.Parse(txtPort.Text, CultureInfo.InvariantCulture)),
+                new OctetString("public"),
+                new ObjectIdentifier(new uint[] { 1, 3, 6 }),
+                0,
+                new List<Variable>());
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
@@ -92,12 +95,15 @@ namespace Lextm.SharpSnmpLib.Agent
 
             try
             {
-                Messenger.SendInform(0, VersionCode.V2,
-                                 new IPEndPoint(ip, int.Parse(txtPort.Text, CultureInfo.InvariantCulture)),
-                                 new OctetString("public"),
-                                 new ObjectIdentifier(new uint[] { 1, 3, 6 }),
-                                 0,
-                                 new List<Variable>(), 2000);
+                Messenger.SendInform(
+                    0,
+                    VersionCode.V2,
+                    new IPEndPoint(ip, int.Parse(txtPort.Text, CultureInfo.InvariantCulture)),
+                    new OctetString("public"),
+                    new ObjectIdentifier(new uint[] { 1, 3, 6 }),
+                    0,
+                    new List<Variable>(), 
+                    2000);
             }
             catch (Exception ex)
             {

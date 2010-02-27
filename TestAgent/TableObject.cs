@@ -4,8 +4,7 @@ namespace Lextm.SharpSnmpLib.Agent
 {
     internal abstract class TableObject : SnmpObject
     {
-        protected abstract IEnumerable<ScalarObject> Objects
-        { get; }
+        protected abstract IEnumerable<ScalarObject> Objects { get; }
 
         /// <summary>
         /// Matches the GET NEXT criteria.

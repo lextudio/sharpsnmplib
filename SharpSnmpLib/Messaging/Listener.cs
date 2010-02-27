@@ -352,7 +352,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             SocketException ex = exception as SocketException;
             if (ex != null && ex.ErrorCode == 10048)
             {
-                exception = new SharpSnmpException("Port is already used", exception);
+                exception = new SnmpException("Port is already used", exception);
             }
 
             handler(this, new ExceptionRaisedEventArgs(exception));
@@ -373,7 +373,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
             catch (Exception ex)
             {
-                SharpMessageFactoryException exception = new SharpMessageFactoryException("Invalid message bytes found. Use tracing to analyze the bytes.", ex);
+                MessageFactoryException exception = new MessageFactoryException("Invalid message bytes found. Use tracing to analyze the bytes.", ex);
                 exception.Bytes = param.GetBytes();
                 HandleException(exception);
             }

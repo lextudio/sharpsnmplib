@@ -68,7 +68,7 @@ namespace Lextm.SharpSnmpLib.Agent
         /// </summary>
         /// <param name="message">The message.</param>
         /// <returns>
-        /// 	<c>true</c> if this instance can handle the specified message; otherwise, <c>false</c>.
+        ///     <c>true</c> if this instance can handle the specified message; otherwise, <c>false</c>.
         /// </returns>
         public bool CanHandle(ISnmpMessage message)
         {

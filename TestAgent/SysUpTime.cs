@@ -7,7 +7,7 @@ namespace Lextm.SharpSnmpLib.Agent
     /// </summary>
     internal class SysUpTime : ScalarObject
     {
-        private readonly ISnmpData _upTime = new TimeTicks((uint)Environment.TickCount / 10);
+        private readonly ISnmpData _time = new TimeTicks((uint)Environment.TickCount / 10);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SysUpTime"/> class.
@@ -23,7 +23,7 @@ namespace Lextm.SharpSnmpLib.Agent
         /// <value>The data.</value>
         protected internal override ISnmpData Data
         {
-            get { return _upTime; }
+            get { return _time; }
             set { throw new AccessFailureException(); }
         }
     }

@@ -107,9 +107,9 @@
     </Compile>
     <Compile Include="Messaging\ReportMessage.cs" />
     <Compile Include="Messaging\SetRequestMessage.cs" />
-    <Compile Include="Messaging\SharpErrorException.cs" />
-    <Compile Include="Messaging\SharpMessageFactoryException.cs" />
-    <Compile Include="Messaging\SharpTimeoutException.cs" />
+    <Compile Include="Messaging\ErrorException.cs" />
+    <Compile Include="Messaging\MessageFactoryException.cs" />
+    <Compile Include="Messaging\TimeoutException.cs" />
     <Compile Include="Messaging\TrapV1Message.cs" />
     <Compile Include="Messaging\TrapV2Message.cs" />
     <Compile Include="Mib\DefinitionType.cs" />
@@ -139,14 +139,14 @@
     <Compile Include="Security\MD5AuthenticationProvider.cs" />
     <Compile Include="Security\SaltGenerator.cs" />
     <Compile Include="Security\SecurityLevel.cs" />
-    <Compile Include="Security\SecurityRecord.cs" />
-    <Compile Include="Security\SecurityRegistry.cs" />
+    <Compile Include="Security\ProviderPair.cs" />
+    <Compile Include="Security\UserRegistry.cs" />
     <Compile Include="Security\SHA1AuthenticationProvider.cs" />
     <Compile Include="Sequence.cs" />
     <Compile Include="SetRequestPdu.cs" />
-    <Compile Include="SharpSnmpException.cs" />
-    <Compile Include="SharpOperationException.cs" />
-    <Compile Include="SnmpDataFactory.cs" />
+    <Compile Include="SnmpException.cs" />
+    <Compile Include="OperationException.cs" />
+    <Compile Include="DataFactory.cs" />
     <Compile Include="SnmpType.cs" />
     <Compile Include="TimeTicks.cs" />
     <Compile Include="TrapV1Pdu.cs" />

@@ -386,7 +386,7 @@ namespace Lextm.SharpSnmpLib.Tests
         }
         
         [Test]
-        [ExpectedException(typeof(SharpMibException))]
+        [ExpectedException(typeof(MibException))]
         public void TestException()
         {
             Lexer lexer = new Lexer();

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Globalization;
 using System.IO;
 using System.Reflection;
-using System.Globalization;
+using System.Text;
 
 namespace Lextm.SharpSnmpLib.Agent
 {
@@ -29,19 +29,19 @@ namespace Lextm.SharpSnmpLib.Agent
         public void Log(SnmpContext context)
         {
             TimeSpan timeTaken = DateTime.Now.Subtract(context.CreatedTime);
-            _writer.WriteLine(string.Format(CultureInfo.InvariantCulture, "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9}",
-                                            DateTime.UtcNow,
-                                            Empty,
-                                            context.Request.Pdu.TypeCode,
-                                            GetStem(context.Request.Pdu.Variables),
-                                            context.Listener.Port,
-                                            context.Request.Parameters.UserName,
-                                            context.Sender.Address,
-                                            (context.Response == null)
-                                                ? Empty
-                                                : context.Response.Pdu.ErrorStatus.ToErrorCode().ToString(),
-                                            context.Request.Version,
-                                            timeTaken));
+            _writer.WriteLine(string.Format(
+                CultureInfo.InvariantCulture,
+                "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9}",
+                DateTime.UtcNow,
+                Empty,
+                context.Request.Pdu.TypeCode,
+                GetStem(context.Request.Pdu.Variables),
+                context.Listener.Port,
+                context.Request.Parameters.UserName,
+                context.Sender.Address,
+                (context.Response == null) ? Empty : context.Response.Pdu.ErrorStatus.ToErrorCode().ToString(),
+                context.Request.Version,
+                timeTaken));
         }
 
         private static string GetStem(IEnumerable<Variable> list)
