@@ -14,22 +14,22 @@ namespace Lextm.SharpSnmpLib.Mib
     {
         private readonly IDictionary<string, MibModule> _loaded = new Dictionary<string, MibModule>();
         private readonly IDictionary<string, MibModule> _pendings = new Dictionary<string, MibModule>();
-        private readonly IDictionary<string, IDefinition> nameTable;
-        private readonly Definition root;
+        private readonly IDictionary<string, IDefinition> _nameTable;
+        private readonly Definition _root;
         
         /// <summary>
         /// Creates an <see cref="ObjectTree"/> instance.
         /// </summary>
         public ObjectTree()
         {
-            root = Definition.RootDefinition;
-            IDefinition ccitt = new Definition(new OidValueAssignment("SNMPV2-SMI", "ccitt", null, 0), root);
-            IDefinition iso = new Definition(new OidValueAssignment("SNMPV2-SMI", "iso", null, 1), root);
-            IDefinition joint_iso_ccitt = new Definition(new OidValueAssignment("SNMPV2-SMI", "joint-iso-ccitt", null, 2), root);
-            nameTable = new Dictionary<string, IDefinition>();
-            nameTable.Add(iso.TextualForm, iso);
-            nameTable.Add(ccitt.TextualForm, ccitt);
-            nameTable.Add(joint_iso_ccitt.TextualForm, joint_iso_ccitt);
+            _root = Definition.RootDefinition;
+            IDefinition ccitt = new Definition(new OidValueAssignment("SNMPV2-SMI", "ccitt", null, 0), _root);
+            IDefinition iso = new Definition(new OidValueAssignment("SNMPV2-SMI", "iso", null, 1), _root);
+            IDefinition jointIsoCcitt = new Definition(new OidValueAssignment("SNMPV2-SMI", "joint-iso-ccitt", null, 2), _root);
+            _nameTable = new Dictionary<string, IDefinition>();
+            _nameTable.Add(iso.TextualForm, iso);
+            _nameTable.Add(ccitt.TextualForm, ccitt);
+            _nameTable.Add(jointIsoCcitt.TextualForm, jointIsoCcitt);
         }
         
         public ObjectTree(ICollection<ModuleLoader> loaders) : this()
@@ -92,16 +92,16 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             get
             {
-                return root;
+                return _root;
             }
         }
 
         public IDefinition Find(string moduleName, string name)
         {
             string full = moduleName + "::" + name;
-            if (nameTable.ContainsKey(full))
+            if (_nameTable.ContainsKey(full))
             {
-                return nameTable[full];
+                return _nameTable[full];
             }
             
             return null;
@@ -109,11 +109,11 @@ namespace Lextm.SharpSnmpLib.Mib
         
         internal IDefinition Find(string name)
         {
-            foreach (string key in nameTable.Keys)
+            foreach (string key in _nameTable.Keys)
             {
-                if (string.CompareOrdinal(key.Split(new string[] { "::" }, StringSplitOptions.None)[1], name) == 0)
+                if (string.CompareOrdinal(key.Split(new [] { "::" }, StringSplitOptions.None)[1], name) == 0)
                 {
-                    return nameTable[key];
+                    return _nameTable[key];
                 }
             }
             
@@ -132,7 +132,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 throw new ArgumentException("numerical cannot be empty");
             }
             
-            IDefinition result = root;
+            IDefinition result = _root;
             for (int i = 0; i < numerical.Length; i++)
             {
                 result = result.GetChildAt(numerical[i]);
@@ -182,7 +182,7 @@ namespace Lextm.SharpSnmpLib.Mib
             // */
             
             // * algorithm 1
-            return root.Add(node);
+            return _root.Add(node);
             
             // */
         }
@@ -356,9 +356,9 @@ namespace Lextm.SharpSnmpLib.Mib
         
         private void AddToTable(IDefinition result)
         {
-            if (result != null && !nameTable.ContainsKey(result.TextualForm))
+            if (result != null && !_nameTable.ContainsKey(result.TextualForm))
             {
-                nameTable.Add(result.TextualForm, result);
+                _nameTable.Add(result.TextualForm, result);
             }
         }
 
@@ -494,23 +494,23 @@ namespace Lextm.SharpSnmpLib.Mib
                 List<Definition> parsed = new List<Definition>();
                 foreach (Definition node in pendings)
                 {
-                    IDefinition def;
+                    IDefinition parent;
                     try
                     {
-                        def = Find(Definition.GetParent(node));
+                        parent = Find(Definition.GetParent(node));
                     }
                     catch (ArgumentOutOfRangeException)
                     {
-                        def = null;
+                        parent = null;
                     }
 
-                    if (def == null)
+                    if (parent == null)
                     {
                         continue;
                     }
 
-                    node.DetermineType(def);
-                    ((Definition)def).Append(node);
+                    node.DetermineType(parent);
+                    node.ParentDefinition = parent;
                     AddToTable(node);
                     parsed.Add(node);
                 }

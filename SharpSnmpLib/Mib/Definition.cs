@@ -15,7 +15,7 @@ namespace Lextm.SharpSnmpLib.Mib
         private readonly uint _value;
         private DefinitionType _type;
         private readonly IDictionary<uint, IDefinition> _children = new Dictionary<uint, IDefinition>();
-        private readonly Definition _parentNode;
+        private Definition _parentNode;
         private readonly string _typeString;
         
         private Definition()
@@ -112,9 +112,18 @@ namespace Lextm.SharpSnmpLib.Mib
         
         public IDefinition ParentDefinition
         {
-            get { return _parentNode; }
+            get
+            {
+                return _parentNode;
+            }
+
+            internal set
+            {
+                _parentNode = (Definition) value;
+                _parentNode.Append(this);
+            }
         }
-        
+
         /// <summary>
         /// Children definitions.
         /// </summary>
@@ -238,7 +247,7 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             if (parentId == null)
             {
-                return new uint[] { value };
+                return new[] { value };
             }
 
             // Old method with List<uint> dropped as it incurred two copies of the array (vs 1 for this method).

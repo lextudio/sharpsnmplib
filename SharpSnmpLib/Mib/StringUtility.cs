@@ -14,17 +14,28 @@ using System.Text;
 namespace Lextm.SharpSnmpLib.Mib
 {
     /// <summary>
-    /// Description of StringUtility.
+    /// String utility.
     /// </summary>
-    internal static class StringUtility
+    public static class StringUtility
     {
-        internal static string ExtractName(string input)
+        /// <summary>
+        /// Extracts the name.
+        /// </summary>
+        /// <param name="input">The input.</param>
+        /// <returns></returns>
+        public static string ExtractName(string input)
         {
             int left = input.IndexOf('(');
             return left == -1 ? input : input.Substring(0, left);
         }
-        
-        internal static uint ExtractValue(string input)
+
+        /// <summary>
+        /// Extracts the value.
+        /// </summary>
+        /// <param name="input">The input.</param>
+        /// <returns></returns>
+        [CLSCompliant(false)]
+        public static uint ExtractValue(string input)
         {
             int left = input.IndexOf('(');
             int right = input.IndexOf(')');

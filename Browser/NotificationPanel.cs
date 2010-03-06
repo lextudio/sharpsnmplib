@@ -83,17 +83,17 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void Listener_InformRequestReceived(object sender, MessageReceivedEventArgs<InformRequestMessage> e)
         {
-            LogMessage(string.Format(StrSends, DateTime.Now, e.Sender, e.Message));
+            LogMessage(string.Format(StrSends, DateTime.Now, e.Sender, e.Message.ToString(_objects)));
         }
 
         private void Listener_TrapV2Received(object sender, MessageReceivedEventArgs<TrapV2Message> e)
         {
-            LogMessage(string.Format(StrSends, DateTime.Now, e.Sender, e.Message));
+            LogMessage(string.Format(StrSends, DateTime.Now, e.Sender, e.Message.ToString(_objects)));
         }
 
         private void Listener_TrapV1Received(object sender, MessageReceivedEventArgs<TrapV1Message> e)
         {
-            LogMessage(string.Format(StrSends, DateTime.Now, e.Sender, e.Message));
+            LogMessage(string.Format(StrSends, DateTime.Now, e.Sender, e.Message.ToString(_objects)));
         }
 
         private void Listener_ExceptionRaised(object sender, ExceptionRaisedEventArgs e)

@@ -165,6 +165,25 @@ namespace Lextm.SharpSnmpLib
         }
 
         /// <summary>
+        /// Gets the enterprise.
+        /// </summary>
+        /// <value>The enterprise.</value>
+        public ObjectIdentifier Enterprise
+        {
+            get { return _enterprise; }
+        }
+
+        /// <summary>
+        /// Gets the time stamp.
+        /// </summary>
+        /// <value>The time stamp.</value>
+        [CLSCompliant(false)]
+        public uint TimeStamp
+        {
+            get { return _time.ToUInt32(); }
+        }
+
+        /// <summary>
         /// Appends the bytes to <see cref="Stream"/>.
         /// </summary>
         /// <param name="stream">The stream.</param>

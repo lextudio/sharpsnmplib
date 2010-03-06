@@ -20,7 +20,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Net;
 using System.Net.Sockets;
-
+using Lextm.SharpSnmpLib.Mib;
 using Lextm.SharpSnmpLib.Security;
 
 namespace Lextm.SharpSnmpLib.Messaging
@@ -57,6 +57,8 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
             
             _version = version;
+            _enterprise = enterprise;
+            _time = time;
             _header = Header.Empty;
             _parameters = new SecurityParameters(null, null, null, community, null, null);
             TrapV2Pdu pdu = new TrapV2Pdu(
@@ -66,8 +68,6 @@ namespace Lextm.SharpSnmpLib.Messaging
                 variables);
             _scope = new Scope(null, null, pdu);
             _pair = ProviderPair.Default;
-            _enterprise = enterprise;
-            _time = time;
         }
         
         internal TrapV2Message(VersionCode version, Header header, SecurityParameters parameters, Scope scope, ProviderPair record)
@@ -215,12 +215,25 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public override string ToString()
         {
+            return ToString(null);
+        }
+
+        /// <summary>
+        /// Returns a <see cref="System.String"/> that represents this instance.
+        /// </summary>
+        /// <param name="objects">The objects.</param>
+        /// <returns>
+        /// A <see cref="System.String"/> that represents this instance.
+        /// </returns>
+        [CLSCompliant(false)]
+        public string ToString(IObjectRegistry objects)
+        {
             return string.Format(
                 CultureInfo.InvariantCulture,
                 "SNMPv2 trap: time stamp: {0}; community: {1}; enterprise: {2}; varbind count: {3}",
                 TimeStamp.ToString(CultureInfo.InvariantCulture),
                 Community,
-                Enterprise,
+                Enterprise.ToString(objects),
                 Variables.Count.ToString(CultureInfo.InvariantCulture));
         }
     }

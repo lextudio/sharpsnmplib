@@ -25,8 +25,10 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Net;
 using System.Net.Sockets;
+using Lextm.SharpSnmpLib.Mib;
 using Lextm.SharpSnmpLib.Security;
 
 namespace Lextm.SharpSnmpLib.Messaging
@@ -41,6 +43,8 @@ namespace Lextm.SharpSnmpLib.Messaging
         private readonly SecurityParameters _parameters;
         private readonly Scope _scope;
         private readonly ProviderPair _pair;
+        private uint _time;
+        private ObjectIdentifier _enterprise;
 
         /// <summary>
         /// Creates a <see cref="InformRequestMessage"/> with all contents.
@@ -60,6 +64,8 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
             
             _version = version;
+            _enterprise = enterprise;
+            _time = time;
             _header = Header.Empty;
             _parameters = new SecurityParameters(null, null, null, community, null, null);
             InformRequestPdu pdu = new InformRequestPdu(
@@ -83,6 +89,9 @@ namespace Lextm.SharpSnmpLib.Messaging
             _parameters = parameters;
             _scope = scope;
             _pair = record;
+            InformRequestPdu pdu = (InformRequestPdu) scope.Pdu;
+            _enterprise = pdu.Enterprise;
+            _time = pdu.TimeStamp;
         }
         
         /// <summary>
@@ -103,6 +112,33 @@ namespace Lextm.SharpSnmpLib.Messaging
         public VersionCode Version
         {
             get { return _version; }
+        }
+
+        /// <summary>
+        /// Gets the community.
+        /// </summary>
+        /// <value>The community.</value>
+        public OctetString Community
+        {
+            get { return _parameters.UserName; }
+        }
+
+        /// <summary>
+        /// Gets the time stamp.
+        /// </summary>
+        /// <value>The time stamp.</value>
+        [CLSCompliant(false)]
+        public uint TimeStamp
+        {
+            get { return _time; }
+        }
+
+        /// <summary>
+        /// Enterprise.
+        /// </summary>
+        public ObjectIdentifier Enterprise
+        {
+            get { return _enterprise; }
         }
 
         /// <summary>
@@ -211,7 +247,25 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public override string ToString()
         {
-            return "INFORM request message: version: " + _version + "; " + _parameters.UserName + "; " + _scope.Pdu;
+            return ToString(null);
+        }
+
+        /// <summary>
+        /// Returns a <see cref="System.String"/> that represents this instance.
+        /// </summary>
+        /// <param name="objects">The objects.</param>
+        /// <returns>
+        /// A <see cref="System.String"/> that represents this instance.
+        /// </returns>
+        [CLSCompliant(false)]
+        public string ToString(IObjectRegistry objects)
+        {
+            return string.Format(CultureInfo.InvariantCulture,
+                                 "INFORM request message: time stamp: {0}; community: {1}; enterprise: {2}; varbind count: {3}",
+                                 TimeStamp.ToString(CultureInfo.InvariantCulture),
+                                 Community,
+                                 Enterprise.ToString(objects),
+                                 Variables.Count.ToString(CultureInfo.InvariantCulture));
         }
     }
 }

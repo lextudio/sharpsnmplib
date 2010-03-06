@@ -21,6 +21,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Text;
+using Lextm.SharpSnmpLib.Mib;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -455,6 +456,19 @@ namespace Lextm.SharpSnmpLib
             }
 
             return left.CompareTo(right) == 0;
+        }
+
+        /// <summary>
+        /// Returns a <see cref="System.String"/> that represents this instance.
+        /// </summary>
+        /// <param name="objects">The objects.</param>
+        /// <returns>
+        /// A <see cref="System.String"/> that represents this instance.
+        /// </returns>
+        [CLSCompliant(false)]
+        public string ToString(IObjectRegistry objects)
+        {
+            return objects == null ? ToString() : StringUtility.GetAlternativeTextualForm(objects.Tree.Find(_oid));
         }
     }
 }

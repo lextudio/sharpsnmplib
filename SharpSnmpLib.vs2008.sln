@@ -48,8 +48,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestGetBulk", "testgetbulk\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpSnmpLib.Optional", "SharpSnmpLib\SharpSnmpLib.Optional.csproj", "{33110773-3E28-4963-8956-C07FB8A5F7E3}"
 EndProject
-Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Install", "Install\Install.wixproj", "{3B85C856-3DFB-40CD-A5C9-F724D812E004}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -288,18 +286,6 @@ Global
 		{33110773-3E28-4963-8956-C07FB8A5F7E3}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{33110773-3E28-4963-8956-C07FB8A5F7E3}.Release|x86.ActiveCfg = Release|Any CPU
 		{33110773-3E28-4963-8956-C07FB8A5F7E3}.Release|x86.Build.0 = Release|x86
-		{3B85C856-3DFB-40CD-A5C9-F724D812E004}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{3B85C856-3DFB-40CD-A5C9-F724D812E004}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3B85C856-3DFB-40CD-A5C9-F724D812E004}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{3B85C856-3DFB-40CD-A5C9-F724D812E004}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{3B85C856-3DFB-40CD-A5C9-F724D812E004}.Debug|x86.ActiveCfg = Debug|x86
-		{3B85C856-3DFB-40CD-A5C9-F724D812E004}.Debug|x86.Build.0 = Debug|x86
-		{3B85C856-3DFB-40CD-A5C9-F724D812E004}.Release|Any CPU.ActiveCfg = Release|x86
-		{3B85C856-3DFB-40CD-A5C9-F724D812E004}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3B85C856-3DFB-40CD-A5C9-F724D812E004}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{3B85C856-3DFB-40CD-A5C9-F724D812E004}.Release|Mixed Platforms.Build.0 = Release|x86
-		{3B85C856-3DFB-40CD-A5C9-F724D812E004}.Release|x86.ActiveCfg = Release|x86
-		{3B85C856-3DFB-40CD-A5C9-F724D812E004}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

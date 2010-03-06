@@ -17,43 +17,43 @@ namespace Lextm.SharpSnmpLib.Mib
     /// </summary>
     internal sealed class ModuleLoader
     {
-        private List<Definition> nodes;
-        private List<string> dependents;
-        private MibModule module;
+        private readonly List<Definition> _nodes;
+        private readonly List<string> _dependents;
+        private readonly MibModule _module;
         
         public ModuleLoader(TextReader reader, string moduleName)
         {
-            nodes = new List<Definition>();
-            dependents = new List<string>();
+            _nodes = new List<Definition>();
+            _dependents = new List<string>();
 
             string line;
             while ((line = reader.ReadLine()) != null)
             {
                 if (line.StartsWith("#", StringComparison.Ordinal))
                 {
-                    dependents.AddRange(ParseDependents(line));
+                    _dependents.AddRange(ParseDependents(line));
                     continue;
                 }
 
-                nodes.Add(ParseLine(line, moduleName));
+                _nodes.Add(ParseLine(line, moduleName));
             }
 
-            module = new MibModule(moduleName, dependents);
+            _module = new MibModule(moduleName, _dependents);
         }
         
         public MibModule Module
         {
-            get { return module; }
+            get { return _module; }
         }
         
         public IEnumerable<Definition> Nodes
         {
-            get { return nodes; }
+            get { return _nodes; }
         }
 
         private static IEnumerable<string> ParseDependents(string line)
         {
-            return line.Substring(1).Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            return line.Substring(1).Split(new [] { ',' }, StringSplitOptions.RemoveEmptyEntries);
         }
 
         private static Definition ParseLine(string line, string module)

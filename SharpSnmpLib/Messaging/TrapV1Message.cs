@@ -29,6 +29,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Net;
 using System.Net.Sockets;
+using Lextm.SharpSnmpLib.Mib;
 
 namespace Lextm.SharpSnmpLib.Messaging
 {
@@ -45,7 +46,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         private readonly int _specific;
         private readonly IList<Variable> _variables;
         private readonly VersionCode _version;
-        private readonly ISnmpPdu _pdu;
+        private readonly TrapV1Pdu _pdu;
         private byte[] _bytes;
         
         /// <summary>
@@ -98,18 +99,18 @@ namespace Lextm.SharpSnmpLib.Messaging
             
             _community = (OctetString)body[1];
             _version = (VersionCode)((Integer32)body[0]).ToInt32();
-            _pdu = (ISnmpPdu)body[2];
-            if (_pdu.TypeCode != SnmpType.TrapV1Pdu)
+            ISnmpPdu pdu = (ISnmpPdu)body[2];
+            if (pdu.TypeCode != SnmpType.TrapV1Pdu)
             {
                 throw new ArgumentException("wrong message type");
             }
             
-            TrapV1Pdu trapPdu = (TrapV1Pdu)_pdu;
-            _enterprise = trapPdu.Enterprise;
-            _agent = trapPdu.AgentAddress.ToIPAddress();
-            _generic = trapPdu.Generic;
-            _specific = trapPdu.Specific;
-            _time = trapPdu.TimeStamp.ToUInt32();
+            _pdu = (TrapV1Pdu) pdu;
+            _enterprise = _pdu.Enterprise;
+            _agent = _pdu.AgentAddress.ToIPAddress();
+            _generic = _pdu.Generic;
+            _specific = _pdu.Specific;
+            _time = _pdu.TimeStamp.ToUInt32();
             _variables = _pdu.Variables;
             ////_bytes = body.ToBytes();
         }
@@ -292,10 +293,22 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public override string ToString()
         {
-            return string.Format(
-                CultureInfo.InvariantCulture,
+            return ToString(null);
+        }
+
+        /// <summary>
+        /// Returns a <see cref="System.String"/> that represents this instance.
+        /// </summary>
+        /// <param name="objects">The objects.</param>
+        /// <returns>
+        /// A <see cref="System.String"/> that represents this instance.
+        /// </returns>
+        [CLSCompliant(false)]
+        public string ToString(IObjectRegistry objects)
+        {
+            return string.Format(CultureInfo.InvariantCulture,
                 "SNMPv1 trap: {0}",
-                _pdu);
+                _pdu.ToString(objects));
         }
     }
 }

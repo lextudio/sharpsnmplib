@@ -92,7 +92,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 throw new ArgumentException("textual cannot be empty");
             }
             
-            string[] content = textual.Split(new string[] { "::" }, StringSplitOptions.None);
+            string[] content = textual.Split(new[] { "::" }, StringSplitOptions.None);
             if (content.Length != 2)
             {
                 throw new ArgumentException("textual format must be '<module>::<name>'");
