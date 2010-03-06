@@ -61,7 +61,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 if (_socket != null)
                 {
                     _socket.Close();    // Note that closing the socket releases the _socket.ReceiveFrom call.
-                    _socket.Dispose(disposing);
+                    (_socket as IDisposable).Dispose();
                     _socket = null;
                 }
             }
@@ -375,7 +375,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             catch (Exception ex)
             {
                 MessageFactoryException exception = new MessageFactoryException("Invalid message bytes found. Use tracing to analyze the bytes.", ex);
-                exception.Bytes = param.GetBytes();
+                exception.SetBytes(param.GetBytes());
                 HandleException(exception);
             }
 

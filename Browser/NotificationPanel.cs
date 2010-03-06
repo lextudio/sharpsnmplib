@@ -11,9 +11,10 @@ using System.Net;
 using System.Net.Sockets;
 using System.Windows.Forms;
 
+using Lextm.SharpSnmpLib.Messaging;
+using Lextm.SharpSnmpLib.Mib;
 using Microsoft.Practices.Unity;
 using WeifenLuo.WinFormsUI.Docking;
-using Lextm.SharpSnmpLib.Messaging;
 
 namespace Lextm.SharpSnmpLib.Browser
 {
@@ -26,6 +27,7 @@ namespace Lextm.SharpSnmpLib.Browser
         private const string StrSends = "[{1}] [{0}] {2}";
         private Listener _listener;
         private Listener _listenerV6;
+        private IObjectRegistry _objects;
         
         public NotificationPanel()
         {
@@ -57,6 +59,13 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             get { return _listenerV6; }
             set { _listenerV6 = value; }
+        }
+        
+        [Dependency]
+        public IObjectRegistry Objects
+        {
+            get { return _objects; }
+            set { _objects = value; }
         }
         
         private void NotificationPanel_Load(object sender, EventArgs e)
