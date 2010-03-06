@@ -98,7 +98,7 @@ namespace Lextm.SharpSnmpLib.Browser
 		{
 			Variable result = manager.Objects.CreateVariable(textual);
 			TraceSource source = new TraceSource("Browser");
-			source.TraceInformation(manager.GetSingle(Agent, GetCommunity, result).ToString());
+			source.TraceInformation(manager.GetSingle(Agent, GetCommunity, result).ToString(manager.Objects));
 			source.Flush();
 			source.Close();
 		}
@@ -124,7 +124,7 @@ namespace Lextm.SharpSnmpLib.Browser
                     response);
             }
 
-            source.TraceInformation(response.Pdu.Variables[0].ToString());
+            source.TraceInformation(response.Pdu.Variables[0].ToString(manager.Objects));
             source.Flush();
 		    source.Close();
 		}
@@ -132,7 +132,7 @@ namespace Lextm.SharpSnmpLib.Browser
 		internal void Set(Manager manager, string textual, ISnmpData data)
 		{
             TraceSource source = new TraceSource("Browser");
-            source.TraceInformation(manager.SetSingle(Agent, GetCommunity, manager.Objects.CreateVariable(textual, data)).ToString());
+            source.TraceInformation(manager.SetSingle(Agent, GetCommunity, manager.Objects.CreateVariable(textual, data)).ToString(manager.Objects));
             source.Flush();
             source.Close();
 		}
@@ -190,7 +190,7 @@ namespace Lextm.SharpSnmpLib.Browser
 
 	        foreach (Variable v in list)
             {
-                source.TraceInformation(v.ToString());
+                source.TraceInformation(v.ToString(manager.Objects));
             }
 
 	        source.Flush();

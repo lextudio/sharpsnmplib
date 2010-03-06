@@ -468,7 +468,18 @@ namespace Lextm.SharpSnmpLib
         [CLSCompliant(false)]
         public string ToString(IObjectRegistry objects)
         {
-            return objects == null ? ToString() : StringUtility.GetAlternativeTextualForm(objects.Tree.Find(_oid));
+            if (objects == null)
+            {
+                return ToString();
+            }
+            
+            string result = StringUtility.GetAlternativeTextualForm(objects.Tree.Find(_oid));
+            if (string.IsNullOrEmpty(result))
+            {
+                return ToString();
+            }
+
+            return result;
         }
     }
 }

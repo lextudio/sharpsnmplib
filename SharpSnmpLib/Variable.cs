@@ -26,6 +26,8 @@
 
 using System;
 using System.Collections.Generic;
+using Lextm.SharpSnmpLib.Mib;
+using System.Globalization;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -164,7 +166,20 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public override string ToString()
         {
-            return "Variable: Id: " + Id + "; Data: " + Data;
+            return ToString(null);
+        }
+
+        /// <summary>
+        /// Returns a <see cref="System.String"/> that represents this instance.
+        /// </summary>
+        /// <param name="objects">The objects.</param>
+        /// <returns>
+        /// A <see cref="System.String"/> that represents this instance.
+        /// </returns>
+        [CLSCompliant(false)]
+        public string ToString(IObjectRegistry objects)
+        {
+            return string.Format(CultureInfo.InvariantCulture, "Variable: Id: {0}; Data: {1}", Id.ToString(objects), Data);
         }
     }
 }
