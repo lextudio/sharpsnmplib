@@ -147,9 +147,10 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         private ISnmpMessage GetResponse(int timeout, IPEndPoint receiver, Socket udpSocket)
         {
-            UserRegistry registry = new UserRegistry();
+            UserRegistry registry = null;
             if (Version == VersionCode.V3)
             {
+                registry = new UserRegistry();
                 Helper.Authenticate(this, _pair);
                 registry.Add(_parameters.UserName, _pair);
             }

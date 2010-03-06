@@ -8,7 +8,8 @@ namespace Lextm.SharpSnmpLib.Agent
     /// </summary>
     internal class SysDescr : ScalarObject
     {
-        private readonly OctetString _description = new OctetString(string.Format(CultureInfo.InvariantCulture, "{0};{1}", Environment.MachineName, Environment.OSVersion));
+        private readonly OctetString _description =
+            new OctetString(string.Format(CultureInfo.InvariantCulture, "#SNMP Agent on {0}", Environment.OSVersion));
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SysDescr"/> class.

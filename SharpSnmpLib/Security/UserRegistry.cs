@@ -26,6 +26,16 @@ namespace Lextm.SharpSnmpLib.Security
     public sealed class UserRegistry
     {
         private readonly IDictionary<OctetString, ProviderPair> _users = new Dictionary<OctetString, ProviderPair>();
+        private static readonly UserRegistry EmptyRegistry = new UserRegistry();
+
+        /// <summary>
+        /// Gets the empty.
+        /// </summary>
+        /// <value>The empty.</value>
+        public static UserRegistry Empty
+        {
+            get { return EmptyRegistry; }
+        }
 
         /// <summary>
         /// Adds the specified user name.

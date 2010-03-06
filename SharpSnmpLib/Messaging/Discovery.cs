@@ -23,6 +23,7 @@
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
+
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
@@ -76,8 +77,17 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             using (Socket socket = Helper.GetSocket(receiver))
             {
-                return (ReportMessage)MessageFactory.GetResponse(receiver, _discovery.ToBytes(), _discovery.RequestId, timeout, new UserRegistry(), socket);
+                return (ReportMessage)MessageFactory.GetResponse(receiver, ToBytes(), _discovery.RequestId, timeout, UserRegistry.Empty, socket);
             }
+        }
+
+        /// <summary>
+        /// Converts to the bytes.
+        /// </summary>
+        /// <returns></returns>
+        public byte[] ToBytes()
+        {
+            return _discovery.ToBytes();
         }
     }
 }

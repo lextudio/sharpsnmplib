@@ -25,6 +25,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Gets the variable.
         /// </summary>
         /// <value>The variable.</value>
+        /// <remarks>If the agent is SNMP v3, this is <code>null</code>.</remarks>
         public Variable Variable
         {
             get { return _variable; }

@@ -139,7 +139,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             using (Socket socket = Helper.GetSocket(receiver))
             {
-                return MessageFactory.GetResponse(receiver, ToBytes(), RequestId, timeout, new UserRegistry(), socket);
+                return MessageFactory.GetResponse(receiver, ToBytes(), RequestId, timeout, UserRegistry.Empty, socket);
             }
         }
 
@@ -152,7 +152,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public ISnmpMessage GetResponse(int timeout, IPEndPoint receiver, Socket socket)
         {
-            return MessageFactory.GetResponse(receiver, ToBytes(), RequestId, timeout, new UserRegistry(), socket);
+            return MessageFactory.GetResponse(receiver, ToBytes(), RequestId, timeout, UserRegistry.Empty, socket);
         }
 
         /// <summary>

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
@@ -34,25 +33,32 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="broadcastAddress">The broadcast address.</param>
         /// <param name="community">The community.</param>
         /// <param name="timeout">The timeout.</param>
+        /// <remarks><paramref name="broadcastAddress"/> must be an IPv4 address. IPv6 is not yet supported here.</remarks>
         public void Discover(VersionCode version, IPEndPoint broadcastAddress, OctetString community, int timeout)
         {
-            if (version == VersionCode.V3)
-            {
-                throw new NotSupportedException("SNMP v3 is not supported");
-            }
-            
             if (broadcastAddress == null)
             {
                 throw new ArgumentNullException("broadcastAddress");
             }
 
-            Variable v = new Variable(new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 1, 1, 0 }));
-            List<Variable> variables = new List<Variable>();
-            variables.Add(v);
+            byte[] bytes;
+            if (version == VersionCode.V3)
+            {
+                // throw new NotSupportedException("SNMP v3 is not supported");
+                Discovery discovery = new Discovery(1, 101);
+                bytes = discovery.ToBytes();
+            }
+            else
+            {
+                Variable v = new Variable(new ObjectIdentifier(new uint[] {1, 3, 6, 1, 2, 1, 1, 1, 0}));
+                List<Variable> variables = new List<Variable>();
+                variables.Add(v);
 
-            _requestId = Messenger.NextId;
-            GetRequestMessage message = new GetRequestMessage(_requestId, version, community, variables);
-            byte[] bytes = message.ToBytes();
+                _requestId = Messenger.NextId;
+                GetRequestMessage message = new GetRequestMessage(_requestId, version, community, variables);
+                bytes = message.ToBytes();
+            }
+
             using (UdpClient udp = new UdpClient(broadcastAddress.AddressFamily))
             {
                 #if (!CF)
@@ -144,28 +150,45 @@ namespace Lextm.SharpSnmpLib.Messaging
 
         private void HandleMessage(MessageParams param)
         {
-            foreach (ISnmpMessage message in MessageFactory.ParseMessages(param.GetBytes(), 0, param.Number, new UserRegistry()))
+            foreach (ISnmpMessage message in MessageFactory.ParseMessages(param.GetBytes(), 0, param.Number, UserRegistry.Empty))
             {
-                if (message.Pdu.TypeCode != SnmpType.GetResponsePdu)
+                if (message.Pdu.TypeCode == SnmpType.ReportPdu)
                 {
-                    continue;
-                }
+                    ReportMessage report = (ReportMessage) message;
+                    if (report.RequestId != _requestId)
+                    {
+                        continue;
+                    }
 
-                GetResponseMessage response = (GetResponseMessage) message;
-                if (response.RequestId != _requestId)
-                {
-                    continue;
-                }
+                    if (report.Pdu.ErrorStatus.ToErrorCode() != ErrorCode.NoError)
+                    {
+                        continue;
+                    }
 
-                if (response.ErrorStatus != ErrorCode.NoError)
-                {
-                    continue;
+                    EventHandler<AgentFoundEventArgs> handler = AgentFound;
+                    if (handler != null)
+                    {
+                        handler(this, new AgentFoundEventArgs(param.Sender, null));
+                    }
                 }
-
-                EventHandler<AgentFoundEventArgs> handler = AgentFound;
-                if (handler != null)
+                if (message.Pdu.TypeCode == SnmpType.GetResponsePdu)
                 {
-                    handler(this, new AgentFoundEventArgs(param.Sender, response.Variables[0]));
+                    GetResponseMessage response = (GetResponseMessage) message;
+                    if (response.RequestId != _requestId)
+                    {
+                        continue;
+                    }
+
+                    if (response.ErrorStatus != ErrorCode.NoError)
+                    {
+                        continue;
+                    }
+
+                    EventHandler<AgentFoundEventArgs> handler = AgentFound;
+                    if (handler != null)
+                    {
+                        handler(this, new AgentFoundEventArgs(param.Sender, response.Variables[0]));
+                    }
                 }
             }
         }

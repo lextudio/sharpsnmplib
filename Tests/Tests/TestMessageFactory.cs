@@ -41,7 +41,7 @@ namespace Lextm.SharpSnmpLib.Tests
                 0x01, 0x04, 0x01, 0x90, 0x72, 0x87, 0x68, 0x02, 0x30, 0x19, 0x06, 0x0b, 0x2b, 0x06, 0x01, 0x04, 0x01, 0x90, 0x72, 0x87,
                 0x69, 0x15, 0x00, 0x04, 0x0a, 0x49, 0x6e, 0x66, 0x6f, 0x72, 0x6d, 0x54, 0x65, 0x73, 0x74 };
 
-            IList<ISnmpMessage> messages = MessageFactory.ParseMessages(new MemoryStream(data), new Lextm.SharpSnmpLib.Security.UserRegistry());
+            IList<ISnmpMessage> messages = MessageFactory.ParseMessages(new MemoryStream(data), UserRegistry.Empty);
             Assert.AreEqual(SnmpType.InformRequestPdu, messages[0].Pdu.TypeCode);
             //Assert.AreEqual(4, messages[0].TimeStamp);
         }
@@ -51,7 +51,7 @@ namespace Lextm.SharpSnmpLib.Tests
         {
             string bytes = "30 29 02 01 00 04 06 70 75 62 6c 69 63 a0 1c 02 04 4f 89 fb dd" + Environment.NewLine +
                 "02 01 00 02 01 00 30 0e 30 0c 06 08 2b 06 01 02 01 01 05 00 05 00";
-            IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes, new Lextm.SharpSnmpLib.Security.UserRegistry());
+            IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes, UserRegistry.Empty);
             Assert.AreEqual(1, messages.Count);
             GetRequestMessage m = (GetRequestMessage)messages[0];
             Variable v = m.Variables[0];
@@ -65,7 +65,7 @@ namespace Lextm.SharpSnmpLib.Tests
             try
             {
                 string bytes = "30 39 02 01 01 04 06 70 75 62 6C 69 63 A7 2C 02 01 01 02 01 00 02 01 00 30 21 30 0D 06 08 2B 06 01 02 01 01";
-                IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes, new Lextm.SharpSnmpLib.Security.UserRegistry());
+                IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes, UserRegistry.Empty);
                 Assert.AreEqual(1, messages.Count);
             }
             catch (Exception)
@@ -171,13 +171,13 @@ namespace Lextm.SharpSnmpLib.Tests
         [Test]
         public void TestGetResponseV3()
         {
-            string bytes = "30 6B 02 01  03 30 0F 02  02 6A 08 02  03 00 FF E3" +
-                "04 01 00 02  01 03 04 23  30 21 04 0D  80 00 1F 88" +
-                "80 E9 63 00  00 D6 1F F4  49 02 01 05  02 02 0F 1C" +
-                "04 05 6C 65  78 74 6D 04  00 04 00 30  30 04 0D 80" +
-                "00 1F 88 80  E9 63 00 00  D6 1F F4 49  04 00 A2 1D" +
-                "02 02 2C 6A  02 01 00 02  01 00 30 11  30 0F 06 08" +
-                "2B 06 01 02  01 01 03 00  43 03 05 E7  14";
+            const string bytes = "30 6B 02 01  03 30 0F 02  02 6A 08 02  03 00 FF E3" +
+                                 "04 01 00 02  01 03 04 23  30 21 04 0D  80 00 1F 88" +
+                                 "80 E9 63 00  00 D6 1F F4  49 02 01 05  02 02 0F 1C" +
+                                 "04 05 6C 65  78 74 6D 04  00 04 00 30  30 04 0D 80" +
+                                 "00 1F 88 80  E9 63 00 00  D6 1F F4 49  04 00 A2 1D" +
+                                 "02 02 2C 6A  02 01 00 02  01 00 30 11  30 0F 06 08" +
+                                 "2B 06 01 02  01 01 03 00  43 03 05 E7  14";
             UserRegistry registry = new Lextm.SharpSnmpLib.Security.UserRegistry();
             registry.Add(new OctetString("lextm"), ProviderPair.Default);
             IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes, registry);
@@ -187,14 +187,14 @@ namespace Lextm.SharpSnmpLib.Tests
         [Test]
         public void TestDiscoveryResponse()
         {
-            string bytes = "30 66 02 01  03 30 0F 02  02 6A 09 02  03 00 FF E3" +
-                "04 01 00 02  01 03 04 1E  30 1C 04 0D  80 00 1F 88" +
-                "80 E9 63 00  00 D6 1F F4  49 02 01 05  02 02 0F 1B" +
-                "04 00 04 00  04 00 30 30  04 0D 80 00  1F 88 80 E9" +
-                "63 00 00 D6  1F F4 49 04  00 A8 1D 02  02 2C 6B 02" +
-                "01 00 02 01  00 30 11 30  0F 06 0A 2B  06 01 06 03" +
-                "0F 01 01 04  00 41 01 03";
-            IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes, new Lextm.SharpSnmpLib.Security.UserRegistry());
+            const string bytes = "30 66 02 01  03 30 0F 02  02 6A 09 02  03 00 FF E3" +
+                                 "04 01 00 02  01 03 04 1E  30 1C 04 0D  80 00 1F 88" +
+                                 "80 E9 63 00  00 D6 1F F4  49 02 01 05  02 02 0F 1B" +
+                                 "04 00 04 00  04 00 30 30  04 0D 80 00  1F 88 80 E9" +
+                                 "63 00 00 D6  1F F4 49 04  00 A8 1D 02  02 2C 6B 02" +
+                                 "01 00 02 01  00 30 11 30  0F 06 0A 2B  06 01 06 03" +
+                                 "0F 01 01 04  00 41 01 03";
+            IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes, UserRegistry.Empty);
             Assert.AreEqual(1, messages.Count);
         }
     }

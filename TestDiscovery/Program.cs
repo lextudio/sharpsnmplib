@@ -28,7 +28,7 @@ namespace TestDiscovery
 
         static void DiscovererAgentFound(object sender, AgentFoundEventArgs e)
         {
-            Console.WriteLine(e.Agent + " announces " + e.Variable.Data);
+            Console.WriteLine(e.Agent + " announces " + (e.Variable == null ? null : e.Variable.Data));
         }
     }
 }
