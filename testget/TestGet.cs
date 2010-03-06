@@ -54,7 +54,7 @@ namespace SnmpGet
                 .Add("d", "-d to display message dump", delegate(string v) { dump = true; })
                 .Add("t:", "-t for timeout value (unit is second).", delegate (string v) { timeout = int.Parse(v) * 1000; })
                 .Add("r:", "-r for retry count (default is 0)", delegate (string v) { retry = int.Parse(v); })
-                .Add("v|version:", "-v for SNMP version (v1, v2 are currently supported)", delegate (string v)
+                .Add("v|version:", "-v for SNMP version (v1, v2 and v3 are currently supported)", delegate (string v)
                                                                                                {
                                                                                                    switch (int.Parse(v))
                                                                                                    {

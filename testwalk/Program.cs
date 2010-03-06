@@ -74,9 +74,9 @@ namespace SnmpWalk
                                                                                                        case 2:
                                                                                                            version = VersionCode.V2;
                                                                                                            break;
-                                                                                                       case 3:
-                                                                                                           version = VersionCode.V3;
-                                                                                                           break;
+                                                                                                       // case 3:
+                                                                                                       //    version = VersionCode.V3;
+                                                                                                       //    break;
                                                                                                        default:
                                                                                                            throw new ArgumentException("no such version: " + v);
                                                                                                    }
