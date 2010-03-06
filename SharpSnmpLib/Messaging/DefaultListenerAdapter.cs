@@ -13,6 +13,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// <summary>
     /// Default listener adapter implementation.
     /// </summary>
+    [Obsolete("Manager developers should use Manager* adapters. Agent developers should check out snmpd as reference design.")]
     public class DefaultListenerAdapter : IListenerAdapter
     {
         private readonly Listener _listener;

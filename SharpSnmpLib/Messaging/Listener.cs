@@ -61,6 +61,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 if (_socket != null)
                 {
                     _socket.Close();    // Note that closing the socket releases the _socket.ReceiveFrom call.
+                    _socket.Dispose(disposing);
                     _socket = null;
                 }
             }

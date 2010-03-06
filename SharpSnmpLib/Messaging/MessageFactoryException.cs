@@ -93,13 +93,20 @@ namespace Lextm.SharpSnmpLib.Messaging
         #endif
         
         /// <summary>
-        /// Bytes.
-        /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
-        public byte[] Bytes
+        /// Gets the bytes.
+        /// </summary>        
+        public byte[] GetBytes()
         {
-            get { return _bytes; }
-            set { _bytes = value; }
+            return _bytes; 
+        }
+        
+        /// <summary>
+        /// Sets the bytes.
+        /// </summary>
+        /// <param name="bytes">Bytes.</param>
+        public void SetBytes(byte[] bytes)
+        {
+            _bytes = bytes;
         }
         
         /// <summary>

@@ -8,7 +8,7 @@
         <CommandLine>--config "$(GendarmeFolder)\rules.xml" --log .\gendarme.log --quiet .\sharpsnmplib.dll</CommandLine>
         <LibraryReleaseFolder>.\SharpSnmpLib\Bin\Release</LibraryReleaseFolder>
         <NDependFolder>H:\Green\NDepend</NDependFolder>
-        <NDependProject>"D:\lextm\documents\SharpDevelop Projects\SharpSnmpLib\SharpSnmpLib.xml"</NDependProject>
+        <NDependProject>"D:\lextm\documents\SharpDevelop Projects\SharpSnmpLib\SharpSnmpLib.ndproj"</NDependProject>
     </PropertyGroup>
     <ItemGroup>
         <LibraryOutputs Include=".\SharpSnmpLib\bin\Release\sharpsnmplib.*" />
@@ -24,10 +24,10 @@
         <Exec Command="$(NDependFolder)\NDepend.Console.exe $(NDependProject)" />
     </Target>
     <Target Name="Debug">
-        <MSBuild Projects="sharpsnmplib.sln" />
+        <MSBuild Projects="sharpsnmplib.vs2008.sln" />
     </Target>
     <Target Name="Release">
-        <MSBuild Projects="sharpsnmplib.sln" Properties="Configuration=Release" />
+        <MSBuild Projects="sharpsnmplib.vs2008.sln" Properties="Configuration=Release" />
     </Target>
     <!--<Target Name="CF">
         <MSBuild Projects="sharpsnmplib.cf35.sln" Properties="Configuration=Release"/>

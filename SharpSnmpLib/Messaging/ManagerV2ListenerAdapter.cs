@@ -13,7 +13,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// <summary>
     /// Adapter for SNMP v2c manager.
     /// </summary>
-    public class ManagerV2ListenerAdapter : IListenerAdapter
+    public class ManagerV2ListenerAdapter : IListenerAdapter, IDisposable
     {
         private readonly Listener _listener;
 
@@ -74,7 +74,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 case SnmpType.InformRequestPdu:
                     {
                         InformRequestMessage inform = (InformRequestMessage)message;
-                        _listener.SendResponse(inform, sender);                        
+                        _listener.SendResponse(inform, sender);
 
                         EventHandler<MessageReceivedEventArgs<InformRequestMessage>> handler = InformRequestReceived;
                         if (handler != null)
@@ -88,6 +88,14 @@ namespace Lextm.SharpSnmpLib.Messaging
                 default:
                     break;
             }
+        }
+        
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+            _listener.Dispose();
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// <summary>
     /// Description of ManagerV3ListenerAdapter.
     /// </summary>
-    public class ManagerV3ListenerAdapter : IListenerAdapter
+    public class ManagerV3ListenerAdapter : IListenerAdapter, IDisposable
     {
         private readonly Listener _listener;
 
@@ -88,6 +88,14 @@ namespace Lextm.SharpSnmpLib.Messaging
                 default:
                     break;
             }
+        }
+        
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+            _listener.Dispose();
         }
     }
 }
