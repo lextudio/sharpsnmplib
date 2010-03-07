@@ -145,8 +145,10 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <summary>
         /// Returns the textual form.
         /// </summary>
+        [Obsolete("Please use SearchResult.Text.")]
         public string TextualForm
         {
+            // TODO: make this property internal and remove from IDefinition.
             get { return _module + "::" + _name; }
         }
 
@@ -168,7 +170,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 }
             }
             
-            throw new ArgumentOutOfRangeException("index");
+            return null;
         }
 
         /// <summary>

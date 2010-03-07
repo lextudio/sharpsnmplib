@@ -106,7 +106,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 case SnmpType.InformRequestPdu:
                     {
                         InformRequestMessage inform = (InformRequestMessage)message;
-                        _listener.SendResponse(inform, sender);
+                        _listener.SendResponse(inform.GenerateResponse(), sender);
 
                         EventHandler<MessageReceivedEventArgs<InformRequestMessage>> handler = InformRequestReceived;
                         if (handler != null)

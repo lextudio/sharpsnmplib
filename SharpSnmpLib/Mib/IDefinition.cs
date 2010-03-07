@@ -46,6 +46,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <summary>
         /// Returns the textual form.
         /// </summary>
+        [Obsolete("Please use SearchResult.Text.")]
         string TextualForm
         {
             get;

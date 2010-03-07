@@ -122,6 +122,7 @@ namespace Lextm.SharpSnmpLib.Mib
 
         public IDefinition Find(uint[] numerical)
         {
+            // TODO: make this method internal and remove it from IObjectTree.
             if (numerical == null)
             {
                 throw new ArgumentNullException("numerical");
@@ -135,10 +136,51 @@ namespace Lextm.SharpSnmpLib.Mib
             IDefinition result = _root;
             for (int i = 0; i < numerical.Length; i++)
             {
-                result = result.GetChildAt(numerical[i]);
+                IDefinition temp = result.GetChildAt(numerical[i]);
+                if (temp == null)
+                {
+                    return null;
+                }
+
+                result = temp;
             }
 
             return result;
+        }
+
+        public SearchResult Search(uint[] numerical)
+        {
+            if (numerical == null)
+            {
+                throw new ArgumentNullException("numerical");
+            }
+
+            if (numerical.Length == 0)
+            {
+                throw new ArgumentException("numerical cannot be empty");
+            }
+
+            IDefinition result = _root;
+            int end = numerical.Length;
+            for (int i = 0; i < numerical.Length; i++)
+            {
+                IDefinition temp = result.GetChildAt(numerical[i]);
+                if (temp == null)
+                {
+                    end = i;
+                    break;
+                }
+
+                result = temp;
+            }
+
+            List<uint> remaining = new List<uint>();
+            for (int j = end; j < numerical.Length; j++ )
+            {
+                remaining.Add(numerical[j]);
+            }
+
+            return new SearchResult(result, remaining.ToArray());
         }
         
         internal bool CanParse(MibModule module)
@@ -264,18 +306,7 @@ namespace Lextm.SharpSnmpLib.Mib
 
         private bool FirstNodeExists(IEntity node)
         {
-            string first = StringUtility.ExtractName(node.Parent.Split('.')[0]);
-            IDefinition firstNode;
-            try
-            {
-                firstNode = Find(first);
-            }
-            catch (ArgumentOutOfRangeException)
-            {
-                firstNode = null;
-            }
-            
-            return firstNode != null;
+            return Find(StringUtility.ExtractName(node.Parent.Split('.')[0])) != null;
         }
 
         private IDefinition CreateExtraNodes(string module, string longParent)
@@ -298,15 +329,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 if (numberFound)
                 {
                     all[currentCursor] = value;
-                    try
-                    {
-                        node = Find(ExtractParent(all, currentCursor + 1));
-                    }
-                    catch (ArgumentOutOfRangeException)
-                    {
-                        node = null;
-                    }
-
+                    node = Find(ExtractParent(all, currentCursor + 1));
                     if (node != null)
                     {
                         continue;
@@ -494,16 +517,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 List<Definition> parsed = new List<Definition>();
                 foreach (Definition node in pendings)
                 {
-                    IDefinition parent;
-                    try
-                    {
-                        parent = Find(Definition.GetParent(node));
-                    }
-                    catch (ArgumentOutOfRangeException)
-                    {
-                        parent = null;
-                    }
-
+                    IDefinition parent = Find(Definition.GetParent(node));
                     if (parent == null)
                     {
                         continue;

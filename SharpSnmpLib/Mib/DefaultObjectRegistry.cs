@@ -10,7 +10,7 @@ namespace Lextm.SharpSnmpLib.Mib
     public sealed class DefaultObjectRegistry : ObjectRegistryBase
     {
         private static volatile DefaultObjectRegistry _instance;
-        private static readonly object locker = new object();
+        private static readonly object Locker = new object();
         
         private DefaultObjectRegistry()
         {
@@ -27,7 +27,7 @@ namespace Lextm.SharpSnmpLib.Mib
             {
                 if (_instance == null)
                 {
-                    lock (locker)
+                    lock (Locker)
                     {
                         if (_instance == null)
                         {

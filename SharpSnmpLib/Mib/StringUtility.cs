@@ -7,9 +7,7 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
@@ -46,35 +44,17 @@ namespace Lextm.SharpSnmpLib.Mib
             
             return uint.Parse(input.Substring(left + 1, right - left - 1), CultureInfo.InvariantCulture);
         }
-        
-        internal static string GetAlternativeTextualForm(IDefinition definition)
+
+        /// <summary>
+        /// Gets the alternative textual form.
+        /// </summary>
+        /// <param name="definition">The definition.</param>
+        /// <returns></returns>
+        [Obsolete("Use SearchResult.AlternativeText instead.")]
+        public static string GetAlternativeTextualForm(IDefinition definition)
         {
-            if (definition == null)
-            {
-                return string.Empty;
-            }
-            
-            List<string> names = new List<string>();
-            IDefinition current = definition;
-            while (current.ParentDefinition != null)
-            {
-                names.Add(current.Name);
-                current = current.ParentDefinition;
-            }
-            
-            if (names.Count == 0)
-            {
-                return string.Empty;
-            }
-            
-            names.Reverse();
-            StringBuilder result = new StringBuilder(names[0]);
-            for (int i = 1; i < names.Count; i++)
-            {
-                result.Append(".").Append(names[i]);
-            }
-            
-            return result.ToString();
+            // TODO: delete this method.
+            return string.Empty;
         }
     }
 }

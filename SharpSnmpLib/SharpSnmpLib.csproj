@@ -119,7 +119,7 @@
     <Compile Include="Mib\IModule.cs" />
     <Compile Include="Mib\IObjectRegistry.cs" />
     <Compile Include="Mib\IObjectTree.cs" />
-    <Compile Include="Mib\StringUtility.cs" />
+    <Compile Include="Mib\SearchResult.cs" />
     <Compile Include="NoSuchInstance.cs" />
     <Compile Include="NoSuchObject.cs" />
     <Compile Include="Null.cs" />

@@ -98,6 +98,7 @@
     <Compile Include="Mib\OidValueAssignment.cs" />
     <Compile Include="Mib\Parser.cs" />
     <Compile Include="Mib\Sequence.cs" />
+    <Compile Include="Mib\StringUtility.cs" />
     <Compile Include="Mib\TextualConvention.cs" />
     <Compile Include="Mib\TrapType.cs" />
     <Compile Include="Mib\TypeAssignment.cs" />

@@ -18,17 +18,17 @@ namespace Lextm.SharpSnmpLib.Tests
         [Test]
         public void TestExtractValue()
         {
-            string test = "org(3)";
+            const string test = "org(3)";
             Assert.AreEqual(3, StringUtility.ExtractValue(test));
         }
-        
+
         [Test]
         public void TestExtractName()
         {
-            string test = "org(3)";
+            const string test = "org(3)";
             Assert.AreEqual("org", StringUtility.ExtractName(test));
             
-            string test1 = "iso";
+            const string test1 = "iso";
             Assert.AreEqual("iso", StringUtility.ExtractName(test1));
         }
         
@@ -44,7 +44,7 @@ namespace Lextm.SharpSnmpLib.Tests
             Definition mib2 = new Definition(new OidValueAssignment("SNMPV2-SMI", "mib-2", "mgmt", 1), mgmt);
             Definition system = new Definition(new OidValueAssignment("SNMPV2-SMI", "system", "mib-2", 1), mib2);
             Assert.AreEqual("iso.org.dod.internet.mgmt.mib-2.system",
-                            StringUtility.GetAlternativeTextualForm(system));
+                            new SearchResult(system, new uint[0]).AlternativeText);
         }
     }
 }

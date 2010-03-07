@@ -267,5 +267,22 @@ namespace Lextm.SharpSnmpLib.Messaging
                                  Enterprise.ToString(objects),
                                  Variables.Count.ToString(CultureInfo.InvariantCulture));
         }
+
+        /// <summary>
+        /// Generates the response message.
+        /// </summary>
+        /// <returns></returns>
+        public GetResponseMessage GenerateResponse()
+        {
+            // TODO: make more efficient here.
+            if (_version == VersionCode.V2)
+            {
+                InformRequestPdu pdu = (InformRequestPdu)_scope.Pdu;
+                return new GetResponseMessage(_scope.Pdu.RequestId.ToInt32(), _version, _parameters.UserName, ErrorCode.NoError, 0, pdu.AllVariables);
+            }
+
+            // TODO: implement this later.
+            return null;
+        }
     }
 }

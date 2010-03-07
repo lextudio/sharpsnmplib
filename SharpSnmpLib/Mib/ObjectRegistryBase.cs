@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 
 namespace Lextm.SharpSnmpLib.Mib
@@ -62,16 +61,8 @@ namespace Lextm.SharpSnmpLib.Mib
             {
                 throw new ArgumentNullException("identifier");
             }
-            
-            try
-            {
-                return IsTableId(identifier.ToNumerical());
-            }
-            catch (ArgumentOutOfRangeException)
-            {
-                // if no matching definition found, refuse to continue.
-                return false;
-            }
+                
+            return IsTableId(identifier.ToNumerical());
         }
 
         /// <summary>
@@ -164,25 +155,9 @@ namespace Lextm.SharpSnmpLib.Mib
             {
                 throw new ArgumentNullException("numerical");
             }
-            
-            try
-            {
-                return _tree.Find(numerical).TextualForm;
-            }
-            catch (ArgumentOutOfRangeException)
-            {
-                // no definition matches numerical.
-            }
-            
-            return _tree.Find(GetParent(numerical)).TextualForm + "." + numerical[numerical.Length - 1].ToString(CultureInfo.InvariantCulture);
-        }
 
-        private static uint[] GetParent(uint[] id)
-        {
-            uint[] result = new uint[id.Length - 1];
-            Array.Copy(id, result, id.Length - 1);
-            return result;
-        }
+            return Tree.Search(numerical).Text;
+       }
 
         /// <summary>
         /// Loads a folder of MIB files.

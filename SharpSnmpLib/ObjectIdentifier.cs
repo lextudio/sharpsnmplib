@@ -1,4 +1,4 @@
-﻿// SNMP Object Identifier type.
+// SNMP Object Identifier type.
 // Copyright (C) 2008-2010 Malcolm Crowe, Lex Li, and other contributors.
 // 
 // This library is free software; you can redistribute it and/or
@@ -472,8 +472,9 @@ namespace Lextm.SharpSnmpLib
             {
                 return ToString();
             }
-            
-            string result = StringUtility.GetAlternativeTextualForm(objects.Tree.Find(_oid));
+
+            SearchResult record = objects.Tree.Search(_oid);
+            string result = record.AlternativeText;
             if (string.IsNullOrEmpty(result))
             {
                 return ToString();

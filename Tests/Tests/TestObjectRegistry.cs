@@ -65,6 +65,7 @@ namespace Lextm.SharpSnmpLib.Tests
             uint[] result = DefaultObjectRegistry.Instance.Translate(textual);
             Assert.AreEqual(expected, result);            
         }
+
         [Test]
         public void TestGetNumericalForm()
         {
