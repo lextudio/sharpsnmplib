@@ -65,7 +65,7 @@ namespace Lextm.SharpSnmpLib.Mib
             {
                 _exports = ParseExports(lexer);
             }
-            
+
             ParseEntities(_tokens, temp, _name, lexer);
         }
         
@@ -81,7 +81,11 @@ namespace Lextm.SharpSnmpLib.Mib
         
         private static void ParseEntities(IList<IConstruct> tokens, Symbol last, string module, Lexer lexer)
         {
-            Symbol temp = last;
+            Symbol temp = last;            
+            if (temp == Symbol.End)
+            {
+                return;
+            }
             
             IList<Symbol> buffer = new List<Symbol>();
             IList<Symbol> next = new List<Symbol>(); // symbol that belongs to next token.

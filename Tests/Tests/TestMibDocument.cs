@@ -19,9 +19,10 @@ namespace Lextm.SharpSnmpLib.Tests
     [TestFixture]
     public class TestMibDocument
     {
-    	// [Test]
+    	[Test]
     	public void TestEmpty()
     	{
+    	    // issue 4978
     		Lexer lexer = new Lexer();
             MemoryStream m = new MemoryStream(Resources.empty);
             using (StreamReader reader = new StreamReader(m))
@@ -30,7 +31,7 @@ namespace Lextm.SharpSnmpLib.Tests
                 reader.Close();
             }
             MibDocument file = new MibDocument(lexer);
-            Assert.AreEqual("SNMPv2-CONF", file.Modules[0].Name);
+            Assert.AreEqual("SNMPV2-CONF", file.Modules[0].Name);
             Assert.AreEqual(0, file.Modules[0].Dependents.Count);
             Assert.AreEqual(0, file.Modules[0].Entities.Count);
     	}

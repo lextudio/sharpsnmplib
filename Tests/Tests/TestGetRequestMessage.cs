@@ -292,16 +292,21 @@ namespace Lextm.SharpSnmpLib.Tests
         [Test]
         public void TestTimeOut()
         {
-        	//IMPORTANT: this test case requires a local SNMP agent such as Windows SNMP agent service, Net-SNMP agent, or snmp4j agent.
+        	// IMPORTANT: this test case requires a local SNMP agent such as 
+        	//   #SNMP Agent (snmpd), 
+        	//   Windows SNMP agent service, 
+        	//   Net-SNMP agent, or 
+        	//   snmp4j agent.
             Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             GetRequestMessage message = new GetRequestMessage(0x4bed, VersionCode.V2, new OctetString("public"), new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) });
             int tick = Environment.TickCount;
             int now = 0;
             bool hasException = false;
+            const int time = 500;
             try
             {
                 //IMPORTANT: test against an agent that doesn't exist.
-                message.GetResponse(5000, new IPEndPoint(IPAddress.Parse("192.168.0.233"), 161), socket);
+                message.GetResponse(time, new IPEndPoint(IPAddress.Parse("192.168.0.233"), 161), socket);
             }
             catch (TimeoutException)
             {
@@ -310,15 +315,15 @@ namespace Lextm.SharpSnmpLib.Tests
             }
             
             //FIXME: these values are valid on my machine. (lex)
-            Assert.AreNotEqual(tick + 5000, now);
-            int difference = tick + 5000 - now;
-            Assert.LessOrEqual(Math.Abs(difference), 1500);
+            Assert.AreNotEqual(tick + time, now);
+            int difference = tick + time - now;
+            Assert.LessOrEqual(Math.Abs(difference), 150);
             Assert.IsTrue(hasException);
             
             hasException = false;
             try
             {
-                message.GetResponse(5000, new IPEndPoint(IPAddress.Loopback, 161), socket);
+                message.GetResponse(time, new IPEndPoint(IPAddress.Loopback, 161), socket);
             }
             catch (TimeoutException)
             {
