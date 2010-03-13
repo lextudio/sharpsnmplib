@@ -40,6 +40,11 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new ArgumentNullException("broadcastAddress");
             }
+            
+            if (version != VersionCode.V3 && community == null)
+            {
+                throw new ArgumentNullException("community");
+            }                
 
             byte[] bytes;
             if (version == VersionCode.V3)

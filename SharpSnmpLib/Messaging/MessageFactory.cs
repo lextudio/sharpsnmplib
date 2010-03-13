@@ -26,6 +26,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
@@ -97,13 +98,13 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 if (message.Pdu.RequestId.ToInt32() != number)
                 {
-                    throw OperationException.Create("wrong response sequence", receiver.Address);
+                    throw OperationException.Create(string.Format(CultureInfo.InvariantCulture, "wrong response sequence: expected {0}, received {1}", number, message.Pdu.RequestId.ToInt32()), receiver.Address);
                 }
 
                 return message;
             }
 
-            throw OperationException.Create("wrong response type", receiver.Address);
+            throw OperationException.Create(string.Format(CultureInfo.InvariantCulture, "wrong response type: {0}", message.Pdu.TypeCode), receiver.Address);
         }
         
         /// <summary>
