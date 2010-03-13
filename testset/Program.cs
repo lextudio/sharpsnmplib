@@ -239,6 +239,10 @@ namespace SnmpSet
                     Console.WriteLine(ex);
                 }
             }
+            catch (SocketException ex)
+            {
+                Console.WriteLine(ex);
+            }
         }
 
         private static IAuthenticationProvider GetAuthenticationProviderByName(string authentication, string phrase)

@@ -259,6 +259,7 @@ namespace Lextm.SharpSnmpLib.Browser
             try
             {
                 source.TraceInformation("==== Begin GET NEXT ====");
+                // TODO: don't use textual form in the future here.
                 Profiles.DefaultProfile.GetNext(Manager, TextualFormForGetNext(treeView1.SelectedNode.Tag as IDefinition));
             }
             catch (Exception ex)

@@ -190,6 +190,10 @@ namespace SnmpGet
                     Console.WriteLine(ex);
                 }
             }
+            catch (SocketException ex)
+            {
+                Console.WriteLine(ex);
+            }
         }
 
         private static void ShowHelp()
