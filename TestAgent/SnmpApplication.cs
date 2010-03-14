@@ -10,7 +10,7 @@ namespace Lextm.SharpSnmpLib.Agent
     {
         private SnmpContext _context;
         private bool _finished;
-        private readonly Logger _logger;
+        private readonly ILogger _logger;
         private readonly IMembershipProvider _provider;
         private readonly MessageHandlerFactory _factory;
         private IMessageHandler _handler;
@@ -26,7 +26,7 @@ namespace Lextm.SharpSnmpLib.Agent
         /// <param name="store">The store.</param>
         /// <param name="provider">The provider.</param>
         /// <param name="factory">The factory.</param>
-        public SnmpApplication(SnmpApplicationFactory owner, Logger logger, ObjectStore store, IMembershipProvider provider, MessageHandlerFactory factory)
+        public SnmpApplication(SnmpApplicationFactory owner, ILogger logger, ObjectStore store, IMembershipProvider provider, MessageHandlerFactory factory)
         {
             _owner = owner;
             _provider = provider;

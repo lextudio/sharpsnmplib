@@ -8,7 +8,7 @@ namespace Lextm.SharpSnmpLib.Agent
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
     internal class SnmpApplicationFactory
     {
-        private readonly Logger _logger;
+        private readonly ILogger _logger;
         private readonly ObjectStore _store;
         private readonly IMembershipProvider _membershipProvider;
         private readonly MessageHandlerFactory _factory;
@@ -22,7 +22,7 @@ namespace Lextm.SharpSnmpLib.Agent
         /// <param name="store">The store.</param>
         /// <param name="membershipProvider">The membership provider.</param>
         /// <param name="factory">The factory.</param>
-        public SnmpApplicationFactory(Logger logger, ObjectStore store, IMembershipProvider membershipProvider, MessageHandlerFactory factory)
+        public SnmpApplicationFactory(ILogger logger, ObjectStore store, IMembershipProvider membershipProvider, MessageHandlerFactory factory)
         {
             _logger = logger;
             _membershipProvider = membershipProvider;

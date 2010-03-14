@@ -73,6 +73,9 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>..\lib\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.ObjectBuilder2">
       <HintPath>..\lib\Microsoft.Practices.ObjectBuilder2.dll</HintPath>
     </Reference>
@@ -92,6 +95,8 @@
   <ItemGroup>
     <Compile Include="ComposedMembershipProvider.cs" />
     <Compile Include="GetBulkMessageHandler.cs" />
+    <Compile Include="ILogger.cs" />
+    <Compile Include="RollingLogger.cs" />
     <Compile Include="SnmpObject.cs" />
     <Compile Include="SysORDescr.cs" />
     <Compile Include="SysORID.cs" />

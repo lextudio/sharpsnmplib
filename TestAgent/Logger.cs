@@ -11,7 +11,7 @@ namespace Lextm.SharpSnmpLib.Agent
     /// Logger class, who logs message processed to the log file.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
-    internal class Logger : IDisposable
+    internal class Logger : IDisposable, ILogger
     {
         private readonly StreamWriter _writer;
         private const string Empty = "-";
