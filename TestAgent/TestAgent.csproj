@@ -93,6 +93,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\lib\RollingFileAppender.cs">
+      <Link>RollingFileAppender.cs</Link>
+    </Compile>
     <Compile Include="ComposedMembershipProvider.cs" />
     <Compile Include="GetBulkMessageHandler.cs" />
     <Compile Include="ILogger.cs" />
