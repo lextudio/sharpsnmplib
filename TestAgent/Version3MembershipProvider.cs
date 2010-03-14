@@ -1,4 +1,9 @@
-﻿namespace Lextm.SharpSnmpLib.Agent
+﻿using System;
+using System.Collections.Generic;
+using Lextm.SharpSnmpLib.Messaging;
+using Lextm.SharpSnmpLib.Security;
+
+namespace Lextm.SharpSnmpLib.Agent
 {
     /// <summary>
     /// SNMP version 3 membership provider. Not yet implemented.
@@ -9,6 +14,7 @@
         private const VersionCode Version = VersionCode.V3;
         private readonly OctetString _get;
         private readonly OctetString _set;
+        private readonly OctetString _engineId = new OctetString(new byte[] { 4, 13, 128, 0, 31, 136, 128, 233, 99, 0, 0, 214, 31, 244, 73 });
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Version3MembershipProvider"/> class.
@@ -25,21 +31,48 @@
         /// <summary>
         /// Authenticates the request.
         /// </summary>
-        /// <param name="message">The message.</param>
+        /// <param name="context">The context.</param>
         /// <returns></returns>
-        public bool AuthenticateRequest(ISnmpMessage message)
+        public bool AuthenticateRequest(SnmpContext context)
         {
+            ISnmpMessage message = context.Request;
             if (message.Version != Version)
             {
                 return false;
             }
-
-            if (message.Pdu.TypeCode == SnmpType.SetRequestPdu)
+            
+            if (message.Parameters.UserName == OctetString.Empty)
             {
-                return message.Parameters.UserName == _set;
+                // discovery message received.
+                context.Response = new ReportMessage(
+                    VersionCode.V3,
+                    new Header(
+                        new Integer32(message.MessageId),
+                        new Integer32(0xFFE3),
+                        new OctetString(new[] { (byte)Levels.Reportable }),
+                        new Integer32(3)),
+                    new SecurityParameters(
+                        _engineId,
+                        new Integer32(0),
+                        new Integer32(Environment.TickCount),
+                        OctetString.Empty,
+                        OctetString.Empty,
+                        OctetString.Empty),
+                    new Scope(
+                        OctetString.Empty,
+                        OctetString.Empty,
+                        // TODO: add a variable.
+                        new ReportPdu(message.RequestId, ErrorCode.NoError, 0, new List<Variable>())),
+                    ProviderPair.Default);
+                return true;                
             }
 
-            return message.Parameters.UserName == _get;
+            if (context.Request.Pdu.TypeCode == SnmpType.SetRequestPdu)
+            {
+                return context.Request.Parameters.UserName == _set;
+            }
+
+            return context.Request.Parameters.UserName == _get;
         }
     }
 }

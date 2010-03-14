@@ -85,6 +85,7 @@ namespace Lextm.SharpSnmpLib.Tests
                 "02 02 2C 6B  02 01 00 02  01 00 30 00";
             IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes, new Lextm.SharpSnmpLib.Security.UserRegistry());
             Assert.AreEqual(1, messages.Count);
+            Assert.AreEqual(OctetString.Empty, messages[0].Parameters.UserName);
         }
 
         [Test]
@@ -196,6 +197,9 @@ namespace Lextm.SharpSnmpLib.Tests
                                  "0F 01 01 04  00 41 01 03";
             IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes, UserRegistry.Empty);
             Assert.AreEqual(1, messages.Count);
+            Assert.AreEqual(5, messages[0].Parameters.EngineBoots.ToInt32());
+            Assert.AreEqual(new byte[] {4, 13, 128, 0, 31, 136, 128, 233, 99, 0, 0, 214, 31, 244, 73}, messages[0].Parameters.EngineId.ToBytes());
+            Assert.AreEqual(3867, messages[0].Parameters.EngineTime.ToInt32());
         }
     }
 }

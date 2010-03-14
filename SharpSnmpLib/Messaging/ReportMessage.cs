@@ -42,7 +42,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         private readonly Header _header;
         private readonly ProviderPair _pair = ProviderPair.Default;
         
-        internal ReportMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, ProviderPair record)
+        public ReportMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, ProviderPair record)
         {
             if (record == null)
             {
@@ -110,6 +110,19 @@ namespace Lextm.SharpSnmpLib.Messaging
         public int RequestId
         {
             get { return _scope.Pdu.RequestId.ToInt32(); }
+        }
+        
+        /// <summary>
+        /// Gets the message ID.
+        /// </summary>
+        /// <value>The message ID.</value>
+        /// <remarks>For v3, message ID is different from request ID. For v1 and v2c, they are the same.</remarks>
+        public int MessageId
+        {
+            get
+            {
+                return _header.MessageId;
+            }
         }
 
         /// <summary>

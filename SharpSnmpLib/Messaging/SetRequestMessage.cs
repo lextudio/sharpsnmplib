@@ -32,7 +32,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         private readonly Header _header;
         private readonly SecurityParameters _parameters;
         private readonly Scope _scope;
-        private readonly ProviderPair _pair;       
+        private readonly ProviderPair _pair;
 
         /// <summary>
         /// Creates a <see cref="SetRequestMessage"/> with all contents.
@@ -96,14 +96,14 @@ namespace Lextm.SharpSnmpLib.Messaging
             // TODO: define more constants.
             _header = new Header(new Integer32(messageId), new Integer32(0xFFE3), new OctetString(new[] { b }), new Integer32(3));
             _parameters = new SecurityParameters(
-                report.Parameters.EngineId, 
-                report.Parameters.EngineBoots, 
+                report.Parameters.EngineId,
+                report.Parameters.EngineBoots,
                 report.Parameters.EngineTime,
-                userName, 
+                userName,
                 _pair.Authentication.CleanDigest,
                 _pair.Privacy.Salt);
             SetRequestPdu pdu = new SetRequestPdu(
-                requestId, 
+                requestId,
                 ErrorCode.NoError,
                 0,
                 variables);
@@ -132,10 +132,10 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public ISnmpMessage GetResponse(int timeout, IPEndPoint receiver)
         {
-                        using (Socket socket = Helper.GetSocket(receiver))
+            using (Socket socket = Helper.GetSocket(receiver))
             {
-            return GetResponse(timeout, receiver, socket);
-        }
+                return GetResponse(timeout, receiver, socket);
+            }
         }
 
         /// <summary>
@@ -174,6 +174,19 @@ namespace Lextm.SharpSnmpLib.Messaging
         public int RequestId
         {
             get { return _scope.Pdu.RequestId.ToInt32(); }
+        }
+        
+        /// <summary>
+        /// Gets the message ID.
+        /// </summary>
+        /// <value>The message ID.</value>
+        /// <remarks>For v3, message ID is different from request ID. For v1 and v2c, they are the same.</remarks>
+        public int MessageId
+        {
+            get
+            {
+                return (_header == null) ? RequestId : _header.MessageId;
+            }
         }
         
         /// <summary>

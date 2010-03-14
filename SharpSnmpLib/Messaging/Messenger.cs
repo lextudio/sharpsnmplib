@@ -21,6 +21,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     public static class Messenger
     {
         private static readonly IdGenerator RequestCounter = new IdGenerator();
+        private static readonly IdGenerator MessageCounter = new IdGenerator();
         
         /// <summary>
         /// Gets a list of variable binds.
@@ -385,11 +386,23 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Gets the request counter.
         /// </summary>
         /// <value>The request counter.</value>
-        public static int NextId
+        public static int NextRequestId
         {
             get
             {
                 return RequestCounter.NextId;
+            }
+        }
+
+        /// <summary>
+        /// Gets the message counter.
+        /// </summary>
+        /// <value>The message counter.</value>
+        public static int NextMessageId
+        {
+            get
+            {
+                return MessageCounter.NextId;
             }
         }
     }

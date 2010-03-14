@@ -246,6 +246,15 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             get { throw new InvalidOperationException(); }
         }
+        
+        /// <summary>
+        /// Gets the message ID.
+        /// </summary>
+        /// <value>The message ID.</value>        
+        public int MessageId
+        {
+            get { throw new InvalidOperationException(); }
+        }
 
         /// <summary>
         /// To byte format.
@@ -307,8 +316,8 @@ namespace Lextm.SharpSnmpLib.Messaging
         public string ToString(IObjectRegistry objects)
         {
             return string.Format(CultureInfo.InvariantCulture,
-                "SNMPv1 trap: {0}",
-                _pdu.ToString(objects));
+                                 "SNMPv1 trap: {0}",
+                                 _pdu.ToString(objects));
         }
     }
 }

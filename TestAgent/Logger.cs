@@ -10,6 +10,7 @@ namespace Lextm.SharpSnmpLib.Agent
     /// <summary>
     /// Logger class, who logs message processed to the log file.
     /// </summary>
+    [Obsolete("Please use RollingLogger")]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
     internal class Logger : IDisposable, ILogger
     {

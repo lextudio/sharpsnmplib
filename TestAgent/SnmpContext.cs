@@ -65,6 +65,7 @@ namespace Lextm.SharpSnmpLib.Agent
         public ISnmpMessage Response
         {
             get { return _response; }
+            set { _response = value; }
         }
 
         /// <summary>
@@ -75,15 +76,16 @@ namespace Lextm.SharpSnmpLib.Agent
         {
             get { return _sender; }
         }
-
+        
         /// <summary>
-        /// Responds the specified response.
+        /// Sends out response message.
         /// </summary>
-        /// <param name="response">The response.</param>
-        public void Respond(GetResponseMessage response)
+        public void SendResponse()
         {
-            _response = response;
-            Listener.SendResponse(response, Sender);
+            if (_response != null)
+            {
+                Listener.SendResponse(_response, Sender);
+            }
         }
     }
 }

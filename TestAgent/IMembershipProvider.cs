@@ -8,8 +8,8 @@ namespace Lextm.SharpSnmpLib.Agent
         /// <summary>
         /// Authenticates the request.
         /// </summary>
-        /// <param name="message">The message.</param>
+        /// <param name="context">The context.</param>
         /// <returns></returns>
-        bool AuthenticateRequest(ISnmpMessage message);
+        bool AuthenticateRequest(SnmpContext context);
     }
 }

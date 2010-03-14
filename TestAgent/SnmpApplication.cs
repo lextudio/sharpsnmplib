@@ -119,7 +119,7 @@ namespace Lextm.SharpSnmpLib.Agent
                     Context.Request.Pdu.Variables);
             }
 
-            Context.Respond(response);
+            Context.Response = response;
         }
 
         private void OnMapRequestHandler()
@@ -139,16 +139,22 @@ namespace Lextm.SharpSnmpLib.Agent
 
         private void OnAuthenticateRequest()
         {
-            if (!_provider.AuthenticateRequest(Context.Request))
+            if (!_provider.AuthenticateRequest(Context))
             {
                 // TODO: handle error here.
                 // return TRAP saying authenticationFailed.
+                CompleteProcessing();
+            }
+            
+            if (Context.Response != null)
+            {
                 CompleteProcessing();
             }
         }
 
         private void OnLogRequest()
         {
+            Context.SendResponse();
             _logger.Log(Context);
         }
 

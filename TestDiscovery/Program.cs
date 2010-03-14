@@ -20,8 +20,11 @@ namespace TestDiscovery
         {
             Discoverer discoverer = new Discoverer();
             discoverer.AgentFound += DiscovererAgentFound;
+            Console.WriteLine("v1 discovery");
             discoverer.Discover(VersionCode.V1, new IPEndPoint(IPAddress.Broadcast, 161), new OctetString("public"), 6000);
+            Console.WriteLine("v2 discovery");
             discoverer.Discover(VersionCode.V2, new IPEndPoint(IPAddress.Broadcast, 161), new OctetString("public"), 6000);
+            Console.WriteLine("v3 discovery");
             discoverer.Discover(VersionCode.V3, new IPEndPoint(IPAddress.Broadcast, 161), null, 6000);
             
             Console.Write("Press any key to continue . . . ");
@@ -30,7 +33,7 @@ namespace TestDiscovery
 
         static void DiscovererAgentFound(object sender, AgentFoundEventArgs e)
         {
-            Console.WriteLine("{0} announces {1}", e.Agent, (e.Variable == null ? "v3 is supported" : e.Variable.Data.ToString()));
+            Console.WriteLine("{0} announces {1}", e.Agent, (e.Variable == null ? "it supports v3" : e.Variable.Data.ToString()));
         }
     }
 }

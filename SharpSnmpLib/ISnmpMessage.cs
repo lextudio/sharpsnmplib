@@ -66,5 +66,11 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <value>The request ID.</value>
         int RequestId { get; }
+        
+        /// <summary>
+        /// Gets the message ID.
+        /// </summary>
+        /// <value>The message ID.</value>       
+        int MessageId { get; }
     }
 }

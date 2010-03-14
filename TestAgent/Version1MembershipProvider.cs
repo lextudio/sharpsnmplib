@@ -24,21 +24,21 @@
         /// <summary>
         /// Authenticates the request.
         /// </summary>
-        /// <param name="message">The message.</param>
+        /// <param name="context">The context.</param>
         /// <returns></returns>
-        public bool AuthenticateRequest(ISnmpMessage message)
+        public bool AuthenticateRequest(SnmpContext context)
         {
-            if (message.Version != Version)
+            if (context.Request.Version != Version)
             {
                 return false;
             }
 
-            if (message.Pdu.TypeCode == SnmpType.SetRequestPdu)
+            if (context.Request.Pdu.TypeCode == SnmpType.SetRequestPdu)
             {
-                return message.Parameters.UserName == _set;
+                return context.Request.Parameters.UserName == _set;
             }
 
-            return message.Parameters.UserName == _get;
+            return context.Request.Parameters.UserName == _get;
         }
     }
 }

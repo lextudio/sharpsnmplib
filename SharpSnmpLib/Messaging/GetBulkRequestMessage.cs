@@ -154,6 +154,19 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             get { return _scope.Pdu.RequestId.ToInt32(); }
         }
+        
+        /// <summary>
+        /// Gets the message ID.
+        /// </summary>
+        /// <value>The message ID.</value>
+        /// <remarks>For v3, message ID is different from request ID. For v1 and v2c, they are the same.</remarks>
+        public int MessageId
+        {
+            get
+            {
+                return (_header == null) ? RequestId : _header.MessageId;
+            }
+        }
 
         /// <summary>
         /// Converts to byte format.

@@ -47,10 +47,11 @@ namespace Lextm.SharpSnmpLib.Messaging
             }                
 
             byte[] bytes;
+            _requestId = Messenger.NextRequestId;
             if (version == VersionCode.V3)
             {
                 // throw new NotSupportedException("SNMP v3 is not supported");
-                Discovery discovery = new Discovery(1, 101);
+                Discovery discovery = new Discovery(_requestId, Messenger.NextMessageId);
                 bytes = discovery.ToBytes();
             }
             else
@@ -58,8 +59,6 @@ namespace Lextm.SharpSnmpLib.Messaging
                 Variable v = new Variable(new ObjectIdentifier(new uint[] {1, 3, 6, 1, 2, 1, 1, 1, 0}));
                 List<Variable> variables = new List<Variable>();
                 variables.Add(v);
-
-                _requestId = Messenger.NextId;
                 GetRequestMessage message = new GetRequestMessage(_requestId, version, community, variables);
                 bytes = message.ToBytes();
             }

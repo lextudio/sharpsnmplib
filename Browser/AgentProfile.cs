@@ -113,7 +113,7 @@ namespace Lextm.SharpSnmpLib.Browser
 		{
 			Variable result = manager.Objects.CreateVariable(textual);
 			TraceSource source = new TraceSource("Browser");
-		    GetNextRequestMessage message = new GetNextRequestMessage(Messenger.NextId, VersionCode, new OctetString(GetCommunity),
+		    GetNextRequestMessage message = new GetNextRequestMessage(Messenger.NextRequestId, VersionCode, new OctetString(GetCommunity),
 		                                                              new List<Variable> {result});
 		    ISnmpMessage response = message.GetResponse(manager.Timeout, _agent);
             if (response.Pdu.ErrorStatus.ToInt32() != 0)

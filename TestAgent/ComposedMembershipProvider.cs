@@ -20,13 +20,13 @@
         /// <summary>
         /// Authenticates the request.
         /// </summary>
-        /// <param name="message">The message.</param>
+        /// <param name="context">The context.</param>
         /// <returns></returns>
-        public bool AuthenticateRequest(ISnmpMessage message)
+        public bool AuthenticateRequest(SnmpContext context)
         {
             foreach (IMembershipProvider provider in _providers)
             {
-                if (provider.AuthenticateRequest(message))
+                if (provider.AuthenticateRequest(context))
                 {
                     return true;
                 }
