@@ -42,6 +42,14 @@ namespace Lextm.SharpSnmpLib.Messaging
         private readonly Header _header;
         private readonly ProviderPair _pair = ProviderPair.Default;
         
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ReportMessage"/> class.
+        /// </summary>
+        /// <param name="version">The version code.</param>
+        /// <param name="header">The header.</param>
+        /// <param name="parameters">The security parameters.</param>
+        /// <param name="scope">The scope.</param>
+        /// <param name="record">The record.</param>
         public ReportMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, ProviderPair record)
         {
             if (record == null)

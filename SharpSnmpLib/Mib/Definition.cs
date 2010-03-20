@@ -145,10 +145,8 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <summary>
         /// Returns the textual form.
         /// </summary>
-        [Obsolete("Please use SearchResult.Text.")]
-        public string TextualForm
+        internal string TextualForm
         {
-            // TODO: make this property internal and remove from IDefinition.
             get { return _module + "::" + _name; }
         }
 
@@ -203,7 +201,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// </summary>
         /// <param name="node"></param>
         /// <returns></returns>
-        public IDefinition Add(IEntity node)
+        public Definition Add(IEntity node)
         {
             // * algorithm 1: recursive
             if (_name == node.Parent)
@@ -213,7 +211,7 @@ namespace Lextm.SharpSnmpLib.Mib
 
             foreach (Definition d in _children.Values)
             {
-                IDefinition result = d.Add(node);
+                Definition result = d.Add(node);
                 if (result != null)
                 {
                     return result;

@@ -466,6 +466,7 @@ namespace Lextm.SharpSnmpLib
         /// A <see cref="System.String"/> that represents this instance.
         /// </returns>
         [CLSCompliant(false)]
+        [Obsolete("Please use SearchResult.GetStringOf")]
         public string ToString(IObjectRegistry objects)
         {
             if (objects == null)

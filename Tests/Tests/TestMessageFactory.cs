@@ -202,6 +202,12 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual(3867, messages[0].Parameters.EngineTime.ToInt32());
             Assert.AreEqual(ErrorCode.NoError, messages[0].Pdu.ErrorStatus.ToErrorCode());
             Assert.AreEqual(1, messages[0].Pdu.Variables.Count);
+            
+            Variable v = messages[0].Pdu.Variables[0];
+            Assert.AreEqual(".1.3.6.1.6.3.15.1.1.4.0", v.Id.ToString());
+            ISnmpData data = v.Data;
+            Assert.AreEqual(SnmpType.Counter32, data.TypeCode);
+            Assert.AreEqual(3, ((Counter32)data).ToUInt32());
         }
     }
 }

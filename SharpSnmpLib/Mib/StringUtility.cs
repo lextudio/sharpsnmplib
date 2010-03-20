@@ -44,17 +44,5 @@ namespace Lextm.SharpSnmpLib.Mib
             
             return uint.Parse(input.Substring(left + 1, right - left - 1), CultureInfo.InvariantCulture);
         }
-
-        /// <summary>
-        /// Gets the alternative textual form.
-        /// </summary>
-        /// <param name="definition">The definition.</param>
-        /// <returns></returns>
-        [Obsolete("Use SearchResult.AlternativeText instead.")]
-        public static string GetAlternativeTextualForm(IDefinition definition)
-        {
-            // TODO: delete this method.
-            return string.Empty;
-        }
     }
 }

@@ -161,7 +161,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("encoding");
             }
 
-            return encoding.GetString(_raw);
+            return encoding.GetString(_raw, 0, _raw.Length); // use this call for SL3.
         }
 
         /// <summary>

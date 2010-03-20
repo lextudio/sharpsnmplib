@@ -179,7 +179,7 @@ namespace Lextm.SharpSnmpLib
         [CLSCompliant(false)]
         public string ToString(IObjectRegistry objects)
         {
-            return string.Format(CultureInfo.InvariantCulture, "Variable: Id: {0}; Data: {1}", Id.ToString(objects), Data);
+            return string.Format(CultureInfo.InvariantCulture, "Variable: Id: {0}; Data: {1}", SearchResult.GetStringOf(Id, objects), Data);
         }
     }
 }

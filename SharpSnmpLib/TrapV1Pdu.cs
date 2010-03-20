@@ -251,7 +251,7 @@ namespace Lextm.SharpSnmpLib
                 "SNMPv1 TRAP PDU: agent address: {0}; time stamp: {1}; enterprise: {2}; generic: {3}; specific: {4}; varbind count: {5}",
                 AgentAddress,
                 TimeStamp,
-                Enterprise.ToString(objects),
+                SearchResult.GetStringOf(Enterprise, objects),
                 Generic,
                 Specific.ToString(CultureInfo.InvariantCulture),
                 Variables.Count.ToString(CultureInfo.InvariantCulture));

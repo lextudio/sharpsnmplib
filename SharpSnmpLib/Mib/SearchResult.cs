@@ -11,6 +11,13 @@ namespace Lextm.SharpSnmpLib.Mib
     {
         private readonly IDefinition _definition;
         private readonly uint[] _remaining;
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SearchResult"/> class.
+        /// </summary>
+        /// <param name="definition">The definition.</param>
+        [CLSCompliant(false)]
+        public SearchResult(IDefinition definition) : this(definition, new uint[0]) { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SearchResult"/> class.
@@ -110,6 +117,31 @@ namespace Lextm.SharpSnmpLib.Mib
 
                 return result.ToString();
             }
+        }
+        
+        /// <summary>
+        /// Returns a <see cref="System.String"/> for this object ID.
+        /// </summary>
+        /// <param name="id">The object ID.</param>
+        /// <param name="objects">The objects.</param>
+        /// <returns>
+        /// A <see cref="System.String"/> that represents this object ID.
+        /// </returns>
+        [CLSCompliant(false)]
+        public static string GetStringOf(ObjectIdentifier id, IObjectRegistry objects)
+        {
+            if (objects == null)
+            {
+                return id.ToString();
+            }
+            
+            string result = objects.Tree.Search(id.ToNumerical()).AlternativeText;
+            if (string.IsNullOrEmpty(result))
+            {
+                return id.ToString();
+            }
+
+            return result;
         }
     }
 }

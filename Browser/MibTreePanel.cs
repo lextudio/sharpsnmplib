@@ -78,7 +78,7 @@ namespace Lextm.SharpSnmpLib.Browser
             node.Tag = definition;
             node.ImageIndex = (int)definition.Type;
             node.SelectedImageIndex = (int)definition.Type;
-            node.ToolTipText = definition.TextualForm + Environment.NewLine + definition.Value;
+            node.ToolTipText = new SearchResult(definition).AlternativeText + Environment.NewLine + definition.Value;
 
             List<IDefinition> list = new List<IDefinition>(definition.Children);
             list.Sort(new DefinitionComparer());
@@ -94,7 +94,7 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             if (def.Type == DefinitionType.Scalar)
             {
-                return def.TextualForm + ".0";
+                return new SearchResult(def).AlternativeText + ".0";
             }
 
             int index;
@@ -104,17 +104,17 @@ namespace Lextm.SharpSnmpLib.Browser
                 index = form.Index;
             }
 
-            return def.TextualForm + "." + index;
+            return new SearchResult(def).AlternativeText + "." + index;
         }
 
         private static string TextualFormForGetNext(IDefinition def)
         {
             if (def.Type == DefinitionType.Scalar)
             {
-                return def.TextualForm + ".0";
+                return new SearchResult(def).AlternativeText + ".0";
             }
 
-            return def.TextualForm;
+            return new SearchResult(def).AlternativeText;
         }
 
         private void ActGetExecute(object sender, EventArgs e)

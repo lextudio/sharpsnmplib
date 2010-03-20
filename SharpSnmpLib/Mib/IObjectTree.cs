@@ -65,15 +65,6 @@ namespace Lextm.SharpSnmpLib.Mib
         void Remove(string moduleName);
 
         /// <summary>
-        /// Finds the specified numerical.
-        /// </summary>
-        /// <param name="numerical">The numerical.</param>
-        /// <returns>If no match is found, <code>null</code> is returned.</returns>
-        /// <remarks>This method performs exact matching. For best matching, <see cref="Search"/> can be used.</remarks>
-        [Obsolete("Use Search instead.")]
-        IDefinition Find(uint[] numerical);
-
-        /// <summary>
         /// Imports the specified enumerable.
         /// </summary>
         /// <param name="modules">The modules.</param>
@@ -89,7 +80,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// </summary>
         /// <param name="id">The OID.</param>
         /// <returns></returns>
-        /// <remarks>This method performs best matching. For exact matching, <see cref="Find(uint[])"/> can be used.</remarks>
+        /// <remarks>This method performs best matching.</remarks>
         SearchResult Search(uint[] id);
     }
 }

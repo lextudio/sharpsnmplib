@@ -246,7 +246,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 "SNMPv2 trap: time stamp: {0}; community: {1}; enterprise: {2}; varbind count: {3}",
                 TimeStamp.ToString(CultureInfo.InvariantCulture),
                 Community,
-                Enterprise.ToString(objects),
+                SearchResult.GetStringOf(Enterprise, objects),
                 Variables.Count.ToString(CultureInfo.InvariantCulture));
         }
     }

@@ -1,0 +1,216 @@
+﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A67FCB29-B2BD-45E1-AA9F-509A737C3409}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Lextm.SharpSnmpLib</RootNamespace>
+    <AssemblyName>sharpsnmplib.sl2</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <SilverlightApplication>false</SilverlightApplication>
+    <ValidateXaml>true</ValidateXaml>
+    <ThrowErrorsInValidation>false</ThrowErrorsInValidation>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>sharpsnmplib.snk</AssemblyOriginatorKeyFile>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\Debug</OutputPath>
+    <DefineConstants>TRACE;DEBUG;SILVERLIGHT;NET_2_0</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT;NET_2_0</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System.Windows" />
+    <Reference Include="mscorlib" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Windows.Browser" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="BitString.cs" />
+    <Compile Include="Bool.cs" />
+    <Compile Include="ByteTool.cs" />
+    <Compile Include="Counter32.cs" />
+    <Compile Include="Counter64.cs" />
+    <Compile Include="DataFactory.cs" />
+    <Compile Include="EndOfMibView.cs" />
+    <Compile Include="ErrorCode.cs" />
+    <Compile Include="Gauge32.cs" />
+    <Compile Include="GenericCode.cs" />
+    <Compile Include="GetBulkRequestPdu.cs" />
+    <Compile Include="GetNextRequestPdu.cs" />
+    <Compile Include="GetRequestPdu.cs" />
+    <Compile Include="GetResponsePdu.cs" />
+    <Compile Include="Header.cs" />
+    <Compile Include="InformRequestPdu.cs" />
+    <Compile Include="Integer32.cs" />
+    <Compile Include="Integer64.cs" />
+    <Compile Include="IP.cs" />
+    <Compile Include="ISegment.cs" />
+    <Compile Include="ISnmpData.cs" />
+    <Compile Include="ISnmpMessage.cs" />
+    <Compile Include="ISnmpPdu.cs" />
+    <Compile Include="Messaging\Discovery.cs" />
+    <Compile Include="Messaging\ErrorException.cs" />
+    <Compile Include="Messaging\GetBulkRequestMessage.cs" />
+    <Compile Include="Messaging\GetNextRequestMessage.cs" />
+    <Compile Include="Messaging\GetRequestMessage.cs" />
+    <Compile Include="Messaging\GetResponseMessage.cs" />
+    <Compile Include="Messaging\Helper.cs" />
+    <Compile Include="Messaging\InformRequestMessage.cs" />
+    <Compile Include="Messaging\MessageFactory.cs" />
+    <Compile Include="Messaging\MessageFactoryException.cs" />
+    <Compile Include="Messaging\ReportMessage.cs" />
+    <Compile Include="Messaging\SetRequestMessage.cs" />
+    <Compile Include="Messaging\TimeoutException.cs" />
+    <Compile Include="Messaging\TrapV1Message.cs" />
+    <Compile Include="Messaging\TrapV2Message.cs" />
+    <Compile Include="Mib\DefinitionType.cs" />
+    <Compile Include="Mib\IConstruct.cs" />
+    <Compile Include="Mib\IDefinition.cs" />
+    <Compile Include="Mib\IEntity.cs" />
+    <Compile Include="Mib\IModule.cs" />
+    <Compile Include="Mib\IObjectRegistry.cs" />
+    <Compile Include="Mib\IObjectTree.cs" />
+    <Compile Include="Mib\SearchResult.cs" />
+    <Compile Include="NoSuchInstance.cs" />
+    <Compile Include="NoSuchObject.cs" />
+    <Compile Include="Null.cs" />
+    <Compile Include="ObjectIdentifier.cs" />
+    <Compile Include="ObjectIdentifierConverter.cs" />
+    <Compile Include="OctetString.cs" />
+    <Compile Include="Opaque.cs" />
+    <Compile Include="OperationException.cs" />
+    <Compile Include="ReportPdu.cs" />
+    <Compile Include="Resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Scope.cs" />
+    <Compile Include="SecurityParameters.cs" />
+    <Compile Include="Security\DefaultAuthenticationProvider.cs" />
+    <Compile Include="Security\DefaultPrivacyProvider.cs" />
+    <Compile Include="Security\IAuthenticationProvider.cs" />
+    <Compile Include="Security\IPrivacyProvider.cs" />
+    <Compile Include="Security\ProviderPair.cs" />
+    <Compile Include="Security\SaltGenerator.cs" />
+    <Compile Include="Security\SecurityLevel.cs" />
+    <Compile Include="Security\UserRegistry.cs" />
+    <Compile Include="Sequence.cs" />
+    <Compile Include="SerializableAttribute.cs" />
+    <Compile Include="SetRequestPdu.cs" />
+    <Compile Include="SnmpException.cs" />
+    <Compile Include="SnmpType.cs" />
+    <Compile Include="TimeTicks.cs" />
+    <Compile Include="TrapV1Pdu.cs" />
+    <Compile Include="TrapV2Pdu.cs" />
+    <Compile Include="Variable.cs" />
+    <Compile Include="VersionCode.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="license.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Microsoft.VersionNumber.targets" />
+    <None Include="sharpsnmplib.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\v3.0\Microsoft.Silverlight.CSharp.targets" Condition="" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

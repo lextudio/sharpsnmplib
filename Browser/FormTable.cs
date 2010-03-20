@@ -98,7 +98,7 @@ namespace Lextm.SharpSnmpLib.Browser
 
             foreach (IDefinition def in d.Children)
             {
-                dataGridTable.Columns[x++].Name = cbColumnDisplay.SelectedIndex == 0 ? def.TextualForm : def.Name;
+                dataGridTable.Columns[x++].Name = cbColumnDisplay.SelectedIndex == 0 ? new SearchResult(def).AlternativeText : def.Name;
             }
         }
 

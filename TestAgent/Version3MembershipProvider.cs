@@ -15,6 +15,7 @@ namespace Lextm.SharpSnmpLib.Agent
         private readonly OctetString _get;
         private readonly OctetString _set;
         private readonly OctetString _engineId = new OctetString(new byte[] { 4, 13, 128, 0, 31, 136, 128, 233, 99, 0, 0, 214, 31, 244, 73 });
+        private uint _counter;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Version3MembershipProvider"/> class.
@@ -43,13 +44,14 @@ namespace Lextm.SharpSnmpLib.Agent
             
             if (message.Parameters.UserName == OctetString.Empty)
             {
+                _counter++;
                 // discovery message received.
                 context.Response = new ReportMessage(
                     VersionCode.V3,
                     new Header(
                         new Integer32(message.MessageId),
                         new Integer32(0xFFE3),
-                        new OctetString(new[] { (byte)Levels.Reportable }),
+                        new OctetString(new[] {(byte) Levels.Reportable}),
                         new Integer32(3)),
                     new SecurityParameters(
                         _engineId,
@@ -61,8 +63,17 @@ namespace Lextm.SharpSnmpLib.Agent
                     new Scope(
                         OctetString.Empty,
                         OctetString.Empty,
-                        // TODO: add a variable.
-                        new ReportPdu(message.RequestId, ErrorCode.NoError, 0, new List<Variable>())),
+                        new ReportPdu(
+                            message.RequestId,
+                            ErrorCode.NoError,
+                            0,
+                            new List<Variable>(1)
+                                {
+                                    new Variable(
+                                        new ObjectIdentifier("1.3.6.1.6.3.15.1.1.4.0"),
+                                        new Counter32(_counter)
+                                        )
+                                })),
                     ProviderPair.Default);
                 return true;                
             }

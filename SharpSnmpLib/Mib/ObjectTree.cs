@@ -14,7 +14,7 @@ namespace Lextm.SharpSnmpLib.Mib
     {
         private readonly IDictionary<string, MibModule> _loaded = new Dictionary<string, MibModule>();
         private readonly IDictionary<string, MibModule> _pendings = new Dictionary<string, MibModule>();
-        private readonly IDictionary<string, IDefinition> _nameTable;
+        private readonly IDictionary<string, Definition> _nameTable;
         private readonly Definition _root;
         
         /// <summary>
@@ -23,10 +23,10 @@ namespace Lextm.SharpSnmpLib.Mib
         public ObjectTree()
         {
             _root = Definition.RootDefinition;
-            IDefinition ccitt = new Definition(new OidValueAssignment("SNMPV2-SMI", "ccitt", null, 0), _root);
-            IDefinition iso = new Definition(new OidValueAssignment("SNMPV2-SMI", "iso", null, 1), _root);
-            IDefinition jointIsoCcitt = new Definition(new OidValueAssignment("SNMPV2-SMI", "joint-iso-ccitt", null, 2), _root);
-            _nameTable = new Dictionary<string, IDefinition>();
+            Definition ccitt = new Definition(new OidValueAssignment("SNMPV2-SMI", "ccitt", null, 0), _root);
+            Definition iso = new Definition(new OidValueAssignment("SNMPV2-SMI", "iso", null, 1), _root);
+            Definition jointIsoCcitt = new Definition(new OidValueAssignment("SNMPV2-SMI", "joint-iso-ccitt", null, 2), _root);
+            _nameTable = new Dictionary<string, Definition>();
             _nameTable.Add(iso.TextualForm, iso);
             _nameTable.Add(ccitt.TextualForm, ccitt);
             _nameTable.Add(jointIsoCcitt.TextualForm, jointIsoCcitt);
@@ -107,7 +107,7 @@ namespace Lextm.SharpSnmpLib.Mib
             return null;
         }
         
-        internal IDefinition Find(string name)
+        internal Definition Find(string name)
         {
             foreach (string key in _nameTable.Keys)
             {
@@ -120,9 +120,8 @@ namespace Lextm.SharpSnmpLib.Mib
             return null;
         }
 
-        public IDefinition Find(uint[] numerical)
+        internal Definition Find(uint[] numerical)
         {
-            // TODO: make this method internal and remove it from IObjectTree.
             if (numerical == null)
             {
                 throw new ArgumentNullException("numerical");
@@ -133,10 +132,10 @@ namespace Lextm.SharpSnmpLib.Mib
                 throw new ArgumentException("numerical cannot be empty");
             }
             
-            IDefinition result = _root;
+            Definition result = _root;
             for (int i = 0; i < numerical.Length; i++)
             {
-                IDefinition temp = result.GetChildAt(numerical[i]);
+                Definition temp = result.GetChildAt(numerical[i]) as Definition;
                 if (temp == null)
                 {
                     return null;
@@ -211,7 +210,7 @@ namespace Lextm.SharpSnmpLib.Mib
             source.Close();
         }
 
-        private IDefinition CreateSelf(IEntity node)
+        private Definition CreateSelf(IEntity node)
         {
             /* algorithm 2: slower, dropped
             IDefinition parent = Find(node.Parent);
@@ -242,7 +241,7 @@ namespace Lextm.SharpSnmpLib.Mib
                     continue;
                 }
                 
-                IDefinition result = CreateSelf(node);
+                Definition result = CreateSelf(node);
                 if (result == null)
                 {
                     pendingNodes.Add(node);
@@ -278,7 +277,7 @@ namespace Lextm.SharpSnmpLib.Mib
                     }
                     else
                     {
-                        IDefinition result = CreateSelf(node);
+                        Definition result = CreateSelf(node);
                         if (result == null)
                         {
                             // wait for parent
@@ -309,10 +308,10 @@ namespace Lextm.SharpSnmpLib.Mib
             return Find(StringUtility.ExtractName(node.Parent.Split('.')[0])) != null;
         }
 
-        private IDefinition CreateExtraNodes(string module, string longParent)
+        private Definition CreateExtraNodes(string module, string longParent)
         {
             string[] content = longParent.Split('.');
-            IDefinition node = Find(StringUtility.ExtractName(content[0]));
+            Definition node = Find(StringUtility.ExtractName(content[0]));
             uint[] rootId = node.GetNumericalForm();
             uint[] all = new uint[content.Length + rootId.Length - 1];
             for (int j = rootId.Length - 1; j >= 0; j--)
@@ -377,7 +376,7 @@ namespace Lextm.SharpSnmpLib.Mib
             return result;
         }
         
-        private void AddToTable(IDefinition result)
+        private void AddToTable(Definition result)
         {
             if (result != null && !_nameTable.ContainsKey(result.TextualForm))
             {

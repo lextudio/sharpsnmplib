@@ -75,7 +75,7 @@ namespace Lextm.SharpSnmpLib.Compiler
             ResumeLayout();
             listView1.Groups["lvgLoaded"].Header = string.Format(CultureInfo.InvariantCulture, "Loaded ({0})", Assembler.Tree.LoadedModules.Count);
             listView1.Groups["lvgPending"].Header = string.Format(CultureInfo.InvariantCulture, "Pending ({0})", Assembler.Tree.PendingModules.Count);
-            tslblCount.Text = "loaded: " + Assembler.Tree.LoadedModules.Count + "; unloaded: " + Assembler.Tree.PendingModules.Count;
+            tslblCount.Text = string.Format("loaded: {0}; unloaded: {1}", Assembler.Tree.LoadedModules.Count, Assembler.Tree.PendingModules.Count);
         }
 
         [Dependency]

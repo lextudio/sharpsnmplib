@@ -131,19 +131,19 @@ namespace Lextm.SharpSnmpLib.Mib
             return true;
         }
 
-        private static bool? useStricterValidation;
+        private static bool? _useStricterValidation;
 
         private static bool UseStricterValidation
         {
             get
             {
-                if (useStricterValidation == null)
+                if (_useStricterValidation == null)
                 {
                     object setting = ConfigurationManager.AppSettings["StricterValidationEnabled"];
-                    useStricterValidation = setting != null && Convert.ToBoolean(setting.ToString(), CultureInfo.InvariantCulture);
+                    _useStricterValidation = setting != null && Convert.ToBoolean(setting.ToString(), CultureInfo.InvariantCulture);
                 }
 
-                return useStricterValidation.Value;
+                return _useStricterValidation.Value;
             }
         }
     }
