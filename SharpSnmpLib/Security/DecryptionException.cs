@@ -1,5 +1,5 @@
-// Message factory exception.
-// Copyright (C) 2008-2010 Malcolm Crowe, Lex Li, and other contributors.
+// Decryption exception.
+// Copyright (C) 2010 Lex Li.
 // 
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -15,60 +15,50 @@
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-/*
- * Created by SharpDevelop.
- * User: lextm
- * Date: 9/6/2009
- * Time: 4:53 PM
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
- */
 using System;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
 
-namespace Lextm.SharpSnmpLib.Messaging
+namespace Lextm.SharpSnmpLib.Security
 {
     /// <summary>
-    /// Message factory exception.
+    /// Decryption exception.
     /// </summary>
     [Serializable]
-    public class MessageFactoryException : SnmpException
+    public class DecryptionException : SnmpException
     {
         private byte[] _bytes;
-        
+
         /// <summary>
-        /// Creates a <see cref="MessageFactoryException"/>.
+        /// Initializes a new instance of the <see cref="DecryptionException"/> class.
         /// </summary>
-        public MessageFactoryException()
-        {
-        }
-        
+        public DecryptionException() { }
+
         /// <summary>
-        /// Creates a <see cref="MessageFactoryException"/> instance with a specific <see cref="String"/>.
+        /// Creates a <see cref="DecryptionException"/> instance with a specific <see cref="String"/>.
         /// </summary>
         /// <param name="message">Message</param>
-        public MessageFactoryException(string message) : base(message)
+        public DecryptionException(string message) : base(message)
         {
         }
         
         /// <summary>
-        /// Creates a <see cref="MessageFactoryException"/> instance with a specific <see cref="String"/> and an <see cref="Exception"/>.
+        /// Creates a <see cref="DecryptionException"/> instance with a specific <see cref="String"/> and an <see cref="Exception"/>.
         /// </summary>
         /// <param name="message">Message</param>
         /// <param name="inner">Inner exception</param>
-        public MessageFactoryException(string message, Exception inner)
+        public DecryptionException(string message, Exception inner)
             : base(message, inner)
         {
         }
 
         #if (!SILVERLIGHT)
         /// <summary>
-        /// Creates a <see cref="MessageFactoryException"/> instance.
+        /// Creates a <see cref="DecryptionException"/> instance.
         /// </summary>
         /// <param name="info">Info</param>
         /// <param name="context">Context</param>
-        protected MessageFactoryException(SerializationInfo info, StreamingContext context)
+        protected DecryptionException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
             if (info == null)
@@ -110,12 +100,12 @@ namespace Lextm.SharpSnmpLib.Messaging
         }
         
         /// <summary>
-        /// Returns a <see cref="String"/> that represents this <see cref="MessageFactoryException"/>.
+        /// Returns a <see cref="String"/> that represents this <see cref="DecryptionException"/>.
         /// </summary>
         /// <returns></returns>
         public override string ToString()
         {
-            return "SharpMessageFactoryInnerException: " + Message;
+            return "DecryptionException: " + Message;
         }
     }
 }

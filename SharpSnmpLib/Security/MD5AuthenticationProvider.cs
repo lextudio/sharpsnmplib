@@ -61,7 +61,7 @@ namespace Lextm.SharpSnmpLib.Security
             
             if (password.Length < 8)
             {
-                throw new ArgumentException("Secret key is too short.", "password");
+                throw new ArgumentException("Secret key is too short. Must be >= 8. Current: " + password.Length, "password");
             }
             
             if (engineId == null)

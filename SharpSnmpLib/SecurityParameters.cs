@@ -32,7 +32,7 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public class SecurityParameters : ISegment
     {
-        private OctetString _engineId;
+        private readonly OctetString _engineId;
 
         /// <summary>
         /// Gets the engine ID.
@@ -41,10 +41,9 @@ namespace Lextm.SharpSnmpLib
         public OctetString EngineId
         {
             get { return _engineId; }
-            set { _engineId = value; }
         }
 
-        private Integer32 _engineBoots;
+        private readonly Integer32 _engineBoots;
 
         /// <summary>
         /// Gets the boot count.
@@ -53,10 +52,9 @@ namespace Lextm.SharpSnmpLib
         public Integer32 EngineBoots
         {
             get { return _engineBoots; }
-            set { _engineBoots = value; }
         }
 
-        private Integer32 _engineTime;
+        private readonly Integer32 _engineTime;
 
         /// <summary>
         /// Gets the engine time.
@@ -65,7 +63,6 @@ namespace Lextm.SharpSnmpLib
         public Integer32 EngineTime
         {
             get { return _engineTime; }
-            set { _engineTime = value; }
         }
 
         private readonly OctetString _userName;

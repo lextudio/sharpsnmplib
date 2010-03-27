@@ -132,6 +132,7 @@
     <Compile Include="ReportPdu.cs" />
     <Compile Include="Scope.cs" />
     <Compile Include="SecurityParameters.cs" />
+    <Compile Include="Security\DecryptionException.cs" />
     <Compile Include="Security\DefaultAuthenticationProvider.cs" />
     <Compile Include="Security\DefaultPrivacyProvider.cs" />
     <Compile Include="Security\DESPrivacyProvider.cs" />

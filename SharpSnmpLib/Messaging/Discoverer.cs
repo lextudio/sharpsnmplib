@@ -154,7 +154,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
         private void HandleMessage(MessageParams param)
         {
-            foreach (ISnmpMessage message in MessageFactory.ParseMessages(param.GetBytes(), 0, param.Number, UserRegistry.Empty))
+            foreach (ISnmpMessage message in MessageFactory.ParseMessages(param.GetBytes(), 0, param.Number, UserRegistry.Default))
             {
                 if (message.Pdu.TypeCode == SnmpType.ReportPdu)
                 {

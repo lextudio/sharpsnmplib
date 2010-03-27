@@ -26,31 +26,30 @@ namespace Lextm.SharpSnmpLib.Security
     public sealed class UserRegistry
     {
         private readonly IDictionary<OctetString, User> _users = new Dictionary<OctetString, User>();
-        private static readonly UserRegistry EmptyRegistry = new UserRegistry();
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="UserRegistry"/> class.
-        /// </summary>
-        public UserRegistry() { }
+        private static readonly UserRegistry DefaultRegistry = new UserRegistry(null);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UserRegistry"/> class.
         /// </summary>
         /// <param name="users">The users.</param>
-        public UserRegistry(IEnumerable<User> users)
+        public UserRegistry(User[] users)
         {
-            foreach (User user in users)
+            if (users != null)
             {
-                _users.Add(user.Name, user);
+                foreach (User user in users)
+                {
+                    Add(user);
+                }
             }
         }
+
         /// <summary>
-        /// Gets the empty.
+        /// Gets the default registry.
         /// </summary>
-        /// <value>The empty.</value>
-        public static UserRegistry Empty
+        /// <value>The default registry.</value>
+        public static UserRegistry Default
         {
-            get { return EmptyRegistry; }
+            get { return DefaultRegistry; }
         }
 
         /// <summary>
@@ -69,7 +68,10 @@ namespace Lextm.SharpSnmpLib.Security
         /// <param name="user">The user.</param>
         public void Add(User user)
         {
-            _users.Add(user.Name, user);
+            if (!_users.ContainsKey(user.Name))
+            {
+                _users.Add(user.Name, user);
+            }
         }
 
         /// <summary>

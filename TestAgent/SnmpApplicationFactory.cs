@@ -16,6 +16,7 @@ namespace Lextm.SharpSnmpLib.Agent
         private readonly object _root = new object();
         private readonly Queue<SnmpApplication> _queue = new Queue<SnmpApplication>();
         private readonly UserRegistry _users;
+        private readonly AgentObjects _objects;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SnmpApplicationFactory"/> class.
@@ -24,9 +25,12 @@ namespace Lextm.SharpSnmpLib.Agent
         /// <param name="store">The store.</param>
         /// <param name="membershipProvider">The membership provider.</param>
         /// <param name="factory">The factory.</param>
-        public SnmpApplicationFactory(ILogger logger, ObjectStore store, IMembershipProvider membershipProvider, MessageHandlerFactory factory, UserRegistry users)
+        /// <param name="users">The users.</param>
+        /// <param name="objects">The objects.</param>
+        public SnmpApplicationFactory(ILogger logger, ObjectStore store, IMembershipProvider membershipProvider, MessageHandlerFactory factory, UserRegistry users, AgentObjects objects)
         {
             _logger = logger;
+            _objects = objects;
             _users = users;
             _membershipProvider = membershipProvider;
             _store = store;
@@ -51,7 +55,7 @@ namespace Lextm.SharpSnmpLib.Agent
 
             if (result == null)
             {
-                result = new SnmpApplication(this, _logger, _store, _membershipProvider, _factory, _users);              
+                result = new SnmpApplication(this, _logger, _store, _membershipProvider, _factory, _users, _objects);              
             }
 
             result.Init(context);

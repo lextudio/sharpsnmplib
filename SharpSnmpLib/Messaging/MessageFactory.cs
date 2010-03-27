@@ -216,14 +216,14 @@ namespace Lextm.SharpSnmpLib.Messaging
             else if (body[3].TypeCode == SnmpType.OctetString)
             {
                 // v3 encrypted
+                // TODO: how to handle decryption exception.
                 scope = new Scope((Sequence)record.Privacy.Decrypt(body[3], parameters));
             }
             else
             {
                 throw new SnmpException("invalid v3 packets scoped data: " + body[3].TypeCode);
             }
-            
-            // TODO: where is authentication validation.
+
             ISnmpPdu pdu = scope.Pdu;
             switch (pdu.TypeCode)
             {

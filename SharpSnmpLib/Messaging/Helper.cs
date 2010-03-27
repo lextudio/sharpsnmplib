@@ -28,23 +28,25 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// Helper class.
     /// </summary>
     public static class Helper
-    {    
+    {
         /// <summary>
         /// Authenticates this message.
         /// </summary>
-        public static void Authenticate(ISnmpMessage message, ProviderPair pair)
+        /// <param name="message">The message.</param>
+        /// <param name="providers">The providers.</param>
+        public static void Authenticate(ISnmpMessage message, ProviderPair providers)
         {
             if (message == null)
             {
                 throw new ArgumentNullException("message");
             }
             
-            if (pair == null)
+            if (providers == null)
             {
-                throw new ArgumentNullException("pair");
+                throw new ArgumentNullException("providers");
             }
             
-            message.Parameters.AuthenticationParameters = pair.Authentication.ComputeHash(message);
+            message.Parameters.AuthenticationParameters = providers.Authentication.ComputeHash(message);
         }
 
         internal static Sequence PackMessage(VersionCode version, IPrivacyProvider privacy, ISegment header, SecurityParameters parameters, ISegment scope)

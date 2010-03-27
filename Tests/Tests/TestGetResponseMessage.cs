@@ -8,6 +8,7 @@
  */
 
 using System.IO;
+using Lextm.SharpSnmpLib.Security;
 using NUnit.Framework;
 using Lextm.SharpSnmpLib.Messaging;
 using Lextm.SharpSnmpLib.Properties;
@@ -22,7 +23,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestMethod()
         {
             MemoryStream m = new MemoryStream(Resources.getresponse, false);
-            ISnmpMessage message = MessageFactory.ParseMessages(m, new Lextm.SharpSnmpLib.Security.UserRegistry())[0];
+            ISnmpMessage message = MessageFactory.ParseMessages(m, UserRegistry.Default)[0];
             Assert.AreEqual(SnmpType.GetResponsePdu, message.Pdu.TypeCode);
             ISnmpPdu pdu = message.Pdu;
             Assert.AreEqual(SnmpType.GetResponsePdu, pdu.TypeCode);

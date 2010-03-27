@@ -43,8 +43,8 @@ namespace Lextm.SharpSnmpLib.Messaging
         private readonly SecurityParameters _parameters;
         private readonly Scope _scope;
         private readonly ProviderPair _pair;
-        private uint _time;
-        private ObjectIdentifier _enterprise;
+        private readonly uint _time;
+        private readonly ObjectIdentifier _enterprise;
 
         /// <summary>
         /// Creates a <see cref="InformRequestMessage"/> with all contents.
@@ -175,7 +175,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             using (Socket socket = Helper.GetSocket(receiver))
             {
-                return MessageFactory.GetResponse(receiver, ToBytes(), RequestId, timeout, UserRegistry.Empty, socket);
+                return MessageFactory.GetResponse(receiver, ToBytes(), RequestId, timeout, UserRegistry.Default, socket);
             }
         }
 
@@ -188,7 +188,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public ISnmpMessage GetResponse(int timeout, IPEndPoint receiver, Socket socket)
         {
-            return MessageFactory.GetResponse(receiver, ToBytes(), RequestId, timeout, UserRegistry.Empty, socket);
+            return MessageFactory.GetResponse(receiver, ToBytes(), RequestId, timeout, UserRegistry.Default, socket);
         }
 
         /// <summary>

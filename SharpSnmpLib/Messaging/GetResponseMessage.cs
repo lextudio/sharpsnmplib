@@ -74,36 +74,11 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Initializes a new instance of the <see cref="GetResponseMessage"/> class.
         /// </summary>
         /// <param name="version">The version.</param>
-        /// <param name="requestId">The request id.</param>
-        /// <param name="messageId">The message id.</param>
-        /// <param name="userName">Name of the user.</param>
-        /// <param name="error">Error code.</param>
-        /// <param name="index">Error index.</param>
-        /// <param name="variables">The variables.</param>
+        /// <param name="header">The header.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="scope">The scope.</param>
         /// <param name="record">The record.</param>
-        public GetResponseMessage(VersionCode version, int requestId, int messageId, OctetString userName, ErrorCode error, int index, IList<Variable> variables, ProviderPair record)
-        {
-            if (record == null)
-            {
-                throw new ArgumentNullException("record");
-            }
-
-            _version = version;
-            _record = record;
-            Levels recordToSecurityLevel = record.ToSecurityLevel();
-            recordToSecurityLevel |= Levels.Reportable;
-            byte b = (byte)recordToSecurityLevel;
-            _header = new Header(new Integer32(messageId), new Integer32(0xFFE3), new OctetString(new[] { b }), new Integer32(3));
-            _parameters = new SecurityParameters(OctetString.Empty, new Integer32(0), new Integer32(0), userName, OctetString.Empty, OctetString.Empty);
-            GetResponsePdu pdu = new GetResponsePdu(
-                requestId,
-                error,
-                index,
-                variables);
-            _scope = new Scope(OctetString.Empty, OctetString.Empty, pdu);
-        }
-
-        internal GetResponseMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, ProviderPair record)
+        public GetResponseMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, ProviderPair record)
         {
             if (record == null)
             {

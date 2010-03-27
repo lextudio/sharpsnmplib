@@ -61,7 +61,7 @@ namespace Lextm.SharpSnmpLib.Security
             
             if (key.Length < MinimumKeyLength)
             {
-                throw new ArgumentOutOfRangeException("key", "Encryption key length has to 32 bytes or more.");
+                throw new ArgumentException("Encryption key length has to 32 bytes or more. Current: " + key.Length, "key");
             }
             
             if (unencryptedData == null)
@@ -283,7 +283,7 @@ namespace Lextm.SharpSnmpLib.Security
             
             if (data.TypeCode != SnmpType.OctetString)
             {
-                throw new ArgumentException("cannot decrypt the scope data", "data");
+                throw new ArgumentException("cannot decrypt the scope data: " + data.TypeCode, "data");
             }
             
             OctetString octets = (OctetString)data;
@@ -292,7 +292,18 @@ namespace Lextm.SharpSnmpLib.Security
 
             // decode encrypted packet
             byte[] decrypted = Decrypt(bytes, pkey, parameters.PrivacyParameters.GetRaw());
-            return DataFactory.CreateSnmpData(decrypted);
+
+            try
+            {
+                ISnmpData result = DataFactory.CreateSnmpData(decrypted);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                DecryptionException newException = new DecryptionException("DES decryption failed", ex);
+                newException.SetBytes(bytes);
+                throw newException;
+            }
         }
 
         /// <summary>

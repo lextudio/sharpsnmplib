@@ -12,7 +12,19 @@ namespace Lextm.SharpSnmpLib.Agent
     internal class Version3MembershipProvider : IMembershipProvider
     {
         private const VersionCode Version = VersionCode.V3;
-        private readonly AgentObjects _objects = new AgentObjects();
+        private readonly AgentObjects _objects;
+        private readonly UserRegistry _users;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Version3MembershipProvider"/> class.
+        /// </summary>
+        /// <param name="users">The users.</param>
+        /// <param name="objects">The objects.</param>
+        public Version3MembershipProvider(UserRegistry users, AgentObjects objects)
+        {
+            _users = users;
+            _objects = objects;
+        }
 
         /// <summary>
         /// Authenticates the request.
@@ -81,9 +93,13 @@ namespace Lextm.SharpSnmpLib.Agent
                 return false;
             }
 
-            // TODO: maybe move v3 checking here.
+            // TODO: verify authentication here.
+            OctetString embedded = message.Parameters.AuthenticationParameters;
+            ProviderPair providers = _users.Find(message.Parameters.UserName);
+            message.Parameters.AuthenticationParameters = providers.Authentication.CleanDigest;
+            OctetString calculated = providers.Authentication.ComputeHash(message);
             // other checking were performed in MessageFactory when decrypting message body.
-            return true;
+            return embedded == calculated;
         }
     }
 }

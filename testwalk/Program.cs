@@ -54,7 +54,7 @@ namespace SnmpWalk
                                                                                            level = Levels.Authentication | Levels.Privacy | Levels.Reportable;
                                                                                        }
                                                                                    })
-                .Add("a:", "-a for authentication method", delegate(string v) { authentication = v; })
+                .Add("a:", "-a for authentication method (MD5 or SHA)", delegate(string v) { authentication = v; })
                 .Add("A:", "-A for authentication passphrase", delegate(string v) { authPhrase = v; })
                 .Add("x:", "-x for privacy method", delegate(string v) { privacy = v; })
                 .Add("X:", "-X for privacy passphrase", delegate(string v) { privPhrase = v; })
@@ -238,12 +238,12 @@ namespace SnmpWalk
 
         private static IAuthenticationProvider GetAuthenticationProviderByName(string authentication, string phrase)
         {
-            if (authentication.ToUpper() == "MD5")
+            if (authentication.ToUpperInvariant() == "MD5")
             {
                 return new MD5AuthenticationProvider(new OctetString(phrase));
             }
             
-            if (authentication.ToUpper() == "SHA")
+            if (authentication.ToUpperInvariant() == "SHA")
             {
                 return new SHA1AuthenticationProvider(new OctetString(phrase));
             }

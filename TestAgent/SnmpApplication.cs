@@ -19,6 +19,7 @@ namespace Lextm.SharpSnmpLib.Agent
         private readonly ObjectStore _store;
         private readonly SnmpApplicationFactory _owner;
         private readonly UserRegistry _users;
+        private readonly AgentObjects _objects;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SnmpApplication"/> class.
@@ -29,9 +30,11 @@ namespace Lextm.SharpSnmpLib.Agent
         /// <param name="provider">The provider.</param>
         /// <param name="factory">The factory.</param>
         /// <param name="users">The users.</param>
-        public SnmpApplication(SnmpApplicationFactory owner, ILogger logger, ObjectStore store, IMembershipProvider provider, MessageHandlerFactory factory, UserRegistry users)
+        /// <param name="objects">The objects.</param>
+        public SnmpApplication(SnmpApplicationFactory owner, ILogger logger, ObjectStore store, IMembershipProvider provider, MessageHandlerFactory factory, UserRegistry users, AgentObjects objects)
         {
             _owner = owner;
+            _objects = objects;
             _provider = provider;
             _logger = logger;
             _store = store;
@@ -89,8 +92,9 @@ namespace Lextm.SharpSnmpLib.Agent
                 return;
             }
 
-            IList<Variable> result = _handler.Handle(Context.Request, _store);
-
+            ISnmpMessage message = Context.Request;
+            IList<Variable> result = _handler.Handle(message, _store);
+            
             GetResponseMessage response;
             if (Context.Request.Version != VersionCode.V3)
             {
@@ -99,9 +103,9 @@ namespace Lextm.SharpSnmpLib.Agent
                 {
                     // for v1 and v2 reply.
                     response = new GetResponseMessage(
-                        Context.Request.RequestId,
-                        Context.Request.Version,
-                        Context.Request.Parameters.UserName,
+                        message.RequestId,
+                        message.Version,
+                        message.Parameters.UserName,
                         ErrorCode.NoError,
                         0,
                         result);
@@ -109,65 +113,108 @@ namespace Lextm.SharpSnmpLib.Agent
                 else
                 {
                     response = new GetResponseMessage(
-                        Context.Request.RequestId,
-                        Context.Request.Version,
-                        Context.Request.Parameters.UserName,
+                        message.RequestId,
+                        message.Version,
+                        message.Parameters.UserName,
                         _handler.ErrorStatus,
                         _handler.ErrorIndex,
-                        Context.Request.Pdu.Variables);
+                        message.Pdu.Variables);
                 }
 
                 if (response.ToBytes().Length > MaxResponseSize)
                 {
                     response = new GetResponseMessage(
-                        Context.Request.RequestId,
-                        Context.Request.Version,
-                        Context.Request.Parameters.UserName,
+                        message.RequestId,
+                        message.Version,
+                        message.Parameters.UserName,
                         ErrorCode.TooBig,
                         0,
-                        Context.Request.Pdu.Variables);
+                        message.Pdu.Variables);
                 }
             }
             else
             {
+                ProviderPair providers = Users.Find(Context.Request.Parameters.UserName);
                 // TODO: reply with v3.
                 if (_handler.ErrorStatus == ErrorCode.NoError)
                 {
                     // for v3
                     response = new GetResponseMessage(
-                        Context.Request.Version,
-                        Context.Request.RequestId,
-                        Context.Request.MessageId,
-                        Context.Request.Parameters.UserName,
-                        ErrorCode.NoError,
-                        0,
-                        result,
-                        Users.Find(Context.Request.Parameters.UserName));
+                        message.Version,
+                        new Header(
+                            new Integer32(message.MessageId),
+                            new Integer32(0xFFE3),
+                            new OctetString(new[] {(byte) Levels.Reportable}),
+                            new Integer32(3)),
+                        new SecurityParameters(
+                            _objects.EngineId,
+                            new Integer32(_objects.EngineBoots),
+                            new Integer32(_objects.EngineTime),
+                            message.Parameters.UserName,
+                            providers.Authentication.CleanDigest,
+                            providers.Privacy.Salt),
+                        new Scope(
+                            _objects.EngineId,
+                            OctetString.Empty,
+                            new GetResponsePdu(
+                                message.RequestId,
+                                ErrorCode.NoError,
+                                0,
+                                result)),
+                        providers);
                 }
                 else
                 {
                     response = new GetResponseMessage(
-                        Context.Request.Version,
-                        Context.Request.RequestId,
-                        Context.Request.MessageId,
-                        Context.Request.Parameters.UserName,
-                        _handler.ErrorStatus,
-                        _handler.ErrorIndex,
-                        Context.Request.Pdu.Variables,
-                        Users.Find(Context.Request.Parameters.UserName));
+                        message.Version,
+                        new Header(
+                            new Integer32(message.MessageId),
+                            new Integer32(0xFFE3),
+                            new OctetString(new[] { (byte)Levels.Reportable }),
+                            new Integer32(3)),
+                        new SecurityParameters(
+                            _objects.EngineId,
+                            new Integer32(_objects.EngineBoots),
+                            new Integer32(_objects.EngineTime),
+                            message.Parameters.UserName,
+                            providers.Authentication.CleanDigest,
+                            providers.Privacy.Salt),
+                        new Scope(
+                            _objects.EngineId,
+                            OctetString.Empty,
+                            new GetResponsePdu(
+                                message.RequestId,
+                                _handler.ErrorStatus,
+                                _handler.ErrorIndex,
+                                message.Pdu.Variables)),
+                        providers);
                 }
 
                 if (response.ToBytes().Length > MaxResponseSize)
                 {
                     response = new GetResponseMessage(
-                        Context.Request.Version,
-                        Context.Request.RequestId,
-                        Context.Request.MessageId,
-                        Context.Request.Parameters.UserName,
-                        ErrorCode.TooBig,
-                        0,
-                        Context.Request.Pdu.Variables,
-                        Users.Find(Context.Request.Parameters.UserName));
+                        message.Version,
+                        new Header(
+                            new Integer32(message.MessageId),
+                            new Integer32(0xFFE3),
+                            new OctetString(new[] { (byte)Levels.Reportable }),
+                            new Integer32(3)),
+                        new SecurityParameters(
+                            _objects.EngineId,
+                            new Integer32(_objects.EngineBoots),
+                            new Integer32(_objects.EngineTime),
+                            message.Parameters.UserName,
+                            providers.Authentication.CleanDigest,
+                            providers.Privacy.Salt),
+                        new Scope(
+                            _objects.EngineId,
+                            OctetString.Empty,
+                            new GetResponsePdu(
+                                message.RequestId,
+                                ErrorCode.TooBig,
+                                0,
+                                message.Pdu.Variables)),
+                        providers);
                 }
             }
 
@@ -201,6 +248,34 @@ namespace Lextm.SharpSnmpLib.Agent
                 // TODO: handle error here.
                 // return TRAP saying authenticationFailed.
                 CompleteProcessing();
+                if (Context.Request.Version == VersionCode.V3)
+                {
+                    ISnmpMessage message = Context.Request;
+                    ProviderPair providers = Users.Find(Context.Request.Parameters.UserName);
+                    Context.Response = new GetResponseMessage(
+                        message.Version,
+                        new Header(
+                            new Integer32(message.MessageId),
+                            new Integer32(0xFFE3),
+                            new OctetString(new[] { (byte)Levels.Reportable }),
+                            new Integer32(3)),
+                        new SecurityParameters(
+                            _objects.EngineId,
+                            new Integer32(_objects.EngineBoots),
+                            new Integer32(_objects.EngineTime),
+                            message.Parameters.UserName,
+                            providers.Authentication.CleanDigest,
+                            providers.Privacy.Salt),
+                        new Scope(
+                            _objects.EngineId,
+                            OctetString.Empty,
+                            new GetResponsePdu(
+                                message.RequestId,
+                                ErrorCode.AuthorizationError,
+                                0,
+                                message.Pdu.Variables)),
+                        providers);
+                }
             }
             
             if (Context.Response != null)

@@ -108,7 +108,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public ISnmpMessage GetResponse(int timeout, IPEndPoint receiver, Socket socket)
         {
-            return MessageFactory.GetResponse(receiver, ToBytes(), RequestId, timeout, UserRegistry.Empty, socket);
+            return MessageFactory.GetResponse(receiver, ToBytes(), RequestId, timeout, UserRegistry.Default, socket);
         }
 
         /// <summary>

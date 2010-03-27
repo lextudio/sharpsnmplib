@@ -438,7 +438,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <value>The users.</value>
         public UserRegistry Users
         {
-            get { return _users ?? (_users = UserRegistry.Empty); }
+            get { return _users ?? (_users = UserRegistry.Default); }
             set { _users = value; }
         }
     }

@@ -55,7 +55,7 @@ namespace SnmpBulkGet
                                                                                    })
                 .Add("Cn:", "-Cn for non-repeaters (default is 0)", delegate(string v) { nonRepeaters = int.Parse(v); })
                 .Add("Cr:", "-Cr for max-repetitions (default is 10)", delegate(string v) { maxRepetitions = int.Parse(v); })
-                .Add("a:", "-a for authentication method", delegate(string v) { authentication = v; })
+                .Add("a:", "-a for authentication method (MD5 or SHA)", delegate(string v) { authentication = v; })
                 .Add("A:", "-A for authentication passphrase", delegate(string v) { authPhrase = v; })
                 .Add("x:", "-x for privacy method", delegate(string v) { privacy = v; })
                 .Add("X:", "-X for privacy passphrase", delegate(string v) { privPhrase = v; })
@@ -213,12 +213,12 @@ namespace SnmpBulkGet
 
         private static IAuthenticationProvider GetAuthenticationProviderByName(string authentication, string phrase)
         {
-            if (authentication.ToUpper() == "MD5")
+            if (authentication.ToUpperInvariant() == "MD5")
             {
                 return new MD5AuthenticationProvider(new OctetString(phrase));
             }
 
-            if (authentication.ToUpper() == "SHA")
+            if (authentication.ToUpperInvariant() == "SHA")
             {
                 return new SHA1AuthenticationProvider(new OctetString(phrase));
             }

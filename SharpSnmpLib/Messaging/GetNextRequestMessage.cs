@@ -255,7 +255,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             UserRegistry registry = null;
             if (Version == VersionCode.V3)
             {
-                registry = new UserRegistry();
+                registry = UserRegistry.Default;
                 Helper.Authenticate(this, _pair);
                 registry.Add(_parameters.UserName, _pair);
             }
