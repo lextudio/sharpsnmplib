@@ -96,6 +96,7 @@
     <Compile Include="..\lib\RollingFileAppender.cs">
       <Link>RollingFileAppender.cs</Link>
     </Compile>
+    <Compile Include="AgentObjects.cs" />
     <Compile Include="ComposedMembershipProvider.cs" />
     <Compile Include="GetBulkMessageHandler.cs" />
     <Compile Include="ILogger.cs" />

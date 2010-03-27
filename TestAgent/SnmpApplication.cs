@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Lextm.SharpSnmpLib.Messaging;
+using Lextm.SharpSnmpLib.Security;
 
 namespace Lextm.SharpSnmpLib.Agent
 {
@@ -17,6 +18,7 @@ namespace Lextm.SharpSnmpLib.Agent
         private const int MaxResponseSize = 1500;
         private readonly ObjectStore _store;
         private readonly SnmpApplicationFactory _owner;
+        private readonly UserRegistry _users;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SnmpApplication"/> class.
@@ -26,13 +28,15 @@ namespace Lextm.SharpSnmpLib.Agent
         /// <param name="store">The store.</param>
         /// <param name="provider">The provider.</param>
         /// <param name="factory">The factory.</param>
-        public SnmpApplication(SnmpApplicationFactory owner, ILogger logger, ObjectStore store, IMembershipProvider provider, MessageHandlerFactory factory)
+        /// <param name="users">The users.</param>
+        public SnmpApplication(SnmpApplicationFactory owner, ILogger logger, ObjectStore store, IMembershipProvider provider, MessageHandlerFactory factory, UserRegistry users)
         {
             _owner = owner;
             _provider = provider;
             _logger = logger;
             _store = store;
             _factory = factory;
+            _users = users;
         }
 
         /// <summary>
@@ -88,38 +92,91 @@ namespace Lextm.SharpSnmpLib.Agent
             IList<Variable> result = _handler.Handle(Context.Request, _store);
 
             GetResponseMessage response;
-            if (_handler.ErrorStatus == ErrorCode.NoError)
+            if (Context.Request.Version != VersionCode.V3)
             {
-                response = new GetResponseMessage(
-                    Context.Request.RequestId,
-                    Context.Request.Version,
-                    Context.Request.Parameters.UserName,
-                    ErrorCode.NoError,
-                    0,
-                    result);
+                
+                if (_handler.ErrorStatus == ErrorCode.NoError)
+                {
+                    // for v1 and v2 reply.
+                    response = new GetResponseMessage(
+                        Context.Request.RequestId,
+                        Context.Request.Version,
+                        Context.Request.Parameters.UserName,
+                        ErrorCode.NoError,
+                        0,
+                        result);
+                }
+                else
+                {
+                    response = new GetResponseMessage(
+                        Context.Request.RequestId,
+                        Context.Request.Version,
+                        Context.Request.Parameters.UserName,
+                        _handler.ErrorStatus,
+                        _handler.ErrorIndex,
+                        Context.Request.Pdu.Variables);
+                }
+
                 if (response.ToBytes().Length > MaxResponseSize)
                 {
                     response = new GetResponseMessage(
-                        Context.Request.RequestId, 
-                        Context.Request.Version,                                                      
-                        Context.Request.Parameters.UserName,                                                      
-                        ErrorCode.TooBig, 
-                        0, 
+                        Context.Request.RequestId,
+                        Context.Request.Version,
+                        Context.Request.Parameters.UserName,
+                        ErrorCode.TooBig,
+                        0,
                         Context.Request.Pdu.Variables);
                 }
             }
             else
             {
-                response = new GetResponseMessage(
-                    Context.Request.RequestId, 
-                    Context.Request.Version,                                                  
-                    Context.Request.Parameters.UserName,                                                  
-                    _handler.ErrorStatus, 
-                    _handler.ErrorIndex,                                                  
-                    Context.Request.Pdu.Variables);
+                // TODO: reply with v3.
+                if (_handler.ErrorStatus == ErrorCode.NoError)
+                {
+                    // for v3
+                    response = new GetResponseMessage(
+                        Context.Request.Version,
+                        Context.Request.RequestId,
+                        Context.Request.MessageId,
+                        Context.Request.Parameters.UserName,
+                        ErrorCode.NoError,
+                        0,
+                        result,
+                        Users.Find(Context.Request.Parameters.UserName));
+                }
+                else
+                {
+                    response = new GetResponseMessage(
+                        Context.Request.Version,
+                        Context.Request.RequestId,
+                        Context.Request.MessageId,
+                        Context.Request.Parameters.UserName,
+                        _handler.ErrorStatus,
+                        _handler.ErrorIndex,
+                        Context.Request.Pdu.Variables,
+                        Users.Find(Context.Request.Parameters.UserName));
+                }
+
+                if (response.ToBytes().Length > MaxResponseSize)
+                {
+                    response = new GetResponseMessage(
+                        Context.Request.Version,
+                        Context.Request.RequestId,
+                        Context.Request.MessageId,
+                        Context.Request.Parameters.UserName,
+                        ErrorCode.TooBig,
+                        0,
+                        Context.Request.Pdu.Variables,
+                        Users.Find(Context.Request.Parameters.UserName));
+                }
             }
 
             Context.Response = response;
+        }
+
+        public UserRegistry Users
+        {
+            get { return _users; }
         }
 
         private void OnMapRequestHandler()

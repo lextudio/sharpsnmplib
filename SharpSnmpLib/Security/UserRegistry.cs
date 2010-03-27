@@ -25,9 +25,25 @@ namespace Lextm.SharpSnmpLib.Security
     /// </summary>
     public sealed class UserRegistry
     {
-        private readonly IDictionary<OctetString, ProviderPair> _users = new Dictionary<OctetString, ProviderPair>();
+        private readonly IDictionary<OctetString, User> _users = new Dictionary<OctetString, User>();
         private static readonly UserRegistry EmptyRegistry = new UserRegistry();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UserRegistry"/> class.
+        /// </summary>
+        public UserRegistry() { }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UserRegistry"/> class.
+        /// </summary>
+        /// <param name="users">The users.</param>
+        public UserRegistry(IEnumerable<User> users)
+        {
+            foreach (User user in users)
+            {
+                _users.Add(user.Name, user);
+            }
+        }
         /// <summary>
         /// Gets the empty.
         /// </summary>
@@ -41,13 +57,27 @@ namespace Lextm.SharpSnmpLib.Security
         /// Adds the specified user name.
         /// </summary>
         /// <param name="userName">Name of the user.</param>
-        /// <param name="pair">The pair.</param>
-        public void Add(OctetString userName, ProviderPair pair)
+        /// <param name="providers">The providers.</param>
+        public void Add(OctetString userName, ProviderPair providers)
         {
-            _users.Add(userName, pair);
+            Add(new User(userName, providers));
         }
 
-        internal ProviderPair Find(OctetString userName)
+        /// <summary>
+        /// Adds the specified user.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        public void Add(User user)
+        {
+            _users.Add(user.Name, user);
+        }
+
+        /// <summary>
+        /// Finds the specified user name.
+        /// </summary>
+        /// <param name="userName">Name of the user.</param>
+        /// <returns></returns>
+        public ProviderPair Find(OctetString userName)
         {
             if (userName == null)
             {
@@ -61,7 +91,7 @@ namespace Lextm.SharpSnmpLib.Security
 
             if (_users.ContainsKey(userName))
             {
-                return _users[userName];
+                return _users[userName].Providers;
             }
 
             throw new ArgumentException("no such user: " + userName);

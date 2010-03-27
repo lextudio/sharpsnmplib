@@ -12,23 +12,7 @@ namespace Lextm.SharpSnmpLib.Agent
     internal class Version3MembershipProvider : IMembershipProvider
     {
         private const VersionCode Version = VersionCode.V3;
-        private readonly OctetString _get;
-        private readonly OctetString _set;
-        // TODO: make engine ID configurable from outside and unique.
-        private readonly OctetString _engineId = new OctetString(new byte[] { 4, 13, 128, 0, 31, 136, 128, 233, 99, 0, 0, 214, 31, 244, 73 });
-        private uint _counter;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Version3MembershipProvider"/> class.
-        /// </summary>
-        /// <param name="getCommunity">The get community.</param>
-        /// <param name="setCommunity">The set community.</param>
-        public Version3MembershipProvider(OctetString getCommunity, OctetString setCommunity)
-        {
-            // TODO: implement v3 checking.
-            _get = getCommunity;
-            _set = setCommunity;
-        }
+        private readonly AgentObjects _objects = new AgentObjects();
 
         /// <summary>
         /// Authenticates the request.
@@ -45,7 +29,7 @@ namespace Lextm.SharpSnmpLib.Agent
             
             if (message.Parameters.UserName == OctetString.Empty)
             {
-                _counter++;
+                _objects.ReportCount++;
                 // discovery message received.
                 context.Response = new ReportMessage(
                     VersionCode.V3,
@@ -55,7 +39,7 @@ namespace Lextm.SharpSnmpLib.Agent
                         new OctetString(new[] {(byte) Levels.Reportable}),
                         new Integer32(3)),
                     new SecurityParameters(
-                        _engineId,
+                        _objects.EngineId,
                         new Integer32(0),
                         new Integer32(Environment.TickCount),
                         OctetString.Empty,
@@ -72,19 +56,34 @@ namespace Lextm.SharpSnmpLib.Agent
                                 {
                                     new Variable(
                                         new ObjectIdentifier("1.3.6.1.6.3.15.1.1.4.0"),
-                                        new Counter32(_counter)
+                                        new Counter32(_objects.ReportCount)
                                         )
                                 })),
                     ProviderPair.Default);
                 return true;                
             }
 
-            if (context.Request.Pdu.TypeCode == SnmpType.SetRequestPdu)
+            if (message.Parameters.EngineId != _objects.EngineId)
             {
-                return context.Request.Parameters.UserName == _set;
+                // not from this engine.
+                return false;
             }
 
-            return context.Request.Parameters.UserName == _get;
+            if (message.Parameters.EngineBoots.ToInt32() != _objects.EngineBoots)
+            {
+                // does not match boot count.
+                return false;
+            }
+
+            if (message.Parameters.EngineTime.ToInt32() > _objects.EngineTime + 500)
+            {
+                // timeout.
+                return false;
+            }
+
+            // TODO: maybe move v3 checking here.
+            // other checking were performed in MessageFactory when decrypting message body.
+            return true;
         }
     }
 }

@@ -42,7 +42,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         private long _active; // = 0
         private bool _disposed;
         private int _port;
-        private readonly UserRegistry _users = new UserRegistry();
+        private UserRegistry _users;
 
         /// <summary>
         /// Releases the unmanaged resources used by the <see cref="T:System.ComponentModel.Component"/> and optionally releases the managed resources.
@@ -370,7 +370,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             IList<ISnmpMessage> messages = null;
             try
             {
-                messages = MessageFactory.ParseMessages(param.GetBytes(), 0, param.Number, _users);
+                messages = MessageFactory.ParseMessages(param.GetBytes(), 0, param.Number, Users);
             }
             catch (Exception ex)
             {
@@ -430,6 +430,16 @@ namespace Lextm.SharpSnmpLib.Messaging
         public IList<IListenerAdapter> Adapters
         {
             get { return _adapters; }
+        }
+
+        /// <summary>
+        /// Gets or sets the users.
+        /// </summary>
+        /// <value>The users.</value>
+        public UserRegistry Users
+        {
+            get { return _users ?? (_users = UserRegistry.Empty); }
+            set { _users = value; }
         }
     }
 }

@@ -205,14 +205,17 @@ namespace Lextm.SharpSnmpLib.Messaging
             Scope scope;
             if (body.Count == 3)
             {
+                // v1 and v2
                 scope = new Scope(null, null, (ISnmpPdu)body[2]);
             }
             else if (body[3].TypeCode == SnmpType.Sequence)
             {
+                // v3 not encrypted
                 scope = new Scope((Sequence)body[3]);
             }
             else if (body[3].TypeCode == SnmpType.OctetString)
             {
+                // v3 encrypted
                 scope = new Scope((Sequence)record.Privacy.Decrypt(body[3], parameters));
             }
             else
@@ -220,6 +223,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new SnmpException("invalid v3 packets scoped data: " + body[3].TypeCode);
             }
             
+            // TODO: where is authentication validation.
             ISnmpPdu pdu = scope.Pdu;
             switch (pdu.TypeCode)
             {

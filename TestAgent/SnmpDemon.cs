@@ -18,18 +18,18 @@ namespace Lextm.SharpSnmpLib.Agent
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
     internal class SnmpDemon : IDisposable
     {
-        private readonly Listener _listener = new Listener();
+        private readonly Listener _listener;
         private readonly SnmpApplicationFactory _factory;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SnmpDemon"/> class.
         /// </summary>
         /// <param name="factory">The factory.</param>
-        public SnmpDemon(SnmpApplicationFactory factory)
+        /// <param name="listener">The listener.</param>
+        public SnmpDemon(SnmpApplicationFactory factory, Listener listener)
         {
             _factory = factory;
-            _listener.ExceptionRaised += ListenerExceptionRaised;
-            _listener.MessageReceived += ListenerMessageReceived;
+            _listener = listener;
         }
 
         private void ListenerMessageReceived(object sender, MessageReceivedEventArgs<ISnmpMessage> e)
@@ -46,6 +46,8 @@ namespace Lextm.SharpSnmpLib.Agent
         /// <param name="port">The port.</param>
         public void Start(int port)
         {
+            _listener.ExceptionRaised += ListenerExceptionRaised;
+            _listener.MessageReceived += ListenerMessageReceived;
             _listener.Start(port);
         }
 
@@ -55,6 +57,8 @@ namespace Lextm.SharpSnmpLib.Agent
         public void Stop()
         {
             _listener.Stop();
+            _listener.ExceptionRaised -= ListenerExceptionRaised;
+            _listener.MessageReceived -= ListenerMessageReceived;
         }
 
         /// <summary>
