@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using Lextm.SharpSnmpLib.Messaging;
+using Lextm.SharpSnmpLib.Security;
 
 namespace Lextm.SharpSnmpLib.Agent
 {
@@ -84,6 +85,13 @@ namespace Lextm.SharpSnmpLib.Agent
         {
             if (_response != null)
             {
+                if (_response.Version == VersionCode.V3)
+                {
+                    ProviderPair providers = _listener.Users.Find(_request.Parameters.UserName);
+                    providers = providers ?? ProviderPair.Default;
+                    Helper.Authenticate(_response, providers);
+                }
+
                 Listener.SendResponse(_response, Sender);
             }
         }

@@ -175,7 +175,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             using (Socket socket = Helper.GetSocket(receiver))
             {
-                return MessageFactory.GetResponse(receiver, ToBytes(), RequestId, timeout, UserRegistry.Default, socket);
+                return MessageFactory.GetResponse(receiver, ToBytes(), MessageId, timeout, UserRegistry.Default, socket);
             }
         }
 
@@ -188,7 +188,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public ISnmpMessage GetResponse(int timeout, IPEndPoint receiver, Socket socket)
         {
-            return MessageFactory.GetResponse(receiver, ToBytes(), RequestId, timeout, UserRegistry.Default, socket);
+            return MessageFactory.GetResponse(receiver, ToBytes(), MessageId, timeout, UserRegistry.Default, socket);
         }
 
         /// <summary>

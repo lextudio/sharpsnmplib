@@ -129,7 +129,8 @@ namespace Lextm.SharpSnmpLib.Agent
                         message.Parameters.UserName,
                         ErrorCode.TooBig,
                         0,
-                        message.Pdu.Variables);
+                        // TODO: check RFC to see what should be returned here.
+                        new List<Variable>());
                 }
             }
             else
@@ -213,7 +214,7 @@ namespace Lextm.SharpSnmpLib.Agent
                                 message.RequestId,
                                 ErrorCode.TooBig,
                                 0,
-                                message.Pdu.Variables)),
+                                new List<Variable>())),
                         providers);
                 }
             }
@@ -251,7 +252,7 @@ namespace Lextm.SharpSnmpLib.Agent
                 if (Context.Request.Version == VersionCode.V3)
                 {
                     ISnmpMessage message = Context.Request;
-                    ProviderPair providers = Users.Find(Context.Request.Parameters.UserName);
+                    ProviderPair providers = ProviderPair.Default;
                     Context.Response = new GetResponseMessage(
                         message.Version,
                         new Header(
@@ -273,7 +274,7 @@ namespace Lextm.SharpSnmpLib.Agent
                                 message.RequestId,
                                 ErrorCode.AuthorizationError,
                                 0,
-                                message.Pdu.Variables)),
+                                new List<Variable>())),
                         providers);
                 }
             }

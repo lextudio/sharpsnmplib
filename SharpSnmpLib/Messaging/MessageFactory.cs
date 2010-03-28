@@ -45,7 +45,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         /// <param name="receiver">The IP address and port of the target to talk to.</param>
         /// <param name="bytes">The byte array representing the SNMP message.</param>
-        /// <param name="number">The <see cref="GetResponseMessage.RequestId"/> of the SNMP message.</param>
+        /// <param name="number">The <see cref="GetResponseMessage.MessageId"/> of the SNMP message.</param>
         /// <param name="timeout">The timeout above which, if the response is not received, a <see cref="TimeoutException"/> is thrown.</param>
         /// <param name="registry">The registry.</param>
         /// <param name="socket">The UDP <see cref="Socket"/> to use to send/receive.</param>
@@ -96,9 +96,9 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             if (message.Pdu.TypeCode == SnmpType.GetResponsePdu || message.Pdu.TypeCode == SnmpType.ReportPdu)
             {
-                if (message.Pdu.RequestId.ToInt32() != number)
+                if (message.MessageId != number)
                 {
-                    throw OperationException.Create(string.Format(CultureInfo.InvariantCulture, "wrong response sequence: expected {0}, received {1}", number, message.Pdu.RequestId.ToInt32()), receiver.Address);
+                    throw OperationException.Create(string.Format(CultureInfo.InvariantCulture, "wrong response sequence: expected {0}, received {1}", number, message.MessageId), receiver.Address);
                 }
 
                 return message;
@@ -201,7 +201,12 @@ namespace Lextm.SharpSnmpLib.Messaging
                 : new SecurityParameters((OctetString)body[2]);
             ProviderPair record = body.Count == 3 ? ProviderPair.Default :
                 registry.Find(parameters.UserName);
-            
+            if (record == null)
+            {
+                // handle decryption exception.
+                return new MalformedMessage(header.MessageId, parameters.UserName);
+            }
+
             Scope scope;
             if (body.Count == 3)
             {
@@ -216,8 +221,15 @@ namespace Lextm.SharpSnmpLib.Messaging
             else if (body[3].TypeCode == SnmpType.OctetString)
             {
                 // v3 encrypted
-                // TODO: how to handle decryption exception.
-                scope = new Scope((Sequence)record.Privacy.Decrypt(body[3], parameters));
+                try
+                {
+                    scope = new Scope((Sequence)record.Privacy.Decrypt(body[3], parameters));
+                }
+                catch (DecryptionException)
+                {
+                    // handle decryption exception.
+                    return new MalformedMessage(header.MessageId, parameters.UserName);
+                }
             }
             else
             {

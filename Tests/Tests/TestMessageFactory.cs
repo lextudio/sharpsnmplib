@@ -217,6 +217,9 @@ namespace Lextm.SharpSnmpLib.Tests
             ISnmpData data = v.Data;
             Assert.AreEqual(SnmpType.Counter32, data.TypeCode);
             Assert.AreEqual(3, ((Counter32)data).ToUInt32());
+
+            Assert.AreEqual("80001F8880E9630000D61FF449", messages[0].Scope.ContextEngineId.ToHexString());
+            Assert.AreEqual("", messages[0].Scope.ContextName.ToHexString());
         }
     }
 }

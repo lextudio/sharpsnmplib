@@ -38,7 +38,12 @@ namespace Lextm.SharpSnmpLib.Agent
             {
                 return false;
             }
-            
+
+            if (message is MalformedMessage)
+            {
+                return false;
+            }
+
             if (message.Parameters.UserName == OctetString.Empty)
             {
                 _objects.ReportCount++;
@@ -58,7 +63,7 @@ namespace Lextm.SharpSnmpLib.Agent
                         OctetString.Empty,
                         OctetString.Empty),
                     new Scope(
-                        OctetString.Empty,
+                        _objects.EngineId,
                         OctetString.Empty,
                         new ReportPdu(
                             message.RequestId,

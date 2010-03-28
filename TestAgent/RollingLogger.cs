@@ -7,7 +7,6 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 
@@ -42,8 +41,8 @@ namespace Lextm.SharpSnmpLib.Agent
                     "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9}",
                     DateTime.UtcNow,
                     Empty,
-                    context.Request.Pdu.TypeCode,
-                    GetStem(context.Request.Pdu.Variables),
+                    context.Request.Pdu == null ? Empty : context.Request.Pdu.TypeCode.ToString(),
+                    GetStem(context.Request.Pdu),
                     context.Listener.Port,
                     context.Request.Parameters.UserName,
                     context.Sender.Address,
@@ -53,10 +52,15 @@ namespace Lextm.SharpSnmpLib.Agent
             }
         }
 
-        private static string GetStem(IEnumerable<Variable> list)
+        private static string GetStem(ISnmpPdu pdu)
         {
+            if (pdu == null)
+            {
+                return Empty;
+            }
+
             StringBuilder result = new StringBuilder();
-            foreach (Variable v in list)
+            foreach (Variable v in pdu.Variables)
             {
                 result.AppendFormat("{0};", v.Id);
             }

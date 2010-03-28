@@ -134,6 +134,12 @@ namespace SnmpGet
                     return;
                 }
 				
+                if (string.IsNullOrEmpty(user))
+                {
+                    Console.WriteLine("User name need to be specified for v3.");
+                    return;
+                }
+
                 IAuthenticationProvider auth;
                 if ((level & Levels.Authentication) == Levels.Authentication)
                 {

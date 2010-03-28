@@ -102,6 +102,7 @@
     <Compile Include="Messaging\GetResponseMessage.cs" />
     <Compile Include="Messaging\Helper.cs" />
     <Compile Include="Messaging\InformRequestMessage.cs" />
+    <Compile Include="Messaging\MalformedMessage.cs" />
     <Compile Include="Messaging\MessageFactory.cs">
       <SubType>Code</SubType>
     </Compile>

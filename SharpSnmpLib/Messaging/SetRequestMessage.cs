@@ -70,7 +70,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="variables">The variables.</param>
         /// <param name="pair">The pair.</param>
         /// <param name="report">The report.</param>
-        public SetRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName, IList<Variable> variables, ProviderPair pair, ReportMessage report)
+        public SetRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName, IList<Variable> variables, ProviderPair pair, ISnmpMessage report)
         {
             if (version != VersionCode.V3)
             {
@@ -155,7 +155,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 registry.Add(_parameters.UserName, _pair);
             }
 
-            return MessageFactory.GetResponse(receiver, ToBytes(), RequestId, timeout, registry, udpSocket);
+            return MessageFactory.GetResponse(receiver, ToBytes(), MessageId, timeout, registry, udpSocket);
         }
         
         /// <summary>
