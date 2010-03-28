@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using WeifenLuo.WinFormsUI.Docking;
+using Microsoft.Practices.Unity;
 
 namespace Lextm.SharpSnmpLib.Compiler
 {

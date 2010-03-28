@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Net;
 using System.Windows.Forms;
-
+using Microsoft.Practices.Unity;
 using Lextm.SharpSnmpLib.Messaging;
 
 namespace Lextm.SharpSnmpLib.Agent

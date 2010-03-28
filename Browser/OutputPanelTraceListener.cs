@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using Microsoft.Practices.Unity;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace Lextm.SharpSnmpLib.Browser

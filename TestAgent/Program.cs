@@ -7,9 +7,7 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
-using System.Configuration;
 using System.Windows.Forms;
-
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
 
@@ -39,9 +37,7 @@ namespace Lextm.SharpSnmpLib.Agent
             }
 
             _container = new UnityContainer();
-            UnityConfigurationSection section
-              = (UnityConfigurationSection)ConfigurationManager.GetSection("unity");
-            section.Containers.Default.Configure(Container);
+            _container.LoadConfiguration("agent");
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

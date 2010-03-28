@@ -9,6 +9,7 @@
 
 using System;
 using System.Windows.Forms;
+using Microsoft.Practices.Unity;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace Lextm.SharpSnmpLib.Browser

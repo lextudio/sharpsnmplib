@@ -32,7 +32,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// Initializes a new instance of the <see cref="UserRegistry"/> class.
         /// </summary>
         /// <param name="users">The users.</param>
-        public UserRegistry(IEnumerable<User> users)
+        public UserRegistry(User[] users)
         {
             if (users != null)
             {
