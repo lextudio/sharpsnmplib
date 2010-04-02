@@ -31,17 +31,21 @@ namespace SnmpGet
                 .Add("c:", "-c for community name, (default is public)", delegate (string v) { if (v != null) community = v; })
                 .Add("l:", "-l for security level, (default is noAuthNoPriv)", delegate (string v)
                                                                                    {
-                                                                                       if (v == "noAuthNoPriv")
+                                                                                       if (v.ToUpperInvariant() == "NOAUTHNOPRIV")
                                                                                        {
                                                                                            level = Levels.None | Levels.Reportable;
                                                                                        }
-                                                                                       else if (v == "authNoPriv")
+                                                                                       else if (v.ToUpperInvariant() == "AUTHNOPRIV")
                                                                                        {
                                                                                            level = Levels.Authentication | Levels.Reportable;
                                                                                        }
-                                                                                       else if (v == "authPriv")
+                                                                                       else if (v.ToUpperInvariant() == "AUTHPRIV")
                                                                                        {
                                                                                            level = Levels.Authentication | Levels.Privacy | Levels.Reportable;
+                                                                                       }
+                                                                                       else
+                                                                                       {
+                                                                                           throw new ArgumentException("no such security mode: " + v);
                                                                                        }
                                                                                    })
                 .Add("a:", "-a for authentication method (MD5 or SHA)", delegate (string v) { authentication = v; })
