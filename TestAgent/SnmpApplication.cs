@@ -15,11 +15,8 @@ namespace Lextm.SharpSnmpLib.Agent
         private readonly IMembershipProvider _provider;
         private readonly MessageHandlerFactory _factory;
         private IMessageHandler _handler;
-        private const int MaxResponseSize = 1500;
         private readonly ObjectStore _store;
         private readonly SnmpApplicationFactory _owner;
-        private readonly UserRegistry _users;
-        private readonly AgentObjects _objects;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SnmpApplication"/> class.
@@ -29,17 +26,13 @@ namespace Lextm.SharpSnmpLib.Agent
         /// <param name="store">The store.</param>
         /// <param name="provider">The provider.</param>
         /// <param name="factory">The factory.</param>
-        /// <param name="users">The users.</param>
-        /// <param name="objects">The objects.</param>
-        public SnmpApplication(SnmpApplicationFactory owner, ILogger logger, ObjectStore store, IMembershipProvider provider, MessageHandlerFactory factory, UserRegistry users, AgentObjects objects)
+        public SnmpApplication(SnmpApplicationFactory owner, ILogger logger, ObjectStore store, IMembershipProvider provider, MessageHandlerFactory factory)
         {
             _owner = owner;
-            _objects = objects;
             _provider = provider;
             _logger = logger;
             _store = store;
             _factory = factory;
-            _users = users;
         }
 
         /// <summary>
@@ -92,139 +85,7 @@ namespace Lextm.SharpSnmpLib.Agent
                 return;
             }
 
-            ISnmpMessage message = Context.Request;
-            IList<Variable> result = _handler.Handle(message, _store);
-            
-            GetResponseMessage response;
-            if (Context.Request.Version != VersionCode.V3)
-            {
-                
-                if (_handler.ErrorStatus == ErrorCode.NoError)
-                {
-                    // for v1 and v2 reply.
-                    response = new GetResponseMessage(
-                        message.RequestId,
-                        message.Version,
-                        message.Parameters.UserName,
-                        ErrorCode.NoError,
-                        0,
-                        result);
-                }
-                else
-                {
-                    response = new GetResponseMessage(
-                        message.RequestId,
-                        message.Version,
-                        message.Parameters.UserName,
-                        _handler.ErrorStatus,
-                        _handler.ErrorIndex,
-                        message.Pdu.Variables);
-                }
-
-                if (response.ToBytes().Length > MaxResponseSize)
-                {
-                    response = new GetResponseMessage(
-                        message.RequestId,
-                        message.Version,
-                        message.Parameters.UserName,
-                        ErrorCode.TooBig,
-                        0,
-                        // TODO: check RFC to see what should be returned here.
-                        new List<Variable>());
-                }
-            }
-            else
-            {
-                ProviderPair providers = Users.Find(Context.Request.Parameters.UserName);
-                // TODO: reply with v3.
-                if (_handler.ErrorStatus == ErrorCode.NoError)
-                {
-                    // for v3
-                    response = new GetResponseMessage(
-                        message.Version,
-                        new Header(
-                            new Integer32(message.MessageId),
-                            new Integer32(0xFFE3),
-                            new OctetString(new[] {(byte) Levels.Reportable}),
-                            new Integer32(3)),
-                        new SecurityParameters(
-                            _objects.EngineId,
-                            new Integer32(_objects.EngineBoots),
-                            new Integer32(_objects.EngineTime),
-                            message.Parameters.UserName,
-                            providers.Authentication.CleanDigest,
-                            providers.Privacy.Salt),
-                        new Scope(
-                            _objects.EngineId,
-                            OctetString.Empty,
-                            new GetResponsePdu(
-                                message.RequestId,
-                                ErrorCode.NoError,
-                                0,
-                                result)),
-                        providers);
-                }
-                else
-                {
-                    response = new GetResponseMessage(
-                        message.Version,
-                        new Header(
-                            new Integer32(message.MessageId),
-                            new Integer32(0xFFE3),
-                            new OctetString(new[] { (byte)Levels.Reportable }),
-                            new Integer32(3)),
-                        new SecurityParameters(
-                            _objects.EngineId,
-                            new Integer32(_objects.EngineBoots),
-                            new Integer32(_objects.EngineTime),
-                            message.Parameters.UserName,
-                            providers.Authentication.CleanDigest,
-                            providers.Privacy.Salt),
-                        new Scope(
-                            _objects.EngineId,
-                            OctetString.Empty,
-                            new GetResponsePdu(
-                                message.RequestId,
-                                _handler.ErrorStatus,
-                                _handler.ErrorIndex,
-                                message.Pdu.Variables)),
-                        providers);
-                }
-
-                if (response.ToBytes().Length > MaxResponseSize)
-                {
-                    response = new GetResponseMessage(
-                        message.Version,
-                        new Header(
-                            new Integer32(message.MessageId),
-                            new Integer32(0xFFE3),
-                            new OctetString(new[] { (byte)Levels.Reportable }),
-                            new Integer32(3)),
-                        new SecurityParameters(
-                            _objects.EngineId,
-                            new Integer32(_objects.EngineBoots),
-                            new Integer32(_objects.EngineTime),
-                            message.Parameters.UserName,
-                            providers.Authentication.CleanDigest,
-                            providers.Privacy.Salt),
-                        new Scope(
-                            _objects.EngineId,
-                            OctetString.Empty,
-                            new GetResponsePdu(
-                                message.RequestId,
-                                ErrorCode.TooBig,
-                                0,
-                                new List<Variable>())),
-                        providers);
-                }
-            }
-
-            Context.Response = response;
-        }
-
-        public UserRegistry Users
-        {
-            get { return _users; }
+            Context.GenerateResponse(_handler.Handle(Context.Request, _store));
         }
 
         private void OnMapRequestHandler()
@@ -249,41 +110,14 @@ namespace Lextm.SharpSnmpLib.Agent
                 // TODO: handle error here.
                 // return TRAP saying authenticationFailed.
                 CompleteProcessing();
-                if (Context.Request.Version == VersionCode.V3)
-                {
-                    ISnmpMessage message = Context.Request;
-                    ProviderPair providers = ProviderPair.Default;
-                    Context.Response = new GetResponseMessage(
-                        message.Version,
-                        new Header(
-                            new Integer32(message.MessageId),
-                            new Integer32(0xFFE3),
-                            new OctetString(new[] { (byte)Levels.Reportable }),
-                            new Integer32(3)),
-                        new SecurityParameters(
-                            _objects.EngineId,
-                            new Integer32(_objects.EngineBoots),
-                            new Integer32(_objects.EngineTime),
-                            message.Parameters.UserName,
-                            providers.Authentication.CleanDigest,
-                            providers.Privacy.Salt),
-                        new Scope(
-                            _objects.EngineId,
-                            OctetString.Empty,
-                            new GetResponsePdu(
-                                message.RequestId,
-                                ErrorCode.AuthorizationError,
-                                0,
-                                new List<Variable>())),
-                        providers);
-                }
+                Context.HandleAuthenticationFailure();
             }
             
             if (Context.Response != null)
             {
                 CompleteProcessing();
             }
-        }
+        }        
 
         private void OnLogRequest()
         {

@@ -20,22 +20,25 @@ namespace Lextm.SharpSnmpLib.Agent
     {
         private readonly Listener _listener;
         private readonly SnmpApplicationFactory _factory;
+        private readonly AgentObjects _objects;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SnmpDemon"/> class.
         /// </summary>
         /// <param name="factory">The factory.</param>
         /// <param name="listener">The listener.</param>
-        public SnmpDemon(SnmpApplicationFactory factory, Listener listener)
+        /// <param name="objects">Agent core objects.</param>
+        public SnmpDemon(SnmpApplicationFactory factory, Listener listener, AgentObjects objects)
         {
             _factory = factory;
             _listener = listener;
+            _objects = objects;
         }
 
         private void ListenerMessageReceived(object sender, MessageReceivedEventArgs<ISnmpMessage> e)
         {
             ISnmpMessage request = e.Message;
-            SnmpContext context = new SnmpContext(request, null, e.Sender, _listener);   
+            SnmpContext context = new SnmpContext(request, null, e.Sender, _listener, _objects);   
             SnmpApplication application = _factory.Create(context);
             application.Process();
         }

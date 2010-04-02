@@ -13,27 +13,9 @@ namespace Lextm.SharpSnmpLib.Agent
         /// <param name="message">The message.</param>
         /// <param name="store">The object store.</param>
         /// <returns></returns>
-        public IList<Variable> Handle(ISnmpMessage message, ObjectStore store)
+        public ResponseData Handle(ISnmpMessage message, ObjectStore store)
         {
-            return null;
-        }
-
-        /// <summary>
-        /// Gets the error status.
-        /// </summary>
-        /// <value>The error status.</value>
-        public ErrorCode ErrorStatus
-        {
-            get { return ErrorCode.NoError; }
-        }
-
-        /// <summary>
-        /// Gets the index of the error.
-        /// </summary>
-        /// <value>The index of the error.</value>
-        public int ErrorIndex
-        {
-            get { return 0; }
+            return new ResponseData(null, ErrorCode.NoError, 0);
         }
     }
 }

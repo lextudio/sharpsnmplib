@@ -99,6 +99,7 @@
     <Compile Include="ComposedMembershipProvider.cs" />
     <Compile Include="GetBulkMessageHandler.cs" />
     <Compile Include="ILogger.cs" />
+    <Compile Include="ResponseData.cs" />
     <Compile Include="RollingLogger.cs" />
     <Compile Include="SnmpObject.cs" />
     <Compile Include="SysORDescr.cs" />

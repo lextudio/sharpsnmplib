@@ -16,9 +16,6 @@ namespace Lextm.SharpSnmpLib.Agent
     /// </summary>
     internal class SetMessageHandler : IMessageHandler
     {
-        private ErrorCode _status;
-        private int _index;
-
         /// <summary>
         /// Handles the specified message.
         /// </summary>
@@ -26,15 +23,15 @@ namespace Lextm.SharpSnmpLib.Agent
         /// <param name="store">The object store.</param>
         /// <returns></returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-        public IList<Variable> Handle(ISnmpMessage message, ObjectStore store)
+        public ResponseData Handle(ISnmpMessage message, ObjectStore store)
         {
-            _index = 0;
-            _status = ErrorCode.NoError;
+            int index = 0;
+            ErrorCode status = ErrorCode.NoError;
 
             IList<Variable> result = new List<Variable>();
-            foreach (Variable v in message.Pdu.Variables) 
+            foreach (Variable v in message.Pdu.Variables)
             {
-                _index++;
+                index++;
                 ScalarObject obj = store.GetObject(v.Id);
                 if (obj != null)
                 {
@@ -44,49 +41,31 @@ namespace Lextm.SharpSnmpLib.Agent
                     }
                     catch (AccessFailureException)
                     {
-                        _status = ErrorCode.NoSuchName;
+                        status = ErrorCode.NoSuchName;
                     }
                     catch (ArgumentException)
                     {
-                        _status = ErrorCode.BadValue;
+                        status = ErrorCode.BadValue;
                     }
                     catch (Exception)
                     {
-                        _status = ErrorCode.GenError;
+                        status = ErrorCode.GenError;
                     }
                 }
                 else
                 {
-                    _status = ErrorCode.NoSuchName;
+                    status = ErrorCode.NoSuchName;
                 }
-                
-                if (_status != ErrorCode.NoError)
+
+                if (status != ErrorCode.NoError)
                 {
                     return null;
                 }
 
                 result.Add(v);
             }
-            
-            return result;
-        }
 
-        /// <summary>
-        /// Gets the error status.
-        /// </summary>
-        /// <value>The error status.</value>
-        public ErrorCode ErrorStatus
-        {
-            get { return _status; }
-        }
-
-        /// <summary>
-        /// Gets the index of the error.
-        /// </summary>
-        /// <value>The index of the error.</value>
-        public int ErrorIndex 
-        {
-            get { return _index; }
+            return new ResponseData(result, status, index);
         }
     }
 }
