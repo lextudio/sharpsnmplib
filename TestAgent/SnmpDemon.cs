@@ -38,7 +38,7 @@ namespace Lextm.SharpSnmpLib.Agent
         private void ListenerMessageReceived(object sender, MessageReceivedEventArgs<ISnmpMessage> e)
         {
             ISnmpMessage request = e.Message;
-            SnmpContext context = new SnmpContext(request, null, e.Sender, _listener, _objects);   
+            SnmpContext context = SnmpContextFactory.Create(request, e.Sender, _listener, _objects);   
             SnmpApplication application = _factory.Create(context);
             application.Process();
         }

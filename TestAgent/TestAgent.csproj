@@ -99,8 +99,11 @@
     <Compile Include="ComposedMembershipProvider.cs" />
     <Compile Include="GetBulkMessageHandler.cs" />
     <Compile Include="ILogger.cs" />
+    <Compile Include="NormalSnmpContext.cs" />
     <Compile Include="ResponseData.cs" />
     <Compile Include="RollingLogger.cs" />
+    <Compile Include="SecureSnmpContext.cs" />
+    <Compile Include="SnmpContextFactory.cs" />
     <Compile Include="SnmpObject.cs" />
     <Compile Include="SysORDescr.cs" />
     <Compile Include="SysORID.cs" />
@@ -116,7 +119,6 @@
     <Compile Include="GetNextMessageHandler.cs" />
     <Compile Include="HandlerMapping.cs" />
     <Compile Include="IMessageHandler.cs" />
-    <Compile Include="Logger.cs" />
     <Compile Include="IMembershipProvider.cs" />
     <Compile Include="MessageHandlerFactory.cs" />
     <Compile Include="AccessFailureException.cs" />
