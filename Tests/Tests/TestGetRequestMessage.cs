@@ -7,7 +7,6 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 
-using System;
 using System.Collections.Generic;
 using System.Net;
 
@@ -17,6 +16,7 @@ using NUnit.Framework;
 using System.Net.Sockets;
 using Lextm.SharpSnmpLib.Properties;
 using TimeoutException = Lextm.SharpSnmpLib.Messaging.TimeoutException;
+using System.Diagnostics;
 
 #pragma warning disable 1591
 
@@ -45,8 +45,11 @@ namespace Lextm.SharpSnmpLib.Tests
         [Test]
         public void TestConstructor()
         {
-            List<Variable> list = new List<Variable>(1);
-            list.Add(new Variable(new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 1, 6, 0 }), new Null()));
+            List<Variable> list = new List<Variable>(1)
+                                      {
+                                          new Variable(new ObjectIdentifier(new uint[] {1, 3, 6, 1, 2, 1, 1, 6, 0}),
+                                                       new Null())
+                                      };
             GetRequestMessage message = new GetRequestMessage(0, VersionCode.V2, new OctetString("public"), list);
             Assert.GreaterOrEqual(Resources.get.Length, message.ToBytes().Length);
         }
@@ -113,7 +116,7 @@ namespace Lextm.SharpSnmpLib.Tests
         }
 
         [Test]
-        public void TestConstructorV2AuthMD5PrivDES()
+        public void TestConstructorV2AuthMd5PrivDes()
         {
             const string bytes = "30 81 80 02  01 03 30 0F  02 02 6C 99  02 03 00 FF" +
                                  "E3 04 01 07  02 01 03 04  38 30 36 04  0D 80 00 1F" +
@@ -157,7 +160,7 @@ namespace Lextm.SharpSnmpLib.Tests
         }
 
         [Test]
-        public void TestConstructorV3AuthMD5()
+        public void TestConstructorV3AuthMd5()
         {
             const string bytes = "30 73" +
                                  "02 01  03 " +
@@ -208,7 +211,7 @@ namespace Lextm.SharpSnmpLib.Tests
         }
 
         [Test]
-        public void TestConstructorV3AuthSHA()
+        public void TestConstructorV3AuthSha()
         {
             const string bytes = "30 77 02 01  03 30 0F 02  02 47 21 02  03 00 FF E3" +
                                  "04 01 05 02  01 03 04 32  30 30 04 0D  80 00 1F 88" +
@@ -299,25 +302,25 @@ namespace Lextm.SharpSnmpLib.Tests
         	//   snmp4j agent.
             Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             GetRequestMessage message = new GetRequestMessage(0x4bed, VersionCode.V2, new OctetString("public"), new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) });
-            int tick = Environment.TickCount;
-            int now = 0;
+            
+            Stopwatch timer = new Stopwatch();
             bool hasException = false;
-            const int time = 500;
+            const int time = 1500;
             try
             {
+                timer.Start();
                 //IMPORTANT: test against an agent that doesn't exist.
                 message.GetResponse(time, new IPEndPoint(IPAddress.Parse("192.168.0.233"), 161), socket);
             }
             catch (TimeoutException)
             {
                 hasException = true;
-                now = Environment.TickCount;
             }
+            timer.Stop();
             
             //FIXME: these values are valid on my machine. (lex)
-            Assert.AreNotEqual(tick + time, now);
-            int difference = tick + time - now;
-            Assert.LessOrEqual(Math.Abs(difference), 150);
+            long elapsedMilliseconds = timer.ElapsedMilliseconds;
+            Assert.LessOrEqual(time, elapsedMilliseconds);
             Assert.IsTrue(hasException);
             
             hasException = false;

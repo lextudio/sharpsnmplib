@@ -164,7 +164,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             get
             {
-                return (_header == null) ? RequestId : _header.MessageId;
+                return (_header == Header.Empty) ? RequestId : _header.MessageId;
             }
         }
 
@@ -235,7 +235,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Sends this <see cref="GetNextRequestMessage"/> and handles the response from agent.
         /// </summary>
-        /// <param name="timeout">Timeout.</param>
+        /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
         /// <param name="receiver">Port number.</param>
         /// <returns></returns>
         public ISnmpMessage GetResponse(int timeout, IPEndPoint receiver)
@@ -249,7 +249,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Sends this <see cref="GetNextRequestMessage"/> and handles the response from agent.
         /// </summary>
-        /// <param name="timeout">Timeout.</param>
+        /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
         /// <param name="receiver">Agent.</param>
         /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
         /// <returns></returns>

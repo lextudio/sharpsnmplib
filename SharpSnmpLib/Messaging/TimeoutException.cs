@@ -42,7 +42,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         private int _timeout;
         
         /// <summary>
-        /// Timeout.
+        /// The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.
         /// </summary>
         public int Timeout
         {

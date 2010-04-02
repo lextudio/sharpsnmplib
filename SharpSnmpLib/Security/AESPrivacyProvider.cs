@@ -46,7 +46,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// in the USM header to store this information</param>
         /// <returns>Encrypted byte array</returns>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when encryption key is null or length of the encryption key is too short.</exception>
-        public static byte[] Encrypt(byte[] unencryptedData, byte[] key, int engineBoots, int engineTime, byte[] privacyParameters)
+        private static byte[] Encrypt(byte[] unencryptedData, byte[] key, int engineBoots, int engineTime, byte[] privacyParameters)
         {
             // check the key before doing anything else
             if (key == null)
@@ -79,7 +79,7 @@ namespace Lextm.SharpSnmpLib.Security
             iv[7] = timeBytes[0];
 
             // Copy salt value to the iv array
-            Array.Copy(privacyParameters, 0, iv, 8, 8);
+            Array.Copy(privacyParameters, 0, iv, 8, PrivacyParametersLength);
 
             using (Rijndael rm = new RijndaelManaged())
             {
@@ -126,7 +126,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// <exception cref="ArgumentNullException">Thrown when encrypted data is null or length == 0</exception>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when encryption key length is less then 32 byte or if privacy parameters
         /// argument is null or length other then 8 bytes</exception>
-        public static byte[] Decrypt(byte[] encryptedData, byte[] key, int engineBoots, int engineTime, byte[] privacyParameters)
+        private static byte[] Decrypt(byte[] encryptedData, byte[] key, int engineBoots, int engineTime, byte[] privacyParameters)
         {
             if (key == null)
             {
@@ -156,9 +156,7 @@ namespace Lextm.SharpSnmpLib.Security
             iv[7] = timeBytes[0];
 
             // Copy salt value to the iv array
-            Array.Copy(privacyParameters, 0, iv, 8, 8);
-
-            byte[] decryptedData;
+            Array.Copy(privacyParameters, 0, iv, 8, PrivacyParametersLength);
 
             // now do CFB decryption of the encrypted data
             using (Rijndael rm = Rijndael.Create())
@@ -183,6 +181,7 @@ namespace Lextm.SharpSnmpLib.Security
                 using (ICryptoTransform cryptor = rm.CreateDecryptor())
                 {
                     // We need to make sure that cryptedData is a collection of 128 byte blocks
+                    byte[] decryptedData;
                     if ((encryptedData.Length % KeyBytes) != 0)
                     {
                         byte[] buffer = new byte[encryptedData.Length];
@@ -207,7 +206,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// <summary>
         /// Returns the length of privacyParameters USM header field. For AES, field length is 8.
         /// </summary>
-        public static int PrivacyParametersLength
+        private static int PrivacyParametersLength
         {
             get { return 8; }
         }
@@ -218,7 +217,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// DES protocol itself requires an 8 byte key. Additional 8 bytes are used for generating the
         /// encryption IV. For encryption itself, first 8 bytes of the key are used.
         /// </summary>
-        public static int MinimumKeyLength
+        private static int MinimumKeyLength
         {
             get { return 16; }
         }

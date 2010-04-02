@@ -57,14 +57,14 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestToString()
         {
             Assert.AreEqual("iso.org.dod.internet.mgmt.mib-2.transmission",
-                new ObjectIdentifier(new uint[] {1, 3, 6, 1, 2, 1, 10}).ToString(DefaultObjectRegistry.Instance));
+                SearchResult.GetStringOf(new ObjectIdentifier(new uint[] {1, 3, 6, 1, 2, 1, 10}), DefaultObjectRegistry.Instance));
         }
 
         [Test]
         public void TestToStringLong()
         {
             Assert.AreEqual("iso.org.dod.internet.mgmt.mib-2.transmission.100",
-                new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 10, 100 }).ToString(DefaultObjectRegistry.Instance));
+                SearchResult.GetStringOf(new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 10, 100 }), DefaultObjectRegistry.Instance));
         }
     }
 }

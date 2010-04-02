@@ -56,7 +56,7 @@ namespace Lextm.SharpSnmpLib.Tests
             GetRequestMessage m = (GetRequestMessage)messages[0];
             Variable v = m.Variables[0];
             string i = v.Id.ToString();
-            Assert.AreEqual("", i);
+            Assert.AreEqual(".1.3.6.1.2.1.1.5.0", i);
         }
         
         [Test]

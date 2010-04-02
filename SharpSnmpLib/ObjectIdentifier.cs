@@ -21,7 +21,6 @@ using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Text;
-using Lextm.SharpSnmpLib.Mib;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -110,9 +109,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentException("length cannot be 0", "length");
             }
 
-            List<uint> result = new List<uint>();
-            result.Add((uint)(raw[0] / 40));
-            result.Add((uint)(raw[0] % 40));
+            List<uint> result = new List<uint> {(uint) (raw[0]/40), (uint) (raw[0]%40)};
             uint buffer = 0;
             for (int i = 1; i < raw.Length; i++)
             {
@@ -292,8 +289,7 @@ namespace Lextm.SharpSnmpLib
 
         private static IEnumerable<byte> ConvertToBytes(uint subIdentifier)
         {
-            List<byte> result = new List<byte>();
-            result.Add((byte)(subIdentifier & 0x7F));
+            List<byte> result = new List<byte> {(byte) (subIdentifier & 0x7F)};
             while ((subIdentifier = subIdentifier >> 7) > 0)
             {
                 result.Add((byte)((subIdentifier & 0x7F) | 0x80));
@@ -456,32 +452,6 @@ namespace Lextm.SharpSnmpLib
             }
 
             return left.CompareTo(right) == 0;
-        }
-
-        /// <summary>
-        /// Returns a <see cref="System.String"/> that represents this instance.
-        /// </summary>
-        /// <param name="objects">The objects.</param>
-        /// <returns>
-        /// A <see cref="System.String"/> that represents this instance.
-        /// </returns>
-        [CLSCompliant(false)]
-        [Obsolete("Please use SearchResult.GetStringOf")]
-        public string ToString(IObjectRegistry objects)
-        {
-            if (objects == null)
-            {
-                return ToString();
-            }
-
-            SearchResult record = objects.Tree.Search(_oid);
-            string result = record.AlternativeText;
-            if (string.IsNullOrEmpty(result))
-            {
-                return ToString();
-            }
-
-            return result;
         }
     }
 }

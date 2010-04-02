@@ -32,7 +32,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="version">The version.</param>
         /// <param name="broadcastAddress">The broadcast address.</param>
         /// <param name="community">The community.</param>
-        /// <param name="timeout">The timeout.</param>
+        /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
         /// <remarks><paramref name="broadcastAddress"/> must be an IPv4 address. IPv6 is not yet supported here.</remarks>
         public void Discover(VersionCode version, IPEndPoint broadcastAddress, OctetString community, int timeout)
         {

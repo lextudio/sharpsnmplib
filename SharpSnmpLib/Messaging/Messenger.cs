@@ -30,7 +30,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="endpoint">Endpoint.</param>
         /// <param name="community">Community name.</param>
         /// <param name="variables">Variable binds.</param>
-        /// <param name="timeout">Timeout.</param>
+        /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
         /// <returns></returns>
         public static IList<Variable> Get(VersionCode version, IPEndPoint endpoint, OctetString community, IList<Variable> variables, int timeout)
         {
@@ -59,7 +59,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="endpoint">Endpoint.</param>
         /// <param name="community">Community name.</param>
         /// <param name="variables">Variable binds.</param>
-        /// <param name="timeout">Timeout.</param>
+        /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
         /// <returns></returns>
         public static IList<Variable> Set(VersionCode version, IPEndPoint endpoint, OctetString community, IList<Variable> variables, int timeout)
         {
@@ -89,7 +89,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="community">Community name.</param>
         /// <param name="table">OID.</param>
         /// <param name="list">A list to hold the results.</param>
-        /// <param name="timeout">Timeout.</param>
+        /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
         /// <param name="mode">Walk mode.</param>
         /// <returns>
         /// Returns row count if the OID is a table. Otherwise this value is meaningless.
@@ -137,7 +137,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="endpoint">The endpoint.</param>
         /// <param name="community">The community.</param>
         /// <param name="seed">The seed.</param>
-        /// <param name="timeout">The timeout.</param>
+        /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
         /// <param name="next">The next.</param>
         /// <returns>
         ///     <c>true</c> if the specified seed has next item; otherwise, <c>false</c>.
@@ -173,7 +173,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="community">Community name.</param>
         /// <param name="table">OID.</param>
         /// <param name="list">A list to hold the results.</param>
-        /// <param name="timeout">Timeout.</param>
+        /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
         /// <param name="maxRepetitions">The max repetitions.</param>
         /// <param name="mode">Walk mode.</param>
         /// <returns></returns>
@@ -227,7 +227,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="endpoint">The endpoint.</param>
         /// <param name="community">The community.</param>
         /// <param name="seed">The seed.</param>
-        /// <param name="timeout">The timeout.</param>
+        /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
         /// <param name="maxRepetitions">The max repetitions.</param>
         /// <param name="next">The next.</param>
         /// <returns>
@@ -315,7 +315,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="enterprise">Enterprise OID.</param>
         /// <param name="timestamp">Timestamp.</param>
         /// <param name="variables">Variable bindings.</param>
-        /// <param name="timeout">Timeout.</param>
+        /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
         [CLSCompliant(false)]
         public static void SendInform(int requestId, VersionCode version, IPEndPoint receiver, OctetString community, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables, int timeout)
         {
@@ -337,7 +337,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="endpoint">Endpoint.</param>
         /// <param name="community">Community name.</param>
         /// <param name="table">Table OID.</param>
-        /// <param name="timeout">Timeout.</param>
+        /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
         /// <param name="maxRepetitions">The max repetitions.</param>
         /// <param name="registry">The registry.</param>
         /// <returns></returns>

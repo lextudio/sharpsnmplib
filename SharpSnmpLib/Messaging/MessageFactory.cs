@@ -46,12 +46,13 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="receiver">The IP address and port of the target to talk to.</param>
         /// <param name="bytes">The byte array representing the SNMP message.</param>
         /// <param name="number">The <see cref="GetResponseMessage.MessageId"/> of the SNMP message.</param>
-        /// <param name="timeout">The timeout above which, if the response is not received, a <see cref="TimeoutException"/> is thrown.</param>
+        /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
         /// <param name="registry">The registry.</param>
         /// <param name="socket">The UDP <see cref="Socket"/> to use to send/receive.</param>
         /// <returns>
         /// The response message (<see cref="ISnmpMessage"/>).
         /// </returns>
+        /// <exception cref="TimeoutException">Timeout happens.</exception>
         internal static ISnmpMessage GetResponse(IPEndPoint receiver, byte[] bytes, int number, int timeout, UserRegistry registry, Socket socket)
         {
             if (socket == null)

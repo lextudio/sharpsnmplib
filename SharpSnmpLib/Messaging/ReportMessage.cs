@@ -88,7 +88,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Sends this <see cref="ReportMessage"/> and handles the response from agent.
         /// </summary>
-        /// <param name="timeout">Timeout.</param>
+        /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
         /// <param name="receiver">Agent.</param>
         /// <returns></returns>
         public ISnmpMessage GetResponse(int timeout, IPEndPoint receiver)
@@ -102,7 +102,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Sends this <see cref="ReportMessage"/> and handles the response from agent.
         /// </summary>
-        /// <param name="timeout">Timeout.</param>
+        /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
         /// <param name="receiver">Agent.</param>
         /// <param name="socket">The socket.</param>
         /// <returns></returns>

@@ -142,33 +142,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         }
 
         /// <summary>
-        /// Sends the response.
-        /// </summary>
-        /// <param name="receiver">The receiver.</param>
-        [Obsolete("Use Listener.SendResponse instead")]
-        public void SendResponse(EndPoint receiver)
-        {
-            if (receiver == null)
-            {
-                throw new ArgumentNullException("receiver");
-            }
-            
-            // TODO: make more efficient here.
-            if (_version == VersionCode.V2)
-            {
-                InformRequestPdu pdu = (InformRequestPdu)_scope.Pdu;
-                new GetResponseMessage(_scope.Pdu.RequestId.ToInt32(), _version, _parameters.UserName, ErrorCode.NoError, 0, pdu.AllVariables).Send(receiver);
-            }
-            else
-            {
-                // TODO: do it for v3
-            }
-        }
-
-        /// <summary>
         /// Sends this <see cref="InformRequestMessage"/> and handles the response from receiver (managers or agents).
         /// </summary>
-        /// <param name="timeout">Timeout.</param>
+        /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
         /// <param name="receiver">Receiver.</param>
         /// <returns></returns>
         public ISnmpMessage GetResponse(int timeout, IPEndPoint receiver)
@@ -182,7 +158,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Sends this <see cref="InformRequestMessage"/> and handles the response from receiver (managers or agents).
         /// </summary>
-        /// <param name="timeout">Timeout.</param>
+        /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
         /// <param name="receiver">Receiver.</param>
         /// <param name="socket">The socket.</param>
         /// <returns></returns>
