@@ -11,10 +11,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Media;
 
 using Lextm.SharpSnmpLib.Mib;
-using Microsoft.Practices.Unity;
 
 namespace Lextm.SharpSnmpLib.Compiler
 {
@@ -23,8 +23,6 @@ namespace Lextm.SharpSnmpLib.Compiler
     {
         private readonly IList<string> _files = new List<string>();
         private readonly BackgroundWorker _worker = new BackgroundWorker();
-        private Parser _parser;
-        private Assembler _assembler;
 
         public CompilerCore()
         {
@@ -39,19 +37,9 @@ namespace Lextm.SharpSnmpLib.Compiler
             get { return _worker.IsBusy; }
         }
 
-        [Dependency]
-        public Parser Parser
-        {
-            get { return _parser; }
-            set { _parser = value; }
-        }
+        public Parser Parser { get; set; }
 
-        [Dependency]
-        public Assembler Assembler
-        {
-            get { return _assembler; }
-            set { _assembler = value; }
-        }
+        public Assembler Assembler { get; set; }
 
         public event EventHandler<EventArgs> RunCompilerCompleted;
 
@@ -103,16 +91,11 @@ namespace Lextm.SharpSnmpLib.Compiler
             SystemSounds.Beep.Play();
         }
 
-        public void Add(string[] files)
+        public void Add(IEnumerable<string> files)
         {
             IList<string> filered = new List<string>();
-            foreach (string file in files)
+            foreach (string file in files.Where(file => !_files.Contains(file)))
             {
-                if (_files.Contains(file))
-                {
-                    continue;
-                }
-
                 _files.Add(file);
                 filered.Add(file);
             }

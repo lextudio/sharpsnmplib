@@ -35,8 +35,8 @@ namespace Lextm.SharpSnmpLib.Tests
         [Test]
         public void TestWriteShortLength()
         {
-            int length = 102;
-            byte expect = 0x66;
+            const int length = 102;
+            const byte expect = 0x66;
             MemoryStream m = new MemoryStream();
             ByteTool.WritePayloadLength(m, length);
             byte[] array = m.ToArray();
@@ -58,7 +58,7 @@ namespace Lextm.SharpSnmpLib.Tests
         [Test]
         public void TestWriteLongLength()
         {
-            int length = 7559605;
+            const int length = 7559605;
             byte[] expected = new byte[] {0x83, 0x73, 0x59, 0xB5};
             MemoryStream m = new MemoryStream();
             ByteTool.WritePayloadLength(m, length);

@@ -20,8 +20,6 @@ namespace Lextm.SharpSnmpLib.Compiler
     /// </summary>
     internal partial class MainForm : Form
     {
-        private CompilerCore _compiler;
-
         public MainForm()
         {
             InitializeComponent();
@@ -36,12 +34,7 @@ namespace Lextm.SharpSnmpLib.Compiler
             modules.Show(dockPanel1, DockState.DockRight);
         }
 
-        [Dependency]
-        public CompilerCore Compiler
-        {
-            get { return _compiler; }
-            set { _compiler = value; }
-        }
+        public CompilerCore Compiler { get; set; }
 
         private void ActExitExecute(object sender, EventArgs e)
         {
@@ -66,8 +59,7 @@ namespace Lextm.SharpSnmpLib.Compiler
             IDockContent content = dockPanel1.ActiveDocument;
             DocumentPanel doc = (DocumentPanel)content;
 
-            List<string> fileList = new List<string>(1);
-            fileList.Add(doc.FileName);
+            List<string> fileList = new List<string>(1) {doc.FileName};
 
             Compiler.Compile(fileList);
         }

@@ -156,12 +156,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public ISnmpData GetData(VersionCode version)
         {
-            if (version == VersionCode.V3)
-            {
-                return new OctetString(ToSequence().ToBytes());
-            }
-
-            return _userName;
+            return version == VersionCode.V3 ? new OctetString(ToSequence().ToBytes()) : _userName;
         }
 
         #endregion

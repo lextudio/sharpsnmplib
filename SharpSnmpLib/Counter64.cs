@@ -142,7 +142,7 @@ namespace Lextm.SharpSnmpLib
         /// Gets that raw bytes.
         /// </summary>
         /// <returns></returns>
-        internal byte[] GetRaw()
+        private byte[] GetRaw()
         {
             return ByteTool.GetRawBytes(BitConverter.GetBytes(_count), false);
         }

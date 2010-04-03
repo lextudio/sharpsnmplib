@@ -1,16 +1,10 @@
-﻿using System.Collections.Generic;
-using Lextm.SharpSnmpLib.Messaging;
-using Lextm.SharpSnmpLib.Security;
-
-namespace Lextm.SharpSnmpLib.Agent
+﻿namespace Lextm.SharpSnmpLib.Agent
 {
     /// <summary>
     /// SNMP application class, who is a pipeline for message processing.
     /// </summary>
     internal class SnmpApplication
     {
-        private SnmpContext _context;
-        private bool _finished;
         private readonly ILogger _logger;
         private readonly IMembershipProvider _provider;
         private readonly MessageHandlerFactory _factory;
@@ -41,8 +35,8 @@ namespace Lextm.SharpSnmpLib.Agent
         /// <param name="context">The context.</param>
         public void Init(SnmpContext context)
         {
-            _context = context;
-            _finished = false;
+            Context = context;
+            ProcessingFinished = false;
             _handler = null;
         }
 
@@ -50,19 +44,13 @@ namespace Lextm.SharpSnmpLib.Agent
         /// Gets the context.
         /// </summary>
         /// <value>The context.</value>
-        public SnmpContext Context
-        {
-            get { return _context; }
-        }
+        public SnmpContext Context { get; private set; }
 
         /// <summary>
         /// Gets a value indicating whether processing is finished.
         /// </summary>
         /// <value><c>true</c> if processing is finished; otherwise, <c>false</c>.</value>
-        public bool ProcessingFinished
-        {
-            get { return _finished; }
-        }
+        public bool ProcessingFinished { get; private set; }
 
         /// <summary>
         /// Processes an incoming request.
@@ -130,7 +118,7 @@ namespace Lextm.SharpSnmpLib.Agent
         /// </summary>
         public void CompleteProcessing()
         {
-            _finished = true;
+            ProcessingFinished = true;
         }
     }
 }

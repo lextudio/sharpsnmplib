@@ -17,33 +17,14 @@ namespace Lextm.SharpSnmpLib.Tests
     [TestFixture]
     public class TestInteger32
     {
-        // [Test]
-        public void TestExtra()
-        {
-            int j = 1;
-            int i = int.MinValue;
-            while (i + j < int.MaxValue)
-            {                
-                Integer32 _int = new Integer32(i + j);
-                byte[] bytes = _int.ToBytes();
-                Integer32 _else = (Integer32)DataFactory.CreateSnmpData(bytes);
-                Assert.AreEqual(i + j, _else.ToInt32());
-                try {
-                   j = j * 256; 
-                } catch (Exception) {
-                   break; 
-                }                
-            }
-        }
-        
         [Test]
         public void TestNegative()
         {
-            int i =-2147418240;
-            Integer32 _int = new Integer32(i);
-            byte[] bytes = _int.ToBytes();
-            Integer32 _else = (Integer32)DataFactory.CreateSnmpData(bytes);
-            Assert.AreEqual(i, _else.ToInt32());
+            const int i = -2147418240;
+            Integer32 data = new Integer32(i);
+            byte[] bytes = data.ToBytes();
+            Integer32 other = (Integer32)DataFactory.CreateSnmpData(bytes);
+            Assert.AreEqual(i, other.ToInt32());
         }
         
         [Test]
@@ -62,7 +43,7 @@ namespace Lextm.SharpSnmpLib.Tests
         [Test]
         public void TestToInt32()
         {
-            int result = -26955;
+            const int result = -26955;
             byte[] expected = new byte[] {0x96, 0xB5};
             Integer32 test = new Integer32(expected);
             Assert.AreEqual(result, test.ToInt32());

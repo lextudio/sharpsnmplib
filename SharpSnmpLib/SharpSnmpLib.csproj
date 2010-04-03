@@ -73,7 +73,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="BitString.cs" />
     <Compile Include="Bool.cs" />
     <Compile Include="ByteTool.cs" />
     <Compile Include="Counter32.cs" />

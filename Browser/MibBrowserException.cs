@@ -11,8 +11,8 @@ namespace Lextm.SharpSnmpLib.Browser
         public BrowserException(string message) : base(message) { }
         
         public BrowserException(string message, Exception inner) : base(message, inner) { }
-    
-        protected BrowserException(SerializationInfo info, StreamingContext context)
+
+        private BrowserException(SerializationInfo info, StreamingContext context)
             : base(info, context) { }
     }
 }

@@ -50,7 +50,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 previous = temp;
             }
             
-            ConstructHelper.Validate(previous, temp == null, "end of file reached");
+            ConstructHelper.Validate(previous, true, "end of file reached");
         }
         
         private static bool ValidType(Symbol symbol)

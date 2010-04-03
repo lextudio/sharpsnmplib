@@ -26,10 +26,12 @@ namespace Lextm.SharpSnmpLib.Mib
             Definition ccitt = new Definition(new OidValueAssignment("SNMPV2-SMI", "ccitt", null, 0), _root);
             Definition iso = new Definition(new OidValueAssignment("SNMPV2-SMI", "iso", null, 1), _root);
             Definition jointIsoCcitt = new Definition(new OidValueAssignment("SNMPV2-SMI", "joint-iso-ccitt", null, 2), _root);
-            _nameTable = new Dictionary<string, Definition>();
-            _nameTable.Add(iso.TextualForm, iso);
-            _nameTable.Add(ccitt.TextualForm, ccitt);
-            _nameTable.Add(jointIsoCcitt.TextualForm, jointIsoCcitt);
+            _nameTable = new Dictionary<string, Definition>
+                             {
+                                 {iso.TextualForm, iso},
+                                 {ccitt.TextualForm, ccitt},
+                                 {jointIsoCcitt.TextualForm, jointIsoCcitt}
+                             };
         }
         
         public ObjectTree(ICollection<ModuleLoader> loaders) : this()
@@ -99,15 +101,10 @@ namespace Lextm.SharpSnmpLib.Mib
         public IDefinition Find(string moduleName, string name)
         {
             string full = moduleName + "::" + name;
-            if (_nameTable.ContainsKey(full))
-            {
-                return _nameTable[full];
-            }
-            
-            return null;
+            return _nameTable.ContainsKey(full) ? _nameTable[full] : null;
         }
-        
-        internal Definition Find(string name)
+
+        private Definition Find(string name)
         {
             foreach (string key in _nameTable.Keys)
             {
@@ -120,20 +117,20 @@ namespace Lextm.SharpSnmpLib.Mib
             return null;
         }
 
-        internal Definition Find(uint[] numerical)
+        private Definition Find(IList<uint> numerical)
         {
             if (numerical == null)
             {
                 throw new ArgumentNullException("numerical");
             }
             
-            if (numerical.Length == 0)
+            if (numerical.Count == 0)
             {
                 throw new ArgumentException("numerical cannot be empty");
             }
             
             Definition result = _root;
-            for (int i = 0; i < numerical.Length; i++)
+            for (int i = 0; i < numerical.Count; i++)
             {
                 Definition temp = result.GetChildAt(numerical[i]) as Definition;
                 if (temp == null)
@@ -181,8 +178,8 @@ namespace Lextm.SharpSnmpLib.Mib
 
             return new SearchResult(result, remaining.ToArray());
         }
-        
-        internal bool CanParse(MibModule module)
+
+        private bool CanParse(MibModule module)
         {
             if (!MibModule.AllDependentsAvailable(module, _loaded))
             {
@@ -198,7 +195,7 @@ namespace Lextm.SharpSnmpLib.Mib
             return true;
         }
 
-        internal void Parse(MibModule module)
+        private void Parse(MibModule module)
         {
             TraceSource source = new TraceSource("Library");
             Stopwatch watch = new Stopwatch();
@@ -228,7 +225,7 @@ namespace Lextm.SharpSnmpLib.Mib
             // */
         }
 
-        private void AddNodes(MibModule module)
+        private void AddNodes(IModule module)
         {
             List<IEntity> pendingNodes = new List<IEntity>();
             
@@ -364,8 +361,8 @@ namespace Lextm.SharpSnmpLib.Mib
 
             return node;
         }
-        
-        internal static uint[] ExtractParent(uint[] input, int length)
+
+        private static uint[] ExtractParent(IList<uint> input, int length)
         {
             uint[] result = new uint[length];
             for (int i = 0; i < length; i++)
@@ -398,11 +395,13 @@ namespace Lextm.SharpSnmpLib.Mib
                 foreach (MibModule pending in _pendings.Values)
                 {
                     bool succeeded = CanParse(pending);
-                    if (succeeded)
+                    if (!succeeded)
                     {
-                        Parse(pending);
-                        parsed.Add(pending.Name);
+                        continue;
                     }
+
+                    Parse(pending);
+                    parsed.Add(pending.Name);
                 }
 
                 foreach (string file in parsed)
@@ -468,8 +467,8 @@ namespace Lextm.SharpSnmpLib.Mib
             source.Flush();
             source.Close();
         }
-        
-        internal void Import(MibModule module)
+
+        private void Import(MibModule module)
         {
             if (module == null)
             {

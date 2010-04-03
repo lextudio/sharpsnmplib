@@ -13,7 +13,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestExtra()
         {
             uint j = 1;
-            uint i = uint.MinValue;
+            const uint i = uint.MinValue;
             while (i + j < uint.MaxValue)
             {                
                 Counter32 _int = new Counter32(i + j);

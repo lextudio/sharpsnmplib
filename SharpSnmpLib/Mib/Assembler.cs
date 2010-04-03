@@ -83,7 +83,7 @@ namespace Lextm.SharpSnmpLib.Mib
             }
         }
 
-        internal static void PersistModuleToFile(string folder, MibModule module, IObjectTree tree)
+        private static void PersistModuleToFile(string folder, IModule module, IObjectTree tree)
         {
             string fileName = Path.Combine(folder, module.Name + ".module");
             using (StreamWriter writer = new StreamWriter(fileName))

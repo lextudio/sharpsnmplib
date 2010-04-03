@@ -18,7 +18,7 @@ namespace Lextm.SharpSnmpLib.Tests
         [Test]
         public void TestConstructor()
         {
-            string expected = "127.0.0.1";
+            const string expected = "127.0.0.1";
             IP ip = new IP(expected);
             Assert.AreEqual(expected, ip.ToString());
         }

@@ -98,7 +98,7 @@
                     previous = temp;
                 }
                 
-                ConstructHelper.Validate(previous, temp == null, "end of file reached");
+                ConstructHelper.Validate(previous, true, "end of file reached");
             }
         }
     }

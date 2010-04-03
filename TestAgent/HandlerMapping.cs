@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection;
 
 namespace Lextm.SharpSnmpLib.Agent
@@ -42,13 +43,12 @@ namespace Lextm.SharpSnmpLib.Agent
 
         private static IMessageHandler CreateMessageHandler(string assemblyName, string type)
         {
-            foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
+            foreach (Assembly assembly in from assembly in AppDomain.CurrentDomain.GetAssemblies()
+                                          let name = assembly.GetName().Name
+                                          where string.Compare(name, assemblyName, StringComparison.OrdinalIgnoreCase) == 0
+                                          select assembly)
             {
-                string name = assembly.GetName().Name;
-                if (string.Compare(name, assemblyName, StringComparison.OrdinalIgnoreCase) == 0)
-                {
-                    return (IMessageHandler) Activator.CreateInstance(assembly.GetType(type));
-                }
+                return (IMessageHandler) Activator.CreateInstance(assembly.GetType(type));
             }
 
             return (IMessageHandler)Activator.CreateInstance(AppDomain.CurrentDomain.Load(assemblyName).GetType(type));
@@ -72,37 +72,17 @@ namespace Lextm.SharpSnmpLib.Agent
         /// </returns>
         public bool CanHandle(ISnmpMessage message)
         {
-            if (!VersionMatched(message))
-            {
-                return false;
-            }
-
-            if (!CommandMatched(message))
-            {
-                return false;
-            }
-
-            return true;
+            return VersionMatched(message) && CommandMatched(message);
         }
 
         private bool CommandMatched(ISnmpMessage message)
         {
-            if (StringEquals(_command, "*"))
-            {
-                return true;
-            }
-
-            return StringEquals(_command + "RequestPdu", message.Pdu.TypeCode.ToString());
+            return StringEquals(_command, "*") || StringEquals(_command + "RequestPdu", message.Pdu.TypeCode.ToString());
         }
 
         private bool VersionMatched(ISnmpMessage message)
         {
-            if (StringEquals(_version, "*"))
-            {
-                return true;
-            }
-
-            return StringEquals(message.Version.ToString(), _version);
+            return StringEquals(_version, "*") || StringEquals(message.Version.ToString(), _version);
         }
 
         private static bool StringEquals(string left, string right)

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Net;
@@ -25,7 +24,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         private readonly object _locker = new object();
         private int _timeout = 5000;
         private VersionCode _version;
-        private IObjectRegistry _objects; // = ObjectRegistry.Default;
         private int _maxRepetitions = 10;
  
         /// <summary>
@@ -70,11 +68,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         /// <value>The objects.</value>
         /// <remarks>Changed from 2.0: it will return null if not set.</remarks>
-        public IObjectRegistry Objects
-        {
-            get { return _objects; }
-            set { _objects = value; }
-        }
+        public IObjectRegistry Objects { get; set; }
 
         /// <summary>
         /// Gets a variable bind.
@@ -85,9 +79,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public Variable GetSingle(IPEndPoint endpoint, string community, Variable variable)
         {
-            List<Variable> variables = new List<Variable>();
-            variables.Add(variable);
-
+            List<Variable> variables = new List<Variable> {variable};
             return Messenger.Get(_version, endpoint, new OctetString(community), variables, _timeout)[0];
         }
 
@@ -160,8 +152,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public Variable SetSingle(IPEndPoint endpoint, string community, Variable variable)
         {
-            List<Variable> variables = new List<Variable>();
-            variables.Add(variable);
+            List<Variable> variables = new List<Variable> {variable};
 
             return Messenger.Set(_version, endpoint, new OctetString(community), variables, _timeout)[0];
         }

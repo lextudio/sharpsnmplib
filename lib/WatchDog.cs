@@ -31,9 +31,8 @@ namespace Lextm.Common
         /// Occurs when the dog is hungry and barks.
         /// </summary>
         public event EventHandler<EventArgs> Bark;
-        private bool _keepBarking;
+
         private readonly Timer _timer = new Timer();
-        private bool _enabled;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WatchDog"/> class.
@@ -44,29 +43,21 @@ namespace Lextm.Common
             _timer.Elapsed += TimerElapsed;
             _timer.Interval = interval;
             _timer.Enabled = false;
-            _enabled = false;
-            _keepBarking = false;
+            Enabled = false;
+            KeepBarking = false;
         }
 
         /// <summary>
         /// Gets or sets a value indicating whether this <see cref="WatchDog"/> is enabled.
         /// </summary>
         /// <value><c>true</c> if enabled; otherwise, <c>false</c>.</value>
-        public bool Enabled
-        {
-            get { return _enabled; }
-            set { _enabled = value; }
-        }
+        public bool Enabled { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether this dog keeps barking when hungry.
         /// </summary>
         /// <value><c>true</c> so it keeps barking; otherwise, <c>false</c>.</value>
-        public bool KeepBarking
-        {
-            get { return _keepBarking; }
-            set { _keepBarking = value; }
-        }
+        public bool KeepBarking { get; set; }
 
         private void TimerElapsed(object sender, ElapsedEventArgs e)
         {

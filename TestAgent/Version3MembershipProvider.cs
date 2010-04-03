@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Lextm.SharpSnmpLib.Messaging;
-using Lextm.SharpSnmpLib.Security;
-
-namespace Lextm.SharpSnmpLib.Agent
+﻿namespace Lextm.SharpSnmpLib.Agent
 {
     /// <summary>
     /// SNMP version 3 membership provider. Not yet implemented.
@@ -20,13 +15,7 @@ namespace Lextm.SharpSnmpLib.Agent
         /// <returns></returns>
         public bool AuthenticateRequest(SnmpContext context)
         {
-            ISnmpMessage message = context.Request;
-            if (message.Version != Version)
-            {
-                return false;
-            }
-
-            return context.HandleMembership();
+            return context.Request.Version == Version && context.HandleMembership();
         }
     }
 }

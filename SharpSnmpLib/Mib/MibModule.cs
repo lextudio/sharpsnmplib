@@ -97,27 +97,29 @@ namespace Lextm.SharpSnmpLib.Mib
                 }
                 
                 buffer.Add(temp);
-                if (temp == Symbol.Assign)
+                if (temp != Symbol.Assign)
                 {
-                    ParseEntity(tokens, module, buffer, lexer, ref next);
-                    buffer.Clear();
-                    foreach (Symbol s in next)
-                    {
-                        if (s == Symbol.End)
-                        {
-                            return;
-                        }
-                        
-                        buffer.Add(s);
-                    }
-                    
-                    next.Clear();
+                    continue;
                 }
+
+                ParseEntity(tokens, module, buffer, lexer, ref next);
+                buffer.Clear();
+                foreach (Symbol s in next)
+                {
+                    if (s == Symbol.End)
+                    {
+                        return;
+                    }
+                        
+                    buffer.Add(s);
+                }
+                    
+                next.Clear();
             }
             while ((temp = lexer.NextSymbol) != Symbol.End);
         }
         
-        private static void ParseEntity(IList<IConstruct> tokens, string module, IList<Symbol> buffer, Lexer lexer, ref IList<Symbol> next)
+        private static void ParseEntity(ICollection<IConstruct> tokens, string module, IList<Symbol> buffer, Lexer lexer, ref IList<Symbol> next)
         {
             next.Clear();
             ConstructHelper.Validate(buffer[0], buffer.Count == 1, "unexpected symbol");
@@ -190,19 +192,22 @@ namespace Lextm.SharpSnmpLib.Mib
             {
                 return new Sequence(module, header[0].ToString(), lexer);
             }
-            else if (current == Symbol.Choice)
+
+            if (current == Symbol.Choice)
             {
                 return new Choice(module, header[0].ToString(), lexer);
             }
-            else if (current == Symbol.Integer)
+
+            if (current == Symbol.Integer)
             {
                 return new Integer(module, header[0].ToString(), lexer);
             }
-            else if (current == Symbol.TextualConvention)
+
+            if (current == Symbol.TextualConvention)
             {
                 return new TextualConvention(module, header[0].ToString(), lexer);
             }
-            
+
             TypeAssignment result = new TypeAssignment(module, header[0].ToString(), current, lexer);
             next.Add(result.Left);
             return result;

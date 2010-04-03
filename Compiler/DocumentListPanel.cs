@@ -9,8 +9,8 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
-using Microsoft.Practices.Unity;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace Lextm.SharpSnmpLib.Compiler
@@ -21,8 +21,6 @@ namespace Lextm.SharpSnmpLib.Compiler
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
     internal partial class DocumentListPanel : DockContent
     {
-        private CompilerCore _compiler;
-
         public DocumentListPanel()
         {
             InitializeComponent();
@@ -58,15 +56,7 @@ namespace Lextm.SharpSnmpLib.Compiler
                 throw new InvalidOperationException("cannot be System MDI");
             }
 
-            foreach (IDockContent content in DockPanel.Documents)
-            {
-                if (content.DockHandler.TabText == fileName)
-                {
-                    return content;
-                }
-            }
-
-            return null;
+            return DockPanel.Documents.FirstOrDefault(content => content.DockHandler.TabText == fileName);
         }
 
         private void DocumentListPanel_Load(object sender, EventArgs e)
@@ -88,12 +78,7 @@ namespace Lextm.SharpSnmpLib.Compiler
             }
         }
 
-        [Dependency]
-        public CompilerCore Compiler
-        {
-            get { return _compiler; }
-            set { _compiler = value; }
-        }
+        public CompilerCore Compiler { get; set; }
 
         private void ActDeleteUpdate(object sender, EventArgs e)
         {
@@ -104,7 +89,7 @@ namespace Lextm.SharpSnmpLib.Compiler
         {
             string fileName = lvFiles.SelectedItems[0].Tag.ToString();
             lvFiles.SelectedItems[0].Remove();
-            _compiler.Remove(fileName);
+            Compiler.Remove(fileName);
         }
     }
 }

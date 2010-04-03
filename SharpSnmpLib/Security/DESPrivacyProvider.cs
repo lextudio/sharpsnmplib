@@ -16,6 +16,7 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography;
 
@@ -196,9 +197,9 @@ namespace Lextm.SharpSnmpLib.Security
         /// <param name="privacyKey">16 byte privacy key</param>
         /// <param name="salt">Salt value returned by GetSalt method</param>
         /// <returns>IV value used in the encryption process</returns>
-        private static byte[] GetIV(byte[] privacyKey, byte[] salt)
+        private static byte[] GetIV(IList<byte> privacyKey, IList<byte> salt)
         {
-            if (privacyKey.Length < 16)
+            if (privacyKey.Count < MinimumKeyLength)
             {
                 throw new ArgumentException("Invalid privacy key length", "privacyKey");
             }
@@ -247,7 +248,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// </summary>
         public static int MinimumKeyLength
         {
-            get { return 16; }
+            get { return MaximumKeyLength; }
         }
         
         /// <summary>

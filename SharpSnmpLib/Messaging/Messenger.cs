@@ -150,8 +150,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("seed");
             }
 
-            List<Variable> variables = new List<Variable>();
-            variables.Add(new Variable(seed.Id));
+            List<Variable> variables = new List<Variable> {new Variable(seed.Id)};
 
             GetNextRequestMessage message = new GetNextRequestMessage(
                 RequestCounter.NextId,
@@ -241,8 +240,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new NotSupportedException("SNMP v1 and v3 is not supported");
             }
 
-            List<Variable> variables = new List<Variable>();
-            variables.Add(new Variable(seed.Id));
+            List<Variable> variables = new List<Variable> {new Variable(seed.Id)};
 
             GetBulkRequestMessage message = new GetBulkRequestMessage(
                 RequestCounter.NextId,

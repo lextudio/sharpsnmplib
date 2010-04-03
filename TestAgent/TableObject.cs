@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Lextm.SharpSnmpLib.Agent
 {
@@ -13,16 +14,7 @@ namespace Lextm.SharpSnmpLib.Agent
         /// <returns><c>null</c> if it does not match.</returns>
         public override ScalarObject MatchGetNext(ObjectIdentifier id)
         {
-            foreach (ScalarObject o in Objects)
-            {
-                ScalarObject result = o.MatchGetNext(id);
-                if (result != null)
-                {
-                    return result;
-                }
-            }
-
-            return null;
+            return Objects.Select(o => o.MatchGetNext(id)).FirstOrDefault(result => result != null);
         }
 
         /// <summary>
@@ -32,16 +24,7 @@ namespace Lextm.SharpSnmpLib.Agent
         /// <returns><c>null</c> if it does not match.</returns>
         public override ScalarObject MatchGet(ObjectIdentifier id)
         {
-            foreach (ScalarObject o in Objects)
-            {
-                ScalarObject result = o.MatchGet(id);
-                if (result != null)
-                {
-                    return result;
-                }
-            }
-
-            return null;
+            return Objects.Select(o => o.MatchGet(id)).FirstOrDefault(result => result != null);
         }
     }
 }

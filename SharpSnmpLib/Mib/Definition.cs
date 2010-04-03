@@ -13,7 +13,6 @@ namespace Lextm.SharpSnmpLib.Mib
         private readonly string _module;
         private readonly string _parent;
         private readonly uint _value;
-        private DefinitionType _type;
         private readonly IDictionary<uint, IDefinition> _children = new Dictionary<uint, IDefinition>();
         private Definition _parentNode;
         private readonly string _typeString;
@@ -58,12 +57,12 @@ namespace Lextm.SharpSnmpLib.Mib
             _module = entity.ModuleName;
             _value = entity.Value;
             _parentNode.Append(this);
-            _type = DetermineType(entity.GetType().ToString(), _name, _parentNode);
+            Type = DetermineType(entity.GetType().ToString(), _name, _parentNode);
         }
 
         internal void DetermineType(IDefinition parent)
         {
-            _type = DetermineType(_typeString, _name, parent);
+            Type = DetermineType(_typeString, _name, parent);
         }
         
         private static DefinitionType DetermineType(string type, string name, IDefinition parent)
@@ -88,12 +87,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 return DefinitionType.Entry;
             }
 
-            if (parent.Type == DefinitionType.Entry)
-            {
-                return DefinitionType.Column;
-            }
-
-            return DefinitionType.Scalar;
+            return parent.Type == DefinitionType.Entry ? DefinitionType.Column : DefinitionType.Scalar;
         }
         
         /// <summary>
@@ -132,10 +126,7 @@ namespace Lextm.SharpSnmpLib.Mib
             get { return _children.Values; }
         }
 
-        public DefinitionType Type
-        {
-            get { return _type; }
-        }
+        public DefinitionType Type { get; private set; }
 
         internal static Definition RootDefinition
         {
@@ -235,7 +226,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// Adds a <see cref="Definition"/> child to this <see cref="Definition"/>.
         /// </summary>
         /// <param name="def"></param>
-        internal void Append(IDefinition def)
+        private void Append(IDefinition def)
         {
             if (!_children.ContainsKey(def.Value))
             {

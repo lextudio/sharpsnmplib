@@ -108,11 +108,13 @@ namespace SnmpGetNext
             {
                 foreach (IPAddress address in Dns.GetHostAddresses(extra[0]))
                 {
-                    if (address.AddressFamily == AddressFamily.InterNetwork)
+                    if (address.AddressFamily != AddressFamily.InterNetwork)
                     {
-                        ip = address;
-                        break;
+                        continue;
                     }
+
+                    ip = address;
+                    break;
                 }
 				
                 if (ip == null)
@@ -161,25 +163,13 @@ namespace SnmpGetNext
                     return;
                 }
 
-                IAuthenticationProvider auth;
-                if ((level & Levels.Authentication) == Levels.Authentication)
-                {
-                    auth = GetAuthenticationProviderByName(authentication, authPhrase);
-                }
-                else
-                {
-                    auth = DefaultAuthenticationProvider.Instance;
-                }
+                IAuthenticationProvider auth = (level & Levels.Authentication) == Levels.Authentication
+                                                   ? GetAuthenticationProviderByName(authentication, authPhrase)
+                                                   : DefaultAuthenticationProvider.Instance;
 
-                IPrivacyProvider priv;
-                if ((level & Levels.Privacy) == Levels.Privacy)
-                {
-                    priv = new DESPrivacyProvider(new OctetString(privPhrase), auth);
-                }
-                else
-                {
-                    priv = DefaultPrivacyProvider.Instance;
-                }
+                IPrivacyProvider priv = (level & Levels.Privacy) == Levels.Privacy
+                                            ? new DESPrivacyProvider(new OctetString(privPhrase), auth)
+                                            : DefaultPrivacyProvider.Instance;
 				
                 Discovery discovery = new Discovery(1, 101);
                 ReportMessage report = discovery.GetResponse(timeout, receiver);

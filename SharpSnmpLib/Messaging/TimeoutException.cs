@@ -39,16 +39,11 @@ namespace Lextm.SharpSnmpLib.Messaging
     [Serializable]
     public sealed class TimeoutException : OperationException
     {
-        private int _timeout;
-        
         /// <summary>
         /// The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.
         /// </summary>
-        public int Timeout
-        {
-            get { return _timeout; }
-        }
-        
+        public int Timeout { get; private set; }
+
         /// <summary>
         /// Creates a <see cref="TimeoutException"/> instance.
         /// </summary>
@@ -82,7 +77,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("info");
             }
 
-            _timeout = info.GetInt32("Timeout");
+            Timeout = info.GetInt32("Timeout");
         }
 
         /// <summary>
@@ -94,7 +89,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);
-            info.AddValue("Timeout", _timeout);
+            info.AddValue("Timeout", Timeout);
         } 
 #endif
         
@@ -104,7 +99,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public override string ToString()
         {
-            return "TimeoutException: timeout: " + _timeout.ToString(CultureInfo.InvariantCulture);
+            return "TimeoutException: timeout: " + Timeout.ToString(CultureInfo.InvariantCulture);
         }
         
         /// <summary>
@@ -115,9 +110,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public static TimeoutException Create(IPAddress agent, int timeout)
         {
-            TimeoutException ex = new TimeoutException();
-            ex.Agent = agent;
-            ex._timeout = timeout;
+            TimeoutException ex = new TimeoutException {Agent = agent, Timeout = timeout};
             return ex;
         }
     }

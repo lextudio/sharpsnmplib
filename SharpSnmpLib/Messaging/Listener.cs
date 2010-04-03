@@ -30,7 +30,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Error message for non IP v6 OS.
         /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Pv")]
-        public static readonly string ErrorIPv6NotSupported = "cannot use IP v6 as the OS does not support it";
+        public const string ErrorIPv6NotSupported = "cannot use IP v6 as the OS does not support it";
         private readonly IPEndPoint _defaultEndPoint = new IPEndPoint(IPAddress.Any, Defaultport);
         private Socket _socket;
         private int _bufferSize;
@@ -134,12 +134,14 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new ObjectDisposedException("Listener");
             }
-            
-            if (_socket != null)
+
+            if (_socket == null)
             {
-                byte[] buffer = response.ToBytes();
-                _socket.BeginSendTo(buffer, 0, buffer.Length, 0, receiver, null, null);
+                return;
             }
+
+            byte[] buffer = response.ToBytes();
+            _socket.BeginSendTo(buffer, 0, buffer.Length, 0, receiver, null, null);
         }
 
         /// <summary>
@@ -229,11 +231,13 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             long activeBefore = Interlocked.CompareExchange(ref _active, 0, 1);
 
-            if (activeBefore == 1)
+            if (activeBefore != 1)
             {
-                _socket.Close();    // Note that closing the socket releases the _socket.ReceiveFrom call.
-                _socket = null;
+                return;
             }
+
+            _socket.Close();    // Note that closing the socket releases the _socket.ReceiveFrom call.
+            _socket = null;
         }
 
         /// <summary>
@@ -315,15 +319,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 try
                 {
                     byte[] buffer = new byte[_bufferSize];
-                    EndPoint remote;
-                    if (_socket.AddressFamily == AddressFamily.InterNetwork)
-                    {
-                        remote = new IPEndPoint(IPAddress.Any, 0);
-                    }
-                    else
-                    {
-                        remote = new IPEndPoint(IPAddress.IPv6Any, 0);
-                    }
+                    EndPoint remote = _socket.AddressFamily == AddressFamily.InterNetwork ? new IPEndPoint(IPAddress.Any, 0) : new IPEndPoint(IPAddress.IPv6Any, 0);
 
                     int count = _socket.ReceiveFrom(buffer, ref remote);
                     ThreadPool.QueueUserWorkItem(HandleMessage, new MessageParams(buffer, count, remote));

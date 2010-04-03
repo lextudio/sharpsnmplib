@@ -78,9 +78,6 @@
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Messaging\AgentFoundEventArgs.cs" />
-    <Compile Include="Messaging\AgentV1ListenerAdapter.cs" />
-    <Compile Include="Messaging\AgentV2ListenerAdapter.cs" />
-    <Compile Include="Messaging\AgentV3ListenerAdapter.cs" />
     <Compile Include="Messaging\DefaultListenerAdapter.cs" />
     <Compile Include="Messaging\Discoverer.cs">
     </Compile>

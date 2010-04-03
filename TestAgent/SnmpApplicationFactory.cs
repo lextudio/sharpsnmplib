@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Lextm.SharpSnmpLib.Security;
 
 namespace Lextm.SharpSnmpLib.Agent
 {
@@ -23,7 +22,6 @@ namespace Lextm.SharpSnmpLib.Agent
         /// <param name="store">The store.</param>
         /// <param name="membershipProvider">The membership provider.</param>
         /// <param name="factory">The factory.</param>
-        /// <param name="objects">The objects.</param>
         public SnmpApplicationFactory(ILogger logger, ObjectStore store, IMembershipProvider membershipProvider, MessageHandlerFactory factory)
         {
             _logger = logger;

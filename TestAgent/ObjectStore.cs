@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Lextm.SharpSnmpLib.Agent
 {
@@ -33,16 +34,7 @@ namespace Lextm.SharpSnmpLib.Agent
         /// <returns></returns>
         public ScalarObject GetObject(ObjectIdentifier oid)
         {
-            foreach (ISnmpObject o in _list)
-            {
-                ScalarObject result = o.MatchGet(oid);
-                if (result != null)
-                {
-                    return result;
-                }
-            }
-
-            return null;
+            return _list.Select(o => o.MatchGet(oid)).FirstOrDefault(result => result != null);
         }
 
         /// <summary>
@@ -52,16 +44,7 @@ namespace Lextm.SharpSnmpLib.Agent
         /// <returns></returns>
         public ScalarObject GetNextObject(ObjectIdentifier oid)
         {
-            foreach (ISnmpObject o in _list)
-            {
-                ScalarObject result = o.MatchGetNext(oid);
-                if (result != null)
-                {
-                    return result;
-                }
-            }
-            
-            return null;
+            return _list.Select(o => o.MatchGetNext(oid)).FirstOrDefault(result => result != null);
         }
     }
 }

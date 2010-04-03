@@ -310,7 +310,9 @@ namespace Lextm.SharpSnmpLib.Tests
             {
                 timer.Start();
                 //IMPORTANT: test against an agent that doesn't exist.
+// ReSharper disable AssignNullToNotNullAttribute
                 message.GetResponse(time, new IPEndPoint(IPAddress.Parse("192.168.0.233"), 161), socket);
+// ReSharper restore AssignNullToNotNullAttribute
             }
             catch (TimeoutException)
             {

@@ -7,14 +7,15 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using Lextm.Common;
 using Lextm.SharpSnmpLib.Mib;
-using Microsoft.Practices.Unity;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace Lextm.SharpSnmpLib.Browser
@@ -25,7 +26,6 @@ namespace Lextm.SharpSnmpLib.Browser
     internal partial class ModuleListPanel : DockContent
     {
         private const string Filter = "*.module";
-        private IObjectRegistry _objects;
         private FileSystemWatcher _watcher;
         private WatchDog _dog;
 
@@ -43,8 +43,8 @@ namespace Lextm.SharpSnmpLib.Browser
             _dog.Bark += DogBark;
             _dog.Enabled = actEnableMonitor.Checked;
 
-            _watcher = new FileSystemWatcher(((ReloadableObjectRegistry)Objects).Path, Filter);
-            _watcher.IncludeSubdirectories = false;
+            _watcher = new FileSystemWatcher(((ReloadableObjectRegistry)Objects).Path, Filter)
+                           {IncludeSubdirectories = false};
             _watcher.Changed += OnChanged;
             _watcher.Created += OnChanged;
             _watcher.Deleted += OnChanged;
@@ -61,18 +61,13 @@ namespace Lextm.SharpSnmpLib.Browser
             _dog.Feed();
         }
 
-        [Dependency]
-        public IObjectRegistry Objects
-        {
-            get { return _objects; }
-            set { _objects = value; }
-        }
+        public IObjectRegistry Objects { get; set; }
 
         private void RefreshPanel(object sender, EventArgs e)
         {
             if (InvokeRequired)
             {
-                Invoke((MethodInvoker) delegate { RefreshPanel(sender, e); });
+                Invoke((MethodInvoker) (() => RefreshPanel(sender, e)));
                 return;
             }
 
@@ -81,22 +76,16 @@ namespace Lextm.SharpSnmpLib.Browser
             listView1.Items.Clear();
             List<string> loaded = new List<string>(reg.Tree.LoadedModules);
             loaded.Sort();
-            foreach (string module in loaded)
+            foreach (ListViewItem item in loaded.Select(module => listView1.Items.Add(module)))
             {
-                ListViewItem item = listView1.Items.Add(module);
                 item.Group = listView1.Groups["lvgLoaded"];
             }
             
             string[] files = Directory.GetFiles(reg.Path, Filter);
-            foreach (string file in files)
+            foreach (ListViewItem item in from file in files
+                                          select Path.GetFileNameWithoutExtension(file)
+                                          into name where !loaded.Contains(name) select listView1.Items.Add(name))
             {
-                string name = Path.GetFileNameWithoutExtension(file);
-                if (loaded.Contains(name))
-                {
-                    continue;
-                }
-                
-                ListViewItem item = listView1.Items.Add(name);
                 item.BackColor = Color.LightGray;
                 item.Group = listView1.Groups["lvgPending"];
             }
@@ -115,11 +104,13 @@ namespace Lextm.SharpSnmpLib.Browser
             {
                 string name = item.Text.ToUpperInvariant();
                 List<string> list = new List<string>(File.ReadAllLines(index));
-                if (!list.Contains(name))
+                if (list.Contains(name))
                 {
-                    list.Add(name);
-                    File.WriteAllLines(index, list.ToArray());
+                    continue;
                 }
+
+                list.Add(name);
+                File.WriteAllLines(index, list.ToArray());
             }
 
             reg.Reload();
@@ -133,11 +124,13 @@ namespace Lextm.SharpSnmpLib.Browser
             {
                 string name = item.Text.ToUpperInvariant();
                 List<string> list = new List<string>(File.ReadAllLines(index));
-                if (list.Contains(name))
+                if (!list.Contains(name))
                 {
-                    list.Remove(name);
-                    File.WriteAllLines(index, list.ToArray());
+                    continue;
                 }
+
+                list.Remove(name);
+                File.WriteAllLines(index, list.ToArray());
             }
 
             reg.Reload();
@@ -148,17 +141,9 @@ namespace Lextm.SharpSnmpLib.Browser
             actRemove.Enabled = listView1.SelectedItems.Count >0 && ItemsInGroup(listView1.SelectedItems, "lvgLoaded");
         }
 
-        private static bool ItemsInGroup(ListView.SelectedListViewItemCollection collection, string group)
+        private static bool ItemsInGroup(IEnumerable collection, string group)
         {
-            foreach (ListViewItem item in collection)
-            {
-                if (item.Group.Name != group)
-                {
-                    return false;
-                }
-            }
-
-            return true;
+            return collection.Cast<ListViewItem>().All(item => item.Group.Name == group);
         }
 
         private void ActAddUpdate(object sender, EventArgs e)

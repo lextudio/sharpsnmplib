@@ -127,11 +127,13 @@ namespace SnmpWalk
             {
                 foreach (IPAddress address in Dns.GetHostAddresses(extra[0]))
                 {
-                    if (address.AddressFamily == AddressFamily.InterNetwork)
+                    if (address.AddressFamily != AddressFamily.InterNetwork)
                     {
-                        ip = address;
-                        break;
+                        continue;
                     }
+
+                    ip = address;
+                    break;
                 }
             
                 if (ip == null)

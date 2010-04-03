@@ -57,8 +57,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             else
             {
                 Variable v = new Variable(new ObjectIdentifier(new uint[] {1, 3, 6, 1, 2, 1, 1, 1, 0}));
-                List<Variable> variables = new List<Variable>();
-                variables.Add(v);
+                List<Variable> variables = new List<Variable> {v};
                 GetRequestMessage message = new GetRequestMessage(_requestId, version, community, variables);
                 bytes = message.ToBytes();
             }
@@ -156,6 +155,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             foreach (ISnmpMessage message in MessageFactory.ParseMessages(param.GetBytes(), 0, param.Number, UserRegistry.Default))
             {
+                EventHandler<AgentFoundEventArgs> handler;
                 if (message.Pdu.TypeCode == SnmpType.ReportPdu)
                 {
                     ReportMessage report = (ReportMessage) message;
@@ -169,30 +169,33 @@ namespace Lextm.SharpSnmpLib.Messaging
                         continue;
                     }
 
-                    EventHandler<AgentFoundEventArgs> handler = AgentFound;
+                    handler = AgentFound;
                     if (handler != null)
                     {
                         handler(this, new AgentFoundEventArgs(param.Sender, null));
                     }
                 }
-                if (message.Pdu.TypeCode == SnmpType.GetResponsePdu)
+
+                if (message.Pdu.TypeCode != SnmpType.GetResponsePdu)
                 {
-                    GetResponseMessage response = (GetResponseMessage) message;
-                    if (response.RequestId != _requestId)
-                    {
-                        continue;
-                    }
+                    continue;
+                }
 
-                    if (response.ErrorStatus != ErrorCode.NoError)
-                    {
-                        continue;
-                    }
+                GetResponseMessage response = (GetResponseMessage) message;
+                if (response.RequestId != _requestId)
+                {
+                    continue;
+                }
 
-                    EventHandler<AgentFoundEventArgs> handler = AgentFound;
-                    if (handler != null)
-                    {
-                        handler(this, new AgentFoundEventArgs(param.Sender, response.Variables[0]));
-                    }
+                if (response.ErrorStatus != ErrorCode.NoError)
+                {
+                    continue;
+                }
+
+                handler = AgentFound;
+                if (handler != null)
+                {
+                    handler(this, new AgentFoundEventArgs(param.Sender, response.Variables[0]));
                 }
             }
         }

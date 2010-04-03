@@ -51,7 +51,7 @@ namespace Lextm.SharpSnmpLib.Agent
         /// </summary>
         /// <param name="info">Info</param>
         /// <param name="context">Context</param>
-        protected AccessFailureException(SerializationInfo info, StreamingContext context)
+        private AccessFailureException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
         } 

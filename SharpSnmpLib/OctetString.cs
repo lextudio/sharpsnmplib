@@ -292,14 +292,9 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public PhysicalAddress ToPhysicalAddress()
         {
-            if (_raw.Length != 6)
-            {
-                return null;
-            }
-
-            return new PhysicalAddress(_raw);
+            return _raw.Length != 6 ? null : new PhysicalAddress(_raw);
         }
-        #endif 
+#endif 
         
         /// <summary>
         /// Default encoding of <see cref="OctetString"/> type.

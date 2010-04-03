@@ -7,13 +7,13 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Windows.Forms;
 
 using Lextm.SharpSnmpLib.Messaging;
 using Lextm.SharpSnmpLib.Mib;
-using Microsoft.Practices.Unity;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace Lextm.SharpSnmpLib.Browser
@@ -25,49 +25,26 @@ namespace Lextm.SharpSnmpLib.Browser
     {
         private const string StrAllUnassigned = "All Unassigned";
         private const string StrSends = "[{1}] [{0}] {2}";
-        private Listener _listener;
-        private Listener _listenerV6;
-        private IObjectRegistry _objects;
-        
+
         public NotificationPanel()
         {
             InitializeComponent();
             tstxtPort.Text = "162";
             tscbIP.Items.Add(StrAllUnassigned);
-            foreach (IPAddress address in Dns.GetHostEntry("").AddressList)
+            foreach (IPAddress address in Dns.GetHostEntry("").AddressList.Where(address => !address.IsIPv6LinkLocal))
             {
-                if (address.IsIPv6LinkLocal)
-                {
-                    continue;
-                }
-
                 tscbIP.Items.Add(address);
             }
 
             tscbIP.SelectedIndex = 0;
         }
-        
-        [Dependency]
-        public Listener Listener
-        {
-            get { return _listener; }
-            set { _listener = value; }
-        }
-        
-        [Dependency]
-        public Listener ListenerV6
-        {
-            get { return _listenerV6; }
-            set { _listenerV6 = value; }
-        }
-        
-        [Dependency]
-        public IObjectRegistry Objects
-        {
-            get { return _objects; }
-            set { _objects = value; }
-        }
-        
+
+        public Listener Listener { get; set; }
+
+        public Listener ListenerV6 { get; set; }
+
+        public IObjectRegistry Objects { get; set; }
+
         private void NotificationPanel_Load(object sender, EventArgs e)
         {
             Listener.ExceptionRaised += Listener_ExceptionRaised;
@@ -83,17 +60,17 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void Listener_InformRequestReceived(object sender, MessageReceivedEventArgs<InformRequestMessage> e)
         {
-            LogMessage(string.Format(StrSends, DateTime.Now, e.Sender, e.Message.ToString(_objects)));
+            LogMessage(string.Format(StrSends, DateTime.Now, e.Sender, e.Message.ToString(Objects)));
         }
 
         private void Listener_TrapV2Received(object sender, MessageReceivedEventArgs<TrapV2Message> e)
         {
-            LogMessage(string.Format(StrSends, DateTime.Now, e.Sender, e.Message.ToString(_objects)));
+            LogMessage(string.Format(StrSends, DateTime.Now, e.Sender, e.Message.ToString(Objects)));
         }
 
         private void Listener_TrapV1Received(object sender, MessageReceivedEventArgs<TrapV1Message> e)
         {
-            LogMessage(string.Format(StrSends, DateTime.Now, e.Sender, e.Message.ToString(_objects)));
+            LogMessage(string.Format(StrSends, DateTime.Now, e.Sender, e.Message.ToString(Objects)));
         }
 
         private void Listener_ExceptionRaised(object sender, ExceptionRaisedEventArgs e)
@@ -101,11 +78,11 @@ namespace Lextm.SharpSnmpLib.Browser
             LogMessage(e.Exception.ToString());
         }
 
-        public void LogMessage(string message)
+        private void LogMessage(string message)
         {
             if (InvokeRequired)
             {
-                Invoke((MethodInvoker) delegate { LogMessage(message); });
+                Invoke((MethodInvoker) (() => LogMessage(message)));
                 return;
             }
             

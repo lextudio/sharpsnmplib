@@ -9,7 +9,6 @@ namespace Lextm.SharpSnmpLib.Browser
         IEnumerable<AgentProfile> Profiles { get; }
         void AddProfile(AgentProfile profile);
         void DeleteProfile(AgentProfile profile);
-        void ReplaceProfile(AgentProfile profile);
         void LoadProfiles();
         void SaveProfiles();
         event EventHandler<EventArgs> OnChanged;

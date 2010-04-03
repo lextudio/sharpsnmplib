@@ -34,12 +34,14 @@ namespace Lextm.SharpSnmpLib.Security
         /// <param name="users">The users.</param>
         public UserRegistry(User[] users)
         {
-            if (users != null)
+            if (users == null)
             {
-                foreach (User user in users)
-                {
-                    Add(user);
-                }
+                return;
+            }
+
+            foreach (User user in users)
+            {
+                Add(user);
             }
         }
 
@@ -91,12 +93,7 @@ namespace Lextm.SharpSnmpLib.Security
                 return ProviderPair.Default;
             }
 
-            if (_users.ContainsKey(userName))
-            {
-                return _users[userName].Providers;
-            }
-
-            return null;
+            return _users.ContainsKey(userName) ? _users[userName].Providers : null;
         }
     }
 }

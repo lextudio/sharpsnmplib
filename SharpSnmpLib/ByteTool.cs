@@ -65,7 +65,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="description">The HEX string.</param>
         /// <returns></returns>
-        public static byte[] Convert(string description)
+        public static byte[] Convert(IEnumerable<char> description)
         {
             List<byte> result = new List<byte>();
             StringBuilder buffer = new StringBuilder(2);
@@ -82,11 +82,13 @@ namespace Lextm.SharpSnmpLib
                 }
                 
                 buffer.Append(c);
-                if (buffer.Length == 2)
+                if (buffer.Length != 2)
                 {
-                    result.Add(byte.Parse(buffer.ToString(), NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture));
-                    buffer.Length = 0;
+                    continue;
                 }
+
+                result.Add(byte.Parse(buffer.ToString(), NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture));
+                buffer.Length = 0;
             }
             
             if (buffer.Length != 0)
@@ -102,7 +104,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="buffer">The bytes.</param>
         /// <returns></returns>
-        public static string Convert(byte[] buffer)
+        public static string Convert(IEnumerable<byte> buffer)
         {
             StringBuilder result = new StringBuilder();
             foreach (byte b in buffer)
@@ -257,7 +259,7 @@ namespace Lextm.SharpSnmpLib
             stream.Write(raw, 0, raw.Length);
         }
         
-        internal static byte[] GetRawBytes(byte[] orig, bool negative)
+        internal static byte[] GetRawBytes(IEnumerable<byte> orig, bool negative)
         {
             byte flag;
             byte sign;

@@ -124,12 +124,14 @@ namespace Lextm.SharpSnmpLib
             }
 
             long original = stream.Position;
-            if (length != 0)
+            if (length == 0)
             {
-                while (stream.Position < original + length)
-                {
-                    _list.Add(DataFactory.CreateSnmpData(stream));
-                }
+                return;
+            }
+
+            while (stream.Position < original + length)
+            {
+                _list.Add(DataFactory.CreateSnmpData(stream));
             }
 
             ////_raw = ByteTool.ParseItems(_list);

@@ -22,13 +22,15 @@ namespace Lextm.SharpSnmpLib.Agent
         
         public RollingLogger()
         {
-            if (log.IsInfoEnabled)
+            if (!log.IsInfoEnabled)
             {
-                log.Info(string.Format(CultureInfo.InvariantCulture, "#Software: #SNMP Agent {0}", System.Reflection.Assembly.GetEntryAssembly().GetName().Version));
-                log.Info("#Version: 1.0");
-                log.Info(string.Format(CultureInfo.InvariantCulture, "#Date: {0}", DateTime.UtcNow));
-                log.Info("#Fields: date time s-ip cs-method cs-uri-stem s-port cs-username c-ip sc-status cs-version time-taken");
+                return;
             }
+
+            log.Info(string.Format(CultureInfo.InvariantCulture, "#Software: #SNMP Agent {0}", System.Reflection.Assembly.GetEntryAssembly().GetName().Version));
+            log.Info("#Version: 1.0");
+            log.Info(string.Format(CultureInfo.InvariantCulture, "#Date: {0}", DateTime.UtcNow));
+            log.Info("#Fields: date time s-ip cs-method cs-uri-stem s-port cs-username c-ip sc-status cs-version time-taken");
         }
 
         public void Log(SnmpContext context)

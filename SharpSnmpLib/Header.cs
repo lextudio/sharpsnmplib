@@ -105,12 +105,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public ISnmpData GetData(VersionCode version)
         {
-            if (version == VersionCode.V3)
-            {
-                return ToSequence();
-            }
-
-            return null;
+            return version == VersionCode.V3 ? ToSequence() : null;
         }
 
         #endregion

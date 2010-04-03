@@ -19,15 +19,7 @@ namespace SnmpSendTrap
     {
         public static void Main(string[] args)
         {
-            IPAddress address;
-            if (args.Length == 1)
-            {
-                address = IPAddress.Parse(args[0]);
-            }
-            else
-            {
-                address = IPAddress.Loopback;
-            }
+            IPAddress address = args.Length == 1 ? IPAddress.Parse(args[0]) : IPAddress.Loopback;
 
             Messenger.SendTrapV1(new IPEndPoint(address, 162), IPAddress.Loopback,
                                  new OctetString("public"),

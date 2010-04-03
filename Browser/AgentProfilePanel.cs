@@ -3,26 +3,18 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Net;
 using System.Windows.Forms;
-using Microsoft.Practices.Unity;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace Lextm.SharpSnmpLib.Browser
 {
     internal partial class AgentProfilePanel : DockContent
     {
-        private IProfileRegistry _profiles;
-
         public AgentProfilePanel()
         {
             InitializeComponent();
         }
 
-        [Dependency]
-        public IProfileRegistry Profiles
-        {
-            get { return _profiles; }
-            set { _profiles = value; }
-        }
+        public IProfileRegistry Profiles { get; set; }
 
         private void AgentProfilePanel_Load(object sender, EventArgs e)
         {
@@ -142,25 +134,27 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             using (FormProfile editor = new FormProfile(null))
             {
-                if (editor.ShowDialog() == DialogResult.OK)
+                if (editor.ShowDialog() != DialogResult.OK)
                 {
-                    try
-                    {
-                        Profiles.AddProfile(new AgentProfile(Guid.NewGuid(), editor.VersionCode,
-                                                             new IPEndPoint(editor.IP, editor.Port), editor.GetCommunity,
-                                                             editor.SetCommunity, editor.AgentName,
-                                                             editor.AuthenticationPassphrase, editor.PrivacyPassphrase,
-                                                             editor.AuthenticationMethod, editor.PrivacyMethod,
-                                                             editor.UserName));
-                        Profiles.SaveProfiles();
-                    }
-                    catch (BrowserException ex)
-                    {
-                        TraceSource source = new TraceSource("Browser");
-                        source.TraceInformation(ex.Message);
-                        source.Flush();
-                        source.Close();
-                    }
+                    return;
+                }
+
+                try
+                {
+                    Profiles.AddProfile(new AgentProfile(Guid.NewGuid(), editor.VersionCode,
+                                                         new IPEndPoint(editor.IP, editor.Port), editor.GetCommunity,
+                                                         editor.SetCommunity, editor.AgentName,
+                                                         editor.AuthenticationPassphrase, editor.PrivacyPassphrase,
+                                                         editor.AuthenticationMethod, editor.PrivacyMethod,
+                                                         editor.UserName));
+                    Profiles.SaveProfiles();
+                }
+                catch (BrowserException ex)
+                {
+                    TraceSource source = new TraceSource("Browser");
+                    source.TraceInformation(ex.Message);
+                    source.Flush();
+                    source.Close();
                 }
             }
         }

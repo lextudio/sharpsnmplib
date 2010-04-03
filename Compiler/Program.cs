@@ -19,13 +19,8 @@ namespace Lextm.SharpSnmpLib.Compiler
     /// </summary>
     internal sealed class Program
     {
-        private static IUnityContainer _container;
+        internal static IUnityContainer Container { get; private set; }
 
-        internal static IUnityContainer Container
-        {
-            get { return _container; }
-        }
-        
         /// <summary>
         /// Program entry point.
         /// </summary>
@@ -38,8 +33,8 @@ namespace Lextm.SharpSnmpLib.Compiler
                 return;
             }
 
-            _container = new UnityContainer();
-            _container.LoadConfiguration("compiler");
+            Container = new UnityContainer();
+            Container.LoadConfiguration("compiler");
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

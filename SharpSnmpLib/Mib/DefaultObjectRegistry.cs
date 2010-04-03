@@ -42,12 +42,14 @@ namespace Lextm.SharpSnmpLib.Mib
 
         private static IList<ModuleLoader> LoadDefaultModules()
         {
-            IList<ModuleLoader> result = new List<ModuleLoader>(5);
-            result.Add(LoadSingle(Resource.SNMPv2_SMI, "SNMPV2-SMI"));
-            result.Add(LoadSingle(Resource.SNMPv2_CONF, "SNMPV2-CONF"));
-            result.Add(LoadSingle(Resource.SNMPv2_TC, "SNMPV2-TC"));
-            result.Add(LoadSingle(Resource.SNMPv2_MIB, "SNMPV2-MIB"));
-            result.Add(LoadSingle(Resource.SNMPv2_TM, "SNMPV2-TM"));
+            IList<ModuleLoader> result = new List<ModuleLoader>(5)
+                                             {
+                                                 LoadSingle(Resource.SNMPv2_SMI, "SNMPV2-SMI"),
+                                                 LoadSingle(Resource.SNMPv2_CONF, "SNMPV2-CONF"),
+                                                 LoadSingle(Resource.SNMPv2_TC, "SNMPV2-TC"),
+                                                 LoadSingle(Resource.SNMPv2_MIB, "SNMPV2-MIB"),
+                                                 LoadSingle(Resource.SNMPv2_TM, "SNMPV2-TM")
+                                             };
             return result;
         }
 

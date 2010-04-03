@@ -1,4 +1,6 @@
-﻿namespace Lextm.SharpSnmpLib.Agent
+﻿using System.Linq;
+
+namespace Lextm.SharpSnmpLib.Agent
 {
     /// <summary>
     /// Composed membership provider, who owns internal providers. If the request is authenticated by any of the internal providers, it is considered as authenticated.
@@ -24,15 +26,7 @@
         /// <returns></returns>
         public bool AuthenticateRequest(SnmpContext context)
         {
-            foreach (IMembershipProvider provider in _providers)
-            {
-                if (provider.AuthenticateRequest(context))
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return _providers.Any(provider => provider.AuthenticateRequest(context));
         }
     }
 }

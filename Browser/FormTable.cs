@@ -84,7 +84,7 @@ namespace Lextm.SharpSnmpLib.Browser
             }
         }
 
-        internal void CreateColumns()
+        private void CreateColumns()
         {
             int x = 0;
             
@@ -105,14 +105,16 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void cbColumnDisplay_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (_columnCountSet)
+            if (!_columnCountSet)
             {
-                CreateColumns();
-                Refresh();
+                return;
             }
+
+            CreateColumns();
+            Refresh();
         }
 
-        public void RefreshTable()
+        private void RefreshTable()
         {
             // TODO: how to get rid of infinite loop?
             // will use WatchDog class to optimize this.

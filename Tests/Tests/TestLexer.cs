@@ -25,7 +25,7 @@ namespace Lextm.SharpSnmpLib.Tests
         [Test]
         public void TestParse2()
         {
-            string test = "Cas::=";
+            const string test = "Cas::=";
             Lexer lexer = new Lexer();
             StringReader reader = new StringReader(test);
             lexer.Parse(reader);
@@ -36,7 +36,7 @@ namespace Lextm.SharpSnmpLib.Tests
         [Test]
         public void TestParse3()
         {
-            string test = "::=BEGIN";
+            const string test = "::=BEGIN";
             Lexer lexer = new Lexer();
             StringReader reader = new StringReader(test);
             lexer.Parse(reader);

@@ -137,7 +137,7 @@ namespace Lextm.SharpSnmpLib.Browser
             source.Close();
 		}
 		
-		internal static bool IsValidIPAddress(string address, out IPAddress ip)
+		internal static bool IsValid(string address, out IPAddress ip)
 		{
 			return IPAddress.TryParse(address, out ip);
 		}
@@ -160,12 +160,12 @@ namespace Lextm.SharpSnmpLib.Browser
 			else
 			{
 				TraceSource source = new TraceSource("Browser");
-				for (int i = 0; i < list.Count; i++)
+				foreach (Variable t in list)
 				{
-					source.TraceInformation(list[i].ToString());
+				    source.TraceInformation(t.ToString());
 				}
 
-				source.Flush();
+			    source.Flush();
 				source.Close();
 			}
 

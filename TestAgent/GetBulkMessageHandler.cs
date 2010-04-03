@@ -16,8 +16,6 @@ namespace Lextm.SharpSnmpLib.Agent
         public ResponseData Handle(ISnmpMessage message, ObjectStore store)
         {
             // TODO: implement this to conform to RFC.
-            ErrorCode status = ErrorCode.NoError;
-            int index = 0;
             IList<Variable> result = new List<Variable>();
             Variable v = message.Pdu.Variables[0];
 
@@ -38,7 +36,7 @@ namespace Lextm.SharpSnmpLib.Agent
                 result.Add(temp);
             }
 
-            return new ResponseData(result, status, index);
+            return new ResponseData(result, ErrorCode.NoError, 0);
         }
     }
 }

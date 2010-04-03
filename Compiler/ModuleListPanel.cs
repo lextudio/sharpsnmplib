@@ -12,10 +12,10 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 using Lextm.SharpSnmpLib.Mib;
-using Microsoft.Practices.Unity;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace Lextm.SharpSnmpLib.Compiler
@@ -26,15 +26,12 @@ namespace Lextm.SharpSnmpLib.Compiler
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
     internal partial class ModuleListPanel : DockContent
     {
-        private Assembler _assembler;
-        private CompilerCore _compiler;
-
         public ModuleListPanel()
         {
             InitializeComponent();
         }
-        
-        internal void ModuleListPanel_Load(object sender, EventArgs e)
+
+        private void ModuleListPanel_Load(object sender, EventArgs e)
         {
             // TODO: bind this refresh to assembler event.
             RefreshPanel(this, EventArgs.Empty);
@@ -44,30 +41,23 @@ namespace Lextm.SharpSnmpLib.Compiler
             }
         }
 
-        [Dependency]
-        public CompilerCore Compiler
-        {
-            get { return _compiler; }
-            set { _compiler = value; }
-        }
+        public CompilerCore Compiler { get; set; }
 
-        public void RefreshPanel(object sender, EventArgs e)
+        private void RefreshPanel(object sender, EventArgs e)
         {
             SuspendLayout();
             listView1.Items.Clear();
             List<string> loaded = new List<string>(Assembler.Tree.LoadedModules);
             loaded.Sort();
-            foreach (string module in loaded)
+            foreach (ListViewItem item in loaded.Select(module => listView1.Items.Add(module)))
             {
-                ListViewItem item = listView1.Items.Add(module);
                 item.Group = listView1.Groups["lvgLoaded"];
             }
             
             List<string> pendings = new List<string>(Assembler.Tree.PendingModules);
             pendings.Sort();
-            foreach (string pending in pendings)
+            foreach (ListViewItem item in pendings.Select(pending => listView1.Items.Add(pending)))
             {
-                ListViewItem item = listView1.Items.Add(pending);
                 item.BackColor = Color.LightGray;
                 item.Group = listView1.Groups["lvgPending"];
             }
@@ -78,12 +68,7 @@ namespace Lextm.SharpSnmpLib.Compiler
             tslblCount.Text = string.Format("loaded: {0}; unloaded: {1}", Assembler.Tree.LoadedModules.Count, Assembler.Tree.PendingModules.Count);
         }
 
-        [Dependency]
-        public Assembler Assembler
-        {
-            get { return _assembler; }
-            set { _assembler = value; }
-        }
+        public Assembler Assembler { get; set; }
 
         private void ActRemoveExecute(object sender, EventArgs e)
         {

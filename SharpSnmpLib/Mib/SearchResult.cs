@@ -153,12 +153,7 @@ namespace Lextm.SharpSnmpLib.Mib
             }
             
             string result = objects.Tree.Search(id.ToNumerical()).AlternativeText;
-            if (string.IsNullOrEmpty(result))
-            {
-                return id.ToString();
-            }
-
-            return result;
+            return string.IsNullOrEmpty(result) ? id.ToString() : result;
         }
     }
 }

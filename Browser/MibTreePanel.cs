@@ -13,7 +13,6 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using Lextm.SharpSnmpLib.Messaging;
 using Lextm.SharpSnmpLib.Mib;
-using Microsoft.Practices.Unity;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace Lextm.SharpSnmpLib.Browser
@@ -23,9 +22,6 @@ namespace Lextm.SharpSnmpLib.Browser
     /// </summary>
     internal partial class MibTreePanel : DockContent
     {
-        private Manager _manager;
-        private IObjectRegistry _objects;
-        private IProfileRegistry _profiles;
         private bool _showNumber;
 
         public MibTreePanel()
@@ -33,32 +29,17 @@ namespace Lextm.SharpSnmpLib.Browser
             InitializeComponent();
         }
 
-        [Dependency]
-        public IObjectRegistry Objects
-        {
-            get { return _objects; }
-            set { _objects = value; }
-        }
+        public IObjectRegistry Objects { get; set; }
 
-        [Dependency]
-        public Manager Manager
-        {
-            get { return _manager; }
-            set { _manager = value; }
-        }
+        public Manager Manager { get; set; }
 
-        [Dependency]
-        public IProfileRegistry Profiles
-        {
-            get { return _profiles; }
-            set { _profiles = value; }
-        }
+        public IProfileRegistry Profiles { get; set; }
 
         private void RefreshPanel(object sender, EventArgs e)
         {
             if (InvokeRequired)
             {
-                Invoke((MethodInvoker) delegate { RefreshPanel(sender, e); });
+                Invoke((MethodInvoker) (() => RefreshPanel(sender, e)));
                 return;
             }
 
@@ -74,11 +55,15 @@ namespace Lextm.SharpSnmpLib.Browser
         private TreeNode Wrap(IDefinition definition)
         {
             string name = _showNumber ? string.Format("{0}({1})", definition.Name, definition.Value) : definition.Name;
-            TreeNode node = new TreeNode(name);
-            node.Tag = definition;
-            node.ImageIndex = (int)definition.Type;
-            node.SelectedImageIndex = (int)definition.Type;
-            node.ToolTipText = new SearchResult(definition).AlternativeText + Environment.NewLine + definition.Value;
+            TreeNode node = new TreeNode(name)
+                                {
+                                    Tag = definition,
+                                    ImageIndex = (int) definition.Type,
+                                    SelectedImageIndex = (int) definition.Type,
+                                    ToolTipText =
+                                        new SearchResult(definition).AlternativeText + Environment.NewLine +
+                                        definition.Value
+                                };
 
             List<IDefinition> list = new List<IDefinition>(definition.Children);
             list.Sort(new DefinitionComparer());

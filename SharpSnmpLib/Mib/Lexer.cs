@@ -39,15 +39,15 @@ namespace Lextm.SharpSnmpLib.Mib
                 throw new ArgumentNullException("stream");
             }
             
-            assignAhead = false;
-            assignSection = false;
-            stringSection = false;
+            _assignAhead = false;
+            _assignSection = false;
+            _stringSection = false;
             
             string line;
             int i = 0;
             while ((line = stream.ReadLine()) != null)
             {
-                if (!stringSection && line.TrimStart().StartsWith("--", StringComparison.Ordinal))
+                if (!_stringSection && line.TrimStart().StartsWith("--", StringComparison.Ordinal))
                 {
                     i++;
                     continue; // commented line
@@ -73,7 +73,7 @@ namespace Lextm.SharpSnmpLib.Mib
             }
         }
 
-        private int index;
+        private int _index;
 
         /// <summary>
         /// Next <see cref="Symbol"/> which is not <see cref="Symbol.EOL"/>.
@@ -99,12 +99,7 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             get
             {
-                if (index < _symbols.Count)
-                {
-                    return _symbols[index++];
-                }
-
-                return null;
+                return _index < _symbols.Count ? _symbols[_index++] : null;
             }
         }
         
@@ -114,10 +109,10 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <exception cref="ArgumentException"></exception>
         public void Restore(Symbol last)
         {
-            index--;
-            if (last != _symbols[index])
+            _index--;
+            if (last != _symbols[_index])
             {
-                throw new ArgumentException("wrong last symbol", "last");
+                throw new ArgumentException(@"wrong last symbol", "last");
             }
         }
 
@@ -129,10 +124,10 @@ namespace Lextm.SharpSnmpLib.Mib
             }
         }
 
-        private StringBuilder temp = new StringBuilder();
-        private bool stringSection;
-        private bool assignSection;
-        private bool assignAhead;
+        private StringBuilder _temp = new StringBuilder();
+        private bool _stringSection;
+        private bool _assignSection;
+        private bool _assignAhead;
 
         /// <summary>
         /// Parses a list of <see cref="char"/> to <see cref="Symbol"/>.
@@ -143,7 +138,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <param name="column">Column number</param>
         /// <param name="list"></param>
         /// <returns><code>true</code> if no need to process this line. Otherwise, <code>false</code> is returned.</returns>
-        public bool Parse(string file, IList<Symbol> list, char current, int row, int column)
+        private bool Parse(string file, ICollection<Symbol> list, char current, int row, int column)
         {
             if (list == null)
             {
@@ -161,9 +156,9 @@ namespace Lextm.SharpSnmpLib.Mib
                 case ']':
                 case ';':
                 case ',':
-                    if (!stringSection)
+                    if (!_stringSection)
                     {
-                        bool moveNext = ParseLastSymbol(file, list, ref temp, row, column);
+                        bool moveNext = ParseLastSymbol(file, list, ref _temp, row, column);
                         if (moveNext)
                         {
                             list.Add(CreateSpecialSymbol(file, '\n', row, column));
@@ -176,14 +171,14 @@ namespace Lextm.SharpSnmpLib.Mib
 
                     break;
                 case '"':
-                    stringSection = !stringSection;
+                    _stringSection = !_stringSection;
                     break;
                 case '\r':
                     return false;
                 default:
-                    if (char.IsWhiteSpace(current) && !assignSection && !stringSection)
+                    if (char.IsWhiteSpace(current) && !_assignSection && !_stringSection)
                     {                     
-                        bool moveNext = ParseLastSymbol(file, list, ref temp, row, column);
+                        bool moveNext = ParseLastSymbol(file, list, ref _temp, row, column);
                         if (moveNext)
                         {
                             list.Add(CreateSpecialSymbol(file, '\n', row, column));
@@ -193,33 +188,33 @@ namespace Lextm.SharpSnmpLib.Mib
                         return false;
                     }
                     
-                    if (assignAhead)
+                    if (_assignAhead)
                     {
-                        assignAhead = false;
-                        ParseLastSymbol(file, list, ref temp, row, column);
+                        _assignAhead = false;
+                        ParseLastSymbol(file, list, ref _temp, row, column);
                         break;
                     }
                     
-                    if (current == ':' && !stringSection)
+                    if (current == ':' && !_stringSection)
                     {    
-                        if (!assignSection)
+                        if (!_assignSection)
                         {
-                            ParseLastSymbol(file, list, ref temp, row, column);
+                            ParseLastSymbol(file, list, ref _temp, row, column);
                         }
                         
-                        assignSection = true;
+                        _assignSection = true;
                     }
                     
-                    if (current == '=' && !stringSection)
+                    if (current == '=' && !_stringSection)
                     {
-                        assignSection = false; 
-                        assignAhead = true;
+                        _assignSection = false; 
+                        _assignAhead = true;
                     }
 
                     break;
             }
 
-            temp.Append(current);
+            _temp.Append(current);
             return false;
         }
 

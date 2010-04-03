@@ -16,6 +16,7 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text;
@@ -153,7 +154,7 @@ namespace Lextm.SharpSnmpLib
             }
         }
 
-        private static bool CheckTwosComp(byte[] b)
+        private static bool CheckTwosComp(IList<byte> b)
         {
             if (b[0] < 128)
             {
@@ -161,7 +162,7 @@ namespace Lextm.SharpSnmpLib
             }
             
             int c = 1;
-            for (int j = b.Length - 1; j >= 0; j--)
+            for (int j = b.Count - 1; j >= 0; j--)
             {
                 if (b[j] == 0 && c > 0)
                 {

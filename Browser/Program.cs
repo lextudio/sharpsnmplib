@@ -19,12 +19,7 @@ namespace Lextm.SharpSnmpLib.Browser
 	/// </summary>
 	internal static class Program
 	{
-	    private static IUnityContainer _container;
-
-	    internal static IUnityContainer Container
-	    {
-	        get { return _container; }
-	    }
+	    internal static IUnityContainer Container { get; private set; }
 
 	    /// <summary>
 		/// Program entry point.
@@ -37,8 +32,8 @@ namespace Lextm.SharpSnmpLib.Browser
                 return;
             }
 
-            _container = new UnityContainer();
-	        _container.LoadConfiguration("browser");
+            Container = new UnityContainer();
+	        Container.LoadConfiguration("browser");
 
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);

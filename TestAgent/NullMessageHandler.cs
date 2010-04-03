@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Lextm.SharpSnmpLib.Agent
+﻿namespace Lextm.SharpSnmpLib.Agent
 {
     /// <summary>
     /// A placeholder.

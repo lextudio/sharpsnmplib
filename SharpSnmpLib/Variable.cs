@@ -119,24 +119,13 @@ namespace Lextm.SharpSnmpLib
                     throw new ArgumentException("wrong varbind section data");
                 }
                 
-                Sequence varbind = item as Sequence;
-                if (null != varbind)
+                Sequence varbind = (Sequence)item;
+                if (varbind.Count != 2 || varbind[0].TypeCode != SnmpType.ObjectIdentifier)
                 {
-                    if (varbind.Count != 2 || varbind[0].TypeCode != SnmpType.ObjectIdentifier)
-                    {
-                        throw new ArgumentException("wrong varbind data");
-                    }
+                    throw new ArgumentException("wrong varbind data");
+                }
                     
-                    result.Add(new Variable((ObjectIdentifier)varbind[0], varbind[1]));
-                }
-                else
-                {
-                    Variable v = item as Variable;
-                    if (null != v) 
-                    {
-                        result.Add(v);
-                    }
-                }
+                result.Add(new Variable((ObjectIdentifier)varbind[0], varbind[1]));
             }
             
             return result;

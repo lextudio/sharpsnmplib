@@ -149,12 +149,7 @@ namespace Lextm.SharpSnmpLib
                 return true;
             }
 
-            if (lo == null || ro == null)
-            {
-                return false;
-            }
-            
-            return true;
+            return lo != null && ro != null;
         }
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Xml;
 
@@ -86,17 +87,7 @@ namespace Lextm.SharpSnmpLib.Browser
 			}
 		}
 
-		public void ReplaceProfile(AgentProfile agentProfile)
-		{
-			DeleteInternal(agentProfile.Id, true);
-			AddInternal(agentProfile);
-			if (OnChanged != null)
-			{
-				OnChanged(null, EventArgs.Empty);
-			}
-		}
-
-		public void LoadProfiles()
+	    public void LoadProfiles()
 		{
 			if (LoadProfilesFromFile() == 0)
 			{
@@ -256,12 +247,8 @@ namespace Lextm.SharpSnmpLib.Browser
 				}
 			}
 			
-			foreach (AgentProfile profile in _profiles.Values)
+			foreach (AgentProfile profile in _profiles.Values.Where(profile => profile.Id == defaultId))
 			{
-				if (profile.Id == defaultId)
-				{
-					
-				}
 			}
 
 			return _profiles.Count;

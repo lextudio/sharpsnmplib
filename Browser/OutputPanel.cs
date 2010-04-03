@@ -11,7 +11,6 @@ using System;
 using System.Globalization;
 using System.Net;
 using System.Windows.Forms;
-using Microsoft.Practices.Unity;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace Lextm.SharpSnmpLib.Browser
@@ -21,9 +20,7 @@ namespace Lextm.SharpSnmpLib.Browser
 	/// </summary>
 	internal partial class OutputPanel : DockContent, IOutputPanel
 	{
-		private IProfileRegistry _profiles;
-
-		public OutputPanel()
+	    public OutputPanel()
 		{
 			InitializeComponent();
 		}
@@ -32,7 +29,7 @@ namespace Lextm.SharpSnmpLib.Browser
 		{
 			if (InvokeRequired)
 			{
-				Invoke((MethodInvoker)delegate { WriteLine(message); });
+				Invoke((MethodInvoker)(() => WriteLine(message)));
 				return;
 			}
 
@@ -42,14 +39,9 @@ namespace Lextm.SharpSnmpLib.Browser
 			txtMessages.ScrollToCaret();
 		}
 
-		[Dependency]
-		public IProfileRegistry Profiles
-		{
-			get { return _profiles; }
-			set { _profiles = value; }
-		}
+	    public IProfileRegistry Profiles { get; set; }
 
-		private void ActClearExecute(object sender, EventArgs e)
+	    private void ActClearExecute(object sender, EventArgs e)
 		{
 			txtMessages.Clear();
 		}

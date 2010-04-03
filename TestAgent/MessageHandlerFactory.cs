@@ -7,6 +7,8 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 
+using System.Linq;
+
 namespace Lextm.SharpSnmpLib.Agent
 {
     /// <summary>
@@ -34,12 +36,9 @@ namespace Lextm.SharpSnmpLib.Agent
         /// <returns></returns>
         public IMessageHandler GetHandler(ISnmpMessage message)
         {
-            foreach (HandlerMapping mapping in _mappings)
+            foreach (HandlerMapping mapping in _mappings.Where(mapping => mapping.CanHandle(message)))
             {
-                if (mapping.CanHandle(message))
-                {
-                    return mapping.Handler;
-                }
+                return mapping.Handler;
             }
 
             return _nullHandler;

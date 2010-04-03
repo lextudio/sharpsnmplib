@@ -25,6 +25,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Lextm.SharpSnmpLib
@@ -40,14 +41,14 @@ namespace Lextm.SharpSnmpLib
         /// Creates a <see cref="Bool"/> instance from raw bytes.
         /// </summary>
         /// <param name="raw">Raw bytes</param>
-        public Bool(byte[] raw)
+        public Bool(IList<byte> raw)
         {
             if (raw == null)
             {
                 throw new ArgumentNullException("raw");
             }
             
-            if (raw.Length != 1)
+            if (raw.Count != 1)
             {
                 throw new ArgumentException("raw must be one item");
             }

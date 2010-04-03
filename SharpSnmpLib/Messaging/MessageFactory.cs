@@ -114,7 +114,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="bytes">Byte string.</param>
         /// <param name="registry">The registry.</param>
         /// <returns></returns>
-        public static IList<ISnmpMessage> ParseMessages(string bytes, UserRegistry registry)
+        public static IList<ISnmpMessage> ParseMessages(IEnumerable<char> bytes, UserRegistry registry)
         {
             return ParseMessages(ByteTool.Convert(bytes), registry);
         }
@@ -166,11 +166,13 @@ namespace Lextm.SharpSnmpLib.Messaging
             while ((first = stream.ReadByte()) != -1)
             {
                 ISnmpMessage message = ParseMessage(first, stream, registry);
-                if (message != null)
+                if (message == null)
                 {
-                    result.Add(message);
-                    break;
+                    continue;
                 }
+
+                result.Add(message);
+                break;
             }
             
             return result;

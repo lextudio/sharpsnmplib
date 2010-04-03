@@ -39,16 +39,11 @@ namespace Lextm.SharpSnmpLib.Messaging
     [Serializable]
     public sealed class ErrorException : OperationException
     {
-        private ISnmpMessage _body;
-        
         /// <summary>
         /// Message body.
         /// </summary>
-        public ISnmpMessage Body
-        {
-            get { return _body; }
-        }        
-        
+        public ISnmpMessage Body { get; private set; }
+
         /// <summary>
         /// Creates a <see cref="ErrorException"/> instance.
         /// </summary>
@@ -81,7 +76,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("info");
             }
             
-            _body = (GetResponseMessage)info.GetValue("Body", typeof(GetResponseMessage));
+            Body = (GetResponseMessage)info.GetValue("Body", typeof(GetResponseMessage));
         }
         
         /// <summary>
@@ -93,7 +88,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);
-            info.AddValue("Body", _body);
+            info.AddValue("Body", Body);
         }
 #endif
         /// <summary>
@@ -132,9 +127,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             /// <returns></returns>
         public static ErrorException Create(string message, IPAddress agent, ISnmpMessage body)
         {
-            ErrorException ex = new ErrorException(message);
-            ex.Agent = agent;
-            ex._body = body;
+            ErrorException ex = new ErrorException(message) {Agent = agent, Body = body};
             return ex;
         }
     }

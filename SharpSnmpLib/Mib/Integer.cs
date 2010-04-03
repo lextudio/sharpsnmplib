@@ -23,8 +23,7 @@ namespace Lextm.SharpSnmpLib.Mib
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "name")]
         public Integer(string module, string name, Lexer lexer)
         {
-            Symbol temp;
-            temp = lexer.NextNonEOLSymbol;
+            Symbol temp = lexer.NextNonEOLSymbol;
             if (temp == Symbol.OpenBracket)
             {
                 while ((temp = lexer.NextSymbol) != Symbol.CloseBracket)

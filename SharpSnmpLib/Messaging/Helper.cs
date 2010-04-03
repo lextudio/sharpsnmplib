@@ -51,11 +51,13 @@ namespace Lextm.SharpSnmpLib.Messaging
 
         internal static Sequence PackMessage(VersionCode version, IPrivacyProvider privacy, ISegment header, SecurityParameters parameters, ISegment scope)
         {
-            List<ISnmpData> collection = new List<ISnmpData>(4);
-            collection.Add(new Integer32((int)version));
-            collection.Add(header.GetData(version));
-            collection.Add(parameters.GetData(version));
-            collection.Add(privacy.Encrypt(scope.GetData(version), parameters));
+            List<ISnmpData> collection = new List<ISnmpData>(4)
+                                             {
+                                                 new Integer32((int) version),
+                                                 header.GetData(version),
+                                                 parameters.GetData(version),
+                                                 privacy.Encrypt(scope.GetData(version), parameters)
+                                             };
             return new Sequence(collection);
         }
 
@@ -72,8 +74,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("data");
             }
             
-            List<ISnmpData> collection = new List<ISnmpData>(1 + data.Length);
-            collection.Add(new Integer32((int)version));
+            List<ISnmpData> collection = new List<ISnmpData>(1 + data.Length) {new Integer32((int) version)};
             collection.AddRange(data);
             return new Sequence(collection);
         }

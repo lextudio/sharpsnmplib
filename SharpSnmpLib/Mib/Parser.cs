@@ -26,7 +26,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <param name="errors">The errors.</param>
         /// <returns></returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1021:AvoidOutParameters", MessageId = "1#")]
-        public ICollection<IModule> ParseToModules(IEnumerable<string> files, out IEnumerable<MibException> errors)
+        public IEnumerable<IModule> ParseToModules(IEnumerable<string> files, out IEnumerable<MibException> errors)
         { 
             if (files == null)
             {
@@ -63,7 +63,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// Loads a MIB file.
         /// </summary>
         /// <param name="fileName">File name</param>
-        public static IList<IModule> Compile(string fileName)
+        public static IEnumerable<IModule> Compile(string fileName)
         {
             if (fileName == null)
             {
@@ -83,7 +83,7 @@ namespace Lextm.SharpSnmpLib.Mib
             return Compile(fileName, File.OpenText(fileName));
         }
 
-        internal static IList<IModule> Compile(string file, TextReader stream)
+        private static IList<IModule> Compile(string file, TextReader stream)
         {
             try
             {

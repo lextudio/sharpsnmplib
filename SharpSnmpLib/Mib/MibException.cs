@@ -23,16 +23,11 @@ namespace Lextm.SharpSnmpLib.Mib
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Mib")]
     public sealed class MibException : SnmpException
     {
-        private Symbol _symbol;
-        
         /// <summary>
         /// Symbol.
         /// </summary>
-        public Symbol Symbol
-        {
-            get { return _symbol; }
-        }
-        
+        public Symbol Symbol { get; private set; }
+
         /// <summary>
         /// Creates a <see cref="MibException"/>.
         /// </summary>
@@ -70,7 +65,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 throw new ArgumentNullException("info");
             }
             
-            _symbol = (Symbol)info.GetValue("Symbol", typeof(Symbol));
+            Symbol = (Symbol)info.GetValue("Symbol", typeof(Symbol));
         }
         
         /// <summary>
@@ -82,7 +77,7 @@ namespace Lextm.SharpSnmpLib.Mib
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);
-            info.AddValue("Symbol", _symbol);
+            info.AddValue("Symbol", Symbol);
         }
 #endif        
         /// <summary>
@@ -95,10 +90,10 @@ namespace Lextm.SharpSnmpLib.Mib
                 return string.Format(
                     CultureInfo.InvariantCulture,
                     "wrong symbol {0} in file \"{1}\". Row {2}. Column: {3}",
-                    _symbol,
-                    _symbol.File,
-                    (_symbol.Row + 1).ToString(CultureInfo.InvariantCulture),
-                    (_symbol.Column + 1).ToString(CultureInfo.InvariantCulture));
+                    Symbol,
+                    Symbol.File,
+                    (Symbol.Row + 1).ToString(CultureInfo.InvariantCulture),
+                    (Symbol.Column + 1).ToString(CultureInfo.InvariantCulture));
             }
         }
         
@@ -125,9 +120,9 @@ namespace Lextm.SharpSnmpLib.Mib
             }
 
 //// ReSharper disable RedundantToStringCall
-            MibException ex = new MibException(message + ". Wrong entity, " + symbol.ToString() + " in file \"" + symbol.File + "\". row: " + (symbol.Row + 1).ToString(CultureInfo.InvariantCulture) + "; column: " + (symbol.Column + 1).ToString(CultureInfo.InvariantCulture));
+            MibException ex = new MibException(message + ". Wrong entity, " + symbol.ToString() + " in file \"" + symbol.File + "\". row: " + (symbol.Row + 1).ToString(CultureInfo.InvariantCulture) + "; column: " + (symbol.Column + 1).ToString(CultureInfo.InvariantCulture))
+                                  {Symbol = symbol};
 //// ReSharper restore RedundantToStringCall
-            ex._symbol = symbol;
             return ex;
         }
     }

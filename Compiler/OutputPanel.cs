@@ -29,7 +29,7 @@ namespace Lextm.SharpSnmpLib.Compiler
         {
             if (InvokeRequired)
             {
-                Invoke((MethodInvoker)delegate { WriteLine(message); });
+                Invoke((MethodInvoker)(() => WriteLine(message)));
                 return;
             }
 

@@ -60,12 +60,7 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             get
             {
-                if (cbAuthentication.SelectedIndex == 0)
-                {
-                    return "MD5";
-                }
-
-                return "SHA1";
+                return cbAuthentication.SelectedIndex == 0 ? "MD5" : "SHA1";
             }
         }
 
@@ -107,12 +102,14 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             int result;
             bool isInt = int.TryParse(txtPort.Text, out result);
-            if (!isInt || result <= 0)
+            if (isInt && result > 0)
             {
-                e.Cancel = true;
-                txtPort.SelectAll();
-                errorProvider1.SetError(txtPort, "Please provide a valid port number");
+                return;
             }
+
+            e.Cancel = true;
+            txtPort.SelectAll();
+            errorProvider1.SetError(txtPort, "Please provide a valid port number");
         }
         
         private void txtPort_Validated(object sender, EventArgs e)
@@ -143,12 +140,14 @@ namespace Lextm.SharpSnmpLib.Browser
         private void txtIP_Validating(object sender, CancelEventArgs e)
         {
             IPAddress ip;
-            if (!AgentProfile.IsValidIPAddress(txtIP.Text, out ip))
+            if (AgentProfile.IsValid(txtIP.Text, out ip))
             {
-                e.Cancel = true;
-                txtIP.SelectAll();
-                errorProvider1.SetError(txtIP, "IP address is not valid");
+                return;
             }
+
+            e.Cancel = true;
+            txtIP.SelectAll();
+            errorProvider1.SetError(txtIP, "IP address is not valid");
         }
         
         private void txtIP_Validated(object sender, EventArgs e)
@@ -227,7 +226,7 @@ namespace Lextm.SharpSnmpLib.Browser
             ValidatingTextBox(txtUserName, e);
         }
 
-        private void ValidatingTextBox(TextBox control, CancelEventArgs e)
+        private void ValidatingTextBox(TextBoxBase control, CancelEventArgs e)
         {
             if (!control.Enabled)
             {
