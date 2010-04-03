@@ -24,6 +24,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     {
         private readonly int _messageId;
         private readonly SecurityParameters _parameters;
+        private readonly ISnmpPdu _pdu;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MalformedMessage"/> class.
@@ -34,6 +35,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             _messageId = messageId;
             _parameters = new SecurityParameters(null, null, null, user, null, null);
+            _pdu = MalformedPdu.Instance;
         }
 
         /// <summary>
@@ -42,7 +44,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <value></value>
         public ISnmpPdu Pdu
         {
-            get { return null; }
+            get { return _pdu; }
         }
 
         /// <summary>

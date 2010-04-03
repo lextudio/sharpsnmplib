@@ -6,19 +6,35 @@ using Lextm.SharpSnmpLib.Security;
 
 namespace Lextm.SharpSnmpLib.Agent
 {
+    /// <summary>
+    /// Secure SNMP context. It is specific to v3.
+    /// </summary>
     internal class SecureSnmpContext : SnmpContext
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SecureSnmpContext"/> class.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <param name="sender">The sender.</param>
+        /// <param name="listener">The listener.</param>
+        /// <param name="objects">The agent core objects.</param>
         public SecureSnmpContext(ISnmpMessage request, IPEndPoint sender, Listener listener, AgentObjects objects)
             : base(request, sender, listener, objects)
         {
         }
 
+        /// <summary>
+        /// Authenticates the message.
+        /// </summary>
         protected override void AuthenticateMessage()
         {
             ProviderPair providers = Listener.Users.Find(Request.Parameters.UserName) ?? ProviderPair.Default;
             Helper.Authenticate(Response, providers);
         }
 
+        /// <summary>
+        /// Handles the authentication failure.
+        /// </summary>
         internal override void HandleAuthenticationFailure()
         {
             Response = new GetResponseMessage(
@@ -42,10 +58,14 @@ namespace Lextm.SharpSnmpLib.Agent
                         Request.RequestId,
                         ErrorCode.AuthorizationError,
                         0,
-                        new List<Variable>())),
+                        Request.Pdu.Variables)),
                 ProviderPair.Default);
         }
 
+        /// <summary>
+        /// Handles the membership.
+        /// </summary>
+        /// <returns></returns>
         public override bool HandleMembership()
         {
             if (Request is MalformedMessage)
@@ -121,6 +141,10 @@ namespace Lextm.SharpSnmpLib.Agent
                 ProviderPair.Default);
         }
 
+        /// <summary>
+        /// Generates the response.
+        /// </summary>
+        /// <param name="data">The data.</param>
         internal override void GenerateResponse(ResponseData data)
         {
             GetResponseMessage response;
@@ -203,7 +227,7 @@ namespace Lextm.SharpSnmpLib.Agent
                             Request.RequestId,
                             ErrorCode.TooBig,
                             0,
-                            new List<Variable>())),
+                            Request.Pdu.Variables)),
                     providers);
             }
 

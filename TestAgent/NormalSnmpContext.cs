@@ -1,36 +1,59 @@
-﻿using System.Collections.Generic;
-using System.Net;
+﻿using System.Net;
 using Lextm.SharpSnmpLib.Messaging;
 
 namespace Lextm.SharpSnmpLib.Agent
 {
+    /// <summary>
+    /// Nomral SNMP context class. It is v1 and v2c specific.
+    /// </summary>
     internal class NormalSnmpContext : SnmpContext
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NormalSnmpContext"/> class.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <param name="sender">The sender.</param>
+        /// <param name="listener">The listener.</param>
         public NormalSnmpContext(ISnmpMessage request, IPEndPoint sender, Listener listener) 
             : base(request, sender, listener, null)
         {
         }
 
+        /// <summary>
+        /// Authenticates the message.
+        /// </summary>
         protected override void AuthenticateMessage()
         {
+            // v1 and v2c do not need this.
         }
 
+        /// <summary>
+        /// Handles the authentication failure.
+        /// </summary>
         internal override void HandleAuthenticationFailure()
         {
+            // TODO: implement this later according to v1 and v2c RFC.
             Response = null;
         }
 
+        /// <summary>
+        /// Handles the membership.
+        /// </summary>
+        /// <returns>Always returns <code>false</code>.</returns>
         public override bool HandleMembership()
         {
             return false;
         }
 
+        /// <summary>
+        /// Generates the response.
+        /// </summary>
+        /// <param name="data">The data.</param>
         internal override void GenerateResponse(ResponseData data)
         {
             GetResponseMessage response;
             if (data.ErrorStatus == ErrorCode.NoError)
             {
-                // for v1 and v2 reply.
                 response = new GetResponseMessage(
                     Request.RequestId,
                     Request.Version,
@@ -58,8 +81,7 @@ namespace Lextm.SharpSnmpLib.Agent
                     Request.Parameters.UserName,
                     ErrorCode.TooBig,
                     0,
-                    // TODO: check RFC to see what should be returned here.
-                    new List<Variable>());
+                    Request.Pdu.Variables);
             }
 
             Response = response;

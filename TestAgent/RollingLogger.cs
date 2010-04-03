@@ -7,6 +7,7 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 
@@ -17,52 +18,56 @@ namespace Lextm.SharpSnmpLib.Agent
     /// </summary>    
     internal class RollingLogger : ILogger
     {
-        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private const string Empty = "-";
         
         public RollingLogger()
         {
-            if (!log.IsInfoEnabled)
+            if (!Logger.IsInfoEnabled)
             {
                 return;
             }
 
-            log.Info(string.Format(CultureInfo.InvariantCulture, "#Software: #SNMP Agent {0}", System.Reflection.Assembly.GetEntryAssembly().GetName().Version));
-            log.Info("#Version: 1.0");
-            log.Info(string.Format(CultureInfo.InvariantCulture, "#Date: {0}", DateTime.UtcNow));
-            log.Info("#Fields: date time s-ip cs-method cs-uri-stem s-port cs-username c-ip sc-status cs-version time-taken");
+            Logger.Info(string.Format(CultureInfo.InvariantCulture, "#Software: #SNMP Agent {0}", System.Reflection.Assembly.GetEntryAssembly().GetName().Version));
+            Logger.Info("#Version: 1.0");
+            Logger.Info(string.Format(CultureInfo.InvariantCulture, "#Date: {0}", DateTime.UtcNow));
+            Logger.Info("#Fields: date time s-ip cs-method cs-uri-stem s-port cs-username c-ip sc-status cs-version time-taken");
         }
 
         public void Log(SnmpContext context)
         {
-            TimeSpan timeTaken = DateTime.Now.Subtract(context.CreatedTime);
-            if (log.IsInfoEnabled)
+            if (Logger.IsInfoEnabled)
             {
-                log.Info(string.Format(
-                    CultureInfo.InvariantCulture,
-                    "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9}",
-                    DateTime.UtcNow,
-                    Empty,
-                    context.Request.Pdu == null ? Empty : context.Request.Pdu.TypeCode.ToString(),
-                    GetStem(context.Request.Pdu),
-                    context.Listener.Port,
-                    context.Request.Parameters.UserName,
-                    context.Sender.Address,
-                    (context.Response == null) ? Empty : context.Response.Pdu.ErrorStatus.ToErrorCode().ToString(),
-                    context.Request.Version,
-                    timeTaken));
+                Logger.Info(GetLogEntry(context));
             }
         }
 
-        private static string GetStem(ISnmpPdu pdu)
+        private static string GetLogEntry(SnmpContext context)
         {
-            if (pdu == null)
+            return string.Format(
+                CultureInfo.InvariantCulture,
+                "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9}",
+                DateTime.UtcNow,
+                Empty,
+                context.Request.Pdu.TypeCode == SnmpType.Unknown ? Empty : context.Request.Pdu.TypeCode.ToString(),
+                GetStem(context.Request.Pdu.Variables),
+                context.Listener.Port,
+                context.Request.Parameters.UserName,
+                context.Sender.Address,
+                (context.Response == null) ? Empty : context.Response.Pdu.ErrorStatus.ToErrorCode().ToString(),
+                context.Request.Version,
+                DateTime.Now.Subtract(context.CreatedTime));
+        }
+
+        private static string GetStem(IList<Variable> variables)
+        {
+            if (variables.Count == 0)
             {
                 return Empty;
             }
 
             StringBuilder result = new StringBuilder();
-            foreach (Variable v in pdu.Variables)
+            foreach (Variable v in variables)
             {
                 result.AppendFormat("{0};", v.Id);
             }
