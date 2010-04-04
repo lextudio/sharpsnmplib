@@ -26,7 +26,7 @@
     <CleanIntermediates>True</CleanIntermediates>
     <KeepLogFile>True</KeepLogFile>
     <BuildLogFile path="" />
-    <HelpFileFormat>Help1xAndHelp2x</HelpFileFormat>
+    <HelpFileFormat>Help1xAndWebsite</HelpFileFormat>
     <CppCommentsFixup>False</CppCommentsFixup>
     <FrameworkVersion>2.0.50727</FrameworkVersion>
     <IndentHtml>False</IndentHtml>
@@ -54,6 +54,6 @@
     <CollectionTocStyle>Hierarchical</CollectionTocStyle>
     <IncludeStopWordList>True</IncludeStopWordList>
     <PlugInNamespaces>ms.vsipcc+, ms.vsexpresscc+</PlugInNamespaces>
-    <HelpFileVersion>1.0.0.0</HelpFileVersion>
+    <HelpFileVersion>5.0.0.0</HelpFileVersion>
     <ContentPlacement>AboveNamespaces</ContentPlacement>
 </project>

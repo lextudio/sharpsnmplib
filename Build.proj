@@ -9,7 +9,7 @@
         <LibraryReleaseFolder>.\SharpSnmpLib\Bin\Release</LibraryReleaseFolder>
         <NDependFolder>H:\Green\NDepend</NDependFolder>
         <NDependProject>SharpSnmpLib.ndproj</NDependProject>
-        <SandcastlePath>"C:\Program Files (x86)\SharpDevelop\3.0\bin\Tools\SHFB\SandcastleBuilderConsole.exe"</SandcastlePath>
+        <SandcastlePath>"C:\Program Files (x86)\SharpDevelop\3.0\bin\Tools\SHFB\SandcastleBuilderConsole.exe" -verbose </SandcastlePath>
         <SandcastleProject>sharpsnmplib.shfb</SandcastleProject>
     </PropertyGroup>
     <ItemGroup>
@@ -26,10 +26,10 @@
         <Exec Command="$(NDependFolder)\NDepend.Console.exe $(NDependProject)" />
     </Target>
     <Target Name="Debug">
-        <MSBuild Projects="sharpsnmplib.vs2008.sln" />
+        <MSBuild Projects="sharpsnmplib.sln" />
     </Target>
     <Target Name="Release">
-        <MSBuild Projects="sharpsnmplib.vs2008.sln" Properties="Configuration=Release" />
+        <MSBuild Projects="sharpsnmplib.sln" Properties="Configuration=Release" />
     </Target>
 	<Target Name="Package" DependsOnTargets="Release">
 	    <Exec Command="$(SandcastlePath) $(SandcastleProject)" WorkingDirectory="." />
