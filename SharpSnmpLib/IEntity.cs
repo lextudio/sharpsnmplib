@@ -1,4 +1,4 @@
-﻿// Authentication provider interface.
+// Entity interface.
 // Copyright (C) 2008-2010 Malcolm Crowe, Lex Li, and other contributors.
 // 
 // This library is free software; you can redistribute it and/or
@@ -15,34 +15,57 @@
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-using Lextm.SharpSnmpLib.Messaging;
+/*
+ * Created by SharpDevelop.
+ * User: lextm
+ * Date: 2008/5/19
+ * Time: 20:10
+ * 
+ * To change this template use Tools | Options | Coding | Edit Standard Headers.
+ */
 
-namespace Lextm.SharpSnmpLib.Security
+using System;
+
+namespace Lextm.SharpSnmpLib
 {
     /// <summary>
-    /// Authentication provider interface.
+    /// Entity interface.
     /// </summary>
-    public interface IAuthenticationProvider
+    [CLSCompliant(false)]
+    public interface IEntity : IConstruct
     {
         /// <summary>
-        /// Gets the clean digest.
+        /// Module name.
         /// </summary>
-        /// <value>The clean digest.</value>
-        OctetString CleanDigest { get; }
-
+        string ModuleName
+        {
+            get;
+        }
+        
         /// <summary>
-        /// Computes the hash.
+        /// Name.
         /// </summary>
-        /// <param name="message">The message.</param>
-        /// <returns></returns>
-        OctetString ComputeHash(ISnmpMessage message);
-
+        string Name
+        {
+            get;
+        }
+        
         /// <summary>
-        /// Converts password to key.
+        /// Parent name.
         /// </summary>
-        /// <param name="password">The password.</param>
-        /// <param name="engineId">The engine id.</param>
-        /// <returns></returns>
-        byte[] PasswordToKey(byte[] password, byte[] engineId);
+        string Parent
+        {
+            get;
+            set;
+        }
+        
+        /// <summary>
+        /// Value.
+        /// </summary>
+        [CLSCompliant(false)]
+        uint Value
+        {
+            get;            
+        }
     }
 }

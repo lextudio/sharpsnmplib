@@ -6,6 +6,8 @@
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
+using Lextm.SharpSnmpLib.Messaging;
+
 namespace Lextm.SharpSnmpLib.Agent
 {
     /// <summary>

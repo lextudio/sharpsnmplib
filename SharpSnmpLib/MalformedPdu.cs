@@ -108,6 +108,7 @@ namespace Lextm.SharpSnmpLib
         /// <value>Returns an empty list.</value>
         public IList<Variable> Variables
         {
+            // as we cannot extract PDU data in such cases, only an empty list can be returned here.
             get { return new List<Variable>(0); }
         }
     }

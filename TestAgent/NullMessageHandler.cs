@@ -1,4 +1,6 @@
-﻿namespace Lextm.SharpSnmpLib.Agent
+﻿using Lextm.SharpSnmpLib.Messaging;
+
+namespace Lextm.SharpSnmpLib.Agent
 {
     /// <summary>
     /// A placeholder.

@@ -15,7 +15,6 @@
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-using System;
 using System.Collections.Generic;
 
 namespace Lextm.SharpSnmpLib
@@ -44,15 +43,6 @@ namespace Lextm.SharpSnmpLib
         /// <value>The index of the error.</value>
         Integer32 ErrorIndex { get; }
 
-        /// <summary>
-        /// Converts the PDU to index complete message.
-        /// </summary>
-        /// <param name="version">Protocol version.</param>
-        /// <param name="community">Community name.</param>
-        /// <returns></returns>
-        [Obsolete("Use ByteTool.PackMessage instead")]
-        Sequence ToMessageBody(VersionCode version, OctetString community);
-        
         /// <summary>
         /// Variable bindings.
         /// </summary>

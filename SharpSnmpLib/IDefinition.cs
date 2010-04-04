@@ -1,4 +1,4 @@
-﻿// Authentication provider interface.
+// Definition interface.
 // Copyright (C) 2008-2010 Malcolm Crowe, Lex Li, and other contributors.
 // 
 // This library is free software; you can redistribute it and/or
@@ -15,34 +15,59 @@
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-using Lextm.SharpSnmpLib.Messaging;
+/*
+ * Created by SharpDevelop.
+ * User: lextm
+ * Date: 2008/6/29
+ * Time: 15:35
+ * 
+ * To change this template use Tools | Options | Coding | Edit Standard Headers.
+ */
 
-namespace Lextm.SharpSnmpLib.Security
+using System;
+using System.Collections.Generic;
+
+namespace Lextm.SharpSnmpLib
 {
     /// <summary>
-    /// Authentication provider interface.
+    /// Definition interface.
     /// </summary>
-    public interface IAuthenticationProvider
-    {
+    [CLSCompliant(false)]
+    public interface IDefinition : IEntity
+    {      
         /// <summary>
-        /// Gets the clean digest.
+        /// Children definitions.
         /// </summary>
-        /// <value>The clean digest.</value>
-        OctetString CleanDigest { get; }
+        IEnumerable<IDefinition> Children
+        {
+            get;
+        }
+        
+        /// <summary>
+        /// Parent definition.
+        /// </summary>
+        IDefinition ParentDefinition
+        {
+            get;
+        }
 
         /// <summary>
-        /// Computes the hash.
+        /// Indexer.
         /// </summary>
-        /// <param name="message">The message.</param>
-        /// <returns></returns>
-        OctetString ComputeHash(ISnmpMessage message);
+        IDefinition GetChildAt(uint index);
 
         /// <summary>
-        /// Converts password to key.
+        /// Gets the numerical form.
         /// </summary>
-        /// <param name="password">The password.</param>
-        /// <param name="engineId">The engine id.</param>
         /// <returns></returns>
-        byte[] PasswordToKey(byte[] password, byte[] engineId);
+        uint[] GetNumericalForm();
+
+        /// <summary>
+        /// Type.
+        /// </summary>
+        DefinitionType Type
+        {
+            get;
+        }
     }
 }

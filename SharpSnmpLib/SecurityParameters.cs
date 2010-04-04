@@ -16,6 +16,7 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
+
 /*
  * Created by SharpDevelop.
  * User: lextm
@@ -128,8 +129,14 @@ namespace Lextm.SharpSnmpLib
         /// <param name="userName">The user name.</param>
         /// <param name="authenticationParameters">The authentication parameters.</param>
         /// <param name="privacyParameters">The privacy parameters.</param>
+        /// <remarks>Only <paramref name="userName"/> cannot be null.</remarks>
         public SecurityParameters(OctetString engineId, Integer32 engineBoots, Integer32 engineTime, OctetString userName, OctetString authenticationParameters, OctetString privacyParameters)
         {
+            if (userName == null)
+            {
+                throw new ArgumentNullException("userName");
+            }
+
             _engineId = engineId;
             _engineBoots = engineBoots;
             _engineTime = engineTime;
@@ -160,16 +167,5 @@ namespace Lextm.SharpSnmpLib
         }
 
         #endregion
-
-        internal SecurityParameters Clone()
-        {
-            return new SecurityParameters(
-                _engineId,
-                _engineBoots,
-                _engineTime,
-                _userName,
-                new OctetString(new byte[12]),
-                _privacyParameters);
-        }
     }
 }

@@ -7,6 +7,7 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 
+using Lextm.SharpSnmpLib.Messaging;
 using NUnit.Framework;
 using System.Text;
 

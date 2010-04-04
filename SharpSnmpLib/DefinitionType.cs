@@ -1,4 +1,4 @@
-﻿// Authentication provider interface.
+﻿// Definition type enum.
 // Copyright (C) 2008-2010 Malcolm Crowe, Lex Li, and other contributors.
 // 
 // This library is free software; you can redistribute it and/or
@@ -15,34 +15,45 @@
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-using Lextm.SharpSnmpLib.Messaging;
+using System;
 
-namespace Lextm.SharpSnmpLib.Security
+namespace Lextm.SharpSnmpLib
 {
     /// <summary>
-    /// Authentication provider interface.
+    /// Definition type.
     /// </summary>
-    public interface IAuthenticationProvider
+    [Serializable]
+    public enum DefinitionType
     {
         /// <summary>
-        /// Gets the clean digest.
+        /// Unknown type.
         /// </summary>
-        /// <value>The clean digest.</value>
-        OctetString CleanDigest { get; }
-
+        Unknown = 0, // agentcapability, modulecompliance, moduleidentity, notificationgroup, notificationtype, objectgroup, objecttype
+       
         /// <summary>
-        /// Computes the hash.
+        /// OID value assignment.
         /// </summary>
-        /// <param name="message">The message.</param>
-        /// <returns></returns>
-        OctetString ComputeHash(ISnmpMessage message);
-
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Oid")]
+        OidValueAssignment = 1, // such as iso
+      
         /// <summary>
-        /// Converts password to key.
+        /// Scalar OID.
         /// </summary>
-        /// <param name="password">The password.</param>
-        /// <param name="engineId">The engine id.</param>
-        /// <returns></returns>
-        byte[] PasswordToKey(byte[] password, byte[] engineId);
+        Scalar = 2, // sysUpTime
+     
+        /// <summary>
+        /// Table OID.
+        /// </summary>
+        Table = 3,
+     
+        /// <summary>
+        /// Table entry OID.
+        /// </summary>
+        Entry = 4,
+      
+        /// <summary>
+        /// Table column OID.
+        /// </summary>
+        Column = 5
     }
 }

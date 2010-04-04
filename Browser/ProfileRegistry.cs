@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Xml;
 
@@ -246,12 +245,8 @@ namespace Lextm.SharpSnmpLib.Browser
 					reader.Close();
 				}
 			}
-			
-			foreach (AgentProfile profile in _profiles.Values.Where(profile => profile.Id == defaultId))
-			{
-			}
 
-			return _profiles.Count;
+	        return _profiles.Count;
 		}
 	}
 }

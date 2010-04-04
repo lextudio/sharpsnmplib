@@ -53,8 +53,6 @@ namespace Lextm.SharpSnmpLib
             full.Insert(0, new Variable(new uint[] { 1, 3, 6, 1, 2, 1, 1, 3, 0 }, _time));
             full.Insert(1, new Variable(new uint[] { 1, 3, 6, 1, 6, 3, 1, 1, 4, 1, 0 }, _enterprise));
             _varbindSection = Variable.Transform(full);
-            
-            ////_raw = ByteTool.ParseItems(_version, new Integer32(0), new Integer32(0), _varbindSection);
         }
         
         /// <summary>
@@ -76,24 +74,10 @@ namespace Lextm.SharpSnmpLib
             _variables.RemoveAt(0);
             _enterprise = (ObjectIdentifier)_variables[0].Data;
             _variables.RemoveAt(0);
-            
-            ////_raw = ByteTool.ParseItems(_version, temp1, temp2, _varbindSection);
-            ////Debug.Assert(length >= _raw.Length, "length not match");
         }
 
         #region ISnmpPdu Members
-        /// <summary>
-        /// Converts to message body.
-        /// </summary>
-        /// <param name="version">Prtocol version</param>
-        /// <param name="community">Community name</param>
-        /// <returns></returns>
-        [Obsolete("Use ByteTool.PackMessage instead")]
-        public Sequence ToMessageBody(VersionCode version, OctetString community)
-        {
-            throw new NotImplementedException();
-        }
-     
+
         /// <summary>
         /// Variables.
         /// </summary>

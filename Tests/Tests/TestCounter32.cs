@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-
+using Lextm.SharpSnmpLib.Messaging;
 using NUnit.Framework;
 
 #pragma warning disable 1591,0618, 1718

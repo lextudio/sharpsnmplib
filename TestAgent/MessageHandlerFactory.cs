@@ -8,6 +8,7 @@
  */
 
 using System.Linq;
+using Lextm.SharpSnmpLib.Messaging;
 
 namespace Lextm.SharpSnmpLib.Agent
 {

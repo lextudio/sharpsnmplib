@@ -42,19 +42,9 @@ namespace Lextm.SharpSnmpLib
         EndMarker = 0x00,
         
         /// <summary>
-        /// Boolean type.
-        /// </summary>
-        Boolean = 0x01,
-        
-        /// <summary>
         /// INTEGER type. (SMIv1, SMIv2)
         /// </summary>
-        Integer32 = 0x02, // X690.Int
-        
-        /// <summary>
-        /// BITS type. (SMIv2)
-        /// </summary>
-        BitString = 0x03,  // X690.BitSet // TODO: verify if this is BITS.
+        Integer32 = 0x02,  // X690.BitSet // TODO: verify if this is BITS.
         
         /// <summary>
         /// OCTET STRING type.
@@ -70,12 +60,6 @@ namespace Lextm.SharpSnmpLib
         /// OBJECT IDENTIFIER type. (SMIv1)
         /// </summary>
         ObjectIdentifier = 0x06,
-        
-        /// <summary>
-        /// Real type.
-        /// </summary>
-        Real = 0x09,
-        GeneralString = 0x1b,
         
         /// <summary>
         /// RFC1213 sequence for whole SNMP packet beginning

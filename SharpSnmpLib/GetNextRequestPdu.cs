@@ -119,17 +119,6 @@ namespace Lextm.SharpSnmpLib
         }
 
         #region ISnmpPdu Members
-        /// <summary>
-        /// Converts to message body.
-        /// </summary>
-        /// <param name="version">Protocol version</param>
-        /// <param name="community">Community name</param>
-        /// <returns></returns>
-        [Obsolete("Use ByteTool.PackMessage instead")]
-        public Sequence ToMessageBody(VersionCode version, OctetString community)
-        {
-            throw new NotImplementedException();
-        }
 
         #endregion
 

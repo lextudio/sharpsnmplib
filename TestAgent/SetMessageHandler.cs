@@ -8,6 +8,7 @@
  */
 using System;
 using System.Collections.Generic;
+using Lextm.SharpSnmpLib.Messaging;
 
 namespace Lextm.SharpSnmpLib.Agent
 {

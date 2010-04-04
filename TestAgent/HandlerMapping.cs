@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
+using Lextm.SharpSnmpLib.Messaging;
 
 namespace Lextm.SharpSnmpLib.Agent
 {

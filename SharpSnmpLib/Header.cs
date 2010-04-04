@@ -59,8 +59,29 @@ namespace Lextm.SharpSnmpLib
         /// <param name="maxMessageSize">Size of the max message.</param>
         /// <param name="securityBits">The flags.</param>
         /// <param name="securityModel">The security model.</param>
+        /// <remarks>If you want an empty header, please use <see cref="Empty"/>.</remarks>
         public Header(Integer32 messageId, Integer32 maxMessageSize, OctetString securityBits, Integer32 securityModel)
         {
+            if (messageId == null)
+            {
+                throw new ArgumentNullException("messageId");
+            }
+
+            if (maxMessageSize == null)
+            {
+                throw new ArgumentNullException("maxMessageSize");
+            }
+
+            if (securityBits == null)
+            {
+                throw new ArgumentNullException("securityBits");
+            }
+
+            if (securityModel == null)
+            {
+                throw new ArgumentNullException("securityModel");
+            }
+
             _messageId = messageId;
             _maxSize = maxMessageSize;
             _flags = securityBits;

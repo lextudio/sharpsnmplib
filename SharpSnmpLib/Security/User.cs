@@ -37,6 +37,31 @@ namespace Lextm.SharpSnmpLib.Security
         /// <param name="privacyPhrase">The privacy phrase.</param>
         public User(OctetString name, string authen, OctetString authenPhrase, string privacy, OctetString privacyPhrase)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException("name");
+            }
+
+            if (authen == null)
+            {
+                throw new ArgumentNullException("authen");
+            }
+
+            if (authenPhrase == null)
+            {
+                throw new ArgumentNullException("authenPhrase");
+            }
+
+            if (privacy == null)
+            {
+                throw new ArgumentNullException("privacy");
+            }
+
+            if (privacyPhrase == null)
+            {
+                throw new ArgumentNullException("privacyPhrase");
+            }
+
             IAuthenticationProvider authenticationProvider;
             if (string.IsNullOrEmpty(authen))
             {
@@ -80,6 +105,16 @@ namespace Lextm.SharpSnmpLib.Security
         /// <param name="providers">The providers.</param>
         public User(OctetString name, ProviderPair providers)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException("name");
+            }
+
+            if (providers == null)
+            {
+                throw new ArgumentNullException("providers");
+            }
+
             _name = name;
             _providers = providers;
         }

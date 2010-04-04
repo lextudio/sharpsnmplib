@@ -29,7 +29,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Net;
 using System.Net.Sockets;
-using Lextm.SharpSnmpLib.Mib;
 
 namespace Lextm.SharpSnmpLib.Messaging
 {

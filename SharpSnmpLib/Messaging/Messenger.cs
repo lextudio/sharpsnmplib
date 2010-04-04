@@ -10,7 +10,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
-using Lextm.SharpSnmpLib.Mib;
 
 namespace Lextm.SharpSnmpLib.Messaging
 {

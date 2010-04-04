@@ -1,4 +1,4 @@
-﻿// Authentication provider interface.
+// Module interface.
 // Copyright (C) 2008-2010 Malcolm Crowe, Lex Li, and other contributors.
 // 
 // This library is free software; you can redistribute it and/or
@@ -15,34 +15,53 @@
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-using Lextm.SharpSnmpLib.Messaging;
+/*
+ * Created by SharpDevelop.
+ * User: lextm
+ * Date: 5/1/2009
+ * Time: 10:40 AM
+ * 
+ * To change this template use Tools | Options | Coding | Edit Standard Headers.
+ */
+using System.Collections.Generic;
 
-namespace Lextm.SharpSnmpLib.Security
+namespace Lextm.SharpSnmpLib
 {
     /// <summary>
-    /// Authentication provider interface.
+    /// MIB Module interface.
     /// </summary>
-    public interface IAuthenticationProvider
+    public interface IModule
     {
         /// <summary>
-        /// Gets the clean digest.
+        /// Module name.
         /// </summary>
-        /// <value>The clean digest.</value>
-        OctetString CleanDigest { get; }
-
+        string Name
+        {
+            get;
+        }
+        
         /// <summary>
-        /// Computes the hash.
+        /// Objects.
         /// </summary>
-        /// <param name="message">The message.</param>
-        /// <returns></returns>
-        OctetString ComputeHash(ISnmpMessage message);
-
+        IList<IEntity> Objects
+        {
+            get;
+        }
+        
         /// <summary>
-        /// Converts password to key.
+        /// Entities.
         /// </summary>
-        /// <param name="password">The password.</param>
-        /// <param name="engineId">The engine id.</param>
-        /// <returns></returns>
-        byte[] PasswordToKey(byte[] password, byte[] engineId);
+        IList<IEntity> Entities
+        {
+            get;
+        }
+        
+        /// <summary>
+        /// Modules that this module dependent on.
+        /// </summary>
+        IList<string> Dependents
+        {
+            get;
+        }
     }
 }

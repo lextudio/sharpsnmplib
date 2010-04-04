@@ -27,7 +27,6 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
-
 using Lextm.SharpSnmpLib.Security;
 
 namespace Lextm.SharpSnmpLib.Messaging

@@ -28,7 +28,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Net;
 using System.Net.Sockets;
-using Lextm.SharpSnmpLib.Mib;
 using Lextm.SharpSnmpLib.Security;
 
 namespace Lextm.SharpSnmpLib.Messaging
@@ -253,7 +252,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                                  "INFORM request message: time stamp: {0}; community: {1}; enterprise: {2}; varbind count: {3}",
                                  TimeStamp.ToString(CultureInfo.InvariantCulture),
                                  Community,
-                                 SearchResult.GetStringOf(Enterprise, objects),
+                                 Enterprise.ToString(objects),
                                  Variables.Count.ToString(CultureInfo.InvariantCulture));
         }
 

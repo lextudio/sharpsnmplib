@@ -275,6 +275,11 @@ namespace Lextm.SharpSnmpLib
         /// <param name="stream">The stream.</param>
         public void AppendBytesTo(Stream stream)
         {
+            if (stream == null)
+            {
+                throw new ArgumentNullException("stream");
+            }
+
             // TODO: improve here.
             List<byte> temp = new List<byte>();
             byte first = (byte)((40 * _oid[0]) + _oid[1]);
@@ -452,6 +457,25 @@ namespace Lextm.SharpSnmpLib
             }
 
             return left.CompareTo(right) == 0;
+        }
+
+        /// <summary>
+        /// Returns a <see cref="System.String"/> that represents this instance.
+        /// </summary>
+        /// <param name="objects">The objects.</param>
+        /// <returns>
+        /// A <see cref="System.String"/> that represents this instance.
+        /// </returns>
+        [CLSCompliant(false)]
+        public string ToString(IObjectRegistry objects)
+        {
+            if (objects == null)
+            {
+                return ToString();
+            }
+
+            string result = objects.Tree.Search(ToNumerical()).AlternativeText;
+            return string.IsNullOrEmpty(result) ? ToString() : result;
         }
     }
 }

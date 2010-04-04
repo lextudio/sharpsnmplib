@@ -26,7 +26,6 @@
 
 using System;
 using System.Collections.Generic;
-using Lextm.SharpSnmpLib.Mib;
 using System.Globalization;
 
 namespace Lextm.SharpSnmpLib
@@ -78,6 +77,11 @@ namespace Lextm.SharpSnmpLib
         /// <remarks>If you set <c>null</c> to <paramref name="data"/>, you get a <see cref="Variable"/> instance whose <see cref="Data"/> is a <see cref="Null"/> instance.</remarks>
         public Variable(ObjectIdentifier id, ISnmpData data)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException("id");
+            }
+
             _oid = id;
             _data = data ?? new Null();
         }
@@ -111,6 +115,11 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         internal static IList<Variable> Transform(Sequence varbindSection)
         {
+            if (varbindSection == null)
+            {
+                throw new ArgumentNullException("varbindSection");
+            }
+
             IList<Variable> result = new List<Variable>(varbindSection.Count);
             foreach (ISnmpData item in varbindSection)
             {
@@ -138,6 +147,11 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         internal static Sequence Transform(IList<Variable> variables)
         {
+            if (variables == null)
+            {
+                throw new ArgumentNullException("variables");
+            }
+
             List<ISnmpData> varbinds = new List<ISnmpData>(variables.Count);
             foreach (Variable v in variables)
             {
@@ -168,7 +182,7 @@ namespace Lextm.SharpSnmpLib
         [CLSCompliant(false)]
         public string ToString(IObjectRegistry objects)
         {
-            return string.Format(CultureInfo.InvariantCulture, "Variable: Id: {0}; Data: {1}", SearchResult.GetStringOf(Id, objects), Data);
+            return string.Format(CultureInfo.InvariantCulture, "Variable: Id: {0}; Data: {1}", Id.ToString(objects), Data);
         }
     }
 }

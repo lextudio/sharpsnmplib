@@ -67,6 +67,11 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public static byte[] Convert(IEnumerable<char> description)
         {
+            if (description == null)
+            {
+                throw new ArgumentNullException("description");
+            }
+
             List<byte> result = new List<byte>();
             StringBuilder buffer = new StringBuilder(2);
             foreach (char c in description)
@@ -106,6 +111,11 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public static string Convert(IEnumerable<byte> buffer)
         {
+            if (buffer == null)
+            {
+                throw new ArgumentNullException("buffer");
+            }
+
             StringBuilder result = new StringBuilder();
             foreach (byte b in buffer)
             {
@@ -118,6 +128,17 @@ namespace Lextm.SharpSnmpLib
 
         internal static bool CompareArray<T>(IList<T> left, IList<T> right) where T : IEquatable<T>
         {
+            if (left == null)
+            {
+                throw new ArgumentNullException("left");
+            }
+
+            if (right == null)
+            {
+                throw new ArgumentNullException("right");
+            }
+
+            // TODO: one day we go .NET 3.5, we can use IEnumerable.SequenceEqual.
             if (left.Count != right.Count)
             {
                 return false;
@@ -177,6 +198,11 @@ namespace Lextm.SharpSnmpLib
         
         internal static void WritePayloadLength(Stream stream, int length) // excluding initial octet
         {
+            if (stream == null)
+            {
+                throw new ArgumentNullException("stream");
+            }
+
             if (length < 0)
             {
                 throw new ArgumentException("length cannot be negative", "length");
@@ -206,12 +232,22 @@ namespace Lextm.SharpSnmpLib
         
         internal static int ReadPayloadLength(Stream stream)
         {
+            if (stream == null)
+            {
+                throw new ArgumentNullException("stream");
+            }
+
             int first = stream.ReadByte();
             return ReadLength(stream, (byte)first);
         }
 
         internal static void IgnoreBytes(Stream stream, int length)
         {
+            if (stream == null)
+            {
+                throw new ArgumentNullException("stream");
+            }
+
             byte[] bytes = new byte[length];
             stream.Read(bytes, 0, length);
             return;
@@ -253,7 +289,12 @@ namespace Lextm.SharpSnmpLib
             {
                 throw new ArgumentNullException("stream");
             }
-            
+
+            if (raw == null)
+            {
+                throw new ArgumentNullException("raw");
+            }
+
             stream.WriteByte((byte)typeCode);
             WritePayloadLength(stream, raw.Length);
             stream.Write(raw, 0, raw.Length);
@@ -261,6 +302,11 @@ namespace Lextm.SharpSnmpLib
         
         internal static byte[] GetRawBytes(IEnumerable<byte> orig, bool negative)
         {
+            if (orig == null)
+            {
+                throw new ArgumentNullException("orig");
+            }
+
             byte flag;
             byte sign;
             if (negative)

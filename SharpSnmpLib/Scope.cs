@@ -53,6 +53,21 @@ namespace Lextm.SharpSnmpLib
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "pdu", Justification = "definition")]
         public Scope(OctetString contextEngineId, OctetString contextName, ISnmpPdu pdu)
         {
+            if (contextEngineId == null)
+            {
+                throw new ArgumentNullException("contextEngineId");
+            }
+
+            if (contextName == null)
+            {
+                throw new ArgumentNullException("contextName");
+            }
+
+            if (pdu == null)
+            {
+                throw new ArgumentNullException("pdu");
+            }
+
             _contextEngineId = contextEngineId;
             _contextName = contextName;
             _pdu = pdu;
@@ -65,6 +80,11 @@ namespace Lextm.SharpSnmpLib
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "pdu", Justification = "definition")]
         public Scope(ISnmpPdu pdu)
         {
+            if (pdu == null)
+            {
+                throw new ArgumentNullException("pdu");
+            }
+
             _pdu = pdu;
         }
 

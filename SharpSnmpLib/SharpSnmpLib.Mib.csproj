@@ -134,6 +134,7 @@
     <EmbeddedResource Include="Resource.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Lextm.SharpSnmpLib.Mib</CustomToolNamespace>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

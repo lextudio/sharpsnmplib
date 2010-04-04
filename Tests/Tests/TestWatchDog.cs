@@ -26,6 +26,10 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual(1, count);
             Thread.Sleep(120);
             dog.Enabled = false;
+            Assert.IsFalse(dog.Enabled);
+            Assert.IsFalse(dog.KeepBarking);
+            // TODO: 100% coverage in this way?
+            dog.Feed();
             Assert.AreEqual(1, count);
         }
     }

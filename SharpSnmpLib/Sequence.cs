@@ -139,15 +139,6 @@ namespace Lextm.SharpSnmpLib
         }
 
         /// <summary>
-        /// <see cref="ISnmpData"/> instances containing in this <see cref="Sequence"/>
-        /// </summary>
-        [Obsolete("Use indexer directly.")]
-        public IList<ISnmpData> Items
-        {
-            get { return _list; }
-        }
-
-        /// <summary>
         /// Data count in this <see cref="Sequence"/>.
         /// </summary>
         public int Count
@@ -197,6 +188,11 @@ namespace Lextm.SharpSnmpLib
         /// <param name="stream">The stream.</param>
         public void AppendBytesTo(Stream stream)
         {
+            if (stream == null)
+            {
+                throw new ArgumentNullException("stream");
+            }
+
             if (_raw == null)
             {
                 _raw = ByteTool.ParseItems(_list);

@@ -27,7 +27,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using Lextm.SharpSnmpLib.Mib;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -39,13 +38,9 @@ namespace Lextm.SharpSnmpLib
     public class TrapV1Pdu : ISnmpPdu
     {
         private byte[] _raw;
-        private readonly ObjectIdentifier _enterprise;
-        private readonly IP _agent;
         private readonly Integer32 _generic;
         private readonly Integer32 _specific;
-        private readonly TimeTicks _timestamp;
         private readonly Sequence _varbindSection;
-        private readonly IList<Variable> _variables;
 
         /// <summary>
         /// Creates a <see cref="TrapV1Pdu"/> instance with PDU elements.
@@ -73,14 +68,43 @@ namespace Lextm.SharpSnmpLib
         /// <param name="variables">Variable binds</param>
         public TrapV1Pdu(ObjectIdentifier enterprise, IP agent, Integer32 generic, Integer32 specific, TimeTicks timestamp, IList<Variable> variables)
         {
-            _enterprise = enterprise;
-            _agent = agent;
+            if (enterprise == null)
+            {
+                throw new ArgumentNullException("enterprise");
+            }
+
+            if (agent == null)
+            {
+                throw new ArgumentNullException("agent");
+            }
+
+            if (generic == null)
+            {
+                throw new ArgumentNullException("generic");
+            }
+
+            if (specific == null)
+            {
+                throw new ArgumentNullException("specific");
+            }
+
+            if (timestamp == null)
+            {
+                throw new ArgumentNullException("timestamp");
+            }
+
+            if (variables == null)
+            {
+                throw new ArgumentNullException("variables");
+            }
+
+            Enterprise = enterprise;
+            AgentAddress = agent;
             _generic = generic;
             _specific = specific;
-            _timestamp = timestamp;
+            TimeStamp = timestamp;
             _varbindSection = Variable.Transform(variables);
-            _variables = variables;
-            ////_raw = ByteTool.ParseItems(_enterprise, _agent, _generic, _specific, _timestamp, _varbindSection);
+            Variables = variables;
         }
 
         /// <summary>
@@ -89,15 +113,14 @@ namespace Lextm.SharpSnmpLib
         /// <param name="stream">The stream.</param>
         public TrapV1Pdu(Stream stream)
         {
-            _enterprise = (ObjectIdentifier)DataFactory.CreateSnmpData(stream);
-            _agent = (IP)DataFactory.CreateSnmpData(stream);
+            if (stream == null) throw new ArgumentNullException("stream");
+            Enterprise = (ObjectIdentifier)DataFactory.CreateSnmpData(stream);
+            AgentAddress = (IP)DataFactory.CreateSnmpData(stream);
             _generic = (Integer32)DataFactory.CreateSnmpData(stream);
             _specific = (Integer32)DataFactory.CreateSnmpData(stream);
-            _timestamp = (TimeTicks)DataFactory.CreateSnmpData(stream);
+            TimeStamp = (TimeTicks)DataFactory.CreateSnmpData(stream);
             _varbindSection = (Sequence)DataFactory.CreateSnmpData(stream);
-            _variables = Variable.Transform(_varbindSection);
-            ////_raw = ByteTool.ParseItems(_enterprise, _agent, _generic, _specific, _timestamp, _varbindSection);
-            ////Debug.Assert(length >= _raw.Length, "length not match");
+            Variables = Variable.Transform(_varbindSection);
         }
 
         /// <summary>
@@ -144,9 +167,14 @@ namespace Lextm.SharpSnmpLib
         /// <param name="stream">The stream.</param>
         public void AppendBytesTo(Stream stream)
         {
+            if (stream == null)
+            {
+                throw new ArgumentNullException("stream");
+            }
+
             if (_raw == null)
             {
-                _raw = ByteTool.ParseItems(_enterprise, _agent, _generic, _specific, _timestamp, _varbindSection);
+                _raw = ByteTool.ParseItems(Enterprise, AgentAddress, _generic, _specific, TimeStamp, _varbindSection);
             }
 
             ByteTool.AppendBytes(stream, TypeCode, _raw);
@@ -167,33 +195,15 @@ namespace Lextm.SharpSnmpLib
         }
 
         /// <summary>
-        /// To message body.
-        /// </summary>
-        /// <param name="version">Protocol version</param>
-        /// <param name="community">Community name</param>
-        /// <returns></returns>
-        [Obsolete("Use ByteTool.PackMessage instead")]
-        public Sequence ToMessageBody(VersionCode version, OctetString community)
-        {
-            throw new NotImplementedException();
-        }      
-        
-        /// <summary>
         /// Enterprise.
         /// </summary>
-        public ObjectIdentifier Enterprise 
-        {
-            get { return _enterprise; }
-        }
-        
+        public ObjectIdentifier Enterprise { get; private set; }
+
         /// <summary>
         /// Agent address.
         /// </summary>
-        public IP AgentAddress 
-        {
-            get { return _agent; }
-        }
-        
+        public IP AgentAddress { get; private set; }
+
         /// <summary>
         /// Generic trap type.
         /// </summary>
@@ -209,23 +219,17 @@ namespace Lextm.SharpSnmpLib
         {
             get { return _specific.ToInt32(); }
         }
-        
+
         /// <summary>
         /// Time stamp.
         /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "TimeStamp")]
-        public TimeTicks TimeStamp
-        {
-            get { return _timestamp; }
-        }
-        
+        public TimeTicks TimeStamp { get; private set; }
+
         /// <summary>
         /// Variable binds.
         /// </summary>
-        public IList<Variable> Variables 
-        {
-            get { return _variables; }
-        }
+        public IList<Variable> Variables { get; private set; }
 
         /// <summary>
         /// Returns a <see cref="string"/> that represents this <see cref="TrapV1Pdu"/>.
@@ -251,7 +255,7 @@ namespace Lextm.SharpSnmpLib
                 "SNMPv1 TRAP PDU: agent address: {0}; time stamp: {1}; enterprise: {2}; generic: {3}; specific: {4}; varbind count: {5}",
                 AgentAddress,
                 TimeStamp,
-                SearchResult.GetStringOf(Enterprise, objects),
+                Enterprise.ToString(objects),
                 Generic,
                 Specific.ToString(CultureInfo.InvariantCulture),
                 Variables.Count.ToString(CultureInfo.InvariantCulture));
