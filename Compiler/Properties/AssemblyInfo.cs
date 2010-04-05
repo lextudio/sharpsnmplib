@@ -1,4 +1,4 @@
-﻿#region Using directives
+#region Using directives
 
 using System;
 using System.Reflection;
@@ -15,7 +15,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("MIT/X11")]
 [assembly: AssemblyCompany("LeXtudio")]
 [assembly: AssemblyProduct("#SNMP MIB Compiler")]
-[assembly: AssemblyCopyright("(C) 2008-2009 Lex Li and other contributors.")]
+[assembly: AssemblyCopyright("(C) 2008-2010 Lex Li")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -29,6 +29,7 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values or you can use the default the Revision and 
 // Build Numbers by using the '*' as shown below:
-[assembly: AssemblyVersion("1.0.*")]
+[assembly: AssemblyVersion("4.1.010405.01")]
+[assembly: AssemblyFileVersion("4.1.010405.01")]
 [assembly: NeutralResourcesLanguage("en-US")]
 [assembly: CLSCompliant(true)]
