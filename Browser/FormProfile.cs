@@ -86,14 +86,18 @@ namespace Lextm.SharpSnmpLib.Browser
             
             txtIP.Text = _profile.Agent.Address.ToString();
             txtIP.ReadOnly = true;
-            txtGet.Text = _profile.GetCommunity;
-            txtSet.Text = _profile.SetCommunity;
             txtName.Text = _profile.Name;
             cbVersionCode.SelectedIndex = (int)_profile.VersionCode;
+
+            var normal = _profile as NormalAgentProfile;
+            txtGet.Text = normal == null ? string.Empty : normal.GetCommunity;
+            txtSet.Text = normal == null ? string.Empty : normal.SetCommunity;
+
             // TODO: load and save profile v3.
-            txtAuthentication.Text = _profile.AuthenticationPassphrase;
-            txtPrivacy.Text = _profile.PrivacyPassphrase;
-            cbAuthentication.SelectedIndex = (_profile.AuthenticationMethod == "MD5") ? 0 : 1;
+            var secure = _profile as SecureAgentProfile;
+            txtAuthentication.Text = secure == null ? string.Empty : secure.AuthenticationPassphrase;
+            txtPrivacy.Text = secure == null ? string.Empty : secure.PrivacyPassphrase;
+            cbAuthentication.SelectedIndex = secure == null ? 0 : (secure.AuthenticationMethod == "MD5") ? 0 : 1;
             cbPrivacy.SelectedIndex = 0;
             txtUserName.Text = _profile.UserName;
         }

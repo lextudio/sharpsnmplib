@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
@@ -17,10 +17,10 @@ namespace Lextm.SharpSnmpLib.Browser
             PrivacyMethod = privacyMethod;
         }
 
-        private string AuthenticationPassphrase { get; set; }
-        private string PrivacyPassphrase { get; set; }
-        private string AuthenticationMethod { get; set; }
-        private string PrivacyMethod { get; set; }
+        internal string AuthenticationPassphrase { get; set; }
+        internal string PrivacyPassphrase { get; set; }
+        internal string AuthenticationMethod { get; set; }
+        internal string PrivacyMethod { get; set; }
 
         internal override void Get(Manager manager, string textual)
         {

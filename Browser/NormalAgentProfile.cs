@@ -15,8 +15,8 @@ namespace Lextm.SharpSnmpLib.Browser
             SetCommunity = setCommunity;
         }
 
-        private string GetCommunity { get; set; }
-        private string SetCommunity { get; set; }
+        internal string GetCommunity { get; set; }
+        internal string SetCommunity { get; set; }
 
         internal override void Get(Manager manager, string textual)
         {

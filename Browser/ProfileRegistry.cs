@@ -125,29 +125,31 @@ namespace Lextm.SharpSnmpLib.Browser
 					writer.WriteStartAttribute("version");
 					writer.WriteValue((int)(_profiles[k]).VersionCode);
 					writer.WriteEndAttribute();
-					
+
+				    var normal = _profiles[k] as NormalAgentProfile;
 					writer.WriteStartAttribute("getCommunity");
-					writer.WriteString(_profiles[k].GetCommunity);
+					writer.WriteString(normal == null ? string.Empty : normal.GetCommunity);
 					writer.WriteEndAttribute();
 					
 					writer.WriteStartAttribute("setCommunity");
-					writer.WriteString(_profiles[k].SetCommunity);
+                    writer.WriteString(normal == null ? string.Empty : normal.SetCommunity);
 					writer.WriteEndAttribute();
 
+				    var secure = _profiles[k] as SecureAgentProfile;
                     writer.WriteStartAttribute("authenticationPassphrase");
-                    writer.WriteString(_profiles[k].AuthenticationPassphrase);
+                    writer.WriteString(secure == null ? string.Empty : secure.AuthenticationPassphrase);
                     writer.WriteEndAttribute();
 
                     writer.WriteStartAttribute("privacyPassphrase");
-                    writer.WriteString(_profiles[k].PrivacyPassphrase);
+                    writer.WriteString(secure == null ? string.Empty : secure.PrivacyPassphrase);
                     writer.WriteEndAttribute();
 
                     writer.WriteStartAttribute("autheticationMethod");
-                    writer.WriteString(_profiles[k].AuthenticationMethod);
+                    writer.WriteString(secure == null ? string.Empty : secure.AuthenticationMethod);
                     writer.WriteEndAttribute();
 
                     writer.WriteStartAttribute("privacyMethod");
-                    writer.WriteString(_profiles[k].PrivacyMethod);
+                    writer.WriteString(secure == null ? string.Empty : secure.PrivacyMethod);
                     writer.WriteEndAttribute();
 
                     writer.WriteStartAttribute("userName");

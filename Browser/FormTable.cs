@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Windows.Forms;
-using Lextm.SharpSnmpLib.Mib;
 using Lextm.SharpSnmpLib.Messaging;
 using Microsoft.Practices.Unity;
 
@@ -126,7 +125,12 @@ namespace Lextm.SharpSnmpLib.Browser
                     break;
                 }
 
-                AgentProfile prof = registry.DefaultProfile;
+                NormalAgentProfile prof = registry.DefaultProfile as NormalAgentProfile;
+                if (prof == null)
+                {
+                    break;
+                }
+
                 IList<Variable> list = new List<Variable>();
                 Thread.Sleep(Convert.ToInt32(textBoxRefresh.Text, CultureInfo.CurrentCulture) * 1000);
                 int rows = Messenger.Walk(prof.VersionCode, prof.Agent, new OctetString(prof.GetCommunity), new ObjectIdentifier(_definition.GetNumericalForm()), list, 1000, WalkMode.WithinSubtree);
