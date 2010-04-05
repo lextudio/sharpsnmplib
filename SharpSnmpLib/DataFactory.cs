@@ -57,6 +57,11 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public static ISnmpData CreateSnmpData(int type, Stream stream)
         {
+            if (stream == null)
+            {
+                throw new ArgumentNullException("stream");
+            }
+            
             int length = ByteTool.ReadPayloadLength(stream);
             switch ((SnmpType)type)
             {
@@ -124,6 +129,11 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public static ISnmpData CreateSnmpData(byte[] buffer, int index, int count)
         {
+            if (buffer == null)
+            {
+                throw new ArgumentNullException("buffer");
+            }
+            
             using (MemoryStream m = new MemoryStream(buffer, index, count, false))
             {
                 return CreateSnmpData(m);

@@ -33,8 +33,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         private readonly Header _header;
         private readonly SecurityParameters _parameters;
         private readonly Scope _scope;
-        private readonly ProviderPair _pair;
-        
+        private readonly ProviderPair _pair;        
         private readonly ObjectIdentifier _enterprise;
         private readonly uint _time;
 
@@ -50,6 +49,21 @@ namespace Lextm.SharpSnmpLib.Messaging
         [CLSCompliant(false)]
         public TrapV2Message(int requestId, VersionCode version, OctetString community, ObjectIdentifier enterprise, uint time, IList<Variable> variables)
         {
+            if (variables == null)
+            {
+                throw new ArgumentNullException("variables");
+            }
+            
+            if (enterprise == null)
+            {
+                throw new ArgumentNullException("enterprise");
+            }
+            
+            if (community == null)
+            {
+                throw new ArgumentNullException("community");
+            }
+            
             if (version == VersionCode.V3)
             {
                 throw new ArgumentException("only v1 and v2c are supported", "version");
@@ -65,12 +79,27 @@ namespace Lextm.SharpSnmpLib.Messaging
                 enterprise,
                 time,
                 variables);
-            _scope = new Scope(null, null, pdu);
+            _scope = new Scope(pdu);
             _pair = ProviderPair.Default;
         }
         
         internal TrapV2Message(VersionCode version, Header header, SecurityParameters parameters, Scope scope, ProviderPair record)
         {
+            if (scope == null)
+            {
+                throw new ArgumentNullException("scope");
+            }
+            
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            
+            if (header == null)
+            {
+                throw new ArgumentNullException("header");
+            }
+            
             if (record == null)
             {
                 throw new ArgumentNullException("record");
@@ -134,6 +163,11 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="manager">Manager.</param>
         public void Send(EndPoint manager)
         {
+            if (manager == null)
+            {
+                throw new ArgumentNullException("manager");
+            }
+            
             using (Socket socket = Helper.GetSocket(manager))
             {
                 Send(manager, socket);
@@ -147,6 +181,11 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="socket">The socket.</param>
         public void Send(EndPoint manager, Socket socket)
         {
+            if (manager == null)
+            {
+                throw new ArgumentNullException("manager");
+            }
+            
             if (socket == null)
             {
                 throw new ArgumentNullException("socket");

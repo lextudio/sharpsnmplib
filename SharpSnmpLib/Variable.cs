@@ -157,8 +157,7 @@ namespace Lextm.SharpSnmpLib
             {
                 varbinds.Add(new Sequence(v.Id, v.Data));
             }
-            
-            //// Debug.Assert(varbinds.Capacity == varbinds.Count, "capacity is " + varbinds.Capacity + "; count is " + varbinds.Count);
+
             Sequence result = new Sequence(varbinds);
             return result;
         }

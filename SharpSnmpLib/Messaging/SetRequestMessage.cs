@@ -43,6 +43,16 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="variables">Variables</param>
         public SetRequestMessage(int requestId, VersionCode version, OctetString community, IList<Variable> variables)
         {
+            if (variables == null)
+            {
+                throw new ArgumentNullException("variables");
+            }
+            
+            if (community == null)
+            {
+                throw new ArgumentNullException("community");
+            }
+            
             if (version == VersionCode.V3)
             {
                 throw new ArgumentException("only v1 and v2c are supported", "version");
@@ -56,7 +66,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 ErrorCode.NoError,
                 0,
                 variables);
-            _scope = new Scope(null, null, pdu);
+            _scope = new Scope(pdu);
             _pair = ProviderPair.Default;
         }
 
@@ -72,6 +82,16 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="report">The report.</param>
         public SetRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName, IList<Variable> variables, ProviderPair pair, ISnmpMessage report)
         {
+            if (variables == null)
+            {
+                throw new ArgumentNullException("variables");
+            }
+            
+            if (userName == null)
+            {
+                throw new ArgumentNullException("userName");
+            }
+            
             if (version != VersionCode.V3)
             {
                 throw new ArgumentException("only v3 is supported", "version");
@@ -112,6 +132,21 @@ namespace Lextm.SharpSnmpLib.Messaging
 
         internal SetRequestMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, ProviderPair record)
         {
+            if (scope == null)
+            {
+                throw new ArgumentNullException("scope");
+            }
+            
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            
+            if (header == null)
+            {
+                throw new ArgumentNullException("header");
+            }
+            
             if (record == null)
             {
                 throw new ArgumentNullException("record");
@@ -132,6 +167,11 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public ISnmpMessage GetResponse(int timeout, IPEndPoint receiver)
         {
+            if (receiver == null)
+            {
+                throw new ArgumentNullException("receiver");
+            }
+            
             using (Socket socket = Helper.GetSocket(receiver))
             {
                 return GetResponse(timeout, receiver, socket);
@@ -143,10 +183,20 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
         /// <param name="receiver">Agent.</param>
-        /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
+        /// <param name="socket">The UDP <see cref="Socket"/> to use to send/receive.</param>
         /// <returns></returns>
-        private ISnmpMessage GetResponse(int timeout, IPEndPoint receiver, Socket udpSocket)
+        private ISnmpMessage GetResponse(int timeout, IPEndPoint receiver, Socket socket)
         {
+            if (socket == null)
+            {
+                throw new ArgumentNullException("udpSocket");
+            }
+            
+            if (receiver == null)
+            {
+                throw new ArgumentNullException("receiver");
+            }
+            
             UserRegistry registry = null;
             if (Version == VersionCode.V3)
             {
@@ -155,7 +205,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 registry.Add(_parameters.UserName, _pair);
             }
 
-            return MessageFactory.GetResponse(receiver, ToBytes(), MessageId, timeout, registry, udpSocket);
+            return MessageFactory.GetResponse(receiver, ToBytes(), MessageId, timeout, registry, socket);
         }
         
         /// <summary>

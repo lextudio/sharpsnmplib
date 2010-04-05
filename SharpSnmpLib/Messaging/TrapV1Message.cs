@@ -62,6 +62,26 @@ namespace Lextm.SharpSnmpLib.Messaging
         [CLSCompliant(false)]
         public TrapV1Message(VersionCode version, IPAddress agent, OctetString community, ObjectIdentifier enterprise, GenericCode generic, int specific, uint time, IList<Variable> variables)
         {
+            if (variables == null)
+            {
+                throw new ArgumentNullException("variables");
+            }
+            
+            if (enterprise == null)
+            {
+                throw new ArgumentNullException("enterprise");
+            }
+            
+            if (community == null)
+            {
+                throw new ArgumentNullException("community");
+            }
+            
+            if (agent == null)
+            {
+                throw new ArgumentNullException("agent");
+            }
+            
             _version = version;
             _agent = agent;
             _community = community;
@@ -120,6 +140,11 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="manager">Manager</param>
         public void Send(EndPoint manager)
         {
+            if (manager == null)
+            {
+                throw new ArgumentNullException("manager");
+            }
+            
             using (Socket socket = Helper.GetSocket(manager))
             {
                 Send(manager, socket);

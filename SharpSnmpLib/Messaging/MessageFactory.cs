@@ -54,6 +54,21 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <exception cref="TimeoutException">Timeout happens.</exception>
         internal static ISnmpMessage GetResponse(IPEndPoint receiver, byte[] bytes, int number, int timeout, UserRegistry registry, Socket socket)
         {
+            if (registry == null)
+            {
+                throw new ArgumentNullException("registry");
+            }
+            
+            if (bytes == null)
+            {
+                throw new ArgumentNullException("bytes");
+            }
+            
+            if (receiver == null)
+            {
+                throw new ArgumentNullException("receiver");
+            }
+            
             if (socket == null)
             {
                 throw new ArgumentNullException("socket");
@@ -115,6 +130,16 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public static IList<ISnmpMessage> ParseMessages(IEnumerable<char> bytes, UserRegistry registry)
         {
+            if (registry == null)
+            {
+                throw new ArgumentNullException("registry");
+            }
+            
+            if (bytes == null)
+            {
+                throw new ArgumentNullException("bytes");
+            }
+            
             return ParseMessages(ByteTool.Convert(bytes), registry);
         }
 
@@ -128,6 +153,16 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public static IList<ISnmpMessage> ParseMessages(byte[] buffer, int index, int count, UserRegistry registry)
         {
+            if (registry == null)
+            {
+                throw new ArgumentNullException("registry");
+            }
+            
+            if (buffer == null)
+            {
+                throw new ArgumentNullException("buffer");
+            }
+            
             return ParseMessages(new MemoryStream(buffer, index, count, false), registry);
         }
 
@@ -139,6 +174,11 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public static IList<ISnmpMessage> ParseMessages(byte[] buffer, UserRegistry registry)
         {
+            if (registry == null)
+            {
+                throw new ArgumentNullException("registry");
+            }
+            
             if (buffer == null)
             {
                 throw new ArgumentNullException("buffer");
@@ -155,6 +195,16 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public static IList<ISnmpMessage> ParseMessages(Stream stream, UserRegistry registry)
         {
+            if (stream == null)
+            {
+                throw new ArgumentNullException("stream");
+            }
+            
+            if (registry == null)
+            {
+                throw new ArgumentNullException("registry");
+            }
+            
             if (stream == null)
             {
                 throw new ArgumentNullException("stream");
@@ -213,7 +263,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             if (body.Count == 3)
             {
                 // v1 and v2
-                scope = new Scope(null, null, (ISnmpPdu)body[2]);
+                scope = new Scope((ISnmpPdu)body[2]);
             }
             else if (body[3].TypeCode == SnmpType.Sequence)
             {

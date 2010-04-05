@@ -55,6 +55,11 @@ namespace Lextm.SharpSnmpLib.Security
         /// <exception cref="ArgumentOutOfRangeException">Thrown when encryption key is null or length of the encryption key is too short.</exception>
         public static byte[] Encrypt(byte[] unencryptedData, byte[] key, byte[] privacyParameters)
         {
+            if (privacyParameters == null)
+            {
+                throw new ArgumentNullException("privacyParameters");
+            }
+            
             if (key == null)
             {
                 throw new ArgumentNullException("key");
@@ -315,6 +320,11 @@ namespace Lextm.SharpSnmpLib.Security
         /// <returns></returns>
         public ISnmpData Encrypt(ISnmpData data, SecurityParameters parameters)
         {
+            if (data == null)
+            {
+                throw new ArgumentNullException("data");
+            }
+            
             if (parameters == null)
             {
                 throw new ArgumentNullException("parameters");

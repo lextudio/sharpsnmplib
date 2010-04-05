@@ -54,6 +54,11 @@ namespace Lextm.SharpSnmpLib
         /// <param name="stream">The stream.</param>
         public TimeTicks(int length, Stream stream)
         {
+            if (stream == null)
+            {
+                throw new ArgumentNullException("stream");
+            }
+            
             _count = new Counter32(length, stream);
         }
 
@@ -131,6 +136,11 @@ namespace Lextm.SharpSnmpLib
         /// <param name="stream">The stream.</param>
         public void AppendBytesTo(Stream stream)
         {
+            if (stream == null)
+            {
+                throw new ArgumentNullException("stream");
+            }
+            
             ByteTool.AppendBytes(stream, TypeCode, _count.GetRaw());
         }
 

@@ -63,6 +63,11 @@ namespace Lextm.SharpSnmpLib
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "temp1")]
         public TrapV2Pdu(Stream stream)
         {
+            if (stream == null)
+            {
+                throw new ArgumentNullException("stream");
+            }
+            
             _requestId = (Integer32)DataFactory.CreateSnmpData(stream); // request
 #pragma warning disable 168
             Integer32 temp1 = (Integer32) DataFactory.CreateSnmpData(stream); // 0
@@ -130,6 +135,11 @@ namespace Lextm.SharpSnmpLib
         /// <param name="stream">The stream.</param>
         public void AppendBytesTo(Stream stream)
         {
+            if (stream == null)
+            {
+                throw new ArgumentNullException("stream");
+            }
+            
             if (_raw == null)
             {
                 _raw = ByteTool.ParseItems(_requestId, new Integer32(0), new Integer32(0), _varbindSection);

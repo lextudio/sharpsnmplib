@@ -51,6 +51,16 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="variables">Variables.</param>
         public GetResponseMessage(int requestId, VersionCode version, OctetString community, ErrorCode error, int index, IList<Variable> variables)
         {
+            if (variables == null)
+            {
+                throw new ArgumentNullException("variables");
+            }
+            
+            if (community == null)
+            {
+                throw new ArgumentNullException("community");
+            }
+            
             if (version == VersionCode.V3)
             {
                 throw new ArgumentException("Please use overload constructor for v3", "version");
@@ -64,7 +74,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 error,
                 index,
                 variables);
-            _scope = new Scope(null, null, pdu);
+            _scope = new Scope(pdu);
             _record = ProviderPair.Default;
         }
 
@@ -78,6 +88,21 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="record">The record.</param>
         public GetResponseMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, ProviderPair record)
         {
+            if (scope == null)
+            {
+                throw new ArgumentNullException("scope");
+            }
+            
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            
+            if (header == null)
+            {
+                throw new ArgumentNullException("header");
+            }
+            
             if (record == null)
             {
                 throw new ArgumentNullException("record");

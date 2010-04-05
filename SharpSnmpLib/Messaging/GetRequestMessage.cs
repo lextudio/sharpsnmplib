@@ -43,6 +43,16 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="variables">Variables</param>
         public GetRequestMessage(int requestId, VersionCode version, OctetString community, IList<Variable> variables)
         {
+            if (variables == null)
+            {
+                throw new ArgumentNullException("variables");
+            }
+            
+            if (community == null)
+            {
+                throw new ArgumentNullException("community");
+            }
+            
             if (version == VersionCode.V3)
             {
                 throw new ArgumentException("only v1 and v2c are supported", "version");
@@ -56,7 +66,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 ErrorCode.NoError,
                 0,
                 variables);
-            _scope = new Scope(null, null, pdu);
+            _scope = new Scope(pdu);
             _pair = ProviderPair.Default;
         }
 
@@ -72,6 +82,16 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="report">The report.</param>
         public GetRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName, IList<Variable> variables, ProviderPair pair, ISnmpMessage report)
         {
+            if (userName == null)
+            {
+                throw new ArgumentNullException("userName");
+            }
+            
+            if (variables == null)
+            {
+                throw new ArgumentNullException("variables");
+            }
+            
             if (version != VersionCode.V3)
             {
                 throw new ArgumentException("only v3 is supported", "version");
@@ -112,6 +132,21 @@ namespace Lextm.SharpSnmpLib.Messaging
         
         internal GetRequestMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, ProviderPair record)
         {
+            if (scope == null)
+            {
+                throw new ArgumentNullException("scope");
+            }
+            
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            
+            if (header == null)
+            {
+                throw new ArgumentNullException("header");
+            }
+            
             if (record == null)
             {
                 throw new ArgumentNullException("record");
@@ -156,6 +191,11 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public ISnmpMessage GetResponse(int timeout, IPEndPoint receiver)
         {
+            if (receiver == null)
+            {
+                throw new ArgumentNullException("receiver");
+            }
+            
             using (Socket socket = Helper.GetSocket(receiver))
             {
                 return GetResponse(timeout, receiver, socket);
@@ -171,6 +211,16 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public ISnmpMessage GetResponse(int timeout, IPEndPoint receiver, Socket udpSocket)
         {
+            if (udpSocket == null)
+            {
+                throw new ArgumentNullException("udpSocket");
+            }
+            
+            if (receiver == null)
+            {
+                throw new ArgumentNullException("receiver");
+            }
+            
             UserRegistry registry = null;
             if (Version == VersionCode.V3)
             {

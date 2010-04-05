@@ -51,18 +51,12 @@ namespace Lextm.SharpSnmpLib
         /// <param name="errorIndex">Error index</param>
         /// <param name="variables">Variables</param>
         public ReportPdu(int requestId, ErrorCode errorStatus, int errorIndex, IList<Variable> variables)
-            : this(new Integer32(requestId), new Integer32((int)errorStatus), new Integer32(errorIndex), variables)
         {
-        }
-        
-        private ReportPdu(Integer32 requestId, Integer32 errorStatus, Integer32 errorIndex, IList<Variable> variables)
-        {
-            _requestId = requestId;
-            _errorStatus = errorStatus;
-            _errorIndex = errorIndex;
+            _requestId = new Integer32(requestId);
+            _errorStatus = new Integer32((int)errorStatus);
+            _errorIndex = new Integer32(errorIndex);
             _variables = variables;
             _varbindSection = Variable.Transform(variables);
-            ////_raw = ByteTool.ParseItems(_seq, _errorStatus, _errorIndex, _varbindSection);
         }
         
         /// <summary>
@@ -71,13 +65,16 @@ namespace Lextm.SharpSnmpLib
         /// <param name="stream">The stream.</param>
         public ReportPdu(Stream stream)
         {
+            if (stream == null)
+            {
+                throw new ArgumentNullException("stream");
+            }
+            
             _requestId = (Integer32)DataFactory.CreateSnmpData(stream);
             _errorStatus = (Integer32)DataFactory.CreateSnmpData(stream);
             _errorIndex = (Integer32)DataFactory.CreateSnmpData(stream);
             _varbindSection = (Sequence)DataFactory.CreateSnmpData(stream);
             _variables = Variable.Transform(_varbindSection);
-            ////_raw = ByteTool.ParseItems(_seq, _errorStatus, _errorIndex, _varbindSection);
-            ////Debug.Assert(length >= _raw.Length, "length not match");
         }
 
         /// <summary>
@@ -137,6 +134,11 @@ namespace Lextm.SharpSnmpLib
         /// <param name="stream">The stream.</param>
         public void AppendBytesTo(Stream stream)
         {
+            if (stream == null)
+            {
+                throw new ArgumentNullException("stream");
+            }
+            
             if (_raw == null)
             {
                 _raw = ByteTool.ParseItems(_requestId, _errorStatus, _errorIndex, _varbindSection);

@@ -35,6 +35,16 @@ namespace Lextm.SharpSnmpLib.Security
         /// <param name="privacy">The privacy.</param>
         public ProviderPair(IAuthenticationProvider authentication, IPrivacyProvider privacy)
         {
+            if (privacy == null)
+            {
+                throw new ArgumentNullException("privacy");
+            }
+            
+            if (authentication == null)
+            {
+                throw new ArgumentNullException("authentication");
+            }
+            
             if (authentication == DefaultAuthenticationProvider.Instance)
             {
                 // FIXME: in this way privacy cannot be non-default.

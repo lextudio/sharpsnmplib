@@ -57,6 +57,21 @@ namespace Lextm.SharpSnmpLib.Messaging
         [CLSCompliant(false)]
         public InformRequestMessage(int requestId, VersionCode version, OctetString community, ObjectIdentifier enterprise, uint time, IList<Variable> variables)
         {
+            if (variables == null)
+            {
+                throw new ArgumentNullException("variables");
+            }
+            
+            if (enterprise == null)
+            {
+                throw new ArgumentNullException("enterprise");
+            }
+            
+            if (community == null)
+            {
+                throw new ArgumentNullException("community");
+            }
+            
             if (version == VersionCode.V3)
             {
                 throw new ArgumentException("only v1 and v2c are supported", "version");
@@ -72,12 +87,27 @@ namespace Lextm.SharpSnmpLib.Messaging
                 enterprise,
                 time,
                 variables);
-            _scope = new Scope(null, null, pdu);
+            _scope = new Scope(pdu);
             _pair = ProviderPair.Default;
         }
         
         internal InformRequestMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, ProviderPair record)
         {
+            if (scope == null)
+            {
+                throw new ArgumentNullException("scope");
+            }
+            
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            
+            if (header == null)
+            {
+                throw new ArgumentNullException("header");
+            }
+            
             if (record == null)
             {
                 throw new ArgumentNullException("record");
@@ -148,6 +178,11 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public ISnmpMessage GetResponse(int timeout, IPEndPoint receiver)
         {
+            if (receiver == null)
+            {
+                throw new ArgumentNullException("receiver");
+            }
+            
             using (Socket socket = Helper.GetSocket(receiver))
             {
                 return MessageFactory.GetResponse(receiver, ToBytes(), MessageId, timeout, UserRegistry.Default, socket);
@@ -163,6 +198,16 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public ISnmpMessage GetResponse(int timeout, IPEndPoint receiver, Socket socket)
         {
+            if (socket == null)
+            {
+                throw new ArgumentNullException("socket");
+            }
+            
+            if (receiver == null)
+            {
+                throw new ArgumentNullException("receiver");
+            }
+            
             return MessageFactory.GetResponse(receiver, ToBytes(), MessageId, timeout, UserRegistry.Default, socket);
         }
 

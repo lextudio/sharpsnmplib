@@ -110,6 +110,11 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public static TimeoutException Create(IPAddress agent, int timeout)
         {
+            if (agent == null)
+            {
+                throw new ArgumentNullException("agent");
+            }
+            
             TimeoutException ex = new TimeoutException {Agent = agent, Timeout = timeout};
             return ex;
         }

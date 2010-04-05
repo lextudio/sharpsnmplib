@@ -156,6 +156,11 @@ namespace Lextm.SharpSnmpLib
         /// <param name="stream">The stream.</param>
         public void AppendBytesTo(Stream stream)
         {
+            if (stream == null)
+            {
+                throw new ArgumentNullException("stream");
+            }
+            
             ByteTool.AppendBytes(stream, TypeCode, ByteTool.GetRawBytes(BitConverter.GetBytes(_int), _int < 0));
         }
 

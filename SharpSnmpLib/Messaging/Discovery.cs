@@ -24,9 +24,11 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
+
 using Lextm.SharpSnmpLib.Security;
 
 namespace Lextm.SharpSnmpLib.Messaging
@@ -74,6 +76,11 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public ReportMessage GetResponse(int timeout, IPEndPoint receiver)
         {
+            if (receiver == null)
+            {
+                throw new ArgumentNullException("receiver");
+            }
+            
             using (Socket socket = Helper.GetSocket(receiver))
             {
                 return (ReportMessage)MessageFactory.GetResponse(receiver, ToBytes(), _discovery.MessageId, timeout, UserRegistry.Default, socket);

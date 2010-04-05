@@ -15,6 +15,7 @@
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
+using System;
 using Lextm.SharpSnmpLib.Messaging;
 
 namespace Lextm.SharpSnmpLib.Security
@@ -60,6 +61,11 @@ namespace Lextm.SharpSnmpLib.Security
         /// <returns></returns>
         public OctetString ComputeHash(ISnmpMessage message)
         {
+            if (message == null)
+            {
+                throw new ArgumentNullException("message");
+            }
+            
             return OctetString.Empty;
         }
 
@@ -80,6 +86,16 @@ namespace Lextm.SharpSnmpLib.Security
         /// <returns></returns>
         public byte[] PasswordToKey(byte[] password, byte[] engineId)
         {
+            if (engineId == null)
+            {
+                throw new ArgumentNullException("engineId");
+            }
+            
+            if (password == null)
+            {
+                throw new ArgumentNullException("password");
+            }
+            
             // IMPORTANT: this is not needed in this class.
             return null;
         }

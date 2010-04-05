@@ -113,7 +113,11 @@ namespace Lextm.SharpSnmpLib
         /// <param name="stream">The stream.</param>
         public TrapV1Pdu(Stream stream)
         {
-            if (stream == null) throw new ArgumentNullException("stream");
+            if (stream == null) 
+            {
+                throw new ArgumentNullException("stream");
+            }
+            
             Enterprise = (ObjectIdentifier)DataFactory.CreateSnmpData(stream);
             AgentAddress = (IP)DataFactory.CreateSnmpData(stream);
             _generic = (Integer32)DataFactory.CreateSnmpData(stream);

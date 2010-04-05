@@ -71,8 +71,6 @@ namespace Lextm.SharpSnmpLib
                     _list.Add(data);
                 }
             }
-
-            ////_raw = ByteTool.ParseItems(items);
         }
         
         /// <summary>
@@ -98,9 +96,7 @@ namespace Lextm.SharpSnmpLib
                 {
                     _list.Add(data);
                 }
-            }
-            
-            ////_raw = ByteTool.ParseItems(items);
+            }            
         }
         
         /// <summary>
@@ -133,9 +129,6 @@ namespace Lextm.SharpSnmpLib
             {
                 _list.Add(DataFactory.CreateSnmpData(stream));
             }
-
-            ////_raw = ByteTool.ParseItems(_list);
-            ////Debug.Assert(length >= _raw.Length, "length not match");
         }
 
         /// <summary>

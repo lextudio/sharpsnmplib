@@ -52,6 +52,21 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="record">The record.</param>
         public ReportMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, ProviderPair record)
         {
+            if (scope == null)
+            {
+                throw new ArgumentNullException("scope");
+            }
+            
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            
+            if (header == null)
+            {
+                throw new ArgumentNullException("header");
+            }
+            
             if (record == null)
             {
                 throw new ArgumentNullException("record");
@@ -93,6 +108,11 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public ISnmpMessage GetResponse(int timeout, IPEndPoint receiver)
         {
+            if (receiver == null)
+            {
+                throw new ArgumentNullException("receiver");
+            }
+            
             using (Socket socket = Helper.GetSocket(receiver))
             {
                 return GetResponse(timeout, receiver, socket);
@@ -108,6 +128,16 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public ISnmpMessage GetResponse(int timeout, IPEndPoint receiver, Socket socket)
         {
+            if (socket == null)
+            {
+                throw new ArgumentNullException("socket");
+            }
+            
+            if (receiver == null)
+            {
+                throw new ArgumentNullException("receiver");
+            }
+            
             return MessageFactory.GetResponse(receiver, ToBytes(), MessageId, timeout, UserRegistry.Default, socket);
         }
 

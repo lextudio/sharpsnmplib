@@ -51,6 +51,26 @@ namespace Lextm.SharpSnmpLib.Messaging
 
         internal static Sequence PackMessage(VersionCode version, IPrivacyProvider privacy, ISegment header, SecurityParameters parameters, ISegment scope)
         {
+            if (scope == null)
+            {
+                throw new ArgumentNullException("scope");
+            }
+            
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            
+            if (header == null)
+            {
+                throw new ArgumentNullException("header");
+            }
+            
+            if (privacy == null)
+            {
+                throw new ArgumentNullException("privacy");
+            }
+            
             List<ISnmpData> collection = new List<ISnmpData>(4)
                                              {
                                                  new Integer32((int) version),

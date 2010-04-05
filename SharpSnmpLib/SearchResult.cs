@@ -149,6 +149,11 @@ namespace Lextm.SharpSnmpLib
         [Obsolete("Use ObjectIdentifier.ToString(IObjectRegistry) instead.")]
         public static string GetStringOf(ObjectIdentifier id, IObjectRegistry objects)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException("id");
+            }
+            
             if (objects == null)
             {
                 return id.ToString();
