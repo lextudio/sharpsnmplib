@@ -166,7 +166,7 @@ namespace Lextm.SharpSnmpLib.Browser
 
 	    private void LoadDefaultProfile()
 		{
-			AgentProfile first = new AgentProfile(Guid.Empty, VersionCode.V1, new IPEndPoint(IPAddress.Loopback, 161), "public", "public", "localhost", string.Empty, string.Empty, "MD5", "DES", string.Empty);
+			AgentProfile first = AgentProfileFactory.Create(Guid.Empty, VersionCode.V1, new IPEndPoint(IPAddress.Loopback, 161), "public", "public", "localhost", string.Empty, string.Empty, "MD5", "DES", string.Empty);
 			AddProfile(first);
 			DefaultProfile = first;
 		}
@@ -214,7 +214,7 @@ namespace Lextm.SharpSnmpLib.Browser
                                             break;
                                         }
 
-									    AgentProfile profile = new AgentProfile(id, vc, new IPEndPoint(def, port), get, set, name,
+									    AgentProfile profile = AgentProfileFactory.Create(id, vc, new IPEndPoint(def, port), get, set, name,
 									                                            authenticationPassphrase, privacyPassphrase, authenticationMethod,
 									                                            privacyMethod, userName);
 										if (id == defaultId)

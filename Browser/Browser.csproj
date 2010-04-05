@@ -93,6 +93,7 @@
       <Link>WatchDog.cs</Link>
     </Compile>
     <Compile Include="AgentProfile.cs" />
+    <Compile Include="AgentProfileFactory.cs" />
     <Compile Include="AgentProfilePanel.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -144,6 +145,7 @@
     <Compile Include="ModuleListPanel.Designer.cs">
       <DependentUpon>ModuleListPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="NormalAgentProfile.cs" />
     <Compile Include="NotificationPanel.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -167,6 +169,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="SecureAgentProfile.cs" />
     <EmbeddedResource Include="AgentProfilePanel.resx">
       <DependentUpon>AgentProfilePanel.cs</DependentUpon>
       <SubType>Designer</SubType>
