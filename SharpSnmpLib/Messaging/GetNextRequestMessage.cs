@@ -301,11 +301,10 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new ArgumentNullException("receiver");
             }
-            
-            UserRegistry registry = null;
+
+            UserRegistry registry = UserRegistry.Default;
             if (Version == VersionCode.V3)
             {
-                registry = UserRegistry.Default;
                 Helper.Authenticate(this, _pair);
                 registry.Add(_parameters.UserName, _pair);
             }

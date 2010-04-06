@@ -58,7 +58,12 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new ArgumentNullException("bytes");
             }
-            
+
+            if (registry == null)
+            {
+                throw new ArgumentNullException("registry");
+            }
+
             if (receiver == null)
             {
                 throw new ArgumentNullException("receiver");
@@ -194,10 +199,10 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new ArgumentNullException("stream");
             }
-            
-            if (stream == null)
+
+            if (registry == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException("registry");
             }
 
             IList<ISnmpMessage> result = new List<ISnmpMessage>();
