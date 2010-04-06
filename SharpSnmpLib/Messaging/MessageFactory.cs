@@ -54,11 +54,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <exception cref="TimeoutException">Timeout happens.</exception>
         internal static ISnmpMessage GetResponse(IPEndPoint receiver, byte[] bytes, int number, int timeout, UserRegistry registry, Socket socket)
         {
-            if (registry == null)
-            {
-                throw new ArgumentNullException("registry");
-            }
-            
             if (bytes == null)
             {
                 throw new ArgumentNullException("bytes");
@@ -198,11 +193,6 @@ namespace Lextm.SharpSnmpLib.Messaging
             if (stream == null)
             {
                 throw new ArgumentNullException("stream");
-            }
-            
-            if (registry == null)
-            {
-                throw new ArgumentNullException("registry");
             }
             
             if (stream == null)

@@ -1,3 +1,5 @@
+// typical usage
+// snmpget -c=public -v=1 localhost 1.3.6.1.2.1.1.1.0
 using System;
 using System.Collections.Generic;
 using System.Net;
