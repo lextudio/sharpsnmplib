@@ -7,7 +7,7 @@ namespace Lextm.SharpSnmpLib.Browser
 {
     internal static class AgentProfileFactory
     {
-        internal static AgentProfile Create(Guid id, VersionCode version, IPEndPoint agent, string getCommunity, string setCommunity, string agentName, string authenticationPassphrase, string privacyPassphrase, string authenticationMethod, string privacyMethod, string userName)
+        internal static AgentProfile Create(Guid id, VersionCode version, IPEndPoint agent, string getCommunity, string setCommunity, string agentName, string authenticationPassphrase, string privacyPassphrase, int authenticationMethod, int privacyMethod, string userName)
         {
             if (version == VersionCode.V3)
             {

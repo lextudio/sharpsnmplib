@@ -56,17 +56,17 @@ namespace Lextm.SharpSnmpLib.Browser
             get { return txtPrivacy.Text; }
         }
 
-        public string AuthenticationMethod
+        public int AuthenticationMethod
         {
             get
             {
-                return cbAuthentication.SelectedIndex == 0 ? "MD5" : "SHA1";
+                return cbAuthentication.SelectedIndex;
             }
         }
 
-        public string PrivacyMethod
+        public int PrivacyMethod
         {
-            get { return "DES"; }
+            get { return cbPrivacy.SelectedIndex; }
         }
 
         public string UserName
@@ -96,8 +96,8 @@ namespace Lextm.SharpSnmpLib.Browser
             var secure = _profile as SecureAgentProfile;
             txtAuthentication.Text = secure == null ? string.Empty : secure.AuthenticationPassphrase;
             txtPrivacy.Text = secure == null ? string.Empty : secure.PrivacyPassphrase;
-            cbAuthentication.SelectedIndex = secure == null ? 0 : (secure.AuthenticationMethod == "MD5") ? 0 : 1;
-            cbPrivacy.SelectedIndex = 0;
+            cbAuthentication.SelectedIndex = secure == null ? 0 : secure.AuthenticationMethod;
+            cbPrivacy.SelectedIndex = secure == null ? 0 : secure.PrivacyMethod;
             txtUserName.Text = _profile.UserName;
         }
         
@@ -185,15 +185,19 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void CbVersionCodeSelectedIndexChanged(object sender, EventArgs e)
         {
-            UpdateV3Controls(cbVersionCode.SelectedIndex == 2);
+            UpdateControls();
         }
 
-        private void UpdateV3Controls(bool isV3)
+        private void UpdateControls()
         {
+            bool isV3 = cbVersionCode.SelectedIndex == 2;
+            bool authenEnabled = cbAuthentication.SelectedIndex != 0;
+            bool privEnabled = cbPrivacy.SelectedIndex != 0;
+
             cbAuthentication.Enabled = isV3;
-            cbPrivacy.Enabled = isV3;
-            txtAuthentication.Enabled = isV3;
-            txtPrivacy.Enabled = isV3;
+            cbPrivacy.Enabled = isV3 && authenEnabled;
+            txtAuthentication.Enabled = isV3 && authenEnabled;
+            txtPrivacy.Enabled = isV3 && privEnabled && authenEnabled;
             txtUserName.Enabled = isV3;
             txtGet.Enabled = !isV3;
             txtSet.Enabled = !isV3;
@@ -244,6 +248,16 @@ namespace Lextm.SharpSnmpLib.Browser
             e.Cancel = true;
             control.SelectAll();
             errorProvider1.SetError(control, "Text box cannot be empty");
+        }
+
+        private void cbAuthentication_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateControls();
+        }
+
+        private void cbPrivacy_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateControls();
         }
     }
 }

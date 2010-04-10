@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
 using Lextm.SharpSnmpLib.Messaging;
+using Lextm.SharpSnmpLib.Security;
 
 namespace Lextm.SharpSnmpLib.Browser
 {
     class SecureAgentProfile : AgentProfile
     {
-        public SecureAgentProfile(Guid id, VersionCode version, IPEndPoint agent, string agentName, string authenticationPassphrase, string privacyPassphrase, string authenticationMethod, string privacyMethod, string userName)
+        public SecureAgentProfile(Guid id, VersionCode version, IPEndPoint agent, string agentName, string authenticationPassphrase, string privacyPassphrase, int authenticationMethod, int privacyMethod, string userName)
             : base(id, version, agent, agentName, userName)
         {
             AuthenticationPassphrase = authenticationPassphrase;
@@ -19,14 +20,48 @@ namespace Lextm.SharpSnmpLib.Browser
 
         internal string AuthenticationPassphrase { get; set; }
         internal string PrivacyPassphrase { get; set; }
-        internal string AuthenticationMethod { get; set; }
-        internal string PrivacyMethod { get; set; }
+        internal int AuthenticationMethod { get; set; }
+        internal int PrivacyMethod { get; set; }
 
         internal override void Get(Manager manager, Variable variable)
         {
-            // Variable result = manager.Objects.CreateVariable(textual);
             TraceSource source = new TraceSource("Browser");
             // source.TraceInformation(manager.GetSingle(Agent, GetCommunity, result).ToString(manager.Objects));
+            if (string.IsNullOrEmpty(UserName))
+            {
+                source.TraceInformation("User name need to be specified for v3.");
+                source.Flush();
+                source.Close();
+                return;
+            }
+
+            //IAuthenticationProvider auth = (level & Levels.Authentication) == Levels.Authentication
+            //                                   ? GetAuthenticationProviderByName(authentication, authPhrase)
+            //                                   : DefaultAuthenticationProvider.Instance;
+
+            //IPrivacyProvider priv = (level & Levels.Privacy) == Levels.Privacy
+            //                            ? new DESPrivacyProvider(new OctetString(privPhrase), auth)
+            //                            : DefaultPrivacyProvider.Instance;
+
+            //Discovery discovery = new Discovery(1, 101);
+            //ReportMessage report = discovery.GetResponse(timeout, receiver);
+
+            //ProviderPair record = new ProviderPair(auth, priv);
+            //GetRequestMessage request = new GetRequestMessage(VersionCode.V3, 100, 0, new OctetString(user), vList, record, report);
+
+            //ISnmpMessage response = request.GetResponse(timeout, receiver);
+            //if (response.Pdu.ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
+            //{
+            //    throw ErrorException.Create(
+            //        "error in response",
+            //        receiver.Address,
+            //        response);
+            //}
+
+            //foreach (Variable v in response.Pdu.Variables)
+            //{
+            //    Console.WriteLine(v);
+            //}
             source.Flush();
             source.Close();
         }

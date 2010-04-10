@@ -145,11 +145,11 @@ namespace Lextm.SharpSnmpLib.Browser
                     writer.WriteEndAttribute();
 
                     writer.WriteStartAttribute("autheticationMethod");
-                    writer.WriteString(secure == null ? string.Empty : secure.AuthenticationMethod);
+                    writer.WriteString(secure == null ? string.Empty : secure.AuthenticationMethod.ToString());
                     writer.WriteEndAttribute();
 
                     writer.WriteStartAttribute("privacyMethod");
-                    writer.WriteString(secure == null ? string.Empty : secure.PrivacyMethod);
+                    writer.WriteString(secure == null ? string.Empty : secure.PrivacyMethod.ToString());
                     writer.WriteEndAttribute();
 
                     writer.WriteStartAttribute("userName");
@@ -168,7 +168,7 @@ namespace Lextm.SharpSnmpLib.Browser
 
 	    private void LoadDefaultProfile()
 		{
-			AgentProfile first = AgentProfileFactory.Create(Guid.Empty, VersionCode.V1, new IPEndPoint(IPAddress.Loopback, 161), "public", "public", "localhost", string.Empty, string.Empty, "MD5", "DES", string.Empty);
+			AgentProfile first = AgentProfileFactory.Create(Guid.Empty, VersionCode.V1, new IPEndPoint(IPAddress.Loopback, 161), "public", "public", "localhost", string.Empty, string.Empty, 0, 0, string.Empty);
 			AddProfile(first);
 			DefaultProfile = first;
 		}
@@ -217,8 +217,8 @@ namespace Lextm.SharpSnmpLib.Browser
                                         }
 
 									    AgentProfile profile = AgentProfileFactory.Create(id, vc, new IPEndPoint(def, port), get, set, name,
-									                                            authenticationPassphrase, privacyPassphrase, authenticationMethod,
-									                                            privacyMethod, userName);
+									                                            authenticationPassphrase, privacyPassphrase, int.Parse(authenticationMethod),
+									                                            int.Parse(privacyMethod), userName);
 										if (id == defaultId)
 										{
 											DefaultProfile = profile;

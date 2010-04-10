@@ -14,4 +14,4 @@ Other demo source code is released in public domain.
 
 *Dependency*
 
-You must install .NET Framework 3.5 (or 4.0) and AssemblyInfo Task (http://code.msdn.microsoft.com/AssemblyInfoTaskvers) before compiling the source code.
+You must install .NET Framework 3.5 or 4.0, and AssemblyInfo Task (http://code.msdn.microsoft.com/AssemblyInfoTaskvers) before compiling the source code.
