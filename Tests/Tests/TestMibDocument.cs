@@ -397,7 +397,8 @@ namespace Lextm.SharpSnmpLib.Tests
                 lexer.Parse("temp.txt", reader);
                 reader.Close();
             }
-            MibDocument file = new MibDocument(lexer);
+            
+			new MibDocument(lexer);
         }
         [Test]
         public void TestRFC1155_SMI()

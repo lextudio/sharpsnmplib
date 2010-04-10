@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Created by SharpDevelop.
  * User: lextm
  * Date: 11/7/2009
@@ -62,13 +62,13 @@ namespace Lextm.SharpSnmpLib.Tests
         [Test]
         public void TestLexerOK()
         {
-            string test = "ADSL-LINE-MIB DEFINITIONS ::= BEGIN" + Environment.NewLine +
-                "IMPORTS" + Environment.NewLine +
-                "MODULE-IDENTITY, OBJECT-TYPE," + Environment.NewLine +
-                "Counter32, Gauge32, Integer32," + Environment.NewLine +
-                "NOTIFICATION-TYPE," + Environment.NewLine +
-                "transmission           FROM SNMPv2-SMI;" + Environment.NewLine +
-                "END";
+//            string test = "ADSL-LINE-MIB DEFINITIONS ::= BEGIN" + Environment.NewLine +
+//                "IMPORTS" + Environment.NewLine +
+//                "MODULE-IDENTITY, OBJECT-TYPE," + Environment.NewLine +
+//                "Counter32, Gauge32, Integer32," + Environment.NewLine +
+//                "NOTIFICATION-TYPE," + Environment.NewLine +
+//                "transmission           FROM SNMPv2-SMI;" + Environment.NewLine +
+//                "END";
             //SmiLexer lex = new SmiLexer(new ANTLRStringStream(test));
             //CommonTokenStream tokens = new CommonTokenStream(lex);
             //SmiParser parser = new SmiParser(tokens);

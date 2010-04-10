@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using Lextm.SharpSnmpLib.Messaging;
 using NUnit.Framework;
@@ -77,21 +77,21 @@ namespace Lextm.SharpSnmpLib.Tests
         [ExpectedException(typeof(ArgumentNullException))]
         public void TestContructor3()
         {
-            Counter32 test = new Counter32(1, null);
+            new Counter32(1, null);
         }
         
         [Test]
         [ExpectedException(typeof(ArgumentException))]
         public void TestConstructor4()
         {
-            Counter32 test = new Counter32(0, new MemoryStream());
+            new Counter32(0, new MemoryStream());
         }
         
         [Test]
         [ExpectedException(typeof(ArgumentException))]
         public void TestConstructor5()
         {
-            Counter32 test = new Counter32(6, new MemoryStream());
+            new Counter32(6, new MemoryStream());
         }
         
         [Test]
@@ -99,7 +99,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestConstructor6()
         {
             byte[] buffer5 = new byte[] {3, 255, 255, 255, 255};
-            Counter32 c5 = new Counter32(buffer5);
+            new Counter32(buffer5);
         }
         
         [Test]

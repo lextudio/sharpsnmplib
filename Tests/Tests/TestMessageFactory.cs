@@ -129,7 +129,7 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual(27801, get.MessageId);
             //Assert.AreEqual(SecurityLevel.None | SecurityLevel.Reportable, get.Level);
             Assert.AreEqual("lexmark", get.Community.ToString());
-            OctetString digest = new MD5AuthenticationProvider(new OctetString("testpass")).ComputeHash(get);
+            //OctetString digest = new MD5AuthenticationProvider(new OctetString("testpass")).ComputeHash(get);
 
             //Assert.AreEqual(digest, get.Parameters.AuthenticationParameters);
         }
@@ -164,7 +164,7 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual(13633, get.MessageId);
             //Assert.AreEqual(SecurityLevel.None | SecurityLevel.Reportable, get.Level);
             Assert.AreEqual("lexli", get.Community.ToString());
-            OctetString digest = new MD5AuthenticationProvider(new OctetString("testpass")).ComputeHash(get);
+            //OctetString digest = new MD5AuthenticationProvider(new OctetString("testpass")).ComputeHash(get);
 
             //Assert.AreEqual(digest, get.Parameters.AuthenticationParameters);
         }

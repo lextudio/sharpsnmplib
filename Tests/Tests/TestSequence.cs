@@ -27,7 +27,7 @@ namespace Lextm.SharpSnmpLib.Tests
             iList.Add(2);
             iList.Add(2);
 
-            Sequence array = new Sequence(iList);
+            new Sequence(iList);
         }
 
         [Test]

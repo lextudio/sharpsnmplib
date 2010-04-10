@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Created by SharpDevelop.
  * User: steves
  * Date: 2008/9/4
@@ -25,7 +25,7 @@ namespace Lextm.SharpSnmpLib.Tests
                         new ObjectIdentifier(new uint[] {1,3,6,1,2,1,2,2,1,22,1}),
                         new ObjectIdentifier(new uint[] {0,0})));
             
-            Sequence a = Variable.Transform(vList);
+            Variable.Transform(vList);
         }
     }
 }
