@@ -484,6 +484,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="numerical">The numerical.</param>
         /// <param name="extra">The extra.</param>
         /// <returns></returns>
+        [CLSCompliant(false)]
         public static ObjectIdentifier Create(uint[] numerical, uint extra)
         {
             uint[] result = new uint[numerical.Length + 1];
