@@ -75,9 +75,15 @@
     <OutputPath>..\bin\</OutputPath>
     <NoStdLib>false</NoStdLib>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\network-server.ico</ApplicationIcon>
+  </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <Import Project="..\sharpsnmplib\Microsoft.VersionNumber.targets" Condition=" '$(Configuration)' == 'Debug' " />
   <ItemGroup>
+    <Reference Include="Crad.Windows.Forms.Actions">
+      <HintPath>..\lib\Crad.Windows.Forms.Actions.dll</HintPath>
+    </Reference>
     <Reference Include="log4net">
       <HintPath>..\lib\log4net.dll</HintPath>
     </Reference>
@@ -105,6 +111,11 @@
     <Compile Include="GetBulkMessageHandler.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="NormalSnmpContext.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="ResponseData.cs" />
     <Compile Include="RollingLogger.cs" />
     <Compile Include="SecureSnmpContext.cs" />
@@ -167,6 +178,10 @@
       <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -192,5 +207,11 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\face-monkey.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\network-server.ico" />
   </ItemGroup>
 </Project>

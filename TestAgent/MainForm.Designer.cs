@@ -37,138 +37,178 @@ namespace Lextm.SharpSnmpLib.Agent
         /// </summary>
         private void InitializeComponent()
         {
-        	this.btnStart = new System.Windows.Forms.Button();
-        	this.btnStop = new System.Windows.Forms.Button();
-        	this.btnTrap = new System.Windows.Forms.Button();
-        	this.btnTrap2 = new System.Windows.Forms.Button();
-        	this.txtIP = new System.Windows.Forms.TextBox();
-        	this.txtPort = new System.Windows.Forms.TextBox();
-        	this.label1 = new System.Windows.Forms.Label();
-        	this.label2 = new System.Windows.Forms.Label();
-        	this.btnInform = new System.Windows.Forms.Button();
-        	this.label3 = new System.Windows.Forms.Label();
-        	this.txtAgentPort = new System.Windows.Forms.TextBox();
-        	this.SuspendLayout();
-        	// 
-        	// btnStart
-        	// 
-        	this.btnStart.Location = new System.Drawing.Point(30, 54);
-        	this.btnStart.Name = "btnStart";
-        	this.btnStart.Size = new System.Drawing.Size(75, 23);
-        	this.btnStart.TabIndex = 0;
-        	this.btnStart.Text = "Start";
-        	this.btnStart.UseVisualStyleBackColor = true;
-        	this.btnStart.Click += new System.EventHandler(this.BtnStartClick);
-        	// 
-        	// btnStop
-        	// 
-        	this.btnStop.Location = new System.Drawing.Point(246, 54);
-        	this.btnStop.Name = "btnStop";
-        	this.btnStop.Size = new System.Drawing.Size(75, 23);
-        	this.btnStop.TabIndex = 1;
-        	this.btnStop.Text = "Stop";
-        	this.btnStop.UseVisualStyleBackColor = true;
-        	this.btnStop.Click += new System.EventHandler(this.BtnStopClick);
-        	// 
-        	// btnTrap
-        	// 
-        	this.btnTrap.Location = new System.Drawing.Point(30, 167);
-        	this.btnTrap.Name = "btnTrap";
-        	this.btnTrap.Size = new System.Drawing.Size(93, 23);
-        	this.btnTrap.TabIndex = 2;
-        	this.btnTrap.Text = "Send Trap v1";
-        	this.btnTrap.UseVisualStyleBackColor = true;
-        	this.btnTrap.Click += new System.EventHandler(this.BtnTrapClick);
-        	// 
-        	// btnTrap2
-        	// 
-        	this.btnTrap2.Location = new System.Drawing.Point(129, 167);
-        	this.btnTrap2.Name = "btnTrap2";
-        	this.btnTrap2.Size = new System.Drawing.Size(93, 23);
-        	this.btnTrap2.TabIndex = 3;
-        	this.btnTrap2.Text = "Send Trap v2";
-        	this.btnTrap2.UseVisualStyleBackColor = true;
-        	this.btnTrap2.Click += new System.EventHandler(this.BtnTrap2Click);
-        	// 
-        	// txtIP
-        	// 
-        	this.txtIP.Location = new System.Drawing.Point(110, 93);
-        	this.txtIP.Name = "txtIP";
-        	this.txtIP.Size = new System.Drawing.Size(100, 20);
-        	this.txtIP.TabIndex = 4;
-        	this.txtIP.Text = "127.0.0.1";
-        	// 
-        	// txtPort
-        	// 
-        	this.txtPort.Location = new System.Drawing.Point(110, 128);
-        	this.txtPort.Name = "txtPort";
-        	this.txtPort.Size = new System.Drawing.Size(49, 20);
-        	this.txtPort.TabIndex = 5;
-        	this.txtPort.Text = "162";
-        	// 
-        	// label1
-        	// 
-        	this.label1.Location = new System.Drawing.Point(30, 96);
-        	this.label1.Name = "label1";
-        	this.label1.Size = new System.Drawing.Size(66, 23);
-        	this.label1.TabIndex = 6;
-        	this.label1.Text = "Manager IP";
-        	// 
-        	// label2
-        	// 
-        	this.label2.Location = new System.Drawing.Point(66, 131);
-        	this.label2.Name = "label2";
-        	this.label2.Size = new System.Drawing.Size(38, 23);
-        	this.label2.TabIndex = 7;
-        	this.label2.Text = "Port";
-        	// 
-        	// btnInform
-        	// 
-        	this.btnInform.Location = new System.Drawing.Point(228, 167);
-        	this.btnInform.Name = "btnInform";
-        	this.btnInform.Size = new System.Drawing.Size(93, 23);
-        	this.btnInform.TabIndex = 8;
-        	this.btnInform.Text = "Send Inform";
-        	this.btnInform.UseVisualStyleBackColor = true;
-        	this.btnInform.Click += new System.EventHandler(this.BtnInformClick);
-        	// 
-        	// label3
-        	// 
-        	this.label3.AutoSize = true;
-        	this.label3.Location = new System.Drawing.Point(30, 13);
-        	this.label3.Name = "label3";
-        	this.label3.Size = new System.Drawing.Size(57, 13);
-        	this.label3.TabIndex = 9;
-        	this.label3.Text = "Agent Port";
-        	// 
-        	// txtAgentPort
-        	// 
-        	this.txtAgentPort.Location = new System.Drawing.Point(110, 10);
-        	this.txtAgentPort.Name = "txtAgentPort";
-        	this.txtAgentPort.Size = new System.Drawing.Size(100, 20);
-        	this.txtAgentPort.TabIndex = 10;
-        	this.txtAgentPort.Text = "161";
-        	// 
-        	// MainForm
-        	// 
-        	this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-        	this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-        	this.ClientSize = new System.Drawing.Size(353, 208);
-        	this.Controls.Add(this.txtAgentPort);
-        	this.Controls.Add(this.label3);
-        	this.Controls.Add(this.btnInform);
-        	this.Controls.Add(this.label2);
-        	this.Controls.Add(this.label1);
-        	this.Controls.Add(this.txtPort);
-        	this.Controls.Add(this.txtIP);
-        	this.Controls.Add(this.btnTrap2);
-        	this.Controls.Add(this.btnTrap);
-        	this.Controls.Add(this.btnStop);
-        	this.Controls.Add(this.btnStart);
-        	this.Name = "MainForm";
-        	this.Text = "TestAgent";
-        	this.ResumeLayout(false);
-        	this.PerformLayout();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            this.btnTrap = new System.Windows.Forms.Button();
+            this.btnTrap2 = new System.Windows.Forms.Button();
+            this.txtIP = new System.Windows.Forms.TextBox();
+            this.txtPort = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.btnInform = new System.Windows.Forms.Button();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+            this.tscbIP = new System.Windows.Forms.ToolStripComboBox();
+            this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
+            this.tstxtPort = new System.Windows.Forms.ToolStripTextBox();
+            this.actEnabled = new Crad.Windows.Forms.Actions.Action();
+            this.alNotification = new Crad.Windows.Forms.Actions.ActionList();
+            this.toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.alNotification)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // btnTrap
+            // 
+            this.btnTrap.Location = new System.Drawing.Point(26, 106);
+            this.btnTrap.Name = "btnTrap";
+            this.btnTrap.Size = new System.Drawing.Size(93, 23);
+            this.btnTrap.TabIndex = 2;
+            this.btnTrap.Text = "Send Trap v1";
+            this.btnTrap.UseVisualStyleBackColor = true;
+            this.btnTrap.Click += new System.EventHandler(this.BtnTrapClick);
+            // 
+            // btnTrap2
+            // 
+            this.btnTrap2.Location = new System.Drawing.Point(125, 106);
+            this.btnTrap2.Name = "btnTrap2";
+            this.btnTrap2.Size = new System.Drawing.Size(93, 23);
+            this.btnTrap2.TabIndex = 3;
+            this.btnTrap2.Text = "Send Trap v2";
+            this.btnTrap2.UseVisualStyleBackColor = true;
+            this.btnTrap2.Click += new System.EventHandler(this.BtnTrap2Click);
+            // 
+            // txtIP
+            // 
+            this.txtIP.Location = new System.Drawing.Point(84, 32);
+            this.txtIP.Name = "txtIP";
+            this.txtIP.Size = new System.Drawing.Size(100, 20);
+            this.txtIP.TabIndex = 4;
+            this.txtIP.Text = "127.0.0.1";
+            // 
+            // txtPort
+            // 
+            this.txtPort.Location = new System.Drawing.Point(84, 58);
+            this.txtPort.Name = "txtPort";
+            this.txtPort.Size = new System.Drawing.Size(49, 20);
+            this.txtPort.TabIndex = 5;
+            this.txtPort.Text = "162";
+            // 
+            // label1
+            // 
+            this.label1.Location = new System.Drawing.Point(12, 35);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(66, 23);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "Manager IP";
+            // 
+            // label2
+            // 
+            this.label2.Location = new System.Drawing.Point(40, 61);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(38, 23);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "Port";
+            // 
+            // btnInform
+            // 
+            this.btnInform.Location = new System.Drawing.Point(224, 106);
+            this.btnInform.Name = "btnInform";
+            this.btnInform.Size = new System.Drawing.Size(93, 23);
+            this.btnInform.TabIndex = 8;
+            this.btnInform.Text = "Send Inform";
+            this.btnInform.UseVisualStyleBackColor = true;
+            this.btnInform.Click += new System.EventHandler(this.BtnInformClick);
+            // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButton1,
+            this.toolStripSeparator1,
+            this.toolStripLabel1,
+            this.tscbIP,
+            this.toolStripLabel2,
+            this.tstxtPort});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(353, 25);
+            this.toolStrip1.TabIndex = 9;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // toolStripButton1
+            // 
+            this.alNotification.SetAction(this.toolStripButton1, this.actEnabled);
+            this.toolStripButton1.CheckOnClick = true;
+            this.toolStripButton1.Image = global::Lextm.SharpSnmpLib.Agent.Properties.Resources.face_monkey;
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(72, 22);
+            this.toolStripButton1.Text = "Disabled";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripLabel1
+            // 
+            this.toolStripLabel1.Name = "toolStripLabel1";
+            this.toolStripLabel1.Size = new System.Drawing.Size(17, 22);
+            this.toolStripLabel1.Text = "IP";
+            // 
+            // tscbIP
+            // 
+            this.tscbIP.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.tscbIP.Name = "tscbIP";
+            this.tscbIP.Size = new System.Drawing.Size(150, 25);
+            // 
+            // toolStripLabel2
+            // 
+            this.toolStripLabel2.Name = "toolStripLabel2";
+            this.toolStripLabel2.Size = new System.Drawing.Size(29, 22);
+            this.toolStripLabel2.Text = "Port";
+            // 
+            // tstxtPort
+            // 
+            this.tstxtPort.Name = "tstxtPort";
+            this.tstxtPort.Size = new System.Drawing.Size(40, 25);
+            // 
+            // actEnabled
+            // 
+            this.actEnabled.CheckOnClick = true;
+            this.actEnabled.Image = global::Lextm.SharpSnmpLib.Agent.Properties.Resources.face_monkey;
+            this.actEnabled.Text = "Disabled";
+            this.actEnabled.ToolTipText = "Enable/disable this panel";
+            this.actEnabled.Execute += new System.EventHandler(this.actEnabled_Execute);
+            // 
+            // alNotification
+            // 
+            this.alNotification.Actions.Add(this.actEnabled);
+            this.alNotification.ContainerControl = this;
+            this.alNotification.Update += new System.EventHandler(this.alNotification_Update);
+            // 
+            // MainForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(353, 141);
+            this.Controls.Add(this.toolStrip1);
+            this.Controls.Add(this.btnInform);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.txtPort);
+            this.Controls.Add(this.txtIP);
+            this.Controls.Add(this.btnTrap2);
+            this.Controls.Add(this.btnTrap);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Name = "MainForm";
+            this.Text = "TestAgent";
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.alNotification)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
         private System.Windows.Forms.Button btnInform;
         private System.Windows.Forms.Label label2;
@@ -177,11 +217,15 @@ namespace Lextm.SharpSnmpLib.Agent
         private System.Windows.Forms.TextBox txtIP;
         private System.Windows.Forms.Button btnTrap2;
         private System.Windows.Forms.Button btnTrap;
-
-        private System.Windows.Forms.Button btnStart;
-        private System.Windows.Forms.Button btnStop;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox txtAgentPort;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
+        private System.Windows.Forms.ToolStripComboBox tscbIP;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel2;
+        private System.Windows.Forms.ToolStripTextBox tstxtPort;
+        private Crad.Windows.Forms.Actions.ActionList alNotification;
+        private Crad.Windows.Forms.Actions.Action actEnabled;
 
     }
 }

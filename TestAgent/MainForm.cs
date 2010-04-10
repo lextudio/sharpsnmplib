@@ -9,7 +9,9 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Net;
+using System.Net.Sockets;
 using System.Windows.Forms;
 using Microsoft.Practices.Unity;
 using Lextm.SharpSnmpLib.Messaging;
@@ -22,28 +24,62 @@ namespace Lextm.SharpSnmpLib.Agent
     public partial class MainForm : Form
     {
         private readonly SnmpDemon _demon;
+        private const string StrAllUnassigned = "All Unassigned";
 
         public MainForm()
         {
             _demon = Program.Container.Resolve<SnmpDemon>();
             InitializeComponent();
-            Application.Idle += Application_Idle;
+            tstxtPort.Text = "161";
+            tscbIP.Items.Add(StrAllUnassigned);
+            foreach (IPAddress address in Dns.GetHostEntry("").AddressList.Where(address => !address.IsIPv6LinkLocal))
+            {
+                tscbIP.Items.Add(address);
+            }
+
+            tscbIP.SelectedIndex = 0;
         }
 
-        private void Application_Idle(object sender, EventArgs e)
-        {
-            btnStart.Enabled = !_demon.Active;
-            btnStop.Enabled = _demon.Active;
-        }
-
-        private void BtnStartClick(object sender, EventArgs e)
+        private void StartListeners()
         {
             _demon.Listener.ClearBindings();
-            _demon.Listener.AddBinding(new IPEndPoint(IPAddress.Any, int.Parse(txtAgentPort.Text, CultureInfo.InvariantCulture)));
+            int port = int.Parse(tstxtPort.Text);
+            if (tscbIP.Text == StrAllUnassigned)
+            {
+                _demon.Listener.AddBinding(new IPEndPoint(IPAddress.Any, port));
+                if (Socket.OSSupportsIPv6)
+                {
+                    _demon.Listener.AddBinding(new IPEndPoint(IPAddress.IPv6Any, port));
+                }
+
+                _demon.Start();
+                return;
+            }
+
+            IPAddress address = IPAddress.Parse(tscbIP.Text);
+            if (address == null)
+            {
+                return;
+            }
+
+            if (address.AddressFamily == AddressFamily.InterNetwork)
+            {
+                _demon.Listener.AddBinding(new IPEndPoint(address, port));
+                _demon.Start();
+                return;
+            }
+
+            if (!Socket.OSSupportsIPv6)
+            {
+                MessageBox.Show(Listener.ErrorIPv6NotSupported);
+                return;
+            }
+
+            _demon.Listener.AddBinding(new IPEndPoint(address, port));
             _demon.Start();
         }
 
-        private void BtnStopClick(object sender, EventArgs e)
+        private void StopListeners()
         {
             _demon.Stop();
         }
@@ -111,6 +147,26 @@ namespace Lextm.SharpSnmpLib.Agent
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void actEnabled_Execute(object sender, EventArgs e)
+        {
+            if (actEnabled.Checked)
+            {
+                StartListeners();
+                actEnabled.Text = "Enabled";
+            }
+            else
+            {
+                StopListeners();
+                actEnabled.Text = "Disabled";
+            }
+        }
+
+        private void alNotification_Update(object sender, EventArgs e)
+        {
+            tscbIP.Enabled = !actEnabled.Checked;
+            tstxtPort.Enabled = !actEnabled.Checked;
         }
     }
 }
