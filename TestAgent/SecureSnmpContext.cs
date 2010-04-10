@@ -18,8 +18,9 @@ namespace Lextm.SharpSnmpLib.Agent
         /// <param name="sender">The sender.</param>
         /// <param name="listener">The listener.</param>
         /// <param name="objects">The agent core objects.</param>
-        public SecureSnmpContext(ISnmpMessage request, IPEndPoint sender, Listener listener, AgentObjects objects)
-            : base(request, sender, listener, objects)
+        /// <param name="binding">The binding.</param>
+        public SecureSnmpContext(ISnmpMessage request, IPEndPoint sender, Listener listener, AgentObjects objects, ListenerBinding binding)
+            : base(request, sender, listener, objects, binding)
         {
         }
 

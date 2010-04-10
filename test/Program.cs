@@ -7,6 +7,7 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
+using System.Net;
 using Lextm.SharpSnmpLib.Messaging;
 
 namespace SnmpTrapD
@@ -22,11 +23,12 @@ namespace SnmpTrapD
 
             Console.WriteLine("#SNMP is available at http://sharpsnmplib.codeplex.com");
             Listener watcher = new Listener();
-            DefaultListenerAdapter adapter = new DefaultListenerAdapter(watcher);
+            DefaultListenerAdapter adapter = new DefaultListenerAdapter();
             watcher.Adapters.Add(adapter);
             adapter.TrapV1Received += WatcherTrapV1Received;
             adapter.TrapV2Received += WatcherTrapV2Received;
             adapter.InformRequestReceived += WatcherInformRequestReceived;
+            watcher.AddBinding(new IPEndPoint(IPAddress.Any, 162));
             watcher.Start();
             Console.WriteLine("Press any key to stop . . . ");
             Console.Read();

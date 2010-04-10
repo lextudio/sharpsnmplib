@@ -6,7 +6,7 @@
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
- using System;
+using System;
 using System.Windows.Forms;
 using Lextm.SharpSnmpLib.Messaging;
 
@@ -18,7 +18,7 @@ namespace Lextm.SharpSnmpLib.Agent
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
     internal class SnmpDemon : IDisposable
     {
-        private readonly Listener _listener;
+        public Listener Listener { get; private set; }
         private readonly SnmpApplicationFactory _factory;
         private readonly AgentObjects _objects;
 
@@ -31,27 +31,26 @@ namespace Lextm.SharpSnmpLib.Agent
         public SnmpDemon(SnmpApplicationFactory factory, Listener listener, AgentObjects objects)
         {
             _factory = factory;
-            _listener = listener;
+            Listener = listener;
             _objects = objects;
         }
 
         private void ListenerMessageReceived(object sender, MessageReceivedEventArgs<ISnmpMessage> e)
         {
             ISnmpMessage request = e.Message;
-            SnmpContext context = SnmpContextFactory.Create(request, e.Sender, _listener, _objects);   
+            SnmpContext context = SnmpContextFactory.Create(request, e.Sender, Listener, _objects, e.Binding);   
             SnmpApplication application = _factory.Create(context);
             application.Process();
         }
 
         /// <summary>
-        /// Starts the specified port.
+        /// Starts the demon.
         /// </summary>
-        /// <param name="port">The port.</param>
-        public void Start(int port)
+        public void Start()
         {
-            _listener.ExceptionRaised += ListenerExceptionRaised;
-            _listener.MessageReceived += ListenerMessageReceived;
-            _listener.Start(port);
+            Listener.ExceptionRaised += ListenerExceptionRaised;
+            Listener.MessageReceived += ListenerMessageReceived;
+            Listener.Start();
         }
 
         /// <summary>
@@ -59,9 +58,9 @@ namespace Lextm.SharpSnmpLib.Agent
         /// </summary>
         public void Stop()
         {
-            _listener.Stop();
-            _listener.ExceptionRaised -= ListenerExceptionRaised;
-            _listener.MessageReceived -= ListenerMessageReceived;
+            Listener.Stop();
+            Listener.ExceptionRaised -= ListenerExceptionRaised;
+            Listener.MessageReceived -= ListenerMessageReceived;
         }
 
         /// <summary>
@@ -70,7 +69,7 @@ namespace Lextm.SharpSnmpLib.Agent
         /// <value><c>true</c> if active; otherwise, <c>false</c>.</value>
         public bool Active
         {
-            get { return _listener.Active; }
+            get { return Listener.Active; }
         }
      
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1300:SpecifyMessageBoxOptions")]
@@ -84,7 +83,7 @@ namespace Lextm.SharpSnmpLib.Agent
         /// </summary>
         public void Dispose()
         {
-            _listener.Dispose();
+            Listener.Dispose();
             GC.SuppressFinalize(this);
         }
     }

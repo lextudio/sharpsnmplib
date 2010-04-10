@@ -9,12 +9,9 @@ namespace Lextm.SharpSnmpLib.Agent
     /// </summary>
     internal abstract class SnmpContext
     {
-        private readonly ISnmpMessage _request;
-        private readonly DateTime _createdTime;
-        private readonly IPEndPoint _sender;
-        private ISnmpMessage _response;
-        private readonly Listener _listener;
-        private readonly AgentObjects _objects;
+        /// <summary>
+        /// Max response size.
+        /// </summary>
         protected const int MaxResponseSize = 1500;
 
         /// <summary>
@@ -24,78 +21,71 @@ namespace Lextm.SharpSnmpLib.Agent
         /// <param name="sender">The sender.</param>
         /// <param name="listener">The listener.</param>
         /// <param name="objects">The agent core objects.</param>
-        protected SnmpContext(ISnmpMessage request, IPEndPoint sender, Listener listener, AgentObjects objects)
+        /// <param name="binding">The binding.</param>
+        protected SnmpContext(ISnmpMessage request, IPEndPoint sender, Listener listener, AgentObjects objects, ListenerBinding binding)
         {
-            _request = request;
-            _listener = listener;
-            _sender = sender;
-            _createdTime = DateTime.Now;
-            _objects = objects;
+            Request = request;
+            Binding = binding;
+            Listener = listener;
+            Sender = sender;
+            CreatedTime = DateTime.Now;
+            Objects = objects;
         }
+
+        /// <summary>
+        /// Gets or sets the binding.
+        /// </summary>
+        /// <value>The binding.</value>
+        public ListenerBinding Binding { get; private set; }
 
         /// <summary>
         /// Gets the created time.
         /// </summary>
         /// <value>The created time.</value>
-        public DateTime CreatedTime
-        {
-            get { return _createdTime; }
-        }
+        public DateTime CreatedTime { get; private set; }
 
         /// <summary>
         /// Gets the request.
         /// </summary>
         /// <value>The request.</value>
-        public ISnmpMessage Request
-        {
-            get { return _request; }
-        }
+        public ISnmpMessage Request { get; private set; }
 
         /// <summary>
         /// Gets the listener.
         /// </summary>
         /// <value>The listener.</value>
-        public Listener Listener
-        {
-            get { return _listener; }
-        }
+        public Listener Listener { get; private set; }
 
         /// <summary>
         /// Gets the response.
         /// </summary>
         /// <value>The response.</value>
-        public ISnmpMessage Response
-        {
-            get { return _response; }
-            protected set { _response = value; }
-        }
+        public ISnmpMessage Response { get; protected set; }
 
         /// <summary>
         /// Gets the sender.
         /// </summary>
         /// <value>The sender.</value>
-        public IPEndPoint Sender
-        {
-            get { return _sender; }
-        }
+        public IPEndPoint Sender { get; private set; }
 
-        protected AgentObjects Objects
-        {
-            get { return _objects; }
-        }
+        /// <summary>
+        /// Gets or sets the objects.
+        /// </summary>
+        /// <value>The objects.</value>
+        protected AgentObjects Objects { get; private set; }
 
         /// <summary>
         /// Sends out response message.
         /// </summary>
         public void SendResponse()
         {
-            if (_response == null)
+            if (Response == null)
             {
                 return;
             }
 
             AuthenticateMessage();
-            Listener.SendResponse(_response, Sender);
+            Binding.SendResponse(Response, Sender);
         }
 
         protected abstract void AuthenticateMessage();

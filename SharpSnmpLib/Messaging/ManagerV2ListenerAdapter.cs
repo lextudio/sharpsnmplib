@@ -13,19 +13,8 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// <summary>
     /// Adapter for SNMP v2c manager.
     /// </summary>
-    public class ManagerV2ListenerAdapter : IListenerAdapter, IDisposable
+    public class ManagerV2ListenerAdapter : IListenerAdapter
     {
-        private readonly Listener _listener;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ManagerV2ListenerAdapter"/> class.
-        /// </summary>
-        /// <param name="listener">The listener.</param>
-        public ManagerV2ListenerAdapter(Listener listener)
-        {
-            _listener = listener;
-        }
-
         /// <summary>
         /// Occurs when a <see cref="TrapV2Message"/> is received.
         /// </summary>
@@ -35,13 +24,14 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Occurs when a <see cref="InformRequestMessage"/> is received.
         /// </summary>
         public event EventHandler<MessageReceivedEventArgs<InformRequestMessage>> InformRequestReceived;
-        
+
         /// <summary>
         /// Processes the message.
         /// </summary>
         /// <param name="message">Message.</param>
         /// <param name="sender">Sender.</param>
-        public void Process(ISnmpMessage message, System.Net.IPEndPoint sender)
+        /// <param name="binding">The binding.</param>
+        public void Process(ISnmpMessage message, System.Net.IPEndPoint sender, ListenerBinding binding)
         {
             if (message == null)
             {
@@ -65,7 +55,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                         EventHandler<MessageReceivedEventArgs<TrapV2Message>> handler = TrapV2Received;
                         if (handler != null)
                         {
-                            handler(this, new MessageReceivedEventArgs<TrapV2Message>(sender, (TrapV2Message)message));
+                            handler(this, new MessageReceivedEventArgs<TrapV2Message>(sender, (TrapV2Message)message, binding));
                         }
 
                         break;
@@ -74,12 +64,12 @@ namespace Lextm.SharpSnmpLib.Messaging
                 case SnmpType.InformRequestPdu:
                     {
                         InformRequestMessage inform = (InformRequestMessage)message;
-                        _listener.SendResponse(inform.GenerateResponse(), sender);
+                        binding.SendResponse(inform.GenerateResponse(), sender);
 
                         EventHandler<MessageReceivedEventArgs<InformRequestMessage>> handler = InformRequestReceived;
                         if (handler != null)
                         {
-                            handler(this, new MessageReceivedEventArgs<InformRequestMessage>(sender, inform));
+                            handler(this, new MessageReceivedEventArgs<InformRequestMessage>(sender, inform, binding));
                         }
 
                         break;
@@ -88,14 +78,6 @@ namespace Lextm.SharpSnmpLib.Messaging
                 default:
                     break;
             }
-        }
-        
-        /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-        /// </summary>
-        public void Dispose()
-        {
-            _listener.Dispose();
         }
     }
 }

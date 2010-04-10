@@ -19,13 +19,14 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Occurs when a <see cref="TrapV1Message" /> is received.
         /// </summary>
         public event EventHandler<MessageReceivedEventArgs<TrapV1Message>> TrapV1Received;
-        
+
         /// <summary>
         /// Processes the message.
         /// </summary>
         /// <param name="message">Message.</param>
         /// <param name="sender">Sender.</param>
-        public void Process(ISnmpMessage message, System.Net.IPEndPoint sender)
+        /// <param name="binding">The binding.</param>
+        public void Process(ISnmpMessage message, System.Net.IPEndPoint sender, ListenerBinding binding)
         {
             if (message == null)
             {
@@ -36,7 +37,12 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new ArgumentNullException("sender");
             }
-            
+
+            if (binding == null)
+            {
+                throw new ArgumentNullException("binding");
+            }
+
             if (message.Version != VersionCode.V1)
             {
                 return;
@@ -49,7 +55,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                         EventHandler<MessageReceivedEventArgs<TrapV1Message>> handler = TrapV1Received;
                         if (handler != null)
                         {
-                            handler(this, new MessageReceivedEventArgs<TrapV1Message>(sender, (TrapV1Message)message));
+                            handler(this, new MessageReceivedEventArgs<TrapV1Message>(sender, (TrapV1Message)message, binding));
                         }
 
                         break;

@@ -38,7 +38,9 @@ namespace Lextm.SharpSnmpLib.Agent
 
         private void BtnStartClick(object sender, EventArgs e)
         {
-            _demon.Start(int.Parse(txtAgentPort.Text, CultureInfo.InvariantCulture));
+            _demon.Listener.ClearBindings();
+            _demon.Listener.AddBinding(new IPEndPoint(IPAddress.Any, int.Parse(txtAgentPort.Text, CultureInfo.InvariantCulture)));
+            _demon.Start();
         }
 
         private void BtnStopClick(object sender, EventArgs e)

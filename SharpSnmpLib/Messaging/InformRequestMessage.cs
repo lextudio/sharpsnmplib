@@ -232,7 +232,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             get
             {
-                return (_header == null) ? RequestId : _header.MessageId;
+                return (_header == Header.Empty) ? RequestId : _header.MessageId;
             }
         }
         

@@ -14,8 +14,9 @@ namespace Lextm.SharpSnmpLib.Agent
         /// <param name="request">The request.</param>
         /// <param name="sender">The sender.</param>
         /// <param name="listener">The listener.</param>
-        public NormalSnmpContext(ISnmpMessage request, IPEndPoint sender, Listener listener) 
-            : base(request, sender, listener, null)
+        /// <param name="binding">The binding.</param>
+        public NormalSnmpContext(ISnmpMessage request, IPEndPoint sender, Listener listener, ListenerBinding binding) 
+            : base(request, sender, listener, null, binding)
         {
         }
 

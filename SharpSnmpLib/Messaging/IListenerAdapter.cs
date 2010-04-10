@@ -20,6 +20,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         /// <param name="message">Message.</param>
         /// <param name="sender">Sender.</param>
-        void Process(ISnmpMessage message, IPEndPoint sender);
+        /// <param name="binding">The binding.</param>
+        void Process(ISnmpMessage message, IPEndPoint sender, ListenerBinding binding);
     }
 }

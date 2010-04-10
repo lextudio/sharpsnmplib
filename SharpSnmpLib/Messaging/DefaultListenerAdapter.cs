@@ -7,6 +7,7 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
+using System.Net;
 
 namespace Lextm.SharpSnmpLib.Messaging
 {
@@ -16,17 +17,6 @@ namespace Lextm.SharpSnmpLib.Messaging
     [Obsolete("Manager developers should use Manager* adapters. Agent developers should check out snmpd as reference design.")]
     public class DefaultListenerAdapter : IListenerAdapter
     {
-        private readonly Listener _listener;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DefaultListenerAdapter"/> class.
-        /// </summary>
-        /// <param name="listener">The listener.</param>
-        public DefaultListenerAdapter(Listener listener)
-        {
-            _listener = listener;
-        }
-
         /// <summary>
         /// Occurs when a <see cref="TrapV1Message" /> is received.
         /// </summary>
@@ -61,13 +51,14 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Occurs when a GET BULK request is received.
         /// </summary>
         public event EventHandler<MessageReceivedEventArgs<GetBulkRequestMessage>> GetBulkRequestReceived;
-        
+
         /// <summary>
         /// Processes the message.
         /// </summary>
         /// <param name="message">Message.</param>
         /// <param name="sender">Sender.</param>
-        public void Process(ISnmpMessage message, System.Net.IPEndPoint sender)
+        /// <param name="binding">The binding.</param>
+        public void Process(ISnmpMessage message, IPEndPoint sender, ListenerBinding binding)
         {
             if (message == null)
             {
@@ -78,7 +69,12 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new ArgumentNullException("sender");
             }
-            
+
+            if (binding == null)
+            {
+                throw new ArgumentNullException("binding");
+            }
+
             switch (message.Pdu.TypeCode)
             {
                 case SnmpType.TrapV1Pdu:
@@ -86,7 +82,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                         EventHandler<MessageReceivedEventArgs<TrapV1Message>> handler = TrapV1Received;
                         if (handler != null)
                         {
-                            handler(this, new MessageReceivedEventArgs<TrapV1Message>(sender, (TrapV1Message)message));
+                            handler(this, new MessageReceivedEventArgs<TrapV1Message>(sender, (TrapV1Message)message, binding));
                         }
 
                         break;
@@ -97,7 +93,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                         EventHandler<MessageReceivedEventArgs<TrapV2Message>> handler = TrapV2Received;
                         if (handler != null)
                         {
-                            handler(this, new MessageReceivedEventArgs<TrapV2Message>(sender, (TrapV2Message)message));
+                            handler(this, new MessageReceivedEventArgs<TrapV2Message>(sender, (TrapV2Message)message, binding));
                         }
 
                         break;
@@ -106,12 +102,12 @@ namespace Lextm.SharpSnmpLib.Messaging
                 case SnmpType.InformRequestPdu:
                     {
                         InformRequestMessage inform = (InformRequestMessage)message;
-                        _listener.SendResponse(inform.GenerateResponse(), sender);
+                        binding.SendResponse(inform.GenerateResponse(), sender);
 
                         EventHandler<MessageReceivedEventArgs<InformRequestMessage>> handler = InformRequestReceived;
                         if (handler != null)
                         {
-                            handler(this, new MessageReceivedEventArgs<InformRequestMessage>(sender, inform));
+                            handler(this, new MessageReceivedEventArgs<InformRequestMessage>(sender, inform, binding));
                         }
 
                         break;
@@ -122,7 +118,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                         EventHandler<MessageReceivedEventArgs<GetRequestMessage>> handler = GetRequestReceived;
                         if (handler != null)
                         {
-                            handler(this, new MessageReceivedEventArgs<GetRequestMessage>(sender, (GetRequestMessage)message));
+                            handler(this, new MessageReceivedEventArgs<GetRequestMessage>(sender, (GetRequestMessage)message, binding));
                         }
 
                         break;
@@ -133,7 +129,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                         EventHandler<MessageReceivedEventArgs<SetRequestMessage>> handler = SetRequestReceived;
                         if (handler != null)
                         {
-                            handler(this, new MessageReceivedEventArgs<SetRequestMessage>(sender, (SetRequestMessage)message));
+                            handler(this, new MessageReceivedEventArgs<SetRequestMessage>(sender, (SetRequestMessage)message, binding));
                         }
 
                         break;
@@ -144,7 +140,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                         EventHandler<MessageReceivedEventArgs<GetNextRequestMessage>> handler = GetNextRequestReceived;
                         if (handler != null)
                         {
-                            handler(this, new MessageReceivedEventArgs<GetNextRequestMessage>(sender, (GetNextRequestMessage)message));
+                            handler(this, new MessageReceivedEventArgs<GetNextRequestMessage>(sender, (GetNextRequestMessage)message, binding));
                         }
 
                         break;
@@ -155,7 +151,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                         EventHandler<MessageReceivedEventArgs<GetBulkRequestMessage>> handler = GetBulkRequestReceived;
                         if (handler != null)
                         {
-                            handler(this, new MessageReceivedEventArgs<GetBulkRequestMessage>(sender, (GetBulkRequestMessage)message));
+                            handler(this, new MessageReceivedEventArgs<GetBulkRequestMessage>(sender, (GetBulkRequestMessage)message, binding));
                         }
 
                         break;

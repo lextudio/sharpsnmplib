@@ -89,6 +89,7 @@
     <Compile Include="Messaging\IListenerAdapter.cs" />
     <Compile Include="Messaging\Listener.cs">
     </Compile>
+    <Compile Include="Messaging\ListenerBinding.cs" />
     <Compile Include="Messaging\Manager.cs">
     </Compile>
     <Compile Include="Messaging\ManagerV1ListenerAdapter.cs" />

@@ -41,21 +41,16 @@ namespace Lextm.SharpSnmpLib.Browser
 
         public Listener Listener { get; set; }
 
-        public Listener ListenerV6 { get; set; }
-
         public IObjectRegistry Objects { get; set; }
 
         private void NotificationPanel_Load(object sender, EventArgs e)
         {
             Listener.ExceptionRaised += Listener_ExceptionRaised;
-            DefaultListenerAdapter adapter = new DefaultListenerAdapter(Listener);
+            DefaultListenerAdapter adapter = new DefaultListenerAdapter();
             Listener.Adapters.Add(adapter);
             adapter.TrapV1Received += Listener_TrapV1Received;
             adapter.TrapV2Received += Listener_TrapV2Received;
             adapter.InformRequestReceived += Listener_InformRequestReceived;
-            
-            ListenerV6.ExceptionRaised += Listener_ExceptionRaised;
-            ListenerV6.Adapters.Add(adapter);
         }
 
         private void Listener_InformRequestReceived(object sender, MessageReceivedEventArgs<InformRequestMessage> e)
@@ -108,20 +103,21 @@ namespace Lextm.SharpSnmpLib.Browser
         private void StopListeners()
         {
             Listener.Stop();
-            ListenerV6.Stop();
         }
 
         private void StartListeners()
         {
+            Listener.ClearBindings();
             int port = int.Parse(tstxtPort.Text);
             if (tscbIP.Text == StrAllUnassigned)
             {
-                Listener.Start(new IPEndPoint(IPAddress.Any, port));
+                Listener.AddBinding(new IPEndPoint(IPAddress.Any, port));
                 if (Socket.OSSupportsIPv6)
                 {
-                    ListenerV6.Start(new IPEndPoint(IPAddress.IPv6Any, port));
+                    Listener.AddBinding(new IPEndPoint(IPAddress.IPv6Any, port));
                 }
-                 
+
+                Listener.Start();
                 return;
             }
 
@@ -133,7 +129,8 @@ namespace Lextm.SharpSnmpLib.Browser
 
             if (address.AddressFamily == AddressFamily.InterNetwork)
             {
-                Listener.Start(new IPEndPoint(address, port)); 
+                Listener.AddBinding(new IPEndPoint(address, port)); 
+                Listener.Start();
                 return;
             }
 
@@ -143,7 +140,8 @@ namespace Lextm.SharpSnmpLib.Browser
                 return;
             }
                 
-            ListenerV6.Start(new IPEndPoint(address, port));          
+            Listener.AddBinding(new IPEndPoint(address, port));  
+            Listener.Start();
         }
 
         private void ActEnabledUpdate(object sender, EventArgs e)
