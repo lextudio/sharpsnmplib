@@ -56,7 +56,7 @@ namespace Lextm.SharpSnmpLib.Agent
                 context.Sender.Address,
                 (context.Response == null) ? Empty : context.Response.Pdu.ErrorStatus.ToErrorCode().ToString(),
                 context.Request.Version,
-                DateTime.Now.Subtract(context.CreatedTime));
+                DateTime.Now.Subtract(context.CreatedTime).TotalMilliseconds);
         }
 
         private static string GetStem(IList<Variable> variables)

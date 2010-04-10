@@ -32,7 +32,7 @@ namespace Lextm.SharpSnmpLib.Agent
             InitializeComponent();
             tstxtPort.Text = "161";
             tscbIP.Items.Add(StrAllUnassigned);
-            foreach (IPAddress address in Dns.GetHostEntry("").AddressList.Where(address => !address.IsIPv6LinkLocal))
+            foreach (IPAddress address in Dns.GetHostEntry(string.Empty).AddressList.Where(address => !address.IsIPv6LinkLocal))
             {
                 tscbIP.Items.Add(address);
             }
