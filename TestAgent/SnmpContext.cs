@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using Lextm.SharpSnmpLib.Messaging;
+using Lextm.SharpSnmpLib.Security;
 
 namespace Lextm.SharpSnmpLib.Agent
 {
@@ -19,14 +20,14 @@ namespace Lextm.SharpSnmpLib.Agent
         /// </summary>
         /// <param name="request">The request.</param>
         /// <param name="sender">The sender.</param>
-        /// <param name="listener">The listener.</param>
+        /// <param name="users">The users.</param>
         /// <param name="objects">The agent core objects.</param>
         /// <param name="binding">The binding.</param>
-        protected SnmpContext(ISnmpMessage request, IPEndPoint sender, Listener listener, AgentObjects objects, ListenerBinding binding)
+        protected SnmpContext(ISnmpMessage request, IPEndPoint sender, UserRegistry users, AgentObjects objects, ListenerBinding binding)
         {
             Request = request;
             Binding = binding;
-            Listener = listener;
+            Users = users;
             Sender = sender;
             CreatedTime = DateTime.Now;
             Objects = objects;
@@ -51,10 +52,10 @@ namespace Lextm.SharpSnmpLib.Agent
         public ISnmpMessage Request { get; private set; }
 
         /// <summary>
-        /// Gets the listener.
+        /// Gets the users.
         /// </summary>
-        /// <value>The listener.</value>
-        public Listener Listener { get; private set; }
+        /// <value>The users.</value>
+        public UserRegistry Users { get; private set; }
 
         /// <summary>
         /// Gets the response.

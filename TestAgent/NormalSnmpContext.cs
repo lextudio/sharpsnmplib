@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using Lextm.SharpSnmpLib.Messaging;
+using Lextm.SharpSnmpLib.Security;
 
 namespace Lextm.SharpSnmpLib.Agent
 {
@@ -13,10 +14,10 @@ namespace Lextm.SharpSnmpLib.Agent
         /// </summary>
         /// <param name="request">The request.</param>
         /// <param name="sender">The sender.</param>
-        /// <param name="listener">The listener.</param>
+        /// <param name="users">The users.</param>
         /// <param name="binding">The binding.</param>
-        public NormalSnmpContext(ISnmpMessage request, IPEndPoint sender, Listener listener, ListenerBinding binding) 
-            : base(request, sender, listener, null, binding)
+        public NormalSnmpContext(ISnmpMessage request, IPEndPoint sender, UserRegistry users, ListenerBinding binding) 
+            : base(request, sender, users, null, binding)
         {
         }
 

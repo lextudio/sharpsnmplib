@@ -16,11 +16,11 @@ namespace Lextm.SharpSnmpLib.Agent
         /// </summary>
         /// <param name="request">The request.</param>
         /// <param name="sender">The sender.</param>
-        /// <param name="listener">The listener.</param>
+        /// <param name="users">The users.</param>
         /// <param name="objects">The agent core objects.</param>
         /// <param name="binding">The binding.</param>
-        public SecureSnmpContext(ISnmpMessage request, IPEndPoint sender, Listener listener, AgentObjects objects, ListenerBinding binding)
-            : base(request, sender, listener, objects, binding)
+        public SecureSnmpContext(ISnmpMessage request, IPEndPoint sender, UserRegistry users, AgentObjects objects, ListenerBinding binding)
+            : base(request, sender, users, objects, binding)
         {
         }
 
@@ -29,7 +29,7 @@ namespace Lextm.SharpSnmpLib.Agent
         /// </summary>
         protected override void AuthenticateMessage()
         {
-            ProviderPair providers = Listener.Users.Find(Request.Parameters.UserName) ?? ProviderPair.Default;
+            ProviderPair providers = Users.Find(Request.Parameters.UserName) ?? ProviderPair.Default;
             Helper.Authenticate(Response, providers);
         }
 
@@ -99,7 +99,7 @@ namespace Lextm.SharpSnmpLib.Agent
             }
 
             OctetString embedded = Request.Parameters.AuthenticationParameters;
-            ProviderPair providers = Listener.Users.Find(Request.Parameters.UserName);
+            ProviderPair providers = Users.Find(Request.Parameters.UserName);
             Request.Parameters.AuthenticationParameters = providers.Authentication.CleanDigest;
             OctetString calculated = providers.Authentication.ComputeHash(Request);
             // other checking were performed in MessageFactory when decrypting message body.
@@ -148,7 +148,7 @@ namespace Lextm.SharpSnmpLib.Agent
         internal override void GenerateResponse(ResponseData data)
         {
             GetResponseMessage response;
-            ProviderPair providers = Listener.Users.Find(Request.Parameters.UserName);
+            ProviderPair providers = Users.Find(Request.Parameters.UserName);
             if (data.ErrorStatus == ErrorCode.NoError)
             {
                 // for v3
