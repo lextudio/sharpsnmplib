@@ -97,7 +97,6 @@ namespace Lextm.SharpSnmpLib.Agent
                 return false;
             }
 
-            // TODO: verify authentication here.
             OctetString embedded = Request.Parameters.AuthenticationParameters;
             ProviderPair providers = Listener.Users.Find(Request.Parameters.UserName);
             Request.Parameters.AuthenticationParameters = providers.Authentication.CleanDigest;
@@ -149,7 +148,6 @@ namespace Lextm.SharpSnmpLib.Agent
         {
             GetResponseMessage response;
             ProviderPair providers = Listener.Users.Find(Request.Parameters.UserName);
-            // TODO: reply with v3.
             if (data.ErrorStatus == ErrorCode.NoError)
             {
                 // for v3

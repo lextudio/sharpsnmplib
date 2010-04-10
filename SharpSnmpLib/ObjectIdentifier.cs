@@ -477,5 +477,19 @@ namespace Lextm.SharpSnmpLib
             string result = objects.Tree.Search(ToNumerical()).AlternativeText;
             return string.IsNullOrEmpty(result) ? ToString() : result;
         }
+
+        /// <summary>
+        /// Creates a new <see cref="Variable"/> instance.
+        /// </summary>
+        /// <param name="numerical">The numerical.</param>
+        /// <param name="extra">The extra.</param>
+        /// <returns></returns>
+        public static ObjectIdentifier Create(uint[] numerical, uint extra)
+        {
+            uint[] result = new uint[numerical.Length + 1];
+            Array.Copy(numerical, result, numerical.Length);
+            result[numerical.Length] = extra;
+            return new ObjectIdentifier(result);
+        }
     }
 }

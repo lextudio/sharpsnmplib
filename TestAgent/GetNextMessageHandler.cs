@@ -35,7 +35,7 @@ namespace Lextm.SharpSnmpLib.Agent
 
                 if (status != ErrorCode.NoError)
                 {
-                    return null;
+                    return new ResponseData(null, status, index);
                 }
             }
 

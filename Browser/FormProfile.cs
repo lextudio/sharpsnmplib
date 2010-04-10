@@ -93,7 +93,6 @@ namespace Lextm.SharpSnmpLib.Browser
             txtGet.Text = normal == null ? string.Empty : normal.GetCommunity;
             txtSet.Text = normal == null ? string.Empty : normal.SetCommunity;
 
-            // TODO: load and save profile v3.
             var secure = _profile as SecureAgentProfile;
             txtAuthentication.Text = secure == null ? string.Empty : secure.AuthenticationPassphrase;
             txtPrivacy.Text = secure == null ? string.Empty : secure.PrivacyPassphrase;

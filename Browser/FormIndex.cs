@@ -8,14 +8,13 @@ namespace Lextm.SharpSnmpLib.Browser
         public FormIndex()
         {
             InitializeComponent();
-            nudIndex.Maximum = decimal.MaxValue;
         }
 
-        public int Index
+        public uint Index
         {
             get
             {
-                return (int)nudIndex.Value;
+                return (uint)nudIndex.Value;
             }
         }
 

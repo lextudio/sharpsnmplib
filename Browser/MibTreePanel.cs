@@ -75,31 +75,31 @@ namespace Lextm.SharpSnmpLib.Browser
             return node;
         }
 
-        private static string TextualFormForGet(IDefinition def)
+        private static ObjectIdentifier GetIdForGet(IDefinition def)
         {
             if (def.Type == DefinitionType.Scalar)
             {
-                return new SearchResult(def).AlternativeText + ".0";
+                return ObjectIdentifier.Create(def.GetNumericalForm(), 0);
             }
 
-            int index;
+            uint index;
             using (FormIndex form = new FormIndex())
             {
                 form.ShowDialog();
                 index = form.Index;
             }
 
-            return new SearchResult(def).AlternativeText + "." + index;
+            return ObjectIdentifier.Create(def.GetNumericalForm(), index);
         }
 
-        private static string TextualFormForGetNext(IDefinition def)
+        private static ObjectIdentifier GetIdForGetNext(IDefinition def)
         {
             if (def.Type == DefinitionType.Scalar)
             {
-                return new SearchResult(def).AlternativeText + ".0";
+                return ObjectIdentifier.Create(def.GetNumericalForm(), 0);
             }
 
-            return new SearchResult(def).AlternativeText;
+            return new ObjectIdentifier(def.GetNumericalForm());
         }
 
         private void ActGetExecute(object sender, EventArgs e)
@@ -108,7 +108,9 @@ namespace Lextm.SharpSnmpLib.Browser
             try
             {
                 source.TraceInformation("==== Begin GET ====");
-                Profiles.DefaultProfile.Get(Manager, TextualFormForGet(treeView1.SelectedNode.Tag as IDefinition));
+                Manager manager = Manager;
+                ObjectIdentifier id = GetIdForGet(treeView1.SelectedNode.Tag as IDefinition);
+                Profiles.DefaultProfile.Get(manager, new Variable(id));
             }
             catch (Exception ex)
             {
@@ -135,14 +137,14 @@ namespace Lextm.SharpSnmpLib.Browser
                 ISnmpData data;
                 using (FormSet form = new FormSet())
                 {
-                    form.OldVal = Profiles.DefaultProfile.GetValue(Manager,
-                                                                   TextualFormForGet(
-                                                                       treeView1.SelectedNode.Tag as IDefinition));
+                    Manager manager = Manager;
+                    ObjectIdentifier id = GetIdForGet(
+                        treeView1.SelectedNode.Tag as IDefinition);
+                    form.OldVal = Profiles.DefaultProfile.GetValue(manager, new Variable(id));
                     if (form.ShowDialog() != DialogResult.OK)
                     {
                         return;
                     }
-
                     
                     if (form.IsString)
                     {
@@ -163,9 +165,9 @@ namespace Lextm.SharpSnmpLib.Browser
                 }
 
                 source.TraceInformation("==== Begin SET ====");
-                Profiles.DefaultProfile.Set(Manager,
-                                                TextualFormForGet(treeView1.SelectedNode.Tag as IDefinition),
-                                                data);
+                Manager manager1 = Manager;
+                ObjectIdentifier id1 = GetIdForGet(treeView1.SelectedNode.Tag as IDefinition);
+                Profiles.DefaultProfile.Set(manager1, new Variable(id1, data));
             }
             catch (Exception ex)
             {
@@ -244,8 +246,9 @@ namespace Lextm.SharpSnmpLib.Browser
             try
             {
                 source.TraceInformation("==== Begin GET NEXT ====");
-                // TODO: don't use textual form in the future here.
-                Profiles.DefaultProfile.GetNext(Manager, TextualFormForGetNext(treeView1.SelectedNode.Tag as IDefinition));
+                Manager manager = Manager;
+                ObjectIdentifier id = GetIdForGetNext(treeView1.SelectedNode.Tag as IDefinition);
+                Profiles.DefaultProfile.GetNext(manager, new Variable(id));
             }
             catch (Exception ex)
             {
@@ -280,7 +283,7 @@ namespace Lextm.SharpSnmpLib.Browser
                         default:
                             if (ValidForGet(node))
                             {
-                                Profiles.DefaultProfile.Get(Manager, TextualFormForGet(node.Tag as IDefinition));
+                                Profiles.DefaultProfile.Get(Manager, GetIdForGet(node.Tag as IDefinition));
                             }
                             else
                             {

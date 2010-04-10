@@ -44,7 +44,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// INTEGER type. (SMIv1, SMIv2)
         /// </summary>
-        Integer32 = 0x02,  // X690.BitSet // TODO: verify if this is BITS.
+        Integer32 = 0x02,  
         
         /// <summary>
         /// OCTET STRING type.

@@ -22,24 +22,24 @@ namespace Lextm.SharpSnmpLib.Browser
         internal string AuthenticationMethod { get; set; }
         internal string PrivacyMethod { get; set; }
 
-        internal override void Get(Manager manager, string textual)
+        internal override void Get(Manager manager, Variable variable)
         {
-            Variable result = manager.Objects.CreateVariable(textual);
+            // Variable result = manager.Objects.CreateVariable(textual);
             TraceSource source = new TraceSource("Browser");
             // source.TraceInformation(manager.GetSingle(Agent, GetCommunity, result).ToString(manager.Objects));
             source.Flush();
             source.Close();
         }
 
-        internal override string GetValue(Manager manager, string textual)
+        internal override string GetValue(Manager manager, Variable variable)
         {
-            Variable result = manager.Objects.CreateVariable(textual);
+            // Variable result = manager.Objects.CreateVariable(textual);
             return null; // manager.GetSingle(Agent, GetCommunity, result).Data.ToString();
         }
 
-        internal override void GetNext(Manager manager, string textual)
+        internal override void GetNext(Manager manager, Variable variable)
         {
-            Variable result = manager.Objects.CreateVariable(textual);
+            // Variable result = manager.Objects.CreateVariable(textual);
             TraceSource source = new TraceSource("Browser");
             //GetNextRequestMessage message = new GetNextRequestMessage(Messenger.NextRequestId, VersionCode, new OctetString(GetCommunity),
             //                                                          new List<Variable> {result});
@@ -57,7 +57,7 @@ namespace Lextm.SharpSnmpLib.Browser
             source.Close();
         }
 
-        internal override void Set(Manager manager, string textual, ISnmpData data)
+        internal override void Set(Manager manager, Variable variable)
         {
             TraceSource source = new TraceSource("Browser");
             // source.TraceInformation(manager.SetSingle(Agent, GetCommunity, manager.Objects.CreateVariable(textual, data)).ToString(manager.Objects));

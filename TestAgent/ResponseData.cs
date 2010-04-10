@@ -15,7 +15,7 @@ namespace Lextm.SharpSnmpLib.Agent
         /// <param name="index">The index.</param>
         public ResponseData(IList<Variable> variables, ErrorCode status, int index)
         {
-            Variables = variables;
+            Variables = variables ?? new List<Variable>(0);
             ErrorStatus = status;
             ErrorIndex = index;
         }

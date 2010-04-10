@@ -26,13 +26,13 @@ namespace Lextm.SharpSnmpLib.Browser
 
 	    public string UserName { get; private set; }
 
-	    internal abstract void Get(Manager manager, string textual);
+	    internal abstract void Get(Manager manager, Variable variable);
 
-	    internal abstract string GetValue(Manager manager, string textual);
+	    internal abstract string GetValue(Manager manager, Variable variable);
 
-	    internal abstract void GetNext(Manager manager, string textual);
+	    internal abstract void GetNext(Manager manager, Variable variable);
 
-	    internal abstract void Set(Manager manager, string textual, ISnmpData data);
+	    internal abstract void Set(Manager manager, Variable variable);
 
 	    internal static bool IsValid(string address, out IPAddress ip)
 		{
