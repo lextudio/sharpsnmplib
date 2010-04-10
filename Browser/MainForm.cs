@@ -8,6 +8,7 @@
  */
 
 using System;
+using System.Reflection;
 using System.Windows.Forms;
 using Microsoft.Practices.Unity;
 using WeifenLuo.WinFormsUI.Docking;
@@ -37,6 +38,8 @@ namespace Lextm.SharpSnmpLib.Browser
 
             DockContent modules = Program.Container.Resolve<DockContent>("ModuleList");
             modules.Show(dockPanel1, DockState.DockRight);
+
+            Text = Text + " (Version: " + Assembly.GetExecutingAssembly().GetName().Version + ")";
 		}
 
         private void ActExitExecute(object sender, EventArgs e)

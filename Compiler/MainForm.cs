@@ -9,6 +9,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Windows.Forms;
 using Microsoft.Practices.Unity;
 using WeifenLuo.WinFormsUI.Docking;
@@ -32,6 +33,8 @@ namespace Lextm.SharpSnmpLib.Compiler
 
             DockContent modules = Program.Container.Resolve<DockContent>("ModuleList");
             modules.Show(dockPanel1, DockState.DockRight);
+
+            Text = Text + " (Version: " + Assembly.GetExecutingAssembly().GetName().Version + ")";
         }
 
         public CompilerCore Compiler { get; set; }

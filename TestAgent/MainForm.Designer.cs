@@ -202,7 +202,7 @@ namespace Lextm.SharpSnmpLib.Agent
             this.Controls.Add(this.btnTrap);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
-            this.Text = "TestAgent";
+            this.Text = "#SNMP Agent";
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.alNotification)).EndInit();

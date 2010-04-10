@@ -12,6 +12,7 @@ using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Reflection;
 using System.Windows.Forms;
 using Microsoft.Practices.Unity;
 using Lextm.SharpSnmpLib.Messaging;
@@ -38,6 +39,7 @@ namespace Lextm.SharpSnmpLib.Agent
             }
 
             tscbIP.SelectedIndex = 0;
+            Text = Text + " (Version: " + Assembly.GetExecutingAssembly().GetName().Version + ")";
         }
 
         private void StartListeners()
