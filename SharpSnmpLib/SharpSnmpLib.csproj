@@ -9,7 +9,7 @@
     <AssemblyName>SharpSnmpLib</AssemblyName>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>sharpsnmplib.snk</AssemblyOriginatorKeyFile>
-    <DocumentationFile>bin\Release\SharpSnmpLib.xml</DocumentationFile>
+    <DocumentationFile>..\bin\SharpSnmpLib.xml</DocumentationFile>
     <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
     <NoStdLib>False</NoStdLib>
     <WarningLevel>4</WarningLevel>

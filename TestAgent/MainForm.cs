@@ -31,6 +31,12 @@ namespace Lextm.SharpSnmpLib.Agent
         {
             _demon = Program.Container.Resolve<SnmpDemon>();
             InitializeComponent();
+			if (!Program.IsRunningOnMono())
+			{
+				System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+				Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+			}
+			
             tstxtPort.Text = "161";
             tscbIP.Items.Add(StrAllUnassigned);
             foreach (IPAddress address in Dns.GetHostEntry(string.Empty).AddressList.Where(address => !address.IsIPv6LinkLocal))

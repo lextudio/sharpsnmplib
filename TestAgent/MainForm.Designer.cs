@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Created by SharpDevelop.
  * User: lexli
  * Date: 2008-12-14
@@ -199,8 +199,7 @@ namespace Lextm.SharpSnmpLib.Agent
             this.Controls.Add(this.txtPort);
             this.Controls.Add(this.txtIP);
             this.Controls.Add(this.btnTrap2);
-            this.Controls.Add(this.btnTrap);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Controls.Add(this.btnTrap);            
             this.Name = "MainForm";
             this.Text = "#SNMP Agent";
             this.toolStrip1.ResumeLayout(false);

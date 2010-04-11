@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Created by SharpDevelop.
  * User: lexli
  * Date: 2008-12-14
@@ -37,6 +37,11 @@ namespace Lextm.SharpSnmpLib.Agent
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());
-        }        
+        }   
+		
+		public static bool IsRunningOnMono()
+  		{
+    		return Type.GetType ("Mono.Runtime") != null;
+  		}
     }
 }
