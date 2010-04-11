@@ -16,8 +16,6 @@ using System.Reflection;
 using System.Windows.Forms;
 using Microsoft.Practices.Unity;
 using Lextm.SharpSnmpLib.Messaging;
-using System.Threading;
-using System.Diagnostics;
 
 namespace Lextm.SharpSnmpLib.Agent
 {
@@ -177,7 +175,7 @@ namespace Lextm.SharpSnmpLib.Agent
         {
             tscbIP.Enabled = !actEnabled.Checked;
             tstxtPort.Enabled = !actEnabled.Checked;
-			actEnabled.Enabled = Program.IsRunningOnMono()? Mono.Unix.Native.Syscall.getuid() == 0 : true;
+			actEnabled.Enabled = Program.IsRunningOnMono() ? Mono.Unix.Native.Syscall.getuid() == 0 : true;
 		}
     }
 }
