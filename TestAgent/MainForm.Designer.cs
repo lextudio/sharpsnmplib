@@ -37,7 +37,6 @@ namespace Lextm.SharpSnmpLib.Agent
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.btnTrap = new System.Windows.Forms.Button();
             this.btnTrap2 = new System.Windows.Forms.Button();
             this.txtIP = new System.Windows.Forms.TextBox();
@@ -199,7 +198,7 @@ namespace Lextm.SharpSnmpLib.Agent
             this.Controls.Add(this.txtPort);
             this.Controls.Add(this.txtIP);
             this.Controls.Add(this.btnTrap2);
-            this.Controls.Add(this.btnTrap);            
+            this.Controls.Add(this.btnTrap);
             this.Name = "MainForm";
             this.Text = "#SNMP Agent";
             this.toolStrip1.ResumeLayout(false);

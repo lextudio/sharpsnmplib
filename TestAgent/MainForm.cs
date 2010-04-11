@@ -33,8 +33,8 @@ namespace Lextm.SharpSnmpLib.Agent
             InitializeComponent();
 			if (!Program.IsRunningOnMono())
 			{
-				System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-				Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+			    // FIXME: work around a Mono WinForms bug.
+				Icon = Properties.Resources.network_server;
 			}
 			
             tstxtPort.Text = "161";
