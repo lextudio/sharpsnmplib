@@ -161,21 +161,25 @@ namespace Lextm.SharpSnmpLib.Agent
         {
             if (actEnabled.Checked)
             {
+                if (Program.IsRunningOnMono() && Mono.Unix.Native.Syscall.getuid() != 0 && int.Parse(txtPort.Text) < 1024)
+                {
+                    MessageBox.Show("On Linux this application must be run as root for port less than 1024.");
+                    return;
+                }
+
                 StartListeners();
                 actEnabled.Text = "Enabled";
+                return;
             }
-            else
-            {
-                StopListeners();
-                actEnabled.Text = "Disabled";
-            }
+
+            StopListeners();
+            actEnabled.Text = "Disabled";
         }
 
         private void alNotification_Update(object sender, EventArgs e)
         {
             tscbIP.Enabled = !actEnabled.Checked;
             tstxtPort.Enabled = !actEnabled.Checked;
-			actEnabled.Enabled = Program.IsRunningOnMono() ? Mono.Unix.Native.Syscall.getuid() == 0 : true;
 		}
     }
 }
