@@ -44,7 +44,12 @@ namespace Lextm.SharpSnmpLib.Messaging
             if (version != VersionCode.V3 && community == null)
             {
                 throw new ArgumentNullException("community");
-            }                
+            }  
+            
+            if (broadcastAddress.AddressFamily == AddressFamily.InterNetworkV6)
+            {
+                throw new ArgumentException("IP v6 is not yet supported", "broadcastAddress");
+            }
 
             byte[] bytes;
             _requestId = Messenger.NextRequestId;
