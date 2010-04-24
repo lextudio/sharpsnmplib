@@ -195,7 +195,7 @@ namespace Lextm.SharpSnmpLib.Mib
             return true;
         }
 
-        private void Parse(MibModule module)
+        private void Parse(IModule module)
         {
             TraceSource source = new TraceSource("Library");
             Stopwatch watch = new Stopwatch();

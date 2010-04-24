@@ -94,12 +94,7 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private static ObjectIdentifier GetIdForGetNext(IDefinition def)
         {
-            if (def.Type == DefinitionType.Scalar)
-            {
-                return ObjectIdentifier.Create(def.GetNumericalForm(), 0);
-            }
-
-            return new ObjectIdentifier(def.GetNumericalForm());
+            return def.Type == DefinitionType.Scalar ? ObjectIdentifier.Create(def.GetNumericalForm(), 0) : new ObjectIdentifier(def.GetNumericalForm());
         }
 
         private void ActGetExecute(object sender, EventArgs e)

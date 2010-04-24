@@ -189,7 +189,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             if (socket == null)
             {
-                throw new ArgumentNullException("udpSocket");
+                throw new ArgumentNullException("socket");
             }
             
             if (receiver == null)

@@ -13,7 +13,6 @@ using System.Net.Sockets;
 using System.Windows.Forms;
 
 using Lextm.SharpSnmpLib.Messaging;
-using Lextm.SharpSnmpLib.Mib;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace Lextm.SharpSnmpLib.Browser

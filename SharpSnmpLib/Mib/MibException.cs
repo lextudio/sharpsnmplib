@@ -120,7 +120,7 @@ namespace Lextm.SharpSnmpLib.Mib
             }
 
 //// ReSharper disable RedundantToStringCall
-            MibException ex = new MibException(message + ". Wrong entity, " + symbol.ToString() + " in file \"" + symbol.File + "\". row: " + (symbol.Row + 1).ToString(CultureInfo.InvariantCulture) + "; column: " + (symbol.Column + 1).ToString(CultureInfo.InvariantCulture))
+            MibException ex = new MibException(message + ". Wrong entity, " + symbol + " in file \"" + symbol.File + "\". row: " + (symbol.Row + 1).ToString(CultureInfo.InvariantCulture) + "; column: " + (symbol.Column + 1).ToString(CultureInfo.InvariantCulture))
                                   {Symbol = symbol};
 //// ReSharper restore RedundantToStringCall
             return ex;

@@ -59,7 +59,7 @@ namespace Lextm.SharpSnmpLib.Agent
                 DateTime.Now.Subtract(context.CreatedTime).TotalMilliseconds);
         }
 
-        private static string GetStem(IList<Variable> variables)
+        private static string GetStem(ICollection<Variable> variables)
         {
             if (variables.Count == 0)
             {

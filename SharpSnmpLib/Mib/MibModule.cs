@@ -22,7 +22,7 @@ namespace Lextm.SharpSnmpLib.Mib
         private readonly string _name;
         private readonly Imports _imports;
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
-        private Exports _exports;
+        private readonly Exports _exports;
         private readonly List<IConstruct> _tokens = new List<IConstruct>();
         
         internal MibModule(string name, IEnumerable<string> dependents)
@@ -68,7 +68,15 @@ namespace Lextm.SharpSnmpLib.Mib
 
             ParseEntities(_tokens, temp, _name, lexer);
         }
-        
+
+        /// <summary>
+        /// Exports data.
+        /// </summary>
+        public Exports Exports
+        {
+            get { return _exports; }
+        }
+
         private static Exports ParseExports(Lexer lexer)
         {
             return new Exports(lexer);
@@ -79,7 +87,7 @@ namespace Lextm.SharpSnmpLib.Mib
             return new Imports(lexer);
         }
         
-        private static void ParseEntities(IList<IConstruct> tokens, Symbol last, string module, Lexer lexer)
+        private static void ParseEntities(ICollection<IConstruct> tokens, Symbol last, string module, Lexer lexer)
         {
             Symbol temp = last;            
             if (temp == Symbol.End)
@@ -289,8 +297,8 @@ namespace Lextm.SharpSnmpLib.Mib
         
         private static bool DependentFound(string dependent, IDictionary<string, MibModule> modules)
         {
-            const string Pattern = "-V[0-9]+$";
-            if (!Regex.IsMatch(dependent, Pattern))
+            const string pattern = "-V[0-9]+$";
+            if (!Regex.IsMatch(dependent, pattern))
             {
                 return modules.ContainsKey(dependent);
             }
@@ -300,7 +308,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 return true;
             }
             
-            string dependentNonVersion = Regex.Replace(dependent, Pattern, string.Empty);
+            string dependentNonVersion = Regex.Replace(dependent, pattern, string.Empty);
             return modules.ContainsKey(dependentNonVersion);
         }
     }

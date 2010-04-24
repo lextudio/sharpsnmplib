@@ -2,7 +2,7 @@ namespace Lextm.SharpSnmpLib.Agent
 {
     internal class SysORUpTime : ScalarObject
     {
-        private readonly ISnmpData _data;
+        private readonly TimeTicks _data;
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public SysORUpTime(int index, TimeTicks time)

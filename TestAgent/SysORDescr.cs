@@ -2,7 +2,7 @@ namespace Lextm.SharpSnmpLib.Agent
 {
     internal class SysORDescr : ScalarObject
     {
-        private readonly ISnmpData _data;
+        private readonly OctetString _data;
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public SysORDescr(int index, OctetString description)

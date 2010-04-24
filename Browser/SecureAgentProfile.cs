@@ -35,7 +35,7 @@ namespace Lextm.SharpSnmpLib.Browser
                 return;
             }
 
-            //IAuthenticationProvider auth = (level & Levels.Authentication) == Levels.Authentication
+            //IAuthenticationProvider auth = AuthenticationMethod != 0
             //                                   ? GetAuthenticationProviderByName(authentication, authPhrase)
             //                                   : DefaultAuthenticationProvider.Instance;
 

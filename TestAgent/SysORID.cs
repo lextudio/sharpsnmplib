@@ -2,7 +2,7 @@ namespace Lextm.SharpSnmpLib.Agent
 {
     internal class SysORID : ScalarObject
     {
-        private readonly ISnmpData _data;
+        private readonly ObjectIdentifier _data;
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public SysORID(int index, ObjectIdentifier dots)

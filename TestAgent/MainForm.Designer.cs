@@ -178,13 +178,13 @@ namespace Lextm.SharpSnmpLib.Agent
             this.actEnabled.Image = global::Lextm.SharpSnmpLib.Agent.Properties.Resources.face_monkey;
             this.actEnabled.Text = "Disabled";
             this.actEnabled.ToolTipText = "Enable/disable this panel";
-            this.actEnabled.Execute += new System.EventHandler(this.actEnabled_Execute);
+            this.actEnabled.Execute += new System.EventHandler(this.ActEnabledExecute);
             // 
             // alNotification
             // 
             this.alNotification.Actions.Add(this.actEnabled);
             this.alNotification.ContainerControl = this;
-            this.alNotification.Update += new System.EventHandler(this.alNotification_Update);
+            this.alNotification.Update += new System.EventHandler(this.AlNotificationUpdate);
             // 
             // MainForm
             // 
@@ -201,6 +201,7 @@ namespace Lextm.SharpSnmpLib.Agent
             this.Controls.Add(this.btnTrap);
             this.Name = "MainForm";
             this.Text = "#SNMP Agent";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.alNotification)).EndInit();

@@ -45,7 +45,6 @@ namespace Lextm.SharpSnmpLib.Agent
             }
 
             tscbIP.SelectedIndex = 0;
-            Text = Text + " (Version: " + Assembly.GetExecutingAssembly().GetName().Version + ")";
         }
 
         private void StartListeners()
@@ -157,7 +156,7 @@ namespace Lextm.SharpSnmpLib.Agent
             }
         }
 
-        private void actEnabled_Execute(object sender, EventArgs e)
+        private void ActEnabledExecute(object sender, EventArgs e)
         {
             if (actEnabled.Checked)
             {
@@ -176,10 +175,15 @@ namespace Lextm.SharpSnmpLib.Agent
             actEnabled.Text = "Disabled";
         }
 
-        private void alNotification_Update(object sender, EventArgs e)
+        private void AlNotificationUpdate(object sender, EventArgs e)
         {
             tscbIP.Enabled = !actEnabled.Checked;
             tstxtPort.Enabled = !actEnabled.Checked;
 		}
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            Text = string.Format(CultureInfo.CurrentUICulture, "{0} (Version: {1})", Text, Assembly.GetExecutingAssembly().GetName().Version);
+        }
     }
 }

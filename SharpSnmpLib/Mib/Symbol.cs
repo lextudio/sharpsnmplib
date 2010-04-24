@@ -133,12 +133,14 @@ namespace Lextm.SharpSnmpLib.Mib
         /// Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
         public static bool Equals(Symbol left, Symbol right)
         {
-            if (((object)left) == ((object)right))
+            object l = left;
+            object r = right;
+            if (l == r)
             {
                 return true;
             }
 
-            if ((object)left == null || (object)right == null)
+            if (l == null || r == null)
             {
                 return false;
             }
