@@ -84,13 +84,14 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <Compile Include="..\lib\Options.cs">
-      <Link>Options.cs</Link>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestGet.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Mono.Options\Mono.Options.csproj">
+      <Project>{C26430B5-E2AE-410E-924C-567D79E625DC}</Project>
+      <Name>Mono.Options</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SharpSnmpLib\SharpSnmpLib.Controls.csproj">
       <Project>{B2E8F73F-072C-4F5B-A42B-315F84A45374}</Project>
       <Name>SharpSnmpLib.Controls</Name>

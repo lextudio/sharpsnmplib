@@ -48,7 +48,11 @@ namespace Lextm.SharpSnmpLib.Messaging
             
             message.Parameters.AuthenticationParameters = providers.Authentication.ComputeHash(message);
         }		
-				
+			
+        /// <summary>
+        /// Tests if runnning on Mono. 
+        /// </summary>
+        /// <returns></returns>
 		public static bool IsRunningOnMono()
   		{
     		return Type.GetType ("Mono.Runtime") != null;

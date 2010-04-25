@@ -6,8 +6,8 @@ using System.Net;
 using System.Net.Sockets;
 using Lextm.SharpSnmpLib;
 using Lextm.SharpSnmpLib.Security;
-using Mono.Options;
 using Lextm.SharpSnmpLib.Messaging;
+using Mono.Options;
 
 namespace SnmpGet
 {
