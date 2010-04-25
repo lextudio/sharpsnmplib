@@ -304,9 +304,21 @@ namespace Lextm.SharpSnmpLib.Tests
             Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             GetRequestMessage message = new GetRequestMessage(0x4bed, VersionCode.V2, new OctetString("public"), new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) });
             
-            Stopwatch timer = new Stopwatch();
-            bool hasException = false;
             const int time = 1500;
+            bool hasException = false;
+            try
+            {
+                message.GetResponse(time, new IPEndPoint(IPAddress.Loopback, 161), socket);
+            }
+            catch (TimeoutException)
+            {
+                hasException = true;
+            }
+
+            Assert.IsFalse(hasException);
+
+            Stopwatch timer = new Stopwatch();
+            
             try
             {
                 timer.Start();
@@ -327,20 +339,10 @@ namespace Lextm.SharpSnmpLib.Tests
 			Console.WriteLine("timeout: " + time);
             Assert.LessOrEqual(time, elapsedMilliseconds);
             Assert.IsTrue(hasException);
-			//FIXME: these values are valid on my machine openSUSE 11.2. (lex)
+
+            // FIXME: these values are valid on my machine openSUSE 11.2. (lex)
+            // This test case usually failed on Windows, as strangely WinSock call adds an extra 500-ms.
             Assert.LessOrEqual(elapsedMilliseconds, time + 50);
-			
-            hasException = false;
-            try
-            {
-                message.GetResponse(time, new IPEndPoint(IPAddress.Loopback, 161), socket);
-            }
-            catch (TimeoutException)
-            {
-                hasException = true;                
-            }
-            
-            Assert.IsFalse(hasException);
         }
     }
 }
