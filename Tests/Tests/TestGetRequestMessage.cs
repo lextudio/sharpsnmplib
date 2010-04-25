@@ -17,6 +17,7 @@ using System.Net.Sockets;
 using Lextm.SharpSnmpLib.Properties;
 using TimeoutException = Lextm.SharpSnmpLib.Messaging.TimeoutException;
 using System.Diagnostics;
+using System;
 
 #pragma warning disable 1591
 
@@ -318,13 +319,17 @@ namespace Lextm.SharpSnmpLib.Tests
             {
                 hasException = true;
             }
-            timer.Stop();
+			
+            timer.Stop();            
             
-            //FIXME: these values are valid on my machine. (lex)
             long elapsedMilliseconds = timer.ElapsedMilliseconds;
+			Console.WriteLine("elapsed: " + elapsedMilliseconds);
+			Console.WriteLine("timeout: " + time);
             Assert.LessOrEqual(time, elapsedMilliseconds);
             Assert.IsTrue(hasException);
-            
+			//FIXME: these values are valid on my machine openSUSE 11.2. (lex)
+            Assert.LessOrEqual(elapsedMilliseconds, time + 50);
+			
             hasException = false;
             try
             {

@@ -1,4 +1,4 @@
-﻿// Helper class.
+// Helper class.
 // Copyright (C) 2008-2010 Malcolm Crowe, Lex Li, and other contributors.
 // 
 // This library is free software; you can redistribute it and/or
@@ -47,7 +47,12 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
             
             message.Parameters.AuthenticationParameters = providers.Authentication.ComputeHash(message);
-        }
+        }		
+				
+		public static bool IsRunningOnMono()
+  		{
+    		return Type.GetType ("Mono.Runtime") != null;
+  		}
 
         internal static Sequence PackMessage(VersionCode version, IPrivacyProvider privacy, ISegment header, SecurityParameters parameters, ISegment scope)
         {

@@ -93,7 +93,13 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
             catch (SocketException ex)
             {
-                if (ex.ErrorCode == 10060)
+				// FIXME: Mono/openSUSE uses 10035 for timeout.
+                if (Helper.IsRunningOnMono() && ex.ErrorCode == 10035)
+				{
+					throw TimeoutException.Create(receiver.Address, timeout);
+				}
+				    
+				if (ex.ErrorCode == 10060)
                 {
                     throw TimeoutException.Create(receiver.Address, timeout);
                 }

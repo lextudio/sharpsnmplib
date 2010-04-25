@@ -31,7 +31,7 @@ namespace Lextm.SharpSnmpLib.Agent
         {
             _demon = Program.Container.Resolve<SnmpDemon>();
             InitializeComponent();
-			if (!Program.IsRunningOnMono())
+			if (!Helper.IsRunningOnMono())
 			{
 			    // FIXME: work around a Mono WinForms bug.
 				Icon = Properties.Resources.network_server;
@@ -160,7 +160,7 @@ namespace Lextm.SharpSnmpLib.Agent
         {
             if (actEnabled.Checked)
             {
-                if (Program.IsRunningOnMono() && Mono.Unix.Native.Syscall.getuid() != 0 && int.Parse(txtPort.Text) < 1024)
+                if (Helper.IsRunningOnMono() && Mono.Unix.Native.Syscall.getuid() != 0 && int.Parse(txtPort.Text) < 1024)
                 {
                     MessageBox.Show("On Linux this application must be run as root for port less than 1024.");
                     return;

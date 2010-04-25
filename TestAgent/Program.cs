@@ -38,10 +38,5 @@ namespace Lextm.SharpSnmpLib.Agent
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());
         }   
-		
-		public static bool IsRunningOnMono()
-  		{
-    		return Type.GetType ("Mono.Runtime") != null;
-  		}
     }
 }
