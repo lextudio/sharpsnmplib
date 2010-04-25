@@ -95,30 +95,30 @@ namespace Lextm.SharpSnmpLib.Browser.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap document_properties_1 {
+        internal static System.Drawing.Bitmap document_properties1 {
             get {
-                object obj = ResourceManager.GetObject("document-properties_1", resourceCulture);
+                object obj = ResourceManager.GetObject("document_properties1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
         internal static System.Drawing.Bitmap document_save {
             get {
-                object obj = ResourceManager.GetObject("document-save", resourceCulture);
+                object obj = ResourceManager.GetObject("document_save", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
         internal static System.Drawing.Bitmap face_monkey {
             get {
-                object obj = ResourceManager.GetObject("face-monkey", resourceCulture);
+                object obj = ResourceManager.GetObject("face_monkey", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
         internal static System.Drawing.Bitmap help_browser {
             get {
-                object obj = ResourceManager.GetObject("help-browser", resourceCulture);
+                object obj = ResourceManager.GetObject("help_browser", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -139,7 +139,7 @@ namespace Lextm.SharpSnmpLib.Browser.Properties {
         
         internal static System.Drawing.Bitmap list_remove {
             get {
-                object obj = ResourceManager.GetObject("list-remove", resourceCulture);
+                object obj = ResourceManager.GetObject("list_remove", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -153,7 +153,7 @@ namespace Lextm.SharpSnmpLib.Browser.Properties {
         
         internal static System.Drawing.Bitmap office_calendar {
             get {
-                object obj = ResourceManager.GetObject("office-calendar", resourceCulture);
+                object obj = ResourceManager.GetObject("office_calendar", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -167,7 +167,7 @@ namespace Lextm.SharpSnmpLib.Browser.Properties {
         
         internal static System.Drawing.Bitmap preferences_desktop_theme {
             get {
-                object obj = ResourceManager.GetObject("preferences-desktop-theme", resourceCulture);
+                object obj = ResourceManager.GetObject("preferences_desktop_theme", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -216,7 +216,7 @@ namespace Lextm.SharpSnmpLib.Browser.Properties {
         
         internal static System.Drawing.Bitmap view_refresh {
             get {
-                object obj = ResourceManager.GetObject("view-refresh", resourceCulture);
+                object obj = ResourceManager.GetObject("view_refresh", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

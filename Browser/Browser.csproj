@@ -280,6 +280,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="changes.txt" />
+    <None Include="Resources\help-browser.png" />
     <None Include="Resources\face-monkey.png" />
     <None Include="Resources\office-calendar.png" />
     <None Include="Resources\view-refresh.png" />

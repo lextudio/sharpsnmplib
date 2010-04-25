@@ -83,7 +83,7 @@ namespace Lextm.SharpSnmpLib.Compiler.Properties {
         
         internal static System.Drawing.Bitmap document_open {
             get {
-                object obj = ResourceManager.GetObject("document-open", resourceCulture);
+                object obj = ResourceManager.GetObject("document_open", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -97,21 +97,21 @@ namespace Lextm.SharpSnmpLib.Compiler.Properties {
         
         internal static System.Drawing.Bitmap go_bottom {
             get {
-                object obj = ResourceManager.GetObject("go-bottom", resourceCulture);
+                object obj = ResourceManager.GetObject("go_bottom", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
         internal static System.Drawing.Bitmap go_jump {
             get {
-                object obj = ResourceManager.GetObject("go-jump", resourceCulture);
+                object obj = ResourceManager.GetObject("go_jump", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
         internal static System.Drawing.Bitmap help_browser {
             get {
-                object obj = ResourceManager.GetObject("help-browser", resourceCulture);
+                object obj = ResourceManager.GetObject("help_browser", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -139,7 +139,7 @@ namespace Lextm.SharpSnmpLib.Compiler.Properties {
         
         internal static System.Drawing.Bitmap system_log_out {
             get {
-                object obj = ResourceManager.GetObject("system-log-out", resourceCulture);
+                object obj = ResourceManager.GetObject("system_log_out", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

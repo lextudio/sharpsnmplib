@@ -172,7 +172,7 @@
             // 
             // actEdit
             // 
-            this.actEdit.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.document_properties_1;
+            this.actEdit.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.document_properties1;
             this.actEdit.Text = "View";
             this.actEdit.ToolTipText = "View Profile";
             this.actEdit.Update += new System.EventHandler(this.actEdit_Update);
@@ -188,7 +188,7 @@
             // editToolStripMenuItem
             // 
             this.actionList1.SetAction(this.editToolStripMenuItem, this.actEdit);
-            this.editToolStripMenuItem.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.document_properties_1;
+            this.editToolStripMenuItem.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.document_properties1;
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
             this.editToolStripMenuItem.Text = "View";
