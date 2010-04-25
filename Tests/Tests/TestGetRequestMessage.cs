@@ -342,7 +342,7 @@ namespace Lextm.SharpSnmpLib.Tests
 
             // FIXME: these values are valid on my machine openSUSE 11.2. (lex)
             // This test case usually failed on Windows, as strangely WinSock call adds an extra 500-ms.
-            Assert.LessOrEqual(elapsedMilliseconds, time + 50);
+            Assert.LessOrEqual(elapsedMilliseconds, time + 100);
         }
     }
 }

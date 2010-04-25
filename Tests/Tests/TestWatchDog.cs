@@ -1,4 +1,4 @@
-﻿using System.Threading;
+using System.Threading;
 using Lextm.Common;
 using NUnit.Framework;
 
@@ -22,7 +22,7 @@ namespace Lextm.SharpSnmpLib.Tests
             dog.Feed();
             dog.Feed();
             dog.Feed();
-            Thread.Sleep(120);
+            Thread.Sleep(200);
             Assert.AreEqual(1, count);
             Thread.Sleep(120);
             dog.Enabled = false;
