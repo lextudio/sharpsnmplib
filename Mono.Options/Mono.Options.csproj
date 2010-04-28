@@ -15,7 +15,7 @@
     <TargetFrameworkProfile />
     <SourceAnalysisOverrideSettingsFile>C:\Users\Administrator\AppData\Roaming\ICSharpCode/SharpDevelop3.0\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
     <SignAssembly>True</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\sharpsnmplib\sharpsnmplib.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\SharpSnmpLib\sharpsnmplib.snk</AssemblyOriginatorKeyFile>
     <DelaySign>False</DelaySign>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
   </PropertyGroup>
