@@ -73,12 +73,15 @@ namespace Lextm.SharpSnmpLib.Browser
             // dockPanel1
             // 
             this.dockPanel1.ActiveAutoHideContent = null;
+            this.dockPanel1.AllowEndUserDocking = false;
+            this.dockPanel1.AllowEndUserNestedDocking = false;
             this.dockPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dockPanel1.DockBackColor = System.Drawing.SystemColors.Control;
             this.dockPanel1.DocumentStyle = WeifenLuo.WinFormsUI.Docking.DocumentStyle.DockingSdi;
             this.dockPanel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World);
             this.dockPanel1.Location = new System.Drawing.Point(0, 49);
             this.dockPanel1.Name = "dockPanel1";
+            this.dockPanel1.ShowDocumentIcon = true;
             this.dockPanel1.Size = new System.Drawing.Size(493, 336);
             dockPanelGradient1.EndColor = System.Drawing.SystemColors.ControlLight;
             dockPanelGradient1.StartColor = System.Drawing.SystemColors.ControlLight;

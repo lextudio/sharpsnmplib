@@ -103,9 +103,6 @@
       <HintPath>..\lib\Microsoft.Practices.Unity.Configuration.dll</HintPath>
     </Reference>
     <Reference Include="System.Configuration" />
-    <Reference Include="WeifenLuo.WinFormsUI.Docking, Version=2.3.1.24483, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\lib\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\lib\WatchDog.cs">
@@ -311,6 +308,10 @@
     <ProjectReference Include="..\SharpSnmpLib\SharpSnmpLib.Mib.csproj">
       <Project>{CBE20411-5DB7-487D-825D-7694267BB6F5}</Project>
       <Name>SharpSnmpLib.Mib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WinFormsUI\WinFormsUI.csproj">
+      <Project>{C75532C4-765B-418E-B09B-46D36B2ABDB1}</Project>
+      <Name>WinFormsUI</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

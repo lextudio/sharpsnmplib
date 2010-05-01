@@ -82,6 +82,8 @@ namespace Lextm.SharpSnmpLib.Compiler
             // dockPanel1
             // 
             this.dockPanel1.ActiveAutoHideContent = null;
+            this.dockPanel1.AllowEndUserDocking = false;
+            this.dockPanel1.AllowEndUserNestedDocking = false;
             this.dockPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dockPanel1.DockBackColor = System.Drawing.SystemColors.Control;
             this.dockPanel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World);

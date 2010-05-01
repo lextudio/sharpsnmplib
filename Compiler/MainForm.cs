@@ -60,9 +60,7 @@ namespace Lextm.SharpSnmpLib.Compiler
         {
             IDockContent content = dockPanel1.ActiveDocument;
             DocumentPanel doc = (DocumentPanel)content;
-
-            List<string> fileList = new List<string>(1) {doc.FileName};
-
+            List<string> fileList = new List<string>(1) { doc.FileName };
             Compiler.Compile(fileList);
         }
 
