@@ -1,4 +1,4 @@
-﻿namespace Lextm.SharpSnmpLib.Browser
+namespace Lextm.SharpSnmpLib.Browser
 {
     partial class AgentProfilePanel
     {
@@ -109,7 +109,6 @@
             // toolStripButton1
             // 
             this.actionList1.SetAction(this.toolStripButton1, this.actAdd);
-            this.toolStripButton1.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.list_add;
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
             this.toolStripButton1.Size = new System.Drawing.Size(49, 22);
@@ -118,7 +117,6 @@
             // toolStripButton2
             // 
             this.actionList1.SetAction(this.toolStripButton2, this.actDelete);
-            this.toolStripButton2.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.list_remove;
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Name = "toolStripButton2";
             this.toolStripButton2.Size = new System.Drawing.Size(60, 22);
@@ -156,23 +154,20 @@
             this.actionList1.Update += new System.EventHandler(this.ActionList1Update);
             // 
             // actAdd
-            // 
-            this.actAdd.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.list_add;
+            //             
             this.actAdd.Text = "Add";
             this.actAdd.ToolTipText = "Add Profile";
             this.actAdd.Execute += new System.EventHandler(this.ActAddExecute);
             // 
             // actDelete
-            // 
-            this.actDelete.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.list_remove;
+            //             
             this.actDelete.Text = "Delete";
             this.actDelete.ToolTipText = "Delete Profile";
             this.actDelete.Update += new System.EventHandler(this.ActDeleteUpdate);
             this.actDelete.Execute += new System.EventHandler(this.ActDeleteExecute);
             // 
             // actEdit
-            // 
-            this.actEdit.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.document_properties1;
+            //             
             this.actEdit.Text = "View";
             this.actEdit.ToolTipText = "View Profile";
             this.actEdit.Update += new System.EventHandler(this.ActEditUpdate);
@@ -188,7 +183,6 @@
             // editToolStripMenuItem
             // 
             this.actionList1.SetAction(this.editToolStripMenuItem, this.actEdit);
-            this.editToolStripMenuItem.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.document_properties1;
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
             this.editToolStripMenuItem.Text = "View";
@@ -203,7 +197,6 @@
             // deleteToolStripMenuItem
             // 
             this.actionList1.SetAction(this.deleteToolStripMenuItem, this.actDelete);
-            this.deleteToolStripMenuItem.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.list_remove;
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
             this.deleteToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
@@ -242,8 +235,7 @@
             this.Controls.Add(this.listView1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.statusStrip1);
-            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Icon = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.network_server;
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));            
             this.Name = "AgentProfilePanel";
             this.TabText = "Agent Profiles";
             this.Load += new System.EventHandler(this.AgentProfilePanel_Load);

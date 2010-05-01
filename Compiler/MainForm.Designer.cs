@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Created by SharpDevelop.
  * User: lextm
  * Date: 2008/6/28
@@ -156,8 +156,7 @@ namespace Lextm.SharpSnmpLib.Compiler
             // toolStripButton1
             // 
             this.actionList1.SetAction(this.toolStripButton1, this.actExit);
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = global::Lextm.SharpSnmpLib.Compiler.Properties.Resources.system_log_out;
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;            
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
             this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
@@ -172,7 +171,6 @@ namespace Lextm.SharpSnmpLib.Compiler
             // 
             this.actionList1.SetAction(this.toolStripButton2, this.actOpen);
             this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton2.Image = global::Lextm.SharpSnmpLib.Compiler.Properties.Resources.document_open;
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Name = "toolStripButton2";
             this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
@@ -182,7 +180,6 @@ namespace Lextm.SharpSnmpLib.Compiler
             // 
             this.actionList1.SetAction(this.toolStripButton3, this.actCompile);
             this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton3.Image = global::Lextm.SharpSnmpLib.Compiler.Properties.Resources.go_bottom;
             this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton3.Name = "toolStripButton3";
             this.toolStripButton3.Size = new System.Drawing.Size(23, 22);
@@ -192,7 +189,6 @@ namespace Lextm.SharpSnmpLib.Compiler
             // 
             this.actionList1.SetAction(this.toolStripButton4, this.actCompileAll);
             this.toolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton4.Image = global::Lextm.SharpSnmpLib.Compiler.Properties.Resources.go_jump;
             this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton4.Name = "toolStripButton4";
             this.toolStripButton4.Size = new System.Drawing.Size(23, 22);
@@ -207,7 +203,6 @@ namespace Lextm.SharpSnmpLib.Compiler
             // 
             this.actionList1.SetAction(this.toolStripButton5, this.actAbout);
             this.toolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton5.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton5.Image")));
             this.toolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton5.Name = "toolStripButton5";
             this.toolStripButton5.Size = new System.Drawing.Size(23, 22);
@@ -236,7 +231,6 @@ namespace Lextm.SharpSnmpLib.Compiler
             // openToolStripMenuItem
             // 
             this.actionList1.SetAction(this.openToolStripMenuItem, this.actOpen);
-            this.openToolStripMenuItem.Image = global::Lextm.SharpSnmpLib.Compiler.Properties.Resources.document_open;
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.openToolStripMenuItem.Text = "Open";
@@ -244,7 +238,6 @@ namespace Lextm.SharpSnmpLib.Compiler
             // exitToolStripMenuItem
             // 
             this.actionList1.SetAction(this.exitToolStripMenuItem, this.actExit);
-            this.exitToolStripMenuItem.Image = global::Lextm.SharpSnmpLib.Compiler.Properties.Resources.system_log_out;
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
@@ -260,7 +253,6 @@ namespace Lextm.SharpSnmpLib.Compiler
             // aboutToolStripMenuItem
             // 
             this.actionList1.SetAction(this.aboutToolStripMenuItem, this.actAbout);
-            this.aboutToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("aboutToolStripMenuItem.Image")));
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.aboutToolStripMenuItem.Text = "About";
@@ -276,21 +268,18 @@ namespace Lextm.SharpSnmpLib.Compiler
             // 
             // actExit
             // 
-            this.actExit.Image = global::Lextm.SharpSnmpLib.Compiler.Properties.Resources.system_log_out;
             this.actExit.Text = "E&xit";
             this.actExit.ToolTipText = "Exit Browser";
             this.actExit.Execute += new System.EventHandler(this.ActExitExecute);
             // 
             // actOpen
             // 
-            this.actOpen.Image = global::Lextm.SharpSnmpLib.Compiler.Properties.Resources.document_open;
             this.actOpen.Text = "Open";
             this.actOpen.ToolTipText = "Open";
             this.actOpen.Execute += new System.EventHandler(this.ActOpenExecute);
             // 
             // actCompile
             // 
-            this.actCompile.Image = global::Lextm.SharpSnmpLib.Compiler.Properties.Resources.go_bottom;
             this.actCompile.Text = "Compile";
             this.actCompile.ToolTipText = "Compile";
             this.actCompile.Execute += new System.EventHandler(this.ActCompileExecute);
@@ -298,7 +287,6 @@ namespace Lextm.SharpSnmpLib.Compiler
             // 
             // actCompileAll
             // 
-            this.actCompileAll.Image = global::Lextm.SharpSnmpLib.Compiler.Properties.Resources.go_jump;
             this.actCompileAll.Text = "Compile All";
             this.actCompileAll.ToolTipText = "Compile All";
             this.actCompileAll.Execute += new System.EventHandler(this.ActCompileAllExecute);
@@ -306,7 +294,6 @@ namespace Lextm.SharpSnmpLib.Compiler
             // 
             // actAbout
             // 
-            this.actAbout.Image = global::Lextm.SharpSnmpLib.Compiler.Properties.Resources.help_browser;
             this.actAbout.Text = "About";
             this.actAbout.ToolTipText = "About #SNMP";
             this.actAbout.Execute += new System.EventHandler(this.ActAboutExecute);
@@ -324,7 +311,6 @@ namespace Lextm.SharpSnmpLib.Compiler
             this.Controls.Add(this.dockPanel1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.menuStrip1);
-            this.Icon = global::Lextm.SharpSnmpLib.Compiler.Properties.Resources.accessories_text_editor;
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";

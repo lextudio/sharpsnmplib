@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Created by SharpDevelop.
  * User: lextm
  * Date: 2008/6/28
@@ -14,6 +14,7 @@ using System.Reflection;
 using System.Windows.Forms;
 using Microsoft.Practices.Unity;
 using WeifenLuo.WinFormsUI.Docking;
+using Lextm.SharpSnmpLib.Messaging;
 
 namespace Lextm.SharpSnmpLib.Compiler
 {
@@ -25,6 +26,24 @@ namespace Lextm.SharpSnmpLib.Compiler
         public MainForm()
         {
             InitializeComponent();
+			
+			if (!Helper.IsRunningOnMono())
+			{
+                Icon =  Properties.Resources.accessories_text_editor;
+                actAbout.Image =  Properties.Resources.help_browser;
+                actCompileAll.Image = Properties.Resources.go_jump;
+                actCompile.Image = Properties.Resources.go_bottom;
+                actOpen.Image = Properties.Resources.document_open;
+                actExit.Image =  Properties.Resources.system_log_out;
+                //aboutToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("aboutToolStripMenuItem.Image")));
+                exitToolStripMenuItem.Image = Properties.Resources.system_log_out;
+                openToolStripMenuItem.Image = Properties.Resources.document_open;
+                //toolStripButton5.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton5.Image")));
+                toolStripButton4.Image = Properties.Resources.go_jump;
+                toolStripButton3.Image = Properties.Resources.go_bottom;
+                toolStripButton2.Image = Properties.Resources.document_open;
+				toolStripButton1.Image = Properties.Resources.system_log_out;
+			}
 
             DockContent files = Program.Container.Resolve<DockContent>("DocumentList");
             files.Show(dockPanel1, DockState.DockLeft);

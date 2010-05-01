@@ -1,9 +1,10 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Net;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
+using Lextm.SharpSnmpLib.Messaging;
 
 namespace Lextm.SharpSnmpLib.Browser
 {
@@ -12,6 +13,17 @@ namespace Lextm.SharpSnmpLib.Browser
         public AgentProfilePanel()
         {
             InitializeComponent();
+			if (!Helper.IsRunningOnMono())
+			{
+				Icon = Properties.Resources.network_server;
+				deleteToolStripMenuItem.Image = Properties.Resources.list_remove;
+				editToolStripMenuItem.Image = Properties.Resources.document_properties1;
+				actEdit.Image = Properties.Resources.document_properties1;
+				actDelete.Image = Properties.Resources.list_remove;
+				actAdd.Image = Properties.Resources.list_add;
+				toolStripButton2.Image = Properties.Resources.list_remove;
+				toolStripButton1.Image = Properties.Resources.list_add;
+			}
         }
 
         public IProfileRegistry Profiles { get; set; }

@@ -28,7 +28,14 @@ namespace Lextm.SharpSnmpLib.Browser
         public NotificationPanel()
         {
             InitializeComponent();
-            tstxtPort.Text = "162";
+			if (!Helper.IsRunningOnMono())
+			{
+				Icon = Properties.Resources.dialog_information;
+				actEnabled.Image = Properties.Resources.face_monkey;
+			    toolStripButton1.Image = Properties.Resources.face_monkey;
+			}
+			
+			tstxtPort.Text = "162";
             tscbIP.Items.Add(StrAllUnassigned);
             foreach (IPAddress address in Dns.GetHostEntry("").AddressList.Where(address => !address.IsIPv6LinkLocal))
             {

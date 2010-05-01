@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Created by SharpDevelop.
  * User: lextm
  * Date: 2009/1/28
@@ -99,7 +99,6 @@ namespace Lextm.SharpSnmpLib.Compiler
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(284, 262);
 			this.Controls.Add(this.lvFiles);
-			this.Icon = global::Lextm.SharpSnmpLib.Compiler.Properties.Resources.document_new;
 			this.Name = "DocumentListPanel";
 			this.TabText = "Document List";
 			this.Load += new System.EventHandler(this.DocumentListPanel_Load);

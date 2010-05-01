@@ -12,6 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
+using Lextm.SharpSnmpLib.Messaging;
 
 namespace Lextm.SharpSnmpLib.Compiler
 {
@@ -24,6 +25,11 @@ namespace Lextm.SharpSnmpLib.Compiler
         public DocumentListPanel()
         {
             InitializeComponent();
+			
+			if (!Helper.IsRunningOnMono())
+			{				
+			    Icon = Properties.Resources.document_new;
+			}
         }
         
         private void LvFilesDoubleClick(object sender, EventArgs e)

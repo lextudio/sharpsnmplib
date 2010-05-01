@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Created by SharpDevelop.
  * User: lextm
  * Date: 2008/6/28
@@ -13,6 +13,7 @@ using System.Reflection;
 using System.Windows.Forms;
 using Microsoft.Practices.Unity;
 using WeifenLuo.WinFormsUI.Docking;
+using Lextm.SharpSnmpLib.Messaging;
 
 namespace Lextm.SharpSnmpLib.Browser
 {
@@ -24,7 +25,12 @@ namespace Lextm.SharpSnmpLib.Browser
 		public MainForm()
 		{
 			InitializeComponent();
-			            
+			if (!Helper.IsRunningOnMono())
+			{
+				Icon = Properties.Resources.internet_web_browser;
+				actAbout.Image = Properties.Resources.help_browser;
+			}
+			
             DockContent agent = Program.Container.Resolve<DockContent>("AgentProfile");
             agent.Show(dockPanel1, DockState.DockLeft);
 

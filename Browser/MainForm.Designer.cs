@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Created by SharpDevelop.
  * User: lextm
  * Date: 2008/6/28
@@ -223,8 +223,7 @@ namespace Lextm.SharpSnmpLib.Browser
             this.actExit.Execute += new System.EventHandler(this.ActExitExecute);
             // 
             // actAbout
-            // 
-            this.actAbout.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.help_browser;
+            //             
             this.actAbout.Text = "About";
             this.actAbout.ToolTipText = "About #SNMP";
             this.actAbout.Execute += new System.EventHandler(this.ActAboutExecute);
@@ -236,8 +235,7 @@ namespace Lextm.SharpSnmpLib.Browser
             this.ClientSize = new System.Drawing.Size(493, 385);
             this.Controls.Add(this.dockPanel1);
             this.Controls.Add(this.toolStrip1);
-            this.Controls.Add(this.menuStrip1);
-            this.Icon = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.internet_web_browser;
+            this.Controls.Add(this.menuStrip1);            
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
             this.Text = "#SNMP MIB Browser";

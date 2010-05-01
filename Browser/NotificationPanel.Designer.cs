@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Created by SharpDevelop.
  * User: lextm
  * Date: 2009/1/28
@@ -77,8 +77,7 @@ namespace Lextm.SharpSnmpLib.Browser
             // toolStripButton1
             // 
             this.alNotification.SetAction(this.toolStripButton1, this.actEnabled);
-            this.toolStripButton1.CheckOnClick = true;
-            this.toolStripButton1.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.face_monkey;
+            this.toolStripButton1.CheckOnClick = true;            
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
             this.toolStripButton1.Size = new System.Drawing.Size(72, 22);
@@ -119,8 +118,7 @@ namespace Lextm.SharpSnmpLib.Browser
             // 
             // actEnabled
             // 
-            this.actEnabled.CheckOnClick = true;
-            this.actEnabled.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.face_monkey;
+            this.actEnabled.CheckOnClick = true;            
             this.actEnabled.Text = "Disabled";
             this.actEnabled.ToolTipText = "Enable/disable this panel";
             this.actEnabled.Execute += new System.EventHandler(this.ActEnabledExecute);
@@ -133,8 +131,7 @@ namespace Lextm.SharpSnmpLib.Browser
             this.ClientSize = new System.Drawing.Size(411, 262);
             this.Controls.Add(this.txtLog);
             this.Controls.Add(this.toolStrip1);
-            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Icon = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.dialog_information;
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));            
             this.Name = "NotificationPanel";
             this.TabText = "Notification";
             this.Load += new System.EventHandler(this.NotificationPanel_Load);
