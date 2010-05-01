@@ -101,7 +101,7 @@ namespace Lextm.SharpSnmpLib.Browser
             txtUserName.Text = _profile.UserName;
         }
         
-        private void txtPort_Validating(object sender, CancelEventArgs e)
+        private void TxtPortValidating(object sender, CancelEventArgs e)
         {
             int result;
             bool isInt = int.TryParse(txtPort.Text, out result);
@@ -115,32 +115,32 @@ namespace Lextm.SharpSnmpLib.Browser
             errorProvider1.SetError(txtPort, "Please provide a valid port number");
         }
         
-        private void txtPort_Validated(object sender, EventArgs e)
+        private void TxtPortValidated(object sender, EventArgs e)
         {
             errorProvider1.SetError(txtPort, string.Empty);
         }
         
-        private void txtSet_Validating(object sender, CancelEventArgs e)
+        private void TxtSetValidating(object sender, CancelEventArgs e)
         {
             ValidatingTextBox(txtSet, e);
         }
         
-        private void txtSet_Validated(object sender, EventArgs e)
+        private void TxtSetValidated(object sender, EventArgs e)
         {
             errorProvider1.SetError(txtSet, string.Empty);
         }
 
-        private void txtGet_Validating(object sender, CancelEventArgs e)
+        private void TxtGetValidating(object sender, CancelEventArgs e)
         {
             ValidatingTextBox(txtGet, e);
         }
         
-        private void txtGet_Validated(object sender, EventArgs e)
+        private void TxtGetValidated(object sender, EventArgs e)
         {
             errorProvider1.SetError(txtGet, string.Empty);
         }
 
-        private void txtIP_Validating(object sender, CancelEventArgs e)
+        private void TxtIpValidating(object sender, CancelEventArgs e)
         {
             IPAddress ip;
             if (AgentProfile.IsValid(txtIP.Text, out ip))
@@ -153,12 +153,12 @@ namespace Lextm.SharpSnmpLib.Browser
             errorProvider1.SetError(txtIP, "IP address is not valid");
         }
         
-        private void txtIP_Validated(object sender, EventArgs e)
+        private void TxtIpValidated(object sender, EventArgs e)
         {
             errorProvider1.SetError(txtIP, string.Empty);
         }
         
-        private void BtnOKClick(object sender, EventArgs e)
+        private void BtnOkClick(object sender, EventArgs e)
         {
             ValidateAllChildren(this);
         }
@@ -203,32 +203,32 @@ namespace Lextm.SharpSnmpLib.Browser
             txtSet.Enabled = !isV3;
         }
 
-        private void txtAuthentication_Validated(object sender, EventArgs e)
+        private void TxtAuthenticationValidated(object sender, EventArgs e)
         {
             errorProvider1.SetError(txtAuthentication, string.Empty);
         }
 
-        private void txtAuthentication_Validating(object sender, CancelEventArgs e)
+        private void TxtAuthenticationValidating(object sender, CancelEventArgs e)
         {
             ValidatingTextBox(txtAuthentication, e);
         }
 
-        private void txtPrivacy_Validated(object sender, EventArgs e)
+        private void TxtPrivacyValidated(object sender, EventArgs e)
         {
             errorProvider1.SetError(txtPrivacy, string.Empty);
         }
 
-        private void txtPrivacy_Validating(object sender, CancelEventArgs e)
+        private void TxtPrivacyValidating(object sender, CancelEventArgs e)
         {
             ValidatingTextBox(txtPrivacy, e);
         }
 
-        private void txtUserName_Validated(object sender, EventArgs e)
+        private void TxtUserNameValidated(object sender, EventArgs e)
         {
             errorProvider1.SetError(txtUserName, string.Empty);
         }
 
-        private void txtUserName_Validating(object sender, CancelEventArgs e)
+        private void TxtUserNameValidating(object sender, CancelEventArgs e)
         {
             ValidatingTextBox(txtUserName, e);
         }
@@ -250,12 +250,12 @@ namespace Lextm.SharpSnmpLib.Browser
             errorProvider1.SetError(control, "Text box cannot be empty");
         }
 
-        private void cbAuthentication_SelectedIndexChanged(object sender, EventArgs e)
+        private void CbAuthenticationSelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateControls();
         }
 
-        private void cbPrivacy_SelectedIndexChanged(object sender, EventArgs e)
+        private void CbPrivacySelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateControls();
         }

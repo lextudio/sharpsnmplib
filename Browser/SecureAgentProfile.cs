@@ -9,6 +9,9 @@ namespace Lextm.SharpSnmpLib.Browser
 {
     class SecureAgentProfile : AgentProfile
     {
+        private readonly IAuthenticationProvider _auth;
+        private IPrivacyProvider _priv;
+
         public SecureAgentProfile(Guid id, VersionCode version, IPEndPoint agent, string agentName, string authenticationPassphrase, string privacyPassphrase, int authenticationMethod, int privacyMethod, string userName)
             : base(id, version, agent, agentName, userName)
         {
@@ -16,6 +19,29 @@ namespace Lextm.SharpSnmpLib.Browser
             PrivacyPassphrase = privacyPassphrase;
             AuthenticationMethod = authenticationMethod;
             PrivacyMethod = privacyMethod;
+
+            switch (AuthenticationMethod)
+            {
+                case 0:
+                    _auth = DefaultAuthenticationProvider.Instance;
+                    break;
+                case 1:
+                    _auth = new MD5AuthenticationProvider(new OctetString(AuthenticationPassphrase));
+                    break;
+                case 2:
+                    _auth = new SHA1AuthenticationProvider(new OctetString(AuthenticationPassphrase));
+                    break;
+            }
+
+            switch (PrivacyMethod)
+            {
+                case 0:
+                    _priv = DefaultPrivacyProvider.Instance;
+                    break;
+                case 1:
+                    _priv = new DESPrivacyProvider(new OctetString(PrivacyPassphrase), _auth);
+                    break;
+            }
         }
 
         internal string AuthenticationPassphrase { get; set; }
@@ -26,7 +52,6 @@ namespace Lextm.SharpSnmpLib.Browser
         internal override void Get(Manager manager, Variable variable)
         {
             TraceSource source = new TraceSource("Browser");
-            // source.TraceInformation(manager.GetSingle(Agent, GetCommunity, result).ToString(manager.Objects));
             if (string.IsNullOrEmpty(UserName))
             {
                 source.TraceInformation("User name need to be specified for v3.");
@@ -35,59 +60,73 @@ namespace Lextm.SharpSnmpLib.Browser
                 return;
             }
 
-            //IAuthenticationProvider auth = AuthenticationMethod != 0
-            //                                   ? GetAuthenticationProviderByName(authentication, authPhrase)
-            //                                   : DefaultAuthenticationProvider.Instance;
+            Discovery discovery = new Discovery(1, 101);
+            ReportMessage report = discovery.GetResponse(manager.Timeout, Agent);
 
-            //IPrivacyProvider priv = (level & Levels.Privacy) == Levels.Privacy
-            //                            ? new DESPrivacyProvider(new OctetString(privPhrase), auth)
-            //                            : DefaultPrivacyProvider.Instance;
+            ProviderPair record = new ProviderPair(_auth, _priv);
+            GetRequestMessage request = new GetRequestMessage(VersionCode.V3, 100, 0, new OctetString(UserName), new List<Variable>() { variable }, record, report);
 
-            //Discovery discovery = new Discovery(1, 101);
-            //ReportMessage report = discovery.GetResponse(timeout, receiver);
+            ISnmpMessage response = request.GetResponse(manager.Timeout, Agent);
+            if (response.Pdu.ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
+            {
+                throw ErrorException.Create(
+                    "error in response",
+                    Agent.Address,
+                    response);
+            }
 
-            //ProviderPair record = new ProviderPair(auth, priv);
-            //GetRequestMessage request = new GetRequestMessage(VersionCode.V3, 100, 0, new OctetString(user), vList, record, report);
-
-            //ISnmpMessage response = request.GetResponse(timeout, receiver);
-            //if (response.Pdu.ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
-            //{
-            //    throw ErrorException.Create(
-            //        "error in response",
-            //        receiver.Address,
-            //        response);
-            //}
-
-            //foreach (Variable v in response.Pdu.Variables)
-            //{
-            //    Console.WriteLine(v);
-            //}
+            source.TraceInformation(response.Pdu.Variables[0].ToString(manager.Objects));
             source.Flush();
             source.Close();
         }
 
         internal override string GetValue(Manager manager, Variable variable)
         {
-            // Variable result = manager.Objects.CreateVariable(textual);
-            return null; // manager.GetSingle(Agent, GetCommunity, result).Data.ToString();
+            Discovery discovery = new Discovery(1, 101);
+            ReportMessage report = discovery.GetResponse(manager.Timeout, Agent);
+
+            ProviderPair record = new ProviderPair(_auth, _priv);
+            GetRequestMessage request = new GetRequestMessage(VersionCode.V3, 100, 0, new OctetString(UserName), new List<Variable>() { variable }, record, report);
+
+            ISnmpMessage response = request.GetResponse(manager.Timeout, Agent);
+            if (response.Pdu.ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
+            {
+                throw ErrorException.Create(
+                    "error in response",
+                    Agent.Address,
+                    response);
+            }
+
+            return response.Pdu.Variables[0].Data.ToString();
         }
 
         internal override void GetNext(Manager manager, Variable variable)
         {
-            // Variable result = manager.Objects.CreateVariable(textual);
             TraceSource source = new TraceSource("Browser");
-            //GetNextRequestMessage message = new GetNextRequestMessage(Messenger.NextRequestId, VersionCode, new OctetString(GetCommunity),
-            //                                                          new List<Variable> {result});
-            //ISnmpMessage response = message.GetResponse(manager.Timeout, Agent);
-            //if (response.Pdu.ErrorStatus.ToInt32() != 0)
-            //{
-            //    throw ErrorException.Create(
-            //        "error in response",
-            //        Agent.Address,
-            //        response);
-            //}
+            if (string.IsNullOrEmpty(UserName))
+            {
+                source.TraceInformation("User name need to be specified for v3.");
+                source.Flush();
+                source.Close();
+                return;
+            }
 
-            //source.TraceInformation(response.Pdu.Variables[0].ToString(manager.Objects));
+            Discovery discovery = new Discovery(1, 101);
+            ReportMessage report = discovery.GetResponse(manager.Timeout, Agent);
+
+            ProviderPair record = new ProviderPair(_auth, _priv);
+            GetNextRequestMessage request = new GetNextRequestMessage(VersionCode.V3, 100, 0, new OctetString(UserName), new List<Variable>() { variable }, record, report);
+
+            ISnmpMessage response = request.GetResponse(manager.Timeout, Agent);
+            if (response.Pdu.ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
+            {
+                throw ErrorException.Create(
+                    "error in response",
+                    Agent.Address,
+                    response);
+            }
+
+            source.TraceInformation(response.Pdu.Variables[0].ToString(manager.Objects));
             source.Flush();
             source.Close();
         }
@@ -95,7 +134,30 @@ namespace Lextm.SharpSnmpLib.Browser
         internal override void Set(Manager manager, Variable variable)
         {
             TraceSource source = new TraceSource("Browser");
-            // source.TraceInformation(manager.SetSingle(Agent, GetCommunity, manager.Objects.CreateVariable(textual, data)).ToString(manager.Objects));
+            if (string.IsNullOrEmpty(UserName))
+            {
+                source.TraceInformation("User name need to be specified for v3.");
+                source.Flush();
+                source.Close();
+                return;
+            }
+
+            Discovery discovery = new Discovery(1, 101);
+            ReportMessage report = discovery.GetResponse(manager.Timeout, Agent);
+
+            ProviderPair record = new ProviderPair(_auth, _priv);
+            SetRequestMessage request = new SetRequestMessage(VersionCode.V3, 100, 0, new OctetString(UserName), new List<Variable>() { variable }, record, report);
+
+            ISnmpMessage response = request.GetResponse(manager.Timeout, Agent);
+            if (response.Pdu.ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
+            {
+                throw ErrorException.Create(
+                    "error in response",
+                    Agent.Address,
+                    response);
+            }
+
+            source.TraceInformation(response.Pdu.Variables[0].ToString(manager.Objects));
             source.Flush();
             source.Close();
         }

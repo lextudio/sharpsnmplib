@@ -81,8 +81,8 @@
             this.txtIP.Size = new System.Drawing.Size(100, 20);
             this.txtIP.TabIndex = 1;
             this.txtIP.Text = "127.0.0.1";
-            this.txtIP.Validating += new System.ComponentModel.CancelEventHandler(this.txtIP_Validating);
-            this.txtIP.Validated += new System.EventHandler(this.txtIP_Validated);
+            this.txtIP.Validating += new System.ComponentModel.CancelEventHandler(this.TxtIpValidating);
+            this.txtIP.Validated += new System.EventHandler(this.TxtIpValidated);
             // 
             // label2
             // 
@@ -133,8 +133,8 @@
             this.txtSet.Size = new System.Drawing.Size(101, 20);
             this.txtSet.TabIndex = 1;
             this.txtSet.Text = "private";
-            this.txtSet.Validating += new System.ComponentModel.CancelEventHandler(this.txtSet_Validating);
-            this.txtSet.Validated += new System.EventHandler(this.txtSet_Validated);
+            this.txtSet.Validating += new System.ComponentModel.CancelEventHandler(this.TxtSetValidating);
+            this.txtSet.Validated += new System.EventHandler(this.TxtSetValidated);
             // 
             // txtGet
             // 
@@ -145,8 +145,8 @@
             this.txtGet.Size = new System.Drawing.Size(101, 20);
             this.txtGet.TabIndex = 0;
             this.txtGet.Text = "public";
-            this.txtGet.Validating += new System.ComponentModel.CancelEventHandler(this.txtGet_Validating);
-            this.txtGet.Validated += new System.EventHandler(this.txtGet_Validated);
+            this.txtGet.Validating += new System.ComponentModel.CancelEventHandler(this.TxtGetValidating);
+            this.txtGet.Validated += new System.EventHandler(this.TxtGetValidated);
             // 
             // cbVersionCode
             // 
@@ -175,8 +175,8 @@
             this.txtPort.Size = new System.Drawing.Size(100, 20);
             this.txtPort.TabIndex = 2;
             this.txtPort.Text = "161";
-            this.txtPort.Validating += new System.ComponentModel.CancelEventHandler(this.txtPort_Validating);
-            this.txtPort.Validated += new System.EventHandler(this.txtPort_Validated);
+            this.txtPort.Validating += new System.ComponentModel.CancelEventHandler(this.TxtPortValidating);
+            this.txtPort.Validated += new System.EventHandler(this.TxtPortValidated);
             // 
             // btnOK
             // 
@@ -188,7 +188,7 @@
             this.btnOK.TabIndex = 3;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
-            this.btnOK.Click += new System.EventHandler(this.BtnOKClick);
+            this.btnOK.Click += new System.EventHandler(this.BtnOkClick);
             // 
             // btnCancel
             // 
@@ -271,8 +271,8 @@
             this.txtUserName.Name = "txtUserName";
             this.txtUserName.Size = new System.Drawing.Size(193, 20);
             this.txtUserName.TabIndex = 9;
-            this.txtUserName.Validating += new System.ComponentModel.CancelEventHandler(this.txtUserName_Validating);
-            this.txtUserName.Validated += new System.EventHandler(this.txtUserName_Validated);
+            this.txtUserName.Validating += new System.ComponentModel.CancelEventHandler(this.TxtUserNameValidating);
+            this.txtUserName.Validated += new System.EventHandler(this.TxtUserNameValidated);
             // 
             // label11
             // 
@@ -296,7 +296,7 @@
             this.cbPrivacy.Name = "cbPrivacy";
             this.cbPrivacy.Size = new System.Drawing.Size(110, 21);
             this.cbPrivacy.TabIndex = 7;
-            this.cbPrivacy.SelectedIndexChanged += new System.EventHandler(this.cbPrivacy_SelectedIndexChanged);
+            this.cbPrivacy.SelectedIndexChanged += new System.EventHandler(this.CbPrivacySelectedIndexChanged);
             // 
             // cbAuthentication
             // 
@@ -312,7 +312,7 @@
             this.cbAuthentication.Name = "cbAuthentication";
             this.cbAuthentication.Size = new System.Drawing.Size(110, 21);
             this.cbAuthentication.TabIndex = 6;
-            this.cbAuthentication.SelectedIndexChanged += new System.EventHandler(this.cbAuthentication_SelectedIndexChanged);
+            this.cbAuthentication.SelectedIndexChanged += new System.EventHandler(this.CbAuthenticationSelectedIndexChanged);
             // 
             // label10
             // 
@@ -338,8 +338,8 @@
             this.txtPrivacy.Name = "txtPrivacy";
             this.txtPrivacy.Size = new System.Drawing.Size(110, 20);
             this.txtPrivacy.TabIndex = 3;
-            this.txtPrivacy.Validating += new System.ComponentModel.CancelEventHandler(this.txtPrivacy_Validating);
-            this.txtPrivacy.Validated += new System.EventHandler(this.txtPrivacy_Validated);
+            this.txtPrivacy.Validating += new System.ComponentModel.CancelEventHandler(this.TxtPrivacyValidating);
+            this.txtPrivacy.Validated += new System.EventHandler(this.TxtPrivacyValidated);
             // 
             // txtAuthentication
             // 
@@ -347,8 +347,8 @@
             this.txtAuthentication.Name = "txtAuthentication";
             this.txtAuthentication.Size = new System.Drawing.Size(110, 20);
             this.txtAuthentication.TabIndex = 2;
-            this.txtAuthentication.Validating += new System.ComponentModel.CancelEventHandler(this.txtAuthentication_Validating);
-            this.txtAuthentication.Validated += new System.EventHandler(this.txtAuthentication_Validated);
+            this.txtAuthentication.Validating += new System.ComponentModel.CancelEventHandler(this.TxtAuthenticationValidating);
+            this.txtAuthentication.Validated += new System.EventHandler(this.TxtAuthenticationValidated);
             // 
             // label8
             // 

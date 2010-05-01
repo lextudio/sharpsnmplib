@@ -64,7 +64,7 @@ namespace Lextm.SharpSnmpLib.Browser
             }
         }
 
-        private void actDelete_Update(object sender, EventArgs e)
+        private void ActDeleteUpdate(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count == 1 && Profiles.DefaultProfile == listView1.SelectedItems[0].Tag as AgentProfile)
             {
@@ -76,12 +76,12 @@ namespace Lextm.SharpSnmpLib.Browser
             }
         }
 
-        private void actEdit_Update(object sender, EventArgs e)
+        private void ActEditUpdate(object sender, EventArgs e)
         {
             actEdit.Enabled = listView1.SelectedItems.Count == 1;
         }
 
-        private void actDefault_Update(object sender, EventArgs e)
+        private void ActDefaultUpdate(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count == 1 && Profiles.DefaultProfile == listView1.SelectedItems[0].Tag as AgentProfile)
             {
@@ -93,7 +93,7 @@ namespace Lextm.SharpSnmpLib.Browser
             }
         }
 
-        private void actDefault_Execute(object sender, EventArgs e)
+        private void ActDefaultExecute(object sender, EventArgs e)
         {
             Profiles.DefaultProfile = listView1.SelectedItems[0].Tag as AgentProfile;
             Profiles.SaveProfiles();
@@ -104,12 +104,12 @@ namespace Lextm.SharpSnmpLib.Browser
             UpdateView(null, null);
         }
 
-        private void actionList1_Update(object sender, EventArgs e)
+        private void ActionList1Update(object sender, EventArgs e)
         {
             tslblDefault.Text = "Default agent is " + Profiles.DefaultProfile.Name;
         }
 
-        private void actDelete_Execute(object sender, EventArgs e)
+        private void ActDeleteExecute(object sender, EventArgs e)
         {
             if (MessageBox.Show("Do you want to remove this item", "Confirmation", MessageBoxButtons.YesNo) != DialogResult.Yes)
             {
@@ -130,7 +130,7 @@ namespace Lextm.SharpSnmpLib.Browser
             }
         }
 
-        private void actAdd_Execute(object sender, EventArgs e)
+        private void ActAddExecute(object sender, EventArgs e)
         {
             using (FormProfile editor = new FormProfile(null))
             {
@@ -154,7 +154,7 @@ namespace Lextm.SharpSnmpLib.Browser
             }
         }
 
-        private void actEdit_Execute(object sender, EventArgs e)
+        private void ActEditExecute(object sender, EventArgs e)
         {
             AgentProfile profile = listView1.SelectedItems[0].Tag as AgentProfile;
             using (FormProfile editor = new FormProfile(profile))
@@ -167,7 +167,7 @@ namespace Lextm.SharpSnmpLib.Browser
             }
         }
 
-        private void listView1_MouseClick(object sender, MouseEventArgs e)
+        private void ListView1MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {

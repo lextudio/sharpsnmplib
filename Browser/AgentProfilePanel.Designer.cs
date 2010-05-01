@@ -80,7 +80,7 @@
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
-            this.listView1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.listView1_MouseClick);
+            this.listView1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ListView1MouseClick);
             // 
             // chName
             // 
@@ -153,37 +153,37 @@
             this.actionList1.Actions.Add(this.actEdit);
             this.actionList1.Actions.Add(this.actDefault);
             this.actionList1.ContainerControl = this;
-            this.actionList1.Update += new System.EventHandler(this.actionList1_Update);
+            this.actionList1.Update += new System.EventHandler(this.ActionList1Update);
             // 
             // actAdd
             // 
             this.actAdd.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.list_add;
             this.actAdd.Text = "Add";
             this.actAdd.ToolTipText = "Add Profile";
-            this.actAdd.Execute += new System.EventHandler(this.actAdd_Execute);
+            this.actAdd.Execute += new System.EventHandler(this.ActAddExecute);
             // 
             // actDelete
             // 
             this.actDelete.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.list_remove;
             this.actDelete.Text = "Delete";
             this.actDelete.ToolTipText = "Delete Profile";
-            this.actDelete.Update += new System.EventHandler(this.actDelete_Update);
-            this.actDelete.Execute += new System.EventHandler(this.actDelete_Execute);
+            this.actDelete.Update += new System.EventHandler(this.ActDeleteUpdate);
+            this.actDelete.Execute += new System.EventHandler(this.ActDeleteExecute);
             // 
             // actEdit
             // 
             this.actEdit.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.document_properties1;
             this.actEdit.Text = "View";
             this.actEdit.ToolTipText = "View Profile";
-            this.actEdit.Update += new System.EventHandler(this.actEdit_Update);
-            this.actEdit.Execute += new System.EventHandler(this.actEdit_Execute);
+            this.actEdit.Update += new System.EventHandler(this.ActEditUpdate);
+            this.actEdit.Execute += new System.EventHandler(this.ActEditExecute);
             // 
             // actDefault
             // 
             this.actDefault.Text = "Set Default";
             this.actDefault.ToolTipText = "Set Default Profile";
-            this.actDefault.Update += new System.EventHandler(this.actDefault_Update);
-            this.actDefault.Execute += new System.EventHandler(this.actDefault_Execute);
+            this.actDefault.Update += new System.EventHandler(this.ActDefaultUpdate);
+            this.actDefault.Execute += new System.EventHandler(this.ActDefaultExecute);
             // 
             // editToolStripMenuItem
             // 
