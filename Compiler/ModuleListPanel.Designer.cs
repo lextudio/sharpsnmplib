@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Created by SharpDevelop.
  * User: lextm
  * Date: 2008/7/20
@@ -126,8 +126,7 @@ namespace Lextm.SharpSnmpLib.Compiler
         	this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         	this.ClientSize = new System.Drawing.Size(465, 299);
         	this.Controls.Add(this.listView1);
-        	this.Controls.Add(this.statusStrip1);
-        	this.Icon = global::Lextm.SharpSnmpLib.Compiler.Properties.Resources.preferences_system_windows;
+        	this.Controls.Add(this.statusStrip1);        	
         	this.Name = "ModuleListPanel";
         	this.TabText = "Module List";
         	this.Load += new System.EventHandler(this.ModuleListPanel_Load);

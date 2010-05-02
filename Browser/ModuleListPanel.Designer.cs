@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Created by SharpDevelop.
  * User: lextm
  * Date: 2008/7/20
@@ -95,8 +95,7 @@ namespace Lextm.SharpSnmpLib.Browser
             this.actionList1.ContainerControl = this;
             // 
             // actAdd
-            // 
-            this.actAdd.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.list_add;
+            //             
             this.actAdd.Text = "Load";
             this.actAdd.ToolTipText = "Load";
             this.actAdd.Update += new System.EventHandler(this.ActAddUpdate);
@@ -104,7 +103,6 @@ namespace Lextm.SharpSnmpLib.Browser
             // 
             // actRemove
             // 
-            this.actRemove.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.list_remove;
             this.actRemove.Text = "Unload";
             this.actRemove.ToolTipText = "Unload";
             this.actRemove.Update += new System.EventHandler(this.ActRemoveUpdate);
@@ -113,15 +111,13 @@ namespace Lextm.SharpSnmpLib.Browser
             // actEnableMonitor
             // 
             this.actEnableMonitor.CheckOnClick = true;
-            this.actEnableMonitor.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.view_refresh;
             this.actEnableMonitor.Text = "Monitor Folder";
             this.actEnableMonitor.ToolTipText = "Monitor Folder";
             this.actEnableMonitor.Execute += new System.EventHandler(this.ActEnableMonitorExecute);
             // 
             // tsbtnAdd
             // 
-            this.actionList1.SetAction(this.tsbtnAdd, this.actAdd);
-            this.tsbtnAdd.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.list_add;
+            this.actionList1.SetAction(this.tsbtnAdd, this.actAdd);            
             this.tsbtnAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnAdd.Name = "tsbtnAdd";
             this.tsbtnAdd.Size = new System.Drawing.Size(53, 22);
@@ -130,7 +126,6 @@ namespace Lextm.SharpSnmpLib.Browser
             // removeToolStripMenuItem
             // 
             this.actionList1.SetAction(this.removeToolStripMenuItem, this.actRemove);
-            this.removeToolStripMenuItem.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.list_remove;
             this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
             this.removeToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
             this.removeToolStripMenuItem.Text = "Unload";
@@ -138,7 +133,6 @@ namespace Lextm.SharpSnmpLib.Browser
             // toolStripButton1
             // 
             this.actionList1.SetAction(this.toolStripButton1, this.actRemove);
-            this.toolStripButton1.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.list_remove;
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
             this.toolStripButton1.Size = new System.Drawing.Size(65, 22);
@@ -148,7 +142,6 @@ namespace Lextm.SharpSnmpLib.Browser
             // 
             this.actionList1.SetAction(this.toolStripButton2, this.actEnableMonitor);
             this.toolStripButton2.CheckOnClick = true;
-            this.toolStripButton2.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.view_refresh;
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Name = "toolStripButton2";
             this.toolStripButton2.Size = new System.Drawing.Size(106, 22);
@@ -209,7 +202,6 @@ namespace Lextm.SharpSnmpLib.Browser
             this.Controls.Add(this.listView1);
             this.Controls.Add(this.toolStrip1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Icon = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.preferences_system_windows;
             this.Name = "ModuleListPanel";
             this.TabText = "Module List";
             this.Load += new System.EventHandler(this.ModuleListPanel_Load);

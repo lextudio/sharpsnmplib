@@ -12,6 +12,7 @@ using System.Globalization;
 using System.Windows.Forms;
 
 using WeifenLuo.WinFormsUI.Docking;
+using Lextm.SharpSnmpLib.Messaging;
 
 namespace Lextm.SharpSnmpLib.Compiler
 {
@@ -23,6 +24,10 @@ namespace Lextm.SharpSnmpLib.Compiler
         public OutputPanel()
         {
             InitializeComponent();
+			if (!Helper.IsRunningOnMono())
+			{
+				Icon = Properties.Resources.utilities_terminal;
+			}
         }
 
         public void Write(string message)

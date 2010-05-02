@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Created by SharpDevelop.
  * User: lextm
  * Date: 2008/6/28
@@ -86,8 +86,7 @@ namespace Lextm.SharpSnmpLib.Compiler
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(511, 154);
-			this.Controls.Add(this.txtMessages);
-			this.Icon = global::Lextm.SharpSnmpLib.Compiler.Properties.Resources.utilities_terminal;
+			this.Controls.Add(this.txtMessages);			
 			this.Name = "OutputPanel";
 			this.TabText = "Output";
 			this.contextOuputMenu.ResumeLayout(false);

@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Created by SharpDevelop.
  * User: lextm
  * Date: 2008/6/28
@@ -183,8 +183,7 @@ namespace Lextm.SharpSnmpLib.Browser
             // 
             // actNumber
             // 
-            this.actNumber.CheckOnClick = true;
-            this.actNumber.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.office_calendar;
+            this.actNumber.CheckOnClick = true;            
             this.actNumber.Text = "Show ID";
             this.actNumber.ToolTipText = "Show object ID";
             this.actNumber.Execute += new System.EventHandler(this.ActNumberExecute);
@@ -192,8 +191,7 @@ namespace Lextm.SharpSnmpLib.Browser
             // toolStripButton2
             // 
             this.actionList1.SetAction(this.toolStripButton2, this.actNumber);
-            this.toolStripButton2.CheckOnClick = true;
-            this.toolStripButton2.Image = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.office_calendar;
+            this.toolStripButton2.CheckOnClick = true;            
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Name = "toolStripButton2";
             this.toolStripButton2.Size = new System.Drawing.Size(70, 22);

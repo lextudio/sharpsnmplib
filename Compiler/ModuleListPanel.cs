@@ -16,6 +16,7 @@ using System.Windows.Forms;
 
 using Lextm.SharpSnmpLib.Mib;
 using WeifenLuo.WinFormsUI.Docking;
+using Lextm.SharpSnmpLib.Messaging;
 
 namespace Lextm.SharpSnmpLib.Compiler
 {
@@ -30,6 +31,10 @@ namespace Lextm.SharpSnmpLib.Compiler
         public ModuleListPanel()
         {
             InitializeComponent();
+			if (!Helper.IsRunningOnMono())
+			{
+				Icon = Properties.Resources.preferences_system_windows;
+			}
         }
 
         private void ModuleListPanel_Load(object sender, EventArgs e)

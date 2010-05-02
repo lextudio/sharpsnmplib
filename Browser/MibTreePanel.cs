@@ -27,6 +27,11 @@ namespace Lextm.SharpSnmpLib.Browser
         public MibTreePanel()
         {
             InitializeComponent();
+			if (!Helper.IsRunningOnMono())
+			{
+				toolStripButton2.Image = Properties.Resources.office_calendar;
+				actNumber.Image = Properties.Resources.office_calendar;
+			}
         }
 
         public IObjectRegistry Objects { get; set; }
