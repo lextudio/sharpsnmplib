@@ -51,10 +51,14 @@ namespace Lextm.SharpSnmpLib.Browser
             ReloadableObjectRegistry repository = (ReloadableObjectRegistry)sender;
             treeView1.Nodes.Clear();
             TreeNode root = Wrap(repository.Tree.Root);
+			// FIXME: worked around a Mono bug.
+			var l = new List<TreeNode>();
             foreach (TreeNode node in root.Nodes)
             {
-                treeView1.Nodes.Add(node);
+                l.Add(node);
             }
+			
+			treeView1.Nodes.AddRange(l.ToArray());
         }
 
         private TreeNode Wrap(IDefinition definition)
