@@ -1161,9 +1161,7 @@ namespace WeifenLuo.WinFormsUI.Docking
 		public void RestoreToPanel()
 		{
             DockPanel.SuspendLayout(true);
-                  
-            // TODO: comment
-			//IDockContent activeContent = DockPanel.ActiveContent;
+			IDockContent activeContent = DockPanel.ActiveContent;
 
 			for (int i=DisplayingContents.Count-1; i>=0; i--)
 			{

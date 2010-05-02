@@ -508,20 +508,18 @@ namespace WeifenLuo.WinFormsUI.Docking
         {
             DummyControl.Focus();
         }
-              
-        // TODO: comment
-        //[Browsable(false)]
-        //public IDockContent ActiveContent
-        //{
-        //    get { return FocusManager.ActiveContent; }
-        //}
-                  
-        // TODO: comment
-        //[Browsable(false)]
-        //public DockPane ActivePane
-        //{
-        //    get { return FocusManager.ActivePane; }
-        //}
+
+        [Browsable(false)]
+        public IDockContent ActiveContent
+        {
+            get { return FocusManager.ActiveContent; }
+        }
+
+        [Browsable(false)]
+        public DockPane ActivePane
+        {
+            get { return FocusManager.ActivePane; }
+        }
 
         [Browsable(false)]
         public IDockContent ActiveDocument
@@ -529,12 +527,11 @@ namespace WeifenLuo.WinFormsUI.Docking
             get { return FocusManager.ActiveDocument; }
         }
             
-        // TODO: comment
-        //[Browsable(false)]
-        //public DockPane ActiveDocumentPane
-        //{
-        //    get { return FocusManager.ActiveDocumentPane; }
-        //}
+        [Browsable(false)]
+        public DockPane ActiveDocumentPane
+        {
+            get { return FocusManager.ActiveDocumentPane; }
+        }
 
         private static readonly object ActiveDocumentChangedEvent = new object();
         [LocalizedCategory("Category_PropertyChanged")]
