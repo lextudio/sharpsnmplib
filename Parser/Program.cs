@@ -9,7 +9,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using Lextm.SharpSnmpLib.Mib;
 
@@ -52,7 +51,7 @@ namespace Lextm.SharpSnmpLib.Parser
             }
             
             Console.WriteLine(files.Count + " files found");
-            Stopwatch watch = new Stopwatch();
+            var watch = new System.Diagnostics.Stopwatch();
             watch.Start();
             
             Mib.Parser parser = new Mib.Parser();

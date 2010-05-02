@@ -25,17 +25,16 @@ namespace Lextm.SharpSnmpLib.Browser
 			InitializeComponent();
 		}
 
-		public void WriteLine(string message)
+		public void Write(string message)
 		{
 			if (InvokeRequired)
 			{
-				Invoke((MethodInvoker)(() => WriteLine(message)));
+				Invoke((MethodInvoker)(() => Write(message)));
 				return;
 			}
 
 		    IPEndPoint agent = Profiles.DefaultProfile != null ? Profiles.DefaultProfile.Agent : null;
             txtMessages.AppendText(string.Format(CultureInfo.CurrentCulture, "[{2}] [{0}] {1}", DateTime.Now, message, agent));
-			txtMessages.AppendText(Environment.NewLine);
 			txtMessages.ScrollToCaret();
 		}
 

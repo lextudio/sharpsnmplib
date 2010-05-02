@@ -9,7 +9,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Windows.Forms;
 using Lextm.SharpSnmpLib.Messaging;
 using Lextm.SharpSnmpLib.Mib;
@@ -23,6 +22,7 @@ namespace Lextm.SharpSnmpLib.Browser
     internal partial class MibTreePanel : DockContent
     {
         private bool _showNumber;
+        private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger("Lextm.SharpSnmpLib.Browser");
 
         public MibTreePanel()
         {
@@ -99,23 +99,20 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void ActGetExecute(object sender, EventArgs e)
         {
-            TraceSource source = new TraceSource("Browser");
             try
             {
-                source.TraceInformation("==== Begin GET ====");
+                Logger.Info("==== Begin GET ====");
                 Manager manager = Manager;
                 ObjectIdentifier id = GetIdForGet(treeView1.SelectedNode.Tag as IDefinition);
                 Profiles.DefaultProfile.Get(manager, new Variable(id));
             }
             catch (Exception ex)
             {
-                source.TraceInformation(ex.ToString());
+                Logger.Info(ex.ToString());
             }
             finally
             {
-                source.TraceInformation("==== End GET ====");
-                source.Flush();
-                source.Close();
+                Logger.Info("==== End GET ====");
             }
         }
 
@@ -126,7 +123,6 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void ActSetExecute(object sender, EventArgs e)
         {
-            TraceSource source = new TraceSource("Browser");
             try
             {
                 ISnmpData data;
@@ -159,20 +155,18 @@ namespace Lextm.SharpSnmpLib.Browser
                     }
                 }
 
-                source.TraceInformation("==== Begin SET ====");
+                Logger.Info("==== Begin SET ====");
                 Manager manager1 = Manager;
                 ObjectIdentifier id1 = GetIdForGet(treeView1.SelectedNode.Tag as IDefinition);
                 Profiles.DefaultProfile.Set(manager1, new Variable(id1, data));
             }
             catch (Exception ex)
             {
-                source.TraceInformation(ex.ToString());
+                Logger.Info(ex.ToString());
             }
             finally
             {
-                source.TraceInformation("==== End SET ====");
-                source.Flush();
-                source.Close();
+                Logger.Info("==== End SET ====");
             }
         }
 
@@ -205,10 +199,7 @@ namespace Lextm.SharpSnmpLib.Browser
             }
             catch (Exception ex)
             {
-                TraceSource source = new TraceSource("Browser");
-                source.TraceInformation(ex.ToString());
-                source.Flush();
-                source.Close();
+                Logger.Info(ex.ToString());
             }
         }
 
@@ -237,23 +228,20 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void ActGetNextExecute(object sender, EventArgs e)
         {
-            TraceSource source = new TraceSource("Browser");
             try
             {
-                source.TraceInformation("==== Begin GET NEXT ====");
+                Logger.Info("==== Begin GET NEXT ====");
                 Manager manager = Manager;
                 ObjectIdentifier id = GetIdForGetNext(treeView1.SelectedNode.Tag as IDefinition);
                 Profiles.DefaultProfile.GetNext(manager, new Variable(id));
             }
             catch (Exception ex)
             {
-                source.TraceInformation(ex.ToString());
+                Logger.Info(ex.ToString());
             }
             finally
             {
-                source.TraceInformation("==== End GET NEXT ====");
-                source.Flush();
-                source.Close();
+                Logger.Info("==== End GET NEXT ====");
             }
         }
 
@@ -320,21 +308,18 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void ActWalkExecute(object sender, EventArgs e)
         {
-            TraceSource source = new TraceSource("Browser");
             try
             {
-                source.TraceInformation("==== Begin WALK ====");
+                Logger.Info("==== Begin WALK ====");
                 Profiles.DefaultProfile.Walk(Manager, (treeView1.SelectedNode.Tag as IDefinition));                
             }
             catch (Exception ex)
             {
-                source.TraceInformation(ex.ToString());
+                Logger.Info(ex.ToString());
             }
             finally
             {
-                source.TraceInformation("==== End WALK ====");
-                source.Flush();
-                source.Close();
+                Logger.Info("==== End WALK ====");
             }
         }
 

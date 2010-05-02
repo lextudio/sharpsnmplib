@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Net;
 using Lextm.SharpSnmpLib.Messaging;
 using Lextm.SharpSnmpLib.Security;
@@ -10,7 +9,8 @@ namespace Lextm.SharpSnmpLib.Browser
     class SecureAgentProfile : AgentProfile
     {
         private readonly IAuthenticationProvider _auth;
-        private IPrivacyProvider _priv;
+        private readonly IPrivacyProvider _priv;
+        private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger("Lextm.SharpSnmpLib.Browser");
 
         public SecureAgentProfile(Guid id, VersionCode version, IPEndPoint agent, string agentName, string authenticationPassphrase, string privacyPassphrase, int authenticationMethod, int privacyMethod, string userName)
             : base(id, version, agent, agentName, userName)
@@ -51,12 +51,9 @@ namespace Lextm.SharpSnmpLib.Browser
 
         internal override void Get(Manager manager, Variable variable)
         {
-            TraceSource source = new TraceSource("Browser");
             if (string.IsNullOrEmpty(UserName))
             {
-                source.TraceInformation("User name need to be specified for v3.");
-                source.Flush();
-                source.Close();
+                Logger.Info("User name need to be specified for v3.");
                 return;
             }
 
@@ -75,9 +72,7 @@ namespace Lextm.SharpSnmpLib.Browser
                     response);
             }
 
-            source.TraceInformation(response.Pdu.Variables[0].ToString(manager.Objects));
-            source.Flush();
-            source.Close();
+            Logger.Info(response.Pdu.Variables[0].ToString(manager.Objects));
         }
 
         internal override string GetValue(Manager manager, Variable variable)
@@ -102,12 +97,9 @@ namespace Lextm.SharpSnmpLib.Browser
 
         internal override void GetNext(Manager manager, Variable variable)
         {
-            TraceSource source = new TraceSource("Browser");
             if (string.IsNullOrEmpty(UserName))
             {
-                source.TraceInformation("User name need to be specified for v3.");
-                source.Flush();
-                source.Close();
+                Logger.Info("User name need to be specified for v3.");
                 return;
             }
 
@@ -126,19 +118,14 @@ namespace Lextm.SharpSnmpLib.Browser
                     response);
             }
 
-            source.TraceInformation(response.Pdu.Variables[0].ToString(manager.Objects));
-            source.Flush();
-            source.Close();
+            Logger.Info(response.Pdu.Variables[0].ToString(manager.Objects));
         }
 
         internal override void Set(Manager manager, Variable variable)
         {
-            TraceSource source = new TraceSource("Browser");
             if (string.IsNullOrEmpty(UserName))
             {
-                source.TraceInformation("User name need to be specified for v3.");
-                source.Flush();
-                source.Close();
+                Logger.Info("User name need to be specified for v3.");
                 return;
             }
 
@@ -157,9 +144,7 @@ namespace Lextm.SharpSnmpLib.Browser
                     response);
             }
 
-            source.TraceInformation(response.Pdu.Variables[0].ToString(manager.Objects));
-            source.Flush();
-            source.Close();
+            Logger.Info(response.Pdu.Variables[0].ToString(manager.Objects));
         }
 
         internal override void GetTable(Manager manager, IDefinition def)
@@ -192,7 +177,6 @@ namespace Lextm.SharpSnmpLib.Browser
 
         public override void Walk(Manager manager, IDefinition definition)
         {
-            TraceSource source = new TraceSource("Browser");
             IList<Variable> list = new List<Variable>();
             //if (VersionCode == VersionCode.V1)
             //{
@@ -211,9 +195,6 @@ namespace Lextm.SharpSnmpLib.Browser
             //{
             //    source.TraceInformation(v.ToString(manager.Objects));
             //}
-
-            source.Flush();
-            source.Close();
         }
     }
 }

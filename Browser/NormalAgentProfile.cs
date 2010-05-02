@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Net;
 using Lextm.SharpSnmpLib.Messaging;
 
@@ -8,6 +7,8 @@ namespace Lextm.SharpSnmpLib.Browser
 {
     internal class NormalAgentProfile : AgentProfile
     {
+        private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger("Lextm.SharpSnmpLib.Browser");
+
         public NormalAgentProfile(Guid id, VersionCode version, IPEndPoint agent, string getCommunity, string setCommunity, string agentName, string userName)
             : base(id, version, agent, agentName, userName)
         {
@@ -20,10 +21,7 @@ namespace Lextm.SharpSnmpLib.Browser
 
         internal override void Get(Manager manager, Variable variable)
         {
-            TraceSource source = new TraceSource("Browser");
-            source.TraceInformation(manager.GetSingle(Agent, GetCommunity, variable).ToString(manager.Objects));
-            source.Flush();
-            source.Close();
+            Logger.Info(manager.GetSingle(Agent, GetCommunity, variable).ToString(manager.Objects));
         }
 
         internal override string GetValue(Manager manager, Variable variable)
@@ -33,7 +31,6 @@ namespace Lextm.SharpSnmpLib.Browser
 
         internal override void GetNext(Manager manager, Variable variable)
         {
-            TraceSource source = new TraceSource("Browser");
             GetNextRequestMessage message = new GetNextRequestMessage(Messenger.NextRequestId, VersionCode, new OctetString(GetCommunity),
                                                                       new List<Variable> {variable});
             ISnmpMessage response = message.GetResponse(manager.Timeout, Agent);
@@ -45,17 +42,12 @@ namespace Lextm.SharpSnmpLib.Browser
                     response);
             }
 
-            source.TraceInformation(response.Pdu.Variables[0].ToString(manager.Objects));
-            source.Flush();
-            source.Close();
+            Logger.Info(response.Pdu.Variables[0].ToString(manager.Objects));
         }
 
         internal override void Set(Manager manager, Variable variable)
         {
-            TraceSource source = new TraceSource("Browser");
-            source.TraceInformation(manager.SetSingle(Agent, SetCommunity, variable).ToString(manager.Objects));
-            source.Flush();
-            source.Close();
+            Logger.Info(manager.SetSingle(Agent, SetCommunity, variable).ToString(manager.Objects));
         }
 
         internal override void GetTable(Manager manager, IDefinition def)
@@ -75,21 +67,15 @@ namespace Lextm.SharpSnmpLib.Browser
             }
             else
             {
-                TraceSource source = new TraceSource("Browser");
                 foreach (Variable t in list)
                 {
-                    source.TraceInformation(t.ToString());
+                    Logger.Info(t.ToString());
                 }
-
-                source.Flush();
-                source.Close();
             }
-
         }
 
         public override void Walk(Manager manager, IDefinition definition)
         {
-            TraceSource source = new TraceSource("Browser");
             IList<Variable> list = new List<Variable>();
             if (VersionCode == VersionCode.V1)
             {
@@ -106,11 +92,8 @@ namespace Lextm.SharpSnmpLib.Browser
 
             foreach (Variable v in list)
             {
-                source.TraceInformation(v.ToString(manager.Objects));
+                Logger.Info(v.ToString(manager.Objects));
             }
-
-            source.Flush();
-            source.Close();
         }
     }
 }

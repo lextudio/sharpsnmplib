@@ -16,7 +16,6 @@ using NUnit.Framework;
 using System.Net.Sockets;
 using Lextm.SharpSnmpLib.Properties;
 using TimeoutException = Lextm.SharpSnmpLib.Messaging.TimeoutException;
-using System.Diagnostics;
 using System;
 
 #pragma warning disable 1591
@@ -317,7 +316,7 @@ namespace Lextm.SharpSnmpLib.Tests
 
             Assert.IsFalse(hasException);
 
-            Stopwatch timer = new Stopwatch();
+            System.Diagnostics.Stopwatch timer = new System.Diagnostics.Stopwatch();
             
             try
             {

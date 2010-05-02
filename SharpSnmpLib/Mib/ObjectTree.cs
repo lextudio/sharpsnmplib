@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Text;
@@ -16,6 +15,7 @@ namespace Lextm.SharpSnmpLib.Mib
         private readonly IDictionary<string, MibModule> _pendings = new Dictionary<string, MibModule>();
         private readonly IDictionary<string, Definition> _nameTable;
         private readonly Definition _root;
+        private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger("Lextm.SharpSnmpLib.Mib");
         
         /// <summary>
         /// Creates an <see cref="ObjectTree"/> instance.
@@ -41,10 +41,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 throw new ArgumentNullException("loaders");
             }
             
-            TraceSource source = new TraceSource("Library");
-            source.TraceInformation(loaders.Count + " module files found");
-            source.Flush();
-            source.Close();
+            Logger.InfoFormat(CultureInfo.InvariantCulture, "{0} module files found", loaders.Count);
 
             List<Definition> defines = new List<Definition>();
             foreach (ModuleLoader loader in loaders)
@@ -197,14 +194,10 @@ namespace Lextm.SharpSnmpLib.Mib
 
         private void Parse(IModule module)
         {
-            TraceSource source = new TraceSource("Library");
-            Stopwatch watch = new Stopwatch();
-            watch.Start();
+            System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
             AddNodes(module);
-            source.TraceInformation(watch.ElapsedMilliseconds.ToString(CultureInfo.InvariantCulture) + "-ms used to assemble " + module.Name);
+            Logger.InfoFormat(CultureInfo.InvariantCulture, "{0}-ms used to assemble {1}", watch.ElapsedMilliseconds, module.Name);
             watch.Stop();
-            source.Flush();
-            source.Close();
         }
 
         private Definition CreateSelf(IEntity node)
@@ -351,10 +344,7 @@ namespace Lextm.SharpSnmpLib.Mib
                     }
                     else
                     {
-                        TraceSource source = new TraceSource("Library");
-                        source.TraceInformation("ignored " + longParent + " in module " + module);
-                        source.Flush();
-                        source.Close();
+                        Logger.InfoFormat(CultureInfo.InvariantCulture, "ignored {0} in module {1}", longParent, module);
                     }
                 }
             }
@@ -383,9 +373,8 @@ namespace Lextm.SharpSnmpLib.Mib
 
         public void Refresh()
         {
-            TraceSource source = new TraceSource("Library");
-            source.TraceInformation("loading modules started");
-            Stopwatch watch = new Stopwatch();
+            Logger.Info("loading modules started");
+            System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
             watch.Start();
             int current = _pendings.Count;
             while (current != 0)
@@ -410,7 +399,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 }
 
                 current = _pendings.Count;
-                source.TraceInformation(current.ToString(CultureInfo.InvariantCulture) + " pending after " + watch.ElapsedMilliseconds.ToString(CultureInfo.InvariantCulture) + "-ms");
+                Logger.InfoFormat(CultureInfo.InvariantCulture, "{0} pending after {1}-ms", current, watch.ElapsedMilliseconds);
                 if (current == previous)
                 {
                     // cannot parse more
@@ -421,8 +410,8 @@ namespace Lextm.SharpSnmpLib.Mib
             watch.Stop();
             
             foreach (string loaded in _loaded.Keys)
-            {   
-                source.TraceInformation(loaded + " is parsed");
+            {
+                Logger.InfoFormat(CultureInfo.InvariantCulture, "{0} is parsed", loaded);
             }
             
             foreach (MibModule module in _pendings.Values)
@@ -437,12 +426,10 @@ namespace Lextm.SharpSnmpLib.Mib
                     }
                 }
                 
-                source.TraceInformation(builder.ToString());
+                Logger.Info(builder.ToString());
             }
             
-            source.TraceInformation("loading modules ended");
-            source.Flush();
-            source.Close();
+            Logger.Info("loading modules ended");
         }
 
         public void Import(IEnumerable<IModule> modules)
@@ -451,21 +438,17 @@ namespace Lextm.SharpSnmpLib.Mib
             {
                 throw new ArgumentNullException("modules");
             }
-
-            TraceSource source = new TraceSource("Library");
+            
             foreach (MibModule module in modules)
             {
                 if (LoadedModules.Contains(module.Name) || PendingModules.Contains(module.Name))
                 {
-                    source.TraceInformation(module.Name + " ignored");
+                    Logger.InfoFormat(CultureInfo.InvariantCulture, "{0} ignored", module.Name);
                     continue;
                 }
 
                 _pendings.Add(module.Name, module);
             }
-
-            source.Flush();
-            source.Close();
         }
 
         private void Import(MibModule module)
@@ -475,18 +458,14 @@ namespace Lextm.SharpSnmpLib.Mib
                 throw new ArgumentNullException("module");
             }
 
-            TraceSource source = new TraceSource("Library");
             if (LoadedModules.Contains(module.Name) || PendingModules.Contains(module.Name))
             {
-                source.TraceInformation(module.Name + " ignored");
+                Logger.InfoFormat(CultureInfo.InvariantCulture, "{0} ignored", module.Name);
             }
             else
             {
                 _pendings.Add(module.Name, module);
             }
-            
-            source.Flush();
-            source.Close();
         }
 
         /// <summary>

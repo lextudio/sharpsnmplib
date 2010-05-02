@@ -8,7 +8,6 @@
  */
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
@@ -26,6 +25,8 @@ namespace Lextm.SharpSnmpLib.Compiler
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
     internal partial class ModuleListPanel : DockContent
     {
+        private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger("Lextm.SharpSnmpLib.Compiler");
+
         public ModuleListPanel()
         {
             InitializeComponent();
@@ -74,10 +75,7 @@ namespace Lextm.SharpSnmpLib.Compiler
         {
             string mib = listView1.SelectedItems[0].Text;
             File.Delete(Path.Combine(Assembler.Folder, mib + ".module"));
-            TraceSource source = new TraceSource("Compiler");
-            source.TraceInformation("The change will take effect when you restart compiler");
-            source.Flush();
-            source.Close();
+            Logger.Info("The change will take effect when you restart compiler");
             Assembler.Tree.Remove(mib);
         }
 

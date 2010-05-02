@@ -25,16 +25,15 @@ namespace Lextm.SharpSnmpLib.Compiler
             InitializeComponent();
         }
 
-        public void WriteLine(string message)
+        public void Write(string message)
         {
             if (InvokeRequired)
             {
-                Invoke((MethodInvoker)(() => WriteLine(message)));
+                Invoke((MethodInvoker)(() => Write(message)));
                 return;
             }
 
             txtMessages.AppendText(string.Format(CultureInfo.InvariantCulture, "[{0}] {1}", DateTime.Now, message));
-            txtMessages.AppendText(Environment.NewLine);
             txtMessages.ScrollToCaret();
         }
 

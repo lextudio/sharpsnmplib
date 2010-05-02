@@ -10,7 +10,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Media;
 
@@ -23,6 +22,7 @@ namespace Lextm.SharpSnmpLib.Compiler
     {
         private readonly IList<string> _files = new List<string>();
         private readonly BackgroundWorker _worker = new BackgroundWorker();
+        private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger("Lextm.SharpSnmpLib.Compiler");
 
         public CompilerCore()
         {
@@ -66,23 +66,20 @@ namespace Lextm.SharpSnmpLib.Compiler
 
         private void BackgroundWorker1RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            TraceSource source = new TraceSource("Compiler");
             if (e.Result != null)
             {
                 IEnumerable<MibException> errors = (IEnumerable<MibException>) e.Result;
                 foreach (MibException error in errors)
                 {
-                    source.TraceInformation(error.Message);
+                    Logger.Info(error.Message);
                 }
             }
 
             if (e.Error != null)
             {
-                source.TraceInformation(e.Error.Message);
+                Logger.Info(e.Error.Message);
             }
 
-            source.Flush();
-            source.Close();
             if (RunCompilerCompleted != null)
             {
                 RunCompilerCompleted(this, EventArgs.Empty);

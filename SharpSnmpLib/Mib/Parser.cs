@@ -8,7 +8,6 @@
  */
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 
@@ -19,6 +18,8 @@ namespace Lextm.SharpSnmpLib.Mib
     /// </summary>
     public sealed class Parser
     {
+        private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger("Lextm.SharpSnmpLib.Mib");
+
         /// <summary>
         /// Parses MIB documents to module files (*.module).
         /// </summary>
@@ -34,7 +35,6 @@ namespace Lextm.SharpSnmpLib.Mib
             }
 
             IList<MibException> list = new List<MibException>();
-            TraceSource source = new TraceSource("Library");
             List<IModule> modules = new List<IModule>();
             foreach (string file in files)
             {
@@ -48,14 +48,11 @@ namespace Lextm.SharpSnmpLib.Mib
                 }
                 finally
                 {
-                    source.TraceInformation(file + " compiled");
+                    Logger.Info(file + " compiled");
                 }
             }
             
             errors = list;
-
-            source.Flush();
-            source.Close();
             return modules;
         }
 
@@ -102,16 +99,13 @@ namespace Lextm.SharpSnmpLib.Mib
 
         private static IList<IModule> CompileToModules(string file, TextReader stream)
         {
-            TraceSource source = new TraceSource("Library");
-            Stopwatch watch = new Stopwatch();
+            var watch = new System.Diagnostics.Stopwatch();
             watch.Start();
             Lexer lexer = new Lexer();
             lexer.Parse(file, stream);
             MibDocument doc = new MibDocument(lexer);
-            source.TraceInformation(watch.ElapsedMilliseconds.ToString(CultureInfo.InvariantCulture) + "-ms used to parse " + file);
+            Logger.Info(watch.ElapsedMilliseconds.ToString(CultureInfo.InvariantCulture) + "-ms used to parse " + file);
             watch.Stop();
-            source.Flush();
-            source.Close();
             return doc.Modules;
         }
     }

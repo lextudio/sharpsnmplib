@@ -1,7 +1,7 @@
-namespace Lextm.SharpSnmpLib.Browser
+namespace Lextm.SharpSnmpLib
 {
     internal interface IOutputPanel
     {
-        void WriteLine(string message);
+        void Write(string message);
     }
 }

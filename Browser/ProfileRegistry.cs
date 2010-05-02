@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Xml;
@@ -13,6 +12,7 @@ namespace Lextm.SharpSnmpLib.Browser
 		private AgentProfile _defaultProfile;
 		// private readonly IDictionary<IPEndPoint, AgentProfile> _profiles = new Dictionary<IPEndPoint, AgentProfile>();
 		private readonly IDictionary<Guid, AgentProfile> _profiles = new Dictionary<Guid, AgentProfile>();
+        private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger("Lextm.SharpSnmpLib.Browser");
 
 		public event EventHandler<EventArgs> OnChanged;
 
@@ -239,10 +239,7 @@ namespace Lextm.SharpSnmpLib.Browser
 				}
 				catch (Exception ex)
 				{
-					TraceSource source = new TraceSource("Browser");
-					source.TraceInformation(ex.ToString());
-					source.Flush();
-					source.Close();
+					Logger.Info(ex.ToString());
 				}
 				finally
 				{

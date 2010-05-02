@@ -7,7 +7,7 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
-using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -22,6 +22,8 @@ namespace Lextm.SharpSnmpLib.Compiler
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
     internal partial class DocumentListPanel : DockContent
     {
+        private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger("Lextm.SharpSnmpLib.Compiler");
+
         public DocumentListPanel()
         {
             InitializeComponent();
@@ -44,10 +46,7 @@ namespace Lextm.SharpSnmpLib.Compiler
             if (opened != null)
             {
                 opened.DockHandler.Show();
-                TraceSource source = new TraceSource("Compiler");
-                source.TraceInformation("The document: " + fileName + " has already opened!");
-                source.Flush();
-                source.Close();
+                Logger.InfoFormat(CultureInfo.InvariantCulture, "The document: {0} has already opened!", fileName);
                 return;
             }
             

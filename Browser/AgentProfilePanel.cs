@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.Net;
 using System.Windows.Forms;
@@ -10,6 +9,8 @@ namespace Lextm.SharpSnmpLib.Browser
 {
     internal partial class AgentProfilePanel : DockContent
     {
+        private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger("Lextm.SharpSnmpLib.Browser");
+        
         public AgentProfilePanel()
         {
             InitializeComponent();
@@ -135,10 +136,7 @@ namespace Lextm.SharpSnmpLib.Browser
             }
             catch (BrowserException ex)
             {
-                TraceSource source = new TraceSource("Browser");
-                source.TraceInformation(ex.Message);
-                source.Flush();
-                source.Close();
+                Logger.Info(ex.Message);
             }
         }
 
@@ -158,10 +156,7 @@ namespace Lextm.SharpSnmpLib.Browser
                 }
                 catch (BrowserException ex)
                 {
-                    TraceSource source = new TraceSource("Browser");
-                    source.TraceInformation(ex.Message);
-                    source.Flush();
-                    source.Close();
+                    Logger.Info(ex.Message);
                 }
             }
         }
