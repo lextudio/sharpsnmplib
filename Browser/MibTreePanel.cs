@@ -9,6 +9,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using Lextm.SharpSnmpLib.Messaging;
 using Lextm.SharpSnmpLib.Mib;
@@ -51,13 +52,7 @@ namespace Lextm.SharpSnmpLib.Browser
             treeView1.Nodes.Clear();
             TreeNode root = Wrap(repository.Tree.Root);
 			// FIXME: worked around a Mono bug.
-			var l = new List<TreeNode>();
-            foreach (TreeNode node in root.Nodes)
-            {
-                l.Add(node);
-            }
-			
-			treeView1.Nodes.AddRange(l.ToArray());
+            treeView1.Nodes.AddRange(root.Nodes.Cast<TreeNode>().ToArray());
         }
 
         private TreeNode Wrap(IDefinition definition)
