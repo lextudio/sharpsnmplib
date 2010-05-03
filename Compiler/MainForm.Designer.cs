@@ -316,7 +316,8 @@ namespace Lextm.SharpSnmpLib.Compiler
             this.Name = "MainForm";
             this.Text = "#SNMP MIB Compiler";
             this.Load += new System.EventHandler(this.MainForm_Load);
-            this.toolStrip1.ResumeLayout(false);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFormClosing);
+			this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

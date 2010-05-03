@@ -240,6 +240,7 @@ namespace Lextm.SharpSnmpLib.Browser
             this.Name = "MainForm";
             this.Text = "#SNMP MIB Browser";
             this.Load += new System.EventHandler(this.MainForm_Load);
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFormClosing);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);

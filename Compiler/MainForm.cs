@@ -107,5 +107,15 @@ namespace Lextm.SharpSnmpLib.Compiler
         {
             Text = string.Format(CultureInfo.CurrentUICulture, "{0} (Version: {1})", Text, Assembly.GetExecutingAssembly().GetName().Version);
         }
+		
+		private void MainFormClosing(object sender, FormClosingEventArgs e)
+		{
+			// FIXME: work around a DPS disposing infinite loop.
+			foreach (var d in Program.Container.ResolveAll<DockContent>())
+			{
+				d.Close();
+				d.Dispose();
+			}
+		}
     }
 }
