@@ -71,16 +71,6 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual("TrapTest", message.Variables[1].Data.ToString());
             Assert.AreEqual(new uint[] {1,3,6,1,4,1,2162,1001,22,0}, message.Variables[1].Id.ToNumerical());
         }
-
-        [Test]
-        public void TestParseFiveVarbinds()
-        {
-            byte[] buffer = Resources.fivevarbinds;
-            TrapV1Message message = (TrapV1Message)MessageFactory.ParseMessages(buffer, UserRegistry.Default)[0];
-            Assert.AreEqual(5, message.Variables.Count);
-            Assert.AreEqual("TrapTest5", message.Variables[4].Data.ToString());
-            Assert.AreEqual(new uint[] { 1, 3, 6, 1, 4, 1, 2162, 1001, 25, 0 }, message.Variables[4].Id.ToNumerical());
-        }
     }
 }
 #pragma warning restore 1591

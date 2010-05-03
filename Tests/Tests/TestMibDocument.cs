@@ -19,6 +19,21 @@ namespace Lextm.SharpSnmpLib.Tests
     [TestFixture]
     public class TestMibDocument
     {
+        [Test]
+        [ExpectedException(typeof(MibException))]
+        public void TestException()
+        {
+            Lexer lexer = new Lexer();
+            MemoryStream m = new MemoryStream(Resources.fivevarbinds);
+            using (StreamReader reader = new StreamReader(m))
+            {
+                lexer.Parse("temp.txt", reader);
+                reader.Close();
+            }
+
+            new MibDocument(lexer);
+        }
+
     	[Test]
     	public void TestEmpty()
     	{
@@ -387,20 +402,6 @@ namespace Lextm.SharpSnmpLib.Tests
         }
         
         [Test]
-        [ExpectedException(typeof(MibException))]
-        public void TestException()
-        {
-            Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.fivevarbinds);
-            using (StreamReader reader = new StreamReader(m))
-            {
-                lexer.Parse("temp.txt", reader);
-                reader.Close();
-            }
-            
-			new MibDocument(lexer);
-        }
-        [Test]
         public void TestRFC1155_SMI()
         {
             Lexer lexer = new Lexer();
@@ -442,7 +443,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestRFC1213_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.RFC1213_MIB);
+            MemoryStream m = new MemoryStream(Resources.RFC1213_MIB1);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -455,14 +456,14 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[200];
             Assert.AreEqual("snmpEnableAuthenTraps", node.Name);
             Assert.AreEqual(30, node.Value);
-            Assert.AreEqual("snmp", node.Parent.ToString());
+            Assert.AreEqual("snmp", node.Parent);
         }
 
         [Test]
         public void TestRFC1213_MIB2()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.RFC1213_MIB2);
+            MemoryStream m = new MemoryStream(Resources.RFC1213_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -475,7 +476,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[205];
             Assert.AreEqual("snmpEnableAuthenTraps", node.Name);
             Assert.AreEqual(30, node.Value);
-            Assert.AreEqual("snmp", node.Parent.ToString());
+            Assert.AreEqual("snmp", node.Parent);
         }
         [Test]
         public void TestRFC_1215()
@@ -509,7 +510,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[231];
             Assert.AreEqual("rmonNotificationGroup", node.Name);
             Assert.AreEqual(11, node.Value);
-            Assert.AreEqual("rmonGroups", node.Parent.ToString());
+            Assert.AreEqual("rmonGroups", node.Parent);
         }
         [Test]
         public void TestSMUX_MIB()
@@ -528,7 +529,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[13];
             Assert.AreEqual("smuxTstatus", node.Name);
             Assert.AreEqual(4, node.Value);
-            Assert.AreEqual("smuxTreeEntry", node.Parent.ToString());
+            Assert.AreEqual("smuxTreeEntry", node.Parent);
         }
         [Test]
         public void TestSNMP_VIEW_BASED_ACM_MIB()
@@ -547,7 +548,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[37];
             Assert.AreEqual("vacmBasicGroup", node.Name);
             Assert.AreEqual(1, node.Value);
-            Assert.AreEqual("vacmMIBGroups", node.Parent.ToString());
+            Assert.AreEqual("vacmMIBGroups", node.Parent);
         }
         [Test]
         public void TestTCP_MIB()
@@ -566,7 +567,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[50];
             Assert.AreEqual("tcpHCGroup", node.Name);
             Assert.AreEqual(5, node.Value);
-            Assert.AreEqual("tcpMIBGroups", node.Parent.ToString());
+            Assert.AreEqual("tcpMIBGroups", node.Parent);
         }
         [Test]
         public void TestTransport_Address_MIB()
@@ -585,7 +586,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[17];
             Assert.AreEqual("transportDomainSctpDns", node.Name);
             Assert.AreEqual(16, node.Value);
-            Assert.AreEqual("transportDomains", node.Parent.ToString());
+            Assert.AreEqual("transportDomains", node.Parent);
         }
         [Test]
         public void TestTunnel_MIB()
@@ -604,13 +605,13 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[41];
             Assert.AreEqual("tunnelMIBInetGroup", node.Name);
             Assert.AreEqual(2, node.Value);
-            Assert.AreEqual("tunnelMIBGroups", node.Parent.ToString());
+            Assert.AreEqual("tunnelMIBGroups", node.Parent);
         }
         [Test]
         public void TestUCD_DEMO_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.UCD_DEMO_MIB);
+            MemoryStream m = new MemoryStream(Resources.UCD_DEMO_MIB1);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -623,13 +624,13 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[6];
             Assert.AreEqual("ucdDemoPassphrase", node.Name);
             Assert.AreEqual(4, node.Value);
-            Assert.AreEqual("ucdDemoPublic", node.Parent.ToString());
+            Assert.AreEqual("ucdDemoPublic", node.Parent);
         }
         [Test]
         public void TestUCD_DISKIO_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.UCD_DISKIO_MIB);
+            MemoryStream m = new MemoryStream(Resources.UCD_DISKIO_MIB1);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -642,13 +643,13 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[13];
             Assert.AreEqual("diskIONWrittenX", node.Name);
             Assert.AreEqual(13, node.Value);
-            Assert.AreEqual("diskIOEntry", node.Parent.ToString());
+            Assert.AreEqual("diskIOEntry", node.Parent);
         }
         [Test]
         public void TestUCD_DLMOD_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.UCD_DLMOD_MIB);
+            MemoryStream m = new MemoryStream(Resources.UCD_DLMOD_MIB1);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -661,13 +662,13 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[8];
             Assert.AreEqual("dlmodStatus", node.Name);
             Assert.AreEqual(5, node.Value);
-            Assert.AreEqual("dlmodEntry", node.Parent.ToString());
+            Assert.AreEqual("dlmodEntry", node.Parent);
         }
         [Test]
         public void TestUCD_IPFILTER_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.UCD_IPFILTER_MIB);
+            MemoryStream m = new MemoryStream(Resources.UCD_IPFILTER_MIB1);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -680,13 +681,13 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[22];
             Assert.AreEqual("ipfAccOutBytes", node.Name);
             Assert.AreEqual(4, node.Value);
-            Assert.AreEqual("ipfAccOutEntry", node.Parent.ToString());
+            Assert.AreEqual("ipfAccOutEntry", node.Parent);
         }
         [Test]
         public void TestUCD_IPFWACC_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.UCD_IPFWACC_MIB);
+            MemoryStream m = new MemoryStream(Resources.UCD_IPFWACC_MIB1);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -699,13 +700,13 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[28];
             Assert.AreEqual("ipFwAccPort10", node.Name);
             Assert.AreEqual(26, node.Value);
-            Assert.AreEqual("ipFwAccEntry", node.Parent.ToString());
+            Assert.AreEqual("ipFwAccEntry", node.Parent);
         }
         [Test]
         public void TestUCD_SNMP_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.UCD_SNMP_MIB);
+            MemoryStream m = new MemoryStream(Resources.UCD_SNMP_MIB1);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -718,7 +719,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[157];
             Assert.AreEqual("logMatchRegExCompilation", node.Name);
             Assert.AreEqual(101, node.Value);
-            Assert.AreEqual("logMatchEntry", node.Parent.ToString());
+            Assert.AreEqual("logMatchEntry", node.Parent);
         }
         [Test]
         public void TestUCD_SNMP_MIB_OLD()
@@ -737,7 +738,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[34];
             Assert.AreEqual("loadaveErrMessage", node.Name);
             Assert.AreEqual(101, node.Value);
-            Assert.AreEqual("loadaves", node.Parent.ToString());
+            Assert.AreEqual("loadaves", node.Parent);
         }
         [Test]
         public void TestUDP_MIB()
@@ -756,7 +757,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[30];
             Assert.AreEqual("udpEndpointGroup", node.Name);
             Assert.AreEqual(4, node.Value);
-            Assert.AreEqual("udpMIBGroups", node.Parent.ToString());
+            Assert.AreEqual("udpMIBGroups", node.Parent);
         }
         [Test]
         public void TestMTA_MIB()
@@ -775,7 +776,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[80];
             Assert.AreEqual("mtaRFC2789ErrorGroup", node.Name);
             Assert.AreEqual(9, node.Value);
-            Assert.AreEqual("mtaGroups", node.Parent.ToString());
+            Assert.AreEqual("mtaGroups", node.Parent);
         }
         [Test]
         public void TestNet_Snmp_Agent_MIB()
@@ -794,7 +795,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[53];
             Assert.AreEqual("nsAgentNotifyGroup", node.Name);
             Assert.AreEqual(9, node.Value);
-            Assert.AreEqual("netSnmpGroups", node.Parent.ToString());
+            Assert.AreEqual("netSnmpGroups", node.Parent);
         }
         [Test]
         public void TestNet_Snmp_Examples_MIB()
@@ -813,7 +814,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[24];
             Assert.AreEqual("netSnmpExampleNotification", node.Name);
             Assert.AreEqual(1, node.Value);
-            Assert.AreEqual("netSnmpExampleNotifications", node.Parent.ToString());
+            Assert.AreEqual("netSnmpExampleNotifications", node.Parent);
         }
         [Test]
         public void TestNet_Snmp_Extend_MIB()
@@ -832,7 +833,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[26];
             Assert.AreEqual("nsExtendOutputGroup", node.Name);
             Assert.AreEqual(2, node.Value);
-            Assert.AreEqual("nsExtendGroups", node.Parent.ToString());
+            Assert.AreEqual("nsExtendGroups", node.Parent);
         }
         [Test]
         public void TestNet_Snmp_MIB()
@@ -851,7 +852,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[13];
             Assert.AreEqual("netSnmpGroups", node.Name);
             Assert.AreEqual(2, node.Value);
-            Assert.AreEqual("netSnmpConformance", node.Parent.ToString());
+            Assert.AreEqual("netSnmpConformance", node.Parent);
         }
         [Test]
         public void TestNet_Snmp_Monitor_MIB()
@@ -870,7 +871,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[4];
             Assert.AreEqual("nsLog", node.Name);
             Assert.AreEqual(24, node.Value);
-            Assert.AreEqual("netSnmpObjects", node.Parent.ToString());
+            Assert.AreEqual("netSnmpObjects", node.Parent);
         }
         [Test]
         public void TestNet_Snmp_System_MIB()
@@ -889,7 +890,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[5];
             Assert.AreEqual("nsDiskIO", node.Name);
             Assert.AreEqual(35, node.Value);
-            Assert.AreEqual("netSnmpObjects", node.Parent.ToString());
+            Assert.AreEqual("netSnmpObjects", node.Parent);
         }
         [Test]
         public void TestNet_Snmp_TC()
@@ -908,7 +909,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[23];
             Assert.AreEqual("netSnmpCallbackDomain", node.Name);
             Assert.AreEqual(6, node.Value);
-            Assert.AreEqual("netSnmpDomains", node.Parent.ToString());
+            Assert.AreEqual("netSnmpDomains", node.Parent);
         }
         [Test]
         public void TestNet_Snmp_VACM_MIB()

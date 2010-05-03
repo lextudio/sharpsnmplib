@@ -239,7 +239,8 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("stream");
             }
 
-            return ReadLength(stream, (byte)stream.ReadByte());
+            int first = stream.ReadByte();
+            return ReadLength(stream, (byte)first);
         }
 
         internal static void IgnoreBytes(Stream stream, int length)
