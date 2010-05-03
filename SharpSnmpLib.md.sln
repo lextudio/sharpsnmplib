@@ -46,6 +46,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Browser", "Browser\Browser.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Compiler", "Compiler\Compiler.csproj", "{5BED5642-262B-44C7-9017-2A971C18D37D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemObjects.Mono.Helpers", "RemObjects.Mono.Helpers\RemObjects.Mono.Helpers.csproj", "{5E9B9AB3-59E8-44FA-B3DC-5EE67800C462}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccNumberOfProjects = 18
@@ -303,6 +305,16 @@ Global
 		{5BED5642-262B-44C7-9017-2A971C18D37D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{5BED5642-262B-44C7-9017-2A971C18D37D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{5BED5642-262B-44C7-9017-2A971C18D37D}.Release|x86.ActiveCfg = Release|Any CPU
+		{5E9B9AB3-59E8-44FA-B3DC-5EE67800C462}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E9B9AB3-59E8-44FA-B3DC-5EE67800C462}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E9B9AB3-59E8-44FA-B3DC-5EE67800C462}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{5E9B9AB3-59E8-44FA-B3DC-5EE67800C462}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{5E9B9AB3-59E8-44FA-B3DC-5EE67800C462}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5E9B9AB3-59E8-44FA-B3DC-5EE67800C462}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E9B9AB3-59E8-44FA-B3DC-5EE67800C462}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E9B9AB3-59E8-44FA-B3DC-5EE67800C462}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{5E9B9AB3-59E8-44FA-B3DC-5EE67800C462}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{5E9B9AB3-59E8-44FA-B3DC-5EE67800C462}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
