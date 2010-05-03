@@ -40,7 +40,7 @@ namespace Lextm.SharpSnmpLib.Mib
             Symbol previous = last;
             while ((temp = lexer.NextSymbol) != null)
             {
-                if (veryPrevious == Symbol.EOL && previous == Symbol.EOL && ValidType(temp))
+                if (veryPrevious == Symbol.EOL && previous == Symbol.EOL && temp.ValidateType())
                 {
                     _left = temp;
                     return;
@@ -50,13 +50,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 previous = temp;
             }
             
-            ConstructHelper.Validate(previous, true, "end of file reached");
-        }
-        
-        private static bool ValidType(Symbol symbol)
-        {      
-            string message;
-            return ConstructHelper.IsValidIdentifier(symbol.ToString(), out message);
+            previous.Validate(true, "end of file reached");
         }
 
         public Symbol Left

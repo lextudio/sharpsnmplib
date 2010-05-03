@@ -11,6 +11,7 @@ using System;
 using System.Globalization;
 using System.Net;
 using System.Windows.Forms;
+using RemObjects.Mono.Helpers;
 using WeifenLuo.WinFormsUI.Docking;
 using Lextm.SharpSnmpLib.Messaging;
 
@@ -24,7 +25,7 @@ namespace Lextm.SharpSnmpLib.Browser
 	    public OutputPanel()
 		{
 			InitializeComponent();
-			if (!Helper.IsRunningOnMono())
+            if (PlatformSupport.Platform == PlatformType.Windows)
 			{
 				Icon = Properties.Resources.utilities_terminal;
 			}

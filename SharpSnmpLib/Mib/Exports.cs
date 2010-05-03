@@ -31,7 +31,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 
                 if (temp == Symbol.Comma && previous != null) 
                 {
-                    ConstructHelper.ValidateIdentifier(previous);
+                    previous.ValidateIdentifier();
                     _types.Add(previous.ToString());
                 }
                 

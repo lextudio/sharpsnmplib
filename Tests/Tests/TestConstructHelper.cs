@@ -24,7 +24,7 @@ namespace Lextm.SharpSnmpLib.Tests
             lexer.Parse(new StringReader("{ iso org(3) dod(6) 1 }"));
             string parent;
             uint value;
-            ConstructHelper.ParseOidValue(lexer, out parent, out value);
+            lexer.ParseOidValue(out parent, out value);
             Assert.AreEqual("iso.org(3).dod(6)", parent);
             Assert.AreEqual(1, value);
         }
@@ -37,7 +37,7 @@ namespace Lextm.SharpSnmpLib.Tests
 "     ieee802dot1mibs(1) 1 }"));
             string parent;
             uint value;
-            ConstructHelper.ParseOidValue(lexer, out parent, out value);
+            lexer.ParseOidValue(out parent, out value);
             Assert.AreEqual("iso(1).std(0).iso8802(8802).ieee802dot1(1).ieee802dot1mibs(1)", parent);
             Assert.AreEqual(1, value);
         }

@@ -51,11 +51,11 @@ namespace Lextm.SharpSnmpLib.Mib
             
             _name = name.ToUpperInvariant(); // all module name are uppercase.
             Symbol temp = lexer.NextNonEOLSymbol;
-            ConstructHelper.Expect(temp, Symbol.Definitions);
+            temp.Expect(Symbol.Definitions);
             temp = lexer.NextNonEOLSymbol;
-            ConstructHelper.Expect(temp, Symbol.Assign);
+            temp.Expect(Symbol.Assign);
             temp = lexer.NextSymbol;
-            ConstructHelper.Expect(temp, Symbol.Begin);
+            temp.Expect(Symbol.Begin);
             temp = lexer.NextNonEOLSymbol;
             if (temp == Symbol.Imports)
             {
@@ -130,8 +130,8 @@ namespace Lextm.SharpSnmpLib.Mib
         private static void ParseEntity(ICollection<IConstruct> tokens, string module, IList<Symbol> buffer, Lexer lexer, ref IList<Symbol> next)
         {
             next.Clear();
-            ConstructHelper.Validate(buffer[0], buffer.Count == 1, "unexpected symbol");
-            ConstructHelper.ValidateIdentifier(buffer[0]);
+            buffer[0].Validate(buffer.Count == 1, "unexpected symbol");
+            buffer[0].ValidateIdentifier();
             if (buffer.Count == 2)
             {
                 // others
@@ -187,8 +187,8 @@ namespace Lextm.SharpSnmpLib.Mib
         
         private static IEntity ParseObjectIdentifier(string module, IList<Symbol> header, Lexer lexer)
         {
-            ConstructHelper.Validate(header[0], header.Count != 4, "invalid OID value assignment");
-            ConstructHelper.Expect(header[2], Symbol.Identifier);
+            header[0].Validate(header.Count != 4, "invalid OID value assignment");
+            header[2].Expect(Symbol.Identifier);
             return new OidValueAssignment(module, header[0].ToString(), lexer);
         }
 

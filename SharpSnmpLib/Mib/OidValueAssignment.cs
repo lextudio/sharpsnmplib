@@ -44,7 +44,7 @@ namespace Lextm.SharpSnmpLib.Mib
         {            
             _module = module;
             _name = name;
-            ConstructHelper.ParseOidValue(lexer, out _parent, out _value);
+            lexer.ParseOidValue(out _parent, out _value);
         }
         
         /// <summary>

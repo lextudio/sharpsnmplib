@@ -2,6 +2,7 @@ using System;
 using System.Drawing;
 using System.Net;
 using System.Windows.Forms;
+using RemObjects.Mono.Helpers;
 using WeifenLuo.WinFormsUI.Docking;
 using Lextm.SharpSnmpLib.Messaging;
 
@@ -14,7 +15,7 @@ namespace Lextm.SharpSnmpLib.Browser
         public AgentProfilePanel()
         {
             InitializeComponent();
-			if (!Helper.IsRunningOnMono())
+            if (PlatformSupport.Platform == PlatformType.Windows)
 			{
 				Icon = Properties.Resources.network_server;
 				actEdit.Image = Properties.Resources.document_properties1;

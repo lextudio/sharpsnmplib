@@ -8,6 +8,8 @@
  */
 
 using System;
+using System.Configuration;
+using System.Globalization;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
@@ -209,5 +211,84 @@ namespace Lextm.SharpSnmpLib.Mib
         internal static readonly Symbol OpenParentheses = new Symbol("(");
         internal static readonly Symbol CloseParentheses = new Symbol(")");
         internal static readonly Symbol Exports = new Symbol("EXPORTS");
+
+        internal void Expect(Symbol expected)
+        {
+            Validate(this != expected, expected + " expected");
+        }
+
+        internal void Validate(bool condition, string message)
+        {
+            if (condition)
+            {
+                throw MibException.Create(message, this);
+            }
+        }
+
+        internal void ValidateIdentifier()
+        {
+            string message;
+            bool condition = !IsValidIdentifier(ToString(), out message);
+            Validate(condition, message);
+        }
+
+        internal bool ValidateType()
+        {      
+            string message;
+            return IsValidIdentifier(ToString(), out message);
+        }
+
+        private static bool IsValidIdentifier(string name, out string message)
+        {
+            if (UseStricterValidation && (name.Length < 1 || name.Length > 64))
+            {
+                message = "an identifier must consist of 1 to 64 letters, digits, and hyphens";
+                return false;
+            }
+
+            if (!Char.IsLetter(name[0]))
+            {
+                message = "the initial character must be a letter";
+                return false;
+            }
+
+            if (name.EndsWith("-", StringComparison.Ordinal))
+            {
+                message = "a hyphen cannot be the last character of an identifier";
+                return false;
+            }
+
+            if (name.Contains("--"))
+            {
+                message = "a hyphen cannot be immediately followed by another hyphen in an identifier";
+                return false;
+            }
+
+            if (UseStricterValidation && name.Contains("_"))
+            {
+                message = "underscores are not allowed in identifiers";
+                return false;
+            }
+
+            // TODO: SMIv2 forbids "-" except in module names and keywords
+            message = null;
+            return true;
+        }
+
+        private static bool? _useStricterValidation;
+
+        private static bool UseStricterValidation
+        {
+            get
+            {
+                if (_useStricterValidation == null)
+                {
+                    object setting = ConfigurationManager.AppSettings["StricterValidationEnabled"];
+                    _useStricterValidation = setting != null && Convert.ToBoolean(setting.ToString(), CultureInfo.InvariantCulture);
+                }
+
+                return _useStricterValidation.Value;
+            }
+        }
     }
 }

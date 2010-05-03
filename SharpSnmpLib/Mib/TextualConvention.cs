@@ -62,7 +62,7 @@
             {
                 // parse between ( )
                 temp = lexer.NextSymbol;
-                ConstructHelper.Expect(temp, Symbol.String);
+                temp.Expect(Symbol.String);
                 temp = lexer.NextSymbol;
                 if (temp == Symbol.EOL)
                 {
@@ -70,7 +70,7 @@
                 }
                 
                 int parenthesesSection = 0;
-                ConstructHelper.Expect(temp, Symbol.OpenParentheses);
+                temp.Expect(Symbol.OpenParentheses);
                 parenthesesSection++;
                 while (parenthesesSection > 0)
                 {
@@ -98,7 +98,7 @@
                     previous = temp;
                 }
                 
-                ConstructHelper.Validate(previous, true, "end of file reached");
+                previous.Validate(true, "end of file reached");
             }
         }
     }

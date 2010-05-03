@@ -13,6 +13,7 @@ using System.Linq;
 using System.Windows.Forms;
 using Lextm.SharpSnmpLib.Messaging;
 using Lextm.SharpSnmpLib.Mib;
+using RemObjects.Mono.Helpers;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace Lextm.SharpSnmpLib.Browser
@@ -28,7 +29,7 @@ namespace Lextm.SharpSnmpLib.Browser
         public MibTreePanel()
         {
             InitializeComponent();
-			if (!Helper.IsRunningOnMono())
+            if (PlatformSupport.Platform == PlatformType.Windows)
 			{
 				actNumber.Image = Properties.Resources.office_calendar;
 			}

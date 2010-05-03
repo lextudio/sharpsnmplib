@@ -47,16 +47,16 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values or you can use the default the Revision and
 // Build Numbers by using the '*' as shown below:
-[assembly: AssemblyVersion("5.0.010502.01")]
+[assembly: AssemblyVersion("5.0.010503.06")]
 #if (!CF)
-[assembly: AssemblyFileVersion("5.0.010502.01")]
+[assembly: AssemblyFileVersion("5.0.010503.06")]
 #endif
 [assembly: NeutralResourcesLanguage("en-US")]
 [assembly: CLSCompliant(true)]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Lextm")]
 
-[assembly: InternalsVisibleTo("SharpSnmpLib.Tests, PublicKey=0024000004800000940000000602000000240000525341310004000001000100cda8c7bee95df6" +
-                              "7f8d98cc94c28b38249c0fd3e42f909d339b1d668dcc5dd1746deae7a097ae275b3a56ba9d2897" +
-                              "0b5e9a803a0ca3ad0d6f9147c48a0fd103ad127e9e000b343e360a5430b70c6fd1a1358857592e" +
-                              "0129e26e308c952967f5828448f19d8ac3355a8a907e34770e92ee051edcc315c2ad281fa6247b" +
-                              "a7cd1dbd")]
+[assembly: InternalsVisibleTo("SharpSnmpLib.Tests, PublicKey=0024000004800000940000000602000000240000525341310004000011000000d9a9ad86f872e6"
++ "46aeb279fc116b6bfb4902fd43b59d044449a0f22fd4a606f35a55784fec360a71472f1af0c35f"
++ "111ae1678f8d454328c53b31a0a81210c08fa7e22d4f8ad089e4d9985551e864ddda83e0fda733"
++ "567a5af7f1b5d181a7c141833956073b4cb491684bc2e7150d9a62baf03f71fa9203afb6c4d3bc"
++ "edceb394")]

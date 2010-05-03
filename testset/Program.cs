@@ -17,7 +17,7 @@ using Lextm.SharpSnmpLib.Security;
 
 namespace SnmpSet
 {
-    static class Program
+    internal static class Program
     {
         static void Main(string[] args)
         {

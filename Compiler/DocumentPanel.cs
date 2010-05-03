@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using Lextm.SharpSnmpLib.Messaging;
+using RemObjects.Mono.Helpers;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace Lextm.SharpSnmpLib.Compiler
@@ -12,7 +13,7 @@ namespace Lextm.SharpSnmpLib.Compiler
         public DocumentPanel(string fileName)
         {
             InitializeComponent();
-            if (!Helper.IsRunningOnMono())
+            if (PlatformSupport.Platform == PlatformType.Windows)
             {
                 Icon = Properties.Resources.document_properties;
             }

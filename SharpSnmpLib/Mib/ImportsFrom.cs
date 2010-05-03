@@ -29,7 +29,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 
                 if (temp == Symbol.Comma)
                 {
-                    ConstructHelper.ValidateIdentifier(previous);
+                    previous.ValidateIdentifier();
                     _types.Add(previous.ToString());
                 }
                 

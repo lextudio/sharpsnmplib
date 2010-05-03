@@ -27,7 +27,7 @@ namespace Lextm.SharpSnmpLib.Mib
             }
             
             bool succeeded = int.TryParse(temp.ToString(), out _value);
-            ConstructHelper.Validate(temp, !succeeded, "not a decimal");
+            temp.Validate(!succeeded, "not a decimal");
         }
 
         public string Module

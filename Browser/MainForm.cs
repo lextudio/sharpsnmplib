@@ -12,6 +12,7 @@ using System.Globalization;
 using System.Reflection;
 using System.Windows.Forms;
 using Microsoft.Practices.Unity;
+using RemObjects.Mono.Helpers;
 using WeifenLuo.WinFormsUI.Docking;
 using Lextm.SharpSnmpLib.Messaging;
 
@@ -25,7 +26,7 @@ namespace Lextm.SharpSnmpLib.Browser
 		public MainForm()
 		{
 			InitializeComponent();
-			if (!Helper.IsRunningOnMono())
+            if (PlatformSupport.Platform == PlatformType.Windows)
 			{
 				Icon = Properties.Resources.internet_web_browser;
 				actAbout.Image = Properties.Resources.help_browser;

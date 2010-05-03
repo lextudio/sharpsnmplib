@@ -9,6 +9,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 
@@ -17,7 +18,7 @@ namespace Lextm.SharpSnmpLib.Mib
     /// <summary>
     /// Lexer class that parses MIB files into symbol list.
     /// </summary>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Lexer")]
+    [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Lexer")]
     public sealed class Lexer
     {
         private readonly IList<Symbol> _symbols = new List<Symbol>();
@@ -78,7 +79,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <summary>
         /// Next <see cref="Symbol"/> which is not <see cref="Symbol.EOL"/>.
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "EOL")]
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "EOL")]
         public Symbol NextNonEOLSymbol
         {
             get
@@ -176,7 +177,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 case '\r':
                     return false;
                 default:
-                    if (char.IsWhiteSpace(current) && !_assignSection && !_stringSection)
+                    if (Char.IsWhiteSpace(current) && !_assignSection && !_stringSection)
                     {                     
                         bool moveNext = ParseLastSymbol(file, list, ref _temp, row, column);
                         if (moveNext)
@@ -274,6 +275,73 @@ namespace Lextm.SharpSnmpLib.Mib
             }
 
             return new Symbol(file, str, row, column);
+        }
+
+        internal void ParseOidValue(out string parent, out uint value)
+        {
+            parent = null;
+            value = 0;
+            Symbol previous = null;
+            
+            Symbol temp = NextNonEOLSymbol;
+            temp.Expect(Symbol.OpenBracket);
+            StringBuilder longParent = new StringBuilder();
+            temp = NextNonEOLSymbol;
+            longParent.Append(temp);
+            
+            while ((temp = NextNonEOLSymbol) != null)
+            {
+                if (temp == Symbol.OpenParentheses)
+                {
+                    longParent.Append(temp);
+                    temp = NextNonEOLSymbol;
+                    bool succeed = UInt32.TryParse(temp.ToString(), out value);
+                    temp.Validate(!succeed, "not a decimal");
+                    longParent.Append(temp);
+                    temp = NextNonEOLSymbol;
+                    temp.Expect(Symbol.CloseParentheses);
+                    longParent.Append(temp);
+                    continue;
+                }
+                
+                if (temp == Symbol.CloseBracket)
+                {
+                    parent = longParent.ToString();
+                    return;
+                }
+                
+                bool succeeded = UInt32.TryParse(temp.ToString(), out value);
+                if (succeeded)
+                {
+                    // numerical way
+                    while ((temp = NextNonEOLSymbol) != Symbol.CloseBracket)
+                    {
+                        longParent.Append(".").Append(value);
+                        succeeded = UInt32.TryParse(temp.ToString(), out value);
+                        temp.Validate(!succeeded, "not a decimal");
+                    }
+                    
+                    temp.Expect(Symbol.CloseBracket);
+                    parent = longParent.ToString();
+                    return;
+                }
+                
+                longParent.Append(".");
+                longParent.Append(temp);
+                temp = NextNonEOLSymbol;
+                temp.Expect(Symbol.OpenParentheses);
+                longParent.Append(temp);
+                temp = NextNonEOLSymbol;
+                succeeded = UInt32.TryParse(temp.ToString(), out value);
+                temp.Validate(!succeeded, "not a decimal");
+                longParent.Append(temp);
+                temp = NextNonEOLSymbol;
+                temp.Expect(Symbol.CloseParentheses);
+                longParent.Append(temp);
+                previous = temp;
+            }
+            
+            throw MibException.Create("end of file reached", previous);
         }
     }
 }

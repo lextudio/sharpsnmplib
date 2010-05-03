@@ -13,6 +13,7 @@ using System.Globalization;
 using System.Reflection;
 using System.Windows.Forms;
 using Microsoft.Practices.Unity;
+using RemObjects.Mono.Helpers;
 using WeifenLuo.WinFormsUI.Docking;
 using Lextm.SharpSnmpLib.Messaging;
 
@@ -26,8 +27,8 @@ namespace Lextm.SharpSnmpLib.Compiler
         public MainForm()
         {
             InitializeComponent();
-			
-			if (!Helper.IsRunningOnMono())
+
+            if (PlatformSupport.Platform == PlatformType.Windows)
 			{
                 Icon =  Properties.Resources.accessories_text_editor;
                 actAbout.Image =  Properties.Resources.help_browser;

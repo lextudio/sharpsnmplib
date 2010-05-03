@@ -13,6 +13,7 @@ using System.Net.Sockets;
 using System.Windows.Forms;
 
 using Lextm.SharpSnmpLib.Messaging;
+using RemObjects.Mono.Helpers;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace Lextm.SharpSnmpLib.Browser
@@ -28,7 +29,7 @@ namespace Lextm.SharpSnmpLib.Browser
         public NotificationPanel()
         {
             InitializeComponent();
-			if (!Helper.IsRunningOnMono())
+            if (PlatformSupport.Platform == PlatformType.Windows)
 			{
 				Icon = Properties.Resources.dialog_information;
 				actEnabled.Image = Properties.Resources.face_monkey;

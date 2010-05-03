@@ -198,6 +198,7 @@ namespace Lextm.SharpSnmpLib
         
         internal static void WritePayloadLength(Stream stream, int length) // excluding initial octet
         {
+            // TODO: make extension method.
             if (stream == null)
             {
                 throw new ArgumentNullException("stream");
@@ -232,17 +233,18 @@ namespace Lextm.SharpSnmpLib
         
         internal static int ReadPayloadLength(Stream stream)
         {
+            // TODO: make extension method.
             if (stream == null)
             {
                 throw new ArgumentNullException("stream");
             }
 
-            int first = stream.ReadByte();
-            return ReadLength(stream, (byte)first);
+            return ReadLength(stream, (byte)stream.ReadByte());
         }
 
         internal static void IgnoreBytes(Stream stream, int length)
         {
+            // TODO: make extension method.
             if (stream == null)
             {
                 throw new ArgumentNullException("stream");
@@ -250,12 +252,12 @@ namespace Lextm.SharpSnmpLib
 
             byte[] bytes = new byte[length];
             stream.Read(bytes, 0, length);
-            return;
         }
         
         // copied from universal
         private static int ReadLength(Stream stream, byte first) // x is initial octet
         {
+            // TODO: make extension method.
             if ((first & 0x80) == 0)
             {
                 return first;
@@ -274,6 +276,7 @@ namespace Lextm.SharpSnmpLib
         // copied from universal
         private static byte ReadByte(Stream s)
         {
+            // TODO: make extension method.
             int n = s.ReadByte();
             if (n == -1)
             {
@@ -285,6 +288,7 @@ namespace Lextm.SharpSnmpLib
         
         internal static void AppendBytes(Stream stream, SnmpType typeCode, byte[] raw)
         {
+            // TODO: make extension method.
             if (stream == null)
             {
                 throw new ArgumentNullException("stream");
@@ -349,6 +353,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public static byte[] ToBytes(ISnmpData data)
         {
+            // TODO: convert to extension method in the future.
             if (data == null)
             {
                 throw new ArgumentNullException("data");

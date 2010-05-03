@@ -25,7 +25,7 @@ namespace Lextm.SharpSnmpLib.Mib
             Symbol temp;
             while ((temp = lexer.NextNonEOLSymbol) != null)
             {
-                ConstructHelper.ValidateIdentifier(temp);
+                temp.ValidateIdentifier();
                 _modules.Add(new MibModule(temp.ToString(), lexer));                
             }
         }

@@ -11,6 +11,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using RemObjects.Mono.Helpers;
 using WeifenLuo.WinFormsUI.Docking;
 using Lextm.SharpSnmpLib.Messaging;
 
@@ -27,7 +28,7 @@ namespace Lextm.SharpSnmpLib.Compiler
         public DocumentListPanel()
         {
             InitializeComponent();
-			if (!Helper.IsRunningOnMono())
+            if (PlatformSupport.Platform == PlatformType.Windows)
 			{				
 			    Icon = Properties.Resources.document_new;
 			}

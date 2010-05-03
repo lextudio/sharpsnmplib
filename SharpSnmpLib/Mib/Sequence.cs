@@ -27,7 +27,7 @@ namespace Lextm.SharpSnmpLib.Mib
             // parse between ( )
             Symbol temp = lexer.NextNonEOLSymbol; 
             int bracketSection = 0;
-            ConstructHelper.Expect(temp, Symbol.OpenBracket);
+            temp.Expect(Symbol.OpenBracket);
             bracketSection++;
             while (bracketSection > 0)
             {

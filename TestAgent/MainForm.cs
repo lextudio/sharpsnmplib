@@ -16,6 +16,7 @@ using System.Reflection;
 using System.Windows.Forms;
 using Microsoft.Practices.Unity;
 using Lextm.SharpSnmpLib.Messaging;
+using RemObjects.Mono.Helpers;
 
 namespace Lextm.SharpSnmpLib.Agent
 {
@@ -31,7 +32,7 @@ namespace Lextm.SharpSnmpLib.Agent
         {
             _demon = Program.Container.Resolve<SnmpDemon>();
             InitializeComponent();
-			if (!Helper.IsRunningOnMono())
+            if (PlatformSupport.Platform == PlatformType.Windows)
 			{
 			    // FIXME: work around a Mono WinForms bug.
 				Icon = Properties.Resources.network_server;

@@ -10,7 +10,7 @@
 using System;
 using System.Globalization;
 using System.Windows.Forms;
-
+using RemObjects.Mono.Helpers;
 using WeifenLuo.WinFormsUI.Docking;
 using Lextm.SharpSnmpLib.Messaging;
 
@@ -24,7 +24,7 @@ namespace Lextm.SharpSnmpLib.Compiler
         public OutputPanel()
         {
             InitializeComponent();
-			if (!Helper.IsRunningOnMono())
+            if (PlatformSupport.Platform == PlatformType.Windows)
 			{
 				Icon = Properties.Resources.utilities_terminal;
 			}

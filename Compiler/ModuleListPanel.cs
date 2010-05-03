@@ -15,6 +15,7 @@ using System.Linq;
 using System.Windows.Forms;
 
 using Lextm.SharpSnmpLib.Mib;
+using RemObjects.Mono.Helpers;
 using WeifenLuo.WinFormsUI.Docking;
 using Lextm.SharpSnmpLib.Messaging;
 
@@ -31,7 +32,7 @@ namespace Lextm.SharpSnmpLib.Compiler
         public ModuleListPanel()
         {
             InitializeComponent();
-			if (!Helper.IsRunningOnMono())
+            if (PlatformSupport.Platform == PlatformType.Windows)
 			{
 				Icon = Properties.Resources.preferences_system_windows;
 			}

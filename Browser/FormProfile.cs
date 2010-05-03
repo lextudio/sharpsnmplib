@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Net;
 using System.Windows.Forms;
 using Lextm.SharpSnmpLib.Messaging;
+using RemObjects.Mono.Helpers;
 
 namespace Lextm.SharpSnmpLib.Browser
 {
@@ -15,7 +16,7 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             InitializeComponent();
             _profile = agent;
-            if (!Helper.IsRunningOnMono())
+            if (PlatformSupport.Platform == PlatformType.Windows)
             {
                 Icon = Properties.Resources.network_server;
             }

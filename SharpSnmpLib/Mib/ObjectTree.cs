@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Text;
+using log4net;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
@@ -15,7 +17,7 @@ namespace Lextm.SharpSnmpLib.Mib
         private readonly IDictionary<string, MibModule> _pendings = new Dictionary<string, MibModule>();
         private readonly IDictionary<string, Definition> _nameTable;
         private readonly Definition _root;
-        private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger("Lextm.SharpSnmpLib.Mib");
+        private static readonly ILog Logger = LogManager.GetLogger("Lextm.SharpSnmpLib.Mib");
         
         /// <summary>
         /// Creates an <see cref="ObjectTree"/> instance.
@@ -105,7 +107,7 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             foreach (string key in _nameTable.Keys)
             {
-                if (string.CompareOrdinal(key.Split(new [] { "::" }, StringSplitOptions.None)[1], name) == 0)
+                if (String.CompareOrdinal(key.Split(new [] { "::" }, StringSplitOptions.None)[1], name) == 0)
                 {
                     return _nameTable[key];
                 }
@@ -194,7 +196,7 @@ namespace Lextm.SharpSnmpLib.Mib
 
         private void Parse(IModule module)
         {
-            System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
+            Stopwatch watch = new Stopwatch();
             AddNodes(module);
             Logger.InfoFormat(CultureInfo.InvariantCulture, "{0}-ms used to assemble {1}", watch.ElapsedMilliseconds, module.Name);
             watch.Stop();
@@ -295,13 +297,13 @@ namespace Lextm.SharpSnmpLib.Mib
 
         private bool FirstNodeExists(IEntity node)
         {
-            return Find(StringUtility.ExtractName(node.Parent.Split('.')[0])) != null;
+            return Find(ExtractName(node.Parent.Split('.')[0])) != null;
         }
 
         private Definition CreateExtraNodes(string module, string longParent)
         {
             string[] content = longParent.Split('.');
-            Definition node = Find(StringUtility.ExtractName(content[0]));
+            Definition node = Find(ExtractName(content[0]));
             uint[] rootId = node.GetNumericalForm();
             uint[] all = new uint[content.Length + rootId.Length - 1];
             for (int j = rootId.Length - 1; j >= 0; j--)
@@ -313,7 +315,7 @@ namespace Lextm.SharpSnmpLib.Mib
             for (int i = 1; i < content.Length; i++)
             {
                 uint value;
-                bool numberFound = uint.TryParse(content[i], out value);
+                bool numberFound = UInt32.TryParse(content[i], out value);
                 int currentCursor = rootId.Length + i - 1;
                 if (numberFound)
                 {
@@ -335,7 +337,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 {
                     string self = content[i];
                     string parent = content[i - 1];
-                    IEntity extra = new OidValueAssignment(module, StringUtility.ExtractName(self), StringUtility.ExtractName(parent), StringUtility.ExtractValue(self));
+                    IEntity extra = new OidValueAssignment(module, ExtractName(self), ExtractName(parent), ExtractValue(self));
                     node = CreateSelf(extra);
                     if (node != null)
                     {
@@ -374,7 +376,7 @@ namespace Lextm.SharpSnmpLib.Mib
         public void Refresh()
         {
             Logger.Info("loading modules started");
-            System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
+            Stopwatch watch = new Stopwatch();
             watch.Start();
             int current = _pendings.Count;
             while (current != 0)
@@ -537,5 +539,34 @@ namespace Lextm.SharpSnmpLib.Mib
         }
 
         #endregion
+
+        /// <summary>
+        /// Extracts the name.
+        /// </summary>
+        /// <param name="input">The input.</param>
+        /// <returns></returns>
+        internal static string ExtractName(string input)
+        {
+            int left = input.IndexOf('(');
+            return left == -1 ? input : input.Substring(0, left);
+        }
+
+        /// <summary>
+        /// Extracts the value.
+        /// </summary>
+        /// <param name="input">The input.</param>
+        /// <returns></returns>
+        [CLSCompliant(false)]
+        internal static uint ExtractValue(string input)
+        {
+            int left = input.IndexOf('(');
+            int right = input.IndexOf(')');
+            if (left >= right)
+            {
+                throw new FormatException("input does not contain a value");
+            }
+            
+            return UInt32.Parse(input.Substring(left + 1, right - left - 1), CultureInfo.InvariantCulture);
+        }
     }
 }

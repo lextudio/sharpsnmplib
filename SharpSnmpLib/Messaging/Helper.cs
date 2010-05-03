@@ -36,6 +36,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="providers">The providers.</param>
         public static void Authenticate(ISnmpMessage message, ProviderPair providers)
         {
+            // TODO: make extension method.
             if (message == null)
             {
                 throw new ArgumentNullException("message");
@@ -115,6 +116,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public static Socket GetSocket(EndPoint endpoint)
         {
+            // TODO: make extension method.
             if (endpoint == null)
             {
                 throw new ArgumentNullException("endpoint");

@@ -25,7 +25,7 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             _module = module;
             _name = header[0].ToString();
-            ConstructHelper.ParseOidValue(lexer, out _parent, out _value);
+            lexer.ParseOidValue(out _parent, out _value);
         }
 
         public string ModuleName

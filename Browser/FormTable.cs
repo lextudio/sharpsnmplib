@@ -5,6 +5,7 @@ using System.Threading;
 using System.Windows.Forms;
 using Lextm.SharpSnmpLib.Messaging;
 using Microsoft.Practices.Unity;
+using RemObjects.Mono.Helpers;
 
 namespace Lextm.SharpSnmpLib.Browser
 {
@@ -21,7 +22,7 @@ namespace Lextm.SharpSnmpLib.Browser
             _definition = def;
             InitializeComponent();
             cbColumnDisplay.SelectedIndex = 1;
-            if (!Helper.IsRunningOnMono())
+            if (PlatformSupport.Platform == PlatformType.Windows)
             {
                 Icon = Properties.Resources.x_office_spreadsheet;
             }
