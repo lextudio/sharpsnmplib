@@ -29,7 +29,6 @@ namespace Lextm.SharpSnmpLib.Browser
             InitializeComponent();
 			if (!Helper.IsRunningOnMono())
 			{
-				toolStripButton2.Image = Properties.Resources.office_calendar;
 				actNumber.Image = Properties.Resources.office_calendar;
 			}
         }

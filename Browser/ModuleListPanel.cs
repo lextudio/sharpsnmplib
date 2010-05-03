@@ -36,10 +36,6 @@ namespace Lextm.SharpSnmpLib.Browser
 			if (!Helper.IsRunningOnMono())
 			{
 				Icon = Properties.Resources.preferences_system_windows;
-				toolStripButton2.Image = Properties.Resources.view_refresh;
-				toolStripButton1.Image = Properties.Resources.list_remove;
-				removeToolStripMenuItem.Image = Properties.Resources.list_remove;
-				tsbtnAdd.Image = Properties.Resources.list_add;
                 actEnableMonitor.Image = Properties.Resources.view_refresh;
                 actRemove.Image = Properties.Resources.list_remove;
 				actAdd.Image = Properties.Resources.list_add;

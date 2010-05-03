@@ -138,18 +138,6 @@
   <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 54</value>
   </metadata>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="toolStripButton3.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAEdSURBVDhPpZM7a4VAEIXvrwzaWgQUe2sFe1ELG28dMIJF
-        bKx9FalErCysvb7+wSRnw0puEjVyFz5WxTlnZmfncvlcnue96rpOZzAM4wmxbCHw7ELML4FhGKjve8bt
-        dlvBdzCOIy3Lwrz+FEBgmqaUZRkjz/M7iqI4FuDOsiwTp6oq5j5N074AgrlzFEUkCMIKsjnMAAJwhSNq
-        xv6VxTN7/1cG3JVnoCgKgap6PxaAy/faeTDfm6bZPwMI/KwdGYmiSJIkkaqq1Lbtdht5r1ErmOeZ6rom
-        TdPINE2yLIt8398WQKv4aePEy7JkxHFMtm3T9XqlIAj2BXi/4Q5w80DXdRSGISVJsi1wZh7urrLjOG9n
-        JhH/uq77sg7TIw8fE+6aE8cfgUMAAAAASUVORK5CYII=
-</value>
-  </data>
   <metadata name="contextAgentMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>637, 17</value>
   </metadata>

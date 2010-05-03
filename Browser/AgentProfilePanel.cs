@@ -17,13 +17,9 @@ namespace Lextm.SharpSnmpLib.Browser
 			if (!Helper.IsRunningOnMono())
 			{
 				Icon = Properties.Resources.network_server;
-				deleteToolStripMenuItem.Image = Properties.Resources.list_remove;
-				editToolStripMenuItem.Image = Properties.Resources.document_properties1;
 				actEdit.Image = Properties.Resources.document_properties1;
 				actDelete.Image = Properties.Resources.list_remove;
 				actAdd.Image = Properties.Resources.list_add;
-				toolStripButton2.Image = Properties.Resources.list_remove;
-				toolStripButton1.Image = Properties.Resources.list_add;
 			}
         }
 

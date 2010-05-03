@@ -64,7 +64,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 286);
             this.Controls.Add(this.txtDocument);
-            this.Icon = global::Lextm.SharpSnmpLib.Compiler.Properties.Resources.document_properties;
             this.Name = "DocumentPanel";
             this.TabPageContextMenuStrip = this.contextMenuStrip1;
             this.contextMenuStrip1.ResumeLayout(false);

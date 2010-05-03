@@ -31,10 +31,9 @@ namespace Lextm.SharpSnmpLib.Browser
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("SNMP v1", System.Windows.Forms.HorizontalAlignment.Left);
             System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("SNMP v2c", System.Windows.Forms.HorizontalAlignment.Left);
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AgentProfilePanel));
             this.listView1 = new System.Windows.Forms.ListView();
-            this.chName = new System.Windows.Forms.ColumnHeader();
-            this.chIP = new System.Windows.Forms.ColumnHeader();
+            this.chName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.chIP = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
@@ -111,7 +110,7 @@ namespace Lextm.SharpSnmpLib.Browser
             this.actionList1.SetAction(this.toolStripButton1, this.actAdd);
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(49, 22);
+            this.toolStripButton1.Size = new System.Drawing.Size(33, 22);
             this.toolStripButton1.Text = "Add";
             // 
             // toolStripButton2
@@ -119,16 +118,15 @@ namespace Lextm.SharpSnmpLib.Browser
             this.actionList1.SetAction(this.toolStripButton2, this.actDelete);
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(60, 22);
+            this.toolStripButton2.Size = new System.Drawing.Size(44, 22);
             this.toolStripButton2.Text = "Delete";
             // 
             // toolStripButton3
             // 
             this.actionList1.SetAction(this.toolStripButton3, this.actEdit);
-            this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
             this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(52, 22);
+            this.toolStripButton3.Size = new System.Drawing.Size(36, 22);
             this.toolStripButton3.Text = "View";
             // 
             // toolStripSeparator1
@@ -154,31 +152,31 @@ namespace Lextm.SharpSnmpLib.Browser
             this.actionList1.Update += new System.EventHandler(this.ActionList1Update);
             // 
             // actAdd
-            //             
+            // 
             this.actAdd.Text = "Add";
             this.actAdd.ToolTipText = "Add Profile";
             this.actAdd.Execute += new System.EventHandler(this.ActAddExecute);
             // 
             // actDelete
-            //             
+            // 
             this.actDelete.Text = "Delete";
             this.actDelete.ToolTipText = "Delete Profile";
-            this.actDelete.Update += new System.EventHandler(this.ActDeleteUpdate);
             this.actDelete.Execute += new System.EventHandler(this.ActDeleteExecute);
+            this.actDelete.Update += new System.EventHandler(this.ActDeleteUpdate);
             // 
             // actEdit
-            //             
+            // 
             this.actEdit.Text = "View";
             this.actEdit.ToolTipText = "View Profile";
-            this.actEdit.Update += new System.EventHandler(this.ActEditUpdate);
             this.actEdit.Execute += new System.EventHandler(this.ActEditExecute);
+            this.actEdit.Update += new System.EventHandler(this.ActEditUpdate);
             // 
             // actDefault
             // 
             this.actDefault.Text = "Set Default";
             this.actDefault.ToolTipText = "Set Default Profile";
-            this.actDefault.Update += new System.EventHandler(this.ActDefaultUpdate);
             this.actDefault.Execute += new System.EventHandler(this.ActDefaultExecute);
+            this.actDefault.Update += new System.EventHandler(this.ActDefaultUpdate);
             // 
             // editToolStripMenuItem
             // 
@@ -235,7 +233,7 @@ namespace Lextm.SharpSnmpLib.Browser
             this.Controls.Add(this.listView1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.statusStrip1);
-            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));            
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Name = "AgentProfilePanel";
             this.TabText = "Agent Profiles";
             this.Load += new System.EventHandler(this.AgentProfilePanel_Load);

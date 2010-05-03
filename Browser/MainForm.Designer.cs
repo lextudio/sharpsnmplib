@@ -144,10 +144,9 @@ namespace Lextm.SharpSnmpLib.Browser
             // toolStripButton1
             // 
             this.actionList1.SetAction(this.toolStripButton1, this.actExit);
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(45, 22);
+            this.toolStripButton1.Size = new System.Drawing.Size(29, 22);
             this.toolStripButton1.Text = "E&xit";
             // 
             // toolStripSeparator1
@@ -158,10 +157,9 @@ namespace Lextm.SharpSnmpLib.Browser
             // toolStripButton2
             // 
             this.actionList1.SetAction(this.toolStripButton2, this.actAbout);
-            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(60, 22);
+            this.toolStripButton2.Size = new System.Drawing.Size(44, 22);
             this.toolStripButton2.Text = "About";
             // 
             // menuStrip1
@@ -186,9 +184,8 @@ namespace Lextm.SharpSnmpLib.Browser
             // exitToolStripMenuItem
             // 
             this.actionList1.SetAction(this.exitToolStripMenuItem, this.actExit);
-            this.exitToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("exitToolStripMenuItem.Image")));
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             // 
             // helpToolStripMenuItem
@@ -202,9 +199,8 @@ namespace Lextm.SharpSnmpLib.Browser
             // aboutToolStripMenuItem
             // 
             this.actionList1.SetAction(this.aboutToolStripMenuItem, this.actAbout);
-            this.aboutToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("aboutToolStripMenuItem.Image")));
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.aboutToolStripMenuItem.Text = "About";
             // 
             // actionList1

@@ -29,6 +29,7 @@ namespace Lextm.SharpSnmpLib.Browser
 			{
 				Icon = Properties.Resources.internet_web_browser;
 				actAbout.Image = Properties.Resources.help_browser;
+			    actExit.Image = Properties.Resources.system_log_out;
 			}
 			
             DockContent agent = Program.Container.Resolve<DockContent>("AgentProfile");

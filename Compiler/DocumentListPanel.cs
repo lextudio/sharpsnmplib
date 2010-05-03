@@ -27,7 +27,6 @@ namespace Lextm.SharpSnmpLib.Compiler
         public DocumentListPanel()
         {
             InitializeComponent();
-			
 			if (!Helper.IsRunningOnMono())
 			{				
 			    Icon = Properties.Resources.document_new;

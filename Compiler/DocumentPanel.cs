@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using Lextm.SharpSnmpLib.Messaging;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace Lextm.SharpSnmpLib.Compiler
@@ -11,6 +12,11 @@ namespace Lextm.SharpSnmpLib.Compiler
         public DocumentPanel(string fileName)
         {
             InitializeComponent();
+            if (!Helper.IsRunningOnMono())
+            {
+                Icon = Properties.Resources.document_properties;
+            }
+
             _fileName = fileName;
             TabText = _fileName;
             txtDocument.LoadFile(_fileName, RichTextBoxStreamType.PlainText);

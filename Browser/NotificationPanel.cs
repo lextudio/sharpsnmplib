@@ -32,7 +32,6 @@ namespace Lextm.SharpSnmpLib.Browser
 			{
 				Icon = Properties.Resources.dialog_information;
 				actEnabled.Image = Properties.Resources.face_monkey;
-			    toolStripButton1.Image = Properties.Resources.face_monkey;
 			}
 			
 			tstxtPort.Text = "162";
