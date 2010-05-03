@@ -51,7 +51,6 @@ namespace Lextm.SharpSnmpLib.Browser
             WeifenLuo.WinFormsUI.Docking.DockPanelGradient dockPanelGradient3 = new WeifenLuo.WinFormsUI.Docking.DockPanelGradient();
             WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient6 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
             WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient7 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.dockPanel1 = new WeifenLuo.WinFormsUI.Docking.DockPanel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
@@ -185,7 +184,7 @@ namespace Lextm.SharpSnmpLib.Browser
             // 
             this.actionList1.SetAction(this.exitToolStripMenuItem, this.actExit);
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             // 
             // helpToolStripMenuItem
@@ -200,7 +199,7 @@ namespace Lextm.SharpSnmpLib.Browser
             // 
             this.actionList1.SetAction(this.aboutToolStripMenuItem, this.actAbout);
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.aboutToolStripMenuItem.Text = "About";
             // 
             // actionList1
@@ -211,7 +210,6 @@ namespace Lextm.SharpSnmpLib.Browser
             // 
             // actExit
             // 
-            this.actExit.Image = ((System.Drawing.Image)(resources.GetObject("actExit.Image")));
             this.actExit.Text = "E&xit";
             this.actExit.ToolTipText = "Exit Browser";
             this.actExit.Execute += new System.EventHandler(this.ActExitExecute);
