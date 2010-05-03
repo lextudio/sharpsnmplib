@@ -37,7 +37,7 @@ namespace Lextm.SharpSnmpLib.Browser
 			
 			tstxtPort.Text = "162";
             tscbIP.Items.Add(StrAllUnassigned);
-            foreach (IPAddress address in Dns.GetHostEntry("").AddressList.Where(address => !address.IsIPv6LinkLocal))
+            foreach (IPAddress address in Dns.GetHostEntry(string.Empty).AddressList.Where(address => !address.IsIPv6LinkLocal))
             {
                 tscbIP.Items.Add(address);
             }
