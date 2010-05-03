@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Net;
 using System.Windows.Forms;
+using Lextm.SharpSnmpLib.Messaging;
 
 namespace Lextm.SharpSnmpLib.Browser
 {
@@ -14,6 +15,10 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             InitializeComponent();
             _profile = agent;
+            if (!Helper.IsRunningOnMono())
+            {
+                Icon = Properties.Resources.network_server;
+            }
         }
 
         internal IPAddress IP

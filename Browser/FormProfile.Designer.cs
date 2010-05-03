@@ -378,7 +378,6 @@
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.groupBox1);
-            this.Icon = global::Lextm.SharpSnmpLib.Browser.Properties.Resources.network_server;
             this.Name = "FormProfile";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Profile Editor";

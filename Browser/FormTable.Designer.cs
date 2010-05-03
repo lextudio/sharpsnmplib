@@ -136,7 +136,6 @@
         	this.Controls.Add(this.textBoxRefresh);
         	this.Controls.Add(this.checkBoxRefresh);
         	this.Controls.Add(this.dataGridTable);
-            this.Icon = Properties.Resources.x_office_spreadsheet;
         	this.MinimumSize = new System.Drawing.Size(440, 400);
         	this.Name = "FormTable";
         	this.Text = "FormTable";

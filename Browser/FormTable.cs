@@ -21,6 +21,10 @@ namespace Lextm.SharpSnmpLib.Browser
             _definition = def;
             InitializeComponent();
             cbColumnDisplay.SelectedIndex = 1;
+            if (!Helper.IsRunningOnMono())
+            {
+                Icon = Properties.Resources.x_office_spreadsheet;
+            }
         }
 
         public void SetRows(int rowCount)
