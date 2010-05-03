@@ -56,7 +56,6 @@ namespace Lextm.SharpSnmpLib.Browser
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tslblOID = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.actionList1)).BeginInit();
@@ -256,7 +255,6 @@ namespace Lextm.SharpSnmpLib.Browser
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel tslblOID;
         private System.Windows.Forms.ToolStripMenuItem walkToolStripMenuItem;
-        private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.ToolStripMenuItem getNextToolStripMenuItem;
         private Crad.Windows.Forms.Actions.Action actGetNext;
         private System.Windows.Forms.ToolStrip toolStrip1;
