@@ -221,17 +221,17 @@ namespace Lextm.SharpSnmpLib.Browser.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap x_office_spreadsheet {
+        internal static System.Drawing.Icon x_office_spreadsheet {
             get {
                 object obj = ResourceManager.GetObject("x_office_spreadsheet", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                return ((System.Drawing.Icon)(obj));
             }
         }
         
-        internal static System.Drawing.Icon x_office_spreadsheet1 {
+        internal static System.Drawing.Bitmap x_office_spreadsheet1 {
             get {
                 object obj = ResourceManager.GetObject("x_office_spreadsheet1", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }

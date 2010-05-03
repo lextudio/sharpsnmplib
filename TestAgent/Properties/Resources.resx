@@ -117,26 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="face_monkey" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAFzUkdCAK7O
-        HOkAAAAEZ0FNQQAAsY8L/GEFAAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAApdJ
-        REFUOE+lU1tIU3EYNzVIz6yk9Emot3xxxtlZ5O1ly0pLt9n0xRIK7LLSNDSERDHSFIu8LNOaiRaalVDD
-        y2Yluiwpkwq8ZCo5nFhWjvIcKFz++s5mol1e8uH7X7/v9/2+mxsAt5XIH8YxLBMfxzEmDcfYYllmTiNj
-        pvZxTKeKZdJjWIn7784WAejTUy1jarRyRjgbtRplag9Ux7ujXOOB/GhPJIV48QTWTXq+S0GWAhxI3O4t
-        dJUmYGawGUP3c1G33wuDxjzYh014UZeC5PA131UypnAZQESgt3QXu7FfLZN8u3Y4EILVgtnRdvDjFtjf
-        mFz3sXYIE09RcXAzVDKJYze7oT9iCyMVgdyiOH9L9blDIGroKo0H/64TsyOtLhk1u/a3LeDHOvDgYgLU
-        nA+qchMRLfe3OAEUQWuFYWOBE6C3NoUAOqAMZ53ydegelGFboQgNxpcBI54YdMTAB/23c6AMWicsMPCz
-        lBzfAQoBz2pTyaMZSjJQhEhh77uJnWHBiAyVYqavEZbKI2IIKNEpEC3zczEQcxDD+tiztZvmW65moTht
-        D8YfleFzjwGfuivxsUuPUWM+Co8p0axPx+nYgPm9pL+YA6K+imrvMF9KxPTzelw4EQn1Nl9oSJIUAc6z
-        Sr4eRclhmHyoh7FAS+EyDtHOyUBcqP4D19MjMNN7Cx/ai/G+7TzG7mbjdU0aRuozYLuTBVtjJrEx4PJR
-        jsJgBn6V0glAHZehlUv43htZRLsGU61FsDWdwURDhlMmm3Iw3VGFHsMpxHFePOlnLgNYANFRgoQrJxWO
-        l/U5sLaVY/pxLazmCrxqyIM+VfmDDHmir/trJ4qPFFcgKeRR35tI2UbnOXEX7+K7+P/PWfjfiVzRKItO
-        fwKeZnZafu9lUAAAAABJRU5ErkJggg==
-</value>
-  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="face_monkey" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\face-monkey.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="network_server" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\network-server.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
