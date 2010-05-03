@@ -144,11 +144,10 @@ namespace Lextm.SharpSnmpLib.Browser
             // toolStripButton1
             // 
             this.actionList1.SetAction(this.toolStripButton1, this.actExit);
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton1.Size = new System.Drawing.Size(45, 22);
             this.toolStripButton1.Text = "E&xit";
             // 
             // toolStripSeparator1
@@ -159,11 +158,10 @@ namespace Lextm.SharpSnmpLib.Browser
             // toolStripButton2
             // 
             this.actionList1.SetAction(this.toolStripButton2, this.actAbout);
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton2.Size = new System.Drawing.Size(60, 22);
             this.toolStripButton2.Text = "About";
             // 
             // menuStrip1
@@ -223,7 +221,7 @@ namespace Lextm.SharpSnmpLib.Browser
             this.actExit.Execute += new System.EventHandler(this.ActExitExecute);
             // 
             // actAbout
-            //             
+            // 
             this.actAbout.Text = "About";
             this.actAbout.ToolTipText = "About #SNMP";
             this.actAbout.Execute += new System.EventHandler(this.ActAboutExecute);
@@ -235,12 +233,12 @@ namespace Lextm.SharpSnmpLib.Browser
             this.ClientSize = new System.Drawing.Size(493, 385);
             this.Controls.Add(this.dockPanel1);
             this.Controls.Add(this.toolStrip1);
-            this.Controls.Add(this.menuStrip1);            
+            this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
             this.Text = "#SNMP MIB Browser";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
-			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFormClosing);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);

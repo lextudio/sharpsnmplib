@@ -51,7 +51,6 @@ namespace Lextm.SharpSnmpLib.Compiler
             WeifenLuo.WinFormsUI.Docking.DockPanelGradient dockPanelGradient3 = new WeifenLuo.WinFormsUI.Docking.DockPanelGradient();
             WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient6 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
             WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient7 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.dockPanel1 = new WeifenLuo.WinFormsUI.Docking.DockPanel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
@@ -156,10 +155,9 @@ namespace Lextm.SharpSnmpLib.Compiler
             // toolStripButton1
             // 
             this.actionList1.SetAction(this.toolStripButton1, this.actExit);
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;            
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton1.Size = new System.Drawing.Size(29, 22);
             this.toolStripButton1.Text = "E&xit";
             // 
             // toolStripSeparator1
@@ -170,28 +168,25 @@ namespace Lextm.SharpSnmpLib.Compiler
             // toolStripButton2
             // 
             this.actionList1.SetAction(this.toolStripButton2, this.actOpen);
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton2.Size = new System.Drawing.Size(40, 22);
             this.toolStripButton2.Text = "Open";
             // 
             // toolStripButton3
             // 
             this.actionList1.SetAction(this.toolStripButton3, this.actCompile);
-            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton3.Size = new System.Drawing.Size(56, 22);
             this.toolStripButton3.Text = "Compile";
             // 
             // toolStripButton4
             // 
             this.actionList1.SetAction(this.toolStripButton4, this.actCompileAll);
-            this.toolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton4.Name = "toolStripButton4";
-            this.toolStripButton4.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton4.Size = new System.Drawing.Size(73, 22);
             this.toolStripButton4.Text = "Compile All";
             // 
             // toolStripSeparator2
@@ -202,10 +197,9 @@ namespace Lextm.SharpSnmpLib.Compiler
             // toolStripButton5
             // 
             this.actionList1.SetAction(this.toolStripButton5, this.actAbout);
-            this.toolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.toolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton5.Name = "toolStripButton5";
-            this.toolStripButton5.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton5.Size = new System.Drawing.Size(44, 22);
             this.toolStripButton5.Text = "About";
             // 
             // menuStrip1
@@ -315,9 +309,9 @@ namespace Lextm.SharpSnmpLib.Compiler
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
             this.Text = "#SNMP MIB Compiler";
-            this.Load += new System.EventHandler(this.MainForm_Load);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFormClosing);
-			this.toolStrip1.ResumeLayout(false);
+            this.Load += new System.EventHandler(this.MainForm_Load);
+            this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
