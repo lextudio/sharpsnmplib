@@ -37,7 +37,7 @@ namespace Lextm.SharpSnmpLib.Compiler
                 actOpen.Image = Properties.Resources.document_open;
                 actExit.Image =  Properties.Resources.system_log_out;
 			}
-            actExit.Image = Properties.Resources.system_log_out;
+
             DockContent files = Program.Container.Resolve<DockContent>("DocumentList");
             files.Show(dockPanel1, DockState.DockLeft);
 

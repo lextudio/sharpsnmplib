@@ -163,7 +163,7 @@ namespace Lextm.SharpSnmpLib.Agent
             {
                 if (Helper.IsRunningOnMono() && Mono.Unix.Native.Syscall.getuid() != 0 && int.Parse(txtPort.Text) < 1024)
                 {
-                    MessageBox.Show("On Linux this application must be run as root for port less than 1024.");
+                    MessageBox.Show("On Linux this application must be run as root for port < 1024.");
                     return;
                 }
 
