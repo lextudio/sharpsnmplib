@@ -11,6 +11,9 @@
     <RootNamespace>snmpset</RootNamespace>
     <AssemblyName>snmpset</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <AssemblyOriginatorKeyFile>..\..\..\SharpSnmpLib\sharpsnmplib.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>False</DelaySign>
+    <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>

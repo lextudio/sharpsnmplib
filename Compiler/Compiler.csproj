@@ -12,6 +12,9 @@
     <AssemblyName>Compiler</AssemblyName>
     <ApplicationIcon>Resources\accessories-text-editor.ico</ApplicationIcon>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <AssemblyOriginatorKeyFile>..\SharpSnmpLib\sharpsnmplib.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>False</DelaySign>
+    <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -124,6 +127,10 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="log4net">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Crad.Windows.Forms.Actions">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\Crad.Windows.Forms.Actions.dll</HintPath>
