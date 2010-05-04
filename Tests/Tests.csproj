@@ -1,88 +1,45 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <ProjectGuid>{FE484004-0780-4730-9D91-D4597341B56E}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FE484004-0780-4730-9D91-D4597341B56E}</ProjectGuid>
     <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Lextm.SharpSnmpLib</RootNamespace>
     <AssemblyName>SharpSnmpLib.Tests</AssemblyName>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <SourceAnalysisOverrideSettingsFile>C:\Users\lextm\AppData\Roaming\ICSharpCode/SharpDevelop3.0\AddIns\MattEverson.SourceAnalysis\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
-    <SignAssembly>true</SignAssembly>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <SourceAnalysisOverrideSettingsFile>C:\Users\Administrator\AppData\Roaming\ICSharpCode/SharpDevelop3.0\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
+    <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>..\SharpSnmpLib\sharpsnmplib.snk</AssemblyOriginatorKeyFile>
     <DelaySign>False</DelaySign>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
-    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
-    <NoStdLib>False</NoStdLib>
-    <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <OldToolsVersion>3.5</OldToolsVersion>
-    <UpgradeBackupLocation />
-    <TargetFrameworkProfile />
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
-    <ProductVersion>8.0.50727</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <OutputPath>bin\Debug\</OutputPath>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>Full</DebugType>
-    <Optimize>False</Optimize>
-    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <OutputPath>bin\Release\</OutputPath>
-    <DebugSymbols>False</DebugSymbols>
-    <DebugType>None</DebugType>
-    <Optimize>True</Optimize>
-    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
-    <DefineConstants>TRACE</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
-    <RegisterForComInterop>False</RegisterForComInterop>
-    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
-    <BaseAddress>4194304</BaseAddress>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <FileAlignment>4096</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <WarningLevel>4</WarningLevel>
     <Optimize>false</Optimize>
-    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>none</DebugType>
+    <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -190,76 +147,83 @@
     <None Include="Resources\UCD-SNMP-MIB.inc" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\AGENTX-MIB.txt" />
-    <Content Include="Resources\DISMAN-EVENT-MIB.txt" />
-    <Content Include="Resources\DISMAN-EXPRESSION-MIB.txt" />
-    <Content Include="Resources\DISMAN-NSLOOKUP-MIB.txt" />
-    <Content Include="Resources\DISMAN-PING-MIB.txt" />
-    <Content Include="Resources\DISMAN-SCHEDULE-MIB.txt" />
-    <Content Include="Resources\DISMAN-SCRIPT-MIB.txt" />
-    <Content Include="Resources\DISMAN-TRACEROUTE-MIB.txt" />
-    <Content Include="Resources\EtherLike-MIB.txt" />
-    <Content Include="Resources\HCNUM-TC.txt" />
-    <Content Include="Resources\HOST-RESOURCES-MIB.txt" />
-    <Content Include="Resources\HOST-RESOURCES-TYPES.txt" />
-    <Content Include="Resources\IANA-ADDRESS-FAMILY-NUMBERS-MIB.txt" />
-    <Content Include="Resources\IANA-LANGUAGE-MIB.txt" />
-    <Content Include="Resources\IANA-RTPROTO-MIB.txt" />
-    <Content Include="Resources\IANAifType-MIB.txt" />
-    <Content Include="Resources\IF-INVERTED-STACK-MIB.txt" />
-    <Content Include="Resources\IF-MIB.txt" />
-    <Content Include="Resources\INET-ADDRESS-MIB.txt" />
-    <Content Include="Resources\IP-FORWARD-MIB.txt" />
-    <Content Include="Resources\IP-MIB.txt" />
-    <Content Include="Resources\IPV6-FLOW-LABEL-MIB.txt" />
-    <Content Include="Resources\IPV6-ICMP-MIB.txt" />
-    <Content Include="Resources\IPV6-MIB.txt" />
-    <Content Include="Resources\IPV6-TC.txt" />
-    <Content Include="Resources\IPV6-TCP-MIB.txt" />
-    <Content Include="Resources\IPV6-UDP-MIB.txt" />
-    <Content Include="Resources\LM-SENSORS-MIB.txt" />
-    <Content Include="Resources\MTA-MIB.txt" />
-    <Content Include="Resources\NET-SNMP-AGENT-MIB.txt" />
-    <Content Include="Resources\NET-SNMP-EXAMPLES-MIB.txt" />
-    <Content Include="Resources\NET-SNMP-EXTEND-MIB.txt" />
-    <Content Include="Resources\NET-SNMP-MIB.txt" />
-    <Content Include="Resources\NET-SNMP-MONITOR-MIB.txt" />
-    <Content Include="Resources\NET-SNMP-SYSTEM-MIB.txt" />
-    <Content Include="Resources\NET-SNMP-TC.txt" />
-    <Content Include="Resources\NET-SNMP-VACM-MIB.txt" />
-    <Content Include="Resources\NETWORK-SERVICES-MIB.txt" />
-    <Content Include="Resources\NOTIFICATION-LOG-MIB.txt" />
-    <Content Include="Resources\RFC-1215.txt" />
-    <Content Include="Resources\RFC1155-SMI.txt" />
-    <Content Include="Resources\RFC1213-MIB.txt" />
-    <Content Include="Resources\RMON-MIB.txt" />
-    <Content Include="Resources\SMUX-MIB.txt" />
-    <Content Include="Resources\SNMP-COMMUNITY-MIB.txt" />
-    <Content Include="Resources\SNMP-FRAMEWORK-MIB.txt" />
-    <Content Include="Resources\SNMP-MPD-MIB.txt" />
-    <Content Include="Resources\SNMP-NOTIFICATION-MIB.txt" />
-    <Content Include="Resources\SNMP-PROXY-MIB.txt" />
-    <Content Include="Resources\SNMP-TARGET-MIB.txt" />
-    <Content Include="Resources\SNMP-USER-BASED-SM-MIB.txt" />
-    <Content Include="Resources\SNMP-USM-AES-MIB.txt" />
-    <Content Include="Resources\SNMP-USM-DH-OBJECTS-MIB.txt" />
-    <Content Include="Resources\SNMP-VIEW-BASED-ACM-MIB.txt" />
-    <Content Include="Resources\SNMPv2-CONF.txt" />
-    <Content Include="Resources\SNMPv2-MIB.txt" />
-    <Content Include="Resources\SNMPv2-SMI.txt" />
-    <Content Include="Resources\SNMPv2-TC.txt" />
-    <Content Include="Resources\SNMPv2-TM.txt" />
-    <Content Include="Resources\TCP-MIB.txt" />
-    <Content Include="Resources\TRANSPORT-ADDRESS-MIB.txt" />
-    <Content Include="Resources\TUNNEL-MIB.txt" />
-    <Content Include="Resources\UCD-DEMO-MIB.txt" />
-    <Content Include="Resources\UCD-DISKIO-MIB.txt" />
-    <Content Include="Resources\UCD-DLMOD-MIB.txt" />
-    <Content Include="Resources\UCD-IPFILTER-MIB.txt" />
-    <Content Include="Resources\UCD-IPFWACC-MIB.txt" />
-    <Content Include="Resources\UCD-SNMP-MIB-OLD.txt" />
-    <Content Include="Resources\UCD-SNMP-MIB.txt" />
-    <Content Include="Resources\UDP-MIB.txt" />
+    <None Include="Resources\AGENTX-MIB.txt" />
+    <None Include="Resources\DISMAN-EVENT-MIB.txt" />
+    <None Include="Resources\DISMAN-EXPRESSION-MIB.txt" />
+    <None Include="Resources\DISMAN-NSLOOKUP-MIB.txt" />
+    <None Include="Resources\DISMAN-PING-MIB.txt" />
+    <None Include="Resources\DISMAN-SCHEDULE-MIB.txt" />
+    <None Include="Resources\DISMAN-SCRIPT-MIB.txt" />
+    <None Include="Resources\DISMAN-TRACEROUTE-MIB.txt" />
+    <None Include="Resources\EtherLike-MIB.txt" />
+    <None Include="Resources\HCNUM-TC.txt" />
+    <None Include="Resources\HOST-RESOURCES-MIB.txt" />
+    <None Include="Resources\HOST-RESOURCES-TYPES.txt" />
+    <None Include="Resources\IANA-ADDRESS-FAMILY-NUMBERS-MIB.txt" />
+    <None Include="Resources\IANA-LANGUAGE-MIB.txt" />
+    <None Include="Resources\IANA-RTPROTO-MIB.txt" />
+    <None Include="Resources\IANAifType-MIB.txt" />
+    <None Include="Resources\IF-INVERTED-STACK-MIB.txt" />
+    <None Include="Resources\IF-MIB.txt" />
+    <None Include="Resources\INET-ADDRESS-MIB.txt" />
+    <None Include="Resources\IP-FORWARD-MIB.txt" />
+    <None Include="Resources\IP-MIB.txt" />
+    <None Include="Resources\IPV6-FLOW-LABEL-MIB.txt" />
+    <None Include="Resources\IPV6-ICMP-MIB.txt" />
+    <None Include="Resources\IPV6-MIB.txt" />
+    <None Include="Resources\IPV6-TC.txt" />
+    <None Include="Resources\IPV6-TCP-MIB.txt" />
+    <None Include="Resources\IPV6-UDP-MIB.txt" />
+    <None Include="Resources\LM-SENSORS-MIB.txt" />
+    <None Include="Resources\MTA-MIB.txt" />
+    <None Include="Resources\NET-SNMP-AGENT-MIB.txt" />
+    <None Include="Resources\NET-SNMP-EXAMPLES-MIB.txt" />
+    <None Include="Resources\NET-SNMP-EXTEND-MIB.txt" />
+    <None Include="Resources\NET-SNMP-MIB.txt" />
+    <None Include="Resources\NET-SNMP-MONITOR-MIB.txt" />
+    <None Include="Resources\NET-SNMP-SYSTEM-MIB.txt" />
+    <None Include="Resources\NET-SNMP-TC.txt" />
+    <None Include="Resources\NET-SNMP-VACM-MIB.txt" />
+    <None Include="Resources\NETWORK-SERVICES-MIB.txt" />
+    <None Include="Resources\NOTIFICATION-LOG-MIB.txt" />
+    <None Include="Resources\RFC-1215.txt" />
+    <None Include="Resources\RFC1155-SMI.txt" />
+    <None Include="Resources\RFC1213-MIB.txt" />
+    <None Include="Resources\RMON-MIB.txt" />
+    <None Include="Resources\SMUX-MIB.txt" />
+    <None Include="Resources\SNMP-COMMUNITY-MIB.txt" />
+    <None Include="Resources\SNMP-FRAMEWORK-MIB.txt" />
+    <None Include="Resources\SNMP-MPD-MIB.txt" />
+    <None Include="Resources\SNMP-NOTIFICATION-MIB.txt" />
+    <None Include="Resources\SNMP-PROXY-MIB.txt" />
+    <None Include="Resources\SNMP-TARGET-MIB.txt" />
+    <None Include="Resources\SNMP-USER-BASED-SM-MIB.txt" />
+    <None Include="Resources\SNMP-USM-AES-MIB.txt" />
+    <None Include="Resources\SNMP-USM-DH-OBJECTS-MIB.txt" />
+    <None Include="Resources\SNMP-VIEW-BASED-ACM-MIB.txt" />
+    <None Include="Resources\SNMPv2-CONF.txt" />
+    <None Include="Resources\SNMPv2-MIB.txt" />
+    <None Include="Resources\SNMPv2-SMI.txt" />
+    <None Include="Resources\SNMPv2-TC.txt" />
+    <None Include="Resources\SNMPv2-TM.txt" />
+    <None Include="Resources\TCP-MIB.txt" />
+    <None Include="Resources\TRANSPORT-ADDRESS-MIB.txt" />
+    <None Include="Resources\TUNNEL-MIB.txt" />
+    <None Include="Resources\UCD-DEMO-MIB.txt" />
+    <None Include="Resources\UCD-DISKIO-MIB.txt" />
+    <None Include="Resources\UCD-DLMOD-MIB.txt" />
+    <None Include="Resources\UCD-IPFILTER-MIB.txt" />
+    <None Include="Resources\UCD-IPFWACC-MIB.txt" />
+    <None Include="Resources\UCD-SNMP-MIB-OLD.txt" />
+    <None Include="Resources\UCD-SNMP-MIB.txt" />
+    <None Include="Resources\UDP-MIB.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SharpSnmpLib\SharpSnmpLib.Controls.csproj">
@@ -275,33 +239,12 @@
       <Name>SharpSnmpLib.Mib</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.0">
-      <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4 %28x86 and x64%29</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
-      <Visible>False</Visible>
-      <ProductName>Windows Installer 3.1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
 </Project>

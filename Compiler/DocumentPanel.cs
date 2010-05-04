@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Forms;
-using Lextm.SharpSnmpLib.Messaging;
 using RemObjects.Mono.Helpers;
 using WeifenLuo.WinFormsUI.Docking;
 

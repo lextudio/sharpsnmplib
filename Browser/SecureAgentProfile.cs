@@ -41,6 +41,9 @@ namespace Lextm.SharpSnmpLib.Browser
                 case 1:
                     _priv = new DESPrivacyProvider(new OctetString(PrivacyPassphrase), _auth);
                     break;
+                case 2:
+                    _priv = new AESPrivacyProvider(new OctetString(PrivacyPassphrase), _auth);
+                    break;
             }
         }
 

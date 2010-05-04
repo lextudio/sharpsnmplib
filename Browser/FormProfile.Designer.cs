@@ -291,7 +291,8 @@
             this.cbPrivacy.FormattingEnabled = true;
             this.cbPrivacy.Items.AddRange(new object[] {
             "NoPriv",
-            "DES"});
+            "DES",
+            "AES"});
             this.cbPrivacy.Location = new System.Drawing.Point(106, 69);
             this.cbPrivacy.Name = "cbPrivacy";
             this.cbPrivacy.Size = new System.Drawing.Size(110, 21);
