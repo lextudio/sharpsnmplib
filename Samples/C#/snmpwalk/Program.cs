@@ -78,9 +78,9 @@ namespace SnmpWalk
                                                                                                        case 2:
                                                                                                            version = VersionCode.V2;
                                                                                                            break;
-                                                                                                       // case 3:
-                                                                                                       //    version = VersionCode.V3;
-                                                                                                       //    break;
+                                                                                                       case 3:
+                                                                                                           version = VersionCode.V3;
+                                                                                                           break;
                                                                                                        default:
                                                                                                            throw new ArgumentException("no such version: " + v);
                                                                                                    }
@@ -146,90 +146,56 @@ namespace SnmpWalk
             try
             {
                 ObjectIdentifier test = extra.Count == 1 ? new ObjectIdentifier("1.3.6.1.2.1") : new ObjectIdentifier(extra[1]);
-
+                IList<Variable> result = new List<Variable>();
                 IPEndPoint receiver = new IPEndPoint(ip, 161);
                 if (version == VersionCode.V1)
                 {
-                    IList<Variable> result = new List<Variable>();
                     Messenger.Walk(version, receiver, new OctetString(community), test, result, timeout, mode);
-                    foreach (Variable variable in result)
-                    {
-                        Console.WriteLine(variable);
-                    }
-
-                    return;
-                }
-                
-                if (version == VersionCode.V2)
+                } 
+                else if (version == VersionCode.V2)
                 {
-                    IList<Variable> result = new List<Variable>();
                     Messenger.BulkWalk(version, receiver, new OctetString(community), test, result, timeout, retry, mode, null, null);
-                    foreach (Variable variable in result)
+                }
+                else
+                {
+
+                    if (string.IsNullOrEmpty(user))
                     {
-                        Console.WriteLine(variable);
+                        Console.WriteLine("User name need to be specified for v3.");
+                        return;
                     }
 
-                    return;
-                }
-                
-                if (version == VersionCode.V3)
-                {
-                    Console.WriteLine("Not yet implemented for v3");
-                    return;
+                    IAuthenticationProvider auth;
+                    if ((level & Levels.Authentication) == Levels.Authentication)
+                    {
+                        auth = GetAuthenticationProviderByName(authentication, authPhrase);
+                    }
+                    else
+                    {
+                        auth = DefaultAuthenticationProvider.Instance;
+                    }
+
+                    IPrivacyProvider priv;
+                    if ((level & Levels.Privacy) == Levels.Privacy)
+                    {
+                        priv = new DESPrivacyProvider(new OctetString(privPhrase), auth);
+                    }
+                    else
+                    {
+                        priv = DefaultPrivacyProvider.Instance;
+                    }
+
+                    Discovery discovery = new Discovery(Messenger.NextMessageId, Messenger.NextRequestId);
+                    ReportMessage report = discovery.GetResponse(timeout, receiver);
+
+                    ProviderPair record = new ProviderPair(auth, priv);
+                    Messenger.BulkWalk(version, receiver, new OctetString(community), test, result, timeout, retry, mode, record, report);
                 }
 
-                if (string.IsNullOrEmpty(user))
+                foreach (Variable variable in result)
                 {
-                    Console.WriteLine("User name need to be specified for v3.");
-                    return;
+                    Console.WriteLine(variable);
                 }
-
-                /*
-                IAuthenticationProvider auth;
-                if ((level & Levels.Authentication) == Levels.Authentication)
-                {
-                    auth = GetAuthenticationProviderByName(authentication, authPhrase);
-                }
-                else
-                {
-                    auth = DefaultAuthenticationProvider.Instance;
-                }
-
-                IPrivacyProvider priv;
-                if ((level & Levels.Privacy) == Levels.Privacy)
-                {
-                    priv = new DESPrivacyProvider(new OctetString(privPhrase), auth);
-                }
-                else
-                {
-                    priv = DefaultPrivacyProvider.Instance;
-                }
-
-                Discovery discovery = new Discovery(Messenger.NextMessageId, Messenger.NextRequestId);
-                ReportMessage report = discovery.GetResponse(timeout, receiver);
-                
-                ProviderPair record = new ProviderPair(auth, priv);
-                GetRequestMessage request = new GetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(user), vList, record, report);
-
-                ISnmpMessage response = request.GetResponse(timeout, receiver);
-                if (dump)
-                {
-                    Console.WriteLine(ByteTool.Convert(request.ToBytes()));
-                }
-
-                if (response.Pdu.ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
-                {
-                    throw ErrorException.Create(
-                        "error in response",
-                        receiver.Address,
-                        response);
-                }
-
-                foreach (Variable v in response.Pdu.Variables)
-                {
-                    Console.WriteLine(v);
-                }
-                // */
             }
             catch (SnmpException ex)
             {

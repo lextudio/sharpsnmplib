@@ -30,9 +30,6 @@ Module Program
         Dim privPhrase As String = String.Empty
         Dim mode As WalkMode = WalkMode.WithinSubtree
 
-        ' case 3:
-        '    version = VersionCode.V3;
-        '    break;
         Dim p As OptionSet = New OptionSet().Add("c:", "-c for community name, (default is public)",
                                                  Sub(v As String)
                                                      If v IsNot Nothing Then
@@ -88,6 +85,9 @@ Module Program
                                                                                                                                                              Case 2
                                                                                                                                                                  version = VersionCode.V2
                                                                                                                                                                  Exit Select
+                                                                                                                                                             Case 3
+                                                                                                                                                                 version = VersionCode.V3
+                                                                                                                                                                 Exit Select
                                                                                                                                                              Case Else
                                                                                                                                                                  Throw New ArgumentException("no such version: " & v)
                                                                                                                                                          End Select
@@ -138,87 +138,44 @@ Module Program
 
         Try
             Dim test As ObjectIdentifier = If(extra.Count = 1, New ObjectIdentifier("1.3.6.1.2.1"), New ObjectIdentifier(extra(1)))
-
+            Dim result As IList(Of Variable) = New List(Of Variable)()
             Dim receiver As New IPEndPoint(ip, 161)
             If version = VersionCode.V1 Then
-                Dim result As IList(Of Variable) = New List(Of Variable)()
                 Messenger.Walk(version, receiver, New OctetString(community), test, result, timeout, _
                  mode)
-                For Each variable As Variable In result
-                    Console.WriteLine(variable)
-                Next
-
-                Return
-            End If
-
-            If version = VersionCode.V2 Then
-                Dim result As IList(Of Variable) = New List(Of Variable)()
+            ElseIf version = VersionCode.V2 Then
                 Messenger.BulkWalk(version, receiver, New OctetString(community), test, result, timeout, _
                  retry, mode, Nothing, Nothing)
-                For Each variable As Variable In result
-                    Console.WriteLine(variable)
-                Next
+            Else
+                If String.IsNullOrEmpty(user) Then
+                    Console.WriteLine("User name need to be specified for v3.")
+                    Return
+                End If
 
-                Return
+                Dim auth As IAuthenticationProvider
+                If (level And Levels.Authentication) = Levels.Authentication Then
+                    auth = GetAuthenticationProviderByName(authentication, authPhrase)
+                Else
+                    auth = DefaultAuthenticationProvider.Instance
+                End If
+
+                Dim priv As IPrivacyProvider
+                If (level And Levels.Privacy) = Levels.Privacy Then
+                    priv = New DESPrivacyProvider(New OctetString(privPhrase), auth)
+                Else
+                    priv = DefaultPrivacyProvider.Instance
+                End If
+
+                Dim discovery As New Discovery(Messenger.NextMessageId, Messenger.NextRequestId)
+                Dim report As ReportMessage = discovery.GetResponse(timeout, receiver)
+
+                Dim record As New ProviderPair(auth, priv)
+                Messenger.BulkWalk(version, receiver, New OctetString(community), test, result, timeout, _
+                 retry, mode, record, report)
             End If
-
-            If version = VersionCode.V3 Then
-                Console.WriteLine("Not yet implemented for v3")
-                Return
-            End If
-
-            If String.IsNullOrEmpty(user) Then
-                Console.WriteLine("User name need to be specified for v3.")
-                Return
-
-                '
-                '                IAuthenticationProvider auth;
-                '                if ((level & Levels.Authentication) == Levels.Authentication)
-                '                {
-                '                    auth = GetAuthenticationProviderByName(authentication, authPhrase);
-                '                }
-                '                else
-                '                {
-                '                    auth = DefaultAuthenticationProvider.Instance;
-                '                }
-                '
-                '                IPrivacyProvider priv;
-                '                if ((level & Levels.Privacy) == Levels.Privacy)
-                '                {
-                '                    priv = new DESPrivacyProvider(new OctetString(privPhrase), auth);
-                '                }
-                '                else
-                '                {
-                '                    priv = DefaultPrivacyProvider.Instance;
-                '                }
-                '
-                '                Discovery discovery = new Discovery(Messenger.NextMessageId, Messenger.NextRequestId);
-                '                ReportMessage report = discovery.GetResponse(timeout, receiver);
-                '
-                '                ProviderPair record = new ProviderPair(auth, priv);
-                '                GetRequestMessage request = new GetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(user), vList, record, report);
-                '
-                '                ISnmpMessage response = request.GetResponse(timeout, receiver);
-                '                if (dump)
-                '                {
-                '                    Console.WriteLine(ByteTool.Convert(request.ToBytes()));
-                '                }
-                '
-                '                if (response.Pdu.ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
-                '                {
-                '                    throw ErrorException.Create(
-                '                        "error in response",
-                '                        receiver.Address,
-                '                        response);
-                '                }
-                '
-                '                foreach (Variable v in response.Pdu.Variables)
-                '                {
-                '                    Console.WriteLine(v);
-                '                }
-                '                //
-
-            End If
+            For Each variable As Variable In result
+                Console.WriteLine(variable)
+            Next
         Catch ex As SnmpException
             If TypeOf ex Is OperationException Then
                 Console.WriteLine(TryCast(ex, OperationException).Details)
