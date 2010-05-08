@@ -46,10 +46,10 @@ namespace Lextm.SharpSnmpLib
             }
 
             Sequence container = (Sequence)data;
-            _messageId = (Integer32) container[0];
-            _maxSize = (Integer32) container[1];
-            _flags = (OctetString) container[2];
-            _securityModel = (Integer32) container[3];
+            _messageId = (Integer32)container[0];
+            _maxSize = (Integer32)container[1];
+            _flags = (OctetString)container[2];
+            _securityModel = (Integer32)container[3];
         }
 
         /// <summary>

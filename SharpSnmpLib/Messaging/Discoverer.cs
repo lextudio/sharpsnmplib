@@ -61,8 +61,8 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
             else
             {
-                Variable v = new Variable(new ObjectIdentifier(new uint[] {1, 3, 6, 1, 2, 1, 1, 1, 0}));
-                List<Variable> variables = new List<Variable> {v};
+                Variable v = new Variable(new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 1, 1, 0 }));
+                List<Variable> variables = new List<Variable> { v };
                 GetRequestMessage message = new GetRequestMessage(_requestId, version, community, variables);
                 bytes = message.ToBytes();
             }
@@ -101,7 +101,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
         private void AsyncReceive(object dummy)
         {
-            Receive((Socket) dummy);
+            Receive((Socket)dummy);
         }
         
         private void Receive(Socket socket)
@@ -163,7 +163,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 EventHandler<AgentFoundEventArgs> handler;
                 if (message.Pdu.TypeCode == SnmpType.ReportPdu)
                 {
-                    ReportMessage report = (ReportMessage) message;
+                    ReportMessage report = (ReportMessage)message;
                     if (report.RequestId != _requestId)
                     {
                         continue;
@@ -186,7 +186,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                     continue;
                 }
 
-                GetResponseMessage response = (GetResponseMessage) message;
+                GetResponseMessage response = (GetResponseMessage)message;
                 if (response.RequestId != _requestId)
                 {
                     continue;

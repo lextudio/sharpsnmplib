@@ -103,10 +103,10 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Sets the bytes.
         /// </summary>
-        /// <param name="bytes">Bytes.</param>
-        public void SetBytes(byte[] bytes)
+        /// <param name="value">Bytes.</param>
+        public void SetBytes(byte[] value)
         {
-            _bytes = bytes;
+            _bytes = value;
         }
         
         /// <summary>

@@ -118,7 +118,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             _parameters = parameters;
             _scope = scope;
             _pair = record;
-            InformRequestPdu pdu = (InformRequestPdu) scope.Pdu;
+            InformRequestPdu pdu = (InformRequestPdu)scope.Pdu;
             _enterprise = pdu.Enterprise;
             _time = pdu.TimeStamp;
         }
@@ -157,6 +157,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         /// <value>The time stamp.</value>
         [CLSCompliant(false)]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "TimeStamp")]
         public uint TimeStamp
         {
             get { return _time; }
@@ -293,12 +294,13 @@ namespace Lextm.SharpSnmpLib.Messaging
         [CLSCompliant(false)]
         public string ToString(IObjectRegistry objects)
         {
-            return string.Format(CultureInfo.InvariantCulture,
-                                 "INFORM request message: time stamp: {0}; community: {1}; enterprise: {2}; varbind count: {3}",
-                                 TimeStamp.ToString(CultureInfo.InvariantCulture),
-                                 Community,
-                                 Enterprise.ToString(objects),
-                                 Variables.Count.ToString(CultureInfo.InvariantCulture));
+            return string.Format(
+                CultureInfo.InvariantCulture,
+                "INFORM request message: time stamp: {0}; community: {1}; enterprise: {2}; varbind count: {3}",
+                TimeStamp.ToString(CultureInfo.InvariantCulture),
+                Community,
+                Enterprise.ToString(objects),
+                Variables.Count.ToString(CultureInfo.InvariantCulture));
         }
 
         /// <summary>

@@ -113,7 +113,7 @@ namespace Lextm.SharpSnmpLib.Mib
 
             internal set
             {
-                _parentNode = (Definition) value;
+                _parentNode = (Definition)value;
                 _parentNode.Append(this);
             }
         }

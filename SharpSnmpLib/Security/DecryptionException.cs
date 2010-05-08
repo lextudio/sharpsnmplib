@@ -32,7 +32,9 @@ namespace Lextm.SharpSnmpLib.Security
         /// <summary>
         /// Initializes a new instance of the <see cref="DecryptionException"/> class.
         /// </summary>
-        public DecryptionException() { }
+        public DecryptionException() 
+        { 
+        }
 
         /// <summary>
         /// Creates a <see cref="DecryptionException"/> instance with a specific <see cref="String"/>.
@@ -93,10 +95,10 @@ namespace Lextm.SharpSnmpLib.Security
         /// <summary>
         /// Sets the bytes.
         /// </summary>
-        /// <param name="bytes">Bytes.</param>
-        public void SetBytes(byte[] bytes)
+        /// <param name="value">Bytes.</param>
+        public void SetBytes(byte[] value)
         {
-            _bytes = bytes;
+            _bytes = value;
         }
         
         /// <summary>

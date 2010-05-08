@@ -53,7 +53,7 @@ namespace Lextm.SharpSnmpLib.Mib
 
         private static IEnumerable<string> ParseDependents(string line)
         {
-            return line.Substring(1).Split(new [] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            return line.Substring(1).Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
         }
 
         private static Definition ParseLine(string line, string module)

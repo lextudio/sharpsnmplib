@@ -149,7 +149,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("seed");
             }
 
-            List<Variable> variables = new List<Variable> {new Variable(seed.Id)};
+            List<Variable> variables = new List<Variable> { new Variable(seed.Id) };
 
             GetNextRequestMessage message = new GetNextRequestMessage(
                 RequestCounter.NextId,
@@ -375,7 +375,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="pair">The pair.</param>
         /// <param name="report">The report.</param>
         /// <returns>
-        /// 	<c>true</c> if the specified seed has next item; otherwise, <c>false</c>.
+        /// <c>true</c> if the specified seed has next item; otherwise, <c>false</c>.
         /// </returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1021:AvoidOutParameters", MessageId = "5#")]
         private static bool BulkHasNext(VersionCode version, IPEndPoint endpoint, OctetString community, Variable seed, int timeout, int maxRepetitions, out IList<Variable> next, ProviderPair pair, ref ISnmpMessage report)
@@ -394,7 +394,9 @@ namespace Lextm.SharpSnmpLib.Messaging
                                                       community,
                                                       0,
                                                       maxRepetitions,
-                                                      variables, pair, report)
+                                                      variables, 
+                                                      pair, 
+                                                      report)
                                                 : new GetBulkRequestMessage(
                                                       RequestCounter.NextId,
                                                       version,

@@ -127,7 +127,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             /// <returns></returns>
         public static ErrorException Create(string message, IPAddress agent, ISnmpMessage body)
         {
-            ErrorException ex = new ErrorException(message) {Agent = agent, Body = body};
+            ErrorException ex = new ErrorException(message) { Agent = agent, Body = body };
             return ex;
         }
     }

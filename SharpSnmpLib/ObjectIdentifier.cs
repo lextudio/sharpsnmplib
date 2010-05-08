@@ -109,7 +109,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentException("length cannot be 0", "length");
             }
 
-            List<uint> result = new List<uint> {(uint) (raw[0]/40), (uint) (raw[0]%40)};
+            List<uint> result = new List<uint> { (uint)(raw[0] / 40), (uint)(raw[0] % 40) };
             uint buffer = 0;
             for (int i = 1; i < raw.Length; i++)
             {
@@ -294,7 +294,7 @@ namespace Lextm.SharpSnmpLib
 
         private static IEnumerable<byte> ConvertToBytes(uint subIdentifier)
         {
-            List<byte> result = new List<byte> {(byte) (subIdentifier & 0x7F)};
+            List<byte> result = new List<byte> { (byte)(subIdentifier & 0x7F) };
             while ((subIdentifier = subIdentifier >> 7) > 0)
             {
                 result.Add((byte)((subIdentifier & 0x7F) | 0x80));

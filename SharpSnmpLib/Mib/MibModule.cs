@@ -297,8 +297,8 @@ namespace Lextm.SharpSnmpLib.Mib
         
         private static bool DependentFound(string dependent, IDictionary<string, MibModule> modules)
         {
-            const string pattern = "-V[0-9]+$";
-            if (!Regex.IsMatch(dependent, pattern))
+            const string Pattern = "-V[0-9]+$";
+            if (!Regex.IsMatch(dependent, Pattern))
             {
                 return modules.ContainsKey(dependent);
             }
@@ -308,7 +308,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 return true;
             }
             
-            string dependentNonVersion = Regex.Replace(dependent, pattern, string.Empty);
+            string dependentNonVersion = Regex.Replace(dependent, Pattern, string.Empty);
             return modules.ContainsKey(dependentNonVersion);
         }
     }

@@ -148,6 +148,9 @@ namespace Lextm.SharpSnmpLib
         /// <param name="community">Community name</param>
         /// <returns></returns>
         [Obsolete("Use ByteTool.PackMessage instead")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "version")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "community")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         public Sequence ToMessageBody(VersionCode version, OctetString community)
         {
             throw new NotImplementedException();

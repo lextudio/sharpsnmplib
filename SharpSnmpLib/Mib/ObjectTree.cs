@@ -30,9 +30,9 @@ namespace Lextm.SharpSnmpLib.Mib
             Definition jointIsoCcitt = new Definition(new OidValueAssignment("SNMPV2-SMI", "joint-iso-ccitt", null, 2), _root);
             _nameTable = new Dictionary<string, Definition>
                              {
-                                 {iso.TextualForm, iso},
-                                 {ccitt.TextualForm, ccitt},
-                                 {jointIsoCcitt.TextualForm, jointIsoCcitt}
+                                 { iso.TextualForm, iso },
+                                 { ccitt.TextualForm, ccitt },
+                                 { jointIsoCcitt.TextualForm, jointIsoCcitt }
                              };
         }
         
@@ -107,7 +107,7 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             foreach (string key in _nameTable.Keys)
             {
-                if (String.CompareOrdinal(key.Split(new [] { "::" }, StringSplitOptions.None)[1], name) == 0)
+                if (String.CompareOrdinal(key.Split(new[] { "::" }, StringSplitOptions.None)[1], name) == 0)
                 {
                     return _nameTable[key];
                 }
@@ -170,7 +170,7 @@ namespace Lextm.SharpSnmpLib.Mib
             }
 
             List<uint> remaining = new List<uint>();
-            for (int j = end; j < numerical.Length; j++ )
+            for (int j = end; j < numerical.Length; j++)
             {
                 remaining.Add(numerical[j]);
             }
@@ -556,7 +556,6 @@ namespace Lextm.SharpSnmpLib.Mib
         /// </summary>
         /// <param name="input">The input.</param>
         /// <returns></returns>
-        [CLSCompliant(false)]
         internal static uint ExtractValue(string input)
         {
             int left = input.IndexOf('(');

@@ -27,6 +27,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <param name="errors">The errors.</param>
         /// <returns></returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1021:AvoidOutParameters", MessageId = "1#")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         public IEnumerable<IModule> ParseToModules(IEnumerable<string> files, out IEnumerable<MibException> errors)
         { 
             if (files == null)

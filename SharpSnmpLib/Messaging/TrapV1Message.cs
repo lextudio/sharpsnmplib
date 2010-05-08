@@ -124,7 +124,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentException("wrong message type");
             }
             
-            _pdu = (TrapV1Pdu) pdu;
+            _pdu = (TrapV1Pdu)pdu;
             _enterprise = _pdu.Enterprise;
             _agent = _pdu.AgentAddress.ToIPAddress();
             _generic = _pdu.Generic;
@@ -274,7 +274,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Gets the message ID.
         /// </summary>
-        /// <value>The message ID.</value>        
+        /// <value>The message ID.</value>
         public int MessageId
         {
             get { throw new InvalidOperationException(); }
@@ -339,9 +339,10 @@ namespace Lextm.SharpSnmpLib.Messaging
         [CLSCompliant(false)]
         public string ToString(IObjectRegistry objects)
         {
-            return string.Format(CultureInfo.InvariantCulture,
-                                 "SNMPv1 trap: {0}",
-                                 _pdu.ToString(objects));
+            return string.Format(
+                CultureInfo.InvariantCulture,
+                "SNMPv1 trap: {0}",
+                _pdu.ToString(objects));
         }
     }
 }

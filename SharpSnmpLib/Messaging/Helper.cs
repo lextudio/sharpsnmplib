@@ -48,16 +48,16 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
             
             message.Parameters.AuthenticationParameters = providers.Authentication.ComputeHash(message);
-        }		
-			
+        }
+            
         /// <summary>
         /// Tests if runnning on Mono. 
         /// </summary>
         /// <returns></returns>
-		public static bool IsRunningOnMono()
-  		{
-    		return Type.GetType ("Mono.Runtime") != null;
-  		}
+        public static bool IsRunningOnMono()
+        {
+            return Type.GetType("Mono.Runtime") != null;
+        }
 
         internal static Sequence PackMessage(VersionCode version, IPrivacyProvider privacy, ISegment header, SecurityParameters parameters, ISegment scope)
         {
@@ -83,7 +83,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             
             List<ISnmpData> collection = new List<ISnmpData>(4)
                                              {
-                                                 new Integer32((int) version),
+                                                 new Integer32((int)version),
                                                  header.GetData(version),
                                                  parameters.GetData(version),
                                                  privacy.Encrypt(scope.GetData(version), parameters)
@@ -104,7 +104,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("data");
             }
             
-            List<ISnmpData> collection = new List<ISnmpData>(1 + data.Length) {new Integer32((int) version)};
+            List<ISnmpData> collection = new List<ISnmpData>(1 + data.Length) { new Integer32((int)version) };
             collection.AddRange(data);
             return new Sequence(collection);
         }

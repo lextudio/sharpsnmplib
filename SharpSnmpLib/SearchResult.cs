@@ -34,7 +34,9 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="definition">The definition.</param>
         [CLSCompliant(false)]
-        public SearchResult(IDefinition definition) : this(definition, new uint[0]) { }
+        public SearchResult(IDefinition definition) : this(definition, new uint[0])
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SearchResult"/> class.
@@ -73,9 +75,9 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <value>The remaining.</value>
         [CLSCompliant(false)]
-        public uint[] Remaining
+        public uint[] GetRemaining()
         {
-            get { return _remaining; }
+            return _remaining; 
         }
 
         /// <summary>
@@ -90,7 +92,7 @@ namespace Lextm.SharpSnmpLib
                     new StringBuilder().Append(Definition.ModuleName).Append("::").Append(
                         Definition.Name);
 
-                foreach (uint item in Remaining)
+                foreach (uint item in GetRemaining())
                 {
                     result.Append(".").Append(item);
                 }
@@ -127,7 +129,7 @@ namespace Lextm.SharpSnmpLib
                     result.Append(".").Append(names[i]);
                 }
 
-                foreach (uint item in Remaining)
+                foreach (uint item in GetRemaining())
                 {
                     result.Append(".").Append(item);
                 }

@@ -116,24 +116,25 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="endpoint">The endpoint.</param>
         public void AddBinding(IPEndPoint endpoint)
         {
-            var binding = new ListenerBinding(Users, Adapters, endpoint);   
-            binding.ExceptionRaised += (o, args) => {
-                                                        var handler = ExceptionRaised;
-                                                        if (handler != null)
-                                                        {
-                                                            handler(o, args);
-                                                        }
+            var binding = new ListenerBinding(Users, Adapters, endpoint);
+            binding.ExceptionRaised += (o, args) =>
+            {
+                var handler = ExceptionRaised;
+                if (handler != null)
+                {
+                    handler(o, args);
+                }
             };
-            binding.MessageReceived += (o, args) => {
-                                                        var handler = MessageReceived;
-                                                        if (handler != null)
-                                                        {
-                                                            handler(o, args);
-                                                        }
+            binding.MessageReceived += (o, args) =>
+            {
+                var handler = MessageReceived;
+                if (handler != null)
+                {
+                    handler(o, args);
+                }
             };
             Bindings.Add(binding);
         }
-
 
         /// <summary>
         /// Clears the bindings.

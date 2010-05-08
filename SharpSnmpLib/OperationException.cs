@@ -130,7 +130,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="agent">Agent address</param>
         public static OperationException Create(string message, IPAddress agent)
         {
-            OperationException ex = new OperationException(message) {_agentAddress = agent};
+            OperationException ex = new OperationException(message) { _agentAddress = agent };
             return ex;
         }
     }

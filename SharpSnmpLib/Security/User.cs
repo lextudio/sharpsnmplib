@@ -31,25 +31,25 @@ namespace Lextm.SharpSnmpLib.Security
         /// Initializes a new instance of the <see cref="User"/> class.
         /// </summary>
         /// <param name="name">The name.</param>
-        /// <param name="authen">The authen.</param>
-        /// <param name="authenPhrase">The authen phrase.</param>
+        /// <param name="authentication">The authentication.</param>
+        /// <param name="authenticationPhrase">The authen phrase.</param>
         /// <param name="privacy">The privacy.</param>
         /// <param name="privacyPhrase">The privacy phrase.</param>
-        public User(OctetString name, string authen, OctetString authenPhrase, string privacy, OctetString privacyPhrase)
+        public User(OctetString name, string authentication, OctetString authenticationPhrase, string privacy, OctetString privacyPhrase)
         {
             if (name == null)
             {
                 throw new ArgumentNullException("name");
             }
 
-            if (authen == null)
+            if (authentication == null)
             {
-                throw new ArgumentNullException("authen");
+                throw new ArgumentNullException("authentication");
             }
 
-            if (authenPhrase == null)
+            if (authenticationPhrase == null)
             {
-                throw new ArgumentNullException("authenPhrase");
+                throw new ArgumentNullException("authenticationPhrase");
             }
 
             if (privacy == null)
@@ -63,21 +63,21 @@ namespace Lextm.SharpSnmpLib.Security
             }
 
             IAuthenticationProvider authenticationProvider;
-            if (string.IsNullOrEmpty(authen))
+            if (string.IsNullOrEmpty(authentication))
             {
                 authenticationProvider = DefaultAuthenticationProvider.Instance;
             }
-            else if (authen.ToUpperInvariant() == "MD5")
+            else if (authentication.ToUpperInvariant() == "MD5")
             {
-                authenticationProvider = new MD5AuthenticationProvider(authenPhrase);
+                authenticationProvider = new MD5AuthenticationProvider(authenticationPhrase);
             }
-            else if (authen.ToUpperInvariant() == "SHA")
+            else if (authentication.ToUpperInvariant() == "SHA")
             {
-                authenticationProvider = new SHA1AuthenticationProvider(authenPhrase);
+                authenticationProvider = new SHA1AuthenticationProvider(authenticationPhrase);
             }
             else
             {
-                throw new ArgumentException("Unknown authentication method: " + authen, "authen");
+                throw new ArgumentException("Unknown authentication method: " + authentication, "authentication");
             }
 
             IPrivacyProvider privacyProvider;
