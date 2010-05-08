@@ -138,10 +138,9 @@ namespace Lextm.SharpSnmpLib.Agent
             // 
             this.alNotification.SetAction(this.toolStripButton1, this.actEnabled);
             this.toolStripButton1.CheckOnClick = true;
-            this.toolStripButton1.Image = global::Lextm.SharpSnmpLib.Agent.Properties.Resources.face_monkey;
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(72, 22);
+            this.toolStripButton1.Size = new System.Drawing.Size(56, 22);
             this.toolStripButton1.Text = "Disabled";
             // 
             // toolStripSeparator1
@@ -175,7 +174,6 @@ namespace Lextm.SharpSnmpLib.Agent
             // actEnabled
             // 
             this.actEnabled.CheckOnClick = true;
-            this.actEnabled.Image = global::Lextm.SharpSnmpLib.Agent.Properties.Resources.face_monkey;
             this.actEnabled.Text = "Disabled";
             this.actEnabled.ToolTipText = "Enable/disable this panel";
             this.actEnabled.Execute += new System.EventHandler(this.ActEnabledExecute);

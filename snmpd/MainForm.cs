@@ -36,6 +36,7 @@ namespace Lextm.SharpSnmpLib.Agent
 			{
 			    // FIXME: work around a Mono WinForms bug.
 				Icon = Properties.Resources.network_server;
+			    actEnabled.Image = Properties.Resources.face_monkey;
 			}
 			
             tstxtPort.Text = "161";
