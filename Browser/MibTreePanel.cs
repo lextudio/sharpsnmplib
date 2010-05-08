@@ -106,9 +106,8 @@ namespace Lextm.SharpSnmpLib.Browser
             try
             {
                 Logger.Info("==== Begin GET ====");
-                Manager manager = Manager;
                 ObjectIdentifier id = GetIdForGet(treeView1.SelectedNode.Tag as IDefinition);
-                Profiles.DefaultProfile.Get(manager, new Variable(id));
+                Profiles.DefaultProfile.Get(Manager, new Variable(id));
             }
             catch (Exception ex)
             {
@@ -132,10 +131,9 @@ namespace Lextm.SharpSnmpLib.Browser
                 ISnmpData data;
                 using (FormSet form = new FormSet())
                 {
-                    Manager manager = Manager;
                     ObjectIdentifier id = GetIdForGet(
                         treeView1.SelectedNode.Tag as IDefinition);
-                    form.OldVal = Profiles.DefaultProfile.GetValue(manager, new Variable(id));
+                    form.OldVal = Profiles.DefaultProfile.GetValue(Manager, new Variable(id));
                     if (form.ShowDialog() != DialogResult.OK)
                     {
                         return;
@@ -160,9 +158,8 @@ namespace Lextm.SharpSnmpLib.Browser
                 }
 
                 Logger.Info("==== Begin SET ====");
-                Manager manager1 = Manager;
                 ObjectIdentifier id1 = GetIdForGet(treeView1.SelectedNode.Tag as IDefinition);
-                Profiles.DefaultProfile.Set(manager1, new Variable(id1, data));
+                Profiles.DefaultProfile.Set(Manager, new Variable(id1, data));
             }
             catch (Exception ex)
             {
@@ -235,9 +232,8 @@ namespace Lextm.SharpSnmpLib.Browser
             try
             {
                 Logger.Info("==== Begin GET NEXT ====");
-                Manager manager = Manager;
                 ObjectIdentifier id = GetIdForGetNext(treeView1.SelectedNode.Tag as IDefinition);
-                Profiles.DefaultProfile.GetNext(manager, new Variable(id));
+                Profiles.DefaultProfile.GetNext(Manager, new Variable(id));
             }
             catch (Exception ex)
             {

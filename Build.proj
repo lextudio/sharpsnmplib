@@ -30,6 +30,7 @@
         <MSBuild Projects="sharpsnmplib.sln" Properties="Configuration=Release" />
     </Target>
 	<Target Name="Package" DependsOnTargets="Release">
+	    <MSBuild Projects="sharpsnmplib.cf35.sln"  Properties="Configuration=Release" />
 	    <MSBuild Projects="sharpsnmplib.shfbproj" Properties="Configuration=Release" />
 	</Target>
     <!--<Target Name="CF">

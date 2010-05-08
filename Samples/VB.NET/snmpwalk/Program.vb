@@ -154,7 +154,7 @@ Module Program
             If version = VersionCode.V2 Then
                 Dim result As IList(Of Variable) = New List(Of Variable)()
                 Messenger.BulkWalk(version, receiver, New OctetString(community), test, result, timeout, _
-                 retry, mode)
+                 retry, mode, Nothing, Nothing)
                 For Each variable As Variable In result
                     Console.WriteLine(variable)
                 Next
@@ -192,11 +192,11 @@ Module Program
                 '                    priv = DefaultPrivacyProvider.Instance;
                 '                }
                 '
-                '                Discovery discovery = new Discovery(1, 101);
+                '                Discovery discovery = new Discovery(Messenger.NextMessageId, Messenger.NextRequestId);
                 '                ReportMessage report = discovery.GetResponse(timeout, receiver);
                 '
                 '                ProviderPair record = new ProviderPair(auth, priv);
-                '                GetRequestMessage request = new GetRequestMessage(VersionCode.V3, 100, 0, new OctetString(user), vList, record, report);
+                '                GetRequestMessage request = new GetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(user), vList, record, report);
                 '
                 '                ISnmpMessage response = request.GetResponse(timeout, receiver);
                 '                if (dump)

@@ -87,7 +87,7 @@ namespace Lextm.SharpSnmpLib.Browser
             {
                 Messenger.BulkWalk(VersionCode, Agent, new OctetString(GetCommunity),
                                    new ObjectIdentifier(definition.GetNumericalForm()), list, manager.Timeout, 10,
-                                   WalkMode.WithinSubtree);
+                                   WalkMode.WithinSubtree, null, null);
             }
 
             foreach (Variable v in list)

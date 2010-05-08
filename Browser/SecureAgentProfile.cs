@@ -11,6 +11,7 @@ namespace Lextm.SharpSnmpLib.Browser
         private readonly IAuthenticationProvider _auth;
         private readonly IPrivacyProvider _priv;
         private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger("Lextm.SharpSnmpLib.Browser");
+        private readonly ProviderPair _record;
 
         public SecureAgentProfile(Guid id, VersionCode version, IPEndPoint agent, string agentName, string authenticationPassphrase, string privacyPassphrase, int authenticationMethod, int privacyMethod, string userName)
             : base(id, version, agent, agentName, userName)
@@ -45,6 +46,8 @@ namespace Lextm.SharpSnmpLib.Browser
                     _priv = new AESPrivacyProvider(new OctetString(PrivacyPassphrase), _auth);
                     break;
             }
+
+            _record = new ProviderPair(_auth, _priv);
         }
 
         internal string AuthenticationPassphrase { get; set; }
@@ -60,11 +63,10 @@ namespace Lextm.SharpSnmpLib.Browser
                 return;
             }
 
-            Discovery discovery = new Discovery(1, 101);
+            Discovery discovery = new Discovery(Messenger.NextMessageId, Messenger.NextRequestId);
             ReportMessage report = discovery.GetResponse(manager.Timeout, Agent);
 
-            ProviderPair record = new ProviderPair(_auth, _priv);
-            GetRequestMessage request = new GetRequestMessage(VersionCode.V3, 100, 0, new OctetString(UserName), new List<Variable>() { variable }, record, report);
+            GetRequestMessage request = new GetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(UserName), new List<Variable> { variable }, _record, report);
 
             ISnmpMessage response = request.GetResponse(manager.Timeout, Agent);
             if (response.Pdu.ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
@@ -80,11 +82,10 @@ namespace Lextm.SharpSnmpLib.Browser
 
         internal override string GetValue(Manager manager, Variable variable)
         {
-            Discovery discovery = new Discovery(1, 101);
+            Discovery discovery = new Discovery(Messenger.NextMessageId, Messenger.NextRequestId);
             ReportMessage report = discovery.GetResponse(manager.Timeout, Agent);
 
-            ProviderPair record = new ProviderPair(_auth, _priv);
-            GetRequestMessage request = new GetRequestMessage(VersionCode.V3, 100, 0, new OctetString(UserName), new List<Variable>() { variable }, record, report);
+            GetRequestMessage request = new GetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(UserName), new List<Variable> { variable }, _record, report);
 
             ISnmpMessage response = request.GetResponse(manager.Timeout, Agent);
             if (response.Pdu.ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
@@ -109,8 +110,7 @@ namespace Lextm.SharpSnmpLib.Browser
             Discovery discovery = new Discovery(1, 101);
             ReportMessage report = discovery.GetResponse(manager.Timeout, Agent);
 
-            ProviderPair record = new ProviderPair(_auth, _priv);
-            GetNextRequestMessage request = new GetNextRequestMessage(VersionCode.V3, 100, 0, new OctetString(UserName), new List<Variable>() { variable }, record, report);
+            GetNextRequestMessage request = new GetNextRequestMessage(VersionCode.V3, 100, 0, new OctetString(UserName), new List<Variable>() { variable }, _record, report);
 
             ISnmpMessage response = request.GetResponse(manager.Timeout, Agent);
             if (response.Pdu.ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
@@ -132,11 +132,10 @@ namespace Lextm.SharpSnmpLib.Browser
                 return;
             }
 
-            Discovery discovery = new Discovery(1, 101);
+            Discovery discovery = new Discovery(Messenger.NextMessageId, Messenger.NextRequestId);
             ReportMessage report = discovery.GetResponse(manager.Timeout, Agent);
 
-            ProviderPair record = new ProviderPair(_auth, _priv);
-            SetRequestMessage request = new SetRequestMessage(VersionCode.V3, 100, 0, new OctetString(UserName), new List<Variable>() { variable }, record, report);
+            SetRequestMessage request = new SetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(UserName), new List<Variable> { variable }, _record, report);
 
             ISnmpMessage response = request.GetResponse(manager.Timeout, Agent);
             if (response.Pdu.ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
@@ -180,24 +179,23 @@ namespace Lextm.SharpSnmpLib.Browser
 
         public override void Walk(Manager manager, IDefinition definition)
         {
-            IList<Variable> list = new List<Variable>();
-            //if (VersionCode == VersionCode.V1)
-            //{
-            //    Messenger.Walk(VersionCode, Agent, new OctetString(GetCommunity),
-            //                   new ObjectIdentifier(definition.GetNumericalForm()), list, manager.Timeout,
-            //                   WalkMode.WithinSubtree);
-            //}
-            //else
-            //{
-            //    Messenger.BulkWalk(VersionCode, Agent, new OctetString(GetCommunity),
-            //                       new ObjectIdentifier(definition.GetNumericalForm()), list, manager.Timeout, 10,
-            //                       WalkMode.WithinSubtree);
-            //}
+            if (string.IsNullOrEmpty(UserName))
+            {
+                Logger.Info("User name need to be specified for v3.");
+                return;
+            }
 
-            //foreach (Variable v in list)
-            //{
-            //    source.TraceInformation(v.ToString(manager.Objects));
-            //}
+            Discovery discovery = new Discovery(Messenger.NextMessageId, Messenger.NextRequestId);
+            ReportMessage report = discovery.GetResponse(manager.Timeout, Agent);
+            IList<Variable> list = new List<Variable>();
+            Messenger.BulkWalk(VersionCode.V3, Agent, new OctetString(UserName),
+                               new ObjectIdentifier(definition.GetNumericalForm()), list, manager.Timeout, 10,
+                               WalkMode.WithinSubtree, _record, report);
+
+            foreach (Variable v in list)
+            {
+                Logger.Info(v.ToString(manager.Objects));
+            }
         }
     }
 }

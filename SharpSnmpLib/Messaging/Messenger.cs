@@ -9,6 +9,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
+using Lextm.SharpSnmpLib.Security;
 
 namespace Lextm.SharpSnmpLib.Messaging
 {
@@ -161,7 +162,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             next = errorFound ? null : response.Pdu.Variables[0];
             return !errorFound;
         }
-        
+
         /// <summary>
         /// Walks.
         /// </summary>
@@ -173,8 +174,10 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
         /// <param name="maxRepetitions">The max repetitions.</param>
         /// <param name="mode">Walk mode.</param>
+        /// <param name="record">The record.</param>
+        /// <param name="report">The report.</param>
         /// <returns></returns>
-        public static int BulkWalk(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, IList<Variable> list, int timeout, int maxRepetitions, WalkMode mode)
+        public static int BulkWalk(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, IList<Variable> list, int timeout, int maxRepetitions, WalkMode mode, ProviderPair record, ISnmpMessage report)
         {
             if (list == null)
             {
@@ -185,7 +188,8 @@ namespace Lextm.SharpSnmpLib.Messaging
             Variable seed = tableV;
             IList<Variable> next;
             int result = 0;
-            while (BulkHasNext(version, endpoint, community, seed, timeout, maxRepetitions, out next))
+            ISnmpMessage message = report;
+            while (BulkHasNext(version, endpoint, community, seed, timeout, maxRepetitions, out next, record, ref message))
             {
                 foreach (Variable v in next)
                 {
@@ -216,51 +220,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         end:
             return result;
         }
-        
-        /// <summary>
-        /// Determines whether the specified seed has next item.
-        /// </summary>
-        /// <param name="version">The version.</param>
-        /// <param name="endpoint">The endpoint.</param>
-        /// <param name="community">The community.</param>
-        /// <param name="seed">The seed.</param>
-        /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
-        /// <param name="maxRepetitions">The max repetitions.</param>
-        /// <param name="next">The next.</param>
-        /// <returns>
-        ///     <c>true</c> if the specified seed has next item; otherwise, <c>false</c>.
-        /// </returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1021:AvoidOutParameters", MessageId = "5#")]
-        private static bool BulkHasNext(VersionCode version, IPEndPoint endpoint, OctetString community, Variable seed, int timeout, int maxRepetitions, out IList<Variable> next)
-        {
-            if (version != VersionCode.V2)
-            {
-                throw new NotSupportedException("SNMP v1 and v3 is not supported");
-            }
 
-            List<Variable> variables = new List<Variable> {new Variable(seed.Id)};
-
-            GetBulkRequestMessage message = new GetBulkRequestMessage(
-                RequestCounter.NextId,
-                version,
-                community,
-                0,
-                maxRepetitions,
-                variables);
-
-            ISnmpMessage response = message.GetResponse(timeout, endpoint);
-            if (response.Pdu.ErrorStatus.ToInt32() != 0)
-            {
-                throw ErrorException.Create(
-                    "error in response",
-                    endpoint.Address,
-                    response);
-            }
-
-            next = response.Pdu.Variables;
-            return next.Count != 0;
-        }
-        
         /// <summary>
         /// Sends a TRAP v1 message.
         /// </summary>
@@ -355,7 +315,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
             
             IList<Variable> list = new List<Variable>();
-            int rows = version == VersionCode.V1 ? Walk(version, endpoint, community, table, list, timeout, WalkMode.WithinSubtree) : BulkWalk(version, endpoint, community, table, list, timeout, maxRepetitions, WalkMode.WithinSubtree);
+            int rows = version == VersionCode.V1 ? Walk(version, endpoint, community, table, list, timeout, WalkMode.WithinSubtree) : BulkWalk(version, endpoint, community, table, list, timeout, maxRepetitions, WalkMode.WithinSubtree, null, null);
             
             if (rows == 0)
             {
@@ -400,6 +360,61 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 return MessageCounter.NextId;
             }
+        }
+
+        /// <summary>
+        /// Determines whether the specified seed has next item.
+        /// </summary>
+        /// <param name="version">The version.</param>
+        /// <param name="endpoint">The endpoint.</param>
+        /// <param name="community">The community.</param>
+        /// <param name="seed">The seed.</param>
+        /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
+        /// <param name="maxRepetitions">The max repetitions.</param>
+        /// <param name="next">The next.</param>
+        /// <param name="pair">The pair.</param>
+        /// <param name="report">The report.</param>
+        /// <returns>
+        /// 	<c>true</c> if the specified seed has next item; otherwise, <c>false</c>.
+        /// </returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1021:AvoidOutParameters", MessageId = "5#")]
+        private static bool BulkHasNext(VersionCode version, IPEndPoint endpoint, OctetString community, Variable seed, int timeout, int maxRepetitions, out IList<Variable> next, ProviderPair pair, ref ISnmpMessage report)
+        {
+            if (version == VersionCode.V1)
+            {
+                throw new ArgumentException("v1 is not supported", "version");
+            }
+
+            List<Variable> variables = new List<Variable> { new Variable(seed.Id) };
+            GetBulkRequestMessage message = version == VersionCode.V3
+                                                ? new GetBulkRequestMessage(
+                                                      version,
+                                                      MessageCounter.NextId,
+                                                      RequestCounter.NextId,
+                                                      community,
+                                                      0,
+                                                      maxRepetitions,
+                                                      variables, pair, report)
+                                                : new GetBulkRequestMessage(
+                                                      RequestCounter.NextId,
+                                                      version,
+                                                      community,
+                                                      0,
+                                                      maxRepetitions,
+                                                      variables);
+
+            ISnmpMessage response = message.GetResponse(timeout, endpoint);
+            if (response.Pdu.ErrorStatus.ToInt32() != 0)
+            {
+                throw ErrorException.Create(
+                    "error in response",
+                    endpoint.Address,
+                    response);
+            }
+
+            next = response.Pdu.Variables;
+            report = message;
+            return next.Count != 0;
         }
     }
 }

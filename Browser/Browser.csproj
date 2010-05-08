@@ -148,6 +148,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="SecureAgentProfile.cs" />
+    <Compile Include="VersionCodeExtension.cs" />
     <EmbeddedResource Include="AgentProfilePanel.resx">
       <DependentUpon>AgentProfilePanel.cs</DependentUpon>
       <SubType>Designer</SubType>

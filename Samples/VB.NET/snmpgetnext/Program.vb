@@ -155,11 +155,11 @@ Module Program
 
             Dim priv As IPrivacyProvider = If((level And Levels.Privacy) = Levels.Privacy, New DESPrivacyProvider(New OctetString(privPhrase), auth), DefaultPrivacyProvider.Instance)
 
-            Dim discovery As New Discovery(1, 101)
+            Dim discovery As New Discovery(Messenger.NextMessageId, Messenger.NextRequestId)
             Dim report As ReportMessage = discovery.GetResponse(timeout, receiver)
 
             Dim record As New ProviderPair(auth, priv)
-            Dim request As New GetNextRequestMessage(VersionCode.V3, 100, 0, New OctetString(user), vList, record, _
+            Dim request As New GetNextRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, New OctetString(user), vList, record, _
              report)
 
             Dim reply As ISnmpMessage = request.GetResponse(timeout, receiver)

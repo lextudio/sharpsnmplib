@@ -11,7 +11,8 @@ namespace Lextm.SharpSnmpLib.Agent
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
     internal class HandlerMapping
     {
-        private readonly string _version;
+        private readonly string[] _version;
+        private readonly bool _catchAll;
         private readonly string _command;
         private readonly IMessageHandler _handler;
 
@@ -23,7 +24,23 @@ namespace Lextm.SharpSnmpLib.Agent
         /// <param name="handler">The handler.</param>
         public HandlerMapping(string version, string command, IMessageHandler handler)
         {
-            _version = version;
+            if (version == null)
+            {
+                throw new ArgumentNullException("version");
+            }
+
+            if (command == null)
+            {
+                throw new ArgumentNullException("command");
+            }
+
+            if (handler == null)
+            {
+                throw new ArgumentNullException("handler");
+            }
+
+            _catchAll = version == "*";
+            _version = _catchAll? new string[0] : version.Split(new[]{','}, StringSplitOptions.RemoveEmptyEntries);
             _command = command;
             _handler = handler;
         }
@@ -37,7 +54,28 @@ namespace Lextm.SharpSnmpLib.Agent
         /// <param name="assembly">The assembly.</param>
         public HandlerMapping(string version, string command, string type, string assembly)
         {
-            _version = version;
+            if (version == null)
+            {
+                throw new ArgumentNullException("version");
+            }
+
+            if (command == null)
+            {
+                throw new ArgumentNullException("command");
+            }
+
+            if (type == null)
+            {
+                throw new ArgumentNullException("type");
+            }
+
+            if (assembly == null)
+            {
+                throw new ArgumentNullException("assembly");
+            }
+
+            _catchAll = version == "*";
+            _version = _catchAll ? new string[0] : version.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
             _command = command;
             _handler = CreateMessageHandler(assembly, type);
         }
@@ -83,7 +121,8 @@ namespace Lextm.SharpSnmpLib.Agent
 
         private bool VersionMatched(ISnmpMessage message)
         {
-            return StringEquals(_version, "*") || StringEquals(message.Version.ToString(), _version);
+            if (_catchAll) return true;
+            return _version.Any(v => StringEquals(message.Version.ToString(), v));
         }
 
         private static bool StringEquals(string left, string right)

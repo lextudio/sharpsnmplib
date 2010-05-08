@@ -55,6 +55,11 @@ namespace Lextm.SharpSnmpLib.Browser
                             item.Group = listView1.Groups["lvgV2"];
                             break;
                         }
+                    case VersionCode.V3:
+                        {
+                            item.Group = listView1.Groups["lvgV3"];
+                            break;
+                        }
                     default:
                         {
                             break;

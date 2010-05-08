@@ -156,11 +156,11 @@ namespace SnmpGet
                                             ? new DESPrivacyProvider(new OctetString(privPhrase), auth)
                                             : DefaultPrivacyProvider.Instance;
 
-                Discovery discovery = new Discovery(1, 101);
+                Discovery discovery = new Discovery(Messenger.NextMessageId, Messenger.NextRequestId);
                 ReportMessage report = discovery.GetResponse(timeout, receiver);
 				
                 ProviderPair record = new ProviderPair(auth, priv);
-                GetRequestMessage request = new GetRequestMessage(VersionCode.V3, 100, 0, new OctetString(user), vList, record, report);
+                GetRequestMessage request = new GetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(user), vList, record, report);
 
                 ISnmpMessage response = request.GetResponse(timeout, receiver);
                 if (dump)

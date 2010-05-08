@@ -45,7 +45,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         /// <param name="requestId">The request id.</param>
         /// <param name="messageId">The message id.</param>
-        public Discovery(int requestId, int messageId)
+        public Discovery(int messageId, int requestId)
         {
             _discovery = new GetRequestMessage(
                 VersionCode.V3,

@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Net;
 using System.Windows.Forms;
-using Lextm.SharpSnmpLib.Messaging;
 using RemObjects.Mono.Helpers;
 
 namespace Lextm.SharpSnmpLib.Browser
@@ -29,7 +28,7 @@ namespace Lextm.SharpSnmpLib.Browser
 
         internal VersionCode VersionCode
         {
-            get { return (VersionCode)cbVersionCode.SelectedIndex; }
+            get { return VersionCodeExtension.FromSelectedIndex(cbVersionCode.SelectedIndex); }
         }
 
         internal string AgentName
@@ -93,7 +92,7 @@ namespace Lextm.SharpSnmpLib.Browser
             txtIP.Text = _profile.Agent.Address.ToString();
             txtIP.ReadOnly = true;
             txtName.Text = _profile.Name;
-            cbVersionCode.SelectedIndex = (int)_profile.VersionCode;
+            cbVersionCode.SelectedIndex = _profile.VersionCode.ToSelectedIndex();
 
             var normal = _profile as NormalAgentProfile;
             txtGet.Text = normal == null ? string.Empty : normal.GetCommunity;

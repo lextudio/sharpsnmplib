@@ -170,12 +170,12 @@ namespace SnmpGetNext
                 IPrivacyProvider priv = (level & Levels.Privacy) == Levels.Privacy
                                             ? new DESPrivacyProvider(new OctetString(privPhrase), auth)
                                             : DefaultPrivacyProvider.Instance;
-				
-                Discovery discovery = new Discovery(1, 101);
+
+                Discovery discovery = new Discovery(Messenger.NextMessageId, Messenger.NextRequestId);
                 ReportMessage report = discovery.GetResponse(timeout, receiver);
 
                 ProviderPair record = new ProviderPair(auth, priv);
-                GetNextRequestMessage request = new GetNextRequestMessage(VersionCode.V3, 100, 0, new OctetString(user), vList, record, report);
+                GetNextRequestMessage request = new GetNextRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(user), vList, record, report);
 
                 ISnmpMessage reply = request.GetResponse(timeout, receiver);
                 if (reply.Pdu.ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError

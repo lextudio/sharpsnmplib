@@ -264,7 +264,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public override string ToString()
         {
-            return "GET NEXT request message: version: " + _version + "; " + _parameters.UserName + "; " + _scope.Pdu;
+            return "GET BULK request message: version: " + _version + "; " + _parameters.UserName + "; " + _scope.Pdu;
         }
 
         /// <summary>
