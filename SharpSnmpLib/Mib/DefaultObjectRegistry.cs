@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
@@ -44,11 +45,11 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             IList<ModuleLoader> result = new List<ModuleLoader>(5)
                                              {
-                                                 LoadSingle(Resource.SNMPv2_SMI, "SNMPV2-SMI"),
-                                                 LoadSingle(Resource.SNMPv2_CONF, "SNMPV2-CONF"),
-                                                 LoadSingle(Resource.SNMPv2_TC, "SNMPV2-TC"),
-                                                 LoadSingle(Resource.SNMPv2_MIB, "SNMPV2-MIB"),
-                                                 LoadSingle(Resource.SNMPv2_TM, "SNMPV2-TM")
+                                                 LoadSingle(Encoding.ASCII.GetString(Resources.SNMPV2_SMI), "SNMPV2-SMI"),
+                                                 LoadSingle(Encoding.ASCII.GetString(Resources.SNMPV2_CONF), "SNMPV2-CONF"),
+                                                 LoadSingle(Encoding.ASCII.GetString(Resources.SNMPV2_TC), "SNMPV2-TC"),
+                                                 LoadSingle(Encoding.ASCII.GetString(Resources.SNMPV2_MIB), "SNMPV2-MIB"),
+                                                 LoadSingle(Encoding.ASCII.GetString(Resources.SNMPV2_TM), "SNMPV2-TM")
                                              };
             return result;
         }

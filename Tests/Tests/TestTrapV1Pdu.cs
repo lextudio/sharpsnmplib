@@ -68,7 +68,7 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual(new uint[] {1, 3, 6, 1, 4, 1, 2162, 1000, 2}, message.Enterprise.ToNumerical());
             Assert.AreEqual(1, message.Variables.Count);
             Assert.AreEqual(new uint[] {1,3,6,1,4,1,2162,1001,21,0}, message.Variables[0].Id.ToNumerical());
-            Assert.AreEqual("中国", (message.Variables[0].Data as OctetString).ToString(Encoding.Unicode));
+            Assert.AreEqual("中国", ((OctetString)message.Variables[0].Data).ToString(Encoding.Unicode));
         }
     }
 }

@@ -50,10 +50,10 @@ namespace Lextm.SharpSnmpLib.Browser
             _record = new ProviderPair(_auth, _priv);
         }
 
-        internal string AuthenticationPassphrase { get; set; }
-        internal string PrivacyPassphrase { get; set; }
-        internal int AuthenticationMethod { get; set; }
-        internal int PrivacyMethod { get; set; }
+        internal string AuthenticationPassphrase { get; private set; }
+        internal string PrivacyPassphrase { get; private set; }
+        internal int AuthenticationMethod { get; private set; }
+        internal int PrivacyMethod { get; private set; }
 
         internal override void Get(Manager manager, Variable variable)
         {
@@ -110,7 +110,7 @@ namespace Lextm.SharpSnmpLib.Browser
             Discovery discovery = new Discovery(1, 101);
             ReportMessage report = discovery.GetResponse(manager.Timeout, Agent);
 
-            GetNextRequestMessage request = new GetNextRequestMessage(VersionCode.V3, 100, 0, new OctetString(UserName), new List<Variable>() { variable }, _record, report);
+            GetNextRequestMessage request = new GetNextRequestMessage(VersionCode.V3, 100, 0, new OctetString(UserName), new List<Variable> { variable }, _record, report);
 
             ISnmpMessage response = request.GetResponse(manager.Timeout, Agent);
             if (response.Pdu.ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError

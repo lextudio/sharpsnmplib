@@ -18,7 +18,7 @@ namespace Lextm.SharpSnmpLib.Browser
             }
         }
 
-        private void btnOK_Click(object sender, EventArgs e)
+        private void BtnOkClick(object sender, EventArgs e)
         {
             Close();
         }

@@ -24,6 +24,7 @@ namespace Lextm.SharpSnmpLib.Mib
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         private readonly Exports _exports;
         private readonly List<IConstruct> _tokens = new List<IConstruct>();
+        const string Pattern = "-V[0-9]+$";
         
         internal MibModule(string name, IEnumerable<string> dependents)
         {
@@ -297,7 +298,6 @@ namespace Lextm.SharpSnmpLib.Mib
         
         private static bool DependentFound(string dependent, IDictionary<string, MibModule> modules)
         {
-            const string Pattern = "-V[0-9]+$";
             if (!Regex.IsMatch(dependent, Pattern))
             {
                 return modules.ContainsKey(dependent);

@@ -6,18 +6,23 @@
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
+
 using System;
 using System.Net;
-
 using Lextm.SharpSnmpLib;
 using Lextm.SharpSnmpLib.Messaging;
 
-namespace TestDiscovery
+namespace snmpdiscover
 {
     class Program
     {
         public static void Main(string[] args)
         {
+            if (args.Length != 0)
+            {
+                return;
+            }
+
             Discoverer discoverer = new Discoverer();
             discoverer.AgentFound += DiscovererAgentFound;
             Console.WriteLine("v1 discovery");

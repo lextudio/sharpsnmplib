@@ -80,7 +80,7 @@
             this.btnOK.TabIndex = 4;
             this.btnOK.Text = "Ok";
             this.btnOK.UseVisualStyleBackColor = true;
-            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
+            this.btnOK.Click += new System.EventHandler(this.BtnOkClick);
             // 
             // btnCancel
             // 
@@ -91,7 +91,7 @@
             this.btnCancel.TabIndex = 5;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            this.btnCancel.Click += new System.EventHandler(this.BtnCancelClick);
             // 
             // rbString
             // 
@@ -114,7 +114,7 @@
             this.rbInteger.TabStop = true;
             this.rbInteger.Text = "Integer";
             this.rbInteger.UseVisualStyleBackColor = true;
-            this.rbInteger.CheckedChanged += new System.EventHandler(this.rbInteger_CheckedChanged);
+            this.rbInteger.CheckedChanged += new System.EventHandler(this.RbIntegerCheckedChanged);
             // 
             // FormSet
             // 

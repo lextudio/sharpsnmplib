@@ -8,13 +8,13 @@
  */
 
 using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
 using System.Windows.Forms;
 using Microsoft.Practices.Unity;
 using RemObjects.Mono.Helpers;
 using WeifenLuo.WinFormsUI.Docking;
-using Lextm.SharpSnmpLib.Messaging;
 
 namespace Lextm.SharpSnmpLib.Browser
 {
@@ -56,7 +56,7 @@ namespace Lextm.SharpSnmpLib.Browser
 		
 		private void ActAboutExecute(object sender, EventArgs e)
 		{
-			Help.ShowHelp(this, "http://sharpsnmplib.codeplex.com");
+			Process.Start("http://sharpsnmplib.codeplex.com");
 		}
 
         private void MainForm_Load(object sender, EventArgs e)

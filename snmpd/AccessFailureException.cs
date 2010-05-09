@@ -64,17 +64,6 @@ namespace Lextm.SharpSnmpLib.Agent
         public override string ToString()
         {
             return "AccessFailureException: " + Message;
-        }        
-     
-        /// <summary>
-        /// Details on operation.
-        /// </summary>
-        public virtual string Details
-        {
-            get
-            {
-                return Message;
-            }
         }
     }
 }

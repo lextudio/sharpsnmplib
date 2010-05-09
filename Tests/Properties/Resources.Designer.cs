@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Lextm.SharpSnmpLib.Properties {
+namespace Lextm.SharpSnmpLib.Tests {
     using System;
     
     

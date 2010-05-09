@@ -11,7 +11,6 @@ using System.IO;
 using Lextm.SharpSnmpLib.Security;
 using NUnit.Framework;
 using Lextm.SharpSnmpLib.Messaging;
-using Lextm.SharpSnmpLib.Properties;
 
 #pragma warning disable 1591
 namespace Lextm.SharpSnmpLib.Tests

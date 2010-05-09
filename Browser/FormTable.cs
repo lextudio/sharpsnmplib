@@ -75,7 +75,7 @@ namespace Lextm.SharpSnmpLib.Browser
             }
         }
 
-        private void checkBoxRefresh_CheckedChanged(object sender, EventArgs e)
+        private void CheckBoxRefreshCheckedChanged(object sender, EventArgs e)
         {
             if(checkBoxRefresh.Checked)
             {
@@ -107,7 +107,7 @@ namespace Lextm.SharpSnmpLib.Browser
             }
         }
 
-        private void cbColumnDisplay_SelectedIndexChanged(object sender, EventArgs e)
+        private void CbColumnDisplaySelectedIndexChanged(object sender, EventArgs e)
         {
             if (!_columnCountSet)
             {
@@ -145,7 +145,7 @@ namespace Lextm.SharpSnmpLib.Browser
             }
         }
 
-        private void textBoxRefresh_KeyDown(object sender, KeyEventArgs e)
+        private void TextBoxRefreshKeyDown(object sender, KeyEventArgs e)
         {
             if ((e.KeyValue > 0 && e.KeyValue < 31) || (e.KeyValue > 47 && e.KeyValue < 58) || (e.KeyValue > 95 && e.KeyValue < 106))
             {

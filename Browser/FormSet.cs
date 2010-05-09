@@ -37,7 +37,7 @@ namespace Lextm.SharpSnmpLib.Browser
             }
         }
 
-        private void btnOK_Click(object sender, EventArgs e)
+        private void BtnOkClick(object sender, EventArgs e)
         {
             if (rbInteger.Checked && !Valid())
             {
@@ -51,12 +51,12 @@ namespace Lextm.SharpSnmpLib.Browser
             }
         }
 
-        private void btnCancel_Click(object sender, EventArgs e)
+        private void BtnCancelClick(object sender, EventArgs e)
         {
             Close();
         }
 
-        private void rbInteger_CheckedChanged(object sender, EventArgs e)
+        private void RbIntegerCheckedChanged(object sender, EventArgs e)
         {
             Valid();
         }

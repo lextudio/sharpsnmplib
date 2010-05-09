@@ -18,7 +18,6 @@ using Lextm.Common;
 using Lextm.SharpSnmpLib.Mib;
 using RemObjects.Mono.Helpers;
 using WeifenLuo.WinFormsUI.Docking;
-using Lextm.SharpSnmpLib.Messaging;
 
 namespace Lextm.SharpSnmpLib.Browser
 {
@@ -34,13 +33,15 @@ namespace Lextm.SharpSnmpLib.Browser
         public ModuleListPanel()
         {
             InitializeComponent();
-            if (PlatformSupport.Platform == PlatformType.Windows)
-			{
-				Icon = Properties.Resources.preferences_system_windows;
-                actEnableMonitor.Image = Properties.Resources.view_refresh;
-                actRemove.Image = Properties.Resources.list_remove;
-				actAdd.Image = Properties.Resources.list_add;
-			}
+            if (PlatformSupport.Platform != PlatformType.Windows)
+            {
+                return;
+            }
+
+            Icon = Properties.Resources.preferences_system_windows;
+            actEnableMonitor.Image = Properties.Resources.view_refresh;
+            actRemove.Image = Properties.Resources.list_remove;
+            actAdd.Image = Properties.Resources.list_add;
         }
         
         void ModuleListPanel_Load(object sender, EventArgs e)

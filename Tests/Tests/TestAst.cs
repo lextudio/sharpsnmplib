@@ -24,31 +24,31 @@ namespace Lextm.SharpSnmpLib.Tests
         [Test]
         public void TestLexerOnMibs()
         {
-            TestMib(Properties.Resources.ACTONA_ACTASTOR_MIB);
-            TestMib(Properties.Resources.ADSL_LINE_MIB);
-            TestMib(Properties.Resources.ADSL_TC_MIB);
-            TestMib(Properties.Resources.AGENTX_MIB);
-            TestMib(Properties.Resources.AIRPORT_BASESTATION_3_MIB);
-            TestMib(Properties.Resources.ALLIEDTELESYN_MIB);
-            TestMib(Properties.Resources.ALVARION_DOT11_WLAN_MIB);
-            TestMib(Properties.Resources.APPC_MIB);
-            TestMib(Properties.Resources.ARRAYMANAGER_MIB);
-            TestMib(Properties.Resources.ARROWPOINT_IPV4_OSPF_MIB);
-            TestMib(Properties.Resources.ATM_TC_MIB);
-            TestMib(Properties.Resources.BASEBRDD_MIB_MIB);
-            TestMib(Properties.Resources.BRIDGE_MIB);
-            TestMib(Properties.Resources.CISCO_AAA_SERVER_MIB);
-            TestMib(Properties.Resources.CISCO_BULK_FILE_MIB);
-            TestMib(Properties.Resources.CISCO_CSG_MIB);
-            TestMib(Properties.Resources.DISMAN_EVENT_MIB);
-            TestMib(Properties.Resources.DISMAN_EXPRESSION_MIB);
-            TestMib(Properties.Resources.DISMAN_NSLOOKUP_MIB);
-            TestMib(Properties.Resources.DISMAN_PING_MIB);
-            TestMib(Properties.Resources.DISMAN_SCHEDULE_MIB);
-            TestMib(Properties.Resources.DISMAN_SCRIPT_MIB);
-            TestMib(Properties.Resources.DISMAN_TRACEROUTE_MIB);
-            TestMib(Properties.Resources.DMTF_DMI_MIB);
-            TestMib(Properties.Resources.empty);
+            TestMib(Resources.ACTONA_ACTASTOR_MIB);
+            TestMib(Resources.ADSL_LINE_MIB);
+            TestMib(Resources.ADSL_TC_MIB);
+            TestMib(Resources.AGENTX_MIB);
+            TestMib(Resources.AIRPORT_BASESTATION_3_MIB);
+            TestMib(Resources.ALLIEDTELESYN_MIB);
+            TestMib(Resources.ALVARION_DOT11_WLAN_MIB);
+            TestMib(Resources.APPC_MIB);
+            TestMib(Resources.ARRAYMANAGER_MIB);
+            TestMib(Resources.ARROWPOINT_IPV4_OSPF_MIB);
+            TestMib(Resources.ATM_TC_MIB);
+            TestMib(Resources.BASEBRDD_MIB_MIB);
+            TestMib(Resources.BRIDGE_MIB);
+            TestMib(Resources.CISCO_AAA_SERVER_MIB);
+            TestMib(Resources.CISCO_BULK_FILE_MIB);
+            TestMib(Resources.CISCO_CSG_MIB);
+            TestMib(Resources.DISMAN_EVENT_MIB);
+            TestMib(Resources.DISMAN_EXPRESSION_MIB);
+            TestMib(Resources.DISMAN_NSLOOKUP_MIB);
+            TestMib(Resources.DISMAN_PING_MIB);
+            TestMib(Resources.DISMAN_SCHEDULE_MIB);
+            TestMib(Resources.DISMAN_SCRIPT_MIB);
+            TestMib(Resources.DISMAN_TRACEROUTE_MIB);
+            TestMib(Resources.DMTF_DMI_MIB);
+            TestMib(Resources.empty);
         }
         
         private void TestMib(byte[] bytes)

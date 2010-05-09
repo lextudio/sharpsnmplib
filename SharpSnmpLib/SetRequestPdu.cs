@@ -69,7 +69,6 @@ namespace Lextm.SharpSnmpLib
             _errorIndex = errorIndex;
             _variables = variables;
             _varbindSection = Variable.Transform(_variables);
-            ////_raw = ByteTool.ParseItems(_sequenceNumber, _errorStatus, _errorIndex, _varbindSection);
         }
 
         /// <summary>
@@ -83,8 +82,6 @@ namespace Lextm.SharpSnmpLib
             _errorIndex = (Integer32)DataFactory.CreateSnmpData(stream);
             _varbindSection = (Sequence)DataFactory.CreateSnmpData(stream);
             _variables = Variable.Transform(_varbindSection);
-            ////_raw = ByteTool.ParseItems(_sequenceNumber, _errorStatus, _errorIndex, _varbindSection);
-            ////Debug.Assert(length >= _raw.Length, "length not match");
         }
         
         /// <summary>
@@ -139,24 +136,6 @@ namespace Lextm.SharpSnmpLib
                 return _variables;
             }
         }
-
-        #region ISnmpPdu Members
-        /// <summary>
-        /// Converts to message body.
-        /// </summary>
-        /// <param name="version">Prtocol version</param>
-        /// <param name="community">Community name</param>
-        /// <returns></returns>
-        [Obsolete("Use ByteTool.PackMessage instead")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "version")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "community")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public Sequence ToMessageBody(VersionCode version, OctetString community)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
 
         #region ISnmpData Members
         /// <summary>

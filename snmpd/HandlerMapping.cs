@@ -121,8 +121,7 @@ namespace Lextm.SharpSnmpLib.Agent
 
         private bool VersionMatched(ISnmpMessage message)
         {
-            if (_catchAll) return true;
-            return _version.Any(v => StringEquals(message.Version.ToString(), v));
+            return _catchAll || _version.Any(v => StringEquals(message.Version.ToString(), v));
         }
 
         private static bool StringEquals(string left, string right)

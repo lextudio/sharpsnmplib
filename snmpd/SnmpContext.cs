@@ -55,7 +55,7 @@ namespace Lextm.SharpSnmpLib.Agent
         /// Gets the users.
         /// </summary>
         /// <value>The users.</value>
-        public UserRegistry Users { get; private set; }
+        protected UserRegistry Users { get; set; }
 
         /// <summary>
         /// Gets the response.

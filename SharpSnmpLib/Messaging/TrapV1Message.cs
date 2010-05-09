@@ -131,7 +131,6 @@ namespace Lextm.SharpSnmpLib.Messaging
             _specific = _pdu.Specific;
             _time = _pdu.TimeStamp.ToUInt32();
             _variables = _pdu.Variables;
-            ////_bytes = body.ToBytes();
         }
 
         /// <summary>

@@ -1,5 +1,6 @@
 using System;
 using System.Drawing;
+using System.Globalization;
 using System.Net;
 using System.Windows.Forms;
 using RemObjects.Mono.Helpers;
@@ -14,13 +15,15 @@ namespace Lextm.SharpSnmpLib.Browser
         public AgentProfilePanel()
         {
             InitializeComponent();
-            if (PlatformSupport.Platform == PlatformType.Windows)
-			{
-				Icon = Properties.Resources.network_server;
-				actEdit.Image = Properties.Resources.document_properties1;
-				actDelete.Image = Properties.Resources.list_remove;
-				actAdd.Image = Properties.Resources.list_add;
-			}
+            if (PlatformSupport.Platform != PlatformType.Windows)
+            {
+                return;
+            }
+
+            Icon = Properties.Resources.network_server;
+            actEdit.Image = Properties.Resources.document_properties1;
+            actDelete.Image = Properties.Resources.list_remove;
+            actAdd.Image = Properties.Resources.list_add;
         }
 
         public IProfileRegistry Profiles { get; set; }
@@ -120,7 +123,7 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void ActionList1Update(object sender, EventArgs e)
         {
-            tslblDefault.Text = "Default agent is " + Profiles.DefaultProfile.Name;
+            tslblDefault.Text = string.Format(CultureInfo.InvariantCulture, "Default agent is {0}", Profiles.DefaultProfile.Name);
         }
 
         private void ActDeleteExecute(object sender, EventArgs e)

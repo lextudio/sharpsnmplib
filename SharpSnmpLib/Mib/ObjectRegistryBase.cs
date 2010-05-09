@@ -264,22 +264,6 @@ namespace Lextm.SharpSnmpLib.Mib
         }
 
         /// <summary>
-        /// Gets the textual format.
-        /// </summary>
-        /// <param name="id">Object ID.</param>
-        /// <returns></returns>
-        [CLSCompliant(false)]
-        public string GetTextual(ObjectIdentifier id)
-        {
-            if (id == null)
-            {
-                throw new ArgumentNullException("id");
-            }
-            
-            return Translate(id.ToNumerical());
-        }
-
-        /// <summary>
         /// Creates a variable.
         /// </summary>
         /// <param name="textual">The textual.</param>

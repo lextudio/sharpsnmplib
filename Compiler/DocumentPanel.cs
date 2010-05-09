@@ -27,7 +27,7 @@ namespace Lextm.SharpSnmpLib.Compiler
             get { return _fileName; }
         }
 
-        private void closeAllToolStripMenuItem_Click(object sender, EventArgs e)
+        private void CloseAllToolStripMenuItemClick(object sender, EventArgs e)
         {
             CloseAllDocuments(DockPanel);
         }

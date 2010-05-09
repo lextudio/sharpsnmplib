@@ -14,7 +14,6 @@ using Lextm.SharpSnmpLib.Messaging;
 using Lextm.SharpSnmpLib.Security;
 using NUnit.Framework;
 using System.Net.Sockets;
-using Lextm.SharpSnmpLib.Properties;
 using TimeoutException = Lextm.SharpSnmpLib.Messaging.TimeoutException;
 using System;
 

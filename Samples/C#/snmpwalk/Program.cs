@@ -166,24 +166,10 @@ namespace SnmpWalk
                     }
 
                     IAuthenticationProvider auth;
-                    if ((level & Levels.Authentication) == Levels.Authentication)
-                    {
-                        auth = GetAuthenticationProviderByName(authentication, authPhrase);
-                    }
-                    else
-                    {
-                        auth = DefaultAuthenticationProvider.Instance;
-                    }
+                    auth = (level & Levels.Authentication) == Levels.Authentication ? GetAuthenticationProviderByName(authentication, authPhrase) : DefaultAuthenticationProvider.Instance;
 
                     IPrivacyProvider priv;
-                    if ((level & Levels.Privacy) == Levels.Privacy)
-                    {
-                        priv = new DESPrivacyProvider(new OctetString(privPhrase), auth);
-                    }
-                    else
-                    {
-                        priv = DefaultPrivacyProvider.Instance;
-                    }
+                    priv = (level & Levels.Privacy) == Levels.Privacy ? new DESPrivacyProvider(new OctetString(privPhrase), auth) : DefaultPrivacyProvider.Instance;
 
                     Discovery discovery = new Discovery(Messenger.NextMessageId, Messenger.NextRequestId);
                     ReportMessage report = discovery.GetResponse(timeout, receiver);

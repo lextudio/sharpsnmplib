@@ -88,7 +88,7 @@
         	this.checkBoxRefresh.TabIndex = 1;
         	this.checkBoxRefresh.Text = "Refresh Table";
         	this.checkBoxRefresh.UseVisualStyleBackColor = true;
-        	this.checkBoxRefresh.CheckedChanged += new System.EventHandler(this.checkBoxRefresh_CheckedChanged);
+        	this.checkBoxRefresh.CheckedChanged += new System.EventHandler(this.CheckBoxRefreshCheckedChanged);
         	// 
         	// label1
         	// 
@@ -112,7 +112,7 @@
         	this.cbColumnDisplay.Name = "cbColumnDisplay";
         	this.cbColumnDisplay.Size = new System.Drawing.Size(95, 21);
         	this.cbColumnDisplay.TabIndex = 4;
-        	this.cbColumnDisplay.SelectedIndexChanged += new System.EventHandler(this.cbColumnDisplay_SelectedIndexChanged);
+        	this.cbColumnDisplay.SelectedIndexChanged += new System.EventHandler(this.CbColumnDisplaySelectedIndexChanged);
         	// 
         	// textBoxRefresh
         	// 
@@ -124,7 +124,7 @@
         	this.textBoxRefresh.TabIndex = 2;
         	this.textBoxRefresh.Text = "10";
         	this.textBoxRefresh.WordWrap = false;
-        	this.textBoxRefresh.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxRefresh_KeyDown);
+        	this.textBoxRefresh.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBoxRefreshKeyDown);
         	// 
         	// FormTable
         	// 

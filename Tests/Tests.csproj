@@ -223,6 +223,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <CustomToolNamespace>Lextm.SharpSnmpLib.Tests</CustomToolNamespace>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

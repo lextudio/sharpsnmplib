@@ -97,8 +97,11 @@
                     
                     previous = temp;
                 }
-                
-                previous.Validate(true, "end of file reached");
+
+                if (previous != null)
+                {
+                    previous.Validate(true, "end of file reached");
+                }
             }
         }
     }

@@ -17,7 +17,6 @@ using System.Windows.Forms;
 using Lextm.SharpSnmpLib.Mib;
 using RemObjects.Mono.Helpers;
 using WeifenLuo.WinFormsUI.Docking;
-using Lextm.SharpSnmpLib.Messaging;
 
 namespace Lextm.SharpSnmpLib.Compiler
 {

@@ -10,7 +10,6 @@
 using System.IO;
 using Lextm.SharpSnmpLib.Mib;
 using NUnit.Framework;
-using Lextm.SharpSnmpLib.Properties;
 
 
 #pragma warning disable 1591
@@ -68,8 +67,9 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[54];
             Assert.AreEqual("casConfigGroup", node.Name);
             Assert.AreEqual(2, node.Value);
-            Assert.AreEqual("casMIBGroups", node.Parent.ToString());
+            Assert.AreEqual("casMIBGroups", node.Parent);
         }
+
         [Test]
         public void TestRFC1157_SNMP_MIB()
         {
@@ -102,7 +102,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[159];
             Assert.AreEqual("jvmLowMemoryCollectNotifGroup", node.Name);
             Assert.AreEqual(8, node.Value);
-            Assert.AreEqual("jvmMgtMIBGroups", node.Parent.ToString());
+            Assert.AreEqual("jvmMgtMIBGroups", node.Parent);
         }
         [Test]
         public void TestIEEE8021_PAE_MIB()
@@ -121,7 +121,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[105];
             Assert.AreEqual("dot1xPaeCompliance", node.Name);
             Assert.AreEqual(1, node.Value);
-            Assert.AreEqual("dot1xPaeCompliances", node.Parent.ToString());
+            Assert.AreEqual("dot1xPaeCompliances", node.Parent);
         }
         [Test]
         public void TestCISCO_CSG_MIB()
@@ -140,7 +140,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[81];
             Assert.AreEqual("ciscoCsgNotifGroup", node.Name);
             Assert.AreEqual(6, node.Value);
-            Assert.AreEqual("ciscoCsgMIBGroups", node.Parent.ToString());
+            Assert.AreEqual("ciscoCsgMIBGroups", node.Parent);
         }
         [Test]
         public void TestCISCO_BULK_FILE_MIB()
@@ -159,7 +159,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[50];
             Assert.AreEqual("ciscoBulkFileStatusGroup", node.Name);
             Assert.AreEqual(2, node.Value);
-            Assert.AreEqual("ciscoBulkFileMIBGroups", node.Parent.ToString());
+            Assert.AreEqual("ciscoBulkFileMIBGroups", node.Parent);
         }
         [Test]
         public void TestCISCO_AAA_SERVER_MIB()
@@ -178,7 +178,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[54];
             Assert.AreEqual("casConfigGroup", node.Name);
             Assert.AreEqual(2, node.Value);
-            Assert.AreEqual("casMIBGroups", node.Parent.ToString());
+            Assert.AreEqual("casMIBGroups", node.Parent);
         }
         
         [Test]
@@ -198,7 +198,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[606];
             Assert.AreEqual("dMTFVoltageProbeEvSub", node.Name);
             Assert.AreEqual(7, node.Value);
-            Assert.AreEqual("dMTFVoltageProbeTable", node.Parent.ToString());
+            Assert.AreEqual("dMTFVoltageProbeTable", node.Parent);
         }
         
         [Test]
@@ -218,7 +218,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[10];
             Assert.AreEqual("atmClpTaggingScrCdvt", node.Name);
             Assert.AreEqual(15, node.Value);
-            Assert.AreEqual("atmTrafficDescriptorTypes", node.Parent.ToString());
+            Assert.AreEqual("atmTrafficDescriptorTypes", node.Parent);
         }
         
         [Test]
@@ -238,7 +238,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[49];
             Assert.AreEqual("apIpv4OspfCompliance", node.Name);
             Assert.AreEqual(1, node.Value);
-            Assert.AreEqual("apIpv4OspfCompliances", node.Parent.ToString());
+            Assert.AreEqual("apIpv4OspfCompliances", node.Parent);
         }
         
         [Test]
@@ -258,7 +258,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[304];
             Assert.AreEqual("appcConversationConfGroup", node.Name);
             Assert.AreEqual(10, node.Value);
-            Assert.AreEqual("appcGroups", node.Parent.ToString());
+            Assert.AreEqual("appcGroups", node.Parent);
         }
         
         [Test]
@@ -278,7 +278,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[268];
             Assert.AreEqual("brzaccVLTrapFtpStatus", node.Name);
             Assert.AreEqual(10, node.Value);
-            Assert.AreEqual("brzaccVLTraps", node.Parent.ToString());
+            Assert.AreEqual("brzaccVLTraps", node.Parent);
         }
         
         [Test]
@@ -298,7 +298,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[379];
             Assert.AreEqual("rebuildRateEv", node.Name);
             Assert.AreEqual(222, node.Value);
-            Assert.AreEqual("aryMgrEvts", node.Parent.ToString());
+            Assert.AreEqual("aryMgrEvts", node.Parent);
         }
         
         [Test]
@@ -318,7 +318,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[46];
             Assert.AreEqual("physicalInterfaceNumRXError", node.Name);
             Assert.AreEqual(10, node.Value);
-            Assert.AreEqual("physicalInterface", node.Parent.ToString());
+            Assert.AreEqual("physicalInterface", node.Parent);
         }
         
         [Test]
@@ -338,7 +338,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[605];
             Assert.AreEqual("ds3TrapInterval", node.Name);
             Assert.AreEqual(4, node.Value);
-            Assert.AreEqual("ds3TrapEntry", node.Parent.ToString());
+            Assert.AreEqual("ds3TrapEntry", node.Parent);
         }
         
         [Test]
@@ -358,7 +358,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[0];
             Assert.AreEqual("adsltcmib", node.Name);
             Assert.AreEqual(2, node.Value);
-            Assert.AreEqual("transmission.94", node.Parent.ToString());
+            Assert.AreEqual("transmission.94", node.Parent);
         }
         
         [Test]
@@ -378,7 +378,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[274];
             Assert.AreEqual("adslAturLineProfileControlGroup", node.Name);
             Assert.AreEqual(25, node.Value);
-            Assert.AreEqual("adslGroups", node.Parent.ToString());
+            Assert.AreEqual("adslGroups", node.Parent);
         }
         
         [Test]
@@ -398,7 +398,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[99];
             Assert.AreEqual("acNotificationInfoGroup", node.Name);
             Assert.AreEqual(7, node.Value);
-            Assert.AreEqual("actastorGroups", node.Parent.ToString());
+            Assert.AreEqual("actastorGroups", node.Parent);
         }
         
         [Test]
@@ -418,7 +418,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[0];
             Assert.AreEqual("internet", node.Name);
             Assert.AreEqual(1, node.Value);
-            Assert.AreEqual("iso.org(3).dod(6)", node.Parent.ToString());
+            Assert.AreEqual("iso.org(3).dod(6)", node.Parent);
         }
         [Test]
         public void TestRFC1271_MIB()
@@ -437,7 +437,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[212];
             Assert.AreEqual("logDescription", node.Name);
             Assert.AreEqual(4, node.Value);
-            Assert.AreEqual("logEntry", node.Parent.ToString());
+            Assert.AreEqual("logEntry", node.Parent);
         }
         [Test]
         public void TestRFC1213_MIB()
@@ -928,7 +928,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[7];
             Assert.AreEqual("nsVacmStatus", node.Name);
             Assert.AreEqual(5, node.Value);
-            Assert.AreEqual("nsVacmAccessEntry", node.Parent.ToString());
+            Assert.AreEqual("nsVacmAccessEntry", node.Parent);
         }
         [Test]
         public void TestNetwork_Service_MIB()
@@ -947,7 +947,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[43];
             Assert.AreEqual("applUDPProtoID", node.Name);
             Assert.AreEqual(5, node.Value);
-            Assert.AreEqual("application", node.Parent.ToString());
+            Assert.AreEqual("application", node.Parent);
         }
         [Test]
         public void TestNotification_Log_MIB()
@@ -966,7 +966,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[54];
             Assert.AreEqual("notificationLogDateGroup", node.Name);
             Assert.AreEqual(4, node.Value);
-            Assert.AreEqual("notificationLogMIBGroups", node.Parent.ToString());
+            Assert.AreEqual("notificationLogMIBGroups", node.Parent);
         }
         [Test]
         public void TestIPv6_Flow_Label_MIB()
@@ -985,7 +985,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[0];
             Assert.AreEqual("ipv6FlowLabelMIB", node.Name);
             Assert.AreEqual(103, node.Value);
-            Assert.AreEqual("mib-2", node.Parent.ToString());
+            Assert.AreEqual("mib-2", node.Parent);
         }
         [Test]
         public void TestIPv6_ICMP_MIB()
@@ -1004,7 +1004,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[42];
             Assert.AreEqual("ipv6IcmpGroup", node.Name);
             Assert.AreEqual(1, node.Value);
-            Assert.AreEqual("ipv6IcmpGroups", node.Parent.ToString());
+            Assert.AreEqual("ipv6IcmpGroups", node.Parent);
         }
         [Test]
         public void TestIPv6_MIB()
@@ -1023,7 +1023,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[90];
             Assert.AreEqual("ipv6NotificationGroup", node.Name);
             Assert.AreEqual(2, node.Value);
-            Assert.AreEqual("ipv6Groups", node.Parent.ToString());
+            Assert.AreEqual("ipv6Groups", node.Parent);
         }
         [Test]
         public void TestIPv6_TC()
@@ -1057,7 +1057,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[14];
             Assert.AreEqual("ipv6TcpGroup", node.Name);
             Assert.AreEqual(1, node.Value);
-            Assert.AreEqual("ipv6TcpGroups", node.Parent.ToString());
+            Assert.AreEqual("ipv6TcpGroups", node.Parent);
         }
         [Test]
         public void TestIPv6_Udp_MIB()
@@ -1076,7 +1076,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[11];
             Assert.AreEqual("ipv6UdpGroup", node.Name);
             Assert.AreEqual(1, node.Value);
-            Assert.AreEqual("ipv6UdpGroups", node.Parent.ToString());
+            Assert.AreEqual("ipv6UdpGroups", node.Parent);
         }
         [Test]
         public void TestLM_Sensors_MIB()
@@ -1095,7 +1095,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[21];
             Assert.AreEqual("lmMiscSensorsValue", node.Name);
             Assert.AreEqual(3, node.Value);
-            Assert.AreEqual("lmMiscSensorsEntry", node.Parent.ToString());
+            Assert.AreEqual("lmMiscSensorsEntry", node.Parent);
         }
         [Test]
         public void TestIP_Forward_MIB()
@@ -1114,7 +1114,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[68];
             Assert.AreEqual("ipForwardMultiPathGroup", node.Name);
             Assert.AreEqual(2, node.Value);
-            Assert.AreEqual("ipForwardGroups", node.Parent.ToString());
+            Assert.AreEqual("ipForwardGroups", node.Parent);
         }
         [Test]
         public void TestIF_Inverted_Stack_MIB()
@@ -1133,7 +1133,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[9];
             Assert.AreEqual("ifInvStackGroup", node.Name);
             Assert.AreEqual(1, node.Value);
-            Assert.AreEqual("ifInvGroups", node.Parent.ToString());
+            Assert.AreEqual("ifInvGroups", node.Parent);
         }
         [Test]
         public void TestIANA_RTPROTO_MIB()
@@ -1152,7 +1152,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[0];
             Assert.AreEqual("ianaRtProtoMIB", node.Name);
             Assert.AreEqual(84, node.Value);
-            Assert.AreEqual("mib-2", node.Parent.ToString());
+            Assert.AreEqual("mib-2", node.Parent);
         }
         [Test]
         public void TestIANA_Language_MIB()
@@ -1171,7 +1171,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[7];
             Assert.AreEqual("ianaLangSMSL", node.Name);
             Assert.AreEqual(7, node.Value);
-            Assert.AreEqual("ianaLanguages", node.Parent.ToString());
+            Assert.AreEqual("ianaLanguages", node.Parent);
         }
         [Test]
         public void TestIANA_ADDRESS_FAMILY_NUMBERS_MIB()
@@ -1190,7 +1190,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[0];
             Assert.AreEqual("ianaAddressFamilyNumbers", node.Name);
             Assert.AreEqual(72, node.Value);
-            Assert.AreEqual("mib-2", node.Parent.ToString());
+            Assert.AreEqual("mib-2", node.Parent);
         }
         [Test]
         public void TestHOST_RESOURCES_TYPE()
@@ -1209,7 +1209,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[54];
             Assert.AreEqual("hrFSLinuxExt2", node.Name);
             Assert.AreEqual(23, node.Value);
-            Assert.AreEqual("hrFSTypes", node.Parent.ToString());
+            Assert.AreEqual("hrFSTypes", node.Parent);
         }
         [Test]
         public void TestHOST_RESOURCES_MIB()
@@ -1228,7 +1228,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[103];
             Assert.AreEqual("hrSWInstalledGroup", node.Name);
             Assert.AreEqual(6, node.Value);
-            Assert.AreEqual("hrMIBGroups", node.Parent.ToString());
+            Assert.AreEqual("hrMIBGroups", node.Parent);
         }
         [Test]
         public void TestHCNUM_TC()
@@ -1247,7 +1247,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[0];
             Assert.AreEqual("hcnumTC", node.Name);
             Assert.AreEqual(78, node.Value);
-            Assert.AreEqual("mib-2", node.Parent.ToString());
+            Assert.AreEqual("mib-2", node.Parent);
         }
         [Test]
         public void TestEtherLike_MIB()
@@ -1266,7 +1266,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[75];
             Assert.AreEqual("etherRateControlGroup", node.Name);
             Assert.AreEqual(15, node.Value);
-            Assert.AreEqual("etherGroups", node.Parent.ToString());
+            Assert.AreEqual("etherGroups", node.Parent);
         }
         [Test]
         public void TestDISKMAN_Event_MIB()
@@ -1285,7 +1285,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[120];
             Assert.AreEqual("dismanEventNotificationGroup", node.Name);
             Assert.AreEqual(6, node.Value);
-            Assert.AreEqual("dismanEventMIBGroups", node.Parent.ToString());
+            Assert.AreEqual("dismanEventMIBGroups", node.Parent);
         }
         [Test]
         public void TestDISKMAN_Expression_MIB()
@@ -1304,7 +1304,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[57];
             Assert.AreEqual("dismanExpressionValueGroup", node.Name);
             Assert.AreEqual(3, node.Value);
-            Assert.AreEqual("dismanExpressionMIBGroups", node.Parent.ToString());
+            Assert.AreEqual("dismanExpressionMIBGroups", node.Parent);
         }
         [Test]
         public void TestDISKMAN_NSLookUp_MIB()
@@ -1323,7 +1323,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[24];
             Assert.AreEqual("lookupGroup", node.Name);
             Assert.AreEqual(1, node.Value);
-            Assert.AreEqual("lookupGroups", node.Parent.ToString());
+            Assert.AreEqual("lookupGroups", node.Parent);
         }
         [Test]
         public void TestDISKMAN_Ping_MIB()
@@ -1342,7 +1342,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[67];
             Assert.AreEqual("pingTimeStampGroup", node.Name);
             Assert.AreEqual(2, node.Value);
-            Assert.AreEqual("pingGroups", node.Parent.ToString());
+            Assert.AreEqual("pingGroups", node.Parent);
         }
         [Test]
         public void TestDISKMAN_Schedule_MIB()
@@ -1361,7 +1361,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[37];
             Assert.AreEqual("schedGroup", node.Name);
             Assert.AreEqual(1, node.Value);
-            Assert.AreEqual("schedGroups", node.Parent.ToString());
+            Assert.AreEqual("schedGroups", node.Parent);
         }
         [Test]
         public void TestDISKMAN_Script_MIB()
@@ -1380,7 +1380,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[93];
             Assert.AreEqual("smNotificationsGroup", node.Name);
             Assert.AreEqual(6, node.Value);
-            Assert.AreEqual("smGroups", node.Parent.ToString());
+            Assert.AreEqual("smGroups", node.Parent);
         }
         [Test]
         public void TestDISKMAN_TRACEROUT_MIB()
@@ -1399,7 +1399,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[83];
             Assert.AreEqual("traceRouteTimeStampGroup", node.Name);
             Assert.AreEqual(2, node.Value);
-            Assert.AreEqual("traceRouteGroups", node.Parent.ToString());
+            Assert.AreEqual("traceRouteGroups", node.Parent);
         }
         [Test]
         public void TestSNMP_USM_DH_OBJECTS_MIB()
@@ -1418,7 +1418,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[23];
             Assert.AreEqual("usmDHKeyKickstartGroup", node.Name);
             Assert.AreEqual(3, node.Value);
-            Assert.AreEqual("usmDHKeyMIBGroups", node.Parent.ToString());
+            Assert.AreEqual("usmDHKeyMIBGroups", node.Parent);
         }
         [Test]
         public void TestSNMP_USM_AES_MIB()
@@ -1437,7 +1437,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[1];
             Assert.AreEqual("usmAesCfb128Protocol", node.Name);
             Assert.AreEqual(4, node.Value);
-            Assert.AreEqual("snmpPrivProtocols", node.Parent.ToString());
+            Assert.AreEqual("snmpPrivProtocols", node.Parent);
         }
         [Test]
         public void TestSNMP_USER_BASED_SM_MIB()
@@ -1456,7 +1456,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[35];
             Assert.AreEqual("usmMIBBasicGroup", node.Name);
             Assert.AreEqual(1, node.Value);
-            Assert.AreEqual("usmMIBGroups", node.Parent.ToString());
+            Assert.AreEqual("usmMIBGroups", node.Parent);
         }
         [Test]
         public void TestSNMP_MPD_MIB()
@@ -1475,7 +1475,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[11];
             Assert.AreEqual("snmpMPDGroup", node.Name);
             Assert.AreEqual(1, node.Value);
-            Assert.AreEqual("snmpMPDMIBGroups", node.Parent.ToString());
+            Assert.AreEqual("snmpMPDMIBGroups", node.Parent);
         }
         [Test]
         public void TestSNMP_Notification_MIB()
@@ -1494,7 +1494,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[28];
             Assert.AreEqual("snmpNotifyFilterGroup", node.Name);
             Assert.AreEqual(2, node.Value);
-            Assert.AreEqual("snmpNotifyGroups", node.Parent.ToString());
+            Assert.AreEqual("snmpNotifyGroups", node.Parent);
         }
         [Test]
         public void TestSNMP_Proxy_MIB()
@@ -1513,7 +1513,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[17];
             Assert.AreEqual("snmpProxyGroup", node.Name);
             Assert.AreEqual(3, node.Value);
-            Assert.AreEqual("snmpProxyGroups", node.Parent.ToString());
+            Assert.AreEqual("snmpProxyGroups", node.Parent);
         }
         [Test]
         public void TestSNMP_Target_MIB()
@@ -1532,7 +1532,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[31];
             Assert.AreEqual("snmpTargetCommandResponderGroup", node.Name);
             Assert.AreEqual(3, node.Value);
-            Assert.AreEqual("snmpTargetGroups", node.Parent.ToString());
+            Assert.AreEqual("snmpTargetGroups", node.Parent);
         }
         [Test]
         public void TestAgentX_MIB()
@@ -1551,7 +1551,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[40];
             Assert.AreEqual("agentxMIBGroup", node.Name);
             Assert.AreEqual(1, node.Value);
-            Assert.AreEqual("agentxMIBGroups", node.Parent.ToString());
+            Assert.AreEqual("agentxMIBGroups", node.Parent);
         }
         [Test]
         public void TestSNMP_Community_MIB()
@@ -1570,7 +1570,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[24];
             Assert.AreEqual("snmpProxyTrapForwardGroup", node.Name);
             Assert.AreEqual(3, node.Value);
-            Assert.AreEqual("snmpCommunityMIBGroups", node.Parent.ToString());
+            Assert.AreEqual("snmpCommunityMIBGroups", node.Parent);
         }
         [Test]
         public void TestSNMP_Framework_MIB()
@@ -1589,7 +1589,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[14];
             Assert.AreEqual("snmpEngineGroup", node.Name);
             Assert.AreEqual(1, node.Value);
-            Assert.AreEqual("snmpFrameworkMIBGroups", node.Parent.ToString());
+            Assert.AreEqual("snmpFrameworkMIBGroups", node.Parent);
         }
         
         [Test]
@@ -1640,7 +1640,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[15];
             Assert.AreEqual("zeroDotZero", node.Name);
             Assert.AreEqual(0, node.Value);
-            Assert.AreEqual("ccitt", node.Parent.ToString());
+            Assert.AreEqual("ccitt", node.Parent);
         }
         
         [Test]
@@ -1660,7 +1660,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[69];
             Assert.AreEqual("snmpObsoleteGroup", node.Name);
             Assert.AreEqual(10, node.Value);
-            Assert.AreEqual("snmpMIBGroups", node.Parent.ToString());
+            Assert.AreEqual("snmpMIBGroups", node.Parent);
             Assert.AreEqual(47, file.Modules[0].Objects.Count);
         }
         [Test]
@@ -1680,7 +1680,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[0];
             Assert.AreEqual("ianaifType", node.Name);
             Assert.AreEqual(30, node.Value);
-            Assert.AreEqual("mib-2", node.Parent.ToString());
+            Assert.AreEqual("mib-2", node.Parent);
         }
         [Test]
         public void TestIF_MIB()
@@ -1699,7 +1699,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[90];
             Assert.AreEqual("ifCompliance2", node.Name);
             Assert.AreEqual(2, node.Value);
-            Assert.AreEqual("ifCompliances", node.Parent.ToString());
+            Assert.AreEqual("ifCompliances", node.Parent);
         }
         
         [Test]
@@ -1719,7 +1719,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[0];
             Assert.AreEqual("inetAddressMIB", node.Name);
             Assert.AreEqual(76, node.Value);
-            Assert.AreEqual("mib-2", node.Parent.ToString());
+            Assert.AreEqual("mib-2", node.Parent);
         }
         [Test]
         public void TestIP_MIB()
@@ -1738,7 +1738,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[292];
             Assert.AreEqual("icmpGroup", node.Name);
             Assert.AreEqual(2, node.Value);
-            Assert.AreEqual("ipMIBGroups", node.Parent.ToString());
+            Assert.AreEqual("ipMIBGroups", node.Parent);
         }
         
         [Test]
@@ -1758,7 +1758,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[7];
             Assert.AreEqual("rfc1157Domain", node.Name);
             Assert.AreEqual(1, node.Value);
-            Assert.AreEqual("rfc1157Proxy", node.Parent.ToString());
+            Assert.AreEqual("rfc1157Proxy", node.Parent);
         }
 
         [Test]
@@ -1778,7 +1778,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IEntity node = file.Modules[0].Entities[61];
             Assert.AreEqual("dot1dStaticStatus", node.Name);
             Assert.AreEqual(4, node.Value);
-            Assert.AreEqual("dot1dStaticEntry", node.Parent.ToString());
+            Assert.AreEqual("dot1dStaticEntry", node.Parent);
         }
     }
 }

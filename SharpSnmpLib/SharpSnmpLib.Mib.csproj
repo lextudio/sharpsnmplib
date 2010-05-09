@@ -86,10 +86,10 @@
     <Compile Include="Mib\Symbol.cs" />
     <Compile Include="Mib\ReloadableObjectRegistry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resource.Designer.cs">
+    <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Resource.resx</DependentUpon>
+      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -107,14 +107,15 @@
     <None Include="sharpsnmplib.snk" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resource.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
-      <CustomToolNamespace>Lextm.SharpSnmpLib.Mib</CustomToolNamespace>
-    </EmbeddedResource>
+    <None Include="license.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="license.txt" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Lextm.SharpSnmpLib.Mib</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
