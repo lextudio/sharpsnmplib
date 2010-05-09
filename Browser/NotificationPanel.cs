@@ -99,7 +99,8 @@ namespace Lextm.SharpSnmpLib.Browser
                 if (Helper.IsRunningOnMono() && PlatformSupport.Platform != PlatformType.Windows && Mono.Unix.Native.Syscall.getuid() != 0 && int.Parse(tstxtPort.Text) < 1024)
                 {
                     MessageBox.Show("On Linux this application must be run as root for port < 1024.");
-                    return;
+                    actEnabled.Checked = false;
+					return;
                 }
 
                 StartListeners();
