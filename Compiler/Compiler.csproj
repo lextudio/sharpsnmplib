@@ -141,6 +141,9 @@
     <Reference Include="Microsoft.Practices.Unity.Configuration">
       <HintPath>..\lib\Microsoft.Practices.Unity.Configuration.dll</HintPath>
     </Reference>
+    <Reference Include="Office2007Renderer">
+      <HintPath>..\lib\Office2007Renderer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Drawing" />

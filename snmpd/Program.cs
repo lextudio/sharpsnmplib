@@ -34,6 +34,7 @@ namespace Lextm.SharpSnmpLib.Agent
             Container = new UnityContainer();
             Container.LoadConfiguration("agent");
 
+            ToolStripManager.Renderer = new Office2007Renderer.Office2007Renderer();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());

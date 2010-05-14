@@ -36,9 +36,9 @@ namespace Lextm.SharpSnmpLib.Compiler
             Container = new UnityContainer();
             Container.LoadConfiguration("compiler");
 
+            ToolStripManager.Renderer = new Office2007Renderer.Office2007Renderer();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
             MainForm main = Container.Resolve<MainForm>();
             Application.Run(main);
         }

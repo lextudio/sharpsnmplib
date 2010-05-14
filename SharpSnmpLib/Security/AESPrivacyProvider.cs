@@ -309,5 +309,14 @@ namespace Lextm.SharpSnmpLib.Security
         }
 
         #endregion
+        
+        /// <summary>
+        /// Returns a string that represents this object.
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return "AES privacy provider";
+        }
     }
 }
