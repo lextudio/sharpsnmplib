@@ -156,6 +156,10 @@ namespace Lextm.SharpSnmpLib.Browser
                     writer.WriteString(_profiles[k].UserName);
                     writer.WriteEndAttribute();
 
+                    writer.WriteStartAttribute("timeout");
+                    writer.WriteValue(_profiles[k].Timeout);
+                    writer.WriteEndAttribute();
+
 					writer.WriteEndElement();
 				}
 
