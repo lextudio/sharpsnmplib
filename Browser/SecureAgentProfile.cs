@@ -13,8 +13,8 @@ namespace Lextm.SharpSnmpLib.Browser
         private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger("Lextm.SharpSnmpLib.Browser");
         private readonly ProviderPair _record;
 
-        public SecureAgentProfile(Guid id, VersionCode version, IPEndPoint agent, string agentName, string authenticationPassphrase, string privacyPassphrase, int authenticationMethod, int privacyMethod, string userName)
-            : base(id, version, agent, agentName, userName)
+        public SecureAgentProfile(Guid id, VersionCode version, IPEndPoint agent, string agentName, string authenticationPassphrase, string privacyPassphrase, int authenticationMethod, int privacyMethod, string userName, int timeout)
+            : base(id, version, agent, agentName, userName, timeout)
         {
             AuthenticationPassphrase = authenticationPassphrase;
             PrivacyPassphrase = privacyPassphrase;
@@ -55,7 +55,12 @@ namespace Lextm.SharpSnmpLib.Browser
         internal int AuthenticationMethod { get; private set; }
         internal int PrivacyMethod { get; private set; }
 
-        internal override void Get(Manager manager, Variable variable)
+        public ProviderPair Providers
+        {
+            get { return _record; }
+        }
+
+        internal override void Get(Variable variable)
         {
             if (string.IsNullOrEmpty(UserName))
             {
@@ -64,11 +69,9 @@ namespace Lextm.SharpSnmpLib.Browser
             }
 
             Discovery discovery = new Discovery(Messenger.NextMessageId, Messenger.NextRequestId);
-            ReportMessage report = discovery.GetResponse(manager.Timeout, Agent);
-
+            ReportMessage report = discovery.GetResponse(Timeout, Agent);
             GetRequestMessage request = new GetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(UserName), new List<Variable> { variable }, _record, report);
-
-            ISnmpMessage response = request.GetResponse(manager.Timeout, Agent);
+            ISnmpMessage response = request.GetResponse(Timeout, Agent);
             if (response.Pdu.ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
             {
                 throw ErrorException.Create(
@@ -77,17 +80,15 @@ namespace Lextm.SharpSnmpLib.Browser
                     response);
             }
 
-            Logger.Info(response.Pdu.Variables[0].ToString(manager.Objects));
+            Logger.Info(response.Pdu.Variables[0].ToString(Objects));
         }
 
-        internal override string GetValue(Manager manager, Variable variable)
+        internal override string GetValue(Variable variable)
         {
             Discovery discovery = new Discovery(Messenger.NextMessageId, Messenger.NextRequestId);
-            ReportMessage report = discovery.GetResponse(manager.Timeout, Agent);
-
+            ReportMessage report = discovery.GetResponse(Timeout, Agent);
             GetRequestMessage request = new GetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(UserName), new List<Variable> { variable }, _record, report);
-
-            ISnmpMessage response = request.GetResponse(manager.Timeout, Agent);
+            ISnmpMessage response = request.GetResponse(Timeout, Agent);
             if (response.Pdu.ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
             {
                 throw ErrorException.Create(
@@ -99,7 +100,7 @@ namespace Lextm.SharpSnmpLib.Browser
             return response.Pdu.Variables[0].Data.ToString();
         }
 
-        internal override void GetNext(Manager manager, Variable variable)
+        internal override void GetNext(Variable variable)
         {
             if (string.IsNullOrEmpty(UserName))
             {
@@ -108,11 +109,9 @@ namespace Lextm.SharpSnmpLib.Browser
             }
 
             Discovery discovery = new Discovery(1, 101);
-            ReportMessage report = discovery.GetResponse(manager.Timeout, Agent);
-
+            ReportMessage report = discovery.GetResponse(Timeout, Agent);
             GetNextRequestMessage request = new GetNextRequestMessage(VersionCode.V3, 100, 0, new OctetString(UserName), new List<Variable> { variable }, _record, report);
-
-            ISnmpMessage response = request.GetResponse(manager.Timeout, Agent);
+            ISnmpMessage response = request.GetResponse(Timeout, Agent);
             if (response.Pdu.ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
             {
                 throw ErrorException.Create(
@@ -121,10 +120,10 @@ namespace Lextm.SharpSnmpLib.Browser
                     response);
             }
 
-            Logger.Info(response.Pdu.Variables[0].ToString(manager.Objects));
+            Logger.Info(response.Pdu.Variables[0].ToString(Objects));
         }
 
-        internal override void Set(Manager manager, Variable variable)
+        internal override void Set(Variable variable)
         {
             if (string.IsNullOrEmpty(UserName))
             {
@@ -133,11 +132,9 @@ namespace Lextm.SharpSnmpLib.Browser
             }
 
             Discovery discovery = new Discovery(Messenger.NextMessageId, Messenger.NextRequestId);
-            ReportMessage report = discovery.GetResponse(manager.Timeout, Agent);
-
+            ReportMessage report = discovery.GetResponse(Timeout, Agent);
             SetRequestMessage request = new SetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(UserName), new List<Variable> { variable }, _record, report);
-
-            ISnmpMessage response = request.GetResponse(manager.Timeout, Agent);
+            ISnmpMessage response = request.GetResponse(Timeout, Agent);
             if (response.Pdu.ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
             {
                 throw ErrorException.Create(
@@ -146,38 +143,38 @@ namespace Lextm.SharpSnmpLib.Browser
                     response);
             }
 
-            Logger.Info(response.Pdu.Variables[0].ToString(manager.Objects));
+            Logger.Info(response.Pdu.Variables[0].ToString(Objects));
         }
 
-        internal override void GetTable(Manager manager, IDefinition def)
+        internal override void GetTable(IDefinition def)
         {
-            //IList<Variable> list = new List<Variable>();
-            //int rows = Messenger.Walk(VersionCode, Agent, new OctetString(GetCommunity), new ObjectIdentifier(def.GetNumericalForm()), list, manager.Timeout, WalkMode.WithinSubtree);
-			
-            //// 
-            //// How many rows are there?
-            ////
-            //if (rows > 0)
-            //{
-            //    FormTable newTable = new FormTable(def);
-            //    newTable.SetRows(rows);
-            //    newTable.PopulateGrid(list);
-            //    newTable.Show();
-            //}
-            //else
-            //{
-            //    TraceSource source = new TraceSource("Browser");
-            //    foreach (Variable t in list)
-            //    {
-            //        source.TraceInformation(t.ToString());
-            //    }
+            Discovery discovery = new Discovery(Messenger.NextMessageId, Messenger.NextRequestId);
+            ReportMessage report = discovery.GetResponse(Timeout, Agent);
+            IList<Variable> list = new List<Variable>();
+            int rows = Messenger.BulkWalk(VersionCode.V3, Agent, new OctetString(UserName),
+                               new ObjectIdentifier(def.GetNumericalForm()), list, Timeout, 10,
+                               WalkMode.WithinSubtree, _record, report);
 
-            //    source.Flush();
-            //    source.Close();
-            //}
+            // 
+            // How many rows are there?
+            //
+            if (rows > 0)
+            {
+                FormTable newTable = new FormTable(def);
+                newTable.SetRows(rows);
+                newTable.PopulateGrid(list);
+                newTable.Show();
+            }
+            else
+            {
+                foreach (Variable t in list)
+                {
+                    Logger.Info(t.ToString());
+                }
+            }
         }
 
-        public override void Walk(Manager manager, IDefinition definition)
+        public override void Walk(IDefinition definition)
         {
             if (string.IsNullOrEmpty(UserName))
             {
@@ -186,15 +183,15 @@ namespace Lextm.SharpSnmpLib.Browser
             }
 
             Discovery discovery = new Discovery(Messenger.NextMessageId, Messenger.NextRequestId);
-            ReportMessage report = discovery.GetResponse(manager.Timeout, Agent);
+            ReportMessage report = discovery.GetResponse(Timeout, Agent);
             IList<Variable> list = new List<Variable>();
             Messenger.BulkWalk(VersionCode.V3, Agent, new OctetString(UserName),
-                               new ObjectIdentifier(definition.GetNumericalForm()), list, manager.Timeout, 10,
+                               new ObjectIdentifier(definition.GetNumericalForm()), list, Timeout, 10,
                                WalkMode.WithinSubtree, _record, report);
 
             foreach (Variable v in list)
             {
-                Logger.Info(v.ToString(manager.Objects));
+                Logger.Info(v.ToString(Objects));
             }
         }
     }

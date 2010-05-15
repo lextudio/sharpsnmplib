@@ -11,7 +11,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using Lextm.SharpSnmpLib.Messaging;
 using Lextm.SharpSnmpLib.Mib;
 using RemObjects.Mono.Helpers;
 using WeifenLuo.WinFormsUI.Docking;
@@ -36,8 +35,6 @@ namespace Lextm.SharpSnmpLib.Browser
         }
 
         public IObjectRegistry Objects { get; set; }
-
-        public Manager Manager { get; set; }
 
         public IProfileRegistry Profiles { get; set; }
 
@@ -107,7 +104,7 @@ namespace Lextm.SharpSnmpLib.Browser
             {
                 Logger.Info("==== Begin GET ====");
                 ObjectIdentifier id = GetIdForGet(treeView1.SelectedNode.Tag as IDefinition);
-                Profiles.DefaultProfile.Get(Manager, new Variable(id));
+                Profiles.DefaultProfile.Get(new Variable(id));
             }
             catch (Exception ex)
             {
@@ -133,7 +130,7 @@ namespace Lextm.SharpSnmpLib.Browser
                 {
                     ObjectIdentifier id = GetIdForGet(
                         treeView1.SelectedNode.Tag as IDefinition);
-                    form.OldVal = Profiles.DefaultProfile.GetValue(Manager, new Variable(id));
+                    form.OldVal = Profiles.DefaultProfile.GetValue(new Variable(id));
                     if (form.ShowDialog() != DialogResult.OK)
                     {
                         return;
@@ -159,7 +156,7 @@ namespace Lextm.SharpSnmpLib.Browser
 
                 Logger.Info("==== Begin SET ====");
                 ObjectIdentifier id1 = GetIdForGet(treeView1.SelectedNode.Tag as IDefinition);
-                Profiles.DefaultProfile.Set(Manager, new Variable(id1, data));
+                Profiles.DefaultProfile.Set(new Variable(id1, data));
             }
             catch (Exception ex)
             {
@@ -196,7 +193,7 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             try
             {
-                Profiles.DefaultProfile.GetTable(Manager, treeView1.SelectedNode.Tag as IDefinition);
+                Profiles.DefaultProfile.GetTable(treeView1.SelectedNode.Tag as IDefinition);
             }
             catch (Exception ex)
             {
@@ -233,7 +230,7 @@ namespace Lextm.SharpSnmpLib.Browser
             {
                 Logger.Info("==== Begin GET NEXT ====");
                 ObjectIdentifier id = GetIdForGetNext(treeView1.SelectedNode.Tag as IDefinition);
-                Profiles.DefaultProfile.GetNext(Manager, new Variable(id));
+                Profiles.DefaultProfile.GetNext(new Variable(id));
             }
             catch (Exception ex)
             {
@@ -311,7 +308,7 @@ namespace Lextm.SharpSnmpLib.Browser
             try
             {
                 Logger.Info("==== Begin WALK ====");
-                Profiles.DefaultProfile.Walk(Manager, (treeView1.SelectedNode.Tag as IDefinition));                
+                Profiles.DefaultProfile.Walk(treeView1.SelectedNode.Tag as IDefinition);                
             }
             catch (Exception ex)
             {

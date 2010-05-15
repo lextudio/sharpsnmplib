@@ -130,15 +130,27 @@ namespace Lextm.SharpSnmpLib.Browser
                     break;
                 }
 
-                NormalAgentProfile prof = registry.DefaultProfile as NormalAgentProfile;
-                if (prof == null)
-                {
-                    break;
-                }
-
                 IList<Variable> list = new List<Variable>();
                 Thread.Sleep(Convert.ToInt32(textBoxRefresh.Text, CultureInfo.CurrentCulture) * 1000);
-                int rows = Messenger.Walk(prof.VersionCode, prof.Agent, new OctetString(prof.GetCommunity), new ObjectIdentifier(_definition.GetNumericalForm()), list, 1000, WalkMode.WithinSubtree);
+                NormalAgentProfile prof = registry.DefaultProfile as NormalAgentProfile;
+                int rows;
+                if (prof != null)
+                {
+                    rows = Messenger.Walk(prof.VersionCode, prof.Agent, prof.GetCommunity,
+                                              new ObjectIdentifier(_definition.GetNumericalForm()), list, prof.Timeout,
+                                              WalkMode.WithinSubtree);
+
+                    
+                }
+                else
+                {
+                    SecureAgentProfile p = (SecureAgentProfile)registry.DefaultProfile;
+                    Discovery discovery = new Discovery(Messenger.NextMessageId, Messenger.NextRequestId);
+                    ReportMessage report = discovery.GetResponse(p.Timeout, p.Agent);
+                    rows = Messenger.BulkWalk(VersionCode.V3, p.Agent, new OctetString(p.UserName),
+                                       new ObjectIdentifier(_definition.GetNumericalForm()), list, p.Timeout, 10,
+                                       WalkMode.WithinSubtree, p.Providers, report);
+                }
 
                 SetRows(rows);
                 PopulateGrid(list);

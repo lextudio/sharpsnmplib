@@ -95,8 +95,8 @@ namespace Lextm.SharpSnmpLib.Browser
             cbVersionCode.SelectedIndex = _profile.VersionCode.ToSelectedIndex();
 
             var normal = _profile as NormalAgentProfile;
-            txtGet.Text = normal == null ? string.Empty : normal.GetCommunity;
-            txtSet.Text = normal == null ? string.Empty : normal.SetCommunity;
+            txtGet.Text = normal == null ? string.Empty : normal.GetCommunity.ToString();
+            txtSet.Text = normal == null ? string.Empty : normal.SetCommunity.ToString();
 
             var secure = _profile as SecureAgentProfile;
             txtAuthentication.Text = secure == null ? string.Empty : secure.AuthenticationPassphrase;

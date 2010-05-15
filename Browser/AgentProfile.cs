@@ -7,14 +7,19 @@ namespace Lextm.SharpSnmpLib.Browser
 {
 	internal abstract class AgentProfile
 	{
-	    internal AgentProfile(Guid id, VersionCode version, IPEndPoint agent, string name, string userName)
+	    internal AgentProfile(Guid id, VersionCode version, IPEndPoint agent, string name, string userName, int timeout)
 		{
-			Id = id;
+	        Timeout = timeout;
+	        Id = id;
 	        UserName = userName;
 			VersionCode = version;
 			Agent = agent;
 			Name = name;
 		}
+
+	    internal int Timeout { get; private set; }
+
+	    public IObjectRegistry Objects { get; set; }
 
 	    internal Guid Id { get; private set; }
 
@@ -26,21 +31,21 @@ namespace Lextm.SharpSnmpLib.Browser
 
 	    public string UserName { get; private set; }
 
-	    internal abstract void Get(Manager manager, Variable variable);
+	    internal abstract void Get(Variable variable);
 
-	    internal abstract string GetValue(Manager manager, Variable variable);
+	    internal abstract string GetValue(Variable variable);
 
-	    internal abstract void GetNext(Manager manager, Variable variable);
+	    internal abstract void GetNext(Variable variable);
 
-	    internal abstract void Set(Manager manager, Variable variable);
+	    internal abstract void Set(Variable variable);
 
 	    internal static bool IsValid(string address, out IPAddress ip)
 		{
 			return IPAddress.TryParse(address, out ip);
 		}
 		
-		internal abstract void GetTable(Manager manager, IDefinition def);
+		internal abstract void GetTable(IDefinition def);
 
-	    public abstract void Walk(Manager manager, IDefinition definition);
+	    public abstract void Walk(IDefinition definition);
 	}
 }

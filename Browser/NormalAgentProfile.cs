@@ -9,31 +9,31 @@ namespace Lextm.SharpSnmpLib.Browser
     {
         private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger("Lextm.SharpSnmpLib.Browser");
 
-        public NormalAgentProfile(Guid id, VersionCode version, IPEndPoint agent, string getCommunity, string setCommunity, string agentName, string userName)
-            : base(id, version, agent, agentName, userName)
+        public NormalAgentProfile(Guid id, VersionCode version, IPEndPoint agent, OctetString getCommunity, OctetString setCommunity, string agentName, string userName, int timeout)
+            : base(id, version, agent, agentName, userName, timeout)
         {
             GetCommunity = getCommunity;
             SetCommunity = setCommunity;
         }
 
-        internal string GetCommunity { get; set; }
-        internal string SetCommunity { get; set; }
+        internal OctetString GetCommunity { get; set; }
+        internal OctetString SetCommunity { get; set; }
 
-        internal override void Get(Manager manager, Variable variable)
+        internal override void Get(Variable variable)
         {
-            Logger.Info(manager.GetSingle(Agent, GetCommunity, variable).ToString(manager.Objects));
+            Logger.Info(Messenger.Get(VersionCode, Agent, GetCommunity, new List<Variable>{variable}, Timeout)[0].ToString(Objects));
         }
 
-        internal override string GetValue(Manager manager, Variable variable)
+        internal override string GetValue(Variable variable)
         {
-            return manager.GetSingle(Agent, GetCommunity, variable).Data.ToString();
+            return Messenger.Get(VersionCode, Agent, GetCommunity, new List<Variable> { variable }, Timeout)[0].Data.ToString();
         }
 
-        internal override void GetNext(Manager manager, Variable variable)
+        internal override void GetNext(Variable variable)
         {
-            GetNextRequestMessage message = new GetNextRequestMessage(Messenger.NextRequestId, VersionCode, new OctetString(GetCommunity),
+            GetNextRequestMessage message = new GetNextRequestMessage(Messenger.NextRequestId, VersionCode, GetCommunity,
                                                                       new List<Variable> {variable});
-            ISnmpMessage response = message.GetResponse(manager.Timeout, Agent);
+            ISnmpMessage response = message.GetResponse(Timeout, Agent);
             if (response.Pdu.ErrorStatus.ToInt32() != 0)
             {
                 throw ErrorException.Create(
@@ -42,18 +42,18 @@ namespace Lextm.SharpSnmpLib.Browser
                     response);
             }
 
-            Logger.Info(response.Pdu.Variables[0].ToString(manager.Objects));
+            Logger.Info(response.Pdu.Variables[0].ToString(Objects));
         }
 
-        internal override void Set(Manager manager, Variable variable)
+        internal override void Set(Variable variable)
         {
-            Logger.Info(manager.SetSingle(Agent, SetCommunity, variable).ToString(manager.Objects));
+            Logger.Info(Messenger.Set(VersionCode, Agent, SetCommunity, new List<Variable> { variable }, Timeout)[0].ToString(Objects));
         }
 
-        internal override void GetTable(Manager manager, IDefinition def)
+        internal override void GetTable(IDefinition def)
         {
             IList<Variable> list = new List<Variable>();
-            int rows = Messenger.Walk(VersionCode, Agent, new OctetString(GetCommunity), new ObjectIdentifier(def.GetNumericalForm()), list, manager.Timeout, WalkMode.WithinSubtree);
+            int rows = Messenger.Walk(VersionCode, Agent, GetCommunity, new ObjectIdentifier(def.GetNumericalForm()), list, Timeout, WalkMode.WithinSubtree);
 			
             // 
             // How many rows are there?
@@ -74,25 +74,25 @@ namespace Lextm.SharpSnmpLib.Browser
             }
         }
 
-        public override void Walk(Manager manager, IDefinition definition)
+        public override void Walk(IDefinition definition)
         {
             IList<Variable> list = new List<Variable>();
             if (VersionCode == VersionCode.V1)
             {
-                Messenger.Walk(VersionCode, Agent, new OctetString(GetCommunity),
-                               new ObjectIdentifier(definition.GetNumericalForm()), list, manager.Timeout,
+                Messenger.Walk(VersionCode, Agent, GetCommunity,
+                               new ObjectIdentifier(definition.GetNumericalForm()), list, Timeout,
                                WalkMode.WithinSubtree);
             }
             else
             {
-                Messenger.BulkWalk(VersionCode, Agent, new OctetString(GetCommunity),
-                                   new ObjectIdentifier(definition.GetNumericalForm()), list, manager.Timeout, 10,
+                Messenger.BulkWalk(VersionCode, Agent, GetCommunity,
+                                   new ObjectIdentifier(definition.GetNumericalForm()), list, Timeout, 10,
                                    WalkMode.WithinSubtree, null, null);
             }
 
             foreach (Variable v in list)
             {
-                Logger.Info(v.ToString(manager.Objects));
+                Logger.Info(v.ToString(Objects));
             }
         }
     }

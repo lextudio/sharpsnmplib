@@ -8,7 +8,7 @@ namespace Lextm.SharpSnmpLib.Browser
 {
 	internal class ProfileRegistry : IProfileRegistry
 	{
-		private const string SettingFile = "Agents3.xml";
+		private const string SettingFile = "Agents4.xml";
 		private AgentProfile _defaultProfile;
 		// private readonly IDictionary<IPEndPoint, AgentProfile> _profiles = new Dictionary<IPEndPoint, AgentProfile>();
 		private readonly IDictionary<Guid, AgentProfile> _profiles = new Dictionary<Guid, AgentProfile>();
@@ -128,11 +128,11 @@ namespace Lextm.SharpSnmpLib.Browser
 
 				    var normal = _profiles[k] as NormalAgentProfile;
 					writer.WriteStartAttribute("getCommunity");
-					writer.WriteString(normal == null ? string.Empty : normal.GetCommunity);
+					writer.WriteString(normal == null ? string.Empty : normal.GetCommunity.ToString());
 					writer.WriteEndAttribute();
 					
 					writer.WriteStartAttribute("setCommunity");
-                    writer.WriteString(normal == null ? string.Empty : normal.SetCommunity);
+                    writer.WriteString(normal == null ? string.Empty : normal.SetCommunity.ToString());
 					writer.WriteEndAttribute();
 
 				    var secure = _profiles[k] as SecureAgentProfile;
@@ -168,7 +168,7 @@ namespace Lextm.SharpSnmpLib.Browser
 
 	    private void LoadDefaultProfile()
 		{
-			AgentProfile first = AgentProfileFactory.Create(Guid.Empty, VersionCode.V1, new IPEndPoint(IPAddress.Loopback, 161), "public", "private", "localhost", string.Empty, string.Empty, 0, 0, string.Empty);
+			AgentProfile first = AgentProfileFactory.Create(Guid.Empty, VersionCode.V1, new IPEndPoint(IPAddress.Loopback, 161), "public", "private", "localhost", string.Empty, string.Empty, 0, 0, string.Empty, 1000);
 			AddProfile(first);
 			DefaultProfile = first;
 		}
@@ -210,6 +210,7 @@ namespace Lextm.SharpSnmpLib.Browser
 									    string authenticationMethod = reader.GetAttribute("authenticationMethod");
 									    string privacyMethod = reader.GetAttribute("privacyMethod");
 									    string userName = reader.GetAttribute("userName");
+									    int timeout = int.Parse(reader.GetAttribute("timeout"));
 
                                         if (def == null)
                                         {
@@ -220,7 +221,7 @@ namespace Lextm.SharpSnmpLib.Browser
 									                                            authenticationPassphrase, privacyPassphrase, 
                                                                                 string.IsNullOrEmpty(authenticationMethod) ? 0 : int.Parse(authenticationMethod),
 									                                            string.IsNullOrEmpty(privacyMethod) ? 0 : int.Parse(privacyMethod),
-                                                                                userName);
+                                                                                userName, timeout);
 										if (id == defaultId)
 										{
 											DefaultProfile = profile;

@@ -155,7 +155,7 @@ namespace Lextm.SharpSnmpLib.Browser
 
                 try
                 {
-                    Profiles.AddProfile(AgentProfileFactory.Create(Guid.NewGuid(), editor.VersionCode, new IPEndPoint(editor.IP, editor.Port), editor.GetCommunity, editor.SetCommunity, editor.AgentName, editor.AuthenticationPassphrase, editor.PrivacyPassphrase, editor.AuthenticationMethod, editor.PrivacyMethod, editor.UserName));
+                    Profiles.AddProfile(AgentProfileFactory.Create(Guid.NewGuid(), editor.VersionCode, new IPEndPoint(editor.IP, editor.Port), editor.GetCommunity, editor.SetCommunity, editor.AgentName, editor.AuthenticationPassphrase, editor.PrivacyPassphrase, editor.AuthenticationMethod, editor.PrivacyMethod, editor.UserName, 1000));
                     Profiles.SaveProfiles();
                 }
                 catch (BrowserException ex)
