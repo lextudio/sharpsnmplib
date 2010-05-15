@@ -9,9 +9,14 @@ Module Program
         End If
 
         Dim oid As String = args(0)
-        Dim registry As New ReloadableObjectRegistry("modules")
-        Dim textual As String = registry.Translate(ObjectIdentifier.Convert(oid))
+        Dim registry As IObjectRegistry = New ReloadableObjectRegistry("modules")
+        Dim tree As IObjectTree = registry.Tree
+        Dim o = tree.Search(ObjectIdentifier.Convert(oid))
+        Dim textual As String = o.AlternativeText
         Console.WriteLine(textual)
+        If o.GetRemaining().Count = 0 Then
+            Console.WriteLine(o.Definition.Type.ToString())
+        End If
     End Sub
 
 End Module

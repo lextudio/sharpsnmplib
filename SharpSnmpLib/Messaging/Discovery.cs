@@ -26,6 +26,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Net;
 using System.Net.Sockets;
 
@@ -94,6 +95,17 @@ namespace Lextm.SharpSnmpLib.Messaging
         public byte[] ToBytes()
         {
             return _discovery.ToBytes();
+        }
+
+        /// <summary>
+        /// Returns a <see cref="System.String"/> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String"/> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return string.Format(CultureInfo.InvariantCulture, "discovery class: message id: {0}; request id: {1}", _discovery.MessageId, _discovery.RequestId);
         }
     }
 }

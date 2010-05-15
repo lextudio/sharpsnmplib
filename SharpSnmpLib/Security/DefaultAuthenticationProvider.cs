@@ -101,5 +101,10 @@ namespace Lextm.SharpSnmpLib.Security
         }
 
         #endregion
+
+        public override string ToString()
+        {
+            return "Default authentication provider";
+        }
     }
 }

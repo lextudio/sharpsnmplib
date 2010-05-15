@@ -16,6 +16,7 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
+using System.Globalization;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -130,5 +131,16 @@ namespace Lextm.SharpSnmpLib
         }
 
         #endregion
+
+        /// <summary>
+        /// Returns a <see cref="System.String"/> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String"/> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return string.Format(CultureInfo.InvariantCulture, "Header: messageId: {0};maxMessageSize: {1};securityBits: {2};securityModel: {3}", MessageId, _maxSize, _flags.ToHexString(), _securityModel);
+        }
     }
 }

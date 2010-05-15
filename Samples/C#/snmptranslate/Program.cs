@@ -14,9 +14,15 @@ namespace snmptranslate
             }
 
             string oid = args[0];
-            ReloadableObjectRegistry registry = new ReloadableObjectRegistry("modules");
-            string textual = registry.Translate(ObjectIdentifier.Convert(oid));
+            IObjectRegistry registry = new ReloadableObjectRegistry("modules");
+            IObjectTree tree = registry.Tree;
+            var o = tree.Search(ObjectIdentifier.Convert(oid));
+            string textual = o.AlternativeText;
             Console.WriteLine(textual);
+            if (o.GetRemaining().Count == 0)
+            {
+                Console.WriteLine(o.Definition.Type.ToString());
+            }
         }
     }
 }

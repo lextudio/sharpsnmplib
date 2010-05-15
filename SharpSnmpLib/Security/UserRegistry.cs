@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace Lextm.SharpSnmpLib.Security
 {
@@ -94,6 +95,17 @@ namespace Lextm.SharpSnmpLib.Security
             }
 
             return _users.ContainsKey(userName) ? _users[userName].Providers : null;
+        }
+
+        /// <summary>
+        /// Returns a <see cref="System.String"/> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String"/> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return string.Format(CultureInfo.InvariantCulture, "User registry: count: {0}", _users.Count);
         }
     }
 }

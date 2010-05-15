@@ -16,6 +16,7 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
+using System.Globalization;
 
 namespace Lextm.SharpSnmpLib.Security
 {
@@ -109,6 +110,17 @@ namespace Lextm.SharpSnmpLib.Security
             {
                 return DefaultPair;
             }
+        }
+
+        /// <summary>
+        /// Returns a <see cref="System.String"/> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String"/> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return string.Format(CultureInfo.InvariantCulture, "Provider pair: authen: {0}; priv: {1}", Authentication, Privacy);
         }
     }
 }

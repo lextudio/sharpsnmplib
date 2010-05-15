@@ -93,6 +93,11 @@ namespace Lextm.SharpSnmpLib
     
             return base.ConvertTo(context, culture, value, destinationType);
         }
+
+        public override string ToString()
+        {
+            return "Object identifier converter";
+        }
     }
     #endif
 }

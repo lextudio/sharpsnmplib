@@ -16,6 +16,7 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
+using System.Globalization;
 
 namespace Lextm.SharpSnmpLib.Security
 {
@@ -57,6 +58,17 @@ namespace Lextm.SharpSnmpLib.Security
             byte[] buffer = BitConverter.GetBytes(NextSalt());
             Array.Reverse(buffer);
             return buffer;
+        }
+
+        /// <summary>
+        /// Returns a <see cref="System.String"/> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String"/> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return string.Format(CultureInfo.InvariantCulture, "Salt generator: current salt: {0}", _salt);
         }
     }
 }

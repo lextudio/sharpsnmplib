@@ -136,5 +136,10 @@ namespace Lextm.SharpSnmpLib.Security
         }
 
         #endregion
+
+        public override string ToString()
+        {
+            return "SHA-1 authentication provider";
+        }
     }
 }

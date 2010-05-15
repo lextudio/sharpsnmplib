@@ -92,20 +92,6 @@ namespace Lextm.SharpSnmpLib
         }
 
         /// <summary>
-        /// Converts the PDU to index complete message.
-        /// </summary>
-        /// <param name="version">Protocol version.</param>
-        /// <param name="community">Community name.</param>
-        /// <returns></returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "version")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "community")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public Sequence ToMessageBody(VersionCode version, OctetString community)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// Variable bindings.
         /// </summary>
         /// <value>Returns an empty list.</value>
@@ -113,6 +99,17 @@ namespace Lextm.SharpSnmpLib
         {
             // as we cannot extract PDU data in such cases, only an empty list can be returned here.
             get { return new List<Variable>(0); }
+        }
+
+        /// <summary>
+        /// Returns a <see cref="System.String"/> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String"/> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return "Malformed PDU";
         }
     }
 }

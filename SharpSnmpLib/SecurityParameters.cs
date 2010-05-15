@@ -16,6 +16,7 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
+using System.Globalization;
 
 /*
  * Created by SharpDevelop.
@@ -167,5 +168,16 @@ namespace Lextm.SharpSnmpLib
         }
 
         #endregion
+
+        /// <summary>
+        /// Returns a <see cref="System.String"/> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String"/> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return string.Format(CultureInfo.InvariantCulture, "Security parameters: engineId: {0};engineBoots: {1};engineTime: {2};userName: {3}; authen hash: {4}; privacy hash: {5}", EngineId, EngineBoots, EngineTime, UserName, AuthenticationParameters.ToHexString(), PrivacyParameters.ToHexString());
+        }
     }
 }

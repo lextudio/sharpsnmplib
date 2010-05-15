@@ -16,6 +16,7 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
+using System.Globalization;
 
 namespace Lextm.SharpSnmpLib.Messaging
 {
@@ -106,6 +107,17 @@ namespace Lextm.SharpSnmpLib.Messaging
         public int MessageId
         {
             get { return _messageId; }
+        }
+
+        /// <summary>
+        /// Returns a <see cref="System.String"/> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String"/> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return string.Format(CultureInfo.InvariantCulture, "Malformed message: message id: {0}; user: {1}", MessageId, _parameters.UserName);
         }
     }
 }

@@ -75,7 +75,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <value>The remaining.</value>
         [CLSCompliant(false)]
-        public IEnumerable<uint> GetRemaining()
+        public ICollection<uint> GetRemaining()
         {
             return _remaining; 
         }
