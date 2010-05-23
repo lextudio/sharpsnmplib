@@ -138,6 +138,12 @@ namespace Lextm.SharpSnmpLib.Security
             get { return _providers; }
         }
 
+        /// <summary>
+        /// Returns a <see cref="System.String"/> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String"/> that represents this instance.
+        /// </returns>
         public override string ToString()
         {
             return string.Format(CultureInfo.InvariantCulture, "User: name: {0}; providers: {1}", Name, Providers);

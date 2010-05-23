@@ -219,7 +219,9 @@
     <None Include="modules\SNMPV2-TM.module">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="changes.txt" />
     <None Include="Resources\system-log-out.png" />
     <None Include="Resources\package-x-generic.png" />

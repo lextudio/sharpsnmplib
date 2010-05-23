@@ -94,6 +94,12 @@ namespace Lextm.SharpSnmpLib
             return base.ConvertTo(context, culture, value, destinationType);
         }
 
+        /// <summary>
+        /// Returns a <see cref="System.String"/> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String"/> that represents this instance.
+        /// </returns>
         public override string ToString()
         {
             return "Object identifier converter";
