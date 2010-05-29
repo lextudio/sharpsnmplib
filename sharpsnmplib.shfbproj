@@ -24,12 +24,12 @@
     </HtmlHelp1xCompilerPath>
     <HtmlHelp2xCompilerPath>
     </HtmlHelp2xCompilerPath>
-    <SandcastlePath>C:\Program Files (x86)\Sandcastle\</SandcastlePath>
+    <SandcastlePath>C:\Program Files\Sandcastle\</SandcastlePath>
     <WorkingPath>
     </WorkingPath>
     <BuildLogFile>
     </BuildLogFile>
-    <HelpFileFormat>HtmlHelp1, MSHelp2, MSHelpViewer, Website</HelpFileFormat>
+    <HelpFileFormat>HtmlHelp1, MSHelp2, MSHelpViewer</HelpFileFormat>
     <FrameworkVersion>2.0.50727</FrameworkVersion>
     <HelpTitle>#SNMP Class Library Documentation</HelpTitle>
     <FeedbackEMailAddress>lextudio%40gmail.com</FeedbackEMailAddress>

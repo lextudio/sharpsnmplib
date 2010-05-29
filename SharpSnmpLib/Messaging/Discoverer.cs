@@ -56,7 +56,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             if (version == VersionCode.V3)
             {
                 // throw new NotSupportedException("SNMP v3 is not supported");
-                Discovery discovery = new Discovery(_requestId, Messenger.NextMessageId);
+                Discovery discovery = new Discovery(Messenger.NextMessageId, _requestId);
                 bytes = discovery.ToBytes();
             }
             else
