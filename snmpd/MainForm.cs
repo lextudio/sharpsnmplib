@@ -55,7 +55,11 @@ namespace Lextm.SharpSnmpLib.Agent
             int port = int.Parse(tstxtPort.Text);
             if (tscbIP.Text == StrAllUnassigned)
             {
-                _demon.Listener.AddBinding(new IPEndPoint(IPAddress.Any, port));
+                if (Socket.SupportsIPv4)
+                {
+                    _demon.Listener.AddBinding(new IPEndPoint(IPAddress.Any, port));
+                }
+
                 if (Socket.OSSupportsIPv6)
                 {
                     _demon.Listener.AddBinding(new IPEndPoint(IPAddress.IPv6Any, port));
@@ -73,6 +77,12 @@ namespace Lextm.SharpSnmpLib.Agent
 
             if (address.AddressFamily == AddressFamily.InterNetwork)
             {
+                if (!Socket.SupportsIPv4)
+                {
+                    MessageBox.Show(Listener.ErrorIPv4NotSupported);
+                    return;
+                }
+
                 _demon.Listener.AddBinding(new IPEndPoint(address, port));
                 _demon.Start();
                 return;

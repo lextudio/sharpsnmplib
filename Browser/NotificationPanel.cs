@@ -124,7 +124,11 @@ namespace Lextm.SharpSnmpLib.Browser
             int port = int.Parse(tstxtPort.Text);
             if (tscbIP.Text == StrAllUnassigned)
             {
-                Listener.AddBinding(new IPEndPoint(IPAddress.Any, port));
+                if (Socket.SupportsIPv4)
+                {
+                    Listener.AddBinding(new IPEndPoint(IPAddress.Any, port));
+                }
+
                 if (Socket.OSSupportsIPv6)
                 {
                     Listener.AddBinding(new IPEndPoint(IPAddress.IPv6Any, port));
@@ -142,6 +146,12 @@ namespace Lextm.SharpSnmpLib.Browser
 
             if (address.AddressFamily == AddressFamily.InterNetwork)
             {
+                if (!Socket.SupportsIPv4)
+                {
+                    LogMessage(Listener.ErrorIPv4NotSupported);
+                    return;
+                }
+
                 Listener.AddBinding(new IPEndPoint(address, port)); 
                 Listener.Start();
                 return;

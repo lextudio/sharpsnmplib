@@ -140,6 +140,11 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new ObjectDisposedException("Listener");
             }
+
+            if (Endpoint.AddressFamily == AddressFamily.InterNetwork && !Socket.SupportsIPv4)
+            {
+                throw new InvalidOperationException(Listener.ErrorIPv4NotSupported);
+            }
             
             if (Endpoint.AddressFamily == AddressFamily.InterNetworkV6 && !Socket.OSSupportsIPv6)
             {
