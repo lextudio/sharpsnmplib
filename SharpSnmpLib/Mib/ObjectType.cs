@@ -19,7 +19,7 @@ namespace Lextm.SharpSnmpLib.Mib
             lexer.ParseOidValue(out _parent, out _value);
         }
 
-		private IDictionary<string, string> ParseProperties(IList<Symbol> header)
+		private static IDictionary<string, string> ParseProperties(IEnumerable<Symbol> header)
 		{
 			IDictionary<string, string> result = new Dictionary<string, string>();
 			StringBuilder data = new StringBuilder();
@@ -28,20 +28,33 @@ namespace Lextm.SharpSnmpLib.Mib
 			{
 				if (IsProperty(sym))
 				{
-					result.Add(previous, data.ToString());
+                    if (previous != null)
+                    {
+                        result.Add(previous, data.ToString());
+                    }
+
 					previous = sym.ToString();
 					data.Length = 0;
 					continue;
 				}
 				
+                if (sym == Symbol.Assign)
+                {
+                    break;
+                }
+
 				data.Append(sym.ToString());
 			}
-			
-			result.Add(previous, data.ToString());
+
+            if (previous != null)
+            {
+                result.Add(previous, data.ToString());
+            }
+
 			return result;
 		}
 
-		private bool IsProperty(Symbol sym)
+		private static bool IsProperty(Symbol sym)
 		{
 			string s = sym.ToString();
 			return  s == "SYNTAX" || s == "MAX-ACCESS" || s == "STATUS" || s == "DESCRIPTION";
@@ -70,7 +83,12 @@ namespace Lextm.SharpSnmpLib.Mib
 		
 		public string Description
 		{			
-			get { return _properties.ContainsKey("DESCRIPTION") ? _properties["DESCRIPTION"] : string.Empty; }
+			get { return _properties.ContainsKey("DESCRIPTION") ? ExtractDescription() : string.Empty; }
 		}
+
+        private string ExtractDescription()
+        {
+            return _properties["DESCRIPTION"].TrimStart(new[] { '"' }).TrimEnd(new[] { '"' }).Trim(new[] { '\r', '\n' });
+        }
     }
 }

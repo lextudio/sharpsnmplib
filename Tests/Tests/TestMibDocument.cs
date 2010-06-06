@@ -441,9 +441,7 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual("logDescription", node.Name);
             Assert.AreEqual(4, node.Value);
             Assert.AreEqual("logEntry", node.Parent);
-			
-			IEntity first = file.Modules[0].Entities[0];			
-			Assert.AreEqual("A list of Ethernet statistics entries.", first.Description);
+            Assert.AreEqual("An implementation dependent description of the\n\n                  event that activated this log entry.", node.Description);
         }
 		
         [Test]
@@ -1294,6 +1292,7 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual(6, node.Value);
             Assert.AreEqual("dismanEventMIBGroups", node.Parent);
         }
+
         [Test]
         public void TestDISKMAN_Expression_MIB()
         {
@@ -1304,6 +1303,7 @@ namespace Lextm.SharpSnmpLib.Tests
                 lexer.Parse(reader);
                 reader.Close();
             }
+
             MibDocument file = new MibDocument(lexer);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("DISMAN-EXPRESSION-MIB", file.Modules[0].Name);
@@ -1313,6 +1313,7 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual(3, node.Value);
             Assert.AreEqual("dismanExpressionMIBGroups", node.Parent);
         }
+
         [Test]
         public void TestDISKMAN_NSLookUp_MIB()
         {
@@ -1323,6 +1324,7 @@ namespace Lextm.SharpSnmpLib.Tests
                 lexer.Parse(reader);
                 reader.Close();
             }
+
             MibDocument file = new MibDocument(lexer);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("DISMAN-NSLOOKUP-MIB", file.Modules[0].Name);
@@ -1332,6 +1334,7 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual(1, node.Value);
             Assert.AreEqual("lookupGroups", node.Parent);
         }
+
         [Test]
         public void TestDISKMAN_Ping_MIB()
         {
