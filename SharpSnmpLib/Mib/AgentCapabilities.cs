@@ -39,10 +39,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// </summary>
         public string ModuleName
         {
-            get
-            {
-                return _module;
-            }
+            get { return _module; }
         }
       
         /// <summary>
@@ -50,10 +47,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// </summary>
         public string Name
         {
-            get
-            {
-                return _name;
-            }
+            get { return _name; }
         }
        
         /// <summary>
@@ -70,10 +64,13 @@ namespace Lextm.SharpSnmpLib.Mib
         /// </summary>
         public uint Value
         {
-            get
-            {
-                return _value;
-            }
+            get { return _value; }
         }
+		
+		public string Description
+		{
+			// TODO: implement this.
+			get { return string.Empty; }
+		}
     }
 }

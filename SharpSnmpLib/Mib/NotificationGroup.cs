@@ -48,5 +48,11 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             get { return _name; }
         }
+		
+		public string Description
+		{
+			// TODO: implement this.
+			get { return string.Empty; }
+		}
     }
 }

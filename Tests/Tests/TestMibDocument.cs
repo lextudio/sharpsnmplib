@@ -411,6 +411,7 @@ namespace Lextm.SharpSnmpLib.Tests
                 lexer.Parse(reader);
                 reader.Close();
             }
+			
             MibDocument file = new MibDocument(lexer);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("RFC1155-SMI", file.Modules[0].Name);
@@ -420,6 +421,7 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual(1, node.Value);
             Assert.AreEqual("iso.org(3).dod(6)", node.Parent);
         }
+		
         [Test]
         public void TestRFC1271_MIB()
         {
@@ -430,6 +432,7 @@ namespace Lextm.SharpSnmpLib.Tests
                 lexer.Parse(reader);
                 reader.Close();
             }
+			
             MibDocument file = new MibDocument(lexer);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("RFC1271-MIB", file.Modules[0].Name);
@@ -438,7 +441,11 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual("logDescription", node.Name);
             Assert.AreEqual(4, node.Value);
             Assert.AreEqual("logEntry", node.Parent);
+			
+			IEntity first = file.Modules[0].Entities[0];			
+			Assert.AreEqual("A list of Ethernet statistics entries.", first.Description);
         }
+		
         [Test]
         public void TestRFC1213_MIB()
         {

@@ -67,5 +67,10 @@ namespace Lextm.SharpSnmpLib
         {
             get;            
         }
+		
+		string Description
+		{
+			get;
+		}
     }
 }

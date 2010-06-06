@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace Lextm.SharpSnmpLib.Mib
@@ -256,5 +256,11 @@ namespace Lextm.SharpSnmpLib.Mib
             Array.Copy(self, result, self.Length - 1);            
             return result;
         }
+		
+		public string Description
+		{
+			// TODO: implement this.
+			get { return string.Empty; }
+		}
     }
 }
