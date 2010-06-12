@@ -54,7 +54,7 @@ namespace Lextm.SharpSnmpLib.Security
         {
         }
 
-        #if (!SILVERLIGHT)
+#if (!SILVERLIGHT && !CF) 
         /// <summary>
         /// Creates a <see cref="DecryptionException"/> instance.
         /// </summary>
@@ -82,7 +82,7 @@ namespace Lextm.SharpSnmpLib.Security
             base.GetObjectData(info, context);
             info.AddValue("Bytes", _bytes);
         }
-        #endif
+#endif
         
         /// <summary>
         /// Gets the bytes.

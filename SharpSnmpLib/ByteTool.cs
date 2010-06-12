@@ -51,7 +51,7 @@ namespace Lextm.SharpSnmpLib
             }
             
             List<byte> result = new List<byte>();
-            string[] content = description.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            string[] content = description.Split(new[] { ' ' });
             foreach (string part in content)
             {
                 result.Add(byte.Parse(part, NumberStyles.Integer, CultureInfo.InvariantCulture));

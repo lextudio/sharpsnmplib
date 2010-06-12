@@ -245,11 +245,15 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("dotted");
             }
 
-            string[] parts = dotted.Split(new[] { '.' }, StringSplitOptions.RemoveEmptyEntries);
+            string[] parts = dotted.Split(new[] { '.' });
             uint[] result = new uint[parts.Length];
             for (int i = 0; i < parts.Length; i++)
             {
-                result[i] = uint.Parse(parts[i], CultureInfo.InvariantCulture);
+#if CF
+                result[i] = uint.Parse(parts[i]);
+#else
+					result[i] = uint.Parse(parts[i], CultureInfo.InvariantCulture);
+#endif
             }
 
             return result;

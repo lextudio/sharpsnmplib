@@ -44,7 +44,7 @@ namespace Lextm.SharpSnmpLib
         {
         }
 
-#if (!SILVERLIGHT)
+#if (!SILVERLIGHT && !CF) 
         /// <summary>
         /// Creates a <see cref="SnmpException"/> instance.
         /// </summary>

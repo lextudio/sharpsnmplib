@@ -68,7 +68,7 @@ namespace SnmpBulkGet
                 .Add("V", "-V to display version number of this application.", delegate (string v) { showVersion = v != null; })
                 .Add("t:", "-t for timeout value (unit is second).", delegate (string v) { timeout = int.Parse(v) * 1000; })
                 .Add("r:", "-r for retry count (default is 0)", delegate (string v) { retry = int.Parse(v); })
-                .Add("v:", "-v for SNMP version (v2 and v3 are currently supported)", delegate (string v)
+                .Add("v:", "-v for SNMP version (2 and 3 are currently supported)", delegate (string v)
                                                                                        {
                                                                                            switch (int.Parse(v))
                                                                                            {

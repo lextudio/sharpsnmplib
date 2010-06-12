@@ -76,7 +76,7 @@ Module Program
                                                                                                                            End Sub).Add("r:", "-r for retry count (default is 0)",
                                                                                                                                         Sub(v As String)
                                                                                                                                             retry = Integer.Parse(v)
-                                                                                                                                        End Sub).Add("v|version:", "-v for SNMP version (v1, v2 are currently supported)",
+                                                                                                                                        End Sub).Add("v|version:", "-v for SNMP version (1, 2, and 3 are currently supported)",
                                                                                                                                                      Sub(v As String)
                                                                                                                                                          Select Case Integer.Parse(v)
                                                                                                                                                              Case 1

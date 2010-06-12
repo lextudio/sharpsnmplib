@@ -19,7 +19,7 @@ namespace System.Net.Sockets
     {
         private static byte[] recvbuffer;        		
    
-        public static IAsyncResult BeginReceive (this UdpClient client,
+        public static IAsyncResult BeginReceive (UdpClient client,
                                           AsyncCallback callback,
 						  object state)
 		{
@@ -39,7 +39,7 @@ namespace System.Net.Sockets
 							callback, state));
 		}
 		
-		public static byte[] EndReceive (this UdpClient client, 
+		public static byte[] EndReceive (UdpClient client, 
                                   IAsyncResult asyncResult,
 					  ref IPEndPoint remoteEP)
 		{

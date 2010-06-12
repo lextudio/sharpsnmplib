@@ -1,4 +1,5 @@
-﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectGuid>{EBB48F98-32C4-474F-B691-3599827418A2}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -14,7 +15,7 @@
     <DelaySign>False</DelaySign>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
     <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
-    <NoStdLib>False</NoStdLib>
+    <NoStdLib>True</NoStdLib>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
@@ -43,9 +44,11 @@
   </PropertyGroup>
   <Import Project="SharpDevelop.Build.CSharp.targets" />
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core">
-      <HintPath>C:\Program Files\Microsoft.NET\SDK\CompactFramework\v3.5\WindowsCE\System.Core.dll</HintPath>
+    <Reference Include="System">
+      <HintPath>C:\Program Files\Microsoft.NET\SDK\CompactFramework\v3.5\WindowsCE\System.dll</HintPath>
+    </Reference>
+    <Reference Include="mscorlib">
+      <HintPath>C:\Program Files\Microsoft.NET\SDK\CompactFramework\v3.5\WindowsCE\mscorlib.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
