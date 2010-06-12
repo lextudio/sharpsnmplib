@@ -27,7 +27,7 @@ namespace Lextm.SharpSnmpLib.Security
     {
         private readonly ProviderPair _providers;
         private readonly OctetString _name;
-
+#if !CF
         /// <summary>
         /// Initializes a new instance of the <see cref="User"/> class.
         /// </summary>
@@ -98,7 +98,7 @@ namespace Lextm.SharpSnmpLib.Security
             _name = name;
             _providers = new ProviderPair(authenticationProvider, privacyProvider);
         }
-
+#endif
         /// <summary>
         /// Initializes a new instance of the <see cref="User"/> class.
         /// </summary>
