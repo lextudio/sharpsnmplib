@@ -52,6 +52,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\lib\CryptoTools.cs">
+      <Link>CryptoTools.cs</Link>
+    </Compile>
+    <Compile Include="..\lib\HMAC.cs">
+      <Link>HMAC.cs</Link>
+    </Compile>
+    <Compile Include="..\lib\HMACMD5.cs">
+      <Link>HMACMD5.cs</Link>
+    </Compile>
+    <Compile Include="..\lib\HMACSHA1.cs">
+      <Link>HMACSHA1.cs</Link>
+    </Compile>
+    <Compile Include="..\lib\KeyedHashAlgorithm.cs">
+      <Link>KeyedHashAlgorithm.cs</Link>
+    </Compile>
+    <Compile Include="..\lib\Locale.cs">
+      <Link>Locale.cs</Link>
+    </Compile>
     <Compile Include="ByteTool.cs" />
     <Compile Include="Counter32.cs" />
     <Compile Include="Counter64.cs" />
@@ -115,9 +133,11 @@
     <Compile Include="Security\DESPrivacyProvider.cs" />
     <Compile Include="Security\IAuthenticationProvider.cs" />
     <Compile Include="Security\IPrivacyProvider.cs" />
+    <Compile Include="Security\MD5AuthenticationProvider.cs" />
     <Compile Include="Security\ProviderPair.cs" />
     <Compile Include="Security\SaltGenerator.cs" />
     <Compile Include="Security\SecurityLevel.cs" />
+    <Compile Include="Security\SHA1AuthenticationProvider.cs" />
     <Compile Include="Security\User.cs" />
     <Compile Include="Security\UserRegistry.cs" />
     <Compile Include="Sequence.cs" />
