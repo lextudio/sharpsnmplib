@@ -29,6 +29,7 @@ namespace SnmpWalk
             VersionCode version = VersionCode.V1;
             int timeout = 1000; 
             int retry = 0;
+            int maxRepetitions = 10;
             Levels level = Levels.None | Levels.Reportable;
             string user = string.Empty;
             string authentication = string.Empty;
@@ -99,7 +100,8 @@ namespace SnmpWalk
                                                                                          {
                                                                                              throw new ArgumentException("unknown argument: " + v);
                                                                                          }
-                                                                                     });
+                                                                                     })
+                .Add("Cr:", "-Cr for max-repetitions (default is 10)", delegate(string v) { maxRepetitions = int.Parse(v); });
         
             List<string> extra = p.Parse (args);
         
@@ -154,7 +156,7 @@ namespace SnmpWalk
                 } 
                 else if (version == VersionCode.V2)
                 {
-                    Messenger.BulkWalk(version, receiver, new OctetString(community), test, result, timeout, retry, mode, null, null);
+                    Messenger.BulkWalk(version, receiver, new OctetString(community), test, result, timeout, maxRepetitions, mode, null, null);
                 }
                 else
                 {
@@ -165,17 +167,15 @@ namespace SnmpWalk
                         return;
                     }
 
-                    IAuthenticationProvider auth;
-                    auth = (level & Levels.Authentication) == Levels.Authentication ? GetAuthenticationProviderByName(authentication, authPhrase) : DefaultAuthenticationProvider.Instance;
+                    IAuthenticationProvider auth = (level & Levels.Authentication) == Levels.Authentication ? GetAuthenticationProviderByName(authentication, authPhrase) : DefaultAuthenticationProvider.Instance;
 
-                    IPrivacyProvider priv;
-                    priv = (level & Levels.Privacy) == Levels.Privacy ? new DESPrivacyProvider(new OctetString(privPhrase), auth) : DefaultPrivacyProvider.Instance;
+                    IPrivacyProvider priv = (level & Levels.Privacy) == Levels.Privacy ? new DESPrivacyProvider(new OctetString(privPhrase), auth) : DefaultPrivacyProvider.Instance;
 
                     Discovery discovery = new Discovery(Messenger.NextMessageId, Messenger.NextRequestId);
                     ReportMessage report = discovery.GetResponse(timeout, receiver);
 
                     ProviderPair record = new ProviderPair(auth, priv);
-                    Messenger.BulkWalk(version, receiver, new OctetString(community), test, result, timeout, retry, mode, record, report);
+                    Messenger.BulkWalk(version, receiver, new OctetString(community), test, result, timeout, maxRepetitions, mode, record, report);
                 }
 
                 foreach (Variable variable in result)
