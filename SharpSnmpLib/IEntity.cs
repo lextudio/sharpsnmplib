@@ -67,10 +67,14 @@ namespace Lextm.SharpSnmpLib
         {
             get;            
         }
-		
-		string Description
-		{
-			get;
-		}
+
+        /// <summary>
+        /// Gets the description.
+        /// </summary>
+        /// <value>The description.</value>
+        string Description
+        {
+            get;
+        }
     }
 }

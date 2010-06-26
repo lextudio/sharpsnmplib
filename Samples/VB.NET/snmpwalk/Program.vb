@@ -22,6 +22,7 @@ Module Program
         Dim version As VersionCode = VersionCode.V1
         Dim timeout As Integer = 1000
         Dim retry As Integer = 0
+        Dim maxRepetitions As Integer = 10
         Dim level As Levels = Levels.None Or Levels.Reportable
         Dim user As String = String.Empty
         Dim authentication As String = String.Empty
@@ -100,7 +101,10 @@ Module Program
                                                                                                                                                                       Else
                                                                                                                                                                           Throw New ArgumentException("unknown argument: " & v)
                                                                                                                                                                       End If
-                                                                                                                                                                  End Sub)
+                                                                                                                                                                  End Sub).Add("Cr:", "-Cr for max-repetitions (default is 10)",
+                                                                                                                                                                               Sub(v As String)
+                                                                                                                                                                                   maxRepetitions = Integer.Parse(v)
+                                                                                                                                                                               End Sub)
         Dim extra As List(Of String) = p.Parse(args)
 
         If showHelp__1 Then
@@ -145,7 +149,7 @@ Module Program
                  mode)
             ElseIf version = VersionCode.V2 Then
                 Messenger.BulkWalk(version, receiver, New OctetString(community), test, result, timeout, _
-                 retry, mode, Nothing, Nothing)
+                 maxRepetitions, mode, Nothing, Nothing)
             Else
                 If String.IsNullOrEmpty(user) Then
                     Console.WriteLine("User name need to be specified for v3.")
@@ -171,7 +175,7 @@ Module Program
 
                 Dim record As New ProviderPair(auth, priv)
                 Messenger.BulkWalk(version, receiver, New OctetString(community), test, result, timeout, _
-                 retry, mode, record, report)
+                 maxRepetitions, mode, record, report)
             End If
             For Each variable As Variable In result
                 Console.WriteLine(variable)
@@ -185,7 +189,7 @@ Module Program
         Catch ex As SocketException
             Console.WriteLine(ex)
         End Try
-	End Sub
+    End Sub
 
     Private Function GetAuthenticationProviderByName(ByVal authentication As String, ByVal phrase As String) As IAuthenticationProvider
         If authentication.ToUpperInvariant() = "MD5" Then
