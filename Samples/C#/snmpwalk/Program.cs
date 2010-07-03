@@ -175,7 +175,7 @@ namespace SnmpWalk
                     ReportMessage report = discovery.GetResponse(timeout, receiver);
 
                     ProviderPair record = new ProviderPair(auth, priv);
-                    Messenger.BulkWalk(version, receiver, new OctetString(community), test, result, timeout, maxRepetitions, mode, record, report);
+                    Messenger.BulkWalk(version, receiver, new OctetString(user), test, result, timeout, maxRepetitions, mode, record, report);
                 }
 
                 foreach (Variable variable in result)
