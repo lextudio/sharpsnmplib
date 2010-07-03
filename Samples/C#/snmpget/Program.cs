@@ -78,15 +78,15 @@ namespace SnmpGet
                                                                                                            throw new ArgumentException("no such version: " + v);
                                                                                                    }
                                                                                                });
-			
+            
             List<string> extra = p.Parse (args);
-			
+            
             if (showHelp)
             {
                 ShowHelp();   
                 return;
             }
-			
+            
             if (showVersion)
             {
                 Console.WriteLine(System.Reflection.Assembly.GetExecutingAssembly().GetName().Version);
@@ -98,7 +98,7 @@ namespace SnmpGet
                 ShowHelp();
                 return;
             }
-			
+            
             IPAddress ip;
             bool parsed = IPAddress.TryParse(extra[0], out ip);
             if (!parsed)
@@ -113,7 +113,7 @@ namespace SnmpGet
                     ip = address;
                     break;
                 }
-				
+                
                 if (ip == null)
                 {
                     Console.WriteLine("invalid host or wrong IP address found: " + extra[0]);
@@ -142,7 +142,7 @@ namespace SnmpGet
 
                     return;
                 }
-				
+                
                 if (string.IsNullOrEmpty(user))
                 {
                     Console.WriteLine("User name need to be specified for v3.");
@@ -159,7 +159,7 @@ namespace SnmpGet
 
                 Discovery discovery = new Discovery(Messenger.NextMessageId, Messenger.NextRequestId);
                 ReportMessage report = discovery.GetResponse(timeout, receiver);
-				
+                
                 ProviderPair record = new ProviderPair(auth, priv);
                 GetRequestMessage request = new GetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(user), vList, record, report);
 
@@ -210,7 +210,7 @@ namespace SnmpGet
             {
                 return new MD5AuthenticationProvider(new OctetString(phrase));
             }
-			
+            
             if (authentication.ToUpperInvariant() == "SHA")
             {
                 return new SHA1AuthenticationProvider(new OctetString(phrase));

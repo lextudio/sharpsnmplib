@@ -246,17 +246,21 @@ namespace Lextm.SharpSnmpLib
             }
 
             string[] parts = dotted.Split(new[] { '.' });
-            uint[] result = new uint[parts.Length];
-            for (int i = 0; i < parts.Length; i++)
+            List<uint> result = new List<uint>();
+            foreach (string s in parts)
             {
+                if (string.IsNullOrEmpty(s))
+                {
+                    continue;
+                }
 #if CF
-                result[i] = uint.Parse(parts[i]);
+                result.Add(uint.Parse(s));
 #else
-					result[i] = uint.Parse(parts[i], CultureInfo.InvariantCulture);
+                result.Add(uint.Parse(s, CultureInfo.InvariantCulture));
 #endif
             }
 
-            return result;
+            return result.ToArray();
         }
 
         /// <summary>

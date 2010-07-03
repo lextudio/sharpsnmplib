@@ -11,6 +11,7 @@ namespace snmptranslate
             if (args.Length != 1)
             {
                 Console.WriteLine("This application takes one parameter.");
+                return;
             }
 
             string oid = args[0];
