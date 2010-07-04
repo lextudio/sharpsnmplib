@@ -174,7 +174,7 @@ Module Program
                 Dim report As ReportMessage = discovery.GetResponse(timeout, receiver)
 
                 Dim record As New ProviderPair(auth, priv)
-                Messenger.BulkWalk(version, receiver, New OctetString(community), test, result, timeout, _
+                Messenger.BulkWalk(version, receiver, New OctetString(user), test, result, timeout, _
                  maxRepetitions, mode, record, report)
             End If
             For Each variable As Variable In result
