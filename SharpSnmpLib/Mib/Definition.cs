@@ -256,11 +256,11 @@ namespace Lextm.SharpSnmpLib.Mib
             Array.Copy(self, result, self.Length - 1);            
             return result;
         }
-		
-		public string Description
-		{
-			// TODO: implement this.
-			get { return string.Empty; }
-		}
+        
+        public string Description
+        {
+            // TODO: implement this.
+            get { return string.Empty; }
+        }
     }
 }

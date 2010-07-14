@@ -24,7 +24,7 @@ namespace Lextm.SharpSnmpLib.Mib
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         private readonly Exports _exports;
         private readonly List<IConstruct> _tokens = new List<IConstruct>();
-        const string Pattern = "-V[0-9]+$";
+        private const string Pattern = "-V[0-9]+$";
         
         internal MibModule(string name, IEnumerable<string> dependents)
         {

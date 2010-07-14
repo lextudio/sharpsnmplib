@@ -294,11 +294,11 @@ namespace Lextm.SharpSnmpLib.Tests
         [Test]
         public void TestTimeOut()
         {
-        	// IMPORTANT: this test case requires a local SNMP agent such as 
-        	//   #SNMP Agent (snmpd), 
-        	//   Windows SNMP agent service, 
-        	//   Net-SNMP agent, or 
-        	//   snmp4j agent.
+            // IMPORTANT: this test case requires a local SNMP agent such as 
+            //   #SNMP Agent (snmpd), 
+            //   Windows SNMP agent service, 
+            //   Net-SNMP agent, or 
+            //   snmp4j agent.
             Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             GetRequestMessage message = new GetRequestMessage(0x4bed, VersionCode.V2, new OctetString("public"), new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) });
             
@@ -329,12 +329,16 @@ namespace Lextm.SharpSnmpLib.Tests
             {
                 hasException = true;
             }
-			
+            catch (SocketException)
+            {
+                hasException = true;
+            }
+
             timer.Stop();            
             
             long elapsedMilliseconds = timer.ElapsedMilliseconds;
-			Console.WriteLine("elapsed: " + elapsedMilliseconds);
-			Console.WriteLine("timeout: " + time);
+            Console.WriteLine("elapsed: " + elapsedMilliseconds);
+            Console.WriteLine("timeout: " + time);
             Assert.LessOrEqual(time, elapsedMilliseconds);
             Assert.IsTrue(hasException);
 

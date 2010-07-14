@@ -54,6 +54,12 @@ namespace Lextm.SharpSnmpLib.Tests
         }
 
         [Test]
+        public void TestConversion()
+        {	  	
+            new ObjectIdentifier(".1.3.6.1.2.1.1.1.0");
+        }
+
+        [Test]
         public void TestToString()
         {
             Assert.AreEqual("iso.org.dod.internet.mgmt.mib-2.transmission",

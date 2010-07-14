@@ -70,11 +70,11 @@ namespace Lextm.SharpSnmpLib.Mib
                 return _value;
             }
         }
-		
-		public string Description
-		{
-			// TODO: implement this.
-			get { return string.Empty; }
-		}
+        
+        public string Description
+        {
+            // TODO: implement this.
+            get { return string.Empty; }
+        }
     }
 }
