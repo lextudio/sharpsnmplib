@@ -109,21 +109,14 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="buffer">The bytes.</param>
         /// <returns></returns>
-        public static string Convert(IEnumerable<byte> buffer)
+        public static string Convert(byte[] buffer)
         {
             if (buffer == null)
             {
                 throw new ArgumentNullException("buffer");
             }
 
-            StringBuilder result = new StringBuilder();
-            foreach (byte b in buffer)
-            {
-                result.AppendFormat("{0:X2} ", b);
-            }
-            
-            result.Length--;
-            return result.ToString();
+            return BitConverter.ToString(buffer).Replace('-', ' ');
         }
 
         internal static bool CompareArray<T>(IList<T> left, IList<T> right) where T : IEquatable<T>
