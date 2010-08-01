@@ -177,6 +177,12 @@ namespace Lextm.SharpSnmpLib.Mib
                 case '\r':
                     return false;
                 default:
+                    if ((int)current == 0x1A)
+                    {
+                        // IMPORTANT: ignore invisible characters such as SUB.
+                        return false;
+                    }
+                    
                     if (Char.IsWhiteSpace(current) && !_assignSection && !_stringSection)
                     {                     
                         bool moveNext = ParseLastSymbol(file, list, ref _temp, row, column);

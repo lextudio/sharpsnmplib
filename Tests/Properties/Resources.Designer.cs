@@ -284,6 +284,13 @@ namespace Lextm.SharpSnmpLib.Tests {
             }
         }
         
+        internal static byte[] httpmib {
+            get {
+                object obj = ResourceManager.GetObject("httpmib", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         internal static byte[] IANA_ADDRESS_FAMILY_NUMBERS_MIB {
             get {
                 object obj = ResourceManager.GetObject("IANA_ADDRESS_FAMILY_NUMBERS_MIB", resourceCulture);
