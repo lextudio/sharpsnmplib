@@ -8,34 +8,34 @@
  */
 namespace Lextm.SharpSnmpLib.Browser
 {
-	partial class NotificationPanel
-	{
-		/// <summary>
-		/// Designer variable used to keep track of non-visual components.
-		/// </summary>
-		private System.ComponentModel.IContainer components = null;
-		
-		/// <summary>
-		/// Disposes resources used by the control.
-		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing) {
-				if (components != null) {
-					components.Dispose();
-				}
-			}
-			base.Dispose(disposing);
-		}
-		
-		/// <summary>
-		/// This method is required for Windows Forms designer support.
-		/// Do not change the method contents inside the source code editor. The Forms designer might
-		/// not be able to load this method if it was changed manually.
-		/// </summary>
-		private void InitializeComponent()
-		{
+    partial class NotificationPanel
+    {
+        /// <summary>
+        /// Designer variable used to keep track of non-visual components.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+        
+        /// <summary>
+        /// Disposes resources used by the control.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) {
+                if (components != null) {
+                    components.Dispose();
+                }
+            }
+            base.Dispose(disposing);
+        }
+        
+        /// <summary>
+        /// This method is required for Windows Forms designer support.
+        /// Do not change the method contents inside the source code editor. The Forms designer might
+        /// not be able to load this method if it was changed manually.
+        /// </summary>
+        private void InitializeComponent()
+        {
             this.txtLog = new System.Windows.Forms.RichTextBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
@@ -134,16 +134,16 @@ namespace Lextm.SharpSnmpLib.Browser
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "NotificationPanel";
             this.TabText = "Notification";
-            this.Load += new System.EventHandler(this.NotificationPanel_Load);
+            this.Load += new System.EventHandler(this.NotificationPanelLoad);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.alNotification)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
-		}
-		private System.Windows.Forms.ToolStrip toolStrip1;
-		private System.Windows.Forms.RichTextBox txtLog;
+        }
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.RichTextBox txtLog;
         private Crad.Windows.Forms.Actions.ActionList alNotification;
         private Crad.Windows.Forms.Actions.Action actEnabled;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
@@ -152,5 +152,5 @@ namespace Lextm.SharpSnmpLib.Browser
         private System.Windows.Forms.ToolStripComboBox tscbIP;
         private System.Windows.Forms.ToolStripLabel toolStripLabel2;
         private System.Windows.Forms.ToolStripTextBox tstxtPort;
-	}
+    }
 }

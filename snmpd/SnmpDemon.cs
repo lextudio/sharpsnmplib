@@ -47,10 +47,11 @@ namespace Lextm.SharpSnmpLib.Agent
         /// Starts the demon.
         /// </summary>
         public void Start()
-        {
+        {   
+            Listener.Start();
             Listener.ExceptionRaised += ListenerExceptionRaised;
             Listener.MessageReceived += ListenerMessageReceived;
-            Listener.Start();
+
         }
 
         /// <summary>

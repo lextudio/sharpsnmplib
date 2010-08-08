@@ -33,13 +33,13 @@ namespace Lextm.SharpSnmpLib.Agent
             _demon = Program.Container.Resolve<SnmpDemon>();
             InitializeComponent();
             if (PlatformSupport.Platform == PlatformType.Windows)
-			{
-			    // FIXME: work around a Mono WinForms bug.
-				Icon = Properties.Resources.network_server;
-			    actEnabled.Image = Properties.Resources.face_monkey;
-			}
-			
-            tstxtPort.Text = "161";
+            {
+                // FIXME: work around a Mono WinForms bug.
+                Icon = Properties.Resources.network_server;
+                actEnabled.Image = Properties.Resources.face_monkey;
+            }
+            
+            tstxtPort.Text = @"161";
             tscbIP.Items.Add(StrAllUnassigned);
             foreach (IPAddress address in Dns.GetHostEntry(string.Empty).AddressList.Where(address => !address.IsIPv6LinkLocal))
             {
@@ -70,11 +70,6 @@ namespace Lextm.SharpSnmpLib.Agent
             }
 
             IPAddress address = IPAddress.Parse(tscbIP.Text);
-            if (address == null)
-            {
-                return;
-            }
-
             if (address.AddressFamily == AddressFamily.InterNetwork)
             {
                 if (!Socket.SupportsIPv4)
@@ -106,11 +101,6 @@ namespace Lextm.SharpSnmpLib.Agent
         private void BtnTrapClick(object sender, EventArgs e)
         {
             IPAddress ip = IPAddress.Parse(txtIP.Text);
-            if (ip == null)
-            {
-                return;
-            }
-
             Messenger.SendTrapV1(
                 new IPEndPoint(ip, int.Parse(txtPort.Text, CultureInfo.InvariantCulture)),
                 IPAddress.Loopback, // here should be IP of the current machine.
@@ -125,11 +115,6 @@ namespace Lextm.SharpSnmpLib.Agent
         private void BtnTrap2Click(object sender, EventArgs e)
         {
             IPAddress ip = IPAddress.Parse(txtIP.Text);
-            if (ip == null)
-            {
-                return;
-            }
-
             Messenger.SendTrapV2(
                 0,
                 VersionCode.V2,
@@ -145,11 +130,6 @@ namespace Lextm.SharpSnmpLib.Agent
         private void BtnInformClick(object sender, EventArgs e)
         {
             IPAddress ip = IPAddress.Parse(txtIP.Text);
-            if (ip == null)
-            {
-                return;
-            }
-
             try
             {
                 Messenger.SendInform(
@@ -170,31 +150,38 @@ namespace Lextm.SharpSnmpLib.Agent
 
         private void ActEnabledExecute(object sender, EventArgs e)
         {
-            if (actEnabled.Checked)
+            if (_demon.Active)
             {
-                if (Helper.IsRunningOnMono() && PlatformSupport.Platform != PlatformType.Windows && Mono.Unix.Native.Syscall.getuid() != 0 && int.Parse(txtPort.Text) < 1024)
-                {
-                    MessageBox.Show("On Linux this application must be run as root for port < 1024.");
-                    actEnabled.Checked = false;
-					return;
-                }
-
-                StartListeners();
-                actEnabled.Text = "Enabled";
+                StopListeners();
                 return;
             }
 
-            StopListeners();
-            actEnabled.Text = "Disabled";
+            if (Helper.IsRunningOnMono() && PlatformSupport.Platform != PlatformType.Windows &&
+                Mono.Unix.Native.Syscall.getuid() != 0 && int.Parse(txtPort.Text) < 1024)
+            {
+                MessageBox.Show(@"On Linux this application must be run as root for port < 1024.");
+                return;
+            }
+
+            try
+            {
+                StartListeners();
+            }
+            catch (PortInUseException ex)
+            {
+                MessageBox.Show(@"Port is already in use: " + ex.Endpoint, @"Error");
+            }
         }
 
         private void AlNotificationUpdate(object sender, EventArgs e)
         {
             tscbIP.Enabled = !actEnabled.Checked;
             tstxtPort.Enabled = !actEnabled.Checked;
-		}
+            actEnabled.Text = _demon.Active ? @"Enabled" : @"Disabled";
+            actEnabled.Checked = _demon.Active;
+        }
 
-        private void MainForm_Load(object sender, EventArgs e)
+        private void MainFormLoad(object sender, EventArgs e)
         {
             Text = string.Format(CultureInfo.CurrentUICulture, "{0} (Version: {1})", Text, Assembly.GetExecutingAssembly().GetName().Version);
         }

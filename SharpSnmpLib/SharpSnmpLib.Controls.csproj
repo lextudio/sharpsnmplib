@@ -66,6 +66,7 @@
     <Compile Include="Messaging\MessageReceivedEventArgs.cs" />
     <Compile Include="Messaging\Messenger.cs" />
     <Compile Include="Messaging\PduCounter.cs" />
+    <Compile Include="Messaging\PortInUseException.cs" />
     <Compile Include="Messaging\WalkMode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="license.txt" />

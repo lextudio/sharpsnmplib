@@ -73,11 +73,20 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Starts this instance.
         /// </summary>
+        /// <exception cref="PortInUseException"/>
         public void Start()
         {
-            foreach (ListenerBinding binding in Bindings)
+            try
             {
-                binding.Start();
+                foreach (ListenerBinding binding in Bindings)
+                {
+                    binding.Start();
+                }
+            }
+            catch (PortInUseException)
+            {
+                Stop(); // stop all started bindings.
+                throw;
             }
 
             Active = true;

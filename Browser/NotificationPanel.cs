@@ -30,12 +30,12 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             InitializeComponent();
             if (PlatformSupport.Platform == PlatformType.Windows)
-			{
-				Icon = Properties.Resources.dialog_information;
-				actEnabled.Image = Properties.Resources.face_monkey;
-			}
-			
-			tstxtPort.Text = "162";
+            {
+                Icon = Properties.Resources.dialog_information;
+                actEnabled.Image = Properties.Resources.face_monkey;
+            }
+            
+            tstxtPort.Text = @"162";
             tscbIP.Items.Add(StrAllUnassigned);
             foreach (IPAddress address in Dns.GetHostEntry(string.Empty).AddressList.Where(address => !address.IsIPv6LinkLocal))
             {
@@ -49,32 +49,32 @@ namespace Lextm.SharpSnmpLib.Browser
 
         public IObjectRegistry Objects { get; set; }
 
-        private void NotificationPanel_Load(object sender, EventArgs e)
+        private void NotificationPanelLoad(object sender, EventArgs e)
         {
-            Listener.ExceptionRaised += Listener_ExceptionRaised;
+            Listener.ExceptionRaised += ListenerExceptionRaised;
             DefaultListenerAdapter adapter = new DefaultListenerAdapter();
             Listener.Adapters.Add(adapter);
-            adapter.TrapV1Received += Listener_TrapV1Received;
-            adapter.TrapV2Received += Listener_TrapV2Received;
-            adapter.InformRequestReceived += Listener_InformRequestReceived;
+            adapter.TrapV1Received += ListenerTrapV1Received;
+            adapter.TrapV2Received += ListenerTrapV2Received;
+            adapter.InformRequestReceived += ListenerInformRequestReceived;
         }
 
-        private void Listener_InformRequestReceived(object sender, MessageReceivedEventArgs<InformRequestMessage> e)
+        private void ListenerInformRequestReceived(object sender, MessageReceivedEventArgs<InformRequestMessage> e)
         {
             LogMessage(string.Format(StrSends, DateTime.Now, e.Sender, e.Message.ToString(Objects)));
         }
 
-        private void Listener_TrapV2Received(object sender, MessageReceivedEventArgs<TrapV2Message> e)
+        private void ListenerTrapV2Received(object sender, MessageReceivedEventArgs<TrapV2Message> e)
         {
             LogMessage(string.Format(StrSends, DateTime.Now, e.Sender, e.Message.ToString(Objects)));
         }
 
-        private void Listener_TrapV1Received(object sender, MessageReceivedEventArgs<TrapV1Message> e)
+        private void ListenerTrapV1Received(object sender, MessageReceivedEventArgs<TrapV1Message> e)
         {
             LogMessage(string.Format(StrSends, DateTime.Now, e.Sender, e.Message.ToString(Objects)));
         }
 
-        private void Listener_ExceptionRaised(object sender, ExceptionRaisedEventArgs e)
+        private void ListenerExceptionRaised(object sender, ExceptionRaisedEventArgs e)
         {
             LogMessage(e.Exception.ToString());
         }
@@ -94,22 +94,26 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void ActEnabledExecute(object sender, EventArgs e)
         {
-            if (actEnabled.Checked)
-            {
-                if (Helper.IsRunningOnMono() && PlatformSupport.Platform != PlatformType.Windows && Mono.Unix.Native.Syscall.getuid() != 0 && int.Parse(tstxtPort.Text) < 1024)
-                {
-                    MessageBox.Show("On Linux this application must be run as root for port < 1024.");
-                    actEnabled.Checked = false;
-					return;
-                }
-
-                StartListeners();
-                actEnabled.Text = "Enabled";
-            }
-            else
+            if (Listener.Active)
             {
                 StopListeners();
-                actEnabled.Text = "Disabled";
+                return;
+            }
+
+            if (Helper.IsRunningOnMono() && PlatformSupport.Platform != PlatformType.Windows &&
+                Mono.Unix.Native.Syscall.getuid() != 0 && int.Parse(tstxtPort.Text) < 1024)
+            {
+                MessageBox.Show(@"On Linux this application must be run as root for port < 1024.");
+                return;
+            }
+
+            try
+            {
+                StartListeners();
+            }
+            catch (PortInUseException ex)
+            {
+                MessageBox.Show(@"Port is already in use: " + ex.Endpoint, @"Error");
             }
         }
 
@@ -139,11 +143,6 @@ namespace Lextm.SharpSnmpLib.Browser
             }
 
             IPAddress address = IPAddress.Parse(tscbIP.Text);
-            if (address == null)
-            {
-                return;
-            }
-
             if (address.AddressFamily == AddressFamily.InterNetwork)
             {
                 if (!Socket.SupportsIPv4)
@@ -171,6 +170,8 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             tscbIP.Enabled = !actEnabled.Checked;
             tstxtPort.Enabled = !actEnabled.Checked;
+            actEnabled.Text = Listener.Active ? @"Enabled" : @"Disabled";
+            actEnabled.Checked = Listener.Active;
         }
     }
 }

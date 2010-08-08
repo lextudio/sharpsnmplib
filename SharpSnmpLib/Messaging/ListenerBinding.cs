@@ -14,12 +14,10 @@ namespace Lextm.SharpSnmpLib.Messaging
     {
         private Socket _socket;
         private int _bufferSize;
-        
-        /// <summary>
-        /// 1 = true, 0 = false
-        /// </summary>
-        private long _active; // = 0
+        private long _active; // = Inactive
         private bool _disposed;
+        private const long Active = 1;
+        private const long Inactive = 0;
         private readonly UserRegistry _users;
         private readonly IEnumerable<IListenerAdapter> _adapters;
 
@@ -49,7 +47,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             
             if (disposing)
             {
-                _active = 0;
+                _active = Inactive;
                 if (_socket != null)
                 {
                     _socket.Close();    // Note that closing the socket releases the _socket.ReceiveFrom call.
@@ -134,6 +132,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Starts this instance.
         /// </summary>
+        /// <exception cref="PortInUseException"/>
         public void Start()
         {
             if (_disposed)
@@ -151,8 +150,8 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new InvalidOperationException(Listener.ErrorIPv6NotSupported);
             }
 
-            long activeBefore = Interlocked.CompareExchange(ref _active, 1, 0);
-            if (activeBefore == 1)
+            long activeBefore = Interlocked.CompareExchange(ref _active, Active, Inactive);
+            if (activeBefore == Active)
             {
                 // If already started, we've nothing to do.
                 return;
@@ -166,9 +165,8 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
             catch (SocketException ex)
             {
-                Interlocked.Exchange(ref _active, 0);
-                HandleException(ex);
-                return;
+                Interlocked.Exchange(ref _active, Inactive);
+                throw new PortInUseException("Endpoint is already in use", ex) {Endpoint = Endpoint};
             }
 
 #if CF
@@ -187,6 +185,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Stops.
         /// </summary>
+        /// <exception cref="ObjectDisposedException"/>
         public void Stop()
         {
             if (_disposed)
@@ -194,9 +193,8 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ObjectDisposedException("Listener");
             }
 
-            long activeBefore = Interlocked.CompareExchange(ref _active, 0, 1);
-
-            if (activeBefore != 1)
+            long activeBefore = Interlocked.CompareExchange(ref _active, Inactive, Active);
+            if (activeBefore != Active)
             {
                 return;
             }
@@ -267,7 +265,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             while (true)
             {
                 // If no more active, then stop.
-                if (Interlocked.Read(ref _active) == 0)
+                if (Interlocked.Read(ref _active) == Inactive)
                 {
                     return;
                 }
@@ -284,8 +282,8 @@ namespace Lextm.SharpSnmpLib.Messaging
                 {
                     // If the SnmpTrapListener was active, marks it as stopped and call HandleException.
                     // If it was inactive, the exception is likely to result from this, and we raise nothing.
-                    long activeBefore = Interlocked.CompareExchange(ref _active, 0, 1);
-                    if (activeBefore == 1)
+                    long activeBefore = Interlocked.CompareExchange(ref _active, Inactive, Active);
+                    if (activeBefore == Active)
                     {
                         HandleException(ex);
                     }
@@ -305,7 +303,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             SocketException ex = exception as SocketException;
             if (ex != null && ex.ErrorCode == 10048)
             {
-                exception = new SnmpException("Port is already used", exception);
+                exception = new PortInUseException("Port is already used", exception);
             }
 
             handler(this, new ExceptionRaisedEventArgs(exception));
