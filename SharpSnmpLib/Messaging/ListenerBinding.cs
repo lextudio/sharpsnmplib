@@ -166,7 +166,12 @@ namespace Lextm.SharpSnmpLib.Messaging
             catch (SocketException ex)
             {
                 Interlocked.Exchange(ref _active, Inactive);
-                throw new PortInUseException("Endpoint is already in use", ex) {Endpoint = Endpoint};
+                if (ex.ErrorCode == 10048)
+                {
+                    throw new PortInUseException("Endpoint is already in use", ex) { Endpoint = Endpoint };
+                }
+
+                throw;
             }
 
 #if CF
@@ -298,12 +303,6 @@ namespace Lextm.SharpSnmpLib.Messaging
             if (handler == null)
             {
                 return;
-            }
-
-            SocketException ex = exception as SocketException;
-            if (ex != null && ex.ErrorCode == 10048)
-            {
-                exception = new PortInUseException("Port is already used", exception);
             }
 
             handler(this, new ExceptionRaisedEventArgs(exception));
