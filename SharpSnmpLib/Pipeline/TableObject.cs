@@ -1,10 +1,17 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Lextm.SharpSnmpLib.Agent
+namespace Lextm.SharpSnmpLib.Pipeline
 {
-    internal abstract class TableObject : SnmpObject
+    /// <summary>
+    /// Object that represents a table.
+    /// </summary>
+    public abstract class TableObject : SnmpObject
     {
+        /// <summary>
+        /// Gets the objects in the table.
+        /// </summary>
+        /// <value>The objects.</value>
         protected abstract IEnumerable<ScalarObject> Objects { get; }
 
         /// <summary>

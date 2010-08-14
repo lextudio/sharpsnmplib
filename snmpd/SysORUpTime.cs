@@ -1,3 +1,5 @@
+using Lextm.SharpSnmpLib.Pipeline;
+
 namespace Lextm.SharpSnmpLib.Agent
 {
     internal class SysORUpTime : ScalarObject
@@ -11,7 +13,7 @@ namespace Lextm.SharpSnmpLib.Agent
             _data = time;
         }
 
-        protected internal override ISnmpData Data
+        public override ISnmpData Data
         {
             get { return _data; }
             set { throw new AccessFailureException(); }

@@ -1,6 +1,6 @@
 ﻿using Lextm.SharpSnmpLib.Messaging;
 
-namespace Lextm.SharpSnmpLib.Agent
+namespace Lextm.SharpSnmpLib.Pipeline
 {
     /// <summary>
     /// A placeholder.

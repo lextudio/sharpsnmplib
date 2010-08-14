@@ -11,8 +11,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Windows.Forms;
-
 using Lextm.SharpSnmpLib.Messaging;
+using Lextm.SharpSnmpLib.Pipeline;
 using RemObjects.Mono.Helpers;
 using WeifenLuo.WinFormsUI.Docking;
 
@@ -45,19 +45,9 @@ namespace Lextm.SharpSnmpLib.Browser
             tscbIP.SelectedIndex = 0;
         }
 
-        public Listener Listener { get; set; }
+        public SnmpDemon Demon { get; set; }
 
         public IObjectRegistry Objects { get; set; }
-
-        private void NotificationPanelLoad(object sender, EventArgs e)
-        {
-            Listener.ExceptionRaised += ListenerExceptionRaised;
-            DefaultListenerAdapter adapter = new DefaultListenerAdapter();
-            Listener.Adapters.Add(adapter);
-            adapter.TrapV1Received += ListenerTrapV1Received;
-            adapter.TrapV2Received += ListenerTrapV2Received;
-            adapter.InformRequestReceived += ListenerInformRequestReceived;
-        }
 
         private void ListenerInformRequestReceived(object sender, MessageReceivedEventArgs<InformRequestMessage> e)
         {
@@ -94,7 +84,7 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void ActEnabledExecute(object sender, EventArgs e)
         {
-            if (Listener.Active)
+            if (Demon.Listener.Active)
             {
                 StopListeners();
                 return;
@@ -119,26 +109,26 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void StopListeners()
         {
-            Listener.Stop();
+            Demon.Listener.Stop();
         }
 
         private void StartListeners()
         {
-            Listener.ClearBindings();
+            Demon.Listener.ClearBindings();
             int port = int.Parse(tstxtPort.Text);
             if (tscbIP.Text == StrAllUnassigned)
             {
                 if (Socket.SupportsIPv4)
                 {
-                    Listener.AddBinding(new IPEndPoint(IPAddress.Any, port));
+                    Demon.Listener.AddBinding(new IPEndPoint(IPAddress.Any, port));
                 }
 
                 if (Socket.OSSupportsIPv6)
                 {
-                    Listener.AddBinding(new IPEndPoint(IPAddress.IPv6Any, port));
+                    Demon.Listener.AddBinding(new IPEndPoint(IPAddress.IPv6Any, port));
                 }
 
-                Listener.Start();
+                Demon.Listener.Start();
                 return;
             }
 
@@ -151,8 +141,8 @@ namespace Lextm.SharpSnmpLib.Browser
                     return;
                 }
 
-                Listener.AddBinding(new IPEndPoint(address, port)); 
-                Listener.Start();
+                Demon.Listener.AddBinding(new IPEndPoint(address, port));
+                Demon.Listener.Start();
                 return;
             }
 
@@ -161,17 +151,17 @@ namespace Lextm.SharpSnmpLib.Browser
                 LogMessage(Listener.ErrorIPv6NotSupported);
                 return;
             }
-                
-            Listener.AddBinding(new IPEndPoint(address, port));  
-            Listener.Start();
+
+            Demon.Listener.AddBinding(new IPEndPoint(address, port));
+            Demon.Listener.Start();
         }
 
         private void ActEnabledUpdate(object sender, EventArgs e)
         {
             tscbIP.Enabled = !actEnabled.Checked;
             tstxtPort.Enabled = !actEnabled.Checked;
-            actEnabled.Text = Listener.Active ? @"Enabled" : @"Disabled";
-            actEnabled.Checked = Listener.Active;
+            actEnabled.Text = Demon.Listener.Active ? @"Enabled" : @"Disabled";
+            actEnabled.Checked = Demon.Listener.Active;
         }
     }
 }

@@ -1,11 +1,11 @@
 using System.Globalization;
 
-namespace Lextm.SharpSnmpLib.Agent
+namespace Lextm.SharpSnmpLib.Pipeline
 {
     /// <summary>
     /// Scalar object interface.
     /// </summary>
-    internal abstract class ScalarObject : SnmpObject
+    public abstract class ScalarObject : SnmpObject
     {
         private readonly ObjectIdentifier _id;
 
@@ -53,7 +53,7 @@ namespace Lextm.SharpSnmpLib.Agent
         /// Gets or sets the data.
         /// </summary>
         /// <value>The data.</value>
-        protected internal abstract ISnmpData Data
+        public abstract ISnmpData Data
         {
             get; set;
         }

@@ -1,3 +1,5 @@
+using Lextm.SharpSnmpLib.Pipeline;
+
 namespace Lextm.SharpSnmpLib.Agent
 {
     internal class SysORID : ScalarObject
@@ -11,7 +13,7 @@ namespace Lextm.SharpSnmpLib.Agent
             _data = dots;
         }
 
-        protected internal override ISnmpData Data
+        public override ISnmpData Data
         {
             get { return _data; }
             set { throw new AccessFailureException(); }

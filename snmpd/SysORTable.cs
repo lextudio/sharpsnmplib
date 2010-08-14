@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Lextm.SharpSnmpLib.Pipeline;
 
 namespace Lextm.SharpSnmpLib.Agent
 {

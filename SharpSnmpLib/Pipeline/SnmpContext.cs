@@ -3,12 +3,12 @@ using System.Net;
 using Lextm.SharpSnmpLib.Messaging;
 using Lextm.SharpSnmpLib.Security;
 
-namespace Lextm.SharpSnmpLib.Agent
+namespace Lextm.SharpSnmpLib.Pipeline
 {
     /// <summary>
     /// SNMP context.
     /// </summary>
-    internal abstract class SnmpContext
+    public abstract class SnmpContext
     {
         /// <summary>
         /// Max response size.
@@ -23,7 +23,7 @@ namespace Lextm.SharpSnmpLib.Agent
         /// <param name="users">The users.</param>
         /// <param name="objects">The agent core objects.</param>
         /// <param name="binding">The binding.</param>
-        protected SnmpContext(ISnmpMessage request, IPEndPoint sender, UserRegistry users, AgentObjects objects, ListenerBinding binding)
+        protected SnmpContext(ISnmpMessage request, IPEndPoint sender, UserRegistry users, DemonObjects objects, ListenerBinding binding)
         {
             Request = request;
             Binding = binding;
@@ -73,7 +73,7 @@ namespace Lextm.SharpSnmpLib.Agent
         /// Gets or sets the objects.
         /// </summary>
         /// <value>The objects.</value>
-        protected AgentObjects Objects { get; private set; }
+        protected DemonObjects Objects { get; private set; }
 
         /// <summary>
         /// Sends out response message.
@@ -89,12 +89,26 @@ namespace Lextm.SharpSnmpLib.Agent
             Binding.SendResponse(Response, Sender);
         }
 
+        /// <summary>
+        /// Authenticates the message.
+        /// </summary>
         protected abstract void AuthenticateMessage();
 
+        /// <summary>
+        /// Handles the authentication failure.
+        /// </summary>
         internal abstract void HandleAuthenticationFailure();
 
+        /// <summary>
+        /// Generates the response.
+        /// </summary>
+        /// <param name="data">The data.</param>
         internal abstract void GenerateResponse(ResponseData data);
 
+        /// <summary>
+        /// Handles the membership authentication.
+        /// </summary>
+        /// <returns></returns>
         public abstract bool HandleMembership();
     }
 }

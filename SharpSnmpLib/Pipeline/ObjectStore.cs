@@ -1,30 +1,33 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Lextm.SharpSnmpLib.Agent
+namespace Lextm.SharpSnmpLib.Pipeline
 {
     /// <summary>
     /// SNMP object store, who holds all implemented SNMP objects in the agent.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
-    internal class ObjectStore
+    public class ObjectStore
     {
-        private readonly IList<ISnmpObject> _list = new List<ISnmpObject>();
+        private readonly IList<ISnmpObject> _list;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ObjectStore"/> class.
         /// </summary>
-        public ObjectStore()
+        /// <param name="objects">The objects.</param>
+        public ObjectStore(IList<ISnmpObject> objects)
         {
-            _list.Add(new SysDescr());
-            _list.Add(new SysObjectId());
-            _list.Add(new SysUpTime());
-            _list.Add(new SysContact());
-            _list.Add(new SysName());
-            _list.Add(new SysLocation());
-            _list.Add(new SysServices());
-            _list.Add(new SysORLastChange());
-            _list.Add(new SysORTable());
+            _list = objects;
+            // TODO: add the objects from outside.
+            //_list.Add(new SysDescr());
+            //_list.Add(new SysObjectId());
+            //_list.Add(new SysUpTime());
+            //_list.Add(new SysContact());
+            //_list.Add(new SysName());
+            //_list.Add(new SysLocation());
+            //_list.Add(new SysServices());
+            //_list.Add(new SysORLastChange());
+            //_list.Add(new SysORTable());
         }
 
         /// <summary>

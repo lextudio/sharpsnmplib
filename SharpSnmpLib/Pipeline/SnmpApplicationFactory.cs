@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 
-namespace Lextm.SharpSnmpLib.Agent
+namespace Lextm.SharpSnmpLib.Pipeline
 {
     /// <summary>
     /// SNMP application factory, who holds all pipeline instances.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
-    internal class SnmpApplicationFactory
+    public class SnmpApplicationFactory
     {
         private readonly ILogger _logger;
         private readonly ObjectStore _store;

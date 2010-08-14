@@ -1,4 +1,5 @@
 ﻿using System;
+using Lextm.SharpSnmpLib.Pipeline;
 
 namespace Lextm.SharpSnmpLib.Agent
 {
@@ -20,7 +21,7 @@ namespace Lextm.SharpSnmpLib.Agent
         /// Gets or sets the data.
         /// </summary>
         /// <value>The data.</value>
-        protected internal override ISnmpData Data
+        public override ISnmpData Data
         {
             get 
             { 

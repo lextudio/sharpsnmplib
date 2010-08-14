@@ -1,3 +1,5 @@
+using Lextm.SharpSnmpLib.Pipeline;
+
 namespace Lextm.SharpSnmpLib.Agent
 {
     internal class SysORLastChange : ScalarObject
@@ -9,7 +11,7 @@ namespace Lextm.SharpSnmpLib.Agent
         {
         }
 
-        protected internal override ISnmpData Data
+        public override ISnmpData Data
         {
             get { return _value; }
             set { throw new AccessFailureException(); }

@@ -4,7 +4,7 @@ using System.Net;
 using Lextm.SharpSnmpLib.Messaging;
 using Lextm.SharpSnmpLib.Security;
 
-namespace Lextm.SharpSnmpLib.Agent
+namespace Lextm.SharpSnmpLib.Pipeline
 {
     /// <summary>
     /// Secure SNMP context. It is specific to v3.
@@ -19,7 +19,7 @@ namespace Lextm.SharpSnmpLib.Agent
         /// <param name="users">The users.</param>
         /// <param name="objects">The agent core objects.</param>
         /// <param name="binding">The binding.</param>
-        public SecureSnmpContext(ISnmpMessage request, IPEndPoint sender, UserRegistry users, AgentObjects objects, ListenerBinding binding)
+        public SecureSnmpContext(ISnmpMessage request, IPEndPoint sender, UserRegistry users, DemonObjects objects, ListenerBinding binding)
             : base(request, sender, users, objects, binding)
         {
         }

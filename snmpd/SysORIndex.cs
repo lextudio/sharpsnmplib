@@ -1,3 +1,4 @@
+using Lextm.SharpSnmpLib.Pipeline;
 namespace Lextm.SharpSnmpLib.Agent
 {
     // TODO: this is not accessible. So how to handle?
@@ -12,7 +13,7 @@ namespace Lextm.SharpSnmpLib.Agent
             _data = new Integer32(index);
         }
 
-        protected internal override ISnmpData Data
+        public override ISnmpData Data
         {
             get { return _data; }
             set { throw new AccessFailureException(); }

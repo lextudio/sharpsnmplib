@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Lextm.SharpSnmpLib.Messaging;
+using Lextm.SharpSnmpLib.Pipeline;
 
 namespace Lextm.SharpSnmpLib.Agent
 {

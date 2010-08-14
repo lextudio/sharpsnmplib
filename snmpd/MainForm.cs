@@ -17,6 +17,7 @@ using System.Windows.Forms;
 using Microsoft.Practices.Unity;
 using Lextm.SharpSnmpLib.Messaging;
 using RemObjects.Mono.Helpers;
+using Lextm.SharpSnmpLib.Pipeline;
 
 namespace Lextm.SharpSnmpLib.Agent
 {

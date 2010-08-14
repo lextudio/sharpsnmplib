@@ -1,9 +1,9 @@
-﻿namespace Lextm.SharpSnmpLib.Agent
+﻿namespace Lextm.SharpSnmpLib.Pipeline
 {
     /// <summary>
     /// SNMP object.
     /// </summary>
-    internal interface ISnmpObject
+    public interface ISnmpObject
     {
         /// <summary>
         /// Matches the GET NEXT criteria.

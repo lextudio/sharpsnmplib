@@ -11,7 +11,7 @@
     <RootNamespace>Lextm.SharpSnmpLib</RootNamespace>
     <AssemblyName>SharpSnmpLib.Controls</AssemblyName>
     <DocumentationFile>..\bin\SharpSnmpLib.Controls.xml</DocumentationFile>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <SourceAnalysisOverrideSettingsFile>D:\sharpsnmplib_svn\SharpSnmpLib\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
@@ -44,6 +44,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Core">
+      <HintPath>c:\Program Files\Reference Assemblies\Microsoft\Framework\v3.5\System.Core.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
@@ -68,7 +71,31 @@
     <Compile Include="Messaging\PduCounter.cs" />
     <Compile Include="Messaging\PortInUseException.cs" />
     <Compile Include="Messaging\WalkMode.cs" />
+    <Compile Include="Pipeline\ComposedMembershipProvider.cs" />
+    <Compile Include="Pipeline\DemonObjects.cs" />
+    <Compile Include="Pipeline\HandlerMapping.cs" />
+    <Compile Include="Pipeline\ILogger.cs" />
+    <Compile Include="Pipeline\IMembershipProvider.cs" />
+    <Compile Include="Pipeline\IMessageHandler.cs" />
+    <Compile Include="Pipeline\ISnmpObject.cs" />
+    <Compile Include="Pipeline\MessageHandlerFactory.cs" />
+    <Compile Include="Pipeline\NormalSnmpContext.cs" />
+    <Compile Include="Pipeline\NullMessageHandler.cs" />
+    <Compile Include="Pipeline\ObjectStore.cs" />
+    <Compile Include="Pipeline\ResponseData.cs" />
+    <Compile Include="Pipeline\ScalarObject.cs" />
+    <Compile Include="Pipeline\SecureSnmpContext.cs" />
+    <Compile Include="Pipeline\SnmpApplication.cs" />
+    <Compile Include="Pipeline\SnmpApplicationFactory.cs" />
+    <Compile Include="Pipeline\SnmpContext.cs" />
+    <Compile Include="Pipeline\SnmpContextFactory.cs" />
+    <Compile Include="Pipeline\SnmpObject.cs" />
+    <Compile Include="Pipeline\TableObject.cs" />
+    <Compile Include="Pipeline\Version1MembershipProvider.cs" />
+    <Compile Include="Pipeline\Version2MembershipProvider.cs" />
+    <Compile Include="Pipeline\Version3MembershipProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Pipeline\SnmpDemon.cs" />
     <None Include="license.txt" />
     <None Include="sharpsnmplib.snk" />
   </ItemGroup>

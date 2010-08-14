@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 
-namespace Lextm.SharpSnmpLib.Agent
+namespace Lextm.SharpSnmpLib.Pipeline
 {
     /// <summary>
     /// Response data.
     /// </summary>
-    internal class ResponseData
+    public class ResponseData
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ResponseData"/> class.

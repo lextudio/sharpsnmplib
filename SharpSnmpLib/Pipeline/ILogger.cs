@@ -6,12 +6,12 @@
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
-namespace Lextm.SharpSnmpLib.Agent
+namespace Lextm.SharpSnmpLib.Pipeline
 {
     /// <summary>
     /// Logger interface.
     /// </summary>
-    internal interface ILogger
+    public interface ILogger
     {
         /// <summary>
         /// Logs an entry.

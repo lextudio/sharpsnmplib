@@ -1,9 +1,9 @@
-﻿namespace Lextm.SharpSnmpLib.Agent
+﻿namespace Lextm.SharpSnmpLib.Pipeline
 {
     /// <summary>
     /// SNMP application class, who is a pipeline for message processing.
     /// </summary>
-    internal class SnmpApplication
+    public class SnmpApplication
     {
         private readonly ILogger _logger;
         private readonly IMembershipProvider _provider;

@@ -3,13 +3,13 @@ using System.Linq;
 using System.Reflection;
 using Lextm.SharpSnmpLib.Messaging;
 
-namespace Lextm.SharpSnmpLib.Agent
+namespace Lextm.SharpSnmpLib.Pipeline
 {
     /// <summary>
     /// Handler mapping class, who is used to map incoming messages to their handlers.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
-    internal class HandlerMapping
+    public class HandlerMapping
     {
         private readonly string[] _version;
         private readonly bool _catchAll;
@@ -87,7 +87,7 @@ namespace Lextm.SharpSnmpLib.Agent
                                           where string.Compare(name, assemblyName, StringComparison.OrdinalIgnoreCase) == 0
                                           select assembly)
             {
-                return (IMessageHandler) Activator.CreateInstance(assembly.GetType(type));
+                return (IMessageHandler)Activator.CreateInstance(assembly.GetType(type));
             }
 
             return (IMessageHandler)Activator.CreateInstance(AppDomain.CurrentDomain.Load(assemblyName).GetType(type));

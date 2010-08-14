@@ -8,12 +8,12 @@
  */
 using Lextm.SharpSnmpLib.Messaging;
 
-namespace Lextm.SharpSnmpLib.Agent
+namespace Lextm.SharpSnmpLib.Pipeline
 {
     /// <summary>
     /// Message handler interface.
     /// </summary>
-    internal interface IMessageHandler
+    public interface IMessageHandler
     {
         /// <summary>
         /// Handles the specified message.

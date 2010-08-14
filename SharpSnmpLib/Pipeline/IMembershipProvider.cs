@@ -1,9 +1,9 @@
-namespace Lextm.SharpSnmpLib.Agent
+namespace Lextm.SharpSnmpLib.Pipeline
 {
     /// <summary>
     /// Membership provider interface.
     /// </summary>
-    internal interface IMembershipProvider
+    public interface IMembershipProvider
     {
         /// <summary>
         /// Authenticates the request.
