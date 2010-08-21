@@ -109,13 +109,6 @@ namespace Lextm.SharpSnmpLib.Browser.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap face_monkey {
-            get {
-                object obj = ResourceManager.GetObject("face_monkey", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
         internal static System.Drawing.Bitmap help_browser {
             get {
                 object obj = ResourceManager.GetObject("help_browser", resourceCulture);
@@ -140,6 +133,20 @@ namespace Lextm.SharpSnmpLib.Browser.Properties {
         internal static System.Drawing.Bitmap list_remove {
             get {
                 object obj = ResourceManager.GetObject("list_remove", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap media_playback_start {
+            get {
+                object obj = ResourceManager.GetObject("media_playback_start", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap media_playback_stop {
+            get {
+                object obj = ResourceManager.GetObject("media_playback_stop", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -77,11 +77,10 @@ namespace Lextm.SharpSnmpLib.Browser
             // toolStripButton1
             // 
             this.alNotification.SetAction(this.toolStripButton1, this.actEnabled);
-            this.toolStripButton1.CheckOnClick = true;
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(56, 22);
-            this.toolStripButton1.Text = "Disabled";
+            this.toolStripButton1.Size = new System.Drawing.Size(77, 22);
+            this.toolStripButton1.Text = "Start listening";
             // 
             // toolStripSeparator1
             // 
@@ -103,7 +102,7 @@ namespace Lextm.SharpSnmpLib.Browser
             // toolStripLabel2
             // 
             this.toolStripLabel2.Name = "toolStripLabel2";
-            this.toolStripLabel2.Size = new System.Drawing.Size(29, 22);
+            this.toolStripLabel2.Size = new System.Drawing.Size(27, 22);
             this.toolStripLabel2.Text = "Port";
             // 
             // tstxtPort
@@ -118,11 +117,10 @@ namespace Lextm.SharpSnmpLib.Browser
             // 
             // actEnabled
             // 
-            this.actEnabled.CheckOnClick = true;
-            this.actEnabled.Text = "Disabled";
-            this.actEnabled.ToolTipText = "Enable/disable this panel";
+            this.actEnabled.Text = "Start listening";
+            this.actEnabled.ToolTipText = "Control listening";
             this.actEnabled.Execute += new System.EventHandler(this.ActEnabledExecute);
-            this.actEnabled.Update += new System.EventHandler(this.ActEnabledUpdate);
+            this.actEnabled.AfterExecute += new System.EventHandler(this.ActEnabledAfterExecute);
             // 
             // NotificationPanel
             // 

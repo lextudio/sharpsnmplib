@@ -32,7 +32,7 @@ namespace Lextm.SharpSnmpLib.Browser
             if (PlatformSupport.Platform == PlatformType.Windows)
             {
                 Icon = Properties.Resources.dialog_information;
-                actEnabled.Image = Properties.Resources.face_monkey;
+                actEnabled.Image = Properties.Resources.media_playback_start;
             }
             
             tstxtPort.Text = @"162";
@@ -156,12 +156,14 @@ namespace Lextm.SharpSnmpLib.Browser
             Demon.Listener.Start();
         }
 
-        private void ActEnabledUpdate(object sender, EventArgs e)
+        private void ActEnabledAfterExecute(object sender, EventArgs e)
         {
-            tscbIP.Enabled = !actEnabled.Checked;
-            tstxtPort.Enabled = !actEnabled.Checked;
-            actEnabled.Text = Demon.Listener.Active ? @"Enabled" : @"Disabled";
-            actEnabled.Checked = Demon.Listener.Active;
+            actEnabled.Text = Demon.Listener.Active ? @"Stop Listening" : @"Start Listening";
+            actEnabled.Image = Demon.Listener.Active
+                                   ? Properties.Resources.media_playback_stop
+                                   : Properties.Resources.media_playback_start;
+            tscbIP.Enabled = !Demon.Listener.Active;
+            tstxtPort.Enabled = !Demon.Listener.Active;
         }
     }
 }

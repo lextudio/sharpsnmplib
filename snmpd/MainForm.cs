@@ -32,12 +32,24 @@ namespace Lextm.SharpSnmpLib.Agent
         public MainForm()
         {
             _demon = Program.Container.Resolve<SnmpDemon>();
+            // TODO: this is a hack. review it later.
+            var store = Program.Container.Resolve<ObjectStore>();
+            store.Add(new SysDescr());
+            store.Add(new SysObjectId());
+            store.Add(new SysUpTime());
+            store.Add(new SysContact());
+            store.Add(new SysName());
+            store.Add(new SysLocation());
+            store.Add(new SysServices());
+            store.Add(new SysORLastChange());
+            store.Add(new SysORTable());
+
             InitializeComponent();
             if (PlatformSupport.Platform == PlatformType.Windows)
             {
                 // FIXME: work around a Mono WinForms bug.
                 Icon = Properties.Resources.network_server;
-                actEnabled.Image = Properties.Resources.face_monkey;
+                actEnabled.Image = Properties.Resources.media_playback_start;
             }
             
             tstxtPort.Text = @"161";
@@ -174,17 +186,19 @@ namespace Lextm.SharpSnmpLib.Agent
             }
         }
 
-        private void AlNotificationUpdate(object sender, EventArgs e)
-        {
-            tscbIP.Enabled = !actEnabled.Checked;
-            tstxtPort.Enabled = !actEnabled.Checked;
-            actEnabled.Text = _demon.Active ? @"Enabled" : @"Disabled";
-            actEnabled.Checked = _demon.Active;
-        }
-
         private void MainFormLoad(object sender, EventArgs e)
         {
             Text = string.Format(CultureInfo.CurrentUICulture, "{0} (Version: {1})", Text, Assembly.GetExecutingAssembly().GetName().Version);
+        }
+
+        private void ActEnabledAfterExecute(object sender, EventArgs e)
+        {
+            actEnabled.Text = _demon.Listener.Active ? @"Stop Listening" : @"Start Listening";
+            actEnabled.Image = _demon.Listener.Active
+                                   ? Properties.Resources.media_playback_stop
+                                   : Properties.Resources.media_playback_start;
+            tscbIP.Enabled = !_demon.Listener.Active;
+            tstxtPort.Enabled = !_demon.Listener.Active;
         }
     }
 }

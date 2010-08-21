@@ -60,9 +60,16 @@ namespace Lextm.SharpSnmpLib.Agent.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap face_monkey {
+        internal static System.Drawing.Bitmap media_playback_start {
             get {
-                object obj = ResourceManager.GetObject("face_monkey", resourceCulture);
+                object obj = ResourceManager.GetObject("media_playback_start", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap media_playback_stop {
+            get {
+                object obj = ResourceManager.GetObject("media_playback_stop", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
