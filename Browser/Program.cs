@@ -14,31 +14,31 @@ using Microsoft.Practices.Unity.Configuration;
 
 namespace Lextm.SharpSnmpLib.Browser
 {
-	/// <summary>
-	/// Class with program entry point.
-	/// </summary>
-	internal static class Program
-	{
-	    internal static IUnityContainer Container { get; private set; }
+    /// <summary>
+    /// Class with program entry point.
+    /// </summary>
+    internal static class Program
+    {
+        internal static IUnityContainer Container { get; private set; }
 
-	    /// <summary>
-		/// Program entry point.
-		/// </summary>
-		[STAThread]
-		private static void Main(string[] args)
-		{
+        /// <summary>
+        /// Program entry point.
+        /// </summary>
+        [STAThread]
+        private static void Main(string[] args)
+        {
             if (args.Length > 0)
             {
                 return;
             }
 
             Container = new UnityContainer();
-	        Container.LoadConfiguration("browser");
+            Container.LoadConfiguration("browser");
 
             ToolStripManager.Renderer = new Office2007Renderer.Office2007Renderer();
-			Application.EnableVisualStyles();
-			Application.SetCompatibleTextRenderingDefault(false);
-		    Application.Run(new MainForm());
-		}
-	}
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new MainForm());
+        }
+    }
 }

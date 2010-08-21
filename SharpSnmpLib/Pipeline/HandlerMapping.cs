@@ -40,7 +40,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
             }
 
             _catchAll = version == "*";
-            _version = _catchAll? new string[0] : version.Split(new[]{','}, StringSplitOptions.RemoveEmptyEntries);
+            _version = _catchAll ? new string[0] : version.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
             _command = command;
             _handler = handler;
         }
@@ -116,7 +116,8 @@ namespace Lextm.SharpSnmpLib.Pipeline
 
         private bool CommandMatched(ISnmpMessage message)
         {
-            return StringEquals(_command, "*") || StringEquals(_command + "RequestPdu", message.Pdu.TypeCode.ToString());
+            return StringEquals(_command, "*") || StringEquals(_command + "RequestPdu", message.Pdu.TypeCode.ToString()) ||
+            StringEquals(_command + "Pdu", message.Pdu.TypeCode.ToString());
         }
 
         private bool VersionMatched(ISnmpMessage message)
