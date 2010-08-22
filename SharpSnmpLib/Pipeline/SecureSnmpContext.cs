@@ -147,6 +147,11 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <param name="data">The data.</param>
         internal override void GenerateResponse(ResponseData data)
         {
+            if (!data.HasResponse)
+            {
+                return;
+            }
+
             GetResponseMessage response;
             ProviderPair providers = Users.Find(Request.Parameters.UserName);
             if (data.ErrorStatus == ErrorCode.NoError)

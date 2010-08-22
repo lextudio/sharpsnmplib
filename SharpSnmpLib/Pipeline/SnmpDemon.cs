@@ -52,10 +52,9 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// </summary>
         public void Start()
         {   
-            Listener.Start();
             Listener.ExceptionRaised += ListenerExceptionRaised;
             Listener.MessageReceived += ListenerMessageReceived;
-
+            Listener.Start();
         }
 
         /// <summary>

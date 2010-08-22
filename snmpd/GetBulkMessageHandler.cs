@@ -12,17 +12,17 @@ namespace Lextm.SharpSnmpLib.Agent
         /// <summary>
         /// Handles the specified message.
         /// </summary>
-        /// <param name="message">The message.</param>
+        /// <param name="context">The context.</param>
         /// <param name="store">The object store.</param>
         /// <returns></returns>
-        public ResponseData Handle(ISnmpMessage message, ObjectStore store)
+        public ResponseData Handle(SnmpContext context, ObjectStore store)
         {
             // TODO: implement this to conform to RFC.
             IList<Variable> result = new List<Variable>();
-            Variable v = message.Pdu.Variables[0];
+            Variable v = context.Request.Pdu.Variables[0];
 
             Variable temp = v;
-            int total = message.Pdu.ErrorIndex.ToInt32();
+            int total = context.Request.Pdu.ErrorIndex.ToInt32();
             while (total-- > 0)
             {
                 ScalarObject next = store.GetNextObject(temp.Id);

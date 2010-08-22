@@ -6,9 +6,18 @@ namespace Lextm.SharpSnmpLib.Browser
 {
     internal class InformMessageHandler : IMessageHandler
     {
-        public ResponseData Handle(ISnmpMessage message, ObjectStore store)
+        public ResponseData Handle(SnmpContext context, ObjectStore store)
         {
-            throw new NotImplementedException();
+            InvokeMessageReceived(new MessageReceivedEventArgs<InformRequestMessage>(context.Sender, (InformRequestMessage)context.Request, context.Binding));
+            return new ResponseData(context.Request.Pdu.Variables, ErrorCode.NoError, 0);
+        }
+
+        public event EventHandler<MessageReceivedEventArgs<InformRequestMessage>> MessageReceived;
+
+        public void InvokeMessageReceived(MessageReceivedEventArgs<InformRequestMessage> e)
+        {
+            EventHandler<MessageReceivedEventArgs<InformRequestMessage>> handler = MessageReceived;
+            if (handler != null) handler(this, e);
         }
     }
 }

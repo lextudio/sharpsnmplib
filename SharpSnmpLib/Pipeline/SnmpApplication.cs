@@ -73,7 +73,7 @@
                 return;
             }
 
-            Context.GenerateResponse(_handler.Handle(Context.Request, _store));
+            Context.GenerateResponse(_handler.Handle(Context, _store));
         }
 
         private void OnMapRequestHandler()
@@ -110,6 +110,11 @@
         private void OnLogRequest()
         {
             Context.SendResponse();
+            if (_logger == null)
+            {
+                return;
+            }
+
             _logger.Log(Context);
         }
 

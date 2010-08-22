@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Lextm.SharpSnmpLib.Pipeline
 {
@@ -18,7 +19,24 @@ namespace Lextm.SharpSnmpLib.Pipeline
             Variables = variables ?? new List<Variable>(0);
             ErrorStatus = status;
             ErrorIndex = index;
+            HasResponse = true;
         }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ResponseData"/> class.
+        /// </summary>
+        public ResponseData()
+        {
+            HasResponse = false;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance has response.
+        /// </summary>
+        /// <value>
+        /// 	<c>true</c> if this instance has response; otherwise, <c>false</c>.
+        /// </value>
+        public bool HasResponse { get; set; }
 
         /// <summary>
         /// Gets or sets the variables.

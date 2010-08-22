@@ -15,6 +15,7 @@ using Lextm.SharpSnmpLib.Messaging;
 using Lextm.SharpSnmpLib.Pipeline;
 using RemObjects.Mono.Helpers;
 using WeifenLuo.WinFormsUI.Docking;
+using Microsoft.Practices.Unity;
 
 namespace Lextm.SharpSnmpLib.Browser
 {
@@ -23,11 +24,21 @@ namespace Lextm.SharpSnmpLib.Browser
     /// </summary>
     internal partial class NotificationPanel : DockContent
     {
+        private readonly SnmpDemon _demon;
         private const string StrAllUnassigned = "All Unassigned";
         private const string StrSends = "[{1}] [{0}] {2}";
 
         public NotificationPanel()
         {
+            var trapv1 = Program.Container.Resolve<TrapV1MessageHandler>("TrapV1Handler");
+            trapv1.MessageReceived += ListenerTrapV1Received;
+            var trapv2 = Program.Container.Resolve<TrapV2MessageHandler>("TrapV2Handler");
+            trapv2.MessageReceived += ListenerTrapV2Received;
+            var inform = Program.Container.Resolve<InformMessageHandler>("InformHandler");
+            inform.MessageReceived += ListenerInformRequestReceived;
+            _demon = Program.Container.Resolve<SnmpDemon>();
+            _demon.Listener.ExceptionRaised += ListenerExceptionRaised;
+
             InitializeComponent();
             if (PlatformSupport.Platform == PlatformType.Windows)
             {
@@ -45,9 +56,10 @@ namespace Lextm.SharpSnmpLib.Browser
             tscbIP.SelectedIndex = 0;
         }
 
-        public SnmpDemon Demon { get; set; }
-
-        public IObjectRegistry Objects { get; set; }
+        public IObjectRegistry Objects
+        {
+            get; set; 
+        }
 
         private void ListenerInformRequestReceived(object sender, MessageReceivedEventArgs<InformRequestMessage> e)
         {
@@ -84,7 +96,7 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void ActEnabledExecute(object sender, EventArgs e)
         {
-            if (Demon.Listener.Active)
+            if (_demon.Listener.Active)
             {
                 StopListeners();
                 return;
@@ -109,26 +121,26 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void StopListeners()
         {
-            Demon.Listener.Stop();
+            _demon.Stop();
         }
 
         private void StartListeners()
         {
-            Demon.Listener.ClearBindings();
+            _demon.Listener.ClearBindings();
             int port = int.Parse(tstxtPort.Text);
             if (tscbIP.Text == StrAllUnassigned)
             {
                 if (Socket.SupportsIPv4)
                 {
-                    Demon.Listener.AddBinding(new IPEndPoint(IPAddress.Any, port));
+                    _demon.Listener.AddBinding(new IPEndPoint(IPAddress.Any, port));
                 }
 
                 if (Socket.OSSupportsIPv6)
                 {
-                    Demon.Listener.AddBinding(new IPEndPoint(IPAddress.IPv6Any, port));
+                    _demon.Listener.AddBinding(new IPEndPoint(IPAddress.IPv6Any, port));
                 }
 
-                Demon.Listener.Start();
+                _demon.Start();
                 return;
             }
 
@@ -141,8 +153,8 @@ namespace Lextm.SharpSnmpLib.Browser
                     return;
                 }
 
-                Demon.Listener.AddBinding(new IPEndPoint(address, port));
-                Demon.Listener.Start();
+                _demon.Listener.AddBinding(new IPEndPoint(address, port));
+                _demon.Start();
                 return;
             }
 
@@ -152,18 +164,18 @@ namespace Lextm.SharpSnmpLib.Browser
                 return;
             }
 
-            Demon.Listener.AddBinding(new IPEndPoint(address, port));
-            Demon.Listener.Start();
+            _demon.Listener.AddBinding(new IPEndPoint(address, port));
+            _demon.Start();
         }
 
         private void ActEnabledAfterExecute(object sender, EventArgs e)
         {
-            actEnabled.Text = Demon.Listener.Active ? @"Stop Listening" : @"Start Listening";
-            actEnabled.Image = Demon.Listener.Active
+            actEnabled.Text = _demon.Listener.Active ? @"Stop Listening" : @"Start Listening";
+            actEnabled.Image = _demon.Listener.Active
                                    ? Properties.Resources.media_playback_stop
                                    : Properties.Resources.media_playback_start;
-            tscbIP.Enabled = !Demon.Listener.Active;
-            tstxtPort.Enabled = !Demon.Listener.Active;
+            tscbIP.Enabled = !_demon.Listener.Active;
+            tstxtPort.Enabled = !_demon.Listener.Active;
         }
     }
 }

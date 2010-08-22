@@ -47,7 +47,8 @@ namespace Lextm.SharpSnmpLib.Messaging
         private readonly VersionCode _version;
         private readonly TrapV1Pdu _pdu;
         private byte[] _bytes;
-        
+        private readonly SecurityParameters _parameter;
+
         /// <summary>
         /// Creates a <see cref="TrapV1Message"/> with all content.
         /// </summary>
@@ -98,6 +99,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 new TimeTicks(_time),
                 _variables);
             _bytes = Helper.PackMessage(_version, _community, pdu).ToBytes();
+            _parameter = new SecurityParameters(null, null, null, _community, null, null);
         }
         
         /// <summary>
@@ -131,6 +133,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             _specific = _pdu.Specific;
             _time = _pdu.TimeStamp.ToUInt32();
             _variables = _pdu.Variables;
+            _parameter = new SecurityParameters(null, null, null, _community, null, null);
         }
 
         /// <summary>
@@ -306,7 +309,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <remarks><see cref="TrapV1Message"/> returns null here.</remarks>
         public SecurityParameters Parameters
         {
-            get { return null; }
+            get { return _parameter; }
         }
 
         /// <summary>

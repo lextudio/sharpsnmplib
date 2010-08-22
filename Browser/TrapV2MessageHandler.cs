@@ -6,9 +6,18 @@ namespace Lextm.SharpSnmpLib.Browser
 {
     internal class TrapV2MessageHandler : IMessageHandler
     {
-        public ResponseData Handle(ISnmpMessage message, ObjectStore store)
+        public ResponseData Handle(SnmpContext context, ObjectStore store)
         {
-            throw new NotImplementedException();
+            InvokeMessageReceived(new MessageReceivedEventArgs<TrapV2Message>(context.Sender, (TrapV2Message)context.Request, context.Binding));
+            return new ResponseData();
+        }
+
+        public event EventHandler<MessageReceivedEventArgs<TrapV2Message>> MessageReceived;
+
+        public void InvokeMessageReceived(MessageReceivedEventArgs<TrapV2Message> e)
+        {
+            EventHandler<MessageReceivedEventArgs<TrapV2Message>> handler = MessageReceived;
+            if (handler != null) handler(this, e);
         }
     }
 }
