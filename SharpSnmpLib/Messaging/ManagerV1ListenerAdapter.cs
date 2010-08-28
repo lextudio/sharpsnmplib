@@ -13,6 +13,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// <summary>
     /// Adapter for SNMP v1 manager.
     /// </summary>
+    [Obsolete("Please switch to SnmpDemon.")]
     public class ManagerV1ListenerAdapter : IListenerAdapter
     {
         /// <summary>

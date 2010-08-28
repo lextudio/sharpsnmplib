@@ -15,6 +15,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// <para>Currently only SNMP v1 and v2c operations are supported.</para>
     /// </remarks>
     [CLSCompliant(false)]
+    [Obsolete("Please use Messenger class instead.")]
     public class Manager
     {
         private const int DefaultPort = 161;
