@@ -118,7 +118,7 @@ namespace Lextm.SharpSnmpLib.Agent
             this.btnInformV2.TabIndex = 8;
             this.btnInformV2.Text = "Send Inform v2";
             this.btnInformV2.UseVisualStyleBackColor = true;
-            this.btnInformV2.Click += new System.EventHandler(this.BtnInformClick);
+            this.btnInformV2.Click += new System.EventHandler(this.BtnInformV2Click);
             // 
             // toolStrip1
             // 

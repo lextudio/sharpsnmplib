@@ -141,7 +141,7 @@ namespace Lextm.SharpSnmpLib.Agent
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1300:SpecifyMessageBoxOptions")]
-        private void BtnInformClick(object sender, EventArgs e)
+        private void BtnInformV2Click(object sender, EventArgs e)
         {
             IPAddress ip = IPAddress.Parse(txtIP.Text);
             try
@@ -158,9 +158,9 @@ namespace Lextm.SharpSnmpLib.Agent
                     null,
                     null);
             }
-            catch (Exception ex)
+            catch (SnmpException ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Details);
             }
         }
 
@@ -186,9 +186,9 @@ namespace Lextm.SharpSnmpLib.Agent
                     record,
                     report);
             }
-            catch (Exception ex)
+            catch (SnmpException ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Details);
             }
         }
 
