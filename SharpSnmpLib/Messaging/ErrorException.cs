@@ -94,7 +94,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Details on error.
         /// </summary>
-        public override string Details
+        protected override string Details
         {
             get
             {
@@ -108,16 +108,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                     index == 0 ? null : Body.Pdu.Variables[index - 1].Id);
             }
         }
-        
-        /// <summary>
-        /// Returns a <see cref="String"/> that represents this <see cref="ErrorException"/>.
-        /// </summary>
-        /// <returns></returns>
-        public override string ToString()
-        {
-            return "ErrorException: " + Details;
-        }
-        
+         
         /// <summary>
         /// Creates a <see cref="ErrorException"/>.
         /// </summary>

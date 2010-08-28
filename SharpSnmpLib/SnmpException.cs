@@ -62,17 +62,17 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public override string ToString()
         {
-            return "SnmpException: " + Message;
+            return Details;
         }        
      
         /// <summary>
         /// Details on operation.
         /// </summary>
-        public virtual string Details
+        protected virtual string Details
         {
             get
             {
-                return Message;
+                return base.ToString();
             }
         }
     }

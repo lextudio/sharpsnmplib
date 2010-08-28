@@ -160,7 +160,7 @@ namespace Lextm.SharpSnmpLib.Agent
             }
             catch (SnmpException ex)
             {
-                MessageBox.Show(ex.Details);
+                MessageBox.Show(ex.ToString());
             }
         }
 
@@ -188,7 +188,7 @@ namespace Lextm.SharpSnmpLib.Agent
             }
             catch (SnmpException ex)
             {
-                MessageBox.Show(ex.Details);
+                MessageBox.Show(ex.ToString());
             }
         }
 

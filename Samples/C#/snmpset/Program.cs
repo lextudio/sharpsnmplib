@@ -230,14 +230,7 @@ namespace SnmpSet
             }
             catch (SnmpException ex)
             {
-                if (ex is OperationException)
-                {
-                    Console.WriteLine((ex as OperationException).Details);
-                }
-                else
-                {
-                    Console.WriteLine(ex);
-                }
+                Console.WriteLine(ex);
             }
             catch (SocketException ex)
             {

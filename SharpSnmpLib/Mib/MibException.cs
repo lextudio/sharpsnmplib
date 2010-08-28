@@ -83,7 +83,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <summary>
         /// Details on error.
         /// </summary>
-        public override string Details
+        protected override string Details
         {
             get
             {
@@ -95,15 +95,6 @@ namespace Lextm.SharpSnmpLib.Mib
                     (Symbol.Row + 1).ToString(CultureInfo.InvariantCulture),
                     (Symbol.Column + 1).ToString(CultureInfo.InvariantCulture));
             }
-        }
-        
-        /// <summary>
-        /// Returns a <see cref="String"/> that represents this <see cref="MibException"/>.
-        /// </summary>
-        /// <returns></returns>
-        public override string ToString()
-        {
-            return "MibException: " + Details;
         }
         
         /// <summary>

@@ -106,21 +106,12 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Details on operation.
         /// </summary>
-        public override string Details
+        protected override string Details
         {
             get
             {
                 return Message + ". Agent: " + Agent;
             }
-        }
-     
-        /// <summary>
-        /// Returns a <see cref="String"/> that represents this <see cref="OperationException"/>.
-        /// </summary>
-        /// <returns></returns>
-        public override string ToString()
-        {
-            return "OperationException: " + Details;
         }
      
         /// <summary>

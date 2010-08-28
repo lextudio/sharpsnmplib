@@ -215,11 +215,7 @@ Module Program
                 Console.WriteLine(v)
             Next
         Catch ex As SnmpException
-            If TypeOf ex Is OperationException Then
-                Console.WriteLine(TryCast(ex, OperationException).Details)
-            Else
-                Console.WriteLine(ex)
-            End If
+            Console.WriteLine(ex)
         Catch ex As SocketException
             Console.WriteLine(ex)
         End Try
