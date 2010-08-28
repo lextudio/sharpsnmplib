@@ -90,7 +90,77 @@ namespace Lextm.SharpSnmpLib.Messaging
             _scope = new Scope(pdu);
             _pair = ProviderPair.Default;
         }
-        
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InformRequestMessage"/> class.
+        /// </summary>
+        /// <param name="version">The version.</param>
+        /// <param name="messageId">The message id.</param>
+        /// <param name="requestId">The request id.</param>
+        /// <param name="userName">Name of the user.</param>
+        /// <param name="enterprise">The enterprise.</param>
+        /// <param name="time">The time.</param>
+        /// <param name="variables">The variables.</param>
+        /// <param name="pair">The pair.</param>
+        /// <param name="report">The report.</param>
+        [CLSCompliant(false)]
+        public InformRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName, ObjectIdentifier enterprise, uint time, IList<Variable> variables, ProviderPair pair, ISnmpMessage report)
+        {
+            if (userName == null)
+            {
+                throw new ArgumentNullException("userName");
+            }
+            
+            if (variables == null)
+            {
+                throw new ArgumentNullException("variables");
+            }
+            
+            if (version != VersionCode.V3)
+            {
+                throw new ArgumentException("only v3 is supported", "version");
+            }
+
+            if (enterprise == null)
+            {
+                throw new ArgumentNullException("enterprise");
+            }
+
+            if (report == null)
+            {
+                throw new ArgumentNullException("report");
+            }
+            
+            if (pair == null)
+            {
+                throw new ArgumentNullException("pair");
+            }
+
+            _version = version;
+            _pair = pair;
+            _enterprise = enterprise;
+            _time = time;
+            Levels recordToSecurityLevel = pair.ToSecurityLevel();
+            recordToSecurityLevel |= Levels.Reportable;
+            byte b = (byte)recordToSecurityLevel;
+            
+            // TODO: define more constants.
+            _header = new Header(new Integer32(messageId), new Integer32(0xFFE3), new OctetString(new[] { b }), new Integer32(3));
+            _parameters = new SecurityParameters(
+                report.Parameters.EngineId,
+                report.Parameters.EngineBoots,
+                report.Parameters.EngineTime,
+                userName,
+                _pair.Authentication.CleanDigest,
+                _pair.Privacy.Salt);
+            var pdu = new InformRequestPdu(
+                requestId,
+                enterprise,
+                time,
+                variables);
+            _scope = new Scope(report.Scope.ContextEngineId, report.Scope.ContextName, pdu);
+        }
+
         internal InformRequestMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, ProviderPair record)
         {
             if (scope == null)
@@ -172,10 +242,10 @@ namespace Lextm.SharpSnmpLib.Messaging
         }
 
         /// <summary>
-        /// Sends this <see cref="InformRequestMessage"/> and handles the response from receiver (managers or agents).
+        /// Sends this <see cref="InformRequestMessage"/> and handles the response from agent.
         /// </summary>
         /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
-        /// <param name="receiver">Receiver.</param>
+        /// <param name="receiver">Agent.</param>
         /// <returns></returns>
         public ISnmpMessage GetResponse(int timeout, IPEndPoint receiver)
         {
@@ -183,35 +253,42 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new ArgumentNullException("receiver");
             }
-            
+
             using (Socket socket = Helper.GetSocket(receiver))
             {
-                return MessageFactory.GetResponse(receiver, ToBytes(), MessageId, timeout, UserRegistry.Default, socket);
+                return GetResponse(timeout, receiver, socket);
             }
         }
 
         /// <summary>
-        /// Sends this <see cref="InformRequestMessage"/> and handles the response from receiver (managers or agents).
+        /// Sends this <see cref="InformRequestMessage"/> and handles the response from agent.
         /// </summary>
         /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
-        /// <param name="receiver">Receiver.</param>
-        /// <param name="socket">The socket.</param>
+        /// <param name="receiver">Agent.</param>
+        /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
         /// <returns></returns>
-        public ISnmpMessage GetResponse(int timeout, IPEndPoint receiver, Socket socket)
+        public ISnmpMessage GetResponse(int timeout, IPEndPoint receiver, Socket udpSocket)
         {
-            if (socket == null)
+            if (udpSocket == null)
             {
-                throw new ArgumentNullException("socket");
+                throw new ArgumentNullException("udpSocket");
             }
-            
+
             if (receiver == null)
             {
                 throw new ArgumentNullException("receiver");
             }
-            
-            return MessageFactory.GetResponse(receiver, ToBytes(), MessageId, timeout, UserRegistry.Default, socket);
-        }
 
+            UserRegistry registry = UserRegistry.Default;
+            if (Version == VersionCode.V3)
+            {
+                Helper.Authenticate(this, _pair);
+                registry.Add(_parameters.UserName, _pair);
+            }
+
+            return MessageFactory.GetResponse(receiver, ToBytes(), MessageId, timeout, registry, udpSocket);
+        }
+        
         /// <summary>
         /// Gets the request ID.
         /// </summary>
@@ -307,6 +384,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Generates the response message.
         /// </summary>
         /// <returns></returns>
+        [Obsolete("Please use SnmpDemon instead.")]
         public GetResponseMessage GenerateResponse()
         {
             // TODO: make more efficient here.

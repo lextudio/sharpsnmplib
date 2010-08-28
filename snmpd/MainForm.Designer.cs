@@ -43,7 +43,7 @@ namespace Lextm.SharpSnmpLib.Agent
             this.txtPort = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.btnInform = new System.Windows.Forms.Button();
+            this.btnInformV2 = new System.Windows.Forms.Button();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -53,6 +53,7 @@ namespace Lextm.SharpSnmpLib.Agent
             this.tstxtPort = new System.Windows.Forms.ToolStripTextBox();
             this.actEnabled = new Crad.Windows.Forms.Actions.Action();
             this.alNotification = new Crad.Windows.Forms.Actions.ActionList();
+            this.btnInformV3 = new System.Windows.Forms.Button();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.alNotification)).BeginInit();
             this.SuspendLayout();
@@ -109,15 +110,15 @@ namespace Lextm.SharpSnmpLib.Agent
             this.label2.TabIndex = 7;
             this.label2.Text = "Port";
             // 
-            // btnInform
+            // btnInformV2
             // 
-            this.btnInform.Location = new System.Drawing.Point(224, 106);
-            this.btnInform.Name = "btnInform";
-            this.btnInform.Size = new System.Drawing.Size(93, 23);
-            this.btnInform.TabIndex = 8;
-            this.btnInform.Text = "Send Inform";
-            this.btnInform.UseVisualStyleBackColor = true;
-            this.btnInform.Click += new System.EventHandler(this.BtnInformClick);
+            this.btnInformV2.Location = new System.Drawing.Point(224, 106);
+            this.btnInformV2.Name = "btnInformV2";
+            this.btnInformV2.Size = new System.Drawing.Size(93, 23);
+            this.btnInformV2.TabIndex = 8;
+            this.btnInformV2.Text = "Send Inform v2";
+            this.btnInformV2.UseVisualStyleBackColor = true;
+            this.btnInformV2.Click += new System.EventHandler(this.BtnInformClick);
             // 
             // toolStrip1
             // 
@@ -182,13 +183,24 @@ namespace Lextm.SharpSnmpLib.Agent
             this.alNotification.Actions.Add(this.actEnabled);
             this.alNotification.ContainerControl = this;
             // 
+            // btnInformV3
+            // 
+            this.btnInformV3.Location = new System.Drawing.Point(224, 134);
+            this.btnInformV3.Name = "btnInformV3";
+            this.btnInformV3.Size = new System.Drawing.Size(93, 23);
+            this.btnInformV3.TabIndex = 10;
+            this.btnInformV3.Text = "Send Inform v3";
+            this.btnInformV3.UseVisualStyleBackColor = true;
+            this.btnInformV3.Click += new System.EventHandler(this.BtnInformV3Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(353, 141);
+            this.ClientSize = new System.Drawing.Size(353, 169);
+            this.Controls.Add(this.btnInformV3);
             this.Controls.Add(this.toolStrip1);
-            this.Controls.Add(this.btnInform);
+            this.Controls.Add(this.btnInformV2);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtPort);
@@ -205,7 +217,7 @@ namespace Lextm.SharpSnmpLib.Agent
             this.PerformLayout();
 
         }
-        private System.Windows.Forms.Button btnInform;
+        private System.Windows.Forms.Button btnInformV2;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtPort;
@@ -221,6 +233,7 @@ namespace Lextm.SharpSnmpLib.Agent
         private System.Windows.Forms.ToolStripTextBox tstxtPort;
         private Crad.Windows.Forms.Actions.ActionList alNotification;
         private Crad.Windows.Forms.Actions.Action actEnabled;
+        private System.Windows.Forms.Button btnInformV3;
 
     }
 }

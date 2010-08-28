@@ -43,7 +43,7 @@ namespace SnmpSendTrap
             {
                 Messenger.SendInform(0, VersionCode.V2, new IPEndPoint(address, 162), new OctetString("public"), new ObjectIdentifier(new uint[] { 1, 3, 6 }),
                                      0,
-                                     new List<Variable>(), 2000);
+                                     new List<Variable>(), 2000, null, null);
             }
             catch (Exception ex)
             {

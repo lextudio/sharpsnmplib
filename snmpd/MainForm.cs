@@ -14,6 +14,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Reflection;
 using System.Windows.Forms;
+using Lextm.SharpSnmpLib.Security;
 using Microsoft.Practices.Unity;
 using Lextm.SharpSnmpLib.Messaging;
 using RemObjects.Mono.Helpers;
@@ -153,7 +154,37 @@ namespace Lextm.SharpSnmpLib.Agent
                     new ObjectIdentifier(new uint[] { 1, 3, 6 }),
                     0,
                     new List<Variable>(), 
-                    2000);
+                    2000,
+                    null,
+                    null);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void BtnInformV3Click(object sender, EventArgs e)
+        {
+            IPAddress ip = IPAddress.Parse(txtIP.Text);
+            try
+            {
+                IPEndPoint receiver = new IPEndPoint(ip, int.Parse(txtPort.Text, CultureInfo.InvariantCulture));
+                Discovery discovery = new Discovery(Messenger.NextMessageId, Messenger.NextRequestId);
+                ReportMessage report = discovery.GetResponse(2000, receiver);
+
+                ProviderPair record = ProviderPair.Default;
+                Messenger.SendInform(
+                    0,
+                    VersionCode.V3,
+                    receiver,
+                    new OctetString("neither"),
+                    new ObjectIdentifier(new uint[] { 1, 3, 6 }),
+                    0,
+                    new List<Variable>(),
+                    2000, 
+                    record,
+                    report);
             }
             catch (Exception ex)
             {

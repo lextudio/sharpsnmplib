@@ -272,10 +272,30 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="timestamp">Timestamp.</param>
         /// <param name="variables">Variable bindings.</param>
         /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
+        /// <param name="pair">The pair.</param>
+        /// <param name="report">The report.</param>
         [CLSCompliant(false)]
-        public static void SendInform(int requestId, VersionCode version, IPEndPoint receiver, OctetString community, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables, int timeout)
+        public static void SendInform(int requestId, VersionCode version, IPEndPoint receiver, OctetString community, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables, int timeout, ProviderPair pair, ISnmpMessage report)
         {
-            InformRequestMessage message = new InformRequestMessage(requestId, version, community, enterprise, timestamp, variables);
+            InformRequestMessage message = version == VersionCode.V3
+                                    ? new InformRequestMessage(
+                                          version,
+                                          MessageCounter.NextId,
+                                          requestId,
+                                          community,
+                                          enterprise,
+                                          timestamp,
+                                          variables,
+                                          pair,
+                                          report)
+                                    : new InformRequestMessage(
+                                          requestId,
+                                          version,
+                                          community,
+                                          enterprise,
+                                          timestamp,
+                                          variables);
+            
             ISnmpMessage response = message.GetResponse(timeout, receiver);
             if (response.Pdu.ErrorStatus.ToInt32() != 0)
             {
@@ -301,6 +321,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Return", Justification = "ByDesign")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Body", Justification = "ByDesign")]
         [CLSCompliant(false)]
+        [Obsolete("This method only works for a few scenarios. Will provide new methods in the future. If it does not work for you, parse WALK result on your own.")]
         public static Variable[,] GetTable(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, int timeout, int maxRepetitions, IObjectRegistry registry)
         {
             if (version == VersionCode.V3)
