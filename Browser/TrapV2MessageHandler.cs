@@ -4,6 +4,7 @@ using Lextm.SharpSnmpLib.Pipeline;
 
 namespace Lextm.SharpSnmpLib.Browser
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
     internal class TrapV2MessageHandler : IMessageHandler
     {
         public ResponseData Handle(SnmpContext context, ObjectStore store)
@@ -17,7 +18,10 @@ namespace Lextm.SharpSnmpLib.Browser
         public void InvokeMessageReceived(MessageReceivedEventArgs<TrapV2Message> e)
         {
             EventHandler<MessageReceivedEventArgs<TrapV2Message>> handler = MessageReceived;
-            if (handler != null) handler(this, e);
+            if (handler != null) 
+            {
+                handler(this, e);
+            }
         }
     }
 }

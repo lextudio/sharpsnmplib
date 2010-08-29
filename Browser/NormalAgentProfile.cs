@@ -17,11 +17,12 @@ namespace Lextm.SharpSnmpLib.Browser
         }
 
         internal OctetString GetCommunity { get; set; }
+        
         internal OctetString SetCommunity { get; set; }
 
         internal override void Get(Variable variable)
         {
-            Logger.Info(Messenger.Get(VersionCode, Agent, GetCommunity, new List<Variable>{variable}, Timeout)[0].ToString(Objects));
+            Logger.Info(Messenger.Get(VersionCode, Agent, GetCommunity, new List<Variable> { variable }, Timeout)[0].ToString(Objects));
         }
 
         internal override string GetValue(Variable variable)
@@ -31,8 +32,11 @@ namespace Lextm.SharpSnmpLib.Browser
 
         internal override void GetNext(Variable variable)
         {
-            GetNextRequestMessage message = new GetNextRequestMessage(Messenger.NextRequestId, VersionCode, GetCommunity,
-                                                                      new List<Variable> {variable});
+            GetNextRequestMessage message = new GetNextRequestMessage(
+                Messenger.NextRequestId,
+                VersionCode, 
+                GetCommunity,
+                new List<Variable> { variable });
             ISnmpMessage response = message.GetResponse(Timeout, Agent);
             if (response.Pdu.ErrorStatus.ToInt32() != 0)
             {
@@ -54,10 +58,8 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             IList<Variable> list = new List<Variable>();
             int rows = Messenger.Walk(VersionCode, Agent, GetCommunity, new ObjectIdentifier(def.GetNumericalForm()), list, Timeout, WalkMode.WithinSubtree);
-			
-            // 
+            
             // How many rows are there?
-            //
             if (rows > 0)
             {
                 FormTable newTable = new FormTable(def);
@@ -79,15 +81,28 @@ namespace Lextm.SharpSnmpLib.Browser
             IList<Variable> list = new List<Variable>();
             if (VersionCode == VersionCode.V1)
             {
-                Messenger.Walk(VersionCode, Agent, GetCommunity,
-                               new ObjectIdentifier(definition.GetNumericalForm()), list, Timeout,
-                               WalkMode.WithinSubtree);
+                Messenger.Walk(
+                    VersionCode, 
+                    Agent, 
+                    GetCommunity,
+                    new ObjectIdentifier(definition.GetNumericalForm()),
+                    list,
+                    Timeout,
+                    WalkMode.WithinSubtree);
             }
             else
             {
-                Messenger.BulkWalk(VersionCode, Agent, GetCommunity,
-                                   new ObjectIdentifier(definition.GetNumericalForm()), list, Timeout, 10,
-                                   WalkMode.WithinSubtree, null, null);
+                Messenger.BulkWalk(
+                    VersionCode,
+                    Agent, 
+                    GetCommunity,
+                    new ObjectIdentifier(definition.GetNumericalForm()), 
+                    list, 
+                    Timeout,
+                    10,
+                    WalkMode.WithinSubtree, 
+                    null, 
+                    null);
             }
 
             foreach (Variable v in list)

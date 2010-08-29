@@ -9,8 +9,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
+
 using Lextm.SharpSnmpLib.Mib;
 using RemObjects.Mono.Helpers;
 using WeifenLuo.WinFormsUI.Docking;
@@ -29,9 +31,9 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             InitializeComponent();
             if (PlatformSupport.Platform == PlatformType.Windows)
-			{
-				actNumber.Image = Properties.Resources.office_calendar;
-			}
+            {
+                actNumber.Image = Properties.Resources.office_calendar;
+            }
         }
 
         public IObjectRegistry Objects { get; set; }
@@ -42,25 +44,26 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             if (InvokeRequired)
             {
-                Invoke((MethodInvoker) (() => RefreshPanel(sender, e)));
+                Invoke((MethodInvoker)(() => RefreshPanel(sender, e)));
                 return;
             }
 
             ReloadableObjectRegistry repository = (ReloadableObjectRegistry)sender;
             treeView1.Nodes.Clear();
             TreeNode root = Wrap(repository.Tree.Root);
-			// FIXME: worked around a Mono bug.
+            
+            // FIXME: worked around a Mono bug.
             treeView1.Nodes.AddRange(root.Nodes.Cast<TreeNode>().ToArray());
         }
 
         private TreeNode Wrap(IDefinition definition)
         {
-            string name = _showNumber ? string.Format("{0}({1})", definition.Name, definition.Value) : definition.Name;
+            string name = _showNumber ? string.Format(CultureInfo.InvariantCulture, "{0}({1})", definition.Name, definition.Value) : definition.Name;
             TreeNode node = new TreeNode(name)
                                 {
                                     Tag = definition,
-                                    ImageIndex = (int) definition.Type,
-                                    SelectedImageIndex = (int) definition.Type,
+                                    ImageIndex = (int)definition.Type,
+                                    SelectedImageIndex = (int)definition.Type,
                                     ToolTipText =
                                         new SearchResult(definition).AlternativeText + Environment.NewLine +
                                         definition.Value
@@ -121,6 +124,7 @@ namespace Lextm.SharpSnmpLib.Browser
             actGet.Enabled = ValidForGet(treeView1.SelectedNode);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1300:SpecifyMessageBoxOptions")]
         private void ActSetExecute(object sender, EventArgs e)
         {
             try
@@ -145,8 +149,11 @@ namespace Lextm.SharpSnmpLib.Browser
                         int result;
                         if (!int.TryParse(form.NewVal, out result))
                         {
-                            MessageBox.Show("Value entered was not an Integer!", "SNMP Set Error",
-                                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show(
+                                "Value entered was not an Integer!", 
+                                "SNMP Set Error",
+                                MessageBoxButtons.OK, 
+                                MessageBoxIcon.Error);
                             return;
                         }
 
@@ -180,7 +187,7 @@ namespace Lextm.SharpSnmpLib.Browser
                 return false;
             }
 
-            //  Scalar or Column. (see DefinitionType.cs)
+            // Scalar or Column. (see DefinitionType.cs)
             return node.ImageIndex == 2 || node.ImageIndex == 5;
         }
 
@@ -208,7 +215,7 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void TreeView1AfterSelect(object sender, TreeViewEventArgs e)
         {
-            tslblOID.Text = ObjectIdentifier.Convert(((IDefinition) e.Node.Tag).GetNumericalForm());
+            tslblOID.Text = ObjectIdentifier.Convert(((IDefinition)e.Node.Tag).GetNumericalForm());
             if (ValidForGet(e.Node))
             {
                 ActGetExecute(sender, e);
@@ -246,7 +253,6 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             actGetNext.Enabled = ValidForGetNext(treeView1.SelectedNode);
         }
-
 
 /*
         private void ManualWalk(TreeNode node, bool first)
@@ -327,7 +333,7 @@ namespace Lextm.SharpSnmpLib.Browser
 
         #region Nested type: DefinitionComparer
 
-        private class DefinitionComparer: IComparer<IDefinition>
+        private class DefinitionComparer : IComparer<IDefinition>
         {
             #region IComparer<IDefinition> Members
 

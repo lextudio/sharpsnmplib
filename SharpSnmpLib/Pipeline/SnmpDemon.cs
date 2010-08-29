@@ -16,15 +16,10 @@ namespace Lextm.SharpSnmpLib.Pipeline
     /// SNMP demon class, who works as a basic agent.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
-    public class SnmpDemon : IDisposable
+    public sealed class SnmpDemon : IDisposable
     {
-        /// <summary>
-        /// Gets or sets the listener.
-        /// </summary>
-        /// <value>The listener.</value>
-        public Listener Listener { get; private set; }
         private readonly SnmpApplicationFactory _factory;
-        private readonly DemonObjects _objects;
+        private readonly DemonObjects _objects;  
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SnmpDemon"/> class.
@@ -37,7 +32,13 @@ namespace Lextm.SharpSnmpLib.Pipeline
             _factory = factory;
             Listener = listener;
             _objects = objects;
-        }
+        }        
+        
+        /// <summary>
+        /// Gets or sets the listener.
+        /// </summary>
+        /// <value>The listener.</value>
+        public Listener Listener { get; private set; }
 
         private void ListenerMessageReceived(object sender, MessageReceivedEventArgs<ISnmpMessage> e)
         {

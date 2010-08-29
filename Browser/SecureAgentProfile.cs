@@ -6,7 +6,7 @@ using Lextm.SharpSnmpLib.Security;
 
 namespace Lextm.SharpSnmpLib.Browser
 {
-    class SecureAgentProfile : AgentProfile
+    internal class SecureAgentProfile : AgentProfile
     {
         private readonly IAuthenticationProvider _auth;
         private readonly IPrivacyProvider _priv;
@@ -51,8 +51,11 @@ namespace Lextm.SharpSnmpLib.Browser
         }
 
         internal string AuthenticationPassphrase { get; private set; }
+        
         internal string PrivacyPassphrase { get; private set; }
+        
         internal int AuthenticationMethod { get; private set; }
+        
         internal int PrivacyMethod { get; private set; }
 
         public ProviderPair Providers
@@ -72,7 +75,7 @@ namespace Lextm.SharpSnmpLib.Browser
             ReportMessage report = discovery.GetResponse(Timeout, Agent);
             GetRequestMessage request = new GetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(UserName), new List<Variable> { variable }, _record, report);
             ISnmpMessage response = request.GetResponse(Timeout, Agent);
-            if (response.Pdu.ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
+            if (response.Pdu.ErrorStatus.ToInt32() != 0)
             {
                 throw ErrorException.Create(
                     "error in response",
@@ -89,7 +92,7 @@ namespace Lextm.SharpSnmpLib.Browser
             ReportMessage report = discovery.GetResponse(Timeout, Agent);
             GetRequestMessage request = new GetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(UserName), new List<Variable> { variable }, _record, report);
             ISnmpMessage response = request.GetResponse(Timeout, Agent);
-            if (response.Pdu.ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
+            if (response.Pdu.ErrorStatus.ToInt32() != 0)
             {
                 throw ErrorException.Create(
                     "error in response",
@@ -112,7 +115,7 @@ namespace Lextm.SharpSnmpLib.Browser
             ReportMessage report = discovery.GetResponse(Timeout, Agent);
             GetNextRequestMessage request = new GetNextRequestMessage(VersionCode.V3, 100, 0, new OctetString(UserName), new List<Variable> { variable }, _record, report);
             ISnmpMessage response = request.GetResponse(Timeout, Agent);
-            if (response.Pdu.ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
+            if (response.Pdu.ErrorStatus.ToInt32() != 0) 
             {
                 throw ErrorException.Create(
                     "error in response",
@@ -135,7 +138,7 @@ namespace Lextm.SharpSnmpLib.Browser
             ReportMessage report = discovery.GetResponse(Timeout, Agent);
             SetRequestMessage request = new SetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(UserName), new List<Variable> { variable }, _record, report);
             ISnmpMessage response = request.GetResponse(Timeout, Agent);
-            if (response.Pdu.ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
+            if (response.Pdu.ErrorStatus.ToInt32() != 0)
             {
                 throw ErrorException.Create(
                     "error in response",
@@ -151,13 +154,19 @@ namespace Lextm.SharpSnmpLib.Browser
             Discovery discovery = new Discovery(Messenger.NextMessageId, Messenger.NextRequestId);
             ReportMessage report = discovery.GetResponse(Timeout, Agent);
             IList<Variable> list = new List<Variable>();
-            int rows = Messenger.BulkWalk(VersionCode.V3, Agent, new OctetString(UserName),
-                               new ObjectIdentifier(def.GetNumericalForm()), list, Timeout, 10,
-                               WalkMode.WithinSubtree, _record, report);
+            int rows = Messenger.BulkWalk(
+                VersionCode.V3,
+                Agent, 
+                new OctetString(UserName),
+                new ObjectIdentifier(def.GetNumericalForm()), 
+                list, 
+                Timeout, 
+                10,
+                WalkMode.WithinSubtree, 
+                _record, 
+                report);
 
-            // 
             // How many rows are there?
-            //
             if (rows > 0)
             {
                 FormTable newTable = new FormTable(def);
@@ -185,9 +194,17 @@ namespace Lextm.SharpSnmpLib.Browser
             Discovery discovery = new Discovery(Messenger.NextMessageId, Messenger.NextRequestId);
             ReportMessage report = discovery.GetResponse(Timeout, Agent);
             IList<Variable> list = new List<Variable>();
-            Messenger.BulkWalk(VersionCode.V3, Agent, new OctetString(UserName),
-                               new ObjectIdentifier(definition.GetNumericalForm()), list, Timeout, 10,
-                               WalkMode.WithinSubtree, _record, report);
+            Messenger.BulkWalk(
+                VersionCode.V3,
+                Agent, 
+                new OctetString(UserName),
+                new ObjectIdentifier(definition.GetNumericalForm()),
+                list,
+                Timeout, 
+                10,
+                WalkMode.WithinSubtree, 
+                _record, 
+                report);
 
             foreach (Variable v in list)
             {

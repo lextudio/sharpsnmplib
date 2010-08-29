@@ -16,46 +16,46 @@ using WeifenLuo.WinFormsUI.Docking;
 
 namespace Lextm.SharpSnmpLib.Browser
 {
-	/// <summary>
-	/// Description of OutputPanel.
-	/// </summary>
-	internal partial class OutputPanel : DockContent, IOutputPanel
-	{
-	    public OutputPanel()
-		{
-			InitializeComponent();
+    /// <summary>
+    /// Description of OutputPanel.
+    /// </summary>
+    internal partial class OutputPanel : DockContent, IOutputPanel
+    {
+        public OutputPanel()
+        {
+            InitializeComponent();
             if (PlatformSupport.Platform == PlatformType.Windows)
-			{
-				Icon = Properties.Resources.utilities_terminal;
-			}
-		}
+            {
+                Icon = Properties.Resources.utilities_terminal;
+            }
+        }
 
-		public void Write(string message)
-		{
-			if (InvokeRequired)
-			{
-				Invoke((MethodInvoker)(() => Write(message)));
-				return;
-			}
+        public void Write(string message)
+        {
+            if (InvokeRequired)
+            {
+                Invoke((MethodInvoker)(() => Write(message)));
+                return;
+            }
 
-		    IPEndPoint agent = Profiles.DefaultProfile != null ? Profiles.DefaultProfile.Agent : null;
+            IPEndPoint agent = Profiles.DefaultProfile != null ? Profiles.DefaultProfile.Agent : null;
             txtMessages.AppendText(string.Format(CultureInfo.CurrentCulture, "[{2}] [{0}] {1}", DateTime.Now, message, agent));
-			txtMessages.ScrollToCaret();
-		}
+            txtMessages.ScrollToCaret();
+        }
 
-	    public IProfileRegistry Profiles { get; set; }
+        public IProfileRegistry Profiles { get; set; }
 
-	    private void ActClearExecute(object sender, EventArgs e)
-		{
-			txtMessages.Clear();
-		}
+        private void ActClearExecute(object sender, EventArgs e)
+        {
+            txtMessages.Clear();
+        }
 
-		private void TxtMessagesMouseUp(object sender, MouseEventArgs e)
-		{
-			if (e.Button == MouseButtons.Right)
-			{
-				contextOuputMenu.Show(txtMessages, e.Location);
-			}
-		}
-	}
+        private void TxtMessagesMouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                contextOuputMenu.Show(txtMessages, e.Location);
+            }
+        }
+    }
 }

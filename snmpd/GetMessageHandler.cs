@@ -8,6 +8,7 @@ namespace Lextm.SharpSnmpLib.Agent
     /// <summary>
     /// GET message handler.
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
     internal class GetMessageHandler : IMessageHandler
     {
         /// <summary>

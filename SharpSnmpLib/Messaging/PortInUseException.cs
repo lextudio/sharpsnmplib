@@ -65,10 +65,10 @@ namespace Lextm.SharpSnmpLib.Messaging
             base.GetObjectData(info, context);
             info.AddValue("Endpoint", Endpoint);
         }
-#endif
-        ///<summary>
+#endif        
+        /// <summary>
         /// The endpoint already in use.
-        ///</summary>
+        /// </summary>
         public IPEndPoint Endpoint { get; set; }
 
         /// <summary>

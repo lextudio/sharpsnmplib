@@ -102,6 +102,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
             ProviderPair providers = Users.Find(Request.Parameters.UserName);
             Request.Parameters.AuthenticationParameters = providers.Authentication.CleanDigest;
             OctetString calculated = providers.Authentication.ComputeHash(Request);
+            
             // other checking were performed in MessageFactory when decrypting message body.
             return embedded == calculated;
         }
@@ -109,6 +110,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         private void HandleDiscovery()
         {
             Objects.ReportCount++;
+            
             // discovery message received.
             Response = new ReportMessage(
                 VersionCode.V3,

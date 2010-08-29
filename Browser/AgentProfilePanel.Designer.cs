@@ -153,7 +153,6 @@ namespace Lextm.SharpSnmpLib.Browser
             this.actionList1.Actions.Add(this.actEdit);
             this.actionList1.Actions.Add(this.actDefault);
             this.actionList1.ContainerControl = this;
-            this.actionList1.Update += new System.EventHandler(this.ActionList1Update);
             // 
             // actAdd
             // 
@@ -180,6 +179,7 @@ namespace Lextm.SharpSnmpLib.Browser
             this.actDefault.Text = "Set Default";
             this.actDefault.ToolTipText = "Set Default Profile";
             this.actDefault.Execute += new System.EventHandler(this.ActDefaultExecute);
+            this.actDefault.AfterExecute += new System.EventHandler(this.ActDefaultAfterExecute);
             this.actDefault.Update += new System.EventHandler(this.ActDefaultUpdate);
             // 
             // editToolStripMenuItem

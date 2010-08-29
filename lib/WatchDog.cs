@@ -23,9 +23,9 @@ using System.Timers;
 namespace Lextm.Common
 {
     /// <summary>
-    /// Watch dog class that simulates a hardware watch dog.
+    /// Watchdog class that simulates a hardware watch dog.
     /// </summary>
-    public class WatchDog
+    public sealed class Watchdog : IDisposable
     {
         /// <summary>
         /// Occurs when the dog is hungry and barks.
@@ -38,7 +38,7 @@ namespace Lextm.Common
         /// Initializes a new instance of the <see cref="WatchDog"/> class.
         /// </summary>
         /// <param name="interval">The interval.</param>
-        public WatchDog(double interval)
+        public Watchdog(double interval)
         {
             _timer.Elapsed += TimerElapsed;
             _timer.Interval = interval;
@@ -85,6 +85,14 @@ namespace Lextm.Common
 
             _timer.Stop();
             _timer.Start();
+        }
+        
+        /// <summary>
+        /// Disposes resources in use.
+        /// </summary>
+        public void Dispose()
+        {
+            _timer.Dispose();
         }
     }
 }

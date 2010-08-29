@@ -24,9 +24,9 @@ namespace Lextm.SharpSnmpLib.Compiler
         {
             InitializeComponent();
             if (PlatformSupport.Platform == PlatformType.Windows)
-			{
-				Icon = Properties.Resources.utilities_terminal;
-			}
+            {
+                Icon = Properties.Resources.utilities_terminal;
+            }
         }
 
         public void Write(string message)

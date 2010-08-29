@@ -5,13 +5,13 @@ using NUnit.Framework;
 namespace Lextm.SharpSnmpLib.Tests
 {
     [TestFixture]
-    public class TestWatchDog
+    public class TestWatchdog
     {
         [Test]
         public void Test()
         {
             int count = 0;
-            WatchDog dog = new WatchDog(100d);
+            Watchdog dog = new Watchdog(100d);
             dog.Bark += delegate
                             {
                                 count++;

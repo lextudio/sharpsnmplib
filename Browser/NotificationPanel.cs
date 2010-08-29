@@ -7,15 +7,17 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Windows.Forms;
+
 using Lextm.SharpSnmpLib.Messaging;
 using Lextm.SharpSnmpLib.Pipeline;
+using Microsoft.Practices.Unity;
 using RemObjects.Mono.Helpers;
 using WeifenLuo.WinFormsUI.Docking;
-using Microsoft.Practices.Unity;
 
 namespace Lextm.SharpSnmpLib.Browser
 {
@@ -63,17 +65,17 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void ListenerInformRequestReceived(object sender, MessageReceivedEventArgs<InformRequestMessage> e)
         {
-            LogMessage(string.Format(StrSends, DateTime.Now, e.Sender, e.Message.ToString(Objects)));
+            LogMessage(string.Format(CultureInfo.InvariantCulture, StrSends, DateTime.Now, e.Sender, e.Message.ToString(Objects)));
         }
 
         private void ListenerTrapV2Received(object sender, MessageReceivedEventArgs<TrapV2Message> e)
         {
-            LogMessage(string.Format(StrSends, DateTime.Now, e.Sender, e.Message.ToString(Objects)));
+            LogMessage(string.Format(CultureInfo.InvariantCulture, StrSends, DateTime.Now, e.Sender, e.Message.ToString(Objects)));
         }
 
         private void ListenerTrapV1Received(object sender, MessageReceivedEventArgs<TrapV1Message> e)
         {
-            LogMessage(string.Format(StrSends, DateTime.Now, e.Sender, e.Message.ToString(Objects)));
+            LogMessage(string.Format(CultureInfo.InvariantCulture, StrSends, DateTime.Now, e.Sender, e.Message.ToString(Objects)));
         }
 
         private void ListenerExceptionRaised(object sender, ExceptionRaisedEventArgs e)
@@ -85,7 +87,7 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             if (InvokeRequired)
             {
-                Invoke((MethodInvoker) (() => LogMessage(message)));
+                Invoke((MethodInvoker)(() => LogMessage(message)));
                 return;
             }
             
@@ -94,6 +96,7 @@ namespace Lextm.SharpSnmpLib.Browser
             txtLog.ScrollToCaret();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1300:SpecifyMessageBoxOptions")]
         private void ActEnabledExecute(object sender, EventArgs e)
         {
             if (_demon.Listener.Active)
@@ -103,7 +106,7 @@ namespace Lextm.SharpSnmpLib.Browser
             }
 
             if (Helper.IsRunningOnMono() && PlatformSupport.Platform != PlatformType.Windows &&
-                Mono.Unix.Native.Syscall.getuid() != 0 && int.Parse(tstxtPort.Text) < 1024)
+                Mono.Unix.Native.Syscall.getuid() != 0 && int.Parse(tstxtPort.Text, CultureInfo.InvariantCulture) < 1024)
             {
                 MessageBox.Show(@"On Linux this application must be run as root for port < 1024.");
                 return;
@@ -127,7 +130,7 @@ namespace Lextm.SharpSnmpLib.Browser
         private void StartListeners()
         {
             _demon.Listener.ClearBindings();
-            int port = int.Parse(tstxtPort.Text);
+            int port = int.Parse(tstxtPort.Text, CultureInfo.InvariantCulture);
             if (tscbIP.Text == StrAllUnassigned)
             {
                 if (Socket.SupportsIPv4)

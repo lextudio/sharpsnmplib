@@ -16,6 +16,7 @@ namespace Lextm.SharpSnmpLib.Agent
     /// <summary>
     /// SET message handler.
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
     internal class SetMessageHandler : IMessageHandler
     {
         /// <summary>

@@ -15,30 +15,30 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <summary>
         /// Gets the object.
         /// </summary>
-        /// <param name="oid">The oid.</param>
+        /// <param name="id">The oid.</param>
         /// <returns></returns>
-        public ScalarObject GetObject(ObjectIdentifier oid)
+        public ScalarObject GetObject(ObjectIdentifier id)
         {
-            return _list.Select(o => o.MatchGet(oid)).FirstOrDefault(result => result != null);
+            return _list.Select(o => o.MatchGet(id)).FirstOrDefault(result => result != null);
         }
 
         /// <summary>
         /// Gets the next object.
         /// </summary>
-        /// <param name="oid">The oid.</param>
+        /// <param name="id">The oid.</param>
         /// <returns></returns>
-        public ScalarObject GetNextObject(ObjectIdentifier oid)
+        public ScalarObject GetNextObject(ObjectIdentifier id)
         {
-            return _list.Select(o => o.MatchGetNext(oid)).FirstOrDefault(result => result != null);
+            return _list.Select(o => o.MatchGetNext(id)).FirstOrDefault(result => result != null);
         }
 
         /// <summary>
         /// Adds the specified <seealso cref="ISnmpObject"/>.
         /// </summary>
-        /// <param name="o">The object.</param>
-        public void Add(ISnmpObject o)
+        /// <param name="newObject">The object.</param>
+        public void Add(ISnmpObject newObject)
         {
-            _list.Add(o);
+            _list.Add(newObject);
         }
     }
 }

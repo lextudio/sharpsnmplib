@@ -25,7 +25,13 @@ namespace Lextm.SharpSnmpLib.Browser
                 if (components != null) {
                     components.Dispose();
                 }
+                
+                if (_dog != null)
+                {
+                    _dog.Dispose();
+                }
             }
+            
             base.Dispose(disposing);
         }
         

@@ -63,10 +63,11 @@ namespace Lextm.SharpSnmpLib.Agent
             tscbIP.SelectedIndex = 0;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1300:SpecifyMessageBoxOptions")]
         private void StartListeners()
         {
             _demon.Listener.ClearBindings();
-            int port = int.Parse(tstxtPort.Text);
+            int port = int.Parse(tstxtPort.Text, CultureInfo.InvariantCulture);
             if (tscbIP.Text == StrAllUnassigned)
             {
                 if (Socket.SupportsIPv4)
@@ -164,6 +165,7 @@ namespace Lextm.SharpSnmpLib.Agent
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1300:SpecifyMessageBoxOptions")]
         private void BtnInformV3Click(object sender, EventArgs e)
         {
             IPAddress ip = IPAddress.Parse(txtIP.Text);
@@ -192,6 +194,7 @@ namespace Lextm.SharpSnmpLib.Agent
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1300:SpecifyMessageBoxOptions")]
         private void ActEnabledExecute(object sender, EventArgs e)
         {
             if (_demon.Active)
@@ -201,7 +204,7 @@ namespace Lextm.SharpSnmpLib.Agent
             }
 
             if (Helper.IsRunningOnMono() && PlatformSupport.Platform != PlatformType.Windows &&
-                Mono.Unix.Native.Syscall.getuid() != 0 && int.Parse(txtPort.Text) < 1024)
+                Mono.Unix.Native.Syscall.getuid() != 0 && int.Parse(txtPort.Text, CultureInfo.InvariantCulture) < 1024)
             {
                 MessageBox.Show(@"On Linux this application must be run as root for port < 1024.");
                 return;

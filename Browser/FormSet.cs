@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace Lextm.SharpSnmpLib.Browser
 {
-    partial class FormSet : Form
+    internal partial class FormSet : Form
     {
         public FormSet()
         {
@@ -37,6 +37,7 @@ namespace Lextm.SharpSnmpLib.Browser
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1300:SpecifyMessageBoxOptions")]
         private void BtnOkClick(object sender, EventArgs e)
         {
             if (rbInteger.Checked && !Valid())
@@ -67,7 +68,7 @@ namespace Lextm.SharpSnmpLib.Browser
             
             if (rbInteger.Checked && !int.TryParse(txtNew.Text, out test))
             {
-                txtNew.Text = "";
+                txtNew.Text = string.Empty;
 
                 return false;
             }

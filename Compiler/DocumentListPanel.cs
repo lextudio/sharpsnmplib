@@ -28,9 +28,9 @@ namespace Lextm.SharpSnmpLib.Compiler
         {
             InitializeComponent();
             if (PlatformSupport.Platform == PlatformType.Windows)
-			{				
-			    Icon = Properties.Resources.document_new;
-			}
+            {                
+                Icon = Properties.Resources.document_new;
+            }
         }
         
         private void LvFilesDoubleClick(object sender, EventArgs e)

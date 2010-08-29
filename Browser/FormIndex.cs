@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace Lextm.SharpSnmpLib.Browser
 {
-    partial class FormIndex : Form
+    internal partial class FormIndex : Form
     {
         public FormIndex()
         {

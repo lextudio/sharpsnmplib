@@ -18,7 +18,7 @@ namespace Lextm.SharpSnmpLib.Agent
     /// 2. SET operation is performed on a read-only object.
     /// </summary>
     [Serializable]
-    public class AccessFailureException : Exception
+    public sealed class AccessFailureException : Exception
     {
         /// <summary>
         /// Creates a <see cref="AccessFailureException"/>.

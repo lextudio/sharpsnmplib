@@ -22,6 +22,7 @@ namespace Lextm.SharpSnmpLib.Compiler
     /// <summary>
     /// Description of MainForm.
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
     internal partial class MainForm : Form
     {
         public MainForm()
@@ -29,14 +30,14 @@ namespace Lextm.SharpSnmpLib.Compiler
             InitializeComponent();
 
             if (PlatformSupport.Platform == PlatformType.Windows)
-			{
-                Icon =  Properties.Resources.accessories_text_editor;
-                actAbout.Image =  Properties.Resources.help_browser;
+            {
+                Icon = Properties.Resources.accessories_text_editor;
+                actAbout.Image = Properties.Resources.help_browser;
                 actCompileAll.Image = Properties.Resources.go_jump;
                 actCompile.Image = Properties.Resources.go_bottom;
                 actOpen.Image = Properties.Resources.document_open;
-                actExit.Image =  Properties.Resources.system_log_out;
-			}
+                actExit.Image = Properties.Resources.system_log_out;
+            }
 
             DockContent files = Program.Container.Resolve<DockContent>("DocumentList");
             files.Show(dockPanel1, DockState.DockLeft);
@@ -100,15 +101,15 @@ namespace Lextm.SharpSnmpLib.Compiler
         {
             Text = string.Format(CultureInfo.CurrentUICulture, "{0} (Version: {1})", Text, Assembly.GetExecutingAssembly().GetName().Version);
         }
-		
-		private void MainFormClosing(object sender, FormClosingEventArgs e)
-		{
-			// FIXME: work around a DPS disposing infinite loop.
-			foreach (var d in Program.Container.ResolveAll<DockContent>())
-			{
-				d.Close();
-				d.Dispose();
-			}
-		}
+        
+        private void MainFormClosing(object sender, FormClosingEventArgs e)
+        {
+            // FIXME: work around a DPS disposing infinite loop.
+            foreach (var d in Program.Container.ResolveAll<DockContent>())
+            {
+                d.Close();
+                d.Dispose();
+            }
+        }
     }
 }

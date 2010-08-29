@@ -68,7 +68,7 @@ namespace Lextm.SharpSnmpLib.Compiler
         {
             if (e.Result != null)
             {
-                IEnumerable<MibException> errors = (IEnumerable<MibException>) e.Result;
+                IEnumerable<MibException> errors = (IEnumerable<MibException>)e.Result;
                 foreach (MibException error in errors)
                 {
                     Logger.Info(error.Message);

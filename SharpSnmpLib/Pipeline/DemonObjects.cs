@@ -43,6 +43,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// Gets the engine time.
         /// </summary>
         /// <value>The engine time.</value>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         public int EngineTime
         {
             get { return Environment.TickCount; }

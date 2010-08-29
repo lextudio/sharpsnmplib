@@ -9,17 +9,28 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             if (version == VersionCode.V3)
             {
-                return new SecureAgentProfile(id, version,
-                                    agent, agentName,
-                                    authenticationPassphrase, privacyPassphrase,
-                                    authenticationMethod, privacyMethod,
-                                    userName, timeout);
+                return new SecureAgentProfile(
+                    id, 
+                    version,
+                    agent, 
+                    agentName,
+                    authenticationPassphrase, 
+                    privacyPassphrase,
+                    authenticationMethod, 
+                    privacyMethod,
+                    userName, 
+                    timeout);
             }
 
-            return new NormalAgentProfile(id, version,
-                                    agent, new OctetString(getCommunity), 
-                                    new OctetString(setCommunity), agentName,
-                                    userName, timeout);
+            return new NormalAgentProfile(
+                id, 
+                version,
+                agent, 
+                new OctetString(getCommunity),
+                new OctetString(setCommunity), 
+                agentName,
+                userName, 
+                timeout);
         }
     }
 }

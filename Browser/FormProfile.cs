@@ -109,8 +109,8 @@ namespace Lextm.SharpSnmpLib.Browser
         private void TxtPortValidating(object sender, CancelEventArgs e)
         {
             int result;
-            bool isInt = int.TryParse(txtPort.Text, out result);
-            if (isInt && result > 0)
+            bool succeeded = int.TryParse(txtPort.Text, out result);
+            if (succeeded && result > 0)
             {
                 return;
             }
@@ -195,17 +195,17 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void UpdateControls()
         {
-            bool isV3 = cbVersionCode.SelectedIndex == 2;
+            bool version3Detected = cbVersionCode.SelectedIndex == 2;
             bool authenEnabled = cbAuthentication.SelectedIndex != 0;
             bool privEnabled = cbPrivacy.SelectedIndex != 0;
 
-            cbAuthentication.Enabled = isV3;
-            cbPrivacy.Enabled = isV3 && authenEnabled;
-            txtAuthentication.Enabled = isV3 && authenEnabled;
-            txtPrivacy.Enabled = isV3 && privEnabled && authenEnabled;
-            txtUserName.Enabled = isV3;
-            txtGet.Enabled = !isV3;
-            txtSet.Enabled = !isV3;
+            cbAuthentication.Enabled = version3Detected;
+            cbPrivacy.Enabled = version3Detected && authenEnabled;
+            txtAuthentication.Enabled = version3Detected && authenEnabled;
+            txtPrivacy.Enabled = version3Detected && privEnabled && authenEnabled;
+            txtUserName.Enabled = version3Detected;
+            txtGet.Enabled = !version3Detected;
+            txtSet.Enabled = !version3Detected;
         }
 
         private void TxtAuthenticationValidated(object sender, EventArgs e)

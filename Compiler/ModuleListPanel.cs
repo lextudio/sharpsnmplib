@@ -32,9 +32,9 @@ namespace Lextm.SharpSnmpLib.Compiler
         {
             InitializeComponent();
             if (PlatformSupport.Platform == PlatformType.Windows)
-			{
-				Icon = Properties.Resources.preferences_system_windows;
-			}
+            {
+                Icon = Properties.Resources.preferences_system_windows;
+            }
         }
 
         private void ModuleListPanel_Load(object sender, EventArgs e)
@@ -71,7 +71,7 @@ namespace Lextm.SharpSnmpLib.Compiler
             ResumeLayout();
             listView1.Groups["lvgLoaded"].Header = string.Format(CultureInfo.InvariantCulture, "Loaded ({0})", Assembler.Tree.LoadedModules.Count);
             listView1.Groups["lvgPending"].Header = string.Format(CultureInfo.InvariantCulture, "Pending ({0})", Assembler.Tree.PendingModules.Count);
-            tslblCount.Text = string.Format("loaded: {0}; unloaded: {1}", Assembler.Tree.LoadedModules.Count, Assembler.Tree.PendingModules.Count);
+            tslblCount.Text = string.Format(CultureInfo.InvariantCulture, "loaded: {0}; unloaded: {1}", Assembler.Tree.LoadedModules.Count, Assembler.Tree.PendingModules.Count);
         }
 
         public Assembler Assembler { get; set; }

@@ -75,6 +75,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <value>The remaining.</value>
         [CLSCompliant(false)]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
         public ICollection<uint> GetRemaining()
         {
             return _remaining; 

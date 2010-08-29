@@ -8,6 +8,7 @@ using WeifenLuo.WinFormsUI.Docking;
 
 namespace Lextm.SharpSnmpLib.Browser
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
     internal partial class AgentProfilePanel : DockContent
     {
         private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger("Lextm.SharpSnmpLib.Browser");
@@ -53,25 +54,25 @@ namespace Lextm.SharpSnmpLib.Browser
                             item.Group = listView1.Groups["lvgV1"];
                             break;
                         }
+                        
                     case VersionCode.V2:
                         {
                             item.Group = listView1.Groups["lvgV2"];
                             break;
                         }
+                        
                     case VersionCode.V3:
                         {
                             item.Group = listView1.Groups["lvgV3"];
                             break;
                         }
+                        
                     default:
                         {
                             break;
                         }
                 }
 
-                //
-                // Lets make the default Agent bold
-                //
                 if (profile == Profiles.DefaultProfile)
                 {
                     item.Font = new Font(listView1.Font, FontStyle.Bold);
@@ -114,18 +115,15 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             Profiles.DefaultProfile = listView1.SelectedItems[0].Tag as AgentProfile;
             Profiles.SaveProfiles();
-
-            //
-            // Update view for new default agent
-            //
             UpdateView(null, null);
         }
-
-        private void ActionList1Update(object sender, EventArgs e)
+        
+        private void ActDefaultAfterExecute(object sender, EventArgs e)
         {
             tslblDefault.Text = string.Format(CultureInfo.InvariantCulture, "Default agent is {0}", Profiles.DefaultProfile.Name);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1300:SpecifyMessageBoxOptions")]
         private void ActDeleteExecute(object sender, EventArgs e)
         {
             if (MessageBox.Show("Do you want to remove this item", "Confirmation", MessageBoxButtons.YesNo) != DialogResult.Yes)
@@ -135,7 +133,7 @@ namespace Lextm.SharpSnmpLib.Browser
 
             try
             {
-                Profiles.DeleteProfile(((AgentProfile) listView1.SelectedItems[0].Tag));
+                Profiles.DeleteProfile(((AgentProfile)listView1.SelectedItems[0].Tag));
                 Profiles.SaveProfiles();
             }
             catch (BrowserException ex)
@@ -172,8 +170,6 @@ namespace Lextm.SharpSnmpLib.Browser
             {
                 if (editor.ShowDialog() == DialogResult.OK)
                 {
-                    //Profiles.ReplaceProfile(new AgentProfile(profile.Id, editor.VersionCode, new IPEndPoint(editor.IP, editor.Port), editor.GetCommunity, editor.SetCommunity, editor.AgentName));
-                    //Profiles.SaveProfiles();
                 }
             }
         }

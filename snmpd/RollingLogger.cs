@@ -17,6 +17,7 @@ namespace Lextm.SharpSnmpLib.Agent
     /// <summary>
     /// Logger class, who logs message processed to the rolling log file.
     /// </summary>    
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
     internal class RollingLogger : ILogger
     {
         private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);

@@ -34,7 +34,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// Gets or sets a value indicating whether this instance has response.
         /// </summary>
         /// <value>
-        /// 	<c>true</c> if this instance has response; otherwise, <c>false</c>.
+        ///     <c>true</c> if this instance has response; otherwise, <c>false</c>.
         /// </value>
         public bool HasResponse { get; set; }
 

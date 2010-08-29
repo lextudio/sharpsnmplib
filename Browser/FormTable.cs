@@ -15,7 +15,7 @@ namespace Lextm.SharpSnmpLib.Browser
         private bool _columnCountSet;
         private Thread _refreshThread;
 
-        delegate void RefreshTableCallback(IList<Variable> list);
+        internal delegate void RefreshTableCallback(IList<Variable> list);
 
         public FormTable(IDefinition def)
         {
@@ -40,25 +40,19 @@ namespace Lextm.SharpSnmpLib.Browser
             // If these threads are different, it returns true.
             if (dataGridTable.InvokeRequired)
             {
-                RefreshTableCallback r =  PopulateGrid;
+                RefreshTableCallback r = PopulateGrid;
                 Invoke(r, new object[] { list });
             }
             else 
             {
                 int rowCount = dataGridTable.RowCount;
 
-                dataGridTable.ColumnCount = (list.Count / dataGridTable.RowCount);
+                dataGridTable.ColumnCount = list.Count / dataGridTable.RowCount;
                 dataGridTable.RowCount = 0;
                 _columnCountSet = true;
 
-                //
-                // Create the column headers
-                //
                 CreateColumns();
 
-                //
-                // Fill in the tree itself
-                //
                 for (int x = 0; x < rowCount; x++)
                 {
                     string[] row = new string[dataGridTable.ColumnCount];
@@ -69,7 +63,6 @@ namespace Lextm.SharpSnmpLib.Browser
                     }
 
                     dataGridTable.Rows.Add(row);
-
                     Refresh();
                 }
             }
@@ -77,7 +70,7 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void CheckBoxRefreshCheckedChanged(object sender, EventArgs e)
         {
-            if(checkBoxRefresh.Checked)
+            if (checkBoxRefresh.Checked)
             {
                 _refreshThread = new Thread(RefreshTable);
                 _refreshThread.Start();
@@ -92,14 +85,11 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             int x = 0;
             
-            //
             // We want to move into the table object here
-            //
             IEnumerator<IDefinition> i = _definition.Children.GetEnumerator();
             i.Reset();
             i.MoveNext();
             IDefinition d = i.Current;
-
 
             foreach (IDefinition def in d.Children)
             {
@@ -136,20 +126,31 @@ namespace Lextm.SharpSnmpLib.Browser
                 int rows;
                 if (prof != null)
                 {
-                    rows = Messenger.Walk(prof.VersionCode, prof.Agent, prof.GetCommunity,
-                                              new ObjectIdentifier(_definition.GetNumericalForm()), list, prof.Timeout,
-                                              WalkMode.WithinSubtree);
-
-                    
+                    rows = Messenger.Walk(
+                        prof.VersionCode, 
+                        prof.Agent, 
+                        prof.GetCommunity,
+                        new ObjectIdentifier(_definition.GetNumericalForm()),
+                        list, 
+                        prof.Timeout,
+                        WalkMode.WithinSubtree);                    
                 }
                 else
                 {
                     SecureAgentProfile p = (SecureAgentProfile)registry.DefaultProfile;
                     Discovery discovery = new Discovery(Messenger.NextMessageId, Messenger.NextRequestId);
                     ReportMessage report = discovery.GetResponse(p.Timeout, p.Agent);
-                    rows = Messenger.BulkWalk(VersionCode.V3, p.Agent, new OctetString(p.UserName),
-                                       new ObjectIdentifier(_definition.GetNumericalForm()), list, p.Timeout, 10,
-                                       WalkMode.WithinSubtree, p.Providers, report);
+                    rows = Messenger.BulkWalk(
+                        VersionCode.V3, 
+                        p.Agent, 
+                        new OctetString(p.UserName),
+                        new ObjectIdentifier(_definition.GetNumericalForm()), 
+                        list, 
+                        p.Timeout,
+                        10,
+                        WalkMode.WithinSubtree, 
+                        p.Providers, 
+                        report);
                 }
 
                 SetRows(rows);
@@ -161,12 +162,11 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             if ((e.KeyValue > 0 && e.KeyValue < 31) || (e.KeyValue > 47 && e.KeyValue < 58) || (e.KeyValue > 95 && e.KeyValue < 106))
             {
-                //Allow all numbers to be printed
+                // Allow all numbers to be printed
+                return;
             }
-            else
-            {
-                e.SuppressKeyPress = true;
-            }
+            
+            e.SuppressKeyPress = true;
         }
 
         private void FormTable_FormClosing(object sender, FormClosingEventArgs e)

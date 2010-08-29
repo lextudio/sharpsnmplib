@@ -28,7 +28,7 @@ namespace Lextm.SharpSnmpLib.Browser
     {
         private const string Filter = "*.module";
         private FileSystemWatcher _watcher;
-        private WatchDog _dog;
+        private Watchdog _dog;
 
         public ModuleListPanel()
         {
@@ -44,17 +44,19 @@ namespace Lextm.SharpSnmpLib.Browser
             actAdd.Image = Properties.Resources.list_add;
         }
         
-        void ModuleListPanel_Load(object sender, EventArgs e)
+        private void ModuleListPanel_Load(object sender, EventArgs e)
         {
             Objects.OnChanged += RefreshPanel;
             RefreshPanel(Objects, EventArgs.Empty);
 
-            _dog = new WatchDog(10000d);
+            _dog = new Watchdog(10000d);
             _dog.Bark += DogBark;
             _dog.Enabled = actEnableMonitor.Checked;
 
             _watcher = new FileSystemWatcher(((ReloadableObjectRegistry)Objects).Path, Filter)
-                           {IncludeSubdirectories = false};
+            {
+                IncludeSubdirectories = false
+            };
             _watcher.Changed += OnChanged;
             _watcher.Created += OnChanged;
             _watcher.Deleted += OnChanged;
@@ -77,7 +79,7 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             if (InvokeRequired)
             {
-                Invoke((MethodInvoker) (() => RefreshPanel(sender, e)));
+                Invoke((MethodInvoker)(() => RefreshPanel(sender, e)));
                 return;
             }
 
@@ -93,8 +95,10 @@ namespace Lextm.SharpSnmpLib.Browser
             
             string[] files = Directory.GetFiles(reg.Path, Filter);
             foreach (ListViewItem item in from file in files
-                                          select Path.GetFileNameWithoutExtension(file)
-                                          into name where !loaded.Contains(name) select listView1.Items.Add(name))
+                     select Path.GetFileNameWithoutExtension(file)
+                     into name 
+                     where !loaded.Contains(name) 
+                     select listView1.Items.Add(name))
             {
                 item.BackColor = Color.LightGray;
                 item.Group = listView1.Groups["lvgPending"];
@@ -148,7 +152,7 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void ActRemoveUpdate(object sender, EventArgs e)
         {
-            actRemove.Enabled = listView1.SelectedItems.Count >0 && ItemsInGroup(listView1.SelectedItems, "lvgLoaded");
+            actRemove.Enabled = listView1.SelectedItems.Count > 0 && ItemsInGroup(listView1.SelectedItems, "lvgLoaded");
         }
 
         private static bool ItemsInGroup(IEnumerable collection, string group)
