@@ -9,6 +9,7 @@
 
 using System;
 using System.Windows.Forms;
+using Lextm.Common;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
 
@@ -33,14 +34,15 @@ namespace Lextm.SharpSnmpLib.Compiler
                 return;
             }
 
-            Container = new UnityContainer();
-            Container.LoadConfiguration("compiler");
-
-            ToolStripManager.Renderer = new Office2007Renderer.Office2007Renderer();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            MainForm main = Container.Resolve<MainForm>();
-            Application.Run(main);
+            SingleInstanceController controller = new SingleInstanceController(typeof(MainForm));
+            controller.BeforeCreateMainForm += delegate
+            {
+                Container = new UnityContainer().LoadConfiguration("compiler");
+                ToolStripManager.Renderer = new Office2007Renderer.Office2007Renderer();
+            };
+            controller.Run(args);
         }
     }
 }

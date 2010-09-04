@@ -47,9 +47,11 @@ namespace Lextm.SharpSnmpLib.Compiler
 
             DockContent modules = Program.Container.Resolve<DockContent>("ModuleList");
             modules.Show(dockPanel1, DockState.DockRight);
+            
+            Compiler = Program.Container.Resolve<CompilerCore>();
         }
 
-        public CompilerCore Compiler { get; set; }
+        public CompilerCore Compiler { get; private set; }
 
         private void ActExitExecute(object sender, EventArgs e)
         {

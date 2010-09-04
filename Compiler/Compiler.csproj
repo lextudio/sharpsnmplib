@@ -47,6 +47,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\lib\SingleInstanceController.cs">
+      <Link>SingleInstanceController.cs</Link>
+    </Compile>
     <None Include="license.txt" />
     <None Include="Resources\accessories-text-editor.ico" />
     <None Include="Resources\dialog-information.ico" />
@@ -145,6 +148,7 @@
     <Reference Include="Microsoft.Practices.Unity.Configuration">
       <HintPath>..\lib\Microsoft.Practices.Unity.Configuration.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Office2007Renderer">
       <HintPath>..\lib\Office2007Renderer.dll</HintPath>
     </Reference>

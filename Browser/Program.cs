@@ -9,6 +9,7 @@
 
 using System;
 using System.Windows.Forms;
+using Lextm.Common;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
 
@@ -32,13 +33,15 @@ namespace Lextm.SharpSnmpLib.Browser
                 return;
             }
 
-            Container = new UnityContainer();
-            Container.LoadConfiguration("browser");
-
-            ToolStripManager.Renderer = new Office2007Renderer.Office2007Renderer();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+            SingleInstanceController controller = new SingleInstanceController(typeof(MainForm));
+            controller.BeforeCreateMainForm += delegate 
+            {
+                Container = new UnityContainer().LoadConfiguration("browser");
+                ToolStripManager.Renderer = new Office2007Renderer.Office2007Renderer();
+            };
+            controller.Run(args);
         }
     }
 }

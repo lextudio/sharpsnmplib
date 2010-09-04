@@ -49,6 +49,7 @@
     <Reference Include="log4net">
       <HintPath>..\lib\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\Mono.Posix.dll</HintPath>
@@ -77,6 +78,9 @@
     <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\lib\SingleInstanceController.cs">
+      <Link>SingleInstanceController.cs</Link>
+    </Compile>
     <Compile Include="..\lib\WatchDog.cs">
       <Link>WatchDog.cs</Link>
     </Compile>
