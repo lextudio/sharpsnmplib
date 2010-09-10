@@ -1,0 +1,3 @@
+glob:*/obj/
+glob:*bin/
+glob:SharpSnmpLib/sharpsnmplib.snk
