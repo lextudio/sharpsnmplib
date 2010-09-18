@@ -73,6 +73,7 @@ namespace Lextm.SharpSnmpLib.Browser
             _dog.Feed();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public IObjectRegistry Objects { get; set; }
 
         private void RefreshPanel(object sender, EventArgs e)

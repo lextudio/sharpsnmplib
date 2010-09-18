@@ -16,9 +16,10 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// <summary>
     /// Listener class.
     /// </summary>
-    public class Listener
+    public class Listener : IDisposable
     {
         private UserRegistry _users;
+        private bool _disposed;
 
         /// <summary>
         /// Error message for non IP v4 OS.
@@ -40,6 +41,52 @@ namespace Lextm.SharpSnmpLib.Messaging
             Adapters = new List<IListenerAdapter>();
             Bindings = new List<ListenerBinding>();
         }
+        
+        /// <summary>
+        /// Releases unmanaged resources and performs other cleanup operations before the
+        /// <see cref="Listener"/> is reclaimed by garbage collection.
+        /// </summary>
+        ~Listener()
+        {
+            Dispose(false);
+        }
+        
+        /// <summary>
+        /// Disposes resources in use.
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        
+        /// <summary>
+        /// Releases the unmanaged resources used by the <see cref="T:System.ComponentModel.Component"/> and optionally releases the managed resources.
+        /// </summary>
+        /// <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
+        private void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+            
+            if (disposing)
+            {
+                if (Bindings != null)
+                {
+                    foreach (ListenerBinding binding in Bindings)
+                    {
+                        binding.Dispose();
+                    }
+                    
+                    Bindings.Clear();
+                    Bindings = null;
+                }
+            }
+            
+            _disposed = true;
+        }
 
         /// <summary>
         /// Gets or sets the users.
@@ -47,8 +94,24 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <value>The users.</value>
         public UserRegistry Users
         {
-            get { return _users ?? (_users = UserRegistry.Default); }
-            set { _users = value; }
+            get
+            {
+                if (_disposed)
+                {
+                    throw new ObjectDisposedException(GetType().FullName);
+                }
+                
+                return _users ?? (_users = UserRegistry.Default);
+            }
+            set
+            {
+                if (_disposed)
+                {
+                    throw new ObjectDisposedException(GetType().FullName);
+                }
+                
+                _users = value;
+            }
         }
 
         /// <summary>
@@ -62,6 +125,11 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         public void Stop()
         {
+            if (_disposed)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
+            }            
+            
             foreach (ListenerBinding binding in Bindings)
             {
                 binding.Stop();
@@ -76,6 +144,11 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <exception cref="PortInUseException"/>
         public void Start()
         {
+            if (_disposed)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
+            }            
+            
             try
             {
                 foreach (ListenerBinding binding in Bindings)
@@ -90,17 +163,6 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             Active = true;
-        }
-
-        /// <summary>
-        /// Releases unmanaged and - optionally - managed resources
-        /// </summary>
-        public void Dispose()
-        {
-            foreach (ListenerBinding binding in Bindings)
-            {
-                binding.Dispose();
-            }
         }
 
         /// <summary>
@@ -131,6 +193,11 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="endpoint">The endpoint.</param>
         public void AddBinding(IPEndPoint endpoint)
         {
+            if (_disposed)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
+            }            
+            
             var binding = new ListenerBinding(Users, Adapters, endpoint);
             binding.ExceptionRaised += (o, args) =>
             {
@@ -156,6 +223,11 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         public void ClearBindings()
         {
+            if (_disposed)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
+            }            
+            
             foreach (ListenerBinding binding in Bindings)
             {
                 binding.Stop();

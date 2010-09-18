@@ -37,7 +37,7 @@ namespace Lextm.SharpSnmpLib.Compiler
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             SingleInstanceController controller = new SingleInstanceController(typeof(MainForm));
-            controller.BeforeCreateMainForm += delegate
+            controller.MainFormCreated += delegate
             {
                 Container = new UnityContainer().LoadConfiguration("compiler");
                 ToolStripManager.Renderer = new Office2007Renderer.Office2007Renderer();

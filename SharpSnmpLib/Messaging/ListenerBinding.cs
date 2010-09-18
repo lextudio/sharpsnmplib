@@ -99,6 +99,11 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="receiver">Receiver.</param>
         public void SendResponse(ISnmpMessage response, EndPoint receiver)
         {
+            if (_disposed)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
+            }            
+            
             if (response == null)
             {
                 throw new ArgumentNullException("response");
@@ -137,9 +142,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             if (_disposed)
             {
-                throw new ObjectDisposedException("Listener");
-            }
-
+                throw new ObjectDisposedException(GetType().FullName);
+            }            
+            
             if (Endpoint.AddressFamily == AddressFamily.InterNetwork && !Socket.SupportsIPv4)
             {
                 throw new InvalidOperationException(Listener.ErrorIPv4NotSupported);
@@ -195,9 +200,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             if (_disposed)
             {
-                throw new ObjectDisposedException("Listener");
-            }
-
+                throw new ObjectDisposedException(GetType().FullName);
+            }            
+            
             long activeBefore = Interlocked.CompareExchange(ref _active, Inactive, Active);
             if (activeBefore != Active)
             {

@@ -21,7 +21,7 @@ namespace Lextm.Common
         
         protected override void OnCreateMainForm()
         {            
-            var handler = BeforeCreateMainForm;
+            var handler = MainFormCreated;
             if (handler != null)
             {
                 handler(null, EventArgs.Empty);
@@ -30,6 +30,6 @@ namespace Lextm.Common
             this.MainForm = (Form)Activator.CreateInstance(_mainForm);
         }
         
-        public event EventHandler<EventArgs> BeforeCreateMainForm;
+        public event EventHandler<EventArgs> MainFormCreated;
     }
 }

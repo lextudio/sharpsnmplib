@@ -32,7 +32,8 @@ namespace Lextm.Common
         /// </summary>
         public event EventHandler<EventArgs> Bark;
 
-        private readonly Timer _timer = new Timer();
+        private bool _disposed;
+        private Timer _timer = new Timer();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WatchDog"/> class.
@@ -46,7 +47,7 @@ namespace Lextm.Common
             Enabled = false;
             KeepBarking = false;
         }
-
+         
         /// <summary>
         /// Gets or sets a value indicating whether this <see cref="WatchDog"/> is enabled.
         /// </summary>
@@ -78,6 +79,11 @@ namespace Lextm.Common
         /// </summary>
         public void Feed()
         {
+            if (_disposed)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
+            }   
+            
             if (!Enabled)
             {
                 return;
@@ -92,7 +98,40 @@ namespace Lextm.Common
         /// </summary>
         public void Dispose()
         {
-            _timer.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }        
+           
+        /// <summary>
+        /// Releases unmanaged resources and performs other cleanup operations before the
+        /// <see cref="Watchdog"/> is reclaimed by garbage collection.
+        /// </summary>        
+        ~Watchdog()
+        {
+            Dispose(false);
+        }
+        
+        /// <summary>
+        /// Releases the unmanaged resources used by the <see cref="T:System.ComponentModel.Component"/> and optionally releases the managed resources.
+        /// </summary>
+        /// <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
+        private void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+            
+            if (disposing)
+            {
+                if (_timer != null)
+                {
+                    _timer.Dispose();
+                    _timer = null;
+                }
+            }
+            
+            _disposed = true;
         }
     }
 }

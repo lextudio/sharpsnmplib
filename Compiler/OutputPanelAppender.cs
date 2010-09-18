@@ -6,6 +6,7 @@ using WeifenLuo.WinFormsUI.Docking;
 
 namespace Lextm.SharpSnmpLib
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Appender")]
     public class OutputPanelAppender : AppenderSkeleton
     {
         protected override void Append(LoggingEvent loggingEvent)

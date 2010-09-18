@@ -19,7 +19,8 @@ namespace Lextm.SharpSnmpLib.Pipeline
     public sealed class SnmpDemon : IDisposable
     {
         private readonly SnmpApplicationFactory _factory;
-        private readonly DemonObjects _objects;  
+        private readonly DemonObjects _objects;
+        private bool _disposed;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SnmpDemon"/> class.
@@ -32,7 +33,48 @@ namespace Lextm.SharpSnmpLib.Pipeline
             _factory = factory;
             Listener = listener;
             _objects = objects;
-        }        
+        }
+        
+        /// <summary>
+        /// Disposes resources in use.
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        
+        /// <summary>
+        /// Releases unmanaged resources and performs other cleanup operations before the
+        /// <see cref="SnmpDemon"/> is reclaimed by garbage collection.
+        /// </summary>
+        ~SnmpDemon()
+        {
+            Dispose(false);
+        }
+        
+        /// <summary>
+        /// Releases the unmanaged resources used by the <see cref="T:System.ComponentModel.Component"/> and optionally releases the managed resources.
+        /// </summary>
+        /// <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
+        private void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+            
+            if (disposing)
+            {
+                if (Listener != null)
+                {
+                    Listener.Dispose();
+                    Listener = null;
+                }
+            }
+            
+            _disposed = true;
+        }
         
         /// <summary>
         /// Gets or sets the listener.
@@ -43,7 +85,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         private void ListenerMessageReceived(object sender, MessageReceivedEventArgs<ISnmpMessage> e)
         {
             ISnmpMessage request = e.Message;
-            SnmpContext context = SnmpContextFactory.Create(request, e.Sender, Listener.Users, _objects, e.Binding);   
+            SnmpContext context = SnmpContextFactory.Create(request, e.Sender, Listener.Users, _objects, e.Binding);
             SnmpApplication application = _factory.Create(context);
             application.Process();
         }
@@ -52,7 +94,12 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// Starts the demon.
         /// </summary>
         public void Start()
-        {   
+        {
+            if (_disposed)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
+            }
+            
             Listener.ExceptionRaised += ListenerExceptionRaised;
             Listener.MessageReceived += ListenerMessageReceived;
             Listener.Start();
@@ -63,6 +110,11 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// </summary>
         public void Stop()
         {
+            if (_disposed)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
+            }
+            
             Listener.Stop();
             Listener.ExceptionRaised -= ListenerExceptionRaised;
             Listener.MessageReceived -= ListenerMessageReceived;
@@ -74,22 +126,21 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <value><c>true</c> if active; otherwise, <c>false</c>.</value>
         public bool Active
         {
-            get { return Listener.Active; }
+            get
+            {
+                if (_disposed)
+                {
+                    throw new ObjectDisposedException(GetType().FullName);
+                }
+                
+                return Listener.Active;
+            }
         }
-     
+        
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1300:SpecifyMessageBoxOptions")]
         private static void ListenerExceptionRaised(object sender, ExceptionRaisedEventArgs e)
         {
             MessageBox.Show(e.Exception.Message);
-        }
-
-        /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-        /// </summary>
-        public void Dispose()
-        {
-            Listener.Dispose();
-            GC.SuppressFinalize(this);
         }
     }
 }

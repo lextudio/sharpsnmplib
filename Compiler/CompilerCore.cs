@@ -20,8 +20,9 @@ namespace Lextm.SharpSnmpLib.Compiler
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
     internal class CompilerCore : IDisposable
     {
+        private bool _disposed;
         private readonly IList<string> _files = new List<string>();
-        private readonly BackgroundWorker _worker = new BackgroundWorker();
+        private BackgroundWorker _worker = new BackgroundWorker();
         private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger("Lextm.SharpSnmpLib.Compiler");
 
         public CompilerCore()
@@ -34,7 +35,15 @@ namespace Lextm.SharpSnmpLib.Compiler
 
         public bool IsBusy
         {
-            get { return _worker.IsBusy; }
+            get
+            {
+                if (_disposed)
+                {
+                    throw new ObjectDisposedException(GetType().FullName);
+                }
+                
+                return _worker.IsBusy;
+            }
         }
 
         public Parser Parser { get; set; }
@@ -47,6 +56,11 @@ namespace Lextm.SharpSnmpLib.Compiler
 
         public void Compile(IEnumerable<string> files)
         {
+            if (_disposed)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
+            }            
+            
             _worker.RunWorkerAsync(files);
         }
         
@@ -90,6 +104,11 @@ namespace Lextm.SharpSnmpLib.Compiler
 
         public void Add(IEnumerable<string> files)
         {
+            if (_disposed)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
+            } 
+            
             IList<string> filered = new List<string>();
             foreach (string file in files.Where(file => !_files.Contains(file)))
             {
@@ -105,18 +124,56 @@ namespace Lextm.SharpSnmpLib.Compiler
 
         public void CompileAll()
         {
+            if (_disposed)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
+            }   
+            
             Compile(_files);
         }
 
         public void Remove(string name)
         {
+            if (_disposed)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
+            }   
+            
             _files.Remove(name);
         }
         
         public void Dispose()
         {
-            _worker.Dispose();
+            Dispose(true);
             GC.SuppressFinalize(this);
+        }
+        
+        ~CompilerCore()
+        {
+            Dispose(false);
+        }
+        
+        /// <summary>
+        /// Releases the unmanaged resources used by the <see cref="T:System.ComponentModel.Component"/> and optionally releases the managed resources.
+        /// </summary>
+        /// <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
+        private void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+            
+            if (disposing)
+            {
+                if (_worker != null)
+                {
+                    _worker.Dispose();
+                    _worker = null;
+                }
+            }
+            
+            _disposed = true;
         }
     }
 }

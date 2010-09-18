@@ -492,7 +492,7 @@ namespace WeifenLuo.WinFormsUI.Docking
                 m_activeDocument = value;
             }
         }
-       
+
         private IFocusManager FocusManager
         {
             get { return m_focusManager; }
@@ -526,7 +526,7 @@ namespace WeifenLuo.WinFormsUI.Docking
         {
             get { return FocusManager.ActiveDocument; }
         }
-            
+
         [Browsable(false)]
         public DockPane ActiveDocumentPane
         {

@@ -47,6 +47,7 @@ namespace Lextm.SharpSnmpLib.Compiler
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public CompilerCore Compiler { get; set; }
 
         private void RefreshPanel(object sender, EventArgs e)
@@ -74,6 +75,7 @@ namespace Lextm.SharpSnmpLib.Compiler
             tslblCount.Text = string.Format(CultureInfo.InvariantCulture, "loaded: {0}; unloaded: {1}", Assembler.Tree.LoadedModules.Count, Assembler.Tree.PendingModules.Count);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public Assembler Assembler { get; set; }
 
         private void ActRemoveExecute(object sender, EventArgs e)

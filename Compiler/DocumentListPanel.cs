@@ -82,6 +82,7 @@ namespace Lextm.SharpSnmpLib.Compiler
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public CompilerCore Compiler { get; set; }
 
         private void ActDeleteUpdate(object sender, EventArgs e)

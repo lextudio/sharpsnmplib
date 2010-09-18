@@ -19,6 +19,7 @@ namespace Lextm.SharpSnmpLib.Browser
 
         internal int Timeout { get; private set; }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public IObjectRegistry Objects { get; set; }
 
         internal Guid Id { get; private set; }

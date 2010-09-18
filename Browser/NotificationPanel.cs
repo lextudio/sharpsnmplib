@@ -58,10 +58,8 @@ namespace Lextm.SharpSnmpLib.Browser
             tscbIP.SelectedIndex = 0;
         }
 
-        public IObjectRegistry Objects
-        {
-            get; set; 
-        }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        public IObjectRegistry Objects { get; set; }
 
         private void ListenerInformRequestReceived(object sender, MessageReceivedEventArgs<InformRequestMessage> e)
         {

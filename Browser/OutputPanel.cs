@@ -43,6 +43,7 @@ namespace Lextm.SharpSnmpLib.Browser
             txtMessages.ScrollToCaret();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public IProfileRegistry Profiles { get; set; }
 
         private void ActClearExecute(object sender, EventArgs e)

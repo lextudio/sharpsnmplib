@@ -134,7 +134,7 @@ namespace WeifenLuo.WinFormsUI.Docking
 			lock (this)
 			{
 				if (!m_disposed && disposing)
-				{  
+				{
                     m_focusManager.Dispose();
 					if (m_mdiClientController != null)
 					{
@@ -761,7 +761,7 @@ namespace WeifenLuo.WinFormsUI.Docking
 		}
 
 		public void SuspendLayout(bool allWindows)
-		{         
+		{
             FocusManager.SuspendFocusTracking();
 			SuspendLayout();
 			if (allWindows)
@@ -769,7 +769,7 @@ namespace WeifenLuo.WinFormsUI.Docking
 		}
 
 		public void ResumeLayout(bool performLayout, bool allWindows)
-		{       
+		{
             FocusManager.ResumeFocusTracking();
             ResumeLayout(performLayout);
             if (allWindows)

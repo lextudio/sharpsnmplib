@@ -27,6 +27,7 @@ namespace Lextm.SharpSnmpLib.Browser
             actAdd.Image = Properties.Resources.list_add;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public IProfileRegistry Profiles { get; set; }
 
         private void AgentProfilePanel_Load(object sender, EventArgs e)

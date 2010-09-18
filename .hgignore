@@ -1,3 +1,9 @@
-glob:*/obj/
-glob:*bin/
 glob:SharpSnmpLib/sharpsnmplib.snk
+relre:/obj/*
+relre:/bin/*
+glob:bin/
+glob:_ReSharper.*
+glob:*.suo
+glob:*.ncb
+glob:*.user
+glob:*.sln.cache
