@@ -109,7 +109,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Encoding of this <see cref="OctetString"/>
         /// </summary>
-        public Encoding Encoding 
+        public Encoding Encoding
         {
             get { return _encoding; }
         }
@@ -121,7 +121,7 @@ namespace Lextm.SharpSnmpLib
         public byte[] GetRaw()
         {
             return _raw;
-        }        
+        }
         
         private static readonly OctetString EmptyString = new OctetString(string.Empty, Encoding.GetEncoding("ASCII"));
 
@@ -129,10 +129,10 @@ namespace Lextm.SharpSnmpLib
         /// Gets the empty string.
         /// </summary>
         /// <value>The empty.</value>
-        public static OctetString Empty 
+        public static OctetString Empty
         {
             get { return EmptyString; }
-        }        
+        }
         
         /// <summary>
         /// Returns a <see cref="String"/> in a hex form that represents this <see cref="OctetString"/>.
@@ -173,13 +173,31 @@ namespace Lextm.SharpSnmpLib
             return ToString(_encoding);
         }
         
+        internal string ToDateAndTimeString()
+        {
+            byte[] bs = _raw;
+            byte[] bs2 = new byte[8];
+            bs2[0] = bs[1];   // Little/Big Endian
+            bs2[1] = bs[0];   // Little/Big Endian
+            bs2[2] = bs[2];
+            bs2[3] = bs[3];
+            bs2[4] = bs[4];
+            bs2[5] = bs[5];
+            bs2[6] = bs[6];
+            bs2[7] = bs[7];
+            return " Year:" + BitConverter.ToInt16(bs2, 0) + ", Month:" +bs2[2] + ", Day:" + bs2[3] + ", Hour:" + bs2[4] + ", Minute:" + bs2[5] + ", Seconds:" + bs2[6] + ", Thenths:" + bs2[7];
+        }
+        
         /// <summary>
         /// Converts octets to data string.
         /// </summary>
         /// <returns></returns>
+        /// <remarks>For date section of DateAndTime type in HOST-RESOURCES-MIB.</remarks>
+        [ObsoleteAttribute("This method will be removed")]
         public string ToDateString()
         {
-            // may be index date
+            // TODO: make it internal and prepare for future usage.
+            // may be DateAndTime
             if (_raw.Length == 8 || _raw.Length == 11)
             {
                 uint yr = _raw[0];
@@ -299,7 +317,7 @@ namespace Lextm.SharpSnmpLib
         {
             return _raw.Length != 6 ? null : new PhysicalAddress(_raw);
         }
-#endif 
+        #endif
         
         /// <summary>
         /// Default encoding of <see cref="OctetString"/> type.
