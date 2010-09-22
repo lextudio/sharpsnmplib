@@ -185,7 +185,7 @@ namespace Lextm.SharpSnmpLib
             bs2[5] = bs[5];
             bs2[6] = bs[6];
             bs2[7] = bs[7];
-            return " Year:" + BitConverter.ToInt16(bs2, 0) + ", Month:" +bs2[2] + ", Day:" + bs2[3] + ", Hour:" + bs2[4] + ", Minute:" + bs2[5] + ", Seconds:" + bs2[6] + ", Thenths:" + bs2[7];
+            return " Year:" + BitConverter.ToInt16(bs2, 0) + ", Month:" + bs2[2] + ", Day:" + bs2[3] + ", Hour:" + bs2[4] + ", Minute:" + bs2[5] + ", Seconds:" + bs2[6] + ", Thenths:" + bs2[7];
         }
         
         /// <summary>

@@ -103,6 +103,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 
                 return _users ?? (_users = UserRegistry.Default);
             }
+            
             set
             {
                 if (_disposed)

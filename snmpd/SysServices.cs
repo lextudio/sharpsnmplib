@@ -1,4 +1,5 @@
 using Lextm.SharpSnmpLib.Pipeline;
+
 namespace Lextm.SharpSnmpLib.Agent
 {
     internal class SysServices : ScalarObject

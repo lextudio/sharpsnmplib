@@ -29,9 +29,9 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values or you can use the default the Revision and 
 // Build Numbers by using the '*' as shown below:
-[assembly: AssemblyVersion("6.0.010922.04")]
-[assembly: AssemblyFileVersion("6.0.010922.04")]
+[assembly: AssemblyVersion("6.0.010922.05")]
+[assembly: AssemblyFileVersion("6.0.010922.05")]
 [assembly: CLSCompliant(true)]
 [assembly: NeutralResourcesLanguage("en-US")]
 
-[assembly: log4net.Config.XmlConfigurator(Watch=true)]
+[assembly: log4net.Config.XmlConfigurator(Watch = true)]
