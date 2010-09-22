@@ -16,7 +16,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// <summary>
     /// Listener class.
     /// </summary>
-    public class Listener : IDisposable
+    public sealed class Listener : IDisposable
     {
         private UserRegistry _users;
         private bool _disposed;

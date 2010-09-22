@@ -97,7 +97,7 @@ namespace Lextm.SharpSnmpLib.Security
             }
             
             // IMPORTANT: this is not needed in this class.
-            return null;
+            return new byte[0];
         }
 
         #endregion

@@ -143,23 +143,23 @@ namespace Lextm.SharpSnmpLib.Mib
             return result;
         }
 
-        public SearchResult Search(uint[] numerical)
+        public SearchResult Search(uint[] id)
         {
-            if (numerical == null)
+            if (id == null)
             {
                 throw new ArgumentNullException("numerical");
             }
 
-            if (numerical.Length == 0)
+            if (id.Length == 0)
             {
                 throw new ArgumentException("numerical cannot be empty");
             }
 
             IDefinition result = _root;
-            int end = numerical.Length;
-            for (int i = 0; i < numerical.Length; i++)
+            int end = id.Length;
+            for (int i = 0; i < id.Length; i++)
             {
-                IDefinition temp = result.GetChildAt(numerical[i]);
+                IDefinition temp = result.GetChildAt(id[i]);
                 if (temp == null)
                 {
                     end = i;
@@ -170,9 +170,9 @@ namespace Lextm.SharpSnmpLib.Mib
             }
 
             List<uint> remaining = new List<uint>();
-            for (int j = end; j < numerical.Length; j++)
+            for (int j = end; j < id.Length; j++)
             {
-                remaining.Add(numerical[j]);
+                remaining.Add(id[j]);
             }
 
             return new SearchResult(result, remaining.ToArray());

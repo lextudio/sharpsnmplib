@@ -6,7 +6,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
     /// Composed membership provider, who owns internal providers. If the request is authenticated by any of the internal providers, it is considered as authenticated.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
-    internal class ComposedMembershipProvider : IMembershipProvider
+    internal sealed class ComposedMembershipProvider : IMembershipProvider
     {
         private readonly IMembershipProvider[] _providers;
 

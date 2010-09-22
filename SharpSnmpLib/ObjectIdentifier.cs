@@ -495,6 +495,11 @@ namespace Lextm.SharpSnmpLib
         [CLSCompliant(false)]
         public static ObjectIdentifier Create(uint[] numerical, uint extra)
         {
+            if (numerical == null)
+            {
+                throw new ArgumentNullException("numerical");
+            }
+            
             uint[] result = new uint[numerical.Length + 1];
             Array.Copy(numerical, result, numerical.Length);
             result[numerical.Length] = extra;

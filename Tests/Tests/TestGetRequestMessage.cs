@@ -344,7 +344,7 @@ namespace Lextm.SharpSnmpLib.Tests
 
             // FIXME: these values are valid on my machine openSUSE 11.2. (lex)
             // This test case usually fails on Windows, as strangely WinSock API call adds an extra 500-ms.
-            if (Helper.IsRunningOnMono())
+            if (Helper.IsRunningOnMono)
             {
                 Assert.LessOrEqual(elapsedMilliseconds, time + 100);
             }

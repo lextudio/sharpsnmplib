@@ -9,7 +9,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
     /// <summary>
     /// Secure SNMP context. It is specific to v3.
     /// </summary>
-    internal class SecureSnmpContext : SnmpContext
+    internal sealed class SecureSnmpContext : SnmpContext
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SecureSnmpContext"/> class.

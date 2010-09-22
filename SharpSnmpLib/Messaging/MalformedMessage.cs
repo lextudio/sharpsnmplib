@@ -79,7 +79,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public byte[] ToBytes()
         {
-            return null;
+            return new byte[0];
         }
 
         /// <summary>

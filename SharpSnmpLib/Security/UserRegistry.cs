@@ -71,6 +71,11 @@ namespace Lextm.SharpSnmpLib.Security
         /// <param name="user">The user.</param>
         public void Add(User user)
         {
+            if (user == null)
+            {
+                return;
+            }
+            
             if (!_users.ContainsKey(user.Name))
             {
                 _users.Add(user.Name, user);

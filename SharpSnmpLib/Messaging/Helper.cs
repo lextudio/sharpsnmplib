@@ -54,9 +54,12 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Tests if runnning on Mono. 
         /// </summary>
         /// <returns></returns>
-        public static bool IsRunningOnMono()
+        public static bool IsRunningOnMono
         {
-            return Type.GetType("Mono.Runtime") != null;
+            get
+            {
+                return Type.GetType("Mono.Runtime") != null;
+            }
         }
 
         internal static Sequence PackMessage(VersionCode version, IPrivacyProvider privacy, ISegment header, SecurityParameters parameters, ISegment scope)
