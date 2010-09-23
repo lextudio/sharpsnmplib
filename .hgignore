@@ -4,6 +4,9 @@ relre:/bin/*
 glob:bin/
 glob:_ReSharper.*
 glob:*.suo
+glob:*.pidb
+glob:*.userprefs
+glob:*.resources
 glob:*.ncb
 glob:*.user
 glob:*.sln.cache

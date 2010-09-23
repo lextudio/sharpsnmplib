@@ -70,7 +70,7 @@
         <AssemblyInfoFiles Include="**\AssemblyInfo.*" Exclude="**\.svn\**\AssemblyInfo.*" />
     </ItemGroup>
     <!-- Import the task -->
-    <UsingTask AssemblyName="AssemblyInfoTask, Version=1.0.51130.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" TaskName="AssemblyInfo" />
+    <UsingTask AssemblyFile="..\lib\AssemblyInfoTask.dll" TaskName="AssemblyInfo" />
     <!-- Re-define CoreCompileDependsOn to ensure the assemblyinfo files are updated before compilation. -->
     <PropertyGroup>
         <CoreCompileDependsOn>

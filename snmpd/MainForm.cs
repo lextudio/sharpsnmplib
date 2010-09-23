@@ -9,6 +9,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Reflection;
@@ -17,6 +18,7 @@ using System.Windows.Forms;
 using Lextm.SharpSnmpLib.Messaging;
 using Lextm.SharpSnmpLib.Pipeline;
 using Lextm.SharpSnmpLib.Security;
+using Microsoft.Practices.Unity;
 using RemObjects.Mono.Helpers;
 
 namespace Lextm.SharpSnmpLib.Agent
