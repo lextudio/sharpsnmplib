@@ -172,9 +172,13 @@ namespace Lextm.SharpSnmpLib.Browser
         private void ActEnabledAfterExecute(object sender, EventArgs e)
         {
             actEnabled.Text = _demon.Listener.Active ? @"Stop Listening" : @"Start Listening";
-            actEnabled.Image = _demon.Listener.Active
-                                   ? Properties.Resources.media_playback_stop
-                                   : Properties.Resources.media_playback_start;
+            if (PlatformSupport.Platform == PlatformType.Windows)
+			{
+			    actEnabled.Image = _demon.Listener.Active
+                                       ? Properties.Resources.media_playback_stop
+                                       : Properties.Resources.media_playback_start;
+			}
+			
             tscbIP.Enabled = !_demon.Listener.Active;
             tstxtPort.Enabled = !_demon.Listener.Active;
         }

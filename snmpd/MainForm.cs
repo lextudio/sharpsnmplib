@@ -50,10 +50,10 @@ namespace Lextm.SharpSnmpLib.Agent
             if (PlatformSupport.Platform == PlatformType.Windows)
             {
                 // FIXME: work around a Mono WinForms bug.
-                Icon = Properties.Resources.network_server;
-                actEnabled.Image = Properties.Resources.media_playback_start;
+                Icon = Properties.Resources.network_server;                
             }
             
+			actEnabled.Image = Properties.Resources.media_playback_start;
             tstxtPort.Text = @"161";
             tscbIP.Items.Add(StrAllUnassigned);
             foreach (IPAddress address in Dns.GetHostEntry(string.Empty).AddressList.Where(address => !address.IsIPv6LinkLocal))
