@@ -173,12 +173,12 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             actEnabled.Text = _demon.Listener.Active ? @"Stop Listening" : @"Start Listening";
             if (PlatformSupport.Platform == PlatformType.Windows)
-			{
-			    actEnabled.Image = _demon.Listener.Active
+            {
+                actEnabled.Image = _demon.Listener.Active
                                        ? Properties.Resources.media_playback_stop
                                        : Properties.Resources.media_playback_start;
-			}
-			
+            }
+            
             tscbIP.Enabled = !_demon.Listener.Active;
             tstxtPort.Enabled = !_demon.Listener.Active;
         }

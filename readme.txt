@@ -18,17 +18,15 @@ Other demo source code is released in public domain.
 
 For .NET 4 (recommended)
 1. Install .NET Framework 4.0 (http://www.microsoft.com/downloads/details.aspx?FamilyID=9cfb2d51-5ff4-4491-b0e5-b386f32c0992&displaylang=en).
-2. Install AssemblyInfo Task (http://code.msdn.microsoft.com/AssemblyInfoTaskvers).
-3. Install .NET SDK or Visual Studio.
-4. Execute prepare.bat to prepare necessary files.
-5. Execute debug.bat to build the source code.
+2. Install .NET SDK or Visual Studio.
+3. Execute prepare.bat to prepare necessary files.
+4. Execute debug.bat to build the source code.
 
 For .NET 3.5
 1. Install .NET Framework 3.5 SP1 (http://www.microsoft.com/downloads/details.aspx?familyid=AB99342F-5D1A-413D-8319-81DA479AB0D7&displaylang=en).
-2. Install AssemblyInfo Task (http://code.msdn.microsoft.com/AssemblyInfoTaskvers).
-3. Install .NET SDK or Visual Studio.
-4. Execute prepare.bat to prepare necessary files.
-5. Execute debug.35.bat to build the source code.
+2. Install .NET SDK or Visual Studio.
+3. Execute prepare.bat to prepare necessary files.
+4. Execute debug.35.bat to build the source code.
 
 For Mono (on openSUSE)
 1. Install Mono 2.* (http://www.go-mono.com/mono-downloads/download.html).
