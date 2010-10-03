@@ -34,6 +34,11 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="binding">The binding.</param>
         public void Process(ISnmpMessage message, System.Net.IPEndPoint sender, ListenerBinding binding)
         {
+            if (binding == null)
+            {
+                throw new ArgumentNullException("binding");
+            }
+            
             if (message == null)
             {
                 throw new ArgumentNullException("message");

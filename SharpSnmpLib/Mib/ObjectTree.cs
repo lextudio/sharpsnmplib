@@ -147,7 +147,7 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             if (id == null)
             {
-                throw new ArgumentNullException("numerical");
+                throw new ArgumentNullException("id");
             }
 
             if (id.Length == 0)

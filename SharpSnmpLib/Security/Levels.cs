@@ -25,12 +25,7 @@ namespace Lextm.SharpSnmpLib.Security
     [Flags]
     [Serializable]
     public enum Levels
-    {
-        /// <summary>
-        /// Without authentication and without privacy.
-        /// </summary>
-        None = 0, 
-        
+    {      
         /// <summary>
         /// Authentication flag.
         /// </summary>

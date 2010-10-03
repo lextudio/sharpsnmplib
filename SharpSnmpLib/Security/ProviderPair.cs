@@ -86,7 +86,7 @@ namespace Lextm.SharpSnmpLib.Security
             Levels flags;
             if (_authentication == DefaultAuthenticationProvider.Instance)
             {
-                flags = Levels.None;
+                flags = 0;
             }
             else if (_privacy == DefaultPrivacyProvider.Instance)
             {

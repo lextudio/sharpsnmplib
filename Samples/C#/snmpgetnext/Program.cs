@@ -27,7 +27,7 @@ namespace SnmpGetNext
             VersionCode version = VersionCode.V1;
             int timeout = 1000;
             int retry = 0;
-            Levels level = Levels.None | Levels.Reportable;
+            Levels level = Levels.Reportable;
             string user = string.Empty;
             string authentication = string.Empty;
             string authPhrase = string.Empty;
@@ -40,7 +40,7 @@ namespace SnmpGetNext
                                                                                    {
                                                                                        if (v.ToUpperInvariant() == "NOAUTHNOPRIV")
                                                                                        {
-                                                                                           level = Levels.None | Levels.Reportable;
+                                                                                           level = Levels.Reportable;
                                                                                        }
                                                                                        else if (v.ToUpperInvariant() == "AUTHNOPRIV")
                                                                                        {

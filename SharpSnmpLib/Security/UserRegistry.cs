@@ -33,7 +33,9 @@ namespace Lextm.SharpSnmpLib.Security
         /// Initializes a new instance of the <see cref="UserRegistry"/> class.
         /// </summary>
         /// <param name="users">The users.</param>
+// ReSharper disable ParameterTypeCanBeEnumerable.Local
         public UserRegistry(User[] users)
+// ReSharper restore ParameterTypeCanBeEnumerable.Local
         {
             if (users == null)
             {

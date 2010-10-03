@@ -10,13 +10,13 @@ namespace Lextm.SharpSnmpLib.Tests
         [Test]
         public void TestToSecurityLevel()
         {
-            Assert.AreEqual(Levels.None, ProviderPair.Default.ToSecurityLevel());
+            Assert.AreEqual(0, ProviderPair.Default.ToSecurityLevel());
         }
 
         [Test]
         public void TestConstrucetor()
         {
-            Assert.AreEqual(Levels.None, new ProviderPair(DefaultAuthenticationProvider.Instance, DefaultPrivacyProvider.Instance).ToSecurityLevel());
+            Assert.AreEqual(0, new ProviderPair(DefaultAuthenticationProvider.Instance, DefaultPrivacyProvider.Instance).ToSecurityLevel());
         }
 
         [Test]

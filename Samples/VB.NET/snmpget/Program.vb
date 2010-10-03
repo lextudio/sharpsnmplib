@@ -21,7 +21,7 @@ Module Program
         Dim version As VersionCode = VersionCode.V1
         Dim timeout As Integer = 1000
         Dim retry As Integer = 0
-        Dim level As Levels = Levels.None Or Levels.Reportable
+        Dim level As Levels = Levels.Reportable
         Dim user As String = String.Empty
         Dim authentication As String = String.Empty
         Dim authPhrase As String = String.Empty
@@ -37,7 +37,7 @@ Module Program
                                                  End Sub).Add("l:", "-l for security level, (default is noAuthNoPriv)",
                 Sub(v As String)
                     If v.ToUpperInvariant() = "NOAUTHNOPRIV" Then
-                        level = Levels.None Or Levels.Reportable
+                        level = Levels.Reportable
                     ElseIf v.ToUpperInvariant() = "AUTHNOPRIV" Then
                         level = Levels.Authentication Or Levels.Reportable
                     ElseIf v.ToUpperInvariant() = "AUTHPRIV" Then
