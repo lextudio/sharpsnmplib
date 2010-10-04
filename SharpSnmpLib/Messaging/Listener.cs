@@ -186,7 +186,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Occurs when a message is received.
         /// </summary>
-        public event EventHandler<MessageReceivedEventArgs<ISnmpMessage>> MessageReceived;
+        public event EventHandler<MessageReceivedEventArgs> MessageReceived;
 
         /// <summary>
         /// Adds the binding.

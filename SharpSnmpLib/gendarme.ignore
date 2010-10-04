@@ -19,6 +19,44 @@ M: System.Boolean Lextm.SharpSnmpLib.ObjectIdentifier::op_LessThan(Lextm.SharpSn
 M: System.Boolean Lextm.SharpSnmpLib.IP::Equals(Lextm.SharpSnmpLib.IP,Lextm.SharpSnmpLib.IP)
 M: System.Boolean Lextm.SharpSnmpLib.Mib.Symbol::Equals(Lextm.SharpSnmpLib.Mib.Symbol,Lextm.SharpSnmpLib.Mib.Symbol)
 
+R: Gendarme.Rules.Correctness.DisposableFieldsShouldBeDisposedRule
+T: Lextm.SharpSnmpLib.Pipeline.SnmpDemon
+
+R: Gendarme.Rules.Correctness.EnsureLocalDisposalRule
+M: System.Void Lextm.SharpSnmpLib.Messaging.Listener::AddBinding(System.Net.IPEndPoint)
+
+R: Gendarme.Rules.Maintainability.AvoidLackOfCohesionOfMethodsRule
+T: Lextm.SharpSnmpLib.SecurityParameters
+T: Lextm.SharpSnmpLib.GetBulkRequestPdu
+T: Lextm.SharpSnmpLib.GetRequestPdu
+T: Lextm.SharpSnmpLib.GetResponsePdu
+T: Lextm.SharpSnmpLib.InformRequestPdu
+T: Lextm.SharpSnmpLib.GetNextRequestPdu
+T: Lextm.SharpSnmpLib.ReportPdu
+T: Lextm.SharpSnmpLib.SetRequestPdu
+T: Lextm.SharpSnmpLib.TrapV1Pdu
+T: Lextm.SharpSnmpLib.TrapV2Pdu
+T: Lextm.SharpSnmpLib.Messaging.GetBulkRequestMessage
+T: Lextm.SharpSnmpLib.Messaging.GetRequestMessage
+T: Lextm.SharpSnmpLib.Messaging.GetResponseMessage
+T: Lextm.SharpSnmpLib.Messaging.InformRequestMessage
+T: Lextm.SharpSnmpLib.Messaging.GetNextRequestMessage
+T: Lextm.SharpSnmpLib.Messaging.ReportMessage
+T: Lextm.SharpSnmpLib.Messaging.SetRequestMessage
+T: Lextm.SharpSnmpLib.Messaging.TrapV1Message
+T: Lextm.SharpSnmpLib.Messaging.TrapV2Message
+T: Lextm.SharpSnmpLib.Messaging.MalformedMessage
+T: Lextm.SharpSnmpLib.Messaging.MessageParams
+T: Lextm.SharpSnmpLib.Messaging.ListenerBinding
+T: Lextm.SharpSnmpLib.Messaging.Listener
+T: Lextm.SharpSnmpLib.Messaging.MessageReceivedEventArgs
+T: Lextm.SharpSnmpLib.Pipeline.SnmpDemon
+T: Lextm.SharpSnmpLib.Pipeline.SnmpApplication
+T: Lextm.SharpSnmpLib.Pipeline.ResponseData
+T: Lextm.SharpSnmpLib.Pipeline.HandlerMapping
+T: Lextm.SharpSnmpLib.Pipeline.DemonObjects
+
+
 R: Gendarme.Rules.Performance.AvoidUncalledPrivateCodeRule
 M: System.Void Lextm.SharpSnmpLib.Counter32::.ctor(System.Byte[])
 M: System.Void Lextm.SharpSnmpLib.Counter64::.ctor(System.Byte[])

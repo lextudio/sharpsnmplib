@@ -59,6 +59,7 @@
     <Compile Include="Messaging\Discoverer.cs" />
     <Compile Include="Messaging\ExceptionRaisedEventArgs.cs" />
     <Compile Include="Messaging\IListenerAdapter.cs" />
+    <Compile Include="Messaging\IListenerBinding.cs" />
     <Compile Include="Messaging\Listener.cs" />
     <Compile Include="Messaging\ListenerBinding.cs" />
     <Compile Include="Messaging\Manager.cs" />

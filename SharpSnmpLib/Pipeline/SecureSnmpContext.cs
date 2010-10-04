@@ -19,7 +19,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <param name="users">The users.</param>
         /// <param name="objects">The agent core objects.</param>
         /// <param name="binding">The binding.</param>
-        public SecureSnmpContext(ISnmpMessage request, IPEndPoint sender, UserRegistry users, DemonObjects objects, ListenerBinding binding)
+        public SecureSnmpContext(ISnmpMessage request, IPEndPoint sender, UserRegistry users, DemonObjects objects, IListenerBinding binding)
             : base(request, sender, users, objects, binding)
         {
         }

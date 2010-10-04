@@ -82,7 +82,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <value>The listener.</value>
         public Listener Listener { get; private set; }
 
-        private void ListenerMessageReceived(object sender, MessageReceivedEventArgs<ISnmpMessage> e)
+        private void ListenerMessageReceived(object sender, MessageReceivedEventArgs e)
         {
             ISnmpMessage request = e.Message;
             SnmpContext context = SnmpContextFactory.Create(request, e.Sender, Listener.Users, _objects, e.Binding);

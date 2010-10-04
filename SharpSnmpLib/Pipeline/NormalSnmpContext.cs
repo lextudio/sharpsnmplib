@@ -16,7 +16,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <param name="sender">The sender.</param>
         /// <param name="users">The users.</param>
         /// <param name="binding">The binding.</param>
-        public NormalSnmpContext(ISnmpMessage request, IPEndPoint sender, UserRegistry users, ListenerBinding binding) 
+        public NormalSnmpContext(ISnmpMessage request, IPEndPoint sender, UserRegistry users, IListenerBinding binding) 
             : base(request, sender, users, null, binding)
         {
         }

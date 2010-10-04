@@ -23,7 +23,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <param name="users">The users.</param>
         /// <param name="objects">The agent core objects.</param>
         /// <param name="binding">The binding.</param>
-        protected SnmpContext(ISnmpMessage request, IPEndPoint sender, UserRegistry users, DemonObjects objects, ListenerBinding binding)
+        protected SnmpContext(ISnmpMessage request, IPEndPoint sender, UserRegistry users, DemonObjects objects, IListenerBinding binding)
         {
             Request = request;
             Binding = binding;
@@ -37,7 +37,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// Gets or sets the binding.
         /// </summary>
         /// <value>The binding.</value>
-        public ListenerBinding Binding { get; private set; }
+        public IListenerBinding Binding { get; private set; }
 
         /// <summary>
         /// Gets the created time.

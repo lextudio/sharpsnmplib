@@ -7,10 +7,12 @@ using Lextm.SharpSnmpLib.Security;
 
 namespace Lextm.SharpSnmpLib.Messaging
 {
+
+    
     /// <summary>
     /// Binding class for <see cref="Listener"/>.
     /// </summary>
-    public sealed class ListenerBinding : IDisposable
+    public sealed class ListenerBinding : IDisposable, IListenerBinding
     {
         private Socket _socket;
         private int _bufferSize;
@@ -87,7 +89,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Occurs when a message is received.
         /// </summary>
-        public event EventHandler<MessageReceivedEventArgs<ISnmpMessage>> MessageReceived;
+        public event EventHandler<MessageReceivedEventArgs> MessageReceived;
         #endregion Events
 
         /// <summary>
@@ -340,10 +342,10 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             foreach (ISnmpMessage message in messages)
             {
-                EventHandler<MessageReceivedEventArgs<ISnmpMessage>> handler = MessageReceived;
+                EventHandler<MessageReceivedEventArgs> handler = MessageReceived;
                 if (handler != null)
                 {
-                    handler(this, new MessageReceivedEventArgs<ISnmpMessage>(param.Sender, message, this));
+                    handler(this, new MessageReceivedEventArgs(param.Sender, message, this));
                 }
                 
                 foreach (IListenerAdapter adapter in _adapters)

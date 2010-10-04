@@ -18,7 +18,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <param name="objects">The objects.</param>
         /// <param name="binding">The binding.</param>
         /// <returns></returns>
-        public static SnmpContext Create(ISnmpMessage request, IPEndPoint sender, UserRegistry users, DemonObjects objects, ListenerBinding binding)
+        public static SnmpContext Create(ISnmpMessage request, IPEndPoint sender, UserRegistry users, DemonObjects objects, IListenerBinding binding)
         {
             if (request.Version == VersionCode.V3)
             {
