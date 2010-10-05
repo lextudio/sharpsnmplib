@@ -9,7 +9,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace Lextm.SharpSnmpLib.Agent
+namespace Lextm.SharpSnmpLib.Pipeline
 {
     /// <summary>
     /// Access failure exception. 

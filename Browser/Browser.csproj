@@ -120,7 +120,6 @@
     <Compile Include="FormTable.Designer.cs">
       <DependentUpon>FormTable.cs</DependentUpon>
     </Compile>
-    <Compile Include="InformMessageHandler.cs" />
     <Compile Include="IOutputPanel.cs" />
     <Compile Include="IProfileRegistry.cs" />
     <Compile Include="MainForm.cs">
@@ -167,8 +166,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="SecureAgentProfile.cs" />
-    <Compile Include="TrapV1MessageHandler.cs" />
-    <Compile Include="TrapV2MessageHandler.cs" />
     <Compile Include="VersionCodeExtension.cs" />
     <EmbeddedResource Include="AgentProfilePanel.resx">
       <DependentUpon>AgentProfilePanel.cs</DependentUpon>

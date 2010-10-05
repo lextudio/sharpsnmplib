@@ -20,5 +20,10 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </param>
         /// <param name="receiver">Receiver.</param>
         void SendResponse(ISnmpMessage response, EndPoint receiver);
+
+        /// <summary>
+        /// Endpoint.
+        /// </summary>
+        IPEndPoint Endpoint { get; }
     }
 }

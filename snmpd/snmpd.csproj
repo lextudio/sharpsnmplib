@@ -64,7 +64,6 @@
     <Compile Include="..\lib\RollingFileAppender.cs">
       <Link>RollingFileAppender.cs</Link>
     </Compile>
-    <Compile Include="GetBulkMessageHandler.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -78,10 +77,6 @@
     <Compile Include="SysORTable.cs" />
     <Compile Include="SysORUpTime.cs" />
     <Compile Include="SysServices.cs" />
-    <Compile Include="GetMessageHandler.cs" />
-    <Compile Include="GetNextMessageHandler.cs" />
-    <Compile Include="AccessFailureException.cs" />
-    <Compile Include="SetMessageHandler.cs" />
     <Compile Include="SysLocation.cs" />
     <Compile Include="SysName.cs" />
     <Compile Include="SysContact.cs" />
