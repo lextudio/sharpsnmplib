@@ -18,10 +18,14 @@
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
     <SourceAnalysisOverrideSettingsFile>..\SharpSnmpLib\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
     <RunSourceAnalysis>False</RunSourceAnalysis>
     <SignAssembly>True</SignAssembly>
