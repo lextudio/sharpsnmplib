@@ -133,10 +133,10 @@
     <Compile Include="Security\DESPrivacyProvider.cs" />
     <Compile Include="Security\IAuthenticationProvider.cs" />
     <Compile Include="Security\IPrivacyProvider.cs" />
+    <Compile Include="Security\Levels.cs" />
     <Compile Include="Security\MD5AuthenticationProvider.cs" />
     <Compile Include="Security\ProviderPair.cs" />
     <Compile Include="Security\SaltGenerator.cs" />
-    <Compile Include="Security\SecurityLevel.cs" />
     <Compile Include="Security\SHA1AuthenticationProvider.cs" />
     <Compile Include="Security\User.cs" />
     <Compile Include="Security\UserRegistry.cs" />
