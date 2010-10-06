@@ -3,9 +3,6 @@
     <PropertyGroup>
         <!--<SharpDevelopBinPath>"C:\Program Files\SharpDevelop\3.0\bin"</SharpDevelopBinPath>-->
         <ReleaseFolder>.\bin</ReleaseFolder>
-        <GendarmeFolder>H:\Green\Gendarme</GendarmeFolder>
-        <GendarmePath>$(GendarmeFolder)\gendarme.exe</GendarmePath>
-        <CommandLine>--config "$(GendarmeFolder)\rules.xml" --log .\gendarme.log --quiet .\sharpsnmplib.dll</CommandLine>
         <LibraryReleaseFolder>.\SharpSnmpLib\Bin\Release</LibraryReleaseFolder>
         <NDependFolder>H:\Green\NDepend</NDependFolder>
         <NDependProject>SharpSnmpLib.ndproj</NDependProject>
@@ -14,10 +11,6 @@
         <LibraryOutputs Include=".\SharpSnmpLib\bin\Release\sharpsnmplib.*" />
         <!-- <CFOutputs Include=".\SharpSnmpLib\bin\Release\sharpsnmplib.cf*"/>-->
     </ItemGroup>
-    <Target Name="Gendarme" DependsOnTargets="Release">
-        <Exec Command="$(GendarmePath) $(CommandLine)" WorkingDirectory="$(LibraryReleaseFolder)" />
-        <Copy SourceFiles="$(LibraryReleaseFolder)\gendarme.log" DestinationFolder="." />
-    </Target>
     <UsingTask AssemblyFile="$(NDependFolder)\MSBuild\NDepend.Build.MSBuild.dll" TaskName="NDependTask" />
     <Target Name="NDepend" DependsOnTargets="Release">
         <!--<NDependTask NDependConsoleExePath="$(NDependFolder)" ProjectFilePath="$(NDependProject)" />-->
