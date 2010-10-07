@@ -28,12 +28,12 @@ namespace Lextm.SharpSnmpLib.Agent
     /// </summary>
     public partial class MainForm : Form
     {
-        private readonly SnmpDemon _demon;
+        private readonly SnmpEngine _demon;
         private const string StrAllUnassigned = "All Unassigned";
 
         public MainForm()
         {
-            _demon = Program.Container.Resolve<SnmpDemon>();
+            _demon = Program.Container.Resolve<SnmpEngine>();
             // TODO: this is a hack. review it later.
             var store = Program.Container.Resolve<ObjectStore>();
             store.Add(new SysDescr());

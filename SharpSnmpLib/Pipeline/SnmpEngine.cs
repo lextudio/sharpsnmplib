@@ -16,10 +16,10 @@ namespace Lextm.SharpSnmpLib.Pipeline
     /// SNMP demon class, who works as a basic agent.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
-    public sealed class SnmpDemon : IDisposable
+    public sealed class SnmpEngine : IDisposable
     {
         private readonly SnmpApplicationFactory _factory;
-        private readonly DemonObjects _objects;
+        private readonly EngineObjects _objects;
         private bool _disposed;
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <param name="factory">The factory.</param>
         /// <param name="listener">The listener.</param>
         /// <param name="objects">Agent core objects.</param>
-        public SnmpDemon(SnmpApplicationFactory factory, Listener listener, DemonObjects objects)
+        public SnmpEngine(SnmpApplicationFactory factory, Listener listener, EngineObjects objects)
         {
             _factory = factory;
             Listener = listener;
@@ -48,7 +48,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// Releases unmanaged resources and performs other cleanup operations before the
         /// <see cref="SnmpDemon"/> is reclaimed by garbage collection.
         /// </summary>
-        ~SnmpDemon()
+        ~SnmpEngine()
         {
             Dispose(false);
         }

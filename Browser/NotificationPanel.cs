@@ -26,7 +26,7 @@ namespace Lextm.SharpSnmpLib.Browser
     /// </summary>
     internal partial class NotificationPanel : DockContent
     {
-        private readonly SnmpDemon _demon;
+        private readonly SnmpEngine _demon;
         private const string StrAllUnassigned = "All Unassigned";
         private const string StrSends = "[{1}] [{0}] {2}";
 
@@ -38,7 +38,7 @@ namespace Lextm.SharpSnmpLib.Browser
             trapv2.MessageReceived += ListenerTrapV2Received;
             var inform = Program.Container.Resolve<InformMessageHandler>("InformHandler");
             inform.MessageReceived += ListenerInformRequestReceived;
-            _demon = Program.Container.Resolve<SnmpDemon>();
+            _demon = Program.Container.Resolve<SnmpEngine>();
             _demon.Listener.ExceptionRaised += ListenerExceptionRaised;
 
             InitializeComponent();

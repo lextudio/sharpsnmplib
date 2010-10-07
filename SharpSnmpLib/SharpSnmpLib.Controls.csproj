@@ -78,7 +78,7 @@
     <Compile Include="Messaging\WalkMode.cs" />
     <Compile Include="Pipeline\AccessFailureException.cs" />
     <Compile Include="Pipeline\ComposedMembershipProvider.cs" />
-    <Compile Include="Pipeline\DemonObjects.cs" />
+    <Compile Include="Pipeline\EngineObjects.cs" />
     <Compile Include="Pipeline\GetBulkMessageHandler.cs" />
     <Compile Include="Pipeline\GetMessageHandler.cs" />
     <Compile Include="Pipeline\GetNextMessageHandler.cs" />
@@ -100,6 +100,7 @@
     <Compile Include="Pipeline\SnmpApplicationFactory.cs" />
     <Compile Include="Pipeline\SnmpContext.cs" />
     <Compile Include="Pipeline\SnmpContextFactory.cs" />
+    <Compile Include="Pipeline\SnmpEngine.cs" />
     <Compile Include="Pipeline\SnmpObject.cs" />
     <Compile Include="Pipeline\TableObject.cs" />
     <Compile Include="Pipeline\TrapV1MessageHandler.cs" />
@@ -108,7 +109,6 @@
     <Compile Include="Pipeline\Version2MembershipProvider.cs" />
     <Compile Include="Pipeline\Version3MembershipProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Pipeline\SnmpDemon.cs" />
     <None Include="license.txt" />
     <None Include="sharpsnmplib.snk" />
   </ItemGroup>
