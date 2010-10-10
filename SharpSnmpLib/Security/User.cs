@@ -25,7 +25,7 @@ namespace Lextm.SharpSnmpLib.Security
     /// </summary>
     public class User
     {
-        private readonly ProviderPair _providers;
+        private readonly IPrivacyProvider _privacy;
         private readonly OctetString _name;
 #if !CF
         /// <summary>
@@ -84,7 +84,7 @@ namespace Lextm.SharpSnmpLib.Security
             IPrivacyProvider privacyProvider;
             if (string.IsNullOrEmpty(privacy))
             {
-                privacyProvider = DefaultPrivacyProvider.Instance;
+                privacyProvider = new DefaultPrivacyProvider(authenticationProvider);
             }
             else if (privacy.ToUpperInvariant() == "DES")
             {
@@ -96,28 +96,28 @@ namespace Lextm.SharpSnmpLib.Security
             }
 
             _name = name;
-            _providers = new ProviderPair(authenticationProvider, privacyProvider);
+            _privacy = privacyProvider;
         }
 #endif
         /// <summary>
         /// Initializes a new instance of the <see cref="User"/> class.
         /// </summary>
         /// <param name="name">The name.</param>
-        /// <param name="providers">The providers.</param>
-        public User(OctetString name, ProviderPair providers)
+        /// <param name="privacy">The privacy provider.</param>
+        public User(OctetString name, IPrivacyProvider privacy)
         {
             if (name == null)
             {
                 throw new ArgumentNullException("name");
             }
 
-            if (providers == null)
+            if (privacy == null)
             {
-                throw new ArgumentNullException("providers");
+                throw new ArgumentNullException("privacy");
             }
 
             _name = name;
-            _providers = providers;
+            _privacy = privacy;
         }
 
         /// <summary>
@@ -130,12 +130,12 @@ namespace Lextm.SharpSnmpLib.Security
         }
 
         /// <summary>
-        /// Gets the providers.
+        /// Gets the privacy provider.
         /// </summary>
-        /// <value>The providers.</value>
-        public ProviderPair Providers
+        /// <value>The provider.</value>
+        public IPrivacyProvider Privacy
         {
-            get { return _providers; }
+            get { return _privacy; }
         }
 
         /// <summary>
@@ -146,7 +146,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// </returns>
         public override string ToString()
         {
-            return string.Format(CultureInfo.InvariantCulture, "User: name: {0}; providers: {1}", Name, Providers);
+            return string.Format(CultureInfo.InvariantCulture, "User: name: {0}; provider: {1}", Name, Privacy);
         }
     }
 }

@@ -38,7 +38,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         private readonly SecurityParameters _parameters;
         private readonly Scope _scope;
         private readonly VersionCode _version;
-        private readonly ProviderPair _record;
+        private readonly IPrivacyProvider _privacy;
 
         /// <summary>
         /// Creates a <see cref="GetResponseMessage"/> with all contents.
@@ -75,7 +75,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 index,
                 variables);
             _scope = new Scope(pdu);
-            _record = ProviderPair.Default;
+            _privacy = DefaultPrivacyProvider.Default;
         }
 
         /// <summary>
@@ -85,8 +85,8 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="header">The header.</param>
         /// <param name="parameters">The parameters.</param>
         /// <param name="scope">The scope.</param>
-        /// <param name="record">The record.</param>
-        public GetResponseMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, ProviderPair record)
+        /// <param name="privacy">The privacy provider.</param>
+        public GetResponseMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, IPrivacyProvider privacy)
         {
             if (scope == null)
             {
@@ -103,16 +103,16 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("header");
             }
             
-            if (record == null)
+            if (privacy == null)
             {
-                throw new ArgumentNullException("record");
+                throw new ArgumentNullException("privacy");
             }
 
             _version = version;
             _header = header;
             _parameters = parameters;
             _scope = scope;
-            _record = record;
+            _privacy = privacy;
         }
       
         /// <summary>
@@ -201,7 +201,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public byte[] ToBytes()
         {
-            return Helper.PackMessage(_version, _record.Privacy, _header, _parameters, _scope).ToBytes();
+            return Helper.PackMessage(_version, _privacy, _header, _parameters, _scope).ToBytes();
         }
 
         /// <summary>

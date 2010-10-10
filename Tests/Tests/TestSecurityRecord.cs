@@ -10,25 +10,19 @@ namespace Lextm.SharpSnmpLib.Tests
         [Test]
         public void TestToSecurityLevel()
         {
-            Assert.AreEqual(0, ProviderPair.Default.ToSecurityLevel());
-        }
-
-        [Test]
-        public void TestConstrucetor()
-        {
-            Assert.AreEqual(0, new ProviderPair(DefaultAuthenticationProvider.Instance, DefaultPrivacyProvider.Instance).ToSecurityLevel());
+            Assert.AreEqual(0, PrivacyProviderExtension.ToSecurityLevel(DefaultPrivacyProvider.Default));
         }
 
         [Test]
         public void TestException()
         {
-            Assert.Throws<ArgumentException>(delegate { new ProviderPair(DefaultAuthenticationProvider.Instance, new DESPrivacyProvider(new OctetString(""), DefaultAuthenticationProvider.Instance)); });
+            Assert.Throws<ArgumentException>(delegate { new DESPrivacyProvider(new OctetString(""), DefaultAuthenticationProvider.Instance); });
         }
 
         [Test]
         public void TestAuthenticationOnly()
         {
-            Assert.AreEqual(Levels.Authentication, new ProviderPair(new MD5AuthenticationProvider(new OctetString("test")), DefaultPrivacyProvider.Instance).ToSecurityLevel());
+            Assert.AreEqual(Levels.Authentication, PrivacyProviderExtension.ToSecurityLevel(new DefaultPrivacyProvider(new MD5AuthenticationProvider(new OctetString("test")))));
         }
     }
 }

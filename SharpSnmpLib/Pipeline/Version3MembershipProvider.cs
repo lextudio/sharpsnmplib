@@ -2,9 +2,8 @@
 {
     /// <summary>
     /// SNMP version 3 membership provider. Not yet implemented.
-    /// </summary>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
-    internal sealed class Version3MembershipProvider : IMembershipProvider
+    /// </summary>    
+    public sealed class Version3MembershipProvider : IMembershipProvider
     {
         private const VersionCode Version = VersionCode.V3;
 

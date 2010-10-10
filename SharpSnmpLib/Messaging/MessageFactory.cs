@@ -252,9 +252,9 @@ namespace Lextm.SharpSnmpLib.Messaging
             SecurityParameters parameters = body.Count == 3
                 ? new SecurityParameters(null, null, null, (OctetString)body[1], null, null)
                 : new SecurityParameters((OctetString)body[2]);
-            ProviderPair record = body.Count == 3 ? ProviderPair.Default :
+            IPrivacyProvider privacy = body.Count == 3 ? DefaultPrivacyProvider.Default :
                 registry.Find(parameters.UserName);
-            if (record == null)
+            if (privacy == null)
             {
                 // handle decryption exception.
                 return new MalformedMessage(header.MessageId, parameters.UserName);
@@ -276,7 +276,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 // v3 encrypted
                 try
                 {
-                    scope = new Scope((Sequence)record.Privacy.Decrypt(body[3], parameters));
+                    scope = new Scope((Sequence)privacy.Decrypt(body[3], parameters));
                 }
                 catch (DecryptionException)
                 {
@@ -295,21 +295,21 @@ namespace Lextm.SharpSnmpLib.Messaging
                 case SnmpType.TrapV1Pdu:
                     return new TrapV1Message(body);
                 case SnmpType.TrapV2Pdu:
-                    return new TrapV2Message(version, header, parameters, scope, record);
+                    return new TrapV2Message(version, header, parameters, scope, privacy);
                 case SnmpType.GetRequestPdu:
-                    return new GetRequestMessage(version, header, parameters, scope, record);
+                    return new GetRequestMessage(version, header, parameters, scope, privacy);
                 case SnmpType.GetResponsePdu:
-                    return new GetResponseMessage(version, header, parameters, scope, record);
+                    return new GetResponseMessage(version, header, parameters, scope, privacy);
                 case SnmpType.SetRequestPdu:
-                    return new SetRequestMessage(version, header, parameters, scope, record);
+                    return new SetRequestMessage(version, header, parameters, scope, privacy);
                 case SnmpType.GetNextRequestPdu:
-                    return new GetNextRequestMessage(version, header, parameters, scope, record);
+                    return new GetNextRequestMessage(version, header, parameters, scope, privacy);
                 case SnmpType.GetBulkRequestPdu:
-                    return new GetBulkRequestMessage(version, header, parameters, scope, record);
+                    return new GetBulkRequestMessage(version, header, parameters, scope, privacy);
                 case SnmpType.ReportPdu:
-                    return new ReportMessage(version, header, parameters, scope, record);
+                    return new ReportMessage(version, header, parameters, scope, privacy);
                 case SnmpType.InformRequestPdu:
-                    return new InformRequestMessage(version, header, parameters, scope, record);
+                    return new InformRequestMessage(version, header, parameters, scope, privacy);
                 default:
                     throw new SnmpException("unsupported pdu: " + pdu.TypeCode);
             }

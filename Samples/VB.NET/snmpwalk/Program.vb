@@ -167,15 +167,14 @@ Module Program
                 If (level And Levels.Privacy) = Levels.Privacy Then
                     priv = New DESPrivacyProvider(New OctetString(privPhrase), auth)
                 Else
-                    priv = DefaultPrivacyProvider.Instance
+                    priv = New DefaultPrivacyProvider(auth)
                 End If
 
                 Dim discovery As New Discovery(Messenger.NextMessageId, Messenger.NextRequestId)
                 Dim report As ReportMessage = discovery.GetResponse(timeout, receiver)
 
-                Dim record As New ProviderPair(auth, priv)
                 Messenger.BulkWalk(version, receiver, New OctetString(user), test, result, timeout, _
-                 maxRepetitions, mode, record, report)
+                 maxRepetitions, mode, priv, report)
             End If
             For Each variable As Variable In result
                 Console.WriteLine(variable)

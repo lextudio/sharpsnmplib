@@ -174,10 +174,10 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
         /// <param name="maxRepetitions">The max repetitions.</param>
         /// <param name="mode">Walk mode.</param>
-        /// <param name="record">The record.</param>
+        /// <param name="privacy">The privacy provider.</param>
         /// <param name="report">The report.</param>
         /// <returns></returns>
-        public static int BulkWalk(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, IList<Variable> list, int timeout, int maxRepetitions, WalkMode mode, ProviderPair record, ISnmpMessage report)
+        public static int BulkWalk(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, IList<Variable> list, int timeout, int maxRepetitions, WalkMode mode, IPrivacyProvider privacy, ISnmpMessage report)
         {
             if (list == null)
             {
@@ -189,7 +189,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             IList<Variable> next;
             int result = 0;
             ISnmpMessage message = report;
-            while (BulkHasNext(version, endpoint, community, seed, timeout, maxRepetitions, out next, record, ref message))
+            while (BulkHasNext(version, endpoint, community, seed, timeout, maxRepetitions, out next, privacy, ref message))
             {
                 foreach (Variable v in next)
                 {
@@ -272,10 +272,10 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="timestamp">Timestamp.</param>
         /// <param name="variables">Variable bindings.</param>
         /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
-        /// <param name="pair">The pair.</param>
+        /// <param name="privacy">The privacy provider.</param>
         /// <param name="report">The report.</param>
         [CLSCompliant(false)]
-        public static void SendInform(int requestId, VersionCode version, IPEndPoint receiver, OctetString community, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables, int timeout, ProviderPair pair, ISnmpMessage report)
+        public static void SendInform(int requestId, VersionCode version, IPEndPoint receiver, OctetString community, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables, int timeout, IPrivacyProvider privacy, ISnmpMessage report)
         {
             InformRequestMessage message = version == VersionCode.V3
                                     ? new InformRequestMessage(
@@ -286,7 +286,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                                           enterprise,
                                           timestamp,
                                           variables,
-                                          pair,
+                                          privacy,
                                           report)
                                     : new InformRequestMessage(
                                           requestId,
@@ -393,13 +393,13 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
         /// <param name="maxRepetitions">The max repetitions.</param>
         /// <param name="next">The next.</param>
-        /// <param name="pair">The pair.</param>
+        /// <param name="privacy">The privacy provider.</param>
         /// <param name="report">The report.</param>
         /// <returns>
         /// <c>true</c> if the specified seed has next item; otherwise, <c>false</c>.
         /// </returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1021:AvoidOutParameters", MessageId = "5#")]
-        private static bool BulkHasNext(VersionCode version, IPEndPoint endpoint, OctetString community, Variable seed, int timeout, int maxRepetitions, out IList<Variable> next, ProviderPair pair, ref ISnmpMessage report)
+        private static bool BulkHasNext(VersionCode version, IPEndPoint endpoint, OctetString community, Variable seed, int timeout, int maxRepetitions, out IList<Variable> next, IPrivacyProvider privacy, ref ISnmpMessage report)
         {
             if (version == VersionCode.V1)
             {
@@ -416,7 +416,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                                                       0,
                                                       maxRepetitions,
                                                       variables, 
-                                                      pair, 
+                                                      privacy, 
                                                       report)
                                                 : new GetBulkRequestMessage(
                                                       RequestCounter.NextId,

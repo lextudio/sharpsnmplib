@@ -5,8 +5,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
 {
     /// <summary>
     /// Message handler for TRAP v2.
-    /// </summary>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
+    /// </summary>    
     public class TrapV2MessageHandler : IMessageHandler
     {
         /// <summary>
@@ -17,6 +16,16 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <returns></returns>
         public ResponseData Handle(SnmpContext context, ObjectStore store)
         {
+            if (store == null)
+            {
+                throw new ArgumentNullException("store");
+            }
+            
+            if (context == null)
+            {
+                throw new ArgumentNullException("context");
+            }
+            
             InvokeMessageReceived(new MessageReceivedEventArgs<TrapV2Message>(context.Sender, (TrapV2Message)context.Request, context.Binding));
             return new ResponseData();
         }
@@ -29,7 +38,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <summary>
         /// Invokes the message received event handler.
         /// </summary>
-        /// <param name="e">The <see cref="Lextm.SharpSnmpLib.Messaging.MessageReceivedEventArgs&lt;Lextm.SharpSnmpLib.Messaging.TrapV2Message&gt;"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="Lextm.SharpSnmpLib.Messaging.MessageReceivedEventArgs"/> instance containing the event data.</param>
         public void InvokeMessageReceived(MessageReceivedEventArgs<TrapV2Message> e)
         {
             EventHandler<MessageReceivedEventArgs<TrapV2Message>> handler = MessageReceived;

@@ -17,8 +17,7 @@ namespace Lextm.SharpSnmpLib.Security
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "AES", Justification = "definition")]
     public class AESPrivacyProvider : IPrivacyProvider
-    {
-        private readonly IAuthenticationProvider _auth;
+    {        
         private readonly SaltGenerator _salt = new SaltGenerator();
         private readonly OctetString _phrase;
         private const int KeyBytes = 16;
@@ -30,10 +29,31 @@ namespace Lextm.SharpSnmpLib.Security
         /// <param name="auth">The auth.</param>
         public AESPrivacyProvider(OctetString phrase, IAuthenticationProvider auth)
         {
+            if (auth == null)
+            {
+                throw new ArgumentNullException("auth");
+            }
+            
+            if (phrase == null)
+            {
+                throw new ArgumentNullException("phrase");
+            }
+            
+            // IMPORTANT: in this way privacy cannot be non-default.
+            if (auth == DefaultAuthenticationProvider.Instance)
+            {
+                throw new ArgumentException("if authentication is off, then privacy cannot be used");
+            }
+            
             _phrase = phrase;
-            _auth = auth;
+            AuthenticationProvider = auth;
         }
 
+        /// <summary>
+        /// Corresponding <see cref="IAuthenticationProvider"/>.
+        /// </summary>
+        public IAuthenticationProvider AuthenticationProvider { get; private set; }
+        
         /// <summary>
         /// Encrypt ScopedPdu using DES encryption protocol
         /// </summary>
@@ -260,7 +280,7 @@ namespace Lextm.SharpSnmpLib.Security
             
             OctetString octets = (OctetString)data;
             byte[] bytes = octets.GetRaw();
-            byte[] pkey = _auth.PasswordToKey(_phrase.GetRaw(), parameters.EngineId.GetRaw());
+            byte[] pkey = AuthenticationProvider.PasswordToKey(_phrase.GetRaw(), parameters.EngineId.GetRaw());
 
             // decode encrypted packet
             byte[] decrypted = Decrypt(bytes, pkey, parameters.EngineBoots.ToInt32(), parameters.EngineTime.ToInt32(), parameters.PrivacyParameters.GetRaw());
@@ -280,7 +300,7 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentNullException("parameters");
             }
             
-            byte[] pkey = _auth.PasswordToKey(_phrase.GetRaw(), parameters.EngineId.GetRaw());
+            byte[] pkey = AuthenticationProvider.PasswordToKey(_phrase.GetRaw(), parameters.EngineId.GetRaw());
             byte[] bytes = ByteTool.ToBytes(data);
             int reminder = bytes.Length % 8;
             int count = reminder == 0 ? 0 : 8 - reminder;

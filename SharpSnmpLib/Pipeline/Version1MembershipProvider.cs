@@ -2,9 +2,8 @@
 {
     /// <summary>
     /// SNMP version 1 membership provider, who checks community names for security.
-    /// </summary>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
-    internal sealed class Version1MembershipProvider : IMembershipProvider
+    /// </summary>    
+    public sealed class Version1MembershipProvider : IMembershipProvider
     {
         private const VersionCode Version = VersionCode.V1;
         private readonly OctetString _get;

@@ -149,7 +149,7 @@ namespace Lextm.SharpSnmpLib.Browser
                         p.Timeout,
                         10,
                         WalkMode.WithinSubtree, 
-                        p.Providers, 
+                        p.Privacy, 
                         report);
                 }
 

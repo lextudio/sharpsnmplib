@@ -33,8 +33,8 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Authenticates this message.
         /// </summary>
         /// <param name="message">The message.</param>
-        /// <param name="providers">The providers.</param>
-        public static void Authenticate(ISnmpMessage message, ProviderPair providers)
+        /// <param name="privacy">The privacy provider.</param>
+        public static void Authenticate(ISnmpMessage message, IPrivacyProvider privacy)
         {
             // TODO: make extension method.
             if (message == null)
@@ -42,12 +42,12 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("message");
             }
             
-            if (providers == null)
+            if (privacy == null)
             {
-                throw new ArgumentNullException("providers");
+                throw new ArgumentNullException("privacy");
             }
             
-            message.Parameters.AuthenticationParameters = providers.Authentication.ComputeHash(message);
+            message.Parameters.AuthenticationParameters = privacy.AuthenticationProvider.ComputeHash(message);
         }
             
         /// <summary>

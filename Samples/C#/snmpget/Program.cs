@@ -153,15 +153,20 @@ namespace SnmpGet
                                                    ? GetAuthenticationProviderByName(authentication, authPhrase)
                                                    : DefaultAuthenticationProvider.Instance;
 
-                IPrivacyProvider priv = (level & Levels.Privacy) == Levels.Privacy
-                                            ? new DESPrivacyProvider(new OctetString(privPhrase), auth)
-                                            : DefaultPrivacyProvider.Instance;
+                IPrivacyProvider priv;
+                if ((level & Levels.Privacy) == Levels.Privacy)
+                {
+                    priv = new DESPrivacyProvider(new OctetString(privPhrase), auth);
+                }
+                else
+                {
+                    priv = new DefaultPrivacyProvider(auth);
+                }
 
                 Discovery discovery = new Discovery(Messenger.NextMessageId, Messenger.NextRequestId);
                 ReportMessage report = discovery.GetResponse(timeout, receiver);
-                
-                ProviderPair record = new ProviderPair(auth, priv);
-                GetRequestMessage request = new GetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(user), vList, record, report);
+
+                GetRequestMessage request = new GetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(user), vList, priv, report);
 
                 ISnmpMessage response = request.GetResponse(timeout, receiver);
                 if (dump)

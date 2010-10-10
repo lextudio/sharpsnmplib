@@ -50,6 +50,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// <summary>
     /// The <see cref="EventArgs"/> for one kind of <see cref="ISnmpMessage"/>, used when that kind of message is received.
     /// </summary>
+    /// <typeparam name="T">The <see cref="ISnmpMessage"/> object received.</typeparam>
     [Obsolete("Please use the non generic version.")]
     public sealed class MessageReceivedEventArgs<T> : EventArgs where T : ISnmpMessage
     {

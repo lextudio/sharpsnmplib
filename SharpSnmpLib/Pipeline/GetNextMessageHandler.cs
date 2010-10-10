@@ -4,9 +4,8 @@ namespace Lextm.SharpSnmpLib.Pipeline
 {
     /// <summary>
     /// GET NEXT message handler.
-    /// </summary>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
-    internal class GetNextMessageHandler : IMessageHandler
+    /// </summary>    
+    public class GetNextMessageHandler : IMessageHandler
     {
         /// <summary>
         /// Handles the specified message.

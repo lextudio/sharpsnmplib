@@ -28,12 +28,12 @@ namespace Lextm.SharpSnmpLib.Agent
     /// </summary>
     public partial class MainForm : Form
     {
-        private readonly SnmpEngine _demon;
+        private readonly SnmpEngine _engine;
         private const string StrAllUnassigned = "All Unassigned";
 
         public MainForm()
         {
-            _demon = Program.Container.Resolve<SnmpEngine>();
+            _engine = Program.Container.Resolve<SnmpEngine>();
             // TODO: this is a hack. review it later.
             var store = Program.Container.Resolve<ObjectStore>();
             store.Add(new SysDescr());
@@ -67,21 +67,21 @@ namespace Lextm.SharpSnmpLib.Agent
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1300:SpecifyMessageBoxOptions")]
         private void StartListeners()
         {
-            _demon.Listener.ClearBindings();
+            _engine.Listener.ClearBindings();
             int port = int.Parse(tstxtPort.Text, CultureInfo.InvariantCulture);
             if (tscbIP.Text == StrAllUnassigned)
             {
                 if (Socket.SupportsIPv4)
                 {
-                    _demon.Listener.AddBinding(new IPEndPoint(IPAddress.Any, port));
+                    _engine.Listener.AddBinding(new IPEndPoint(IPAddress.Any, port));
                 }
 
                 if (Socket.OSSupportsIPv6)
                 {
-                    _demon.Listener.AddBinding(new IPEndPoint(IPAddress.IPv6Any, port));
+                    _engine.Listener.AddBinding(new IPEndPoint(IPAddress.IPv6Any, port));
                 }
 
-                _demon.Start();
+                _engine.Start();
                 return;
             }
 
@@ -94,8 +94,8 @@ namespace Lextm.SharpSnmpLib.Agent
                     return;
                 }
 
-                _demon.Listener.AddBinding(new IPEndPoint(address, port));
-                _demon.Start();
+                _engine.Listener.AddBinding(new IPEndPoint(address, port));
+                _engine.Start();
                 return;
             }
 
@@ -105,13 +105,13 @@ namespace Lextm.SharpSnmpLib.Agent
                 return;
             }
 
-            _demon.Listener.AddBinding(new IPEndPoint(address, port));
-            _demon.Start();
+            _engine.Listener.AddBinding(new IPEndPoint(address, port));
+            _engine.Start();
         }
 
         private void StopListeners()
         {
-            _demon.Stop();
+            _engine.Stop();
         }
 
         private void BtnTrapClick(object sender, EventArgs e)
@@ -176,7 +176,6 @@ namespace Lextm.SharpSnmpLib.Agent
                 Discovery discovery = new Discovery(Messenger.NextMessageId, Messenger.NextRequestId);
                 ReportMessage report = discovery.GetResponse(2000, receiver);
 
-                ProviderPair record = ProviderPair.Default;
                 Messenger.SendInform(
                     0,
                     VersionCode.V3,
@@ -186,7 +185,7 @@ namespace Lextm.SharpSnmpLib.Agent
                     0,
                     new List<Variable>(),
                     2000, 
-                    record,
+                    DefaultPrivacyProvider.Default,
                     report);
             }
             catch (SnmpException ex)
@@ -198,7 +197,7 @@ namespace Lextm.SharpSnmpLib.Agent
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1300:SpecifyMessageBoxOptions")]
         private void ActEnabledExecute(object sender, EventArgs e)
         {
-            if (_demon.Active)
+            if (_engine.Active)
             {
                 StopListeners();
                 return;
@@ -228,12 +227,12 @@ namespace Lextm.SharpSnmpLib.Agent
 
         private void ActEnabledAfterExecute(object sender, EventArgs e)
         {
-            actEnabled.Text = _demon.Listener.Active ? @"Stop Listening" : @"Start Listening";
-            actEnabled.Image = _demon.Listener.Active
+            actEnabled.Text = _engine.Listener.Active ? @"Stop Listening" : @"Start Listening";
+            actEnabled.Image = _engine.Listener.Active
                                    ? Properties.Resources.media_playback_stop
                                    : Properties.Resources.media_playback_start;
-            tscbIP.Enabled = !_demon.Listener.Active;
-            tstxtPort.Enabled = !_demon.Listener.Active;
+            tscbIP.Enabled = !_engine.Listener.Active;
+            tstxtPort.Enabled = !_engine.Listener.Active;
         }
     }
 }

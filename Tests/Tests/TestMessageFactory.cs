@@ -100,7 +100,7 @@ namespace Lextm.SharpSnmpLib.Tests
                                  "02 02 2C 6A  02 01 00 02  01 00 30 0E  30 0C 06 08" +
                                  "2B 06 01 02  01 01 03 00  05 00";
             UserRegistry registry = UserRegistry.Default;
-            registry.Add(new OctetString("lextm"), ProviderPair.Default);
+            registry.Add(new OctetString("lextm"), DefaultPrivacyProvider.Default);
             IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes, registry);
             Assert.AreEqual(1, messages.Count);
             GetRequestMessage get = (GetRequestMessage)messages[0];
@@ -122,7 +122,7 @@ namespace Lextm.SharpSnmpLib.Tests
                                  "29 C5 A4 BC  32 DA 2E C7  65 A5 3D 71  06 3C 5B 56" +
                                  "FB 04 A4";
             MD5AuthenticationProvider auth = new MD5AuthenticationProvider(new OctetString("testpass"));
-            UserRegistry.Default.Add(new OctetString("lexmark"), new ProviderPair(auth, new DESPrivacyProvider(new OctetString("passtest"), auth)));
+            UserRegistry.Default.Add(new OctetString("lexmark"), new DESPrivacyProvider(new OctetString("passtest"), auth));
             IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes, UserRegistry.Default);
             Assert.AreEqual(1, messages.Count);
             GetRequestMessage get = (GetRequestMessage)messages[0];
@@ -157,7 +157,7 @@ namespace Lextm.SharpSnmpLib.Tests
                                  "04  00 "+
                                  "A0 1A 02  02 01 AF 02 01 00 02 01  00 30 0E 30  0C 06 08 2B  06 01 02 01 01 03 00 05  00";
             UserRegistry registry = UserRegistry.Default;
-            registry.Add(new OctetString("lexli"), new ProviderPair(new MD5AuthenticationProvider(new OctetString("testpass")), DefaultPrivacyProvider.Instance));
+            registry.Add(new OctetString("lexli"), new DefaultPrivacyProvider(new MD5AuthenticationProvider(new OctetString("testpass"))));
             IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes, registry);
             Assert.AreEqual(1, messages.Count);
             GetRequestMessage get = (GetRequestMessage)messages[0];
@@ -180,7 +180,7 @@ namespace Lextm.SharpSnmpLib.Tests
                                  "02 02 2C 6A  02 01 00 02  01 00 30 11  30 0F 06 08" +
                                  "2B 06 01 02  01 01 03 00  43 03 05 E7  14";
             UserRegistry registry = UserRegistry.Default;
-            registry.Add(new OctetString("lextm"), ProviderPair.Default);
+            registry.Add(new OctetString("lextm"), DefaultPrivacyProvider.Default);
             IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes, registry);
             Assert.AreEqual(1, messages.Count);
             ISnmpMessage message = messages[0];

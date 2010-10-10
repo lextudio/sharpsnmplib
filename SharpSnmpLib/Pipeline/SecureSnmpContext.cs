@@ -29,8 +29,8 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// </summary>
         protected override void AuthenticateMessage()
         {
-            ProviderPair providers = Users.Find(Request.Parameters.UserName) ?? ProviderPair.Default;
-            Helper.Authenticate(Response, providers);
+            IPrivacyProvider privacy = Users.Find(Request.Parameters.UserName) ?? DefaultPrivacyProvider.Default;
+            Helper.Authenticate(Response, privacy);
         }
 
         /// <summary>
@@ -50,8 +50,8 @@ namespace Lextm.SharpSnmpLib.Pipeline
                     new Integer32(Objects.EngineBoots),
                     new Integer32(Objects.EngineTime),
                     Request.Parameters.UserName,
-                    ProviderPair.Default.Authentication.CleanDigest,
-                    ProviderPair.Default.Privacy.Salt),
+                    DefaultPrivacyProvider.Default.AuthenticationProvider.CleanDigest,
+                    DefaultPrivacyProvider.Default.Salt),
                 new Scope(
                     Objects.EngineId,
                     OctetString.Empty,
@@ -60,7 +60,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                         ErrorCode.AuthorizationError,
                         0,
                         Request.Pdu.Variables)),
-                ProviderPair.Default);
+                DefaultPrivacyProvider.Default);
         }
 
         /// <summary>
@@ -99,9 +99,9 @@ namespace Lextm.SharpSnmpLib.Pipeline
             }
 
             OctetString embedded = Request.Parameters.AuthenticationParameters;
-            ProviderPair providers = Users.Find(Request.Parameters.UserName);
-            Request.Parameters.AuthenticationParameters = providers.Authentication.CleanDigest;
-            OctetString calculated = providers.Authentication.ComputeHash(Request);
+            IPrivacyProvider privacy = Users.Find(Request.Parameters.UserName);
+            Request.Parameters.AuthenticationParameters = privacy.AuthenticationProvider.CleanDigest;
+            OctetString calculated = privacy.AuthenticationProvider.ComputeHash(Request);
             
             // other checking were performed in MessageFactory when decrypting message body.
             return embedded == calculated;
@@ -140,7 +140,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                                     new Counter32(Objects.ReportCount)
                                     )
                             })),
-                ProviderPair.Default);
+                DefaultPrivacyProvider.Default);
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
             }
 
             GetResponseMessage response;
-            ProviderPair providers = Users.Find(Request.Parameters.UserName);
+            IPrivacyProvider privacy = Users.Find(Request.Parameters.UserName);
             if (data.ErrorStatus == ErrorCode.NoError)
             {
                 // for v3
@@ -171,8 +171,8 @@ namespace Lextm.SharpSnmpLib.Pipeline
                         new Integer32(Objects.EngineBoots),
                         new Integer32(Objects.EngineTime),
                         Request.Parameters.UserName,
-                        providers.Authentication.CleanDigest,
-                        providers.Privacy.Salt),
+                        privacy.AuthenticationProvider.CleanDigest,
+                        privacy.Salt),
                     new Scope(
                         Objects.EngineId,
                         OctetString.Empty,
@@ -181,7 +181,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                             ErrorCode.NoError,
                             0,
                             data.Variables)),
-                    providers);
+                    privacy);
             }
             else
             {
@@ -197,8 +197,8 @@ namespace Lextm.SharpSnmpLib.Pipeline
                         new Integer32(Objects.EngineBoots),
                         new Integer32(Objects.EngineTime),
                         Request.Parameters.UserName,
-                        providers.Authentication.CleanDigest,
-                        providers.Privacy.Salt),
+                        privacy.AuthenticationProvider.CleanDigest,
+                        privacy.Salt),
                     new Scope(
                         Objects.EngineId,
                         OctetString.Empty,
@@ -207,7 +207,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                             data.ErrorStatus,
                             data.ErrorIndex,
                             Request.Pdu.Variables)),
-                    providers);
+                    privacy);
             }
 
             if (response.ToBytes().Length > MaxResponseSize)
@@ -224,8 +224,8 @@ namespace Lextm.SharpSnmpLib.Pipeline
                         new Integer32(Objects.EngineBoots),
                         new Integer32(Objects.EngineTime),
                         Request.Parameters.UserName,
-                        providers.Authentication.CleanDigest,
-                        providers.Privacy.Salt),
+                        privacy.AuthenticationProvider.CleanDigest,
+                        privacy.Salt),
                     new Scope(
                         Objects.EngineId,
                         OctetString.Empty,
@@ -234,7 +234,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                             ErrorCode.TooBig,
                             0,
                             Request.Pdu.Variables)),
-                    providers);
+                    privacy);
             }
 
             Response = response;

@@ -196,13 +196,17 @@ Module Program
 
             Dim auth As IAuthenticationProvider = If((level And Levels.Authentication) = Levels.Authentication, GetAuthenticationProviderByName(authentication, authPhrase), DefaultAuthenticationProvider.Instance)
 
-            Dim priv As IPrivacyProvider = If((level And Levels.Privacy) = Levels.Privacy, New DESPrivacyProvider(New OctetString(privPhrase), auth), DefaultPrivacyProvider.Instance)
+            Dim priv As IPrivacyProvider
+            If ((level And Levels.Privacy) = Levels.Privacy) Then
+                priv = New DESPrivacyProvider(New OctetString(privPhrase), auth)
+            Else
+                priv = New DefaultPrivacyProvider(auth)
+            End If
 
             Dim discovery As New Discovery(Messenger.NextMessageId, Messenger.NextRequestId)
             Dim report As ReportMessage = discovery.GetResponse(timeout, receiver)
 
-            Dim record As New ProviderPair(auth, priv)
-            Dim request As New SetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, New OctetString(user), vList, record, _
+            Dim request As New SetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, New OctetString(user), vList, priv, _
                                                  report)
 
             Dim response As ISnmpMessage = request.GetResponse(timeout, receiver)

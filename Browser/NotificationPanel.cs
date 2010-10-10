@@ -26,7 +26,7 @@ namespace Lextm.SharpSnmpLib.Browser
     /// </summary>
     internal partial class NotificationPanel : DockContent
     {
-        private readonly SnmpEngine _demon;
+        private readonly SnmpEngine _engine;
         private const string StrAllUnassigned = "All Unassigned";
         private const string StrSends = "[{1}] [{0}] {2}";
 
@@ -38,8 +38,8 @@ namespace Lextm.SharpSnmpLib.Browser
             trapv2.MessageReceived += ListenerTrapV2Received;
             var inform = Program.Container.Resolve<InformMessageHandler>("InformHandler");
             inform.MessageReceived += ListenerInformRequestReceived;
-            _demon = Program.Container.Resolve<SnmpEngine>();
-            _demon.Listener.ExceptionRaised += ListenerExceptionRaised;
+            _engine = Program.Container.Resolve<SnmpEngine>();
+            _engine.Listener.ExceptionRaised += ListenerExceptionRaised;
 
             InitializeComponent();
             if (PlatformSupport.Platform == PlatformType.Windows)
@@ -97,7 +97,7 @@ namespace Lextm.SharpSnmpLib.Browser
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1300:SpecifyMessageBoxOptions")]
         private void ActEnabledExecute(object sender, EventArgs e)
         {
-            if (_demon.Listener.Active)
+            if (_engine.Listener.Active)
             {
                 StopListeners();
                 return;
@@ -122,26 +122,26 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void StopListeners()
         {
-            _demon.Stop();
+            _engine.Stop();
         }
 
         private void StartListeners()
         {
-            _demon.Listener.ClearBindings();
+            _engine.Listener.ClearBindings();
             int port = int.Parse(tstxtPort.Text, CultureInfo.InvariantCulture);
             if (tscbIP.Text == StrAllUnassigned)
             {
                 if (Socket.SupportsIPv4)
                 {
-                    _demon.Listener.AddBinding(new IPEndPoint(IPAddress.Any, port));
+                    _engine.Listener.AddBinding(new IPEndPoint(IPAddress.Any, port));
                 }
 
                 if (Socket.OSSupportsIPv6)
                 {
-                    _demon.Listener.AddBinding(new IPEndPoint(IPAddress.IPv6Any, port));
+                    _engine.Listener.AddBinding(new IPEndPoint(IPAddress.IPv6Any, port));
                 }
 
-                _demon.Start();
+                _engine.Start();
                 return;
             }
 
@@ -154,8 +154,8 @@ namespace Lextm.SharpSnmpLib.Browser
                     return;
                 }
 
-                _demon.Listener.AddBinding(new IPEndPoint(address, port));
-                _demon.Start();
+                _engine.Listener.AddBinding(new IPEndPoint(address, port));
+                _engine.Start();
                 return;
             }
 
@@ -165,22 +165,22 @@ namespace Lextm.SharpSnmpLib.Browser
                 return;
             }
 
-            _demon.Listener.AddBinding(new IPEndPoint(address, port));
-            _demon.Start();
+            _engine.Listener.AddBinding(new IPEndPoint(address, port));
+            _engine.Start();
         }
 
         private void ActEnabledAfterExecute(object sender, EventArgs e)
         {
-            actEnabled.Text = _demon.Listener.Active ? @"Stop Listening" : @"Start Listening";
+            actEnabled.Text = _engine.Listener.Active ? @"Stop Listening" : @"Start Listening";
             if (PlatformSupport.Platform == PlatformType.Windows)
             {
-                actEnabled.Image = _demon.Listener.Active
+                actEnabled.Image = _engine.Listener.Active
                                        ? Properties.Resources.media_playback_stop
                                        : Properties.Resources.media_playback_start;
             }
             
-            tscbIP.Enabled = !_demon.Listener.Active;
-            tstxtPort.Enabled = !_demon.Listener.Active;
+            tscbIP.Enabled = !_engine.Listener.Active;
+            tstxtPort.Enabled = !_engine.Listener.Active;
         }
     }
 }

@@ -43,5 +43,10 @@ namespace Lextm.SharpSnmpLib.Security
         /// <param name="parameters">The parameters.</param>
         /// <returns></returns>
         ISnmpData Decrypt(ISnmpData data, SecurityParameters parameters);
+        
+        /// <summary>
+        /// Corresponding <see cref="IAuthenticationProvider"/>.
+        /// </summary>
+        IAuthenticationProvider AuthenticationProvider { get; }
     }
 }

@@ -28,7 +28,6 @@ namespace Lextm.SharpSnmpLib.Security
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "DES", Justification = "definition")]
     public class DESPrivacyProvider : IPrivacyProvider
     {
-        private readonly IAuthenticationProvider _auth;
         private readonly SaltGenerator _salt = new SaltGenerator();
         private readonly OctetString _phrase;
 
@@ -39,9 +38,30 @@ namespace Lextm.SharpSnmpLib.Security
         /// <param name="auth">The auth.</param>
         public DESPrivacyProvider(OctetString phrase, IAuthenticationProvider auth)
         {
+            if (auth == null)
+            {
+                throw new ArgumentNullException("auth");
+            }
+            
+            if (phrase == null)
+            {
+                throw new ArgumentNullException("phrase");
+            }
+            
+            // IMPORTANT: in this way privacy cannot be non-default.
+            if (auth == DefaultAuthenticationProvider.Instance)
+            {
+                throw new ArgumentException("if authentication is off, then privacy cannot be used");
+            }
+            
             _phrase = phrase;
-            _auth = auth;
+            AuthenticationProvider = auth;
         }
+        
+        /// <summary>
+        /// Corresponding <see cref="IAuthenticationProvider"/>.
+        /// </summary>
+        public IAuthenticationProvider AuthenticationProvider { get; private set; }
 
         /// <summary>
         /// Encrypt ScopedPdu using DES encryption protocol
@@ -174,7 +194,7 @@ namespace Lextm.SharpSnmpLib.Security
             for (int i = 0; i < 8; ++i)
             {
                 iv[i] = (byte)(key[8 + i] ^ privacyParameters[i]);
-            }     
+            }
             
             using (DES des = new DESCryptoServiceProvider())
             {
@@ -294,7 +314,7 @@ namespace Lextm.SharpSnmpLib.Security
             
             OctetString octets = (OctetString)data;
             byte[] bytes = octets.GetRaw();
-            byte[] pkey = _auth.PasswordToKey(_phrase.GetRaw(), parameters.EngineId.GetRaw());
+            byte[] pkey = AuthenticationProvider.PasswordToKey(_phrase.GetRaw(), parameters.EngineId.GetRaw());
 
             // decode encrypted packet
             byte[] decrypted = Decrypt(bytes, pkey, parameters.PrivacyParameters.GetRaw());
@@ -330,7 +350,7 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentNullException("parameters");
             }
             
-            byte[] pkey = _auth.PasswordToKey(_phrase.GetRaw(), parameters.EngineId.GetRaw());
+            byte[] pkey = AuthenticationProvider.PasswordToKey(_phrase.GetRaw(), parameters.EngineId.GetRaw());
             byte[] bytes = ByteTool.ToBytes(data);
             int reminder = bytes.Length % 8;
             int count = reminder == 0 ? 0 : 8 - reminder;

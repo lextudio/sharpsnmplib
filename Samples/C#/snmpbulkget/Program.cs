@@ -170,15 +170,20 @@ namespace SnmpBulkGet
                                                    ? GetAuthenticationProviderByName(authentication, authPhrase)
                                                    : DefaultAuthenticationProvider.Instance;
 
-                IPrivacyProvider priv = (level & Levels.Privacy) == Levels.Privacy
-                                            ? new DESPrivacyProvider(new OctetString(privPhrase), auth)
-                                            : DefaultPrivacyProvider.Instance;
+                IPrivacyProvider priv;
+                if ((level & Levels.Privacy) == Levels.Privacy)
+                {
+                    priv = new DESPrivacyProvider(new OctetString(privPhrase), auth);
+                }
+                else
+                {
+                    priv = new DefaultPrivacyProvider(auth);
+                }
 
                 Discovery discovery = new Discovery(Messenger.NextMessageId, Messenger.NextRequestId);
                 ReportMessage report = discovery.GetResponse(timeout, receiver);
 
-                ProviderPair record = new ProviderPair(auth, priv);
-                GetBulkRequestMessage request = new GetBulkRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(user), nonRepeaters, maxRepetitions, vList, record, report);
+                GetBulkRequestMessage request = new GetBulkRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(user), nonRepeaters, maxRepetitions, vList, priv, report);
 
                 ISnmpMessage reply = request.GetResponse(timeout, receiver);
                 if (reply.Pdu.ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError

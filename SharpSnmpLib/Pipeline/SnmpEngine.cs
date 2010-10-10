@@ -13,7 +13,7 @@ using Lextm.SharpSnmpLib.Messaging;
 namespace Lextm.SharpSnmpLib.Pipeline
 {
     /// <summary>
-    /// SNMP demon class, who works as a basic agent.
+    /// SNMP engine, who is the core of an SNMP entity (manager or agent).
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
     public sealed class SnmpEngine : IDisposable
@@ -23,11 +23,11 @@ namespace Lextm.SharpSnmpLib.Pipeline
         private bool _disposed;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SnmpDemon"/> class.
+        /// Initializes a new instance of the <see cref="SnmpEngine"/> class.
         /// </summary>
         /// <param name="factory">The factory.</param>
         /// <param name="listener">The listener.</param>
-        /// <param name="objects">Agent core objects.</param>
+        /// <param name="objects">Engine core objects.</param>
         public SnmpEngine(SnmpApplicationFactory factory, Listener listener, EngineObjects objects)
         {
             _factory = factory;
@@ -46,7 +46,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         
         /// <summary>
         /// Releases unmanaged resources and performs other cleanup operations before the
-        /// <see cref="SnmpDemon"/> is reclaimed by garbage collection.
+        /// <see cref="SnmpEngine"/> is reclaimed by garbage collection.
         /// </summary>
         ~SnmpEngine()
         {
@@ -91,7 +91,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         }
 
         /// <summary>
-        /// Starts the demon.
+        /// Starts the engine.
         /// </summary>
         public void Start()
         {
@@ -121,7 +121,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         }
 
         /// <summary>
-        /// Gets a value indicating whether this <see cref="SnmpDemon"/> is active.
+        /// Gets a value indicating whether this <see cref="SnmpEngine"/> is active.
         /// </summary>
         /// <value><c>true</c> if active; otherwise, <c>false</c>.</value>
         public bool Active

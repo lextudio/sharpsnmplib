@@ -116,9 +116,9 @@
     <Compile Include="Security\IAuthenticationProvider.cs" />
     <Compile Include="Security\IPrivacyProvider.cs" />
     <Compile Include="Security\MD5AuthenticationProvider.cs" />
+    <Compile Include="Security\PrivacyProviderExtension.cs" />
     <Compile Include="Security\SaltGenerator.cs" />
     <Compile Include="Security\Levels.cs" />
-    <Compile Include="Security\ProviderPair.cs" />
     <Compile Include="Security\User.cs" />
     <Compile Include="Security\UserRegistry.cs" />
     <Compile Include="Security\SHA1AuthenticationProvider.cs" />
@@ -142,7 +142,7 @@
   <Import Project="Microsoft.VersionNumber.targets" Condition=" '$(Configuration)' == 'Debug' " />
   <UsingTask AssemblyFile="..\lib\GendarmeMsBuild.dll" TaskName="GendarmeMsBuild.Gendarme" />
   <Target Name="AfterBuild">
-    <Gendarme Assemblies="$(TargetPath)" WarningsAsErrors="False" IntegrateWithVisualStudio="True" GendarmeIgnoreFilename="gendarme.ignore" />
+    <Gendarme Condition=" '$(Configuration)' == 'Release' " Assemblies="$(TargetPath)" WarningsAsErrors="False" IntegrateWithVisualStudio="True" GendarmeIgnoreFilename="gendarme.ignore" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

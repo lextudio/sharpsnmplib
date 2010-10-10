@@ -3,7 +3,7 @@ using System;
 namespace Lextm.SharpSnmpLib.Pipeline
 {
     /// <summary>
-    /// Demon objects.
+    /// Engine objects.
     /// </summary>
     public class EngineObjects
     {
@@ -11,7 +11,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         private readonly OctetString _engineId = new OctetString(new byte[] { 4, 13, 128, 0, 31, 136, 128, 233, 99, 0, 0, 214, 31, 244, 73 });
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DemonObjects"/> class.
+        /// Initializes a new instance of the <see cref="EngineObjects"/> class.
         /// </summary>
         public EngineObjects()
         {

@@ -24,35 +24,35 @@ namespace Lextm.SharpSnmpLib.Security
     /// </summary>
     public sealed class DefaultPrivacyProvider : IPrivacyProvider
     {
-        private DefaultPrivacyProvider()
-        {
-        }
-
-        private static IPrivacyProvider _instance;
-        private static readonly object Root = new object();
-
+        private static IPrivacyProvider DefaultInstance;
+        
         /// <summary>
-        /// Gets the instance.
+        /// Default privacy provider with default authentication provider.
         /// </summary>
-        /// <value>The instance.</value>
-        public static IPrivacyProvider Instance
+        public static IPrivacyProvider Default
         {
             get
             {
-                lock (Root)
-                {
-                    if (_instance == null)
-                    {
-                        _instance = new DefaultPrivacyProvider();
-                    }
-                }
-
-                return _instance;
+                return DefaultInstance ?? (DefaultInstance = new DefaultPrivacyProvider(DefaultAuthenticationProvider.Instance));
             }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DefaultPrivacyProvider"/> class.
+        /// </summary>
+        /// <param name="authentication">Authentication provider.</param>
+        public DefaultPrivacyProvider(IAuthenticationProvider authentication)
+        {
+            AuthenticationProvider = authentication;
         }
 
         #region IPrivacyProvider Members
 
+        /// <summary>
+        /// Corresponding <see cref="IAuthenticationProvider"/>.
+        /// </summary>
+        public IAuthenticationProvider AuthenticationProvider { get; private set; }
+        
         /// <summary>
         /// Decrypts the specified data.
         /// </summary>
@@ -84,7 +84,7 @@ namespace Lextm.SharpSnmpLib.Security
             
             if (data.TypeCode == SnmpType.Sequence || data is ISnmpPdu)
             {
-                return data;                
+                return data;
             }
             
             throw new ArgumentException("unencrypted data is expected.", "data");

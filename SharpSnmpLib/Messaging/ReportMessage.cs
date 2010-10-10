@@ -40,7 +40,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         private readonly SecurityParameters _parameters;
         private readonly Scope _scope;
         private readonly Header _header;
-        private readonly ProviderPair _pair = ProviderPair.Default;
+        private readonly IPrivacyProvider _privacy = DefaultPrivacyProvider.Default;
         
         /// <summary>
         /// Initializes a new instance of the <see cref="ReportMessage"/> class.
@@ -49,8 +49,8 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="header">The header.</param>
         /// <param name="parameters">The security parameters.</param>
         /// <param name="scope">The scope.</param>
-        /// <param name="record">The record.</param>
-        public ReportMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, ProviderPair record)
+        /// <param name="privacy">The privacy provider.</param>
+        public ReportMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, IPrivacyProvider privacy)
         {
             if (scope == null)
             {
@@ -67,9 +67,9 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("header");
             }
             
-            if (record == null)
+            if (privacy == null)
             {
-                throw new ArgumentNullException("record");
+                throw new ArgumentNullException("privacy");
             }
             
             if (version != VersionCode.V3)
@@ -81,7 +81,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             _header = header;
             _parameters = parameters;
             _scope = scope;
-            _pair = record;
+            _privacy = privacy;
         }
 
         /// <summary>
@@ -190,7 +190,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public byte[] ToBytes()
         {
-            return Helper.PackMessage(_version, _pair.Privacy, _header, _parameters, _scope).ToBytes();
+            return Helper.PackMessage(_version, _privacy, _header, _parameters, _scope).ToBytes();
         }
 
         /// <summary>

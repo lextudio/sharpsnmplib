@@ -33,7 +33,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         private readonly Header _header;
         private readonly SecurityParameters _parameters;
         private readonly Scope _scope;
-        private readonly ProviderPair _pair;        
+        private readonly IPrivacyProvider _privacy;        
         private readonly ObjectIdentifier _enterprise;
         private readonly uint _time;
 
@@ -80,10 +80,10 @@ namespace Lextm.SharpSnmpLib.Messaging
                 time,
                 variables);
             _scope = new Scope(pdu);
-            _pair = ProviderPair.Default;
+            _privacy = DefaultPrivacyProvider.Default;
         }
         
-        internal TrapV2Message(VersionCode version, Header header, SecurityParameters parameters, Scope scope, ProviderPair record)
+        internal TrapV2Message(VersionCode version, Header header, SecurityParameters parameters, Scope scope, IPrivacyProvider privacy)
         {
             if (scope == null)
             {
@@ -100,16 +100,16 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("header");
             }
             
-            if (record == null)
+            if (privacy == null)
             {
-                throw new ArgumentNullException("record");
+                throw new ArgumentNullException("privacy");
             }
 
             _version = version;
             _header = header;
             _parameters = parameters;
             _scope = scope;
-            _pair = record;
+            _privacy = privacy;
             TrapV2Pdu pdu = (TrapV2Pdu)_scope.Pdu;
             _enterprise = pdu.Enterprise;
             _time = pdu.TimeStamp;
@@ -152,7 +152,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public byte[] ToBytes()
         {
-            return Helper.PackMessage(_version, _pair.Privacy, _header, _parameters, _scope).ToBytes();
+            return Helper.PackMessage(_version, _privacy, _header, _parameters, _scope).ToBytes();
         }
 
         #endregion

@@ -4,9 +4,8 @@ namespace Lextm.SharpSnmpLib.Pipeline
 {
     /// <summary>
     /// GET BULK message handler.
-    /// </summary>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
-    internal class GetBulkMessageHandler : IMessageHandler
+    /// </summary>    
+    public class GetBulkMessageHandler : IMessageHandler
     {
         /// <summary>
         /// Handles the specified message.

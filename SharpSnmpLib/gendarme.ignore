@@ -20,7 +20,7 @@ M: System.Boolean Lextm.SharpSnmpLib.IP::Equals(Lextm.SharpSnmpLib.IP,Lextm.Shar
 M: System.Boolean Lextm.SharpSnmpLib.Mib.Symbol::Equals(Lextm.SharpSnmpLib.Mib.Symbol,Lextm.SharpSnmpLib.Mib.Symbol)
 
 R: Gendarme.Rules.Correctness.DisposableFieldsShouldBeDisposedRule
-T: Lextm.SharpSnmpLib.Pipeline.SnmpDemon
+T: Lextm.SharpSnmpLib.Pipeline.SnmpEngine
 
 R: Gendarme.Rules.Correctness.EnsureLocalDisposalRule
 M: System.Void Lextm.SharpSnmpLib.Messaging.Listener::AddBinding(System.Net.IPEndPoint)
@@ -50,11 +50,13 @@ T: Lextm.SharpSnmpLib.Messaging.MessageParams
 T: Lextm.SharpSnmpLib.Messaging.ListenerBinding
 T: Lextm.SharpSnmpLib.Messaging.Listener
 T: Lextm.SharpSnmpLib.Messaging.MessageReceivedEventArgs
-T: Lextm.SharpSnmpLib.Pipeline.SnmpDemon
+T: Lextm.SharpSnmpLib.Security.DESPrivacyProvider
+T: Lextm.SharpSnmpLib.Security.AESPrivacyProvider
+T: Lextm.SharpSnmpLib.Pipeline.SnmpEngine
 T: Lextm.SharpSnmpLib.Pipeline.SnmpApplication
 T: Lextm.SharpSnmpLib.Pipeline.ResponseData
 T: Lextm.SharpSnmpLib.Pipeline.HandlerMapping
-T: Lextm.SharpSnmpLib.Pipeline.DemonObjects
+T: Lextm.SharpSnmpLib.Pipeline.EngineObjects
 
 
 R: Gendarme.Rules.Performance.AvoidUncalledPrivateCodeRule

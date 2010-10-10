@@ -41,7 +41,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         private readonly Header _header;
         private readonly SecurityParameters _parameters;
         private readonly Scope _scope;
-        private readonly ProviderPair _pair;
+        private readonly IPrivacyProvider _privacy;
         private readonly uint _time;
         private readonly ObjectIdentifier _enterprise;
 
@@ -88,7 +88,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 time,
                 variables);
             _scope = new Scope(pdu);
-            _pair = ProviderPair.Default;
+            _privacy = DefaultPrivacyProvider.Default;
         }
 
         /// <summary>
@@ -101,10 +101,10 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="enterprise">The enterprise.</param>
         /// <param name="time">The time.</param>
         /// <param name="variables">The variables.</param>
-        /// <param name="pair">The pair.</param>
+        /// <param name="privacy">The privacy provider.</param>
         /// <param name="report">The report.</param>
         [CLSCompliant(false)]
-        public InformRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName, ObjectIdentifier enterprise, uint time, IList<Variable> variables, ProviderPair pair, ISnmpMessage report)
+        public InformRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName, ObjectIdentifier enterprise, uint time, IList<Variable> variables, IPrivacyProvider privacy, ISnmpMessage report)
         {
             if (userName == null)
             {
@@ -131,16 +131,16 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("report");
             }
             
-            if (pair == null)
+            if (privacy == null)
             {
-                throw new ArgumentNullException("pair");
+                throw new ArgumentNullException("privacy");
             }
 
             _version = version;
-            _pair = pair;
+            _privacy = privacy;
             _enterprise = enterprise;
             _time = time;
-            Levels recordToSecurityLevel = pair.ToSecurityLevel();
+            Levels recordToSecurityLevel = PrivacyProviderExtension.ToSecurityLevel(privacy);
             recordToSecurityLevel |= Levels.Reportable;
             byte b = (byte)recordToSecurityLevel;
             
@@ -151,8 +151,8 @@ namespace Lextm.SharpSnmpLib.Messaging
                 report.Parameters.EngineBoots,
                 report.Parameters.EngineTime,
                 userName,
-                _pair.Authentication.CleanDigest,
-                _pair.Privacy.Salt);
+                _privacy.AuthenticationProvider.CleanDigest,
+                _privacy.Salt);
             var pdu = new InformRequestPdu(
                 requestId,
                 enterprise,
@@ -161,7 +161,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             _scope = new Scope(report.Scope.ContextEngineId, report.Scope.ContextName, pdu);
         }
 
-        internal InformRequestMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, ProviderPair record)
+        internal InformRequestMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, IPrivacyProvider privacy)
         {
             if (scope == null)
             {
@@ -178,16 +178,16 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("header");
             }
             
-            if (record == null)
+            if (privacy == null)
             {
-                throw new ArgumentNullException("record");
+                throw new ArgumentNullException("privacy");
             }
 
             _version = version;
             _header = header;
             _parameters = parameters;
             _scope = scope;
-            _pair = record;
+            _privacy = privacy;
             InformRequestPdu pdu = (InformRequestPdu)scope.Pdu;
             _enterprise = pdu.Enterprise;
             _time = pdu.TimeStamp;
@@ -282,8 +282,8 @@ namespace Lextm.SharpSnmpLib.Messaging
             UserRegistry registry = UserRegistry.Default;
             if (Version == VersionCode.V3)
             {
-                Helper.Authenticate(this, _pair);
-                registry.Add(_parameters.UserName, _pair);
+                Helper.Authenticate(this, _privacy);
+                registry.Add(_parameters.UserName, _privacy);
             }
 
             return MessageFactory.GetResponse(receiver, ToBytes(), MessageId, timeout, registry, udpSocket);
@@ -320,7 +320,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public byte[] ToBytes()
         {
-            return Helper.PackMessage(_version, _pair.Privacy, _header, _parameters, _scope).ToBytes();
+            return Helper.PackMessage(_version, _privacy, _header, _parameters, _scope).ToBytes();
         }
 
         /// <summary>
@@ -384,7 +384,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Generates the response message.
         /// </summary>
         /// <returns></returns>
-        [Obsolete("Please use SnmpDemon instead.")]
+        [Obsolete("Please use SnmpEngine instead.")]
         public GetResponseMessage GenerateResponse()
         {
             // TODO: make more efficient here.

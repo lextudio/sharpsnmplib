@@ -32,7 +32,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         private readonly Header _header;
         private readonly SecurityParameters _parameters;
         private readonly Scope _scope;
-        private readonly ProviderPair _pair;
+        private readonly IPrivacyProvider _privacy;
 
         /// <summary>
         /// Creates a <see cref="GetRequestMessage"/> with all contents.
@@ -67,7 +67,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 0,
                 variables);
             _scope = new Scope(pdu);
-            _pair = ProviderPair.Default;
+            _privacy = DefaultPrivacyProvider.Default;
         }
 
         /// <summary>
@@ -78,9 +78,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="requestId">The request id.</param>
         /// <param name="userName">Name of the user.</param>
         /// <param name="variables">The variables.</param>
-        /// <param name="pair">The pair.</param>
+        /// <param name="privacy">The privacy provider.</param>
         /// <param name="report">The report.</param>
-        public GetRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName, IList<Variable> variables, ProviderPair pair, ISnmpMessage report)
+        public GetRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName, IList<Variable> variables, IPrivacyProvider privacy, ISnmpMessage report)
         {
             if (userName == null)
             {
@@ -102,14 +102,14 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("report");
             }
             
-            if (pair == null)
+            if (privacy == null)
             {
-                throw new ArgumentNullException("pair");
+                throw new ArgumentNullException("privacy");
             }
 
             _version = version;
-            _pair = pair;
-            Levels recordToSecurityLevel = pair.ToSecurityLevel();
+            _privacy = privacy;
+            Levels recordToSecurityLevel = PrivacyProviderExtension.ToSecurityLevel(privacy);
             recordToSecurityLevel |= Levels.Reportable;
             byte b = (byte)recordToSecurityLevel;
             
@@ -120,8 +120,8 @@ namespace Lextm.SharpSnmpLib.Messaging
                 report.Parameters.EngineBoots,
                 report.Parameters.EngineTime,
                 userName,
-                _pair.Authentication.CleanDigest,
-                _pair.Privacy.Salt);
+                _privacy.AuthenticationProvider.CleanDigest,
+                _privacy.Salt);
             GetRequestPdu pdu = new GetRequestPdu(
                 requestId,
                 ErrorCode.NoError,
@@ -130,7 +130,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             _scope = new Scope(report.Scope.ContextEngineId, report.Scope.ContextName, pdu);
         }
         
-        internal GetRequestMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, ProviderPair record)
+        internal GetRequestMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, IPrivacyProvider privacy)
         {
             if (scope == null)
             {
@@ -147,16 +147,16 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("header");
             }
             
-            if (record == null)
+            if (privacy == null)
             {
-                throw new ArgumentNullException("record");
+                throw new ArgumentNullException("privacy");
             }
 
             _version = version;
             _header = header;
             _parameters = parameters;
             _scope = scope;
-            _pair = record;
+            _privacy = privacy;
         }
 
         /// <summary>
@@ -224,8 +224,8 @@ namespace Lextm.SharpSnmpLib.Messaging
             UserRegistry registry = UserRegistry.Default;
             if (Version == VersionCode.V3)
             {
-                Helper.Authenticate(this, _pair);
-                registry.Add(_parameters.UserName, _pair);
+                Helper.Authenticate(this, _privacy);
+                registry.Add(_parameters.UserName, _privacy);
             }
 
             return MessageFactory.GetResponse(receiver, ToBytes(), MessageId, timeout, registry, udpSocket);
@@ -259,11 +259,11 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Gets the level.
         /// </summary>
         /// <value>The level.</value>
-        public Levels Level
+        internal Levels Level
         {
             get
             {
-                return _pair.ToSecurityLevel();
+                return PrivacyProviderExtension.ToSecurityLevel(_privacy);
             }
         }
         
@@ -273,7 +273,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public byte[] ToBytes()
         {
-            return Helper.PackMessage(_version, _pair.Privacy, _header, _parameters, _scope).ToBytes();
+            return Helper.PackMessage(_version, _privacy, _header, _parameters, _scope).ToBytes();
         }
 
         /// <summary>
