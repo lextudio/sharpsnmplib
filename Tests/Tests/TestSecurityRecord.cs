@@ -10,7 +10,7 @@ namespace Lextm.SharpSnmpLib.Tests
         [Test]
         public void TestToSecurityLevel()
         {
-            Assert.AreEqual(0, PrivacyProviderExtension.ToSecurityLevel(DefaultPrivacyProvider.Default));
+            Assert.AreEqual((Levels)0, PrivacyProviderExtension.ToSecurityLevel(DefaultPrivacyProvider.Default));
         }
 
         [Test]
