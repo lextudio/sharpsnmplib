@@ -28,13 +28,10 @@ namespace Lextm.SharpSnmpLib
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu")]
     public class TrapV2Pdu : ISnmpPdu
     {
-        private readonly IList<Variable> _variables;
-        private readonly Integer32 _requestId;
         private byte[] _raw;
         private readonly Sequence _varbindSection;
         private readonly TimeTicks _time;
-        private readonly ObjectIdentifier _enterprise;
-     
+
         /// <summary>
         /// Creates a <see cref="TrapV2Pdu"/> instance with all content.
         /// </summary>
@@ -45,13 +42,13 @@ namespace Lextm.SharpSnmpLib
         [CLSCompliant(false)]
         public TrapV2Pdu(int requestId, ObjectIdentifier enterprise, uint time, IList<Variable> variables)
         {
-            _enterprise = enterprise;
-            _requestId = new Integer32(requestId);
+            Enterprise = enterprise;
+            RequestId = new Integer32(requestId);
             _time = new TimeTicks(time);
-            _variables = variables;
+            Variables = variables;
             IList<Variable> full = new List<Variable>(variables);
             full.Insert(0, new Variable(new uint[] { 1, 3, 6, 1, 2, 1, 1, 3, 0 }, _time));
-            full.Insert(1, new Variable(new uint[] { 1, 3, 6, 1, 6, 3, 1, 1, 4, 1, 0 }, _enterprise));
+            full.Insert(1, new Variable(new uint[] { 1, 3, 6, 1, 6, 3, 1, 1, 4, 1, 0 }, Enterprise));
             _varbindSection = Variable.Transform(full);
         }
         
@@ -68,17 +65,17 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("stream");
             }
             
-            _requestId = (Integer32)DataFactory.CreateSnmpData(stream); // request
+            RequestId = (Integer32)DataFactory.CreateSnmpData(stream); // request
 #pragma warning disable 168
             Integer32 temp1 = (Integer32)DataFactory.CreateSnmpData(stream); // 0
             Integer32 temp2 = (Integer32)DataFactory.CreateSnmpData(stream); // 0
 #pragma warning restore 168
             _varbindSection = (Sequence)DataFactory.CreateSnmpData(stream);
-            _variables = Variable.Transform(_varbindSection); // v[0] is timestamp. v[1] oid, v[2] value.
-            _time = (TimeTicks)_variables[0].Data;
-            _variables.RemoveAt(0);
-            _enterprise = (ObjectIdentifier)_variables[0].Data;
-            _variables.RemoveAt(0);
+            Variables = Variable.Transform(_varbindSection); // v[0] is timestamp. v[1] oid, v[2] value.
+            _time = (TimeTicks)Variables[0].Data;
+            Variables.RemoveAt(0);
+            Enterprise = (ObjectIdentifier)Variables[0].Data;
+            Variables.RemoveAt(0);
         }
 
         #region ISnmpPdu Members
@@ -86,19 +83,13 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Variables.
         /// </summary>
-        public IList<Variable> Variables
-        {
-            get { return _variables; }
-        }
+        public IList<Variable> Variables { get; private set; }
 
         /// <summary>
         /// Gets the request ID.
         /// </summary>
         /// <value>The request ID.</value>
-        public Integer32 RequestId
-        {
-            get { return _requestId; }
-        }
+        public Integer32 RequestId { get; private set; }
 
         /// <summary>
         /// Gets the error status.
@@ -142,7 +133,7 @@ namespace Lextm.SharpSnmpLib
             
             if (_raw == null)
             {
-                _raw = ByteTool.ParseItems(_requestId, new Integer32(0), new Integer32(0), _varbindSection);
+                _raw = ByteTool.ParseItems(RequestId, new Integer32(0), new Integer32(0), _varbindSection);
             }
 
             ByteTool.AppendBytes(stream, TypeCode, _raw);
@@ -163,14 +154,12 @@ namespace Lextm.SharpSnmpLib
         }
 
         #endregion
+
         /// <summary>
         /// Enterprise.
         /// </summary>
-        public ObjectIdentifier Enterprise
-        {
-            get { return _enterprise; }
-        }
-        
+        public ObjectIdentifier Enterprise { get; private set; }
+
         /// <summary>
         /// Time stamp.
         /// </summary>
@@ -190,10 +179,10 @@ namespace Lextm.SharpSnmpLib
             return string.Format(
                 CultureInfo.InvariantCulture,
                 "TRAP v2 PDU: request ID: {3}; enterprise: {0}; time stamp: {1}; variable count: {2}",
-                _enterprise, 
+                Enterprise, 
                 _time, 
-                _variables.Count.ToString(CultureInfo.InvariantCulture),
-                _requestId);
+                Variables.Count.ToString(CultureInfo.InvariantCulture),
+                RequestId);
         }
     }
 }

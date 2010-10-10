@@ -185,7 +185,7 @@ namespace Lextm.SharpSnmpLib.Agent
                     0,
                     new List<Variable>(),
                     2000, 
-                    DefaultPrivacyProvider.Default,
+                    DefaultPrivacyProvider.DefaultPair,
                     report);
             }
             catch (SnmpException ex)

@@ -47,11 +47,9 @@ namespace Lextm.SharpSnmpLib
     public sealed class OctetString // This namespace has its own concept of string
         : ISnmpData, IEquatable<OctetString>
     {
-        private readonly byte[] _raw;
-        private readonly Encoding _encoding;
-        
         // IMPORTANT: use GetEncoding because of CF.
         private static Encoding _defaultEncoding = Encoding.GetEncoding("ASCII");
+        private readonly byte[] _raw;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OctetString"/> class.
@@ -67,7 +65,7 @@ namespace Lextm.SharpSnmpLib
 
             _raw = new byte[length];
             stream.Read(_raw, 0, length);
-            _encoding = DefaultEncoding;
+            Encoding = DefaultEncoding;
         }
         
         /// <summary>
@@ -83,7 +81,7 @@ namespace Lextm.SharpSnmpLib
             
             _raw = new byte[raw.Length];
             Array.Copy(raw, _raw, raw.Length);
-            _encoding = DefaultEncoding;
+            Encoding = DefaultEncoding;
         }
         
         /// <summary>
@@ -93,8 +91,8 @@ namespace Lextm.SharpSnmpLib
         /// <param name="encoding">Encoding.</param>
         public OctetString(string content, Encoding encoding)
         {
-            _encoding = encoding;
-            _raw = _encoding.GetBytes(content);
+            Encoding = encoding;
+            _raw = Encoding.GetBytes(content);
         }
         
         /// <summary>
@@ -105,14 +103,11 @@ namespace Lextm.SharpSnmpLib
             : this(content, DefaultEncoding)
         {
         }
-        
+
         /// <summary>
         /// Encoding of this <see cref="OctetString"/>
         /// </summary>
-        public Encoding Encoding
-        {
-            get { return _encoding; }
-        }
+        public Encoding Encoding { get; private set; }
 
         /// <summary>
         /// Gets raw bytes.
@@ -170,7 +165,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public override string ToString()
         {
-            return ToString(_encoding);
+            return ToString(Encoding);
         }
         
         internal string ToDateAndTimeString()

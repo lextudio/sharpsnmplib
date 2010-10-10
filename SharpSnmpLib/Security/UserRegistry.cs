@@ -78,10 +78,12 @@ namespace Lextm.SharpSnmpLib.Security
                 return;
             }
             
-            if (!_users.ContainsKey(user.Name))
+            if (_users.ContainsKey(user.Name))
             {
-                _users.Add(user.Name, user);
+                _users.Remove(user.Name);
             }
+
+            _users.Add(user.Name, user);
         }
 
         /// <summary>
@@ -98,7 +100,7 @@ namespace Lextm.SharpSnmpLib.Security
 
             if (userName == OctetString.Empty)
             {
-                return DefaultPrivacyProvider.Default;
+                return DefaultPrivacyProvider.DefaultPair;
             }
 
             return _users.ContainsKey(userName) ? _users[userName].Privacy : null;

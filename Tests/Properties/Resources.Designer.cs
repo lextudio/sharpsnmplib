@@ -781,6 +781,27 @@ namespace Lextm.SharpSnmpLib.Tests {
             }
         }
         
+        internal static byte[] trapv3 {
+            get {
+                object obj = ResourceManager.GetObject("trapv3", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] trapv3auth {
+            get {
+                object obj = ResourceManager.GetObject("trapv3auth", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] trapv3authpriv {
+            get {
+                object obj = ResourceManager.GetObject("trapv3authpriv", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         internal static byte[] TUNNEL_MIB {
             get {
                 object obj = ResourceManager.GetObject("TUNNEL_MIB", resourceCulture);

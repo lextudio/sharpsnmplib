@@ -36,10 +36,6 @@ namespace Lextm.SharpSnmpLib
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu")]
     public class GetBulkRequestPdu : ISnmpPdu
     {
-        private readonly Integer32 _nonRepeaters;
-        private readonly Integer32 _maxRepetitions;
-        private readonly IList<Variable> _variables;
-        private readonly Integer32 _requestId;
         private byte[] _raw;
         private readonly Sequence _varbindSection;
 
@@ -57,10 +53,10 @@ namespace Lextm.SharpSnmpLib
         
         private GetBulkRequestPdu(Integer32 requestId, Integer32 nonRepeaters, Integer32 maxRepetitions, IList<Variable> variables)
         {
-            _requestId = requestId;
-            _nonRepeaters = nonRepeaters;
-            _maxRepetitions = maxRepetitions;
-            _variables = variables;
+            RequestId = requestId;
+            ErrorStatus = nonRepeaters;
+            ErrorIndex = maxRepetitions;
+            Variables = variables;
             _varbindSection = Variable.Transform(variables);
             ////_raw = ByteTool.ParseItems(_seq, _nonRepeaters, _maxRepetitions, _varbindSection);
         }
@@ -71,11 +67,11 @@ namespace Lextm.SharpSnmpLib
         /// <param name="stream">The stream.</param>
         public GetBulkRequestPdu(Stream stream)
         {
-            _requestId = (Integer32)DataFactory.CreateSnmpData(stream);
-            _nonRepeaters = (Integer32)DataFactory.CreateSnmpData(stream);
-            _maxRepetitions = (Integer32)DataFactory.CreateSnmpData(stream);
+            RequestId = (Integer32)DataFactory.CreateSnmpData(stream);
+            ErrorStatus = (Integer32)DataFactory.CreateSnmpData(stream);
+            ErrorIndex = (Integer32)DataFactory.CreateSnmpData(stream);
             _varbindSection = (Sequence)DataFactory.CreateSnmpData(stream);
-            _variables = Variable.Transform(_varbindSection);
+            Variables = Variable.Transform(_varbindSection);
             ////_raw = ByteTool.ParseItems(_seq, _nonRepeaters, _maxRepetitions, _varbindSection);
             ////Debug.Assert(length >= _raw.Length, "length not match");
         }
@@ -84,46 +80,24 @@ namespace Lextm.SharpSnmpLib
         /// Gets the request ID.
         /// </summary>
         /// <value>The request ID.</value>
-        public Integer32 RequestId
-        {
-            get
-            {
-                return _requestId;
-            }
-        }
+        public Integer32 RequestId { get; private set; }
 
         /// <summary>
         /// Gets the error status.
         /// </summary>
         /// <value>The error status.</value>
-        public Integer32 ErrorStatus
-        {
-            get { return _nonRepeaters; }
-        }
+        public Integer32 ErrorStatus { get; private set; }
 
         /// <summary>
         /// Gets the index of the error.
         /// </summary>
         /// <value>The index of the error.</value>
-        public Integer32 ErrorIndex
-        {
-            get { return _maxRepetitions; }
-        }
-        
+        public Integer32 ErrorIndex { get; private set; }
+
         /// <summary>
         /// Variables.
         /// </summary>
-        public IList<Variable> Variables
-        {
-            get
-            {
-                return _variables;
-            }
-        }
-
-        #region ISnmpPdu Members
-
-        #endregion
+        public IList<Variable> Variables { get; private set; }
 
         #region ISnmpData Members
         /// <summary>
@@ -147,7 +121,7 @@ namespace Lextm.SharpSnmpLib
             
             if (_raw == null)
             {
-                _raw = ByteTool.ParseItems(_requestId, _nonRepeaters, _maxRepetitions, _varbindSection);
+                _raw = ByteTool.ParseItems(RequestId, ErrorStatus, ErrorIndex, _varbindSection);
             }
 
             ByteTool.AppendBytes(stream, TypeCode, _raw);
@@ -178,10 +152,10 @@ namespace Lextm.SharpSnmpLib
             return string.Format(
                 CultureInfo.InvariantCulture,
                 "GETBULK request PDU: seq: {0}; non-repeaters: {1}; max-repetitions: {2}; variable count: {3}",
-                _requestId, 
-                _nonRepeaters, 
-                _maxRepetitions, 
-                _variables.Count.ToString(CultureInfo.InvariantCulture));
+                RequestId, 
+                ErrorStatus, 
+                ErrorIndex, 
+                Variables.Count.ToString(CultureInfo.InvariantCulture));
         }
     }
 }

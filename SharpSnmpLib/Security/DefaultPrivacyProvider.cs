@@ -24,16 +24,16 @@ namespace Lextm.SharpSnmpLib.Security
     /// </summary>
     public sealed class DefaultPrivacyProvider : IPrivacyProvider
     {
-        private static IPrivacyProvider DefaultInstance;
+        private static IPrivacyProvider _defaultInstance;
         
         /// <summary>
         /// Default privacy provider with default authentication provider.
         /// </summary>
-        public static IPrivacyProvider Default
+        public static IPrivacyProvider DefaultPair
         {
             get
             {
-                return DefaultInstance ?? (DefaultInstance = new DefaultPrivacyProvider(DefaultAuthenticationProvider.Instance));
+                return _defaultInstance ?? (_defaultInstance = new DefaultPrivacyProvider(DefaultAuthenticationProvider.Instance));
             }
         }
         

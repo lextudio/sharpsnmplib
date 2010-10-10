@@ -36,11 +36,9 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// </summary>
     public class ReportMessage : ISnmpMessage
     {
-        private readonly VersionCode _version;
         private readonly SecurityParameters _parameters;
-        private readonly Scope _scope;
         private readonly Header _header;
-        private readonly IPrivacyProvider _privacy = DefaultPrivacyProvider.Default;
+        private readonly IPrivacyProvider _privacy = DefaultPrivacyProvider.DefaultPair;
         
         /// <summary>
         /// Initializes a new instance of the <see cref="ReportMessage"/> class.
@@ -77,10 +75,10 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentException("only v3 is supported", "version");
             }
 
-            _version = version;
+            Version = version;
             _header = header;
             _parameters = parameters;
-            _scope = scope;
+            Scope = scope;
             _privacy = privacy;
         }
 
@@ -97,7 +95,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         public IList<Variable> Variables
         {
-            get { return _scope.Pdu.Variables; }
+            get { return Scope.Pdu.Variables; }
         }
         
         /// <summary>
@@ -147,7 +145,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <value>The request ID.</value>
         public int RequestId
         {
-            get { return _scope.Pdu.RequestId.ToInt32(); }
+            get { return Scope.Pdu.RequestId.ToInt32(); }
         }
         
         /// <summary>
@@ -167,22 +165,13 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Gets the scope.
         /// </summary>
         /// <value>The scope.</value>
-        public Scope Scope
-        {
-            get
-            {
-                return _scope;
-            }
-        }
+        public Scope Scope { get; private set; }
 
         /// <summary>
         /// Gets the version.
         /// </summary>
         /// <value>The version.</value>
-        public VersionCode Version
-        {
-            get { return _version; }
-        }
+        public VersionCode Version { get; private set; }
 
         /// <summary>
         /// Converts to byte format.
@@ -190,7 +179,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public byte[] ToBytes()
         {
-            return Helper.PackMessage(_version, _privacy, _header, _parameters, _scope).ToBytes();
+            return Helper.PackMessage(Version, _privacy, _header, _parameters, Scope).ToBytes();
         }
 
         /// <summary>
@@ -198,7 +187,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         public ISnmpPdu Pdu
         {
-            get { return _scope.Pdu; }
+            get { return Scope.Pdu; }
         }
         
         /// <summary>
@@ -207,7 +196,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public override string ToString()
         {
-            return "REPORT request message: version: " + _version + "; " + _parameters.UserName + "; " + _scope.Pdu;
+            return "REPORT request message: version: " + Version + "; " + _parameters.UserName + "; " + Scope.Pdu;
         }
     }
 }

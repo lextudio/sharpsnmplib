@@ -36,10 +36,6 @@ namespace Lextm.SharpSnmpLib
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu")]
     public class SetRequestPdu : ISnmpPdu
     {
-        private readonly Integer32 _errorStatus;
-        private readonly Integer32 _errorIndex;
-        private readonly IList<Variable> _variables;
-        private readonly Integer32 _requestId;
         private byte[] _raw;
         private readonly Sequence _varbindSection;
 
@@ -64,11 +60,11 @@ namespace Lextm.SharpSnmpLib
         /// <param name="variables">Variables</param>
         private SetRequestPdu(Integer32 requestId, Integer32 errorStatus, Integer32 errorIndex, IList<Variable> variables)
         {
-            _requestId = requestId;
-            _errorStatus = errorStatus;
-            _errorIndex = errorIndex;
-            _variables = variables;
-            _varbindSection = Variable.Transform(_variables);
+            RequestId = requestId;
+            ErrorStatus = errorStatus;
+            ErrorIndex = errorIndex;
+            Variables = variables;
+            _varbindSection = Variable.Transform(Variables);
         }
 
         /// <summary>
@@ -77,11 +73,11 @@ namespace Lextm.SharpSnmpLib
         /// <param name="stream">The stream.</param>
         public SetRequestPdu(Stream stream)
         {
-            _requestId = (Integer32)DataFactory.CreateSnmpData(stream);
-            _errorStatus = (Integer32)DataFactory.CreateSnmpData(stream);
-            _errorIndex = (Integer32)DataFactory.CreateSnmpData(stream);
+            RequestId = (Integer32)DataFactory.CreateSnmpData(stream);
+            ErrorStatus = (Integer32)DataFactory.CreateSnmpData(stream);
+            ErrorIndex = (Integer32)DataFactory.CreateSnmpData(stream);
             _varbindSection = (Sequence)DataFactory.CreateSnmpData(stream);
-            _variables = Variable.Transform(_varbindSection);
+            Variables = Variable.Transform(_varbindSection);
         }
         
         /// <summary>
@@ -93,49 +89,34 @@ namespace Lextm.SharpSnmpLib
             return string.Format(
                 CultureInfo.InvariantCulture,
                 "SET request PDU: seq: {0}; status: {1}; index: {2}; variable count: {3}",
-                _requestId,
-                _errorStatus,
-                _errorIndex,
-                _variables.Count.ToString(CultureInfo.InvariantCulture));
+                RequestId,
+                ErrorStatus,
+                ErrorIndex,
+                Variables.Count.ToString(CultureInfo.InvariantCulture));
         }
 
         /// <summary>
         /// Gets the request ID.
         /// </summary>
         /// <value>The request ID.</value>
-        public Integer32 RequestId
-        {
-            get { return _requestId; }
-        }
+        public Integer32 RequestId { get; private set; }
 
         /// <summary>
         /// Gets the error status.
         /// </summary>
         /// <value>The error status.</value>
-        public Integer32 ErrorStatus
-        {
-            get { return _errorStatus; }
-        }
+        public Integer32 ErrorStatus { get; private set; }
 
         /// <summary>
         /// Gets the index of the error.
         /// </summary>
         /// <value>The index of the error.</value>
-        public Integer32 ErrorIndex
-        {
-            get { return _errorIndex; }
-        }
-        
+        public Integer32 ErrorIndex { get; private set; }
+
         /// <summary>
         /// Variables.
         /// </summary>
-        public IList<Variable> Variables
-        {
-            get
-            {
-                return _variables;
-            }
-        }
+        public IList<Variable> Variables { get; private set; }
 
         #region ISnmpData Members
         /// <summary>
@@ -159,7 +140,7 @@ namespace Lextm.SharpSnmpLib
             
             if (_raw == null)
             {
-                _raw = ByteTool.ParseItems(_requestId, _errorStatus, _errorIndex, _varbindSection);
+                _raw = ByteTool.ParseItems(RequestId, ErrorStatus, ErrorIndex, _varbindSection);
             }
 
             ByteTool.AppendBytes(stream, TypeCode, _raw);

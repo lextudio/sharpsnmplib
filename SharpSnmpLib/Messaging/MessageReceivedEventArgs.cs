@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Net;
 
 namespace Lextm.SharpSnmpLib.Messaging
@@ -9,7 +10,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     public sealed class MessageReceivedEventArgs : EventArgs
     {
         /// <summary>
-        /// Creates a <see cref="MessageReceivedEventArgs{T}"/>.
+        /// Creates a <see cref="MessageReceivedEventArgs"/>.
         /// </summary>
         /// <param name="sender">Sender.</param>
         /// <param name="message">The message received.</param>
@@ -43,7 +44,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public override string ToString()
         {
-            return Message + "; sender: " + Sender;
+            return string.Format(CultureInfo.InvariantCulture, "{0}; sender: {1}", Message, Sender);
         }
     }
     
@@ -54,8 +55,6 @@ namespace Lextm.SharpSnmpLib.Messaging
     [Obsolete("Please use the non generic version.")]
     public sealed class MessageReceivedEventArgs<T> : EventArgs where T : ISnmpMessage
     {
-        private readonly ISnmpMessage _message;
-
         /// <summary>
         /// Creates a <see cref="MessageReceivedEventArgs{T}"/>.
         /// </summary>
@@ -65,17 +64,14 @@ namespace Lextm.SharpSnmpLib.Messaging
         public MessageReceivedEventArgs(IPEndPoint sender, T message, IListenerBinding binding)
         {
             Sender = sender;
-            _message = message;
+            Message = message;
             Binding = binding;
         }
 
         /// <summary>
         /// The received message.
         /// </summary>
-        public T Message
-        {
-            get { return (T)_message; }
-        }
+        public T Message { get; private set; }
 
         /// <summary>
         /// Sender.
@@ -94,7 +90,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public override string ToString()
         {
-            return _message.GetType().ToString() + _message + "; sender: " + Sender;
+            return string.Format(CultureInfo.InvariantCulture, "{0}: {1}; sender: {2}", Message.GetType().ToString(), Message, Sender);
         }
     }
 }

@@ -25,10 +25,6 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// </summary>
     public class MalformedMessage : ISnmpMessage
     {
-        private readonly int _messageId;
-        private readonly SecurityParameters _parameters;
-        private readonly ISnmpPdu _pdu;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="MalformedMessage"/> class.
         /// </summary>
@@ -41,28 +37,22 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("user");
             }
 
-            _messageId = messageId;
-            _parameters = new SecurityParameters(null, null, null, user, null, null);
-            _pdu = MalformedPdu.Instance;
+            MessageId = messageId;
+            Parameters = new SecurityParameters(null, null, null, user, null, null);
+            Pdu = MalformedPdu.Instance;
         }
 
         /// <summary>
         /// PDU section.
         /// </summary>
         /// <value></value>
-        public ISnmpPdu Pdu
-        {
-            get { return _pdu; }
-        }
+        public ISnmpPdu Pdu { get; private set; }
 
         /// <summary>
         /// Gets the parameters.
         /// </summary>
         /// <value>The parameters.</value>
-        public SecurityParameters Parameters
-        {
-            get { return _parameters; }
-        }
+        public SecurityParameters Parameters { get; private set; }
 
         /// <summary>
         /// Gets the scope.
@@ -104,10 +94,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Gets the message ID.
         /// </summary>
         /// <value>The message ID.</value>
-        public int MessageId
-        {
-            get { return _messageId; }
-        }
+        public int MessageId { get; private set; }
 
         /// <summary>
         /// Returns a <see cref="System.String"/> that represents this instance.
@@ -117,7 +104,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </returns>
         public override string ToString()
         {
-            return string.Format(CultureInfo.InvariantCulture, "Malformed message: message id: {0}; user: {1}", MessageId, _parameters.UserName);
+            return string.Format(CultureInfo.InvariantCulture, "Malformed message: message id: {0}; user: {1}", MessageId, Parameters.UserName);
         }
     }
 }

@@ -24,10 +24,6 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public sealed class Scope : ISegment
     {
-        private readonly ISnmpPdu _pdu;
-        private OctetString _contextEngineId;
-        private OctetString _contextName;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Scope"/> class.
         /// </summary>
@@ -39,9 +35,9 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("data");
             }
             
-            _contextEngineId = (OctetString)data[0];
-            _contextName = (OctetString)data[1];
-            _pdu = (ISnmpPdu)data[2];
+            ContextEngineId = (OctetString)data[0];
+            ContextName = (OctetString)data[1];
+            Pdu = (ISnmpPdu)data[2];
         }
 
         /// <summary>
@@ -68,9 +64,9 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("pdu");
             }
 
-            _contextEngineId = contextEngineId;
-            _contextName = contextName;
-            _pdu = pdu;
+            ContextEngineId = contextEngineId;
+            ContextName = contextName;
+            Pdu = pdu;
         }
 
         /// <summary>
@@ -85,7 +81,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("pdu");
             }
 
-            _pdu = pdu;
+            Pdu = pdu;
         }
 
         /// <summary>
@@ -93,10 +89,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <value>The PDU.</value>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu", Justification = "definition")]
-        public ISnmpPdu Pdu
-        {
-            get { return _pdu; }
-        }
+        public ISnmpPdu Pdu { get; private set; }
 
         #region ISegment Members
 
@@ -119,29 +112,21 @@ namespace Lextm.SharpSnmpLib
         /// Gets or sets the name of the context.
         /// </summary>
         /// <value>The name of the context.</value>
-        public OctetString ContextName
-        {
-            get { return _contextName; }
-            set { _contextName = value; }
-        }
+        public OctetString ContextName { get; set; }
 
         /// <summary>
         /// Gets or sets the context engine id.
         /// </summary>
         /// <value>The context engine id.</value>
-        public OctetString ContextEngineId
-        {
-            get { return _contextEngineId; }
-            set { _contextEngineId = value; }
-        }
-        
+        public OctetString ContextEngineId { get; set; }
+
         /// <summary>
         /// Converts to <see cref="Sequence"/> object.
         /// </summary>
         /// <returns></returns>
         public Sequence ToSequence()
         {
-            return new Sequence(_contextEngineId, _contextName, _pdu);
+            return new Sequence(ContextEngineId, ContextName, Pdu);
         }
 
         #endregion

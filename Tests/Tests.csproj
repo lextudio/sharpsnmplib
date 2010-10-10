@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{FE484004-0780-4730-9D91-D4597341B56E}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -139,6 +139,8 @@
     <None Include="Resources\smistrip" />
     <None Include="Resources\SNMPV2-PDU.mib" />
     <None Include="Resources\SYMMIB_MIB-MIB.mib" />
+    <None Include="Resources\trapv3auth" />
+    <None Include="Resources\trapv3authpriv" />
     <None Include="Resources\twovarbinds.dat" />
     <None Include="Resources\UCD-DEMO-MIB.inc" />
     <None Include="Resources\UCD-DISKIO-MIB.inc" />
@@ -209,6 +211,7 @@
     <None Include="Resources\SNMPv2-TM.txt" />
     <None Include="Resources\TCP-MIB.txt" />
     <None Include="Resources\TRANSPORT-ADDRESS-MIB.txt" />
+    <None Include="Resources\trapv3" />
     <None Include="Resources\TUNNEL-MIB.txt" />
     <None Include="Resources\UCD-DEMO-MIB.txt" />
     <None Include="Resources\UCD-DISKIO-MIB.txt" />

@@ -34,72 +34,41 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public class SecurityParameters : ISegment
     {
-        private readonly OctetString _engineId;
-
         /// <summary>
         /// Gets the engine ID.
         /// </summary>
         /// <value>The engine ID.</value>
-        public OctetString EngineId
-        {
-            get { return _engineId; }
-        }
-
-        private readonly Integer32 _engineBoots;
+        public OctetString EngineId { get; private set; }
 
         /// <summary>
         /// Gets the boot count.
         /// </summary>
         /// <value>The boot count.</value>
-        public Integer32 EngineBoots
-        {
-            get { return _engineBoots; }
-        }
-
-        private readonly Integer32 _engineTime;
+        public Integer32 EngineBoots { get; private set; }
 
         /// <summary>
         /// Gets the engine time.
         /// </summary>
         /// <value>The engine time.</value>
-        public Integer32 EngineTime
-        {
-            get { return _engineTime; }
-        }
-
-        private readonly OctetString _userName;
+        public Integer32 EngineTime { get; private set; }
 
         /// <summary>
         /// Gets the user name.
         /// </summary>
         /// <value>The user name.</value>
-        public OctetString UserName
-        {
-            get { return _userName; }
-        }
-
-        private OctetString _authenticationParameters;
+        public OctetString UserName { get; private set; }
 
         /// <summary>
         /// Gets the authentication parameters.
         /// </summary>
         /// <value>The authentication parameters.</value>
-        public OctetString AuthenticationParameters
-        {
-            get { return _authenticationParameters; }
-            set { _authenticationParameters = value; }
-        }
-
-        private readonly OctetString _privacyParameters;
+        public OctetString AuthenticationParameters { get; set; }
 
         /// <summary>
         /// Gets the privacy parameters.
         /// </summary>
         /// <value>The privacy parameters.</value>
-        public OctetString PrivacyParameters
-        {
-            get { return _privacyParameters; }
-        }
+        public OctetString PrivacyParameters { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SecurityParameters"/> class.
@@ -113,12 +82,12 @@ namespace Lextm.SharpSnmpLib
             }
             
             Sequence data = (Sequence)DataFactory.CreateSnmpData(parameters.GetRaw());
-            _engineId = (OctetString)data[0];
-            _engineBoots = (Integer32)data[1];
-            _engineTime = (Integer32)data[2];
-            _userName = (OctetString)data[3];
-            _authenticationParameters = (OctetString)data[4];
-            _privacyParameters = (OctetString)data[5];
+            EngineId = (OctetString)data[0];
+            EngineBoots = (Integer32)data[1];
+            EngineTime = (Integer32)data[2];
+            UserName = (OctetString)data[3];
+            AuthenticationParameters = (OctetString)data[4];
+            PrivacyParameters = (OctetString)data[5];
         }
 
         /// <summary>
@@ -138,12 +107,12 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("userName");
             }
 
-            _engineId = engineId;
-            _engineBoots = engineBoots;
-            _engineTime = engineTime;
-            _userName = userName;
-            _authenticationParameters = authenticationParameters;
-            _privacyParameters = privacyParameters;
+            EngineId = engineId;
+            EngineBoots = engineBoots;
+            EngineTime = engineTime;
+            UserName = userName;
+            AuthenticationParameters = authenticationParameters;
+            PrivacyParameters = privacyParameters;
         }
 
         /// <summary>
@@ -152,7 +121,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public Sequence ToSequence()
         {
-            return new Sequence(_engineId, _engineBoots, _engineTime, _userName, _authenticationParameters, _privacyParameters);
+            return new Sequence(EngineId, EngineBoots, EngineTime, UserName, AuthenticationParameters, PrivacyParameters);
         }
 
         #region ISegment Members
@@ -164,7 +133,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public ISnmpData GetData(VersionCode version)
         {
-            return version == VersionCode.V3 ? new OctetString(ToSequence().ToBytes()) : _userName;
+            return version == VersionCode.V3 ? new OctetString(ToSequence().ToBytes()) : UserName;
         }
 
         #endregion

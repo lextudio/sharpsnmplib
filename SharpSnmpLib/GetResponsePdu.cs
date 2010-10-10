@@ -37,10 +37,6 @@ namespace Lextm.SharpSnmpLib
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu")]
     public class GetResponsePdu : ISnmpPdu
     {
-        private readonly Integer32 _errorStatus;
-        private readonly Integer32 _requestId;
-        private readonly Integer32 _errorIndex;
-        private readonly IList<Variable> _variables;
         private readonly Sequence _varbindSection;
         private byte[] _raw;
 
@@ -53,10 +49,10 @@ namespace Lextm.SharpSnmpLib
         /// <param name="variables">Variables.</param>
         public GetResponsePdu(int requestId, ErrorCode errorStatus, int errorIndex, IList<Variable> variables)
         {
-            _requestId = new Integer32(requestId);
-            _errorStatus = new Integer32((int)errorStatus);
-            _errorIndex = new Integer32(errorIndex);
-            _variables = variables;
+            RequestId = new Integer32(requestId);
+            ErrorStatus = new Integer32((int)errorStatus);
+            ErrorIndex = new Integer32(errorIndex);
+            Variables = variables;
             _varbindSection = Variable.Transform(variables);
             ////_raw = ByteTool.ParseItems(_sequenceNumber, _errorStatus, _errorIndex, _varbindSection);
         }
@@ -67,11 +63,11 @@ namespace Lextm.SharpSnmpLib
         /// <param name="stream">The stream.</param>
         public GetResponsePdu(Stream stream)
         {
-            _requestId = (Integer32)DataFactory.CreateSnmpData(stream);
-            _errorStatus = (Integer32)DataFactory.CreateSnmpData(stream);
-            _errorIndex = (Integer32)DataFactory.CreateSnmpData(stream);
+            RequestId = (Integer32)DataFactory.CreateSnmpData(stream);
+            ErrorStatus = (Integer32)DataFactory.CreateSnmpData(stream);
+            ErrorIndex = (Integer32)DataFactory.CreateSnmpData(stream);
             _varbindSection = (Sequence)DataFactory.CreateSnmpData(stream);
-            _variables = Variable.Transform(_varbindSection);
+            Variables = Variable.Transform(_varbindSection);
             ////_raw = ByteTool.ParseItems(_sequenceNumber, _errorStatus, _errorIndex, _varbindSection);
             ////Debug.Assert(length >= _raw.Length, "length not match");
         }
@@ -80,38 +76,23 @@ namespace Lextm.SharpSnmpLib
         /// Gets the request ID.
         /// </summary>
         /// <value>The request ID.</value>
-        public Integer32 RequestId
-        {
-            get { return _requestId; }
-        }
-        
+        public Integer32 RequestId { get; private set; }
+
         /// <summary>
         /// Error status.
         /// </summary>
-        public Integer32 ErrorStatus
-        {
-            get { return _errorStatus; }
-        }
-        
+        public Integer32 ErrorStatus { get; private set; }
+
         /// <summary>
         /// Error index.
         /// </summary>
-        public Integer32 ErrorIndex
-        {
-            get { return _errorIndex; }
-        }
-        
+        public Integer32 ErrorIndex { get; private set; }
+
         /// <summary>
         /// Variables.
         /// </summary>
-        public IList<Variable> Variables
-        {
-            get
-            {
-                return _variables;
-            }
-        }
-        
+        public IList<Variable> Variables { get; private set; }
+
         /// <summary>
         /// Type code.
         /// </summary>
@@ -136,7 +117,7 @@ namespace Lextm.SharpSnmpLib
             
             if (_raw == null)
             {
-                _raw = ByteTool.ParseItems(_requestId, _errorStatus, _errorIndex, _varbindSection);
+                _raw = ByteTool.ParseItems(RequestId, ErrorStatus, ErrorIndex, _varbindSection);
             }
 
             ByteTool.AppendBytes(stream, TypeCode, _raw);
@@ -165,10 +146,10 @@ namespace Lextm.SharpSnmpLib
             return string.Format(
                 CultureInfo.InvariantCulture,
                 "GET response PDU: seq: {0}; status: {1}; index: {2}; variable count: {3}",
-                _requestId, 
-                _errorStatus, 
-                _errorIndex, 
-                _variables.Count.ToString(CultureInfo.InvariantCulture));
+                RequestId, 
+                ErrorStatus, 
+                ErrorIndex, 
+                Variables.Count.ToString(CultureInfo.InvariantCulture));
         }
     }
 }

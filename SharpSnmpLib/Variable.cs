@@ -38,9 +38,6 @@ namespace Lextm.SharpSnmpLib
     /// </remarks>
     public class Variable
     {
-        private readonly ObjectIdentifier _oid;
-        private readonly ISnmpData _data;
-        
         /// <summary>
         /// Creates a <see cref="Variable"/> instance with a specific <see cref="ObjectIdentifier"/>.
         /// </summary>
@@ -82,32 +79,20 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("id");
             }
 
-            _oid = id;
-            _data = data ?? new Null();
+            Id = id;
+            Data = data ?? new Null();
         }
-        
+
         /// <summary>
         /// Variable object identifier.
         /// </summary>
-        public ObjectIdentifier Id
-        {
-            get
-            {
-                return _oid;
-            }
-        }
-        
+        public ObjectIdentifier Id { get; private set; }
+
         /// <summary>
         /// Variable data.
         /// </summary>
-        public ISnmpData Data
-        {
-            get
-            {
-                return _data;
-            }
-        }
-        
+        public ISnmpData Data { get; private set; }
+
         /// <summary>
         /// Converts varbind section to variable binds list.
         /// </summary>

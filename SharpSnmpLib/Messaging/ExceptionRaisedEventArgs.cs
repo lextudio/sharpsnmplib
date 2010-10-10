@@ -15,23 +15,18 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// </summary>
     public sealed class ExceptionRaisedEventArgs : EventArgs
     {
-        private readonly Exception _ex;
-        
         /// <summary>
         /// Creates an <see cref="ExceptionRaisedEventArgs"/>.
         /// </summary>
         /// <param name="ex">Exception.</param>
         public ExceptionRaisedEventArgs(Exception ex)
         {
-            _ex = ex;
+            Exception = ex;
         }
-        
+
         /// <summary>
         /// Exception.
         /// </summary>
-        public Exception Exception
-        {
-            get { return _ex; }
-        }
+        public Exception Exception { get; private set; }
     }
 }

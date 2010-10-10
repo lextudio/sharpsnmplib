@@ -26,7 +26,6 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public class SearchResult
     {
-        private readonly IDefinition _definition;
         private readonly uint[] _remaining;
         
         /// <summary>
@@ -56,7 +55,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("remaining");
             }
 
-            _definition = definition;
+            Definition = definition;
             _remaining = remaining;
         }
 
@@ -65,10 +64,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <value>The definition.</value>
         [CLSCompliant(false)]
-        public IDefinition Definition
-        {
-            get { return _definition; }
-        }
+        public IDefinition Definition { get; private set; }
 
         /// <summary>
         /// Gets the remaining.

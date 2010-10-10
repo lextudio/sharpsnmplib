@@ -22,8 +22,12 @@ namespace Lextm.SharpSnmpLib.Messaging
         private readonly object _locker = new object();
         private int _timeout = 5000;
         private VersionCode _version;
-        private int _maxRepetitions = 10;
- 
+
+        public Manager()
+        {
+            MaxRepetitions = 10;
+        }
+
         /// <summary>
         /// Default protocol version for operations.
         /// </summary>
@@ -231,11 +235,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Gets or sets the max repetitions for GET BULK operations.
         /// </summary>
         /// <value>The max repetitions.</value>
-        public int MaxRepetitions
-        {
-            get { return _maxRepetitions; }
-            set { _maxRepetitions = value; }
-        }
+        public int MaxRepetitions { get; set; }
 
         /// <summary>
         /// Gets a table of variables.

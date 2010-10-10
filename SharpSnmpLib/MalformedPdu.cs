@@ -52,7 +52,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="stream">The stream.</param>
         public void AppendBytesTo(Stream stream)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public byte[] ToBytes()
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace Lextm.SharpSnmpLib
         /// <value>The request ID.</value>
         public Integer32 RequestId
         {
-            get { throw new NotImplementedException(); }
+            get { throw new NotSupportedException(); }
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace Lextm.SharpSnmpLib
         /// <value>The error status.</value>
         public Integer32 ErrorStatus
         {
-            get { throw new NotImplementedException(); }
+            get { throw new NotSupportedException(); }
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Lextm.SharpSnmpLib
         /// <value>The index of the error.</value>
         public Integer32 ErrorIndex
         {
-            get { throw new NotImplementedException(); }
+            get { throw new NotSupportedException(); }
         }
 
         /// <summary>

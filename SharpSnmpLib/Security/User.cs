@@ -25,8 +25,6 @@ namespace Lextm.SharpSnmpLib.Security
     /// </summary>
     public class User
     {
-        private readonly IPrivacyProvider _privacy;
-        private readonly OctetString _name;
 #if !CF
         /// <summary>
         /// Initializes a new instance of the <see cref="User"/> class.
@@ -95,8 +93,8 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentException("Unknown privacy method: " + privacy, "privacy");
             }
 
-            _name = name;
-            _privacy = privacyProvider;
+            Name = name;
+            Privacy = privacyProvider;
         }
 #endif
         /// <summary>
@@ -116,27 +114,21 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentNullException("privacy");
             }
 
-            _name = name;
-            _privacy = privacy;
+            Name = name;
+            Privacy = privacy;
         }
 
         /// <summary>
         /// Gets the name.
         /// </summary>
         /// <value>The name.</value>
-        public OctetString Name
-        {
-            get { return _name; }
-        }
+        public OctetString Name { get; private set; }
 
         /// <summary>
         /// Gets the privacy provider.
         /// </summary>
         /// <value>The provider.</value>
-        public IPrivacyProvider Privacy
-        {
-            get { return _privacy; }
-        }
+        public IPrivacyProvider Privacy { get; private set; }
 
         /// <summary>
         /// Returns a <see cref="System.String"/> that represents this instance.

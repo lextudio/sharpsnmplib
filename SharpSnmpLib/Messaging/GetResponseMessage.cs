@@ -35,9 +35,6 @@ namespace Lextm.SharpSnmpLib.Messaging
     public class GetResponseMessage : ISnmpMessage
     {
         private readonly Header _header;
-        private readonly SecurityParameters _parameters;
-        private readonly Scope _scope;
-        private readonly VersionCode _version;
         private readonly IPrivacyProvider _privacy;
 
         /// <summary>
@@ -66,16 +63,16 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentException("Please use overload constructor for v3", "version");
             }
 
-            _version = version;
+            Version = version;
             _header = Header.Empty;
-            _parameters = new SecurityParameters(null, null, null, community, null, null);
+            Parameters = new SecurityParameters(null, null, null, community, null, null);
             GetResponsePdu pdu = new GetResponsePdu(
                 requestId,
                 error,
                 index,
                 variables);
-            _scope = new Scope(pdu);
-            _privacy = DefaultPrivacyProvider.Default;
+            Scope = new Scope(pdu);
+            _privacy = DefaultPrivacyProvider.DefaultPair;
         }
 
         /// <summary>
@@ -108,10 +105,10 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("privacy");
             }
 
-            _version = version;
+            Version = version;
             _header = header;
-            _parameters = parameters;
-            _scope = scope;
+            Parameters = parameters;
+            Scope = scope;
             _privacy = privacy;
         }
       
@@ -120,7 +117,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         public ErrorCode ErrorStatus
         {
-            get { return _scope.Pdu.ErrorStatus.ToErrorCode(); }
+            get { return Scope.Pdu.ErrorStatus.ToErrorCode(); }
         }
         
         /// <summary>
@@ -128,24 +125,21 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         public int ErrorIndex
         {
-            get { return _scope.Pdu.ErrorIndex.ToInt32(); }
+            get { return Scope.Pdu.ErrorIndex.ToInt32(); }
         }
 
         /// <summary>
         /// Gets the version.
         /// </summary>
         /// <value>The version.</value>
-        public VersionCode Version
-        {
-            get { return _version; }
-        }
+        public VersionCode Version { get; private set; }
 
         /// <summary>
         /// Request ID.
         /// </summary>
         public int RequestId
         {
-            get { return _scope.Pdu.RequestId.ToInt32(); }
+            get { return Scope.Pdu.RequestId.ToInt32(); }
         }
         
         /// <summary>
@@ -157,7 +151,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             get
             {
-                return (_header == Header.Empty) ? RequestId : _header.MessageId;
+                return _header == Header.Empty ? RequestId : _header.MessageId;
             }
         }
         
@@ -166,7 +160,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         public IList<Variable> Variables
         {
-            get { return _scope.Pdu.Variables; }
+            get { return Scope.Pdu.Variables; }
         }
         
         /// <summary>
@@ -174,34 +168,28 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         public ISnmpPdu Pdu
         {
-            get { return _scope.Pdu; }
+            get { return Scope.Pdu; }
         }
 
         /// <summary>
         /// Gets the parameters.
         /// </summary>
         /// <value>The parameters.</value>
-        public SecurityParameters Parameters
-        {
-            get { return _parameters; }
-        }
+        public SecurityParameters Parameters { get; private set; }
 
         /// <summary>
         /// Gets the scope.
         /// </summary>
         /// <value>The scope.</value>
-        public Scope Scope
-        {
-            get { return _scope; }
-        }
-        
+        public Scope Scope { get; private set; }
+
         /// <summary>
         /// Converts to byte format.
         /// </summary>
         /// <returns></returns>
         public byte[] ToBytes()
         {
-            return Helper.PackMessage(_version, _privacy, _header, _parameters, _scope).ToBytes();
+            return Helper.PackMessage(Version, _privacy, _header, Parameters, Scope).ToBytes();
         }
 
         /// <summary>
@@ -210,7 +198,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public override string ToString()
         {
-            return "GET response message: version: " + _version + "; " + _parameters.UserName + "; " + _scope.Pdu;
+            return "GET response message: version: " + Version + "; " + Parameters.UserName + "; " + Scope.Pdu;
         }
     }
 }

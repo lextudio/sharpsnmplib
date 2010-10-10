@@ -252,7 +252,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             SecurityParameters parameters = body.Count == 3
                 ? new SecurityParameters(null, null, null, (OctetString)body[1], null, null)
                 : new SecurityParameters((OctetString)body[2]);
-            IPrivacyProvider privacy = body.Count == 3 ? DefaultPrivacyProvider.Default :
+            IPrivacyProvider privacy = body.Count == 3 ? DefaultPrivacyProvider.DefaultPair :
                 registry.Find(parameters.UserName);
             if (privacy == null)
             {

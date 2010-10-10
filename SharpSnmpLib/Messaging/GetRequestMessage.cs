@@ -28,10 +28,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// </summary>
     public class GetRequestMessage : ISnmpMessage
     {
-        private readonly VersionCode _version;
         private readonly Header _header;
-        private readonly SecurityParameters _parameters;
-        private readonly Scope _scope;
         private readonly IPrivacyProvider _privacy;
 
         /// <summary>
@@ -58,16 +55,16 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentException("only v1 and v2c are supported", "version");
             }
             
-            _version = version;
+            Version = version;
             _header = Header.Empty;
-            _parameters = new SecurityParameters(null, null, null, community, null, null);
+            Parameters = new SecurityParameters(null, null, null, community, null, null);
             GetRequestPdu pdu = new GetRequestPdu(
                 requestId,
                 ErrorCode.NoError,
                 0,
                 variables);
-            _scope = new Scope(pdu);
-            _privacy = DefaultPrivacyProvider.Default;
+            Scope = new Scope(pdu);
+            _privacy = DefaultPrivacyProvider.DefaultPair;
         }
 
         /// <summary>
@@ -107,7 +104,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("privacy");
             }
 
-            _version = version;
+            Version = version;
             _privacy = privacy;
             Levels recordToSecurityLevel = PrivacyProviderExtension.ToSecurityLevel(privacy);
             recordToSecurityLevel |= Levels.Reportable;
@@ -115,7 +112,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             
             // TODO: define more constants.
             _header = new Header(new Integer32(messageId), new Integer32(0xFFE3), new OctetString(new[] { b }), new Integer32(3));
-            _parameters = new SecurityParameters(
+            Parameters = new SecurityParameters(
                 report.Parameters.EngineId,
                 report.Parameters.EngineBoots,
                 report.Parameters.EngineTime,
@@ -127,7 +124,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 ErrorCode.NoError,
                 0,
                 variables);
-            _scope = new Scope(report.Scope.ContextEngineId, report.Scope.ContextName, pdu);
+            Scope = new Scope(report.Scope.ContextEngineId, report.Scope.ContextName, pdu);
         }
         
         internal GetRequestMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, IPrivacyProvider privacy)
@@ -152,10 +149,10 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("privacy");
             }
 
-            _version = version;
+            Version = version;
             _header = header;
-            _parameters = parameters;
-            _scope = scope;
+            Parameters = parameters;
+            Scope = scope;
             _privacy = privacy;
         }
 
@@ -179,7 +176,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             get
             {
-                return _scope.Pdu.Variables;
+                return Scope.Pdu.Variables;
             }
         }
 
@@ -225,7 +222,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             if (Version == VersionCode.V3)
             {
                 Helper.Authenticate(this, _privacy);
-                registry.Add(_parameters.UserName, _privacy);
+                registry.Add(Parameters.UserName, _privacy);
             }
 
             return MessageFactory.GetResponse(receiver, ToBytes(), MessageId, timeout, registry, udpSocket);
@@ -234,17 +231,14 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Version.
         /// </summary>
-        public VersionCode Version
-        {
-            get { return _version; }
-        }
-        
+        public VersionCode Version { get; private set; }
+
         /// <summary>
         /// Request ID.
         /// </summary>
         public int RequestId
         {
-            get { return _scope.Pdu.RequestId.ToInt32(); }
+            get { return Scope.Pdu.RequestId.ToInt32(); }
         }
 
         /// <summary>
@@ -252,7 +246,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         public OctetString Community
         {
-            get { return _parameters.UserName; }
+            get { return Parameters.UserName; }
         }
 
         /// <summary>
@@ -273,7 +267,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public byte[] ToBytes()
         {
-            return Helper.PackMessage(_version, _privacy, _header, _parameters, _scope).ToBytes();
+            return Helper.PackMessage(Version, _privacy, _header, Parameters, Scope).ToBytes();
         }
 
         /// <summary>
@@ -283,7 +277,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             get
             {
-                return _scope.Pdu;
+                return Scope.Pdu;
             }
         }
 
@@ -291,19 +285,13 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Gets the parameters.
         /// </summary>
         /// <value>The parameters.</value>
-        public SecurityParameters Parameters
-        {
-            get { return _parameters; }
-        }
+        public SecurityParameters Parameters { get; private set; }
 
         /// <summary>
         /// Gets the scope.
         /// </summary>
         /// <value>The scope.</value>
-        public Scope Scope
-        {
-            get { return _scope; }
-        }
+        public Scope Scope { get; private set; }
 
         /// <summary>
         /// Returns a <see cref="string"/> that represents this <see cref="GetRequestMessage"/>.
@@ -311,7 +299,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public override string ToString()
         {
-            return "GET request message: version: " + _version + "; " + Community + "; " + Pdu;
+            return "GET request message: version: " + Version + "; " + Community + "; " + Pdu;
         }
     }
 }

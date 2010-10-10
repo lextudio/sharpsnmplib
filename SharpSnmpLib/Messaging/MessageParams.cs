@@ -4,15 +4,13 @@ namespace Lextm.SharpSnmpLib.Messaging
 {
     internal sealed class MessageParams
     {
-        private readonly int _number;
         private readonly byte[] _bytes;
-        private readonly IPEndPoint _sender;
 
         public MessageParams(byte[] bytes, int number, EndPoint sender)
         {
             _bytes = bytes;
-            _number = number;
-            _sender = (IPEndPoint)sender;
+            Number = number;
+            Sender = (IPEndPoint)sender;
         }
 
         public byte[] GetBytes()
@@ -20,14 +18,8 @@ namespace Lextm.SharpSnmpLib.Messaging
            return _bytes;
         }
 
-        public IPEndPoint Sender
-        {
-            get { return _sender; }
-        }
+        public IPEndPoint Sender { get; private set; }
 
-        public int Number
-        {
-            get { return _number; }
-        }
+        public int Number { get; private set; }
     }
 }

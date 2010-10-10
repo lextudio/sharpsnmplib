@@ -29,7 +29,6 @@ namespace Lextm.SharpSnmpLib.Security
         {
         }
 
-        private static readonly object Root = new object();
         private static IAuthenticationProvider _instance;
 
         /// <summary>
@@ -38,18 +37,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// <value>The instance.</value>
         public static IAuthenticationProvider Instance
         {
-            get
-            {
-                lock (Root)
-                {
-                    if (_instance == null)
-                    {
-                        _instance = new DefaultAuthenticationProvider();
-                    }
-                }
-
-                return _instance;
-            }
+            get { return _instance ?? (_instance = new DefaultAuthenticationProvider()); }
         }
 
         #region IAuthenticationProvider Members

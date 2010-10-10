@@ -24,6 +24,7 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
+using System.Globalization;
 using System.Net;
 #if (!SILVERLIGHT)
 using System.Runtime.Serialization;
@@ -41,17 +42,8 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Agent address.
         /// </summary>
-        private IPAddress _agentAddress;
-        
-        /// <summary>
-        /// Agent address.
-        /// </summary>
-        protected IPAddress Agent
-        {
-            get { return _agentAddress; }
-            set { _agentAddress = value; }
-        }
-        
+        protected IPAddress Agent { get; set; }
+
         /// <summary>
         /// Creates a <see cref="OperationException"/> instance.
         /// </summary>
@@ -88,7 +80,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("info");
             }
             
-            _agentAddress = (IPAddress)info.GetValue("Agent", typeof(IPAddress));
+            Agent = (IPAddress)info.GetValue("Agent", typeof(IPAddress));
         }
         
         /// <summary>
@@ -100,7 +92,7 @@ namespace Lextm.SharpSnmpLib
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);
-            info.AddValue("Agent", _agentAddress);
+            info.AddValue("Agent", Agent);
         }
 #endif
         /// <summary>
@@ -110,7 +102,7 @@ namespace Lextm.SharpSnmpLib
         {
             get
             {
-                return Message + ". Agent: " + Agent;
+                return string.Format(CultureInfo.InvariantCulture, "{0}. Agent: {1}", Message, Agent);
             }
         }
      
@@ -121,7 +113,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="agent">Agent address</param>
         public static OperationException Create(string message, IPAddress agent)
         {
-            OperationException ex = new OperationException(message) { _agentAddress = agent };
+            OperationException ex = new OperationException(message) { Agent = agent };
             return ex;
         }
     }

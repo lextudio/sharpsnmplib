@@ -8,28 +8,18 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// </summary>
     public sealed class AgentFoundEventArgs : EventArgs
     {
-        private readonly IPEndPoint _agent;
-
         /// <summary>
         /// Gets the agent.
         /// </summary>
         /// <value>The agent.</value>
-        public IPEndPoint Agent
-        {
-            get { return _agent; }
-        }
-
-        private readonly Variable _variable;
+        public IPEndPoint Agent { get; private set; }
 
         /// <summary>
         /// Gets the variable.
         /// </summary>
         /// <value>The variable.</value>
         /// <remarks>If the agent is SNMP v3, this is <code>null</code>.</remarks>
-        public Variable Variable
-        {
-            get { return _variable; }
-        }
+        public Variable Variable { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AgentFoundEventArgs"/> class.
@@ -38,8 +28,8 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="variable">The variable.</param>
         public AgentFoundEventArgs(IPEndPoint agent, Variable variable)
         {
-            _agent = agent;
-            _variable = variable;
+            Agent = agent;
+            Variable = variable;
         }
     }
 }

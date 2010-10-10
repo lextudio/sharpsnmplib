@@ -469,12 +469,20 @@
   <data name="UDP_MIB" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\UDP-MIB.txt;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="fivevarbinds" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\fivevarbinds.dat;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="httpmib" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\httpmib.txt;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="trapv3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\trapv3;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="trapv3auth" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\trapv3auth;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="trapv3authpriv" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\trapv3authpriv;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

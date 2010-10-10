@@ -36,14 +36,9 @@ namespace Lextm.SharpSnmpLib
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu")]
     public class InformRequestPdu : ISnmpPdu
     {
-        private readonly Integer32 _errorStatus;
-        private readonly Integer32 _errorIndex;
-        private readonly IList<Variable> _variables;
-        private readonly Integer32 _requestId;
         private byte[] _raw;
         private readonly Sequence _varbindSection;
         private readonly TimeTicks _time;
-        private readonly ObjectIdentifier _enterprise;
 
         /// <summary>
         /// Creates a <see cref="InformRequestPdu"/> instance with all content.
@@ -55,13 +50,13 @@ namespace Lextm.SharpSnmpLib
         [CLSCompliant(false)]
         public InformRequestPdu(int requestId, ObjectIdentifier enterprise, uint time, IList<Variable> variables)
         {
-            _enterprise = enterprise;
-            _requestId = new Integer32(requestId);
+            Enterprise = enterprise;
+            RequestId = new Integer32(requestId);
             _time = new TimeTicks(time);
-            _variables = variables;
+            Variables = variables;
             IList<Variable> full = new List<Variable>(variables);
             full.Insert(0, new Variable(new uint[] { 1, 3, 6, 1, 2, 1, 1, 3, 0 }, _time));
-            full.Insert(1, new Variable(new uint[] { 1, 3, 6, 1, 6, 3, 1, 1, 4, 1, 0 }, _enterprise));
+            full.Insert(1, new Variable(new uint[] { 1, 3, 6, 1, 6, 3, 1, 1, 4, 1, 0 }, Enterprise));
             _varbindSection = Variable.Transform(full);
             ////_raw = ByteTool.ParseItems(_seq, new Integer32(0), new Integer32(0), _varbindSection);
         }        
@@ -81,15 +76,15 @@ namespace Lextm.SharpSnmpLib
         /// <param name="stream">The stream.</param>
         public InformRequestPdu(Stream stream)
         {
-            _requestId = (Integer32)DataFactory.CreateSnmpData(stream);
-            _errorStatus = (Integer32)DataFactory.CreateSnmpData(stream);
-            _errorIndex = (Integer32)DataFactory.CreateSnmpData(stream);
+            RequestId = (Integer32)DataFactory.CreateSnmpData(stream);
+            ErrorStatus = (Integer32)DataFactory.CreateSnmpData(stream);
+            ErrorIndex = (Integer32)DataFactory.CreateSnmpData(stream);
             _varbindSection = (Sequence)DataFactory.CreateSnmpData(stream);
-            _variables = Variable.Transform(_varbindSection);
-            _time = (TimeTicks)_variables[0].Data;
-            _variables.RemoveAt(0);
-            _enterprise = (ObjectIdentifier)_variables[0].Data;
-            _variables.RemoveAt(0);
+            Variables = Variable.Transform(_varbindSection);
+            _time = (TimeTicks)Variables[0].Data;
+            Variables.RemoveAt(0);
+            Enterprise = (ObjectIdentifier)Variables[0].Data;
+            Variables.RemoveAt(0);
             ////_raw = ByteTool.ParseItems(_seq, _errorStatus, _errorIndex, _varbindSection);
             ////Debug.Assert(length >= _raw.Length, "length not match");
         }
@@ -98,29 +93,20 @@ namespace Lextm.SharpSnmpLib
         /// Gets the request ID.
         /// </summary>
         /// <value>The request ID.</value>
-        public Integer32 RequestId
-        {
-            get { return _requestId; }
-        }
+        public Integer32 RequestId { get; private set; }
 
         /// <summary>
         /// Gets the error status.
         /// </summary>
         /// <value>The error status.</value>
-        public Integer32 ErrorStatus
-        {
-            get { return _errorStatus; }
-        }
+        public Integer32 ErrorStatus { get; private set; }
 
         /// <summary>
         /// Gets the index of the error.
         /// </summary>
         /// <value>The index of the error.</value>
-        public Integer32 ErrorIndex
-        {
-            get { return _errorIndex; }
-        }
-        
+        public Integer32 ErrorIndex { get; private set; }
+
         internal IList<Variable> AllVariables
         {
             get
@@ -128,21 +114,11 @@ namespace Lextm.SharpSnmpLib
                 return Variable.Transform(_varbindSection);
             }
         }
-        
+
         /// <summary>
         /// Variables.
         /// </summary>
-        public IList<Variable> Variables
-        {
-            get
-            {
-                return _variables;
-            }
-        }
-
-        #region ISnmpPdu Members
-
-        #endregion
+        public IList<Variable> Variables { get; private set; }
 
         #region ISnmpData Members
         /// <summary>
@@ -157,10 +133,7 @@ namespace Lextm.SharpSnmpLib
         /// Gets the enterprise.
         /// </summary>
         /// <value>The enterprise.</value>
-        public ObjectIdentifier Enterprise
-        {
-            get { return _enterprise; }
-        }
+        public ObjectIdentifier Enterprise { get; private set; }
 
         /// <summary>
         /// Gets the time stamp.
@@ -186,7 +159,7 @@ namespace Lextm.SharpSnmpLib
             
             if (_raw == null)
             {
-                _raw = ByteTool.ParseItems(_requestId, new Integer32(0), new Integer32(0), _varbindSection);
+                _raw = ByteTool.ParseItems(RequestId, new Integer32(0), new Integer32(0), _varbindSection);
             }
 
             ByteTool.AppendBytes(stream, TypeCode, _raw);            
@@ -217,10 +190,10 @@ namespace Lextm.SharpSnmpLib
             return string.Format(
                 CultureInfo.InvariantCulture,
                 "INFORM request PDU: seq: {0}; status: {1}; index: {2}; variable count: {3}",
-                _requestId,
-                _errorStatus,
-                _errorIndex,
-                _variables.Count.ToString(CultureInfo.InvariantCulture));
+                RequestId,
+                ErrorStatus,
+                ErrorIndex,
+                Variables.Count.ToString(CultureInfo.InvariantCulture));
         }
     }
 }

@@ -29,7 +29,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// </summary>
         protected override void AuthenticateMessage()
         {
-            IPrivacyProvider privacy = Users.Find(Request.Parameters.UserName) ?? DefaultPrivacyProvider.Default;
+            IPrivacyProvider privacy = Users.Find(Request.Parameters.UserName) ?? DefaultPrivacyProvider.DefaultPair;
             Helper.Authenticate(Response, privacy);
         }
 
@@ -50,8 +50,8 @@ namespace Lextm.SharpSnmpLib.Pipeline
                     new Integer32(Objects.EngineBoots),
                     new Integer32(Objects.EngineTime),
                     Request.Parameters.UserName,
-                    DefaultPrivacyProvider.Default.AuthenticationProvider.CleanDigest,
-                    DefaultPrivacyProvider.Default.Salt),
+                    DefaultPrivacyProvider.DefaultPair.AuthenticationProvider.CleanDigest,
+                    DefaultPrivacyProvider.DefaultPair.Salt),
                 new Scope(
                     Objects.EngineId,
                     OctetString.Empty,
@@ -60,7 +60,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                         ErrorCode.AuthorizationError,
                         0,
                         Request.Pdu.Variables)),
-                DefaultPrivacyProvider.Default);
+                DefaultPrivacyProvider.DefaultPair);
         }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                                     new Counter32(Objects.ReportCount)
                                     )
                             })),
-                DefaultPrivacyProvider.Default);
+                DefaultPrivacyProvider.DefaultPair);
         }
 
         /// <summary>

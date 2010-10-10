@@ -29,13 +29,8 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// </summary>
     public class TrapV2Message : ISnmpMessage
     {
-        private readonly VersionCode _version;
         private readonly Header _header;
-        private readonly SecurityParameters _parameters;
-        private readonly Scope _scope;
-        private readonly IPrivacyProvider _privacy;        
-        private readonly ObjectIdentifier _enterprise;
-        private readonly uint _time;
+        private readonly IPrivacyProvider _privacy;
 
         /// <summary>
         /// Creates a <see cref="TrapV2Message"/> instance with all content.
@@ -69,18 +64,18 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentException("only v1 and v2c are supported", "version");
             }
             
-            _version = version;
-            _enterprise = enterprise;
-            _time = time;
+            Version = version;
+            Enterprise = enterprise;
+            TimeStamp = time;
             _header = Header.Empty;
-            _parameters = new SecurityParameters(null, null, null, community, null, null);
+            Parameters = new SecurityParameters(null, null, null, community, null, null);
             TrapV2Pdu pdu = new TrapV2Pdu(
                 requestId,
                 enterprise,
                 time,
                 variables);
-            _scope = new Scope(pdu);
-            _privacy = DefaultPrivacyProvider.Default;
+            Scope = new Scope(pdu);
+            _privacy = DefaultPrivacyProvider.DefaultPair;
         }
         
         internal TrapV2Message(VersionCode version, Header header, SecurityParameters parameters, Scope scope, IPrivacyProvider privacy)
@@ -105,14 +100,14 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("privacy");
             }
 
-            _version = version;
+            Version = version;
             _header = header;
-            _parameters = parameters;
-            _scope = scope;
+            Parameters = parameters;
+            Scope = scope;
             _privacy = privacy;
-            TrapV2Pdu pdu = (TrapV2Pdu)_scope.Pdu;
-            _enterprise = pdu.Enterprise;
-            _time = pdu.TimeStamp;
+            TrapV2Pdu pdu = (TrapV2Pdu)Scope.Pdu;
+            Enterprise = pdu.Enterprise;
+            TimeStamp = pdu.TimeStamp;
         }
         
         #region ISnmpMessage Members
@@ -121,26 +116,20 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         public ISnmpPdu Pdu
         {
-            get { return _scope.Pdu; }
+            get { return Scope.Pdu; }
         }
 
         /// <summary>
         /// Gets the parameters.
         /// </summary>
         /// <value>The parameters.</value>
-        public SecurityParameters Parameters
-        {
-            get { return _parameters; }
-        }
+        public SecurityParameters Parameters { get; private set; }
 
         /// <summary>
         /// Gets the scope.
         /// </summary>
         /// <value>The scope.</value>
-        public Scope Scope
-        {
-            get { return _scope; }
-        }
+        public Scope Scope { get; private set; }
 
         #endregion
 
@@ -152,7 +141,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public byte[] ToBytes()
         {
-            return Helper.PackMessage(_version, _privacy, _header, _parameters, _scope).ToBytes();
+            return Helper.PackMessage(Version, _privacy, _header, Parameters, Scope).ToBytes();
         }
 
         #endregion
@@ -200,43 +189,33 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         public OctetString Community
         {
-            get { return _parameters.UserName; }
+            get { return Parameters.UserName; }
         }
-        
+
         /// <summary>
         /// Enterprise.
         /// </summary>
-        public ObjectIdentifier Enterprise
-        {
-            get { return _enterprise; }
-        }
-        
+        public ObjectIdentifier Enterprise { get; private set; }
+
         /// <summary>
         /// Time stamp.
         /// </summary>
-        [CLSCompliant(false)]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "TimeStamp")]
-        public uint TimeStamp
-        {
-            get { return _time; }
-        }
-        
+        [CLSCompliant(false), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "TimeStamp")]
+        public uint TimeStamp { get; private set; }
+
         /// <summary>
         /// Variables.
         /// </summary>
         public IList<Variable> Variables
         {
-            get { return _scope.Pdu.Variables; }
+            get { return Scope.Pdu.Variables; }
         }
 
         /// <summary>
         /// Gets the version.
         /// </summary>
         /// <value>The version.</value>
-        public VersionCode Version
-        {
-            get { return _version; }
-        }
+        public VersionCode Version { get; private set; }
 
         /// <summary>
         /// Gets the request ID.
@@ -244,7 +223,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <value>The request ID.</value>
         public int RequestId
         {
-            get { return _scope.Pdu.RequestId.ToInt32(); }
+            get { return Scope.Pdu.RequestId.ToInt32(); }
         }
         
         /// <summary>
@@ -256,7 +235,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             get
             {
-                return (_header == Header.Empty) ? RequestId : _header.MessageId;
+                return _header == Header.Empty ? RequestId : _header.MessageId;
             }
         }
 

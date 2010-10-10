@@ -37,17 +37,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// </summary>
     public class TrapV1Message : ISnmpMessage
     {
-        private readonly uint _time;
-        private readonly OctetString _community;
-        private readonly ObjectIdentifier _enterprise;
-        private readonly IPAddress _agent;
-        private readonly GenericCode _generic;
-        private readonly int _specific;
-        private readonly IList<Variable> _variables;
-        private readonly VersionCode _version;
-        private readonly TrapV1Pdu _pdu;
         private byte[] _bytes;
-        private readonly SecurityParameters _parameter;
 
         /// <summary>
         /// Creates a <see cref="TrapV1Message"/> with all content.
@@ -83,23 +73,23 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("agent");
             }
             
-            _version = version;
-            _agent = agent;
-            _community = community;
-            _variables = variables;
-            _enterprise = enterprise;
-            _generic = generic;
-            _specific = specific;
-            _time = time;
+            Version = version;
+            AgentAddress = agent;
+            Community = community;
+            Variables = variables;
+            Enterprise = enterprise;
+            Generic = generic;
+            Specific = specific;
+            TimeStamp = time;
             TrapV1Pdu pdu = new TrapV1Pdu(
-                _enterprise,
-                new IP(_agent),
-                new Integer32((int)_generic),
-                new Integer32(_specific),
-                new TimeTicks(_time),
-                _variables);
-            _bytes = Helper.PackMessage(_version, _community, pdu).ToBytes();
-            _parameter = new SecurityParameters(null, null, null, _community, null, null);
+                Enterprise,
+                new IP(AgentAddress),
+                new Integer32((int)Generic),
+                new Integer32(Specific),
+                new TimeTicks(TimeStamp),
+                Variables);
+            _bytes = Helper.PackMessage(Version, Community, pdu).ToBytes();
+            Parameters = new SecurityParameters(null, null, null, Community, null, null);
         }
         
         /// <summary>
@@ -118,22 +108,22 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentException("wrong message body");
             }
             
-            _community = (OctetString)body[1];
-            _version = (VersionCode)((Integer32)body[0]).ToInt32();
-            ISnmpPdu pdu = (ISnmpPdu)body[2];
-            if (pdu.TypeCode != SnmpType.TrapV1Pdu)
+            Community = (OctetString)body[1];
+            Version = (VersionCode)((Integer32)body[0]).ToInt32();
+            Pdu = (ISnmpPdu)body[2];
+            if (Pdu.TypeCode != SnmpType.TrapV1Pdu)
             {
                 throw new ArgumentException("wrong message type");
             }
-            
-            _pdu = (TrapV1Pdu)pdu;
-            _enterprise = _pdu.Enterprise;
-            _agent = _pdu.AgentAddress.ToIPAddress();
-            _generic = _pdu.Generic;
-            _specific = _pdu.Specific;
-            _time = _pdu.TimeStamp.ToUInt32();
-            _variables = _pdu.Variables;
-            _parameter = new SecurityParameters(null, null, null, _community, null, null);
+
+            TrapV1Pdu trapPdu = (TrapV1Pdu)Pdu;
+            Enterprise = trapPdu.Enterprise;
+            AgentAddress = trapPdu.AgentAddress.ToIPAddress();
+            Generic = trapPdu.Generic;
+            Specific = trapPdu.Specific;
+            TimeStamp = trapPdu.TimeStamp.ToUInt32();
+            Variables = Pdu.Variables;
+            Parameters = new SecurityParameters(null, null, null, Community, null, null);
         }
 
         /// <summary>
@@ -173,96 +163,47 @@ namespace Lextm.SharpSnmpLib.Messaging
             byte[] bytes = ToBytes();
             socket.SendTo(bytes, manager);
         }
-        
+
         /// <summary>
         /// Time stamp.
         /// </summary>
-        [CLSCompliant(false)]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "TimeStamp")]
-        public uint TimeStamp
-        {
-            get
-            {
-                return _time;
-            }
-        }
-        
+        [CLSCompliant(false), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "TimeStamp")]
+        public uint TimeStamp { get; private set; }
+
         /// <summary>
         /// Community name.
         /// </summary>
-        public OctetString Community
-        {
-            get
-            {
-                return _community;
-            }
-        }
-        
+        public OctetString Community { get; private set; }
+
         /// <summary>
         /// Enterprise.
         /// </summary>
-        public ObjectIdentifier Enterprise
-        {
-            get
-            {
-                return _enterprise;
-            }
-        }
-        
+        public ObjectIdentifier Enterprise { get; private set; }
+
         /// <summary>
         /// Agent address.
         /// </summary>
-        public IPAddress AgentAddress
-        {
-            get
-            {
-                return _agent;
-            }
-        }
-        
+        public IPAddress AgentAddress { get; private set; }
+
         /// <summary>
         /// Generic type.
         /// </summary>
-        public GenericCode Generic
-        {
-            get
-            {
-                return _generic;
-            }
-        }
-        
+        public GenericCode Generic { get; private set; }
+
         /// <summary>
         /// Specific type.
         /// </summary>
-        public int Specific
-        {
-            get
-            {
-                return _specific;
-            }
-        }
-        
+        public int Specific { get; private set; }
+
         /// <summary>
         /// Variable binds.
         /// </summary>
-        public IList<Variable> Variables
-        {
-            get
-            {
-                return _variables;
-            }
-        }
-        
+        public IList<Variable> Variables { get; private set; }
+
         /// <summary>
         /// Protocol version.
         /// </summary>
-        public VersionCode Version
-        {
-            get
-            {
-                return _version;
-            }
-        }
+        public VersionCode Version { get; private set; }
 
         /// <summary>
         /// Gets the request ID.
@@ -270,7 +211,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <value>The request ID.</value>
         public int RequestId
         {
-            get { throw new InvalidOperationException(); }
+            get { throw new NotSupportedException(); }
         }
         
         /// <summary>
@@ -279,7 +220,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <value>The message ID.</value>
         public int MessageId
         {
-            get { throw new InvalidOperationException(); }
+            get { throw new NotSupportedException(); }
         }
 
         /// <summary>
@@ -288,29 +229,20 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public byte[] ToBytes()
         {
-            return _bytes ?? (_bytes = Helper.PackMessage(_version, _community, _pdu).ToBytes());
+            return _bytes ?? (_bytes = Helper.PackMessage(Version, Community, Pdu).ToBytes());
         }
 
         /// <summary>
         /// PDU.
         /// </summary>
-        public ISnmpPdu Pdu
-        {
-            get
-            {
-                return _pdu;
-            }
-        }
+        public ISnmpPdu Pdu { get; private set; }
 
         /// <summary>
         /// Gets the parameters.
         /// </summary>
         /// <value>The parameters.</value>
         /// <remarks><see cref="TrapV1Message"/> returns null here.</remarks>
-        public SecurityParameters Parameters
-        {
-            get { return _parameter; }
-        }
+        public SecurityParameters Parameters { get; private set; }
 
         /// <summary>
         /// Gets the scope.
@@ -319,7 +251,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <remarks><see cref="TrapV1Message"/> returns null here.</remarks>
         public Scope Scope
         {
-            get { return null; }
+            get { throw new NotSupportedException(); }
         }
         
         /// <summary>
@@ -344,7 +276,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             return string.Format(
                 CultureInfo.InvariantCulture,
                 "SNMPv1 trap: {0}",
-                _pdu.ToString(objects));
+                ((TrapV1Pdu)Pdu).ToString(objects));
         }
     }
 }
