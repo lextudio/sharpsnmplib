@@ -24,7 +24,15 @@ namespace Lextm.SharpSnmpLib.Tests
         [Test]
         public void TestToBytes()
         {
-        	Assert.AreEqual(new byte[] { 0x05, 0x00 }, new Null().ToBytes());
+            Assert.AreEqual(new byte[] { 0x05, 0x00 }, new Null().ToBytes());
+        }
+        
+        [Test]
+        public void TestEqual()
+        {
+            var left = new Null();
+            var right = new Null();
+            Assert.AreEqual(left, right);
         }
     }
 }

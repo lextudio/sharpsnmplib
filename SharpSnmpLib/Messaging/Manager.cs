@@ -23,6 +23,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         private int _timeout = 5000;
         private VersionCode _version;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Manager"/> class.
+        /// </summary>
         public Manager()
         {
             MaxRepetitions = 10;

@@ -10,15 +10,23 @@ using NUnit.Framework;
 #pragma warning disable 1591, 0618
 namespace Lextm.SharpSnmpLib.Tests
 {
-	[TestFixture]
-	public class TestNoSuchObject
-	{
-		[Test]
-		public void TestToBytes()
-		{
-			NoSuchObject obj = new NoSuchObject();
-			Assert.AreEqual(new byte[] { 0x80, 0x00 }, obj.ToBytes());
-		}
-	}
+    [TestFixture]
+    public class TestNoSuchObject
+    {
+        [Test]
+        public void TestToBytes()
+        {
+            NoSuchObject obj = new NoSuchObject();
+            Assert.AreEqual(new byte[] { 0x80, 0x00 }, obj.ToBytes());
+        }
+        
+        [Test]
+        public void TestEqual()
+        {
+            var left = new NoSuchObject();
+            var right = new NoSuchObject();
+            Assert.AreEqual(left, right);
+        }
+    }
 }
 #pragma warning restore 1591, 0618

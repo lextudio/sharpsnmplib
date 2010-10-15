@@ -16,6 +16,14 @@ namespace Lextm.SharpSnmpLib.Tests
     public class TestGauge32
     {
         [Test]
+        public void TestEqual()
+        {
+            var left = new Gauge32(200);
+            var right = new Gauge32(200);
+            Assert.AreEqual(left, right);
+        }
+        
+        [Test]
         public void TestConstructor()
         {
             byte[] buffer2 = new byte[] {01, 44};

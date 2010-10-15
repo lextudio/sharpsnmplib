@@ -51,6 +51,14 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual(34, result.Seconds);
             Assert.AreEqual(470, result.Milliseconds);
         }
+        
+        [Test]
+        public void TestEqual()
+        {
+            var left = new TimeTicks(800);
+            var right = new TimeTicks(800);
+            Assert.AreEqual(left, right);
+        }
     }
 }
 #pragma warning restore 1591,0618

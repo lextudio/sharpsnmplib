@@ -22,6 +22,14 @@ namespace Lextm.SharpSnmpLib.Tests
             Opaque test = new Opaque(e.ToBytes());
             Assert.AreEqual(new byte[] {0x44, 0x03, 0x42, 0x01, 0x03}, test.ToBytes());
         }
+        
+        [Test]
+        public void TestEqual()
+        {
+            var left = new Opaque(new byte[] { 0x80, 0x77 });
+            var right = new Opaque(new byte[] { 0x80, 0x77 });
+            Assert.AreEqual(left, right);
+        }
     }
 }
 #pragma warning restore 1591,0618

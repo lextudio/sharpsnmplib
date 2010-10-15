@@ -19,6 +19,14 @@ namespace Lextm.SharpSnmpLib.Tests
     public class TestInteger32
     {
         [Test]
+        public void TestEqual()
+        {
+            var left = new Integer32(599);
+            var right = new Integer32(599);
+            Assert.AreEqual(left, right);
+        }
+        
+        [Test]
         public void TestNegative()
         {
             const int i = -2147418240;

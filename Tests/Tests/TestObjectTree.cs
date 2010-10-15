@@ -10,7 +10,6 @@
 using Lextm.SharpSnmpLib.Mib;
 using System;
 using NUnit.Framework;
-using NUnit.Framework.SyntaxHelpers;
 
 namespace Lextm.SharpSnmpLib.Tests
 {

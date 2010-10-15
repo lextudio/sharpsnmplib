@@ -22,11 +22,22 @@ namespace Lextm.SharpSnmpLib.Tests
             IP ip = new IP(expected);
             Assert.AreEqual(expected, ip.ToString());
         }
+        
         [Test]
         public void TestToBytes()
         {
             IP ip = new IP("129.213.224.111");
             Assert.AreEqual(new byte[] {0x40, 0x04, 0x81, 0xD5, 0xE0, 0x6F}, ip.ToBytes());
+        }
+        
+        [Test]
+        public void TestEquals()
+        {
+            IP actual = new IP("172.0.0.1");
+            IP target = new IP("172.0.0.1");
+
+            Assert.IsTrue(actual == target);
+            Assert.AreEqual(actual, target);
         }
     }
 }

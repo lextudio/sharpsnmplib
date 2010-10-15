@@ -29,6 +29,14 @@ namespace Lextm.SharpSnmpLib.Tests
         }
         
         [Test]
+        public void TestEqual()
+        {
+            var left = new Counter32(100);
+            var right = new Counter32(100);
+            Assert.AreEqual(left, right);
+        }
+        
+        [Test]
         public void TestConstructor()
         {
             byte[] buffer2 = new byte[] {01, 44};

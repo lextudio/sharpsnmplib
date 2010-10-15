@@ -83,6 +83,7 @@
     <Compile Include="Tests\TestNull.cs" />
     <Compile Include="Tests\TestObjectIdentifier.cs" />
     <Compile Include="Tests\TestObjectRegistry.cs" />
+    <Compile Include="Tests\TestObjectTree.cs" />
     <Compile Include="Tests\TestSecurityRecord.cs" />
     <Compile Include="Tests\TestStringUtilities.cs" />
     <Compile Include="Tests\TestOctetString.cs" />
