@@ -135,7 +135,7 @@
     <Compile Include="Security\IPrivacyProvider.cs" />
     <Compile Include="Security\Levels.cs" />
     <Compile Include="Security\MD5AuthenticationProvider.cs" />
-    <Compile Include="Security\ProviderPair.cs" />
+    <Compile Include="Security\PrivacyProviderExtension.cs" />
     <Compile Include="Security\SaltGenerator.cs" />
     <Compile Include="Security\SHA1AuthenticationProvider.cs" />
     <Compile Include="Security\User.cs" />
@@ -151,10 +151,5 @@
     <Compile Include="VersionCode.cs" />
     <None Include="Microsoft.VersionNumber.targets" />
     <None Include="sharpsnmplib.snk" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Messaging" />
-    <Folder Include="Properties" />
-    <Folder Include="Security" />
   </ItemGroup>
 </Project>
