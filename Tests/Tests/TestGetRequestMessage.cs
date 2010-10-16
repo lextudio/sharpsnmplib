@@ -107,6 +107,7 @@ namespace Lextm.SharpSnmpLib.Tests
                 new OctetString("lexli"),
                 new List<Variable>(1) { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0")) },
                 privacy,
+                Messenger.MaxMessageSize,
                 report);
             
             Assert.AreEqual(Levels.Authentication, request.Level);

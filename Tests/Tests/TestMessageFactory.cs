@@ -227,6 +227,9 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual("", message.Parameters.PrivacyParameters.ToHexString());
             Assert.AreEqual("", message.Scope.ContextEngineId.ToHexString()); // SNMP#NET returns string.Empty here.
             Assert.AreEqual("", message.Scope.ContextName.ToHexString());
+            Assert.AreEqual(528732060, message.MessageId);
+            Assert.AreEqual(1905687779, message.RequestId);
+            Assert.AreEqual(".1.3.6", ((TrapV2Message)message).Enterprise.ToString());
         }
 
         [Test]

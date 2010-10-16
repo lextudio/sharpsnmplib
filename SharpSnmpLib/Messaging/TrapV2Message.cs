@@ -77,7 +77,79 @@ namespace Lextm.SharpSnmpLib.Messaging
             Scope = new Scope(pdu);
             _privacy = DefaultPrivacyProvider.DefaultPair;
         }
-        
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TrapV2Message"/> class.
+        /// </summary>
+        /// <param name="version">The version.</param>
+        /// <param name="messageId">The message id.</param>
+        /// <param name="requestId">The request id.</param>
+        /// <param name="userName">Name of the user.</param>
+        /// <param name="enterprise">The enterprise.</param>
+        /// <param name="time">The time.</param>
+        /// <param name="variables">The variables.</param>
+        /// <param name="privacy">The privacy.</param>
+        /// <param name="maxMessageSize">Size of the max message.</param>
+        /// <param name="engineId">The engine ID.</param>
+        /// <param name="engineBoots">The engine boots.</param>
+        /// <param name="engineTime">The engine time.</param>
+        [CLSCompliant(false)]
+        public TrapV2Message(VersionCode version, int messageId, int requestId, OctetString userName, ObjectIdentifier enterprise, uint time, IList<Variable> variables, IPrivacyProvider privacy, int maxMessageSize, OctetString engineId, int engineBoots, int engineTime)
+        {
+            if (userName == null)
+            {
+                throw new ArgumentNullException("userName");
+            }
+            
+            if (variables == null)
+            {
+                throw new ArgumentNullException("variables");
+            }
+            
+            if (version != VersionCode.V3)
+            {
+                throw new ArgumentException("only v3 is supported", "version");
+            }
+
+            if (enterprise == null)
+            {
+                throw new ArgumentNullException("enterprise");
+            }
+
+            if (engineId == null)
+            {
+                throw new ArgumentNullException("engineId");
+            }
+            
+            if (privacy == null)
+            {
+                throw new ArgumentNullException("privacy");
+            }
+
+            Version = version;
+            _privacy = privacy;
+            Enterprise = enterprise;
+            TimeStamp = time;
+            Levels recordToSecurityLevel = PrivacyProviderExtension.ToSecurityLevel(privacy);
+            byte b = (byte)recordToSecurityLevel;
+            
+            // TODO: define more constants.
+            _header = new Header(new Integer32(messageId), new Integer32(maxMessageSize), new OctetString(new[] { b }), new Integer32(3));
+            Parameters = new SecurityParameters(
+                engineId,
+                new Integer32(engineBoots), 
+                new Integer32(engineTime), 
+                userName,
+                _privacy.AuthenticationProvider.CleanDigest,
+                _privacy.Salt);
+            var pdu = new TrapV2Pdu(
+                requestId,
+                enterprise,
+                time,
+                variables);
+            Scope = new Scope(OctetString.Empty, OctetString.Empty, pdu);
+        }
+
         internal TrapV2Message(VersionCode version, Header header, SecurityParameters parameters, Scope scope, IPrivacyProvider privacy)
         {
             if (scope == null)

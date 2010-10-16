@@ -92,8 +92,9 @@
     <Compile Include="Tests\TestSequence.cs" />
     <Compile Include="Tests\TestSnmpDataFactory.cs" />
     <Compile Include="Tests\TestTimeticks.cs" />
-    <Compile Include="Tests\TestTrapMessage.cs" />
+    <Compile Include="Tests\TestTrapV1Message.cs" />
     <Compile Include="Tests\TestTrapV1Pdu.cs" />
+    <Compile Include="Tests\TestTrapV2Message.cs" />
     <Compile Include="Tests\TestVariable.cs" />
     <Compile Include="Tests\TestWatchDog.cs" />
     <None Include="Resources\empty.txt" />

@@ -97,9 +97,10 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="time">The time.</param>
         /// <param name="variables">The variables.</param>
         /// <param name="privacy">The privacy provider.</param>
+        /// <param name="maxMessageSize">Size of the max message.</param>
         /// <param name="report">The report.</param>
         [CLSCompliant(false)]
-        public InformRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName, ObjectIdentifier enterprise, uint time, IList<Variable> variables, IPrivacyProvider privacy, ISnmpMessage report)
+        public InformRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName, ObjectIdentifier enterprise, uint time, IList<Variable> variables, IPrivacyProvider privacy, int maxMessageSize, ISnmpMessage report)
         {
             if (userName == null)
             {
@@ -140,7 +141,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             byte b = (byte)recordToSecurityLevel;
             
             // TODO: define more constants.
-            _header = new Header(new Integer32(messageId), new Integer32(0xFFE3), new OctetString(new[] { b }), new Integer32(3));
+            _header = new Header(new Integer32(messageId), new Integer32(maxMessageSize), new OctetString(new[] { b }), new Integer32(3));
             Parameters = new SecurityParameters(
                 report.Parameters.EngineId,
                 report.Parameters.EngineBoots,

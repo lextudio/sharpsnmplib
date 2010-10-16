@@ -180,7 +180,7 @@ namespace SnmpGetNext
                 Discovery discovery = new Discovery(Messenger.NextMessageId, Messenger.NextRequestId);
                 ReportMessage report = discovery.GetResponse(timeout, receiver);
 
-                GetNextRequestMessage request = new GetNextRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(user), vList, priv, report);
+                GetNextRequestMessage request = new GetNextRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(user), vList, priv, Messenger.MaxMessageSize, report);
 
                 ISnmpMessage reply = request.GetResponse(timeout, receiver);
                 if (reply.Pdu.ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError

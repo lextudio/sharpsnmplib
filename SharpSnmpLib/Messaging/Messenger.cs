@@ -19,8 +19,16 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// </summary>
     public static class Messenger
     {
-        private static readonly IdGenerator RequestCounter = new IdGenerator();
-        private static readonly IdGenerator MessageCounter = new IdGenerator();
+        /// <summary>
+        /// Max message size used in #SNMP. 
+        /// </summary>
+        /// <remarks>
+        /// Please note that you can use any value for your own application. 
+        /// Also this value may be changed in #SNMP in future releases.
+        /// </remarks>
+        public const int MaxMessageSize = 0xFFE3;
+        private static readonly IdGenerator RequestCounter = new IdGenerator(int.MinValue, int.MaxValue);
+        private static readonly IdGenerator MessageCounter = new IdGenerator(0, int.MaxValue);
         
         /// <summary>
         /// Gets a list of variable binds.
@@ -287,6 +295,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                                           timestamp,
                                           variables,
                                           privacy,
+                                          MaxMessageSize,
                                           report)
                                     : new InformRequestMessage(
                                           requestId,
@@ -417,6 +426,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                                                       maxRepetitions,
                                                       variables, 
                                                       privacy, 
+                                                      MaxMessageSize,
                                                       report)
                                                 : new GetBulkRequestMessage(
                                                       RequestCounter.NextId,

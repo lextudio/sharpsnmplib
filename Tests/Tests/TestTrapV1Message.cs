@@ -8,7 +8,7 @@ using Lextm.SharpSnmpLib.Messaging;
 namespace Lextm.SharpSnmpLib.Tests
 {
     [TestFixture]
-    public class TestTrapMessage
+    public class TestTrapV1Message
     {
         [Test]
         public void TestSendTrap()

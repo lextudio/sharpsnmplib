@@ -156,7 +156,7 @@ Module Program
             Dim report As ReportMessage = discovery.GetResponse(timeout, receiver)
 
             Dim request As New GetBulkRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, New OctetString(user), nonRepeaters, maxRepetitions, _
-             vList, priv, report)
+             vList, priv, Messenger.MaxMessageSize, report)
 
             Dim reply As ISnmpMessage = request.GetResponse(timeout, receiver)
             If reply.Pdu.ErrorStatus.ToInt32() <> 0 Then
