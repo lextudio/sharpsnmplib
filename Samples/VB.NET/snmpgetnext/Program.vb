@@ -160,8 +160,7 @@ Module Program
                 priv = New DefaultPrivacyProvider(auth)
             End If
 
-            Dim discovery As New Discovery(Messenger.NextMessageId, Messenger.NextRequestId)
-            Dim report As ReportMessage = discovery.GetResponse(timeout, receiver)
+            Dim report As ReportMessage = Messenger.GetDiscovery().GetResponse(timeout, receiver)
 
             Dim request As New GetNextRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, New OctetString(user), vList, priv, Messenger.MaxMessageSize, _
              report)

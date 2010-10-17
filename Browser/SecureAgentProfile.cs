@@ -68,7 +68,7 @@ namespace Lextm.SharpSnmpLib.Browser
                 return;
             }
 
-            Discovery discovery = new Discovery(Messenger.NextMessageId, Messenger.NextRequestId);
+            Discovery discovery = Messenger.GetDiscovery();
             ReportMessage report = discovery.GetResponse(Timeout, Agent);
             GetRequestMessage request = new GetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(UserName), new List<Variable> { variable }, _privacy, Messenger.MaxMessageSize, report);
             ISnmpMessage response = request.GetResponse(Timeout, Agent);
@@ -85,7 +85,7 @@ namespace Lextm.SharpSnmpLib.Browser
 
         internal override string GetValue(Variable variable)
         {
-            Discovery discovery = new Discovery(Messenger.NextMessageId, Messenger.NextRequestId);
+            Discovery discovery = Messenger.GetDiscovery();
             ReportMessage report = discovery.GetResponse(Timeout, Agent);
             GetRequestMessage request = new GetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(UserName), new List<Variable> { variable }, _privacy, Messenger.MaxMessageSize, report);
             ISnmpMessage response = request.GetResponse(Timeout, Agent);
@@ -108,7 +108,7 @@ namespace Lextm.SharpSnmpLib.Browser
                 return;
             }
 
-            Discovery discovery = new Discovery(1, 101);
+            Discovery discovery = Messenger.GetDiscovery();
             ReportMessage report = discovery.GetResponse(Timeout, Agent);
             GetNextRequestMessage request = new GetNextRequestMessage(VersionCode.V3, 100, 0, new OctetString(UserName), new List<Variable> { variable }, _privacy, Messenger.MaxMessageSize, report);
             ISnmpMessage response = request.GetResponse(Timeout, Agent);
@@ -131,7 +131,7 @@ namespace Lextm.SharpSnmpLib.Browser
                 return;
             }
 
-            Discovery discovery = new Discovery(Messenger.NextMessageId, Messenger.NextRequestId);
+            Discovery discovery = Messenger.GetDiscovery();
             ReportMessage report = discovery.GetResponse(Timeout, Agent);
             SetRequestMessage request = new SetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(UserName), new List<Variable> { variable }, _privacy, Messenger.MaxMessageSize, report);
             ISnmpMessage response = request.GetResponse(Timeout, Agent);
@@ -148,7 +148,7 @@ namespace Lextm.SharpSnmpLib.Browser
 
         internal override void GetTable(IDefinition def)
         {
-            Discovery discovery = new Discovery(Messenger.NextMessageId, Messenger.NextRequestId);
+            Discovery discovery = Messenger.GetDiscovery();
             ReportMessage report = discovery.GetResponse(Timeout, Agent);
             IList<Variable> list = new List<Variable>();
             int rows = Messenger.BulkWalk(
@@ -188,7 +188,7 @@ namespace Lextm.SharpSnmpLib.Browser
                 return;
             }
 
-            Discovery discovery = new Discovery(Messenger.NextMessageId, Messenger.NextRequestId);
+            Discovery discovery = Messenger.GetDiscovery();
             ReportMessage report = discovery.GetResponse(Timeout, Agent);
             IList<Variable> list = new List<Variable>();
             Messenger.BulkWalk(

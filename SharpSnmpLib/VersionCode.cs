@@ -38,7 +38,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// SNMP v2u is obsolete.
         /// </summary>
-        [Obsolete]
+        [Obsolete("This version of SNMP is obsolete and replaced by v3.")]
         V2U = 2,
 
         /// <summary>

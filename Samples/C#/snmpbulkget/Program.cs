@@ -180,7 +180,7 @@ namespace SnmpBulkGet
                     priv = new DefaultPrivacyProvider(auth);
                 }
 
-                Discovery discovery = new Discovery(Messenger.NextMessageId, Messenger.NextRequestId);
+                Discovery discovery = Messenger.GetDiscovery();
                 ReportMessage report = discovery.GetResponse(timeout, receiver);
 
                 GetBulkRequestMessage request = new GetBulkRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(user), nonRepeaters, maxRepetitions, vList, priv, Messenger.MaxMessageSize, report);

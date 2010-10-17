@@ -6,9 +6,7 @@ using System.Threading;
 using Lextm.SharpSnmpLib.Security;
 
 namespace Lextm.SharpSnmpLib.Messaging
-{
-
-    
+{    
     /// <summary>
     /// Binding class for <see cref="Listener"/>.
     /// </summary>

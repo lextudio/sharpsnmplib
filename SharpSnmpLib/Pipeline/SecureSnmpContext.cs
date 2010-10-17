@@ -42,7 +42,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 Request.Version,
                 new Header(
                     new Integer32(Request.MessageId),
-                    new Integer32(0xFFE3),
+                    new Integer32(Messenger.MaxMessageSize),
                     new OctetString(new[] { (byte)Levels.Reportable }),
                     new Integer32(3)),
                 new SecurityParameters(
@@ -116,7 +116,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 VersionCode.V3,
                 new Header(
                     new Integer32(Request.MessageId),
-                    new Integer32(0xFFE3),
+                    new Integer32(Messenger.MaxMessageSize),
                     new OctetString(new[] { (byte)Levels.Reportable }),
                     new Integer32(3)),
                 new SecurityParameters(
@@ -163,8 +163,8 @@ namespace Lextm.SharpSnmpLib.Pipeline
                     Request.Version,
                     new Header(
                         new Integer32(Request.MessageId),
-                        new Integer32(0xFFE3),
-                        new OctetString(new[] {(byte) Levels.Reportable}),
+                        new Integer32(Messenger.MaxMessageSize),
+                        new OctetString(new[] { (byte)Levels.Reportable }),
                         new Integer32(3)),
                     new SecurityParameters(
                         Group.EngineId,
@@ -189,8 +189,8 @@ namespace Lextm.SharpSnmpLib.Pipeline
                     Request.Version,
                     new Header(
                         new Integer32(Request.MessageId),
-                        new Integer32(0xFFE3),
-                        new OctetString(new[] {(byte) Levels.Reportable}),
+                        new Integer32(Messenger.MaxMessageSize),
+                        new OctetString(new[] { (byte)Levels.Reportable }),
                         new Integer32(3)),
                     new SecurityParameters(
                         Group.EngineId,
@@ -216,8 +216,8 @@ namespace Lextm.SharpSnmpLib.Pipeline
                     Request.Version,
                     new Header(
                         new Integer32(Request.MessageId),
-                        new Integer32(0xFFE3),
-                        new OctetString(new[] {(byte) Levels.Reportable}),
+                        new Integer32(Messenger.MaxMessageSize),
+                        new OctetString(new[] { (byte)Levels.Reportable }),
                         new Integer32(3)),
                     new SecurityParameters(
                         Group.EngineId,

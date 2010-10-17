@@ -138,7 +138,7 @@ namespace Lextm.SharpSnmpLib.Browser
                 else
                 {
                     SecureAgentProfile p = (SecureAgentProfile)registry.DefaultProfile;
-                    Discovery discovery = new Discovery(Messenger.NextMessageId, Messenger.NextRequestId);
+                    Discovery discovery = Messenger.GetDiscovery();
                     ReportMessage report = discovery.GetResponse(p.Timeout, p.Agent);
                     rows = Messenger.BulkWalk(
                         VersionCode.V3, 

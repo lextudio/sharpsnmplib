@@ -374,10 +374,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <value>The request counter.</value>
         public static int NextRequestId
         {
-            get
-            {
-                return RequestCounter.NextId;
-            }
+            get { return RequestCounter.NextId; }
         }
 
         /// <summary>
@@ -386,10 +383,16 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <value>The message counter.</value>
         public static int NextMessageId
         {
-            get
-            {
-                return MessageCounter.NextId;
-            }
+            get { return MessageCounter.NextId; }
+        }
+        
+        /// <summary>
+        /// Gets discovery.
+        /// </summary>
+        /// <returns></returns>
+        public static Discovery GetDiscovery()
+        {
+            return new Discovery(NextMessageId, NextRequestId, MaxMessageSize);
         }
 
         /// <summary>

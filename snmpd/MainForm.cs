@@ -173,7 +173,7 @@ namespace Lextm.SharpSnmpLib.Agent
             try
             {
                 IPEndPoint receiver = new IPEndPoint(ip, int.Parse(txtPort.Text, CultureInfo.InvariantCulture));
-                Discovery discovery = new Discovery(Messenger.NextMessageId, Messenger.NextRequestId);
+                Discovery discovery = Messenger.GetDiscovery();
                 ReportMessage report = discovery.GetResponse(2000, receiver);
 
                 Messenger.SendInform(

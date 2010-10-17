@@ -13,7 +13,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <summary>
         /// Max response size.
         /// </summary>
-        protected const int MaxResponseSize = 0xFFE3;
+        protected const int MaxResponseSize = Messenger.MaxMessageSize;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SnmpContext"/> class.

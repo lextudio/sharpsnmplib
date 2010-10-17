@@ -46,13 +46,14 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         /// <param name="requestId">The request id.</param>
         /// <param name="messageId">The message id.</param>
-        public Discovery(int messageId, int requestId)
+        /// <param name="maxMessageSize">The max size of message.</param>
+        public Discovery(int messageId, int requestId, int maxMessageSize)
         {
             _discovery = new GetRequestMessage(
                 VersionCode.V3,
                 new Header(
                     new Integer32(messageId),
-                    new Integer32(0xFFE3),
+                    new Integer32(maxMessageSize),
                     new OctetString(new[] { (byte)Levels.Reportable }),
                     new Integer32(3)),
                 new SecurityParameters(
