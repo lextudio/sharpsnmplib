@@ -6,7 +6,7 @@ namespace Lextm.SharpSnmpLib.Objects
     /// <summary>
     /// SysName object.
     /// </summary>
-    internal class SysName : ScalarObject
+    public class SysName : ScalarObject
     {
         private OctetString _name = new OctetString(Environment.MachineName);
 

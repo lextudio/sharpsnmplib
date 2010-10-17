@@ -16,7 +16,7 @@ using Lextm.SharpSnmpLib.Messaging;
 namespace Lextm.SharpSnmpLib.Tests
 {
     [TestFixture]
-    public class TestGetResponseMessage
+    public class TestResponseMessage
     {
         [Test]
         public void TestMethod()

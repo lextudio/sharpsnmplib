@@ -6,7 +6,7 @@ namespace Lextm.SharpSnmpLib.Objects
     /// <summary>
     /// SysUpTime object.
     /// </summary>
-    internal class SysUpTime : ScalarObject
+    public class SysUpTime : ScalarObject
     {
         private readonly ISnmpData _time = new TimeTicks((uint)Environment.TickCount / 10);
 

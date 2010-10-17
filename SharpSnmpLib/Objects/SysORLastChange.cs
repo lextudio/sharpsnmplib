@@ -2,7 +2,7 @@ using Lextm.SharpSnmpLib.Pipeline;
 
 namespace Lextm.SharpSnmpLib.Objects
 {
-    internal class SysORLastChange : ScalarObject
+    public class SysORLastChange : ScalarObject
     {
         private readonly ISnmpData _value = new TimeTicks(0);
 

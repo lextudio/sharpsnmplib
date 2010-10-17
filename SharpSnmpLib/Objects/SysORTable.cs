@@ -3,7 +3,7 @@ using Lextm.SharpSnmpLib.Pipeline;
 
 namespace Lextm.SharpSnmpLib.Objects
 {
-    internal class SysORTable : TableObject
+    public class SysORTable : TableObject
     {
         // "1.3.6.1.2.1.1.9.1"
         private readonly IList<ScalarObject> _elements = new List<ScalarObject>();

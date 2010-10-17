@@ -42,7 +42,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Creates a <see cref="GetBulkRequestMessage"/> with all contents.
         /// </summary>
-        /// <param name="requestId">The request id.</param>
+        /// <param name="requestId">The request ID.</param>
         /// <param name="version">Protocol version.</param>
         /// <param name="community">Community name.</param>
         /// <param name="nonRepeaters">Non-repeaters.</param>
@@ -60,9 +60,19 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("community");
             }
             
-            if (version == VersionCode.V3)
+            if (version != VersionCode.V2)
             {
-                throw new ArgumentException("only v1 and v2c are supported", "version");
+                throw new ArgumentException("only v2c are supported", "version");
+            }
+
+            if (nonRepeaters > variables.Count)
+            {
+                throw new ArgumentException("nonRepeaters should not be greater than variable count", "nonRepeaters");
+            }
+
+            if (maxRepetitions < 1)
+            {
+                throw new ArgumentException("maxRepetitions should be greater than 0", "maxRepetitions");
             }
 
             Version = version;
@@ -134,7 +144,17 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new ArgumentNullException("privacy");
             }
-            
+
+            if (nonRepeaters > variables.Count)
+            {
+                throw new ArgumentException("nonRepeaters should not be greater than variable count", "nonRepeaters");
+            }
+
+            if (maxRepetitions < 1)
+            {
+                throw new ArgumentException("maxRepetitions should be greater than 0", "maxRepetitions");
+            }
+
             Version = version;
             _privacy = privacy;
             Levels recordToSecurityLevel = PrivacyProviderExtension.ToSecurityLevel(privacy);

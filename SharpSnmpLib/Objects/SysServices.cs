@@ -2,7 +2,7 @@ using Lextm.SharpSnmpLib.Pipeline;
 
 namespace Lextm.SharpSnmpLib.Objects
 {
-    internal class SysServices : ScalarObject
+    public class SysServices : ScalarObject
     {
         private readonly Integer32 _value = new Integer32(72);
 

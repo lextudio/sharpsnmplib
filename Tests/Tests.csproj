@@ -67,6 +67,7 @@
     </Compile>
     <Compile Include="Tests\TestDESPrivacyProvider.cs" />
     <Compile Include="Tests\TestEndOfMibView.cs" />
+    <Compile Include="Tests\TestGetBulkMessageHandler.cs" />
     <Compile Include="Tests\TestGetMessageHandler.cs" />
     <Compile Include="Tests\TestGetNextMessageHandler.cs" />
     <Compile Include="Tests\TestManager.cs" />
@@ -76,7 +77,7 @@
     <Compile Include="Tests\TestCounter64.cs" />
     <Compile Include="Tests\TestGauge32.cs" />
     <Compile Include="Tests\TestGetRequestMessage.cs" />
-    <Compile Include="Tests\TestGetResponseMessage.cs" />
+    <Compile Include="Tests\TestResponseMessage.cs" />
     <Compile Include="Tests\TestInteger32.cs" />
     <Compile Include="Tests\TestIP.cs" />
     <Compile Include="Tests\TestLexer.cs" />

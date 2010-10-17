@@ -6,7 +6,7 @@ namespace Lextm.SharpSnmpLib.Objects
     /// <summary>
     /// SysLocation object.
     /// </summary>
-    internal class SysLocation : ScalarObject
+    public class SysLocation : ScalarObject
     {
         private OctetString _location = OctetString.Empty;
 

@@ -6,7 +6,7 @@ namespace Lextm.SharpSnmpLib.Objects
     /// <summary>
     /// SysContact object.
     /// </summary>
-    internal class SysContact : ScalarObject
+    public class SysContact : ScalarObject
     {
         private OctetString _contact = new OctetString(Environment.UserName);
 

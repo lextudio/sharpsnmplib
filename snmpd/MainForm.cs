@@ -16,6 +16,7 @@ using System.Reflection;
 using System.Windows.Forms;
 
 using Lextm.SharpSnmpLib.Messaging;
+using Lextm.SharpSnmpLib.Objects;
 using Lextm.SharpSnmpLib.Pipeline;
 using Lextm.SharpSnmpLib.Security;
 using Microsoft.Practices.Unity;
@@ -53,7 +54,7 @@ namespace Lextm.SharpSnmpLib.Agent
                 Icon = Properties.Resources.network_server;                
             }
             
-			actEnabled.Image = Properties.Resources.media_playback_start;
+            actEnabled.Image = Properties.Resources.media_playback_start;
             tstxtPort.Text = @"161";
             tscbIP.Items.Add(StrAllUnassigned);
             foreach (IPAddress address in Dns.GetHostEntry(string.Empty).AddressList.Where(address => !address.IsIPv6LinkLocal))
