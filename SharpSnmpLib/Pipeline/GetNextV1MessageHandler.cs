@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Lextm.SharpSnmpLib.Pipeline
 {
     /// <summary>
-    /// GET message handler.
-    /// </summary>
-    public class GetV2V3MessageHandler : IMessageHandler
+    /// GET NEXT message handler.
+    /// </summary>    
+    public class GetNextV1MessageHandler : IMessageHandler
     {
         /// <summary>
         /// Handles the specified message.
@@ -14,7 +13,6 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <param name="context">The context.</param>
         /// <param name="store">The object store.</param>
         /// <returns></returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         public ResponseData Handle(SnmpContext context, ObjectStore store)
         {
             ErrorCode status = ErrorCode.NoError;
@@ -23,26 +21,15 @@ namespace Lextm.SharpSnmpLib.Pipeline
             foreach (Variable v in context.Request.Pdu.Variables)
             {
                 index++;
-                ScalarObject obj = store.GetObject(v.Id);
-                if (obj == null)
+                ScalarObject next = store.GetNextObject(v.Id);
+                if (next == null)
                 {
-                    result.Add(new Variable(v.Id, new NoSuchInstance()));
+                    status = ErrorCode.NoSuchName;
                 }
                 else
                 {
-                    try
-                    {
-                        Variable item = obj.Variable;
-                        result.Add(item);
-                    }
-                    catch (AccessFailureException)
-                    {
-                        result.Add(new Variable(v.Id, new NoSuchObject()));
-                    }
-                    catch (Exception)
-                    {
-                        status = ErrorCode.GenError;
-                    }
+                    // TODO: how to handle write only object here?
+                    result.Add(next.Variable);
                 }
 
                 if (status != ErrorCode.NoError)

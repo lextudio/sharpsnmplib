@@ -6,6 +6,9 @@ namespace Lextm.SharpSnmpLib.Pipeline
     /// <summary>
     /// GET message handler.
     /// </summary>
+    /// <remarks>
+    /// Follows RFC 3416 4.2.1.
+    /// </remarks>
     public class GetMessageHandler : IMessageHandler
     {
         /// <summary>
@@ -24,7 +27,11 @@ namespace Lextm.SharpSnmpLib.Pipeline
             {
                 index++;
                 ScalarObject obj = store.GetObject(v.Id);
-                if (obj != null)
+                if (obj == null)
+                {
+                    result.Add(new Variable(v.Id, new NoSuchInstance()));
+                }
+                else
                 {
                     try
                     {
@@ -33,16 +40,12 @@ namespace Lextm.SharpSnmpLib.Pipeline
                     }
                     catch (AccessFailureException)
                     {
-                        status = ErrorCode.NoSuchName;
+                        result.Add(new Variable(v.Id, new NoSuchObject()));
                     }
                     catch (Exception)
                     {
                         status = ErrorCode.GenError;
                     }
-                }
-                else
-                {
-                    status = ErrorCode.NoSuchName;
                 }
 
                 if (status != ErrorCode.NoError)

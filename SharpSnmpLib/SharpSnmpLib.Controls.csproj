@@ -80,10 +80,10 @@
     <Compile Include="Pipeline\ComposedMembershipProvider.cs" />
     <Compile Include="Pipeline\EngineGroup.cs" />
     <Compile Include="Pipeline\GetBulkMessageHandler.cs" />
-    <Compile Include="Pipeline\GetMessageHandler.cs" />
+    <Compile Include="Pipeline\GetV1MessageHandler.cs" />
+    <Compile Include="Pipeline\GetNextV1MessageHandler.cs" />
     <Compile Include="Pipeline\GetNextMessageHandler.cs" />
-    <Compile Include="Pipeline\GetNextV2V3MessageHandler.cs" />
-    <Compile Include="Pipeline\GetV2V3MessageHandler.cs" />
+    <Compile Include="Pipeline\GetMessageHandler.cs" />
     <Compile Include="Pipeline\HandlerMapping.cs" />
     <Compile Include="Pipeline\ILogger.cs" />
     <Compile Include="Pipeline\IMembershipProvider.cs" />
@@ -97,7 +97,7 @@
     <Compile Include="Pipeline\ResponseData.cs" />
     <Compile Include="Pipeline\ScalarObject.cs" />
     <Compile Include="Pipeline\SecureSnmpContext.cs" />
-    <Compile Include="Pipeline\SetMessageHandler.cs" />
+    <Compile Include="Pipeline\SetV1MessageHandler.cs" />
     <Compile Include="Pipeline\SnmpApplication.cs" />
     <Compile Include="Pipeline\SnmpApplicationFactory.cs" />
     <Compile Include="Pipeline\SnmpContext.cs" />

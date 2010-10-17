@@ -1,10 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Lextm.SharpSnmpLib.Pipeline
 {
     /// <summary>
     /// GET NEXT message handler.
     /// </summary>    
+    /// <remarks>
+    /// Follows RFC 3416 4.2.2.
+    /// </remarks>
     public class GetNextMessageHandler : IMessageHandler
     {
         /// <summary>
@@ -13,6 +17,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <param name="context">The context.</param>
         /// <param name="store">The object store.</param>
         /// <returns></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         public ResponseData Handle(SnmpContext context, ObjectStore store)
         {
             ErrorCode status = ErrorCode.NoError;
@@ -21,15 +26,14 @@ namespace Lextm.SharpSnmpLib.Pipeline
             foreach (Variable v in context.Request.Pdu.Variables)
             {
                 index++;
-                ScalarObject next = store.GetNextObject(v.Id);
-                if (next == null)
+                try
                 {
-                    status = ErrorCode.NoSuchName;
+                    ScalarObject next = store.GetNextObject(v.Id);
+                    result.Add(next == null ? new Variable(v.Id, new EndOfMibView()) : next.Variable);
                 }
-                else
+                catch (Exception)
                 {
-                    // TODO: how to handle write only object here?
-                    result.Add(next.Variable);
+                    status = ErrorCode.GenError;
                 }
 
                 if (status != ErrorCode.NoError)

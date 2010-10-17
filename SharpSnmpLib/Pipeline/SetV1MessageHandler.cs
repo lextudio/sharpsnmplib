@@ -1,12 +1,20 @@
-﻿using System;
+﻿/*
+ * Created by SharpDevelop.
+ * User: lextm
+ * Date: 11/29/2009
+ * Time: 11:01 AM
+ * 
+ * To change this template use Tools | Options | Coding | Edit Standard Headers.
+ */
+using System;
 using System.Collections.Generic;
 
 namespace Lextm.SharpSnmpLib.Pipeline
 {
     /// <summary>
-    /// GET NEXT message handler.
+    /// SET message handler.
     /// </summary>    
-    public class GetNextV2V3MessageHandler : IMessageHandler
+    public class SetV1MessageHandler : IMessageHandler
     {
         /// <summary>
         /// Handles the specified message.
@@ -17,26 +25,44 @@ namespace Lextm.SharpSnmpLib.Pipeline
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         public ResponseData Handle(SnmpContext context, ObjectStore store)
         {
-            ErrorCode status = ErrorCode.NoError;
             int index = 0;
+            ErrorCode status = ErrorCode.NoError;
+
             IList<Variable> result = new List<Variable>();
             foreach (Variable v in context.Request.Pdu.Variables)
             {
                 index++;
-                try
+                ScalarObject obj = store.GetObject(v.Id);
+                if (obj != null)
                 {
-                    ScalarObject next = store.GetNextObject(v.Id);
-                    result.Add(next == null ? new Variable(v.Id, new EndOfMibView()) : next.Variable);
+                    try
+                    {
+                        obj.Data = v.Data;
+                    }
+                    catch (AccessFailureException)
+                    {
+                        status = ErrorCode.NoSuchName;
+                    }
+                    catch (ArgumentException)
+                    {
+                        status = ErrorCode.BadValue;
+                    }
+                    catch (Exception)
+                    {
+                        status = ErrorCode.GenError;
+                    }
                 }
-                catch (Exception)
+                else
                 {
-                    status = ErrorCode.GenError;
+                    status = ErrorCode.NoSuchName;
                 }
 
                 if (status != ErrorCode.NoError)
                 {
                     return new ResponseData(null, status, index);
                 }
+
+                result.Add(v);
             }
 
             return new ResponseData(result, status, index);

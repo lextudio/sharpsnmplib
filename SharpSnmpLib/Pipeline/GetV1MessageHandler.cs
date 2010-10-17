@@ -1,20 +1,12 @@
-﻿/*
- * Created by SharpDevelop.
- * User: lextm
- * Date: 11/29/2009
- * Time: 11:01 AM
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
- */
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace Lextm.SharpSnmpLib.Pipeline
 {
     /// <summary>
-    /// SET message handler.
-    /// </summary>    
-    public class SetMessageHandler : IMessageHandler
+    /// GET message handler.
+    /// </summary>
+    public class GetV1MessageHandler : IMessageHandler
     {
         /// <summary>
         /// Handles the specified message.
@@ -25,9 +17,8 @@ namespace Lextm.SharpSnmpLib.Pipeline
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         public ResponseData Handle(SnmpContext context, ObjectStore store)
         {
-            int index = 0;
             ErrorCode status = ErrorCode.NoError;
-
+            int index = 0;
             IList<Variable> result = new List<Variable>();
             foreach (Variable v in context.Request.Pdu.Variables)
             {
@@ -37,15 +28,12 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 {
                     try
                     {
-                        obj.Data = v.Data;
+                        Variable item = obj.Variable;
+                        result.Add(item);
                     }
                     catch (AccessFailureException)
                     {
                         status = ErrorCode.NoSuchName;
-                    }
-                    catch (ArgumentException)
-                    {
-                        status = ErrorCode.BadValue;
                     }
                     catch (Exception)
                     {
@@ -61,8 +49,6 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 {
                     return new ResponseData(null, status, index);
                 }
-
-                result.Add(v);
             }
 
             return new ResponseData(result, status, index);
