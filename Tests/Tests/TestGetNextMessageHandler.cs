@@ -67,5 +67,30 @@ namespace Lextm.SharpSnmpLib.Tests
             var genError = handler.Handle(context, store);
             Assert.AreEqual(ErrorCode.GenError, genError.ErrorStatus);
         }
+
+        [Test]
+        public void EndOfMibView()
+        {
+            var handler = new GetNextMessageHandler();
+            var store = new ObjectStore();
+            store.Add(new SysDescr());
+            var context = SnmpContextFactory.Create(
+                new GetNextRequestMessage(
+                    300,
+                    VersionCode.V1,
+                    new OctetString("lextm"),
+                    new List<Variable>
+                        {
+                            new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.2.0"))
+                        }
+                    ),
+                new IPEndPoint(IPAddress.Loopback, 100),
+                UserRegistry.Default,
+                null,
+                null);
+            var endOfMibView = handler.Handle(context, store);
+            Assert.AreEqual(new ObjectIdentifier("1.3.6.1.2.1.1.2.0"), endOfMibView.Variables[0].Id);
+            Assert.AreEqual(new EndOfMibView(), endOfMibView.Variables[0].Data);
+        }
     }
 }
