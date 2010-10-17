@@ -68,6 +68,7 @@
     <Compile Include="Tests\TestDESPrivacyProvider.cs" />
     <Compile Include="Tests\TestEndOfMibView.cs" />
     <Compile Include="Tests\TestGetMessageHandler.cs" />
+    <Compile Include="Tests\TestGetNextMessageHandler.cs" />
     <Compile Include="Tests\TestManager.cs" />
     <Compile Include="Tests\TestByteTool.cs" />
     <Compile Include="Tests\TestConstructHelper.cs" />

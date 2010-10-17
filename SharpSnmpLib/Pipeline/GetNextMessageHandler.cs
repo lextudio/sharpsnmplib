@@ -20,7 +20,6 @@ namespace Lextm.SharpSnmpLib.Pipeline
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         public ResponseData Handle(SnmpContext context, ObjectStore store)
         {
-            ErrorCode status = ErrorCode.NoError;
             int index = 0;
             IList<Variable> result = new List<Variable>();
             foreach (Variable v in context.Request.Pdu.Variables)
@@ -33,16 +32,11 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 }
                 catch (Exception)
                 {
-                    status = ErrorCode.GenError;
-                }
-
-                if (status != ErrorCode.NoError)
-                {
-                    return new ResponseData(null, status, index);
+                    return new ResponseData(context.Request.Pdu.Variables, ErrorCode.GenError, index);
                 }
             }
 
-            return new ResponseData(result, status, index);
+            return new ResponseData(result, ErrorCode.NoError, index);
         }
     }
 }

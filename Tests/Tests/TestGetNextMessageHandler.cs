@@ -1,0 +1,71 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Net;
+using Lextm.SharpSnmpLib.Messaging;
+using Lextm.SharpSnmpLib.Objects;
+using Lextm.SharpSnmpLib.Pipeline;
+using Lextm.SharpSnmpLib.Security;
+using Moq;
+using NUnit.Framework;
+
+namespace Lextm.SharpSnmpLib.Tests
+{
+    [TestFixture]
+    public class TestGetNextMessageHandler
+    {
+        [Test]
+        public void NoError()
+        {
+            var handler = new GetNextMessageHandler();
+            var context = SnmpContextFactory.Create(
+                new GetNextRequestMessage(
+                    300,
+                    VersionCode.V1,
+                    new OctetString("lextm"),
+                    new List<Variable>
+                        {
+                            new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0"))
+                        }
+                    ),
+                new IPEndPoint(IPAddress.Loopback, 100),
+                UserRegistry.Default,
+                null,
+                null);
+            var store = new ObjectStore();
+            store.Add(new SysDescr());
+            store.Add(new SysObjectId());
+            var noerror = handler.Handle(context, store);
+            Assert.AreEqual(ErrorCode.NoError, noerror.ErrorStatus);
+            Assert.AreEqual(new ObjectIdentifier("1.3.6.1.2.1.1.2.0"), noerror.Variables[0].Id);
+        }
+
+        [Test]
+        public void GenError()
+        {
+            var handler = new GetNextMessageHandler();
+            var mock = new Mock<ScalarObject>(new ObjectIdentifier("1.3.6.1.2.1.1.2.0"));
+            mock.Setup(foo => foo.Data).Throws<Exception>();
+            mock.Setup(foo => foo.MatchGet(new ObjectIdentifier("1.3.6.1.2.1.1.2.0"))).Returns(mock.Object);
+            mock.Setup(foo => foo.MatchGetNext(new ObjectIdentifier("1.3.6.1.2.1.1.1.0"))).Returns(mock.Object);
+            var store = new ObjectStore();
+            store.Add(new SysDescr());
+            store.Add(mock.Object);
+            var context = SnmpContextFactory.Create(
+                new GetNextRequestMessage(
+                    300,
+                    VersionCode.V1,
+                    new OctetString("lextm"),
+                    new List<Variable>
+                        {
+                            new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0"))
+                        }
+                    ),
+                new IPEndPoint(IPAddress.Loopback, 100),
+                UserRegistry.Default,
+                null,
+                null);
+            var genError = handler.Handle(context, store);
+            Assert.AreEqual(ErrorCode.GenError, genError.ErrorStatus);
+        }
+    }
+}
