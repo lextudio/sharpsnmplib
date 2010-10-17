@@ -26,26 +26,26 @@ namespace Lextm.SharpSnmpLib.Pipeline
             foreach (Variable v in context.Request.Pdu.Variables)
             {
                 index++;
-                ScalarObject obj = store.GetObject(v.Id);
-                if (obj == null)
+                try
                 {
-                    result.Add(new Variable(v.Id, new NoSuchInstance()));
-                }
-                else
-                {
-                    try
+                    ScalarObject obj = store.GetObject(v.Id);
+                    if (obj == null)
+                    {
+                        result.Add(new Variable(v.Id, new NoSuchInstance()));
+                    }
+                    else
                     {
                         Variable item = obj.Variable;
                         result.Add(item);
                     }
-                    catch (AccessFailureException)
-                    {
-                        result.Add(new Variable(v.Id, new NoSuchObject()));
-                    }
-                    catch (Exception)
-                    {
-                        status = ErrorCode.GenError;
-                    }
+                }
+                catch (AccessFailureException)
+                {
+                    result.Add(new Variable(v.Id, new NoSuchObject()));
+                }
+                catch (Exception)
+                {
+                    return new ResponseData(context.Request.Pdu.Variables, ErrorCode.GenError, index);
                 }
 
                 if (status != ErrorCode.NoError)

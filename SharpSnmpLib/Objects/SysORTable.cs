@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Lextm.SharpSnmpLib.Pipeline;
 
-namespace Lextm.SharpSnmpLib.Agent
+namespace Lextm.SharpSnmpLib.Objects
 {
     internal class SysORTable : TableObject
     {

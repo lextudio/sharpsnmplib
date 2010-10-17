@@ -1,20 +1,20 @@
 using System;
 using Lextm.SharpSnmpLib.Pipeline;
 
-namespace Lextm.SharpSnmpLib.Agent
+namespace Lextm.SharpSnmpLib.Objects
 {
     /// <summary>
-    /// SysLocation object.
+    /// SysName object.
     /// </summary>
-    internal class SysLocation : ScalarObject
+    internal class SysName : ScalarObject
     {
-        private OctetString _location = OctetString.Empty;
+        private OctetString _name = new OctetString(Environment.MachineName);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SysLocation"/> class.
+        /// Initializes a new instance of the <see cref="SysName"/> class.
         /// </summary>
-        public SysLocation()
-            : base(new ObjectIdentifier("1.3.6.1.2.1.1.6.0"))
+        public SysName()
+            : base(new ObjectIdentifier("1.3.6.1.2.1.1.5.0"))
         {
         }
 
@@ -26,17 +26,17 @@ namespace Lextm.SharpSnmpLib.Agent
         {
             get 
             { 
-                return _location; 
+                return _name; 
             }
             
             set
             {
                 if (value.TypeCode != SnmpType.OctetString)
                 {
-                    throw new ArgumentException("wrong data type", "value");
+                    throw new ArgumentException("data");
                 }
 
-                _location = (OctetString)value;
+                _name = (OctetString)value;
             }
         }
     }

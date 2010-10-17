@@ -7,8 +7,6 @@ namespace Lextm.SharpSnmpLib.Pipeline
     /// </summary>
     public abstract class ScalarObject : SnmpObject
     {
-        private readonly ObjectIdentifier _id;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ScalarObject"/> class.
         /// </summary>
@@ -16,7 +14,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         protected ScalarObject(ObjectIdentifier id)
         {
-            _id = id;
+            Id = id;
         }
 
         /// <summary>
@@ -46,7 +44,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <value>The variable.</value>
         public Variable Variable
         {
-            get { return new Variable(_id, Data); }
+            get { return new Variable(Id, Data); }
         }
 
         /// <summary>
@@ -62,10 +60,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// Gets the ID.
         /// </summary>
         /// <value>The ID.</value>
-        private ObjectIdentifier Id
-        {
-            get { return _id; }
-        }
+        private ObjectIdentifier Id { get; set; }
 
         /// <summary>
         /// Matches the GET NEXT criteria.

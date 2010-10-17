@@ -1,6 +1,6 @@
 using Lextm.SharpSnmpLib.Pipeline;
 
-namespace Lextm.SharpSnmpLib.Agent
+namespace Lextm.SharpSnmpLib.Objects
 {
     internal class SysORDescr : ScalarObject
     {

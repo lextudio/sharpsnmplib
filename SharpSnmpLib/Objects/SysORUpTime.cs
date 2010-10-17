@@ -1,16 +1,16 @@
 using Lextm.SharpSnmpLib.Pipeline;
 
-namespace Lextm.SharpSnmpLib.Agent
+namespace Lextm.SharpSnmpLib.Objects
 {
-    internal class SysORID : ScalarObject
+    internal class SysORUpTime : ScalarObject
     {
-        private readonly ObjectIdentifier _data;
+        private readonly TimeTicks _data;
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        public SysORID(int index, ObjectIdentifier dots)
-            : base("1.3.6.1.2.1.1.9.1.2.{0}", index)
+        public SysORUpTime(int index, TimeTicks time)
+            : base("1.3.6.1.2.1.1.9.1.4.{0}", index)
         {
-            _data = dots;
+            _data = time;
         }
 
         public override ISnmpData Data

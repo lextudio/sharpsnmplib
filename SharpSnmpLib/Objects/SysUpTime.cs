@@ -1,7 +1,7 @@
 using System;
 using Lextm.SharpSnmpLib.Pipeline;
 
-namespace Lextm.SharpSnmpLib.Agent
+namespace Lextm.SharpSnmpLib.Objects
 {
     /// <summary>
     /// SysUpTime object.

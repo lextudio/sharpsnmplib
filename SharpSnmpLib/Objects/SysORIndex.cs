@@ -1,6 +1,6 @@
 using Lextm.SharpSnmpLib.Pipeline;
 
-namespace Lextm.SharpSnmpLib.Agent
+namespace Lextm.SharpSnmpLib.Objects
 {
     // TODO: this is not accessible. So how to handle?
     internal class SysORIndex : ScalarObject

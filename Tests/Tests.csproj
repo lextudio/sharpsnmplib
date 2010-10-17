@@ -45,6 +45,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Moq">
+      <HintPath>..\lib\Moq.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -64,6 +67,7 @@
     </Compile>
     <Compile Include="Tests\TestDESPrivacyProvider.cs" />
     <Compile Include="Tests\TestEndOfMibView.cs" />
+    <Compile Include="Tests\TestGetMessageHandler.cs" />
     <Compile Include="Tests\TestManager.cs" />
     <Compile Include="Tests\TestByteTool.cs" />
     <Compile Include="Tests\TestConstructHelper.cs" />
