@@ -17,10 +17,10 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <param name="request">The request.</param>
         /// <param name="sender">The sender.</param>
         /// <param name="users">The users.</param>
-        /// <param name="objects">The agent core objects.</param>
+        /// <param name="group">The engine core group.</param>
         /// <param name="binding">The binding.</param>
-        public SecureSnmpContext(ISnmpMessage request, IPEndPoint sender, UserRegistry users, EngineObjects objects, IListenerBinding binding)
-            : base(request, sender, users, objects, binding)
+        public SecureSnmpContext(ISnmpMessage request, IPEndPoint sender, UserRegistry users, EngineGroup @group, IListenerBinding binding)
+            : base(request, sender, users, group, binding)
         {
         }
 
@@ -46,14 +46,14 @@ namespace Lextm.SharpSnmpLib.Pipeline
                     new OctetString(new[] { (byte)Levels.Reportable }),
                     new Integer32(3)),
                 new SecurityParameters(
-                    Objects.EngineId,
-                    new Integer32(Objects.EngineBoots),
-                    new Integer32(Objects.EngineTime),
+                    Group.EngineId,
+                    new Integer32(Group.EngineBoots),
+                    new Integer32(Group.EngineTime),
                     Request.Parameters.UserName,
                     DefaultPrivacyProvider.DefaultPair.AuthenticationProvider.CleanDigest,
                     DefaultPrivacyProvider.DefaultPair.Salt),
                 new Scope(
-                    Objects.EngineId,
+                    Group.EngineId,
                     OctetString.Empty,
                     new ResponsePdu(
                         Request.RequestId,
@@ -80,19 +80,19 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 return true;
             }
 
-            if (Request.Parameters.EngineId != Objects.EngineId)
+            if (Request.Parameters.EngineId != Group.EngineId)
             {
                 // not from this engine.
                 return false;
             }
 
-            if (Request.Parameters.EngineBoots.ToInt32() != Objects.EngineBoots)
+            if (Request.Parameters.EngineBoots.ToInt32() != Group.EngineBoots)
             {
                 // does not match boot count.
                 return false;
             }
 
-            if (Request.Parameters.EngineTime.ToInt32() > Objects.EngineTime + 500)
+            if (Request.Parameters.EngineTime.ToInt32() > Group.EngineTime + 500)
             {
                 // timeout.
                 return false;
@@ -109,7 +109,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
 
         private void HandleDiscovery()
         {
-            Objects.ReportCount++;
+            Group.ReportCount++;
             
             // discovery message received.
             Response = new ReportMessage(
@@ -120,14 +120,14 @@ namespace Lextm.SharpSnmpLib.Pipeline
                     new OctetString(new[] { (byte)Levels.Reportable }),
                     new Integer32(3)),
                 new SecurityParameters(
-                    Objects.EngineId,
+                    Group.EngineId,
                     new Integer32(0),
                     new Integer32(Environment.TickCount),
                     OctetString.Empty,
                     OctetString.Empty,
                     OctetString.Empty),
                 new Scope(
-                    Objects.EngineId,
+                    Group.EngineId,
                     OctetString.Empty,
                     new ReportPdu(
                         Request.RequestId,
@@ -137,7 +137,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                             {
                                 new Variable(
                                     new ObjectIdentifier("1.3.6.1.6.3.15.1.1.4.0"),
-                                    new Counter32(Objects.ReportCount)
+                                    new Counter32(Group.ReportCount)
                                     )
                             })),
                 DefaultPrivacyProvider.DefaultPair);
@@ -167,14 +167,14 @@ namespace Lextm.SharpSnmpLib.Pipeline
                         new OctetString(new[] {(byte) Levels.Reportable}),
                         new Integer32(3)),
                     new SecurityParameters(
-                        Objects.EngineId,
-                        new Integer32(Objects.EngineBoots),
-                        new Integer32(Objects.EngineTime),
+                        Group.EngineId,
+                        new Integer32(Group.EngineBoots),
+                        new Integer32(Group.EngineTime),
                         Request.Parameters.UserName,
                         privacy.AuthenticationProvider.CleanDigest,
                         privacy.Salt),
                     new Scope(
-                        Objects.EngineId,
+                        Group.EngineId,
                         OctetString.Empty,
                         new ResponsePdu(
                             Request.RequestId,
@@ -193,14 +193,14 @@ namespace Lextm.SharpSnmpLib.Pipeline
                         new OctetString(new[] {(byte) Levels.Reportable}),
                         new Integer32(3)),
                     new SecurityParameters(
-                        Objects.EngineId,
-                        new Integer32(Objects.EngineBoots),
-                        new Integer32(Objects.EngineTime),
+                        Group.EngineId,
+                        new Integer32(Group.EngineBoots),
+                        new Integer32(Group.EngineTime),
                         Request.Parameters.UserName,
                         privacy.AuthenticationProvider.CleanDigest,
                         privacy.Salt),
                     new Scope(
-                        Objects.EngineId,
+                        Group.EngineId,
                         OctetString.Empty,
                         new ResponsePdu(
                             Request.RequestId,
@@ -220,14 +220,14 @@ namespace Lextm.SharpSnmpLib.Pipeline
                         new OctetString(new[] {(byte) Levels.Reportable}),
                         new Integer32(3)),
                     new SecurityParameters(
-                        Objects.EngineId,
-                        new Integer32(Objects.EngineBoots),
-                        new Integer32(Objects.EngineTime),
+                        Group.EngineId,
+                        new Integer32(Group.EngineBoots),
+                        new Integer32(Group.EngineTime),
                         Request.Parameters.UserName,
                         privacy.AuthenticationProvider.CleanDigest,
                         privacy.Salt),
                     new Scope(
-                        Objects.EngineId,
+                        Group.EngineId,
                         OctetString.Empty,
                         new ResponsePdu(
                             Request.RequestId,

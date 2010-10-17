@@ -15,14 +15,14 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <param name="request">The request.</param>
         /// <param name="sender">The sender.</param>
         /// <param name="users">The users.</param>
-        /// <param name="objects">The objects.</param>
+        /// <param name="group">The engine group.</param>
         /// <param name="binding">The binding.</param>
         /// <returns></returns>
-        public static SnmpContext Create(ISnmpMessage request, IPEndPoint sender, UserRegistry users, EngineObjects objects, IListenerBinding binding)
+        public static SnmpContext Create(ISnmpMessage request, IPEndPoint sender, UserRegistry users, EngineGroup group, IListenerBinding binding)
         {
             if (request.Version == VersionCode.V3)
             {
-                return new SecureSnmpContext(request, sender, users, objects, binding);
+                return new SecureSnmpContext(request, sender, users, group, binding);
             }
 
             return new NormalSnmpContext(request, sender, users, binding);

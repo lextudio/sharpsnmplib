@@ -78,7 +78,7 @@
     <Compile Include="Messaging\WalkMode.cs" />
     <Compile Include="Pipeline\AccessFailureException.cs" />
     <Compile Include="Pipeline\ComposedMembershipProvider.cs" />
-    <Compile Include="Pipeline\EngineObjects.cs" />
+    <Compile Include="Pipeline\EngineGroup.cs" />
     <Compile Include="Pipeline\GetBulkMessageHandler.cs" />
     <Compile Include="Pipeline\GetMessageHandler.cs" />
     <Compile Include="Pipeline\GetNextMessageHandler.cs" />

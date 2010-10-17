@@ -3,17 +3,17 @@ using System;
 namespace Lextm.SharpSnmpLib.Pipeline
 {
     /// <summary>
-    /// Engine objects.
+    /// Engine group which contains all related objects.
     /// </summary>
-    public class EngineObjects
+    public class EngineGroup
     {
         // TODO: make engine ID configurable from outside and unique.
         private readonly OctetString _engineId = new OctetString(new byte[] { 4, 13, 128, 0, 31, 136, 128, 233, 99, 0, 0, 214, 31, 244, 73 });
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EngineObjects"/> class.
+        /// Initializes a new instance of the <see cref="EngineGroup"/> class.
         /// </summary>
-        public EngineObjects()
+        public EngineGroup()
         {
             EngineBoots = 0;
         }

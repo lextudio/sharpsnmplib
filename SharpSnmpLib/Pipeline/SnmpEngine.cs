@@ -19,7 +19,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
     public sealed class SnmpEngine : IDisposable
     {
         private readonly SnmpApplicationFactory _factory;
-        private readonly EngineObjects _objects;
+        private readonly EngineGroup _group;
         private bool _disposed;
 
         /// <summary>
@@ -27,12 +27,12 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// </summary>
         /// <param name="factory">The factory.</param>
         /// <param name="listener">The listener.</param>
-        /// <param name="objects">Engine core objects.</param>
-        public SnmpEngine(SnmpApplicationFactory factory, Listener listener, EngineObjects objects)
+        /// <param name="group">Engine core @group.</param>
+        public SnmpEngine(SnmpApplicationFactory factory, Listener listener, EngineGroup @group)
         {
             _factory = factory;
             Listener = listener;
-            _objects = objects;
+            _group = group;
         }
         
         /// <summary>
@@ -85,7 +85,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         private void ListenerMessageReceived(object sender, MessageReceivedEventArgs e)
         {
             ISnmpMessage request = e.Message;
-            SnmpContext context = SnmpContextFactory.Create(request, e.Sender, Listener.Users, _objects, e.Binding);
+            SnmpContext context = SnmpContextFactory.Create(request, e.Sender, Listener.Users, _group, e.Binding);
             SnmpApplication application = _factory.Create(context);
             application.Process();
         }

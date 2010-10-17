@@ -13,7 +13,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <summary>
         /// Max response size.
         /// </summary>
-        protected const int MaxResponseSize = 1500;
+        protected const int MaxResponseSize = 0xFFE3;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SnmpContext"/> class.
@@ -21,16 +21,16 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <param name="request">The request.</param>
         /// <param name="sender">The sender.</param>
         /// <param name="users">The users.</param>
-        /// <param name="objects">The agent core objects.</param>
+        /// <param name="group">The engine core group.</param>
         /// <param name="binding">The binding.</param>
-        protected SnmpContext(ISnmpMessage request, IPEndPoint sender, UserRegistry users, EngineObjects objects, IListenerBinding binding)
+        protected SnmpContext(ISnmpMessage request, IPEndPoint sender, UserRegistry users, EngineGroup group, IListenerBinding binding)
         {
             Request = request;
             Binding = binding;
             Users = users;
             Sender = sender;
             CreatedTime = DateTime.Now;
-            Objects = objects;
+            Group = group;
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// Gets or sets the objects.
         /// </summary>
         /// <value>The objects.</value>
-        protected EngineObjects Objects { get; private set; }
+        protected EngineGroup Group { get; private set; }
 
         /// <summary>
         /// Sends out response message.
