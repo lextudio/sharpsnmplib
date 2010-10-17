@@ -76,6 +76,22 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="userName">Name of the user.</param>
         /// <param name="variables">The variables.</param>
         /// <param name="privacy">The privacy provider.</param>
+        /// <param name="report">The report.</param>
+        [Obsolete("Please use other overloading ones.")]
+        public SetRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName, IList<Variable> variables, IPrivacyProvider privacy, ISnmpMessage report)
+            : this(version, messageId, requestId, userName, variables, privacy, 0xFFE3, report)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SetRequestMessage"/> class.
+        /// </summary>
+        /// <param name="version">The version.</param>
+        /// <param name="messageId">The message id.</param>
+        /// <param name="requestId">The request id.</param>
+        /// <param name="userName">Name of the user.</param>
+        /// <param name="variables">The variables.</param>
+        /// <param name="privacy">The privacy provider.</param>
         /// <param name="maxMessageSize">Size of the max message.</param>
         /// <param name="report">The report.</param>
         public SetRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName, IList<Variable> variables, IPrivacyProvider privacy, int maxMessageSize, ISnmpMessage report)

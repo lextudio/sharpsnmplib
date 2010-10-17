@@ -97,6 +97,25 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="time">The time.</param>
         /// <param name="variables">The variables.</param>
         /// <param name="privacy">The privacy provider.</param>
+        /// <param name="report">The report.</param>
+        [CLSCompliant(false)]
+        [Obsolete("Please use other overloading ones.")]
+        public InformRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName, ObjectIdentifier enterprise, uint time, IList<Variable> variables, IPrivacyProvider privacy, ISnmpMessage report)
+            : this(version, messageId, requestId, userName, enterprise, time, variables, privacy, 0xFFE3, report)       
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InformRequestMessage"/> class.
+        /// </summary>
+        /// <param name="version">The version.</param>
+        /// <param name="messageId">The message id.</param>
+        /// <param name="requestId">The request id.</param>
+        /// <param name="userName">Name of the user.</param>
+        /// <param name="enterprise">The enterprise.</param>
+        /// <param name="time">The time.</param>
+        /// <param name="variables">The variables.</param>
+        /// <param name="privacy">The privacy provider.</param>
         /// <param name="maxMessageSize">Size of the max message.</param>
         /// <param name="report">The report.</param>
         [CLSCompliant(false)]
