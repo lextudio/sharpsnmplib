@@ -1,4 +1,4 @@
-// GET response message type.
+﻿// Response message type.
 // Copyright (C) 2008-2010 Malcolm Crowe, Lex Li, and other contributors.
 // 
 // This library is free software; you can redistribute it and/or
@@ -30,16 +30,15 @@ using Lextm.SharpSnmpLib.Security;
 namespace Lextm.SharpSnmpLib.Messaging
 {
     /// <summary>
-    /// GET response message.
+    /// Response message.
     /// </summary>
-    [Obsolete("Use ResponseMessage.")]
-    public class GetResponseMessage : ISnmpMessage
+    public class ResponseMessage : ISnmpMessage
     {
         private readonly Header _header;
         private readonly IPrivacyProvider _privacy;
 
         /// <summary>
-        /// Creates a <see cref="GetResponseMessage"/> with all contents.
+        /// Creates a <see cref="ResponseMessage"/> with all contents.
         /// </summary>
         /// <param name="requestId">Request ID.</param>
         /// <param name="version">Protocol version.</param>
@@ -47,18 +46,18 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="error">Error code.</param>
         /// <param name="index">Error index.</param>
         /// <param name="variables">Variables.</param>
-        public GetResponseMessage(int requestId, VersionCode version, OctetString community, ErrorCode error, int index, IList<Variable> variables)
+        public ResponseMessage(int requestId, VersionCode version, OctetString community, ErrorCode error, int index, IList<Variable> variables)
         {
             if (variables == null)
             {
                 throw new ArgumentNullException("variables");
             }
-            
+
             if (community == null)
             {
                 throw new ArgumentNullException("community");
             }
-            
+
             if (version == VersionCode.V3)
             {
                 throw new ArgumentException("Please use overload constructor for v3", "version");
@@ -67,7 +66,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             Version = version;
             _header = Header.Empty;
             Parameters = new SecurityParameters(null, null, null, community, null, null);
-            GetResponsePdu pdu = new GetResponsePdu(
+            ResponsePdu pdu = new ResponsePdu(
                 requestId,
                 error,
                 index,
@@ -77,30 +76,30 @@ namespace Lextm.SharpSnmpLib.Messaging
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GetResponseMessage"/> class.
+        /// Initializes a new instance of the <see cref="ResponseMessage"/> class.
         /// </summary>
         /// <param name="version">The version.</param>
         /// <param name="header">The header.</param>
         /// <param name="parameters">The parameters.</param>
         /// <param name="scope">The scope.</param>
         /// <param name="privacy">The privacy provider.</param>
-        public GetResponseMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, IPrivacyProvider privacy)
+        public ResponseMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, IPrivacyProvider privacy)
         {
             if (scope == null)
             {
                 throw new ArgumentNullException("scope");
             }
-            
+
             if (parameters == null)
             {
                 throw new ArgumentNullException("parameters");
             }
-            
+
             if (header == null)
             {
                 throw new ArgumentNullException("header");
             }
-            
+
             if (privacy == null)
             {
                 throw new ArgumentNullException("privacy");
@@ -112,7 +111,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             Scope = scope;
             _privacy = privacy;
         }
-      
+
         /// <summary>
         /// Error status.
         /// </summary>
@@ -120,7 +119,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             get { return Scope.Pdu.ErrorStatus.ToErrorCode(); }
         }
-        
+
         /// <summary>
         /// Error index.
         /// </summary>
@@ -142,7 +141,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             get { return Scope.Pdu.RequestId.ToInt32(); }
         }
-        
+
         /// <summary>
         /// Gets the message ID.
         /// </summary>
@@ -155,7 +154,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 return _header == Header.Empty ? RequestId : _header.MessageId;
             }
         }
-        
+
         /// <summary>
         /// Variables.
         /// </summary>
@@ -163,7 +162,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             get { return Scope.Pdu.Variables; }
         }
-        
+
         /// <summary>
         /// PDU.
         /// </summary>
@@ -194,12 +193,12 @@ namespace Lextm.SharpSnmpLib.Messaging
         }
 
         /// <summary>
-        /// Returns a <see cref="string"/> that represents this <see cref="GetResponseMessage"/>.
+        /// Returns a <see cref="string"/> that represents this <see cref="ResponseMessage"/>.
         /// </summary>
         /// <returns></returns>
         public override string ToString()
         {
-            return "GET response message: version: " + Version + "; " + Parameters.UserName + "; " + Scope.Pdu;
+            return "Response message: version: " + Version + "; " + Parameters.UserName + "; " + Scope.Pdu;
         }
     }
 }

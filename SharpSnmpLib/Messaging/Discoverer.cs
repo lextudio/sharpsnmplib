@@ -181,12 +181,12 @@ namespace Lextm.SharpSnmpLib.Messaging
                     }
                 }
 
-                if (message.Pdu.TypeCode != SnmpType.GetResponsePdu)
+                if (message.Pdu.TypeCode != SnmpType.ResponsePdu)
                 {
                     continue;
                 }
 
-                GetResponseMessage response = (GetResponseMessage)message;
+                ResponseMessage response = (ResponseMessage)message;
                 if (response.RequestId != _requestId)
                 {
                     continue;

@@ -53,6 +53,7 @@
     <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Messaging\ResponseMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ByteTool.cs" />
     <Compile Include="Counter32.cs" />
@@ -97,6 +98,7 @@
     <Compile Include="IModule.cs" />
     <Compile Include="IObjectRegistry.cs" />
     <Compile Include="IObjectTree.cs" />
+    <Compile Include="ResponsePdu.cs" />
     <Compile Include="SearchResult.cs" />
     <Compile Include="NoSuchInstance.cs" />
     <Compile Include="NoSuchObject.cs" />

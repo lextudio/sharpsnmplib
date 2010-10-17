@@ -1,4 +1,4 @@
-// GET response message PDU.
+﻿// GET response message PDU.
 // Copyright (C) 2008-2010 Malcolm Crowe, Lex Li, and other contributors.
 // 
 // This library is free software; you can redistribute it and/or
@@ -32,23 +32,22 @@ using System.IO;
 namespace Lextm.SharpSnmpLib
 {
     /// <summary>
-    /// GET response PDU.
+    /// Response PDU.
     /// </summary>
-    [Obsolete("Please use ResponsePdu.")]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu")]
-    public class GetResponsePdu : ISnmpPdu
+    public class ResponsePdu : ISnmpPdu
     {
         private readonly Sequence _varbindSection;
         private byte[] _raw;
 
         /// <summary>
-        /// Creates a <see cref="GetResponsePdu"/> with all contents.
+        /// Creates a <see cref="ResponsePdu"/> with all contents.
         /// </summary>
         /// <param name="requestId">The request ID.</param>
         /// <param name="errorStatus">Error status.</param>
         /// <param name="errorIndex">Error index.</param>
         /// <param name="variables">Variables.</param>
-        public GetResponsePdu(int requestId, ErrorCode errorStatus, int errorIndex, IList<Variable> variables)
+        public ResponsePdu(int requestId, ErrorCode errorStatus, int errorIndex, IList<Variable> variables)
         {
             RequestId = new Integer32(requestId);
             ErrorStatus = new Integer32((int)errorStatus);
@@ -59,10 +58,10 @@ namespace Lextm.SharpSnmpLib
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GetResponsePdu"/> class.
+        /// Initializes a new instance of the <see cref="ResponsePdu"/> class.
         /// </summary>
         /// <param name="stream">The stream.</param>
-        public GetResponsePdu(Stream stream)
+        public ResponsePdu(Stream stream)
         {
             RequestId = (Integer32)DataFactory.CreateSnmpData(stream);
             ErrorStatus = (Integer32)DataFactory.CreateSnmpData(stream);
@@ -101,7 +100,7 @@ namespace Lextm.SharpSnmpLib
         {
             get
             {
-                return SnmpType.GetResponsePdu;
+                return SnmpType.ResponsePdu;
             }
         }
 
@@ -115,7 +114,7 @@ namespace Lextm.SharpSnmpLib
             {
                 throw new ArgumentNullException("stream");
             }
-            
+
             if (_raw == null)
             {
                 _raw = ByteTool.ParseItems(RequestId, ErrorStatus, ErrorIndex, _varbindSection);
@@ -139,7 +138,7 @@ namespace Lextm.SharpSnmpLib
         }
 
         /// <summary>
-        /// Returns a <see cref="string"/> that represents this <see cref="GetResponsePdu"/>/
+        /// Returns a <see cref="string"/> that represents this <see cref="ResponsePdu"/>/
         /// </summary>
         /// <returns></returns>
         public override string ToString()
@@ -147,9 +146,9 @@ namespace Lextm.SharpSnmpLib
             return string.Format(
                 CultureInfo.InvariantCulture,
                 "GET response PDU: seq: {0}; status: {1}; index: {2}; variable count: {3}",
-                RequestId, 
-                ErrorStatus, 
-                ErrorIndex, 
+                RequestId,
+                ErrorStatus,
+                ErrorIndex,
                 Variables.Count.ToString(CultureInfo.InvariantCulture));
         }
     }

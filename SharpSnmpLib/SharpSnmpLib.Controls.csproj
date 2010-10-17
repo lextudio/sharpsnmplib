@@ -82,6 +82,8 @@
     <Compile Include="Pipeline\GetBulkMessageHandler.cs" />
     <Compile Include="Pipeline\GetMessageHandler.cs" />
     <Compile Include="Pipeline\GetNextMessageHandler.cs" />
+    <Compile Include="Pipeline\GetNextV2V3MessageHandler.cs" />
+    <Compile Include="Pipeline\GetV2V3MessageHandler.cs" />
     <Compile Include="Pipeline\HandlerMapping.cs" />
     <Compile Include="Pipeline\ILogger.cs" />
     <Compile Include="Pipeline\IMembershipProvider.cs" />

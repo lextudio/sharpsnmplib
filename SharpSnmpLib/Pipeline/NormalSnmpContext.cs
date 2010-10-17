@@ -58,10 +58,10 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 return;
             }
 
-            GetResponseMessage response;
+            ResponseMessage response;
             if (data.ErrorStatus == ErrorCode.NoError)
             {
-                response = new GetResponseMessage(
+                response = new ResponseMessage(
                     Request.RequestId,
                     Request.Version,
                     Request.Parameters.UserName,
@@ -71,7 +71,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
             }
             else
             {
-                response = new GetResponseMessage(
+                response = new ResponseMessage(
                     Request.RequestId,
                     Request.Version,
                     Request.Parameters.UserName,
@@ -82,7 +82,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
 
             if (response.ToBytes().Length > MaxResponseSize)
             {
-                response = new GetResponseMessage(
+                response = new ResponseMessage(
                     Request.RequestId,
                     Request.Version,
                     Request.Parameters.UserName,

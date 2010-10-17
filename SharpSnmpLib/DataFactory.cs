@@ -101,8 +101,8 @@ namespace Lextm.SharpSnmpLib
                     return new TrapV2Pdu(stream);
                 case SnmpType.GetRequestPdu:
                     return new GetRequestPdu(stream);
-                case SnmpType.GetResponsePdu:
-                    return new GetResponsePdu(stream);
+                case SnmpType.ResponsePdu:
+                    return new ResponsePdu(stream);
                 case SnmpType.GetBulkRequestPdu:
                     return new GetBulkRequestPdu(stream);
                 case SnmpType.GetNextRequestPdu:

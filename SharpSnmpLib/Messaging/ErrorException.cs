@@ -76,7 +76,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("info");
             }
             
-            Body = (GetResponseMessage)info.GetValue("Body", typeof(GetResponseMessage));
+            Body = (ResponseMessage)info.GetValue("Body", typeof(ResponseMessage));
         }
         
         /// <summary>

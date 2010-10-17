@@ -38,7 +38,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// </summary>
         internal override void HandleAuthenticationFailure()
         {
-            Response = new GetResponseMessage(
+            Response = new ResponseMessage(
                 Request.Version,
                 new Header(
                     new Integer32(Request.MessageId),
@@ -55,7 +55,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 new Scope(
                     Objects.EngineId,
                     OctetString.Empty,
-                    new GetResponsePdu(
+                    new ResponsePdu(
                         Request.RequestId,
                         ErrorCode.AuthorizationError,
                         0,
@@ -154,12 +154,12 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 return;
             }
 
-            GetResponseMessage response;
+            ResponseMessage response;
             IPrivacyProvider privacy = Users.Find(Request.Parameters.UserName);
             if (data.ErrorStatus == ErrorCode.NoError)
             {
                 // for v3
-                response = new GetResponseMessage(
+                response = new ResponseMessage(
                     Request.Version,
                     new Header(
                         new Integer32(Request.MessageId),
@@ -176,7 +176,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                     new Scope(
                         Objects.EngineId,
                         OctetString.Empty,
-                        new GetResponsePdu(
+                        new ResponsePdu(
                             Request.RequestId,
                             ErrorCode.NoError,
                             0,
@@ -185,7 +185,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
             }
             else
             {
-                response = new GetResponseMessage(
+                response = new ResponseMessage(
                     Request.Version,
                     new Header(
                         new Integer32(Request.MessageId),
@@ -202,7 +202,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                     new Scope(
                         Objects.EngineId,
                         OctetString.Empty,
-                        new GetResponsePdu(
+                        new ResponsePdu(
                             Request.RequestId,
                             data.ErrorStatus,
                             data.ErrorIndex,
@@ -212,7 +212,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
 
             if (response.ToBytes().Length > MaxResponseSize)
             {
-                response = new GetResponseMessage(
+                response = new ResponseMessage(
                     Request.Version,
                     new Header(
                         new Integer32(Request.MessageId),
@@ -229,7 +229,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                     new Scope(
                         Objects.EngineId,
                         OctetString.Empty,
-                        new GetResponsePdu(
+                        new ResponsePdu(
                             Request.RequestId,
                             ErrorCode.TooBig,
                             0,

@@ -115,7 +115,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 message = ParseMessages(m, registry)[0];
             }
 
-            if (message.Pdu.TypeCode == SnmpType.GetResponsePdu || message.Pdu.TypeCode == SnmpType.ReportPdu)
+            if (message.Pdu.TypeCode == SnmpType.ResponsePdu || message.Pdu.TypeCode == SnmpType.ReportPdu)
             {
                 if (message.MessageId != number)
                 {
@@ -298,8 +298,8 @@ namespace Lextm.SharpSnmpLib.Messaging
                     return new TrapV2Message(version, header, parameters, scope, privacy);
                 case SnmpType.GetRequestPdu:
                     return new GetRequestMessage(version, header, parameters, scope, privacy);
-                case SnmpType.GetResponsePdu:
-                    return new GetResponseMessage(version, header, parameters, scope, privacy);
+                case SnmpType.ResponsePdu:
+                    return new ResponseMessage(version, header, parameters, scope, privacy);
                 case SnmpType.SetRequestPdu:
                     return new SetRequestMessage(version, header, parameters, scope, privacy);
                 case SnmpType.GetNextRequestPdu:
