@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Lextm.SharpSnmpLib.Pipeline
 {
@@ -21,17 +22,24 @@ namespace Lextm.SharpSnmpLib.Pipeline
             foreach (Variable v in context.Request.Pdu.Variables)
             {
                 index++;
-                ScalarObject next = store.GetNextObject(v.Id);
-                if (next == null)
+                try
                 {
-                    status = ErrorCode.NoSuchName;
+                    ScalarObject next = store.GetNextObject(v.Id);
+                    if (next == null)
+                    {
+                        status = ErrorCode.NoSuchName;
+                    }
+                    else
+                    {
+                        // TODO: how to handle write only object here?
+                        result.Add(next.Variable);
+                    }
                 }
-                else
+                catch (Exception)
                 {
-                    // TODO: how to handle write only object here?
-                    result.Add(next.Variable);
+                    return new ResponseData(context.Request.Pdu.Variables, ErrorCode.GenError, index);
                 }
-
+                
                 if (status != ErrorCode.NoError)
                 {
                     return new ResponseData(null, status, index);
