@@ -4,7 +4,7 @@ using Lextm.SharpSnmpLib.Pipeline;
 namespace Lextm.SharpSnmpLib.Objects
 {
     /// <summary>
-    /// SysContact object.
+    /// sysContact object.
     /// </summary>
     public class SysContact : ScalarObject
     {

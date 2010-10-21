@@ -3,7 +3,7 @@ using Lextm.SharpSnmpLib.Pipeline;
 namespace Lextm.SharpSnmpLib.Objects
 {
     /// <summary>
-    /// SysObjectId object.
+    /// sysObjectId object.
     /// </summary>
     public class SysObjectId : ScalarObject
     {

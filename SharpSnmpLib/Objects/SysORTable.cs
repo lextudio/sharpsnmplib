@@ -3,11 +3,17 @@ using Lextm.SharpSnmpLib.Pipeline;
 
 namespace Lextm.SharpSnmpLib.Objects
 {
+    /// <summary>
+    /// sysORTable object.
+    /// </summary>
     public class SysORTable : TableObject
     {
         // "1.3.6.1.2.1.1.9.1"
         private readonly IList<ScalarObject> _elements = new List<ScalarObject>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SysORTable"/> class.
+        /// </summary>
         public SysORTable()
         {
             _elements.Add(new SysORIndex(1));
@@ -20,6 +26,10 @@ namespace Lextm.SharpSnmpLib.Objects
             _elements.Add(new SysORUpTime(2, new TimeTicks(2)));
         }
 
+        /// <summary>
+        /// Gets the objects in the table.
+        /// </summary>
+        /// <value>The objects.</value>
         protected override IEnumerable<ScalarObject> Objects
         {
             get { return _elements; }

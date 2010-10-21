@@ -4,7 +4,7 @@ using Lextm.SharpSnmpLib.Pipeline;
 namespace Lextm.SharpSnmpLib.Objects
 {
     /// <summary>
-    /// SysName object.
+    /// sysName object.
     /// </summary>
     public class SysName : ScalarObject
     {

@@ -5,7 +5,7 @@ using Lextm.SharpSnmpLib.Pipeline;
 namespace Lextm.SharpSnmpLib.Objects
 {
     /// <summary>
-    /// SysDescr object.
+    /// sysDescr object.
     /// </summary>
     public class SysDescr : ScalarObject
     {

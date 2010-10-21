@@ -4,7 +4,7 @@ using Lextm.SharpSnmpLib.Pipeline;
 namespace Lextm.SharpSnmpLib.Objects
 {
     /// <summary>
-    /// SysUpTime object.
+    /// sysUpTime object.
     /// </summary>
     public class SysUpTime : ScalarObject
     {

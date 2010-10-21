@@ -35,6 +35,8 @@ namespace Lextm.SharpSnmpLib.Agent
         public MainForm()
         {
             _engine = Program.Container.Resolve<SnmpEngine>();
+            _engine.ExceptionRaised += (sender, e) => MessageBox.Show(e.Exception.ToString());
+
             // TODO: this is a hack. review it later.
             var store = Program.Container.Resolve<ObjectStore>();
             store.Add(new SysDescr());

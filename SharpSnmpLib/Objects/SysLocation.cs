@@ -4,7 +4,7 @@ using Lextm.SharpSnmpLib.Pipeline;
 namespace Lextm.SharpSnmpLib.Objects
 {
     /// <summary>
-    /// SysLocation object.
+    /// sysLocation object.
     /// </summary>
     public class SysLocation : ScalarObject
     {
