@@ -11,14 +11,38 @@ using NUnit.Framework;
 namespace Lextm.SharpSnmpLib.Tests
 {
     [TestFixture]
-    public class TestGetNextMessageHandler
+    public class TestGetV1MessageHandler
     {
+        [Test]
+        public void NoSuchName()
+        {
+            var handler = new GetV1MessageHandler();
+            var context = SnmpContextFactory.Create(
+                new GetRequestMessage(
+                    300,
+                    VersionCode.V1,
+                    new OctetString("lextm"),
+                    new List<Variable>
+                        {
+                            new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0"))
+                        }
+                    ),
+                new IPEndPoint(IPAddress.Loopback, 100),
+                UserRegistry.Default,
+                null,
+                null);
+            var store = new ObjectStore();
+            handler.Handle(context, store);
+            var noSuchName = (ResponseMessage)context.Response;
+            Assert.AreEqual(ErrorCode.NoSuchName, noSuchName.ErrorStatus);
+        }
+
         [Test]
         public void NoError()
         {
-            var handler = new GetNextMessageHandler();
+            var handler = new GetV1MessageHandler();
             var context = SnmpContextFactory.Create(
-                new GetNextRequestMessage(
+                new GetRequestMessage(
                     300,
                     VersionCode.V1,
                     new OctetString("lextm"),
@@ -33,51 +57,22 @@ namespace Lextm.SharpSnmpLib.Tests
                 null);
             var store = new ObjectStore();
             store.Add(new SysDescr());
-            store.Add(new SysObjectId());
             handler.Handle(context, store);
             var noerror = (ResponseMessage)context.Response;
             Assert.AreEqual(ErrorCode.NoError, noerror.ErrorStatus);
-            Assert.AreEqual(new ObjectIdentifier("1.3.6.1.2.1.1.2.0"), noerror.Variables[0].Id);
         }
 
         [Test]
         public void GenError()
         {
-            var handler = new GetNextMessageHandler();
+            var handler = new GetV1MessageHandler();
             var mock = new Mock<ScalarObject>(new ObjectIdentifier("1.3.6.1.2.1.1.2.0"));
             mock.Setup(foo => foo.Data).Throws<Exception>();
             mock.Setup(foo => foo.MatchGet(new ObjectIdentifier("1.3.6.1.2.1.1.2.0"))).Returns(mock.Object);
-            mock.Setup(foo => foo.MatchGetNext(new ObjectIdentifier("1.3.6.1.2.1.1.1.0"))).Returns(mock.Object);
             var store = new ObjectStore();
-            store.Add(new SysDescr());
             store.Add(mock.Object);
             var context = SnmpContextFactory.Create(
-                new GetNextRequestMessage(
-                    300,
-                    VersionCode.V1,
-                    new OctetString("lextm"),
-                    new List<Variable>
-                        {
-                            new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0"))
-                        }
-                    ),
-                new IPEndPoint(IPAddress.Loopback, 100),
-                UserRegistry.Default,
-                null,
-                null);
-            handler.Handle(context, store);
-            var genError = (ResponseMessage)context.Response;
-            Assert.AreEqual(ErrorCode.GenError, genError.ErrorStatus);
-        }
-
-        [Test]
-        public void EndOfMibView()
-        {
-            var handler = new GetNextMessageHandler();
-            var store = new ObjectStore();
-            store.Add(new SysDescr());
-            var context = SnmpContextFactory.Create(
-                new GetNextRequestMessage(
+                new GetRequestMessage(
                     300,
                     VersionCode.V1,
                     new OctetString("lextm"),
@@ -91,9 +86,8 @@ namespace Lextm.SharpSnmpLib.Tests
                 null,
                 null);
             handler.Handle(context, store);
-            var endOfMibView = (ResponseMessage)context.Response;
-            Assert.AreEqual(new ObjectIdentifier("1.3.6.1.2.1.1.2.0"), endOfMibView.Variables[0].Id);
-            Assert.AreEqual(new EndOfMibView(), endOfMibView.Variables[0].Data);
+            var genError = (ResponseMessage)context.Response;
+            Assert.AreEqual(ErrorCode.GenError, genError.ErrorStatus);
         }
     }
 }

@@ -6,7 +6,9 @@ namespace Lextm.SharpSnmpLib.Pipeline
     /// <summary>
     /// Message handler for INFORM.
     /// </summary>    
+// ReSharper disable ClassNeverInstantiated.Global
     public class InformMessageHandler : IMessageHandler
+// ReSharper restore ClassNeverInstantiated.Global
     {
         /// <summary>
         /// Handles the specified message.
@@ -14,7 +16,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <param name="context">The context.</param>
         /// <param name="store">The object store.</param>
         /// <returns></returns>
-        public ResponseData Handle(SnmpContext context, ObjectStore store)
+        public void Handle(SnmpContext context, ObjectStore store)
         {
             if (store == null)
             {
@@ -27,7 +29,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
             }
             
             InvokeMessageReceived(new MessageReceivedEventArgs<InformRequestMessage>(context.Sender, (InformRequestMessage)context.Request, context.Binding));
-            return new ResponseData(context.Request.Pdu.Variables, ErrorCode.NoError, 0);
+            context.CopyRequest(ErrorCode.NoError, 0);
         }
 
         /// <summary>

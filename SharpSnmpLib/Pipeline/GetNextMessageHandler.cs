@@ -18,7 +18,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <param name="store">The object store.</param>
         /// <returns></returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-        public ResponseData Handle(SnmpContext context, ObjectStore store)
+        public void Handle(SnmpContext context, ObjectStore store)
         {
             int index = 0;
             IList<Variable> result = new List<Variable>();
@@ -32,11 +32,12 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 }
                 catch (Exception)
                 {
-                    return new ResponseData(context.Request.Pdu.Variables, ErrorCode.GenError, index);
+                    context.CopyRequest(ErrorCode.GenError, index);
+                    return;
                 }
             }
 
-            return new ResponseData(result, ErrorCode.NoError, index);
+            context.GenerateResponse(result);
         }
     }
 }

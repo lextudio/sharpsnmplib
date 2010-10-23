@@ -6,7 +6,12 @@ namespace Lextm.SharpSnmpLib.Pipeline
     /// <summary>
     /// GET message handler.
     /// </summary>
+    /// <remarks>
+    /// Follows RFC 1157, 4.1.2
+    /// </remarks>
+// ReSharper disable UnusedMember.Global
     public class GetV1MessageHandler : IMessageHandler
+// ReSharper restore UnusedMember.Global
     {
         /// <summary>
         /// Handles the specified message.
@@ -15,7 +20,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <param name="store">The object store.</param>
         /// <returns></returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-        public ResponseData Handle(SnmpContext context, ObjectStore store)
+        public void Handle(SnmpContext context, ObjectStore store)
         {
             ErrorCode status = ErrorCode.NoError;
             int index = 0;
@@ -37,7 +42,8 @@ namespace Lextm.SharpSnmpLib.Pipeline
                     }
                     catch (Exception)
                     {
-                        status = ErrorCode.GenError;
+                        context.CopyRequest(ErrorCode.GenError, index);
+                        return;
                     }
                 }
                 else
@@ -47,11 +53,12 @@ namespace Lextm.SharpSnmpLib.Pipeline
 
                 if (status != ErrorCode.NoError)
                 {
-                    return new ResponseData(null, status, index);
+                    context.CopyRequest(status, index);
+                    return;
                 }
             }
 
-            return new ResponseData(result, status, index);
+            context.GenerateResponse(result);
         }
     }
 }

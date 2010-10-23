@@ -13,9 +13,8 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <param name="context">The context.</param>
         /// <param name="store">The object store.</param>
         /// <returns></returns>
-        public ResponseData Handle(SnmpContext context, ObjectStore store)
+        public void Handle(SnmpContext context, ObjectStore store)
         {
-            return new ResponseData(null, ErrorCode.NoError, 0);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using System.Net;
+﻿using System;
+using System.Collections.Generic;
+using System.Net;
 using Lextm.SharpSnmpLib.Messaging;
 using Lextm.SharpSnmpLib.Security;
 
@@ -39,6 +41,35 @@ namespace Lextm.SharpSnmpLib.Pipeline
         }
 
         /// <summary>
+        /// Copies the request variable bindings to response.
+        /// </summary>
+        /// <param name="status">The status.</param>
+        /// <param name="index">The index.</param>
+        internal override void CopyRequest(ErrorCode status, int index)
+        {
+            var response = new ResponseMessage(
+                Request.RequestId,
+                Request.Version,
+                Request.Parameters.UserName,
+                status,
+                index,
+                Request.Pdu.Variables);
+
+            if (response.ToBytes().Length > MaxResponseSize)
+            {
+                response = new ResponseMessage(
+                    Request.RequestId,
+                    Request.Version,
+                    Request.Parameters.UserName,
+                    ErrorCode.TooBig,
+                    0,
+                    Request.Pdu.Variables);
+            }
+
+            Response = response;
+        }
+
+        /// <summary>
         /// Handles the membership.
         /// </summary>
         /// <returns>Always returns <code>false</code>.</returns>
@@ -50,35 +81,16 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <summary>
         /// Generates the response.
         /// </summary>
-        /// <param name="data">The data.</param>
-        internal override void GenerateResponse(ResponseData data)
+        /// <param name="variables">The variables.</param>
+        internal override void GenerateResponse(IList<Variable> variables)
         {
-            if (!data.HasResponse)
-            {
-                return;
-            }
-
-            ResponseMessage response;
-            if (data.ErrorStatus == ErrorCode.NoError)
-            {
-                response = new ResponseMessage(
-                    Request.RequestId,
-                    Request.Version,
-                    Request.Parameters.UserName,
-                    ErrorCode.NoError,
-                    0,
-                    data.Variables);
-            }
-            else
-            {
-                response = new ResponseMessage(
-                    Request.RequestId,
-                    Request.Version,
-                    Request.Parameters.UserName,
-                    data.ErrorStatus,
-                    data.ErrorIndex,
-                    Request.Pdu.Variables);
-            }
+            ResponseMessage response = new ResponseMessage(
+                Request.RequestId,
+                Request.Version,
+                Request.Parameters.UserName,
+                ErrorCode.NoError,
+                0,
+                variables);
 
             if (response.ToBytes().Length > MaxResponseSize)
             {

@@ -19,7 +19,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <param name="users">The users.</param>
         /// <param name="group">The engine core group.</param>
         /// <param name="binding">The binding.</param>
-        public SecureSnmpContext(ISnmpMessage request, IPEndPoint sender, UserRegistry users, EngineGroup @group, IListenerBinding binding)
+        public SecureSnmpContext(ISnmpMessage request, IPEndPoint sender, UserRegistry users, EngineGroup group, IListenerBinding binding)
             : base(request, sender, users, group, binding)
         {
         }
@@ -61,6 +61,62 @@ namespace Lextm.SharpSnmpLib.Pipeline
                         0,
                         Request.Pdu.Variables)),
                 DefaultPrivacyProvider.DefaultPair);
+        }
+
+        internal override void CopyRequest(ErrorCode status, int index)
+        {
+            IPrivacyProvider privacy = Users.Find(Request.Parameters.UserName);
+            var response = new ResponseMessage(
+                    Request.Version,
+                    new Header(
+                        new Integer32(Request.MessageId),
+                        new Integer32(Messenger.MaxMessageSize),
+                        new OctetString(new[] { (byte)Levels.Reportable }),
+                        new Integer32(3)),
+                    new SecurityParameters(
+                        Group.EngineId,
+                        new Integer32(Group.EngineBoots),
+                        new Integer32(Group.EngineTime),
+                        Request.Parameters.UserName,
+                        privacy.AuthenticationProvider.CleanDigest,
+                        privacy.Salt),
+                    new Scope(
+                        Group.EngineId,
+                        OctetString.Empty,
+                        new ResponsePdu(
+                            Request.RequestId,
+                            status,
+                            index,
+                            Request.Pdu.Variables)),
+                    privacy);
+            if (response.ToBytes().Length > MaxResponseSize)
+            {
+                response = new ResponseMessage(
+                    Request.Version,
+                    new Header(
+                        new Integer32(Request.MessageId),
+                        new Integer32(Messenger.MaxMessageSize),
+                        new OctetString(new[] { (byte)Levels.Reportable }),
+                        new Integer32(3)),
+                    new SecurityParameters(
+                        Group.EngineId,
+                        new Integer32(Group.EngineBoots),
+                        new Integer32(Group.EngineTime),
+                        Request.Parameters.UserName,
+                        privacy.AuthenticationProvider.CleanDigest,
+                        privacy.Salt),
+                    new Scope(
+                        Group.EngineId,
+                        OctetString.Empty,
+                        new ResponsePdu(
+                            Request.RequestId,
+                            ErrorCode.TooBig,
+                            0,
+                            Request.Pdu.Variables)),
+                    privacy);
+            }
+
+            Response = response;
         }
 
         /// <summary>
@@ -146,69 +202,35 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <summary>
         /// Generates the response.
         /// </summary>
-        /// <param name="data">The data.</param>
-        internal override void GenerateResponse(ResponseData data)
+        /// <param name="variables">The variables.</param>
+        internal override void GenerateResponse(IList<Variable> variables)
         {
-            if (!data.HasResponse)
-            {
-                return;
-            }
-
-            ResponseMessage response;
             IPrivacyProvider privacy = Users.Find(Request.Parameters.UserName);
-            if (data.ErrorStatus == ErrorCode.NoError)
-            {
-                // for v3
-                response = new ResponseMessage(
-                    Request.Version,
-                    new Header(
-                        new Integer32(Request.MessageId),
-                        new Integer32(Messenger.MaxMessageSize),
-                        new OctetString(new[] { (byte)Levels.Reportable }),
-                        new Integer32(3)),
-                    new SecurityParameters(
-                        Group.EngineId,
-                        new Integer32(Group.EngineBoots),
-                        new Integer32(Group.EngineTime),
-                        Request.Parameters.UserName,
-                        privacy.AuthenticationProvider.CleanDigest,
-                        privacy.Salt),
-                    new Scope(
-                        Group.EngineId,
-                        OctetString.Empty,
-                        new ResponsePdu(
-                            Request.RequestId,
-                            ErrorCode.NoError,
-                            0,
-                            data.Variables)),
-                    privacy);
-            }
-            else
-            {
-                response = new ResponseMessage(
-                    Request.Version,
-                    new Header(
-                        new Integer32(Request.MessageId),
-                        new Integer32(Messenger.MaxMessageSize),
-                        new OctetString(new[] { (byte)Levels.Reportable }),
-                        new Integer32(3)),
-                    new SecurityParameters(
-                        Group.EngineId,
-                        new Integer32(Group.EngineBoots),
-                        new Integer32(Group.EngineTime),
-                        Request.Parameters.UserName,
-                        privacy.AuthenticationProvider.CleanDigest,
-                        privacy.Salt),
-                    new Scope(
-                        Group.EngineId,
-                        OctetString.Empty,
-                        new ResponsePdu(
-                            Request.RequestId,
-                            data.ErrorStatus,
-                            data.ErrorIndex,
-                            Request.Pdu.Variables)),
-                    privacy);
-            }
+
+            // for v3
+            ResponseMessage response = new ResponseMessage(
+                Request.Version,
+                new Header(
+                    new Integer32(Request.MessageId),
+                    new Integer32(Messenger.MaxMessageSize),
+                    new OctetString(new[] {(byte) Levels.Reportable}),
+                    new Integer32(3)),
+                new SecurityParameters(
+                    Group.EngineId,
+                    new Integer32(Group.EngineBoots),
+                    new Integer32(Group.EngineTime),
+                    Request.Parameters.UserName,
+                    privacy.AuthenticationProvider.CleanDigest,
+                    privacy.Salt),
+                new Scope(
+                    Group.EngineId,
+                    OctetString.Empty,
+                    new ResponsePdu(
+                        Request.RequestId,
+                        ErrorCode.NoError,
+                        0,
+                        variables)),
+                privacy);
 
             if (response.ToBytes().Length > MaxResponseSize)
             {
@@ -217,7 +239,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                     new Header(
                         new Integer32(Request.MessageId),
                         new Integer32(Messenger.MaxMessageSize),
-                        new OctetString(new[] { (byte)Levels.Reportable }),
+                        new OctetString(new[] {(byte) Levels.Reportable}),
                         new Integer32(3)),
                     new SecurityParameters(
                         Group.EngineId,

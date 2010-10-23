@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using Lextm.SharpSnmpLib.Messaging;
 using Lextm.SharpSnmpLib.Security;
@@ -102,8 +103,15 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <summary>
         /// Generates the response.
         /// </summary>
-        /// <param name="data">The data.</param>
-        internal abstract void GenerateResponse(ResponseData data);
+        /// <param name="variables">The variables.</param>
+        internal abstract void GenerateResponse(IList<Variable> variables);
+
+        /// <summary>
+        /// Copies the request variable bindings to response.
+        /// </summary>
+        /// <param name="status">The status.</param>
+        /// <param name="index">The index.</param>
+        internal abstract void CopyRequest(ErrorCode status, int index);
 
         /// <summary>
         /// Handles the membership authentication.

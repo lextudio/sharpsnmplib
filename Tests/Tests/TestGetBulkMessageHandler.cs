@@ -39,7 +39,8 @@ namespace Lextm.SharpSnmpLib.Tests
             store.Add(new SysUpTime());
             store.Add(new SysContact());
             store.Add(new SysName());
-            var noerror = handler.Handle(context, store);
+            handler.Handle(context, store);
+            var noerror = (ResponseMessage)context.Response;
             Assert.AreEqual(ErrorCode.NoError, noerror.ErrorStatus);
             Assert.AreEqual(new ObjectIdentifier("1.3.6.1.2.1.1.2.0"), noerror.Variables[0].Id);
             Assert.AreEqual(new ObjectIdentifier("1.3.6.1.2.1.1.3.0"), noerror.Variables[1].Id);
@@ -73,7 +74,8 @@ namespace Lextm.SharpSnmpLib.Tests
                 UserRegistry.Default,
                 null,
                 null);
-            var genError = handler.Handle(context, store);
+            handler.Handle(context, store);
+            var genError = (ResponseMessage)context.Response;
             Assert.AreEqual(ErrorCode.GenError, genError.ErrorStatus);
         }
 
@@ -99,7 +101,8 @@ namespace Lextm.SharpSnmpLib.Tests
                 UserRegistry.Default,
                 null,
                 null);
-            var endOfMibView = handler.Handle(context, store);
+            handler.Handle(context, store);
+            var endOfMibView = (ResponseMessage)context.Response;
             Assert.AreEqual(new ObjectIdentifier("1.3.6.1.2.1.1.2.0"), endOfMibView.Variables[0].Id);
             Assert.AreEqual(new EndOfMibView(), endOfMibView.Variables[0].Data);
         }
@@ -131,7 +134,8 @@ namespace Lextm.SharpSnmpLib.Tests
             store.Add(new SysUpTime());
             store.Add(new SysContact());
             store.Add(new SysName());
-            var noerror = handler.Handle(context, store);
+            handler.Handle(context, store);
+            var noerror = (ResponseMessage)context.Response;
             Assert.AreEqual(ErrorCode.NoError, noerror.ErrorStatus);
             Assert.AreEqual(new ObjectIdentifier("1.3.6.1.2.1.1.2.0"), noerror.Variables[0].Id);
             Assert.AreEqual(new ObjectIdentifier("1.3.6.1.2.1.1.4.0"), noerror.Variables[1].Id);

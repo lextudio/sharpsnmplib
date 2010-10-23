@@ -73,7 +73,7 @@
                 return;
             }
 
-            Context.GenerateResponse(_handler.Handle(Context, _store));
+            _handler.Handle(Context, _store);
         }
 
         private void OnMapRequestHandler()

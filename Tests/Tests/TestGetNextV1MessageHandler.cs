@@ -11,12 +11,12 @@ using NUnit.Framework;
 namespace Lextm.SharpSnmpLib.Tests
 {
     [TestFixture]
-    public class TestGetNextMessageHandler
+    public class TestGetNextV1MessageHandler
     {
         [Test]
         public void NoError()
         {
-            var handler = new GetNextMessageHandler();
+            var handler = new GetNextV1MessageHandler();
             var context = SnmpContextFactory.Create(
                 new GetNextRequestMessage(
                     300,
@@ -43,7 +43,7 @@ namespace Lextm.SharpSnmpLib.Tests
         [Test]
         public void GenError()
         {
-            var handler = new GetNextMessageHandler();
+            var handler = new GetNextV1MessageHandler();
             var mock = new Mock<ScalarObject>(new ObjectIdentifier("1.3.6.1.2.1.1.2.0"));
             mock.Setup(foo => foo.Data).Throws<Exception>();
             mock.Setup(foo => foo.MatchGet(new ObjectIdentifier("1.3.6.1.2.1.1.2.0"))).Returns(mock.Object);
@@ -71,9 +71,9 @@ namespace Lextm.SharpSnmpLib.Tests
         }
 
         [Test]
-        public void EndOfMibView()
+        public void NoSuchName()
         {
-            var handler = new GetNextMessageHandler();
+            var handler = new GetNextV1MessageHandler();
             var store = new ObjectStore();
             store.Add(new SysDescr());
             var context = SnmpContextFactory.Create(
@@ -91,9 +91,8 @@ namespace Lextm.SharpSnmpLib.Tests
                 null,
                 null);
             handler.Handle(context, store);
-            var endOfMibView = (ResponseMessage)context.Response;
-            Assert.AreEqual(new ObjectIdentifier("1.3.6.1.2.1.1.2.0"), endOfMibView.Variables[0].Id);
-            Assert.AreEqual(new EndOfMibView(), endOfMibView.Variables[0].Data);
+            var noSuchName = (ResponseMessage)context.Response;
+            Assert.AreEqual(ErrorCode.NoSuchName, noSuchName.ErrorStatus);
         }
     }
 }

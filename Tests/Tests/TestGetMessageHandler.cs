@@ -32,7 +32,8 @@ namespace Lextm.SharpSnmpLib.Tests
                 null,
                 null);
             var store = new ObjectStore();
-            var nosuchinstance = handler.Handle(context, store);
+            handler.Handle(context, store);
+            var nosuchinstance = (ResponseMessage)context.Response;
             Assert.AreEqual(new NoSuchInstance(), nosuchinstance.Variables[0].Data);
         }
 
@@ -56,7 +57,8 @@ namespace Lextm.SharpSnmpLib.Tests
                 null);
             var store = new ObjectStore();
             store.Add(new SysDescr());
-            var noerror = handler.Handle(context, store);
+            handler.Handle(context, store);
+            var noerror = (ResponseMessage)context.Response;
             Assert.AreEqual(ErrorCode.NoError, noerror.ErrorStatus);
         }
 
@@ -83,7 +85,8 @@ namespace Lextm.SharpSnmpLib.Tests
                 UserRegistry.Default,
                 null,
                 null);
-            var genError = handler.Handle(context, store);
+            handler.Handle(context, store);
+            var genError = (ResponseMessage)context.Response;
             Assert.AreEqual(ErrorCode.GenError, genError.ErrorStatus);
         }
 
@@ -110,7 +113,8 @@ namespace Lextm.SharpSnmpLib.Tests
                 UserRegistry.Default,
                 null,
                 null);
-            var noSuchObject = handler.Handle(context, store);
+            handler.Handle(context, store);
+            var noSuchObject = (ResponseMessage)context.Response;
             Assert.AreEqual(new NoSuchObject(), noSuchObject.Variables[0].Data);
         }
     }

@@ -14,7 +14,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <param name="context">The context.</param>
         /// <param name="store">The object store.</param>
         /// <returns></returns>
-        public ResponseData Handle(SnmpContext context, ObjectStore store)
+        public void Handle(SnmpContext context, ObjectStore store)
         {
             IList<Variable> result = new List<Variable>();
             int index = 0;
@@ -30,7 +30,8 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 }
                 catch (Exception)
                 {
-                    return new ResponseData(context.Request.Pdu.Variables, ErrorCode.GenError, index);
+                    context.CopyRequest(ErrorCode.GenError, index);
+                    return;
                 }
             }
 
@@ -58,12 +59,13 @@ namespace Lextm.SharpSnmpLib.Pipeline
                     }
                     catch (Exception)
                     {
-                        return new ResponseData(context.Request.Pdu.Variables, ErrorCode.GenError, index);
+                        context.CopyRequest(ErrorCode.GenError, index);
+                        return;
                     }
                 }
             }
 
-            return new ResponseData(result, ErrorCode.NoError, 0);
+            context.GenerateResponse(result);
         }
     }
 }

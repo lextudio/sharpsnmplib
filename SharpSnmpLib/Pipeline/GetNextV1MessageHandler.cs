@@ -6,7 +6,12 @@ namespace Lextm.SharpSnmpLib.Pipeline
     /// <summary>
     /// GET NEXT message handler.
     /// </summary>    
+    /// <remarks>
+    /// Follows RFC 1157, 4.1.3
+    /// </remarks>
+// ReSharper disable UnusedMember.Global
     public class GetNextV1MessageHandler : IMessageHandler
+// ReSharper restore UnusedMember.Global
     {
         /// <summary>
         /// Handles the specified message.
@@ -14,7 +19,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <param name="context">The context.</param>
         /// <param name="store">The object store.</param>
         /// <returns></returns>
-        public ResponseData Handle(SnmpContext context, ObjectStore store)
+        public void Handle(SnmpContext context, ObjectStore store)
         {
             ErrorCode status = ErrorCode.NoError;
             int index = 0;
@@ -37,16 +42,18 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 }
                 catch (Exception)
                 {
-                    return new ResponseData(context.Request.Pdu.Variables, ErrorCode.GenError, index);
+                    context.CopyRequest(ErrorCode.GenError, index);
+                    return;
                 }
                 
                 if (status != ErrorCode.NoError)
                 {
-                    return new ResponseData(null, status, index);
+                    context.CopyRequest(status, index);
+                    return;
                 }
             }
 
-            return new ResponseData(result, status, index);
+            context.GenerateResponse(result);
         }
     }
 }

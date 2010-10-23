@@ -106,7 +106,6 @@
     <Compile Include="Pipeline\NormalSnmpContext.cs" />
     <Compile Include="Pipeline\NullMessageHandler.cs" />
     <Compile Include="Pipeline\ObjectStore.cs" />
-    <Compile Include="Pipeline\ResponseData.cs" />
     <Compile Include="Pipeline\ScalarObject.cs" />
     <Compile Include="Pipeline\SecureSnmpContext.cs" />
     <Compile Include="Pipeline\SetV1MessageHandler.cs" />

@@ -65,6 +65,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Tests\TestGetV1MessageHandler.cs" />
+    <Compile Include="Tests\TestGetNextV1MessageHandler.cs" />
     <Compile Include="Tests\TestDESPrivacyProvider.cs" />
     <Compile Include="Tests\TestEndOfMibView.cs" />
     <Compile Include="Tests\TestGetBulkMessageHandler.cs" />
@@ -91,6 +93,7 @@
     <Compile Include="Tests\TestObjectRegistry.cs" />
     <Compile Include="Tests\TestObjectTree.cs" />
     <Compile Include="Tests\TestSecurityRecord.cs" />
+    <Compile Include="Tests\TestSetV1MessageHandler.cs" />
     <Compile Include="Tests\TestStringUtilities.cs" />
     <Compile Include="Tests\TestOctetString.cs" />
     <Compile Include="Tests\TestOpaque.cs" />
