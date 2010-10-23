@@ -38,7 +38,6 @@ namespace Lextm.SharpSnmpLib.Messaging
     public class InformRequestMessage : ISnmpMessage
     {
         private readonly Header _header;
-        private readonly IPrivacyProvider _privacy;
 
         /// <summary>
         /// Creates a <see cref="InformRequestMessage"/> with all contents.
@@ -83,7 +82,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 time,
                 variables);
             Scope = new Scope(pdu);
-            _privacy = DefaultPrivacyProvider.DefaultPair;
+            Privacy = DefaultPrivacyProvider.DefaultPair;
         }
 
         /// <summary>
@@ -152,7 +151,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             Version = version;
-            _privacy = privacy;
+            Privacy = privacy;
             Enterprise = enterprise;
             TimeStamp = time;
             Levels recordToSecurityLevel = PrivacyProviderExtension.ToSecurityLevel(privacy);
@@ -166,8 +165,8 @@ namespace Lextm.SharpSnmpLib.Messaging
                 report.Parameters.EngineBoots,
                 report.Parameters.EngineTime,
                 userName,
-                _privacy.AuthenticationProvider.CleanDigest,
-                _privacy.Salt);
+                Privacy.AuthenticationProvider.CleanDigest,
+                Privacy.Salt);
             var pdu = new InformRequestPdu(
                 requestId,
                 enterprise,
@@ -202,21 +201,24 @@ namespace Lextm.SharpSnmpLib.Messaging
             _header = header;
             Parameters = parameters;
             Scope = scope;
-            _privacy = privacy;
+            Privacy = privacy;
             InformRequestPdu pdu = (InformRequestPdu)scope.Pdu;
             Enterprise = pdu.Enterprise;
             TimeStamp = pdu.TimeStamp;
         }
-        
+
+        /// <summary>
+        /// Gets the privacy provider.
+        /// </summary>
+        /// <value>The privacy provider.</value>
+        public IPrivacyProvider Privacy { get; private set; }
+
         /// <summary>
         /// Variables.
         /// </summary>
         public IList<Variable> Variables
         {
-            get
-            {
-                return Scope.Pdu.Variables;
-            }
+            get { return Scope.Pdu.Variables; }
         }
 
         /// <summary>
@@ -284,11 +286,11 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("receiver");
             }
 
-            UserRegistry registry = UserRegistry.Default;
+            UserRegistry registry = new UserRegistry();
             if (Version == VersionCode.V3)
             {
-                SnmpMessageExtension.Authenticate(this, _privacy);
-                registry.Add(Parameters.UserName, _privacy);
+                SnmpMessageExtension.Authenticate(this);
+                registry.Add(Parameters.UserName, Privacy);
             }
 
             return MessageFactory.GetResponse(receiver, ToBytes(), MessageId, timeout, registry, udpSocket);
@@ -300,10 +302,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <value>The request ID.</value>
         public int RequestId
         {
-            get
-            {
-                return Scope.Pdu.RequestId.ToInt32();
-            }
+            get { return Scope.Pdu.RequestId.ToInt32(); }
         }
         
         /// <summary>
@@ -325,7 +324,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public byte[] ToBytes()
         {
-            return SnmpMessageExtension.PackMessage(Version, _privacy, _header, Parameters, Scope).ToBytes();
+            return SnmpMessageExtension.PackMessage(Version, Privacy, _header, Parameters, Scope).ToBytes();
         }
 
         /// <summary>
@@ -333,10 +332,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         public ISnmpPdu Pdu
         {
-            get
-            {
-                return Scope.Pdu;
-            }
+            get { return Scope.Pdu; }
         }
 
         /// <summary>

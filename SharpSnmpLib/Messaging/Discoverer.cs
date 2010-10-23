@@ -15,6 +15,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         private long _active;
         private int _bufferSize;
         private int _requestId;
+        private static readonly UserRegistry Empty = new UserRegistry();
 
         /// <summary>
         /// Occurs when an SNMP agent is found.
@@ -158,7 +159,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
         private void HandleMessage(MessageParams param)
         {
-            foreach (ISnmpMessage message in MessageFactory.ParseMessages(param.GetBytes(), 0, param.Number, UserRegistry.Default))
+            foreach (ISnmpMessage message in MessageFactory.ParseMessages(param.GetBytes(), 0, param.Number, Empty))
             {
                 EventHandler<AgentFoundEventArgs> handler;
                 if (message.Pdu.TypeCode == SnmpType.ReportPdu)

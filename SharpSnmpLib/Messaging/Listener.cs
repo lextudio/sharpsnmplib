@@ -101,7 +101,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                     throw new ObjectDisposedException(GetType().FullName);
                 }
                 
-                return _users ?? (_users = UserRegistry.Default);
+                return _users ?? (_users = new UserRegistry());
             }
             
             set

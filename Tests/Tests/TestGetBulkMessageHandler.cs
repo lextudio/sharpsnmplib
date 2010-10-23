@@ -30,7 +30,7 @@ namespace Lextm.SharpSnmpLib.Tests
                         }
                     ),
                 new IPEndPoint(IPAddress.Loopback, 100),
-                UserRegistry.Default,
+                new UserRegistry(),
                 null,
                 null);
             var store = new ObjectStore();
@@ -71,7 +71,7 @@ namespace Lextm.SharpSnmpLib.Tests
                         }
                     ),
                 new IPEndPoint(IPAddress.Loopback, 100),
-                UserRegistry.Default,
+                new UserRegistry(),
                 null,
                 null);
             handler.Handle(context, store);
@@ -98,7 +98,7 @@ namespace Lextm.SharpSnmpLib.Tests
                         }
                     ),
                 new IPEndPoint(IPAddress.Loopback, 100),
-                UserRegistry.Default,
+                new UserRegistry(),
                 null,
                 null);
             handler.Handle(context, store);
@@ -125,7 +125,7 @@ namespace Lextm.SharpSnmpLib.Tests
                         }
                     ),
                 new IPEndPoint(IPAddress.Loopback, 100),
-                UserRegistry.Default,
+                new UserRegistry(),
                 null,
                 null);
             var store = new ObjectStore();

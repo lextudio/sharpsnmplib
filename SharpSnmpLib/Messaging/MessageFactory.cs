@@ -44,7 +44,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         /// <param name="receiver">The IP address and port of the target to talk to.</param>
         /// <param name="bytes">The byte array representing the SNMP message.</param>
-        /// <param name="number">The <see cref="GetResponseMessage.MessageId"/> of the SNMP message.</param>
+        /// <param name="number">The <see cref="ResponseMessage.MessageId"/> of the SNMP message.</param>
         /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
         /// <param name="registry">The registry.</param>
         /// <param name="socket">The UDP <see cref="Socket"/> to use to send/receive.</param>
@@ -238,7 +238,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             if (array.TypeCode != SnmpType.Sequence)
             {
-                throw new ArgumentException("not an SNMP message");
+                throw new SnmpException("not an SNMP message");
             }
 
             Sequence body = (Sequence)array;
@@ -295,21 +295,21 @@ namespace Lextm.SharpSnmpLib.Messaging
                 case SnmpType.TrapV1Pdu:
                     return new TrapV1Message(body);
                 case SnmpType.TrapV2Pdu:
-                    return new TrapV2Message(version, header, parameters, scope, privacy);
+                    return SnmpMessageExtension.Verify(new TrapV2Message(version, header, parameters, scope, privacy));
                 case SnmpType.GetRequestPdu:
-                    return new GetRequestMessage(version, header, parameters, scope, privacy);
+                    return SnmpMessageExtension.Verify(new GetRequestMessage(version, header, parameters, scope, privacy));
                 case SnmpType.ResponsePdu:
-                    return new ResponseMessage(version, header, parameters, scope, privacy);
+                    return SnmpMessageExtension.Verify(new ResponseMessage(version, header, parameters, scope, privacy));
                 case SnmpType.SetRequestPdu:
-                    return new SetRequestMessage(version, header, parameters, scope, privacy);
+                    return SnmpMessageExtension.Verify(new SetRequestMessage(version, header, parameters, scope, privacy));
                 case SnmpType.GetNextRequestPdu:
-                    return new GetNextRequestMessage(version, header, parameters, scope, privacy);
+                    return SnmpMessageExtension.Verify(new GetNextRequestMessage(version, header, parameters, scope, privacy));
                 case SnmpType.GetBulkRequestPdu:
-                    return new GetBulkRequestMessage(version, header, parameters, scope, privacy);
+                    return SnmpMessageExtension.Verify(new GetBulkRequestMessage(version, header, parameters, scope, privacy));
                 case SnmpType.ReportPdu:
-                    return new ReportMessage(version, header, parameters, scope, privacy);
+                    return SnmpMessageExtension.Verify(new ReportMessage(version, header, parameters, scope, privacy));
                 case SnmpType.InformRequestPdu:
-                    return new InformRequestMessage(version, header, parameters, scope, privacy);
+                    return SnmpMessageExtension.Verify(new InformRequestMessage(version, header, parameters, scope, privacy));
                 default:
                     throw new SnmpException("unsupported pdu: " + pdu.TypeCode);
             }

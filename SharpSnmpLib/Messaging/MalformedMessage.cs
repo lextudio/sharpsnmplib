@@ -17,6 +17,7 @@
 
 using System;
 using System.Globalization;
+using Lextm.SharpSnmpLib.Security;
 
 namespace Lextm.SharpSnmpLib.Messaging
 {
@@ -95,6 +96,15 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         /// <value>The message ID.</value>
         public int MessageId { get; private set; }
+
+        /// <summary>
+        /// Gets the privacy provider.
+        /// </summary>
+        /// <value>The privacy provider.</value>
+        public IPrivacyProvider Privacy
+        {
+            get { return null; }
+        }
 
         /// <summary>
         /// Returns a <see cref="System.String"/> that represents this instance.

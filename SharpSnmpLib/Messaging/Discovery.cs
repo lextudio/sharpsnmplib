@@ -40,6 +40,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     public sealed class Discovery
     {
         private readonly GetRequestMessage _discovery;
+        private static readonly UserRegistry Empty = new UserRegistry();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Discovery"/> class.
@@ -85,7 +86,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             
             using (Socket socket = SnmpMessageExtension.GetSocket(receiver))
             {
-                return (ReportMessage)MessageFactory.GetResponse(receiver, ToBytes(), _discovery.MessageId, timeout, UserRegistry.Default, socket);
+                return (ReportMessage)MessageFactory.GetResponse(receiver, ToBytes(), _discovery.MessageId, timeout, Empty, socket);
             }
         }
 

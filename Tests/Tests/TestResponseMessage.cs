@@ -22,7 +22,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestMethod()
         {
             MemoryStream m = new MemoryStream(Resources.getresponse, false);
-            ISnmpMessage message = MessageFactory.ParseMessages(m, UserRegistry.Default)[0];
+            ISnmpMessage message = MessageFactory.ParseMessages(m, new UserRegistry())[0];
             Assert.AreEqual(SnmpType.ResponsePdu, message.Pdu.TypeCode);
             ISnmpPdu pdu = message.Pdu;
             Assert.AreEqual(SnmpType.ResponsePdu, pdu.TypeCode);

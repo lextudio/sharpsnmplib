@@ -29,8 +29,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// </summary>
         protected override void AuthenticateResponse()
         {
-            IPrivacyProvider privacy = Users.Find(Request.Parameters.UserName) ?? DefaultPrivacyProvider.DefaultPair;
-            SnmpMessageExtension.Authenticate(Response, privacy);
+            SnmpMessageExtension.Authenticate(Response);
         }
 
         /// <summary>

@@ -24,6 +24,8 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 
+using Lextm.SharpSnmpLib.Security;
+
 namespace Lextm.SharpSnmpLib.Messaging
 {
     /// <summary>
@@ -72,5 +74,11 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         /// <value>The message ID.</value>       
         int MessageId { get; }
+
+        /// <summary>
+        /// Gets the privacy provider.
+        /// </summary>
+        /// <value>The privacy provider.</value>
+        IPrivacyProvider Privacy { get; }
     }
 }

@@ -33,26 +33,20 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Authenticates this message.
         /// </summary>
         /// <param name="message">The message.</param>
-        /// <param name="privacy">The privacy provider.</param>
-        public static void Authenticate(ISnmpMessage message, IPrivacyProvider privacy)
+        public static void Authenticate(ISnmpMessage message)
         {
             // TODO: make extension method.
             if (message == null)
             {
                 throw new ArgumentNullException("message");
             }
-            
-            if (privacy == null)
-            {
-                throw new ArgumentNullException("privacy");
-            }
-            
+
             if (message.Version != VersionCode.V3)
             {
                 return;
             }
             
-            message.Parameters.AuthenticationParameters = privacy.AuthenticationProvider.ComputeHash(message);
+            message.Parameters.AuthenticationParameters = message.Privacy.AuthenticationProvider.ComputeHash(message);
         }
             
         /// <summary>
@@ -131,6 +125,34 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             return new Socket(endpoint.AddressFamily, SocketType.Dgram, ProtocolType.Udp);
-        }        
+        }
+
+        /// <summary>
+        /// Verifies the message.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        public static ISnmpMessage Verify(ISnmpMessage message)
+        {
+            // TODO: make extension method.
+            if (message == null)
+            {
+                throw new ArgumentNullException("message");
+            }
+
+            if (message.Version != VersionCode.V3)
+            {
+                return message;
+            }
+
+            var expected = message.Parameters.AuthenticationParameters;
+            message.Parameters.AuthenticationParameters = message.Privacy.AuthenticationProvider.CleanDigest;
+            if (message.Privacy.AuthenticationProvider.ComputeHash(message) != expected)
+            {
+                throw new SnmpException("invalid v3 packet data");
+            }
+
+            message.Parameters.AuthenticationParameters = expected;
+            return message;
+        }
     }
 }

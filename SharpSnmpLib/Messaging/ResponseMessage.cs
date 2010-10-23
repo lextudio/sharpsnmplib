@@ -35,7 +35,6 @@ namespace Lextm.SharpSnmpLib.Messaging
     public class ResponseMessage : ISnmpMessage
     {
         private readonly Header _header;
-        private readonly IPrivacyProvider _privacy;
 
         /// <summary>
         /// Creates a <see cref="ResponseMessage"/> with all contents.
@@ -72,7 +71,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 index,
                 variables);
             Scope = new Scope(pdu);
-            _privacy = DefaultPrivacyProvider.DefaultPair;
+            Privacy = DefaultPrivacyProvider.DefaultPair;
         }
 
         /// <summary>
@@ -109,8 +108,14 @@ namespace Lextm.SharpSnmpLib.Messaging
             _header = header;
             Parameters = parameters;
             Scope = scope;
-            _privacy = privacy;
+            Privacy = privacy;
         }
+
+        /// <summary>
+        /// Gets the privacy provider.
+        /// </summary>
+        /// <value>The privacy provider.</value>
+        public IPrivacyProvider Privacy { get; private set; }
 
         /// <summary>
         /// Error status.
@@ -189,7 +194,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public byte[] ToBytes()
         {
-            return SnmpMessageExtension.PackMessage(Version, _privacy, _header, Parameters, Scope).ToBytes();
+            return SnmpMessageExtension.PackMessage(Version, Privacy, _header, Parameters, Scope).ToBytes();
         }
 
         /// <summary>

@@ -29,6 +29,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Net;
 using System.Net.Sockets;
+using Lextm.SharpSnmpLib.Security;
 
 namespace Lextm.SharpSnmpLib.Messaging
 {
@@ -219,6 +220,11 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         /// <value>The message ID.</value>
         public int MessageId
+        {
+            get { throw new NotSupportedException(); }
+        }
+
+        public IPrivacyProvider Privacy
         {
             get { throw new NotSupportedException(); }
         }

@@ -27,7 +27,6 @@ namespace Lextm.SharpSnmpLib.Security
     public sealed class UserRegistry
     {
         private readonly IDictionary<OctetString, User> _users = new Dictionary<OctetString, User>();
-        private static readonly UserRegistry DefaultRegistry = new UserRegistry(null);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UserRegistry"/> class.
@@ -49,12 +48,10 @@ namespace Lextm.SharpSnmpLib.Security
         }
 
         /// <summary>
-        /// Gets the default registry.
+        /// Initializes a new instance of the <see cref="UserRegistry"/> class.
         /// </summary>
-        /// <value>The default registry.</value>
-        public static UserRegistry Default
+        public UserRegistry() : this(null)
         {
-            get { return DefaultRegistry; }
         }
 
         /// <summary>

@@ -15,10 +15,6 @@
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Sockets;
 /*
  * Created by SharpDevelop.
  * User: lextm
@@ -27,6 +23,7 @@ using System.Net.Sockets;
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
+using System;
 using Lextm.SharpSnmpLib.Security;
 
 namespace Lextm.SharpSnmpLib.Messaging
@@ -90,6 +87,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             get { return _parameters; }
         }
         
+/*
         /// <summary>
         /// Variables.
         /// </summary>
@@ -97,7 +95,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             get { return Scope.Pdu.Variables; }
         }
-        
+*/
+
+/*
         /// <summary>
         /// Sends this <see cref="ReportMessage"/> and handles the response from agent.
         /// </summary>
@@ -110,13 +110,15 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new ArgumentNullException("receiver");
             }
-            
+
             using (Socket socket = SnmpMessageExtension.GetSocket(receiver))
             {
                 return GetResponse(timeout, receiver, socket);
             }
         }
+*/
 
+/*
         /// <summary>
         /// Sends this <see cref="ReportMessage"/> and handles the response from agent.
         /// </summary>
@@ -136,8 +138,9 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("receiver");
             }
             
-            return MessageFactory.GetResponse(receiver, ToBytes(), MessageId, timeout, UserRegistry.Default, socket);
+            return MessageFactory.GetResponse(receiver, ToBytes(), MessageId, timeout, new UserRegistry(), socket);
         }
+*/
 
         /// <summary>
         /// Gets the request ID.
@@ -179,7 +182,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public byte[] ToBytes()
         {
-            return SnmpMessageExtension.PackMessage(Version, _privacy, _header, _parameters, Scope).ToBytes();
+            return SnmpMessageExtension.PackMessage(Version, Privacy, _header, _parameters, Scope).ToBytes();
         }
 
         /// <summary>
@@ -189,7 +192,16 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             get { return Scope.Pdu; }
         }
-        
+
+        /// <summary>
+        /// Gets the privacy provider.
+        /// </summary>
+        /// <value>The privacy provider.</value>
+        public IPrivacyProvider Privacy
+        {
+            get { return _privacy; }
+        }
+
         /// <summary>
         /// Returns a <see cref="string"/> that represents this <see cref="ReportMessage"/>.
         /// </summary>

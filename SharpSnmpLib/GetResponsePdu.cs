@@ -69,8 +69,6 @@ namespace Lextm.SharpSnmpLib
             ErrorIndex = (Integer32)DataFactory.CreateSnmpData(stream);
             _varbindSection = (Sequence)DataFactory.CreateSnmpData(stream);
             Variables = Variable.Transform(_varbindSection);
-            ////_raw = ByteTool.ParseItems(_sequenceNumber, _errorStatus, _errorIndex, _varbindSection);
-            ////Debug.Assert(length >= _raw.Length, "length not match");
         }
 
         /// <summary>

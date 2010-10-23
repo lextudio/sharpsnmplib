@@ -30,7 +30,6 @@ namespace Lextm.SharpSnmpLib.Messaging
     public class TrapV2Message : ISnmpMessage
     {
         private readonly Header _header;
-        private readonly IPrivacyProvider _privacy;
 
         /// <summary>
         /// Creates a <see cref="TrapV2Message"/> instance with all content.
@@ -75,7 +74,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 time,
                 variables);
             Scope = new Scope(pdu);
-            _privacy = DefaultPrivacyProvider.DefaultPair;
+            Privacy = DefaultPrivacyProvider.DefaultPair;
         }
 
         /// <summary>
@@ -127,7 +126,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             Version = version;
-            _privacy = privacy;
+            Privacy = privacy;
             Enterprise = enterprise;
             TimeStamp = time;
             Levels recordToSecurityLevel = PrivacyProviderExtension.ToSecurityLevel(privacy);
@@ -140,8 +139,8 @@ namespace Lextm.SharpSnmpLib.Messaging
                 new Integer32(engineBoots), 
                 new Integer32(engineTime), 
                 userName,
-                _privacy.AuthenticationProvider.CleanDigest,
-                _privacy.Salt);
+                Privacy.AuthenticationProvider.CleanDigest,
+                Privacy.Salt);
             var pdu = new TrapV2Pdu(
                 requestId,
                 enterprise,
@@ -176,13 +175,20 @@ namespace Lextm.SharpSnmpLib.Messaging
             _header = header;
             Parameters = parameters;
             Scope = scope;
-            _privacy = privacy;
+            Privacy = privacy;
             TrapV2Pdu pdu = (TrapV2Pdu)Scope.Pdu;
             Enterprise = pdu.Enterprise;
             TimeStamp = pdu.TimeStamp;
         }
         
         #region ISnmpMessage Members
+
+        /// <summary>
+        /// Gets the privacy provider.
+        /// </summary>
+        /// <value>The privacy provider.</value>
+        public IPrivacyProvider Privacy { get; private set; }
+
         /// <summary>
         /// PDU.
         /// </summary>
@@ -213,7 +219,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public byte[] ToBytes()
         {
-            return SnmpMessageExtension.PackMessage(Version, _privacy, _header, Parameters, Scope).ToBytes();
+            return SnmpMessageExtension.PackMessage(Version, Privacy, _header, Parameters, Scope).ToBytes();
         }
 
         #endregion

@@ -29,7 +29,6 @@ namespace Lextm.SharpSnmpLib.Messaging
     public class SetRequestMessage : ISnmpMessage
     {
         private readonly Header _header;
-        private readonly IPrivacyProvider _privacy;
 
         /// <summary>
         /// Creates a <see cref="SetRequestMessage"/> with all contents.
@@ -64,7 +63,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 0,
                 variables);
             Scope = new Scope(pdu);
-            _privacy = DefaultPrivacyProvider.DefaultPair;
+            Privacy = DefaultPrivacyProvider.DefaultPair;
         }
 
         /// <summary>
@@ -122,7 +121,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             Version = version;
-            _privacy = privacy;
+            Privacy = privacy;
             Levels recordToSecurityLevel = PrivacyProviderExtension.ToSecurityLevel(privacy);
             recordToSecurityLevel |= Levels.Reportable;
             byte b = (byte)recordToSecurityLevel;
@@ -134,8 +133,8 @@ namespace Lextm.SharpSnmpLib.Messaging
                 report.Parameters.EngineBoots,
                 report.Parameters.EngineTime,
                 userName,
-                _privacy.AuthenticationProvider.CleanDigest,
-                _privacy.Salt);
+                Privacy.AuthenticationProvider.CleanDigest,
+                Privacy.Salt);
             SetRequestPdu pdu = new SetRequestPdu(
                 requestId,
                 ErrorCode.NoError,
@@ -170,8 +169,14 @@ namespace Lextm.SharpSnmpLib.Messaging
             _header = header;
             Parameters = parameters;
             Scope = scope;
-            _privacy = privacy;
+            Privacy = privacy;
         }
+
+        /// <summary>
+        /// Gets the privacy provider.
+        /// </summary>
+        /// <value>The privacy provider.</value>
+        public IPrivacyProvider Privacy { get; private set; }
 
         /// <summary>
         /// Sends this <see cref="SetRequestMessage"/> and handles the response from agent.
@@ -211,11 +216,11 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("receiver");
             }
 
-            UserRegistry registry = UserRegistry.Default;
+            UserRegistry registry = new UserRegistry();
             if (Version == VersionCode.V3)
             {
-                SnmpMessageExtension.Authenticate(this, _privacy);
-                registry.Add(Parameters.UserName, _privacy);
+                SnmpMessageExtension.Authenticate(this);
+                registry.Add(Parameters.UserName, Privacy);
             }
 
             return MessageFactory.GetResponse(receiver, ToBytes(), MessageId, timeout, registry, socket);
@@ -269,7 +274,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public byte[] ToBytes()
         {
-            return SnmpMessageExtension.PackMessage(Version, _privacy, _header, Parameters, Scope).ToBytes();
+            return SnmpMessageExtension.PackMessage(Version, Privacy, _header, Parameters, Scope).ToBytes();
         }
 
         /// <summary>
