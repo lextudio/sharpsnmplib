@@ -189,7 +189,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public byte[] ToBytes()
         {
-            return Helper.PackMessage(Version, _privacy, _header, Parameters, Scope).ToBytes();
+            return SnmpMessageExtension.PackMessage(Version, _privacy, _header, Parameters, Scope).ToBytes();
         }
 
         /// <summary>

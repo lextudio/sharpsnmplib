@@ -259,7 +259,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("receiver");
             }
 
-            using (Socket socket = Helper.GetSocket(receiver))
+            using (Socket socket = SnmpMessageExtension.GetSocket(receiver))
             {
                 return GetResponse(timeout, receiver, socket);
             }
@@ -287,7 +287,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             UserRegistry registry = UserRegistry.Default;
             if (Version == VersionCode.V3)
             {
-                Helper.Authenticate(this, _privacy);
+                SnmpMessageExtension.Authenticate(this, _privacy);
                 registry.Add(Parameters.UserName, _privacy);
             }
 
@@ -325,7 +325,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public byte[] ToBytes()
         {
-            return Helper.PackMessage(Version, _privacy, _header, Parameters, Scope).ToBytes();
+            return SnmpMessageExtension.PackMessage(Version, _privacy, _header, Parameters, Scope).ToBytes();
         }
 
         /// <summary>

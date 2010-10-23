@@ -27,7 +27,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// <summary>
     /// Helper class.
     /// </summary>
-    public static class Helper
+    public static class SnmpMessageExtension
     {
         /// <summary>
         /// Authenticates this message.
@@ -45,6 +45,11 @@ namespace Lextm.SharpSnmpLib.Messaging
             if (privacy == null)
             {
                 throw new ArgumentNullException("privacy");
+            }
+            
+            if (message.Version != VersionCode.V3)
+            {
+                return;
             }
             
             message.Parameters.AuthenticationParameters = privacy.AuthenticationProvider.ComputeHash(message);

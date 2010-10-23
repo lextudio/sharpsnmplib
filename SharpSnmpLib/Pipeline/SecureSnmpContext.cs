@@ -27,10 +27,10 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <summary>
         /// Authenticates the message.
         /// </summary>
-        protected override void AuthenticateMessage()
+        protected override void AuthenticateResponse()
         {
             IPrivacyProvider privacy = Users.Find(Request.Parameters.UserName) ?? DefaultPrivacyProvider.DefaultPair;
-            Helper.Authenticate(Response, privacy);
+            SnmpMessageExtension.Authenticate(Response, privacy);
         }
 
         /// <summary>

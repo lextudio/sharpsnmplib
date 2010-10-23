@@ -88,7 +88,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 new Integer32(Specific),
                 new TimeTicks(TimeStamp),
                 Variables);
-            _bytes = Helper.PackMessage(Version, Community, pdu).ToBytes();
+            _bytes = SnmpMessageExtension.PackMessage(Version, Community, pdu).ToBytes();
             Parameters = new SecurityParameters(null, null, null, Community, null, null);
         }
         
@@ -137,7 +137,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("manager");
             }
             
-            using (Socket socket = Helper.GetSocket(manager))
+            using (Socket socket = SnmpMessageExtension.GetSocket(manager))
             {
                 Send(manager, socket);
             }
@@ -229,7 +229,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public byte[] ToBytes()
         {
-            return _bytes ?? (_bytes = Helper.PackMessage(Version, Community, Pdu).ToBytes());
+            return _bytes ?? (_bytes = SnmpMessageExtension.PackMessage(Version, Community, Pdu).ToBytes());
         }
 
         /// <summary>

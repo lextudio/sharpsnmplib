@@ -249,6 +249,8 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual("", message.Parameters.PrivacyParameters.ToHexString());
             Assert.AreEqual("", message.Scope.ContextEngineId.ToHexString()); // SNMP#NET returns string.Empty here.
             Assert.AreEqual("", message.Scope.ContextName.ToHexString());
+            Assert.AreEqual(318463383, message.MessageId);
+            Assert.AreEqual(1276263065, message.RequestId);
         }
 
         [Test]
@@ -268,6 +270,9 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual("0000000069D39B2A", message.Parameters.PrivacyParameters.ToHexString());
             Assert.AreEqual("", message.Scope.ContextEngineId.ToHexString()); // SNMP#NET returns string.Empty here.
             Assert.AreEqual("", message.Scope.ContextName.ToHexString());
+            Assert.AreEqual(0, message.Scope.Pdu.Variables.Count);
+            Assert.AreEqual(1004947569, message.MessageId);
+            Assert.AreEqual(234419641, message.RequestId);
         }
     }
 }

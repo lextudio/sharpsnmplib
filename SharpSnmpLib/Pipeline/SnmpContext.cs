@@ -86,14 +86,14 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 return;
             }
 
-            AuthenticateMessage();
+            AuthenticateResponse();
             Binding.SendResponse(Response, Sender);
         }
 
         /// <summary>
         /// Authenticates the message.
         /// </summary>
-        protected abstract void AuthenticateMessage();
+        protected abstract void AuthenticateResponse();
 
         /// <summary>
         /// Handles the authentication failure.

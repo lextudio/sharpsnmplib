@@ -213,7 +213,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public byte[] ToBytes()
         {
-            return Helper.PackMessage(Version, _privacy, _header, Parameters, Scope).ToBytes();
+            return SnmpMessageExtension.PackMessage(Version, _privacy, _header, Parameters, Scope).ToBytes();
         }
 
         #endregion
@@ -229,7 +229,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("manager");
             }
             
-            using (Socket socket = Helper.GetSocket(manager))
+            using (Socket socket = SnmpMessageExtension.GetSocket(manager))
             {
                 Send(manager, socket);
             }

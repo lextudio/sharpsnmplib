@@ -83,7 +83,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("receiver");
             }
             
-            using (Socket socket = Helper.GetSocket(receiver))
+            using (Socket socket = SnmpMessageExtension.GetSocket(receiver))
             {
                 return (ReportMessage)MessageFactory.GetResponse(receiver, ToBytes(), _discovery.MessageId, timeout, UserRegistry.Default, socket);
             }

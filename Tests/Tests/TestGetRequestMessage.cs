@@ -111,7 +111,7 @@ namespace Lextm.SharpSnmpLib.Tests
                 report);
             
             Assert.AreEqual(Levels.Authentication, request.Level);
-            Helper.Authenticate(request, privacy);
+            SnmpMessageExtension.Authenticate(request, privacy);
             Assert.AreEqual(ByteTool.Convert(bytes), request.ToBytes());
         }
 
@@ -153,7 +153,7 @@ namespace Lextm.SharpSnmpLib.Tests
                         new List<Variable>(1) { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0")) })),
                 privacy);
             Assert.AreEqual(Levels.Authentication | Levels.Privacy, request.Level);
-            Helper.Authenticate(request, privacy);
+            SnmpMessageExtension.Authenticate(request, privacy);
             Assert.AreEqual(ByteTool.Convert(bytes), request.ToBytes());
         }
 
@@ -204,7 +204,7 @@ namespace Lextm.SharpSnmpLib.Tests
                         new List<Variable>(1) { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0"), new Null()) })),
                 pair);
             Assert.AreEqual(Levels.Authentication, request.Level);
-            Helper.Authenticate(request, pair);
+            SnmpMessageExtension.Authenticate(request, pair);
             Assert.AreEqual(ByteTool.Convert(bytes), request.ToBytes());
         }
 
@@ -244,7 +244,7 @@ namespace Lextm.SharpSnmpLib.Tests
                         new List<Variable>(1) { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0"), new Null()) })),
                 pair);
             Assert.AreEqual(Levels.Authentication, request.Level);
-            Helper.Authenticate(request, pair);
+            SnmpMessageExtension.Authenticate(request, pair);
             Assert.AreEqual(ByteTool.Convert(bytes), request.ToBytes());
         }
         
@@ -343,7 +343,7 @@ namespace Lextm.SharpSnmpLib.Tests
 
             // FIXME: these values are valid on my machine openSUSE 11.2. (lex)
             // This test case usually fails on Windows, as strangely WinSock API call adds an extra 500-ms.
-            if (Helper.IsRunningOnMono)
+            if (SnmpMessageExtension.IsRunningOnMono)
             {
                 Assert.LessOrEqual(elapsedMilliseconds, time + 100);
             }
