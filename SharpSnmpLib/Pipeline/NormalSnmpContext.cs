@@ -47,17 +47,23 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <param name="index">The index.</param>
         internal override void CopyRequest(ErrorCode status, int index)
         {
-            var response = new ResponseMessage(
+            Response = new ResponseMessage(
                 Request.RequestId,
                 Request.Version,
                 Request.Parameters.UserName,
                 status,
                 index,
                 Request.Pdu.Variables);
-
-            if (response.ToBytes().Length > MaxResponseSize)
+        }
+        
+        /// <summary>
+        /// Verifies message size.
+        /// </summary>
+        protected override void VerifySize()
+        {           
+            if (Response.ToBytes().Length > Messenger.MaxMessageSize)
             {
-                response = new ResponseMessage(
+                Response = new ResponseMessage(
                     Request.RequestId,
                     Request.Version,
                     Request.Parameters.UserName,
@@ -65,8 +71,6 @@ namespace Lextm.SharpSnmpLib.Pipeline
                     0,
                     Request.Pdu.Variables);
             }
-
-            Response = response;
         }
 
         /// <summary>
@@ -84,26 +88,14 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <param name="variables">The variables.</param>
         internal override void GenerateResponse(IList<Variable> variables)
         {
-            ResponseMessage response = new ResponseMessage(
+            Response = new ResponseMessage(
                 Request.RequestId,
                 Request.Version,
                 Request.Parameters.UserName,
                 ErrorCode.NoError,
                 0,
                 variables);
-
-            if (response.ToBytes().Length > MaxResponseSize)
-            {
-                response = new ResponseMessage(
-                    Request.RequestId,
-                    Request.Version,
-                    Request.Parameters.UserName,
-                    ErrorCode.TooBig,
-                    0,
-                    Request.Pdu.Variables);
-            }
-
-            Response = response;
+            VerifySize();
         }
     }
 }

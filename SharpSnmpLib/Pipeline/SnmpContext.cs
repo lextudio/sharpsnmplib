@@ -12,11 +12,6 @@ namespace Lextm.SharpSnmpLib.Pipeline
     public abstract class SnmpContext
     {
         /// <summary>
-        /// Max response size.
-        /// </summary>
-        protected const int MaxResponseSize = Messenger.MaxMessageSize;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="SnmpContext"/> class.
         /// </summary>
         /// <param name="request">The request.</param>
@@ -118,5 +113,10 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// </summary>
         /// <returns></returns>
         public abstract bool HandleMembership();
+        
+        /// <summary>
+        /// Verifies message size.
+        /// </summary>
+        protected abstract void VerifySize();
     }
 }
