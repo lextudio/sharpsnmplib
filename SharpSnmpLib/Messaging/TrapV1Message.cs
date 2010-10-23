@@ -38,7 +38,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// </summary>
     public class TrapV1Message : ISnmpMessage
     {
-        private byte[] _bytes;
+        private readonly byte[] _bytes;
 
         /// <summary>
         /// Creates a <see cref="TrapV1Message"/> with all content.
@@ -89,8 +89,9 @@ namespace Lextm.SharpSnmpLib.Messaging
                 new Integer32(Specific),
                 new TimeTicks(TimeStamp),
                 Variables);
-            _bytes = SnmpMessageExtension.PackMessage(Version, Community, pdu).ToBytes();
             Parameters = new SecurityParameters(null, null, null, Community, null, null);
+
+            _bytes = SnmpMessageExtension.PackMessage(Version, Community, pdu).ToBytes();
         }
         
         /// <summary>
@@ -125,6 +126,8 @@ namespace Lextm.SharpSnmpLib.Messaging
             TimeStamp = trapPdu.TimeStamp.ToUInt32();
             Variables = Pdu.Variables;
             Parameters = new SecurityParameters(null, null, null, Community, null, null);
+
+            _bytes = SnmpMessageExtension.PackMessage(Version, Community, Pdu).ToBytes();
         }
 
         /// <summary>
@@ -224,6 +227,17 @@ namespace Lextm.SharpSnmpLib.Messaging
             get { throw new NotSupportedException(); }
         }
 
+        /// <summary>
+        /// Gets the header.
+        /// </summary>
+        public Header Header 
+        { 
+            get { throw new NotSupportedException(); }
+        }
+        
+        /// <summary>
+        /// Gets the privacy provider.
+        /// </summary>
         public IPrivacyProvider Privacy
         {
             get { throw new NotSupportedException(); }
@@ -235,7 +249,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public byte[] ToBytes()
         {
-            return _bytes ?? (_bytes = SnmpMessageExtension.PackMessage(Version, Community, Pdu).ToBytes());
+            return _bytes;
         }
 
         /// <summary>

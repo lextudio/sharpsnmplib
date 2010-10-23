@@ -31,18 +31,22 @@ namespace Lextm.SharpSnmpLib.Security
         OctetString CleanDigest { get; }
 
         /// <summary>
-        /// Computes the hash.
-        /// </summary>
-        /// <param name="message">The message.</param>
-        /// <returns></returns>
-        OctetString ComputeHash(ISnmpMessage message);
-
-        /// <summary>
         /// Converts password to key.
         /// </summary>
         /// <param name="password">The password.</param>
         /// <param name="engineId">The engine id.</param>
         /// <returns></returns>
         byte[] PasswordToKey(byte[] password, byte[] engineId);
+
+        /// <summary>
+        /// Computes the hash.
+        /// </summary>
+        /// <param name="version">The version.</param>
+        /// <param name="header">The header.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="scope">The scope.</param>
+        /// <param name="privacy">The privacy provider.</param>
+        /// <returns></returns>
+        OctetString ComputeHash(VersionCode version, Header header, SecurityParameters parameters, Scope scope, IPrivacyProvider privacy);
     }
 }

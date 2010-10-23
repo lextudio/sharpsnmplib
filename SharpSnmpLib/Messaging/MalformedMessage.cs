@@ -63,6 +63,14 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             get { return null; }
         }
+        
+        /// <summary>
+        /// Gets the header.
+        /// </summary>
+        public Header Header 
+        { 
+            get { return null; }
+        }
 
         /// <summary>
         /// Converts to the bytes.

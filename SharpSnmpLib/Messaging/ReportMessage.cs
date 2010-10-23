@@ -34,9 +34,9 @@ namespace Lextm.SharpSnmpLib.Messaging
     public class ReportMessage : ISnmpMessage
     {
         private readonly SecurityParameters _parameters;
-        private readonly Header _header;
         private readonly IPrivacyProvider _privacy = DefaultPrivacyProvider.DefaultPair;
-        
+        private readonly byte[] _bytes;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ReportMessage"/> class.
         /// </summary>
@@ -73,12 +73,20 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             Version = version;
-            _header = header;
+            Header = header;
             _parameters = parameters;
             Scope = scope;
             _privacy = privacy;
+
+            Parameters.AuthenticationParameters = Privacy.AuthenticationProvider.ComputeHash(Version, Header, Parameters, Scope, Privacy);
+            _bytes = SnmpMessageExtension.PackMessage(Version, Header, Parameters, Scope, Privacy).ToBytes();
         }
 
+        /// <summary>
+        /// Gets the header.
+        /// </summary>
+        public Header Header { get; private set; }
+        
         /// <summary>
         /// Security parameters.
         /// </summary>
@@ -86,61 +94,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             get { return _parameters; }
         }
-        
-/*
-        /// <summary>
-        /// Variables.
-        /// </summary>
-        public IList<Variable> Variables
-        {
-            get { return Scope.Pdu.Variables; }
-        }
-*/
-
-/*
-        /// <summary>
-        /// Sends this <see cref="ReportMessage"/> and handles the response from agent.
-        /// </summary>
-        /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
-        /// <param name="receiver">Agent.</param>
-        /// <returns></returns>
-        public ISnmpMessage GetResponse(int timeout, IPEndPoint receiver)
-        {
-            if (receiver == null)
-            {
-                throw new ArgumentNullException("receiver");
-            }
-
-            using (Socket socket = SnmpMessageExtension.GetSocket(receiver))
-            {
-                return GetResponse(timeout, receiver, socket);
-            }
-        }
-*/
-
-/*
-        /// <summary>
-        /// Sends this <see cref="ReportMessage"/> and handles the response from agent.
-        /// </summary>
-        /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
-        /// <param name="receiver">Agent.</param>
-        /// <param name="socket">The socket.</param>
-        /// <returns></returns>
-        public ISnmpMessage GetResponse(int timeout, IPEndPoint receiver, Socket socket)
-        {
-            if (socket == null)
-            {
-                throw new ArgumentNullException("socket");
-            }
-            
-            if (receiver == null)
-            {
-                throw new ArgumentNullException("receiver");
-            }
-            
-            return MessageFactory.GetResponse(receiver, ToBytes(), MessageId, timeout, new UserRegistry(), socket);
-        }
-*/
 
         /// <summary>
         /// Gets the request ID.
@@ -160,7 +113,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             get
             {
-                return _header.MessageId;
+                return Header.MessageId;
             }
         }
 
@@ -182,7 +135,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public byte[] ToBytes()
         {
-            return SnmpMessageExtension.PackMessage(Version, Privacy, _header, _parameters, Scope).ToBytes();
+            return _bytes;
         }
 
         /// <summary>

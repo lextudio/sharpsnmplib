@@ -111,7 +111,6 @@ namespace Lextm.SharpSnmpLib.Tests
                 report);
             
             Assert.AreEqual(Levels.Authentication, request.Level);
-            SnmpMessageExtension.Authenticate(request);
             Assert.AreEqual(ByteTool.Convert(bytes), request.ToBytes());
         }
 
@@ -141,7 +140,7 @@ namespace Lextm.SharpSnmpLib.Tests
                     new Integer32(0x14),
                     new Integer32(0x35),
                     new OctetString("lexmark"),
-                    new OctetString(new byte[12]),
+                    new OctetString(ByteTool.Convert("80  50 D9 A1 E7 81 B6 19 80  4F 06 C0")),
                     new OctetString(ByteTool.Convert("00 00 00  01 44 2C A3 B5"))),
                 new Scope(
                     new OctetString(ByteTool.Convert("80 00 1F 88 80 E9 63 00  00 D6 1F F4  49")),
@@ -153,7 +152,6 @@ namespace Lextm.SharpSnmpLib.Tests
                         new List<Variable>(1) { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0")) })),
                 privacy);
             Assert.AreEqual(Levels.Authentication | Levels.Privacy, request.Level);
-            SnmpMessageExtension.Authenticate(request);
             Assert.AreEqual(ByteTool.Convert(bytes), request.ToBytes());
         }
 
@@ -192,7 +190,7 @@ namespace Lextm.SharpSnmpLib.Tests
                     new Integer32(0x0d),
                     new Integer32(0x57),
                     new OctetString("lexli"),
-                    new OctetString(new byte[12]),
+                    new OctetString(ByteTool.Convert("1C 6D 67 BF  B2 38 ED 63 DF 0A 05 24")),
                     OctetString.Empty),
                 new Scope(
                     new OctetString(ByteTool.Convert("80 00 1F 88 80 E9 63 00  00 D6 1F F4  49")),
@@ -204,7 +202,6 @@ namespace Lextm.SharpSnmpLib.Tests
                         new List<Variable>(1) { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0"), new Null()) })),
                 pair);
             Assert.AreEqual(Levels.Authentication, request.Level);
-            SnmpMessageExtension.Authenticate(request);
             Assert.AreEqual(ByteTool.Convert(bytes), request.ToBytes());
         }
 
@@ -232,7 +229,7 @@ namespace Lextm.SharpSnmpLib.Tests
                     new Integer32(0x15),
                     new Integer32(0x015B),
                     new OctetString("lextudio"),
-                    new OctetString(new byte[12]),
+                    new OctetString(ByteTool.Convert("7B 62 65 AE D3 8F E3 7D  58 45 5C 6C")),
                     OctetString.Empty),
                 new Scope(
                     new OctetString(ByteTool.Convert("80 00 1F 88 80 E9 63 00  00 D6 1F F4  49")),
@@ -244,7 +241,6 @@ namespace Lextm.SharpSnmpLib.Tests
                         new List<Variable>(1) { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0"), new Null()) })),
                 pair);
             Assert.AreEqual(Levels.Authentication, request.Level);
-            SnmpMessageExtension.Authenticate(request);
             Assert.AreEqual(ByteTool.Convert(bytes), request.ToBytes());
         }
         

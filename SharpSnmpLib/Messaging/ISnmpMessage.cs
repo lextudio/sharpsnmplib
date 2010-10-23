@@ -38,6 +38,11 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu")]
         ISnmpPdu Pdu { get; }
+        
+        /// <summary>
+        /// Gets the header.
+        /// </summary>
+        Header Header { get; }
 
         /// <summary>
         /// Gets the parameters.

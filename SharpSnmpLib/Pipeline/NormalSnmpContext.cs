@@ -24,14 +24,6 @@ namespace Lextm.SharpSnmpLib.Pipeline
         }
 
         /// <summary>
-        /// Authenticates the message.
-        /// </summary>
-        protected override void AuthenticateResponse()
-        {
-            // v1 and v2c do not need this.
-        }
-
-        /// <summary>
         /// Handles the authentication failure.
         /// </summary>
         internal override void HandleAuthenticationFailure()

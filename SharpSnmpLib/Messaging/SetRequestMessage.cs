@@ -28,7 +28,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// </summary>
     public class SetRequestMessage : ISnmpMessage
     {
-        private readonly Header _header;
+        private readonly byte[] _bytes;
 
         /// <summary>
         /// Creates a <see cref="SetRequestMessage"/> with all contents.
@@ -55,7 +55,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
             
             Version = version;
-            _header = Header.Empty;
+            Header = Header.Empty;
             Parameters = new SecurityParameters(null, null, null, community, null, null);
             SetRequestPdu pdu = new SetRequestPdu(
                 requestId,
@@ -64,6 +64,8 @@ namespace Lextm.SharpSnmpLib.Messaging
                 variables);
             Scope = new Scope(pdu);
             Privacy = DefaultPrivacyProvider.DefaultPair;
+ 
+            _bytes = SnmpMessageExtension.PackMessage(Version, Header, Parameters, Scope, Privacy).ToBytes();
         }
 
         /// <summary>
@@ -127,7 +129,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             byte b = (byte)recordToSecurityLevel;
             
             // TODO: define more constants.
-            _header = new Header(new Integer32(messageId), new Integer32(maxMessageSize), new OctetString(new[] { b }), new Integer32(3));
+            Header = new Header(new Integer32(messageId), new Integer32(maxMessageSize), new OctetString(new[] { b }), new Integer32(3));
             Parameters = new SecurityParameters(
                 report.Parameters.EngineId,
                 report.Parameters.EngineBoots,
@@ -141,6 +143,9 @@ namespace Lextm.SharpSnmpLib.Messaging
                 0,
                 variables);
             Scope = new Scope(report.Scope.ContextEngineId, report.Scope.ContextName, pdu);
+
+            Parameters.AuthenticationParameters = Privacy.AuthenticationProvider.ComputeHash(Version, Header, Parameters, Scope, Privacy);
+            _bytes = SnmpMessageExtension.PackMessage(Version, Header, Parameters, Scope, Privacy).ToBytes();
         }
 
         internal SetRequestMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, IPrivacyProvider privacy)
@@ -166,12 +171,19 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             Version = version;
-            _header = header;
+            Header = header;
             Parameters = parameters;
             Scope = scope;
             Privacy = privacy;
+
+            _bytes = SnmpMessageExtension.PackMessage(Version, Header, Parameters, Scope, Privacy).ToBytes();
         }
 
+        /// <summary>
+        /// Gets the header.
+        /// </summary>
+        public Header Header { get; private set; }
+        
         /// <summary>
         /// Gets the privacy provider.
         /// </summary>
@@ -219,7 +231,6 @@ namespace Lextm.SharpSnmpLib.Messaging
             UserRegistry registry = new UserRegistry();
             if (Version == VersionCode.V3)
             {
-                SnmpMessageExtension.Authenticate(this);
                 registry.Add(Parameters.UserName, Privacy);
             }
 
@@ -253,7 +264,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             get
             {
-                return _header == Header.Empty ? RequestId : _header.MessageId;
+                return Header == Header.Empty ? RequestId : Header.MessageId;
             }
         }
         
@@ -274,7 +285,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public byte[] ToBytes()
         {
-            return SnmpMessageExtension.PackMessage(Version, Privacy, _header, Parameters, Scope).ToBytes();
+            return _bytes;
         }
 
         /// <summary>

@@ -114,20 +114,38 @@ namespace Lextm.SharpSnmpLib.Security
         /// <summary>
         /// Computes the hash.
         /// </summary>
-        /// <param name="message">The message.</param>
+        /// <param name="version">The version.</param>
+        /// <param name="header">The header.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="scope">The scope.</param>
+        /// <param name="privacy">The privacy provider.</param>
         /// <returns></returns>
-        public OctetString ComputeHash(ISnmpMessage message)
+        public OctetString ComputeHash(VersionCode version, Header header, SecurityParameters parameters, Scope scope, IPrivacyProvider privacy)
         {
-            if (message == null)
+            if (header == null)
             {
-                throw new ArgumentNullException("message");
+                throw new ArgumentNullException("header");
+            }
+
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+
+            if (scope == null)
+            {
+                throw new ArgumentNullException("scope");
+            }
+
+            if (privacy == null)
+            {
+                throw new ArgumentNullException("privacy");
             }
             
-            byte[] key = PasswordToKey(_password, message.Parameters.EngineId.GetRaw());
+            byte[] key = PasswordToKey(_password, parameters.EngineId.GetRaw());
             using (HMACSHA1 sha1 = new HMACSHA1(key))
             {
-                byte[] buffer = message.ToBytes();
-                byte[] hash = sha1.ComputeHash(buffer);
+                byte[] hash = sha1.ComputeHash(SnmpMessageExtension.PackMessage(version, header, parameters, scope, privacy).ToBytes());
                 sha1.Clear();
                 byte[] result = new byte[DigestLength];
                 Array.Copy(hash, result, result.Length);

@@ -29,7 +29,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// </summary>
     public class TrapV2Message : ISnmpMessage
     {
-        private readonly Header _header;
+        private readonly byte[] _bytes;
 
         /// <summary>
         /// Creates a <see cref="TrapV2Message"/> instance with all content.
@@ -58,15 +58,15 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("community");
             }
             
-            if (version == VersionCode.V3)
+            if (version != VersionCode.V2)
             {
-                throw new ArgumentException("only v1 and v2c are supported", "version");
+                throw new ArgumentException("only v2c are supported", "version");
             }
             
             Version = version;
             Enterprise = enterprise;
             TimeStamp = time;
-            _header = Header.Empty;
+            Header = Header.Empty;
             Parameters = new SecurityParameters(null, null, null, community, null, null);
             TrapV2Pdu pdu = new TrapV2Pdu(
                 requestId,
@@ -75,6 +75,8 @@ namespace Lextm.SharpSnmpLib.Messaging
                 variables);
             Scope = new Scope(pdu);
             Privacy = DefaultPrivacyProvider.DefaultPair;
+
+            _bytes = SnmpMessageExtension.PackMessage(Version, Community, pdu).ToBytes();
         }
 
         /// <summary>
@@ -133,7 +135,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             byte b = (byte)recordToSecurityLevel;
             
             // TODO: define more constants.
-            _header = new Header(new Integer32(messageId), new Integer32(maxMessageSize), new OctetString(new[] { b }), new Integer32(3));
+            Header = new Header(new Integer32(messageId), new Integer32(maxMessageSize), new OctetString(new[] { b }), new Integer32(3));
             Parameters = new SecurityParameters(
                 engineId,
                 new Integer32(engineBoots), 
@@ -147,6 +149,9 @@ namespace Lextm.SharpSnmpLib.Messaging
                 time,
                 variables);
             Scope = new Scope(OctetString.Empty, OctetString.Empty, pdu);
+
+            Parameters.AuthenticationParameters = Privacy.AuthenticationProvider.ComputeHash(Version, Header, Parameters, Scope, Privacy);
+            _bytes = SnmpMessageExtension.PackMessage(Version, Header, Parameters, Scope, Privacy).ToBytes();
         }
 
         internal TrapV2Message(VersionCode version, Header header, SecurityParameters parameters, Scope scope, IPrivacyProvider privacy)
@@ -172,17 +177,24 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             Version = version;
-            _header = header;
+            Header = header;
             Parameters = parameters;
             Scope = scope;
             Privacy = privacy;
             TrapV2Pdu pdu = (TrapV2Pdu)Scope.Pdu;
             Enterprise = pdu.Enterprise;
             TimeStamp = pdu.TimeStamp;
+
+            _bytes = SnmpMessageExtension.PackMessage(Version, Header, Parameters, Scope, Privacy).ToBytes();
         }
         
         #region ISnmpMessage Members
 
+        /// <summary>
+        /// Gets the header.
+        /// </summary>
+        public Header Header { get; private set; }
+        
         /// <summary>
         /// Gets the privacy provider.
         /// </summary>
@@ -219,7 +231,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public byte[] ToBytes()
         {
-            return SnmpMessageExtension.PackMessage(Version, Privacy, _header, Parameters, Scope).ToBytes();
+            return _bytes;
         }
 
         #endregion
@@ -313,7 +325,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             get
             {
-                return _header == Header.Empty ? RequestId : _header.MessageId;
+                return Header == Header.Empty ? RequestId : Header.MessageId;
             }
         }
 

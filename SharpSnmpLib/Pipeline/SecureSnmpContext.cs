@@ -25,14 +25,6 @@ namespace Lextm.SharpSnmpLib.Pipeline
         }
 
         /// <summary>
-        /// Authenticates the message.
-        /// </summary>
-        protected override void AuthenticateResponse()
-        {
-            SnmpMessageExtension.Authenticate(Response);
-        }
-
-        /// <summary>
         /// Handles the authentication failure.
         /// </summary>
         internal override void HandleAuthenticationFailure()
@@ -59,7 +51,8 @@ namespace Lextm.SharpSnmpLib.Pipeline
                         ErrorCode.AuthorizationError,
                         0,
                         Request.Pdu.Variables)),
-                DefaultPrivacyProvider.DefaultPair);
+                DefaultPrivacyProvider.DefaultPair,
+                true);
         }
 
         internal override void CopyRequest(ErrorCode status, int index)
@@ -87,7 +80,8 @@ namespace Lextm.SharpSnmpLib.Pipeline
                             status,
                             index,
                             Request.Pdu.Variables)),
-                    privacy);
+                    privacy,
+                    true);
             VerifySize();
         }
         
@@ -121,7 +115,8 @@ namespace Lextm.SharpSnmpLib.Pipeline
                             ErrorCode.TooBig,
                             0,
                             Request.Pdu.Variables)),
-                    privacy);
+                    privacy,
+                    true);
             }
         }
 
@@ -160,13 +155,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 return false;
             }
 
-            OctetString embedded = Request.Parameters.AuthenticationParameters;
-            IPrivacyProvider privacy = Users.Find(Request.Parameters.UserName);
-            Request.Parameters.AuthenticationParameters = privacy.AuthenticationProvider.CleanDigest;
-            OctetString calculated = privacy.AuthenticationProvider.ComputeHash(Request);
-            
-            // other checking were performed in MessageFactory when decrypting message body.
-            return embedded == calculated;
+            return true;
         }
 
         private void HandleDiscovery()
@@ -237,7 +226,8 @@ namespace Lextm.SharpSnmpLib.Pipeline
                         ErrorCode.NoError,
                         0,
                         variables)),
-                privacy);
+                privacy,
+                true);
             VerifySize();
         }
     }

@@ -28,27 +28,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// Helper class.
     /// </summary>
     public static class SnmpMessageExtension
-    {
-        /// <summary>
-        /// Authenticates this message.
-        /// </summary>
-        /// <param name="message">The message.</param>
-        public static void Authenticate(ISnmpMessage message)
-        {
-            // TODO: make extension method.
-            if (message == null)
-            {
-                throw new ArgumentNullException("message");
-            }
-
-            if (message.Version != VersionCode.V3)
-            {
-                return;
-            }
-            
-            message.Parameters.AuthenticationParameters = message.Privacy.AuthenticationProvider.ComputeHash(message);
-        }
-            
+    {          
         /// <summary>
         /// Tests if runnning on Mono. 
         /// </summary>
@@ -61,7 +41,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
         }
 
-        internal static Sequence PackMessage(VersionCode version, IPrivacyProvider privacy, ISegment header, SecurityParameters parameters, ISegment scope)
+        internal static Sequence PackMessage(VersionCode version, ISegment header, SecurityParameters parameters, ISegment scope, IPrivacyProvider privacy)
         {
             if (scope == null)
             {
@@ -146,7 +126,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             var expected = message.Parameters.AuthenticationParameters;
             message.Parameters.AuthenticationParameters = message.Privacy.AuthenticationProvider.CleanDigest;
-            if (message.Privacy.AuthenticationProvider.ComputeHash(message) != expected)
+            if (message.Privacy.AuthenticationProvider.ComputeHash(message.Version, message.Header, message.Parameters, message.Scope, message.Privacy) != expected)
             {
                 throw new SnmpException("invalid v3 packet data");
             }

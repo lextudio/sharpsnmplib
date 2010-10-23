@@ -46,7 +46,6 @@ namespace Lextm.SharpSnmpLib.Tests
                 0,
                 0
                );
-            SnmpMessageExtension.Authenticate(trap);
             Assert.AreEqual(ByteTool.Convert(Resources.trapv3auth), ByteTool.Convert(trap.ToBytes()));
         }
 
@@ -66,7 +65,7 @@ namespace Lextm.SharpSnmpLib.Tests
                     new Integer32(0),
                     new Integer32(0),
                     new OctetString("lextm"),
-                    privacy.AuthenticationProvider.CleanDigest,
+                    new OctetString(ByteTool.Convert("61A9A486AF4A861BD5C0BB1F")), 
                     new OctetString(ByteTool.Convert("0000000069D39B2A"))),
                 new Scope(OctetString.Empty, OctetString.Empty,
                           new TrapV2Pdu(
@@ -74,9 +73,7 @@ namespace Lextm.SharpSnmpLib.Tests
                               new ObjectIdentifier("1.3.6"),
                               0,
                               new List<Variable>())),
-                privacy);
-            SnmpMessageExtension.Authenticate(trap);
-            
+                privacy);         
             byte[] bytes = trap.ToBytes();
             UserRegistry registry = new UserRegistry();
             registry.Add(new OctetString("lextm"), privacy);
