@@ -126,6 +126,26 @@ namespace Lextm.SharpSnmpLib.Security
         }
 
         /// <summary>
+        /// Verifies the hash.
+        /// </summary>
+        /// <param name="version">The version.</param>
+        /// <param name="header">The header.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="scopeBytes">The scope bytes.</param>
+        /// <param name="privacy">The privacy provider.</param>
+        /// <returns>
+        /// Returns <code>true</code> if hash matches. Otherwise, returns <code>false</code>.
+        /// </returns>
+        public bool VerifyHash(VersionCode version, Header header, SecurityParameters parameters, ISnmpData scopeBytes, IPrivacyProvider privacy)
+        {
+            var expected = parameters.AuthenticationParameters;
+            parameters.AuthenticationParameters = CleanDigest;
+            bool result = ComputeHash(version, header, parameters, scopeBytes, privacy) == expected;
+            parameters.AuthenticationParameters = expected;
+            return result;
+        }
+
+        /// <summary>
         /// Computes the hash.
         /// </summary>
         /// <param name="version">The version.</param>
@@ -134,7 +154,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// <param name="scopeBytes">The scope bytes.</param>
         /// <param name="privacy">The privacy provider.</param>
         /// <returns></returns>
-        public OctetString ComputeHash(VersionCode version, Header header, SecurityParameters parameters, ISnmpData scopeBytes, IPrivacyProvider privacy)
+        private OctetString ComputeHash(VersionCode version, Header header, SecurityParameters parameters, ISnmpData scopeBytes, IPrivacyProvider privacy)
         {
             if (header == null)
             {

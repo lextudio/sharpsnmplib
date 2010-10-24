@@ -77,7 +77,7 @@ namespace Lextm.SharpSnmpLib.Security
         }
 
         /// <summary>
-        /// Computes the hash.
+        /// Verifies the hash.
         /// </summary>
         /// <param name="version">The version.</param>
         /// <param name="header">The header.</param>
@@ -85,7 +85,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// <param name="scopeBytes">The scope bytes.</param>
         /// <param name="privacy">The privacy provider.</param>
         /// <returns></returns>
-        public OctetString ComputeHash(VersionCode version, Header header, SecurityParameters parameters, ISnmpData scopeBytes, IPrivacyProvider privacy)
+        public bool VerifyHash(VersionCode version, Header header, SecurityParameters parameters, ISnmpData scopeBytes, IPrivacyProvider privacy)
         {
             if (header == null)
             {
@@ -107,7 +107,7 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentNullException("privacy");
             }
 
-            return OctetString.Empty;
+            return true;
         }
 
         /// <summary>

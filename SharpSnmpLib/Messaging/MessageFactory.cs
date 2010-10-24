@@ -267,15 +267,10 @@ namespace Lextm.SharpSnmpLib.Messaging
                     throw new SnmpException("invalid v3 packets scoped data: " + body[3].TypeCode);
                 }
 
-                var expected = parameters.AuthenticationParameters;
-                parameters.AuthenticationParameters = privacy.AuthenticationProvider.CleanDigest;
-                if (privacy.AuthenticationProvider.ComputeHash(version, header, parameters, body[3], privacy) !=
-                    expected)
+                if (!privacy.AuthenticationProvider.VerifyHash(version, header, parameters, body[3], privacy))
                 {
                     throw new SnmpException("invalid v3 packet data");
                 }
-
-                parameters.AuthenticationParameters = expected;
             }
 
             ISnmpPdu pdu = scope.Pdu;
