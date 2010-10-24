@@ -15,8 +15,6 @@
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-using Lextm.SharpSnmpLib.Messaging;
-
 namespace Lextm.SharpSnmpLib.Security
 {
     /// <summary>
@@ -48,5 +46,16 @@ namespace Lextm.SharpSnmpLib.Security
         /// <param name="privacy">The privacy provider.</param>
         /// <returns></returns>
         OctetString ComputeHash(VersionCode version, Header header, SecurityParameters parameters, Scope scope, IPrivacyProvider privacy);
+
+        /// <summary>
+        /// Computes the hash.
+        /// </summary>
+        /// <param name="version">The version.</param>
+        /// <param name="header">The header.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="scopeBytes">The scope bytes.</param>
+        /// <param name="privacy">The privacy provider.</param>
+        /// <returns></returns>
+        OctetString ComputeHash(VersionCode version, Header header, SecurityParameters parameters, ISnmpData scopeBytes, IPrivacyProvider privacy);
     }
 }

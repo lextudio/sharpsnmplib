@@ -122,6 +122,20 @@ namespace Lextm.SharpSnmpLib.Security
         /// <returns></returns>
         public OctetString ComputeHash(VersionCode version, Header header, SecurityParameters parameters, Scope scope, IPrivacyProvider privacy)
         {
+            return ComputeHash(version, header, parameters, privacy.Encrypt(scope.GetData(version), parameters), privacy);
+        }
+
+        /// <summary>
+        /// Computes the hash.
+        /// </summary>
+        /// <param name="version">The version.</param>
+        /// <param name="header">The header.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="scopeBytes">The scope bytes.</param>
+        /// <param name="privacy">The privacy provider.</param>
+        /// <returns></returns>
+        public OctetString ComputeHash(VersionCode version, Header header, SecurityParameters parameters, ISnmpData scopeBytes, IPrivacyProvider privacy)
+        {
             if (header == null)
             {
                 throw new ArgumentNullException("header");
@@ -132,20 +146,20 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentNullException("parameters");
             }
 
-            if (scope == null)
+            if (scopeBytes == null)
             {
-                throw new ArgumentNullException("scope");
+                throw new ArgumentNullException("scopeBytes");
             }
 
             if (privacy == null)
             {
                 throw new ArgumentNullException("privacy");
             }
-            
+
             byte[] key = PasswordToKey(_password, parameters.EngineId.GetRaw());
             using (HMACSHA1 sha1 = new HMACSHA1(key))
             {
-                byte[] hash = sha1.ComputeHash(SnmpMessageExtension.PackMessage(version, header, parameters, scope, privacy).ToBytes());
+                byte[] hash = sha1.ComputeHash(SnmpMessageExtension.PackMessage(version, header, parameters, scopeBytes, privacy).ToBytes());
                 sha1.Clear();
                 byte[] result = new byte[DigestLength];
                 Array.Copy(hash, result, result.Length);

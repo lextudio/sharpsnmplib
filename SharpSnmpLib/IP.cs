@@ -214,8 +214,7 @@ namespace Lextm.SharpSnmpLib
             {
                 return false;
             }
-            
-            // TODO: find a way to do proper comparison.
+
             return ByteTool.CompareArray(left.ToIPAddress().GetAddressBytes(), right.ToIPAddress().GetAddressBytes());
         }
     }

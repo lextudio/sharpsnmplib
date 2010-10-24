@@ -52,7 +52,7 @@ namespace Lextm.SharpSnmpLib
         /// Converts to the bytes.
         /// </summary>
         /// <returns></returns>
-        [Obsolete("Use AppendBytesTo instead.")]
+        [Obsolete("Use ByteTool.ToBytes instead.")]
         byte[] ToBytes();
         
         /// <summary>

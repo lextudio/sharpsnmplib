@@ -8,13 +8,12 @@
  */
 
 using System;
-using Lextm.SharpSnmpLib.Messaging;
 using NUnit.Framework;
 #pragma warning disable 1591,0618
 namespace Lextm.SharpSnmpLib.Tests
 {
     [TestFixture]
-    public class TestSnmpDataFactory
+    public class TestDataFactory
     {
         [Test]
         public void TestCreateObjectIdentifier()

@@ -41,6 +41,38 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
         }
 
+        internal static Sequence PackMessage(VersionCode version, ISegment header, SecurityParameters parameters, ISnmpData scopeBytes, IPrivacyProvider privacy)
+        {
+            if (scopeBytes == null)
+            {
+                throw new ArgumentNullException("scopeBytes");
+            }
+
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+
+            if (header == null)
+            {
+                throw new ArgumentNullException("header");
+            }
+
+            if (privacy == null)
+            {
+                throw new ArgumentNullException("privacy");
+            }
+
+            List<ISnmpData> collection = new List<ISnmpData>(4)
+                                             {
+                                                 new Integer32((int)version),
+                                                 header.GetData(version),
+                                                 parameters.GetData(version),
+                                                 scopeBytes,
+                                             };
+            return new Sequence(collection);
+        }
+
         internal static Sequence PackMessage(VersionCode version, ISegment header, SecurityParameters parameters, ISegment scope, IPrivacyProvider privacy)
         {
             if (scope == null)
@@ -105,34 +137,6 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             return new Socket(endpoint.AddressFamily, SocketType.Dgram, ProtocolType.Udp);
-        }
-
-        /// <summary>
-        /// Verifies the message.
-        /// </summary>
-        /// <param name="message">The message.</param>
-        public static ISnmpMessage Verify(ISnmpMessage message)
-        {
-            // TODO: make extension method.
-            if (message == null)
-            {
-                throw new ArgumentNullException("message");
-            }
-
-            if (message.Version != VersionCode.V3)
-            {
-                return message;
-            }
-
-            var expected = message.Parameters.AuthenticationParameters;
-            message.Parameters.AuthenticationParameters = message.Privacy.AuthenticationProvider.CleanDigest;
-            if (message.Privacy.AuthenticationProvider.ComputeHash(message.Version, message.Header, message.Parameters, message.Scope, message.Privacy) != expected)
-            {
-                throw new SnmpException("invalid v3 packet data");
-            }
-
-            message.Parameters.AuthenticationParameters = expected;
-            return message;
         }
     }
 }

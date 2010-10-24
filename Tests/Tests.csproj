@@ -99,7 +99,7 @@
     <Compile Include="Tests\TestOpaque.cs" />
     <Compile Include="Tests\TestParseItemsException.cs" />
     <Compile Include="Tests\TestSequence.cs" />
-    <Compile Include="Tests\TestSnmpDataFactory.cs" />
+    <Compile Include="Tests\TestDataFactory.cs" />
     <Compile Include="Tests\TestTimeticks.cs" />
     <Compile Include="Tests\TestTrapV1Message.cs" />
     <Compile Include="Tests\TestTrapV1Pdu.cs" />

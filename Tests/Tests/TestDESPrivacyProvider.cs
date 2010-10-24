@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using NUnit.Framework;
 using Lextm.SharpSnmpLib.Security;
 
@@ -9,6 +7,32 @@ namespace Lextm.SharpSnmpLib.Tests
     [TestFixture]
     public class TestDESPrivacyProvider
     {
+        [Test]
+        public void TestDecrypt2()
+        {
+            byte[] encrypted = ByteTool.Convert("04 38 A4 F9 78 15 2B 14 45 F7 4F C5 B2 1C 82 72 9A 0B D9 EE C1 17 3E E1 26 0D 8B D4 7B 0F D7 35 06 1B E2 14 0D 4A 9B CA BF EF 18 6B 53 B9 FA 70 95 D0 15 38 C5 77 96 85 61 40");
+            var privacy = new DESPrivacyProvider(new OctetString("privacyphrase"), new MD5AuthenticationProvider(new OctetString("authentication")));
+            var parameters = new SecurityParameters(
+                new OctetString(ByteTool.Convert("80001F8880E9630000D61FF449")),
+                new Integer32(0),
+                new Integer32(0),
+                new OctetString("lextm"),
+                OctetString.Empty, 
+                new OctetString(ByteTool.Convert("0000000069D39B2A")));
+            var data = privacy.Decrypt(DataFactory.CreateSnmpData(encrypted), 
+                                         parameters);
+            Assert.AreEqual(SnmpType.Sequence, data.TypeCode);
+            
+            // TODO: parse snmp#net output and compare result.
+            byte[] net =
+                ByteTool.Convert(
+                    "04 38 A4 F9 78 15 2B 14 45 F7 4F C5 B2 1C 82 72 9A 0B D9 EE C1 17 3E E1 26 0D 8B D4 7B 0F D7 35 06 1B E2 14 0D 4A 9B CA BF EF 18 6B 53 B9 FA 70 95 D0 5D AF 04 5A 68 B5 DA 73");
+            var netData = privacy.Decrypt(DataFactory.CreateSnmpData(net), parameters);
+            Assert.AreEqual(SnmpType.Sequence, netData.TypeCode);
+
+            Assert.AreEqual(ByteTool.Convert(ByteTool.ToBytes(netData)), ByteTool.Convert(ByteTool.ToBytes(data)));
+        }
+        
         [Test]
         public void TestDecrypt()
         {

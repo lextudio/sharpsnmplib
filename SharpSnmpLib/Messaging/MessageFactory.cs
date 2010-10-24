@@ -165,45 +165,62 @@ namespace Lextm.SharpSnmpLib.Messaging
             int first;
             while ((first = stream.ReadByte()) != -1)
             {
-                //ISnmpMessage message = ParseMessage(first, stream, registry);
-                ISnmpData array = DataFactory.CreateSnmpData(first, stream);
-                if (array == null)
+                ISnmpMessage message = ParseMessage(first, stream, registry);
+                if (message == null)
                 {
                     continue;
                 }
 
-                if (array.TypeCode != SnmpType.Sequence)
-                {
-                    throw new SnmpException("not an SNMP message");
-                }
+                result.Add(message);
+            }
 
-                Sequence body = (Sequence)array;
-                if (body.Count != 3 && body.Count != 4)
-                {
-                    throw new SnmpException("not an SNMP message");
-                }
+            return result;
+        }
 
-                VersionCode version = (VersionCode)((Integer32)body[0]).ToInt32();
-                Header header = body.Count == 3 ? Header.Empty : new Header(body[1]);
-                SecurityParameters parameters = body.Count == 3
-                                                    ? new SecurityParameters(null, null, null, (OctetString)body[1], null, null)
-                                                    : new SecurityParameters((OctetString)body[2]);
-                IPrivacyProvider privacy = body.Count == 3 ? DefaultPrivacyProvider.DefaultPair :
-                                                                                                    registry.Find(parameters.UserName);
+        private static ISnmpMessage ParseMessage(int first, Stream stream, UserRegistry registry)
+        {
+            ISnmpData array = DataFactory.CreateSnmpData(first, stream);
+            if (array == null)
+            {
+                return null;
+            }
+
+            if (array.TypeCode != SnmpType.Sequence)
+            {
+                throw new SnmpException("not an SNMP message");
+            }
+
+            Sequence body = (Sequence)array;
+            if (body.Count != 3 && body.Count != 4)
+            {
+                throw new SnmpException("not an SNMP message");
+            }
+
+            VersionCode version = (VersionCode)((Integer32)body[0]).ToInt32();
+            Header header;
+            SecurityParameters parameters;
+            IPrivacyProvider privacy;
+            Scope scope;
+            if (body.Count == 3)
+            {
+                header = Header.Empty;
+                parameters = new SecurityParameters(null, null, null, (OctetString)body[1], null, null);
+                privacy = DefaultPrivacyProvider.DefaultPair;
+                // v1 and v2
+                scope = new Scope((ISnmpPdu)body[2]);
+            }
+            else
+            {
+                header = new Header(body[1]);
+                parameters = new SecurityParameters((OctetString)body[2]);
+                privacy = registry.Find(parameters.UserName);
                 if (privacy == null)
                 {
                     // handle decryption exception.
-                    result.Add(new MalformedMessage(header.MessageId, parameters.UserName));
-                    break;
+                    return new MalformedMessage(header.MessageId, parameters.UserName);
                 }
 
-                Scope scope;
-                if (body.Count == 3)
-                {
-                    // v1 and v2
-                    scope = new Scope((ISnmpPdu)body[2]);
-                }
-                else if (body[3].TypeCode == SnmpType.Sequence)
+                if (body[3].TypeCode == SnmpType.Sequence)
                 {
                     // v3 not encrypted
                     scope = new Scope((Sequence)body[3]);
@@ -218,8 +235,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                     catch (DecryptionException)
                     {
                         // handle decryption exception.
-                        result.Add(new MalformedMessage(header.MessageId, parameters.UserName));
-                        break;
+                        return new MalformedMessage(header.MessageId, parameters.UserName);
                     }
                 }
                 else
@@ -227,42 +243,41 @@ namespace Lextm.SharpSnmpLib.Messaging
                     throw new SnmpException("invalid v3 packets scoped data: " + body[3].TypeCode);
                 }
 
-                ISnmpPdu pdu = scope.Pdu;
-                switch (pdu.TypeCode)
+                var expected = parameters.AuthenticationParameters;
+                parameters.AuthenticationParameters = privacy.AuthenticationProvider.CleanDigest;
+                if (privacy.AuthenticationProvider.ComputeHash(version, header, parameters, body[3], privacy) !=
+                    expected)
                 {
-                    case SnmpType.TrapV1Pdu:
-                        result.Add(new TrapV1Message(body));
-                        goto end;
-                    case SnmpType.TrapV2Pdu:
-                        result.Add(SnmpMessageExtension.Verify(new TrapV2Message(version, header, parameters, scope, privacy)));
-                        goto end;
-                    case SnmpType.GetRequestPdu:
-                        result.Add(SnmpMessageExtension.Verify(new GetRequestMessage(version, header, parameters, scope, privacy)));
-                        goto end;
-                    case SnmpType.ResponsePdu:
-                        result.Add(SnmpMessageExtension.Verify(new ResponseMessage(version, header, parameters, scope, privacy, false)));
-                        goto end;
-                    case SnmpType.SetRequestPdu:
-                        result.Add(SnmpMessageExtension.Verify(new SetRequestMessage(version, header, parameters, scope, privacy)));
-                        goto end;
-                    case SnmpType.GetNextRequestPdu:
-                        result.Add(SnmpMessageExtension.Verify(new GetNextRequestMessage(version, header, parameters, scope, privacy)));
-                        goto end;
-                    case SnmpType.GetBulkRequestPdu:
-                        result.Add(SnmpMessageExtension.Verify(new GetBulkRequestMessage(version, header, parameters, scope, privacy)));
-                        goto end;
-                    case SnmpType.ReportPdu:
-                        result.Add(SnmpMessageExtension.Verify(new ReportMessage(version, header, parameters, scope, privacy)));
-                        goto end;
-                    case SnmpType.InformRequestPdu:
-                        result.Add(SnmpMessageExtension.Verify(new InformRequestMessage(version, header, parameters, scope, privacy)));
-                        goto end;
-                    default:
-                        throw new SnmpException("unsupported pdu: " + pdu.TypeCode);
+                    throw new SnmpException("invalid v3 packet data");
                 }
+
+                parameters.AuthenticationParameters = expected;
             }
-            end:           
-            return result;
+
+            ISnmpPdu pdu = scope.Pdu;
+            switch (pdu.TypeCode)
+            {
+                case SnmpType.TrapV1Pdu:
+                    return new TrapV1Message(body);
+                case SnmpType.TrapV2Pdu:
+                    return new TrapV2Message(version, header, parameters, scope, privacy);
+                case SnmpType.GetRequestPdu:
+                    return new GetRequestMessage(version, header, parameters, scope, privacy);
+                case SnmpType.ResponsePdu:
+                    return new ResponseMessage(version, header, parameters, scope, privacy, false);
+                case SnmpType.SetRequestPdu:
+                    return new SetRequestMessage(version, header, parameters, scope, privacy);
+                case SnmpType.GetNextRequestPdu:
+                    return new GetNextRequestMessage(version, header, parameters, scope, privacy);
+                case SnmpType.GetBulkRequestPdu:
+                    return new GetBulkRequestMessage(version, header, parameters, scope, privacy);
+                case SnmpType.ReportPdu:
+                    return new ReportMessage(version, header, parameters, scope, privacy);
+                case SnmpType.InformRequestPdu:
+                    return new InformRequestMessage(version, header, parameters, scope, privacy);
+                default:
+                    throw new SnmpException("unsupported pdu: " + pdu.TypeCode);
+            }
         }
     }
 }

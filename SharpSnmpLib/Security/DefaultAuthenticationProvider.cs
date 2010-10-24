@@ -16,7 +16,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
-using Lextm.SharpSnmpLib.Messaging;
 
 namespace Lextm.SharpSnmpLib.Security
 {
@@ -53,6 +52,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// <returns></returns>
         public OctetString ComputeHash(VersionCode version, Header header, SecurityParameters parameters, Scope scope, IPrivacyProvider privacy)
         {
+            // TODO: make it extension method.
             if (header == null)
             {
                 throw new ArgumentNullException("header");
@@ -66,6 +66,31 @@ namespace Lextm.SharpSnmpLib.Security
             if (scope == null)
             {
                 throw new ArgumentNullException("scope");
+            }
+
+            if (privacy == null)
+            {
+                throw new ArgumentNullException("privacy");
+            }
+
+            return OctetString.Empty;
+        }
+
+        public OctetString ComputeHash(VersionCode version, Header header, SecurityParameters parameters, ISnmpData scopeBytes, IPrivacyProvider privacy)
+        {
+            if (header == null)
+            {
+                throw new ArgumentNullException("header");
+            }
+
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+
+            if (scopeBytes == null)
+            {
+                throw new ArgumentNullException("scopeBytes");
             }
 
             if (privacy == null)
