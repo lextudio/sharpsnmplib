@@ -102,7 +102,7 @@
             this.groupBox1.Location = new System.Drawing.Point(12, 148);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(201, 77);
-            this.groupBox1.TabIndex = 3;
+            this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Community Names";
             // 
@@ -161,7 +161,7 @@
             this.cbVersionCode.Location = new System.Drawing.Point(80, 96);
             this.cbVersionCode.Name = "cbVersionCode";
             this.cbVersionCode.Size = new System.Drawing.Size(100, 21);
-            this.cbVersionCode.TabIndex = 0;
+            this.cbVersionCode.TabIndex = 3;
             this.cbVersionCode.SelectedIndexChanged += new System.EventHandler(this.CbVersionCodeSelectedIndexChanged);
             // 
             // errorProvider1
@@ -227,7 +227,7 @@
             this.txtName.Location = new System.Drawing.Point(80, 18);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(100, 20);
-            this.txtName.TabIndex = 9;
+            this.txtName.TabIndex = 0;
             // 
             // groupBox2
             // 
@@ -242,7 +242,7 @@
             this.groupBox2.Location = new System.Drawing.Point(12, 12);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(200, 130);
-            this.groupBox2.TabIndex = 10;
+            this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "General";
             // 
@@ -261,7 +261,7 @@
             this.groupBox3.Location = new System.Drawing.Point(218, 12);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(240, 213);
-            this.groupBox3.TabIndex = 11;
+            this.groupBox3.TabIndex = 3;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Security/Privacy";
             // 
@@ -270,7 +270,7 @@
             this.txtUserName.Location = new System.Drawing.Point(23, 151);
             this.txtUserName.Name = "txtUserName";
             this.txtUserName.Size = new System.Drawing.Size(193, 20);
-            this.txtUserName.TabIndex = 9;
+            this.txtUserName.TabIndex = 4;
             this.txtUserName.Validating += new System.ComponentModel.CancelEventHandler(this.TxtUserNameValidating);
             this.txtUserName.Validated += new System.EventHandler(this.TxtUserNameValidated);
             // 
@@ -296,7 +296,7 @@
             this.cbPrivacy.Location = new System.Drawing.Point(106, 69);
             this.cbPrivacy.Name = "cbPrivacy";
             this.cbPrivacy.Size = new System.Drawing.Size(110, 21);
-            this.cbPrivacy.TabIndex = 7;
+            this.cbPrivacy.TabIndex = 2;
             this.cbPrivacy.SelectedIndexChanged += new System.EventHandler(this.CbPrivacySelectedIndexChanged);
             // 
             // cbAuthentication
@@ -312,7 +312,7 @@
             this.cbAuthentication.Location = new System.Drawing.Point(106, 18);
             this.cbAuthentication.Name = "cbAuthentication";
             this.cbAuthentication.Size = new System.Drawing.Size(110, 21);
-            this.cbAuthentication.TabIndex = 6;
+            this.cbAuthentication.TabIndex = 0;
             this.cbAuthentication.SelectedIndexChanged += new System.EventHandler(this.CbAuthenticationSelectedIndexChanged);
             // 
             // label10
@@ -347,7 +347,7 @@
             this.txtAuthentication.Location = new System.Drawing.Point(106, 44);
             this.txtAuthentication.Name = "txtAuthentication";
             this.txtAuthentication.Size = new System.Drawing.Size(110, 20);
-            this.txtAuthentication.TabIndex = 2;
+            this.txtAuthentication.TabIndex = 1;
             this.txtAuthentication.Validating += new System.ComponentModel.CancelEventHandler(this.TxtAuthenticationValidating);
             this.txtAuthentication.Validated += new System.EventHandler(this.TxtAuthenticationValidated);
             // 

@@ -243,9 +243,9 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual(Levels.Authentication, request.Level);
             Assert.AreEqual(ByteTool.Convert(bytes), request.ToBytes());
         }
-        
+  
         [Test]
-        public void TestConstructorV3()
+        public void TestDiscoveryV3()
         {
             const string bytes = "30 3A 02 01 03 30 0F 02 02 6A 09 02 03 00 FF E3" +
                                  " 04 01 04 02 01 03 04 10 30 0E 04 00 02 01 00 02" +

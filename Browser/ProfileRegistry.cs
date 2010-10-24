@@ -11,9 +11,24 @@ namespace Lextm.SharpSnmpLib.Browser
     internal class ProfileRegistry : IProfileRegistry
     {
         private const string SettingFile = "Agents4.xml";
+        private const string NameAuthenticationMethod = "authenticationMethod";
+        private const string NamePrivacyPassphrase = "privacyPassphrase";
+        private const string NamePrivacyMethod = "privacyMethod";
+        private const string NameUserName = "userName";
+        private const string NameTimeout = "timeout";
+        private const string NameAuthenticationPassphrase = "authenticationPassphrase";
+        private const string NameSetCommunity = "setCommunity";
+        private const string NameGetCommunity = "getCommunity";
+        private const string NameVersion = "version";
         private AgentProfile _defaultProfile;
         private readonly IDictionary<Guid, AgentProfile> _profiles = new Dictionary<Guid, AgentProfile>();
         private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger("Lextm.SharpSnmpLib.Browser");
+        private const string NameName = "name";
+        private const string NameAdd = "add";
+        private const string NameDefaultAgent = "defaultAgent";
+        private const string NameAgent = "agents";
+        private const string NameBinding = "binding";
+        private const string NameId = "id";
 
         public event EventHandler<EventArgs> OnChanged;
 
@@ -106,62 +121,62 @@ namespace Lextm.SharpSnmpLib.Browser
             {
                 writer.Formatting = Formatting.Indented;
                 writer.WriteStartDocument();
-                writer.WriteStartElement("agents");
-                writer.WriteStartAttribute("defaultAgent");
+                writer.WriteStartElement(NameAgent);
+                writer.WriteStartAttribute(NameDefaultAgent);
                 writer.WriteString(_defaultProfile.Id.ToString());
                 writer.WriteEndAttribute();
 
                 foreach (Guid k in keys)
                 {
-                    writer.WriteStartElement("add");
+                    writer.WriteStartElement(NameAdd);
                     
-                    writer.WriteStartAttribute("id");
+                    writer.WriteStartAttribute(NameId);
                     writer.WriteString(_profiles[k].Id.ToString());
                     writer.WriteEndAttribute();
                     
-                    writer.WriteStartAttribute("name");
+                    writer.WriteStartAttribute(NameName);
                     writer.WriteString(_profiles[k].Name);
                     writer.WriteEndAttribute();
                     
-                    writer.WriteStartAttribute("binding");
+                    writer.WriteStartAttribute(NameBinding);
                     writer.WriteString(string.Format(CultureInfo.InvariantCulture, "{0}:{1}", _profiles[k].Agent.Address, _profiles[k].Agent.Port));
                     writer.WriteEndAttribute();
                     
-                    writer.WriteStartAttribute("version");
+                    writer.WriteStartAttribute(NameVersion);
                     writer.WriteValue((int)_profiles[k].VersionCode);
                     writer.WriteEndAttribute();
 
                     var normal = _profiles[k] as NormalAgentProfile;
-                    writer.WriteStartAttribute("getCommunity");
+                    writer.WriteStartAttribute(NameGetCommunity);
                     writer.WriteString(normal == null ? string.Empty : normal.GetCommunity.ToString());
                     writer.WriteEndAttribute();
                     
-                    writer.WriteStartAttribute("setCommunity");
+                    writer.WriteStartAttribute(NameSetCommunity);
                     writer.WriteString(normal == null ? string.Empty : normal.SetCommunity.ToString());
                     writer.WriteEndAttribute();
 
                     var secure = _profiles[k] as SecureAgentProfile;
-                    writer.WriteStartAttribute("authenticationPassphrase");
+                    writer.WriteStartAttribute(NameAuthenticationPassphrase);
                     writer.WriteString(secure == null ? string.Empty : secure.AuthenticationPassphrase);
                     writer.WriteEndAttribute();
 
-                    writer.WriteStartAttribute("privacyPassphrase");
+                    writer.WriteStartAttribute(NamePrivacyPassphrase);
                     writer.WriteString(secure == null ? string.Empty : secure.PrivacyPassphrase);
                     writer.WriteEndAttribute();
 
-                    writer.WriteStartAttribute("autheticationMethod");
+                    writer.WriteStartAttribute(NameAuthenticationMethod);
                     writer.WriteString(secure == null ? string.Empty : secure.AuthenticationMethod.ToString(CultureInfo.InvariantCulture));
                     writer.WriteEndAttribute();
 
-                    writer.WriteStartAttribute("privacyMethod");
+                    writer.WriteStartAttribute(NamePrivacyMethod);
                     writer.WriteString(secure == null ? string.Empty : secure.PrivacyMethod.ToString(CultureInfo.InvariantCulture));
                     writer.WriteEndAttribute();
 
-                    writer.WriteStartAttribute("userName");
+                    writer.WriteStartAttribute(NameUserName);
                     writer.WriteString(_profiles[k].UserName);
                     writer.WriteEndAttribute();
 
-                    writer.WriteStartAttribute("timeout");
+                    writer.WriteStartAttribute(NameTimeout);
                     writer.WriteValue(_profiles[k].Timeout);
                     writer.WriteEndAttribute();
 
@@ -200,31 +215,26 @@ namespace Lextm.SharpSnmpLib.Browser
                         {
                             case XmlNodeType.Element:
                                 {
-                                    if (reader.Name == "agents")
+                                    if (reader.Name == NameAgent)
                                     {
-                                        defaultId = new Guid(reader.GetAttribute("defaultAgent"));
+                                        defaultId = new Guid(reader.GetAttribute(NameDefaultAgent));
                                     }
-                                    else if (reader.Name == "add")
+                                    else if (reader.Name == NameAdd)
                                     {
-                                        string name = reader.GetAttribute("name");
-                                        Guid id = new Guid(reader.GetAttribute("id"));
-                                        string[] parts = reader.GetAttribute("binding").Split(new[] { ':' });
+                                        string name = reader.GetAttribute(NameName);
+                                        Guid id = new Guid(reader.GetAttribute(NameId));
+                                        string[] parts = reader.GetAttribute(NameBinding).Split(new[] { ':' });
                                         IPAddress def = IPAddress.Parse(parts[0]);
                                         int port = int.Parse(parts[1], CultureInfo.InvariantCulture);
-                                        VersionCode vc = (VersionCode)int.Parse(reader.GetAttribute("version"), CultureInfo.InvariantCulture);
-                                        string get = reader.GetAttribute("getCommunity");
-                                        string set = reader.GetAttribute("setCommunity");
-                                        string authenticationPassphrase = reader.GetAttribute("authenticationPassphrase");
-                                        string privacyPassphrase = reader.GetAttribute("privacyPassphrase");
-                                        string authenticationMethod = reader.GetAttribute("authenticationMethod");
-                                        string privacyMethod = reader.GetAttribute("privacyMethod");
-                                        string userName = reader.GetAttribute("userName");
-                                        int timeout = int.Parse(reader.GetAttribute("timeout"), CultureInfo.InvariantCulture);
-
-                                        if (def == null)
-                                        {
-                                            break;
-                                        }
+                                        VersionCode vc = (VersionCode)int.Parse(reader.GetAttribute(NameVersion), CultureInfo.InvariantCulture);
+                                        string get = reader.GetAttribute(NameGetCommunity);
+                                        string set = reader.GetAttribute(NameSetCommunity);
+                                        string authenticationPassphrase = reader.GetAttribute(NameAuthenticationPassphrase);
+                                        string privacyPassphrase = reader.GetAttribute(NamePrivacyPassphrase);
+                                        string authenticationMethod = reader.GetAttribute(NameAuthenticationMethod);
+                                        string privacyMethod = reader.GetAttribute(NamePrivacyMethod);
+                                        string userName = reader.GetAttribute(NameUserName);
+                                        int timeout = int.Parse(reader.GetAttribute(NameTimeout), CultureInfo.InvariantCulture);
 
                                         AgentProfile profile = AgentProfileFactory.Create(
                                             id, 

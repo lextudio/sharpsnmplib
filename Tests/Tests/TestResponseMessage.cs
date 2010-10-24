@@ -7,6 +7,7 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 
+using System.Collections.Generic;
 using Lextm.SharpSnmpLib.Security;
 using NUnit.Framework;
 using Lextm.SharpSnmpLib.Messaging;
@@ -18,19 +19,32 @@ namespace Lextm.SharpSnmpLib.Tests
     public class TestResponseMessage
     {
         [Test]
-        public void TestMethod()
+        public void TestConstructor()
         {
-            ISnmpMessage message = MessageFactory.ParseMessages(Resources.getresponse, new UserRegistry())[0];
-            Assert.AreEqual(SnmpType.ResponsePdu, message.Pdu.TypeCode);
-            ISnmpPdu pdu = message.Pdu;
-            Assert.AreEqual(SnmpType.ResponsePdu, pdu.TypeCode);
-            ResponsePdu response = (ResponsePdu)pdu;
-            Assert.AreEqual(new Integer32(0), response.ErrorStatus);
-            Assert.AreEqual(0, response.ErrorIndex.ToInt32());
-            Assert.AreEqual(1, response.Variables.Count);
-            Variable v = response.Variables[0];
-            Assert.AreEqual(new uint[] { 1, 3, 6, 1, 2, 1, 1, 6, 0 }, v.Id.ToNumerical());
-            Assert.AreEqual("Shanghai", v.Data.ToString());
+            var response = new ResponseMessage(
+                VersionCode.V3,
+                new Header(
+                    new Integer32(500),
+                    new Integer32(4000),
+                    new OctetString(new byte[] {0x4}),
+                    new Integer32(3)),
+                new SecurityParameters(
+                    OctetString.Empty,
+                    new Integer32(0),
+                    new Integer32(0),
+                    new OctetString("lextm"),
+                    OctetString.Empty,
+                    OctetString.Empty),
+                new Scope(
+                    OctetString.Empty,
+                    OctetString.Empty,
+                    new ResponsePdu(0x2C6B, ErrorCode.NoError, 0, new List<Variable>{ new Variable(new ObjectIdentifier("1.3.6.1.1.2.5.0"), new Integer32(400))})),
+                DefaultPrivacyProvider.DefaultPair,
+                true);
+            var registry = new UserRegistry();
+            registry.Add(new OctetString("lextm"), DefaultPrivacyProvider.DefaultPair);
+            var messages = MessageFactory.ParseMessages(response.ToBytes(), registry);
+            Assert.AreEqual(1, messages.Count);
         }
     }
 }

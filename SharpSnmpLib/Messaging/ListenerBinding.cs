@@ -324,7 +324,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             IList<ISnmpMessage> messages = null;
             try
             {
-                messages = MessageFactory.ParseMessages(param.GetBytes(), _users);
+                messages = MessageFactory.ParseMessages(param.GetBytes(), 0, param.Number, _users);
             }
             catch (Exception ex)
             {

@@ -9,7 +9,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using Lextm.SharpSnmpLib.Messaging;
 using Lextm.SharpSnmpLib.Security;
 using NUnit.Framework;
@@ -156,6 +155,49 @@ namespace Lextm.SharpSnmpLib.Tests
             //OctetString digest = new MD5AuthenticationProvider(new OctetString("testpass")).ComputeHash(get);
 
             //Assert.AreEqual(digest, get.Parameters.AuthenticationParameters);
+        }
+
+        [Test]
+        public void TestResponseV1()
+        {
+            ISnmpMessage message = MessageFactory.ParseMessages(Resources.getresponse, new UserRegistry())[0];
+            Assert.AreEqual(SnmpType.ResponsePdu, message.Pdu.TypeCode);
+            ISnmpPdu pdu = message.Pdu;
+            Assert.AreEqual(SnmpType.ResponsePdu, pdu.TypeCode);
+            ResponsePdu response = (ResponsePdu)pdu;
+            Assert.AreEqual(new Integer32(0), response.ErrorStatus);
+            Assert.AreEqual(0, response.ErrorIndex.ToInt32());
+            Assert.AreEqual(1, response.Variables.Count);
+            Variable v = response.Variables[0];
+            Assert.AreEqual(new uint[] { 1, 3, 6, 1, 2, 1, 1, 6, 0 }, v.Id.ToNumerical());
+            Assert.AreEqual("Shanghai", v.Data.ToString());
+        }
+
+        [Test]
+        public void TestGetResponseV3_error()
+        {
+            // TODO: make use of this test case.
+            const string bytes = "30 77 02 01 03 30 11 02 04 1A AE F6 91 02 03 00" +
+                                 "FF E3 04 01 04 02 01 03 04 29 30 27 04 0F 04 0D" +
+                                 "80 00 1F 88 80 E9 63 00 00 D6 1F F4 49 02 01 00" +
+                                 "02 04 01 5C DE E9 04 07 6E 65 69 74 68 65 72 04" +
+                                 "00 04 00 30 34 04 0F 04 0D 80 00 1F 88 80 E9 63" +
+                                 "00 00 D6 1F F4 49 04 00 A2 1F 02 04 1A AE F6 9E" +
+                                 "02 01 00 02 01 00 30 11 30 0F 06 08 2B 06 01 02" +
+                                 "01 01 02 00 06 03 2B 06 01";
+            UserRegistry registry = new UserRegistry();
+            registry.Add(new OctetString("neither"), DefaultPrivacyProvider.DefaultPair);
+            IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes, registry);
+            Assert.AreEqual(1, messages.Count);
+            ISnmpMessage message = messages[0];
+            Assert.AreEqual("040D80001F8880E9630000D61FF449", message.Parameters.EngineId.ToHexString());
+            Assert.AreEqual(0, message.Parameters.EngineBoots.ToInt32());
+            Assert.AreEqual(22863593, message.Parameters.EngineTime.ToInt32());
+            Assert.AreEqual("neither", message.Parameters.UserName.ToString());
+            Assert.AreEqual("", message.Parameters.AuthenticationParameters.ToHexString());
+            Assert.AreEqual("", message.Parameters.PrivacyParameters.ToHexString());
+            Assert.AreEqual("040D80001F8880E9630000D61FF449", message.Scope.ContextEngineId.ToHexString());
+            Assert.AreEqual("", message.Scope.ContextName.ToHexString());
         }
 
         [Test]

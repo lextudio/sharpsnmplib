@@ -86,9 +86,10 @@ namespace Lextm.SharpSnmpLib.Messaging
 #if !(CF)
             socket.ReceiveTimeout = timeout;
 #endif
+            int count;
             try
             {
-                socket.Receive(reply, 0, bufSize, SocketFlags.None);
+                count = socket.Receive(reply, 0, bufSize, SocketFlags.None);
             }
             catch (SocketException ex)
             {
@@ -107,7 +108,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             // Passing 'count' is not necessary because ParseMessages should ignore it, but it offer extra safety (and would avoid a bug if parsing >1 response).
-            ISnmpMessage message = ParseMessages(reply, registry)[0];
+            ISnmpMessage message = ParseMessages(reply, 0, count, registry)[0];
             if (message.Pdu.TypeCode == SnmpType.ResponsePdu || message.Pdu.TypeCode == SnmpType.ReportPdu)
             {
                 if (message.MessageId != number)
@@ -154,13 +155,36 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new ArgumentNullException("registry");
             }
-            
+
             if (buffer == null)
             {
                 throw new ArgumentNullException("buffer");
             }
 
-            Stream stream = new MemoryStream(buffer, false);
+            return ParseMessages(buffer, 0, buffer.Length, registry);
+        }
+
+        /// <summary>
+        /// Creates <see cref="ISnmpMessage"/> instances from buffer.
+        /// </summary>
+        /// <param name="buffer">Buffer.</param>
+        /// <param name="index">The index.</param>
+        /// <param name="length">The length.</param>
+        /// <param name="registry">The registry.</param>
+        /// <returns></returns>
+        public static IList<ISnmpMessage> ParseMessages(byte[] buffer, int index, int length, UserRegistry registry)
+        {
+            if (registry == null)
+            {
+                throw new ArgumentNullException("registry");
+            }
+
+            if (buffer == null)
+            {
+                throw new ArgumentNullException("buffer");
+            }
+
+            Stream stream = new MemoryStream(buffer, index, length, false);
             IList<ISnmpMessage> result = new List<ISnmpMessage>();
             int first;
             while ((first = stream.ReadByte()) != -1)

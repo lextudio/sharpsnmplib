@@ -76,6 +76,15 @@ namespace Lextm.SharpSnmpLib.Security
             return OctetString.Empty;
         }
 
+        /// <summary>
+        /// Computes the hash.
+        /// </summary>
+        /// <param name="version">The version.</param>
+        /// <param name="header">The header.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="scopeBytes">The scope bytes.</param>
+        /// <param name="privacy">The privacy provider.</param>
+        /// <returns></returns>
         public OctetString ComputeHash(VersionCode version, Header header, SecurityParameters parameters, ISnmpData scopeBytes, IPrivacyProvider privacy)
         {
             if (header == null)
