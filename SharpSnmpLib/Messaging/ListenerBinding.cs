@@ -240,8 +240,17 @@ namespace Lextm.SharpSnmpLib.Messaging
                 }
                 catch (SocketException ex)
                 {
-                    Interlocked.Exchange(ref _active, 0);    // If there is an exception here, mark the TrapListener as inactive.
-                    HandleException(ex);
+                    // ignore WSAECONNRESET, http://bytes.com/topic/c-sharp/answers/237558-strange-udp-socket-problem
+                    if (ex.ErrorCode != WSAECONNRESET)
+                    {
+                        // If the SnmpTrapListener was active, marks it as stopped and call HandleException.
+                        // If it was inactive, the exception is likely to result from this, and we raise nothing.
+                        long activeBefore = Interlocked.CompareExchange(ref _active, Inactive, Active);
+                        if (activeBefore == Active)
+                        {                        
+                            HandleException(ex);
+                        }
+                    }
                 }
 
                 iar.AsyncWaitHandle.WaitOne();
@@ -268,7 +277,17 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
             catch (SocketException ex)
             {
-                HandleException(ex);
+                // ignore WSAECONNRESET, http://bytes.com/topic/c-sharp/answers/237558-strange-udp-socket-problem
+                if (ex.ErrorCode != WSAECONNRESET)
+                {
+                    // If the SnmpTrapListener was active, marks it as stopped and call HandleException.
+                    // If it was inactive, the exception is likely to result from this, and we raise nothing.
+                    long activeBefore = Interlocked.CompareExchange(ref _active, Inactive, Active);
+                    if (activeBefore == Active)
+                    {                        
+                        HandleException(ex);
+                    }
+                }
             }
         }
 #else
