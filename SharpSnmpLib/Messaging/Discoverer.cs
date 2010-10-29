@@ -16,6 +16,8 @@ namespace Lextm.SharpSnmpLib.Messaging
         private int _bufferSize;
         private int _requestId;
         private static readonly UserRegistry Empty = new UserRegistry();
+        private const int WSAECONNRESET = 10054; // http://msdn.microsoft.com/en-us/library/ms740668(VS.85).aspx
+        private const int WSAEADDRINUSE = 10048; // http://msdn.microsoft.com/en-us/library/ms740668(VS.85).aspx
 
         /// <summary>
         /// Occurs when an SNMP agent is found.
@@ -124,12 +126,15 @@ namespace Lextm.SharpSnmpLib.Messaging
                 }
                 catch (SocketException ex)
                 {
-                    // If the SnmpTrapListener was active, marks it as stopped and call HandleException.
-                    // If it was inactive, the exception is likely to result from this, and we raise nothing.
-                    long activeBefore = Interlocked.CompareExchange(ref _active, 0, 1);
-                    if (activeBefore == 1)
+                    if (ex.ErrorCode != WSAECONNRESET)
                     {
-                        HandleException(ex);
+                        // If the SnmpTrapListener was active, marks it as stopped and call HandleException.
+                        // If it was inactive, the exception is likely to result from this, and we raise nothing.
+                        long activeBefore = Interlocked.CompareExchange(ref _active, 0, 1);
+                        if (activeBefore == 1)
+                        {
+                            HandleException(ex);
+                        }
                     }
                 }
             }
@@ -144,7 +149,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             SocketException ex = exception as SocketException;
-            if (ex != null && ex.ErrorCode == 10048)
+            if (ex != null && ex.ErrorCode == WSAEADDRINUSE)
             {
                 exception = new SnmpException("Port is already used", exception);
             }

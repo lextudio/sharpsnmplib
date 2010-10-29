@@ -39,6 +39,9 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// </summary>
     public static class MessageFactory
     {
+        // http://msdn.microsoft.com/en-us/library/ms740668(VS.85).aspx
+        private const int WSAETIMEDOUT = 10060;
+
         /// <summary>
         /// Sends an SNMP message and wait for its responses.
         /// </summary>
@@ -99,7 +102,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                     throw TimeoutException.Create(receiver.Address, timeout);
                 }
 
-                if (ex.ErrorCode == 10060)
+                if (ex.ErrorCode == WSAETIMEDOUT)
                 {
                     throw TimeoutException.Create(receiver.Address, timeout);
                 }

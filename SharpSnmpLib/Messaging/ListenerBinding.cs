@@ -18,6 +18,8 @@ namespace Lextm.SharpSnmpLib.Messaging
         private bool _disposed;
         private const long Active = 1;
         private const long Inactive = 0;
+        private const int WSAECONNRESET = 10054; // http://msdn.microsoft.com/en-us/library/ms740668(VS.85).aspx
+        private const int WSAEADDRINUSE = 10048; // http://msdn.microsoft.com/en-us/library/ms740668(VS.85).aspx
         private readonly UserRegistry _users;
         private readonly IEnumerable<IListenerAdapter> _adapters;
 
@@ -171,7 +173,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             catch (SocketException ex)
             {
                 Interlocked.Exchange(ref _active, Inactive);
-                if (ex.ErrorCode == 10048)
+                if (ex.ErrorCode == WSAEADDRINUSE)
                 {
                     throw new PortInUseException("Endpoint is already in use", ex) { Endpoint = Endpoint };
                 }
@@ -291,7 +293,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 catch (SocketException ex)
                 {
                     // ignore WSAECONNRESET, http://bytes.com/topic/c-sharp/answers/237558-strange-udp-socket-problem
-                    if (ex.ErrorCode != 10054)
+                    if (ex.ErrorCode != WSAECONNRESET)
                     {
                         // If the SnmpTrapListener was active, marks it as stopped and call HandleException.
                         // If it was inactive, the exception is likely to result from this, and we raise nothing.

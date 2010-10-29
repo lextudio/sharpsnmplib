@@ -81,15 +81,15 @@ namespace SnmpGetNext
                                                                                                    throw new ArgumentException("no such version: " + v);
                                                                                            }
                                                                                        });
-			
+            
             List<string> extra = p.Parse (args);
-			
+            
             if (showHelp)
             {
                 ShowHelp();
                 return;
             }
-			
+            
             if (showVersion)
             {
                 Console.WriteLine(System.Reflection.Assembly.GetExecutingAssembly().GetName().Version);
@@ -101,7 +101,7 @@ namespace SnmpGetNext
                 ShowHelp();
                 return;
             }
-			
+            
             IPAddress ip;
             bool parsed = IPAddress.TryParse(extra[0], out ip);
             if (!parsed)
@@ -116,7 +116,7 @@ namespace SnmpGetNext
                     ip = address;
                     break;
                 }
-				
+                
                 if (ip == null)
                 {
                     Console.WriteLine("invalid host or wrong IP address found: " + extra[0]);
@@ -220,7 +220,7 @@ namespace SnmpGetNext
 
             throw new ArgumentException("unknown name", "authentication");
         }
-		
+        
         private static void ShowHelp()
         {
             Console.WriteLine("#SNMP is available at http://sharpsnmplib.codeplex.com");
