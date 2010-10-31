@@ -493,7 +493,10 @@ namespace WeifenLuo.WinFormsUI.Docking
 				return;
 
 			if (content.DockHandler.HideOnClose)
+			{
 				content.DockHandler.Hide();
+				NestedDockingStatus.NestedPanes.Remove(this);
+			}
 			else
 				content.DockHandler.Close();
 
@@ -589,7 +592,7 @@ namespace WeifenLuo.WinFormsUI.Docking
 
             CaptionControl.RefreshChanges();
             TabStripControl.RefreshChanges();
-            if (DockState == DockState.Float)
+            if (DockState == DockState.Float && FloatWindow != null)
                 FloatWindow.RefreshChanges();
             if (DockHelper.IsDockStateAutoHide(DockState) && DockPanel != null)
             {
@@ -1161,6 +1164,7 @@ namespace WeifenLuo.WinFormsUI.Docking
 		public void RestoreToPanel()
 		{
             DockPanel.SuspendLayout(true);
+
 			IDockContent activeContent = DockPanel.ActiveContent;
 
 			for (int i=DisplayingContents.Count-1; i>=0; i--)
