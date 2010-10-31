@@ -51,7 +51,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// Gets the users.
         /// </summary>
         /// <value>The users.</value>
-        protected UserRegistry Users { get; set; }
+        protected UserRegistry Users { get; private set; }
 
         /// <summary>
         /// Gets the response.
@@ -70,6 +70,19 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// </summary>
         /// <value>The objects.</value>
         protected EngineGroup Group { get; private set; }
+
+        /// <summary>
+        /// Gets a value indicating whether [too big].
+        /// </summary>
+        /// <value><c>true</c> if the response is too big; otherwise, <c>false</c>.</value>
+        public bool TooBig
+        {
+            get
+            {
+                var length = Response.ToBytes().Length;
+                return length > Request.Header.MaxSize || length > Messenger.MaxMessageSize;
+            }
+        }
 
         /// <summary>
         /// Sends out response message.
@@ -107,10 +120,10 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// </summary>
         /// <returns></returns>
         public abstract bool HandleMembership();
-        
+
         /// <summary>
-        /// Verifies message size.
+        /// Generates too big message.
         /// </summary>
-        protected abstract void VerifySize();
+        public abstract void GenerateTooBig();
     }
 }

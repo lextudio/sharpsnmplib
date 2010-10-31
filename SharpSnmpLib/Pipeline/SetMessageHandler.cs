@@ -32,6 +32,13 @@ namespace Lextm.SharpSnmpLib.Pipeline
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         public void Handle(SnmpContext context, ObjectStore store)
         {
+            context.CopyRequest(ErrorCode.InconsistentName, int.MaxValue);
+            if (context.TooBig)
+            {
+                context.GenerateTooBig();
+                return;
+            }
+
             int index = 0;
             ErrorCode status = ErrorCode.NoError;
 

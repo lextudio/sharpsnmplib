@@ -82,42 +82,42 @@ namespace Lextm.SharpSnmpLib.Pipeline
                             Request.Pdu.Variables)),
                     privacy,
                     true);
-            VerifySize();
-        }
-        
-                /// <summary>
-        /// Verifies message size.
-        /// </summary>
-        protected override void VerifySize()
-        {       
-            IPrivacyProvider privacy = Users.Find(Request.Parameters.UserName);            
-            if (Response.ToBytes().Length > Messenger.MaxMessageSize)
+            if (TooBig)
             {
-                Response = new ResponseMessage(
-                    Request.Version,
-                    new Header(
-                        new Integer32(Request.MessageId),
-                        new Integer32(Messenger.MaxMessageSize),
-                        new OctetString(new[] { (byte)Levels.Reportable }),
-                        new Integer32(3)),
-                    new SecurityParameters(
-                        Group.EngineId,
-                        new Integer32(Group.EngineBoots),
-                        new Integer32(Group.EngineTime),
-                        Request.Parameters.UserName,
-                        privacy.AuthenticationProvider.CleanDigest,
-                        privacy.Salt),
-                    new Scope(
-                        Group.EngineId,
-                        OctetString.Empty,
-                        new ResponsePdu(
-                            Request.RequestId,
-                            ErrorCode.TooBig,
-                            0,
-                            Request.Pdu.Variables)),
-                    privacy,
-                    true);
+                GenerateTooBig();
             }
+        }
+
+        /// <summary>
+        /// Generates too big message.
+        /// </summary>
+        public override void GenerateTooBig()
+        {   
+            IPrivacyProvider privacy = Users.Find(Request.Parameters.UserName);
+            Response = new ResponseMessage(
+                Request.Version,
+                new Header(
+                    new Integer32(Request.MessageId),
+                    new Integer32(Messenger.MaxMessageSize),
+                    new OctetString(new[] { (byte)Levels.Reportable }),
+                    new Integer32(3)),
+                new SecurityParameters(
+                    Group.EngineId,
+                    new Integer32(Group.EngineBoots),
+                    new Integer32(Group.EngineTime),
+                    Request.Parameters.UserName,
+                    privacy.AuthenticationProvider.CleanDigest,
+                    privacy.Salt),
+                new Scope(
+                    Group.EngineId,
+                    OctetString.Empty,
+                    new ResponsePdu(
+                        Request.RequestId,
+                        ErrorCode.TooBig,
+                        0,
+                        Request.Pdu.Variables)),
+                privacy,
+                true);
         }
 
         /// <summary>
@@ -192,7 +192,10 @@ namespace Lextm.SharpSnmpLib.Pipeline
                                     )
                             })),
                 DefaultPrivacyProvider.DefaultPair);
-            VerifySize();
+            if (TooBig)
+            {
+                GenerateTooBig();
+            }
         }
 
         /// <summary>
@@ -228,7 +231,10 @@ namespace Lextm.SharpSnmpLib.Pipeline
                         variables)),
                 privacy,
                 true);
-            VerifySize();
+            if (TooBig)
+            {
+                GenerateTooBig();
+            }
         }
     }
 }

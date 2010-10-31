@@ -46,22 +46,19 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 index,
                 Request.Pdu.Variables);
         }
-        
+
         /// <summary>
-        /// Verifies message size.
+        /// Generates too big message.
         /// </summary>
-        protected override void VerifySize()
-        {           
-            if (Response.ToBytes().Length > Messenger.MaxMessageSize)
-            {
-                Response = new ResponseMessage(
-                    Request.RequestId,
-                    Request.Version,
-                    Request.Parameters.UserName,
-                    ErrorCode.TooBig,
-                    0,
-                    Request.Pdu.Variables);
-            }
+        public override void GenerateTooBig()
+        {
+            Response = new ResponseMessage(
+                Request.RequestId,
+                Request.Version,
+                Request.Parameters.UserName,
+                ErrorCode.TooBig,
+                0,
+                Request.Pdu.Variables);
         }
 
         /// <summary>
@@ -86,7 +83,10 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 ErrorCode.NoError,
                 0,
                 variables);
-            VerifySize();
+            if (TooBig)
+            {
+                GenerateTooBig();
+            }
         }
     }
 }

@@ -30,9 +30,19 @@ namespace Lextm.SharpSnmpLib
         private readonly OctetString _flags;
         private readonly Integer32 _securityModel;
         private static readonly Header EmptyHeader = new Header();
-        
+
+        /// <summary>
+        /// Max message size used in #SNMP. 
+        /// </summary>
+        /// <remarks>
+        /// Please note that you can use any value for your own application. 
+        /// Also this value may be changed in #SNMP in future releases.
+        /// </remarks>
+        public const int MaxMessageSize = 0xFFE3;
+
         private Header()
         {            
+            _maxSize = new Integer32(MaxMessageSize);
         }
 
         /// <summary>
@@ -142,5 +152,7 @@ namespace Lextm.SharpSnmpLib
         {
             return string.Format(CultureInfo.InvariantCulture, "Header: messageId: {0};maxMessageSize: {1};securityBits: {2};securityModel: {3}", MessageId, _maxSize, _flags.ToHexString(), _securityModel);
         }
+
+        public int MaxSize { get; set; }
     }
 }
