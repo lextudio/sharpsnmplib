@@ -89,6 +89,7 @@
     <Compile Include="Objects\SysServices.cs" />
     <Compile Include="Objects\SysUpTime.cs" />
     <Compile Include="Pipeline\AccessFailureException.cs" />
+    <Compile Include="Pipeline\SetMessageHandler.cs" />
     <Compile Include="Pipeline\ComposedMembershipProvider.cs" />
     <Compile Include="Pipeline\EngineGroup.cs" />
     <Compile Include="Pipeline\GetBulkMessageHandler.cs" />
