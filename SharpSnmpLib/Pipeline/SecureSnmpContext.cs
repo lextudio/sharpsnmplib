@@ -53,6 +53,10 @@ namespace Lextm.SharpSnmpLib.Pipeline
                         Request.Pdu.Variables)),
                 DefaultPrivacyProvider.DefaultPair,
                 true);
+            if (TooBig)
+            {
+                GenerateTooBig();
+            }
         }
 
         internal override void CopyRequest(ErrorCode status, int index)

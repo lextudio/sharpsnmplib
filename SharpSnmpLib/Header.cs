@@ -153,6 +153,13 @@ namespace Lextm.SharpSnmpLib
             return string.Format(CultureInfo.InvariantCulture, "Header: messageId: {0};maxMessageSize: {1};securityBits: {2};securityModel: {3}", MessageId, _maxSize, _flags.ToHexString(), _securityModel);
         }
 
-        public int MaxSize { get; set; }
+        /// <summary>
+        /// Gets or sets the size of the max.
+        /// </summary>
+        /// <value>The size of the max.</value>
+        public int MaxSize
+        {
+            get { return _maxSize.ToInt32(); }
+        }
     }
 }

@@ -45,6 +45,10 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 status,
                 index,
                 Request.Pdu.Variables);
+            if (TooBig)
+            {
+                GenerateTooBig();
+            }
         }
 
         /// <summary>
