@@ -156,4 +156,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <Target Name="AfterBuild">
+    <Gendarme Condition=" '$(Configuration)' == 'Release' AND '$(OS)' == 'Windows_NT' " Assemblies="$(TargetPath)" WarningsAsErrors="False" IntegrateWithVisualStudio="True" GendarmeIgnoreFilename="gendarme.ignore" />
+  </Target>
 </Project>

@@ -144,8 +144,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
             {
                 handler(sender, e);
             }
-        }
-        
+        }        
         
         /// <summary>
         /// Occurs when an exception is raised.

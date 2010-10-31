@@ -6,6 +6,7 @@ namespace Lextm.SharpSnmpLib.Objects
     /// <summary>
     /// sysUpTime object.
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "UpTime")]
     public class SysUpTime : ScalarObject
     {
         private readonly ISnmpData _time = new TimeTicks((uint)Environment.TickCount / 10);

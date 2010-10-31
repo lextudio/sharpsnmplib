@@ -29,6 +29,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     public class GetRequestMessage : ISnmpMessage
     {
         private readonly byte[] _bytes;
+        
         /// <summary>
         /// Creates a <see cref="GetRequestMessage"/> with all contents.
         /// </summary>

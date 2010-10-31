@@ -192,8 +192,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                             {
                                 new Variable(
                                     new ObjectIdentifier("1.3.6.1.6.3.15.1.1.4.0"),
-                                    new Counter32(Group.ReportCount)
-                                    )
+                                    new Counter32(Group.ReportCount))
                             })),
                 DefaultPrivacyProvider.DefaultPair);
             if (TooBig)
@@ -216,7 +215,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 new Header(
                     new Integer32(Request.MessageId),
                     new Integer32(Messenger.MaxMessageSize),
-                    new OctetString(new[] {(byte) Levels.Reportable}),
+                    new OctetString(new[] { (byte)Levels.Reportable }),
                     new Integer32(3)),
                 new SecurityParameters(
                     Group.EngineId,

@@ -7,6 +7,7 @@ namespace Lextm.SharpSnmpLib.Objects
     /// <summary>
     /// sysDescr object.
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Descr")]
     public class SysDescr : ScalarObject
     {
         private readonly OctetString _description =

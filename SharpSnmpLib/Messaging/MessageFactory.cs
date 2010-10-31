@@ -232,8 +232,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 header = Header.Empty;
                 parameters = new SecurityParameters(null, null, null, (OctetString)body[1], null, null);
-                privacy = DefaultPrivacyProvider.DefaultPair;
-                // v1 and v2
+                privacy = DefaultPrivacyProvider.DefaultPair;                
                 scope = new Scope((ISnmpPdu)body[2]);
             }
             else

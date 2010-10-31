@@ -170,7 +170,7 @@ Module Program
                     priv = New DefaultPrivacyProvider(auth)
                 End If
 
-                Dim report As ReportMessage = Messenger.GetDiscovery().GetResponse(timeout, receiver)
+                Dim report As ReportMessage = Messenger.NextDiscovery.GetResponse(timeout, receiver)
 
                 Messenger.BulkWalk(version, receiver, New OctetString(user), test, result, timeout, _
                  maxRepetitions, mode, priv, report)

@@ -393,12 +393,12 @@ namespace Lextm.SharpSnmpLib.Messaging
         }
 
         /// <summary>
-        /// Gets discovery.
+        /// Returns a new discovery request.
         /// </summary>
         /// <returns></returns>
-        public static Discovery GetDiscovery()
+        public static Discovery NextDiscovery
         {
-            return new Discovery(NextMessageId, NextRequestId, MaxMessageSize);
+            get { return new Discovery(NextMessageId, NextRequestId, MaxMessageSize); }
         }
 
         /// <summary>

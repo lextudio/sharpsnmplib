@@ -19,6 +19,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <param name="context">The context.</param>
         /// <param name="store">The object store.</param>
         /// <returns></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         public void Handle(SnmpContext context, ObjectStore store)
         {
             ErrorCode status = ErrorCode.NoError;
