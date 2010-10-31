@@ -2,7 +2,7 @@ using Lextm.SharpSnmpLib.Pipeline;
 
 namespace Lextm.SharpSnmpLib.Objects
 {
-    internal class SysORID : ScalarObject
+    internal sealed class SysORID : ScalarObject
     {
         private readonly ObjectIdentifier _data;
 

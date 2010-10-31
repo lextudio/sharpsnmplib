@@ -156,7 +156,8 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+<!--  <UsingTask AssemblyFile="..\lib\GendarmeMsBuild.dll" TaskName="GendarmeMsBuild.Gendarme" />
   <Target Name="AfterBuild">
-    <Gendarme Condition=" '$(Configuration)' == 'Release' AND '$(OS)' == 'Windows_NT' " Assemblies="$(TargetPath)" WarningsAsErrors="False" IntegrateWithVisualStudio="True" GendarmeIgnoreFilename="gendarme.ignore" />
-  </Target>
+    <Gendarme Condition=" '$(Configuration)' == 'Release' AND '$(OS)' == 'Windows_NT' " Assemblies="$(TargetPath)" WarningsAsErrors="False" IntegrateWithVisualStudio="True" GendarmeIgnoreFilename="../SharpSnmpLib/gendarme.ignore" />
+  </Target>-->
 </Project>

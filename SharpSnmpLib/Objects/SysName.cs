@@ -23,7 +23,7 @@ namespace Lextm.SharpSnmpLib.Objects
         /// </summary>
         /// <value>The data.</value>
         public override ISnmpData Data
-        {
+        {            
             get 
             { 
                 return _name; 
@@ -31,6 +31,11 @@ namespace Lextm.SharpSnmpLib.Objects
             
             set
             {
+                if (value == null)
+                {
+                    throw new ArgumentNullException("value");
+                }
+                
                 if (value.TypeCode != SnmpType.OctetString)
                 {
                     throw new ArgumentException("data");

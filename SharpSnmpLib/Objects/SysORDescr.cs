@@ -2,7 +2,7 @@ using Lextm.SharpSnmpLib.Pipeline;
 
 namespace Lextm.SharpSnmpLib.Objects
 {
-    internal class SysORDescr : ScalarObject
+    internal sealed class SysORDescr : ScalarObject
     {
         private readonly OctetString _data;
 

@@ -3,7 +3,7 @@ using Lextm.SharpSnmpLib.Pipeline;
 namespace Lextm.SharpSnmpLib.Objects
 {
     // TODO: this is not accessible. So how to handle?
-    internal class SysORIndex : ScalarObject
+    internal sealed class SysORIndex : ScalarObject
     {
         private readonly ISnmpData _data;
 

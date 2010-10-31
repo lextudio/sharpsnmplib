@@ -122,6 +122,26 @@ namespace Lextm.SharpSnmpLib.Security
         /// <returns></returns>
         public OctetString ComputeHash(VersionCode version, Header header, SecurityParameters parameters, Scope scope, IPrivacyProvider privacy)
         {
+            if (header == null)
+            {
+                throw new ArgumentNullException("header");
+            }
+
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            
+            if (scope == null)
+            {
+                throw new ArgumentNullException("scope");
+            }
+            
+            if (privacy == null)
+            {
+                throw new ArgumentNullException("privacy");
+            }
+            
             return ComputeHash(version, header, parameters, privacy.Encrypt(scope.GetData(version), parameters), privacy);
         }
 
@@ -138,6 +158,26 @@ namespace Lextm.SharpSnmpLib.Security
         /// </returns>
         public bool VerifyHash(VersionCode version, Header header, SecurityParameters parameters, ISnmpData scopeBytes, IPrivacyProvider privacy)
         {
+            if (header == null)
+            {
+                throw new ArgumentNullException("header");
+            }
+
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            
+            if (scopeBytes == null)
+            {
+                throw new ArgumentNullException("scopeBytes");
+            }
+            
+            if (privacy == null)
+            {
+                throw new ArgumentNullException("privacy");
+            } 
+            
             var expected = parameters.AuthenticationParameters;
             parameters.AuthenticationParameters = CleanDigest;
             bool result = ComputeHash(version, header, parameters, scopeBytes, privacy) == expected;
@@ -154,26 +194,11 @@ namespace Lextm.SharpSnmpLib.Security
         /// <param name="scopeBytes">The scope bytes.</param>
         /// <param name="privacy">The privacy provider.</param>
         /// <returns></returns>
-        private OctetString ComputeHash(VersionCode version, Header header, SecurityParameters parameters, ISnmpData scopeBytes, IPrivacyProvider privacy)
+        private OctetString ComputeHash(VersionCode version, ISegment header, SecurityParameters parameters, ISnmpData scopeBytes, IPrivacyProvider privacy)
         {
-            if (header == null)
-            {
-                throw new ArgumentNullException("header");
-            }
-
-            if (parameters == null)
-            {
-                throw new ArgumentNullException("parameters");
-            }
-
             if (scopeBytes == null)
             {
                 throw new ArgumentNullException("scopeBytes");
-            }
-
-            if (privacy == null)
-            {
-                throw new ArgumentNullException("privacy");
             }
 
             byte[] key = PasswordToKey(_password, parameters.EngineId.GetRaw());

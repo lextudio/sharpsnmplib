@@ -1,4 +1,6 @@
-﻿namespace Lextm.SharpSnmpLib.Pipeline
+﻿using System;
+
+namespace Lextm.SharpSnmpLib.Pipeline
 {
     /// <summary>
     /// SNMP version 1 membership provider, who checks community names for security.
@@ -27,6 +29,11 @@
         /// <returns></returns>
         public bool AuthenticateRequest(SnmpContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException("context");
+            }
+            
             if (context.Request.Version != Version)
             {
                 return false;

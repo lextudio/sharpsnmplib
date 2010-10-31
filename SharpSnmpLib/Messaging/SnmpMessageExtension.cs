@@ -41,7 +41,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
         }
 
-        internal static Sequence PackMessage(VersionCode version, ISegment header, SecurityParameters parameters, ISnmpData scopeBytes, IPrivacyProvider privacy)
+        internal static Sequence PackMessage(VersionCode version, ISegment header, ISegment parameters, ISnmpData scopeBytes, IPrivacyProvider privacy)
         {
             if (scopeBytes == null)
             {

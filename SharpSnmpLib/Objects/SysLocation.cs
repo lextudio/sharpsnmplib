@@ -31,6 +31,11 @@ namespace Lextm.SharpSnmpLib.Objects
             
             set
             {
+                if (value == null)
+                {
+                    throw new ArgumentNullException("value");
+                }
+                
                 if (value.TypeCode != SnmpType.OctetString)
                 {
                     throw new ArgumentException("wrong data type", "value");

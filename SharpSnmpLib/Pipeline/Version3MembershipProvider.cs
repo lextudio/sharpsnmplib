@@ -1,4 +1,6 @@
-﻿namespace Lextm.SharpSnmpLib.Pipeline
+﻿using System;
+
+namespace Lextm.SharpSnmpLib.Pipeline
 {
     /// <summary>
     /// SNMP version 3 membership provider. Not yet implemented.
@@ -14,6 +16,11 @@
         /// <returns></returns>
         public bool AuthenticateRequest(SnmpContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException("context");
+            }
+            
             return context.Request.Version == Version && context.HandleMembership();
         }
     }

@@ -186,19 +186,21 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new ArgumentNullException("buffer");
             }
-
-            Stream stream = new MemoryStream(buffer, index, length, false);
+            
             IList<ISnmpMessage> result = new List<ISnmpMessage>();
-            int first;
-            while ((first = stream.ReadByte()) != -1)
-            {
-                ISnmpMessage message = ParseMessage(first, stream, registry);
-                if (message == null)
+            using (Stream stream = new MemoryStream(buffer, index, length, false))
+            {                
+                int first;
+                while ((first = stream.ReadByte()) != -1)
                 {
-                    continue;
+                    ISnmpMessage message = ParseMessage(first, stream, registry);
+                    if (message == null)
+                    {
+                        continue;
+                    }
+    
+                    result.Add(message);
                 }
-
-                result.Add(message);
             }
 
             return result;

@@ -1,4 +1,8 @@
-﻿R: Gendarme.Rules.BadPractice.DoNotForgetNotImplementedMethodsRule
+﻿R: Gendarme.Rules.BadPractice.AvoidVisibleConstantFieldRule
+T: Lextm.SharpSnmpLib.Header
+T: Lextm.SharpSnmpLib.Messaging.Listener
+
+R: Gendarme.Rules.BadPractice.DoNotForgetNotImplementedMethodsRule
 M: System.Void Lextm.SharpSnmpLib.MalformedPdu::AppendBytesTo(System.IO.Stream)
 M: System.Byte[] Lextm.SharpSnmpLib.MalformedPdu::ToBytes()
 M: Lextm.SharpSnmpLib.Integer32 Lextm.SharpSnmpLib.MalformedPdu::get_ErrorIndex()
@@ -33,6 +37,8 @@ T: Lextm.SharpSnmpLib.GetResponsePdu
 T: Lextm.SharpSnmpLib.InformRequestPdu
 T: Lextm.SharpSnmpLib.GetNextRequestPdu
 T: Lextm.SharpSnmpLib.ReportPdu
+T: Lextm.SharpSnmpLib.ResponsePdu
+T: Lextm.SharpSnmpLib.Scope
 T: Lextm.SharpSnmpLib.SetRequestPdu
 T: Lextm.SharpSnmpLib.TrapV1Pdu
 T: Lextm.SharpSnmpLib.TrapV2Pdu
@@ -42,6 +48,7 @@ T: Lextm.SharpSnmpLib.Messaging.GetResponseMessage
 T: Lextm.SharpSnmpLib.Messaging.InformRequestMessage
 T: Lextm.SharpSnmpLib.Messaging.GetNextRequestMessage
 T: Lextm.SharpSnmpLib.Messaging.ReportMessage
+T: Lextm.SharpSnmpLib.Messaging.ResponseMessage
 T: Lextm.SharpSnmpLib.Messaging.SetRequestMessage
 T: Lextm.SharpSnmpLib.Messaging.TrapV1Message
 T: Lextm.SharpSnmpLib.Messaging.TrapV2Message
@@ -49,6 +56,7 @@ T: Lextm.SharpSnmpLib.Messaging.MalformedMessage
 T: Lextm.SharpSnmpLib.Messaging.MessageParams
 T: Lextm.SharpSnmpLib.Messaging.ListenerBinding
 T: Lextm.SharpSnmpLib.Messaging.Listener
+T: Lextm.SharpSnmpLib.Messaging.Discoverer
 T: Lextm.SharpSnmpLib.Messaging.MessageReceivedEventArgs
 T: Lextm.SharpSnmpLib.Security.DESPrivacyProvider
 T: Lextm.SharpSnmpLib.Security.AESPrivacyProvider
@@ -56,7 +64,7 @@ T: Lextm.SharpSnmpLib.Pipeline.SnmpEngine
 T: Lextm.SharpSnmpLib.Pipeline.SnmpApplication
 T: Lextm.SharpSnmpLib.Pipeline.ResponseData
 T: Lextm.SharpSnmpLib.Pipeline.HandlerMapping
-T: Lextm.SharpSnmpLib.Pipeline.EngineObjects
+T: Lextm.SharpSnmpLib.Pipeline.EngineGroup
 
 
 R: Gendarme.Rules.Performance.AvoidUncalledPrivateCodeRule
