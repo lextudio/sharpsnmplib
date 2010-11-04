@@ -104,13 +104,14 @@
     <Compile Include="Messaging\GetNextRequestMessage.cs" />
     <Compile Include="Messaging\GetRequestMessage.cs" />
     <Compile Include="Messaging\GetResponseMessage.cs" />
-    <Compile Include="Messaging\Helper.cs" />
     <Compile Include="Messaging\InformRequestMessage.cs" />
     <Compile Include="Messaging\ISnmpMessage.cs" />
     <Compile Include="Messaging\MalformedMessage.cs" />
     <Compile Include="Messaging\MessageFactory.cs" />
     <Compile Include="Messaging\ReportMessage.cs" />
+    <Compile Include="Messaging\ResponseMessage.cs" />
     <Compile Include="Messaging\SetRequestMessage.cs" />
+    <Compile Include="Messaging\SnmpMessageExtension.cs" />
     <Compile Include="Messaging\TimeoutException.cs" />
     <Compile Include="Messaging\TrapV1Message.cs" />
     <Compile Include="Messaging\TrapV2Message.cs" />
@@ -124,6 +125,7 @@
     <Compile Include="OperationException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReportPdu.cs" />
+    <Compile Include="ResponsePdu.cs" />
     <Compile Include="Scope.cs" />
     <Compile Include="SearchResult.cs" />
     <Compile Include="SecurityParameters.cs" />
