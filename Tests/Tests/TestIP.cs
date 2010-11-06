@@ -35,9 +35,12 @@ namespace Lextm.SharpSnmpLib.Tests
         {
             IP actual = new IP("172.0.0.1");
             IP target = new IP("172.0.0.1");
+            IP another = new IP("172.0.0.0");
 
             Assert.IsTrue(actual == target);
             Assert.AreEqual(actual, target);
+            Assert.IsFalse(actual == another);
+            Assert.AreNotEqual(actual, another);
         }
     }
 }

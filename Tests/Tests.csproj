@@ -65,6 +65,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Tests\ListenerBindingTestFixture.cs" />
     <Compile Include="Tests\TestSetMessageHandler.cs" />
     <Compile Include="Tests\TestGetV1MessageHandler.cs" />
     <Compile Include="Tests\TestGetNextV1MessageHandler.cs" />

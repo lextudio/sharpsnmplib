@@ -146,7 +146,12 @@ namespace Lextm.SharpSnmpLib.Messaging
             if (_disposed)
             {
                 throw new ObjectDisposedException(GetType().FullName);
-            }            
+            }       
+
+            if (!Active)
+            {
+                return;
+            }
             
             foreach (ListenerBinding binding in Bindings)
             {
@@ -165,7 +170,12 @@ namespace Lextm.SharpSnmpLib.Messaging
             if (_disposed)
             {
                 throw new ObjectDisposedException(GetType().FullName);
-            }            
+            }  
+
+            if (Active)
+            {
+                return;
+            }
             
             try
             {
@@ -187,7 +197,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Gets or sets the bindings.
         /// </summary>
         /// <value>The bindings.</value>
-        private IList<ListenerBinding> Bindings { get; set; }
+        internal IList<ListenerBinding> Bindings { get; set; }
 
         /// <summary>
         /// Gets or sets the adapters.
@@ -216,6 +226,19 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ObjectDisposedException(GetType().FullName);
             }            
             
+            if (Active)
+            {
+                throw new InvalidOperationException("Must be called when Active == false");
+            }
+            
+            foreach (ListenerBinding existed in Bindings)
+            {
+                if (existed.Endpoint.Equals(endpoint))
+                {
+                    return;
+                }
+            }
+            
             var binding = new ListenerBinding(Users, Adapters, endpoint);
             binding.ExceptionRaised += (o, args) =>
             {
@@ -236,6 +259,31 @@ namespace Lextm.SharpSnmpLib.Messaging
             Bindings.Add(binding);
         }
 
+        /// <summary>
+        /// Removes the binding.
+        /// </summary>
+        /// <param name="endpoint">The endpoint.</param>
+        public void RemoveBinding(IPEndPoint endpoint)
+        {
+            if (_disposed)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
+            }            
+            
+            if (Active)
+            {
+                throw new InvalidOperationException("Must be called when Active == false");
+            }
+            
+            for (int i = 0; i < Bindings.Count; i++)
+            {
+                if (Bindings[i].Endpoint.Equals(endpoint))
+                {
+                    Bindings.RemoveAt(i);
+                }
+            }
+        }
+        
         /// <summary>
         /// Clears the bindings.
         /// </summary>
