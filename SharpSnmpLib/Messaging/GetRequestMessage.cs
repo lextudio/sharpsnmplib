@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Net;
 using System.Net.Sockets;
 using Lextm.SharpSnmpLib.Security;
@@ -323,7 +324,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public override string ToString()
         {
-            return "GET request message: version: " + Version + "; " + Community + "; " + Pdu;
+            return string.Format(CultureInfo.InvariantCulture, "GET request message: version: {0}; {1}; {2}", Version, Community, Pdu);
         }
     }
 }

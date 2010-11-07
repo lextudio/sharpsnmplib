@@ -289,7 +289,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public override string ToString()
         {
-            return "SNMP manager: timeout: " + Timeout.ToString(CultureInfo.InvariantCulture) + "; version: " + DefaultVersion;
+            return string.Format(CultureInfo.InvariantCulture, "SNMP manager: timeout: {0}; version: {1}", Timeout.ToString(CultureInfo.InvariantCulture), DefaultVersion);
         }         
     }
 }

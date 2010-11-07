@@ -162,14 +162,15 @@ namespace Lextm.SharpSnmpLib.Messaging
             if (_disposed)
             {
                 throw new ObjectDisposedException(GetType().FullName);
-            }            
-            
-            if (Endpoint.AddressFamily == AddressFamily.InterNetwork && !Socket.SupportsIPv4)
+            }
+
+            var addressFamily = Endpoint.AddressFamily;
+            if (addressFamily == AddressFamily.InterNetwork && !Socket.SupportsIPv4)
             {
                 throw new InvalidOperationException(Listener.ErrorIPv4NotSupported);
             }
             
-            if (Endpoint.AddressFamily == AddressFamily.InterNetworkV6 && !Socket.OSSupportsIPv6)
+            if (addressFamily == AddressFamily.InterNetworkV6 && !Socket.OSSupportsIPv6)
             {
                 throw new InvalidOperationException(Listener.ErrorIPv6NotSupported);
             }
@@ -181,7 +182,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 return;
             }
 
-            _socket = new Socket(Endpoint.AddressFamily, SocketType.Dgram, ProtocolType.Udp);
+            _socket = new Socket(addressFamily, SocketType.Dgram, ProtocolType.Udp);
 
             try
             {

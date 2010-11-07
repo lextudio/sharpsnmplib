@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Security.Cryptography;
 
@@ -87,7 +88,7 @@ namespace Lextm.SharpSnmpLib.Security
             
             if (key.Length < MinimumKeyLength)
             {
-                throw new ArgumentException("Encryption key length has to 32 bytes or more. Current: " + key.Length, "key");
+                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Encryption key length has to 32 bytes or more. Current: {0}", key.Length), "key");
             }
             
             if (unencryptedData == null)
@@ -309,7 +310,7 @@ namespace Lextm.SharpSnmpLib.Security
             
             if (data.TypeCode != SnmpType.OctetString)
             {
-                throw new ArgumentException("cannot decrypt the scope data: " + data.TypeCode, "data");
+                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "cannot decrypt the scope data: {0}", data.TypeCode), "data");
             }
             
             OctetString octets = (OctetString)data;

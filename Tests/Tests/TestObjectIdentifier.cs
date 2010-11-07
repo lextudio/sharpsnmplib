@@ -56,7 +56,8 @@ namespace Lextm.SharpSnmpLib.Tests
         [Test]
         public void TestConversion()
         {
-            new ObjectIdentifier(".1.3.6.1.2.1.1.1.0");
+            var o = new ObjectIdentifier(".1.3.6.1.2.1.1.1.0");
+            Assert.AreEqual(".1.3.6.1.2.1.1.1.0", o.ToString());
         }
 
         [Test]

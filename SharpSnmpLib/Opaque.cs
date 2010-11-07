@@ -41,7 +41,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// Opaque type.
     /// </summary>
-    [Obsolete("This type is obsolete. Use OctetString type instead.")]
+    /// <remarks>This type is obsolete. Use OctetString type instead.</remarks>
     public sealed class Opaque : ISnmpData, IEquatable<Opaque>
     {
         private readonly byte[] _raw;

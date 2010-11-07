@@ -25,6 +25,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using Lextm.SharpSnmpLib.Security;
 
 namespace Lextm.SharpSnmpLib.Messaging
@@ -218,7 +219,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public override string ToString()
         {
-            return "Response message: version: " + Version + "; " + Parameters.UserName + "; " + Scope.Pdu;
+            return string.Format(CultureInfo.InvariantCulture, "Response message: version: {0}; {1}; {2}", Version, Parameters.UserName, Scope.Pdu);
         }
     }
 }

@@ -56,8 +56,23 @@ namespace Lextm.SharpSnmpLib
         /// Creates an <see cref="IP"/> from a specific <see cref="String"/>.
         /// </summary>
         /// <param name="ip">IP string</param>
-        public IP(string ip) : this(IPAddress.Parse(ip))
+        public IP(string ip) : this(ParseString(ip))
         {
+        }
+
+        private static IPAddress ParseString(string ip)
+        {
+#if CF
+            return IPAddress.Parse(ip);
+#else
+            IPAddress temp;
+            if (IPAddress.TryParse(ip, out temp))
+            {
+                return temp;
+            }
+
+            throw new ArgumentException("This is not a valid IP address", "ip");
+#endif
         }
 
         /// <summary>

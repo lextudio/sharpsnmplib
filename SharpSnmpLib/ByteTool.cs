@@ -53,8 +53,16 @@ namespace Lextm.SharpSnmpLib
             List<byte> result = new List<byte>();
             string[] content = description.Trim().Split(new[] { ' ' });
             foreach (string part in content)
-            {                
+            {
+#if CF
                 result.Add(byte.Parse(part, NumberStyles.Integer, CultureInfo.InvariantCulture));
+#else
+                byte temp;
+                if (byte.TryParse(part, out temp))
+                {
+                    result.Add(temp);
+                }
+#endif
             }
 
             return result.ToArray();
@@ -91,8 +99,15 @@ namespace Lextm.SharpSnmpLib
                 {
                     continue;
                 }
-
+#if CF
                 result.Add(byte.Parse(buffer.ToString(), NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture));
+#else
+                byte temp;
+                if (byte.TryParse(buffer.ToString(), NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out temp))
+                {
+                    result.Add(temp);
+                }
+#endif                
                 buffer.Length = 0;
             }
             

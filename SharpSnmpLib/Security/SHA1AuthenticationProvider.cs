@@ -16,8 +16,10 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
+using System.Globalization;
 using System.IO;
 using System.Security.Cryptography;
+
 using Lextm.SharpSnmpLib.Messaging;
 
 namespace Lextm.SharpSnmpLib.Security
@@ -62,7 +64,7 @@ namespace Lextm.SharpSnmpLib.Security
             
             if (password.Length < 8)
             {
-                throw new ArgumentException("Secret key is too short. Must be >= 8. Current: " + password.Length, "password");
+                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Secret key is too short. Must be >= 8. Current: {0}", password.Length), "password");
             }
             
             if (engineId == null)

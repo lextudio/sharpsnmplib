@@ -253,10 +253,15 @@ namespace Lextm.SharpSnmpLib
                 {
                     continue;
                 }
+
 #if CF
                 result.Add(uint.Parse(s));
 #else
-                result.Add(uint.Parse(s, CultureInfo.InvariantCulture));
+                uint temp;
+                if (uint.TryParse(s, out temp))
+                {
+                    result.Add(temp);
+                }
 #endif
             }
 

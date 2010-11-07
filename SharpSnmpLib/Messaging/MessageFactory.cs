@@ -268,7 +268,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 }
                 else
                 {
-                    throw new SnmpException("invalid v3 packets scoped data: " + body[3].TypeCode);
+                    throw new SnmpException(string.Format(CultureInfo.InvariantCulture, "invalid v3 packets scoped data: {0}", body[3].TypeCode));
                 }
 
                 if (!privacy.AuthenticationProvider.VerifyHash(version, header, parameters, body[3], privacy))
@@ -299,7 +299,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 case SnmpType.InformRequestPdu:
                     return new InformRequestMessage(version, header, parameters, scope, privacy);
                 default:
-                    throw new SnmpException("unsupported pdu: " + pdu.TypeCode);
+                    throw new SnmpException(string.Format(CultureInfo.InvariantCulture, "unsupported pdu: {0}", pdu.TypeCode));
             }
         }
     }

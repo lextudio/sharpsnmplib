@@ -147,30 +147,32 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <returns></returns>
         public override bool HandleMembership()
         {
-            if (Request is MalformedMessage)
+            ISnmpMessage request = Request;
+            if (request is MalformedMessage)
             {
                 return false;
             }
 
-            if (Request.Parameters.UserName == OctetString.Empty)
+            var parameters = request.Parameters;
+            if (parameters.UserName == OctetString.Empty)
             {
                 HandleDiscovery();
                 return true;
             }
 
-            if (Request.Parameters.EngineId != Group.EngineId)
+            if (parameters.EngineId != Group.EngineId)
             {
                 // not from this engine.
                 return false;
             }
 
-            if (Request.Parameters.EngineBoots.ToInt32() != Group.EngineBoots)
+            if (parameters.EngineBoots.ToInt32() != Group.EngineBoots)
             {
                 // does not match boot count.
                 return false;
             }
 
-            if (Request.Parameters.EngineTime.ToInt32() > Group.EngineTime + 500)
+            if (parameters.EngineTime.ToInt32() > Group.EngineTime + 500)
             {
                 // timeout.
                 return false;

@@ -25,6 +25,7 @@
  */
 
 using System;
+using System.Globalization;
 using System.IO;
 
 namespace Lextm.SharpSnmpLib
@@ -116,7 +117,7 @@ namespace Lextm.SharpSnmpLib
                 case SnmpType.EndMarker:
                     return null;
                 default:
-                    throw new SnmpException("unsupported data type: " + (SnmpType)type);
+                    throw new SnmpException(string.Format(CultureInfo.InvariantCulture, "unsupported data type: {0}", (SnmpType)type));
             }
         }
 

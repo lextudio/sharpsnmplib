@@ -45,12 +45,13 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 throw new ArgumentNullException("context");
             }
             
+            ISnmpPdu pdu = context.Request.Pdu;
             IList<Variable> result = new List<Variable>();
             int index = 0;
-            int nonrepeaters = context.Request.Pdu.ErrorStatus.ToInt32();
+            int nonrepeaters = pdu.ErrorStatus.ToInt32();
             for (int i = 0; i < nonrepeaters; i++)
             {
-                Variable v = context.Request.Pdu.Variables[i];
+                Variable v = pdu.Variables[i];
                 index++;
                 try
                 {
@@ -64,12 +65,12 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 }
             }
 
-            for (int j = nonrepeaters; j < context.Request.Pdu.Variables.Count; j++)
+            for (int j = nonrepeaters; j < pdu.Variables.Count; j++)
             {
-                Variable v = context.Request.Pdu.Variables[j];
+                Variable v = pdu.Variables[j];
                 index++;
                 Variable temp = v;
-                int repetition = context.Request.Pdu.ErrorIndex.ToInt32();
+                int repetition = pdu.ErrorIndex.ToInt32();
                 while (repetition-- > 0)
                 {
                     try

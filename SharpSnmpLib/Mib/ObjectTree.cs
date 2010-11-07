@@ -564,8 +564,14 @@ namespace Lextm.SharpSnmpLib.Mib
             {
                 throw new FormatException("input does not contain a value");
             }
-            
-            return UInt32.Parse(input.Substring(left + 1, right - left - 1), CultureInfo.InvariantCulture);
+
+            uint temp;
+            if (UInt32.TryParse(input.Substring(left + 1, right - left - 1), out temp))
+            {
+                return temp;
+            }
+
+            throw new FormatException("input does not contain a value");
         }
     }
 }

@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Net;
 using System.Net.Sockets;
 using Lextm.SharpSnmpLib.Security;
@@ -243,7 +244,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public override string ToString()
         {
-            return "SET request message: version: " + Version + "; " + Parameters.UserName + "; " + Scope.Pdu;
+            return string.Format(CultureInfo.InvariantCulture, "SET request message: version: {0}; {1}; {2}", Version, Parameters.UserName, Scope.Pdu);
         }
 
         /// <summary>
