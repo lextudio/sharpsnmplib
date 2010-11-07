@@ -72,7 +72,7 @@
     <Compile Include="Messaging\MessageParams.cs" />
     <Compile Include="Messaging\MessageReceivedEventArgs.cs" />
     <Compile Include="Messaging\Messenger.cs" />
-    <Compile Include="Messaging\PduCounter.cs" />
+    <Compile Include="Messaging\NumberGenerator.cs" />
     <Compile Include="Messaging\PortInUseException.cs" />
     <Compile Include="Messaging\WalkMode.cs" />
     <Compile Include="Objects\SysContact.cs" />

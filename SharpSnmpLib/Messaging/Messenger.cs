@@ -36,8 +36,8 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// </summary>
     public static class Messenger
     {
-        private static readonly IdGenerator RequestCounter = new IdGenerator(int.MinValue, int.MaxValue);
-        private static readonly IdGenerator MessageCounter = new IdGenerator(0, int.MaxValue);
+        private static readonly NumberGenerator RequestCounter = new NumberGenerator(int.MinValue, int.MaxValue);
+        private static readonly NumberGenerator MessageCounter = new NumberGenerator(0, int.MaxValue);
         private static int _maxMessageSize = Header.MaxMessageSize;
 
         /// <summary>
@@ -58,7 +58,8 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             GetRequestMessage message = new GetRequestMessage(RequestCounter.NextId, version, community, variables);
             ISnmpMessage response = message.GetResponse(timeout, endpoint);
-            if (response.Pdu.ErrorStatus.ToInt32() != 0)
+            var pdu = response.Pdu;
+            if (pdu.ErrorStatus.ToInt32() != 0)
             {
                 throw ErrorException.Create(
                     "error in response",
@@ -66,7 +67,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                     response);
             }
 
-            return response.Pdu.Variables;
+            return pdu.Variables;
         }
         
         /// <summary>
@@ -87,7 +88,8 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             SetRequestMessage message = new SetRequestMessage(RequestCounter.NextId, version, community, variables);
             ISnmpMessage response = message.GetResponse(timeout, endpoint);
-            if (response.Pdu.ErrorStatus.ToInt32() != 0)
+            var pdu = response.Pdu;
+            if (pdu.ErrorStatus.ToInt32() != 0)
             {
                 throw ErrorException.Create(
                     "error in response",
@@ -95,7 +97,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                     response);
             }
 
-            return response.Pdu.Variables;
+            return pdu.Variables;
         }
         
         /// <summary>
@@ -176,8 +178,9 @@ namespace Lextm.SharpSnmpLib.Messaging
                 variables);
 
             ISnmpMessage response = message.GetResponse(timeout, endpoint);
-            bool errorFound = response.Pdu.ErrorStatus.ToErrorCode() == ErrorCode.NoSuchName;
-            next = errorFound ? null : response.Pdu.Variables[0];
+            var pdu = response.Pdu;
+            bool errorFound = pdu.ErrorStatus.ToErrorCode() == ErrorCode.NoSuchName;
+            next = errorFound ? null : pdu.Variables[0];
             return !errorFound;
         }
 
@@ -442,11 +445,12 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             List<Variable> variables = new List<Variable> { new Variable(seed.Id) };
+            var requestId = RequestCounter.NextId;
             GetBulkRequestMessage message = version == VersionCode.V3
                                                 ? new GetBulkRequestMessage(
                                                       version,
                                                       MessageCounter.NextId,
-                                                      RequestCounter.NextId,
+                                                      requestId,
                                                       community,
                                                       0,
                                                       maxRepetitions,
@@ -455,7 +459,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                                                       MaxMessageSize,
                                                       report)
                                                 : new GetBulkRequestMessage(
-                                                      RequestCounter.NextId,
+                                                      requestId,
                                                       version,
                                                       community,
                                                       0,
@@ -463,7 +467,8 @@ namespace Lextm.SharpSnmpLib.Messaging
                                                       variables);
 
             ISnmpMessage response = message.GetResponse(timeout, endpoint);
-            if (response.Pdu.ErrorStatus.ToInt32() != 0)
+            var pdu = response.Pdu;
+            if (pdu.ErrorStatus.ToInt32() != 0)
             {
                 throw ErrorException.Create(
                     "error in response",
@@ -471,7 +476,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                     response);
             }
 
-            next = response.Pdu.Variables;
+            next = pdu.Variables;
             report = message;
             return next.Count != 0;
         }

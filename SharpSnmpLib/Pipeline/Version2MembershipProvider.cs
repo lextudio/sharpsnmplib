@@ -56,12 +56,13 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 return false;
             }
 
+            var parameters = context.Request.Parameters;
             if (context.Request.Pdu.TypeCode == SnmpType.SetRequestPdu)
             {
-                return context.Request.Parameters.UserName == _set;
+                return parameters.UserName == _set;
             }
 
-            return context.Request.Parameters.UserName == _get;
+            return parameters.UserName == _get;
         }
     }
 }

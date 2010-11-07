@@ -108,10 +108,11 @@ namespace Lextm.SharpSnmpLib
             {
                 List<string> names = new List<string>();
                 IDefinition current = Definition;
-                while (current.ParentDefinition != null)
+                IDefinition parent;
+                while ((parent = current.ParentDefinition) != null)
                 {
                     names.Add(current.Name);
-                    current = current.ParentDefinition;
+                    current = parent;
                 }
 
                 if (names.Count == 0)

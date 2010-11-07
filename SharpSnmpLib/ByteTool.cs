@@ -147,12 +147,13 @@ namespace Lextm.SharpSnmpLib
             }
 
             // TODO: one day we go .NET 3.5, we can use IEnumerable.SequenceEqual.
-            if (left.Count != right.Count)
+            var l = left.Count;
+            if (l != right.Count)
             {
                 return false;
             }
             
-            for (int i = 0; i < left.Count; i++)
+            for (int i = 0; i < l; i++)
             {
                 if (!left[i].Equals(right[i]))
                 {

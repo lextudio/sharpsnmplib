@@ -23,14 +23,14 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// A counter that generates ID.
     /// </summary>
     /// <remarks>The request ID is used to identifier sessions.</remarks>
-    public sealed class IdGenerator
+    public sealed class NumberGenerator
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="IdGenerator"/> class.
+        /// Initializes a new instance of the <see cref="NumberGenerator"/> class.
         /// </summary>
         /// <param name="min">The min.</param>
         /// <param name="max">The max.</param>
-        public IdGenerator(int min, int max)
+        public NumberGenerator(int min, int max)
         {
             _min = min;
             _max = max;

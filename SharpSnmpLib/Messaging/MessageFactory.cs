@@ -96,11 +96,11 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
             catch (SocketException ex)
             {
-                // FIXME: Mono/openSUSE uses 10035 for timeout.
-                if (SnmpMessageExtension.IsRunningOnMono && ex.ErrorCode == 10035)
-                {
-                    throw TimeoutException.Create(receiver.Address, timeout);
-                }
+                // FIXME: If you use a Mono build without the fix for this bug (https://bugzilla.novell.com/show_bug.cgi?id=599488), please uncomment this code.
+                //if (SnmpMessageExtension.IsRunningOnMono && ex.ErrorCode == 10035)
+                //{
+                //    throw TimeoutException.Create(receiver.Address, timeout);
+                //}
 
                 if (ex.ErrorCode == WSAETIMEDOUT)
                 {
@@ -112,17 +112,19 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             // Passing 'count' is not necessary because ParseMessages should ignore it, but it offer extra safety (and would avoid a bug if parsing >1 response).
             ISnmpMessage message = ParseMessages(reply, 0, count, registry)[0];
-            if (message.Pdu.TypeCode == SnmpType.ResponsePdu || message.Pdu.TypeCode == SnmpType.ReportPdu)
+            var code = message.Pdu.TypeCode;
+            if (code == SnmpType.ResponsePdu || code == SnmpType.ReportPdu)
             {
-                if (message.MessageId != number)
+                var id = message.MessageId;
+                if (id != number)
                 {
-                    throw OperationException.Create(string.Format(CultureInfo.InvariantCulture, "wrong response sequence: expected {0}, received {1}", number, message.MessageId), receiver.Address);
+                    throw OperationException.Create(string.Format(CultureInfo.InvariantCulture, "wrong response sequence: expected {0}, received {1}", number, id), receiver.Address);
                 }
 
                 return message;
             }
 
-            throw OperationException.Create(string.Format(CultureInfo.InvariantCulture, "wrong response type: {0}", message.Pdu.TypeCode), receiver.Address);
+            throw OperationException.Create(string.Format(CultureInfo.InvariantCulture, "wrong response type: {0}", code), receiver.Address);
         }
         
         /// <summary>
@@ -248,12 +250,13 @@ namespace Lextm.SharpSnmpLib.Messaging
                     return new MalformedMessage(header.MessageId, parameters.UserName);
                 }
 
-                if (body[3].TypeCode == SnmpType.Sequence)
+                var code = body[3].TypeCode;
+                if (code == SnmpType.Sequence)
                 {
                     // v3 not encrypted
                     scope = new Scope((Sequence)body[3]);
                 }
-                else if (body[3].TypeCode == SnmpType.OctetString)
+                else if (code == SnmpType.OctetString)
                 {
                     // v3 encrypted
                     try
@@ -268,7 +271,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 }
                 else
                 {
-                    throw new SnmpException(string.Format(CultureInfo.InvariantCulture, "invalid v3 packets scoped data: {0}", body[3].TypeCode));
+                    throw new SnmpException(string.Format(CultureInfo.InvariantCulture, "invalid v3 packets scoped data: {0}", code));
                 }
 
                 if (!privacy.AuthenticationProvider.VerifyHash(version, header, parameters, body[3], privacy))
@@ -277,8 +280,8 @@ namespace Lextm.SharpSnmpLib.Messaging
                 }
             }
 
-            ISnmpPdu pdu = scope.Pdu;
-            switch (pdu.TypeCode)
+            var scopeCode = scope.Pdu.TypeCode;
+            switch (scopeCode)
             {
                 case SnmpType.TrapV1Pdu:
                     return new TrapV1Message(body);
@@ -299,7 +302,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 case SnmpType.InformRequestPdu:
                     return new InformRequestMessage(version, header, parameters, scope, privacy);
                 default:
-                    throw new SnmpException(string.Format(CultureInfo.InvariantCulture, "unsupported pdu: {0}", pdu.TypeCode));
+                    throw new SnmpException(string.Format(CultureInfo.InvariantCulture, "unsupported pdu: {0}", scopeCode));
             }
         }
     }

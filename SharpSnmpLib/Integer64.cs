@@ -65,10 +65,11 @@ namespace Lextm.SharpSnmpLib
                     v.Add((byte)(n & 0xff));
                     n >>= 8;
                 }
-                
-                _raw = new byte[v.Count];
+
+                var count = v.Count;
+                _raw = new byte[count];
                 int len = 0;
-                for (int j = v.Count - 1; j >= 0; j--)
+                for (int j = count - 1; j >= 0; j--)
                 {
                     _raw[len++] = v[j];
                 }

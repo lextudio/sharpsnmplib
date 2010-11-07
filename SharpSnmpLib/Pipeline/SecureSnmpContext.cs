@@ -46,6 +46,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// </summary>
         internal override void HandleAuthenticationFailure()
         {
+            var defaultPair = DefaultPrivacyProvider.DefaultPair;
             Response = new ResponseMessage(
                 Request.Version,
                 new Header(
@@ -58,8 +59,8 @@ namespace Lextm.SharpSnmpLib.Pipeline
                     new Integer32(Group.EngineBoots),
                     new Integer32(Group.EngineTime),
                     Request.Parameters.UserName,
-                    DefaultPrivacyProvider.DefaultPair.AuthenticationProvider.CleanDigest,
-                    DefaultPrivacyProvider.DefaultPair.Salt),
+                    defaultPair.AuthenticationProvider.CleanDigest,
+                    defaultPair.Salt),
                 new Scope(
                     Group.EngineId,
                     OctetString.Empty,
@@ -68,7 +69,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                         ErrorCode.AuthorizationError,
                         0,
                         Request.Pdu.Variables)),
-                DefaultPrivacyProvider.DefaultPair,
+                defaultPair,
                 true);
             if (TooBig)
             {
@@ -78,7 +79,8 @@ namespace Lextm.SharpSnmpLib.Pipeline
 
         internal override void CopyRequest(ErrorCode status, int index)
         {
-            IPrivacyProvider privacy = Users.Find(Request.Parameters.UserName);
+            var userName = Request.Parameters.UserName;
+            IPrivacyProvider privacy = Users.Find(userName);
             Response = new ResponseMessage(
                     Request.Version,
                     new Header(
@@ -90,7 +92,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                         Group.EngineId,
                         new Integer32(Group.EngineBoots),
                         new Integer32(Group.EngineTime),
-                        Request.Parameters.UserName,
+                        userName,
                         privacy.AuthenticationProvider.CleanDigest,
                         privacy.Salt),
                     new Scope(
@@ -113,8 +115,9 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// Generates too big message.
         /// </summary>
         public override void GenerateTooBig()
-        {   
-            IPrivacyProvider privacy = Users.Find(Request.Parameters.UserName);
+        {
+            var userName = Request.Parameters.UserName;
+            IPrivacyProvider privacy = Users.Find(userName);
             Response = new ResponseMessage(
                 Request.Version,
                 new Header(
@@ -126,7 +129,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                     Group.EngineId,
                     new Integer32(Group.EngineBoots),
                     new Integer32(Group.EngineTime),
-                    Request.Parameters.UserName,
+                    userName,
                     privacy.AuthenticationProvider.CleanDigest,
                     privacy.Salt),
                 new Scope(
@@ -226,9 +229,8 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <param name="variables">The variables.</param>
         internal override void GenerateResponse(IList<Variable> variables)
         {
-            IPrivacyProvider privacy = Users.Find(Request.Parameters.UserName);
-
-            // for v3
+            var userName = Request.Parameters.UserName;
+            IPrivacyProvider privacy = Users.Find(userName);
             Response = new ResponseMessage(
                 Request.Version,
                 new Header(
@@ -240,7 +242,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                     Group.EngineId,
                     new Integer32(Group.EngineBoots),
                     new Integer32(Group.EngineTime),
-                    Request.Parameters.UserName,
+                    userName,
                     privacy.AuthenticationProvider.CleanDigest,
                     privacy.Salt),
                 new Scope(

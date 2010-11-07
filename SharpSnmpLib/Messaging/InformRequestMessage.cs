@@ -162,21 +162,24 @@ namespace Lextm.SharpSnmpLib.Messaging
             
             // TODO: define more constants.
             Header = new Header(new Integer32(messageId), new Integer32(maxMessageSize), new OctetString(new[] { b }), new Integer32(3));
+            var parameters = report.Parameters;
+            var authenticationProvider = Privacy.AuthenticationProvider;
             Parameters = new SecurityParameters(
-                report.Parameters.EngineId,
-                report.Parameters.EngineBoots,
-                report.Parameters.EngineTime,
+                parameters.EngineId,
+                parameters.EngineBoots,
+                parameters.EngineTime,
                 userName,
-                Privacy.AuthenticationProvider.CleanDigest,
+                authenticationProvider.CleanDigest,
                 Privacy.Salt);
             var pdu = new InformRequestPdu(
                 requestId,
                 enterprise,
                 time,
                 variables);
-            Scope = new Scope(report.Scope.ContextEngineId, report.Scope.ContextName, pdu);
+            var scope = report.Scope;
+            Scope = new Scope(scope.ContextEngineId, scope.ContextName, pdu);
 
-            Parameters.AuthenticationParameters = Privacy.AuthenticationProvider.ComputeHash(Version, Header, Parameters, Scope, Privacy);
+            Parameters.AuthenticationParameters = authenticationProvider.ComputeHash(Version, Header, Parameters, Scope, Privacy);
             _bytes = SnmpMessageExtension.PackMessage(Version, Header, Parameters, Scope, Privacy).ToBytes();
         }
 

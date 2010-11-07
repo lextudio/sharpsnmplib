@@ -136,12 +136,13 @@ namespace Lextm.SharpSnmpLib.Messaging
             
             // TODO: define more constants.
             Header = new Header(new Integer32(messageId), new Integer32(maxMessageSize), new OctetString(new[] { b }), new Integer32(3));
+            var authenticationProvider = Privacy.AuthenticationProvider;
             Parameters = new SecurityParameters(
                 engineId,
                 new Integer32(engineBoots), 
                 new Integer32(engineTime), 
                 userName,
-                Privacy.AuthenticationProvider.CleanDigest,
+                authenticationProvider.CleanDigest,
                 Privacy.Salt);
             var pdu = new TrapV2Pdu(
                 requestId,
@@ -150,7 +151,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 variables);
             Scope = new Scope(OctetString.Empty, OctetString.Empty, pdu);
 
-            Parameters.AuthenticationParameters = Privacy.AuthenticationProvider.ComputeHash(Version, Header, Parameters, Scope, Privacy);
+            Parameters.AuthenticationParameters = authenticationProvider.ComputeHash(Version, Header, Parameters, Scope, Privacy);
             _bytes = SnmpMessageExtension.PackMessage(Version, Header, Parameters, Scope, Privacy).ToBytes();
         }
 

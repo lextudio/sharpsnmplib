@@ -49,9 +49,10 @@ namespace Lextm.SharpSnmpLib.Pipeline
             IList<Variable> result = new List<Variable>();
             int index = 0;
             int nonrepeaters = pdu.ErrorStatus.ToInt32();
+            var variables = pdu.Variables;
             for (int i = 0; i < nonrepeaters; i++)
             {
-                Variable v = pdu.Variables[i];
+                Variable v = variables[i];
                 index++;
                 try
                 {
@@ -65,9 +66,9 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 }
             }
 
-            for (int j = nonrepeaters; j < pdu.Variables.Count; j++)
+            for (int j = nonrepeaters; j < variables.Count; j++)
             {
-                Variable v = pdu.Variables[j];
+                Variable v = variables[j];
                 index++;
                 Variable temp = v;
                 int repetition = pdu.ErrorIndex.ToInt32();

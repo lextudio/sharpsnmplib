@@ -307,10 +307,11 @@ namespace Lextm.SharpSnmpLib.Security
             {
                 throw new ArgumentNullException("data");
             }
-            
-            if (data.TypeCode != SnmpType.OctetString)
+
+            var code = data.TypeCode;
+            if (code != SnmpType.OctetString)
             {
-                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "cannot decrypt the scope data: {0}", data.TypeCode), "data");
+                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "cannot decrypt the scope data: {0}", code), "data");
             }
             
             OctetString octets = (OctetString)data;

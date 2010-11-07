@@ -64,9 +64,10 @@ namespace Lextm.SharpSnmpLib.Messaging
             if (version != VersionCode.V3 && community == null)
             {
                 throw new ArgumentNullException("community");
-            }  
-            
-            if (broadcastAddress.AddressFamily == AddressFamily.InterNetworkV6)
+            }
+
+            var addressFamily = broadcastAddress.AddressFamily;
+            if (addressFamily == AddressFamily.InterNetworkV6)
             {
                 throw new ArgumentException("IP v6 is not yet supported", "broadcastAddress");
             }
@@ -87,7 +88,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 bytes = message.ToBytes();
             }
 
-            using (UdpClient udp = new UdpClient(broadcastAddress.AddressFamily))
+            using (UdpClient udp = new UdpClient(addressFamily))
             {
                 #if (!CF)
                 udp.EnableBroadcast = true;
@@ -184,7 +185,8 @@ namespace Lextm.SharpSnmpLib.Messaging
             foreach (ISnmpMessage message in MessageFactory.ParseMessages(param.GetBytes(), 0, param.Number, Empty))
             {
                 EventHandler<AgentFoundEventArgs> handler;
-                if (message.Pdu.TypeCode == SnmpType.ReportPdu)
+                var code = message.Pdu.TypeCode;
+                if (code == SnmpType.ReportPdu)
                 {
                     ReportMessage report = (ReportMessage)message;
                     if (report.RequestId != _requestId)
@@ -204,7 +206,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                     }
                 }
 
-                if (message.Pdu.TypeCode != SnmpType.ResponsePdu)
+                if (code != SnmpType.ResponsePdu)
                 {
                     continue;
                 }

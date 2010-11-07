@@ -118,13 +118,13 @@ namespace Lextm.SharpSnmpLib
             {
                 throw new ArgumentNullException("stream");
             }
-
-            long original = stream.Position;
+            
             if (length == 0)
             {
                 return;
             }
 
+            long original = stream.Position;
             while (stream.Position < original + length)
             {
                 _list.Add(DataFactory.CreateSnmpData(stream));

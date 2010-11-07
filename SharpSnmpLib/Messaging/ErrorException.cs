@@ -98,14 +98,15 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             get
             {
-                int index = Body.Pdu.ErrorIndex.ToInt32();
+                var pdu = Body.Pdu;
+                int index = pdu.ErrorIndex.ToInt32();
                 return string.Format(
                     CultureInfo.InvariantCulture,
                     "{0}. {1}. Index: {2}. Errored Object ID: {3}",
                     Message,
-                    Body.Pdu.ErrorStatus.ToErrorCode(),
+                    pdu.ErrorStatus.ToErrorCode(),
                     index.ToString(CultureInfo.InvariantCulture),
-                    index == 0 ? null : Body.Pdu.Variables[index - 1].Id);
+                    index == 0 ? null : pdu.Variables[index - 1].Id);
             }
         }
          
