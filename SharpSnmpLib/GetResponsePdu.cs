@@ -48,6 +48,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="errorStatus">Error status.</param>
         /// <param name="errorIndex">Error index.</param>
         /// <param name="variables">Variables.</param>
+        [Obsolete("Please use ResponsePdu.")]
         public GetResponsePdu(int requestId, ErrorCode errorStatus, int errorIndex, IList<Variable> variables)
         {
             RequestId = new Integer32(requestId);
@@ -55,13 +56,13 @@ namespace Lextm.SharpSnmpLib
             ErrorIndex = new Integer32(errorIndex);
             Variables = variables;
             _varbindSection = Variable.Transform(variables);
-            ////_raw = ByteTool.ParseItems(_sequenceNumber, _errorStatus, _errorIndex, _varbindSection);
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GetResponsePdu"/> class.
         /// </summary>
         /// <param name="stream">The stream.</param>
+        [Obsolete("Please use ResponsePdu.")]
         public GetResponsePdu(Stream stream)
         {
             RequestId = (Integer32)DataFactory.CreateSnmpData(stream);
@@ -75,26 +76,31 @@ namespace Lextm.SharpSnmpLib
         /// Gets the request ID.
         /// </summary>
         /// <value>The request ID.</value>
+        [Obsolete("Please use ResponsePdu.")]
         public Integer32 RequestId { get; private set; }
 
         /// <summary>
         /// Error status.
         /// </summary>
+        [Obsolete("Please use ResponsePdu.")]
         public Integer32 ErrorStatus { get; private set; }
 
         /// <summary>
         /// Error index.
         /// </summary>
+        [Obsolete("Please use ResponsePdu.")]
         public Integer32 ErrorIndex { get; private set; }
 
         /// <summary>
         /// Variables.
         /// </summary>
+        [Obsolete("Please use ResponsePdu.")]
         public IList<Variable> Variables { get; private set; }
 
         /// <summary>
         /// Type code.
         /// </summary>
+        [Obsolete("Please use ResponsePdu.")]
         public SnmpType TypeCode
         {
             get
@@ -107,6 +113,7 @@ namespace Lextm.SharpSnmpLib
         /// Appends the bytes to <see cref="Stream"/>.
         /// </summary>
         /// <param name="stream">The stream.</param>
+        [Obsolete("Please use ResponsePdu.")]
         public void AppendBytesTo(Stream stream)
         {
             if (stream == null)
@@ -126,7 +133,7 @@ namespace Lextm.SharpSnmpLib
         /// Converts to byte format.
         /// </summary>
         /// <returns></returns>
-        [Obsolete("Use AppendBytesTo instead.")]
+        [Obsolete("Please use ResponsePdu.")]
         public byte[] ToBytes()
         {
             using (MemoryStream result = new MemoryStream())
@@ -140,6 +147,7 @@ namespace Lextm.SharpSnmpLib
         /// Returns a <see cref="string"/> that represents this <see cref="GetResponsePdu"/>/
         /// </summary>
         /// <returns></returns>
+        [Obsolete("Please use ResponsePdu.")]
         public override string ToString()
         {
             return string.Format(

@@ -47,6 +47,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="error">Error code.</param>
         /// <param name="index">Error index.</param>
         /// <param name="variables">Variables.</param>
+        [Obsolete("Use ResponseMessage.")]
         public GetResponseMessage(int requestId, VersionCode version, OctetString community, ErrorCode error, int index, IList<Variable> variables)
         {
             if (variables == null)
@@ -87,6 +88,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="scope">The scope.</param>
         /// <param name="privacy">The privacy provider.</param>
         /// <param name="needAuthentication">if set to <c>true</c>, authentication is needed.</param>
+        [Obsolete("Use ResponseMessage.")]
         public GetResponseMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, IPrivacyProvider privacy, bool needAuthentication)
         {
             if (scope == null)
@@ -126,17 +128,20 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Gets the header.
         /// </summary>
+        [Obsolete("Use ResponseMessage.")]
         public Header Header { get; private set; }
         
         /// <summary>
         /// Gets the privacy provider.
         /// </summary>
         /// <value>The privacy provider.</value>
+        [Obsolete("Use ResponseMessage.")]
         public IPrivacyProvider Privacy { get; private set; }
 
         /// <summary>
         /// Error status.
         /// </summary>
+        [Obsolete("Use ResponseMessage.")]
         public ErrorCode ErrorStatus
         {
             get { return Scope.Pdu.ErrorStatus.ToErrorCode(); }
@@ -145,6 +150,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Error index.
         /// </summary>
+        [Obsolete("Use ResponseMessage.")]
         public int ErrorIndex
         {
             get { return Scope.Pdu.ErrorIndex.ToInt32(); }
@@ -154,11 +160,13 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Gets the version.
         /// </summary>
         /// <value>The version.</value>
+        [Obsolete("Use ResponseMessage.")]
         public VersionCode Version { get; private set; }
 
         /// <summary>
         /// Request ID.
         /// </summary>
+        [Obsolete("Use ResponseMessage.")]
         public int RequestId
         {
             get { return Scope.Pdu.RequestId.ToInt32(); }
@@ -169,6 +177,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         /// <value>The message ID.</value>
         /// <remarks>For v3, message ID is different from request ID. For v1 and v2c, they are the same.</remarks>
+        [Obsolete("Use ResponseMessage.")]
         public int MessageId
         {
             get { return Header == Header.Empty ? RequestId : Header.MessageId; }
@@ -177,6 +186,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Variables.
         /// </summary>
+        [Obsolete("Use ResponseMessage.")]
         public IList<Variable> Variables
         {
             get { return Scope.Pdu.Variables; }
@@ -185,6 +195,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// PDU.
         /// </summary>
+        [Obsolete("Use ResponseMessage.")]
         public ISnmpPdu Pdu
         {
             get { return Scope.Pdu; }
@@ -194,18 +205,21 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Gets the parameters.
         /// </summary>
         /// <value>The parameters.</value>
+        [Obsolete("Use ResponseMessage.")]
         public SecurityParameters Parameters { get; private set; }
 
         /// <summary>
         /// Gets the scope.
         /// </summary>
         /// <value>The scope.</value>
+        [Obsolete("Use ResponseMessage.")]
         public Scope Scope { get; private set; }
 
         /// <summary>
         /// Converts to byte format.
         /// </summary>
         /// <returns></returns>
+        [Obsolete("Use ResponseMessage.")]
         public byte[] ToBytes()
         {
             return _bytes;
@@ -215,6 +229,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Returns a <see cref="string"/> that represents this <see cref="GetResponseMessage"/>.
         /// </summary>
         /// <returns></returns>
+        [Obsolete("Use ResponseMessage.")]
         public override string ToString()
         {
             return string.Format(CultureInfo.InvariantCulture, "GET response message: version: {0}; {1}; {2}", Version, Parameters.UserName, Scope.Pdu);
