@@ -63,7 +63,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("privacy");
             }
 
-            List<ISnmpData> collection = new List<ISnmpData>(4)
+            ISnmpData[] collection = new ISnmpData[4]
                                              {
                                                  new Integer32((int)version),
                                                  header.GetData(version),
@@ -95,7 +95,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("privacy");
             }
             
-            List<ISnmpData> collection = new List<ISnmpData>(4)
+            ISnmpData[] collection = new ISnmpData[4]
                                              {
                                                  new Integer32((int)version),
                                                  header.GetData(version),

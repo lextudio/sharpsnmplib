@@ -132,6 +132,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         internal static Sequence Transform(IList<Variable> variables)
         {
+            // TODO: use IEnumerable instead of IList.
             if (variables == null)
             {
                 throw new ArgumentNullException("variables");

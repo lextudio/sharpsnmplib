@@ -118,6 +118,8 @@ namespace Lextm.SharpSnmpLib.Browser
             foreach (ListViewItem item in listView1.SelectedItems)
             {
                 string name = item.Text.ToUpperInvariant();
+                
+                // TODO: bad performance. improve later.
                 List<string> list = new List<string>(File.ReadAllLines(index));
                 if (list.Contains(name))
                 {
@@ -138,6 +140,8 @@ namespace Lextm.SharpSnmpLib.Browser
             foreach (ListViewItem item in listView1.SelectedItems)
             {
                 string name = item.Text.ToUpperInvariant();
+                
+                // TODO: bad performance. improve later.
                 List<string> list = new List<string>(File.ReadAllLines(index));
                 if (!list.Contains(name))
                 {

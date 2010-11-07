@@ -45,7 +45,6 @@ namespace Lextm.SharpSnmpLib
             ErrorIndex = new Integer32(errorIndex);
             Variables = variables;
             _varbindSection = Variable.Transform(variables);
-            ////_raw = ByteTool.ParseItems(_sequenceNumber, _errorStatus, _errorIndex, _varbindSection);
         }
 
         /// <summary>
