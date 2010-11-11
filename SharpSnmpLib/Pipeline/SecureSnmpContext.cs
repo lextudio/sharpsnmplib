@@ -142,6 +142,11 @@ namespace Lextm.SharpSnmpLib.Pipeline
                         Request.Pdu.Variables)),
                 privacy,
                 true);
+            if (TooBig)
+            {
+                Response = null;
+                // TODO: snmpSilentDrops++;
+            }
         }
 
         /// <summary>

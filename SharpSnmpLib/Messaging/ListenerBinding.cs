@@ -182,7 +182,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 return;
             }
 
-            _socket = new Socket(addressFamily, SocketType.Dgram, ProtocolType.Udp);
+            _socket = new Socket(addressFamily, SocketType.Dgram, ProtocolType.Udp) { ExclusiveAddressUse = true };
 
             try
             {
@@ -244,10 +244,10 @@ namespace Lextm.SharpSnmpLib.Messaging
             while (true)
             {
                 // If no more active, then stop.
-                if (Interlocked.Read(ref _active) == 0)
+                if (Interlocked.Read(ref _active) == Inactive)
+                {
                     return;
-
-                //Console.WriteLine("Waiting");
+                }
 
                 byte[] buffer = new byte[_bufferSize];
                 EndPoint remote = new IPEndPoint(IPAddress.Any, 0);
@@ -271,7 +271,10 @@ namespace Lextm.SharpSnmpLib.Messaging
                     }
                 }
 
-                iar.AsyncWaitHandle.WaitOne();
+                if (iar != null)
+                {
+                    iar.AsyncWaitHandle.WaitOne();
+                }
             }
         }
 
@@ -279,8 +282,10 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             // If no more active, then stop. This discards the received packet, if any (indeed, we may be there either
             // because we've received a packet, or because the socket has been closed).
-            if (Interlocked.Read(ref _active) == 0)
+            if (Interlocked.Read(ref _active) == Inactive)
+            {
                 return;
+            }
 
             //// We start another receive operation.
             //AsyncBeginReceive();
@@ -289,7 +294,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             try
             {
-                EndPoint remote = new IPEndPoint(IPAddress.Any, 0);
+                EndPoint remote = _socket.AddressFamily == AddressFamily.InterNetwork ? new IPEndPoint(IPAddress.Any, 0) : new IPEndPoint(IPAddress.IPv6Any, 0);
                 int count = _socket.EndReceiveFrom(iar, ref remote);
                 HandleMessage(new MessageParams(buffer, count, remote));
             }
