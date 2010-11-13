@@ -50,10 +50,11 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <summary>
         /// Initializes a new instance of the <see cref="SnmpApplicationFactory"/> class.
         /// </summary>
+        /// <param name="store">The store.</param>
         /// <param name="membershipProvider">The membership provider.</param>
         /// <param name="factory">The factory.</param>
-        public SnmpApplicationFactory(IMembershipProvider membershipProvider, MessageHandlerFactory factory)
-            : this(null, null, membershipProvider, factory) // TODO: handle the null case in the future.
+        public SnmpApplicationFactory(ObjectStore store, IMembershipProvider membershipProvider, MessageHandlerFactory factory)
+            : this(null, store, membershipProvider, factory) // TODO: handle the null case in the future.
         {
         }
 

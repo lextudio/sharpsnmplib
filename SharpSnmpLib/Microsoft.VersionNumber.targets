@@ -9,7 +9,7 @@
     <!-- Properties for controlling the Assembly Version -->
     <PropertyGroup>
         <AssemblyMajorVersion>6</AssemblyMajorVersion>
-        <AssemblyMinorVersion>0</AssemblyMinorVersion>
+        <AssemblyMinorVersion>1</AssemblyMinorVersion>
         <AssemblyBuildNumber>
         </AssemblyBuildNumber>
         <AssemblyRevision>
@@ -22,7 +22,7 @@
     <!-- Properties for controlling the Assembly File Version -->
     <PropertyGroup>
         <AssemblyFileMajorVersion>6</AssemblyFileMajorVersion>
-        <AssemblyFileMinorVersion>0</AssemblyFileMinorVersion>
+        <AssemblyFileMinorVersion>1</AssemblyFileMinorVersion>
         <AssemblyFileBuildNumber>
         </AssemblyFileBuildNumber>
         <AssemblyFileRevision>
@@ -81,7 +81,17 @@
     <!-- The target that acutally does all the work. The inputs are the same as the CoreCompileDependsOn target
   (with the addition of @(AssemblyInfoFiles) to ensure that we only ever update the AssemblyInfo files if a 
   compile is actually going to take place. The outputs are the AssemblyInfoFiles that were passed in for update. -->
-    <Target Name="UpdateAssemblyInfoFiles" Inputs="$(MSBuildAllProjects);&#xD;&#xA;                @(Compile);&#xD;&#xA;                @(ManifestResourceWithNoCulture);&#xD;&#xA;                $(ApplicationIcon);&#xD;&#xA;                $(AssemblyOriginatorKeyFile);&#xD;&#xA;                @(ManifestNonResxWithNoCultureOnDisk);&#xD;&#xA;                @(ReferencePath);&#xD;&#xA;                @(CompiledLicenseFile);&#xD;&#xA;                @(EmbeddedDocumentation);                &#xD;&#xA;                @(CustomAdditionalCompileInputs);&#xD;&#xA;                @(AssemblyInfoFiles)" Outputs="@(AssemblyInfoFiles);@(IntermediateAssembly)">
+    <Target Name="UpdateAssemblyInfoFiles" Inputs="$(MSBuildAllProjects);
+      @(Compile);
+      @(ManifestResourceWithNoCulture);
+      $(ApplicationIcon);
+      $(AssemblyOriginatorKeyFile);
+      @(ManifestNonResxWithNoCultureOnDisk);
+      @(ReferencePath);
+      @(CompiledLicenseFile);
+      @(EmbeddedDocumentation); 
+      @(CustomAdditionalCompileInputs);
+      @(AssemblyInfoFiles)" Outputs="@(AssemblyInfoFiles);@(IntermediateAssembly)">
         <AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyMajorVersion="$(AssemblyMajorVersion)" AssemblyMinorVersion="$(AssemblyMinorVersion)" AssemblyBuildNumber="$(AssemblyBuildNumber)" AssemblyRevision="$(AssemblyRevision)" AssemblyBuildNumberType="$(AssemblyBuildNumberType)" AssemblyBuildNumberFormat="$(AssemblyBuildNumberFormat)" AssemblyRevisionType="$(AssemblyRevisionType)" AssemblyRevisionFormat="$(AssemblyRevisionFormat)" AssemblyFileMajorVersion="$(AssemblyFileMajorVersion)" AssemblyFileMinorVersion="$(AssemblyFileMinorVersion)" AssemblyFileBuildNumber="$(AssemblyFileBuildNumber)" AssemblyFileRevision="$(AssemblyFileRevision)" AssemblyFileBuildNumberType="$(AssemblyFileBuildNumberType)" AssemblyFileBuildNumberFormat="$(AssemblyFileBuildNumberFormat)" AssemblyFileRevisionType="$(AssemblyFileRevisionType)" AssemblyFileRevisionFormat="$(AssemblyFileRevisionFormat)" ComVisible="$(AssemblyComVisible)" AssemblyGuid="$(AssemblyGuid)" AssemblyCompany="$(AssemblyCompany)" AssemblyConfiguration="$(AssemblyConfiguration)" AssemblyCopyright="$(AssemblyCopyright)" AssemblyCulture="$(AssemblyCulture)" AssemblyDescription="$(AssemblyDescription)" AssemblyProduct="$(AssemblyProduct)" AssemblyTitle="$(AssemblyTitle)" AssemblyIncludeSigningInformation="$(AssemblyIncludeSigningInformation)" AssemblyDelaySign="$(AssemblyDelaySign)" AssemblyKeyFile="$(AssemblyKeyFile)" AssemblyKeyName="$(AssemblyKeyName)">
             <Output TaskParameter="MaxAssemblyVersion" PropertyName="MaxAssemblyVersion" />
             <Output TaskParameter="MaxAssemblyFileVersion" PropertyName="MaxAssemblyFileVersion" />
