@@ -56,12 +56,12 @@ namespace Lextm.SharpSnmpLib.Pipeline
         internal override void CopyRequest(ErrorCode status, int index)
         {
             Response = new ResponseMessage(
-                Request.RequestId,
+                Request.RequestId(),
                 Request.Version,
                 Request.Parameters.UserName,
                 status,
                 index,
-                Request.Pdu.Variables);
+                Request.Pdu().Variables);
             if (TooBig)
             {
                 GenerateTooBig();
@@ -74,12 +74,12 @@ namespace Lextm.SharpSnmpLib.Pipeline
         public override void GenerateTooBig()
         {
             Response = new ResponseMessage(
-                Request.RequestId,
+                Request.RequestId(),
                 Request.Version,
                 Request.Parameters.UserName,
                 ErrorCode.TooBig,
                 0,
-                Request.Pdu.Variables);
+                Request.Pdu().Variables);
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         internal override void GenerateResponse(IList<Variable> variables)
         {
             Response = new ResponseMessage(
-                Request.RequestId,
+                Request.RequestId(),
                 Request.Version,
                 Request.Parameters.UserName,
                 ErrorCode.NoError,

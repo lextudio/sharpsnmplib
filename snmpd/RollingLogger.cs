@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
+using Lextm.SharpSnmpLib.Messaging;
 using Lextm.SharpSnmpLib.Pipeline;
 
 namespace Lextm.SharpSnmpLib.Agent
@@ -51,12 +52,12 @@ namespace Lextm.SharpSnmpLib.Agent
                 "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9}",
                 DateTime.UtcNow,
                 context.Binding.Endpoint.Address,
-                context.Request.Pdu.TypeCode == SnmpType.Unknown ? Empty : context.Request.Pdu.TypeCode.ToString(),
-                GetStem(context.Request.Pdu.Variables),
+                context.Request.Pdu().TypeCode == SnmpType.Unknown ? Empty : context.Request.Pdu().TypeCode.ToString(),
+                GetStem(context.Request.Pdu().Variables),
                 context.Binding.Endpoint.Port,
                 context.Request.Parameters.UserName,
                 context.Sender.Address,
-                (context.Response == null) ? Empty : context.Response.Pdu.ErrorStatus.ToErrorCode().ToString(),
+                (context.Response == null) ? Empty : context.Response.Pdu().ErrorStatus.ToErrorCode().ToString(),
                 context.Request.Version,
                 DateTime.Now.Subtract(context.CreatedTime).TotalMilliseconds);
         }

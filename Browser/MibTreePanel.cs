@@ -52,7 +52,7 @@ namespace Lextm.SharpSnmpLib.Browser
             treeView1.Nodes.Clear();
             TreeNode root = Wrap(repository.Tree.Root);
             
-            // FIXME: worked around a Mono bug.
+            // FIXME: worked around a Mono issue.
             treeView1.Nodes.AddRange(root.Nodes.Cast<TreeNode>().ToArray());
         }
 

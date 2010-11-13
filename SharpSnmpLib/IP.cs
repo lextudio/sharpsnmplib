@@ -125,20 +125,6 @@ namespace Lextm.SharpSnmpLib
                 return SnmpType.IPAddress;
             }
         }
-        
-        /// <summary>
-        /// Converts to byte format.
-        /// </summary>
-        /// <returns></returns>
-        [Obsolete("Use AppendBytesTo instead.")]
-        public byte[] ToBytes()
-        {
-            using (MemoryStream result = new MemoryStream())
-            {
-                AppendBytesTo(result);
-                return result.ToArray();
-            }
-        }
 
         /// <summary>
         /// Appends the bytes to <see cref="Stream"/>.
@@ -151,7 +137,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("stream");
             }
             
-            ByteTool.AppendBytes(stream, TypeCode, _ip.GetAddressBytes());
+            stream.AppendBytes(TypeCode, _ip.GetAddressBytes());
         }
 
         /// <summary>

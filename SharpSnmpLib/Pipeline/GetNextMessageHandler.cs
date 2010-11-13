@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using Lextm.SharpSnmpLib.Messaging;
 
 namespace Lextm.SharpSnmpLib.Pipeline
 {
@@ -49,7 +50,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
             
             int index = 0;
             IList<Variable> result = new List<Variable>();
-            foreach (Variable v in context.Request.Pdu.Variables)
+            foreach (Variable v in context.Request.Pdu().Variables)
             {
                 index++;
                 try

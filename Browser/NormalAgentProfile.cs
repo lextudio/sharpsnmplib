@@ -38,7 +38,7 @@ namespace Lextm.SharpSnmpLib.Browser
                 GetCommunity,
                 new List<Variable> { variable });
             ISnmpMessage response = message.GetResponse(Timeout, Agent);
-            if (response.Pdu.ErrorStatus.ToInt32() != 0)
+            if (response.Pdu().ErrorStatus.ToInt32() != 0)
             {
                 throw ErrorException.Create(
                     "error in response",
@@ -46,7 +46,7 @@ namespace Lextm.SharpSnmpLib.Browser
                     response);
             }
 
-            Logger.Info(response.Pdu.Variables[0].ToString(Objects));
+            Logger.Info(response.Pdu().Variables[0].ToString(Objects));
         }
 
         internal override void Set(Variable variable)

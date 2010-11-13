@@ -117,20 +117,6 @@ namespace Lextm.SharpSnmpLib
         #region ISnmpData Members
 
         /// <summary>
-        /// Converts to byte format.
-        /// </summary>
-        /// <returns></returns>
-        [Obsolete("Use AppendBytesTo instead.")]
-        public byte[] ToBytes()
-        {
-            using (MemoryStream result = new MemoryStream())
-            {
-                AppendBytesTo(result);
-                return result.ToArray();
-            }
-        }
-
-        /// <summary>
         /// Appends the bytes to <see cref="Stream"/>.
         /// </summary>
         /// <param name="stream">The stream.</param>
@@ -141,7 +127,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("stream");
             }
             
-            ByteTool.AppendBytes(stream, TypeCode, _count.GetRaw());
+            stream.AppendBytes(TypeCode, _count.GetRaw());
         }
 
         #endregion

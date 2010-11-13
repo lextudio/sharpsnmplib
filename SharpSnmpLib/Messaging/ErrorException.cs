@@ -98,7 +98,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             get
             {
-                var pdu = Body.Pdu;
+                var pdu = Body.Pdu();
                 int index = pdu.ErrorIndex.ToInt32();
                 return string.Format(
                     CultureInfo.InvariantCulture,

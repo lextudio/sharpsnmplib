@@ -35,7 +35,7 @@ namespace Lextm.SharpSnmpLib
         /// Max message size used in #SNMP. 
         /// </summary>
         /// <remarks>
-        /// Please note that you can use any value for your own application. 
+        /// You can use any value for your own application. 
         /// Also this value may be changed in #SNMP in future releases.
         /// </remarks>
         public const int MaxMessageSize = 0xFFE3;

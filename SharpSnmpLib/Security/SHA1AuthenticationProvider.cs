@@ -119,94 +119,20 @@ namespace Lextm.SharpSnmpLib.Security
         /// <param name="version">The version.</param>
         /// <param name="header">The header.</param>
         /// <param name="parameters">The parameters.</param>
-        /// <param name="scope">The scope.</param>
+        /// <param name="data">The scope bytes.</param>
         /// <param name="privacy">The privacy provider.</param>
         /// <returns></returns>
-        public OctetString ComputeHash(VersionCode version, Header header, SecurityParameters parameters, Scope scope, IPrivacyProvider privacy)
+        public OctetString ComputeHash(VersionCode version, ISegment header, SecurityParameters parameters, ISnmpData data, IPrivacyProvider privacy)
         {
-            if (header == null)
+            if (data == null)
             {
-                throw new ArgumentNullException("header");
-            }
-
-            if (parameters == null)
-            {
-                throw new ArgumentNullException("parameters");
-            }
-            
-            if (scope == null)
-            {
-                throw new ArgumentNullException("scope");
-            }
-            
-            if (privacy == null)
-            {
-                throw new ArgumentNullException("privacy");
-            }
-            
-            return ComputeHash(version, header, parameters, privacy.Encrypt(scope.GetData(version), parameters), privacy);
-        }
-
-        /// <summary>
-        /// Verifies the hash.
-        /// </summary>
-        /// <param name="version">The version.</param>
-        /// <param name="header">The header.</param>
-        /// <param name="parameters">The parameters.</param>
-        /// <param name="scopeBytes">The scope bytes.</param>
-        /// <param name="privacy">The privacy provider.</param>
-        /// <returns>
-        /// Returns <code>true</code> if hash matches. Otherwise, returns <code>false</code>.
-        /// </returns>
-        public bool VerifyHash(VersionCode version, Header header, SecurityParameters parameters, ISnmpData scopeBytes, IPrivacyProvider privacy)
-        {
-            if (header == null)
-            {
-                throw new ArgumentNullException("header");
-            }
-
-            if (parameters == null)
-            {
-                throw new ArgumentNullException("parameters");
-            }
-            
-            if (scopeBytes == null)
-            {
-                throw new ArgumentNullException("scopeBytes");
-            }
-            
-            if (privacy == null)
-            {
-                throw new ArgumentNullException("privacy");
-            } 
-            
-            var expected = parameters.AuthenticationParameters;
-            parameters.AuthenticationParameters = CleanDigest;
-            bool result = ComputeHash(version, header, parameters, scopeBytes, privacy) == expected;
-            parameters.AuthenticationParameters = expected;
-            return result;
-        }
-
-        /// <summary>
-        /// Computes the hash.
-        /// </summary>
-        /// <param name="version">The version.</param>
-        /// <param name="header">The header.</param>
-        /// <param name="parameters">The parameters.</param>
-        /// <param name="scopeBytes">The scope bytes.</param>
-        /// <param name="privacy">The privacy provider.</param>
-        /// <returns></returns>
-        private OctetString ComputeHash(VersionCode version, ISegment header, SecurityParameters parameters, ISnmpData scopeBytes, IPrivacyProvider privacy)
-        {
-            if (scopeBytes == null)
-            {
-                throw new ArgumentNullException("scopeBytes");
+                throw new ArgumentNullException("data");
             }
 
             byte[] key = PasswordToKey(_password, parameters.EngineId.GetRaw());
             using (HMACSHA1 sha1 = new HMACSHA1(key))
             {
-                byte[] hash = sha1.ComputeHash(SnmpMessageExtension.PackMessage(version, header, parameters, scopeBytes, privacy).ToBytes());
+                byte[] hash = sha1.ComputeHash(SnmpMessageExtension.PackMessage(version, header, parameters, data).ToBytes());
                 sha1.Clear();
                 byte[] result = new byte[DigestLength];
                 Array.Copy(hash, result, result.Length);

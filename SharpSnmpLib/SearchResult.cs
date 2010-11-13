@@ -135,31 +135,5 @@ namespace Lextm.SharpSnmpLib
                 return result.ToString();
             }
         }
-        
-        /// <summary>
-        /// Returns a <see cref="System.String"/> for this object ID.
-        /// </summary>
-        /// <param name="id">The object ID.</param>
-        /// <param name="objects">The objects.</param>
-        /// <returns>
-        /// A <see cref="System.String"/> that represents this object ID.
-        /// </returns>
-        [CLSCompliant(false)]
-        [Obsolete("Use ObjectIdentifier.ToString(IObjectRegistry) instead.")]
-        public static string GetStringOf(ObjectIdentifier id, IObjectRegistry objects)
-        {
-            if (id == null)
-            {
-                throw new ArgumentNullException("id");
-            }
-            
-            if (objects == null)
-            {
-                return id.ToString();
-            }
-
-            string result = objects.Tree.Search(id.ToNumerical()).AlternativeText;
-            return string.IsNullOrEmpty(result) ? id.ToString() : result;
-        }
     }
 }

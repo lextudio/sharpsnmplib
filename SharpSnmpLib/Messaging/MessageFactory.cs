@@ -47,7 +47,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         /// <param name="receiver">The IP address and port of the target to talk to.</param>
         /// <param name="bytes">The byte array representing the SNMP message.</param>
-        /// <param name="number">The <see cref="ResponseMessage.MessageId"/> of the SNMP message.</param>
+        /// <param name="number">The message id of the SNMP message.</param>
         /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
         /// <param name="registry">The registry.</param>
         /// <param name="socket">The UDP <see cref="Socket"/> to use to send/receive.</param>
@@ -96,7 +96,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
             catch (SocketException ex)
             {
-                // FIXME: If you use a Mono build without the fix for this bug (https://bugzilla.novell.com/show_bug.cgi?id=599488), please uncomment this code.
+                // FIXME: If you use a Mono build without the fix for this issue (https://bugzilla.novell.com/show_bug.cgi?id=599488), please uncomment this code.
                 //if (SnmpMessageExtension.IsRunningOnMono && ex.ErrorCode == 10035)
                 //{
                 //    throw TimeoutException.Create(receiver.Address, timeout);
@@ -110,12 +110,12 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw;
             }
 
-            // Passing 'count' is not necessary because ParseMessages should ignore it, but it offer extra safety (and would avoid a bug if parsing >1 response).
+            // Passing 'count' is not necessary because ParseMessages should ignore it, but it offer extra safety (and would avoid an issue if parsing >1 response).
             ISnmpMessage message = ParseMessages(reply, 0, count, registry)[0];
-            var code = message.Pdu.TypeCode;
+            var code = message.Pdu().TypeCode;
             if (code == SnmpType.ResponsePdu || code == SnmpType.ReportPdu)
             {
-                var id = message.MessageId;
+                var id = message.MessageId();
                 if (id != number)
                 {
                     throw OperationException.Create(string.Format(CultureInfo.InvariantCulture, "wrong response sequence: expected {0}, received {1}", number, id), receiver.Address);

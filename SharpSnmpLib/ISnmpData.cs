@@ -47,13 +47,6 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="stream">The stream.</param>
         void AppendBytesTo(Stream stream);
-
-        /// <summary>
-        /// Converts to the bytes.
-        /// </summary>
-        /// <returns></returns>
-        [Obsolete("Use ByteTool.ToBytes instead.")]
-        byte[] ToBytes();
         
         /// <summary>
         /// Returns a <see cref="String"/> that represents this object.

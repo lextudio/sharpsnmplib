@@ -42,20 +42,10 @@ namespace Lextm.SharpSnmpLib.Security
         /// <param name="version">The version.</param>
         /// <param name="header">The header.</param>
         /// <param name="parameters">The parameters.</param>
-        /// <param name="scope">The scope.</param>
+        /// <param name="data">The scope bytes.</param>
         /// <param name="privacy">The privacy provider.</param>
         /// <returns></returns>
-        OctetString ComputeHash(VersionCode version, Header header, SecurityParameters parameters, Scope scope, IPrivacyProvider privacy);
-
-        /// <summary>
-        /// Verifies the hash.
-        /// </summary>
-        /// <param name="version">The version.</param>
-        /// <param name="header">The header.</param>
-        /// <param name="parameters">The parameters.</param>
-        /// <param name="scopeBytes">The scope bytes.</param>
-        /// <param name="privacy">The privacy provider.</param>
-        /// <returns></returns>
-        bool VerifyHash(VersionCode version, Header header, SecurityParameters parameters, ISnmpData scopeBytes, IPrivacyProvider privacy);
+        OctetString ComputeHash(VersionCode version, ISegment header, SecurityParameters parameters,
+                                       ISnmpData data, IPrivacyProvider privacy);
     }
 }

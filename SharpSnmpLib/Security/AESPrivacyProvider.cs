@@ -318,7 +318,7 @@ namespace Lextm.SharpSnmpLib.Security
             }
             
             byte[] pkey = AuthenticationProvider.PasswordToKey(_phrase.GetRaw(), parameters.EngineId.GetRaw());
-            byte[] bytes = ByteTool.ToBytes(data);
+            byte[] bytes = data.ToBytes();
             int reminder = bytes.Length % 8;
             int count = reminder == 0 ? 0 : 8 - reminder;
             using (MemoryStream stream = new MemoryStream())

@@ -47,12 +47,11 @@ namespace Lextm.SharpSnmpLib.Security
         /// <param name="version">The version.</param>
         /// <param name="header">The header.</param>
         /// <param name="parameters">The parameters.</param>
-        /// <param name="scope">The scope.</param>
+        /// <param name="data">The scope data.</param>
         /// <param name="privacy">The privacy provider.</param>
         /// <returns></returns>
-        public OctetString ComputeHash(VersionCode version, Header header, SecurityParameters parameters, Scope scope, IPrivacyProvider privacy)
+        public OctetString ComputeHash(VersionCode version, ISegment header, SecurityParameters parameters, ISnmpData data, IPrivacyProvider privacy)
         {
-            // TODO: make it extension method.
             if (header == null)
             {
                 throw new ArgumentNullException("header");
@@ -63,9 +62,9 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentNullException("parameters");
             }
 
-            if (scope == null)
+            if (data == null)
             {
-                throw new ArgumentNullException("scope");
+                throw new ArgumentNullException("data");
             }
 
             if (privacy == null)
@@ -74,40 +73,6 @@ namespace Lextm.SharpSnmpLib.Security
             }
 
             return OctetString.Empty;
-        }
-
-        /// <summary>
-        /// Verifies the hash.
-        /// </summary>
-        /// <param name="version">The version.</param>
-        /// <param name="header">The header.</param>
-        /// <param name="parameters">The parameters.</param>
-        /// <param name="scopeBytes">The scope bytes.</param>
-        /// <param name="privacy">The privacy provider.</param>
-        /// <returns></returns>
-        public bool VerifyHash(VersionCode version, Header header, SecurityParameters parameters, ISnmpData scopeBytes, IPrivacyProvider privacy)
-        {
-            if (header == null)
-            {
-                throw new ArgumentNullException("header");
-            }
-
-            if (parameters == null)
-            {
-                throw new ArgumentNullException("parameters");
-            }
-
-            if (scopeBytes == null)
-            {
-                throw new ArgumentNullException("scopeBytes");
-            }
-
-            if (privacy == null)
-            {
-                throw new ArgumentNullException("privacy");
-            }
-
-            return true;
         }
 
         /// <summary>

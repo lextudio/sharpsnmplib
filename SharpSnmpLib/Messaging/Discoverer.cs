@@ -185,16 +185,16 @@ namespace Lextm.SharpSnmpLib.Messaging
             foreach (ISnmpMessage message in MessageFactory.ParseMessages(param.GetBytes(), 0, param.Number, Empty))
             {
                 EventHandler<AgentFoundEventArgs> handler;
-                var code = message.Pdu.TypeCode;
+                var code = message.Pdu().TypeCode;
                 if (code == SnmpType.ReportPdu)
                 {
                     ReportMessage report = (ReportMessage)message;
-                    if (report.RequestId != _requestId)
+                    if (report.RequestId() != _requestId)
                     {
                         continue;
                     }
 
-                    if (report.Pdu.ErrorStatus.ToErrorCode() != ErrorCode.NoError)
+                    if (report.Pdu().ErrorStatus.ToErrorCode() != ErrorCode.NoError)
                     {
                         continue;
                     }
@@ -212,7 +212,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 }
 
                 ResponseMessage response = (ResponseMessage)message;
-                if (response.RequestId != _requestId)
+                if (response.RequestId() != _requestId)
                 {
                     continue;
                 }
@@ -225,7 +225,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 handler = AgentFound;
                 if (handler != null)
                 {
-                    handler(this, new AgentFoundEventArgs(param.Sender, response.Variables[0]));
+                    handler(this, new AgentFoundEventArgs(param.Sender, response.Variables()[0]));
                 }
             }
         }

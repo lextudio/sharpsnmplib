@@ -220,7 +220,7 @@ namespace SnmpSet
                 SetRequestMessage request = new SetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(user), vList, priv, Messenger.MaxMessageSize, report);
 
                 ISnmpMessage response = request.GetResponse(timeout, receiver);
-                if (response.Pdu.ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
+                if (response.Pdu().ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
                 {
                     throw ErrorException.Create(
                         "error in response",
@@ -228,7 +228,7 @@ namespace SnmpSet
                         response);
                 }
 
-                foreach (Variable v in response.Pdu.Variables)
+                foreach (Variable v in response.Pdu().Variables)
                 {
                     Console.WriteLine(v);
                 }

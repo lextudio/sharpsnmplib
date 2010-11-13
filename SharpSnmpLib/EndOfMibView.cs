@@ -100,20 +100,6 @@ namespace Lextm.SharpSnmpLib
                 return SnmpType.EndOfMibView;
             }
         }
-        
-        /// <summary>
-        /// Converts to byte format.
-        /// </summary>
-        /// <returns></returns>
-        [Obsolete("Use AppendBytesTo instead.")]
-        public byte[] ToBytes()
-        {
-            using (MemoryStream result = new MemoryStream())
-            {
-                AppendBytesTo(result);
-                return result.ToArray();
-            }
-        }
 
         /// <summary>
         /// Appends the bytes to <see cref="Stream"/>.
@@ -126,7 +112,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("stream");
             }
             
-            ByteTool.AppendBytes(stream, TypeCode, new byte[0]);
+            stream.AppendBytes(TypeCode, new byte[0]);
         }
         
         /// <summary>

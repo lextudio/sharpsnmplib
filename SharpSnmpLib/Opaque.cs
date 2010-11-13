@@ -18,6 +18,7 @@
 using System;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 // ASN.1 BER encoding library by Malcolm Crowe at the University of the West of Scotland
@@ -85,20 +86,6 @@ namespace Lextm.SharpSnmpLib
                 return SnmpType.Opaque;
             }
         }
-        
-        /// <summary>
-        /// Converts to byte format.
-        /// </summary>
-        /// <returns></returns>
-        [Obsolete("Use AppendBytesTo instead.")]
-        public byte[] ToBytes()
-        {
-            using (MemoryStream result = new MemoryStream())
-            {
-                AppendBytesTo(result);
-                return result.ToArray();
-            }
-        }
 
         /// <summary>
         /// Appends the bytes to <see cref="Stream"/>.
@@ -111,7 +98,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("stream");
             }
             
-            ByteTool.AppendBytes(stream, TypeCode, _raw);
+            stream.AppendBytes(TypeCode, _raw);
         }
 
         /// <summary>
@@ -176,7 +163,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="right">Right <see cref="Opaque"/> object</param>
         /// <returns>
         /// Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
-        public static bool Equals(Opaque left, Opaque right)
+        private static bool Equals(Opaque left, Opaque right)
         {
             object lo = left;
             object ro = right;
@@ -189,8 +176,8 @@ namespace Lextm.SharpSnmpLib
             {
                 return false;
             }
-            
-            return ByteTool.CompareArray(left._raw, right._raw);
+
+            return left._raw.SequenceEqual(right._raw); 
         }
     }
     

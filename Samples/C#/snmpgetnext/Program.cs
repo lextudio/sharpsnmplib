@@ -141,7 +141,7 @@ namespace SnmpGetNext
                                                                               new OctetString(community),
                                                                               vList);
                     ISnmpMessage response = message.GetResponse(timeout, receiver);
-                    if (response.Pdu.ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
+                    if (response.Pdu().ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
                     {
                         throw ErrorException.Create(
                             "error in response",
@@ -149,7 +149,7 @@ namespace SnmpGetNext
                             response);
                     }
 
-                    foreach (Variable variable in response.Pdu.Variables)
+                    foreach (Variable variable in response.Pdu().Variables)
                     {
                         Console.WriteLine(variable);
                     }
@@ -183,7 +183,7 @@ namespace SnmpGetNext
                 GetNextRequestMessage request = new GetNextRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(user), vList, priv, Messenger.MaxMessageSize, report);
 
                 ISnmpMessage reply = request.GetResponse(timeout, receiver);
-                if (reply.Pdu.ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
+                if (reply.Pdu().ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
                 {
                     throw ErrorException.Create(
                         "error in response",
@@ -191,7 +191,7 @@ namespace SnmpGetNext
                         reply);
                 }
 
-                foreach (Variable v in reply.Pdu.Variables)
+                foreach (Variable v in reply.Pdu().Variables)
                 {
                     Console.WriteLine(v);
                 }

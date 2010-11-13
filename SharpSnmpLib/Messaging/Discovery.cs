@@ -84,9 +84,9 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("receiver");
             }
             
-            using (Socket socket = SnmpMessageExtension.GetSocket(receiver))
+            using (Socket socket = receiver.GetSocket())
             {
-                return (ReportMessage)MessageFactory.GetResponse(receiver, ToBytes(), _discovery.MessageId, timeout, Empty, socket);
+                return (ReportMessage)MessageFactory.GetResponse(receiver, ToBytes(), _discovery.MessageId(), timeout, Empty, socket);
             }
         }
 
@@ -107,7 +107,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </returns>
         public override string ToString()
         {
-            return string.Format(CultureInfo.InvariantCulture, "discovery class: message id: {0}; request id: {1}", _discovery.MessageId, _discovery.RequestId);
+            return string.Format(CultureInfo.InvariantCulture, "discovery class: message id: {0}; request id: {1}", _discovery.MessageId(), _discovery.RequestId());
         }
     }
 }

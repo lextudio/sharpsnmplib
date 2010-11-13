@@ -58,16 +58,6 @@ namespace Lextm.SharpSnmpLib
             full.Insert(0, new Variable(new uint[] { 1, 3, 6, 1, 2, 1, 1, 3, 0 }, _time));
             full.Insert(1, new Variable(new uint[] { 1, 3, 6, 1, 6, 3, 1, 1, 4, 1, 0 }, Enterprise));
             _varbindSection = Variable.Transform(full);
-            ////_raw = ByteTool.ParseItems(_seq, new Integer32(0), new Integer32(0), _varbindSection);
-        }        
-
-        /// <summary>
-        /// Creates a <see cref="InformRequestPdu"/> with raw bytes.
-        /// </summary>
-        /// <param name="raw">Raw bytes</param>
-        internal InformRequestPdu(byte[] raw)
-            : this(new MemoryStream(raw))
-        {
         }
 
         /// <summary>
@@ -85,8 +75,6 @@ namespace Lextm.SharpSnmpLib
             Variables.RemoveAt(0);
             Enterprise = (ObjectIdentifier)Variables[0].Data;
             Variables.RemoveAt(0);
-            ////_raw = ByteTool.ParseItems(_seq, _errorStatus, _errorIndex, _varbindSection);
-            ////Debug.Assert(length >= _raw.Length, "length not match");
         }
 
         /// <summary>
@@ -106,14 +94,6 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <value>The index of the error.</value>
         public Integer32 ErrorIndex { get; private set; }
-
-        internal IList<Variable> AllVariables
-        {
-            get
-            {
-                return Variable.Transform(_varbindSection);
-            }
-        }
 
         /// <summary>
         /// Variables.
@@ -162,21 +142,7 @@ namespace Lextm.SharpSnmpLib
                 _raw = ByteTool.ParseItems(RequestId, new Integer32(0), new Integer32(0), _varbindSection);
             }
 
-            ByteTool.AppendBytes(stream, TypeCode, _raw);            
-        }
-
-        /// <summary>
-        /// Converts to byte format.
-        /// </summary>
-        /// <returns></returns>
-        [Obsolete("Use AppendBytesTo instead.")]
-        public byte[] ToBytes()
-        {
-            using (MemoryStream result = new MemoryStream())
-            {
-                AppendBytesTo(result);
-                return result.ToArray();
-            }
+            stream.AppendBytes(TypeCode, _raw);            
         }
 
         #endregion

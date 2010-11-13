@@ -72,7 +72,7 @@ namespace Lextm.SharpSnmpLib.Browser
             ReportMessage report = discovery.GetResponse(Timeout, Agent);
             GetRequestMessage request = new GetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(UserName), new List<Variable> { variable }, _privacy, Messenger.MaxMessageSize, report);
             ISnmpMessage response = request.GetResponse(Timeout, Agent);
-            if (response.Pdu.ErrorStatus.ToInt32() != 0)
+            if (response.Pdu().ErrorStatus.ToInt32() != 0)
             {
                 throw ErrorException.Create(
                     "error in response",
@@ -80,7 +80,7 @@ namespace Lextm.SharpSnmpLib.Browser
                     response);
             }
 
-            Logger.Info(response.Pdu.Variables[0].ToString(Objects));
+            Logger.Info(response.Pdu().Variables[0].ToString(Objects));
         }
 
         internal override string GetValue(Variable variable)
@@ -89,7 +89,7 @@ namespace Lextm.SharpSnmpLib.Browser
             ReportMessage report = discovery.GetResponse(Timeout, Agent);
             GetRequestMessage request = new GetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(UserName), new List<Variable> { variable }, _privacy, Messenger.MaxMessageSize, report);
             ISnmpMessage response = request.GetResponse(Timeout, Agent);
-            if (response.Pdu.ErrorStatus.ToInt32() != 0)
+            if (response.Pdu().ErrorStatus.ToInt32() != 0)
             {
                 throw ErrorException.Create(
                     "error in response",
@@ -97,7 +97,7 @@ namespace Lextm.SharpSnmpLib.Browser
                     response);
             }
 
-            return response.Pdu.Variables[0].Data.ToString();
+            return response.Pdu().Variables[0].Data.ToString();
         }
 
         internal override void GetNext(Variable variable)
@@ -112,7 +112,7 @@ namespace Lextm.SharpSnmpLib.Browser
             ReportMessage report = discovery.GetResponse(Timeout, Agent);
             GetNextRequestMessage request = new GetNextRequestMessage(VersionCode.V3, 100, 0, new OctetString(UserName), new List<Variable> { variable }, _privacy, Messenger.MaxMessageSize, report);
             ISnmpMessage response = request.GetResponse(Timeout, Agent);
-            if (response.Pdu.ErrorStatus.ToInt32() != 0) 
+            if (response.Pdu().ErrorStatus.ToInt32() != 0) 
             {
                 throw ErrorException.Create(
                     "error in response",
@@ -120,7 +120,7 @@ namespace Lextm.SharpSnmpLib.Browser
                     response);
             }
 
-            Logger.Info(response.Pdu.Variables[0].ToString(Objects));
+            Logger.Info(response.Pdu().Variables[0].ToString(Objects));
         }
 
         internal override void Set(Variable variable)
@@ -135,7 +135,7 @@ namespace Lextm.SharpSnmpLib.Browser
             ReportMessage report = discovery.GetResponse(Timeout, Agent);
             SetRequestMessage request = new SetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(UserName), new List<Variable> { variable }, _privacy, Messenger.MaxMessageSize, report);
             ISnmpMessage response = request.GetResponse(Timeout, Agent);
-            if (response.Pdu.ErrorStatus.ToInt32() != 0)
+            if (response.Pdu().ErrorStatus.ToInt32() != 0)
             {
                 throw ErrorException.Create(
                     "error in response",
@@ -143,7 +143,7 @@ namespace Lextm.SharpSnmpLib.Browser
                     response);
             }
 
-            Logger.Info(response.Pdu.Variables[0].ToString(Objects));
+            Logger.Info(response.Pdu().Variables[0].ToString(Objects));
         }
 
         internal override void GetTable(IDefinition def)

@@ -34,12 +34,6 @@ namespace Lextm.SharpSnmpLib.Messaging
     public interface ISnmpMessage
     {
         /// <summary>
-        /// PDU section.
-        /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu")]
-        ISnmpPdu Pdu { get; }
-        
-        /// <summary>
         /// Gets the header.
         /// </summary>
         Header Header { get; }
@@ -67,18 +61,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         /// <value>The version.</value>
         VersionCode Version { get; }
-
-        /// <summary>
-        /// Gets the request ID.
-        /// </summary>
-        /// <value>The request ID.</value>
-        int RequestId { get; }
-        
-        /// <summary>
-        /// Gets the message ID.
-        /// </summary>
-        /// <value>The message ID.</value>       
-        int MessageId { get; }
 
         /// <summary>
         /// Gets the privacy provider.

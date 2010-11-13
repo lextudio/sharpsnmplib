@@ -76,7 +76,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             Scope = new Scope(pdu);
             Privacy = DefaultPrivacyProvider.DefaultPair;
 
-            _bytes = SnmpMessageExtension.PackMessage(Version, Community, pdu).ToBytes();
+            _bytes = this.PackMessage().ToBytes();
         }
 
         /// <summary>
@@ -131,7 +131,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             Privacy = privacy;
             Enterprise = enterprise;
             TimeStamp = time;
-            Levels recordToSecurityLevel = PrivacyProviderExtension.ToSecurityLevel(privacy);
+            Levels recordToSecurityLevel = privacy.ToSecurityLevel();
             byte b = (byte)recordToSecurityLevel;
             
             // TODO: define more constants.
@@ -152,7 +152,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             Scope = new Scope(OctetString.Empty, OctetString.Empty, pdu);
 
             Parameters.AuthenticationParameters = authenticationProvider.ComputeHash(Version, Header, Parameters, Scope, Privacy);
-            _bytes = SnmpMessageExtension.PackMessage(Version, Header, Parameters, Scope, Privacy).ToBytes();
+            _bytes = this.PackMessage().ToBytes();
         }
 
         internal TrapV2Message(VersionCode version, Header header, SecurityParameters parameters, Scope scope, IPrivacyProvider privacy)
@@ -186,7 +186,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             Enterprise = pdu.Enterprise;
             TimeStamp = pdu.TimeStamp;
 
-            _bytes = SnmpMessageExtension.PackMessage(Version, Header, Parameters, Scope, Privacy).ToBytes();
+            _bytes = this.PackMessage().ToBytes();
         }
         
         #region ISnmpMessage Members
@@ -201,14 +201,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         /// <value>The privacy provider.</value>
         public IPrivacyProvider Privacy { get; private set; }
-
-        /// <summary>
-        /// PDU.
-        /// </summary>
-        public ISnmpPdu Pdu
-        {
-            get { return Scope.Pdu; }
-        }
 
         /// <summary>
         /// Gets the parameters.
@@ -238,52 +230,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         #endregion
 
         /// <summary>
-        /// Sends this <see cref="TrapV2Message"/>.
-        /// </summary>
-        /// <param name="manager">Manager.</param>
-        public void Send(EndPoint manager)
-        {
-            if (manager == null)
-            {
-                throw new ArgumentNullException("manager");
-            }
-            
-            using (Socket socket = SnmpMessageExtension.GetSocket(manager))
-            {
-                Send(manager, socket);
-            }
-        }
-
-        /// <summary>
-        /// Sends this <see cref="TrapV2Message"/>.
-        /// </summary>
-        /// <param name="manager">Manager.</param>
-        /// <param name="socket">The socket.</param>
-        public void Send(EndPoint manager, Socket socket)
-        {
-            if (manager == null)
-            {
-                throw new ArgumentNullException("manager");
-            }
-            
-            if (socket == null)
-            {
-                throw new ArgumentNullException("socket");
-            }
-            
-            byte[] bytes = ToBytes();
-            socket.SendTo(bytes, manager);
-        }
-
-        /// <summary>
-        /// Community name.
-        /// </summary>
-        public OctetString Community
-        {
-            get { return Parameters.UserName; }
-        }
-
-        /// <summary>
         /// Enterprise.
         /// </summary>
         public ObjectIdentifier Enterprise { get; private set; }
@@ -295,40 +241,10 @@ namespace Lextm.SharpSnmpLib.Messaging
         public uint TimeStamp { get; private set; }
 
         /// <summary>
-        /// Variables.
-        /// </summary>
-        public IList<Variable> Variables
-        {
-            get { return Scope.Pdu.Variables; }
-        }
-
-        /// <summary>
         /// Gets the version.
         /// </summary>
         /// <value>The version.</value>
         public VersionCode Version { get; private set; }
-
-        /// <summary>
-        /// Gets the request ID.
-        /// </summary>
-        /// <value>The request ID.</value>
-        public int RequestId
-        {
-            get { return Scope.Pdu.RequestId.ToInt32(); }
-        }
-        
-        /// <summary>
-        /// Gets the message ID.
-        /// </summary>
-        /// <value>The message ID.</value>
-        /// <remarks>For v3, message ID is different from request ID. For v1 and v2c, they are the same.</remarks>
-        public int MessageId
-        {
-            get
-            {
-                return Header == Header.Empty ? RequestId : Header.MessageId;
-            }
-        }
 
         /// <summary>
         /// Returns a <see cref="string"/> that represents the current <see cref="TrapV2Message"/>.
@@ -353,9 +269,9 @@ namespace Lextm.SharpSnmpLib.Messaging
                 CultureInfo.InvariantCulture,
                 "SNMPv2 trap: time stamp: {0}; community: {1}; enterprise: {2}; varbind count: {3}",
                 TimeStamp.ToString(CultureInfo.InvariantCulture),
-                Community,
+                this.Community(),
                 Enterprise.ToString(objects),
-                Variables.Count.ToString(CultureInfo.InvariantCulture));
+                this.Variables().Count.ToString(CultureInfo.InvariantCulture));
         }
     }
 }

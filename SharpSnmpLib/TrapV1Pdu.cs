@@ -181,21 +181,7 @@ namespace Lextm.SharpSnmpLib
                 _raw = ByteTool.ParseItems(Enterprise, AgentAddress, _generic, _specific, TimeStamp, _varbindSection);
             }
 
-            ByteTool.AppendBytes(stream, TypeCode, _raw);
-        }
-
-        /// <summary>
-        /// Converts to byte format.
-        /// </summary>
-        /// <returns></returns>
-        [Obsolete("Use AppendBytesTo instead.")]
-        public byte[] ToBytes()
-        {
-            using (MemoryStream result = new MemoryStream())
-            {
-                AppendBytesTo(result);
-                return result.ToArray();
-            }
+            stream.AppendBytes(TypeCode, _raw);
         }
 
         /// <summary>

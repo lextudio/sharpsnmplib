@@ -17,26 +17,26 @@ Module Program
 
         Console.WriteLine("#SNMP is available at http://sharpsnmplib.codeplex.com")
         Dim watcher As New Listener()
-        Dim adapter As New DefaultListenerAdapter()
-        watcher.Adapters.Add(adapter)
-        AddHandler adapter.TrapV1Received, AddressOf WatcherTrapV1Received
-        AddHandler adapter.TrapV2Received, AddressOf WatcherTrapV2Received
-        AddHandler adapter.InformRequestReceived, AddressOf WatcherInformRequestReceived
+        'Dim adapter As New DefaultListenerAdapter()
+        'watcher.Adapters.Add(adapter)
+        'AddHandler adapter.TrapV1Received, AddressOf WatcherTrapV1Received
+        'AddHandler adapter.TrapV2Received, AddressOf WatcherTrapV2Received
+        'AddHandler adapter.InformRequestReceived, AddressOf WatcherInformRequestReceived
         watcher.AddBinding(New IPEndPoint(IPAddress.Any, 162))
         watcher.Start()
         Console.WriteLine("Press any key to stop . . . ")
         Console.Read()
     End Sub
 
-    Private Sub WatcherInformRequestReceived(ByVal sender As Object, ByVal e As MessageReceivedEventArgs(Of InformRequestMessage))
-        Console.WriteLine(e)
-    End Sub
+    'Private Sub WatcherInformRequestReceived(ByVal sender As Object, ByVal e As MessageReceivedEventArgs(Of InformRequestMessage))
+    '    Console.WriteLine(e)
+    'End Sub
 
-    Private Sub WatcherTrapV2Received(ByVal sender As Object, ByVal e As MessageReceivedEventArgs(Of TrapV2Message))
-        Console.WriteLine(e)
-    End Sub
+    'Private Sub WatcherTrapV2Received(ByVal sender As Object, ByVal e As MessageReceivedEventArgs(Of TrapV2Message))
+    '    Console.WriteLine(e)
+    'End Sub
 
-    Private Sub WatcherTrapV1Received(ByVal sender As Object, ByVal e As MessageReceivedEventArgs(Of TrapV1Message))
-        Console.WriteLine(e)
-    End Sub
+    'Private Sub WatcherTrapV1Received(ByVal sender As Object, ByVal e As MessageReceivedEventArgs(Of TrapV1Message))
+    '    Console.WriteLine(e)
+    'End Sub
 End Module

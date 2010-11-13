@@ -50,7 +50,9 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.Greater(new ObjectIdentifier("1.1"), new ObjectIdentifier("0.0"));
             Assert.Greater(new ObjectIdentifier("0.0.0"), new ObjectIdentifier("0.0"));
             Assert.AreEqual(new ObjectIdentifier("0.0"), new ObjectIdentifier("0.0"));
+// ReSharper disable RedundantCast
             Assert.AreEqual((ObjectIdentifier)null, (ObjectIdentifier)null);
+// ReSharper restore RedundantCast
         }
 
         [Test]
@@ -64,14 +66,14 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestToString()
         {
             Assert.AreEqual("iso.org.dod.internet.mgmt.mib-2.transmission",
-                            SearchResult.GetStringOf(new ObjectIdentifier(new uint[] {1, 3, 6, 1, 2, 1, 10}), DefaultObjectRegistry.Instance));
+                            new ObjectIdentifier(new uint[] {1, 3, 6, 1, 2, 1, 10}).ToString(DefaultObjectRegistry.Instance));
         }
 
         [Test]
         public void TestToStringLong()
         {
             Assert.AreEqual("iso.org.dod.internet.mgmt.mib-2.transmission.100",
-                            SearchResult.GetStringOf(new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 10, 100 }), DefaultObjectRegistry.Instance));
+                            new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 10, 100 }).ToString(DefaultObjectRegistry.Instance));
         }
         
         [Test]

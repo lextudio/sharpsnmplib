@@ -74,7 +74,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             Scope = new Scope(pdu);
             Privacy = DefaultPrivacyProvider.DefaultPair;
 
-            _bytes = SnmpMessageExtension.PackMessage(Version, Header, Parameters, Scope, Privacy).ToBytes();
+            _bytes = this.PackMessage().ToBytes();
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 Parameters.AuthenticationParameters = Privacy.AuthenticationProvider.ComputeHash(Version, Header, Parameters, Scope, Privacy);
             }
 
-            _bytes = SnmpMessageExtension.PackMessage(Version, Header, Parameters, Scope, Privacy).ToBytes();
+            _bytes = this.PackMessage().ToBytes();
         }
 
         /// <summary>
@@ -154,43 +154,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         /// <value>The version.</value>
         public VersionCode Version { get; private set; }
-
-        /// <summary>
-        /// Request ID.
-        /// </summary>
-        public int RequestId
-        {
-            get { return Scope.Pdu.RequestId.ToInt32(); }
-        }
-
-        /// <summary>
-        /// Gets the message ID.
-        /// </summary>
-        /// <value>The message ID.</value>
-        /// <remarks>For v3, message ID is different from request ID. For v1 and v2c, they are the same.</remarks>
-        public int MessageId
-        {
-            get
-            {
-                return Header == Header.Empty ? RequestId : Header.MessageId;
-            }
-        }
-
-        /// <summary>
-        /// Variables.
-        /// </summary>
-        public IList<Variable> Variables
-        {
-            get { return Scope.Pdu.Variables; }
-        }
-
-        /// <summary>
-        /// PDU.
-        /// </summary>
-        public ISnmpPdu Pdu
-        {
-            get { return Scope.Pdu; }
-        }
 
         /// <summary>
         /// Gets the parameters.

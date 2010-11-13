@@ -38,16 +38,9 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("user");
             }
 
-            MessageId = messageId;
+            Header = new Header(new Integer32(messageId), null, null, null);
             Parameters = new SecurityParameters(null, null, null, user, null, null);
-            Pdu = MalformedPdu.Instance;
         }
-
-        /// <summary>
-        /// PDU section.
-        /// </summary>
-        /// <value></value>
-        public ISnmpPdu Pdu { get; private set; }
 
         /// <summary>
         /// Gets the parameters.
@@ -63,14 +56,11 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             get { return null; }
         }
-        
+
         /// <summary>
         /// Gets the header.
         /// </summary>
-        public Header Header 
-        { 
-            get { return null; }
-        }
+        public Header Header { get; private set; }
 
         /// <summary>
         /// Converts to the bytes.
@@ -91,21 +81,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         }
 
         /// <summary>
-        /// Gets the request ID.
-        /// </summary>
-        /// <value>The request ID.</value>
-        public int RequestId
-        {
-            get { return -1; }
-        }
-
-        /// <summary>
-        /// Gets the message ID.
-        /// </summary>
-        /// <value>The message ID.</value>
-        public int MessageId { get; private set; }
-
-        /// <summary>
         /// Gets the privacy provider.
         /// </summary>
         /// <value>The privacy provider.</value>
@@ -122,7 +97,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </returns>
         public override string ToString()
         {
-            return string.Format(CultureInfo.InvariantCulture, "Malformed message: message id: {0}; user: {1}", MessageId, Parameters.UserName);
+            return string.Format(CultureInfo.InvariantCulture, "Malformed message: message id: {0}; user: {1}", this.MessageId(), Parameters.UserName);
         }
     }
 }

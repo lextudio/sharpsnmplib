@@ -144,7 +144,7 @@ namespace SnmpBulkGet
                                                                               maxRepetitions,
                                                                               vList);
                     ISnmpMessage response = message.GetResponse(timeout, receiver);
-                    if (response.Pdu.ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
+                    if (response.Pdu().ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
                     {
                         throw ErrorException.Create(
                             "error in response",
@@ -152,7 +152,7 @@ namespace SnmpBulkGet
                             response);
                     }
 
-                    foreach (Variable variable in response.Pdu.Variables)
+                    foreach (Variable variable in response.Pdu().Variables)
                     {
                         Console.WriteLine(variable);
                     }
@@ -186,7 +186,7 @@ namespace SnmpBulkGet
                 GetBulkRequestMessage request = new GetBulkRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(user), nonRepeaters, maxRepetitions, vList, priv, Messenger.MaxMessageSize, report);
 
                 ISnmpMessage reply = request.GetResponse(timeout, receiver);
-                if (reply.Pdu.ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
+                if (reply.Pdu().ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
                 {
                     throw ErrorException.Create(
                         "error in response",
@@ -194,7 +194,7 @@ namespace SnmpBulkGet
                         reply);
                 }
 
-                foreach (Variable v in reply.Pdu.Variables)
+                foreach (Variable v in reply.Pdu().Variables)
                 {
                     Console.WriteLine(v);
                 }

@@ -24,7 +24,9 @@ namespace Lextm.SharpSnmpLib.Browser
     /// <summary>
     /// Description of NotificationPanel.
     /// </summary>
+// ReSharper disable UnusedMember.Global
     internal partial class NotificationPanel : DockContent
+// ReSharper restore UnusedMember.Global
     {
         private readonly SnmpEngine _engine;
         private const string StrAllUnassigned = "All Unassigned";
@@ -59,21 +61,23 @@ namespace Lextm.SharpSnmpLib.Browser
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+// ReSharper disable MemberCanBePrivate.Global
         public IObjectRegistry Objects { get; set; }
+// ReSharper restore MemberCanBePrivate.Global
 
-        private void ListenerInformRequestReceived(object sender, MessageReceivedEventArgs<InformRequestMessage> e)
+        private void ListenerInformRequestReceived(object sender, InformRequestMessageReceivedEventArgs e)
         {
-            LogMessage(string.Format(CultureInfo.InvariantCulture, StrSends, DateTime.Now, e.Sender, e.Message.ToString(Objects)));
+            LogMessage(string.Format(CultureInfo.InvariantCulture, StrSends, DateTime.Now, e.Sender, e.InformRequest.ToString(Objects)));
         }
 
-        private void ListenerTrapV2Received(object sender, MessageReceivedEventArgs<TrapV2Message> e)
+        private void ListenerTrapV2Received(object sender, TrapV2MessageReceivedEventArgs e)
         {
-            LogMessage(string.Format(CultureInfo.InvariantCulture, StrSends, DateTime.Now, e.Sender, e.Message.ToString(Objects)));
+            LogMessage(string.Format(CultureInfo.InvariantCulture, StrSends, DateTime.Now, e.Sender, e.TrapV2.ToString(Objects)));
         }
 
-        private void ListenerTrapV1Received(object sender, MessageReceivedEventArgs<TrapV1Message> e)
+        private void ListenerTrapV1Received(object sender, TrapV1MessageReceivedEventArgs e)
         {
-            LogMessage(string.Format(CultureInfo.InvariantCulture, StrSends, DateTime.Now, e.Sender, e.Message.ToString(Objects)));
+            LogMessage(string.Format(CultureInfo.InvariantCulture, StrSends, DateTime.Now, e.Sender, e.TrapV1.ToString(Objects)));
         }
 
         private void ListenerExceptionRaised(object sender, ExceptionRaisedEventArgs e)

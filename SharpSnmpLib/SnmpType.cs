@@ -132,14 +132,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu")]
         GetNextRequestPdu = 0xA1,
-        
-        /// <summary>
-        /// Get response PDU.
-        /// </summary>
-        [Obsolete("Please use ResponsePdu.")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu")]
-        GetResponsePdu = 0xA2,
-         
+       
         /// <summary>
         /// Response PDU.
         /// </summary>

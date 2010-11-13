@@ -44,23 +44,23 @@ namespace Lextm.SharpSnmpLib.Pipeline
             {
                 throw new ArgumentNullException("context");
             }
-            
-            InvokeMessageReceived(new MessageReceivedEventArgs<InformRequestMessage>(context.Sender, (InformRequestMessage)context.Request, context.Binding));
+
+            InvokeMessageReceived(new InformRequestMessageReceivedEventArgs(context.Sender, (InformRequestMessage)context.Request, context.Binding));
             context.CopyRequest(ErrorCode.NoError, 0);
         }
 
         /// <summary>
         /// Occurs when a message is received.
         /// </summary>
-        public event EventHandler<MessageReceivedEventArgs<InformRequestMessage>> MessageReceived;
+        public event EventHandler<InformRequestMessageReceivedEventArgs> MessageReceived;
 
         /// <summary>
-        /// Invokes the message received event handler.
+        /// Invokes the message received.
         /// </summary>
-        /// <param name="e">The <see cref="Lextm.SharpSnmpLib.Messaging.MessageReceivedEventArgs"/> instance containing the event data.</param>
-        public void InvokeMessageReceived(MessageReceivedEventArgs<InformRequestMessage> e)
+        /// <param name="e">The <see cref="Lextm.SharpSnmpLib.Pipeline.InformRequestMessageReceivedEventArgs"/> instance containing the event data.</param>
+        public void InvokeMessageReceived(InformRequestMessageReceivedEventArgs e)
         {
-            EventHandler<MessageReceivedEventArgs<InformRequestMessage>> handler = MessageReceived;
+            EventHandler<InformRequestMessageReceivedEventArgs> handler = MessageReceived;
             if (handler != null) 
             {
                 handler(this, e);

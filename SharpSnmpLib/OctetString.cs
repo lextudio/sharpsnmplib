@@ -18,6 +18,7 @@
 using System;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 #if (!CF) && (!SILVERLIGHT)
 using System.Net.NetworkInformation;
 #endif
@@ -188,7 +189,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <returns></returns>
         /// <remarks>For date section of DateAndTime type in HOST-RESOURCES-MIB.</remarks>
-        [ObsoleteAttribute("This method will be removed")]
+        [Obsolete("This method will be removed")]
         public string ToDateString()
         {
             // TODO: make it internal and prepare for future usage.
@@ -221,20 +222,6 @@ namespace Lextm.SharpSnmpLib
         }
 
         /// <summary>
-        /// Converts to byte format.
-        /// </summary>
-        /// <returns></returns>
-        [Obsolete("Use AppendBytesTo instead.")]
-        public byte[] ToBytes()
-        {
-            using (MemoryStream result = new MemoryStream())
-            {
-                AppendBytesTo(result);
-                return result.ToArray();
-            }
-        }
-
-        /// <summary>
         /// Appends the bytes to <see cref="Stream"/>.
         /// </summary>
         /// <param name="stream">The stream.</param>
@@ -245,7 +232,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("stream");
             }
 
-            ByteTool.AppendBytes(stream, TypeCode, _raw);
+            stream.AppendBytes(TypeCode, _raw);
         }
 
         /// <summary>
@@ -343,8 +330,8 @@ namespace Lextm.SharpSnmpLib
             {
                 return false;
             }
-            
-            return ByteTool.CompareArray(left._raw, right._raw);
+
+            return left._raw.SequenceEqual(right._raw); 
         }
     }
     

@@ -19,7 +19,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// Toes the security level.
         /// </summary>
         /// <returns></returns>
-        public static Levels ToSecurityLevel(IPrivacyProvider privacy)
+        public static Levels ToSecurityLevel(this IPrivacyProvider privacy)
         {
             if (privacy == null)
             {

@@ -24,8 +24,7 @@ namespace Lextm.SharpSnmpLib.Tests
         {
             Variable v = new Variable(new ObjectIdentifier(new uint[] {1,3,6,1,4,1,2162,1001,21,0}), 
                                       new OctetString("TrapTest"));
-            List<Variable> vList = new List<Variable>();
-            vList.Add(v);
+            List<Variable> vList = new List<Variable> {v};
 
             TrapV1Pdu pdu = new TrapV1Pdu(new ObjectIdentifier(new uint[] {1, 3, 6, 1, 4, 1, 2162, 1000, 2}),
                                           new IP("127.0.0.1"),
@@ -40,9 +39,9 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual(12, message.Specific);
             Assert.AreEqual(16352, message.TimeStamp);
             Assert.AreEqual(new uint[] {1, 3, 6, 1, 4, 1, 2162, 1000, 2}, message.Enterprise.ToNumerical());
-            Assert.AreEqual(1, message.Variables.Count);
-            Assert.AreEqual(new uint[] {1,3,6,1,4,1,2162,1001,21,0}, message.Variables[0].Id.ToNumerical());
-            Assert.AreEqual("TrapTest", message.Variables[0].Data.ToString());
+            Assert.AreEqual(1, message.Variables().Count);
+            Assert.AreEqual(new uint[] {1,3,6,1,4,1,2162,1001,21,0}, message.Variables()[0].Id.ToNumerical());
+            Assert.AreEqual("TrapTest", message.Variables()[0].Data.ToString());
         }
         
         [Test]
@@ -50,8 +49,7 @@ namespace Lextm.SharpSnmpLib.Tests
         {
             Variable v = new Variable(new ObjectIdentifier(new uint[] {1,3,6,1,4,1,2162,1001,21,0}), 
                                       new OctetString("中国", Encoding.Unicode));
-            List<Variable> vList = new List<Variable>();
-            vList.Add(v);
+            List<Variable> vList = new List<Variable> {v};
 
             TrapV1Pdu pdu = new TrapV1Pdu(new ObjectIdentifier(new uint[] {1, 3, 6, 1, 4, 1, 2162, 1000, 2}),
                                           new IP("127.0.0.1"),
@@ -66,9 +64,9 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual(12, message.Specific);
             Assert.AreEqual(16352, message.TimeStamp);
             Assert.AreEqual(new uint[] {1, 3, 6, 1, 4, 1, 2162, 1000, 2}, message.Enterprise.ToNumerical());
-            Assert.AreEqual(1, message.Variables.Count);
-            Assert.AreEqual(new uint[] {1,3,6,1,4,1,2162,1001,21,0}, message.Variables[0].Id.ToNumerical());
-            Assert.AreEqual("中国", ((OctetString)message.Variables[0].Data).ToString(Encoding.Unicode));
+            Assert.AreEqual(1, message.Variables().Count);
+            Assert.AreEqual(new uint[] {1,3,6,1,4,1,2162,1001,21,0}, message.Variables()[0].Id.ToNumerical());
+            Assert.AreEqual("中国", ((OctetString)message.Variables()[0].Data).ToString(Encoding.Unicode));
         }
     }
 }

@@ -16,6 +16,7 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
+using Lextm.SharpSnmpLib.Messaging;
 
 namespace Lextm.SharpSnmpLib.Pipeline
 {
@@ -57,7 +58,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
             }
 
             var parameters = context.Request.Parameters;
-            if (context.Request.Pdu.TypeCode == SnmpType.SetRequestPdu)
+            if (context.Request.Pdu().TypeCode == SnmpType.SetRequestPdu)
             {
                 return parameters.UserName == _set;
             }

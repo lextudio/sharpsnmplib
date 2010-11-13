@@ -32,7 +32,7 @@ using System.IO;
 using System.Text;
 
 namespace Lextm.SharpSnmpLib
-{    
+{
     /// <summary>
     /// Description of ByteTool.
     /// </summary>
@@ -134,36 +134,6 @@ namespace Lextm.SharpSnmpLib
             return BitConverter.ToString(buffer).Replace('-', ' ');
         }
 
-        internal static bool CompareArray<T>(IList<T> left, IList<T> right) where T : IEquatable<T>
-        {
-            if (left == null)
-            {
-                throw new ArgumentNullException("left");
-            }
-
-            if (right == null)
-            {
-                throw new ArgumentNullException("right");
-            }
-
-            // TODO: one day we go .NET 3.5, we can use IEnumerable.SequenceEqual.
-            var l = left.Count;
-            if (l != right.Count)
-            {
-                return false;
-            }
-            
-            for (int i = 0; i < l; i++)
-            {
-                if (!left[i].Equals(right[i]))
-                {
-                    return false;
-                }
-            }
-            
-            return true;
-        }
-
         internal static byte[] ParseItems(params ISnmpData[] items)
         {
             if (items == null)
@@ -204,116 +174,7 @@ namespace Lextm.SharpSnmpLib
                 return result.ToArray();
             }
         }
-        
-        internal static void WritePayloadLength(Stream stream, int length) // excluding initial octet
-        {
-            // TODO: make extension method.
-            if (stream == null)
-            {
-                throw new ArgumentNullException("stream");
-            }
 
-            if (length < 0)
-            {
-                throw new ArgumentException("length cannot be negative", "length");
-            }
-            
-            if (length < 127)
-            {
-                stream.WriteByte((byte)length);
-                return;
-            }
-            
-            byte[] c = new byte[16];
-            int j = 0;
-            while (length > 0)
-            {
-                c[j++] = (byte)(length & 0xff);
-                length = length >> 8;
-            }
-            
-            stream.WriteByte((byte)(0x80 | j));
-            while (j > 0)
-            {
-                int x = c[--j];
-                stream.WriteByte((byte)x);
-            }
-        }
-        
-        internal static int ReadPayloadLength(Stream stream)
-        {
-            // TODO: make extension method.
-            if (stream == null)
-            {
-                throw new ArgumentNullException("stream");
-            }
-
-            int first = stream.ReadByte();
-            return ReadLength(stream, (byte)first);
-        }
-
-        internal static void IgnoreBytes(Stream stream, int length)
-        {
-            // TODO: make extension method.
-            if (stream == null)
-            {
-                throw new ArgumentNullException("stream");
-            }
-
-            byte[] bytes = new byte[length];
-            stream.Read(bytes, 0, length);
-        }
-        
-        // copied from universal
-        private static int ReadLength(Stream stream, byte first) // x is initial octet
-        {
-            // TODO: make extension method.
-            if ((first & 0x80) == 0)
-            {
-                return first;
-            }
-            
-            int result = 0;
-            int octets = first & 0x7f;
-            for (int j = 0; j < octets; j++)
-            {
-                result = (result << 8) + ReadByte(stream);
-            }
-            
-            return result;
-        }
-        
-        // copied from universal
-        private static byte ReadByte(Stream s)
-        {
-            // TODO: make extension method.
-            int n = s.ReadByte();
-            if (n == -1)
-            {
-                throw new SnmpException("BER end of file");
-            }
-            
-            return (byte)n;
-        }
-        
-        internal static void AppendBytes(Stream stream, SnmpType typeCode, byte[] raw)
-        {
-            // TODO: make extension method.
-            if (stream == null)
-            {
-                throw new ArgumentNullException("stream");
-            }
-
-            if (raw == null)
-            {
-                throw new ArgumentNullException("raw");
-            }
-
-            stream.WriteByte((byte)typeCode);
-            WritePayloadLength(stream, raw.Length);
-            stream.Write(raw, 0, raw.Length);
-        }
-        
         internal static byte[] GetRawBytes(IEnumerable<byte> orig, bool negative)
         {
             if (orig == null)
@@ -355,25 +216,6 @@ namespace Lextm.SharpSnmpLib
 
             list.Reverse();
             return list.ToArray();
-        }
-              
-        /// <summary>
-        /// Converts to byte format.
-        /// </summary>
-        /// <returns></returns>
-        public static byte[] ToBytes(ISnmpData data)
-        {
-            // TODO: convert to extension method in the future.
-            if (data == null)
-            {
-                throw new ArgumentNullException("data");
-            }
-                
-            using (MemoryStream result = new MemoryStream())
-            {
-                data.AppendBytesTo(result);
-                return result.ToArray();
-            }
         }
     }
 }

@@ -26,8 +26,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Net;
-using System.Net.Sockets;
 using Lextm.SharpSnmpLib.Security;
 
 namespace Lextm.SharpSnmpLib.Messaging
@@ -84,7 +82,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             Scope = new Scope(pdu);
             Privacy = DefaultPrivacyProvider.DefaultPair;
 
-            _bytes = SnmpMessageExtension.PackMessage(Version, Header, Parameters, Scope, Privacy).ToBytes();
+            _bytes = this.PackMessage().ToBytes();
         }
 
         /// <summary>
@@ -156,7 +154,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             Privacy = privacy;
             Enterprise = enterprise;
             TimeStamp = time;
-            Levels recordToSecurityLevel = PrivacyProviderExtension.ToSecurityLevel(privacy);
+            Levels recordToSecurityLevel = privacy.ToSecurityLevel();
             recordToSecurityLevel |= Levels.Reportable;
             byte b = (byte)recordToSecurityLevel;
             
@@ -180,7 +178,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             Scope = new Scope(scope.ContextEngineId, scope.ContextName, pdu);
 
             Parameters.AuthenticationParameters = authenticationProvider.ComputeHash(Version, Header, Parameters, Scope, Privacy);
-            _bytes = SnmpMessageExtension.PackMessage(Version, Header, Parameters, Scope, Privacy).ToBytes();
+            _bytes = this.PackMessage().ToBytes();
         }
 
         internal InformRequestMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, IPrivacyProvider privacy)
@@ -214,7 +212,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             Enterprise = pdu.Enterprise;
             TimeStamp = pdu.TimeStamp;
             
-            _bytes = SnmpMessageExtension.PackMessage(Version, Header, Parameters, Scope, Privacy).ToBytes();
+            _bytes = this.PackMessage().ToBytes();
         }
 
         /// <summary>
@@ -224,27 +222,10 @@ namespace Lextm.SharpSnmpLib.Messaging
         public IPrivacyProvider Privacy { get; private set; }
 
         /// <summary>
-        /// Variables.
-        /// </summary>
-        public IList<Variable> Variables
-        {
-            get { return Scope.Pdu.Variables; }
-        }
-
-        /// <summary>
         /// Gets the version.
         /// </summary>
         /// <value>The version.</value>
         public VersionCode Version { get; private set; }
-
-        /// <summary>
-        /// Gets the community.
-        /// </summary>
-        /// <value>The community.</value>
-        public OctetString Community
-        {
-            get { return Parameters.UserName; }
-        }
 
         /// <summary>
         /// Gets the time stamp.
@@ -257,77 +238,11 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Enterprise.
         /// </summary>
         public ObjectIdentifier Enterprise { get; private set; }
-
-        /// <summary>
-        /// Sends this <see cref="InformRequestMessage"/> and handles the response from agent.
-        /// </summary>
-        /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
-        /// <param name="receiver">Agent.</param>
-        /// <returns></returns>
-        public ISnmpMessage GetResponse(int timeout, IPEndPoint receiver)
-        {
-            if (receiver == null)
-            {
-                throw new ArgumentNullException("receiver");
-            }
-
-            using (Socket socket = SnmpMessageExtension.GetSocket(receiver))
-            {
-                return GetResponse(timeout, receiver, socket);
-            }
-        }
-
-        /// <summary>
-        /// Sends this <see cref="InformRequestMessage"/> and handles the response from agent.
-        /// </summary>
-        /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
-        /// <param name="receiver">Agent.</param>
-        /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
-        /// <returns></returns>
-        public ISnmpMessage GetResponse(int timeout, IPEndPoint receiver, Socket udpSocket)
-        {
-            if (udpSocket == null)
-            {
-                throw new ArgumentNullException("udpSocket");
-            }
-
-            if (receiver == null)
-            {
-                throw new ArgumentNullException("receiver");
-            }
-
-            UserRegistry registry = new UserRegistry();
-            if (Version == VersionCode.V3)
-            {
-                registry.Add(Parameters.UserName, Privacy);
-            }
-
-            return MessageFactory.GetResponse(receiver, ToBytes(), MessageId, timeout, registry, udpSocket);
-        }
         
         /// <summary>
         /// Gets the header.
         /// </summary>
         public Header Header { get; private set; }
-        
-        /// <summary>
-        /// Gets the request ID.
-        /// </summary>
-        /// <value>The request ID.</value>
-        public int RequestId
-        {
-            get { return Scope.Pdu.RequestId.ToInt32(); }
-        }
-        
-        /// <summary>
-        /// Gets the message ID.
-        /// </summary>
-        /// <value>The message ID.</value>
-        /// <remarks>For v3, message ID is different from request ID. For v1 and v2c, they are the same.</remarks>
-        public int MessageId
-        {
-            get { return Header == Header.Empty ? RequestId : Header.MessageId; }
-        }
         
         /// <summary>
         /// Converts to byte format.
@@ -336,14 +251,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         public byte[] ToBytes()
         {
             return _bytes;
-        }
-
-        /// <summary>
-        /// PDU.
-        /// </summary>
-        public ISnmpPdu Pdu
-        {
-            get { return Scope.Pdu; }
         }
 
         /// <summary>
@@ -381,27 +288,9 @@ namespace Lextm.SharpSnmpLib.Messaging
                 CultureInfo.InvariantCulture,
                 "INFORM request message: time stamp: {0}; community: {1}; enterprise: {2}; varbind count: {3}",
                 TimeStamp.ToString(CultureInfo.InvariantCulture),
-                Community,
+                this.Community(),
                 Enterprise.ToString(objects),
-                Variables.Count.ToString(CultureInfo.InvariantCulture));
-        }
-
-        /// <summary>
-        /// Generates the response message.
-        /// </summary>
-        /// <returns></returns>
-        [Obsolete("Please use SnmpEngine instead.")]
-        public GetResponseMessage GenerateResponse()
-        {
-            // TODO: make more efficient here.
-            if (Version == VersionCode.V2)
-            {
-                InformRequestPdu pdu = (InformRequestPdu)Scope.Pdu;
-                return new GetResponseMessage(Scope.Pdu.RequestId.ToInt32(), Version, Parameters.UserName, ErrorCode.NoError, 0, pdu.AllVariables);
-            }
-
-            // TODO: implement this later.
-            return null;
+                this.Variables().Count.ToString(CultureInfo.InvariantCulture));
         }
     }
 }

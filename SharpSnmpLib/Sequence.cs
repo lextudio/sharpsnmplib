@@ -191,7 +191,7 @@ namespace Lextm.SharpSnmpLib
                 _raw = ByteTool.ParseItems(_list);
             }
 
-            ByteTool.AppendBytes(stream, TypeCode, _raw);
+            stream.AppendBytes(TypeCode, _raw);
         }
 
         /// <summary>

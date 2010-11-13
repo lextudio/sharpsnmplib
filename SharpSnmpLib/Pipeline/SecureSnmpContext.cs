@@ -50,7 +50,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
             Response = new ResponseMessage(
                 Request.Version,
                 new Header(
-                    new Integer32(Request.MessageId),
+                    new Integer32(Request.MessageId()),
                     new Integer32(Messenger.MaxMessageSize),
                     new OctetString(new[] { (byte)Levels.Reportable }),
                     new Integer32(3)),
@@ -65,10 +65,10 @@ namespace Lextm.SharpSnmpLib.Pipeline
                     Group.EngineId,
                     OctetString.Empty,
                     new ResponsePdu(
-                        Request.RequestId,
+                        Request.RequestId(),
                         ErrorCode.AuthorizationError,
                         0,
-                        Request.Pdu.Variables)),
+                        Request.Pdu().Variables)),
                 defaultPair,
                 true);
             if (TooBig)
@@ -84,7 +84,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
             Response = new ResponseMessage(
                     Request.Version,
                     new Header(
-                        new Integer32(Request.MessageId),
+                        new Integer32(Request.MessageId()),
                         new Integer32(Messenger.MaxMessageSize),
                         new OctetString(new[] { (byte)Levels.Reportable }),
                         new Integer32(3)),
@@ -99,10 +99,10 @@ namespace Lextm.SharpSnmpLib.Pipeline
                         Group.EngineId,
                         OctetString.Empty,
                         new ResponsePdu(
-                            Request.RequestId,
+                            Request.RequestId(),
                             status,
                             index,
-                            Request.Pdu.Variables)),
+                            Request.Pdu().Variables)),
                     privacy,
                     true);
             if (TooBig)
@@ -121,7 +121,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
             Response = new ResponseMessage(
                 Request.Version,
                 new Header(
-                    new Integer32(Request.MessageId),
+                    new Integer32(Request.MessageId()),
                     new Integer32(Messenger.MaxMessageSize),
                     new OctetString(new[] { (byte)Levels.Reportable }),
                     new Integer32(3)),
@@ -136,10 +136,10 @@ namespace Lextm.SharpSnmpLib.Pipeline
                     Group.EngineId,
                     OctetString.Empty,
                     new ResponsePdu(
-                        Request.RequestId,
+                        Request.RequestId(),
                         ErrorCode.TooBig,
                         0,
-                        Request.Pdu.Variables)),
+                        Request.Pdu().Variables)),
                 privacy,
                 true);
             if (TooBig)
@@ -197,7 +197,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
             Response = new ReportMessage(
                 VersionCode.V3,
                 new Header(
-                    new Integer32(Request.MessageId),
+                    new Integer32(Request.MessageId()),
                     new Integer32(Messenger.MaxMessageSize),
                     new OctetString(new[] { (byte)Levels.Reportable }),
                     new Integer32(3)),
@@ -212,7 +212,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                     Group.EngineId,
                     OctetString.Empty,
                     new ReportPdu(
-                        Request.RequestId,
+                        Request.RequestId(),
                         ErrorCode.NoError,
                         0,
                         new List<Variable>(1)
@@ -239,7 +239,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
             Response = new ResponseMessage(
                 Request.Version,
                 new Header(
-                    new Integer32(Request.MessageId),
+                    new Integer32(Request.MessageId()),
                     new Integer32(Messenger.MaxMessageSize),
                     new OctetString(new[] { (byte)Levels.Reportable }),
                     new Integer32(3)),
@@ -254,7 +254,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                     Group.EngineId,
                     OctetString.Empty,
                     new ResponsePdu(
-                        Request.RequestId,
+                        Request.RequestId(),
                         ErrorCode.NoError,
                         0,
                         variables)),

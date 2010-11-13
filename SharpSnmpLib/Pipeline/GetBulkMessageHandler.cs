@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using Lextm.SharpSnmpLib.Messaging;
 
 namespace Lextm.SharpSnmpLib.Pipeline
 {
@@ -45,7 +46,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 throw new ArgumentNullException("context");
             }
             
-            ISnmpPdu pdu = context.Request.Pdu;
+            ISnmpPdu pdu = context.Request.Pdu();
             IList<Variable> result = new List<Variable>();
             int index = 0;
             int nonrepeaters = pdu.ErrorStatus.ToInt32();

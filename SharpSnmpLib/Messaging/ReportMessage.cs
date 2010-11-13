@@ -34,7 +34,6 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// </summary>
     public class ReportMessage : ISnmpMessage
     {
-        private readonly SecurityParameters _parameters;
         private readonly IPrivacyProvider _privacy = DefaultPrivacyProvider.DefaultPair;
         private readonly byte[] _bytes;
 
@@ -75,48 +74,23 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             Version = version;
             Header = header;
-            _parameters = parameters;
+            Parameters = parameters;
             Scope = scope;
             _privacy = privacy;
 
             Parameters.AuthenticationParameters = Privacy.AuthenticationProvider.ComputeHash(Version, Header, Parameters, Scope, Privacy);
-            _bytes = SnmpMessageExtension.PackMessage(Version, Header, Parameters, Scope, Privacy).ToBytes();
+            _bytes = this.PackMessage().ToBytes();
         }
 
         /// <summary>
         /// Gets the header.
         /// </summary>
         public Header Header { get; private set; }
-        
+
         /// <summary>
         /// Security parameters.
         /// </summary>
-        public SecurityParameters Parameters
-        {
-            get { return _parameters; }
-        }
-
-        /// <summary>
-        /// Gets the request ID.
-        /// </summary>
-        /// <value>The request ID.</value>
-        public int RequestId
-        {
-            get { return Scope.Pdu.RequestId.ToInt32(); }
-        }
-        
-        /// <summary>
-        /// Gets the message ID.
-        /// </summary>
-        /// <value>The message ID.</value>
-        /// <remarks>For v3, message ID is different from request ID. For v1 and v2c, they are the same.</remarks>
-        public int MessageId
-        {
-            get
-            {
-                return Header.MessageId;
-            }
-        }
+        public SecurityParameters Parameters { get; private set; }
 
         /// <summary>
         /// Gets the scope.
@@ -140,14 +114,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         }
 
         /// <summary>
-        /// PDU.
-        /// </summary>
-        public ISnmpPdu Pdu
-        {
-            get { return Scope.Pdu; }
-        }
-
-        /// <summary>
         /// Gets the privacy provider.
         /// </summary>
         /// <value>The privacy provider.</value>
@@ -162,7 +128,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public override string ToString()
         {
-            return string.Format(CultureInfo.InvariantCulture, "REPORT request message: version: {0}; {1}; {2}", Version, _parameters.UserName, Scope.Pdu);
+            return string.Format(CultureInfo.InvariantCulture, "REPORT request message: version: {0}; {1}; {2}", Version, Parameters.UserName, Scope.Pdu);
         }
     }
 }

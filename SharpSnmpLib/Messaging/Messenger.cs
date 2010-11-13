@@ -58,7 +58,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             GetRequestMessage message = new GetRequestMessage(RequestCounter.NextId, version, community, variables);
             ISnmpMessage response = message.GetResponse(timeout, endpoint);
-            var pdu = response.Pdu;
+            var pdu = response.Pdu();
             if (pdu.ErrorStatus.ToInt32() != 0)
             {
                 throw ErrorException.Create(
@@ -88,7 +88,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             SetRequestMessage message = new SetRequestMessage(RequestCounter.NextId, version, community, variables);
             ISnmpMessage response = message.GetResponse(timeout, endpoint);
-            var pdu = response.Pdu;
+            var pdu = response.Pdu();
             if (pdu.ErrorStatus.ToInt32() != 0)
             {
                 throw ErrorException.Create(
@@ -178,7 +178,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 variables);
 
             ISnmpMessage response = message.GetResponse(timeout, endpoint);
-            var pdu = response.Pdu;
+            var pdu = response.Pdu();
             bool errorFound = pdu.ErrorStatus.ToErrorCode() == ErrorCode.NoSuchName;
             next = errorFound ? null : pdu.Variables[0];
             return !errorFound;
@@ -319,7 +319,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                                           variables);
             
             ISnmpMessage response = message.GetResponse(timeout, receiver);
-            if (response.Pdu.ErrorStatus.ToInt32() != 0)
+            if (response.Pdu().ErrorStatus.ToInt32() != 0)
             {
                 throw ErrorException.Create(
                     "error in response",
@@ -403,7 +403,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Max message size used in #SNMP. 
         /// </summary>
         /// <remarks>
-        /// Please note that you can use any value for your own application. 
+        /// You can use any value for your own application. 
         /// Also this value may be changed in #SNMP in future releases.
         /// </remarks>
         public static int MaxMessageSize
@@ -467,7 +467,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                                                       variables);
 
             ISnmpMessage response = message.GetResponse(timeout, endpoint);
-            var pdu = response.Pdu;
+            var pdu = response.Pdu();
             if (pdu.ErrorStatus.ToInt32() != 0)
             {
                 throw ErrorException.Create(

@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using Lextm.SharpSnmpLib.Messaging;
 
 namespace Lextm.SharpSnmpLib.Pipeline
 {
@@ -70,7 +71,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
             ErrorCode status = ErrorCode.NoError;
 
             IList<Variable> result = new List<Variable>();
-            foreach (Variable v in context.Request.Pdu.Variables)
+            foreach (Variable v in context.Request.Pdu().Variables)
             {
                 index++;
                 ScalarObject obj = store.GetObject(v.Id);

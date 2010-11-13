@@ -29,7 +29,7 @@ namespace Lextm.SharpSnmpLib.Tests
                 0x69, 0x15, 0x00, 0x04, 0x0a, 0x49, 0x6e, 0x66, 0x6f, 0x72, 0x6d, 0x54, 0x65, 0x73, 0x74 };
 
             IList<ISnmpMessage> messages = MessageFactory.ParseMessages(data, new UserRegistry());
-            Assert.AreEqual(SnmpType.InformRequestPdu, messages[0].Pdu.TypeCode);
+            Assert.AreEqual(SnmpType.InformRequestPdu, messages[0].Pdu().TypeCode);
             //Assert.AreEqual(4, messages[0].TimeStamp);
         }
         
@@ -41,7 +41,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes, new UserRegistry());
             Assert.AreEqual(1, messages.Count);
             GetRequestMessage m = (GetRequestMessage)messages[0];
-            Variable v = m.Variables[0];
+            Variable v = m.Variables()[0];
             string i = v.Id.ToString();
             Assert.AreEqual(".1.3.6.1.2.1.1.5.0", i);
         }
@@ -91,9 +91,9 @@ namespace Lextm.SharpSnmpLib.Tests
             IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes, registry);
             Assert.AreEqual(1, messages.Count);
             GetRequestMessage get = (GetRequestMessage)messages[0];
-            Assert.AreEqual(27144, get.MessageId);
+            Assert.AreEqual(27144, get.MessageId());
             //Assert.AreEqual(SecurityLevel.None | SecurityLevel.Reportable, get.Level);
-            Assert.AreEqual("lextm", get.Community.ToString());
+            Assert.AreEqual("lextm", get.Community().ToString());
         }
 
         [Test]
@@ -114,9 +114,9 @@ namespace Lextm.SharpSnmpLib.Tests
             IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes, registry);
             Assert.AreEqual(1, messages.Count);
             GetRequestMessage get = (GetRequestMessage)messages[0];
-            Assert.AreEqual(27801, get.MessageId);
+            Assert.AreEqual(27801, get.MessageId());
             //Assert.AreEqual(SecurityLevel.None | SecurityLevel.Reportable, get.Level);
-            Assert.AreEqual("lexmark", get.Community.ToString());
+            Assert.AreEqual("lexmark", get.Community().ToString());
             //OctetString digest = new MD5AuthenticationProvider(new OctetString("testpass")).ComputeHash(get);
 
             //Assert.AreEqual(digest, get.Parameters.AuthenticationParameters);
@@ -149,9 +149,9 @@ namespace Lextm.SharpSnmpLib.Tests
             IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes, registry);
             Assert.AreEqual(1, messages.Count);
             GetRequestMessage get = (GetRequestMessage)messages[0];
-            Assert.AreEqual(13633, get.MessageId);
+            Assert.AreEqual(13633, get.MessageId());
             //Assert.AreEqual(SecurityLevel.None | SecurityLevel.Reportable, get.Level);
-            Assert.AreEqual("lexli", get.Community.ToString());
+            Assert.AreEqual("lexli", get.Community().ToString());
             //OctetString digest = new MD5AuthenticationProvider(new OctetString("testpass")).ComputeHash(get);
 
             //Assert.AreEqual(digest, get.Parameters.AuthenticationParameters);
@@ -161,8 +161,8 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestResponseV1()
         {
             ISnmpMessage message = MessageFactory.ParseMessages(Resources.getresponse, new UserRegistry())[0];
-            Assert.AreEqual(SnmpType.ResponsePdu, message.Pdu.TypeCode);
-            ISnmpPdu pdu = message.Pdu;
+            Assert.AreEqual(SnmpType.ResponsePdu, message.Pdu().TypeCode);
+            ISnmpPdu pdu = message.Pdu();
             Assert.AreEqual(SnmpType.ResponsePdu, pdu.TypeCode);
             ResponsePdu response = (ResponsePdu)pdu;
             Assert.AreEqual(new Integer32(0), response.ErrorStatus);
@@ -240,10 +240,10 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual(5, messages[0].Parameters.EngineBoots.ToInt32());
             Assert.AreEqual(new byte[] {4, 13, 128, 0, 31, 136, 128, 233, 99, 0, 0, 214, 31, 244, 73}, messages[0].Parameters.EngineId.ToBytes());
             Assert.AreEqual(3867, messages[0].Parameters.EngineTime.ToInt32());
-            Assert.AreEqual(ErrorCode.NoError, messages[0].Pdu.ErrorStatus.ToErrorCode());
-            Assert.AreEqual(1, messages[0].Pdu.Variables.Count);
-            
-            Variable v = messages[0].Pdu.Variables[0];
+            Assert.AreEqual(ErrorCode.NoError, messages[0].Pdu().ErrorStatus.ToErrorCode());
+            Assert.AreEqual(1, messages[0].Pdu().Variables.Count);
+
+            Variable v = messages[0].Pdu().Variables[0];
             Assert.AreEqual(".1.3.6.1.6.3.15.1.1.4.0", v.Id.ToString());
             ISnmpData data = v.Data;
             Assert.AreEqual(SnmpType.Counter32, data.TypeCode);
@@ -270,8 +270,8 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual("", message.Parameters.PrivacyParameters.ToHexString());
             Assert.AreEqual("", message.Scope.ContextEngineId.ToHexString()); // SNMP#NET returns string.Empty here.
             Assert.AreEqual("", message.Scope.ContextName.ToHexString());
-            Assert.AreEqual(528732060, message.MessageId);
-            Assert.AreEqual(1905687779, message.RequestId);
+            Assert.AreEqual(528732060, message.MessageId());
+            Assert.AreEqual(1905687779, message.RequestId());
             Assert.AreEqual(".1.3.6", ((TrapV2Message)message).Enterprise.ToString());
         }
 
@@ -292,8 +292,8 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual("", message.Parameters.PrivacyParameters.ToHexString());
             Assert.AreEqual("", message.Scope.ContextEngineId.ToHexString()); // SNMP#NET returns string.Empty here.
             Assert.AreEqual("", message.Scope.ContextName.ToHexString());
-            Assert.AreEqual(318463383, message.MessageId);
-            Assert.AreEqual(1276263065, message.RequestId);
+            Assert.AreEqual(318463383, message.MessageId());
+            Assert.AreEqual(1276263065, message.RequestId());
         }
 
         [Test]
@@ -316,8 +316,8 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual("", message.Scope.ContextEngineId.ToHexString()); // SNMP#NET returns string.Empty here.
             Assert.AreEqual("", message.Scope.ContextName.ToHexString());
             Assert.AreEqual(0, message.Scope.Pdu.Variables.Count);
-            Assert.AreEqual(1004947569, message.MessageId);
-            Assert.AreEqual(234419641, message.RequestId);
+            Assert.AreEqual(1004947569, message.MessageId());
+            Assert.AreEqual(234419641, message.RequestId());
         }
     }
 }

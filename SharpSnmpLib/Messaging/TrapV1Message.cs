@@ -28,7 +28,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Net;
-using System.Net.Sockets;
 using Lextm.SharpSnmpLib.Security;
 
 namespace Lextm.SharpSnmpLib.Messaging
@@ -39,6 +38,8 @@ namespace Lextm.SharpSnmpLib.Messaging
     public class TrapV1Message : ISnmpMessage
     {
         private readonly byte[] _bytes;
+        private Scope _scope;
+        private readonly ISnmpPdu _pdu;
 
         /// <summary>
         /// Creates a <see cref="TrapV1Message"/> with all content.
@@ -77,7 +78,6 @@ namespace Lextm.SharpSnmpLib.Messaging
             Version = version;
             AgentAddress = agent;
             Community = community;
-            Variables = variables;
             Enterprise = enterprise;
             Generic = generic;
             Specific = specific;
@@ -88,7 +88,8 @@ namespace Lextm.SharpSnmpLib.Messaging
                 new Integer32((int)Generic),
                 new Integer32(Specific),
                 new TimeTicks(TimeStamp),
-                Variables);
+                variables);
+            _pdu = pdu;
             Parameters = new SecurityParameters(null, null, null, Community, null, null);
 
             _bytes = SnmpMessageExtension.PackMessage(Version, Community, pdu).ToBytes();
@@ -112,60 +113,21 @@ namespace Lextm.SharpSnmpLib.Messaging
             
             Community = (OctetString)body[1];
             Version = (VersionCode)((Integer32)body[0]).ToInt32();
-            Pdu = (ISnmpPdu)body[2];
-            if (Pdu.TypeCode != SnmpType.TrapV1Pdu)
+            _pdu = (ISnmpPdu)body[2];
+            if (_pdu.TypeCode != SnmpType.TrapV1Pdu)
             {
                 throw new ArgumentException("wrong message type");
             }
 
-            TrapV1Pdu trapPdu = (TrapV1Pdu)Pdu;
+            TrapV1Pdu trapPdu = (TrapV1Pdu)_pdu;
             Enterprise = trapPdu.Enterprise;
             AgentAddress = trapPdu.AgentAddress.ToIPAddress();
             Generic = trapPdu.Generic;
             Specific = trapPdu.Specific;
             TimeStamp = trapPdu.TimeStamp.ToUInt32();
-            Variables = Pdu.Variables;
             Parameters = new SecurityParameters(null, null, null, Community, null, null);
 
-            _bytes = SnmpMessageExtension.PackMessage(Version, Community, Pdu).ToBytes();
-        }
-
-        /// <summary>
-        /// Sends this <see cref="TrapV1Message"/>.
-        /// </summary>
-        /// <param name="manager">Manager</param>
-        public void Send(EndPoint manager)
-        {
-            if (manager == null)
-            {
-                throw new ArgumentNullException("manager");
-            }
-            
-            using (Socket socket = SnmpMessageExtension.GetSocket(manager))
-            {
-                Send(manager, socket);
-            }
-        }
-
-        /// <summary>
-        /// Sends this <see cref="TrapV1Message"/>.
-        /// </summary>
-        /// <param name="manager">Manager</param>
-        /// <param name="socket">The socket.</param>
-        public void Send(EndPoint manager, Socket socket)
-        {
-            if (socket == null)
-            {
-                throw new ArgumentNullException("socket");
-            }
-
-            if (manager == null)
-            {
-                throw new ArgumentNullException("manager");
-            }
-
-            byte[] bytes = ToBytes();
-            socket.SendTo(bytes, manager);
+            _bytes = SnmpMessageExtension.PackMessage(Version, Community, _pdu).ToBytes();
         }
 
         /// <summary>
@@ -200,32 +162,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         public int Specific { get; private set; }
 
         /// <summary>
-        /// Variable binds.
-        /// </summary>
-        public IList<Variable> Variables { get; private set; }
-
-        /// <summary>
         /// Protocol version.
         /// </summary>
         public VersionCode Version { get; private set; }
-
-        /// <summary>
-        /// Gets the request ID.
-        /// </summary>
-        /// <value>The request ID.</value>
-        public int RequestId
-        {
-            get { throw new NotSupportedException(); }
-        }
-        
-        /// <summary>
-        /// Gets the message ID.
-        /// </summary>
-        /// <value>The message ID.</value>
-        public int MessageId
-        {
-            get { throw new NotSupportedException(); }
-        }
 
         /// <summary>
         /// Gets the header.
@@ -253,11 +192,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         }
 
         /// <summary>
-        /// PDU.
-        /// </summary>
-        public ISnmpPdu Pdu { get; private set; }
-
-        /// <summary>
         /// Gets the parameters.
         /// </summary>
         /// <value>The parameters.</value>
@@ -271,7 +205,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <remarks><see cref="TrapV1Message"/> returns null here.</remarks>
         public Scope Scope
         {
-            get { throw new NotSupportedException(); }
+            get { return _scope ?? (_scope = new Scope(_pdu)); }
         }
         
         /// <summary>
@@ -296,7 +230,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             return string.Format(
                 CultureInfo.InvariantCulture,
                 "SNMPv1 trap: {0}",
-                ((TrapV1Pdu)Pdu).ToString(objects));
+                ((TrapV1Pdu)_pdu).ToString(objects));
         }
     }
 }

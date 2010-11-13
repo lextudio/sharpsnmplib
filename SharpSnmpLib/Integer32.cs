@@ -135,20 +135,6 @@ namespace Lextm.SharpSnmpLib
                 return SnmpType.Integer32;
             }
         }
-        
-        /// <summary>
-        /// Converts to byte format.
-        /// </summary>
-        /// <returns></returns>
-        [Obsolete("Use AppendBytesTo instead.")]
-        public byte[] ToBytes()
-        {
-            using (MemoryStream result = new MemoryStream())
-            {
-                AppendBytesTo(result);
-                return result.ToArray();
-            }
-        }
 
         /// <summary>
         /// Appends the bytes to <see cref="Stream"/>.
@@ -161,7 +147,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("stream");
             }
             
-            ByteTool.AppendBytes(stream, TypeCode, ByteTool.GetRawBytes(BitConverter.GetBytes(_int), _int < 0));
+            stream.AppendBytes(TypeCode, ByteTool.GetRawBytes(BitConverter.GetBytes(_int), _int < 0));
         }
 
         /// <summary>
@@ -226,7 +212,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="right">Right <see cref="Integer32"/> object</param>
         /// <returns>
         /// Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
-        public static bool Equals(Integer32 left, Integer32 right)
+        private static bool Equals(Integer32 left, Integer32 right)
         {
             object lo = left;
             object ro = right;

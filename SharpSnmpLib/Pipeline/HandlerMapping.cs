@@ -133,7 +133,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
 
         private bool CommandMatched(ISnmpMessage message)
         {
-            var codeString = message.Pdu.TypeCode.ToString();
+            var codeString = message.Pdu().TypeCode.ToString();
             return StringEquals(_command, "*") || StringEquals(_command + "RequestPdu", codeString) ||
             StringEquals(_command + "Pdu", codeString);
         }

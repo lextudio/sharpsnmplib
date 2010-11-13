@@ -29,7 +29,7 @@ namespace Lextm.SharpSnmpLib.Tests
             m.WriteByte(0x66);
             m.Flush();
             m.Position = 0;
-            Assert.AreEqual(102, ByteTool.ReadPayloadLength(m));
+            Assert.AreEqual(102, m.ReadPayloadLength());
         }
         
         [Test]
@@ -38,7 +38,7 @@ namespace Lextm.SharpSnmpLib.Tests
             const int length = 102;
             const byte expect = 0x66;
             MemoryStream m = new MemoryStream();
-            ByteTool.WritePayloadLength(m, length);
+            m.WritePayloadLength(length);
             byte[] array = m.ToArray();
             Assert.AreEqual(1, array.Length);
             Assert.AreEqual(expect, array[0]);
@@ -52,7 +52,7 @@ namespace Lextm.SharpSnmpLib.Tests
             m.Write(expected, 0, 4);
             m.Flush();
             m.Position = 0;
-            Assert.AreEqual(7559605, ByteTool.ReadPayloadLength(m));
+            Assert.AreEqual(7559605, m.ReadPayloadLength());
         }
         
         [Test]
@@ -61,7 +61,7 @@ namespace Lextm.SharpSnmpLib.Tests
             const int length = 7559605;
             byte[] expected = new byte[] {0x83, 0x73, 0x59, 0xB5};
             MemoryStream m = new MemoryStream();
-            ByteTool.WritePayloadLength(m, length);
+            m.WritePayloadLength(length);
             Assert.AreEqual(expected, m.ToArray());
         }
     }

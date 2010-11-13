@@ -56,15 +56,6 @@ namespace Lextm.SharpSnmpLib
         }
 
         /// <summary>
-        /// Converts to the bytes.
-        /// </summary>
-        /// <returns></returns>
-        public byte[] ToBytes()
-        {
-            throw new NotSupportedException();
-        }
-
-        /// <summary>
         /// Gets the request ID.
         /// </summary>
         /// <value>The request ID.</value>

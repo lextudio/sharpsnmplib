@@ -23,14 +23,13 @@ namespace Lextm.SharpSnmpLib.Tests
                                          parameters);
             Assert.AreEqual(SnmpType.Sequence, data.TypeCode);
             
-            // TODO: parse snmp#net output and compare result.
             byte[] net =
                 ByteTool.Convert(
                     "04 38 A4 F9 78 15 2B 14 45 F7 4F C5 B2 1C 82 72 9A 0B D9 EE C1 17 3E E1 26 0D 8B D4 7B 0F D7 35 06 1B E2 14 0D 4A 9B CA BF EF 18 6B 53 B9 FA 70 95 D0 5D AF 04 5A 68 B5 DA 73");
             var netData = privacy.Decrypt(DataFactory.CreateSnmpData(net), parameters);
             Assert.AreEqual(SnmpType.Sequence, netData.TypeCode);
 
-            Assert.AreEqual(ByteTool.Convert(ByteTool.ToBytes(netData)), ByteTool.Convert(ByteTool.ToBytes(data)));
+            Assert.AreEqual(ByteTool.Convert(netData.ToBytes()), ByteTool.Convert(data.ToBytes()));
         }
         
         [Test]
@@ -72,7 +71,7 @@ namespace Lextm.SharpSnmpLib.Tests
             SecurityParameters parameters = new SecurityParameters(engineId, new Integer32(0x14), new Integer32(0x35), new OctetString("lexmark"), new OctetString(new byte[12]), new OctetString(ByteTool.Convert("00 00 00  01 44 2C A3 B5")));
             ISnmpData data = priv.Encrypt(scope.GetData(VersionCode.V3), parameters);
             Assert.AreEqual(SnmpType.OctetString, data.TypeCode);
-            Assert.AreEqual(expected, ByteTool.ToBytes(data));
+            Assert.AreEqual(expected, data.ToBytes());
         }
     }
 }

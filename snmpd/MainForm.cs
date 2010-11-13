@@ -52,7 +52,7 @@ namespace Lextm.SharpSnmpLib.Agent
             InitializeComponent();
             if (PlatformSupport.Platform == PlatformType.Windows)
             {
-                // FIXME: work around a Mono WinForms bug.
+                // FIXME: work around a Mono WinForms issue.
                 Icon = Properties.Resources.network_server;                
             }
             

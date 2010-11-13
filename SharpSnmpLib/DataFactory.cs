@@ -63,7 +63,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("stream");
             }
             
-            int length = ByteTool.ReadPayloadLength(stream);
+            int length = stream.ReadPayloadLength();
             switch ((SnmpType)type)
             {
                 case SnmpType.Counter32:
@@ -75,16 +75,16 @@ namespace Lextm.SharpSnmpLib
                 case SnmpType.ObjectIdentifier:
                     return new ObjectIdentifier(length, stream);
                 case SnmpType.Null:
-                    ByteTool.IgnoreBytes(stream, length);
+                    stream.IgnoreBytes(length);
                     return new Null();
                 case SnmpType.NoSuchInstance:
-                    ByteTool.IgnoreBytes(stream, length);
+                    stream.IgnoreBytes(length);
                     return new NoSuchInstance();
                 case SnmpType.NoSuchObject:
-                    ByteTool.IgnoreBytes(stream, length);
+                    stream.IgnoreBytes(length);
                     return new NoSuchObject();
                 case SnmpType.EndOfMibView:
-                    ByteTool.IgnoreBytes(stream, length);
+                    stream.IgnoreBytes(length);
                     return new EndOfMibView();
                 case SnmpType.Integer32:
                     return new Integer32(length, stream);

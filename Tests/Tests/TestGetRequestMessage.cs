@@ -32,8 +32,8 @@ namespace Lextm.SharpSnmpLib.Tests
         {
             byte[] expected = Resources.get;
             ISnmpMessage message = MessageFactory.ParseMessages(expected, new UserRegistry())[0];
-            Assert.AreEqual(SnmpType.GetRequestPdu, message.Pdu.TypeCode);
-            GetRequestPdu pdu = (GetRequestPdu)message.Pdu;
+            Assert.AreEqual(SnmpType.GetRequestPdu, message.Pdu().TypeCode);
+            GetRequestPdu pdu = (GetRequestPdu)message.Pdu();
             Assert.AreEqual(1, pdu.Variables.Count);
             Variable v = pdu.Variables[0];
             Assert.AreEqual(new uint[] { 1, 3, 6, 1, 2, 1, 1, 6, 0 }, v.Id.ToNumerical());
@@ -110,7 +110,7 @@ namespace Lextm.SharpSnmpLib.Tests
                 Messenger.MaxMessageSize,
                 report);
             
-            Assert.AreEqual(Levels.Authentication, request.Level);
+            Assert.AreEqual(Levels.Authentication, request.Level());
             Assert.AreEqual(ByteTool.Convert(bytes), request.ToBytes());
         }
 
@@ -151,7 +151,7 @@ namespace Lextm.SharpSnmpLib.Tests
                         0,
                         new List<Variable>(1) { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0")) })),
                 privacy);
-            Assert.AreEqual(Levels.Authentication | Levels.Privacy, request.Level);
+            Assert.AreEqual(Levels.Authentication | Levels.Privacy, request.Level());
             Assert.AreEqual(ByteTool.Convert(bytes), request.ToBytes());
         }
 
@@ -201,7 +201,7 @@ namespace Lextm.SharpSnmpLib.Tests
                         0,
                         new List<Variable>(1) { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0"), new Null()) })),
                 pair);
-            Assert.AreEqual(Levels.Authentication, request.Level);
+            Assert.AreEqual(Levels.Authentication, request.Level());
             Assert.AreEqual(ByteTool.Convert(bytes), request.ToBytes());
         }
 
@@ -240,7 +240,7 @@ namespace Lextm.SharpSnmpLib.Tests
                         0,
                         new List<Variable>(1) { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0"), new Null()) })),
                 pair);
-            Assert.AreEqual(Levels.Authentication, request.Level);
+            Assert.AreEqual(Levels.Authentication, request.Level());
             Assert.AreEqual(ByteTool.Convert(bytes), request.ToBytes());
         }
   

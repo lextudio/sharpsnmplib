@@ -42,9 +42,9 @@ namespace Lextm.SharpSnmpLib.Tests
             handler.Handle(context, store);
             var noerror = (ResponseMessage)context.Response;
             Assert.AreEqual(ErrorCode.NoError, noerror.ErrorStatus);
-            Assert.AreEqual(new ObjectIdentifier("1.3.6.1.2.1.1.2.0"), noerror.Variables[0].Id);
-            Assert.AreEqual(new ObjectIdentifier("1.3.6.1.2.1.1.3.0"), noerror.Variables[1].Id);
-            Assert.AreEqual(2, noerror.Variables.Count);
+            Assert.AreEqual(new ObjectIdentifier("1.3.6.1.2.1.1.2.0"), noerror.Variables()[0].Id);
+            Assert.AreEqual(new ObjectIdentifier("1.3.6.1.2.1.1.3.0"), noerror.Variables()[1].Id);
+            Assert.AreEqual(2, noerror.Variables().Count);
         }
 
         [Test]
@@ -103,8 +103,8 @@ namespace Lextm.SharpSnmpLib.Tests
                 null);
             handler.Handle(context, store);
             var endOfMibView = (ResponseMessage)context.Response;
-            Assert.AreEqual(new ObjectIdentifier("1.3.6.1.2.1.1.2.0"), endOfMibView.Variables[0].Id);
-            Assert.AreEqual(new EndOfMibView(), endOfMibView.Variables[0].Data);
+            Assert.AreEqual(new ObjectIdentifier("1.3.6.1.2.1.1.2.0"), endOfMibView.Variables()[0].Id);
+            Assert.AreEqual(new EndOfMibView(), endOfMibView.Variables()[0].Data);
         }
 
         [Test]
@@ -137,10 +137,10 @@ namespace Lextm.SharpSnmpLib.Tests
             handler.Handle(context, store);
             var noerror = (ResponseMessage)context.Response;
             Assert.AreEqual(ErrorCode.NoError, noerror.ErrorStatus);
-            Assert.AreEqual(new ObjectIdentifier("1.3.6.1.2.1.1.2.0"), noerror.Variables[0].Id);
-            Assert.AreEqual(new ObjectIdentifier("1.3.6.1.2.1.1.4.0"), noerror.Variables[1].Id);
-            Assert.AreEqual(new ObjectIdentifier("1.3.6.1.2.1.1.5.0"), noerror.Variables[2].Id);
-            Assert.AreEqual(3, noerror.Variables.Count);
+            Assert.AreEqual(new ObjectIdentifier("1.3.6.1.2.1.1.2.0"), noerror.Variables()[0].Id);
+            Assert.AreEqual(new ObjectIdentifier("1.3.6.1.2.1.1.4.0"), noerror.Variables()[1].Id);
+            Assert.AreEqual(new ObjectIdentifier("1.3.6.1.2.1.1.5.0"), noerror.Variables()[2].Id);
+            Assert.AreEqual(3, noerror.Variables().Count);
         }
     }
 }

@@ -174,7 +174,7 @@ namespace SnmpGet
                     Console.WriteLine(ByteTool.Convert(request.ToBytes()));
                 }
 
-                if (response.Pdu.ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
+                if (response.Pdu().ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
                 {
                     throw ErrorException.Create(
                         "error in response",
@@ -182,7 +182,7 @@ namespace SnmpGet
                         response);
                 }
 
-                foreach (Variable v in response.Pdu.Variables)
+                foreach (Variable v in response.Pdu().Variables)
                 {
                     Console.WriteLine(v);
                 }

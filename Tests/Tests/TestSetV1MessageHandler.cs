@@ -94,7 +94,7 @@ namespace Lextm.SharpSnmpLib.Tests
             handler.Handle(context, store);
             var noerror = (ResponseMessage)context.Response;
             Assert.AreEqual(ErrorCode.NoError, noerror.ErrorStatus);
-            Assert.AreEqual(new OctetString("test"), noerror.Variables[0].Data);
+            Assert.AreEqual(new OctetString("test"), noerror.Variables()[0].Data);
         }
 
         [Test]

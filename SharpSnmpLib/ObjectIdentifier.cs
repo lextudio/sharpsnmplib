@@ -269,20 +269,6 @@ namespace Lextm.SharpSnmpLib
         }
 
         /// <summary>
-        /// Converts to byte format.
-        /// </summary>
-        /// <returns></returns>
-        [Obsolete("Use AppendBytesTo instead.")]
-        public byte[] ToBytes()
-        {
-            using (MemoryStream result = new MemoryStream())
-            {
-                AppendBytesTo(result);
-                return result.ToArray();
-            }
-        }
-
-        /// <summary>
         /// Appends the bytes to <see cref="Stream"/>.
         /// </summary>
         /// <param name="stream">The stream.</param>
@@ -302,7 +288,7 @@ namespace Lextm.SharpSnmpLib
                 temp.AddRange(ConvertToBytes(_oid[i]));
             }
 
-            ByteTool.AppendBytes(stream, TypeCode, temp.ToArray());
+            stream.AppendBytes(TypeCode, temp.ToArray());
         }
 
         private static IEnumerable<byte> ConvertToBytes(uint subIdentifier)

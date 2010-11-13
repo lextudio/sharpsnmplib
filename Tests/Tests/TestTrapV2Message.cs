@@ -58,7 +58,7 @@ namespace Lextm.SharpSnmpLib.Tests
                 new Header(
                     new Integer32(1004947569),
                     new Integer32(0x10000),
-                    new OctetString(new[] {(byte) PrivacyProviderExtension.ToSecurityLevel(privacy)}),
+                    new OctetString(new[] {(byte) privacy.ToSecurityLevel()}),
                     new Integer32(3)),
                 new SecurityParameters(
                     new OctetString(ByteTool.Convert("80001F8880E9630000D61FF449")),
@@ -89,8 +89,8 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual("", message.Scope.ContextEngineId.ToHexString()); // SNMP#NET returns string.Empty here.
             Assert.AreEqual("", message.Scope.ContextName.ToHexString());
             Assert.AreEqual(0, message.Scope.Pdu.Variables.Count);
-            Assert.AreEqual(1004947569, message.MessageId);
-            Assert.AreEqual(234419641, message.RequestId);
+            Assert.AreEqual(1004947569, message.MessageId());
+            Assert.AreEqual(234419641, message.RequestId());
         }
     }
 }

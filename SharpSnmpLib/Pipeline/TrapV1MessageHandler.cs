@@ -44,22 +44,22 @@ namespace Lextm.SharpSnmpLib.Pipeline
             {
                 throw new ArgumentNullException("context");
             }
-            
-            InvokeMessageReceived(new MessageReceivedEventArgs<TrapV1Message>(context.Sender, (TrapV1Message)context.Request, context.Binding));
+
+            InvokeMessageReceived(new TrapV1MessageReceivedEventArgs(context.Sender, (TrapV1Message)context.Request, context.Binding));
         }
 
         /// <summary>
         /// Occurs when a message is received.
         /// </summary>
-        public event EventHandler<MessageReceivedEventArgs<TrapV1Message>> MessageReceived;
+        public event EventHandler<TrapV1MessageReceivedEventArgs> MessageReceived;
 
         /// <summary>
         /// Invokes the message received event handler.
         /// </summary>
         /// <param name="e">The <see cref="Lextm.SharpSnmpLib.Messaging.MessageReceivedEventArgs"/> instance containing the event data.</param>
-        public void InvokeMessageReceived(MessageReceivedEventArgs<TrapV1Message> e)
+        public void InvokeMessageReceived(TrapV1MessageReceivedEventArgs e)
         {
-            EventHandler<MessageReceivedEventArgs<TrapV1Message>> handler = MessageReceived;
+            EventHandler<TrapV1MessageReceivedEventArgs> handler = MessageReceived;
             if (handler == null)
             {
                 return;

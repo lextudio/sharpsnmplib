@@ -30,10 +30,10 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyTitle("SharpSnmpLib")]
 [assembly: AssemblyDescription("#SNMP Library for .NET")]
-[assembly: AssemblyConfiguration("Less GPL")]
+[assembly: AssemblyConfiguration("Lesser GPL 2.1+")]
 [assembly: AssemblyCompany("LeXtudio")]
 [assembly: AssemblyProduct("#SNMPLib")]
-[assembly: AssemblyCopyright("(C) 2008-2009 Malcolm Crowe, Lex Li, Steve Santacroce, and other contributors.")]
+[assembly: AssemblyCopyright("(C) 2008-2010 Malcolm Crowe, Lex Li, Steve Santacroce, and other contributors.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -47,9 +47,9 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values or you can use the default the Revision and
 // Build Numbers by using the '*' as shown below:
-[assembly: AssemblyVersion("6.0.011107.00")]
+[assembly: AssemblyVersion("7.0.011113.38")]
 #if (!CF)
-[assembly: AssemblyFileVersion("6.0.011107.00")]
+[assembly: AssemblyFileVersion("7.0.011113.38")]
 #endif
 [assembly: NeutralResourcesLanguage("en-US")]
 [assembly: CLSCompliant(true)]

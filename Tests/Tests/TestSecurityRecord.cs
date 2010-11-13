@@ -10,7 +10,7 @@ namespace Lextm.SharpSnmpLib.Tests
         [Test]
         public void TestToSecurityLevel()
         {
-            Assert.AreEqual((Levels)0, PrivacyProviderExtension.ToSecurityLevel(DefaultPrivacyProvider.DefaultPair));
+            Assert.AreEqual((Levels)0, DefaultPrivacyProvider.DefaultPair.ToSecurityLevel());
         }
 
         [Test]
@@ -22,7 +22,7 @@ namespace Lextm.SharpSnmpLib.Tests
         [Test]
         public void TestAuthenticationOnly()
         {
-            Assert.AreEqual(Levels.Authentication, PrivacyProviderExtension.ToSecurityLevel(new DefaultPrivacyProvider(new MD5AuthenticationProvider(new OctetString("test")))));
+            Assert.AreEqual(Levels.Authentication, new DefaultPrivacyProvider(new MD5AuthenticationProvider(new OctetString("test"))).ToSecurityLevel());
         }
     }
 }

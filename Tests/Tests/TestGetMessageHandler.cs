@@ -34,7 +34,7 @@ namespace Lextm.SharpSnmpLib.Tests
             var store = new ObjectStore();
             handler.Handle(context, store);
             var nosuchinstance = (ResponseMessage)context.Response;
-            Assert.AreEqual(new NoSuchInstance(), nosuchinstance.Variables[0].Data);
+            Assert.AreEqual(new NoSuchInstance(), nosuchinstance.Variables()[0].Data);
         }
 
         [Test]
@@ -115,7 +115,7 @@ namespace Lextm.SharpSnmpLib.Tests
                 null);
             handler.Handle(context, store);
             var noSuchObject = (ResponseMessage)context.Response;
-            Assert.AreEqual(new NoSuchObject(), noSuchObject.Variables[0].Data);
+            Assert.AreEqual(new NoSuchObject(), noSuchObject.Variables()[0].Data);
         }
     }
 }
