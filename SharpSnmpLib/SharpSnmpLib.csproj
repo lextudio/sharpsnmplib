@@ -203,7 +203,9 @@
     <Compile Include="VersionCode.cs" />
     <None Include="gendarme.ignore" />
     <None Include="license.txt" />
-    <None Include="Microsoft.VersionNumber.targets" />
+    <None Include="Microsoft.VersionNumber.targets">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="sharpsnmplib.snk" />
   </ItemGroup>
   <ItemGroup />

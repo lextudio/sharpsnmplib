@@ -43,8 +43,8 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// </summary>
         /// <param name="factory">The factory.</param>
         /// <param name="listener">The listener.</param>
-        /// <param name="group">Engine core @group.</param>
-        public SnmpEngine(SnmpApplicationFactory factory, Listener listener, EngineGroup @group)
+        /// <param name="group">Engine core group.</param>
+        public SnmpEngine(SnmpApplicationFactory factory, Listener listener, EngineGroup group)
         {
             _factory = factory;
             Listener = listener;
