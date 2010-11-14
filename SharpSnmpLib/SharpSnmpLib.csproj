@@ -62,7 +62,6 @@
     <Compile Include="Messaging\GetBulkRequestMessage.cs" />
     <Compile Include="Messaging\GetNextRequestMessage.cs" />
     <Compile Include="Messaging\GetRequestMessage.cs" />
-    <Compile Include="Messaging\IListenerAdapter.cs" />
     <Compile Include="Messaging\IListenerBinding.cs" />
     <Compile Include="Messaging\InformRequestMessage.cs" />
     <Compile Include="Messaging\ISnmpMessage.cs" />

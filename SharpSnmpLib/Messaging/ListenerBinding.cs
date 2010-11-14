@@ -38,19 +38,16 @@ namespace Lextm.SharpSnmpLib.Messaging
         private const int WSAECONNRESET = 10054; // http://msdn.microsoft.com/en-us/library/ms740668(VS.85).aspx
         private const int WSAEADDRINUSE = 10048; // http://msdn.microsoft.com/en-us/library/ms740668(VS.85).aspx
         private readonly UserRegistry _users;
-        private readonly IEnumerable<IListenerAdapter> _adapters;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ListenerBinding"/> class.
         /// </summary>
         /// <param name="users">The users.</param>
-        /// <param name="adapters">The adapters.</param>
         /// <param name="endpoint">The endpoint.</param>
-        public ListenerBinding(UserRegistry users, IEnumerable<IListenerAdapter> adapters, IPEndPoint endpoint)
+        public ListenerBinding(UserRegistry users, IPEndPoint endpoint)
         {
             _users = users;
             Endpoint = endpoint;
-            _adapters = adapters;
         }
 
         /// <summary>
@@ -392,11 +389,6 @@ namespace Lextm.SharpSnmpLib.Messaging
                 if (handler != null)
                 {
                     handler(this, new MessageReceivedEventArgs(param.Sender, message, this));
-                }
-                
-                foreach (IListenerAdapter adapter in _adapters)
-                {
-                    adapter.Process(message, param.Sender, this);
                 }
             }
         }

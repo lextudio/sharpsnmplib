@@ -55,7 +55,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         public Listener()
         {
-            Adapters = new List<IListenerAdapter>();
             Bindings = new List<ListenerBinding>();
         }
         
@@ -200,12 +199,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         internal IList<ListenerBinding> Bindings { get; set; }
 
         /// <summary>
-        /// Gets or sets the adapters.
-        /// </summary>
-        /// <value>The adapters.</value>
-        public IList<IListenerAdapter> Adapters { get; private set; }
-
-        /// <summary>
         /// Occurs when an exception is raised.
         /// </summary>
         public event EventHandler<ExceptionRaisedEventArgs> ExceptionRaised;
@@ -239,7 +232,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 }
             }
             
-            var binding = new ListenerBinding(Users, Adapters, endpoint);
+            var binding = new ListenerBinding(Users, endpoint);
             binding.ExceptionRaised += (o, args) =>
             {
                 var handler = ExceptionRaised;
