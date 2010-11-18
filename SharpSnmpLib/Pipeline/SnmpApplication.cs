@@ -101,7 +101,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
             }
 
             _handler = _factory.GetHandler(Context.Request);
-            if (_handler.GetType() == typeof(NullMessageHandler))
+            if (_handler is NullMessageHandler)
             {
                 // TODO: handle error here.
                 CompleteProcessing();

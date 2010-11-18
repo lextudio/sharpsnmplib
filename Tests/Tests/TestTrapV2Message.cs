@@ -58,8 +58,7 @@ namespace Lextm.SharpSnmpLib.Tests
                 new Header(
                     new Integer32(1004947569),
                     new Integer32(0x10000),
-                    new OctetString(new[] {(byte) privacy.ToSecurityLevel()}),
-                    new Integer32(3)),
+                    new OctetString(new[] {(byte) privacy.ToSecurityLevel()})),
                 new SecurityParameters(
                     new OctetString(ByteTool.Convert("80001F8880E9630000D61FF449")),
                     new Integer32(0),

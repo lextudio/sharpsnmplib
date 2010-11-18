@@ -1,4 +1,21 @@
-﻿/*
+﻿// IPrivacyProvider extension methods.
+// Copyright (C) 2010 Lex Li
+// 
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public
+// License as published by the Free Software Foundation; either
+// version 2.1 of the License, or (at your option) any later version.
+// 
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// Lesser General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+/*
  * Created by SharpDevelop.
  * User: lextm
  * Date: 10/10/2010
@@ -16,7 +33,7 @@ namespace Lextm.SharpSnmpLib.Security
     public static class PrivacyProviderExtension
     {
         /// <summary>
-        /// Toes the security level.
+        /// Converts to <seealso cref="Levels"/>.
         /// </summary>
         /// <returns></returns>
         public static Levels ToSecurityLevel(this IPrivacyProvider privacy)
@@ -41,6 +58,23 @@ namespace Lextm.SharpSnmpLib.Security
             }
 
             return flags;
+        }
+        
+        /// <summary>
+        /// Converts to <seealso cref="OctetString"/>.
+        /// </summary>
+        /// <param name="privacy">Privacy provider.</param>
+        /// <param name="reportable">Reportable flag.</param>
+        /// <returns></returns>
+        public static OctetString ToOctetString(this IPrivacyProvider privacy, bool reportable)
+        {
+            Levels recordToSecurityLevel = privacy.ToSecurityLevel();
+            if (reportable)
+            {
+                recordToSecurityLevel |= Levels.Reportable;
+            }
+            
+            return new OctetString(new[] { (byte)recordToSecurityLevel });
         }
     }
 }

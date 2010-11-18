@@ -30,6 +30,7 @@ namespace Lextm.SharpSnmpLib
         private readonly OctetString _flags;
         private readonly Integer32 _securityModel;
         private static readonly Header EmptyHeader = new Header();
+        private static readonly Integer32 DefaultSecurityModel = new Integer32(3);
 
         /// <summary>
         /// Max message size used in #SNMP. 
@@ -69,9 +70,8 @@ namespace Lextm.SharpSnmpLib
         /// <param name="messageId">The message id.</param>
         /// <param name="maxMessageSize">Size of the max message.</param>
         /// <param name="securityBits">The flags.</param>
-        /// <param name="securityModel">The security model.</param>
         /// <remarks>If you want an empty header, please use <see cref="Empty"/>.</remarks>
-        public Header(Integer32 messageId, Integer32 maxMessageSize, OctetString securityBits, Integer32 securityModel)
+        public Header(Integer32 messageId, Integer32 maxMessageSize, OctetString securityBits)
         {
             if (messageId == null)
             {
@@ -88,7 +88,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("securityBits");
             }
 
-            if (securityModel == null)
+            if (DefaultSecurityModel == null)
             {
                 throw new ArgumentNullException("securityModel");
             }
@@ -96,7 +96,7 @@ namespace Lextm.SharpSnmpLib
             _messageId = messageId;
             _maxSize = maxMessageSize;
             _flags = securityBits;
-            _securityModel = securityModel;
+            _securityModel = DefaultSecurityModel;
         }
         
         /// <summary>

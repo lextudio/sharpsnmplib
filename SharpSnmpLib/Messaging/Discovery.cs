@@ -55,8 +55,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 new Header(
                     new Integer32(messageId),
                     new Integer32(maxMessageSize),
-                    new OctetString(new[] { (byte)Levels.Reportable }),
-                    new Integer32(3)),
+                    new OctetString(new[] { (byte)Levels.Reportable })),
                 new SecurityParameters(
                     OctetString.Empty,
                     new Integer32(0),

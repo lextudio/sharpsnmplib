@@ -11,6 +11,7 @@ namespace Lextm.SharpSnmpLib.Browser
         private readonly IAuthenticationProvider _auth;
         private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger("Lextm.SharpSnmpLib.Browser");
         private readonly IPrivacyProvider _privacy;
+        private readonly UserRegistry _registry;
 
         public SecureAgentProfile(Guid id, VersionCode version, IPEndPoint agent, string agentName, string authenticationPassphrase, string privacyPassphrase, int authenticationMethod, int privacyMethod, string userName, int timeout)
             : base(id, version, agent, agentName, userName, timeout)
@@ -45,6 +46,8 @@ namespace Lextm.SharpSnmpLib.Browser
                     _privacy = new AESPrivacyProvider(new OctetString(PrivacyPassphrase), _auth);
                     break;
             }
+            
+            _registry = new UserRegistry().Add(new OctetString(userName), _privacy);
         }
 
         internal string AuthenticationPassphrase { get; private set; }
@@ -71,7 +74,7 @@ namespace Lextm.SharpSnmpLib.Browser
             Discovery discovery = Messenger.NextDiscovery;
             ReportMessage report = discovery.GetResponse(Timeout, Agent);
             GetRequestMessage request = new GetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(UserName), new List<Variable> { variable }, _privacy, Messenger.MaxMessageSize, report);
-            ISnmpMessage response = request.GetResponse(Timeout, Agent);
+            ISnmpMessage response = request.GetResponse(Timeout, Agent, _registry);
             if (response.Pdu().ErrorStatus.ToInt32() != 0)
             {
                 throw ErrorException.Create(
@@ -88,7 +91,7 @@ namespace Lextm.SharpSnmpLib.Browser
             Discovery discovery = Messenger.NextDiscovery;
             ReportMessage report = discovery.GetResponse(Timeout, Agent);
             GetRequestMessage request = new GetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(UserName), new List<Variable> { variable }, _privacy, Messenger.MaxMessageSize, report);
-            ISnmpMessage response = request.GetResponse(Timeout, Agent);
+            ISnmpMessage response = request.GetResponse(Timeout, Agent, _registry);
             if (response.Pdu().ErrorStatus.ToInt32() != 0)
             {
                 throw ErrorException.Create(
@@ -111,7 +114,7 @@ namespace Lextm.SharpSnmpLib.Browser
             Discovery discovery = Messenger.NextDiscovery;
             ReportMessage report = discovery.GetResponse(Timeout, Agent);
             GetNextRequestMessage request = new GetNextRequestMessage(VersionCode.V3, 100, 0, new OctetString(UserName), new List<Variable> { variable }, _privacy, Messenger.MaxMessageSize, report);
-            ISnmpMessage response = request.GetResponse(Timeout, Agent);
+            ISnmpMessage response = request.GetResponse(Timeout, Agent, _registry);
             if (response.Pdu().ErrorStatus.ToInt32() != 0) 
             {
                 throw ErrorException.Create(
@@ -134,7 +137,7 @@ namespace Lextm.SharpSnmpLib.Browser
             Discovery discovery = Messenger.NextDiscovery;
             ReportMessage report = discovery.GetResponse(Timeout, Agent);
             SetRequestMessage request = new SetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(UserName), new List<Variable> { variable }, _privacy, Messenger.MaxMessageSize, report);
-            ISnmpMessage response = request.GetResponse(Timeout, Agent);
+            ISnmpMessage response = request.GetResponse(Timeout, Agent, _registry);
             if (response.Pdu().ErrorStatus.ToInt32() != 0)
             {
                 throw ErrorException.Create(

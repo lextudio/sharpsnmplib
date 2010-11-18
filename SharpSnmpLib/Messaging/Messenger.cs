@@ -36,8 +36,8 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// </summary>
     public static class Messenger
     {
-        private static readonly NumberGenerator RequestCounter = new NumberGenerator(int.MinValue, int.MaxValue);
-        private static readonly NumberGenerator MessageCounter = new NumberGenerator(0, int.MaxValue);
+        private static readonly NumberGenerator RequestCounter = new NumberGenerator(int.MinValue, int.MaxValue); // RFC 3416 (3.)
+        private static readonly NumberGenerator MessageCounter = new NumberGenerator(0, int.MaxValue); // RFC 3412 (6.)
         private static int _maxMessageSize = Header.MaxMessageSize;
 
         /// <summary>

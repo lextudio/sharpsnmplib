@@ -38,7 +38,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("user");
             }
 
-            Header = new Header(new Integer32(messageId), null, null, null);
+            Header = new Header(new Integer32(messageId), null, null);
             Parameters = new SecurityParameters(null, null, null, user, null, null);
         }
 

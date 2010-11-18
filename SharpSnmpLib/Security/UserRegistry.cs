@@ -59,20 +59,20 @@ namespace Lextm.SharpSnmpLib.Security
         /// </summary>
         /// <param name="userName">Name of the user.</param>
         /// <param name="privacy">The privacy provider.</param>
-        public void Add(OctetString userName, IPrivacyProvider privacy)
+        public UserRegistry Add(OctetString userName, IPrivacyProvider privacy)
         {
-            Add(new User(userName, privacy));
+            return Add(new User(userName, privacy));
         }
 
         /// <summary>
         /// Adds the specified user.
         /// </summary>
         /// <param name="user">The user.</param>
-        public void Add(User user)
+        public UserRegistry Add(User user)
         {
             if (user == null)
             {
-                return;
+                return this;
             }
             
             if (_users.ContainsKey(user.Name))
@@ -81,6 +81,7 @@ namespace Lextm.SharpSnmpLib.Security
             }
 
             _users.Add(user.Name, user);
+            return this;
         }
 
         /// <summary>

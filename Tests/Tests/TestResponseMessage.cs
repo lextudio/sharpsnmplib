@@ -26,8 +26,7 @@ namespace Lextm.SharpSnmpLib.Tests
                 new Header(
                     new Integer32(500),
                     new Integer32(4000),
-                    new OctetString(new byte[] {0x4}),
-                    new Integer32(3)),
+                    new OctetString(new byte[] {0x4})),
                 new SecurityParameters(
                     OctetString.Empty,
                     new Integer32(0),

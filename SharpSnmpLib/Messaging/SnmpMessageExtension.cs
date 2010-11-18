@@ -35,6 +35,16 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <value>The level.</value>
         internal static Levels Level(this ISnmpMessage message)
         {
+            if (message == null)
+            {
+                throw new ArgumentNullException("message");
+            }
+            
+            if (message.Version != VersionCode.V3)
+            {
+                throw new ArgumentException("this method only applies to v3 messages", "message");
+            }
+            
             return message.Privacy.ToSecurityLevel(); 
         }
         
@@ -201,6 +211,39 @@ namespace Lextm.SharpSnmpLib.Messaging
                                                                   "not a trap message: {0}", code));
             }
         }
+        
+        /// <summary>
+        /// Sends this <see cref="GetNextRequestMessage"/> and handles the response from agent.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
+        /// <param name="receiver">Port number.</param>
+        /// <param name="registry">User registry.</param>
+        /// <returns></returns>
+        public static ISnmpMessage GetResponse(this ISnmpMessage request, int timeout, IPEndPoint receiver, UserRegistry registry)
+        {
+            // TODO: make more usage of UserRegistry.
+            if (request == null)
+            {
+                throw new ArgumentNullException("request");
+            }
+
+            if (receiver == null)
+            {
+                throw new ArgumentNullException("receiver");
+            }
+
+            var code = request.Pdu().TypeCode;
+            if (code == SnmpType.TrapV1Pdu || code == SnmpType.TrapV2Pdu || code == SnmpType.ReportPdu)
+            {
+                throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, "not a request message: {0}", code));
+            } 
+  
+            using (Socket socket = receiver.GetSocket())
+            {
+                return request.GetResponse(timeout, receiver, registry, socket);
+            }
+        }
 
         /// <summary>
         /// Sends this <see cref="GetNextRequestMessage"/> and handles the response from agent.
@@ -242,6 +285,26 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
         /// <returns></returns>
         public static ISnmpMessage GetResponse(this ISnmpMessage request, int timeout, IPEndPoint receiver, Socket udpSocket)
+        {  
+            UserRegistry registry = new UserRegistry();
+            if (request.Version == VersionCode.V3)
+            {
+                registry.Add(request.Parameters.UserName, request.Privacy);
+            }
+
+            return request.GetResponse(timeout, receiver, registry, udpSocket);
+        }
+
+        /// <summary>
+        /// Sends this <see cref="GetNextRequestMessage"/> and handles the response from agent.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
+        /// <param name="receiver">Agent.</param>
+        /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
+        /// <param name="registry">The user registry.</param>
+        /// <returns></returns>
+        public static ISnmpMessage GetResponse(this ISnmpMessage request, int timeout, IPEndPoint receiver, UserRegistry registry, Socket udpSocket)
         {
             if (request == null)
             {
@@ -257,6 +320,11 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new ArgumentNullException("receiver");
             }
+            
+            if (registry == null)
+            {
+                throw new ArgumentNullException("registry");
+            }
 
             var code = request.Pdu().TypeCode;
             if (code == SnmpType.TrapV1Pdu || code == SnmpType.TrapV2Pdu || code == SnmpType.ReportPdu)
@@ -264,15 +332,9 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, "not a request message: {0}", code));
             }  
 
-            UserRegistry registry = new UserRegistry();
-            if (request.Version == VersionCode.V3)
-            {
-                registry.Add(request.Parameters.UserName, request.Privacy);
-            }
-
             return MessageFactory.GetResponse(receiver, request.ToBytes(), request.MessageId(), timeout, registry, udpSocket);
         }
-
+        
         /// <summary>
         /// Tests if runnning on Mono. 
         /// </summary>

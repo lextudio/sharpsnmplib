@@ -154,12 +154,8 @@ namespace Lextm.SharpSnmpLib.Messaging
             Privacy = privacy;
             Enterprise = enterprise;
             TimeStamp = time;
-            Levels recordToSecurityLevel = privacy.ToSecurityLevel();
-            recordToSecurityLevel |= Levels.Reportable;
-            byte b = (byte)recordToSecurityLevel;
-            
-            // TODO: define more constants.
-            Header = new Header(new Integer32(messageId), new Integer32(maxMessageSize), new OctetString(new[] { b }), new Integer32(3));
+
+            Header = new Header(new Integer32(messageId), new Integer32(maxMessageSize), privacy.ToOctetString(true));
             var parameters = report.Parameters;
             var authenticationProvider = Privacy.AuthenticationProvider;
             Parameters = new SecurityParameters(
