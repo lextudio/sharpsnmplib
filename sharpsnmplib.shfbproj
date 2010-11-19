@@ -36,23 +36,21 @@
     <IncludeFavorites>False</IncludeFavorites>
     <HelpFileVersion>6.0.0.0</HelpFileVersion>
     <DocumentationSources>
-      <DocumentationSource sourceFile="bin\SharpSnmpLib.Controls.dll" />
-      <DocumentationSource sourceFile="bin\SharpSnmpLib.Controls.xml" />
       <DocumentationSource sourceFile="bin\SharpSnmpLib.dll" />
-      <DocumentationSource sourceFile="bin\SharpSnmpLib.Mib.dll" />
-      <DocumentationSource sourceFile="bin\SharpSnmpLib.Mib.xml" />
-      <DocumentationSource sourceFile="bin\SharpSnmpLib.Optional.dll" />
-      <DocumentationSource sourceFile="bin\SharpSnmpLib.Optional.xml" />
-      <DocumentationSource sourceFile="bin\SharpSnmpLib.xml" />
-    </DocumentationSources>
+<DocumentationSource sourceFile="bin\SharpSnmpLib.Mib.dll" />
+<DocumentationSource sourceFile="bin\SharpSnmpLib.Mib.xml" />
+<DocumentationSource sourceFile="bin\SharpSnmpLib.Optional.dll" />
+<DocumentationSource sourceFile="bin\SharpSnmpLib.Optional.xml" />
+<DocumentationSource sourceFile="bin\SharpSnmpLib.xml" /></DocumentationSources>
     <NamespaceSummaries>
       <NamespaceSummaryItem name="(global)" isDocumented="False" />
-<NamespaceSummaryItem name="Lextm.SharpSnmpLib" isDocumented="True">Basic building blocks for SNMP packet parsing. ISnmpData derived classes such as Counter32 are matching SNMP data types. ISnmpPdu derived classes are matching SNMP PDU types.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Lextm.SharpSnmpLib.Messaging" isDocumented="True">The classes and interfaces under this namespace are used for SNMP message processing. ISnmpMessage derived classes are matching SNMP message types.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Lextm.SharpSnmpLib.Mib" isDocumented="True">All interfaces and classes under this namespace are used for MIB document parsing.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Lextm.SharpSnmpLib.Security" isDocumented="True">All classes and interfaces under this namespace are used for SNMP v3 message handling.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Lextm.SharpSnmpLib.Tests" isDocumented="False" />
-<NamespaceSummaryItem name="Lextm.SharpSnmpLib.Pipeline" isDocumented="True">All classes and interfaces under this namespace are used for SNMP engine implementation. The SNMP processing pipeline is similar to ASP.NET HTTP message processing pipeline.</NamespaceSummaryItem></NamespaceSummaries>
+      <NamespaceSummaryItem name="Lextm.SharpSnmpLib" isDocumented="True">Basic building blocks for SNMP packet parsing. ISnmpData derived classes such as Counter32 are matching SNMP data types. ISnmpPdu derived classes are matching SNMP PDU types.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Lextm.SharpSnmpLib.Messaging" isDocumented="True">The classes and interfaces under this namespace are used for SNMP message processing. ISnmpMessage derived classes are matching SNMP message types.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Lextm.SharpSnmpLib.Mib" isDocumented="True">All interfaces and classes under this namespace are used for MIB document parsing.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Lextm.SharpSnmpLib.Security" isDocumented="True">All classes and interfaces under this namespace are used for SNMP v3 message handling.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Lextm.SharpSnmpLib.Tests" isDocumented="False" />
+      <NamespaceSummaryItem name="Lextm.SharpSnmpLib.Pipeline" isDocumented="True">All classes and interfaces under this namespace are used for SNMP engine implementation. The SNMP processing pipeline is similar to ASP.NET HTTP message processing pipeline.</NamespaceSummaryItem>
+    </NamespaceSummaries>
     <NamingMethod>HashedMemberName</NamingMethod>
     <SdkLinkTarget>Blank</SdkLinkTarget>
     <RootNamespaceContainer>True</RootNamespaceContainer>
