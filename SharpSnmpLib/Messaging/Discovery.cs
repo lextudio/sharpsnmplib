@@ -85,7 +85,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             
             using (Socket socket = receiver.GetSocket())
             {
-                return (ReportMessage)MessageFactory.GetResponse(receiver, ToBytes(), _discovery.MessageId(), timeout, Empty, socket);
+                return (ReportMessage)_discovery.GetResponse(timeout, receiver, Empty, socket);
             }
         }
 

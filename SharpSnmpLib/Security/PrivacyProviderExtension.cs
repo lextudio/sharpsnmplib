@@ -28,7 +28,7 @@ using System;
 namespace Lextm.SharpSnmpLib.Security
 {
     /// <summary>
-    /// Extension class for IPrivacyProvider.
+    /// Extension class for <seealso cref="IPrivacyProvider"/>.
     /// </summary>
     public static class PrivacyProviderExtension
     {

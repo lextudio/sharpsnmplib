@@ -145,7 +145,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         }
 
         /// <summary>
-        /// Sends this <see cref="TrapV1Message"/>.
+        /// Sends an <see cref="ISnmpMessage"/>.
         /// </summary>
         /// <param name="message">The message.</param>
         /// <param name="manager">Manager</param>
@@ -171,13 +171,13 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
             else
             {
-                throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture,
+                throw new InvalidOperationException(String.Format(CultureInfo.InvariantCulture,
                                                                   "not a trap message: {0}", code));
             }
         }
 
         /// <summary>
-        /// Sends this <see cref="TrapV1Message"/>.
+        /// Sends an <see cref="ISnmpMessage"/>.
         /// </summary>
         /// <param name="message">The message.</param>
         /// <param name="manager">Manager</param>
@@ -203,17 +203,17 @@ namespace Lextm.SharpSnmpLib.Messaging
             if (code == SnmpType.TrapV1Pdu || code == SnmpType.TrapV2Pdu || code == SnmpType.ReportPdu)
             {
                 byte[] bytes = message.ToBytes();
-                socket.BeginSendTo(bytes, 0, bytes.Length, SocketFlags.None, manager, null, null);
+                socket.BeginSendTo(bytes, 0, bytes.Length, SocketFlags.None, manager, ar => socket.EndSendTo(ar), null);
             }
             else
             {
-                throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture,
+                throw new InvalidOperationException(String.Format(CultureInfo.InvariantCulture,
                                                                   "not a trap message: {0}", code));
             }
         }
         
         /// <summary>
-        /// Sends this <see cref="GetNextRequestMessage"/> and handles the response from agent.
+        /// Sends this <see cref="ISnmpMessage"/> and handles the response from agent.
         /// </summary>
         /// <param name="request">The request.</param>
         /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
@@ -236,7 +236,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             var code = request.Pdu().TypeCode;
             if (code == SnmpType.TrapV1Pdu || code == SnmpType.TrapV2Pdu || code == SnmpType.ReportPdu)
             {
-                throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, "not a request message: {0}", code));
+                throw new InvalidOperationException(String.Format(CultureInfo.InvariantCulture, "not a request message: {0}", code));
             } 
   
             using (Socket socket = receiver.GetSocket())
@@ -246,7 +246,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         }
 
         /// <summary>
-        /// Sends this <see cref="GetNextRequestMessage"/> and handles the response from agent.
+        /// Sends this <see cref="ISnmpMessage"/> and handles the response from agent.
         /// </summary>
         /// <param name="request">The request.</param>
         /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
@@ -267,7 +267,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             var code = request.Pdu().TypeCode;
             if (code == SnmpType.TrapV1Pdu || code == SnmpType.TrapV2Pdu || code == SnmpType.ReportPdu)
             {
-                throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, "not a request message: {0}", code));
+                throw new InvalidOperationException(String.Format(CultureInfo.InvariantCulture, "not a request message: {0}", code));
             } 
   
             using (Socket socket = receiver.GetSocket())
@@ -277,7 +277,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         }
 
         /// <summary>
-        /// Sends this <see cref="GetNextRequestMessage"/> and handles the response from agent.
+        /// Sends this <see cref="ISnmpMessage"/> and handles the response from agent.
         /// </summary>
         /// <param name="request">The request.</param>
         /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
@@ -296,7 +296,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         }
 
         /// <summary>
-        /// Sends this <see cref="GetNextRequestMessage"/> and handles the response from agent.
+        /// Sends an  <see cref="ISnmpMessage"/> and handles the response from agent.
         /// </summary>
         /// <param name="request">The request.</param>
         /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
@@ -326,15 +326,135 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("registry");
             }
 
-            var code = request.Pdu().TypeCode;
-            if (code == SnmpType.TrapV1Pdu || code == SnmpType.TrapV2Pdu || code == SnmpType.ReportPdu)
+            var requestCode = request.Pdu().TypeCode;
+            if (requestCode == SnmpType.TrapV1Pdu || requestCode == SnmpType.TrapV2Pdu || requestCode == SnmpType.ReportPdu)
             {
-                throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, "not a request message: {0}", code));
-            }  
+                throw new InvalidOperationException(String.Format(CultureInfo.InvariantCulture, "not a request message: {0}", requestCode));
+            }
 
-            return MessageFactory.GetResponse(receiver, request.ToBytes(), request.MessageId(), timeout, registry, udpSocket);
+            byte[] bytes = request.ToBytes();
+#if CF
+            int bufSize = 8192;
+#else
+            int bufSize = udpSocket.ReceiveBufferSize;
+#endif
+            byte[] reply = new byte[bufSize];
+
+            // Whatever you change, try to keep the Send and the Receive close to each other.
+            udpSocket.SendTo(bytes, receiver);
+#if !(CF)
+            udpSocket.ReceiveTimeout = timeout;
+#endif
+            int count;
+            try
+            {
+                count = udpSocket.Receive(reply, 0, bufSize, SocketFlags.None);
+            }
+            catch (SocketException ex)
+            {
+                // FIXME: If you use a Mono build without the fix for this issue (https://bugzilla.novell.com/show_bug.cgi?id=599488), please uncomment this code.
+                //if (SnmpMessageExtension.IsRunningOnMono && ex.ErrorCode == 10035)
+                //{
+                //    throw TimeoutException.Create(receiver.Address, timeout);
+                //}
+
+                if (ex.ErrorCode == WSAETIMEDOUT)
+                {
+                    throw TimeoutException.Create(receiver.Address, timeout);
+                }
+
+                throw;
+            }
+
+            // Passing 'count' is not necessary because ParseMessages should ignore it, but it offer extra safety (and would avoid an issue if parsing >1 response).
+            ISnmpMessage response = MessageFactory.ParseMessages(reply, 0, count, registry)[0];
+            var responseCode = response.Pdu().TypeCode;
+            if (responseCode == SnmpType.ResponsePdu || responseCode == SnmpType.ReportPdu)
+            {
+                int requestId = request.MessageId();
+                var responseId = response.MessageId();
+                if (responseId != requestId)
+                {
+                    throw OperationException.Create(String.Format(CultureInfo.InvariantCulture, "wrong response sequence: expected {0}, received {1}", requestId, responseId), receiver.Address);
+                }
+
+                return response;
+            }
+
+            throw OperationException.Create(String.Format(CultureInfo.InvariantCulture, "wrong response type: {0}", responseCode), receiver.Address);
         }
-        
+
+        /// <summary>
+        /// Ends a pending asynchronous read.
+        /// </summary>
+        /// <param name="asyncResult">An <seealso cref="IAsyncResult"/> that stores state information and any user defined data for this asynchronous operation.</param>
+        /// <returns></returns>
+        public static ISnmpMessage EndGetResponse(IAsyncResult asyncResult)
+        {
+            StateObject so = (StateObject)asyncResult.AsyncState;
+            Socket s = so.WorkSocket;
+            int count = s.EndReceive(asyncResult);
+            // Passing 'count' is not necessary because ParseMessages should ignore it, but it offer extra safety (and would avoid an issue if parsing >1 response).
+            ISnmpMessage response = MessageFactory.ParseMessages(so.Buffer, 0, count, so.Users)[0];
+            var responseCode = response.Pdu().TypeCode;
+            if (responseCode == SnmpType.ResponsePdu || responseCode == SnmpType.ReportPdu)
+            {
+                int requestId = so.Id;
+                var responseId = response.MessageId();
+                if (responseId != requestId)
+                {
+                    throw OperationException.Create(String.Format(CultureInfo.InvariantCulture, "wrong response sequence: expected {0}, received {1}", requestId, responseId), so.Receiver.Address);
+                }
+
+                return response;
+            }
+
+            throw OperationException.Create(String.Format(CultureInfo.InvariantCulture, "wrong response type: {0}", responseCode), so.Receiver.Address);
+        }
+
+        /// <summary>
+        /// Begins to asynchronously send an <see cref="ISnmpMessage"/> to an <seealso cref="IPEndPoint"/>.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <param name="receiver">Agent.</param>
+        /// <param name="registry">The user registry.</param>
+        /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
+        /// <param name="callback">The callback.</param>
+        /// <returns></returns>
+        public static IAsyncResult BeginGetResponse(this ISnmpMessage request, IPEndPoint receiver, UserRegistry registry, Socket udpSocket, AsyncCallback callback)
+        {
+            if (request == null)
+            {
+                throw new ArgumentNullException("request");
+            }
+
+            if (udpSocket == null)
+            {
+                throw new ArgumentNullException("udpSocket");
+            }
+
+            if (receiver == null)
+            {
+                throw new ArgumentNullException("receiver");
+            }
+
+            if (registry == null)
+            {
+                throw new ArgumentNullException("registry");
+            }
+
+            var requestCode = request.Pdu().TypeCode;
+            if (requestCode == SnmpType.TrapV1Pdu || requestCode == SnmpType.TrapV2Pdu || requestCode == SnmpType.ReportPdu)
+            {
+                throw new InvalidOperationException(String.Format(CultureInfo.InvariantCulture, "not a request message: {0}", requestCode));
+            }
+
+            // Whatever you change, try to keep the Send and the Receive close to each other.
+            StateObject state = new StateObject(udpSocket, registry, request.MessageId(), receiver);
+            state.WorkSocket.SendTo(request.ToBytes(), receiver);
+            return state.WorkSocket.BeginReceive(state.Buffer, 0, state.BufferSize, SocketFlags.None, callback, state);
+        }
+
         /// <summary>
         /// Tests if runnning on Mono. 
         /// </summary>
@@ -403,6 +523,33 @@ namespace Lextm.SharpSnmpLib.Messaging
                                         data
                                     };
             return new Sequence(items);
+        }
+
+        private const int WSAETIMEDOUT = 10060; // http://msdn.microsoft.com/en-us/library/ms740668(VS.85).aspx
+
+        // State object for reading client data asynchronously
+        private class StateObject
+        {
+            public Socket WorkSocket { get; private set; }
+            public UserRegistry Users { get; private set; }
+            public int BufferSize { get; private set; }
+            public byte[] Buffer { get; private set; }
+            public int Id { get; private set; }
+            public IPEndPoint Receiver { get; private set; }
+
+            public StateObject(Socket socket, UserRegistry users, int messageId, IPEndPoint receiver)
+            {
+#if CF
+                BufferSize = 8192;
+#else
+                BufferSize = socket.ReceiveBufferSize;
+#endif
+                Buffer = new byte[BufferSize];
+                WorkSocket = socket;
+                Users = users;
+                Id = messageId;
+                Receiver = receiver;
+            }
         }
     }
 }

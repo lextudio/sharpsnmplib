@@ -28,8 +28,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Net;
-using System.Net.Sockets;
 using Lextm.SharpSnmpLib.Security;
 
 namespace Lextm.SharpSnmpLib.Messaging
@@ -39,94 +37,6 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// </summary>
     public static class MessageFactory
     {
-        // http://msdn.microsoft.com/en-us/library/ms740668(VS.85).aspx
-        private const int WSAETIMEDOUT = 10060;
-
-        /// <summary>
-        /// Sends an SNMP message and wait for its responses.
-        /// </summary>
-        /// <param name="receiver">The IP address and port of the target to talk to.</param>
-        /// <param name="bytes">The byte array representing the SNMP message.</param>
-        /// <param name="number">The message id of the SNMP message.</param>
-        /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
-        /// <param name="registry">The registry.</param>
-        /// <param name="socket">The UDP <see cref="Socket"/> to use to send/receive.</param>
-        /// <returns>
-        /// The response message (<see cref="ISnmpMessage"/>).
-        /// </returns>
-        /// <exception cref="TimeoutException">Timeout happens.</exception>
-        internal static ISnmpMessage GetResponse(IPEndPoint receiver, byte[] bytes, int number, int timeout, UserRegistry registry, Socket socket)
-        {
-            if (bytes == null)
-            {
-                throw new ArgumentNullException("bytes");
-            }
-
-            if (registry == null)
-            {
-                throw new ArgumentNullException("registry");
-            }
-
-            if (receiver == null)
-            {
-                throw new ArgumentNullException("receiver");
-            }
-
-            if (socket == null)
-            {
-                throw new ArgumentNullException("socket");
-            }
-
-#if CF
-            int bufSize = 8192;
-#else
-            int bufSize = socket.ReceiveBufferSize;
-#endif
-            byte[] reply = new byte[bufSize];
-
-            // Whatever you change, try to keep the Send and the Receive close to each other.
-            socket.SendTo(bytes, receiver);
-#if !(CF)
-            socket.ReceiveTimeout = timeout;
-#endif
-            int count;
-            try
-            {
-                count = socket.Receive(reply, 0, bufSize, SocketFlags.None);
-            }
-            catch (SocketException ex)
-            {
-                // FIXME: If you use a Mono build without the fix for this issue (https://bugzilla.novell.com/show_bug.cgi?id=599488), please uncomment this code.
-                //if (SnmpMessageExtension.IsRunningOnMono && ex.ErrorCode == 10035)
-                //{
-                //    throw TimeoutException.Create(receiver.Address, timeout);
-                //}
-
-                if (ex.ErrorCode == WSAETIMEDOUT)
-                {
-                    throw TimeoutException.Create(receiver.Address, timeout);
-                }
-
-                throw;
-            }
-
-            // Passing 'count' is not necessary because ParseMessages should ignore it, but it offer extra safety (and would avoid an issue if parsing >1 response).
-            ISnmpMessage message = ParseMessages(reply, 0, count, registry)[0];
-            var code = message.Pdu().TypeCode;
-            if (code == SnmpType.ResponsePdu || code == SnmpType.ReportPdu)
-            {
-                var id = message.MessageId();
-                if (id != number)
-                {
-                    throw OperationException.Create(string.Format(CultureInfo.InvariantCulture, "wrong response sequence: expected {0}, received {1}", number, id), receiver.Address);
-                }
-
-                return message;
-            }
-
-            throw OperationException.Create(string.Format(CultureInfo.InvariantCulture, "wrong response type: {0}", code), receiver.Address);
-        }
-        
         /// <summary>
         /// Creates <see cref="ISnmpMessage"/> instances from a string.
         /// </summary>
