@@ -25,7 +25,7 @@ using Lextm.SharpSnmpLib.Security;
 namespace Lextm.SharpSnmpLib.Messaging
 {
     /// <summary>
-    /// ISnmpMessage extension class.
+    /// Extension methods for <seealso cref="ISnmpMessage"/>.
     /// </summary>
     public static class SnmpMessageExtension
     {
@@ -172,7 +172,8 @@ namespace Lextm.SharpSnmpLib.Messaging
             else
             {
                 throw new InvalidOperationException(String.Format(CultureInfo.InvariantCulture,
-                                                                  "not a trap message: {0}", code));
+                                                                  "not a trap message: {0}", 
+                                                                  code));
             }
         }
 
@@ -208,7 +209,8 @@ namespace Lextm.SharpSnmpLib.Messaging
             else
             {
                 throw new InvalidOperationException(String.Format(CultureInfo.InvariantCulture,
-                                                                  "not a trap message: {0}", code));
+                                                                  "not a trap message: {0}", 
+                                                                  code));
             }
         }
         
@@ -382,15 +384,26 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             throw OperationException.Create(String.Format(CultureInfo.InvariantCulture, "wrong response type: {0}", responseCode), receiver.Address);
-        }
-
+        }  
+                
         /// <summary>
         /// Ends a pending asynchronous read.
         /// </summary>
+        /// <param name="request">Request message.</param>
         /// <param name="asyncResult">An <seealso cref="IAsyncResult"/> that stores state information and any user defined data for this asynchronous operation.</param>
         /// <returns></returns>
-        public static ISnmpMessage EndGetResponse(IAsyncResult asyncResult)
+        public static ISnmpMessage EndGetResponse(this ISnmpMessage request, IAsyncResult asyncResult)
         {
+            if (asyncResult == null)
+            {
+                throw new ArgumentNullException("asyncResult");
+            }
+            
+            if (request == null)
+            {
+                throw new ArgumentNullException("request");
+            }
+            
             StateObject so = (StateObject)asyncResult.AsyncState;
             Socket s = so.WorkSocket;
             int count = s.EndReceive(asyncResult);
@@ -399,7 +412,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             var responseCode = response.Pdu().TypeCode;
             if (responseCode == SnmpType.ResponsePdu || responseCode == SnmpType.ReportPdu)
             {
-                int requestId = so.Id;
+                int requestId = request.MessageId();
                 var responseId = response.MessageId();
                 if (responseId != requestId)
                 {
@@ -450,7 +463,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             // Whatever you change, try to keep the Send and the Receive close to each other.
-            StateObject state = new StateObject(udpSocket, registry, request.MessageId(), receiver);
+            StateObject state = new StateObject(udpSocket, registry, receiver);
             state.WorkSocket.SendTo(request.ToBytes(), receiver);
             return state.WorkSocket.BeginReceive(state.Buffer, 0, state.BufferSize, SocketFlags.None, callback, state);
         }
@@ -525,7 +538,10 @@ namespace Lextm.SharpSnmpLib.Messaging
             return new Sequence(items);
         }
 
-        private const int WSAETIMEDOUT = 10060; // http://msdn.microsoft.com/en-us/library/ms740668(VS.85).aspx
+        /// <summary>
+        /// http://msdn.microsoft.com/en-us/library/ms740668(VS.85).aspx
+        /// </summary>
+        private const int WSAETIMEDOUT = 10060;
 
         // State object for reading client data asynchronously
         private class StateObject
@@ -534,10 +550,9 @@ namespace Lextm.SharpSnmpLib.Messaging
             public UserRegistry Users { get; private set; }
             public int BufferSize { get; private set; }
             public byte[] Buffer { get; private set; }
-            public int Id { get; private set; }
             public IPEndPoint Receiver { get; private set; }
 
-            public StateObject(Socket socket, UserRegistry users, int messageId, IPEndPoint receiver)
+            public StateObject(Socket socket, UserRegistry users, IPEndPoint receiver)
             {
 #if CF
                 BufferSize = 8192;
@@ -547,7 +562,6 @@ namespace Lextm.SharpSnmpLib.Messaging
                 Buffer = new byte[BufferSize];
                 WorkSocket = socket;
                 Users = users;
-                Id = messageId;
                 Receiver = receiver;
             }
         }

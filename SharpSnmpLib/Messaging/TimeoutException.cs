@@ -99,7 +99,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public override string ToString()
         {
-            return "TimeoutException: timeout: " + Timeout.ToString(CultureInfo.InvariantCulture);
+            return string.Format(CultureInfo.InvariantCulture, "TimeoutException: timeout: {0}", Timeout.ToString(CultureInfo.InvariantCulture));
         }
         
         /// <summary>

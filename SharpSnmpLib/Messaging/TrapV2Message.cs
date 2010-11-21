@@ -73,7 +73,6 @@ namespace Lextm.SharpSnmpLib.Messaging
                 variables);
             Scope = new Scope(pdu);
             Privacy = DefaultPrivacyProvider.DefaultPair;
-
             _bytes = this.PackMessage().ToBytes();
         }
 
@@ -179,7 +178,6 @@ namespace Lextm.SharpSnmpLib.Messaging
             TrapV2Pdu pdu = (TrapV2Pdu)Scope.Pdu;
             Enterprise = pdu.Enterprise;
             TimeStamp = pdu.TimeStamp;
-
             _bytes = this.PackMessage().ToBytes();
         }
         
