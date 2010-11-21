@@ -97,7 +97,7 @@ namespace Lextm.SharpSnmpLib
         /// <value>The error status.</value>
         public Integer32 ErrorStatus
         {
-            get { return new Integer32(0); }
+            get { return Integer32.Zero; }
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace Lextm.SharpSnmpLib
         /// <value>The index of the error.</value>
         public Integer32 ErrorIndex
         {
-            get { return new Integer32(0); }
+            get { return Integer32.Zero; }
         }
 
         #endregion
@@ -133,7 +133,7 @@ namespace Lextm.SharpSnmpLib
             
             if (_raw == null)
             {
-                _raw = ByteTool.ParseItems(RequestId, new Integer32(0), new Integer32(0), _varbindSection);
+                _raw = ByteTool.ParseItems(RequestId, Integer32.Zero, Integer32.Zero, _varbindSection);
             }
 
             stream.AppendBytes(TypeCode, _raw);

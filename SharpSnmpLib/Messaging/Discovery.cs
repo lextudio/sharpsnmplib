@@ -41,7 +41,14 @@ namespace Lextm.SharpSnmpLib.Messaging
     {
         private readonly GetRequestMessage _discovery;
         private static readonly UserRegistry Empty = new UserRegistry();
-
+        private static readonly OctetString ReportableString = new OctetString(new[] { (byte)Levels.Reportable });
+        private static readonly SecurityParameters DefaultSecurityParameters = new SecurityParameters(OctetString.Empty,
+                                                                                                      Integer32.Zero,
+                                                                                                      Integer32.Zero,
+                                                                                                      OctetString.Empty,
+                                                                                                      OctetString.Empty,
+                                                                                                      OctetString.Empty);
+        
         /// <summary>
         /// Initializes a new instance of the <see cref="Discovery"/> class.
         /// </summary>
@@ -55,18 +62,12 @@ namespace Lextm.SharpSnmpLib.Messaging
                 new Header(
                     new Integer32(messageId),
                     new Integer32(maxMessageSize),
-                    new OctetString(new[] { (byte)Levels.Reportable })),
-                new SecurityParameters(
-                    OctetString.Empty,
-                    new Integer32(0),
-                    new Integer32(0),
-                    OctetString.Empty,
-                    OctetString.Empty,
-                    OctetString.Empty),
+                    ReportableString),
+                DefaultSecurityParameters,
                 new Scope(
                     OctetString.Empty,
                     OctetString.Empty,
-                    new GetRequestPdu(requestId, ErrorCode.NoError, 0, new List<Variable>())),
+                    new GetRequestPdu(requestId, new List<Variable>())),
                 DefaultPrivacyProvider.DefaultPair);
         }
 

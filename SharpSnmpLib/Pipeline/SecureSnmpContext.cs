@@ -199,7 +199,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                     new OctetString(new[] { (byte)Levels.Reportable })),
                 new SecurityParameters(
                     Group.EngineId,
-                    new Integer32(0),
+                    Integer32.Zero,
                     new Integer32(Environment.TickCount),
                     OctetString.Empty,
                     OctetString.Empty,

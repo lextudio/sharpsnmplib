@@ -139,7 +139,7 @@ namespace Lextm.SharpSnmpLib
             
             if (_raw == null)
             {
-                _raw = ByteTool.ParseItems(RequestId, new Integer32(0), new Integer32(0), _varbindSection);
+                _raw = ByteTool.ParseItems(RequestId, Integer32.Zero, Integer32.Zero, _varbindSection);
             }
 
             stream.AppendBytes(TypeCode, _raw);            

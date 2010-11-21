@@ -46,8 +46,19 @@ namespace Lextm.SharpSnmpLib
         /// <param name="errorStatus">Error status</param>
         /// <param name="errorIndex">Error index</param>
         /// <param name="variables">Variables</param>
+        [Obsolete("Please use other overloads.")]
         public SetRequestPdu(int requestId, ErrorCode errorStatus, int errorIndex, IList<Variable> variables)
             : this(new Integer32(requestId), new Integer32((int)errorStatus), new Integer32(errorIndex), variables)
+        {
+        }
+        
+        /// <summary>
+        /// Creates a <see cref="SetRequestPdu"/> instance with all contents.
+        /// </summary>
+        /// <param name="requestId">The request id.</param>
+        /// <param name="variables">Variables</param>
+        public SetRequestPdu(int requestId, IList<Variable> variables)
+            : this(new Integer32(requestId), Integer32.Zero, Integer32.Zero, variables)
         {
         }
 

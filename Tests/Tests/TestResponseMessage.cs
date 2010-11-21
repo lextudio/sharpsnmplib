@@ -29,8 +29,8 @@ namespace Lextm.SharpSnmpLib.Tests
                     new OctetString(new byte[] {0x4})),
                 new SecurityParameters(
                     OctetString.Empty,
-                    new Integer32(0),
-                    new Integer32(0),
+                    Integer32.Zero,
+                    Integer32.Zero,
                     new OctetString("lextm"),
                     OctetString.Empty,
                     OctetString.Empty),

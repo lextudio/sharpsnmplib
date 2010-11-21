@@ -46,8 +46,19 @@ namespace Lextm.SharpSnmpLib
         /// <param name="errorStatus">Error status</param>
         /// <param name="errorIndex">Error index</param>
         /// <param name="variables">Variables</param>
+        [Obsolete("Please use other overloaded constructor")]
         public GetNextRequestPdu(int requestId, ErrorCode errorStatus, int errorIndex, IList<Variable> variables)
             : this(new Integer32(requestId), new Integer32((int)errorStatus), new Integer32(errorIndex), variables)
+        {
+        }
+        
+        /// <summary>
+        /// Creates a <see cref="GetNextRequestPdu"/> with all contents.
+        /// </summary>
+        /// <param name="requestId">The request id.</param>
+        /// <param name="variables">Variables</param>
+        public GetNextRequestPdu(int requestId, IList<Variable> variables)
+            : this(new Integer32(requestId), Integer32.Zero, Integer32.Zero, variables)
         {
         }
         
@@ -58,7 +69,6 @@ namespace Lextm.SharpSnmpLib
             ErrorIndex = errorIndex;
             Variables = variables;
             _varbindSection = Variable.Transform(variables);
-            ////_raw = ByteTool.ParseItems(_seq, _errorStatus, _errorIndex, _varbindSection);
         }
 
         /// <summary>
@@ -72,8 +82,6 @@ namespace Lextm.SharpSnmpLib
             ErrorIndex = (Integer32)DataFactory.CreateSnmpData(stream);
             _varbindSection = (Sequence)DataFactory.CreateSnmpData(stream);
             Variables = Variable.Transform(_varbindSection);
-            ////_raw = ByteTool.ParseItems(_seq, _errorStatus, _errorIndex, _varbindSection);
-            ////Debug.Assert(length >= _raw.Length, "length not match");
         }
 
         /// <summary>

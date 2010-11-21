@@ -145,8 +145,6 @@ namespace Lextm.SharpSnmpLib.Tests
                     OctetString.Empty,
                     new GetRequestPdu(
                         0x3A25,
-                        ErrorCode.NoError,
-                        0,
                         new List<Variable>(1) { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0")) })),
                 privacy);
             Assert.AreEqual(Levels.Authentication | Levels.Privacy, request.Level());
@@ -194,8 +192,6 @@ namespace Lextm.SharpSnmpLib.Tests
                     OctetString.Empty,
                     new GetRequestPdu(
                         0x01AF,
-                        ErrorCode.NoError,
-                        0,
                         new List<Variable>(1) { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0"), new Null()) })),
                 pair);
             Assert.AreEqual(Levels.Authentication, request.Level());
@@ -232,8 +228,6 @@ namespace Lextm.SharpSnmpLib.Tests
                     OctetString.Empty,
                     new GetRequestPdu(
                         0x56FF,
-                        ErrorCode.NoError,
-                        0,
                         new List<Variable>(1) { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0"), new Null()) })),
                 pair);
             Assert.AreEqual(Levels.Authentication, request.Level());
@@ -255,15 +249,15 @@ namespace Lextm.SharpSnmpLib.Tests
                     new OctetString(new byte[] { 0x4 })),
                 new SecurityParameters(
                     OctetString.Empty,
-                    new Integer32(0),
-                    new Integer32(0),
+                    Integer32.Zero,
+                    Integer32.Zero,
                     OctetString.Empty,
                     OctetString.Empty,
                     OctetString.Empty),
                 new Scope(
                     OctetString.Empty,
                     OctetString.Empty,
-                    new GetRequestPdu(0x2C6B, ErrorCode.NoError, 0, new List<Variable>())),
+                    new GetRequestPdu(0x2C6B, new List<Variable>())),
                 DefaultPrivacyProvider.DefaultPair
                );
             string test = ByteTool.Convert(request.ToBytes());

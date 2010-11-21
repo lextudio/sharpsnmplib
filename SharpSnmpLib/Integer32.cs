@@ -46,6 +46,11 @@ namespace Lextm.SharpSnmpLib
         private readonly int _int;
         
         /// <summary>
+        /// Zero.
+        /// </summary>
+        public static readonly Integer32 Zero = new Integer32(0);
+        
+        /// <summary>
         /// Creates an <see cref="Integer32"/> instance.
         /// </summary>
         /// <param name="raw">Raw bytes</param>

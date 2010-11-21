@@ -67,8 +67,6 @@ namespace Lextm.SharpSnmpLib.Messaging
             Parameters = new SecurityParameters(null, null, null, community, null, null);
             GetNextRequestPdu pdu = new GetNextRequestPdu(
                 requestId,
-                ErrorCode.NoError,
-                0,
                 variables);
             Scope = new Scope(pdu);
             Privacy = DefaultPrivacyProvider.DefaultPair;
@@ -145,8 +143,6 @@ namespace Lextm.SharpSnmpLib.Messaging
                 Privacy.Salt);
             GetNextRequestPdu pdu = new GetNextRequestPdu(
                 requestId,
-                ErrorCode.NoError,
-                0,
                 variables);
             var scope = report.Scope;
             Scope = new Scope(scope.ContextEngineId, scope.ContextName, pdu);

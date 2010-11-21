@@ -22,7 +22,7 @@ using System.Net.Sockets;
 namespace Lextm.SharpSnmpLib.Messaging
 {
     /// <summary>
-    /// End point extension.
+    /// Extension methods for <seealso cref="EndPoint"/>.
     /// </summary>
     public static class EndPointExtension
     {

@@ -33,8 +33,16 @@ namespace Lextm.SharpSnmpLib.Messaging
         private int _bufferSize;
         private int _requestId;
         private static readonly UserRegistry Empty = new UserRegistry();
-        private const int WSAECONNRESET = 10054; // http://msdn.microsoft.com/en-us/library/ms740668(VS.85).aspx
-        private const int WSAEADDRINUSE = 10048; // http://msdn.microsoft.com/en-us/library/ms740668(VS.85).aspx
+        
+        /// <summary>
+        /// http://msdn.microsoft.com/en-us/library/ms740668(VS.85).aspx
+        /// </summary>
+        private const int WSAECONNRESET = 10054; 
+        
+        /// <summary>
+        /// http://msdn.microsoft.com/en-us/library/ms740668(VS.85).aspx
+        /// </summary>
+        private const int WSAEADDRINUSE = 10048; 
 
         /// <summary>
         /// Occurs when an SNMP agent is found.

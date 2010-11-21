@@ -14,8 +14,8 @@ namespace Lextm.SharpSnmpLib.Tests
             var privacy = new DESPrivacyProvider(new OctetString("privacyphrase"), new MD5AuthenticationProvider(new OctetString("authentication")));
             var parameters = new SecurityParameters(
                 new OctetString(ByteTool.Convert("80001F8880E9630000D61FF449")),
-                new Integer32(0),
-                new Integer32(0),
+                Integer32.Zero,
+                Integer32.Zero,
                 new OctetString("lextm"),
                 OctetString.Empty, 
                 new OctetString(ByteTool.Convert("0000000069D39B2A")));
@@ -67,7 +67,7 @@ namespace Lextm.SharpSnmpLib.Tests
      "FB 04 A4");
             OctetString engineId = new OctetString(ByteTool.Convert("80 00 1F 88 80  E9 63 00 00  D6 1F F4 49"));
             DESPrivacyProvider priv = new DESPrivacyProvider(new OctetString("passtest"), new MD5AuthenticationProvider(new OctetString("testpass")));
-            Scope scope = new Scope(engineId, OctetString.Empty, new GetRequestPdu(0x3A25, ErrorCode.NoError, 0, new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0")) }));
+            Scope scope = new Scope(engineId, OctetString.Empty, new GetRequestPdu(0x3A25, new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0")) }));
             SecurityParameters parameters = new SecurityParameters(engineId, new Integer32(0x14), new Integer32(0x35), new OctetString("lexmark"), new OctetString(new byte[12]), new OctetString(ByteTool.Convert("00 00 00  01 44 2C A3 B5")));
             ISnmpData data = priv.Encrypt(scope.GetData(VersionCode.V3), parameters);
             Assert.AreEqual(SnmpType.OctetString, data.TypeCode);
