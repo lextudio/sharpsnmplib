@@ -33,16 +33,14 @@ namespace Lextm.SharpSnmpLib.Messaging
         private int _bufferSize;
         private int _requestId;
         private static readonly UserRegistry Empty = new UserRegistry();
-        
+        private readonly IList<Variable> _defaultVariables = new List<Variable> { new Variable(new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 1, 1, 0 })) };
+        private const long Active = 1;
+        private const long Inactive = 0;
+
         /// <summary>
         /// http://msdn.microsoft.com/en-us/library/ms740668(VS.85).aspx
         /// </summary>
-        private const int WSAECONNRESET = 10054; 
-        
-        /// <summary>
-        /// http://msdn.microsoft.com/en-us/library/ms740668(VS.85).aspx
-        /// </summary>
-        private const int WSAEADDRINUSE = 10048; 
+        private const int WSAECONNRESET = 10054;
 
         /// <summary>
         /// Occurs when an SNMP agent is found.
@@ -90,9 +88,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
             else
             {
-                Variable v = new Variable(new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 1, 1, 0 }));
-                List<Variable> variables = new List<Variable> { v };
-                GetRequestMessage message = new GetRequestMessage(_requestId, version, community, variables);
+                GetRequestMessage message = new GetRequestMessage(_requestId, version, community, _defaultVariables);
                 bytes = message.ToBytes();
             }
 
@@ -103,8 +99,8 @@ namespace Lextm.SharpSnmpLib.Messaging
                 #endif
                 udp.Send(bytes, bytes.Length, broadcastAddress);
 
-                long activeBefore = Interlocked.CompareExchange(ref _active, 1, 0);
-                if (activeBefore == 1)
+                long activeBefore = Interlocked.CompareExchange(ref _active, Active, Inactive);
+                if (activeBefore == Active)
                 {
                     // If already started, we've nothing to do.
                     return;
@@ -123,7 +119,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 #endif
 
                 Thread.Sleep(timeout);                
-                Interlocked.CompareExchange(ref _active, 0, 1);
+                Interlocked.CompareExchange(ref _active, Inactive, Active);
                 udp.Close();
             }
         }
@@ -138,7 +134,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             while (true)
             {
                 // If no more active, then stop.
-                if (Interlocked.Read(ref _active) == 0)
+                if (Interlocked.Read(ref _active) == Inactive)
                 {
                     return;
                 }
@@ -156,8 +152,8 @@ namespace Lextm.SharpSnmpLib.Messaging
                     {
                         // If the SnmpTrapListener was active, marks it as stopped and call HandleException.
                         // If it was inactive, the exception is likely to result from this, and we raise nothing.
-                        long activeBefore = Interlocked.CompareExchange(ref _active, 0, 1);
-                        if (activeBefore == 1)
+                        long activeBefore = Interlocked.CompareExchange(ref _active, Inactive, Active);
+                        if (activeBefore == Active)
                         {
                             HandleException(ex);
                         }
@@ -172,12 +168,6 @@ namespace Lextm.SharpSnmpLib.Messaging
             if (handler == null)
             {
                 return;
-            }
-
-            SocketException ex = exception as SocketException;
-            if (ex != null && ex.ErrorCode == WSAEADDRINUSE)
-            {
-                exception = new SnmpException("Port is already used", exception);
             }
 
             handler(this, new ExceptionRaisedEventArgs(exception));

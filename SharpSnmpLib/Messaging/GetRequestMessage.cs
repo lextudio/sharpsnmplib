@@ -138,7 +138,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             var scope = report.Scope;
             Scope = new Scope(scope.ContextEngineId, scope.ContextName, pdu);
 
-            Parameters.AuthenticationParameters = authenticationProvider.ComputeHash(Version, Header, Parameters, Scope, Privacy);
+            authenticationProvider.ComputeHash(Version, Header, Parameters, Scope, Privacy);
             _bytes = this.PackMessage().ToBytes();
         }
         

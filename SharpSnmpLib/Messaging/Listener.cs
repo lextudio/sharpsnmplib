@@ -25,6 +25,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using Lextm.SharpSnmpLib.Security;
 
@@ -224,12 +225,9 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new InvalidOperationException("Must be called when Active == false");
             }
             
-            foreach (ListenerBinding existed in Bindings)
+            if (Bindings.Any(existed => existed.Endpoint.Equals(endpoint)))
             {
-                if (existed.Endpoint.Equals(endpoint))
-                {
-                    return;
-                }
+                return;
             }
             
             var binding = new ListenerBinding(Users, endpoint);

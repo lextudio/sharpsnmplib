@@ -18,8 +18,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Net;
-using System.Net.Sockets;
 using Lextm.SharpSnmpLib.Security;
 
 namespace Lextm.SharpSnmpLib.Messaging
@@ -147,8 +145,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 time,
                 variables);
             Scope = new Scope(OctetString.Empty, OctetString.Empty, pdu);
-
-            Parameters.AuthenticationParameters = authenticationProvider.ComputeHash(Version, Header, Parameters, Scope, Privacy);
+            authenticationProvider.ComputeHash(Version, Header, Parameters, Scope, Privacy);
             _bytes = this.PackMessage().ToBytes();
         }
 

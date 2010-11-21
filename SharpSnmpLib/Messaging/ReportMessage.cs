@@ -77,8 +77,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             Parameters = parameters;
             Scope = scope;
             _privacy = privacy;
-
-            Parameters.AuthenticationParameters = Privacy.AuthenticationProvider.ComputeHash(Version, Header, Parameters, Scope, Privacy);
+            Privacy.AuthenticationProvider.ComputeHash(Version, Header, Parameters, Scope, Privacy);
             _bytes = this.PackMessage().ToBytes();
         }
 

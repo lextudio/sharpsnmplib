@@ -16,6 +16,7 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
+using System.Globalization;
 using System.Net;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
@@ -94,7 +95,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public override string ToString()
         {
-            return "PortInUseException: " + Message;
+            return string.Format(CultureInfo.InvariantCulture, "PortInUseException: {0}", Message);
         }
     }
 }

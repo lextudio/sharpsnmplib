@@ -25,6 +25,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Net;
 using Lextm.SharpSnmpLib.Security;
 
@@ -36,8 +37,15 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// </summary>
     public static class Messenger
     {
-        private static readonly NumberGenerator RequestCounter = new NumberGenerator(int.MinValue, int.MaxValue); // RFC 3416 (3.)
-        private static readonly NumberGenerator MessageCounter = new NumberGenerator(0, int.MaxValue); // RFC 3412 (6.)
+        /// <summary>
+        /// RFC 3416 (3.)
+        /// </summary>
+        private static readonly NumberGenerator RequestCounter = new NumberGenerator(int.MinValue, int.MaxValue); 
+        
+        /// <summary>
+        /// RFC 3412 (6.)
+        /// </summary>
+        private static readonly NumberGenerator MessageCounter = new NumberGenerator(0, int.MaxValue); 
         private static int _maxMessageSize = Header.MaxMessageSize;
 
         /// <summary>
@@ -124,7 +132,8 @@ namespace Lextm.SharpSnmpLib.Messaging
             Variable tableV = new Variable(table);
             Variable seed;
             Variable next = tableV;
-
+            string rowMask = string.Format(CultureInfo.InvariantCulture, "{0}.1.1.", table);
+            string subTreeMask = string.Format(CultureInfo.InvariantCulture, "{0}.", table);
             do
             {
                 seed = next;
@@ -133,14 +142,14 @@ namespace Lextm.SharpSnmpLib.Messaging
                     continue;
                 }
 
-                if (mode == WalkMode.WithinSubtree && !seed.Id.ToString().StartsWith(table + ".", StringComparison.Ordinal))
+                if (mode == WalkMode.WithinSubtree && !seed.Id.ToString().StartsWith(subTreeMask, StringComparison.Ordinal))
                 {
                     // not in sub tree
                     break;
                 }
 
                 list.Add(seed);
-                if (seed.Id.ToString().StartsWith(table + ".1.1.", StringComparison.Ordinal))
+                if (seed.Id.ToString().StartsWith(rowMask, StringComparison.Ordinal))
                 {
                     result++;
                 }
@@ -170,7 +179,6 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             List<Variable> variables = new List<Variable> { new Variable(seed.Id) };
-
             GetNextRequestMessage message = new GetNextRequestMessage(
                 RequestCounter.NextId,
                 version,
@@ -212,6 +220,8 @@ namespace Lextm.SharpSnmpLib.Messaging
             ISnmpMessage message = report;
             while (BulkHasNext(version, endpoint, community, seed, timeout, maxRepetitions, out next, privacy, ref message))
             {
+                string subTreeMask = string.Format(CultureInfo.InvariantCulture, "{0}.", table);
+                string rowMask = string.Format(CultureInfo.InvariantCulture, "{0}.1.1.", table);
                 foreach (Variable v in next)
                 {
                     string id = v.Id.ToString();
@@ -220,16 +230,14 @@ namespace Lextm.SharpSnmpLib.Messaging
                         goto end;
                     }
 
-                    if (mode == WalkMode.WithinSubtree &&
-                        !id.StartsWith(table + ".", StringComparison.Ordinal))
+                    if (mode == WalkMode.WithinSubtree && !id.StartsWith(subTreeMask, StringComparison.Ordinal))
                     {
                         // not in sub tree
                         goto end;
                     }
 
                     list.Add(v);
-
-                    if (id.StartsWith(table + ".1.1.", StringComparison.Ordinal))
+                    if (id.StartsWith(rowMask, StringComparison.Ordinal))
                     {
                         result++;
                     }
@@ -273,9 +281,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         [CLSCompliant(false)]
         public static void SendTrapV2(int requestId, VersionCode version, EndPoint receiver, OctetString community, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables)
         {
-            if (version == VersionCode.V1)
+            if (version != VersionCode.V2)
             {
-                throw new ArgumentException("SNMP v1 is not support", "version");
+                throw new ArgumentException("Only SNMP v2c is supported", "version");
             }
 
             TrapV2Message message = new TrapV2Message(requestId, version, community, enterprise, timestamp, variables);
@@ -354,7 +362,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             bool canContinue = registry == null || registry.ValidateTable(table);
             if (!canContinue)
             {
-                throw new ArgumentException("not a table OID: " + table);
+                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "not a table OID: {0}", table));
             }
             
             IList<Variable> list = new List<Variable>();

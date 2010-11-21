@@ -35,9 +35,17 @@ namespace Lextm.SharpSnmpLib.Messaging
         private bool _disposed;
         private const long Active = 1;
         private const long Inactive = 0;
-        private const int WSAECONNRESET = 10054; // http://msdn.microsoft.com/en-us/library/ms740668(VS.85).aspx
-        private const int WSAEADDRINUSE = 10048; // http://msdn.microsoft.com/en-us/library/ms740668(VS.85).aspx
         private readonly UserRegistry _users;
+
+        /// <summary>
+        /// http://msdn.microsoft.com/en-us/library/ms740668(VS.85).aspx
+        /// </summary>
+        private const int WSAECONNRESET = 10054;
+ 
+        /// <summary>
+        /// http://msdn.microsoft.com/en-us/library/ms740668(VS.85).aspx
+        /// </summary>
+        private const int WSAEADDRINUSE = 10048;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ListenerBinding"/> class.
@@ -141,7 +149,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             byte[] buffer = response.ToBytes();
-            _socket.BeginSendTo(buffer, 0, buffer.Length, 0, receiver, null, null);
+            _socket.BeginSendTo(buffer, 0, buffer.Length, 0, receiver, ar => _socket.EndSendTo(ar), null);
         }
 
         /// <summary>

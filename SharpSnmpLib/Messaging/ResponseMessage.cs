@@ -116,7 +116,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             if (needAuthentication)
             {
-                Parameters.AuthenticationParameters = Privacy.AuthenticationProvider.ComputeHash(Version, Header, Parameters, Scope, Privacy);
+                Privacy.AuthenticationProvider.ComputeHash(Version, Header, Parameters, Scope, Privacy);
             }
 
             _bytes = this.PackMessage().ToBytes();
