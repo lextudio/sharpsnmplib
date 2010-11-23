@@ -204,6 +204,76 @@ namespace Lextm.SharpSnmpLib.Messaging
             if (code == SnmpType.TrapV1Pdu || code == SnmpType.TrapV2Pdu || code == SnmpType.ReportPdu)
             {
                 byte[] bytes = message.ToBytes();
+                socket.SendTo(bytes, 0, bytes.Length, SocketFlags.None, manager);
+            }
+            else
+            {
+                throw new InvalidOperationException(String.Format(CultureInfo.InvariantCulture,
+                                                                  "not a trap message: {0}", 
+                                                                  code));
+            }
+        }
+
+        /// <summary>
+        /// Sends an <see cref="ISnmpMessage"/>.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <param name="manager">Manager</param>
+        public static void SendAsync(this ISnmpMessage message, EndPoint manager)
+        {
+            if (message == null)
+            {
+                throw new ArgumentNullException("message");
+            }
+
+            if (manager == null)
+            {
+                throw new ArgumentNullException("manager");
+            }
+
+            var code = message.Pdu().TypeCode;
+            if (code == SnmpType.TrapV1Pdu || code == SnmpType.TrapV2Pdu || code == SnmpType.ReportPdu)
+            {
+                using (Socket socket = manager.GetSocket())
+                {
+                    message.SendAsync(manager, socket);
+                }
+            }
+            else
+            {
+                throw new InvalidOperationException(String.Format(CultureInfo.InvariantCulture,
+                                                                  "not a trap message: {0}", 
+                                                                  code));
+            }
+        }
+        
+        /// <summary>
+        /// Sends an <see cref="ISnmpMessage"/>.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <param name="manager">Manager</param>
+        /// <param name="socket">The socket.</param>
+        public static void SendAsync(this ISnmpMessage message, EndPoint manager, Socket socket)
+        {
+            if (message == null)
+            {
+                throw new ArgumentNullException("message");
+            }
+
+            if (socket == null)
+            {
+                throw new ArgumentNullException("socket");
+            }
+
+            if (manager == null)
+            {
+                throw new ArgumentNullException("manager");
+            }
+
+            var code = message.Pdu().TypeCode;
+            if (code == SnmpType.TrapV1Pdu || code == SnmpType.TrapV2Pdu || code == SnmpType.ReportPdu)
+            {
+                byte[] bytes = message.ToBytes();
                 socket.BeginSendTo(bytes, 0, bytes.Length, SocketFlags.None, manager, ar => socket.EndSendTo(ar), null);
             }
             else
