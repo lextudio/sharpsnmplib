@@ -32,7 +32,7 @@ namespace Lextm.SharpSnmpLib.Tests
         {
             byte[] expected = Resources.get;
             ISnmpMessage message = MessageFactory.ParseMessages(expected, new UserRegistry())[0];
-            Assert.AreEqual(SnmpType.GetRequestPdu, message.Pdu().TypeCode);
+            Assert.AreEqual(SnmpType.GetRequestPdu, message.Type());
             GetRequestPdu pdu = (GetRequestPdu)message.Pdu();
             Assert.AreEqual(1, pdu.Variables.Count);
             Variable v = pdu.Variables[0];
@@ -273,6 +273,27 @@ namespace Lextm.SharpSnmpLib.Tests
             byte[] expected = ByteTool.Convert(s);
             GetRequestMessage message = new GetRequestMessage(0x4bed, VersionCode.V2, new OctetString("public"), new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) });
             Assert.AreEqual(expected, message.ToBytes());
+        }
+        
+        [Test]
+        public void TestTimeOutAsync()
+        {
+            // IMPORTANT: this test case requires a local SNMP agent such as 
+            //   #SNMP Agent (snmpd), 
+            //   Windows SNMP agent service, 
+            //   Net-SNMP agent, or 
+            //   snmp4j agent.
+            Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            GetRequestMessage message = new GetRequestMessage(0x4bed, VersionCode.V2, new OctetString("public"), new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) });
+            
+            var users = new UserRegistry();
+            //IMPORTANT: test against an agent that doesn't exist.
+            // ReSharper disable AssignNullToNotNullAttribute
+            //message.BeginGetResponse(new IPEndPoint(IPAddress.Parse("192.168.0.233"), 161), users, socket, null);
+            // ReSharper restore AssignNullToNotNullAttribute
+            var ar2 = message.BeginGetResponse(new IPEndPoint(IPAddress.Loopback, 161), users, socket, null);
+            var response = message.EndGetResponse(ar2);
+            Assert.AreEqual(SnmpType.ResponsePdu, response.Type());
         }
         
         [Test]

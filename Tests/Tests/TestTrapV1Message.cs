@@ -23,7 +23,7 @@ namespace Lextm.SharpSnmpLib.Tests
                                                       new List<Variable>());
             byte[] bytes = message.ToBytes();
             ISnmpMessage parsed = MessageFactory.ParseMessages(bytes, new UserRegistry())[0];
-            Assert.AreEqual(SnmpType.TrapV1Pdu, parsed.Pdu().TypeCode);
+            Assert.AreEqual(SnmpType.TrapV1Pdu, parsed.Type());
             TrapV1Message m = (TrapV1Message)parsed;
             Assert.AreEqual(GenericCode.AuthenticationFailure, m.Generic);
             Assert.AreEqual(0, m.Specific);

@@ -52,7 +52,7 @@ namespace Lextm.SharpSnmpLib.Agent
                 "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9}",
                 DateTime.UtcNow,
                 context.Binding.Endpoint.Address,
-                context.Request.Pdu().TypeCode == SnmpType.Unknown ? Empty : context.Request.Pdu().TypeCode.ToString(),
+                context.Request.Type() == SnmpType.Unknown ? Empty : context.Request.Type().ToString(),
                 GetStem(context.Request.Pdu().Variables),
                 context.Binding.Endpoint.Port,
                 context.Request.Parameters.UserName,

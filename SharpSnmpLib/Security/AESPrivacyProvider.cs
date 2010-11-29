@@ -30,8 +30,12 @@ using System.Security.Cryptography;
 namespace Lextm.SharpSnmpLib.Security
 {
     /// <summary>
-    /// Privacy provider for AES.
+    /// Privacy provider for AES 128.
     /// </summary>
+    /// <remarks>
+    /// This is an experimental port from SNMP#NET project. As AES is not part of SNMP RFC, this class is provided as it is.
+    /// If you want other AES providers, you can port them from SNMP#NET in a similar manner.
+    /// </remarks>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "AES", Justification = "definition")]
     public class AESPrivacyProvider : IPrivacyProvider
     {        

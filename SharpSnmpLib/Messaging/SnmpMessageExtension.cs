@@ -30,8 +30,24 @@ namespace Lextm.SharpSnmpLib.Messaging
     public static class SnmpMessageExtension
     {
         /// <summary>
+        /// Gets the <seealso cref="SnmpType"/>.
+        /// </summary>
+        /// <param name="message">The <seealso cref="ISnmpMessage"/>.</param>
+        /// <returns></returns>
+        public static SnmpType Type(this ISnmpMessage message)
+        {
+            if (message == null)
+            {
+                throw new ArgumentNullException("message");
+            }
+            
+            return message.Pdu().TypeCode;
+        }
+        
+        /// <summary>
         /// Gets the level.
         /// </summary>
+        /// <param name="message">The <seealso cref="ISnmpMessage"/>.</param>
         /// <value>The level.</value>
         internal static Levels Level(this ISnmpMessage message)
         {
@@ -51,6 +67,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Variables.
         /// </summary>
+        /// <param name="message">The <seealso cref="ISnmpMessage"/>.</param>
         public static IList<Variable> Variables(this ISnmpMessage message)
         {
             if (message == null)
@@ -58,7 +75,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("message");
             }
 
-            var code = message.Pdu().TypeCode;
+            var code = message.Type();
             if (code == SnmpType.Unknown)
             {
                 return new List<Variable>(0); // malformed message.
@@ -70,6 +87,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Request ID.
         /// </summary>
+        /// <param name="message">The <seealso cref="ISnmpMessage"/>.</param>
         public static int RequestId(this ISnmpMessage message)
         {
             if (message == null)
@@ -77,7 +95,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("message");
             }
 
-            var code = message.Pdu().TypeCode;
+            var code = message.Type();
             if (code == SnmpType.Unknown)
             {
                 return -1; // malformed message.
@@ -95,6 +113,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Gets the message ID.
         /// </summary>
         /// <value>The message ID.</value>
+        /// <param name="message">The <seealso cref="ISnmpMessage"/>.</param>
         /// <remarks>For v3, message ID is different from request ID. For v1 and v2c, they are the same.</remarks>
         public static int MessageId(this ISnmpMessage message)
         {
@@ -103,7 +122,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("message");
             }
 
-            var code = message.Pdu().TypeCode;
+            var code = message.Type();
             if (code == SnmpType.TrapV1Pdu)
             {
                 throw new NotSupportedException();
@@ -115,6 +134,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// PDU.
         /// </summary>
+        /// <param name="message">The <seealso cref="ISnmpMessage"/>.</param>
         public static ISnmpPdu Pdu(this ISnmpMessage message)
         {
             if (message == null)
@@ -134,6 +154,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Community name.
         /// </summary>
+        /// <param name="message">The <seealso cref="ISnmpMessage"/>.</param>
         public static OctetString Community(this ISnmpMessage message)
         {
             if (message == null)
@@ -147,7 +168,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Sends an <see cref="ISnmpMessage"/>.
         /// </summary>
-        /// <param name="message">The message.</param>
+        /// <param name="message">The <seealso cref="ISnmpMessage"/>.</param>
         /// <param name="manager">Manager</param>
         public static void Send(this ISnmpMessage message, EndPoint manager)
         {
@@ -161,7 +182,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("manager");
             }
 
-            var code = message.Pdu().TypeCode;
+            var code = message.Type();
             if (code == SnmpType.TrapV1Pdu || code == SnmpType.TrapV2Pdu || code == SnmpType.ReportPdu)
             {
                 using (Socket socket = manager.GetSocket())
@@ -180,7 +201,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Sends an <see cref="ISnmpMessage"/>.
         /// </summary>
-        /// <param name="message">The message.</param>
+        /// <param name="message">The <seealso cref="ISnmpMessage"/>.</param>
         /// <param name="manager">Manager</param>
         /// <param name="socket">The socket.</param>
         public static void Send(this ISnmpMessage message, EndPoint manager, Socket socket)
@@ -200,7 +221,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("manager");
             }
 
-            var code = message.Pdu().TypeCode;
+            var code = message.Type();
             if (code == SnmpType.TrapV1Pdu || code == SnmpType.TrapV2Pdu || code == SnmpType.ReportPdu)
             {
                 byte[] bytes = message.ToBytes();
@@ -217,7 +238,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Sends an <see cref="ISnmpMessage"/>.
         /// </summary>
-        /// <param name="message">The message.</param>
+        /// <param name="message">The <seealso cref="ISnmpMessage"/>.</param>
         /// <param name="manager">Manager</param>
         public static void SendAsync(this ISnmpMessage message, EndPoint manager)
         {
@@ -231,7 +252,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("manager");
             }
 
-            var code = message.Pdu().TypeCode;
+            var code = message.Type();
             if (code == SnmpType.TrapV1Pdu || code == SnmpType.TrapV2Pdu || code == SnmpType.ReportPdu)
             {
                 using (Socket socket = manager.GetSocket())
@@ -250,7 +271,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Sends an <see cref="ISnmpMessage"/>.
         /// </summary>
-        /// <param name="message">The message.</param>
+        /// <param name="message">The <seealso cref="ISnmpMessage"/>.</param>
         /// <param name="manager">Manager</param>
         /// <param name="socket">The socket.</param>
         public static void SendAsync(this ISnmpMessage message, EndPoint manager, Socket socket)
@@ -270,7 +291,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("manager");
             }
 
-            var code = message.Pdu().TypeCode;
+            var code = message.Type();
             if (code == SnmpType.TrapV1Pdu || code == SnmpType.TrapV2Pdu || code == SnmpType.ReportPdu)
             {
                 byte[] bytes = message.ToBytes();
@@ -287,7 +308,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Sends this <see cref="ISnmpMessage"/> and handles the response from agent.
         /// </summary>
-        /// <param name="request">The request.</param>
+        /// <param name="request">The <seealso cref="ISnmpMessage"/>.</param>
         /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
         /// <param name="receiver">Port number.</param>
         /// <param name="registry">User registry.</param>
@@ -305,7 +326,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("receiver");
             }
 
-            var code = request.Pdu().TypeCode;
+            var code = request.Type();
             if (code == SnmpType.TrapV1Pdu || code == SnmpType.TrapV2Pdu || code == SnmpType.ReportPdu)
             {
                 throw new InvalidOperationException(String.Format(CultureInfo.InvariantCulture, "not a request message: {0}", code));
@@ -320,7 +341,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Sends this <see cref="ISnmpMessage"/> and handles the response from agent.
         /// </summary>
-        /// <param name="request">The request.</param>
+        /// <param name="request">The <see cref="ISnmpMessage"/>.</param>
         /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
         /// <param name="receiver">Port number.</param>
         /// <returns></returns>
@@ -336,7 +357,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("receiver");
             }
 
-            var code = request.Pdu().TypeCode;
+            var code = request.Type();
             if (code == SnmpType.TrapV1Pdu || code == SnmpType.TrapV2Pdu || code == SnmpType.ReportPdu)
             {
                 throw new InvalidOperationException(String.Format(CultureInfo.InvariantCulture, "not a request message: {0}", code));
@@ -351,7 +372,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Sends this <see cref="ISnmpMessage"/> and handles the response from agent.
         /// </summary>
-        /// <param name="request">The request.</param>
+        /// <param name="request">The <see cref="ISnmpMessage"/>.</param>
         /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
         /// <param name="receiver">Agent.</param>
         /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
@@ -370,7 +391,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Sends an  <see cref="ISnmpMessage"/> and handles the response from agent.
         /// </summary>
-        /// <param name="request">The request.</param>
+        /// <param name="request">The <see cref="ISnmpMessage"/>.</param>
         /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
         /// <param name="receiver">Agent.</param>
         /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
@@ -398,7 +419,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("registry");
             }
 
-            var requestCode = request.Pdu().TypeCode;
+            var requestCode = request.Type();
             if (requestCode == SnmpType.TrapV1Pdu || requestCode == SnmpType.TrapV2Pdu || requestCode == SnmpType.ReportPdu)
             {
                 throw new InvalidOperationException(String.Format(CultureInfo.InvariantCulture, "not a request message: {0}", requestCode));
@@ -440,7 +461,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             // Passing 'count' is not necessary because ParseMessages should ignore it, but it offer extra safety (and would avoid an issue if parsing >1 response).
             ISnmpMessage response = MessageFactory.ParseMessages(reply, 0, count, registry)[0];
-            var responseCode = response.Pdu().TypeCode;
+            var responseCode = response.Type();
             if (responseCode == SnmpType.ResponsePdu || responseCode == SnmpType.ReportPdu)
             {
                 int requestId = request.MessageId();
@@ -459,7 +480,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Ends a pending asynchronous read.
         /// </summary>
-        /// <param name="request">Request message.</param>
+        /// <param name="request">The <see cref="ISnmpMessage"/>.</param>
         /// <param name="asyncResult">An <seealso cref="IAsyncResult"/> that stores state information and any user defined data for this asynchronous operation.</param>
         /// <returns></returns>
         public static ISnmpMessage EndGetResponse(this ISnmpMessage request, IAsyncResult asyncResult)
@@ -479,7 +500,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             int count = s.EndReceive(asyncResult);
             // Passing 'count' is not necessary because ParseMessages should ignore it, but it offer extra safety (and would avoid an issue if parsing >1 response).
             ISnmpMessage response = MessageFactory.ParseMessages(so.Buffer, 0, count, so.Users)[0];
-            var responseCode = response.Pdu().TypeCode;
+            var responseCode = response.Type();
             if (responseCode == SnmpType.ResponsePdu || responseCode == SnmpType.ReportPdu)
             {
                 int requestId = request.MessageId();
@@ -498,7 +519,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Begins to asynchronously send an <see cref="ISnmpMessage"/> to an <seealso cref="IPEndPoint"/>.
         /// </summary>
-        /// <param name="request">The request.</param>
+        /// <param name="request">The <see cref="ISnmpMessage"/>.</param>
         /// <param name="receiver">Agent.</param>
         /// <param name="registry">The user registry.</param>
         /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
@@ -526,7 +547,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("registry");
             }
 
-            var requestCode = request.Pdu().TypeCode;
+            var requestCode = request.Type();
             if (requestCode == SnmpType.TrapV1Pdu || requestCode == SnmpType.TrapV2Pdu || requestCode == SnmpType.ReportPdu)
             {
                 throw new InvalidOperationException(String.Format(CultureInfo.InvariantCulture, "not a request message: {0}", requestCode));
@@ -544,12 +565,14 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public static bool IsRunningOnMono
         {
-            get
-            {
-                return Type.GetType("Mono.Runtime") != null;
-            }
+            get { return System.Type.GetType("Mono.Runtime") != null; }
         }
 
+        /// <summary>
+        /// Packs up the <see cref="ISnmpMessage"/>.
+        /// </summary>
+        /// <param name="message">The <see cref="ISnmpMessage"/>.</param>
+        /// <returns></returns>
         internal static Sequence PackMessage(this ISnmpMessage message)
         {
             if (message == null)
