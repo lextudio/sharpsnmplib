@@ -54,7 +54,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestSNMPv2TMTextual()
         {
             uint[] old = DefaultObjectRegistry.Instance.Translate("SNMPV2-SMI::snmpDomains");
-            string result = DefaultObjectRegistry.Instance.Translate(Definition.AppendTo(old, 1));
+            string result = DefaultObjectRegistry.Instance.Translate(ObjectIdentifier.AppendTo(old, 1));
             Assert.AreEqual("SNMPV2-TM::snmpUDPDomain", result);
         }
         [Test]

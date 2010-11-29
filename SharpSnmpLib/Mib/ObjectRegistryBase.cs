@@ -140,7 +140,7 @@ namespace Lextm.SharpSnmpLib.Mib
             }
             
             uint[] oid = _tree.Find(moduleName, content[0]).GetNumericalForm();
-            return Definition.AppendTo(oid, (uint)value);
+            return ObjectIdentifier.AppendTo(oid, (uint)value);
         }
 
         /// <summary>

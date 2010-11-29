@@ -51,7 +51,7 @@ namespace Lextm.SharpSnmpLib.Mib
             _parentNode = parent;
             uint[] id = string.IsNullOrEmpty(parent.Name) ?
                 null : parent._id; // null for root node    (use _id rather than GetNumericalForm to avoid the Clone)
-            _id = AppendTo(id, entity.Value);
+            _id = ObjectIdentifier.AppendTo(id, entity.Value);
             _parent = parent.Name;
             _name = entity.Name;
             _module = entity.ModuleName;
@@ -232,21 +232,6 @@ namespace Lextm.SharpSnmpLib.Mib
             {
                 _children.Add(def.Value, def);
             }
-        }
-        
-        internal static uint[] AppendTo(uint[] parentId, uint value)
-        {
-            if (parentId == null)
-            {
-                return new[] { value };
-            }
-
-            // Old method with List<uint> dropped as it incurred two copies of the array (vs 1 for this method).
-            int length = parentId.Length;
-            uint[] tmp = new uint[length + 1];
-            Array.Copy(parentId, tmp, length);
-            tmp[length] = value;
-            return tmp;
         }
         
         internal static uint[] GetParent(IDefinition definition)    // Assume all IDefinition are Definition

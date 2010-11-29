@@ -17,6 +17,7 @@
 
 using System;
 using System.Globalization;
+using System.Linq;
 
 namespace Lextm.SharpSnmpLib.Security
 {
@@ -55,9 +56,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// <returns></returns>
         public byte[] GetSaltBytes()
         {
-            byte[] buffer = BitConverter.GetBytes(NextSalt());
-            Array.Reverse(buffer);
-            return buffer;
+            return BitConverter.GetBytes(NextSalt()).Reverse().ToArray();
         }
 
         /// <summary>

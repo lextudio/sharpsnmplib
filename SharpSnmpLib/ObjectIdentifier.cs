@@ -491,10 +491,29 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("numerical");
             }
             
-            uint[] result = new uint[numerical.Length + 1];
-            Array.Copy(numerical, result, numerical.Length);
-            result[numerical.Length] = extra;
-            return new ObjectIdentifier(result);
+            return new ObjectIdentifier(AppendTo(numerical, extra));
+        }        
+          
+        /// <summary>
+        /// Appends an extra number to the array.
+        /// </summary>
+        /// <param name="original">The original array.</param>
+        /// <param name="extra">The extra.</param>
+        /// <returns></returns>       
+        [CLSCompliant(false)]                   
+        public static uint[] AppendTo(uint[] original, uint extra)
+        {
+            if (original == null)
+            {
+                return new[] { extra };
+            }
+
+            // Old method with List<uint> dropped as it incurred two copies of the array (vs 1 for this method).
+            int length = original.Length;
+            uint[] tmp = new uint[length + 1];
+            Array.Copy(original, tmp, length);
+            tmp[length] = extra;
+            return tmp;
         }
     }
 }
