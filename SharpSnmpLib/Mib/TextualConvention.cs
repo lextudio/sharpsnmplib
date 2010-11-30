@@ -11,15 +11,17 @@ namespace Lextm.SharpSnmpLib.Mib
             obsolete
         }
 
+        private string _name;
         private string _displayHint;
         private Status _status;
         private string _description;
         private string _reference;
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "module")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "name")]
         public TextualConvention(string module, string name, Lexer lexer)
         {
+            _name = name;
+
             Symbol temp = lexer.NextNonEOLSymbol;
             
             if (temp == Symbol.DisplayHint)
