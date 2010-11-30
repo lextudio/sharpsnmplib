@@ -16,6 +16,7 @@ namespace Lextm.SharpSnmpLib.Mib
         private Status _status;
         private string _description;
         private string _reference;
+        private ITypeAssignment _syntax;
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "module")]
         public TextualConvention(string module, string name, Lexer lexer)
@@ -115,26 +116,7 @@ namespace Lextm.SharpSnmpLib.Mib
             }
             else if (temp == Symbol.Integer)
             {
-                // parse between { }
-                temp = lexer.NextNonEOLSymbol;
-                if (temp == Symbol.OpenBracket)
-                {
-                    while ((temp = lexer.NextNonEOLSymbol) != Symbol.CloseBracket)
-                    {
-                    }
-
-                    return;
-                }
-
-                // parse between ( )
-                if (temp == Symbol.OpenParentheses)
-                {
-                    while ((temp = lexer.NextNonEOLSymbol) != Symbol.CloseParentheses)
-                    {
-                    }
-
-                    return;
-                }
+                _syntax = new Integer(module, string.Empty, lexer);
             }
             else if (temp == Symbol.Octet)
             {

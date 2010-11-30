@@ -89,6 +89,7 @@
     <Compile Include="Mib\MibException.cs" />
     <Compile Include="Mib\Symbol.cs" />
     <Compile Include="Mib\ReloadableObjectRegistry.cs" />
+    <Compile Include="Mib\ValueRange.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

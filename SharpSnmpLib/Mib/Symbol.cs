@@ -215,6 +215,7 @@ namespace Lextm.SharpSnmpLib.Mib
         internal static readonly Symbol Status = new Symbol("STATUS");
         internal static readonly Symbol Description = new Symbol("DESCRIPTION");
         internal static readonly Symbol Reference = new Symbol("REFERENCE");
+        internal static readonly Symbol DoubleDot = new Symbol("..");
 
         internal void Expect(Symbol expected)
         {
