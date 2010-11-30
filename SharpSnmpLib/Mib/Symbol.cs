@@ -211,6 +211,10 @@ namespace Lextm.SharpSnmpLib.Mib
         internal static readonly Symbol OpenParentheses = new Symbol("(");
         internal static readonly Symbol CloseParentheses = new Symbol(")");
         internal static readonly Symbol Exports = new Symbol("EXPORTS");
+        internal static readonly Symbol DisplayHint = new Symbol("DISPLAY-HINT");
+        internal static readonly Symbol Status = new Symbol("STATUS");
+        internal static readonly Symbol Description = new Symbol("DESCRIPTION");
+        internal static readonly Symbol Reference = new Symbol("REFERENCE");
 
         internal void Expect(Symbol expected)
         {
