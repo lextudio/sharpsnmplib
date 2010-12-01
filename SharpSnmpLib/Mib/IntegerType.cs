@@ -15,7 +15,7 @@ namespace Lextm.SharpSnmpLib.Mib
     /// The INTEGER type represents a list of alternatives, or a range of numbers..
     /// Includes Integer32 as it's indistinguishable from INTEGER.
     /// </summary>
-    internal sealed class Integer : ITypeAssignment
+    internal sealed class IntegerType : ITypeAssignment
     {
         private bool _isEnumeration;
         private IDictionary<int, string> _mapIntToString;
@@ -23,14 +23,14 @@ namespace Lextm.SharpSnmpLib.Mib
         private IList<ValueRange> _ranges;
 
         /// <summary>
-        /// Creates an <see cref="Integer"/> instance.
+        /// Creates an <see cref="IntegerType"/> instance.
         /// </summary>
         /// <param name="module"></param>
         /// <param name="name"></param>
         /// <param name="lexer"></param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "module")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "name")]
-        public Integer(string module, string name, Lexer lexer)
+        public IntegerType(string module, string name, Lexer lexer)
         {
             Symbol temp = lexer.NextNonEOLSymbol;
             if (temp == Symbol.OpenBracket)

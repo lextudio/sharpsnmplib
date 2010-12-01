@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace Lextm.SharpSnmpLib.Tests
 {
     [TestFixture]
-    class TestInteger
+    class TestIntegerType
     {
         [Test]
         public void TestEnumerable()
@@ -18,7 +18,7 @@ namespace Lextm.SharpSnmpLib.Tests
             lexer.NextSymbol.Expect(Symbol.Assign);
             lexer.NextSymbol.Expect(Symbol.Integer);
 
-            Integer i = new Integer("module", "name", lexer);
+            IntegerType i = new IntegerType("module", "name", lexer);
             Assert.IsTrue(i.IsEnumeration);
             Assert.AreEqual(1, i["first"]);
             Assert.AreEqual("second", i[2]);
@@ -35,7 +35,7 @@ namespace Lextm.SharpSnmpLib.Tests
             lexer.NextSymbol.Expect(Symbol.Assign);
             lexer.NextSymbol.Expect(Symbol.Integer);
 
-            Integer i = new Integer("module", "name", lexer);
+            IntegerType i = new IntegerType("module", "name", lexer);
             Assert.IsFalse(i.IsEnumeration);
             Assert.IsTrue(i.Contains(8));
             Assert.IsTrue(i.Contains(5));
