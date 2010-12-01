@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Mib\Assembler.cs" />
     <Compile Include="Mib\AgentCapabilities.cs" />
+    <Compile Include="Mib\BitsType.cs" />
     <Compile Include="Mib\Choice.cs" />
     <Compile Include="Mib\DefaultObjectRegistry.cs" />
     <Compile Include="Mib\Exports.cs" />

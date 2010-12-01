@@ -74,18 +74,13 @@ namespace Lextm.SharpSnmpLib.Mib
              *      sub-typed in the same way as the SYNTAX clause of an
              *      OBJECT-TYPE macro.
              * 
-             * Therefore the possible values are:
-             *      INTEGER
-             *      OCTET STRING
+             * Therefore the possible values are (grouped by underlying type):
+             *      INTEGER, Integer32
+             *      OCTET STRING, Opaque
              *      OBJECT IDENTIFIER
-             *      Integer32
              *      IpAddress
-             *      Counter32
-             *      TimeTicks
-             *      Opaque
              *      Counter64
-             *      Unsigned32
-             *      Gauge32
+             *      Unsigned32, Counter32, Gauge32, TimeTicks
              *      BITS
              * With appropriate sub-typing.
              */
@@ -93,26 +88,7 @@ namespace Lextm.SharpSnmpLib.Mib
             temp = lexer.NextNonEOLSymbol;
             if (temp == Symbol.Bits)
             {
-                // parse between { }
-                temp = lexer.NextNonEOLSymbol;
-                if (temp == Symbol.OpenBracket)
-                {
-                    while ((temp = lexer.NextNonEOLSymbol) != Symbol.CloseBracket)
-                    {
-                    }
-
-                    return;
-                }
-
-                // parse between ( )
-                if (temp == Symbol.OpenParentheses)
-                {
-                    while ((temp = lexer.NextNonEOLSymbol) != Symbol.CloseParentheses)
-                    {
-                    }
-
-                    return;
-                }
+                _syntax = new BitsType(module, string.Empty, lexer);
             }
             else if (temp == Symbol.Integer || temp == Symbol.Integer32)
             {
@@ -120,29 +96,58 @@ namespace Lextm.SharpSnmpLib.Mib
             }
             else if (temp == Symbol.Octet)
             {
-                // parse between ( )
                 temp = lexer.NextSymbol;
                 temp.Expect(Symbol.String);
                 _syntax = new OctetStringType(module, string.Empty, lexer);
             }
+            else if (temp == Symbol.Opaque)
+            {
+                _syntax = new OctetStringType(module, string.Empty, lexer);
+            }
+            else if (temp == Symbol.IpAddress)
+            {
+                SkipSyntax(lexer);
+            }
+            else if (temp == Symbol.Counter64)
+            {
+                SkipSyntax(lexer);
+            }
+            else if (temp == Symbol.Unsigned32 || temp == Symbol.Counter32 || temp == Symbol.Gauge32 || temp == Symbol.TimeTicks)
+            {
+                SkipSyntax(lexer);
+            }
+            else if (temp == Symbol.Object)
+            {
+                temp = lexer.NextSymbol;
+                temp.Expect(Symbol.Identifier);
+                SkipSyntax(lexer);
+            }
             else
             {
-                Symbol previous = null;
-                while ((temp = lexer.NextSymbol) != null)
-                {
-                    if (previous == Symbol.EOL && temp == Symbol.EOL)
-                    {
-                        return;
-                    }
-
-                    previous = temp;
-                }
-
-                if (previous != null)
-                {
-                    previous.Validate(true, "end of file reached");
-                }
+                SkipSyntax(lexer);
             }
+        }
+
+        // TODO: Remove every call of this and replace with appropriate parsing.
+        private static void SkipSyntax(Lexer lexer)
+        {
+            Symbol temp = null;
+            Symbol previous = null;
+            while ((temp = lexer.NextSymbol) != null)
+            {
+                if (previous == Symbol.EOL && temp == Symbol.EOL)
+                {
+                    return;
+                }
+
+                previous = temp;
+            }
+
+            if (previous != null)
+            {
+                previous.Validate(true, "end of file reached");
+            }
+            return;
         }
 
         public string Name
