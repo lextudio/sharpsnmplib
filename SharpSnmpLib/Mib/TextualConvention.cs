@@ -4,7 +4,7 @@ namespace Lextm.SharpSnmpLib.Mib
 {
     internal sealed class TextualConvention : IConstruct
     {
-        private enum Status
+        public enum StatusEnum
         {
             current,
             deprecated,
@@ -13,7 +13,7 @@ namespace Lextm.SharpSnmpLib.Mib
 
         private string _name;
         private string _displayHint;
-        private Status _status;
+        private StatusEnum _status;
         private string _description;
         private string _reference;
         private ITypeAssignment _syntax;
@@ -24,7 +24,7 @@ namespace Lextm.SharpSnmpLib.Mib
             _name = name;
 
             Symbol temp = lexer.NextNonEOLSymbol;
-            
+
             if (temp == Symbol.DisplayHint)
             {
                 // TODO: this needs decoding to a useful format.
@@ -35,7 +35,7 @@ namespace Lextm.SharpSnmpLib.Mib
             temp.Expect(Symbol.Status);
             try
             {
-                _status = (Status)Enum.Parse(typeof(Status), lexer.NextNonEOLSymbol.ToString());
+                _status = (StatusEnum)Enum.Parse(typeof(StatusEnum), lexer.NextNonEOLSymbol.ToString());
                 temp = lexer.NextNonEOLSymbol;
             }
             catch (ArgumentException)
@@ -163,6 +163,36 @@ namespace Lextm.SharpSnmpLib.Mib
                     previous.Validate(true, "end of file reached");
                 }
             }
+        }
+
+        public string Name
+        {
+            get { return _name; }
+        }
+
+        public string DisplayHint
+        {
+            get { return _displayHint; }
+        }
+
+        public StatusEnum Status
+        {
+            get { return _status; }
+        }
+
+        public string Description
+        {
+            get { return _description; }
+        }
+
+        public string Reference
+        {
+            get { return _reference; }
+        }
+
+        public ITypeAssignment Syntax
+        {
+            get { return _syntax; }
         }
     }
 }
