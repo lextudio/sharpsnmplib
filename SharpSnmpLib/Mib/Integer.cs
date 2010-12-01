@@ -49,6 +49,43 @@ namespace Lextm.SharpSnmpLib.Mib
             }
         }
 
+        public bool IsEnumeration
+        {
+            get
+            {
+                return _isEnumeration;
+            }
+        }
+
+        public int? this[string identifier]
+        {
+            get
+            {
+                return _isEnumeration ? (int?)_mapStringToInt[identifier] : null;
+            }
+        }
+
+        public string this[int value]
+        {
+            get
+            {
+                return _isEnumeration ? _mapIntToString[value] : null;
+            }
+        }
+
+        internal bool Contains(int p)
+        {
+            foreach (ValueRange range in _ranges)
+            {
+                if (range.Contains(p))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         private void DecodeRanges(Lexer lexer)
         {
             Symbol temp = lexer.NextSymbol;
