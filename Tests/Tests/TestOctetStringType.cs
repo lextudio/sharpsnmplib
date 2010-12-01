@@ -34,5 +34,20 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.IsFalse(i.Contains(25));
             Assert.IsFalse(i.Contains(61));
         }
+
+        [Test]
+        public void TestNegative()
+        {
+            const string test = "SomeEnum ::= OCTET STRING ( SIZE (8 | -5 .. 20 | 31 .. 60 ))";
+            Lexer lexer = new Lexer();
+            StringReader reader = new StringReader(test);
+            lexer.Parse(reader);
+            string name = lexer.NextSymbol.ToString();
+            lexer.NextSymbol.Expect(Symbol.Assign);
+            lexer.NextSymbol.Expect(Symbol.Octet);
+            lexer.NextSymbol.Expect(Symbol.String);
+
+            Assert.Throws<MibException>(delegate { new OctetStringType("module", "name", lexer); });
+        }
     }
 }
