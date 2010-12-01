@@ -114,36 +114,16 @@ namespace Lextm.SharpSnmpLib.Mib
                     return;
                 }
             }
-            else if (temp == Symbol.Integer)
+            else if (temp == Symbol.Integer || temp == Symbol.Integer32)
             {
-                _syntax = new Integer(module, string.Empty, lexer);
+                _syntax = new IntegerType(module, string.Empty, lexer);
             }
             else if (temp == Symbol.Octet)
             {
                 // parse between ( )
                 temp = lexer.NextSymbol;
                 temp.Expect(Symbol.String);
-                temp = lexer.NextSymbol;
-                if (temp == Symbol.EOL)
-                {
-                    return;
-                }
-
-                int parenthesesSection = 0;
-                temp.Expect(Symbol.OpenParentheses);
-                parenthesesSection++;
-                while (parenthesesSection > 0)
-                {
-                    temp = lexer.NextSymbol;
-                    if (temp == Symbol.OpenParentheses)
-                    {
-                        parenthesesSection++;
-                    }
-                    else if (temp == Symbol.CloseParentheses)
-                    {
-                        parenthesesSection--;
-                    }
-                }
+                _syntax = new OctetStringType(module, string.Empty, lexer);
             }
             else
             {

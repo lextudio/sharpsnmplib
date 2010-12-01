@@ -209,7 +209,7 @@ namespace Lextm.SharpSnmpLib.Mib
 
             if (current == Symbol.Integer)
             {
-                return new Integer(module, header[0].ToString(), lexer);
+                return new IntegerType(module, header[0].ToString(), lexer);
             }
 
             if (current == Symbol.TextualConvention)

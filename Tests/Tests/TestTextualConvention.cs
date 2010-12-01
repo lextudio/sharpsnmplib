@@ -32,8 +32,8 @@ namespace Lextm.SharpSnmpLib.Tests
             var tc = new TextualConvention(string.Empty, name, lexer);
             Assert.AreEqual(name, tc.Name);
             Assert.IsNull(tc.Reference);
-            Assert.AreEqual(typeof(Integer), tc.Syntax.GetType());
-            Assert.AreEqual("second", (tc.Syntax as Integer)[100]);
+            Assert.AreEqual(typeof(IntegerType), tc.Syntax.GetType());
+            Assert.AreEqual("second", (tc.Syntax as IntegerType)[100]);
         }
     }
 }

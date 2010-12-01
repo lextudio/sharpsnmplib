@@ -216,6 +216,14 @@ namespace Lextm.SharpSnmpLib.Mib
         internal static readonly Symbol Description = new Symbol("DESCRIPTION");
         internal static readonly Symbol Reference = new Symbol("REFERENCE");
         internal static readonly Symbol DoubleDot = new Symbol("..");
+        internal static readonly Symbol Integer32 = new Symbol("Integer32");
+        internal static readonly Symbol IpAddress = new Symbol("IpAddress");
+        internal static readonly Symbol Counter32 = new Symbol("Counter32");
+        internal static readonly Symbol TimeTicks = new Symbol("TimeTicks");
+        internal static readonly Symbol Opaque = new Symbol("Opaque");
+        internal static readonly Symbol Counter64 = new Symbol("Counter64");
+        internal static readonly Symbol Unsigned32 = new Symbol("Unsigned32");
+        internal static readonly Symbol Gauge32 = new Symbol("Gauge32");
 
         internal void Expect(Symbol expected)
         {
