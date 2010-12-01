@@ -157,6 +157,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 case ']':
                 case ';':
                 case ',':
+                case '|':
                     if (!_stringSection)
                     {
                         bool moveNext = ParseLastSymbol(file, list, ref _temp, row, column);
@@ -275,6 +276,9 @@ namespace Lextm.SharpSnmpLib.Mib
                     break;
                 case ',':
                     str = ",";
+                    break;
+                case '|':
+                    str = "|";
                     break;
                 default:
                     throw new ArgumentException("value is not a special character");

@@ -73,7 +73,7 @@ namespace Lextm.SharpSnmpLib.Mib
             }
         }
 
-        internal bool Contains(int p)
+        public bool Contains(int p)
         {
             foreach (ValueRange range in _ranges)
             {

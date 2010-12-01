@@ -3,8 +3,8 @@ namespace Lextm.SharpSnmpLib.Mib
 {
     internal class ValueRange
     {
-        private int _first;
-        private int? _second;
+        private readonly int _start;
+        private readonly int? _end;
 
         public ValueRange(Symbol first, Symbol second)
         {
@@ -12,39 +12,49 @@ namespace Lextm.SharpSnmpLib.Mib
 
             if (int.TryParse(first.ToString(), out value))
             {
-                _first = value;
+                _start = value;
             }
             else
             {
                 var parts = first.ToString().Split(new char[] { '.' });
                 first.Validate(!(parts.Length == 3 && string.IsNullOrEmpty(parts[1])), "illegal sub-typing");
                 first.Validate(!int.TryParse(parts[0], out value), "illegal sub-typing");
-                _first = value;
+                _start = value;
                 first.Validate(!int.TryParse(parts[2], out value), "illegal sub-typing");
-                _second = value;
-                first.Validate(_first >= _second, "illegal sub-typing");
+                _end = value;
+                first.Validate(_start >= _end, "illegal sub-typing");
             }
 
             if (second != null && int.TryParse(second.ToString(), out value))
             {
-                _second = value;
-                second.Validate(_first >= _second, "illegal sub-typing");
+                _end = value;
+                second.Validate(_start >= _end, "illegal sub-typing");
             }
             else
             {
-                _second = null;
+                _end = null;
             }
+        }
+
+        public int Start
+        {
+            get { return _start; }
+        }
+
+        public int? End
+        {
+            get { return _end; }
         }
 
         internal bool Contains(int p)
         {
-            if (_second == null)
+            if (_end == null)
             {
-                return p == _first;
+                return p == _start;
             }
             else
             {
-                return _first <= p && p <= _second;
+                return _start <= p && p <= _end;
             }
         }
     }

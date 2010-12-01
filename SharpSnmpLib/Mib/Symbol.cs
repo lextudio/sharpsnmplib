@@ -224,6 +224,7 @@ namespace Lextm.SharpSnmpLib.Mib
         internal static readonly Symbol Counter64 = new Symbol("Counter64");
         internal static readonly Symbol Unsigned32 = new Symbol("Unsigned32");
         internal static readonly Symbol Gauge32 = new Symbol("Gauge32");
+        internal static readonly Symbol Size = new Symbol("SIZE");
 
         internal void Expect(Symbol expected)
         {

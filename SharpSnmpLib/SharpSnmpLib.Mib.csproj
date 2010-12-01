@@ -63,7 +63,7 @@
     <Compile Include="Mib\Exports.cs" />
     <Compile Include="Mib\Imports.cs" />
     <Compile Include="Mib\ImportsFrom.cs" />
-    <Compile Include="Mib\Integer.cs" />
+    <Compile Include="Mib\IntegerType.cs" />
     <Compile Include="Mib\ITypeAssignment.cs" />
     <Compile Include="Mib\Macro.cs" />
     <Compile Include="Mib\ModuleCompliance.cs" />
@@ -75,6 +75,7 @@
     <Compile Include="Mib\ObjectIdentity.cs" />
     <Compile Include="Mib\ObjectRegistryBase.cs" />
     <Compile Include="Mib\ObjectType.cs" />
+    <Compile Include="Mib\OctetStringType.cs" />
     <Compile Include="Mib\OidValueAssignment.cs" />
     <Compile Include="Mib\Parser.cs" />
     <Compile Include="Mib\Sequence.cs" />
