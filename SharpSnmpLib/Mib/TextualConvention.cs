@@ -106,48 +106,26 @@ namespace Lextm.SharpSnmpLib.Mib
             }
             else if (temp == Symbol.IpAddress)
             {
-                SkipSyntax(lexer);
+                _syntax = new IpAddressType(module, string.Empty, lexer);
             }
             else if (temp == Symbol.Counter64)
             {
-                SkipSyntax(lexer);
+                _syntax = new Counter64Type(module, string.Empty, lexer);
             }
             else if (temp == Symbol.Unsigned32 || temp == Symbol.Counter32 || temp == Symbol.Gauge32 || temp == Symbol.TimeTicks)
             {
-                SkipSyntax(lexer);
+                _syntax = new UnsignedType(module, string.Empty, lexer);
             }
             else if (temp == Symbol.Object)
             {
                 temp = lexer.NextSymbol;
                 temp.Expect(Symbol.Identifier);
-                SkipSyntax(lexer);
+                _syntax = new ObjectIdentifierType(module, string.Empty, lexer);
             }
             else
             {
-                SkipSyntax(lexer);
+                temp.Validate(true, "illegal syntax for textual convention");
             }
-        }
-
-        // TODO: Remove every call of this and replace with appropriate parsing.
-        private static void SkipSyntax(Lexer lexer)
-        {
-            Symbol temp = null;
-            Symbol previous = null;
-            while ((temp = lexer.NextSymbol) != null)
-            {
-                if (previous == Symbol.EOL && temp == Symbol.EOL)
-                {
-                    return;
-                }
-
-                previous = temp;
-            }
-
-            if (previous != null)
-            {
-                previous.Validate(true, "end of file reached");
-            }
-            return;
         }
 
         public string Name

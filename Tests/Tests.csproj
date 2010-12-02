@@ -70,7 +70,9 @@
     </Compile>
     <Compile Include="Tests\ListenerBindingTestFixture.cs" />
     <Compile Include="Tests\TestBitsType.cs" />
+    <Compile Include="Tests\TestCounter64Type.cs" />
     <Compile Include="Tests\TestIntegerType.cs" />
+    <Compile Include="Tests\TestIpAddressType.cs" />
     <Compile Include="Tests\TestOctetStringType.cs" />
     <Compile Include="Tests\TestSetMessageHandler.cs" />
     <Compile Include="Tests\TestGetV1MessageHandler.cs" />
@@ -113,6 +115,7 @@
     <Compile Include="Tests\TestTrapV1Message.cs" />
     <Compile Include="Tests\TestTrapV1Pdu.cs" />
     <Compile Include="Tests\TestTrapV2Message.cs" />
+    <Compile Include="Tests\TestUnsignedType.cs" />
     <Compile Include="Tests\TestVariable.cs" />
     <Compile Include="Tests\TestWatchDog.cs" />
     <None Include="Resources\empty.txt" />

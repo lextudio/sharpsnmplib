@@ -73,11 +73,11 @@ namespace Lextm.SharpSnmpLib.Mib
             }
         }
 
-        public bool Contains(int p)
+        public bool Contains(int value)
         {
             foreach (ValueRange range in _ranges)
             {
-                if (range.Contains(p))
+                if (range.Contains(value))
                 {
                     return true;
                 }
