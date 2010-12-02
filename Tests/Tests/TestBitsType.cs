@@ -1,0 +1,29 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using NUnit.Framework;
+using System.IO;
+using Lextm.SharpSnmpLib.Mib;
+
+namespace Lextm.SharpSnmpLib.Tests
+{
+    class TestBitsType
+    {
+        [Test]
+        public void Test()
+        {
+            const string test = "SomeEnum ::= BITS {first(1), second(2)}";
+            Lexer lexer = new Lexer();
+            StringReader reader = new StringReader(test);
+            lexer.Parse(reader);
+            string name = lexer.NextSymbol.ToString();
+            lexer.NextSymbol.Expect(Symbol.Assign);
+            lexer.NextSymbol.Expect(Symbol.Bits);
+
+            BitsType i = new BitsType("module", "name", lexer);
+            Assert.AreEqual(1, i["first"]);
+            Assert.AreEqual("second", i[2]);
+        }
+    }
+}

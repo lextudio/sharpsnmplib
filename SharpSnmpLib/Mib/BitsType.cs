@@ -22,6 +22,7 @@ namespace Lextm.SharpSnmpLib.Mib
 
             int number;
             lexer.NextSymbol.Expect(Symbol.OpenBracket);
+            lexer.Restore(Symbol.OpenBracket);
             while (lexer.NextNonEOLSymbol != Symbol.CloseBracket)
             {
                 string identifier = lexer.NextNonEOLSymbol.ToString();

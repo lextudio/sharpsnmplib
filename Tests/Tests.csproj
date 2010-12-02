@@ -69,6 +69,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Tests\ListenerBindingTestFixture.cs" />
+    <Compile Include="Tests\TestBitsType.cs" />
     <Compile Include="Tests\TestIntegerType.cs" />
     <Compile Include="Tests\TestOctetStringType.cs" />
     <Compile Include="Tests\TestSetMessageHandler.cs" />
