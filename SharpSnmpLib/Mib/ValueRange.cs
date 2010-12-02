@@ -10,29 +10,14 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             int value;
 
-            if (int.TryParse(first.ToString(), out value))
-            {
-                _start = value;
-            }
-            else
-            {
-                var parts = first.ToString().Split(new char[] { '.' });
-                first.Validate(!(parts.Length == 3 && string.IsNullOrEmpty(parts[1])), "illegal sub-typing");
-                first.Validate(!int.TryParse(parts[0], out value), "illegal sub-typing");
-                _start = value;
-                first.Validate(!int.TryParse(parts[2], out value), "illegal sub-typing");
-                _end = value;
-                first.Validate(_start >= _end, "illegal sub-typing");
-            }
+            first.Validate(!int.TryParse(first.ToString(), out value), "invalid sub-typing");
+            _start = value;
 
-            if (second != null && int.TryParse(second.ToString(), out value))
+            if (second != null)
             {
+                second.Validate(!int.TryParse(second.ToString(), out value), "invalid sub-typing");
                 _end = value;
                 second.Validate(_start >= _end, "illegal sub-typing");
-            }
-            else
-            {
-                _end = null;
             }
         }
 

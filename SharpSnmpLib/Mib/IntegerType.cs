@@ -107,16 +107,9 @@ namespace Lextm.SharpSnmpLib.Mib
                 ValueRange range = new ValueRange(value1, value2);
 
                 value1.Validate(Contains(range.Start), "invalid sub-typing");
-                if (range.End != null)
+                if (value2 != null)
                 {
-                    if (value2 != null)
-                    {
-                        value2.Validate(Contains((int)range.End), "invalid sub-typing");
-                    }
-                    else
-                    {
-                        value1.Validate(Contains((int)range.End), "invalid sub-typing");
-                    }
+                    value2.Validate(Contains((int)range.End), "invalid sub-typing");
                 }
 
                 foreach (ValueRange other in _ranges)

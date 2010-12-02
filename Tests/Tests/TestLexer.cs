@@ -18,7 +18,7 @@ namespace Lextm.SharpSnmpLib.Tests
                 lexer.Parse(reader);
                 reader.Close();
             }
-            Assert.AreEqual(909, lexer.SymbolCount);
+            Assert.AreEqual(925, lexer.SymbolCount);
         }
         
         [Test]

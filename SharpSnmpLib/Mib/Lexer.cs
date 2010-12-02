@@ -129,6 +129,7 @@ namespace Lextm.SharpSnmpLib.Mib
         private bool _stringSection;
         private bool _assignSection;
         private bool _assignAhead;
+        private bool _dotSection;
 
         /// <summary>
         /// Parses a list of <see cref="char"/> to <see cref="Symbol"/>.
@@ -201,6 +202,21 @@ namespace Lextm.SharpSnmpLib.Mib
                         _assignAhead = false;
                         ParseLastSymbol(file, list, ref _temp, row, column);
                         break;
+                    }
+
+                    if (_dotSection && current != '.')
+                    {
+                        ParseLastSymbol(file, list, ref _temp, row, column);
+                        _dotSection = false;
+                    }
+
+                    if (current == '.' && !_stringSection)
+                    {
+                        if (!_dotSection)
+                        {
+                            ParseLastSymbol(file, list, ref _temp, row, column);
+                            _dotSection = true;
+                        }
                     }
                     
                     if (current == ':' && !_stringSection)
