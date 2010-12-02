@@ -27,7 +27,7 @@ namespace Lextm.SharpSnmpLib.Tests
         [Test]
         public void TestRanges()
         {
-            const string test = "SomeEnum ::= INTEGER (8 | 5 .. 20 | 31 .. 60 )";
+            const string test = "SomeEnum ::= INTEGER (8 | 10 ..20 | 31 .. 60 )";
             Lexer lexer = new Lexer();
             StringReader reader = new StringReader(test);
             lexer.Parse(reader);
@@ -38,7 +38,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IntegerType i = new IntegerType("module", "name", lexer);
             Assert.IsFalse(i.IsEnumeration);
             Assert.IsTrue(i.Contains(8));
-            Assert.IsTrue(i.Contains(5));
+            Assert.IsTrue(i.Contains(10));
             Assert.IsTrue(i.Contains(15));
             Assert.IsTrue(i.Contains(20));
             Assert.IsTrue(i.Contains(35));
@@ -46,6 +46,62 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.IsFalse(i.Contains(-9));
             Assert.IsFalse(i.Contains(25));
             Assert.IsFalse(i.Contains(61));
+        }
+
+        [Test]
+        public void TestOverlappingRanges1()
+        {
+            const string test = "SomeEnum ::= INTEGER (8 | 5 .. 20 |31 .. 60 )";
+            Lexer lexer = new Lexer();
+            StringReader reader = new StringReader(test);
+            lexer.Parse(reader);
+            string name = lexer.NextSymbol.ToString();
+            lexer.NextSymbol.Expect(Symbol.Assign);
+            lexer.NextSymbol.Expect(Symbol.Integer);
+
+            Assert.Throws<MibException>(() => new IntegerType("module", "name", lexer));
+        }
+
+        [Test]
+        public void TestOverlappingRanges2()
+        {
+            const string test = "SomeEnum ::= INTEGER (8 | 8 .. 20 | 31 .. 60 )";
+            Lexer lexer = new Lexer();
+            StringReader reader = new StringReader(test);
+            lexer.Parse(reader);
+            string name = lexer.NextSymbol.ToString();
+            lexer.NextSymbol.Expect(Symbol.Assign);
+            lexer.NextSymbol.Expect(Symbol.Integer);
+
+            Assert.Throws<MibException>(() => new IntegerType("module", "name", lexer));
+        }
+
+        [Test]
+        public void TestOverlappingRanges3()
+        {
+            const string test = "SomeEnum ::= INTEGER (8 | 8 | 31 .. 60 )";
+            Lexer lexer = new Lexer();
+            StringReader reader = new StringReader(test);
+            lexer.Parse(reader);
+            string name = lexer.NextSymbol.ToString();
+            lexer.NextSymbol.Expect(Symbol.Assign);
+            lexer.NextSymbol.Expect(Symbol.Integer);
+
+            Assert.Throws<MibException>(() => new IntegerType("module", "name", lexer));
+        }
+
+        [Test]
+        public void TestOverlappingRanges4()
+        {
+            const string test = "SomeEnum ::= INTEGER (8 | 5..20 | 31 .. 60 )";
+            Lexer lexer = new Lexer();
+            StringReader reader = new StringReader(test);
+            lexer.Parse(reader);
+            string name = lexer.NextSymbol.ToString();
+            lexer.NextSymbol.Expect(Symbol.Assign);
+            lexer.NextSymbol.Expect(Symbol.Integer);
+
+            Assert.Throws<MibException>(() => new IntegerType("module", "name", lexer));
         }
     }
 }

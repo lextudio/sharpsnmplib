@@ -44,7 +44,7 @@ namespace Lextm.SharpSnmpLib.Mib
             }
 
             temp.Expect(Symbol.Description);
-            _description = lexer.NextNonEOLSymbol.ToString();
+            _description = lexer.NextNonEOLSymbol.ToString().Trim(new char[] { '"' });
             temp = lexer.NextNonEOLSymbol;
 
             if (temp == Symbol.Reference)

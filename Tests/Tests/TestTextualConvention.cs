@@ -34,6 +34,30 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.IsNull(tc.Reference);
             Assert.AreEqual(typeof(IntegerType), tc.Syntax.GetType());
             Assert.AreEqual("second", (tc.Syntax as IntegerType)[100]);
+            Assert.AreEqual(TextualConvention.StatusEnum.current, tc.Status);
+            Assert.IsNull(tc.DisplayHint);
+            Assert.AreEqual("A multi line\n        description", tc.Description);
+        }
+
+        [Test]
+        public void TestInvalidStatus()
+        {
+            const string test =
+@"someObjectName ::= TEXTUAL-CONVENTION
+    STATUS blahblah
+    DESCRIPTION ""A multi line
+        description""
+    SYNTAX INTEGER {
+        first(0),
+        second(100)
+        }";
+            Lexer lexer = new Lexer();
+            StringReader reader = new StringReader(test);
+            lexer.Parse(reader);
+            string name = lexer.NextSymbol.ToString();
+            lexer.NextSymbol.Expect(Symbol.Assign);
+            lexer.NextSymbol.Expect(Symbol.TextualConvention);
+            Assert.Throws<MibException>(() => new TextualConvention(string.Empty, name, lexer));
         }
     }
 }

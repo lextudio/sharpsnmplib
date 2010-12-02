@@ -104,7 +104,31 @@ namespace Lextm.SharpSnmpLib.Mib
                     temp = lexer.NextSymbol;
                 }
 
-                _ranges.Add(new ValueRange(value1, value2));
+                ValueRange range = new ValueRange(value1, value2);
+
+                value1.Validate(Contains(range.Start), "invalid sub-typing");
+                if (range.End != null)
+                {
+                    if (value2 != null)
+                    {
+                        value2.Validate(Contains((int)range.End), "invalid sub-typing");
+                    }
+                    else
+                    {
+                        value1.Validate(Contains((int)range.End), "invalid sub-typing");
+                    }
+                }
+
+                foreach (ValueRange other in _ranges)
+                {
+                    value1.Validate(range.Contains(other.Start), "invalid sub-typing");
+                    if (other.End != null)
+                    {
+                        value1.Validate(range.Contains((int)other.End), "invalid sub-typing");
+                    }
+                }
+
+                _ranges.Add(range);
             }
         }
 
