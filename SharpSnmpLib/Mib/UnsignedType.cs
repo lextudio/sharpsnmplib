@@ -5,6 +5,12 @@ using System.Text;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
+    /**
+     * As this type is used for Counter32 and TimeTicks as well as Unsigned32
+     * and Gauge32 it incorrectly allows range restrictions of Counter32 and
+     * TimeTicks.  This is ok as currently we do not care about detecting
+     * incorrect MIBs and this doesn't block the decoding of correct MIBs.
+     */
     class UnsignedType : ITypeAssignment
     {
         private string _module;

@@ -15,6 +15,12 @@ namespace Lextm.SharpSnmpLib.Mib
     /// The INTEGER type represents a list of alternatives, or a range of numbers..
     /// Includes Integer32 as it's indistinguishable from INTEGER.
     /// </summary>
+    /**
+     * As this type is used for Integer32 as well as INTEGER it incorrectly
+     * allows enumeration sub-typing of Integer32.  This is ok as currently we
+     * do not care about detecting incorrect MIBs and this doesn't block the
+     * decoding of correct MIBs.
+     */
     internal sealed class IntegerType : ITypeAssignment
     {
         private bool _isEnumeration;
