@@ -55,6 +55,11 @@ namespace Lextm.SharpSnmpLib
         /// <param name="variables">Variables</param>      
         public GetRequestPdu(int requestId, IList<Variable> variables)
         {
+            if (variables == null)
+            {
+                throw new ArgumentNullException("variables");
+            }
+
             RequestId = new Integer32(requestId);
             ErrorStatus = Integer32.Zero;
             ErrorIndex = Integer32.Zero;
@@ -68,6 +73,11 @@ namespace Lextm.SharpSnmpLib
         /// <param name="stream">The stream.</param>
         public GetRequestPdu(Stream stream)
         {
+            if (stream == null)
+            {
+                throw new ArgumentNullException("stream");
+            }
+
             RequestId = (Integer32)DataFactory.CreateSnmpData(stream);
             ErrorStatus = (Integer32)DataFactory.CreateSnmpData(stream);
             ErrorIndex = (Integer32)DataFactory.CreateSnmpData(stream);

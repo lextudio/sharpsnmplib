@@ -7,13 +7,13 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 
-using Lextm.SharpSnmpLib.Messaging;
+using System;
 using NUnit.Framework;
 #pragma warning disable 1591,0618
 namespace Lextm.SharpSnmpLib.Tests
 {
     [TestFixture]
-    public class TestGauge32
+    public class Gauge32TestFixture
     {
         [Test]
         public void TestEqual()
@@ -21,6 +21,18 @@ namespace Lextm.SharpSnmpLib.Tests
             var left = new Gauge32(200);
             var right = new Gauge32(200);
             Assert.AreEqual(left, right);
+// ReSharper disable EqualExpressionComparison
+            Assert.IsTrue(left == left);
+// ReSharper restore EqualExpressionComparison
+            Assert.IsFalse(left == null);
+            Assert.IsFalse(null == right);
+            Assert.IsTrue(left != null);
+            Assert.IsTrue(left.Equals(right));
+            Assert.AreEqual(((uint)200).GetHashCode(), left.GetHashCode());
+            Assert.AreEqual("200", left.ToString());
+
+            Assert.Throws<ArgumentNullException>(() => left.AppendBytesTo(null));
+            Assert.Throws<ArgumentNullException>(() => new Gauge32(0, null));
         }
         
         [Test]

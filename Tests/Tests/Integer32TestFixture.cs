@@ -7,7 +7,7 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
-using Lextm.SharpSnmpLib.Messaging;
+using System.IO;
 using NUnit.Framework;
 #pragma warning disable 1591,0618
 namespace Lextm.SharpSnmpLib.Tests
@@ -16,14 +16,33 @@ namespace Lextm.SharpSnmpLib.Tests
     /// Description of TestInteger32.
     /// </summary>
     [TestFixture]
-    public class TestInteger32
+    public class Integer32TestFixture
     {
+        [Test]
+        public void TestException()
+        {
+            Assert.Throws<ArgumentNullException>(() => new Integer32(0, null));
+            Assert.Throws<ArgumentException>(() => new Integer32(0, new MemoryStream()));
+            Assert.Throws<ArgumentException>(() => new Integer32(-1, new MemoryStream()));
+            Assert.Throws<ArgumentException>(() => new Integer32(6, new MemoryStream()));
+            Assert.Throws<ArgumentNullException>(() => new Integer32(6).AppendBytesTo(null));
+        }
+
         [Test]
         public void TestEqual()
         {
             var left = new Integer32(599);
             var right = new Integer32(599);
             Assert.AreEqual(left, right);
+// ReSharper disable RedundantCast
+// ReSharper disable EqualExpressionComparison
+            Assert.IsTrue((Integer32)null == (Integer32)null);
+// ReSharper restore EqualExpressionComparison
+// ReSharper restore RedundantCast
+            Assert.AreNotEqual(null, right);
+            Assert.AreNotEqual(left, null);
+            Assert.IsTrue(left.Equals(right));
+            Assert.IsTrue(left != null);
         }
         
         [Test]
@@ -41,6 +60,8 @@ namespace Lextm.SharpSnmpLib.Tests
         {
             Integer32 test = new Integer32(100);
             Assert.AreEqual(100, test.ToInt32());
+            Assert.Throws<InvalidCastException>(() => test.ToErrorCode());
+            Assert.Throws<InvalidCastException>(() => new Integer32(-1).ToErrorCode());
             
             Integer32 test2 = new Integer32(new byte[] {0x00});
             Assert.AreEqual(0, test2.ToInt32());

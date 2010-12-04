@@ -131,7 +131,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="right">Right <see cref="EndOfMibView"/> object</param>
         /// <returns>
         /// Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
-        public static bool Equals(EndOfMibView left, EndOfMibView right)
+        private static bool Equals(EndOfMibView left, EndOfMibView right)
         {
             object lo = left;
             object ro = right;

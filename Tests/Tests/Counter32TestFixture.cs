@@ -7,25 +7,12 @@ using NUnit.Framework;
 namespace Lextm.SharpSnmpLib.Tests
 {
     [TestFixture]
-    public class TestCounter32
+    public class Counter32TestFixture
     {
-        // [Test]
-        public void TestExtra()
+        [Test]
+        public void TestException()
         {
-            uint j = 1;
-            const uint i = uint.MinValue;
-            while (i + j < uint.MaxValue)
-            {                
-                Counter32 _int = new Counter32(i + j);
-                byte[] bytes = _int.ToBytes();
-                Counter32 _else = (Counter32)DataFactory.CreateSnmpData(bytes);
-                Assert.AreEqual(i + j, _else.ToUInt32());
-                try {
-                   j = j * 256; 
-                } catch (Exception) {
-                   break; 
-                }                
-            }
+            Assert.Throws<ArgumentNullException>(()=> new Counter32(0).AppendBytesTo(null));
         }
         
         [Test]

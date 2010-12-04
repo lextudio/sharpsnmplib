@@ -48,7 +48,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="variables">Variables</param>
         [Obsolete("Please use other overloaded constructor")]
         public GetNextRequestPdu(int requestId, ErrorCode errorStatus, int errorIndex, IList<Variable> variables)
-            : this(new Integer32(requestId), new Integer32((int)errorStatus), new Integer32(errorIndex), variables)
+            : this(requestId, variables)
         {
         }
         
@@ -58,15 +58,15 @@ namespace Lextm.SharpSnmpLib
         /// <param name="requestId">The request id.</param>
         /// <param name="variables">Variables</param>
         public GetNextRequestPdu(int requestId, IList<Variable> variables)
-            : this(new Integer32(requestId), Integer32.Zero, Integer32.Zero, variables)
         {
-        }
-        
-        private GetNextRequestPdu(Integer32 requestId, Integer32 errorStatus, Integer32 errorIndex, IList<Variable> variables)
-        {
-            RequestId = requestId;
-            ErrorStatus = errorStatus;
-            ErrorIndex = errorIndex;
+            if (variables == null)
+            {
+                throw new ArgumentNullException("variables");
+            }
+
+            RequestId = new Integer32(requestId);
+            ErrorStatus = Integer32.Zero;
+            ErrorIndex = Integer32.Zero;
             Variables = variables;
             _varbindSection = Variable.Transform(variables);
         }
@@ -77,6 +77,11 @@ namespace Lextm.SharpSnmpLib
         /// <param name="stream">The stream.</param>
         public GetNextRequestPdu(Stream stream)
         {
+            if (stream == null)
+            {
+                throw new ArgumentNullException("stream");
+            }
+
             RequestId = (Integer32)DataFactory.CreateSnmpData(stream);
             ErrorStatus = (Integer32)DataFactory.CreateSnmpData(stream);
             ErrorIndex = (Integer32)DataFactory.CreateSnmpData(stream);

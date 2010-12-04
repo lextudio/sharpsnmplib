@@ -48,14 +48,14 @@
     <Reference Include="Moq">
       <HintPath>..\lib\Moq.dll</HintPath>
     </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\lib\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="nunit.framework, Version=2.5.0.9122, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77">
-      <HintPath>..\lib\nunit.framework.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -68,49 +68,60 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Tests\GetRequestPduTestFixture.cs" />
+    <Compile Include="Tests\HeaderTestFixture.cs" />
     <Compile Include="Tests\ListenerBindingTestFixture.cs" />
+    <Compile Include="Tests\MalformedPduTestFixture.cs" />
+    <Compile Include="Tests\ReportPduTestFixture.cs" />
+    <Compile Include="Tests\ResponsePduTestFixture.cs" />
+    <Compile Include="Tests\ScopeTestFixture.cs" />
+    <Compile Include="Tests\SearchResultTestFixture.cs" />
+    <Compile Include="Tests\SecurityParametersTestFixture.cs" />
+    <Compile Include="Tests\SnmpDataExtensionTestFixture.cs" />
+    <Compile Include="Tests\StreamExtensionTestFixture.cs" />
     <Compile Include="Tests\TestSetMessageHandler.cs" />
     <Compile Include="Tests\TestGetV1MessageHandler.cs" />
     <Compile Include="Tests\TestGetNextV1MessageHandler.cs" />
     <Compile Include="Tests\TestDESPrivacyProvider.cs" />
-    <Compile Include="Tests\TestEndOfMibView.cs" />
+    <Compile Include="Tests\EndOfMibViewTestFixture.cs" />
     <Compile Include="Tests\TestGetBulkMessageHandler.cs" />
     <Compile Include="Tests\TestGetMessageHandler.cs" />
     <Compile Include="Tests\TestGetNextMessageHandler.cs" />
     <Compile Include="Tests\TestManager.cs" />
     <Compile Include="Tests\TestByteTool.cs" />
     <Compile Include="Tests\TestConstructHelper.cs" />
-    <Compile Include="Tests\TestCounter32.cs" />
-    <Compile Include="Tests\TestCounter64.cs" />
-    <Compile Include="Tests\TestGauge32.cs" />
+    <Compile Include="Tests\Counter32TestFixture.cs" />
+    <Compile Include="Tests\Counter64TestFixture.cs" />
+    <Compile Include="Tests\Gauge32TestFixture.cs" />
     <Compile Include="Tests\TestGetRequestMessage.cs" />
     <Compile Include="Tests\TestResponseMessage.cs" />
-    <Compile Include="Tests\TestInteger32.cs" />
-    <Compile Include="Tests\TestIP.cs" />
+    <Compile Include="Tests\Integer32TestFixture.cs" />
+    <Compile Include="Tests\IPTestFixture.cs" />
     <Compile Include="Tests\TestLexer.cs" />
     <Compile Include="Tests\TestMD5AuthenticationProvider.cs" />
     <Compile Include="Tests\TestMessageFactory.cs" />
     <Compile Include="Tests\TestMibDocument.cs" />
-    <Compile Include="Tests\TestNoSuchInstance.cs" />
-    <Compile Include="Tests\TestNoSuchObject.cs" />
-    <Compile Include="Tests\TestNull.cs" />
-    <Compile Include="Tests\TestObjectIdentifier.cs" />
+    <Compile Include="Tests\NoSuchInstanceTestFixture.cs" />
+    <Compile Include="Tests\NoSuchObjectTestFixture.cs" />
+    <Compile Include="Tests\NullTestFixture.cs" />
+    <Compile Include="Tests\ObjectIdentifierTestFixture.cs" />
     <Compile Include="Tests\TestObjectRegistry.cs" />
     <Compile Include="Tests\TestObjectTree.cs" />
     <Compile Include="Tests\TestSecurityRecord.cs" />
     <Compile Include="Tests\TestSetV1MessageHandler.cs" />
     <Compile Include="Tests\TestStringUtilities.cs" />
-    <Compile Include="Tests\TestOctetString.cs" />
-    <Compile Include="Tests\TestOpaque.cs" />
+    <Compile Include="Tests\OctetStringTestFixture.cs" />
+    <Compile Include="Tests\OpaqueTestFixture.cs" />
     <Compile Include="Tests\TestParseItemsException.cs" />
-    <Compile Include="Tests\TestSequence.cs" />
+    <Compile Include="Tests\SequenceTestFixture.cs" />
     <Compile Include="Tests\TestDataFactory.cs" />
-    <Compile Include="Tests\TestTimeticks.cs" />
+    <Compile Include="Tests\TimeticksTestFixture.cs" />
     <Compile Include="Tests\TestTrapV1Message.cs" />
     <Compile Include="Tests\TestTrapV1Pdu.cs" />
     <Compile Include="Tests\TestTrapV2Message.cs" />
     <Compile Include="Tests\TestVariable.cs" />
     <Compile Include="Tests\TestWatchDog.cs" />
+    <Compile Include="Tests\TrapV2PduTestFixture.cs" />
     <None Include="Resources\empty.txt" />
     <None Include="Resources\httpmib.txt" />
   </ItemGroup>

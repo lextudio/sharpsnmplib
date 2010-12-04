@@ -43,15 +43,7 @@ namespace Lextm.SharpSnmpLib
             
             _ip = ip;
         }
-        
-        /// <summary>
-        /// Creates an <see cref="IP"/> from raw bytes.
-        /// </summary>
-        /// <param name="raw">Raw bytes</param>
-        internal IP(byte[] raw) : this(raw.Length, new MemoryStream(raw))
-        {
-        }
-        
+
         /// <summary>
         /// Creates an <see cref="IP"/> from a specific <see cref="String"/>.
         /// </summary>
@@ -202,7 +194,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="right">Right <see cref="IP"/> object</param>
         /// <returns>
         /// Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
-        public static bool Equals(IP left, IP right)
+        private static bool Equals(IP left, IP right)
         {
             object lo = left;
             object ro = right;

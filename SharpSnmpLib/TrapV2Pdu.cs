@@ -42,6 +42,16 @@ namespace Lextm.SharpSnmpLib
         [CLSCompliant(false)]
         public TrapV2Pdu(int requestId, ObjectIdentifier enterprise, uint time, IList<Variable> variables)
         {
+            if (enterprise == null)
+            {
+                throw new ArgumentNullException("enterprise");
+            }
+
+            if (variables == null)
+            {
+                throw new ArgumentNullException("variables");
+            }
+
             Enterprise = enterprise;
             RequestId = new Integer32(requestId);
             _time = new TimeTicks(time);
@@ -97,7 +107,7 @@ namespace Lextm.SharpSnmpLib
         /// <value>The error status.</value>
         public Integer32 ErrorStatus
         {
-            get { return Integer32.Zero; }
+            get { throw new NotSupportedException(); }
         }
 
         /// <summary>
@@ -106,7 +116,7 @@ namespace Lextm.SharpSnmpLib
         /// <value>The index of the error.</value>
         public Integer32 ErrorIndex
         {
-            get { return Integer32.Zero; }
+            get { throw new NotSupportedException(); }
         }
 
         #endregion

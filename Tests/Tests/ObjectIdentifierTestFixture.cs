@@ -1,16 +1,42 @@
-﻿using Lextm.SharpSnmpLib.Mib;
+﻿using System;
+using System.Diagnostics;
+using System.IO;
+using Lextm.SharpSnmpLib.Mib;
 using NUnit.Framework;
+
 #pragma warning disable 1591,0618
 namespace Lextm.SharpSnmpLib.Tests
 {
     [TestFixture]
-    public class TestObjectIdentifier
+    public class ObjectIdentifierTestFixture
     {
+        [Test]
+        public void TestException()
+        {
+            Assert.Throws<ArgumentNullException>(() => new ObjectIdentifier((uint[])null));
+            Assert.Throws<ArgumentException>(() => new ObjectIdentifier(new uint[] {1}));
+            Assert.Throws<ArgumentException>(() => new ObjectIdentifier(new uint[] {5, 8}));
+            Assert.Throws<ArgumentException>(() => new ObjectIdentifier(new uint[] {1, 80}));
+            Assert.Throws<ArgumentNullException>(() => new ObjectIdentifier(0, null));
+            Assert.Throws<ArgumentException>(() => new ObjectIdentifier(0, new MemoryStream()));
+// ReSharper disable RedundantCast
+            Assert.Throws<ArgumentNullException>(() => new ObjectIdentifier(new uint[] {1, 3}).CompareTo((ObjectIdentifier)null));
+// ReSharper restore RedundantCast
+            Assert.Throws<ArgumentNullException>(() => ObjectIdentifier.Convert((uint[])null));
+            Assert.Throws<ArgumentNullException>(() => ObjectIdentifier.Convert((string)null));
+            var oid = new ObjectIdentifier(new uint[] { 1, 3 });
+            Assert.Throws<ArgumentException>(() => oid.CompareTo(80));
+            Assert.Throws<ArgumentNullException>(() => ObjectIdentifier.Create(null, 0));
+            Assert.Throws<ArgumentNullException>(() => oid.AppendBytesTo(null));
+        }
+
         [Test]
         public void TestConstructor()
         {
             ObjectIdentifier oid = new ObjectIdentifier(new byte[] { 0x2B, 0x06, 0x99, 0x37 });
             Assert.AreEqual(new uint[] { 1, 3, 6, 3255 }, oid.ToNumerical());
+            var o = ObjectIdentifier.Create(new uint[] {1, 3, 6}, 3255);
+            Assert.AreEqual(oid, o);
         }
         
         [Test]
@@ -49,10 +75,7 @@ namespace Lextm.SharpSnmpLib.Tests
         {
             Assert.Greater(new ObjectIdentifier("1.1"), new ObjectIdentifier("0.0"));
             Assert.Greater(new ObjectIdentifier("0.0.0"), new ObjectIdentifier("0.0"));
-            Assert.AreEqual(new ObjectIdentifier("0.0"), new ObjectIdentifier("0.0"));
-// ReSharper disable RedundantCast
-            Assert.AreEqual((ObjectIdentifier)null, (ObjectIdentifier)null);
-// ReSharper restore RedundantCast
+            Assert.IsTrue(new ObjectIdentifier("0.0") < new ObjectIdentifier("1.1"));
         }
 
         [Test]
@@ -65,14 +88,16 @@ namespace Lextm.SharpSnmpLib.Tests
         [Test]
         public void TestToString()
         {
-            Assert.AreEqual("iso.org.dod.internet.mgmt.mib-2.transmission",
-                            new ObjectIdentifier(new uint[] {1, 3, 6, 1, 2, 1, 10}).ToString(DefaultObjectRegistry.Instance));
+            var transmission = new ObjectIdentifier(new uint[] {1, 3, 6, 1, 2, 1, 10});
+            Assert.AreEqual(".iso.org.dod.internet.mgmt.mib-2.transmission",
+                            transmission.ToString(DefaultObjectRegistry.Instance));
+            Assert.AreEqual(".1.3.6.1.2.1.10", transmission.ToString(null));
         }
 
         [Test]
         public void TestToStringLong()
         {
-            Assert.AreEqual("iso.org.dod.internet.mgmt.mib-2.transmission.100",
+            Assert.AreEqual(".iso.org.dod.internet.mgmt.mib-2.transmission.100",
                             new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 10, 100 }).ToString(DefaultObjectRegistry.Instance));
         }
         
@@ -82,6 +107,13 @@ namespace Lextm.SharpSnmpLib.Tests
             var left = new ObjectIdentifier("1.3.6.3");
             var right = new ObjectIdentifier("1.3.6.3");
             Assert.AreEqual(left, right);
+            Assert.IsTrue(left.Equals(right));
+            Assert.IsTrue(left != null);
+// ReSharper disable RedundantCast
+// ReSharper disable EqualExpressionComparison
+            Assert.IsTrue((ObjectIdentifier)null == (ObjectIdentifier)null);
+// ReSharper restore EqualExpressionComparison
+// ReSharper restore RedundantCast
         }
     }
 }

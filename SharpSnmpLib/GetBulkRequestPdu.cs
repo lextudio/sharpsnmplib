@@ -47,18 +47,17 @@ namespace Lextm.SharpSnmpLib
         /// <param name="maxRepetitions">Max repetitions.</param>
         /// <param name="variables">Variables.</param>
         public GetBulkRequestPdu(int requestId, int nonRepeaters, int maxRepetitions, IList<Variable> variables)
-            : this(new Integer32(requestId), new Integer32(nonRepeaters), new Integer32(maxRepetitions), variables)
         {
-        }
-        
-        private GetBulkRequestPdu(Integer32 requestId, Integer32 nonRepeaters, Integer32 maxRepetitions, IList<Variable> variables)
-        {
-            RequestId = requestId;
-            ErrorStatus = nonRepeaters;
-            ErrorIndex = maxRepetitions;
+            if (variables == null)
+            {
+                throw new ArgumentNullException("variables");
+            }
+
+            RequestId = new Integer32(requestId);
+            ErrorStatus = new Integer32(nonRepeaters);
+            ErrorIndex = new Integer32(maxRepetitions);
             Variables = variables;
             _varbindSection = Variable.Transform(variables);
-            ////_raw = ByteTool.ParseItems(_seq, _nonRepeaters, _maxRepetitions, _varbindSection);
         }
 
         /// <summary>
@@ -67,13 +66,16 @@ namespace Lextm.SharpSnmpLib
         /// <param name="stream">The stream.</param>
         public GetBulkRequestPdu(Stream stream)
         {
+            if (stream == null)
+            {
+                throw new ArgumentNullException("stream");
+            }
+
             RequestId = (Integer32)DataFactory.CreateSnmpData(stream);
             ErrorStatus = (Integer32)DataFactory.CreateSnmpData(stream);
             ErrorIndex = (Integer32)DataFactory.CreateSnmpData(stream);
             _varbindSection = (Sequence)DataFactory.CreateSnmpData(stream);
             Variables = Variable.Transform(_varbindSection);
-            ////_raw = ByteTool.ParseItems(_seq, _nonRepeaters, _maxRepetitions, _varbindSection);
-            ////Debug.Assert(length >= _raw.Length, "length not match");
         }
 
         /// <summary>
@@ -137,7 +139,7 @@ namespace Lextm.SharpSnmpLib
         {
             return string.Format(
                 CultureInfo.InvariantCulture,
-                "GETBULK request PDU: seq: {0}; non-repeaters: {1}; max-repetitions: {2}; variable count: {3}",
+                "GET BULK request PDU: seq: {0}; non-repeaters: {1}; max-repetitions: {2}; variable count: {3}",
                 RequestId, 
                 ErrorStatus, 
                 ErrorIndex, 

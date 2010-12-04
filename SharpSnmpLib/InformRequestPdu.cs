@@ -50,6 +50,16 @@ namespace Lextm.SharpSnmpLib
         [CLSCompliant(false)]
         public InformRequestPdu(int requestId, ObjectIdentifier enterprise, uint time, IList<Variable> variables)
         {
+            if (enterprise == null)
+            {
+                throw new ArgumentNullException("enterprise");
+            }
+
+            if (variables == null)
+            {
+                throw new ArgumentNullException("variables");
+            }
+
             Enterprise = enterprise;
             RequestId = new Integer32(requestId);
             _time = new TimeTicks(time);
@@ -66,6 +76,11 @@ namespace Lextm.SharpSnmpLib
         /// <param name="stream">The stream.</param>
         public InformRequestPdu(Stream stream)
         {
+            if (stream == null)
+            {
+                throw new ArgumentNullException("stream");
+            }
+
             RequestId = (Integer32)DataFactory.CreateSnmpData(stream);
             ErrorStatus = (Integer32)DataFactory.CreateSnmpData(stream);
             ErrorIndex = (Integer32)DataFactory.CreateSnmpData(stream);

@@ -16,18 +16,14 @@ using NUnit.Framework;
 namespace Lextm.SharpSnmpLib.Tests
 {
     [TestFixture]
-    public class TestSequence
+    public class SequenceTestFixture
     {
         [Test]
-        [ExpectedException(typeof(ArgumentException))]
-        public void TestConstructor()
+        public void TestException()
         {
-            List<int> iList = new List<int>();
-            iList.Add(1);
-            iList.Add(2);
-            iList.Add(2);
-
-            new Sequence(iList);
+            Assert.Throws<ArgumentNullException>(() => new Sequence(null));
+            Assert.Throws<ArgumentNullException>(() => new Sequence((IEnumerable<ISnmpData>) null));
+            Assert.Throws<ArgumentNullException>(() => new Sequence(0, null));
         }
 
         [Test]
@@ -39,6 +35,8 @@ namespace Lextm.SharpSnmpLib.Tests
                         new OctetString("TrapTest")));
 
             Sequence a = Variable.Transform(vList);
+            Assert.Throws<ArgumentNullException>(() => a.AppendBytesTo(null));
+            Assert.AreEqual("SNMP SEQUENCE: SNMP SEQUENCE: .1.3.6.1.4.1.2162.1001.21.0; TrapTest; ; ", a.ToString());
             byte[] bytes = a.ToBytes();
             ISnmpData data = DataFactory.CreateSnmpData(bytes);
             Assert.AreEqual(SnmpType.Sequence, data.TypeCode);

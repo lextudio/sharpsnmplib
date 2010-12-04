@@ -130,7 +130,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="right">Right <see cref="Null"/> object</param>
         /// <returns>
         /// Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
-        public static bool Equals(Null left, Null right)
+        private static bool Equals(Null left, Null right)
         {
             object lo = left;
             object ro = right;

@@ -23,6 +23,11 @@ namespace Lextm.SharpSnmpLib.Mib
         
         internal Definition(uint[] id, string name, string parent, string module, string typeString)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException("id");
+            }
+
             _id = id;
             _name = name;
             _parent = parent;
@@ -114,7 +119,10 @@ namespace Lextm.SharpSnmpLib.Mib
             internal set
             {
                 _parentNode = (Definition)value;
-                _parentNode.Append(this);
+                if (_parentNode != null)
+                {
+                    _parentNode.Append(this);
+                }
             }
         }
 

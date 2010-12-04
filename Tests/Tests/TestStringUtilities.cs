@@ -43,7 +43,7 @@ namespace Lextm.SharpSnmpLib.Tests
             Definition mgmt = new Definition(new OidValueAssignment("SNMPV2-SMI", "mgmt", "internet", 2), internet);
             Definition mib2 = new Definition(new OidValueAssignment("SNMPV2-SMI", "mib-2", "mgmt", 1), mgmt);
             Definition system = new Definition(new OidValueAssignment("SNMPV2-SMI", "system", "mib-2", 1), mib2);
-            Assert.AreEqual("iso.org.dod.internet.mgmt.mib-2.system",
+            Assert.AreEqual(".iso.org.dod.internet.mgmt.mib-2.system",
                             new SearchResult(system, new uint[0]).AlternativeText);
         }
     }

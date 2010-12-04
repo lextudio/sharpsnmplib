@@ -7,6 +7,8 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 
+using System;
+using System.Collections.Generic;
 using System.IO;
 using NUnit.Framework;
 #pragma warning disable 1591, 0618
@@ -15,6 +17,20 @@ namespace Lextm.SharpSnmpLib.Tests
     [TestFixture]
     public class TestByteTool
     {
+        [Test]
+        public void TestException()
+        {
+            Assert.Throws<ArgumentNullException>(() => ByteTool.GetRawBytes(null, true));
+            Assert.Throws<ArgumentNullException>(() => ByteTool.ConvertDecimal(null));
+            Assert.Throws<ArgumentNullException>(() => ByteTool.Convert((byte[])null));
+            Assert.Throws<ArgumentNullException>(() => ByteTool.ParseItems(null));
+            Assert.Throws<ArgumentException>(() => ByteTool.ParseItems((ISnmpData)null));
+            Assert.Throws<ArgumentNullException>(() => ByteTool.ParseItems((IEnumerable<ISnmpData>)null));
+            Assert.Throws<ArgumentNullException>(() => ByteTool.Convert((string)null));
+            Assert.Throws<ArgumentException>(() => ByteTool.Convert("**"));
+            Assert.Throws<ArgumentException>(() => ByteTool.Convert("8AB"));
+        }
+
         [Test]
         public void TestConvertDecimal()
         {

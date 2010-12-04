@@ -48,6 +48,11 @@ namespace Lextm.SharpSnmpLib
         /// <param name="variables">Variables</param>
         public ReportPdu(int requestId, ErrorCode errorStatus, int errorIndex, IList<Variable> variables)
         {
+            if (variables == null)
+            {
+                throw new ArgumentNullException("variables");
+            }
+
             RequestId = new Integer32(requestId);
             ErrorStatus = new Integer32((int)errorStatus);
             ErrorIndex = new Integer32(errorIndex);

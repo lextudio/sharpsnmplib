@@ -79,7 +79,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("stream");
             }
 
-            if (length == 0)
+            if (length <= 0)
             {
                 throw new ArgumentException("length cannot be 0.", "length");
             }
@@ -115,7 +115,7 @@ namespace Lextm.SharpSnmpLib
         {
             if (_int > 19 || _int < 0)
             {
-                throw new InvalidOperationException();
+                throw new InvalidCastException();
             }
 
             return (ErrorCode)_int;

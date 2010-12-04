@@ -25,7 +25,6 @@
  */
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -145,25 +144,25 @@ namespace Lextm.SharpSnmpLib
             {
                 foreach (ISnmpData item in items)
                 {
+                    if (item == null)
+                    {
+                        throw new ArgumentException("item in the collection cannot be null", "items");
+                    }
+
                     item.AppendBytesTo(result);
                 }
                 
                 return result.ToArray();
             }
         }
-        
-        internal static byte[] ParseItems(IEnumerable items)
+
+        internal static byte[] ParseItems(IEnumerable<ISnmpData> items)
         {
             if (items == null)
             {
                 throw new ArgumentNullException("items");
             }
 
-            if (!(items is IEnumerable<ISnmpData>))
-            {
-                throw new ArgumentException("items must be IEnumerable<ISnmpData>");
-            }
-            
             using (MemoryStream result = new MemoryStream())
             {
                 foreach (ISnmpData item in items)

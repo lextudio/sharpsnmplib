@@ -67,13 +67,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public override string ToString()
         {
-            StringBuilder result = new StringBuilder("Opaque type: ");
-            foreach (byte b in _raw)
-            {
-                result.Append(b.ToString("X2", CultureInfo.InvariantCulture));
-            }
-            
-            return result.ToString();
+            return ByteTool.Convert(_raw);
         }
 
         /// <summary>

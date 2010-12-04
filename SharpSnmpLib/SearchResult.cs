@@ -121,7 +121,7 @@ namespace Lextm.SharpSnmpLib
                 }
 
                 names.Reverse();
-                StringBuilder result = new StringBuilder(names[0]);
+                StringBuilder result = new StringBuilder(".").Append(names[0]);
                 for (int i = 1; i < names.Count; i++)
                 {
                     result.Append(".").Append(names[i]);

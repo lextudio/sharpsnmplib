@@ -47,12 +47,9 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public IEnumerator GetEnumerator()
         {
-            foreach (ISnmpData data in _list)
-            {
-                yield return data;
-            }
+            return _list.GetEnumerator();
         }
-        
+
         /// <summary>
         /// Creates an <see cref="Sequence"/> instance with varied <see cref="ISnmpData"/> instances.
         /// </summary>
@@ -77,17 +74,11 @@ namespace Lextm.SharpSnmpLib
         /// Creates an <see cref="Sequence"/> instance with varied <see cref="ISnmpData"/> instances.
         /// </summary>
         /// <param name="items"></param>
-        public Sequence(IEnumerable items)
+        public Sequence(IEnumerable<ISnmpData> items)
         {
             if (items == null)
             {
                 throw new ArgumentNullException("items");
-            }
-
-            IEnumerable<ISnmpData> list = items as IEnumerable<ISnmpData>;
-            if (list == null)
-            {
-                throw new ArgumentException("objects must be IEnumerable<ISnmpData>");
             }
 
             foreach (ISnmpData data in items)
@@ -97,14 +88,6 @@ namespace Lextm.SharpSnmpLib
                     _list.Add(data);
                 }
             }            
-        }
-        
-        /// <summary>
-        /// Creates an <see cref="Sequence"/> instance from raw bytes.
-        /// </summary>
-        /// <param name="raw">Raw bytes</param>
-        internal Sequence(byte[] raw) : this(raw.Length, new MemoryStream(raw))
-        {
         }
 
         /// <summary>
@@ -145,10 +128,7 @@ namespace Lextm.SharpSnmpLib
         /// <value></value>
         public ISnmpData this[int index]
         {
-            get
-            {
-                return _list[index];
-            }
+            get { return _list[index]; }
         }
         
         /// <summary>
@@ -156,10 +136,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         public SnmpType TypeCode
         {
-            get
-            {
-                return SnmpType.Sequence;
-            }
+            get { return SnmpType.Sequence; }
         }
         
         /// <summary>

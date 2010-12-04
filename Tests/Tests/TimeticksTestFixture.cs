@@ -15,13 +15,21 @@ using NUnit.Framework;
 namespace Lextm.SharpSnmpLib.Tests
 {
     [TestFixture]
-    public class TestTimeticks
+    public class TimeticksTestFixture
     {
+        [Test]
+        public void TestException()
+        {
+            Assert.Throws<ArgumentNullException>(() => new TimeTicks(0, null));   
+            Assert.Throws<ArgumentNullException>(() => new TimeTicks(0).AppendBytesTo(null));
+        }
+
         [Test]
         public void TestConstructor()
         {
             TimeTicks time = new TimeTicks(15);
             Assert.AreEqual(15, time.ToUInt32());
+            Assert.AreEqual("15 (00:00:00.1500000)", time.ToString());
         }
         
         [Test]
@@ -29,6 +37,7 @@ namespace Lextm.SharpSnmpLib.Tests
         {
             TimeTicks time2 = new TimeTicks(new byte[] { 0x3F, 0xE0 });
             Assert.AreEqual(16352, time2.ToUInt32());
+            Assert.AreEqual(16352.GetHashCode(), time2.GetHashCode());
         }
         [Test]
         public void TestToBytes()
@@ -58,6 +67,11 @@ namespace Lextm.SharpSnmpLib.Tests
             var left = new TimeTicks(800);
             var right = new TimeTicks(800);
             Assert.AreEqual(left, right);
+// ReSharper disable EqualExpressionComparison
+            Assert.IsTrue(left == left);
+// ReSharper restore EqualExpressionComparison
+            Assert.IsTrue(left != null);
+            Assert.IsTrue(left.Equals(right));
         }
     }
 }
