@@ -36,6 +36,8 @@ namespace Lextm.SharpSnmpLib
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu")]
     public class InformRequestPdu : ISnmpPdu
     {
+        private readonly uint[] TimeId = new uint[] { 1, 3, 6, 1, 2, 1, 1, 3, 0 };
+        private readonly uint[] EnterpriseId = new uint[] { 1, 3, 6, 1, 6, 3, 1, 1, 4, 1, 0 };
         private byte[] _raw;
         private readonly Sequence _varbindSection;
         private readonly TimeTicks _time;
@@ -65,8 +67,8 @@ namespace Lextm.SharpSnmpLib
             _time = new TimeTicks(time);
             Variables = variables;
             IList<Variable> full = new List<Variable>(variables);
-            full.Insert(0, new Variable(new uint[] { 1, 3, 6, 1, 2, 1, 1, 3, 0 }, _time));
-            full.Insert(1, new Variable(new uint[] { 1, 3, 6, 1, 6, 3, 1, 1, 4, 1, 0 }, Enterprise));
+            full.Insert(0, new Variable(TimeId, _time));
+            full.Insert(1, new Variable(EnterpriseId, Enterprise));
             _varbindSection = Variable.Transform(full);
         }
 
@@ -82,8 +84,10 @@ namespace Lextm.SharpSnmpLib
             }
 
             RequestId = (Integer32)DataFactory.CreateSnmpData(stream);
-            ErrorStatus = (Integer32)DataFactory.CreateSnmpData(stream);
-            ErrorIndex = (Integer32)DataFactory.CreateSnmpData(stream);
+#pragma warning disable 168
+            Integer32 temp1 = (Integer32)DataFactory.CreateSnmpData(stream); // 0
+            Integer32 temp2 = (Integer32)DataFactory.CreateSnmpData(stream); // 0
+#pragma warning restore 168
             _varbindSection = (Sequence)DataFactory.CreateSnmpData(stream);
             Variables = Variable.Transform(_varbindSection);
             _time = (TimeTicks)Variables[0].Data;
@@ -102,14 +106,20 @@ namespace Lextm.SharpSnmpLib
         /// Gets the error status.
         /// </summary>
         /// <value>The error status.</value>
-        public Integer32 ErrorStatus { get; private set; }
+        public Integer32 ErrorStatus
+        {
+            get { throw new NotSupportedException(); }
+        }
 
         /// <summary>
         /// Gets the index of the error.
         /// </summary>
         /// <value>The index of the error.</value>
-        public Integer32 ErrorIndex { get; private set; }
-
+        public Integer32 ErrorIndex
+        {
+            get { throw new NotSupportedException(); }
+        }
+        
         /// <summary>
         /// Variables.
         /// </summary>
@@ -170,10 +180,10 @@ namespace Lextm.SharpSnmpLib
         {
             return string.Format(
                 CultureInfo.InvariantCulture,
-                "INFORM request PDU: seq: {0}; status: {1}; index: {2}; variable count: {3}",
+                "INFORM request PDU: seq: {0}; enterprise: {1}; time stamp: {2}; variable count: {3}",
                 RequestId,
-                ErrorStatus,
-                ErrorIndex,
+                Enterprise,
+                _time,
                 Variables.Count.ToString(CultureInfo.InvariantCulture));
         }
     }

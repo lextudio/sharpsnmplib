@@ -115,9 +115,9 @@ namespace Lextm.SharpSnmpLib
         }
 
         /// <summary>
-        /// Data count in this <see cref="Sequence"/>.
+        /// Item count in this <see cref="Sequence"/>.
         /// </summary>
-        public int Count
+        public int Length
         {
             get { return _list.Count; }
         }
@@ -137,19 +137,6 @@ namespace Lextm.SharpSnmpLib
         public SnmpType TypeCode
         {
             get { return SnmpType.Sequence; }
-        }
-        
-        /// <summary>
-        /// To byte format.
-        /// </summary>
-        /// <returns></returns>
-        public byte[] ToBytes()
-        {
-            using (MemoryStream result = new MemoryStream())
-            {
-                AppendBytesTo(result);
-                return result.ToArray();
-            }
         }
 
         /// <summary>

@@ -41,42 +41,22 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentNullException("name");
             }
 
-            if (authentication == null)
-            {
-                throw new ArgumentNullException("authentication");
-            }
-
-            if (authenticationPhrase == null)
-            {
-                throw new ArgumentNullException("authenticationPhrase");
-            }
-
-            if (privacy == null)
-            {
-                throw new ArgumentNullException("privacy");
-            }
-
-            if (privacyPhrase == null)
-            {
-                throw new ArgumentNullException("privacyPhrase");
-            }
-
             IAuthenticationProvider authenticationProvider;
             if (string.IsNullOrEmpty(authentication))
             {
                 authenticationProvider = DefaultAuthenticationProvider.Instance;
             }
-            else if (authentication.ToUpperInvariant() == "MD5")
+            else if (string.Compare(authentication, "MD5", StringComparison.OrdinalIgnoreCase) == 0)
             {
                 authenticationProvider = new MD5AuthenticationProvider(authenticationPhrase);
             }
-            else if (authentication.ToUpperInvariant() == "SHA")
+            else if (string.Compare(authentication, "SHA", StringComparison.OrdinalIgnoreCase) == 0)
             {
                 authenticationProvider = new SHA1AuthenticationProvider(authenticationPhrase);
             }
             else
             {
-                throw new ArgumentException("Unknown authentication method: " + authentication, "authentication");
+                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Unknown authentication method: {0}", authentication), "authentication");
             }
 
             IPrivacyProvider privacyProvider;
@@ -84,13 +64,13 @@ namespace Lextm.SharpSnmpLib.Security
             {
                 privacyProvider = new DefaultPrivacyProvider(authenticationProvider);
             }
-            else if (privacy.ToUpperInvariant() == "DES")
+            else if (string.Compare(privacy, "DES", StringComparison.OrdinalIgnoreCase) == 0)
             {
                 privacyProvider = new DESPrivacyProvider(privacyPhrase, authenticationProvider);
             }
             else
             {
-                throw new ArgumentException("Unknown privacy method: " + privacy, "privacy");
+                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Unknown privacy method: {0}", privacy), "privacy");
             }
 
             Name = name;

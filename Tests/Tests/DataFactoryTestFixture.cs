@@ -8,13 +8,24 @@
  */
 
 using System;
+using System.IO;
 using NUnit.Framework;
+
 #pragma warning disable 1591,0618
 namespace Lextm.SharpSnmpLib.Tests
 {
     [TestFixture]
-    public class TestDataFactory
+    public class DataFactoryTestFixture
     {
+        [Test]
+        public void TestException()
+        {
+            Assert.Throws<ArgumentNullException>(() => DataFactory.CreateSnmpData((Stream)null));
+            Assert.Throws<ArgumentNullException>(() => DataFactory.CreateSnmpData(null, 0, 0));
+            Assert.Throws<ArgumentNullException>(() => DataFactory.CreateSnmpData((byte[])null));
+            Assert.Throws<ArgumentNullException>(() => DataFactory.CreateSnmpData(0, null));
+        }
+        
         [Test]
         public void TestCreateObjectIdentifier()
         {
@@ -44,6 +55,7 @@ namespace Lextm.SharpSnmpLib.Tests
             Null n = (Null)data;
             Assert.AreEqual(expected, n.ToBytes());
         }
+        
         [Test]
         public void TestCreateInteger()
         {
@@ -53,6 +65,7 @@ namespace Lextm.SharpSnmpLib.Tests
             Integer32 i = (Integer32)data;
             Assert.AreEqual(0, i.ToInt32());
         }
+        
         [Test]
         public void TestCreateOctetString()
         {
@@ -61,6 +74,7 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual(SnmpType.OctetString, data.TypeCode);
             Assert.AreEqual("public", data.ToString());
         }
+        
         [Test]
         public void TestCreateIP()
         {
@@ -70,6 +84,7 @@ namespace Lextm.SharpSnmpLib.Tests
             IP a = (IP)data;
             Assert.AreEqual("127.0.0.1", a.ToString());
         }
+        
         [Test]
         public void TestTimeticks()
         {
@@ -79,6 +94,7 @@ namespace Lextm.SharpSnmpLib.Tests
             TimeTicks t = (TimeTicks)data;
             Assert.AreEqual(16352, t.ToUInt32());
         }
+        
         [Test]
         public void TestVarbind()
         {
@@ -88,7 +104,7 @@ namespace Lextm.SharpSnmpLib.Tests
             ISnmpData data = DataFactory.CreateSnmpData(expected);
             Assert.AreEqual(SnmpType.Sequence, data.TypeCode);
             Sequence a = (Sequence)data;
-            Assert.AreEqual(2, a.Count);
+            Assert.AreEqual(2, a.Length);
             
             ISnmpData oid = a[0];
             ISnmpData name = a[1];
@@ -99,6 +115,7 @@ namespace Lextm.SharpSnmpLib.Tests
             OctetString s = (OctetString)name;
             Assert.AreEqual("TrapTest", s.ToString());
         }
+        
         [Test]
         public void TestVarbindSection()
         {
@@ -110,10 +127,11 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual(SnmpType.Sequence, data.TypeCode);
             
             Sequence a = (Sequence)data;
-            Assert.AreEqual(1, a.Count);
+            Assert.AreEqual(1, a.Length);
             ISnmpData varbind = a[0];
             Assert.AreEqual(SnmpType.Sequence, varbind.TypeCode);
         }
+        
         [Test]
         public void TestTrapv1Pdu()
         {
@@ -138,6 +156,7 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual(16352, t.TimeStamp.ToUInt32());
             Assert.AreEqual(1, t.Variables.Count);
         }
+        
         [Test]
         public void TestTrapPacket()
         {
@@ -159,7 +178,7 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual(SnmpType.Sequence, data.TypeCode);
             
             Sequence t = (Sequence)data;
-            Assert.AreEqual(3, t.Count);
+            Assert.AreEqual(3, t.Length);
             ISnmpData version = t[0];
             Assert.AreEqual(SnmpType.Integer32, version.TypeCode);
             Assert.AreEqual(1, 1 + ((Integer32)version).ToInt32());

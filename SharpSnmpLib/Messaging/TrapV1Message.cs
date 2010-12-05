@@ -106,7 +106,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("body");
             }
             
-            if (body.Count != 3)
+            if (body.Length != 3)
             {
                 throw new ArgumentException("wrong message body");
             }

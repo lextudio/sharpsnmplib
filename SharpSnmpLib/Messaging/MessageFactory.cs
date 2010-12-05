@@ -132,7 +132,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             Sequence body = (Sequence)array;
-            if (body.Count != 3 && body.Count != 4)
+            if (body.Length != 3 && body.Length != 4)
             {
                 throw new SnmpException("not an SNMP message");
             }
@@ -142,7 +142,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             SecurityParameters parameters;
             IPrivacyProvider privacy;
             Scope scope;
-            if (body.Count == 3)
+            if (body.Length == 3)
             {
                 header = Header.Empty;
                 parameters = new SecurityParameters(null, null, null, (OctetString)body[1], null, null);

@@ -7,18 +7,60 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 
+using System;
 using System.Collections.Generic;
+using System.Text;
+
 using Lextm.SharpSnmpLib.Messaging;
 using Lextm.SharpSnmpLib.Security;
 using NUnit.Framework;
-using System.Text;
 
 #pragma warning disable 1591
 namespace Lextm.SharpSnmpLib.Tests
 {
     [TestFixture]
-    public class TestTrapV1Pdu
+    public class TrapV1PduTestFixture
     {
+        [Test]
+        public void TestException()
+        {
+            Assert.Throws<ArgumentNullException>(() => new TrapV1Pdu(null));
+            Assert.Throws<ArgumentNullException>(() => new TrapV1Pdu((ObjectIdentifier)null, null, null, null, null, null));
+            Assert.Throws<ArgumentNullException>(() => new TrapV1Pdu(new ObjectIdentifier(new uint[] {1, 3, 6, 1, 4, 1, 2162, 1000, 2}), null, null, null, null, null));
+            Assert.Throws<ArgumentNullException>(() => new TrapV1Pdu(new ObjectIdentifier(new uint[] {1, 3, 6, 1, 4, 1, 2162, 1000, 2}),
+                                                                     new IP("127.0.0.1"), null, null, null, null));
+            Assert.Throws<ArgumentNullException>(() => new TrapV1Pdu(new ObjectIdentifier(new uint[] {1, 3, 6, 1, 4, 1, 2162, 1000, 2}),
+                                          new IP("127.0.0.1"),
+                                          new Integer32((int)GenericCode.EnterpriseSpecific),
+                                          null, null, null));
+            Assert.Throws<ArgumentNullException>(() => new TrapV1Pdu(new ObjectIdentifier(new uint[] {1, 3, 6, 1, 4, 1, 2162, 1000, 2}),
+                                          new IP("127.0.0.1"),
+                                          new Integer32((int)GenericCode.EnterpriseSpecific),
+                                          new Integer32(12),
+                                          null, null));
+            Assert.Throws<ArgumentNullException>(() => new TrapV1Pdu(new ObjectIdentifier(new uint[] {1, 3, 6, 1, 4, 1, 2162, 1000, 2}),
+                                          new IP("127.0.0.1"),
+                                          new Integer32((int)GenericCode.EnterpriseSpecific),
+                                          new Integer32(12),
+                                          new TimeTicks(16352),
+                                          null));
+            Variable v = new Variable(new ObjectIdentifier(new uint[] {1,3,6,1,4,1,2162,1001,21,0}), 
+                                      new OctetString("TrapTest"));
+            List<Variable> vList = new List<Variable> {v};
+
+            TrapV1Pdu pdu = new TrapV1Pdu(new ObjectIdentifier(new uint[] {1, 3, 6, 1, 4, 1, 2162, 1000, 2}),
+                                          new IP("127.0.0.1"),
+                                          new Integer32((int)GenericCode.EnterpriseSpecific),
+                                          new Integer32(12),
+                                          new TimeTicks(16352),
+                                          vList);
+            Assert.Throws<ArgumentNullException>(() => pdu.AppendBytesTo(null));
+            
+            Assert.Throws<NotSupportedException>(() => { var test = pdu.RequestId; });
+            Assert.Throws<NotSupportedException>(() => { var test = pdu.ErrorIndex; });
+            Assert.Throws<NotSupportedException>(() => { var test = pdu.ErrorStatus; });
+        }
+        
         [Test]
         public void TestToTrapMessage()
         {
@@ -26,7 +68,7 @@ namespace Lextm.SharpSnmpLib.Tests
                                       new OctetString("TrapTest"));
             List<Variable> vList = new List<Variable> {v};
 
-            TrapV1Pdu pdu = new TrapV1Pdu(new ObjectIdentifier(new uint[] {1, 3, 6, 1, 4, 1, 2162, 1000, 2}),
+            TrapV1Pdu pdu = new TrapV1Pdu(new uint[] {1, 3, 6, 1, 4, 1, 2162, 1000, 2},
                                           new IP("127.0.0.1"),
                                           new Integer32((int)GenericCode.EnterpriseSpecific),
                                           new Integer32(12),
@@ -42,6 +84,7 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual(1, message.Variables().Count);
             Assert.AreEqual(new uint[] {1,3,6,1,4,1,2162,1001,21,0}, message.Variables()[0].Id.ToNumerical());
             Assert.AreEqual("TrapTest", message.Variables()[0].Data.ToString());
+            Assert.AreEqual("SNMPv1 TRAP PDU: agent address: 127.0.0.1; time stamp: 16352 (00:02:43.5200000); enterprise: .1.3.6.1.4.1.2162.1000.2; generic: EnterpriseSpecific; specific: 12; varbind count: 1", pdu.ToString());
         }
         
         [Test]

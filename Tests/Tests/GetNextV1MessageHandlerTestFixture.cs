@@ -11,7 +11,7 @@ using NUnit.Framework;
 namespace Lextm.SharpSnmpLib.Tests
 {
     [TestFixture]
-    public class TestGetNextV1MessageHandler
+    public class GetNextV1MessageHandlerTestFixture
     {
         [Test]
         public void NoError()
@@ -34,6 +34,8 @@ namespace Lextm.SharpSnmpLib.Tests
             var store = new ObjectStore();
             store.Add(new SysDescr());
             store.Add(new SysObjectId());
+            Assert.Throws<ArgumentNullException>(() => handler.Handle(null, null));
+            Assert.Throws<ArgumentNullException>(() => handler.Handle(context, null));
             handler.Handle(context, store);
             var noerror = (ResponseMessage)context.Response;
             Assert.AreEqual(ErrorCode.NoError, noerror.ErrorStatus);
