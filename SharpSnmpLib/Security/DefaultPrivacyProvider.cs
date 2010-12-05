@@ -61,6 +61,16 @@ namespace Lextm.SharpSnmpLib.Security
         /// <returns></returns>
         public ISnmpData Decrypt(ISnmpData data, SecurityParameters parameters)
         {
+            if (data == null)
+            {
+                throw new ArgumentNullException("data");
+            }
+            
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }            
+            
             return data;
         }
 
@@ -72,16 +82,16 @@ namespace Lextm.SharpSnmpLib.Security
         /// <returns></returns>
         public ISnmpData Encrypt(ISnmpData data, SecurityParameters parameters)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException("parameters");
-            }
-            
             if (data == null)
             {
                 throw new ArgumentNullException("data");
             }
-            
+                        
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }            
+          
             if (data.TypeCode == SnmpType.Sequence || data is ISnmpPdu)
             {
                 return data;

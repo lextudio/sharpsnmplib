@@ -114,6 +114,16 @@ namespace Lextm.SharpSnmpLib
             AuthenticationParameters = authenticationParameters;
             PrivacyParameters = privacyParameters;
         }
+        
+        /// <summary>
+        /// Creates an instance of <seealso cref="SecurityParameters"/>.
+        /// </summary>
+        /// <param name="userName">User name.</param>
+        /// <returns></returns>
+        public static SecurityParameters Create(OctetString userName)
+        {
+            return new SecurityParameters(null, null, null, userName, null, null);
+        }
 
         /// <summary>
         /// Converts to <see cref="Sequence"/>.

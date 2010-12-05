@@ -90,7 +90,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 new TimeTicks(TimeStamp),
                 variables);
             _pdu = pdu;
-            Parameters = new SecurityParameters(null, null, null, Community, null, null);
+            Parameters = SecurityParameters.Create(Community);
 
             _bytes = SnmpMessageExtension.PackMessage(Version, Community, pdu).ToBytes();
         }
@@ -125,7 +125,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             Generic = trapPdu.Generic;
             Specific = trapPdu.Specific;
             TimeStamp = trapPdu.TimeStamp.ToUInt32();
-            Parameters = new SecurityParameters(null, null, null, Community, null, null);
+            Parameters = SecurityParameters.Create(Community);
 
             _bytes = SnmpMessageExtension.PackMessage(Version, Community, _pdu).ToBytes();
         }

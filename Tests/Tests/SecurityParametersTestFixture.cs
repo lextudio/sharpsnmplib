@@ -19,7 +19,7 @@ namespace Lextm.SharpSnmpLib.Tests
         [Test]
         public void TestToString()
         {
-            Assert.AreEqual("Security parameters: engineId: ;engineBoots: ;engineTime: ;userName: test; authen hash: ; privacy hash: ", new SecurityParameters(null, null, null, new OctetString("test"), null, null).ToString());
+            Assert.AreEqual("Security parameters: engineId: ;engineBoots: ;engineTime: ;userName: test; authen hash: ; privacy hash: ", SecurityParameters.Create(new OctetString("test")).ToString());
         }
     }
 }

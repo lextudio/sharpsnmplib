@@ -65,7 +65,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             Version = version;
             Header = Header.Empty;
-            Parameters = new SecurityParameters(null, null, null, community, null, null);
+            Parameters = SecurityParameters.Create(community);
             ResponsePdu pdu = new ResponsePdu(
                 requestId,
                 error,

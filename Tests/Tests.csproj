@@ -68,6 +68,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Tests\AuthenticationProviderExtensionTestFixture.cs" />
+    <Compile Include="Tests\DESPrivacyProviderTestFixture.cs" />
+    <Compile Include="Tests\DefaultAuthenticationProviderTestFixture.cs" />
+    <Compile Include="Tests\DefaultPrivacyProviderTestFixture.cs" />
     <Compile Include="Tests\GetBulkRequestPduTestFixture.cs" />
     <Compile Include="Tests\GetNextRequestPduTestFixture.cs" />
     <Compile Include="Tests\GetRequestPduTestFixture.cs" />
@@ -75,12 +79,16 @@
     <Compile Include="Tests\InformRequestPduTestFixture.cs" />
     <Compile Include="Tests\ListenerBindingTestFixture.cs" />
     <Compile Include="Tests\MalformedPduTestFixture.cs" />
+    <Compile Include="Tests\MD5AuthenticationProviderTestFixture.cs" />
+    <Compile Include="Tests\PrivacyProviderExtensionTestFixture.cs" />
     <Compile Include="Tests\ReportPduTestFixture.cs" />
     <Compile Include="Tests\ResponsePduTestFixture.cs" />
+    <Compile Include="Tests\SaltGeneratorTestFixture.cs" />
     <Compile Include="Tests\ScopeTestFixture.cs" />
     <Compile Include="Tests\SearchResultTestFixture.cs" />
     <Compile Include="Tests\SecurityParametersTestFixture.cs" />
     <Compile Include="Tests\SetRequestPduTestFixture.cs" />
+    <Compile Include="Tests\SHA1AuthenticationProviderTestFixture.cs" />
     <Compile Include="Tests\SnmpDataExtensionTestFixture.cs" />
     <Compile Include="Tests\StreamExtensionTestFixture.cs" />
     <Compile Include="Tests\SetMessageHandlerTestFixture.cs" />
@@ -123,6 +131,7 @@
     <Compile Include="Tests\TestTrapV1Message.cs" />
     <Compile Include="Tests\TrapV1PduTestFixture.cs" />
     <Compile Include="Tests\TestTrapV2Message.cs" />
+    <Compile Include="Tests\UserRegistryTestFixture.cs" />
     <Compile Include="Tests\UserTestFixture.cs" />
     <Compile Include="Tests\VariableTestFixture.cs" />
     <Compile Include="Tests\TestWatchDog.cs" />

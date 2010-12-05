@@ -38,6 +38,11 @@ namespace Lextm.SharpSnmpLib.Security
         /// </returns>
         public static bool VerifyHash(this IAuthenticationProvider authen, VersionCode version, Header header, SecurityParameters parameters, ISnmpData scopeBytes, IPrivacyProvider privacy)
         {
+            if (authen == null)
+            {
+                throw new ArgumentNullException("authen");
+            }
+            
             if (header == null)
             {
                 throw new ArgumentNullException("header");
@@ -82,6 +87,11 @@ namespace Lextm.SharpSnmpLib.Security
         /// <param name="privacy">The privacy provider.</param>
         public static void ComputeHash(this IAuthenticationProvider authen, VersionCode version, Header header, SecurityParameters parameters, Scope scope, IPrivacyProvider privacy)
         {
+            if (authen == null)
+            {
+                throw new ArgumentNullException("authen");
+            }
+            
             if (header == null)
             {
                 throw new ArgumentNullException("header");

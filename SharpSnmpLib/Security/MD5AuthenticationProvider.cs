@@ -61,17 +61,17 @@ namespace Lextm.SharpSnmpLib.Security
             {
                 throw new ArgumentNullException("password");
             }
+                        
+            if (engineId == null)
+            {
+                throw new ArgumentNullException("engineId");
+            }
             
             if (password.Length < 8)
             {
                 throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Secret key is too short. Must be >= 8. Current: {0}", password.Length), "password");
             }
             
-            if (engineId == null)
-            {
-                throw new ArgumentNullException("engineId");
-            }
-
             using (MD5 md5 = new MD5CryptoServiceProvider())
             {
                 int passwordIndex = 0;
@@ -124,9 +124,24 @@ namespace Lextm.SharpSnmpLib.Security
         /// <returns></returns>
         public OctetString ComputeHash(VersionCode version, ISegment header, SecurityParameters parameters, ISnmpData data, IPrivacyProvider privacy)
         {
+            if (header == null)
+            {
+                throw new ArgumentNullException("header");
+            }
+            
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            
             if (data == null)
             {
                 throw new ArgumentNullException("data");
+            }
+            
+            if (privacy == null)
+            {
+                throw new ArgumentNullException("privacy");
             }
 
             byte[] key = PasswordToKey(_password, parameters.EngineId.GetRaw());

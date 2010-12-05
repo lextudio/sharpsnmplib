@@ -65,7 +65,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             Enterprise = enterprise;
             TimeStamp = time;
             Header = Header.Empty;
-            Parameters = new SecurityParameters(null, null, null, community, null, null);
+            Parameters = SecurityParameters.Create(community);
             TrapV2Pdu pdu = new TrapV2Pdu(
                 requestId,
                 enterprise,

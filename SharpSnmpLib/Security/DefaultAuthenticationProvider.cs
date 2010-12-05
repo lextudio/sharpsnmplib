@@ -92,17 +92,17 @@ namespace Lextm.SharpSnmpLib.Security
         /// <returns></returns>
         public byte[] PasswordToKey(byte[] password, byte[] engineId)
         {
-            if (engineId == null)
-            {
-                throw new ArgumentNullException("engineId");
-            }
-            
             if (password == null)
             {
                 throw new ArgumentNullException("password");
             }
             
-            // IMPORTANT: this is not needed in this class.
+            if (engineId == null)
+            {
+                throw new ArgumentNullException("engineId");
+            }
+            
+            // IMPORTANT: this function is not used.
             return new byte[0];
         }
 

@@ -39,14 +39,14 @@ namespace Lextm.SharpSnmpLib.Security
         /// <param name="auth">The auth.</param>
         public DESPrivacyProvider(OctetString phrase, IAuthenticationProvider auth)
         {
-            if (auth == null)
-            {
-                throw new ArgumentNullException("auth");
-            }
-            
             if (phrase == null)
             {
                 throw new ArgumentNullException("phrase");
+            }
+            
+            if (auth == null)
+            {
+                throw new ArgumentNullException("auth");
             }
             
             // IMPORTANT: in this way privacy cannot be non-default.
@@ -76,14 +76,19 @@ namespace Lextm.SharpSnmpLib.Security
         /// <exception cref="ArgumentOutOfRangeException">Thrown when encryption key is null or length of the encryption key is too short.</exception>
         public static byte[] Encrypt(byte[] unencryptedData, byte[] key, byte[] privacyParameters)
         {
-            if (privacyParameters == null)
+            if (unencryptedData == null)
             {
-                throw new ArgumentNullException("privacyParameters");
+                throw new ArgumentNullException("unencryptedData");
             }
-            
+
             if (key == null)
             {
                 throw new ArgumentNullException("key");
+            }
+            
+            if (privacyParameters == null)
+            {
+                throw new ArgumentNullException("privacyParameters");
             }
             
             if (key.Length < MinimumKeyLength)
@@ -91,11 +96,6 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Encryption key length has to 32 bytes or more. Current: {0}", key.Length), "key");
             }
             
-            if (unencryptedData == null)
-            {
-                throw new ArgumentNullException("unencryptedData");
-            }
-
             byte[] iv = GetIV(key, privacyParameters);
 
             // DES uses 8 byte keys but we need 16 to encrypt ScopedPdu. Get first 8 bytes and use them as encryption key
@@ -161,6 +161,16 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentNullException("encryptedData");
             }
             
+            if (key == null)
+            {
+                throw new ArgumentNullException("key");
+            }
+            
+            if (privacyParameters == null)
+            {
+                throw new ArgumentNullException("privacyParameters");
+            }
+            
             if (encryptedData.Length == 0)
             {
                 throw new ArgumentException("empty encrypted data", "encryptedData");
@@ -171,21 +181,11 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentException("Encrypted data buffer has to be divisible by 8.", "encryptedData");
             }
             
-            if (privacyParameters == null)
-            {
-                throw new ArgumentNullException("privacyParameters");
-            }
-            
             if (privacyParameters.Length != PrivacyParametersLength)
             {
                 throw new ArgumentOutOfRangeException("privacyParameters", "Privacy parameters argument has to be 8 bytes long");
             }
 
-            if (key == null)
-            {
-                throw new ArgumentNullException("key");
-            }
-            
             if (key.Length < MinimumKeyLength)
             {
                 throw new ArgumentOutOfRangeException("key", "Decryption key has to be at least 16 bytes long.");
@@ -248,7 +248,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// <returns>8 byte DES encryption password</returns>
         private static byte[] GetKey(byte[] privacyPassword)
         {
-            if (privacyPassword == null || privacyPassword.Length < 16)
+            if (privacyPassword.Length < 16)
             {
                 throw new ArgumentException("Invalid privacy key length.", "privacyPassword");
             }
@@ -298,16 +298,16 @@ namespace Lextm.SharpSnmpLib.Security
         /// <returns></returns>
         public ISnmpData Decrypt(ISnmpData data, SecurityParameters parameters)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException("parameters");
-            }
-            
             if (data == null)
             {
                 throw new ArgumentNullException("data");
             }
 
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            
             var code = data.TypeCode;
             if (code != SnmpType.OctetString)
             {
@@ -351,6 +351,11 @@ namespace Lextm.SharpSnmpLib.Security
             {
                 throw new ArgumentNullException("parameters");
             }
+            
+            if (data.TypeCode != SnmpType.Sequence && !(data is ISnmpPdu))
+            {
+                throw new ArgumentException("unencrypted data is expected.", "data");
+            }        
             
             byte[] pkey = AuthenticationProvider.PasswordToKey(_phrase.GetRaw(), parameters.EngineId.GetRaw());
             byte[] bytes = data.ToBytes();

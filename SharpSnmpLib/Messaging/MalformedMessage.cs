@@ -39,7 +39,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             Header = new Header(new Integer32(messageId), null, null);
-            Parameters = new SecurityParameters(null, null, null, user, null, null);
+            Parameters = SecurityParameters.Create(user);
         }
 
         /// <summary>
