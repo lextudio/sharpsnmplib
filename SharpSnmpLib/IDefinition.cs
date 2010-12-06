@@ -69,5 +69,7 @@ namespace Lextm.SharpSnmpLib
         {
             get;
         }
+
+        string DisplayHint { get; }
     }
 }

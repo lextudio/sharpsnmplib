@@ -39,6 +39,11 @@ namespace Lextm.SharpSnmpLib.Mib
             }
         }
 
+        public override string Name
+        {
+            get { return _name; }
+        }
+
         public bool Contains(int p)
         {
             foreach (ValueRange range in _size)

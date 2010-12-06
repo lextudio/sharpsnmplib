@@ -69,7 +69,6 @@
     <Compile Include="Mib\ImportsFrom.cs" />
     <Compile Include="Mib\IntegerType.cs" />
     <Compile Include="Mib\IpAddressType.cs" />
-    <Compile Include="Mib\ITypeAssignment.cs" />
     <Compile Include="Mib\Macro.cs" />
     <Compile Include="Mib\MaxAccess.cs" />
     <Compile Include="Mib\ModuleCompliance.cs" />

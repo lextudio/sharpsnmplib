@@ -17,6 +17,7 @@ namespace Lextm.SharpSnmpLib.Mib
         private readonly IDictionary<string, MibModule> _pendings = new Dictionary<string, MibModule>();
         private readonly IDictionary<string, Definition> _nameTable;
         private readonly Definition _root;
+        private readonly IDictionary<string, ITypeAssignment> _types = new Dictionary<string, ITypeAssignment>();
         private static readonly ILog Logger = LogManager.GetLogger("Lextm.SharpSnmpLib.Mib");
         
         /// <summary>
@@ -197,13 +198,34 @@ namespace Lextm.SharpSnmpLib.Mib
         private void Parse(IModule module)
         {
             Stopwatch watch = new Stopwatch();
+            AddTypes(module);
             AddNodes(module);
             Logger.InfoFormat(CultureInfo.InvariantCulture, "{0}-ms used to assemble {1}", watch.ElapsedMilliseconds, module.Name);
             watch.Stop();
         }
 
+        private void AddTypes(IModule module)
+        {
+            foreach (KeyValuePair<string, ITypeAssignment> pair in module.Types)
+            {
+                if (!_types.ContainsKey(pair.Key))
+                {
+                    _types.Add(pair);
+                }
+            }
+        }
+
         private Definition CreateSelf(IEntity node)
         {
+            ObjectType o = node as ObjectType;
+            if (o != null)
+            {
+                TypeAssignment syn = o.Syntax as TypeAssignment;
+                if (syn != null && _types.ContainsKey(syn.Value))
+                {
+                    o.Syntax = _types[syn.Value];
+                }
+            }
             /* algorithm 2: slower, dropped
             IDefinition parent = Find(node.Parent);
             if (parent == null)

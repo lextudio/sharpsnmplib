@@ -8,6 +8,7 @@
  */
 
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
@@ -221,7 +222,7 @@ namespace Lextm.SharpSnmpLib.Mib
             next.Add(result.Left);
             return result;
         }
-        
+
         /// <summary>
         /// Module name.
         /// </summary>
@@ -274,6 +275,18 @@ namespace Lextm.SharpSnmpLib.Mib
                 return result;
             }
         }
+
+        public IDictionary<string, ITypeAssignment> Types
+        {
+            get
+            {
+                return _tokens.Where(token => token is ITypeAssignment)
+                              .Cast<ITypeAssignment>()
+                              .Where(type => !string.IsNullOrEmpty(type.Name))
+                              .ToDictionary(type => type.Name);
+            }
+        }
+
         
         public IList<string> Dependents
         {

@@ -335,5 +335,11 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             get { return _description; }
         }
+
+        public ITypeAssignment Syntax
+        {
+            get { return _syntax; }
+            internal set { _syntax = value; }
+        }
     }
 }

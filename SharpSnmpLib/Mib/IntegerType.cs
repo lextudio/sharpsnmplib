@@ -26,6 +26,7 @@ namespace Lextm.SharpSnmpLib.Mib
         private bool _isEnumeration;
         private IDictionary<string, int> _map;
         private IList<ValueRange> _ranges;
+        private string _name;
 
         /// <summary>
         /// Creates an <see cref="IntegerType"/> instance.
@@ -37,6 +38,8 @@ namespace Lextm.SharpSnmpLib.Mib
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "name")]
         public IntegerType(string module, string name, Lexer lexer)
         {
+            _name = name;
+
             Symbol temp = lexer.NextNonEOLSymbol;
             if (temp == Symbol.OpenBracket)
             {
@@ -64,6 +67,7 @@ namespace Lextm.SharpSnmpLib.Mib
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "name")]
         public IntegerType(string module, string name, IEnumerator<Symbol> enumerator, ref Symbol temp)
         {
+            _name = name;
             temp = enumerator.NextNonEOLSymbol();
             if (temp == Symbol.OpenBracket)
             {
@@ -77,6 +81,11 @@ namespace Lextm.SharpSnmpLib.Mib
                 _ranges = DecodeRanges(enumerator);
                 temp = enumerator.NextNonEOLSymbol();
             }
+        }
+
+        public override string Name
+        {
+            get { return _name; }
         }
 
         public bool IsEnumeration

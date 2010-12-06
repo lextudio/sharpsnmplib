@@ -2,7 +2,7 @@
 
 namespace Lextm.SharpSnmpLib.Mib
 {
-    internal sealed class TextualConvention : IConstruct
+    internal sealed class TextualConvention : ITypeAssignment
     {
         private string _name;
         private string _displayHint;

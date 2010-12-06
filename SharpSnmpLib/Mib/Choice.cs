@@ -14,17 +14,20 @@ namespace Lextm.SharpSnmpLib.Mib
     /// </summary>
     internal sealed class Choice : ITypeAssignment
     {
+        private string _name;
+
         /// <summary>
         /// Creates a <see cref="Choice"/> instance.
         /// </summary>
         /// <param name="module"></param>
         /// <param name="name"></param>
         /// <param name="lexer"></param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "name")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "module")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "temp")]
         public Choice(string module, string name, Lexer lexer)
         {
+            _name = name;
+
             Symbol temp;
             while ((temp = lexer.NextSymbol) != Symbol.OpenBracket)
             {
@@ -33,6 +36,11 @@ namespace Lextm.SharpSnmpLib.Mib
             while ((temp = lexer.NextSymbol) != Symbol.CloseBracket)
             {
             }
+        }
+
+        public string Name
+        {
+            get { return _name; }
         }
     }
 }

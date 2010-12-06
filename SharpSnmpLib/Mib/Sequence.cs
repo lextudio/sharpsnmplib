@@ -15,6 +15,8 @@ namespace Lextm.SharpSnmpLib.Mib
     /// </summary>
     internal sealed class Sequence : ITypeAssignment
     {
+        private string _name;
+
         /// <summary>
         /// Creates a <see cref="Sequence"/> instance.
         /// </summary>
@@ -25,6 +27,7 @@ namespace Lextm.SharpSnmpLib.Mib
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "name")]
         public Sequence(string module, string name, Lexer lexer)
         {
+            _name = name;
             // parse between ( )
             Symbol temp = lexer.NextNonEOLSymbol; 
             int bracketSection = 0;
@@ -63,6 +66,11 @@ namespace Lextm.SharpSnmpLib.Mib
                     bracketSection--;
                 }
             }
+        }
+
+        public string Name
+        {
+            get { return _name; }
         }
     }
 }

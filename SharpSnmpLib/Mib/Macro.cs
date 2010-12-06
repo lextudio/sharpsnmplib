@@ -4,11 +4,13 @@ namespace Lextm.SharpSnmpLib.Mib
 {
     internal sealed class Macro : ITypeAssignment
     {
+        private string _name;
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "temp")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "header")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "module")]
         public Macro(string module, IList<Symbol> header, Lexer lexer)
         {
+            _name = header[0].ToString();
             Symbol temp;
             while ((temp = lexer.NextSymbol) != Symbol.Begin)
             {                
@@ -17,6 +19,11 @@ namespace Lextm.SharpSnmpLib.Mib
             while ((temp = lexer.NextSymbol) != Symbol.End)
             {
             }
+        }
+
+        public string Name
+        {
+            get { return _name; }
         }
     }
 }

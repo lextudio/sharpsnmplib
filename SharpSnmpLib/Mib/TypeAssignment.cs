@@ -80,5 +80,15 @@ namespace Lextm.SharpSnmpLib.Mib
                 return _left;
             }
         }
+
+        public override string Name
+        {
+            get { return _name; }
+        }
+
+        public string Value
+        {
+            get { return _value; }
+        }
     }
 }

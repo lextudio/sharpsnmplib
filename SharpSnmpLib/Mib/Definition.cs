@@ -58,6 +58,16 @@ namespace Lextm.SharpSnmpLib.Mib
             _value = entity.Value;
             _parentNode.Append(this);
             Type = DetermineType(entity.GetType().ToString(), _name, _parentNode);
+
+            ObjectType ot = entity as ObjectType;
+            if (ot != null)
+            {
+                TextualConvention tc = ot.Syntax as TextualConvention;
+                if (tc != null)
+                {
+                    DisplayHint = tc.DisplayHint;
+                }
+            }
         }
 
         internal void DetermineType(IDefinition parent)
@@ -247,5 +257,7 @@ namespace Lextm.SharpSnmpLib.Mib
             // TODO: implement this.
             get { return string.Empty; }
         }
+
+        public string DisplayHint { get; private set; }
     }
 }

@@ -21,5 +21,10 @@ namespace Lextm.SharpSnmpLib.Mib
             _module = module;
             _name = name;
         }
+
+        public string Name
+        {
+            get { return _name; }
+        }
     }
 }
