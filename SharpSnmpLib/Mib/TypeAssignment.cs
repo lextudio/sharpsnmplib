@@ -20,7 +20,7 @@ namespace Lextm.SharpSnmpLib.Mib
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         private string _name;
         private readonly Symbol _left;
-        private string _type;
+        private string _value;
         
         /// <summary>
         /// Creates an <see cref="TypeAssignment"/>.
@@ -33,7 +33,7 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             _module = module;
             _name = name;
-            _type = last.ToString();
+            _value = last.ToString();
             
             Symbol temp;
             Symbol veryPrevious = null;
@@ -57,11 +57,7 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             _module = module;
             _name = name;
-            _type = temp.ToString();
-            if (_type == "DisplayString")
-            {
-                int i = 0;
-            }
+            _value = temp.ToString();
 
             temp = enumerator.NextNonEOLSymbol();
 

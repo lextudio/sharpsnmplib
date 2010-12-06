@@ -40,160 +40,39 @@ namespace Lextm.SharpSnmpLib.Mib
             temp.Expect(Symbol.ObjectType);
             temp = enumerator.NextNonEOLSymbol();
 
-            temp.Expect(Symbol.Syntax);
-            temp = enumerator.NextNonEOLSymbol();
+            _syntax         = ParseSyntax       (enumerator, ref temp);
+            _units          = ParseUnits        (enumerator, ref temp);
+            _access         = ParseAccess       (enumerator, ref temp);
+            _status         = ParseStatus       (enumerator, ref temp);
+            _description    = ParseDescription  (enumerator, ref temp);
+            _reference      = ParseReference    (enumerator, ref temp);
+            _indices        = ParseIndices      (enumerator, ref temp);
+            _augment        = ParseAugments     (enumerator, ref temp);
+            _defVal         = ParseDefVal       (enumerator, ref temp);
+        }
 
-            if (temp == Symbol.Bits)
-            {
-                _syntax = new BitsType(_module, string.Empty, enumerator);
-                temp = enumerator.NextNonEOLSymbol();
-            }
-            else if (temp == Symbol.Integer || temp == Symbol.Integer32)
-            {
-                _syntax = new IntegerType(_module, string.Empty, enumerator, ref temp);
-            }
-            else if (temp == Symbol.Octet)
-            {
-                temp = enumerator.NextNonEOLSymbol();
-
-                temp.Expect(Symbol.String);
-                _syntax = new OctetStringType(_module, string.Empty, enumerator, ref temp);
-            }
-            else if (temp == Symbol.Opaque)
-            {
-                _syntax = new OctetStringType(_module, string.Empty, enumerator, ref temp);
-            }
-            else if (temp == Symbol.IpAddress)
-            {
-                _syntax = new IpAddressType(_module, string.Empty, enumerator);
-                temp = enumerator.NextNonEOLSymbol();
-            }
-            else if (temp == Symbol.Counter64)
-            {
-                _syntax = new Counter64Type(_module, string.Empty, enumerator);
-                temp = enumerator.NextNonEOLSymbol();
-            }
-            else if (temp == Symbol.Unsigned32 || temp == Symbol.Counter32 || temp == Symbol.Gauge32 || temp == Symbol.TimeTicks)
-            {
-                _syntax = new UnsignedType(_module, string.Empty, enumerator, ref temp);
-            }
-            else if (temp == Symbol.Object)
-            {
-                temp = enumerator.NextNonEOLSymbol();
-
-                temp.Expect(Symbol.Identifier);
-                _syntax = new ObjectIdentifierType(_module, string.Empty, enumerator);
-                temp = enumerator.NextNonEOLSymbol();
-            }
-            else if (temp == Symbol.Sequence)
-            {
-                temp = enumerator.NextNonEOLSymbol();
-
-                temp.Expect(Symbol.Of);
-                temp = enumerator.NextNonEOLSymbol();
-
-                _syntax = new TypeAssignment(_module, string.Empty, enumerator, ref temp);
-            }
-            else
-            {
-                _syntax = new TypeAssignment(_module, string.Empty, enumerator, ref temp);
-            }
-
-
-            if (temp == Symbol.Units)
-            {
-                temp = enumerator.NextNonEOLSymbol();
-
-                _units = temp.ToString();
-                temp = enumerator.NextNonEOLSymbol();
-            }
-
-            if (temp == Symbol.MaxAccess || temp == Symbol.Access)
-            {
-                temp = enumerator.NextNonEOLSymbol();
-
-                switch (temp.ToString())
-                {
-                    case "not-accessible":
-                        _access = MaxAccess.notAccessible;
-                        break;
-                    case "accessible-for-notify":
-                        _access = MaxAccess.accessibleForNotify;
-                        break;
-                    case "read-only":
-                        _access = MaxAccess.readOnly;
-                        break;
-                    case "read-write":
-                        _access = MaxAccess.readWrite;
-                        break;
-                    case "read-create":
-                        _access = MaxAccess.readCreate;
-                        break;
-                    case "write-only":
-                        _access = MaxAccess.readWrite;
-                        break;
-                    default:
-                        temp.Validate(true, "Invalid access");
-                        break;
-                }
-            }
-            else
-            {
-                temp.Validate(true, "missing access");
-            }
-
-            temp = enumerator.NextNonEOLSymbol();
-
-            temp.Expect(Symbol.Status);
-            temp = enumerator.NextNonEOLSymbol();
-
-            try
-            {
-                _status = (Status)Enum.Parse(typeof(Status), temp.ToString());
-                temp = enumerator.NextNonEOLSymbol();
-            }
-            catch (ArgumentException)
-            {
-                temp.Validate(true, "Invalid status");
-            }
-
-            if (temp == Symbol.Description)
-            {
-                temp = enumerator.NextNonEOLSymbol();
-
-                _description = temp.ToString().Trim(new char[] { '"' });
-                temp = enumerator.NextNonEOLSymbol();
-            }
-
-            if (temp == Symbol.Reference)
-            {
-                temp = enumerator.NextNonEOLSymbol();
-
-                _reference = temp.ToString();
-                temp = enumerator.NextNonEOLSymbol();
-            }
-
-            if (temp == Symbol.Index)
-            {
-                temp = enumerator.NextNonEOLSymbol();
-
-                _indices = ParseIndexTypes(enumerator);
-                temp = enumerator.NextNonEOLSymbol();
-            }
-            else if (temp == Symbol.Augments)
+        private static string ParseAugments(IEnumerator<Symbol> enumerator, ref Symbol temp)
+        {
+            string augment = null;
+            if (temp == Symbol.Augments)
             {
                 temp = enumerator.NextNonEOLSymbol();
 
                 temp.Expect(Symbol.OpenBracket);
                 temp = enumerator.NextNonEOLSymbol();
 
-                _augment = temp.ToString();
+                augment = temp.ToString();
                 temp = enumerator.NextNonEOLSymbol();
 
                 temp.Expect(Symbol.CloseBracket);
                 temp = enumerator.NextNonEOLSymbol();
             }
+            return augment;
+        }
 
+        private static Symbol ParseDefVal(IEnumerator<Symbol> enumerator, ref Symbol temp)
+        {
+            Symbol defVal = null;
             if (temp == Symbol.DefVal)
             {
                 temp = enumerator.NextNonEOLSymbol();
@@ -221,30 +100,208 @@ namespace Lextm.SharpSnmpLib.Mib
                 }
                 else
                 {
-                    _defVal = temp;
+                    defVal = temp;
+                    temp = enumerator.NextNonEOLSymbol();
+                }
+            }
+            return defVal;
+        }
+
+        private static IList<string> ParseIndices(IEnumerator<Symbol> enumerator, ref Symbol temp)
+        {
+            IList<string> indices = null;
+            if (temp == Symbol.Index)
+            {
+                temp = enumerator.NextNonEOLSymbol();
+
+                indices = new List<string>();
+
+                while (temp != Symbol.CloseBracket)
+                {
+                    if (temp != Symbol.Comma)
+                    {
+                        indices.Add(temp.ToString());
+                    }
                     temp = enumerator.NextNonEOLSymbol();
                 }
 
-
+                temp = enumerator.NextNonEOLSymbol();
             }
+            return indices;
         }
 
-        private IList<string> ParseIndexTypes(IEnumerator<Symbol> enumerator)
+        private static string ParseReference(IEnumerator<Symbol> enumerator, ref Symbol temp)
         {
-            IList<string> list = new List<string>();
-            Symbol temp = enumerator.Current; enumerator.MoveNext();
-
-            while (temp != Symbol.CloseBracket)
+            string reference = null;
+            if (temp == Symbol.Reference)
             {
-                if (temp != Symbol.Comma && temp != Symbol.EOL)
+                temp = enumerator.NextNonEOLSymbol();
+
+                reference = temp.ToString();
+                temp = enumerator.NextNonEOLSymbol();
+            }
+            return reference;
+        }
+
+        private static string ParseDescription(IEnumerator<Symbol> enumerator, ref Symbol temp)
+        {
+            string description = null;
+            if (temp == Symbol.Description)
+            {
+                temp = enumerator.NextNonEOLSymbol();
+
+                description = temp.ToString().Trim(new char[] { '"' });
+                temp = enumerator.NextNonEOLSymbol();
+            }
+            return description;
+        }
+
+        private static Status ParseStatus(IEnumerator<Symbol> enumerator, ref Symbol temp)
+        {
+            Status status = Status.obsolete;
+
+            temp.Expect(Symbol.Status);
+            temp = enumerator.NextNonEOLSymbol();
+
+            try
+            {
+                status = (Status)Enum.Parse(typeof(Status), temp.ToString());
+                temp = enumerator.NextNonEOLSymbol();
+            }
+            catch (ArgumentException)
+            {
+                temp.Validate(true, "Invalid status");
+            }
+            return status;
+        }
+
+        private static MaxAccess ParseAccess(IEnumerator<Symbol> enumerator, ref Symbol temp)
+        {
+            MaxAccess access = MaxAccess.notAccessible;
+
+            if (temp == Symbol.MaxAccess || temp == Symbol.Access)
+            {
+                temp = enumerator.NextNonEOLSymbol();
+
+                switch (temp.ToString())
                 {
-                    list.Add(temp.ToString());
+                    case "not-accessible":
+                        access = MaxAccess.notAccessible;
+                        break;
+                    case "accessible-for-notify":
+                        access = MaxAccess.accessibleForNotify;
+                        break;
+                    case "read-only":
+                        access = MaxAccess.readOnly;
+                        break;
+                    case "read-write":
+                        access = MaxAccess.readWrite;
+                        break;
+                    case "read-create":
+                        access = MaxAccess.readCreate;
+                        break;
+                    case "write-only":
+                        access = MaxAccess.readWrite;
+                        break;
+                    default:
+                        temp.Validate(true, "Invalid access");
+                        break;
                 }
-                enumerator.MoveNext();
-                temp = enumerator.Current;
+            }
+            else
+            {
+                temp.Validate(true, "missing access");
             }
 
-            return list;
+            temp = enumerator.NextNonEOLSymbol();
+            return access;
+        }
+
+        private static string ParseUnits(IEnumerator<Symbol> enumerator, ref Symbol temp)
+        {
+            string units = null;
+
+            if (temp == Symbol.Units)
+            {
+                temp = enumerator.NextNonEOLSymbol();
+
+                units = temp.ToString();
+                temp = enumerator.NextNonEOLSymbol();
+            }
+
+            return units;
+        }
+
+        private static ITypeAssignment ParseSyntax(IEnumerator<Symbol> enumerator, ref Symbol temp)
+        {
+            ITypeAssignment syntax;
+
+            temp.Expect(Symbol.Syntax);
+            temp = enumerator.NextNonEOLSymbol();
+
+            if (temp == Symbol.Bits)
+            {
+                syntax = new BitsType(string.Empty, string.Empty, enumerator);
+                temp = enumerator.NextNonEOLSymbol();
+            }
+            else if (temp == Symbol.Integer || temp == Symbol.Integer32)
+            {
+                syntax = new IntegerType(string.Empty, string.Empty, enumerator, ref temp);
+            }
+            else if (temp == Symbol.Octet)
+            {
+                temp = enumerator.NextNonEOLSymbol();
+
+                temp.Expect(Symbol.String);
+                syntax = new OctetStringType(string.Empty, string.Empty, enumerator, ref temp);
+            }
+            else if (temp == Symbol.Opaque)
+            {
+                syntax = new OctetStringType(string.Empty, string.Empty, enumerator, ref temp);
+            }
+            else if (temp == Symbol.IpAddress)
+            {
+                syntax = new IpAddressType(string.Empty, string.Empty, enumerator);
+                temp = enumerator.NextNonEOLSymbol();
+            }
+            else if (temp == Symbol.Counter64)
+            {
+                syntax = new Counter64Type(string.Empty, string.Empty, enumerator);
+                temp = enumerator.NextNonEOLSymbol();
+            }
+            else if (temp == Symbol.Unsigned32 || temp == Symbol.Counter32 || temp == Symbol.Gauge32 || temp == Symbol.TimeTicks)
+            {
+                syntax = new UnsignedType(string.Empty, string.Empty, enumerator, ref temp);
+            }
+            else if (temp == Symbol.Object)
+            {
+                temp = enumerator.NextNonEOLSymbol();
+
+                temp.Expect(Symbol.Identifier);
+                syntax = new ObjectIdentifierType(string.Empty, string.Empty, enumerator);
+                temp = enumerator.NextNonEOLSymbol();
+            }
+            else if (temp == Symbol.Sequence)
+            {
+                temp = enumerator.NextNonEOLSymbol();
+
+                if (temp == Symbol.Of)
+                {
+                    temp = enumerator.NextNonEOLSymbol();
+                    syntax = new TypeAssignment(string.Empty, string.Empty, enumerator, ref temp);
+                }
+                else
+                {
+                    syntax = new Sequence(string.Empty, string.Empty, enumerator);
+                    temp = enumerator.NextNonEOLSymbol();
+                }
+            }
+            else
+            {
+                syntax = new TypeAssignment(string.Empty, string.Empty, enumerator, ref temp);
+            }
+
+            return syntax;
         }
 
         private static bool IsProperty(Symbol sym)

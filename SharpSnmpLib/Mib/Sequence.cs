@@ -7,6 +7,7 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 
+using System.Collections.Generic;
 namespace Lextm.SharpSnmpLib.Mib
 {
     /// <summary>
@@ -32,6 +33,27 @@ namespace Lextm.SharpSnmpLib.Mib
             while (bracketSection > 0)
             {
                 temp = lexer.NextNonEOLSymbol;
+                if (temp == Symbol.OpenBracket)
+                {
+                    bracketSection++;
+                }
+                else if (temp == Symbol.CloseBracket)
+                {
+                    bracketSection--;
+                }
+            }
+        }
+
+        public Sequence(string module, string name, IEnumerator<Symbol> enumerator)
+        {
+            // parse between ( )
+            Symbol temp = enumerator.NextNonEOLSymbol();
+            int bracketSection = 0;
+            temp.Expect(Symbol.OpenBracket);
+            bracketSection++;
+            while (bracketSection > 0)
+            {
+                temp = enumerator.NextNonEOLSymbol();
                 if (temp == Symbol.OpenBracket)
                 {
                     bracketSection++;
