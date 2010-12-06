@@ -112,8 +112,9 @@
     <Compile Include="Pipeline\ILogger.cs" />
     <Compile Include="Pipeline\IMembershipProvider.cs" />
     <Compile Include="Pipeline\IMessageHandler.cs" />
-    <Compile Include="Pipeline\InformMessageHandler.cs" />
+    <Compile Include="Pipeline\InformRequestMessageHandler.cs" />
     <Compile Include="Pipeline\InformRequestMessageReceivedEventArgs.cs" />
+    <Compile Include="Pipeline\ISnmpContext.cs" />
     <Compile Include="Pipeline\ISnmpObject.cs" />
     <Compile Include="Pipeline\MessageHandlerFactory.cs" />
     <Compile Include="Pipeline\NormalSnmpContext.cs" />

@@ -15,6 +15,7 @@
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
+using System;
 using Lextm.SharpSnmpLib.Messaging;
 
 namespace Lextm.SharpSnmpLib.Pipeline
@@ -30,8 +31,17 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <param name="context">The context.</param>
         /// <param name="store">The object store.</param>
         /// <returns></returns>
-        public void Handle(SnmpContext context, ObjectStore store)
+        public void Handle(ISnmpContext context, ObjectStore store)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException("context");
+            }
+
+            if (store == null)
+            {
+                throw new ArgumentNullException("store");
+            }
         }
     }
 }

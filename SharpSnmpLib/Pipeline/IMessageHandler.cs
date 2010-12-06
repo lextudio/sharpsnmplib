@@ -36,6 +36,6 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <param name="context">The context.</param>
         /// <param name="store">The object store.</param>
         /// <returns></returns>
-        void Handle(SnmpContext context, ObjectStore store);
+        void Handle(ISnmpContext context, ObjectStore store);
     }
 }

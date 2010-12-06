@@ -34,8 +34,23 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <param name="binding">The binding.</param>
         public InformRequestMessageReceivedEventArgs(IPEndPoint sender, InformRequestMessage request, IListenerBinding binding)
         {
+            if (sender == null)
+            {
+                throw new ArgumentNullException("sender");
+            }
+
+            if (request == null)
+            {
+                throw new ArgumentNullException("request");
+            }
+
+            if (binding == null)
+            {
+                throw new ArgumentNullException("binding");
+            }
+
             Sender = sender;
-            InformRequest = request;
+            InformRequestMessage = request;
             Binding = binding;
         }
 
@@ -49,7 +64,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// Gets or sets the request.
         /// </summary>
         /// <value>The request.</value>
-        public InformRequestMessage InformRequest { get; private set; }
+        public InformRequestMessage InformRequestMessage { get; private set; }
 
         /// <summary>
         /// Gets or sets the binding.

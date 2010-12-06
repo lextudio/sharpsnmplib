@@ -3,20 +3,19 @@ using System.Collections.Generic;
 using System.Net;
 using Lextm.SharpSnmpLib.Messaging;
 using Lextm.SharpSnmpLib.Objects;
-using Lextm.SharpSnmpLib.Pipeline;
 using Lextm.SharpSnmpLib.Security;
 using Moq;
 using NUnit.Framework;
 
-namespace Lextm.SharpSnmpLib.Tests
+namespace Lextm.SharpSnmpLib.Pipeline.Tests
 {
     [TestFixture]
-    public class SetV1MessageHandlerTestFixture
+    public class SetMessageHandlerTestFixture
     {
         [Test]
-        public void BadValue()
+        public void WrongType()
         {
-            var handler = new SetV1MessageHandler();
+            var handler = new SetMessageHandler();
             var mock = new Mock<ScalarObject>(new ObjectIdentifier("1.3.6.1.2.1.1.4.0"));
             mock.Setup(foo => foo.Data).Throws<Exception>();
             mock.Setup(foo => foo.MatchGet(new ObjectIdentifier("1.3.6.1.2.1.1.4.0"))).Returns(mock.Object);
@@ -38,14 +37,43 @@ namespace Lextm.SharpSnmpLib.Tests
                 null,
                 null);
             handler.Handle(context, store);
-            var badValue = (ResponseMessage)context.Response;
-            Assert.AreEqual(ErrorCode.BadValue, badValue.ErrorStatus);
+            var wrongType = (ResponseMessage)context.Response;
+            Assert.AreEqual(ErrorCode.WrongType, wrongType.ErrorStatus);
+        }
+
+        [Test]
+        public void NoAccess()
+        {
+            var handler = new SetMessageHandler();
+            var mock = new Mock<ScalarObject>(new ObjectIdentifier("1.3.6.1.2.1.1.4.0"));
+            mock.Setup(foo => foo.Data).Throws<Exception>();
+            mock.Setup(foo => foo.MatchGet(new ObjectIdentifier("1.3.6.1.2.1.1.4.0"))).Returns(mock.Object);
+            mock.SetupSet(foo => foo.Data = new OctetString("test")).Throws<AccessFailureException>();
+            var store = new ObjectStore();
+            store.Add(mock.Object);
+            var context = SnmpContextFactory.Create(
+                new SetRequestMessage(
+                    300,
+                    VersionCode.V1,
+                    new OctetString("lextm"),
+                    new List<Variable>
+                        {
+                            new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.4.0"), new OctetString("test"))
+                        }
+                    ),
+                new IPEndPoint(IPAddress.Loopback, 100),
+                new UserRegistry(),
+                null,
+                null);
+            handler.Handle(context, store);
+            var noAccess = (ResponseMessage)context.Response;
+            Assert.AreEqual(ErrorCode.NoAccess, noAccess.ErrorStatus);
         }
 
         [Test]
         public void GenError()
         {
-            var handler = new SetV1MessageHandler();
+            var handler = new SetMessageHandler();
             var mock = new Mock<ScalarObject>(new ObjectIdentifier("1.3.6.1.2.1.1.4.0"));
             mock.Setup(foo => foo.Data).Throws<Exception>();
             mock.Setup(foo => foo.MatchGet(new ObjectIdentifier("1.3.6.1.2.1.1.4.0"))).Returns(mock.Object);
@@ -74,7 +102,7 @@ namespace Lextm.SharpSnmpLib.Tests
         [Test]
         public void NoError()
         {
-            var handler = new SetV1MessageHandler();
+            var handler = new SetMessageHandler();
             var context = SnmpContextFactory.Create(
                 new SetRequestMessage(
                     300,
@@ -100,9 +128,9 @@ namespace Lextm.SharpSnmpLib.Tests
         }
 
         [Test]
-        public void NoSuchName()
+        public void NotWritable()
         {
-            var handler = new SetV1MessageHandler();
+            var handler = new SetMessageHandler();
             var context = SnmpContextFactory.Create(
                 new SetRequestMessage(
                     300,
@@ -119,37 +147,35 @@ namespace Lextm.SharpSnmpLib.Tests
                 null);
             var store = new ObjectStore();
             handler.Handle(context, store);
-            var noSuchName = (ResponseMessage)context.Response;
-            Assert.AreEqual(ErrorCode.NoSuchName, noSuchName.ErrorStatus);
+            var notWritable = (ResponseMessage)context.Response;
+            Assert.AreEqual(ErrorCode.NotWritable, notWritable.ErrorStatus);
         }
         
         [Test]
-        public void NoSuchName2()
+        public void TooBig()
         {
-            var handler = new SetV1MessageHandler();
-            var mock = new Mock<ScalarObject>(new ObjectIdentifier("1.3.6.1.2.1.1.4.0"));
-            mock.Setup(foo => foo.Data).Throws<AccessFailureException>();
-            mock.Setup(foo => foo.MatchGet(new ObjectIdentifier("1.3.6.1.2.1.1.4.0"))).Returns(mock.Object);
-            mock.SetupSet(foo => foo.Data = new OctetString("test")).Throws<AccessFailureException>();
-            var store = new ObjectStore();
-            store.Add(mock.Object);
+            var list = new List<Variable>();
+            for (int i = 0; i < 5000; i++)
+            {
+                list.Add(new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.4.0"), new OctetString("test")));
+            }
+
+            var handler = new SetMessageHandler();
             var context = SnmpContextFactory.Create(
                 new SetRequestMessage(
                     300,
                     VersionCode.V1,
                     new OctetString("lextm"),
-                    new List<Variable>
-                        {
-                            new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.4.0"), new OctetString("test"))
-                        }
+                    list
                     ),
                 new IPEndPoint(IPAddress.Loopback, 100),
                 new UserRegistry(),
                 null,
                 null);
+            var store = new ObjectStore();
             handler.Handle(context, store);
-            var genError = (ResponseMessage)context.Response;
-            Assert.AreEqual(ErrorCode.NoSuchName, genError.ErrorStatus);
+            var notWritable = (ResponseMessage)context.Response;
+            Assert.AreEqual(ErrorCode.TooBig, notWritable.ErrorStatus);
         }
     }
 }

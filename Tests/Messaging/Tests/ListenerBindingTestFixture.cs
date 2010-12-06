@@ -8,10 +8,9 @@
  */
 using System;
 using System.Net;
-using Lextm.SharpSnmpLib.Messaging;
 using NUnit.Framework;
 
-namespace Lextm.SharpSnmpLib.Tests
+namespace Lextm.SharpSnmpLib.Messaging.Tests
 {
     /// <summary>
     /// Description of ListenerBindingTestFixture.

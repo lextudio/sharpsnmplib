@@ -34,8 +34,23 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <param name="binding">The binding.</param>
         public TrapV1MessageReceivedEventArgs(IPEndPoint sender, TrapV1Message request, IListenerBinding binding)
         {
+            if (sender == null)
+            {
+                throw new ArgumentNullException("sender");
+            }
+
+            if (request == null)
+            {
+                throw new ArgumentNullException("request");
+            }
+
+            if (binding == null)
+            {
+                throw new ArgumentNullException("binding");
+            }
+
             Sender = sender;
-            TrapV1 = request;
+            TrapV1Message = request;
             Binding = binding;
         }
 
@@ -49,7 +64,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// Gets or sets the request.
         /// </summary>
         /// <value>The request.</value>
-        public TrapV1Message TrapV1 { get; private set; }
+        public TrapV1Message TrapV1Message { get; private set; }
 
         /// <summary>
         /// Gets or sets the binding.

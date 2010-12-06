@@ -26,7 +26,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
     /// <summary>
     /// SNMP context.
     /// </summary>
-    public abstract class SnmpContext
+    internal abstract class SnmpContext : ISnmpContext
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SnmpContext"/> class.
@@ -117,20 +117,20 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <summary>
         /// Handles the authentication failure.
         /// </summary>
-        internal abstract void HandleAuthenticationFailure();
+        public abstract void HandleAuthenticationFailure();
 
         /// <summary>
         /// Generates the response.
         /// </summary>
         /// <param name="variables">The variables.</param>
-        internal abstract void GenerateResponse(IList<Variable> variables);
+        public abstract void GenerateResponse(IList<Variable> variables);
 
         /// <summary>
         /// Copies the request variable bindings to response.
         /// </summary>
         /// <param name="status">The status.</param>
         /// <param name="index">The index.</param>
-        internal abstract void CopyRequest(ErrorCode status, int index);
+        public abstract void CopyRequest(ErrorCode status, int index);
 
         /// <summary>
         /// Handles the membership authentication.

@@ -34,7 +34,7 @@ Module Program
         AddHandler trapv1.MessageReceived, AddressOf WatcherTrapV1Received
         Dim trapv2 = Container.Resolve(Of TrapV2MessageHandler)("TrapV2Handler")
         AddHandler trapv2.MessageReceived, AddressOf WatcherTrapV2Received
-        Dim inform = Container.Resolve(Of InformMessageHandler)("InformHandler")
+        Dim inform = Container.Resolve(Of InformRequestMessageHandler)("InformHandler")
         AddHandler inform.MessageReceived, AddressOf WatcherInformRequestReceived
         Using engine = Container.Resolve(Of SnmpEngine)()
             engine.Listener.AddBinding(New IPEndPoint(IPAddress.Any, 162))
@@ -47,14 +47,14 @@ Module Program
     End Sub
 
     Private Sub WatcherInformRequestReceived(ByVal sender As Object, ByVal e As InformRequestMessageReceivedEventArgs)
-        Console.WriteLine(e.InformRequest)
+        Console.WriteLine(e.InformRequestMessage)
     End Sub
 
     Private Sub WatcherTrapV2Received(ByVal sender As Object, ByVal e As TrapV2MessageReceivedEventArgs)
-        Console.WriteLine(e.TrapV2)
+        Console.WriteLine(e.TrapV2Message)
     End Sub
 
     Private Sub WatcherTrapV1Received(ByVal sender As Object, ByVal e As TrapV1MessageReceivedEventArgs)
-        Console.WriteLine(e.TrapV1)
+        Console.WriteLine(e.TrapV1Message)
     End Sub
 End Module

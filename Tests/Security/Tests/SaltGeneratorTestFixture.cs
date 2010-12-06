@@ -7,10 +7,9 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
-using Lextm.SharpSnmpLib.Security;
 using NUnit.Framework;
 
-namespace Lextm.SharpSnmpLib.Tests
+namespace Lextm.SharpSnmpLib.Security.Tests
 {
     [TestFixture]
     public class SaltGeneratorTestFixture
@@ -25,7 +24,7 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual("Salt generator", gen.ToString());
             
             gen._salt = long.MaxValue;
-            Assert.AreEqual(1, gen.NextSalt());
+            Assert.AreEqual(new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01 }, gen.GetSaltBytes());
         }
     }
 }

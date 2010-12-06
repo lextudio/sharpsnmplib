@@ -7,10 +7,9 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
-using Lextm.SharpSnmpLib.Security;
 using NUnit.Framework;
 
-namespace Lextm.SharpSnmpLib.Tests
+namespace Lextm.SharpSnmpLib.Security.Tests
 {
     [TestFixture]
     public class AuthenticationProviderExtensionTestFixture

@@ -27,6 +27,6 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// </summary>
         /// <param name="context">The context.</param>
         /// <returns></returns>
-        bool AuthenticateRequest(SnmpContext context);
+        bool AuthenticateRequest(ISnmpContext context);
     }
 }

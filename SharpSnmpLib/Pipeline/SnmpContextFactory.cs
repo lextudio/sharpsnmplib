@@ -35,7 +35,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <param name="group">The engine group.</param>
         /// <param name="binding">The binding.</param>
         /// <returns></returns>
-        public static SnmpContext Create(ISnmpMessage request, IPEndPoint sender, UserRegistry users, EngineGroup group, IListenerBinding binding)
+        public static ISnmpContext Create(ISnmpMessage request, IPEndPoint sender, UserRegistry users, EngineGroup group, IListenerBinding binding)
         {
             if (request.Version == VersionCode.V3)
             {

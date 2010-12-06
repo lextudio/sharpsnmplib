@@ -24,7 +24,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
     /// Message handler for INFORM.
     /// </summary>    
 // ReSharper disable ClassNeverInstantiated.Global
-    public class InformMessageHandler : IMessageHandler
+    public class InformRequestMessageHandler : IMessageHandler
 // ReSharper restore ClassNeverInstantiated.Global
     {
         /// <summary>
@@ -33,18 +33,18 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <param name="context">The context.</param>
         /// <param name="store">The object store.</param>
         /// <returns></returns>
-        public void Handle(SnmpContext context, ObjectStore store)
+        public void Handle(ISnmpContext context, ObjectStore store)
         {
-            if (store == null)
-            {
-                throw new ArgumentNullException("store");
-            }
-            
             if (context == null)
             {
                 throw new ArgumentNullException("context");
             }
 
+            if (store == null)
+            {
+                throw new ArgumentNullException("store");
+            }
+            
             InvokeMessageReceived(new InformRequestMessageReceivedEventArgs(context.Sender, (InformRequestMessage)context.Request, context.Binding));
             context.CopyRequest(ErrorCode.NoError, 0);
         }
@@ -58,7 +58,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// Invokes the message received.
         /// </summary>
         /// <param name="e">The <see cref="Lextm.SharpSnmpLib.Pipeline.InformRequestMessageReceivedEventArgs"/> instance containing the event data.</param>
-        public void InvokeMessageReceived(InformRequestMessageReceivedEventArgs e)
+        private void InvokeMessageReceived(InformRequestMessageReceivedEventArgs e)
         {
             EventHandler<InformRequestMessageReceivedEventArgs> handler = MessageReceived;
             if (handler != null) 

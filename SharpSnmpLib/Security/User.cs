@@ -25,58 +25,6 @@ namespace Lextm.SharpSnmpLib.Security
     /// </summary>
     public class User
     {
-#if !CF
-        /// <summary>
-        /// Initializes a new instance of the <see cref="User"/> class.
-        /// </summary>
-        /// <param name="name">The name.</param>
-        /// <param name="authentication">The authentication.</param>
-        /// <param name="authenticationPhrase">The authen phrase.</param>
-        /// <param name="privacy">The privacy.</param>
-        /// <param name="privacyPhrase">The privacy phrase.</param>
-        public User(OctetString name, string authentication, OctetString authenticationPhrase, string privacy, OctetString privacyPhrase)
-        {
-            if (name == null)
-            {
-                throw new ArgumentNullException("name");
-            }
-
-            IAuthenticationProvider authenticationProvider;
-            if (string.IsNullOrEmpty(authentication))
-            {
-                authenticationProvider = DefaultAuthenticationProvider.Instance;
-            }
-            else if (string.Compare(authentication, "MD5", StringComparison.OrdinalIgnoreCase) == 0)
-            {
-                authenticationProvider = new MD5AuthenticationProvider(authenticationPhrase);
-            }
-            else if (string.Compare(authentication, "SHA", StringComparison.OrdinalIgnoreCase) == 0)
-            {
-                authenticationProvider = new SHA1AuthenticationProvider(authenticationPhrase);
-            }
-            else
-            {
-                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Unknown authentication method: {0}", authentication), "authentication");
-            }
-
-            IPrivacyProvider privacyProvider;
-            if (string.IsNullOrEmpty(privacy))
-            {
-                privacyProvider = new DefaultPrivacyProvider(authenticationProvider);
-            }
-            else if (string.Compare(privacy, "DES", StringComparison.OrdinalIgnoreCase) == 0)
-            {
-                privacyProvider = new DESPrivacyProvider(privacyPhrase, authenticationProvider);
-            }
-            else
-            {
-                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Unknown privacy method: {0}", privacy), "privacy");
-            }
-
-            Name = name;
-            Privacy = privacyProvider;
-        }
-#endif
         /// <summary>
         /// Initializes a new instance of the <see cref="User"/> class.
         /// </summary>

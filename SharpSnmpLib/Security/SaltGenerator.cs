@@ -33,7 +33,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// Get next salt Int64 value. Used internally to encrypt data.
         /// </summary>
         /// <returns>Random Int64 value</returns>
-        internal long NextSalt()
+        private long NextSalt()
         {
             lock (_root)
             {
