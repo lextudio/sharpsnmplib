@@ -33,8 +33,7 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual(name, tc.Name);
             Assert.IsNull(tc.Reference);
             Assert.AreEqual(typeof(IntegerType), tc.Syntax.GetType());
-            Assert.AreEqual("second", (tc.Syntax as IntegerType)[100]);
-            Assert.AreEqual(TextualConvention.StatusEnum.current, tc.Status);
+            Assert.AreEqual(Status.current, tc.Status);
             Assert.IsNull(tc.DisplayHint);
             Assert.AreEqual("A multi line\n        description", tc.Description);
         }

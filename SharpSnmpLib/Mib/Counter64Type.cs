@@ -9,7 +9,14 @@ namespace Lextm.SharpSnmpLib.Mib
     {
         private string _module;
         private string _name;
+
         public Counter64Type(string module, string name, Lexer lexer)
+        {
+            _module = module;
+            _name = name;
+        }
+
+        public Counter64Type(string module, string name, IEnumerator<Symbol> enumerator)
         {
             _module = module;
             _name = name;

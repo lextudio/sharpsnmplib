@@ -15,5 +15,11 @@ namespace Lextm.SharpSnmpLib.Mib
             _module = module;
             _name = name;
         }
+
+        public ObjectIdentifierType(string module, string name, IEnumerator<Symbol> enumerator)
+        {
+            _module = module;
+            _name = name;
+        }
     }
 }

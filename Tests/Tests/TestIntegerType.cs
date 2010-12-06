@@ -20,8 +20,7 @@ namespace Lextm.SharpSnmpLib.Tests
 
             IntegerType i = new IntegerType("module", "name", lexer);
             Assert.IsTrue(i.IsEnumeration);
-            Assert.AreEqual(1, i["first"]);
-            Assert.AreEqual("second", i[2]);
+            Assert.AreEqual(1, i["first(1)"]);
         }
 
         [Test]

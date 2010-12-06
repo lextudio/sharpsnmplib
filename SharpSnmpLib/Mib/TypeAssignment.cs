@@ -7,20 +7,20 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 
+using System.Collections.Generic;
 namespace Lextm.SharpSnmpLib.Mib
 {
     /// <summary>
     /// Alias.
     /// </summary>
-    internal sealed class TypeAssignment : ITypeAssignment
+    internal sealed class TypeAssignment : AbstractTypeAssignment
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         private string _module;
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         private string _name;
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
-        private Symbol _last;
         private readonly Symbol _left;
+        private string _type;
         
         /// <summary>
         /// Creates an <see cref="TypeAssignment"/>.
@@ -33,7 +33,7 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             _module = module;
             _name = name;
-            _last = last;
+            _type = last.ToString();
             
             Symbol temp;
             Symbol veryPrevious = null;
@@ -51,6 +51,30 @@ namespace Lextm.SharpSnmpLib.Mib
             }
             
             previous.Validate(true, "end of file reached");
+        }
+
+        public TypeAssignment(string module, string name, IEnumerator<Symbol> enumerator, ref Symbol temp)
+        {
+            _module = module;
+            _name = name;
+            _type = temp.ToString();
+            if (_type == "DisplayString")
+            {
+                int i = 0;
+            }
+
+            temp = enumerator.NextNonEOLSymbol();
+
+            if (temp == Symbol.OpenBracket)
+            {
+                DecodeEnumerations(enumerator);
+                temp = enumerator.NextNonEOLSymbol();
+            }
+            else if (temp == Symbol.OpenParentheses)
+            {
+                DecodeRanges(enumerator);
+                temp = enumerator.NextNonEOLSymbol();
+            }
         }
 
         public Symbol Left

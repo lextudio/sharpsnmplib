@@ -11,11 +11,11 @@ namespace Lextm.SharpSnmpLib.Mib
      * TimeTicks.  This is ok as currently we do not care about detecting
      * incorrect MIBs and this doesn't block the decoding of correct MIBs.
      */
-    class UnsignedType : ITypeAssignment
+    class UnsignedType : AbstractTypeAssignment
     {
         private string _module;
         private string _name;
-        private List<ValueRange> _ranges;
+        private IList<ValueRange> _ranges;
 
         public UnsignedType(string module, string name, Lexer lexer)
         {
@@ -25,8 +25,7 @@ namespace Lextm.SharpSnmpLib.Mib
             Symbol temp = lexer.NextNonEOLSymbol;
             if (temp == Symbol.OpenParentheses)
             {
-                lexer.Restore(temp);
-                DecodeRanges(lexer);
+                _ranges = DecodeRanges(lexer);
             }
             else
             {
@@ -34,45 +33,20 @@ namespace Lextm.SharpSnmpLib.Mib
             }
         }
 
-        private void DecodeRanges(Lexer lexer)
+        public UnsignedType(string module, string name, IEnumerator<Symbol> enumerator, ref Symbol temp)
         {
-            Symbol temp = lexer.NextSymbol;
-            _ranges = new List<ValueRange>();
+            _module = module;
+            _name = name;
 
-            while (temp != Symbol.CloseParentheses)
+            temp = enumerator.NextNonEOLSymbol();
+            if (temp == Symbol.OpenParentheses)
             {
-                Symbol value1 = lexer.NextSymbol;
-                Symbol value2 = null;
-
-                temp = lexer.NextSymbol;
-                if (temp == Symbol.DoubleDot)
-                {
-                    value2 = lexer.NextSymbol;
-                    temp = lexer.NextSymbol;
-                }
-
-                ValueRange range = new ValueRange(value1, value2);
-
-                value1.Validate(Contains(range.Start), "invalid sub-typing");
-                if (value2 != null)
-                {
-                    value2.Validate(Contains((int)range.End), "invalid sub-typing");
-                }
-
-                foreach (ValueRange other in _ranges)
-                {
-                    value1.Validate(range.Contains(other.Start), "invalid sub-typing");
-                    if (other.End != null)
-                    {
-                        value1.Validate(range.Contains((int)other.End), "invalid sub-typing");
-                    }
-                }
-
-                _ranges.Add(range);
+                _ranges = DecodeRanges(enumerator);
+                temp = enumerator.NextNonEOLSymbol();
             }
         }
 
-        internal bool Contains(int value)
+        public bool Contains(int value)
         {
             foreach (ValueRange range in _ranges)
             {

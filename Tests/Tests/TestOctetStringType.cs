@@ -14,7 +14,7 @@ namespace Lextm.SharpSnmpLib.Tests
         [Test]
         public void TestRanges()
         {
-            const string test = "SomeEnum ::= OCTET STRING ( SIZE (8 | 5 .. 20 | 31 .. 60 ))";
+            const string test = "SomeEnum ::= OCTET STRING ( SIZE (5 | 8 .. 20 | 31 .. 60 ))";
             Lexer lexer = new Lexer();
             StringReader reader = new StringReader(test);
             lexer.Parse(reader);

@@ -4,16 +4,9 @@ namespace Lextm.SharpSnmpLib.Mib
 {
     internal sealed class TextualConvention : IConstruct
     {
-        public enum StatusEnum
-        {
-            current,
-            deprecated,
-            obsolete
-        }
-
         private string _name;
         private string _displayHint;
-        private StatusEnum _status;
+        private Status _status;
         private string _description;
         private string _reference;
         private ITypeAssignment _syntax;
@@ -35,7 +28,7 @@ namespace Lextm.SharpSnmpLib.Mib
             temp.Expect(Symbol.Status);
             try
             {
-                _status = (StatusEnum)Enum.Parse(typeof(StatusEnum), lexer.NextNonEOLSymbol.ToString());
+                _status = (Status)Enum.Parse(typeof(Status), lexer.NextNonEOLSymbol.ToString());
                 temp = lexer.NextNonEOLSymbol;
             }
             catch (ArgumentException)
@@ -138,7 +131,7 @@ namespace Lextm.SharpSnmpLib.Mib
             get { return _displayHint; }
         }
 
-        public StatusEnum Status
+        public Status Status
         {
             get { return _status; }
         }
