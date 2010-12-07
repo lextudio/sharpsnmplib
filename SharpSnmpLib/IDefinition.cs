@@ -70,6 +70,12 @@ namespace Lextm.SharpSnmpLib
             get;
         }
 
-        string DisplayHint { get; }
+        /// <summary>
+        /// The base entity of this definition/
+        /// </summary>
+        IEntity Entity
+        {
+            get;
+        }
     }
 }

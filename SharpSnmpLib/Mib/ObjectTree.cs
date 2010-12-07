@@ -595,5 +595,30 @@ namespace Lextm.SharpSnmpLib.Mib
 
             throw new FormatException("input does not contain a value");
         }
+
+        /// <summary>
+        /// Decodes a variable using the loaded definitions to the best type.
+        /// 
+        /// Depending on the variable and loaded MIBs can return:
+        ///     * Double
+        ///     * Int32
+        ///     * UInt32
+        ///     * UInt64
+        /// </summary>
+        /// <param name="v">The variable to decode the value of.</param>
+        /// <returns>The best result based on the loaded MIBs.</returns>
+        public object Decode(Variable v)
+        {
+            var def = Search(v.Id.ToNumerical()).Definition;
+            ObjectType o = def.Entity as ObjectType;
+
+            if (o == null) { return null; }
+
+            TextualConvention tc = o.Syntax as TextualConvention;
+
+            if (tc == null) { return null; }
+
+            return tc.Decode(v);
+        }
     }
 }

@@ -84,9 +84,9 @@ namespace Lextm.SharpSnmpLib.Mib
             return _ranges;
         }
 
-        protected IDictionary<string, int> DecodeEnumerations(object enumerator)
+        protected IDictionary<int, string> DecodeEnumerations(object enumerator)
         {
-            Dictionary<string, int> _map = new Dictionary<string, int>();
+            Dictionary<int, string> _map = new Dictionary<int, string>();
 
             int signedNumber;
             do
@@ -102,7 +102,7 @@ namespace Lextm.SharpSnmpLib.Mib
                     try
                     {
                         // Have to include the number as it seems repeated identifiers are allowed ??
-                        _map.Add(String.Format("{0}({1})", identifier, signedNumber), signedNumber);
+                        _map.Add(signedNumber, String.Format("{0}({1})", identifier, signedNumber));
                     }
                     catch (ArgumentException ex)
                     {

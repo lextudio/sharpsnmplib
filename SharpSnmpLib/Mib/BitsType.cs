@@ -9,7 +9,7 @@ namespace Lextm.SharpSnmpLib.Mib
     {
         private string _module;
         private string _name;
-        private IDictionary<string, int> _map;
+        private IDictionary<int, string> _map;
 
         public BitsType(string module, string name, Lexer lexer)
         {
@@ -27,11 +27,11 @@ namespace Lextm.SharpSnmpLib.Mib
             _map = DecodeEnumerations(enumerator);
         }
 
-        public int? this[string identifier]
+        public string this[int identifier]
         {
             get
             {
-                return (int?)_map[identifier];
+                return (string)_map[identifier];
             }
         }
 

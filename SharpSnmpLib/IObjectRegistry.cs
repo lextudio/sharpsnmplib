@@ -112,5 +112,18 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="modules">The modules.</param>
         void Import(IEnumerable<IModule> modules);
+
+        /// <summary>
+        /// Decodes a variable using the loaded definitions to the best type.
+        /// 
+        /// Depending on the variable and loaded MIBs can return:
+        ///     * Double
+        ///     * Int32
+        ///     * UInt32
+        ///     * UInt64
+        /// </summary>
+        /// <param name="v">The variable to decode the value of.</param>
+        /// <returns>The best result based on the loaded MIBs.</returns>
+        object Decode(Variable v);
     }
 }

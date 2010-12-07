@@ -24,7 +24,7 @@ namespace Lextm.SharpSnmpLib.Mib
     internal sealed class IntegerType : AbstractTypeAssignment
     {
         private bool _isEnumeration;
-        private IDictionary<string, int> _map;
+        private IDictionary<int, string> _map;
         private IList<ValueRange> _ranges;
         private string _name;
 
@@ -96,11 +96,11 @@ namespace Lextm.SharpSnmpLib.Mib
             }
         }
 
-        public int? this[string identifier]
+        public string this[int identifier]
         {
             get
             {
-                return _isEnumeration ? (int?)_map[identifier] : null;
+                return _isEnumeration ? _map[identifier] : null;
             }
         }
 

@@ -22,7 +22,7 @@ namespace Lextm.SharpSnmpLib.Tests
             lexer.NextSymbol.Expect(Symbol.Bits);
 
             BitsType i = new BitsType("module", "name", lexer);
-            Assert.AreEqual(1, i["first(1)"]);
+            Assert.AreEqual("first(1)", i[1]);
         }
     }
 }

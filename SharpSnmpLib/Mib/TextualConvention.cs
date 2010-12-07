@@ -5,7 +5,7 @@ namespace Lextm.SharpSnmpLib.Mib
     internal sealed class TextualConvention : ITypeAssignment
     {
         private string _name;
-        private string _displayHint;
+        private DisplayHint _displayHint;
         private Status _status;
         private string _description;
         private string _reference;
@@ -21,7 +21,7 @@ namespace Lextm.SharpSnmpLib.Mib
             if (temp == Symbol.DisplayHint)
             {
                 // TODO: this needs decoding to a useful format.
-                _displayHint = lexer.NextNonEOLSymbol.ToString();
+                _displayHint = new DisplayHint(lexer.NextNonEOLSymbol.ToString().Trim(new char[] { '"' }));
                 temp = lexer.NextNonEOLSymbol;
             }
 
@@ -128,7 +128,7 @@ namespace Lextm.SharpSnmpLib.Mib
 
         public string DisplayHint
         {
-            get { return _displayHint; }
+            get { return _displayHint == null ? null : _displayHint.ToString(); }
         }
 
         public Status Status
@@ -149,6 +149,39 @@ namespace Lextm.SharpSnmpLib.Mib
         public ITypeAssignment Syntax
         {
             get { return _syntax; }
+        }
+
+        internal object Decode(Variable v)
+        {
+            if (_syntax is IntegerType || _syntax is UnsignedType)
+            {
+                Integer32 i = v.Data as Integer32;
+                if (i == null || (_syntax as IntegerType).IsEnumeration)
+                {
+                    return null;
+                }
+                else
+                {
+                    return _displayHint.Decode(i.ToInt32());
+                }
+            }
+            else if (_syntax is OctetStringType)
+            {
+                OctetString o = v.Data as OctetString;
+                if (o == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    // TODO: Follow the format specifier for octet strings.
+                    return null;
+                }
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

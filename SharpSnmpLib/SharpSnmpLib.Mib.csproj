@@ -63,6 +63,7 @@
     <Compile Include="Mib\Choice.cs" />
     <Compile Include="Mib\Counter64Type.cs" />
     <Compile Include="Mib\DefaultObjectRegistry.cs" />
+    <Compile Include="Mib\DisplayHint.cs" />
     <Compile Include="Mib\Exports.cs" />
     <Compile Include="Mib\Extensions.cs" />
     <Compile Include="Mib\Imports.cs" />
