@@ -28,7 +28,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 _type = NumType.dec;
                 if (str.StartsWith("d-"))
                 {
-                    _decimalPoints = Convert.ToInt32(str.Substring(1));
+                    _decimalPoints = Convert.ToInt32(str.Substring(2));
                 }
             }
             else if (str.StartsWith("o"))
