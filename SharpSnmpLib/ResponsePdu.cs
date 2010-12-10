@@ -49,12 +49,16 @@ namespace Lextm.SharpSnmpLib
         /// <param name="variables">Variables.</param>
         public ResponsePdu(int requestId, ErrorCode errorStatus, int errorIndex, IList<Variable> variables)
         {
+            if (variables == null)
+            {
+                throw new ArgumentNullException("variables");
+            }
+
             RequestId = new Integer32(requestId);
             ErrorStatus = new Integer32((int)errorStatus);
             ErrorIndex = new Integer32(errorIndex);
             Variables = variables;
             _varbindSection = Variable.Transform(variables);
-            ////_raw = ByteTool.ParseItems(_sequenceNumber, _errorStatus, _errorIndex, _varbindSection);
         }
 
         /// <summary>
@@ -63,13 +67,16 @@ namespace Lextm.SharpSnmpLib
         /// <param name="stream">The stream.</param>
         public ResponsePdu(Stream stream)
         {
+            if (stream == null)
+            {
+                throw new ArgumentNullException("stream");
+            }
+
             RequestId = (Integer32)DataFactory.CreateSnmpData(stream);
             ErrorStatus = (Integer32)DataFactory.CreateSnmpData(stream);
             ErrorIndex = (Integer32)DataFactory.CreateSnmpData(stream);
             _varbindSection = (Sequence)DataFactory.CreateSnmpData(stream);
             Variables = Variable.Transform(_varbindSection);
-            ////_raw = ByteTool.ParseItems(_sequenceNumber, _errorStatus, _errorIndex, _varbindSection);
-            ////Debug.Assert(length >= _raw.Length, "length not match");
         }
 
         /// <summary>
@@ -131,7 +138,7 @@ namespace Lextm.SharpSnmpLib
         {
             return string.Format(
                 CultureInfo.InvariantCulture,
-                "GET response PDU: seq: {0}; status: {1}; index: {2}; variable count: {3}",
+                "Response PDU: seq: {0}; status: {1}; index: {2}; variable count: {3}",
                 RequestId,
                 ErrorStatus,
                 ErrorIndex,

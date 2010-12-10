@@ -38,7 +38,7 @@ namespace Lextm.SharpSnmpLib.Browser
             trapv1.MessageReceived += ListenerTrapV1Received;
             var trapv2 = Program.Container.Resolve<TrapV2MessageHandler>("TrapV2Handler");
             trapv2.MessageReceived += ListenerTrapV2Received;
-            var inform = Program.Container.Resolve<InformMessageHandler>("InformHandler");
+            var inform = Program.Container.Resolve<InformRequestMessageHandler>("InformHandler");
             inform.MessageReceived += ListenerInformRequestReceived;
             _engine = Program.Container.Resolve<SnmpEngine>();
             _engine.Listener.ExceptionRaised += ListenerExceptionRaised;
@@ -67,17 +67,17 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void ListenerInformRequestReceived(object sender, InformRequestMessageReceivedEventArgs e)
         {
-            LogMessage(string.Format(CultureInfo.InvariantCulture, StrSends, DateTime.Now, e.Sender, e.InformRequest.ToString(Objects)));
+            LogMessage(string.Format(CultureInfo.InvariantCulture, StrSends, DateTime.Now, e.Sender, e.InformRequestMessage.ToString(Objects)));
         }
 
         private void ListenerTrapV2Received(object sender, TrapV2MessageReceivedEventArgs e)
         {
-            LogMessage(string.Format(CultureInfo.InvariantCulture, StrSends, DateTime.Now, e.Sender, e.TrapV2.ToString(Objects)));
+            LogMessage(string.Format(CultureInfo.InvariantCulture, StrSends, DateTime.Now, e.Sender, e.TrapV2Message.ToString(Objects)));
         }
 
         private void ListenerTrapV1Received(object sender, TrapV1MessageReceivedEventArgs e)
         {
-            LogMessage(string.Format(CultureInfo.InvariantCulture, StrSends, DateTime.Now, e.Sender, e.TrapV1.ToString(Objects)));
+            LogMessage(string.Format(CultureInfo.InvariantCulture, StrSends, DateTime.Now, e.Sender, e.TrapV1Message.ToString(Objects)));
         }
 
         private void ListenerExceptionRaised(object sender, ExceptionRaisedEventArgs e)

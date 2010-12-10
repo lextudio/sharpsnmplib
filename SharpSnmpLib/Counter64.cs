@@ -59,7 +59,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("stream");
             }
 
-            if (length == 0 || length > 9)
+            if (length <= 0 || length > 9)
             {
                 throw new ArgumentException("byte length must between 1 and 9");
             }
@@ -200,7 +200,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="right">Right <see cref="Counter64"/> object</param>
         /// <returns>
         /// Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
-        public static bool Equals(Counter64 left, Counter64 right)
+        private static bool Equals(Counter64 left, Counter64 right)
         {
             object lo = left;
             object ro = right;

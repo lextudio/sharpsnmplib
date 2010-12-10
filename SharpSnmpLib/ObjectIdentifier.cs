@@ -155,26 +155,6 @@ namespace Lextm.SharpSnmpLib
         /// Greater than zero
         /// This object is greater than <paramref name="other"/>.
         /// </returns>
-        public int Compare(ObjectIdentifier other)
-        {
-            return CompareTo(other);
-        }
-        
-        /// <summary>
-        /// Compares the current object with another object of the same type.
-        /// </summary>
-        /// <param name="other">An object to compare with this object.</param>
-        /// <returns>
-        /// A 32-bit signed integer that indicates the relative order of the objects being compared. The return value has the following meanings:
-        /// Value
-        /// Meaning
-        /// Less than zero
-        /// This object is less than the <paramref name="other"/> parameter.
-        /// Zero
-        /// This object is equal to <paramref name="other"/>.
-        /// Greater than zero
-        /// This object is greater than <paramref name="other"/>.
-        /// </returns>
         public int CompareTo(ObjectIdentifier other)
         {
             if (other == null)
@@ -441,7 +421,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="right">Right <see cref="ObjectIdentifier"/> object</param>
         /// <returns>
         /// Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
-        public static bool Equals(ObjectIdentifier left, ObjectIdentifier right)
+        private static bool Equals(ObjectIdentifier left, ObjectIdentifier right)
         {
             object lo = left;
             object ro = right;

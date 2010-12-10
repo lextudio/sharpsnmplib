@@ -169,47 +169,6 @@ namespace Lextm.SharpSnmpLib
             return ToString(Encoding);
         }
         
-        internal string ToDateAndTimeString()
-        {
-            byte[] bs = _raw;
-            byte[] bs2 = new byte[8];
-            bs2[0] = bs[1];   // Little/Big Endian
-            bs2[1] = bs[0];   // Little/Big Endian
-            bs2[2] = bs[2];
-            bs2[3] = bs[3];
-            bs2[4] = bs[4];
-            bs2[5] = bs[5];
-            bs2[6] = bs[6];
-            bs2[7] = bs[7];
-            return string.Format(CultureInfo.InvariantCulture, "Year:{0}, Month:{1}, Day:{2}, Hour:{3}, Minute:{4}, Seconds:{5}, Thenths:{6}", BitConverter.ToInt16(bs2, 0), bs2[2], bs2[3], bs2[4], bs2[5], bs2[6], bs2[7]);
-        }
-        
-        /// <summary>
-        /// Converts octets to data string.
-        /// </summary>
-        /// <returns></returns>
-        /// <remarks>For date section of DateAndTime type in HOST-RESOURCES-MIB.</remarks>
-        [Obsolete("This method will be removed")]
-        public string ToDateString()
-        {
-            // TODO: make it internal and prepare for future usage.
-            // may be DateAndTime
-            if (_raw.Length == 8 || _raw.Length == 11)
-            {
-                uint yr = _raw[0];
-                yr = (yr * 256) + _raw[1];
-                uint mo = _raw[2];
-                uint dy = _raw[3];
-
-                if (yr > 1990 && mo < 13 && dy < 32)
-                {
-                    return new DateTime((int)yr, (int)mo, (int)dy).ToString();
-                }
-            }
-            
-            return string.Empty;
-        }
-
         /// <summary>
         /// Type code.
         /// </summary>
@@ -297,9 +256,14 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public PhysicalAddress ToPhysicalAddress()
         {
-            return _raw.Length != 6 ? null : new PhysicalAddress(_raw);
+            if (_raw.Length != 6)
+            {
+                throw new InvalidCastException(string.Format(CultureInfo.InvariantCulture, "the data length is not equal to 6: {0}", _raw.Length));
+            }
+
+            return new PhysicalAddress(_raw);
         }
-        #endif
+#endif
         
         /// <summary>
         /// Default encoding of <see cref="OctetString"/> type.
@@ -317,7 +281,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="right">Right <see cref="OctetString"/> object</param>
         /// <returns>
         /// Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
-        public static bool Equals(OctetString left, OctetString right)
+        private static bool Equals(OctetString left, OctetString right)
         {
             object lo = left;
             object ro = right;

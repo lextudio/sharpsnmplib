@@ -27,6 +27,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -105,18 +106,23 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("varbindSection");
             }
 
-            IList<Variable> result = new List<Variable>(varbindSection.Count);
+            IList<Variable> result = new List<Variable>(varbindSection.Length);
             foreach (ISnmpData item in varbindSection)
             {
                 if (item.TypeCode != SnmpType.Sequence)
                 {
-                    throw new ArgumentException("wrong varbind section data");
+                    throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "wrong varbind section data type: {0}", item.TypeCode));
                 }
                 
                 Sequence varbind = (Sequence)item;
-                if (varbind.Count != 2 || varbind[0].TypeCode != SnmpType.ObjectIdentifier)
+                if (varbind.Length != 2)
                 {
-                    throw new ArgumentException("wrong varbind data");
+                    throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "wrong varbind data length: {0}", varbind.Length));
+                }
+                
+                if (varbind[0].TypeCode != SnmpType.ObjectIdentifier)
+                {
+                    throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "wrong varbind first data type: {0}", varbind[0].TypeCode));
                 }
                     
                 result.Add(new Variable((ObjectIdentifier)varbind[0], varbind[1]));
@@ -139,10 +145,7 @@ namespace Lextm.SharpSnmpLib
             }
 
             List<ISnmpData> varbinds = new List<ISnmpData>(variables.Count);
-            foreach (Variable v in variables)
-            {
-                varbinds.Add(new Sequence(v.Id, v.Data));
-            }
+            varbinds.AddRange(variables.Select(v => new Sequence(v.Id, v.Data)).Cast<ISnmpData>());
 
             Sequence result = new Sequence(varbinds);
             return result;

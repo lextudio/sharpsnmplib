@@ -36,17 +36,17 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <param name="store">The object store.</param>
         /// <returns></returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-        public void Handle(SnmpContext context, ObjectStore store)
+        public void Handle(ISnmpContext context, ObjectStore store)
         {
-            if (store == null)
-            {
-                throw new ArgumentNullException("store");
-            }
-            
             if (context == null)
             {
                 throw new ArgumentNullException("context");
             }
+            
+            if (store == null)
+            {
+                throw new ArgumentNullException("store");
+            }  
             
             int index = 0;
             IList<Variable> result = new List<Variable>();

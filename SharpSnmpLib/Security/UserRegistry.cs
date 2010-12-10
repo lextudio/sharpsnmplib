@@ -53,6 +53,14 @@ namespace Lextm.SharpSnmpLib.Security
         public UserRegistry() : this(null)
         {
         }
+        
+        /// <summary>
+        /// Returns the user count.
+        /// </summary>
+        public int Count
+        {
+            get { return _users.Count; }
+        }
 
         /// <summary>
         /// Adds the specified user name.
@@ -112,7 +120,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// </returns>
         public override string ToString()
         {
-            return string.Format(CultureInfo.InvariantCulture, "User registry: count: {0}", _users.Count);
+            return string.Format(CultureInfo.InvariantCulture, "User registry: count: {0}", Count);
         }
     }
 }

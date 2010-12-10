@@ -44,7 +44,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <summary>
         /// Handles the authentication failure.
         /// </summary>
-        internal override void HandleAuthenticationFailure()
+        public override void HandleAuthenticationFailure()
         {
             var defaultPair = DefaultPrivacyProvider.DefaultPair;
             Response = new ResponseMessage(
@@ -76,7 +76,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
             }
         }
 
-        internal override void CopyRequest(ErrorCode status, int index)
+        public override void CopyRequest(ErrorCode status, int index)
         {
             var userName = Request.Parameters.UserName;
             IPrivacyProvider privacy = Users.Find(userName);
@@ -228,7 +228,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// Generates the response.
         /// </summary>
         /// <param name="variables">The variables.</param>
-        internal override void GenerateResponse(IList<Variable> variables)
+        public override void GenerateResponse(IList<Variable> variables)
         {
             var userName = Request.Parameters.UserName;
             IPrivacyProvider privacy = Users.Find(userName);

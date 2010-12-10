@@ -63,7 +63,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// </summary>
         /// <param name="context">The context.</param>
         /// <returns></returns>
-        public SnmpApplication Create(SnmpContext context)
+        public SnmpApplication Create(ISnmpContext context)
         {
             SnmpApplication result = null;
             lock (_root)

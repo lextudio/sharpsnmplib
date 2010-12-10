@@ -34,6 +34,6 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// Logs an entry.
         /// </summary>
         /// <param name="context">Message context.</param>
-        void Log(SnmpContext context);
+        void Log(ISnmpContext context);
     }
 }

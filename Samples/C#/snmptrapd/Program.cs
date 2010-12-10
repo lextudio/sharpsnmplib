@@ -31,7 +31,7 @@ namespace SnmpTrapD
             trapv1.MessageReceived += WatcherTrapV1Received;
             var trapv2 = Container.Resolve<TrapV2MessageHandler>("TrapV2Handler");
             trapv2.MessageReceived += WatcherTrapV2Received;
-            var inform = Container.Resolve<InformMessageHandler>("InformHandler");
+            var inform = Container.Resolve<InformRequestMessageHandler>("InformHandler");
             inform.MessageReceived += WatcherInformRequestReceived;
             using (var engine = Container.Resolve<SnmpEngine>())
             {
@@ -46,17 +46,17 @@ namespace SnmpTrapD
 
         private static void WatcherInformRequestReceived(object sender, InformRequestMessageReceivedEventArgs e)
         {
-            Console.WriteLine(e.InformRequest);
+            Console.WriteLine(e.InformRequestMessage);
         }
 
         private static void WatcherTrapV2Received(object sender, TrapV2MessageReceivedEventArgs e)
         {
-            Console.WriteLine(e.TrapV2);
+            Console.WriteLine(e.TrapV2Message);
         }
 
         private static void WatcherTrapV1Received(object sender, TrapV1MessageReceivedEventArgs e)
         {
-            Console.WriteLine(e.TrapV1);
+            Console.WriteLine(e.TrapV1Message);
         }
     }
 }

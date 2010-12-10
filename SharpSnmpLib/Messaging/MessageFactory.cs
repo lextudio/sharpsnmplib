@@ -45,14 +45,14 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public static IList<ISnmpMessage> ParseMessages(IEnumerable<char> bytes, UserRegistry registry)
         {
-            if (registry == null)
-            {
-                throw new ArgumentNullException("registry");
-            }
-            
             if (bytes == null)
             {
                 throw new ArgumentNullException("bytes");
+            }
+            
+            if (registry == null)
+            {
+                throw new ArgumentNullException("registry");
             }
             
             return ParseMessages(ByteTool.Convert(bytes), registry);
@@ -66,14 +66,14 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public static IList<ISnmpMessage> ParseMessages(byte[] buffer, UserRegistry registry)
         {
-            if (registry == null)
-            {
-                throw new ArgumentNullException("registry");
-            }
-
             if (buffer == null)
             {
                 throw new ArgumentNullException("buffer");
+            }
+
+            if (registry == null)
+            {
+                throw new ArgumentNullException("registry");
             }
 
             return ParseMessages(buffer, 0, buffer.Length, registry);
@@ -89,16 +89,16 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public static IList<ISnmpMessage> ParseMessages(byte[] buffer, int index, int length, UserRegistry registry)
         {
-            if (registry == null)
-            {
-                throw new ArgumentNullException("registry");
-            }
-
             if (buffer == null)
             {
                 throw new ArgumentNullException("buffer");
             }
             
+            if (registry == null)
+            {
+                throw new ArgumentNullException("registry");
+            }
+
             IList<ISnmpMessage> result = new List<ISnmpMessage>();
             using (Stream stream = new MemoryStream(buffer, index, length, false))
             {                
@@ -132,7 +132,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             Sequence body = (Sequence)array;
-            if (body.Count != 3 && body.Count != 4)
+            if (body.Length != 3 && body.Length != 4)
             {
                 throw new SnmpException("not an SNMP message");
             }
@@ -142,10 +142,10 @@ namespace Lextm.SharpSnmpLib.Messaging
             SecurityParameters parameters;
             IPrivacyProvider privacy;
             Scope scope;
-            if (body.Count == 3)
+            if (body.Length == 3)
             {
                 header = Header.Empty;
-                parameters = new SecurityParameters(null, null, null, (OctetString)body[1], null, null);
+                parameters = SecurityParameters.Create((OctetString)body[1]);
                 privacy = DefaultPrivacyProvider.DefaultPair;                
                 scope = new Scope((ISnmpPdu)body[2]);
             }

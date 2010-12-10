@@ -101,7 +101,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         private void ListenerMessageReceived(object sender, MessageReceivedEventArgs e)
         {
             ISnmpMessage request = e.Message;
-            SnmpContext context = SnmpContextFactory.Create(request, e.Sender, Listener.Users, _group, e.Binding);
+            var context = SnmpContextFactory.Create(request, e.Sender, Listener.Users, _group, e.Binding);
             SnmpApplication application = _factory.Create(context);
             application.Process();
         }

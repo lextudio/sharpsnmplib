@@ -50,7 +50,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// Inits the specified context.
         /// </summary>
         /// <param name="context">The context.</param>
-        public void Init(SnmpContext context)
+        public void Init(ISnmpContext context)
         {
             Context = context;
             ProcessingFinished = false;
@@ -61,7 +61,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// Gets the context.
         /// </summary>
         /// <value>The context.</value>
-        public SnmpContext Context { get; private set; }
+        public ISnmpContext Context { get; private set; }
 
         /// <summary>
         /// Gets a value indicating whether processing is finished.

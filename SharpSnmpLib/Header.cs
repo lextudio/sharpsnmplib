@@ -88,11 +88,6 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("securityBits");
             }
 
-            if (DefaultSecurityModel == null)
-            {
-                throw new ArgumentNullException("securityModel");
-            }
-
             _messageId = messageId;
             _maxSize = maxMessageSize;
             _flags = securityBits;

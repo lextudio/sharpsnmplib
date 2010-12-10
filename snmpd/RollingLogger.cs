@@ -37,7 +37,7 @@ namespace Lextm.SharpSnmpLib.Agent
             Logger.Info("#Fields: date time s-ip cs-method cs-uri-stem s-port cs-username c-ip sc-status cs-version time-taken");
         }
 
-        public void Log(SnmpContext context)
+        public void Log(ISnmpContext context)
         {
             if (Logger.IsInfoEnabled)
             {
@@ -45,7 +45,7 @@ namespace Lextm.SharpSnmpLib.Agent
             }
         }
 
-        private static string GetLogEntry(SnmpContext context)
+        private static string GetLogEntry(ISnmpContext context)
         {
             return string.Format(
                 CultureInfo.InvariantCulture,

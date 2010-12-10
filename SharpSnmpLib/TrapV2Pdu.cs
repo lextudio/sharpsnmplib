@@ -28,6 +28,8 @@ namespace Lextm.SharpSnmpLib
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu")]
     public class TrapV2Pdu : ISnmpPdu
     {
+        private readonly uint[] TimeId = new uint[] { 1, 3, 6, 1, 2, 1, 1, 3, 0 };
+        private readonly uint[] EnterpriseId = new uint[] { 1, 3, 6, 1, 6, 3, 1, 1, 4, 1, 0 };
         private byte[] _raw;
         private readonly Sequence _varbindSection;
         private readonly TimeTicks _time;
@@ -42,13 +44,23 @@ namespace Lextm.SharpSnmpLib
         [CLSCompliant(false)]
         public TrapV2Pdu(int requestId, ObjectIdentifier enterprise, uint time, IList<Variable> variables)
         {
+            if (enterprise == null)
+            {
+                throw new ArgumentNullException("enterprise");
+            }
+
+            if (variables == null)
+            {
+                throw new ArgumentNullException("variables");
+            }
+
             Enterprise = enterprise;
             RequestId = new Integer32(requestId);
             _time = new TimeTicks(time);
             Variables = variables;
             IList<Variable> full = new List<Variable>(variables);
-            full.Insert(0, new Variable(new uint[] { 1, 3, 6, 1, 2, 1, 1, 3, 0 }, _time));
-            full.Insert(1, new Variable(new uint[] { 1, 3, 6, 1, 6, 3, 1, 1, 4, 1, 0 }, Enterprise));
+            full.Insert(0, new Variable(TimeId, _time));
+            full.Insert(1, new Variable(EnterpriseId, Enterprise));
             _varbindSection = Variable.Transform(full);
         }
         
@@ -97,7 +109,7 @@ namespace Lextm.SharpSnmpLib
         /// <value>The error status.</value>
         public Integer32 ErrorStatus
         {
-            get { return Integer32.Zero; }
+            get { throw new NotSupportedException(); }
         }
 
         /// <summary>
@@ -106,7 +118,7 @@ namespace Lextm.SharpSnmpLib
         /// <value>The index of the error.</value>
         public Integer32 ErrorIndex
         {
-            get { return Integer32.Zero; }
+            get { throw new NotSupportedException(); }
         }
 
         #endregion

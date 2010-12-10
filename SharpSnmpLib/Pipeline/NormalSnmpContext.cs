@@ -42,7 +42,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <summary>
         /// Handles the authentication failure.
         /// </summary>
-        internal override void HandleAuthenticationFailure()
+        public override void HandleAuthenticationFailure()
         {
             // TODO: implement this later according to v1 and v2c RFC.
             Response = null;
@@ -53,7 +53,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// </summary>
         /// <param name="status">The status.</param>
         /// <param name="index">The index.</param>
-        internal override void CopyRequest(ErrorCode status, int index)
+        public override void CopyRequest(ErrorCode status, int index)
         {
             Response = new ResponseMessage(
                 Request.RequestId(),
@@ -95,7 +95,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// Generates the response.
         /// </summary>
         /// <param name="variables">The variables.</param>
-        internal override void GenerateResponse(IList<Variable> variables)
+        public override void GenerateResponse(IList<Variable> variables)
         {
             Response = new ResponseMessage(
                 Request.RequestId(),

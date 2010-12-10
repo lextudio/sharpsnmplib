@@ -34,17 +34,17 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <returns></returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-        public void Handle(SnmpContext context, ObjectStore store)
-        {
-            if (store == null)
-            {
-                throw new ArgumentNullException("store");
-            }
-            
+        public void Handle(ISnmpContext context, ObjectStore store)
+        {    
             if (context == null)
             {
                 throw new ArgumentNullException("context");
             }
+            
+            if (store == null)
+            {
+                throw new ArgumentNullException("store");
+            }    
             
             ISnmpPdu pdu = context.Request.Pdu();
             IList<Variable> result = new List<Variable>();
