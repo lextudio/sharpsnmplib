@@ -26,7 +26,7 @@ namespace Lextm.SharpSnmpLib.Tests
         [Test]
         public void TestRanges()
         {
-            const string test = "SomeEnum ::= INTEGER (8 | 10 ..20 | 31 .. 60 )";
+            const string test = "SomeEnum ::= INTEGER (8 |10 ..20| 31..60 )";
             Lexer lexer = new Lexer();
             StringReader reader = new StringReader(test);
             lexer.Parse(reader);

@@ -153,16 +153,36 @@ namespace Lextm.SharpSnmpLib.Mib
 
         internal object Decode(Variable v)
         {
-            if (_syntax is IntegerType || _syntax is UnsignedType)
+            if (_syntax is IntegerType)
             {
                 Integer32 i = v.Data as Integer32;
                 if (i == null || (_syntax as IntegerType).IsEnumeration)
                 {
                     return null;
                 }
-                else
+                else if (_displayHint != null)
                 {
                     return _displayHint.Decode(i.ToInt32());
+                }
+                else
+                {
+                    return i.ToInt32();
+                }
+            }
+            else if (_syntax is UnsignedType)
+            {
+                Integer32 i = v.Data as Integer32;
+                if (i == null)
+                {
+                    return null;
+                }
+                else if (_displayHint != null)
+                {
+                    return _displayHint.Decode(i.ToInt32());
+                }
+                else
+                {
+                    return i.ToInt32();
                 }
             }
             else if (_syntax is OctetStringType)
