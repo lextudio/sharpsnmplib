@@ -63,7 +63,15 @@
       <Link>WatchDog.cs</Link>
     </Compile>
     <Compile Include="Messaging\Tests\ListenerBindingTestFixture.cs" />
+    <Compile Include="Pipeline\Tests\NormalSnmpContextTestFixture.cs" />
+    <Compile Include="Pipeline\Tests\SnmpContextFactoryTestFixture.cs" />
+    <Compile Include="Objects\Tests\SysORUpTimeTestFixture.cs" />
+    <Compile Include="Objects\Tests\SysORIndexTestFixture.cs" />
+    <Compile Include="Objects\Tests\SysORIDTestFixture.cs" />
+    <Compile Include="Objects\Tests\SysORDescrTestFixture.cs" />
+    <Compile Include="Objects\Tests\SysORLastChangeTestFixture.cs" />
     <Compile Include="Objects\Tests\SysLocationTestFixture.cs" />
+    <Compile Include="Objects\Tests\SysORTableTestFixture.cs" />
     <Compile Include="Objects\Tests\SysServicesTestFixture.cs" />
     <Compile Include="Objects\Tests\SysNameTestFixture.cs" />
     <Compile Include="Objects\Tests\SysContactTestFixture.cs" />
