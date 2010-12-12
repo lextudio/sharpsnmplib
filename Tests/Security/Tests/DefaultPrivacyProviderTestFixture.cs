@@ -24,7 +24,8 @@ namespace Lextm.SharpSnmpLib.Security.Tests
              
             Assert.Throws<ArgumentNullException>(() => provider.Decrypt(null, null));
             Assert.Throws<ArgumentNullException>(() => provider.Decrypt(OctetString.Empty, null));           
-            Assert.AreEqual(OctetString.Empty, provider.Decrypt(OctetString.Empty, SecurityParameters.Create(OctetString.Empty)));
+            var result = provider.Decrypt(new Sequence(), SecurityParameters.Create(OctetString.Empty));
+            Assert.IsNotNull(result);
         }
     }
 }

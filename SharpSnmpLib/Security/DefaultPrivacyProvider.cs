@@ -71,6 +71,12 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentNullException("parameters");
             }            
             
+            if (data.TypeCode != SnmpType.Sequence)
+            {
+                DecryptionException newException = new DecryptionException("Default decryption failed");
+                throw newException;
+            }
+            
             return data;
         }
 

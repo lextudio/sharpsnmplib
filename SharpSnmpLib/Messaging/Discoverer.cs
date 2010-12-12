@@ -183,7 +183,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             foreach (ISnmpMessage message in MessageFactory.ParseMessages(param.GetBytes(), 0, param.Number, Empty))
             {
                 EventHandler<AgentFoundEventArgs> handler;
-                var code = message.Type();
+                var code = message.TypeCode();
                 if (code == SnmpType.ReportPdu)
                 {
                     ReportMessage report = (ReportMessage)message;

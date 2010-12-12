@@ -186,7 +186,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
                 if (!privacy.AuthenticationProvider.VerifyHash(version, header, parameters, body[3], privacy))
                 {
-                    throw new SnmpException("invalid v3 packet data");
+                    throw new SnmpException("invalid v3 packet data hash detected");
                 }
             }
 

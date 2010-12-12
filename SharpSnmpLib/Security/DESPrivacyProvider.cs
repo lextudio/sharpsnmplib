@@ -324,6 +324,13 @@ namespace Lextm.SharpSnmpLib.Security
             try
             {
                 ISnmpData result = DataFactory.CreateSnmpData(decrypted);
+                if (result.TypeCode != SnmpType.Sequence)
+                {
+                    DecryptionException newException = new DecryptionException("DES decryption failed");
+                    newException.SetBytes(bytes);
+                    throw newException;
+                }
+                
                 return result;
             }
             catch (Exception ex)

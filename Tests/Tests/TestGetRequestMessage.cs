@@ -32,7 +32,7 @@ namespace Lextm.SharpSnmpLib.Tests
         {
             byte[] expected = Resources.get;
             ISnmpMessage message = MessageFactory.ParseMessages(expected, new UserRegistry())[0];
-            Assert.AreEqual(SnmpType.GetRequestPdu, message.Type());
+            Assert.AreEqual(SnmpType.GetRequestPdu, message.TypeCode());
             GetRequestPdu pdu = (GetRequestPdu)message.Pdu();
             Assert.AreEqual(1, pdu.Variables.Count);
             Variable v = pdu.Variables[0];
@@ -293,7 +293,7 @@ namespace Lextm.SharpSnmpLib.Tests
             // ReSharper restore AssignNullToNotNullAttribute
             var ar2 = message.BeginGetResponse(new IPEndPoint(IPAddress.Loopback, 161), users, socket, null);
             var response = message.EndGetResponse(ar2);
-            Assert.AreEqual(SnmpType.ResponsePdu, response.Type());
+            Assert.AreEqual(SnmpType.ResponsePdu, response.TypeCode());
         }
         
         [Test]

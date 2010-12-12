@@ -34,7 +34,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         /// <param name="message">The <seealso cref="ISnmpMessage"/>.</param>
         /// <returns></returns>
-        public static SnmpType Type(this ISnmpMessage message)
+        public static SnmpType TypeCode(this ISnmpMessage message)
         {
             if (message == null)
             {
@@ -75,7 +75,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("message");
             }
 
-            var code = message.Type();
+            var code = message.TypeCode();
             if (code == SnmpType.Unknown)
             {
                 return new List<Variable>(0); // malformed message.
@@ -95,17 +95,6 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("message");
             }
 
-            var code = message.Type();
-            if (code == SnmpType.Unknown)
-            {
-                return -1; // malformed message.
-            }
-
-            if (code == SnmpType.TrapV1Pdu)
-            {
-                throw new NotSupportedException();
-            }
-
             return message.Scope.Pdu.RequestId.ToInt32(); 
         }
 
@@ -122,12 +111,6 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("message");
             }
 
-            var code = message.Type();
-            if (code == SnmpType.TrapV1Pdu)
-            {
-                throw new NotSupportedException();
-            }
-
             return message.Header == Header.Empty ? message.RequestId() : message.Header.MessageId;
         }
 
@@ -142,13 +125,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("message");
             }
 
-            var pdu = message.Scope.Pdu;
-            if (pdu.TypeCode == SnmpType.Unknown)
-            {
-                return MalformedPdu.Instance; // malformed message.
-            }
-
-            return pdu; 
+            return message.Scope.Pdu;
         }
 
         /// <summary>
@@ -182,7 +159,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("manager");
             }
 
-            var code = message.Type();
+            var code = message.TypeCode();
             if (code == SnmpType.TrapV1Pdu || code == SnmpType.TrapV2Pdu || code == SnmpType.ReportPdu)
             {
                 using (Socket socket = manager.GetSocket())
@@ -221,7 +198,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("manager");
             }
 
-            var code = message.Type();
+            var code = message.TypeCode();
             if (code == SnmpType.TrapV1Pdu || code == SnmpType.TrapV2Pdu || code == SnmpType.ReportPdu)
             {
                 byte[] bytes = message.ToBytes();
@@ -252,7 +229,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("manager");
             }
 
-            var code = message.Type();
+            var code = message.TypeCode();
             if (code == SnmpType.TrapV1Pdu || code == SnmpType.TrapV2Pdu || code == SnmpType.ReportPdu)
             {
                 using (Socket socket = manager.GetSocket())
@@ -291,7 +268,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("manager");
             }
 
-            var code = message.Type();
+            var code = message.TypeCode();
             if (code == SnmpType.TrapV1Pdu || code == SnmpType.TrapV2Pdu || code == SnmpType.ReportPdu)
             {
                 byte[] bytes = message.ToBytes();
@@ -326,7 +303,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("receiver");
             }
 
-            var code = request.Type();
+            var code = request.TypeCode();
             if (code == SnmpType.TrapV1Pdu || code == SnmpType.TrapV2Pdu || code == SnmpType.ReportPdu)
             {
                 throw new InvalidOperationException(String.Format(CultureInfo.InvariantCulture, "not a request message: {0}", code));
@@ -357,7 +334,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("receiver");
             }
 
-            var code = request.Type();
+            var code = request.TypeCode();
             if (code == SnmpType.TrapV1Pdu || code == SnmpType.TrapV2Pdu || code == SnmpType.ReportPdu)
             {
                 throw new InvalidOperationException(String.Format(CultureInfo.InvariantCulture, "not a request message: {0}", code));
@@ -419,7 +396,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("registry");
             }
 
-            var requestCode = request.Type();
+            var requestCode = request.TypeCode();
             if (requestCode == SnmpType.TrapV1Pdu || requestCode == SnmpType.TrapV2Pdu || requestCode == SnmpType.ReportPdu)
             {
                 throw new InvalidOperationException(String.Format(CultureInfo.InvariantCulture, "not a request message: {0}", requestCode));
@@ -461,7 +438,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             // Passing 'count' is not necessary because ParseMessages should ignore it, but it offer extra safety (and would avoid an issue if parsing >1 response).
             ISnmpMessage response = MessageFactory.ParseMessages(reply, 0, count, registry)[0];
-            var responseCode = response.Type();
+            var responseCode = response.TypeCode();
             if (responseCode == SnmpType.ResponsePdu || responseCode == SnmpType.ReportPdu)
             {
                 int requestId = request.MessageId();
@@ -500,7 +477,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             int count = s.EndReceive(asyncResult);
             // Passing 'count' is not necessary because ParseMessages should ignore it, but it offer extra safety (and would avoid an issue if parsing >1 response).
             ISnmpMessage response = MessageFactory.ParseMessages(so.Buffer, 0, count, so.Users)[0];
-            var responseCode = response.Type();
+            var responseCode = response.TypeCode();
             if (responseCode == SnmpType.ResponsePdu || responseCode == SnmpType.ReportPdu)
             {
                 int requestId = request.MessageId();
@@ -547,7 +524,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("registry");
             }
 
-            var requestCode = request.Type();
+            var requestCode = request.TypeCode();
             if (requestCode == SnmpType.TrapV1Pdu || requestCode == SnmpType.TrapV2Pdu || requestCode == SnmpType.ReportPdu)
             {
                 throw new InvalidOperationException(String.Format(CultureInfo.InvariantCulture, "not a request message: {0}", requestCode));

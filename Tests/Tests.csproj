@@ -63,6 +63,7 @@
       <Link>WatchDog.cs</Link>
     </Compile>
     <Compile Include="Messaging\Tests\ListenerBindingTestFixture.cs" />
+    <Compile Include="Messaging\Tests\MessageFactoryTestFixture.cs" />
     <Compile Include="Pipeline\Tests\NormalSnmpContextTestFixture.cs" />
     <Compile Include="Pipeline\Tests\SnmpContextFactoryTestFixture.cs" />
     <Compile Include="Objects\Tests\SysORUpTimeTestFixture.cs" />
@@ -135,7 +136,6 @@
     <Compile Include="Tests\IPTestFixture.cs" />
     <Compile Include="Tests\TestLexer.cs" />
     <Compile Include="Tests\TestMD5AuthenticationProvider.cs" />
-    <Compile Include="Tests\TestMessageFactory.cs" />
     <Compile Include="Tests\TestMibDocument.cs" />
     <Compile Include="Tests\NoSuchInstanceTestFixture.cs" />
     <Compile Include="Tests\NoSuchObjectTestFixture.cs" />

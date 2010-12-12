@@ -45,6 +45,12 @@ namespace Lextm.SharpSnmpLib
         {            
             _maxSize = new Integer32(MaxMessageSize);
         }
+        
+        internal Header(int messageId) 
+            : this()
+        {
+            _messageId = new Integer32(messageId);
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Header"/> class.
