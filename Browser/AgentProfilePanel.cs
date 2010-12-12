@@ -30,7 +30,7 @@ namespace Lextm.SharpSnmpLib.Browser
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public IProfileRegistry Profiles { get; set; }
 
-        private void AgentProfilePanel_Load(object sender, EventArgs e)
+        private void AgentProfilePanelLoad(object sender, EventArgs e)
         {
             Profiles.LoadProfiles();
             UpdateView(this, EventArgs.Empty);
@@ -127,7 +127,7 @@ namespace Lextm.SharpSnmpLib.Browser
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1300:SpecifyMessageBoxOptions")]
         private void ActDeleteExecute(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Do you want to remove this item", "Confirmation", MessageBoxButtons.YesNo) != DialogResult.Yes)
+            if (MessageBox.Show(@"Do you want to remove this item", @"Confirmation", MessageBoxButtons.YesNo) != DialogResult.Yes)
             {
                 return;
             }

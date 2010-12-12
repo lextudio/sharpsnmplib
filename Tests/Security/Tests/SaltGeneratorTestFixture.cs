@@ -6,7 +6,6 @@
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
-using System;
 using NUnit.Framework;
 
 namespace Lextm.SharpSnmpLib.Security.Tests
@@ -23,7 +22,7 @@ namespace Lextm.SharpSnmpLib.Security.Tests
             Assert.AreNotEqual(first, second);
             Assert.AreEqual("Salt generator", gen.ToString());
             
-            gen._salt = long.MaxValue;
+            gen.SetSalt(long.MaxValue);
             Assert.AreEqual(new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01 }, gen.GetSaltBytes());
         }
     }

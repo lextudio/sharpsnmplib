@@ -129,7 +129,7 @@ namespace Lextm.SharpSnmpLib.Compiler
         	this.Controls.Add(this.statusStrip1);        	
         	this.Name = "ModuleListPanel";
         	this.TabText = "Module List";
-        	this.Load += new System.EventHandler(this.ModuleListPanel_Load);
+        	this.Load += new System.EventHandler(this.ModuleListPanelLoad);
         	((System.ComponentModel.ISupportInitialize)(this.actionList1)).EndInit();
         	this.contextModuleMenu.ResumeLayout(false);
         	this.statusStrip1.ResumeLayout(false);

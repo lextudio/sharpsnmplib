@@ -15,7 +15,7 @@ namespace Lextm.SharpSnmpLib.Browser
                 case VersionCode.V3:
                     return 2;
                 default:
-                    throw new ArgumentException("unknown version", "version");
+                    throw new ArgumentException(@"unknown version", "version");
             }
         }
 
@@ -30,7 +30,7 @@ namespace Lextm.SharpSnmpLib.Browser
                 case 2:
                     return VersionCode.V3;
                 default:
-                    throw new ArgumentException("unknown selection index", "selected");
+                    throw new ArgumentException(@"unknown selection index", "selected");
             }
         }
     }

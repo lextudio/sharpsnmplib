@@ -9,6 +9,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
@@ -72,13 +73,9 @@ namespace Lextm.SharpSnmpLib.Mib
             RealTree.Import(modules);
             RealTree.Refresh();  
             
-            foreach (MibModule module in modules)
+            foreach (MibModule module in
+                modules.Cast<MibModule>().Where(module => !Tree.PendingModules.Contains(module.Name)))
             {
-                if (Tree.PendingModules.Contains(module.Name))
-                {
-                    continue;
-                }
-
                 PersistModuleToFile(Folder, module, Tree);
             }
         }

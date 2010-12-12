@@ -139,7 +139,7 @@
         	this.MinimumSize = new System.Drawing.Size(440, 400);
         	this.Name = "FormTable";
         	this.Text = "FormTable";
-        	this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormTable_FormClosing);
+        	this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormTableFormClosing);
         	((System.ComponentModel.ISupportInitialize)(this.dataGridTable)).EndInit();
         	this.ResumeLayout(false);
         	this.PerformLayout();

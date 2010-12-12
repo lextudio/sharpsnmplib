@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text;
 using log4net;
 
@@ -105,15 +106,9 @@ namespace Lextm.SharpSnmpLib.Mib
 
         private Definition Find(string name)
         {
-            foreach (string key in _nameTable.Keys)
-            {
-                if (String.CompareOrdinal(key.Split(new[] { "::" }, StringSplitOptions.None)[1], name) == 0)
-                {
-                    return _nameTable[key];
-                }
-            }
-            
-            return null;
+            return (from key in _nameTable.Keys
+                    where String.CompareOrdinal(key.Split(new[] {"::"}, StringSplitOptions.None)[1], name) == 0
+                    select _nameTable[key]).FirstOrDefault();
         }
 
         private Definition Find(IList<uint> numerical)
@@ -129,9 +124,11 @@ namespace Lextm.SharpSnmpLib.Mib
             }
             
             Definition result = _root;
-            for (int i = 0; i < numerical.Count; i++)
+// ReSharper disable LoopCanBePartlyConvertedToQuery
+            foreach (uint digit in numerical)
+// ReSharper restore LoopCanBePartlyConvertedToQuery
             {
-                Definition temp = result.GetChildAt(numerical[i]) as Definition;
+                Definition temp = result.GetChildAt(digit) as Definition;
                 if (temp == null)
                 {
                     return null;
@@ -383,14 +380,9 @@ namespace Lextm.SharpSnmpLib.Mib
             {
                 int previous = current;
                 IList<string> parsed = new List<string>();
-                foreach (MibModule pending in _pendings.Values)
+                foreach (MibModule pending in
+                    from pending in _pendings.Values let succeeded = CanParse(pending) where succeeded select pending)
                 {
-                    bool succeeded = CanParse(pending);
-                    if (!succeeded)
-                    {
-                        continue;
-                    }
-
                     Parse(pending);
                     parsed.Add(pending.Name);
                 }
@@ -420,12 +412,9 @@ namespace Lextm.SharpSnmpLib.Mib
             {
                 StringBuilder builder = new StringBuilder(module.Name);
                 builder.Append(" is pending. Missing dependencies: ");
-                foreach (string depend in module.Dependents)
+                foreach (string depend in module.Dependents.Where(depend => !LoadedModules.Contains(depend)))
                 {
-                    if (!LoadedModules.Contains(depend))
-                    {
-                        builder.Append(depend).Append(' ');
-                    }
+                    builder.Append(depend).Append(' ');
                 }
                 
                 Logger.Info(builder.ToString());

@@ -37,7 +37,7 @@ namespace Lextm.SharpSnmpLib.Compiler
             }
         }
 
-        private void ModuleListPanel_Load(object sender, EventArgs e)
+        private void ModuleListPanelLoad(object sender, EventArgs e)
         {
             // TODO: bind this refresh to assembler event.
             RefreshPanel(this, EventArgs.Empty);

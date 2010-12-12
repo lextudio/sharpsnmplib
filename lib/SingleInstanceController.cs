@@ -6,7 +6,7 @@ namespace Lextm.Common
 {
     public class SingleInstanceController : WindowsFormsApplicationBase
     {
-        private Type _mainForm;
+        private readonly Type _mainForm;
         
         public SingleInstanceController(Type mainForm)
         {
@@ -27,7 +27,7 @@ namespace Lextm.Common
                 handler(null, EventArgs.Empty);
             }
             
-            this.MainForm = (Form)Activator.CreateInstance(_mainForm);
+            MainForm = (Form)Activator.CreateInstance(_mainForm);
         }
         
         public event EventHandler<EventArgs> MainFormCreated;

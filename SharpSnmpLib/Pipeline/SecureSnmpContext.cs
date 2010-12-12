@@ -177,13 +177,8 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 return false;
             }
 
-            if (parameters.EngineTime.ToInt32() > Group.EngineTime + 500)
-            {
-                // timeout.
-                return false;
-            }
-
-            return true;
+            // TODO: make 500 configurable
+            return parameters.EngineTime.ToInt32() <= Group.EngineTime + 500;
         }
 
         private void HandleDiscovery()

@@ -1,8 +1,6 @@
 using System;
 using System.Net;
 
-using Lextm.SharpSnmpLib.Messaging;
-
 namespace Lextm.SharpSnmpLib.Browser
 {
     internal abstract class AgentProfile

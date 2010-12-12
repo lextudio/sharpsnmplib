@@ -28,6 +28,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace Lextm.SharpSnmpLib
@@ -61,15 +62,12 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("items");
             }
 
-            foreach (ISnmpData data in items)
+            foreach (ISnmpData data in items.Where(data => data != null))
             {
-                if (data != null)
-                {
-                    _list.Add(data);
-                }
+                _list.Add(data);
             }
         }
-        
+
         /// <summary>
         /// Creates an <see cref="Sequence"/> instance with varied <see cref="ISnmpData"/> instances.
         /// </summary>
@@ -81,13 +79,10 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("items");
             }
 
-            foreach (ISnmpData data in items)
+            foreach (ISnmpData data in items.Where(data => data != null))
             {
-                if (data != null)
-                {
-                    _list.Add(data);
-                }
-            }            
+                _list.Add(data);
+            }
         }
 
         /// <summary>

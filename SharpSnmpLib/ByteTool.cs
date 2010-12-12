@@ -28,6 +28,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace Lextm.SharpSnmpLib
@@ -81,13 +82,8 @@ namespace Lextm.SharpSnmpLib
 
             List<byte> result = new List<byte>();
             StringBuilder buffer = new StringBuilder(2);
-            foreach (char c in description)
+            foreach (char c in description.Where(c => !char.IsWhiteSpace(c)))
             {
-                if (char.IsWhiteSpace(c))
-                {
-                    continue;
-                }
-                
                 if (!char.IsLetterOrDigit(c))
                 {
                     throw new ArgumentException("illegal character found", "description");

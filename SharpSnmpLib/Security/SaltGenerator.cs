@@ -16,7 +16,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
-using System.Globalization;
 using System.Linq;
 
 namespace Lextm.SharpSnmpLib.Security
@@ -26,8 +25,13 @@ namespace Lextm.SharpSnmpLib.Security
     /// </summary>
     public sealed class SaltGenerator
     {
-        internal long _salt = Convert.ToInt64(new Random().Next(1, int.MaxValue));
+        private long _salt = Convert.ToInt64(new Random().Next(1, int.MaxValue));
         private readonly object _root = new object();
+
+        internal void SetSalt(long salt)
+        {
+            _salt = salt;
+        }
 
         /// <summary>
         /// Get next salt Int64 value. Used internally to encrypt data.

@@ -36,8 +36,8 @@ namespace Lextm.SharpSnmpLib
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu")]
     public class InformRequestPdu : ISnmpPdu
     {
-        private readonly uint[] TimeId = new uint[] { 1, 3, 6, 1, 2, 1, 1, 3, 0 };
-        private readonly uint[] EnterpriseId = new uint[] { 1, 3, 6, 1, 6, 3, 1, 1, 4, 1, 0 };
+        private readonly uint[] _timeId = new uint[] { 1, 3, 6, 1, 2, 1, 1, 3, 0 };
+        private readonly uint[] _enterpriseId = new uint[] { 1, 3, 6, 1, 6, 3, 1, 1, 4, 1, 0 };
         private byte[] _raw;
         private readonly Sequence _varbindSection;
         private readonly TimeTicks _time;
@@ -67,8 +67,8 @@ namespace Lextm.SharpSnmpLib
             _time = new TimeTicks(time);
             Variables = variables;
             IList<Variable> full = new List<Variable>(variables);
-            full.Insert(0, new Variable(TimeId, _time));
-            full.Insert(1, new Variable(EnterpriseId, Enterprise));
+            full.Insert(0, new Variable(_timeId, _time));
+            full.Insert(1, new Variable(_enterpriseId, Enterprise));
             _varbindSection = Variable.Transform(full);
         }
 

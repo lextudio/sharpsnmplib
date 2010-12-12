@@ -76,12 +76,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             var code = message.TypeCode();
-            if (code == SnmpType.Unknown)
-            {
-                return new List<Variable>(0); // malformed message.
-            }
-            
-            return message.Scope.Pdu.Variables; 
+            return code == SnmpType.Unknown ? new List<Variable>(0) : message.Scope.Pdu.Variables;
         }
 
         /// <summary>
@@ -160,18 +155,16 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             var code = message.TypeCode();
-            if (code == SnmpType.TrapV1Pdu || code == SnmpType.TrapV2Pdu || code == SnmpType.ReportPdu)
-            {
-                using (Socket socket = manager.GetSocket())
-                {
-                    message.Send(manager, socket);
-                }
-            }
-            else
+            if ((code != SnmpType.TrapV1Pdu && code != SnmpType.TrapV2Pdu) && code != SnmpType.ReportPdu)
             {
                 throw new InvalidOperationException(String.Format(CultureInfo.InvariantCulture,
-                                                                  "not a trap message: {0}", 
+                                                                  "not a trap message: {0}",
                                                                   code));
+            }
+
+            using (Socket socket = manager.GetSocket())
+            {
+                message.Send(manager, socket);
             }
         }
 
@@ -199,17 +192,15 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             var code = message.TypeCode();
-            if (code == SnmpType.TrapV1Pdu || code == SnmpType.TrapV2Pdu || code == SnmpType.ReportPdu)
-            {
-                byte[] bytes = message.ToBytes();
-                socket.SendTo(bytes, 0, bytes.Length, SocketFlags.None, manager);
-            }
-            else
+            if ((code != SnmpType.TrapV1Pdu && code != SnmpType.TrapV2Pdu) && code != SnmpType.ReportPdu)
             {
                 throw new InvalidOperationException(String.Format(CultureInfo.InvariantCulture,
-                                                                  "not a trap message: {0}", 
+                                                                  "not a trap message: {0}",
                                                                   code));
             }
+
+            byte[] bytes = message.ToBytes();
+            socket.SendTo(bytes, 0, bytes.Length, SocketFlags.None, manager);
         }
 
         /// <summary>
@@ -230,18 +221,16 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             var code = message.TypeCode();
-            if (code == SnmpType.TrapV1Pdu || code == SnmpType.TrapV2Pdu || code == SnmpType.ReportPdu)
-            {
-                using (Socket socket = manager.GetSocket())
-                {
-                    message.SendAsync(manager, socket);
-                }
-            }
-            else
+            if ((code != SnmpType.TrapV1Pdu && code != SnmpType.TrapV2Pdu) && code != SnmpType.ReportPdu)
             {
                 throw new InvalidOperationException(String.Format(CultureInfo.InvariantCulture,
-                                                                  "not a trap message: {0}", 
+                                                                  "not a trap message: {0}",
                                                                   code));
+            }
+
+            using (Socket socket = manager.GetSocket())
+            {
+                message.SendAsync(manager, socket);
             }
         }
         
@@ -269,17 +258,15 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             var code = message.TypeCode();
-            if (code == SnmpType.TrapV1Pdu || code == SnmpType.TrapV2Pdu || code == SnmpType.ReportPdu)
-            {
-                byte[] bytes = message.ToBytes();
-                socket.BeginSendTo(bytes, 0, bytes.Length, SocketFlags.None, manager, ar => socket.EndSendTo(ar), null);
-            }
-            else
+            if ((code != SnmpType.TrapV1Pdu && code != SnmpType.TrapV2Pdu) && code != SnmpType.ReportPdu)
             {
                 throw new InvalidOperationException(String.Format(CultureInfo.InvariantCulture,
-                                                                  "not a trap message: {0}", 
+                                                                  "not a trap message: {0}",
                                                                   code));
             }
+
+            byte[] bytes = message.ToBytes();
+            socket.BeginSendTo(bytes, 0, bytes.Length, SocketFlags.None, manager, ar => socket.EndSendTo(ar), null);
         }
         
         /// <summary>
@@ -542,7 +529,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public static bool IsRunningOnMono
         {
-            get { return System.Type.GetType("Mono.Runtime") != null; }
+            get { return Type.GetType("Mono.Runtime") != null; }
         }
 
         /// <summary>

@@ -79,11 +79,13 @@ namespace Lextm.SharpSnmpLib.Pipeline
                     status = ErrorCode.NoSuchName;
                 }
 
-                if (status != ErrorCode.NoError)
+                if (status == ErrorCode.NoError)
                 {
-                    context.CopyRequest(status, index);
-                    return;
+                    continue;
                 }
+
+                context.CopyRequest(status, index);
+                return;
             }
 
             context.GenerateResponse(result);

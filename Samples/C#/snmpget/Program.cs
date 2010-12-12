@@ -3,6 +3,7 @@
 // snmpget -v=3 -l=authPriv -a=MD5 -A=authentication -x=DES -X=privacy -u=user localhost 1.3.6.1.2.1.1.1.0
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using Lextm.SharpSnmpLib;
@@ -103,17 +104,13 @@ namespace SnmpGet
             bool parsed = IPAddress.TryParse(extra[0], out ip);
             if (!parsed)
             {
-                foreach (IPAddress address in Dns.GetHostAddresses(extra[0]))
+                foreach (IPAddress address in
+                    Dns.GetHostAddresses(extra[0]).Where(address => address.AddressFamily == AddressFamily.InterNetwork))
                 {
-                    if (address.AddressFamily != AddressFamily.InterNetwork)
-                    {
-                        continue;
-                    }
-
                     ip = address;
                     break;
                 }
-                
+
                 if (ip == null)
                 {
                     Console.WriteLine("invalid host or wrong IP address found: " + extra[0]);

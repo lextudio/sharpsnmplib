@@ -150,8 +150,8 @@ namespace Lextm.SharpSnmpLib.Browser
                         if (!int.TryParse(form.NewVal, out result))
                         {
                             MessageBox.Show(
-                                "Value entered was not an Integer!", 
-                                "SNMP Set Error",
+                                @"Value entered was not an Integer!", 
+                                @"SNMP Set Error",
                                 MessageBoxButtons.OK, 
                                 MessageBoxIcon.Error);
                             return;
@@ -254,50 +254,7 @@ namespace Lextm.SharpSnmpLib.Browser
             actGetNext.Enabled = ValidForGetNext(treeView1.SelectedNode);
         }
 
-/*
-        private void ManualWalk(TreeNode node, bool first)
-        {
-            if (node != null)
-            {
-                try
-                {
-                    switch (node.ImageIndex)
-                    {
-                        case 3:
-                            Profiles.DefaultProfile.GetTable(Manager, node.Tag as IDefinition);
-                            break;
-                        default:
-                            if (ValidForGet(node))
-                            {
-                                Profiles.DefaultProfile.Get(Manager, GetIdForGet(node.Tag as IDefinition));
-                            }
-                            else
-                            {
-                                //
-                                // TODO: I would like to be able to put headings for the parent of the child nodes
-                                //
-                                ManualWalk(node.Nodes[0], false);
-                            }
-                            break;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    TraceSource source = new TraceSource("Browser");
-                    source.TraceInformation(ex.ToString());
-                    source.Flush();
-                    source.Close();
-                }
-
-                if (!first)
-                {
-                    ManualWalk(node.NextNode, false);
-                }
-            }
-        }
-*/
-
-        private void MibTreePanel_Load(object sender, EventArgs e)
+        private void MibTreePanelLoad(object sender, EventArgs e)
         {
             RefreshPanel(Objects, EventArgs.Empty);
             Objects.OnChanged += RefreshPanel;

@@ -334,10 +334,6 @@ namespace Lextm.SharpSnmpLib.Tests
             {
                 hasException = true;
             }
-            catch (SocketException)
-            {
-                hasException = true;
-            }
 
             timer.Stop();            
             
