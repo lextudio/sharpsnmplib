@@ -1,9 +1,18 @@
 <Configuration>
   <Daemon.SolutionSettings>
+    <SkipFilesAndFolders>
+      <Item>5E9B9AB3-59E8-44FA-B3DC-5EE67800C462</Item>
+      <Item>C26430B5-E2AE-410E-924C-567D79E625DC</Item>
+      <Item>C75532C4-765B-418E-B09B-46D36B2ABDB1</Item>
+      <Item>DA58ECDA-DB5D-41D0-982A-7E17E8172354/f:RollingFileAppender.cs/l:..?lib?RollingFileAppender.cs</Item>
+      <Item>FE484004-0780-4730-9D91-D4597341B56E</Item>
+    </SkipFilesAndFolders>
     <GeneratedFilesAndFolders>
       <Item>5E9B9AB3-59E8-44FA-B3DC-5EE67800C462</Item>
       <Item>C26430B5-E2AE-410E-924C-567D79E625DC</Item>
       <Item>C75532C4-765B-418E-B09B-46D36B2ABDB1</Item>
+      <Item>DA58ECDA-DB5D-41D0-982A-7E17E8172354/f:RollingFileAppender.cs/l:..?lib?RollingFileAppender.cs</Item>
+      <Item>FE484004-0780-4730-9D91-D4597341B56E</Item>
     </GeneratedFilesAndFolders>
   </Daemon.SolutionSettings>
 </Configuration>
