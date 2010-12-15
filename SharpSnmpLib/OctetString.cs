@@ -81,7 +81,7 @@ namespace Lextm.SharpSnmpLib
             }
             
             _raw = new byte[raw.Length];
-            Array.Copy(raw, _raw, raw.Length);
+            Buffer.BlockCopy(raw, 0, _raw, 0, raw.Length);
             Encoding = DefaultEncoding;
         }
         

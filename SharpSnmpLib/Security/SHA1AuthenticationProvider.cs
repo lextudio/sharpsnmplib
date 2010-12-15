@@ -88,7 +88,7 @@ namespace Lextm.SharpSnmpLib.Security
                         buf[i] = password[passwordIndex++ % password.Length];
                     }
                     
-                    Array.Copy(buf, 0, sourceBuffer, count, buf.Length);
+                    Buffer.BlockCopy(buf, 0, sourceBuffer, count, buf.Length);
                     count += 64;
                 }
 
@@ -150,7 +150,7 @@ namespace Lextm.SharpSnmpLib.Security
                 byte[] hash = sha1.ComputeHash(SnmpMessageExtension.PackMessage(version, header, parameters, data).ToBytes());
                 sha1.Clear();
                 byte[] result = new byte[DigestLength];
-                Array.Copy(hash, result, result.Length);
+                Buffer.BlockCopy(hash, 0, result, 0, result.Length);
                 return new OctetString(result);
             }
         }

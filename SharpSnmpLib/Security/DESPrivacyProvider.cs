@@ -26,6 +26,7 @@ namespace Lextm.SharpSnmpLib.Security
     /// <summary>
     /// Privacy provider for DES.
     /// </summary>
+    /// <remarks>Ported from SNMP#NET PrivacyDES class.</remarks>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "DES", Justification = "definition")]
     public class DESPrivacyProvider : IPrivacyProvider
     {
@@ -115,7 +116,7 @@ namespace Lextm.SharpSnmpLib.Security
             byte[] cipherText = iv;
             int posIn = 0;
             int posResult = 0;
-            Array.Copy(unencryptedData, 0, buffer, 0, unencryptedData.Length);
+            Buffer.BlockCopy(unencryptedData, 0, buffer, 0, unencryptedData.Length);
 
             using (DES des = new DESCryptoServiceProvider())
             {
@@ -132,8 +133,8 @@ namespace Lextm.SharpSnmpLib.Security
                             posIn++;
                         }
                         
-                        /*int byteCount =*/ transform.TransformBlock(inbuffer, 0, inbuffer.Length, cipherText, 0);
-                        Array.Copy(cipherText, 0, result, posResult, cipherText.Length);
+                        transform.TransformBlock(inbuffer, 0, inbuffer.Length, cipherText, 0);
+                        Buffer.BlockCopy(cipherText, 0, result, posResult, cipherText.Length);
                         posResult += cipherText.Length;
                     }
                 }
@@ -204,7 +205,7 @@ namespace Lextm.SharpSnmpLib.Security
 
                 // .NET implementation only takes an 8 byte key
                 byte[] outKey = new byte[8];
-                Array.Copy(key, outKey, 8);
+                Buffer.BlockCopy(key, 0, outKey, 0, 8);
 
                 des.Key = outKey;
                 des.IV = iv;
@@ -254,7 +255,7 @@ namespace Lextm.SharpSnmpLib.Security
             }
             
             byte[] key = new byte[8];
-            Array.Copy(privacyPassword, key, 8);
+            Buffer.BlockCopy(privacyPassword, 0, key, 0, 8);
             return key;
         }
         
@@ -317,12 +318,11 @@ namespace Lextm.SharpSnmpLib.Security
             OctetString octets = (OctetString)data;
             byte[] bytes = octets.GetRaw();
             byte[] pkey = AuthenticationProvider.PasswordToKey(_phrase.GetRaw(), parameters.EngineId.GetRaw());
-
-            // decode encrypted packet
-            byte[] decrypted = Decrypt(bytes, pkey, parameters.PrivacyParameters.GetRaw());
-
+            
             try
             {
+                // decode encrypted packet
+                byte[] decrypted = Decrypt(bytes, pkey, parameters.PrivacyParameters.GetRaw());            
                 ISnmpData result = DataFactory.CreateSnmpData(decrypted);
                 if (result.TypeCode != SnmpType.Sequence)
                 {
