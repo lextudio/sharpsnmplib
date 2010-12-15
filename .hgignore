@@ -13,3 +13,4 @@ glob:*.sln.cache
 glob:StyleCop.Cache
 glob:StyleCopViolations.xml
 glob:Tests/PartCover/coverage.xml
+glob:NDependOut/*

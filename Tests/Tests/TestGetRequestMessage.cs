@@ -287,11 +287,7 @@ namespace Lextm.SharpSnmpLib.Tests
             GetRequestMessage message = new GetRequestMessage(0x4bed, VersionCode.V2, new OctetString("public"), new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) });
             
             var users = new UserRegistry();
-            //IMPORTANT: test against an agent that doesn't exist.
-            // ReSharper disable AssignNullToNotNullAttribute
-            //message.BeginGetResponse(new IPEndPoint(IPAddress.Parse("192.168.0.233"), 161), users, socket, null);
-            // ReSharper restore AssignNullToNotNullAttribute
-            var ar2 = message.BeginGetResponse(new IPEndPoint(IPAddress.Loopback, 161), users, socket, null);
+            var ar2 = message.BeginGetResponse(new IPEndPoint(IPAddress.Loopback, 161), users, socket, null, null);
             var response = message.EndGetResponse(ar2);
             Assert.AreEqual(SnmpType.ResponsePdu, response.TypeCode());
         }

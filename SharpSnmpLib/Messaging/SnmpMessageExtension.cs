@@ -1,4 +1,4 @@
-// Helper class.
+// SNMP message extension class.
 // Copyright (C) 2008-2010 Malcolm Crowe, Lex Li, and other contributors.
 // 
 // This library is free software; you can redistribute it and/or
@@ -23,7 +23,7 @@ using System.Net.Sockets;
 using Lextm.SharpSnmpLib.Security;
 
 namespace Lextm.SharpSnmpLib.Messaging
-{
+{    
     /// <summary>
     /// Extension methods for <seealso cref="ISnmpMessage"/>.
     /// </summary>
@@ -459,11 +459,11 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("request");
             }
             
-            StateObject so = (StateObject)asyncResult.AsyncState;
-            Socket s = so.WorkSocket;
-            int count = s.EndReceive(asyncResult);
+            var ar = (SnmpMessageAsyncResult)asyncResult;
+            Socket s = ar.WorkSocket;
+            int count = s.EndReceive(ar.Inner);
             // Passing 'count' is not necessary because ParseMessages should ignore it, but it offer extra safety (and would avoid an issue if parsing >1 response).
-            ISnmpMessage response = MessageFactory.ParseMessages(so.Buffer, 0, count, so.Users)[0];
+            ISnmpMessage response = MessageFactory.ParseMessages(ar.Buffer, 0, count, ar.Users)[0];
             var responseCode = response.TypeCode();
             if (responseCode == SnmpType.ResponsePdu || responseCode == SnmpType.ReportPdu)
             {
@@ -471,13 +471,13 @@ namespace Lextm.SharpSnmpLib.Messaging
                 var responseId = response.MessageId();
                 if (responseId != requestId)
                 {
-                    throw OperationException.Create(String.Format(CultureInfo.InvariantCulture, "wrong response sequence: expected {0}, received {1}", requestId, responseId), so.Receiver.Address);
+                    throw OperationException.Create(String.Format(CultureInfo.InvariantCulture, "wrong response sequence: expected {0}, received {1}", requestId, responseId), ar.Receiver.Address);
                 }
 
                 return response;
             }
 
-            throw OperationException.Create(String.Format(CultureInfo.InvariantCulture, "wrong response type: {0}", responseCode), so.Receiver.Address);
+            throw OperationException.Create(String.Format(CultureInfo.InvariantCulture, "wrong response type: {0}", responseCode), ar.Receiver.Address);
         }
 
         /// <summary>
@@ -488,8 +488,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="registry">The user registry.</param>
         /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
         /// <param name="callback">The callback.</param>
+        /// <param name="state">The state object.</param>
         /// <returns></returns>
-        public static IAsyncResult BeginGetResponse(this ISnmpMessage request, IPEndPoint receiver, UserRegistry registry, Socket udpSocket, AsyncCallback callback)
+        public static IAsyncResult BeginGetResponse(this ISnmpMessage request, IPEndPoint receiver, UserRegistry registry, Socket udpSocket, AsyncCallback callback, object state)
         {
             if (request == null)
             {
@@ -518,9 +519,15 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             // Whatever you change, try to keep the Send and the Receive close to each other.
-            StateObject state = new StateObject(udpSocket, registry, receiver);
-            state.WorkSocket.SendTo(request.ToBytes(), receiver);
-            return state.WorkSocket.BeginReceive(state.Buffer, 0, state.BufferSize, SocketFlags.None, callback, state);
+            udpSocket.SendTo(request.ToBytes(), receiver);
+#if CF
+            var bufferSize = 8192;
+#else
+            var bufferSize = udpSocket.ReceiveBufferSize;
+#endif
+            var buffer = new byte[bufferSize];
+            var ar = udpSocket.BeginReceive(buffer, 0, bufferSize, SocketFlags.None, callback, state);
+            return new SnmpMessageAsyncResult(ar, udpSocket, registry, receiver, buffer);
         }
 
         /// <summary>
@@ -600,26 +607,47 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         private const int WSAETIMEDOUT = 10060;
 
-        // State object for reading client data asynchronously
-        private class StateObject
-        {
-            public Socket WorkSocket { get; private set; }
-            public UserRegistry Users { get; private set; }
-            public int BufferSize { get; private set; }
-            public byte[] Buffer { get; private set; }
-            public IPEndPoint Receiver { get; private set; }
-
-            public StateObject(Socket socket, UserRegistry users, IPEndPoint receiver)
+        private class SnmpMessageAsyncResult : IAsyncResult
+        {        
+            public SnmpMessageAsyncResult(IAsyncResult inner, Socket socket, UserRegistry users, IPEndPoint receiver, byte[] buffer)
             {
-#if CF
-                BufferSize = 8192;
-#else
-                BufferSize = socket.ReceiveBufferSize;
-#endif
-                Buffer = new byte[BufferSize];
+                Buffer = buffer;
                 WorkSocket = socket;
                 Users = users;
-                Receiver = receiver;
+                Receiver = receiver;          
+                Inner = inner;
+            }
+            
+            public IAsyncResult Inner { get; private set; }
+            
+            public Socket WorkSocket { get; private set; }
+            
+            public UserRegistry Users { get; private set; }
+            
+            public int BufferSize { get; private set; }
+            
+            public byte[] Buffer { get; private set; }
+            
+            public IPEndPoint Receiver { get; private set; }
+            
+            public bool IsCompleted 
+            {
+                get { return Inner.IsCompleted; }
+            }
+            
+            public System.Threading.WaitHandle AsyncWaitHandle 
+            {
+                get { return Inner.AsyncWaitHandle; }
+            }
+            
+            public object AsyncState 
+            {
+                get { return Inner.AsyncState; }
+            }
+            
+            public bool CompletedSynchronously 
+            {
+                get { return Inner.CompletedSynchronously; }
             }
         }
     }
