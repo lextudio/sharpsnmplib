@@ -208,7 +208,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 case SnmpType.GetBulkRequestPdu:
                     return new GetBulkRequestMessage(version, header, parameters, scope, privacy);
                 case SnmpType.ReportPdu:
-                    return new ReportMessage(version, header, parameters, scope, privacy);
+                    return new ReportMessage(version, header, parameters, scope, privacy, false);
                 case SnmpType.InformRequestPdu:
                     return new InformRequestMessage(version, header, parameters, scope, privacy);
                 default:

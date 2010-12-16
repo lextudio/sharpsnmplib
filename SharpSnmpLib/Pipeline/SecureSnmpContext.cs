@@ -28,6 +28,8 @@ namespace Lextm.SharpSnmpLib.Pipeline
     /// </summary>
     internal sealed class SecureSnmpContext : SnmpContext
     {
+        private static readonly ObjectIdentifier ReportId = new ObjectIdentifier("1.3.6.1.6.3.15.1.1.4.0");
+        
         /// <summary>
         /// Initializes a new instance of the <see cref="SecureSnmpContext"/> class.
         /// </summary>
@@ -209,10 +211,10 @@ namespace Lextm.SharpSnmpLib.Pipeline
                         new List<Variable>(1)
                             {
                                 new Variable(
-                                    new ObjectIdentifier("1.3.6.1.6.3.15.1.1.4.0"),
+                                    ReportId,
                                     new Counter32(Group.ReportCount))
                             })),
-                DefaultPrivacyProvider.DefaultPair);
+                DefaultPrivacyProvider.DefaultPair, true);
             if (TooBig)
             {
                 GenerateTooBig();

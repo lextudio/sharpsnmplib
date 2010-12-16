@@ -45,7 +45,8 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="parameters">The security parameters.</param>
         /// <param name="scope">The scope.</param>
         /// <param name="privacy">The privacy provider.</param>
-        public ReportMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, IPrivacyProvider privacy)
+        /// <param name="needAuthentication">if set to <c>true</c>, authentication is needed.</param>
+        public ReportMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, IPrivacyProvider privacy, bool needAuthentication)
         {
             if (scope == null)
             {
@@ -77,7 +78,11 @@ namespace Lextm.SharpSnmpLib.Messaging
             Parameters = parameters;
             Scope = scope;
             _privacy = privacy;
-            Privacy.AuthenticationProvider.ComputeHash(Version, Header, Parameters, Scope, Privacy);
+            if (needAuthentication)
+            {
+                Privacy.AuthenticationProvider.ComputeHash(Version, Header, Parameters, Scope, Privacy);
+            }
+            
             _bytes = this.PackMessage().ToBytes();
         }
 

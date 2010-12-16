@@ -96,7 +96,7 @@ namespace Lextm.SharpSnmpLib.Tests
                         ErrorCode.NoError,
                         0,
                         new List<Variable>(1) { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0")) })),
-                DefaultPrivacyProvider.DefaultPair);
+                DefaultPrivacyProvider.DefaultPair, false);
             
             IPrivacyProvider privacy = new DefaultPrivacyProvider(new MD5AuthenticationProvider(new OctetString("testpass")));
             GetRequestMessage request = new GetRequestMessage(
