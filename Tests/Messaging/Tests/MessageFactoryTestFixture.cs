@@ -11,14 +11,40 @@ using System;
 using System.Collections.Generic;
 using Lextm.SharpSnmpLib.Messaging;
 using Lextm.SharpSnmpLib.Security;
+using Lextm.SharpSnmpLib.Tests;
 using NUnit.Framework;
 
 #pragma warning disable 1591, 0618
-namespace Lextm.SharpSnmpLib.Tests
+namespace Lextm.SharpSnmpLib.Messaging.Tests
 {
     [TestFixture]
     public class MessageFactoryTestFixture
-    {      
+    {   
+        [Test]
+        public void TestReportFailure()
+        {
+            var data = "30 70 02 01 03 30"+
+"11 02 04 76 EB 6A 22 02 03 00 FF F0 04 01 01 02 01 03 04 33 30 31 04 09"+
+
+"80 00 05 23 01 C1 4D BB 83 02 01 5B 02 03 1C 93 9D 04 0C 4D 44 35 5F 44"+
+"45 53 5F 55 73 65 72 04 0C E5 C7 C5 2E 17 7E 87 62 AB 56 D6 C7 04 00 30"+
+"23 04 00 04 00 A8 1D 02 01 00 02 01 00 02 01 00 30 12 30 10 06 0A 2B 06"+
+
+"01 06 03 0F 01 01 02 00 41 02 05 EE";
+            var bytes = ByteTool.Convert(data);
+            string userName = "MD5_DES_User";
+            string phrase = "AuthPassword";
+            string privatePhrase = "PrivPassword";
+            IAuthenticationProvider auth = new MD5AuthenticationProvider(new OctetString(phrase));
+            IPrivacyProvider priv = new DESPrivacyProvider(new OctetString(privatePhrase), auth);
+            var users = new UserRegistry();
+            users.Add(new User(new OctetString(userName), priv));
+            var messages = MessageFactory.ParseMessages(bytes, users);
+            Assert.AreEqual(1, messages.Count);
+            var message = messages[0];
+            Assert.AreEqual(1, message.Variables().Count);
+        }
+        
         [Test]
         public void TestInform()
         {

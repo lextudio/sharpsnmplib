@@ -214,7 +214,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                                     ReportId,
                                     new Counter32(Group.ReportCount))
                             })),
-                DefaultPrivacyProvider.DefaultPair, true);
+                DefaultPrivacyProvider.DefaultPair);
             if (TooBig)
             {
                 GenerateTooBig();

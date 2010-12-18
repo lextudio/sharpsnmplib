@@ -37,18 +37,6 @@ namespace Lextm.SharpSnmpLib.Agent
             _engine = Program.Container.Resolve<SnmpEngine>();
             _engine.ExceptionRaised += (sender, e) => MessageBox.Show(e.Exception.ToString());
 
-            // TODO: this is a hack. review it later.
-            var store = Program.Container.Resolve<ObjectStore>();
-            store.Add(new SysDescr());
-            store.Add(new SysObjectId());
-            store.Add(new SysUpTime());
-            store.Add(new SysContact());
-            store.Add(new SysName());
-            store.Add(new SysLocation());
-            store.Add(new SysServices());
-            store.Add(new SysORLastChange());
-            store.Add(new SysORTable());
-
             InitializeComponent();
             if (PlatformSupport.Platform == PlatformType.Windows)
             {
