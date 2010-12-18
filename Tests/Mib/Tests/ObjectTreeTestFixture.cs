@@ -7,29 +7,27 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 
-using Lextm.SharpSnmpLib.Mib;
-using System;
 using NUnit.Framework;
 
-namespace Lextm.SharpSnmpLib.Tests
+namespace Lextm.SharpSnmpLib.Mib.Tests
 {
     [TestFixture]
-    public class TestObjectTree
+    public class ObjectTreeTestFixture
     {
         [Test]
         public void TestExtractValue()
         {
-            string test = "org(3)";
+            const string test = "org(3)";
             Assert.AreEqual(3, ObjectTree.ExtractValue(test));
         }
-        
+
         [Test]
         public void TestExtractName()
         {
-            string test = "org(3)";
+            const string test = "org(3)";
             Assert.AreEqual("org", ObjectTree.ExtractName(test));
             
-            string test1 = "iso";
+            const string test1 = "iso";
             Assert.AreEqual("iso", ObjectTree.ExtractName(test1));
         }
     }

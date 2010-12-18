@@ -6,7 +6,6 @@
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
-using System;
 using System.Net;
 using NUnit.Framework;
 
@@ -19,7 +18,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
     public class ListenerTestFixture
     {
         [Test]
-        public void AddBinding_Duplicate()
+        public void AddBindingDuplicate()
         {
             Assert.AreEqual(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 21), new IPEndPoint(IPAddress.Parse("127.0.0.1"), 21));
             var listener = new Listener();

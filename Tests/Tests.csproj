@@ -122,40 +122,36 @@
     <Compile Include="Tests\SetRequestPduTestFixture.cs" />
     <Compile Include="Tests\SnmpDataExtensionTestFixture.cs" />
     <Compile Include="Tests\StreamExtensionTestFixture.cs" />
-    <Compile Include="Tests\TestDESPrivacyProvider.cs" />
     <Compile Include="Tests\EndOfMibViewTestFixture.cs" />
-    <Compile Include="Tests\TestManager.cs" />
-    <Compile Include="Tests\TestByteTool.cs" />
-    <Compile Include="Tests\TestConstructHelper.cs" />
+    <Compile Include="Messaging\Tests\ManagerTestFixture.cs" />
+    <Compile Include="Tests\ByteToolTestFixture.cs" />
     <Compile Include="Tests\Counter32TestFixture.cs" />
     <Compile Include="Tests\Counter64TestFixture.cs" />
     <Compile Include="Tests\Gauge32TestFixture.cs" />
-    <Compile Include="Tests\TestGetRequestMessage.cs" />
-    <Compile Include="Tests\TestResponseMessage.cs" />
+    <Compile Include="Messaging\Tests\GetRequestMessageTestFixture.cs" />
+    <Compile Include="Messaging\Tests\ResponseMessageTestFixture.cs" />
     <Compile Include="Tests\Integer32TestFixture.cs" />
     <Compile Include="Tests\IPTestFixture.cs" />
-    <Compile Include="Tests\TestLexer.cs" />
-    <Compile Include="Tests\TestMD5AuthenticationProvider.cs" />
-    <Compile Include="Tests\TestMibDocument.cs" />
+    <Compile Include="Mib\Tests\LexerTestFixture.cs" />
+    <Compile Include="Mib\Tests\MibDocumentTestFixture.cs" />
     <Compile Include="Tests\NoSuchInstanceTestFixture.cs" />
     <Compile Include="Tests\NoSuchObjectTestFixture.cs" />
     <Compile Include="Tests\NullTestFixture.cs" />
     <Compile Include="Tests\ObjectIdentifierTestFixture.cs" />
-    <Compile Include="Tests\TestObjectRegistry.cs" />
-    <Compile Include="Tests\TestObjectTree.cs" />
-    <Compile Include="Tests\TestSecurityRecord.cs" />
-    <Compile Include="Tests\TestStringUtilities.cs" />
+    <Compile Include="Mib\Tests\ObjectRegistryTestFixture.cs" />
+    <Compile Include="Mib\Tests\ObjectTreeTestFixture.cs" />
+    <Compile Include="Security\Tests\LevelsTestFixture.cs" />
+    <Compile Include="Mib\Tests\DefinitionTestFixture.cs" />
     <Compile Include="Tests\OctetStringTestFixture.cs" />
     <Compile Include="Tests\OpaqueTestFixture.cs" />
-    <Compile Include="Tests\TestParseItemsException.cs" />
     <Compile Include="Tests\SequenceTestFixture.cs" />
     <Compile Include="Tests\DataFactoryTestFixture.cs" />
     <Compile Include="Tests\TimeticksTestFixture.cs" />
-    <Compile Include="Tests\TestTrapV1Message.cs" />
+    <Compile Include="Messaging\Tests\TrapV1MessageTestFixture.cs" />
     <Compile Include="Tests\TrapV1PduTestFixture.cs" />
-    <Compile Include="Tests\TestTrapV2Message.cs" />
+    <Compile Include="Messaging\Tests\TrapV2MessageTestFixture.cs" />
     <Compile Include="Tests\VariableTestFixture.cs" />
-    <Compile Include="Tests\TestWatchDog.cs" />
+    <Compile Include="Tests\WatchdogTestFixture.cs" />
     <Compile Include="Tests\TrapV2PduTestFixture.cs" />
     <None Include="Resources\empty.txt" />
     <None Include="Resources\httpmib.txt" />
@@ -289,7 +285,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
-      <CustomToolNamespace>Lextm.SharpSnmpLib.Tests</CustomToolNamespace>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

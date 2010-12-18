@@ -8,22 +8,21 @@
  */
 
 using System.IO;
-using Lextm.SharpSnmpLib.Mib;
 using NUnit.Framework;
 
-
 #pragma warning disable 1591
-namespace Lextm.SharpSnmpLib.Tests
+namespace Lextm.SharpSnmpLib.Mib.Tests
 {
     [TestFixture]
-    public class TestMibDocument
+    public class MibDocumentTestFixture
     {
+        // ReSharper disable InconsistentNaming
         [Test]
         [ExpectedException(typeof(MibException))]
         public void TestException()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.fivevarbinds);
+            MemoryStream m = new MemoryStream(Properties.Resources.fivevarbinds);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse("temp.txt", reader);
@@ -38,7 +37,7 @@ namespace Lextm.SharpSnmpLib.Tests
         {
             // issue 4978
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.empty);
+            MemoryStream m = new MemoryStream(Properties.Resources.empty);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -55,7 +54,7 @@ namespace Lextm.SharpSnmpLib.Tests
         {
             // issue 4978
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.httpmib);
+            MemoryStream m = new MemoryStream(Properties.Resources.httpmib);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -72,7 +71,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestSNMPv2_PDU()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.SNMPV2_PDU);
+            MemoryStream m = new MemoryStream(Properties.Resources.SNMPV2_PDU);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -89,10 +88,11 @@ namespace Lextm.SharpSnmpLib.Tests
         }
 
         [Test]
+
         public void TestRFC1157_SNMP_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.RFC1157_SNMP);
+            MemoryStream m = new MemoryStream(Properties.Resources.RFC1157_SNMP);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -107,7 +107,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestJVM_MANAGEMENT_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.JVM_MANAGEMENT_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.JVM_MANAGEMENT_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -126,7 +126,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestIEEE8021_PAE_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.IEEE8021_PAE_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.IEEE8021_PAE_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -145,7 +145,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestCISCO_CSG_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.CISCO_CSG_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.CISCO_CSG_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -164,7 +164,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestCISCO_BULK_FILE_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.CISCO_BULK_FILE_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.CISCO_BULK_FILE_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -183,7 +183,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestCISCO_AAA_SERVER_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.CISCO_AAA_SERVER_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.CISCO_AAA_SERVER_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -203,7 +203,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestBASEBRDD_MIB_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.BASEBRDD_MIB_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.BASEBRDD_MIB_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -223,7 +223,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestATM_TC__MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.ATM_TC_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.ATM_TC_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -243,7 +243,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestARROWPOINT_IPV4_OSPF_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.ARROWPOINT_IPV4_OSPF_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.ARROWPOINT_IPV4_OSPF_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -263,7 +263,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestAPPC_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.APPC_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.APPC_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -283,7 +283,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestALVARION_DOT11_WLAN_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.ALVARION_DOT11_WLAN_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.ALVARION_DOT11_WLAN_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -303,7 +303,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestARRAYMANAGER_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.ARRAYMANAGER_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.ARRAYMANAGER_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -323,7 +323,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestAIRPORT_BASESTATION_3_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.AIRPORT_BASESTATION_3_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.AIRPORT_BASESTATION_3_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -343,7 +343,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestALLIEDTELESYN_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.ALLIEDTELESYN_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.ALLIEDTELESYN_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -363,7 +363,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestADSL_TC_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.ADSL_TC_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.ADSL_TC_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -383,7 +383,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestADSL_LINE_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.ADSL_LINE_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.ADSL_LINE_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -403,7 +403,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestACTONA_ACTASTOR_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.ACTONA_ACTASTOR_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.ACTONA_ACTASTOR_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -423,7 +423,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestRFC1155_SMI()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.RFC1155_SMI);
+            MemoryStream m = new MemoryStream(Properties.Resources.RFC1155_SMI);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -444,7 +444,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestRFC1271_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.RFC1271_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.RFC1271_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -466,7 +466,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestRFC1213_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.RFC1213_MIB1);
+            MemoryStream m = new MemoryStream(Properties.Resources.RFC1213_MIB1);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -486,7 +486,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestRFC1213_MIB2()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.RFC1213_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.RFC1213_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -505,7 +505,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestRFC_1215()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.RFC_1215);
+            MemoryStream m = new MemoryStream(Properties.Resources.RFC_1215);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -520,7 +520,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestRMON_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.RMON_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.RMON_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -539,7 +539,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestSMUX_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.SMUX_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.SMUX_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -558,7 +558,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestSNMP_VIEW_BASED_ACM_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.SNMP_VIEW_BASED_ACM_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.SNMP_VIEW_BASED_ACM_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -577,7 +577,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestTCP_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.TCP_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.TCP_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -596,7 +596,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestTransport_Address_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.TRANSPORT_ADDRESS_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.TRANSPORT_ADDRESS_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -615,7 +615,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestTunnel_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.TUNNEL_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.TUNNEL_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -634,7 +634,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestUCD_DEMO_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.UCD_DEMO_MIB1);
+            MemoryStream m = new MemoryStream(Properties.Resources.UCD_DEMO_MIB1);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -653,7 +653,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestUCD_DISKIO_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.UCD_DISKIO_MIB1);
+            MemoryStream m = new MemoryStream(Properties.Resources.UCD_DISKIO_MIB1);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -672,7 +672,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestUCD_DLMOD_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.UCD_DLMOD_MIB1);
+            MemoryStream m = new MemoryStream(Properties.Resources.UCD_DLMOD_MIB1);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -691,7 +691,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestUCD_IPFILTER_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.UCD_IPFILTER_MIB1);
+            MemoryStream m = new MemoryStream(Properties.Resources.UCD_IPFILTER_MIB1);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -710,7 +710,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestUCD_IPFWACC_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.UCD_IPFWACC_MIB1);
+            MemoryStream m = new MemoryStream(Properties.Resources.UCD_IPFWACC_MIB1);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -729,7 +729,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestUCD_SNMP_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.UCD_SNMP_MIB1);
+            MemoryStream m = new MemoryStream(Properties.Resources.UCD_SNMP_MIB1);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -748,7 +748,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestUCD_SNMP_MIB_OLD()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.UCD_SNMP_MIB_OLD);
+            MemoryStream m = new MemoryStream(Properties.Resources.UCD_SNMP_MIB_OLD);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -767,7 +767,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestUDP_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.UDP_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.UDP_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -786,7 +786,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestMTA_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.MTA_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.MTA_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -805,7 +805,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestNet_Snmp_Agent_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.NET_SNMP_AGENT_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.NET_SNMP_AGENT_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -824,7 +824,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestNet_Snmp_Examples_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.NET_SNMP_EXAMPLES_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.NET_SNMP_EXAMPLES_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -843,7 +843,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestNet_Snmp_Extend_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.NET_SNMP_EXTEND_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.NET_SNMP_EXTEND_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -862,7 +862,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestNet_Snmp_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.NET_SNMP_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.NET_SNMP_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -881,7 +881,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestNet_Snmp_Monitor_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.NET_SNMP_MONITOR_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.NET_SNMP_MONITOR_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -900,7 +900,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestNet_Snmp_System_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.NET_SNMP_SYSTEM_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.NET_SNMP_SYSTEM_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -919,7 +919,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestNet_Snmp_TC()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.NET_SNMP_TC);
+            MemoryStream m = new MemoryStream(Properties.Resources.NET_SNMP_TC);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -938,7 +938,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestNet_Snmp_VACM_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.NET_SNMP_VACM_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.NET_SNMP_VACM_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -957,7 +957,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestNetwork_Service_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.NETWORK_SERVICES_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.NETWORK_SERVICES_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -976,7 +976,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestNotification_Log_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.NOTIFICATION_LOG_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.NOTIFICATION_LOG_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -995,7 +995,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestIPv6_Flow_Label_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.IPV6_FLOW_LABEL_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.IPV6_FLOW_LABEL_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -1014,7 +1014,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestIPv6_ICMP_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.IPV6_ICMP_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.IPV6_ICMP_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -1033,7 +1033,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestIPv6_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.IPV6_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.IPV6_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -1052,7 +1052,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestIPv6_TC()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.IPV6_TC);
+            MemoryStream m = new MemoryStream(Properties.Resources.IPV6_TC);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -1067,7 +1067,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestIPv6_Tcp_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.IPV6_TCP_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.IPV6_TCP_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -1086,7 +1086,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestIPv6_Udp_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.IPV6_UDP_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.IPV6_UDP_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -1105,7 +1105,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestLM_Sensors_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.LM_SENSORS_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.LM_SENSORS_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -1124,7 +1124,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestIP_Forward_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.IP_FORWARD_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.IP_FORWARD_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -1143,7 +1143,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestIF_Inverted_Stack_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.IF_INVERTED_STACK_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.IF_INVERTED_STACK_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -1162,7 +1162,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestIANA_RTPROTO_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.IANA_RTPROTO_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.IANA_RTPROTO_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -1181,7 +1181,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestIANA_Language_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.IANA_LANGUAGE_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.IANA_LANGUAGE_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -1200,7 +1200,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestIANA_ADDRESS_FAMILY_NUMBERS_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.IANA_ADDRESS_FAMILY_NUMBERS_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.IANA_ADDRESS_FAMILY_NUMBERS_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -1219,7 +1219,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestHOST_RESOURCES_TYPE()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.HOST_RESOURCES_TYPES);
+            MemoryStream m = new MemoryStream(Properties.Resources.HOST_RESOURCES_TYPES);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -1238,7 +1238,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestHOST_RESOURCES_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.HOST_RESOURCES_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.HOST_RESOURCES_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -1257,7 +1257,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestHCNUM_TC()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.HCNUM_TC);
+            MemoryStream m = new MemoryStream(Properties.Resources.HCNUM_TC);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -1276,7 +1276,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestEtherLike_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.EtherLike_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.EtherLike_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -1295,7 +1295,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestDISKMAN_Event_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.DISMAN_EVENT_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.DISMAN_EVENT_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -1315,7 +1315,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestDISKMAN_Expression_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.DISMAN_EXPRESSION_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.DISMAN_EXPRESSION_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -1336,7 +1336,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestDISKMAN_NSLookUp_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.DISMAN_NSLOOKUP_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.DISMAN_NSLOOKUP_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -1357,7 +1357,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestDISKMAN_Ping_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.DISMAN_PING_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.DISMAN_PING_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -1376,7 +1376,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestDISKMAN_Schedule_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.DISMAN_SCHEDULE_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.DISMAN_SCHEDULE_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -1395,7 +1395,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestDISKMAN_Script_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.DISMAN_SCRIPT_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.DISMAN_SCRIPT_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -1414,7 +1414,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestDISKMAN_TRACEROUT_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.DISMAN_TRACEROUTE_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.DISMAN_TRACEROUTE_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -1433,7 +1433,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestSNMP_USM_DH_OBJECTS_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.SNMP_USM_DH_OBJECTS_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.SNMP_USM_DH_OBJECTS_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -1452,7 +1452,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestSNMP_USM_AES_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.SNMP_USM_AES_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.SNMP_USM_AES_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -1471,7 +1471,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestSNMP_USER_BASED_SM_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.SNMP_USER_BASED_SM_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.SNMP_USER_BASED_SM_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -1490,7 +1490,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestSNMP_MPD_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.SNMP_MPD_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.SNMP_MPD_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -1509,7 +1509,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestSNMP_Notification_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.SNMP_NOTIFICATION_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.SNMP_NOTIFICATION_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -1528,7 +1528,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestSNMP_Proxy_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.SNMP_PROXY_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.SNMP_PROXY_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -1547,7 +1547,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestSNMP_Target_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.SNMP_TARGET_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.SNMP_TARGET_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -1566,7 +1566,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestAgentX_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.AGENTX_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.AGENTX_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -1585,7 +1585,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestSNMP_Community_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.SNMP_COMMUNITY_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.SNMP_COMMUNITY_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -1604,7 +1604,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestSNMP_Framework_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.SNMP_FRAMEWORK_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.SNMP_FRAMEWORK_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -1624,7 +1624,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void Testv2CONF()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.SNMPv2_CONF);
+            MemoryStream m = new MemoryStream(Properties.Resources.SNMPv2_CONF);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -1639,7 +1639,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void Testv2_TC()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.SNMPv2_TC);
+            MemoryStream m = new MemoryStream(Properties.Resources.SNMPv2_TC);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -1655,7 +1655,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void Testv2_SMI()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.SNMPv2_SMI);
+            MemoryStream m = new MemoryStream(Properties.Resources.SNMPv2_SMI);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -1675,7 +1675,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void Testv2_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.SNMPv2_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.SNMPv2_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -1695,7 +1695,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestIANAifType_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.IANAifType_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.IANAifType_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -1714,7 +1714,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestIF_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.IF_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.IF_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -1734,7 +1734,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestINET_ADDRESS_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.INET_ADDRESS_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.INET_ADDRESS_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -1753,7 +1753,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestIP_MIB()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.IP_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.IP_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -1773,7 +1773,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void Testv2TM()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.SNMPv2_TM);
+            MemoryStream m = new MemoryStream(Properties.Resources.SNMPv2_TM);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -1793,7 +1793,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestBridge()
         {
             Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Resources.BRIDGE_MIB);
+            MemoryStream m = new MemoryStream(Properties.Resources.BRIDGE_MIB);
             using (StreamReader reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
@@ -1809,6 +1809,8 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual(4, node.Value);
             Assert.AreEqual("dot1dStaticEntry", node.Parent);
         }
+
+        // ReSharper restore InconsistentNaming
     }
 }
 #pragma warning restore 1591

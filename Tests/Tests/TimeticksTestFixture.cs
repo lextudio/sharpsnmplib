@@ -8,7 +8,6 @@
  */
 
 using System;
-using Lextm.SharpSnmpLib.Messaging;
 using NUnit.Framework;
 
 #pragma warning disable 1591,0618
@@ -22,6 +21,14 @@ namespace Lextm.SharpSnmpLib.Tests
         {
             Assert.Throws<ArgumentNullException>(() => new TimeTicks(0, null));   
             Assert.Throws<ArgumentNullException>(() => new TimeTicks(0).AppendBytesTo(null));
+        }
+        
+        [Test]
+        public void TestConstructor3()
+        {
+            TimeTicks time = new TimeTicks(800);
+            uint count = time.ToUInt32();
+            Assert.AreEqual(time, new TimeTicks(count));
         }
 
         [Test]

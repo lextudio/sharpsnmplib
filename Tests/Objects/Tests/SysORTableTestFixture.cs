@@ -6,8 +6,6 @@
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
-using System;
-using System.Linq;
 using NUnit.Framework;
 
 namespace Lextm.SharpSnmpLib.Objects.Tests

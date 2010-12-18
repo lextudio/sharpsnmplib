@@ -7,14 +7,13 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 
-using System.Collections.Generic;
 using NUnit.Framework;
 
 #pragma warning disable 1591
-namespace Lextm.SharpSnmpLib.Tests
+namespace Lextm.SharpSnmpLib.Messaging.Tests
 {
     [TestFixture]
-    public class TestManager
+    public class ManagerTestFixture
     {
         [Test]
         public void TestGetTable()

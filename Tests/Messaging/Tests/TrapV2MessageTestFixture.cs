@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
 using Lextm.SharpSnmpLib.Security;
 using NUnit.Framework;
-using Lextm.SharpSnmpLib.Messaging;
 
-namespace Lextm.SharpSnmpLib.Tests
+namespace Lextm.SharpSnmpLib.Messaging.Tests
 {
     [TestFixture]
-    public class TestTrapV2Message
+    public class TrapV2MessageTestFixture
     {
         [Test]
         public void TestToBytes()
@@ -25,7 +24,7 @@ namespace Lextm.SharpSnmpLib.Tests
                 0,
                 0
                );
-            Assert.AreEqual(ByteTool.Convert(Resources.trapv3), ByteTool.Convert(trap.ToBytes()));
+            Assert.AreEqual(ByteTool.Convert(Properties.Resources.trapv3), ByteTool.Convert(trap.ToBytes()));
         }
         
         [Test]
@@ -46,7 +45,7 @@ namespace Lextm.SharpSnmpLib.Tests
                 0,
                 0
                );
-            Assert.AreEqual(ByteTool.Convert(Resources.trapv3auth), ByteTool.Convert(trap.ToBytes()));
+            Assert.AreEqual(ByteTool.Convert(Properties.Resources.trapv3auth), ByteTool.Convert(trap.ToBytes()));
         }
 
         [Test]

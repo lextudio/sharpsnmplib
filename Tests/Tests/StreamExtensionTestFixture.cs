@@ -15,7 +15,7 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.Throws<ArgumentNullException>(() => StreamExtension.IgnoreBytes(null, 0));
             Assert.Throws<ArgumentNullException>(() => StreamExtension.ReadPayloadLength(null));
             Assert.Throws<ArgumentNullException>(() => StreamExtension.WritePayloadLength(null, 0));
-            Assert.Throws<ArgumentException>(() => StreamExtension.WritePayloadLength(new MemoryStream(), -1));
+            Assert.Throws<ArgumentException>(() => new MemoryStream().WritePayloadLength(-1));
         }
     }
 }

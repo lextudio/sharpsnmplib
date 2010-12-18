@@ -28,12 +28,12 @@ using System;
 namespace Lextm.SharpSnmpLib.Security
 {
     /// <summary>
-    /// Extension class for <seealso cref="IPrivacyProvider"/>.
+    /// Extension class for <see cref="IPrivacyProvider"/>.
     /// </summary>
     public static class PrivacyProviderExtension
     {
         /// <summary>
-        /// Converts to <seealso cref="Levels"/>.
+        /// Converts to <see cref="Levels"/>.
         /// </summary>
         /// <returns></returns>
         public static Levels ToSecurityLevel(this IPrivacyProvider privacy)
@@ -61,7 +61,7 @@ namespace Lextm.SharpSnmpLib.Security
         }
         
         /// <summary>
-        /// Converts to <seealso cref="OctetString"/>.
+        /// Converts to <see cref="OctetString"/>.
         /// </summary>
         /// <param name="privacy">Privacy provider.</param>
         /// <param name="reportable">Reportable flag.</param>

@@ -25,14 +25,14 @@ using Lextm.SharpSnmpLib.Security;
 namespace Lextm.SharpSnmpLib.Messaging
 {    
     /// <summary>
-    /// Extension methods for <seealso cref="ISnmpMessage"/>.
+    /// Extension methods for <see cref="ISnmpMessage"/>.
     /// </summary>
     public static class SnmpMessageExtension
     {
         /// <summary>
-        /// Gets the <seealso cref="SnmpType"/>.
+        /// Gets the <see cref="SnmpType"/>.
         /// </summary>
-        /// <param name="message">The <seealso cref="ISnmpMessage"/>.</param>
+        /// <param name="message">The <see cref="ISnmpMessage"/>.</param>
         /// <returns></returns>
         public static SnmpType TypeCode(this ISnmpMessage message)
         {
@@ -47,7 +47,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Gets the level.
         /// </summary>
-        /// <param name="message">The <seealso cref="ISnmpMessage"/>.</param>
+        /// <param name="message">The <see cref="ISnmpMessage"/>.</param>
         /// <value>The level.</value>
         internal static Levels Level(this ISnmpMessage message)
         {
@@ -67,7 +67,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Variables.
         /// </summary>
-        /// <param name="message">The <seealso cref="ISnmpMessage"/>.</param>
+        /// <param name="message">The <see cref="ISnmpMessage"/>.</param>
         public static IList<Variable> Variables(this ISnmpMessage message)
         {
             if (message == null)
@@ -82,7 +82,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Request ID.
         /// </summary>
-        /// <param name="message">The <seealso cref="ISnmpMessage"/>.</param>
+        /// <param name="message">The <see cref="ISnmpMessage"/>.</param>
         public static int RequestId(this ISnmpMessage message)
         {
             if (message == null)
@@ -97,7 +97,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Gets the message ID.
         /// </summary>
         /// <value>The message ID.</value>
-        /// <param name="message">The <seealso cref="ISnmpMessage"/>.</param>
+        /// <param name="message">The <see cref="ISnmpMessage"/>.</param>
         /// <remarks>For v3, message ID is different from request ID. For v1 and v2c, they are the same.</remarks>
         public static int MessageId(this ISnmpMessage message)
         {
@@ -112,7 +112,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// PDU.
         /// </summary>
-        /// <param name="message">The <seealso cref="ISnmpMessage"/>.</param>
+        /// <param name="message">The <see cref="ISnmpMessage"/>.</param>
         public static ISnmpPdu Pdu(this ISnmpMessage message)
         {
             if (message == null)
@@ -126,7 +126,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Community name.
         /// </summary>
-        /// <param name="message">The <seealso cref="ISnmpMessage"/>.</param>
+        /// <param name="message">The <see cref="ISnmpMessage"/>.</param>
         public static OctetString Community(this ISnmpMessage message)
         {
             if (message == null)
@@ -140,7 +140,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Sends an <see cref="ISnmpMessage"/>.
         /// </summary>
-        /// <param name="message">The <seealso cref="ISnmpMessage"/>.</param>
+        /// <param name="message">The <see cref="ISnmpMessage"/>.</param>
         /// <param name="manager">Manager</param>
         public static void Send(this ISnmpMessage message, EndPoint manager)
         {
@@ -171,7 +171,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Sends an <see cref="ISnmpMessage"/>.
         /// </summary>
-        /// <param name="message">The <seealso cref="ISnmpMessage"/>.</param>
+        /// <param name="message">The <see cref="ISnmpMessage"/>.</param>
         /// <param name="manager">Manager</param>
         /// <param name="socket">The socket.</param>
         public static void Send(this ISnmpMessage message, EndPoint manager, Socket socket)
@@ -206,7 +206,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Sends an <see cref="ISnmpMessage"/>.
         /// </summary>
-        /// <param name="message">The <seealso cref="ISnmpMessage"/>.</param>
+        /// <param name="message">The <see cref="ISnmpMessage"/>.</param>
         /// <param name="manager">Manager</param>
         public static void SendAsync(this ISnmpMessage message, EndPoint manager)
         {
@@ -237,7 +237,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Sends an <see cref="ISnmpMessage"/>.
         /// </summary>
-        /// <param name="message">The <seealso cref="ISnmpMessage"/>.</param>
+        /// <param name="message">The <see cref="ISnmpMessage"/>.</param>
         /// <param name="manager">Manager</param>
         /// <param name="socket">The socket.</param>
         public static void SendAsync(this ISnmpMessage message, EndPoint manager, Socket socket)
@@ -272,7 +272,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Sends this <see cref="ISnmpMessage"/> and handles the response from agent.
         /// </summary>
-        /// <param name="request">The <seealso cref="ISnmpMessage"/>.</param>
+        /// <param name="request">The <see cref="ISnmpMessage"/>.</param>
         /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
         /// <param name="receiver">Port number.</param>
         /// <param name="registry">User registry.</param>
@@ -445,7 +445,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Ends a pending asynchronous read.
         /// </summary>
         /// <param name="request">The <see cref="ISnmpMessage"/>.</param>
-        /// <param name="asyncResult">An <seealso cref="IAsyncResult"/> that stores state information and any user defined data for this asynchronous operation.</param>
+        /// <param name="asyncResult">An <see cref="IAsyncResult"/> that stores state information and any user defined data for this asynchronous operation.</param>
         /// <returns></returns>
         public static ISnmpMessage EndGetResponse(this ISnmpMessage request, IAsyncResult asyncResult)
         {
@@ -481,7 +481,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         }
 
         /// <summary>
-        /// Begins to asynchronously send an <see cref="ISnmpMessage"/> to an <seealso cref="IPEndPoint"/>.
+        /// Begins to asynchronously send an <see cref="ISnmpMessage"/> to an <see cref="IPEndPoint"/>.
         /// </summary>
         /// <param name="request">The <see cref="ISnmpMessage"/>.</param>
         /// <param name="receiver">Agent.</param>

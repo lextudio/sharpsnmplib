@@ -1,11 +1,10 @@
 ﻿using System;
-using Lextm.SharpSnmpLib.Security;
 using NUnit.Framework;
 
-namespace Lextm.SharpSnmpLib.Tests
+namespace Lextm.SharpSnmpLib.Security.Tests
 {
     [TestFixture]
-    public class TestSecurityRecord
+    public class LevelsTestFixture
     {
         [Test]
         public void TestToSecurityLevel()

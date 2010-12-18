@@ -15,7 +15,7 @@ using NUnit.Framework;
 namespace Lextm.SharpSnmpLib.Tests
 {
     [TestFixture]
-    public class TestByteTool
+    public class ByteToolTestFixture
     {
         [Test]
         public void TestException()

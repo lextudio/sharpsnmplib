@@ -48,13 +48,26 @@ namespace Lextm.SharpSnmpLib.Tests
             Variable v = new Variable(
                     new ObjectIdentifier(new uint[] {1,3,6,1,4,1,2162,1001,21,0}),
                     new OctetString("TrapTest"));
-            List<Variable> vList = new List<Variable>();
-            vList.Add(v);
+            List<Variable> vList = new List<Variable> {v};
 
             Sequence varbindSection = Variable.Transform(vList);
             Assert.AreEqual(1, varbindSection.Length);
             Sequence varbind = (Sequence)varbindSection[0];
             Assert.AreEqual(2, varbind.Length);
+        }
+
+        [Test]
+        // [ExpectedException(typeof(IndexOutOfRangeException))]
+        public void TestConstructor()
+        {
+            List<Variable> vList = new List<Variable>
+                                       {
+                                           new Variable(
+                                               new ObjectIdentifier(new uint[] {1, 3, 6, 1, 2, 1, 2, 2, 1, 22, 1}),
+                                               new ObjectIdentifier(new uint[] {0, 0}))
+                                       };
+
+            Variable.Transform(vList);
         }
     }
 }

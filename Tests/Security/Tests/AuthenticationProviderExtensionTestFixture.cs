@@ -21,12 +21,12 @@ namespace Lextm.SharpSnmpLib.Security.Tests
             Assert.Throws<ArgumentNullException>(() => AuthenticationProviderExtension.ComputeHash(DefaultAuthenticationProvider.Instance, VersionCode.V1, null, null, null, null));
             Assert.Throws<ArgumentNullException>(() => AuthenticationProviderExtension.ComputeHash(DefaultAuthenticationProvider.Instance, VersionCode.V1, Header.Empty, null, null, null));
             Assert.Throws<ArgumentNullException>(() => AuthenticationProviderExtension.ComputeHash(DefaultAuthenticationProvider.Instance, VersionCode.V1, Header.Empty, SecurityParameters.Create(new OctetString("test")), null, null));
-            Assert.Throws<ArgumentNullException>(() => AuthenticationProviderExtension.ComputeHash(DefaultAuthenticationProvider.Instance, VersionCode.V1, Header.Empty, SecurityParameters.Create(new OctetString("test")), new Scope(OctetString.Empty, OctetString.Empty, new MalformedPdu()), null));
+            Assert.Throws<ArgumentNullException>(() => DefaultAuthenticationProvider.Instance.ComputeHash(VersionCode.V1, Header.Empty, SecurityParameters.Create(new OctetString("test")), new Scope(OctetString.Empty, OctetString.Empty, new MalformedPdu()), null));
             Assert.Throws<ArgumentNullException>(() => AuthenticationProviderExtension.VerifyHash(null, VersionCode.V1, null, null, null, null));
-            Assert.Throws<ArgumentNullException>(() => AuthenticationProviderExtension.VerifyHash(DefaultAuthenticationProvider.Instance, VersionCode.V1, null, null, null, null));
-            Assert.Throws<ArgumentNullException>(() => AuthenticationProviderExtension.VerifyHash(DefaultAuthenticationProvider.Instance, VersionCode.V1, Header.Empty, null, null, null));
-            Assert.Throws<ArgumentNullException>(() => AuthenticationProviderExtension.VerifyHash(DefaultAuthenticationProvider.Instance, VersionCode.V1, Header.Empty, SecurityParameters.Create(new OctetString("test")), null, null));
-            Assert.Throws<ArgumentNullException>(() => AuthenticationProviderExtension.VerifyHash(DefaultAuthenticationProvider.Instance, VersionCode.V1, Header.Empty, SecurityParameters.Create(new OctetString("test")), new MalformedPdu(), null));
+            Assert.Throws<ArgumentNullException>(() => DefaultAuthenticationProvider.Instance.VerifyHash(VersionCode.V1, null, null, null, null));
+            Assert.Throws<ArgumentNullException>(() => DefaultAuthenticationProvider.Instance.VerifyHash(VersionCode.V1, Header.Empty, null, null, null));
+            Assert.Throws<ArgumentNullException>(() => DefaultAuthenticationProvider.Instance.VerifyHash(VersionCode.V1, Header.Empty, SecurityParameters.Create(new OctetString("test")), null, null));
+            Assert.Throws<ArgumentNullException>(() => DefaultAuthenticationProvider.Instance.VerifyHash(VersionCode.V1, Header.Empty, SecurityParameters.Create(new OctetString("test")), new MalformedPdu(), null));
         }
     }
 }

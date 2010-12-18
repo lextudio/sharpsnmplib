@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace Lextm.SharpSnmpLib.Tests
 {
     [TestFixture]
-    public class TestWatchdog
+    public class WatchdogTestFixture
     {
         [Test]
         public void Test()

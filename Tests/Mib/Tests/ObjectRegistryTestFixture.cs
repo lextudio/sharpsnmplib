@@ -9,15 +9,15 @@
 
 using System.Collections.Generic;
 using System.IO;
-using Lextm.SharpSnmpLib.Mib;
 using NUnit.Framework;
 
 #pragma warning disable 1591
-namespace Lextm.SharpSnmpLib.Tests
+namespace Lextm.SharpSnmpLib.Mib.Tests
 {
     [TestFixture]
-    public class TestObjectRegistry
+    public class ObjectRegistryTestFixture
     {
+        // ReSharper disable InconsistentNaming
         [Test]
         public void TestValidateTable()
         {
@@ -42,7 +42,8 @@ namespace Lextm.SharpSnmpLib.Tests
             uint[] oid2 = new uint[] {1,3,6,1,2,1,10};
             string result2 = DefaultObjectRegistry.Instance.Translate(oid2);
             Assert.AreEqual("SNMPV2-SMI::transmission", result2);
-        }    
+        }   
+ 
         [Test]
         public void TestSNMPv2MIBTextual()
         {
@@ -50,6 +51,7 @@ namespace Lextm.SharpSnmpLib.Tests
             string result = DefaultObjectRegistry.Instance.Translate(oid);
             Assert.AreEqual("SNMPV2-MIB::system", result);            
         }
+
         [Test]
         public void TestSNMPv2TMTextual()
         {
@@ -57,6 +59,7 @@ namespace Lextm.SharpSnmpLib.Tests
             string result = DefaultObjectRegistry.Instance.Translate(ObjectIdentifier.AppendTo(old, 1));
             Assert.AreEqual("SNMPV2-TM::snmpUDPDomain", result);
         }
+
         [Test]
         public void TestGetNumericalFrom()
         {
@@ -84,6 +87,7 @@ namespace Lextm.SharpSnmpLib.Tests
             
             Assert.AreEqual("SNMPV2-SMI::private", DefaultObjectRegistry.Instance.Translate(expected));
         }
+
         [Test]
         public void TestZeroDotZero()
         {
@@ -94,6 +98,7 @@ namespace Lextm.SharpSnmpLib.Tests
 
             Assert.AreEqual(expected, DefaultObjectRegistry.Instance.Translate(textual));            
         }
+
         [Test]
         public void TestSNMPv2MIBNumerical()
         {
@@ -102,6 +107,7 @@ namespace Lextm.SharpSnmpLib.Tests
             uint[] result = DefaultObjectRegistry.Instance.Translate(textual);
             Assert.AreEqual(expected, result);
         }
+
         [Test]
         public void TestSNMPv2TMNumerical()
         {
@@ -110,6 +116,7 @@ namespace Lextm.SharpSnmpLib.Tests
             uint[] result = DefaultObjectRegistry.Instance.Translate(textual);
             Assert.AreEqual(expected, result);
         }
+
         [Test]
         public void TestsysORTable()
         {
@@ -117,6 +124,7 @@ namespace Lextm.SharpSnmpLib.Tests
             uint[] id = DefaultObjectRegistry.Instance.Translate(name);
             Assert.IsTrue(DefaultObjectRegistry.Instance.IsTableId(id));
         }
+
         [Test]
         public void TestsysORTable0()
         {
@@ -125,6 +133,7 @@ namespace Lextm.SharpSnmpLib.Tests
             uint[] id = DefaultObjectRegistry.Instance.Translate(name);
             Assert.AreEqual(expected, id);
         }
+
         [Test]
         public void TestsysORTable0Reverse()
         {
@@ -132,7 +141,8 @@ namespace Lextm.SharpSnmpLib.Tests
             const string expected = "SNMPV2-MIB::sysORTable.0";
             string value = DefaultObjectRegistry.Instance.Translate(id);
             Assert.AreEqual(expected, value);
-        }    
+        }   
+ 
         [Test]
         public void TestsnmpMIB()
         {
@@ -145,7 +155,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestActona()
         {
             const string name = "ACTONA-ACTASTOR-MIB::actona";
-            IList<IModule> modules = Parser.Compile(new StreamReader(new MemoryStream(Resources.ACTONA_ACTASTOR_MIB)));
+            IList<IModule> modules = Parser.Compile(new StreamReader(new MemoryStream(Properties.Resources.ACTONA_ACTASTOR_MIB)));
             DefaultObjectRegistry.Instance.Import(modules);
             DefaultObjectRegistry.Instance.Refresh();
             uint[] id = DefaultObjectRegistry.Instance.Translate(name);
@@ -158,9 +168,9 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestSYMMIB_MIB_MIB()
         {
             const string name = "SYMMIB_MIB-MIB::symbios_3_1";
-            IList<IModule> modules = Parser.Compile(new StreamReader(new MemoryStream(Resources.SYMMIB_MIB_MIB)));
+            IList<IModule> modules = Parser.Compile(new StreamReader(new MemoryStream(Properties.Resources.SYMMIB_MIB_MIB)));
             DefaultObjectRegistry.Instance.Import(modules);
-            modules = Parser.Compile(new StreamReader(new MemoryStream(Resources.DMTF_DMI_MIB)));
+            modules = Parser.Compile(new StreamReader(new MemoryStream(Properties.Resources.DMTF_DMI_MIB)));
             DefaultObjectRegistry.Instance.Import(modules);
             DefaultObjectRegistry.Instance.Refresh();
             uint[] id = DefaultObjectRegistry.Instance.Translate(name);
@@ -173,7 +183,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestIEEE802dot11_MIB()
         {
             const string name = "IEEE802DOT11-MIB::dot11SMTnotification";
-            IList<IModule> modules = Parser.Compile(new StreamReader(new MemoryStream(Resources.IEEE802DOT11_MIB)));
+            IList<IModule> modules = Parser.Compile(new StreamReader(new MemoryStream(Properties.Resources.IEEE802DOT11_MIB)));
             DefaultObjectRegistry.Instance.Import(modules);
             DefaultObjectRegistry.Instance.Refresh();
             uint[] id = DefaultObjectRegistry.Instance.Translate(name);
@@ -186,6 +196,7 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual(id1, DefaultObjectRegistry.Instance.Translate(name1));
             Assert.AreEqual(name1, DefaultObjectRegistry.Instance.Translate(id1));
         }
+        // ReSharper restore InconsistentNaming
     }
 }
 #pragma warning restore 1591

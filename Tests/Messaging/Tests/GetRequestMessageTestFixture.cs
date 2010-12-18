@@ -9,28 +9,25 @@
 
 using System.Collections.Generic;
 using System.Net;
-
-using Lextm.SharpSnmpLib.Messaging;
 using Lextm.SharpSnmpLib.Security;
 using NUnit.Framework;
 using System.Net.Sockets;
-using TimeoutException = Lextm.SharpSnmpLib.Messaging.TimeoutException;
 using System;
 
 #pragma warning disable 1591
 
-namespace Lextm.SharpSnmpLib.Tests
+namespace Lextm.SharpSnmpLib.Messaging.Tests
 {
     /// <summary>
     /// Description of TestGetMessage.
     /// </summary>
     [TestFixture]
-    public class TestGetRequestMessage
+    public class GetRequestMessageTestFixture
     {
         [Test]
         public void Test()
         {
-            byte[] expected = Resources.get;
+            byte[] expected = Properties.Resources.get;
             ISnmpMessage message = MessageFactory.ParseMessages(expected, new UserRegistry())[0];
             Assert.AreEqual(SnmpType.GetRequestPdu, message.TypeCode());
             GetRequestPdu pdu = (GetRequestPdu)message.Pdu();
@@ -50,7 +47,7 @@ namespace Lextm.SharpSnmpLib.Tests
                                                        new Null())
                                       };
             GetRequestMessage message = new GetRequestMessage(0, VersionCode.V2, new OctetString("public"), list);
-            Assert.GreaterOrEqual(Resources.get.Length, message.ToBytes().Length);
+            Assert.GreaterOrEqual(Properties.Resources.get.Length, message.ToBytes().Length);
         }
 
         [Test]

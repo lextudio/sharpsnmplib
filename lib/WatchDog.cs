@@ -36,7 +36,7 @@ namespace Lextm.Common
         private Timer _timer = new Timer();
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="WatchDog"/> class.
+        /// Initializes a new instance of the <see cref="Watchdog"/> class.
         /// </summary>
         /// <param name="interval">The interval.</param>
         public Watchdog(double interval)
@@ -49,7 +49,7 @@ namespace Lextm.Common
         }
          
         /// <summary>
-        /// Gets or sets a value indicating whether this <see cref="WatchDog"/> is enabled.
+        /// Gets or sets a value indicating whether this <see cref="Watchdog"/> is enabled.
         /// </summary>
         /// <value><c>true</c> if enabled; otherwise, <c>false</c>.</value>
         public bool Enabled { get; set; }

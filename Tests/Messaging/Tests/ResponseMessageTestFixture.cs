@@ -10,13 +10,12 @@
 using System.Collections.Generic;
 using Lextm.SharpSnmpLib.Security;
 using NUnit.Framework;
-using Lextm.SharpSnmpLib.Messaging;
 
 #pragma warning disable 1591
-namespace Lextm.SharpSnmpLib.Tests
+namespace Lextm.SharpSnmpLib.Messaging.Tests
 {
     [TestFixture]
-    public class TestResponseMessage
+    public class ResponseMessageTestFixture
     {
         [Test]
         public void TestConstructor()

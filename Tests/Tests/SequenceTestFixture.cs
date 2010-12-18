@@ -9,7 +9,6 @@
 
 using System;
 using System.Collections.Generic;
-using Lextm.SharpSnmpLib.Messaging;
 using NUnit.Framework;
 
 #pragma warning disable 1591
@@ -29,10 +28,12 @@ namespace Lextm.SharpSnmpLib.Tests
         [Test]
         public void TestToBytes()
         {
-            List<Variable> vList = new List<Variable>();
-            vList.Add(new Variable(
-                        new ObjectIdentifier(new uint[] {1,3,6,1,4,1,2162,1001,21,0}),
-                        new OctetString("TrapTest")));
+            List<Variable> vList = new List<Variable>
+                                       {
+                                           new Variable(
+                                               new ObjectIdentifier(new uint[] {1, 3, 6, 1, 4, 1, 2162, 1001, 21, 0}),
+                                               new OctetString("TrapTest"))
+                                       };
 
             Sequence a = Variable.Transform(vList);
             Assert.Throws<ArgumentNullException>(() => a.AppendBytesTo(null));

@@ -49,7 +49,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         }
 
         /// <summary>
-        /// Adds the specified <seealso cref="ISnmpObject"/>.
+        /// Adds the specified <see cref="ISnmpObject"/>.
         /// </summary>
         /// <param name="newObject">The object.</param>
         public void Add(ISnmpObject newObject)
