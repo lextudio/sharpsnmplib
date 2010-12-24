@@ -68,6 +68,11 @@ namespace Lextm.SharpSnmpLib.Security
         /// <returns></returns>
         public static OctetString ToOctetString(this IPrivacyProvider privacy, bool reportable)
         {
+            if (privacy == null)
+            {
+                throw new ArgumentNullException("privacy");
+            }
+
             Levels recordToSecurityLevel = privacy.ToSecurityLevel();
             if (reportable)
             {
@@ -75,6 +80,23 @@ namespace Lextm.SharpSnmpLib.Security
             }
             
             return new OctetString(new[] { (byte)recordToSecurityLevel });
+        }
+
+        internal static ISnmpData GetScopeData(this IPrivacyProvider privacy, Header header, SecurityParameters parameters, ISnmpData rawScopeData)
+        {
+            if (privacy == null)
+            {
+                throw new ArgumentNullException("privacy");
+            }
+
+            if (header == null)
+            {
+                throw new ArgumentNullException("header");
+            }
+
+            return Levels.Privacy == (AuthenticationProviderExtension.ToLevels(header.Flags) & Levels.Privacy)
+                       ? privacy.Encrypt(rawScopeData, parameters)
+                       : rawScopeData;
         }
     }
 }

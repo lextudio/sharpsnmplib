@@ -27,7 +27,6 @@ namespace Lextm.SharpSnmpLib
     {
         private readonly Integer32 _messageId;
         private readonly Integer32 _maxSize;
-        private readonly OctetString _flags;
         private readonly Integer32 _securityModel;
         private static readonly Header EmptyHeader = new Header();
         private static readonly Integer32 DefaultSecurityModel = new Integer32(3);
@@ -66,7 +65,7 @@ namespace Lextm.SharpSnmpLib
             Sequence container = (Sequence)data;
             _messageId = (Integer32)container[0];
             _maxSize = (Integer32)container[1];
-            _flags = (OctetString)container[2];
+            Flags = (OctetString)container[2];
             _securityModel = (Integer32)container[3];
         }
 
@@ -96,7 +95,7 @@ namespace Lextm.SharpSnmpLib
 
             _messageId = messageId;
             _maxSize = maxMessageSize;
-            _flags = securityBits;
+            Flags = securityBits;
             _securityModel = DefaultSecurityModel;
         }
         
@@ -107,6 +106,11 @@ namespace Lextm.SharpSnmpLib
         {
             get { return EmptyHeader; }
         }
+        
+        /// <summary>
+        /// Security flags.
+        /// </summary>
+        public OctetString Flags { get; private set; }
 
         /// <summary>
         /// Gets the message ID.
@@ -114,10 +118,7 @@ namespace Lextm.SharpSnmpLib
         /// <value>The message ID.</value>
         public int MessageId
         {
-            get
-            {
-                return _messageId.ToInt32();
-            }
+            get { return _messageId.ToInt32(); }
         }
 
         #region ISegment Members
@@ -128,7 +129,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public Sequence ToSequence()
         {
-            return new Sequence(_messageId, _maxSize, _flags, _securityModel);
+            return new Sequence(_messageId, _maxSize, Flags, _securityModel);
         }
 
         /// <summary>
@@ -151,7 +152,7 @@ namespace Lextm.SharpSnmpLib
         /// </returns>
         public override string ToString()
         {
-            return string.Format(CultureInfo.InvariantCulture, "Header: messageId: {0};maxMessageSize: {1};securityBits: {2};securityModel: {3}", MessageId, _maxSize, _flags.ToHexString(), _securityModel);
+            return string.Format(CultureInfo.InvariantCulture, "Header: messageId: {0};maxMessageSize: {1};securityBits: {2};securityModel: {3}", MessageId, _maxSize, Flags.ToHexString(), _securityModel);
         }
 
         /// <summary>

@@ -75,15 +75,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             Header = header;
             Parameters = parameters;
             Scope = scope;
-            if (!(privacy is DefaultPrivacyProvider))
-            {
-                Privacy = new DefaultPrivacyProvider(privacy.AuthenticationProvider);
-            }
-            else
-            {
-                Privacy = privacy;
-            }
-            
+            Privacy = privacy;
             Privacy.AuthenticationProvider.ComputeHash(Version, Header, Parameters, Scope, Privacy);            
             _bytes = this.PackMessage().ToBytes();
         }

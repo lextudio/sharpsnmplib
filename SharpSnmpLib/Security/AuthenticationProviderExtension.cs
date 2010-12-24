@@ -68,6 +68,11 @@ namespace Lextm.SharpSnmpLib.Security
                 return true;
             }
 
+            if (0 == (ToLevels(header.Flags) & Levels.Authentication))
+            {
+                return true;
+            }
+
             var expected = parameters.AuthenticationParameters;
             parameters.AuthenticationParameters = authen.CleanDigest; // clean the hash first.
             bool result = authen.ComputeHash(version, header, parameters, scopeBytes, privacy) == expected;
@@ -117,8 +122,36 @@ namespace Lextm.SharpSnmpLib.Security
                 return;
             }
 
+            if (0 == (ToLevels(header.Flags) & Levels.Authentication))
+            {
+                return;
+            }
+
+            var scopeData = privacy.GetScopeData(header, parameters, scope.GetData(version));
             // replace the hash.
-            parameters.AuthenticationParameters = authen.ComputeHash(version, header, parameters, privacy.Encrypt(scope.GetData(version), parameters), privacy);
+            parameters.AuthenticationParameters = authen.ComputeHash(version, header, parameters, scopeData, privacy);
+        }
+
+        internal static Levels ToLevels(OctetString securityLevel)
+        {
+            if (securityLevel == null)
+            {
+                return 0;
+            }
+            
+            var bytes = securityLevel.GetRaw();
+            if (bytes.Length > 1)
+            {
+                throw new ArgumentException("securityLevel length should be 1", "securityLevel");
+            }
+            
+            var b = (int)bytes[0];
+            if (b < 0 || b > 7)
+            {
+                throw new ArgumentException("securityLevel content should be from 0 to 7", "securityLevel");
+            }
+            
+            return (Levels)b;
         }
     }
 }

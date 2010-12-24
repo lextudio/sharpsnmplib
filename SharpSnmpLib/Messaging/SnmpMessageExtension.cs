@@ -554,7 +554,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             return PackMessage(message.Version,
                                message.Header,
                                message.Parameters,
-                               message.Privacy.Encrypt(message.Scope.GetData(message.Version), message.Parameters));
+                               message.Privacy.GetScopeData(message.Header, message.Parameters, message.Scope.GetData(message.Version)));
         }
 
         /// <summary>
@@ -623,9 +623,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             public Socket WorkSocket { get; private set; }
             
             public UserRegistry Users { get; private set; }
-            
-            public int BufferSize { get; private set; }
-            
+
             public byte[] Buffer { get; private set; }
             
             public IPEndPoint Receiver { get; private set; }
