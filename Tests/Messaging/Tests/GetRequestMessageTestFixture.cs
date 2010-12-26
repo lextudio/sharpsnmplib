@@ -77,7 +77,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
                 new Header(
                     new Integer32(13633),
                     new Integer32(0xFFE3),
-                    new OctetString(new byte[] { 0x0 })),
+                    0),
                 new SecurityParameters(
                     new OctetString(ByteTool.Convert("80 00 1F 88 80 E9 63 00  00 D6 1F F4  49")),
                     new Integer32(0x0d),
@@ -129,7 +129,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
                 new Header(
                     new Integer32(0x6C99),
                     new Integer32(0xFFE3),
-                    new OctetString(new byte[] { 0x7 })),
+                    Levels.Authentication | Levels.Privacy | Levels.Reportable),
                 new SecurityParameters(
                     new OctetString(ByteTool.Convert("80 00 1F 88 80 E9 63 00  00 D6 1F F4  49")),
                     new Integer32(0x14),
@@ -176,7 +176,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
                 new Header(
                     new Integer32(13633),
                     new Integer32(0xFFE3),
-                    new OctetString(new byte[] { 0x5 })),
+                    Levels.Authentication | Levels.Reportable),
                 new SecurityParameters(
                     new OctetString(ByteTool.Convert("80 00 1F 88 80 E9 63 00  00 D6 1F F4  49")),
                     new Integer32(0x0d),
@@ -212,7 +212,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
                 new Header(
                     new Integer32(0x4721),
                     new Integer32(0xFFE3),
-                    new OctetString(new byte[] { 0x5 })),
+                    Levels.Authentication | Levels.Reportable),
                 new SecurityParameters(
                     new OctetString(ByteTool.Convert("80 00 1F 88 80 E9 63 00  00 D6 1F F4  49")),
                     new Integer32(0x15),
@@ -243,7 +243,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
                 new Header(
                     new Integer32(0x6A09),
                     new Integer32(0xFFE3),
-                    new OctetString(new byte[] { 0x4 })),
+                    Levels.Reportable),
                 new SecurityParameters(
                     OctetString.Empty,
                     Integer32.Zero,

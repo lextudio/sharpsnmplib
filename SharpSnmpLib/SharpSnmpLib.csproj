@@ -56,6 +56,7 @@
     <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Levels.cs" />
     <Compile Include="Messaging\AgentFoundEventArgs.cs" />
     <Compile Include="Messaging\Discoverer.cs" />
     <Compile Include="Messaging\Discovery.cs" />
@@ -186,7 +187,6 @@
     <Compile Include="Security\MD5AuthenticationProvider.cs" />
     <Compile Include="Security\PrivacyProviderExtension.cs" />
     <Compile Include="Security\SaltGenerator.cs" />
-    <Compile Include="Security\Levels.cs" />
     <Compile Include="Security\User.cs" />
     <Compile Include="Security\UserRegistry.cs" />
     <Compile Include="Security\SHA1AuthenticationProvider.cs" />

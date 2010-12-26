@@ -41,7 +41,6 @@ namespace Lextm.SharpSnmpLib.Messaging
     {
         private readonly GetRequestMessage _discovery;
         private static readonly UserRegistry Empty = new UserRegistry();
-        private static readonly OctetString ReportableString = new OctetString(new[] { (byte)Levels.Reportable });
         private static readonly SecurityParameters DefaultSecurityParameters = new SecurityParameters(OctetString.Empty,
                                                                                                       Integer32.Zero,
                                                                                                       Integer32.Zero,
@@ -62,7 +61,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 new Header(
                     new Integer32(messageId),
                     new Integer32(maxMessageSize),
-                    ReportableString),
+                    Levels.Reportable),
                 DefaultSecurityParameters,
                 new Scope(
                     OctetString.Empty,

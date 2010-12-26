@@ -155,7 +155,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             Enterprise = enterprise;
             TimeStamp = time;
 
-            Header = new Header(new Integer32(messageId), new Integer32(maxMessageSize), privacy.ToOctetString(true));
+            Header = new Header(new Integer32(messageId), new Integer32(maxMessageSize), privacy.ToSecurityLevel() | Levels.Reportable);
             var parameters = report.Parameters;
             var authenticationProvider = Privacy.AuthenticationProvider;
             Parameters = new SecurityParameters(

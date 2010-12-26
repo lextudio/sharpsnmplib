@@ -54,7 +54,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 new Header(
                     new Integer32(Request.MessageId()),
                     new Integer32(Messenger.MaxMessageSize),
-                    new OctetString(new byte[] { 0x0 })),
+                    0),
                 new SecurityParameters(
                     Group.EngineId,
                     new Integer32(Group.EngineBoots),
@@ -87,7 +87,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                     new Header(
                         new Integer32(Request.MessageId()),
                         new Integer32(Messenger.MaxMessageSize),
-                        new OctetString(new byte[] { 0x0 })),
+                        0),
                     new SecurityParameters(
                         Group.EngineId,
                         new Integer32(Group.EngineBoots),
@@ -123,7 +123,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 new Header(
                     new Integer32(Request.MessageId()),
                     new Integer32(Messenger.MaxMessageSize),
-                    new OctetString(new byte[] { 0x0 })),
+                    0),
                 new SecurityParameters(
                     Group.EngineId,
                     new Integer32(Group.EngineBoots),
@@ -193,7 +193,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 new Header(
                     new Integer32(Request.MessageId()),
                     new Integer32(Messenger.MaxMessageSize),
-                    new OctetString(new byte[] { 0x0 })),
+                    0),
                 new SecurityParameters(
                     Group.EngineId,
                     Integer32.Zero,
@@ -234,7 +234,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 new Header(
                     new Integer32(Request.MessageId()),
                     new Integer32(Messenger.MaxMessageSize),
-                    new OctetString(new byte[] { 0x0 })),
+                    0),
                 new SecurityParameters(
                     Group.EngineId,
                     new Integer32(Group.EngineBoots),

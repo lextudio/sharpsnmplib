@@ -17,7 +17,7 @@
 
 using System;
 
-namespace Lextm.SharpSnmpLib.Security
+namespace Lextm.SharpSnmpLib
 {
     /// <summary>
     /// Security level.
