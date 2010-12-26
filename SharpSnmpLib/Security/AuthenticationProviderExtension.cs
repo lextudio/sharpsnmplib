@@ -80,7 +80,6 @@ namespace Lextm.SharpSnmpLib.Security
             return result;
         }
 
-
         /// <summary>
         /// Computes the hash.
         /// </summary>
@@ -90,7 +89,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// <param name="parameters">The parameters.</param>
         /// <param name="scope">The scope.</param>
         /// <param name="privacy">The privacy provider.</param>
-        public static void ComputeHash(this IAuthenticationProvider authen, VersionCode version, Header header, SecurityParameters parameters, Scope scope, IPrivacyProvider privacy)
+        public static void ComputeHash(this IAuthenticationProvider authen, VersionCode version, Header header, SecurityParameters parameters, ISegment scope, IPrivacyProvider privacy)
         {
             if (authen == null)
             {

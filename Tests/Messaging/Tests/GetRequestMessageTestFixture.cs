@@ -106,7 +106,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
                 Messenger.MaxMessageSize,
                 report);
             
-            Assert.AreEqual(Levels.Authentication, request.Level());
+            Assert.AreEqual(Levels.Authentication, request.Header.SecurityLevel);
             Assert.AreEqual(ByteTool.Convert(bytes), request.ToBytes());
         }
 
@@ -144,7 +144,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
                         0x3A25,
                         new List<Variable>(1) { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0")) })),
                 privacy);
-            Assert.AreEqual(Levels.Authentication | Levels.Privacy, request.Level());
+            Assert.AreEqual(Levels.Authentication | Levels.Privacy, request.Header.SecurityLevel);
             Assert.AreEqual(ByteTool.Convert(bytes), request.ToBytes());
         }
 
@@ -191,7 +191,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
                         0x01AF,
                         new List<Variable>(1) { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0"), new Null()) })),
                 pair);
-            Assert.AreEqual(Levels.Authentication, request.Level());
+            Assert.AreEqual(Levels.Authentication, request.Header.SecurityLevel);
             Assert.AreEqual(ByteTool.Convert(bytes), request.ToBytes());
         }
 
@@ -227,7 +227,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
                         0x56FF,
                         new List<Variable>(1) { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0"), new Null()) })),
                 pair);
-            Assert.AreEqual(Levels.Authentication, request.Level());
+            Assert.AreEqual(Levels.Authentication, request.Header.SecurityLevel);
             Assert.AreEqual(ByteTool.Convert(bytes), request.ToBytes());
         }
   

@@ -59,6 +59,21 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public static IList<Variable> Get(VersionCode version, IPEndPoint endpoint, OctetString community, IList<Variable> variables, int timeout)
         {
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException("endpoint");
+            }
+            
+            if (community == null)
+            {
+                throw new ArgumentNullException("community");
+            }
+            
+            if (variables == null)
+            {
+                throw new ArgumentNullException("variables");
+            }
+            
             if (version == VersionCode.V3)
             {
                 throw new NotSupportedException("SNMP v3 is not supported");
@@ -89,6 +104,21 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public static IList<Variable> Set(VersionCode version, IPEndPoint endpoint, OctetString community, IList<Variable> variables, int timeout)
         {
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException("endpoint");
+            }
+            
+            if (community == null)
+            {
+                throw new ArgumentNullException("community");
+            }
+            
+            if (variables == null)
+            {
+                throw new ArgumentNullException("variables");
+            }
+            
             if (version == VersionCode.V3)
             {
                 throw new NotSupportedException("SNMP v3 is not supported");
@@ -306,6 +336,36 @@ namespace Lextm.SharpSnmpLib.Messaging
         [CLSCompliant(false)]
         public static void SendInform(int requestId, VersionCode version, IPEndPoint receiver, OctetString community, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables, int timeout, IPrivacyProvider privacy, ISnmpMessage report)
         {
+            if (receiver == null)
+            {
+                throw new ArgumentNullException("receiver");
+            }
+            
+            if (community == null)
+            {
+                throw new ArgumentNullException("community");
+            }
+            
+            if (enterprise == null)
+            {
+                throw new ArgumentNullException("enterprise");
+            }
+            
+            if (variables == null)
+            {
+                throw new ArgumentNullException("variables");
+            }
+            
+            if (privacy == null)
+            {
+                throw new ArgumentNullException("privacy");
+            }
+            
+            if (report == null)
+            {
+                throw new ArgumentNullException("report");
+            }
+            
             InformRequestMessage message = version == VersionCode.V3
                                     ? new InformRequestMessage(
                                           version,

@@ -52,13 +52,14 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 throw new ArgumentNullException("context");
             }
             
-            if (context.Request.Version != Version)
+            var request = context.Request;
+            if (request.Version != Version)
             {
                 return false;
             }
-
-            var parameters = context.Request.Parameters;
-            if (context.Request.Pdu().TypeCode == SnmpType.SetRequestPdu)
+            
+            var parameters = request.Parameters;
+            if (request.Pdu().TypeCode == SnmpType.SetRequestPdu)
             {
                 return parameters.UserName == _set;
             }

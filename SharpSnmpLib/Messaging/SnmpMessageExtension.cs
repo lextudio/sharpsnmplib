@@ -45,26 +45,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         }
         
         /// <summary>
-        /// Gets the level.
-        /// </summary>
-        /// <param name="message">The <see cref="ISnmpMessage"/>.</param>
-        /// <value>The level.</value>
-        internal static Levels Level(this ISnmpMessage message)
-        {
-            if (message == null)
-            {
-                throw new ArgumentNullException("message");
-            }
-            
-            if (message.Version != VersionCode.V3)
-            {
-                throw new ArgumentException("this method only applies to v3 messages", "message");
-            }
-            
-            return message.Privacy.ToSecurityLevel(); 
-        }
-        
-        /// <summary>
         /// Variables.
         /// </summary>
         /// <param name="message">The <see cref="ISnmpMessage"/>.</param>
@@ -342,7 +322,22 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
         /// <returns></returns>
         public static ISnmpMessage GetResponse(this ISnmpMessage request, int timeout, IPEndPoint receiver, Socket udpSocket)
-        {  
+        {
+            if (request == null)
+            {
+                throw new ArgumentNullException("request");
+            }
+            
+            if (receiver == null)
+            {
+                throw new ArgumentNullException("receiver");
+            }
+            
+            if (udpSocket == null)
+            {
+                throw new ArgumentNullException("udpSocket");
+            }
+            
             UserRegistry registry = new UserRegistry();
             if (request.Version == VersionCode.V3)
             {
@@ -463,7 +458,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             Socket s = ar.WorkSocket;
             int count = s.EndReceive(ar.Inner);
             // Passing 'count' is not necessary because ParseMessages should ignore it, but it offer extra safety (and would avoid an issue if parsing >1 response).
-            ISnmpMessage response = MessageFactory.ParseMessages(ar.Buffer, 0, count, ar.Users)[0];
+            ISnmpMessage response = MessageFactory.ParseMessages(ar.GetBuffer(), 0, count, ar.Users)[0];
             var responseCode = response.TypeCode();
             if (responseCode == SnmpType.ResponsePdu || responseCode == SnmpType.ReportPdu)
             {
@@ -575,7 +570,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             return new Sequence(collection);
         }
 
-        internal static Sequence PackMessage(VersionCode version, ISegment header, SecurityParameters parameters, ISnmpData data)
+        internal static Sequence PackMessage(VersionCode version, ISegment header, ISegment parameters, ISnmpData data)
         {
             if (header == null)
             {
@@ -607,11 +602,13 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         private const int WSAETIMEDOUT = 10060;
 
-        private class SnmpMessageAsyncResult : IAsyncResult
+        private sealed class SnmpMessageAsyncResult : IAsyncResult
         {        
+            private readonly byte[] _buffer;
+            
             public SnmpMessageAsyncResult(IAsyncResult inner, Socket socket, UserRegistry users, IPEndPoint receiver, byte[] buffer)
             {
-                Buffer = buffer;
+                _buffer = buffer;
                 WorkSocket = socket;
                 Users = users;
                 Receiver = receiver;          
@@ -624,7 +621,10 @@ namespace Lextm.SharpSnmpLib.Messaging
             
             public UserRegistry Users { get; private set; }
 
-            public byte[] Buffer { get; private set; }
+            public byte[] GetBuffer() 
+            { 
+                return _buffer; 
+            }
             
             public IPEndPoint Receiver { get; private set; }
             
