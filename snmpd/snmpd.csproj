@@ -87,6 +87,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.config" />
+    <None Include="readme.txt" />
     <None Include="Resources\network-server.ico" />
   </ItemGroup>
   <ItemGroup>
