@@ -45,8 +45,7 @@ namespace Lextm.SharpSnmpLib.Browser
                 users.Add(new OctetString("authen"), new DefaultPrivacyProvider(new MD5AuthenticationProvider(new OctetString("authentication"))));
                 users.Add(new OctetString("privacy"), new DESPrivacyProvider(new OctetString("privacyphrase"),
                                                                              new MD5AuthenticationProvider(new OctetString("authentication"))));
- 
-                
+             
                 ToolStripManager.Renderer = new Office2007Renderer.Office2007Renderer();
             };
             controller.Run(args);
