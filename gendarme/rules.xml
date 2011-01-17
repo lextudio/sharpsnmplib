@@ -8,6 +8,7 @@
 		<rules include="*" from="Gendarme.Rules.Design.Linq.dll"/>
 		<rules include="*" from="Gendarme.Rules.Exceptions.dll" />
 		<rules include="*" from="Gendarme.Rules.Interoperability.dll"/>
+		<rules include="*" from="Gendarme.Rules.Interoperability.Com.dll"/>
 		<rules include="*" from="Gendarme.Rules.Naming.dll"/>
 		<rules include="*" from="Gendarme.Rules.Performance.dll" />
 		<rules include="*" from="Gendarme.Rules.Portability.dll" />
@@ -17,6 +18,7 @@
 		<rules include="*" from="Gendarme.Rules.Smells.dll"/>
 		<rules include="*" from="Gendarme.Rules.Ui.dll" />
 		<rules include="*" from="Gendarme.Rules.Maintainability.dll"/>
+		<rules include="*" from="Gendarme.Rules.Gendarme.dll"/>
 	</ruleset>
 
 	<ruleset name="default">
@@ -84,6 +86,9 @@
 	<ruleset name="naming">
 		<rules include="*" from="Gendarme.Rules.Naming.dll"/>
 	</ruleset>
+	<ruleset name="unit-test">
+		<rules include="*" from="Gendarme.Rules.NUnit.dll"/>
+	</ruleset>
 	<ruleset name="smells">
 		<rules include="*" from="Gendarme.Rules.Smells.dll"/>
 	</ruleset>
@@ -102,10 +107,16 @@
 	<ruleset name="interoperability">
 		<rules include="*" from="Gendarme.Rules.Interoperability.dll"/>
 	</ruleset>
+	<ruleset name="interop-com">
+		<rules include="*" from="Gendarme.Rules.Interoperability.Com.dll"/>
+	</ruleset>
 	<ruleset name="serialization">
 		<rules include="*" from="Gendarme.Rules.Serialization.dll"/>
 	</ruleset>
 	<ruleset name="maintainability">
 		<rules include="*" from="Gendarme.Rules.Maintainability.dll"/>
+	</ruleset>
+	<ruleset name="gendarme">
+		<rules include="*" from="Gendarme.Rules.Gendarme.dll"/>
 	</ruleset>
 </gendarme>

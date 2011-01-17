@@ -356,12 +356,12 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("variables");
             }
             
-            if (privacy == null)
+            if (version == VersionCode.V3 && privacy == null)
             {
                 throw new ArgumentNullException("privacy");
             }
             
-            if (report == null)
+            if (version == VersionCode.V3 && report == null)
             {
                 throw new ArgumentNullException("report");
             }
