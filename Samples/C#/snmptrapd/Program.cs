@@ -8,7 +8,9 @@
  */
 using System;
 using System.Net;
+using Lextm.SharpSnmpLib;
 using Lextm.SharpSnmpLib.Pipeline;
+using Lextm.SharpSnmpLib.Security;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
 
