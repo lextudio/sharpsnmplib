@@ -18,6 +18,8 @@ namespace Lextm.SharpSnmpLib.Security.Tests
         public void TestException()
         {
             Assert.Throws<ArgumentNullException>(() => PrivacyProviderExtension.ToSecurityLevel(null));
+            Assert.Throws<ArgumentNullException>(() => PrivacyProviderExtension.GetScopeData(null, null, null, null));
+            Assert.Throws<ArgumentNullException>(() => DefaultPrivacyProvider.DefaultPair.GetScopeData(null, null, null));
         }
     }
 }

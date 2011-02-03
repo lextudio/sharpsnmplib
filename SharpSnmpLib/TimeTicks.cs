@@ -43,7 +43,7 @@ namespace Lextm.SharpSnmpLib
         /// Creates a <see cref="TimeTicks"/> instance with <see cref="TimeSpan"/>.
         /// </summary>
         /// <param name="span">The time span.</param>        
-        public TimeTicks(TimeSpan span) : this((uint)span.Seconds)
+        public TimeTicks(TimeSpan span) : this((uint)(span.TotalMilliseconds / 10))
         {            
         }
         

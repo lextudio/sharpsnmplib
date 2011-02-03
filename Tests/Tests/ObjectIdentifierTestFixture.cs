@@ -75,6 +75,7 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.Greater(new ObjectIdentifier("1.1"), new ObjectIdentifier("0.0"));
             Assert.Greater(new ObjectIdentifier("0.0.0"), new ObjectIdentifier("0.0"));
             Assert.IsTrue(new ObjectIdentifier("0.0") < new ObjectIdentifier("1.1"));
+            Assert.IsTrue(new ObjectIdentifier("0.0").Compare(new ObjectIdentifier("1.1")) < 0);
         }
 
         [Test]

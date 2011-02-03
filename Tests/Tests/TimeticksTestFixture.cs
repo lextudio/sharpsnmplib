@@ -69,6 +69,14 @@ namespace Lextm.SharpSnmpLib.Tests
         }
         
         [Test]
+        public void TestConstructor4()
+        {
+        	var result = new TimeTicks(171447);
+        	var ticks = new TimeTicks(new TimeSpan(0, 0, 28, 34, 470));
+        	Assert.AreEqual(result, ticks);
+        }
+        
+        [Test]
         public void TestEqual()
         {
             var left = new TimeTicks(800);
