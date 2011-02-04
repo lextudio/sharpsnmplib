@@ -10,7 +10,7 @@
 using System;
 using NUnit.Framework;
 
-#pragma warning disable 1591, 0618
+#pragma warning disable 1591, 0618,1718
 namespace Lextm.SharpSnmpLib.Tests
 {
     [TestFixture]
@@ -46,4 +46,4 @@ namespace Lextm.SharpSnmpLib.Tests
         }
     }
 }
-#pragma warning restore 1591, 0618
+#pragma warning restore 1591, 0618,1718
