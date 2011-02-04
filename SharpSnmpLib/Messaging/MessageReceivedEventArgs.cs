@@ -34,6 +34,21 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="binding">The binding.</param>
         public MessageReceivedEventArgs(IPEndPoint sender, ISnmpMessage message, IListenerBinding binding)
         {
+            if (sender == null)
+            {
+                throw new ArgumentNullException("sender");
+            }
+            
+            if (message == null)
+            {
+                throw new ArgumentNullException("message");
+            }
+            
+            if (binding == null)
+            {
+                throw new ArgumentNullException("binding");
+            }
+            
             Sender = sender;
             Message = message;
             Binding = binding;

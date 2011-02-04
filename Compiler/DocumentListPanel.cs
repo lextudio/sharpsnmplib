@@ -63,7 +63,7 @@ namespace Lextm.SharpSnmpLib.Compiler
             return DockPanel.Documents.FirstOrDefault(content => content.DockHandler.TabText == fileName);
         }
 
-        private void DocumentListPanel_Load(object sender, EventArgs e)
+        private void DocumentListPanelLoad(object sender, EventArgs e)
         {
             Compiler.FileAdded += FileOpen;
         }

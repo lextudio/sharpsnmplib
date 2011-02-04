@@ -24,7 +24,9 @@ namespace Lextm.SharpSnmpLib.Browser
     /// <summary>
     /// Description of ModuleListPanel.
     /// </summary>
+// ReSharper disable UnusedMember.Global
     internal partial class ModuleListPanel : DockContent
+// ReSharper restore UnusedMember.Global
     {
         private const string Filter = "*.module";
         private FileSystemWatcher _watcher;
@@ -44,7 +46,7 @@ namespace Lextm.SharpSnmpLib.Browser
             actAdd.Image = Properties.Resources.list_add;
         }
         
-        private void ModuleListPanel_Load(object sender, EventArgs e)
+        private void ModuleListPanelLoad(object sender, EventArgs e)
         {
             Objects.OnChanged += RefreshPanel;
             RefreshPanel(Objects, EventArgs.Empty);

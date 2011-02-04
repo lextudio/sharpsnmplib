@@ -15,26 +15,17 @@ namespace Lextm.SharpSnmpLib.Browser
 
         public string OldVal
         {
-            set
-            {
-                txtCurrent.Text = value;
-            }
+            set { txtCurrent.Text = value; }
         }
 
         public string NewVal
         {
-            get
-            {
-                return txtNew.Text;
-            }
+            get { return txtNew.Text; }
         }
 
         public bool IsString
         {
-            get
-            {
-                return rbString.Checked;
-            }
+            get { return rbString.Checked; }
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1300:SpecifyMessageBoxOptions")]
@@ -42,7 +33,7 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             if (rbInteger.Checked && !Valid())
             {
-                MessageBox.Show("The new value is not an Integer", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show(@"The new value is not an Integer", @"Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 DialogResult = DialogResult.Cancel;
             }
             else

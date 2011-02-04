@@ -8,6 +8,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using Lextm.SharpSnmpLib;
@@ -107,17 +108,13 @@ namespace SnmpBulkGet
             bool parsed = IPAddress.TryParse(extra[0], out ip);
             if (!parsed)
             {
-                foreach (IPAddress address in Dns.GetHostAddresses(extra[0]))
+                foreach (IPAddress address in
+                    Dns.GetHostAddresses(extra[0]).Where(address => address.AddressFamily == AddressFamily.InterNetwork))
                 {
-                    if (address.AddressFamily != AddressFamily.InterNetwork)
-                    {
-                        continue;
-                    }
-
                     ip = address;
                     break;
                 }
-                
+
                 if (ip == null)
                 {
                     Console.WriteLine("invalid host or wrong IP address found: " + extra[0]);

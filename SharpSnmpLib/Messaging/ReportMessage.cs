@@ -34,7 +34,6 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// </summary>
     public class ReportMessage : ISnmpMessage
     {
-        private readonly IPrivacyProvider _privacy = DefaultPrivacyProvider.DefaultPair;
         private readonly byte[] _bytes;
 
         /// <summary>
@@ -76,8 +75,8 @@ namespace Lextm.SharpSnmpLib.Messaging
             Header = header;
             Parameters = parameters;
             Scope = scope;
-            _privacy = privacy;
-            Privacy.AuthenticationProvider.ComputeHash(Version, Header, Parameters, Scope, Privacy);
+            Privacy = privacy;
+            Privacy.AuthenticationProvider.ComputeHash(Version, Header, Parameters, Scope, Privacy);            
             _bytes = this.PackMessage().ToBytes();
         }
 
@@ -116,10 +115,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Gets the privacy provider.
         /// </summary>
         /// <value>The privacy provider.</value>
-        public IPrivacyProvider Privacy
-        {
-            get { return _privacy; }
-        }
+        public IPrivacyProvider Privacy { get; private set; }
 
         /// <summary>
         /// Returns a <see cref="string"/> that represents this <see cref="ReportMessage"/>.

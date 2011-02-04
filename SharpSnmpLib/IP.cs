@@ -27,9 +27,11 @@ namespace Lextm.SharpSnmpLib
     public sealed class IP : ISnmpData, IEquatable<IP>
     {
         private readonly IPAddress _ip;
+// ReSharper disable InconsistentNaming
         private const int IPv4Length = 4;
         private const int IPv6Length = 16;
-        
+// ReSharper restore InconsistentNaming      
+  
         /// <summary>
         /// Creates an <see cref="IP"/> with a specific <see cref="IPAddress"/>.
         /// </summary>

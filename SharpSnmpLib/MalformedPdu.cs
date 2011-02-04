@@ -26,17 +26,6 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     internal sealed class MalformedPdu : ISnmpPdu
     {
-        private static readonly ISnmpPdu Pdu = new MalformedPdu();
-
-        /// <summary>
-        /// Gets the instance.
-        /// </summary>
-        /// <value>The instance.</value>
-        public static ISnmpPdu Instance
-        {
-            get { return Pdu; }
-        }
-
         /// <summary>
         /// Type code.
         /// </summary>

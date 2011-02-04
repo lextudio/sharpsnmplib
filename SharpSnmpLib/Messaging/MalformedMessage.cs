@@ -26,6 +26,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// </summary>
     public class MalformedMessage : ISnmpMessage
     {
+        private static readonly Scope DefaultScope = new Scope(new MalformedPdu());
         /// <summary>
         /// Initializes a new instance of the <see cref="MalformedMessage"/> class.
         /// </summary>
@@ -38,8 +39,9 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("user");
             }
 
-            Header = new Header(new Integer32(messageId), null, null);
+            Header = new Header(messageId);
             Parameters = SecurityParameters.Create(user);
+            Scope = DefaultScope;
         }
 
         /// <summary>
@@ -54,7 +56,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <value>The scope.</value>
         public Scope Scope
         {
-            get { return null; }
+            get; private set;
         }
 
         /// <summary>

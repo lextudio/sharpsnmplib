@@ -45,6 +45,8 @@ namespace Lextm.SharpSnmpLib.Browser
             this.setToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.walkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.getTableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyNumericOIDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyTextualOIDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.actionList1 = new Crad.Windows.Forms.Actions.ActionList();
             this.actGet = new Crad.Windows.Forms.Actions.Action();
@@ -52,6 +54,8 @@ namespace Lextm.SharpSnmpLib.Browser
             this.actSet = new Crad.Windows.Forms.Actions.Action();
             this.actWalk = new Crad.Windows.Forms.Actions.Action();
             this.actGetTable = new Crad.Windows.Forms.Actions.Action();
+            this.actGetNumeric = new Crad.Windows.Forms.Actions.Action();
+            this.actGetTextual = new Crad.Windows.Forms.Actions.Action();
             this.actNumber = new Crad.Windows.Forms.Actions.Action();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -85,44 +89,60 @@ namespace Lextm.SharpSnmpLib.Browser
             this.getNextToolStripMenuItem,
             this.setToolStripMenuItem,
             this.walkToolStripMenuItem,
-            this.getTableToolStripMenuItem});
+            this.getTableToolStripMenuItem,
+            this.copyNumericOIDToolStripMenuItem,
+            this.copyTextualOIDToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(125, 114);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(167, 158);
             // 
             // getToolStripMenuItem
             // 
             this.actionList1.SetAction(this.getToolStripMenuItem, this.actGet);
             this.getToolStripMenuItem.Name = "getToolStripMenuItem";
-            this.getToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.getToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.getToolStripMenuItem.Text = "Get";
             // 
             // getNextToolStripMenuItem
             // 
             this.actionList1.SetAction(this.getNextToolStripMenuItem, this.actGetNext);
             this.getNextToolStripMenuItem.Name = "getNextToolStripMenuItem";
-            this.getNextToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.getNextToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.getNextToolStripMenuItem.Text = "Get Next";
             // 
             // setToolStripMenuItem
             // 
             this.actionList1.SetAction(this.setToolStripMenuItem, this.actSet);
             this.setToolStripMenuItem.Name = "setToolStripMenuItem";
-            this.setToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.setToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.setToolStripMenuItem.Text = "Set";
             // 
             // walkToolStripMenuItem
             // 
             this.actionList1.SetAction(this.walkToolStripMenuItem, this.actWalk);
             this.walkToolStripMenuItem.Name = "walkToolStripMenuItem";
-            this.walkToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.walkToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.walkToolStripMenuItem.Text = "Walk";
             // 
             // getTableToolStripMenuItem
             // 
             this.actionList1.SetAction(this.getTableToolStripMenuItem, this.actGetTable);
             this.getTableToolStripMenuItem.Name = "getTableToolStripMenuItem";
-            this.getTableToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.getTableToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.getTableToolStripMenuItem.Text = "Get Table";
+            // 
+            // copyNumericOIDToolStripMenuItem
+            // 
+            this.actionList1.SetAction(this.copyNumericOIDToolStripMenuItem, this.actGetNumeric);
+            this.copyNumericOIDToolStripMenuItem.Name = "copyNumericOIDToolStripMenuItem";
+            this.copyNumericOIDToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.copyNumericOIDToolStripMenuItem.Text = "Copy Numeric OID";
+            // 
+            // copyTextualOIDToolStripMenuItem
+            // 
+            this.actionList1.SetAction(this.copyTextualOIDToolStripMenuItem, this.actGetTextual);
+            this.copyTextualOIDToolStripMenuItem.Name = "copyTextualOIDToolStripMenuItem";
+            this.copyTextualOIDToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.copyTextualOIDToolStripMenuItem.Text = "Copy Textual OID";
             // 
             // imageList1
             // 
@@ -143,6 +163,8 @@ namespace Lextm.SharpSnmpLib.Browser
             this.actionList1.Actions.Add(this.actGetTable);
             this.actionList1.Actions.Add(this.actGetNext);
             this.actionList1.Actions.Add(this.actNumber);
+            this.actionList1.Actions.Add(this.actGetNumeric);
+            this.actionList1.Actions.Add(this.actGetTextual);
             this.actionList1.ContainerControl = this;
             // 
             // actGet
@@ -180,9 +202,21 @@ namespace Lextm.SharpSnmpLib.Browser
             this.actGetTable.Execute += new System.EventHandler(this.ActGetTableExecute);
             this.actGetTable.Update += new System.EventHandler(this.ActGetTableUpdate);
             // 
+            // actGetNumeric
+            // 
+            this.actGetNumeric.Text = "Copy Numeric OID";
+            this.actGetNumeric.Execute += new System.EventHandler(this.ActGetNumericExecute);
+            this.actGetNumeric.Update += new System.EventHandler(this.ActGetNumericUpdate);
+            // 
+            // actGetTextual
+            // 
+            this.actGetTextual.Text = "Copy Textual OID";
+            this.actGetTextual.Execute += new System.EventHandler(this.ActGetTextualExecute);
+            this.actGetTextual.Update += new System.EventHandler(this.ActGetNumericUpdate);
+            // 
             // actNumber
             // 
-            this.actNumber.CheckOnClick = true;            
+            this.actNumber.CheckOnClick = true;
             this.actNumber.Text = "Show ID";
             this.actNumber.ToolTipText = "Show object ID";
             this.actNumber.Execute += new System.EventHandler(this.ActNumberExecute);
@@ -190,10 +224,10 @@ namespace Lextm.SharpSnmpLib.Browser
             // toolStripButton2
             // 
             this.actionList1.SetAction(this.toolStripButton2, this.actNumber);
-            this.toolStripButton2.CheckOnClick = true;            
+            this.toolStripButton2.CheckOnClick = true;
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(70, 22);
+            this.toolStripButton2.Size = new System.Drawing.Size(51, 22);
             this.toolStripButton2.Text = "Show ID";
             // 
             // statusStrip1
@@ -209,7 +243,7 @@ namespace Lextm.SharpSnmpLib.Browser
             // tslblOID
             // 
             this.tslblOID.Name = "tslblOID";
-            this.tslblOID.Size = new System.Drawing.Size(10, 17);
+            this.tslblOID.Size = new System.Drawing.Size(11, 17);
             this.tslblOID.Text = " ";
             // 
             // toolStrip1
@@ -232,7 +266,7 @@ namespace Lextm.SharpSnmpLib.Browser
             this.Controls.Add(this.statusStrip1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "MibTreePanel";
-            this.Load += new System.EventHandler(this.MibTreePanel_Load);
+            this.Load += new System.EventHandler(this.MibTreePanelLoad);
             this.contextMenuStrip1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.actionList1)).EndInit();
             this.statusStrip1.ResumeLayout(false);
@@ -243,6 +277,8 @@ namespace Lextm.SharpSnmpLib.Browser
             this.PerformLayout();
 
         }
+		private System.Windows.Forms.ToolStripMenuItem copyTextualOIDToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem copyNumericOIDToolStripMenuItem;
 		private System.Windows.Forms.TreeView treeView1;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem getToolStripMenuItem;
@@ -262,5 +298,7 @@ namespace Lextm.SharpSnmpLib.Browser
         private System.Windows.Forms.ToolStripButton toolStripButton2;
         private Crad.Windows.Forms.Actions.Action actGetTable;
         private System.Windows.Forms.ToolStripMenuItem getTableToolStripMenuItem;
+        private Crad.Windows.Forms.Actions.Action actGetNumeric;
+        private Crad.Windows.Forms.Actions.Action actGetTextual;
 	}
 }

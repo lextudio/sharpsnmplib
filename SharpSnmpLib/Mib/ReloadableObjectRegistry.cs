@@ -34,12 +34,12 @@ namespace Lextm.SharpSnmpLib.Mib
 
             if (path.Length == 0)
             {
-                throw new ArgumentException("Path cannot be empty.", "path");
+                throw new ArgumentException(@"Path cannot be empty.", "path");
             }
 
             if (!Directory.Exists(path))
             {
-                throw new ArgumentException("Path is invalid", "path");
+                throw new ArgumentException(@"Path is invalid", "path");
             }
 
             _path = System.IO.Path.GetFullPath(path);

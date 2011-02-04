@@ -29,8 +29,9 @@ namespace Lextm.SharpSnmpLib
         private readonly Integer32 _maxSize;
         private readonly OctetString _flags;
         private readonly Integer32 _securityModel;
-        private static readonly Header EmptyHeader = new Header();
         private static readonly Integer32 DefaultSecurityModel = new Integer32(3);
+        private static readonly Integer32 DefaultMaxMessageSize = new Integer32(MaxMessageSize);
+        private static readonly Header EmptyHeader = new Header();
 
         /// <summary>
         /// Max message size used in #SNMP. 
@@ -41,9 +42,12 @@ namespace Lextm.SharpSnmpLib
         /// </remarks>
         public const int MaxMessageSize = 0xFFE3;
 
-        private Header()
+        private Header() : this(null, DefaultMaxMessageSize, 0)
         {            
-            _maxSize = new Integer32(MaxMessageSize);
+        }
+        
+        internal Header(int messageId) : this(new Integer32(messageId), DefaultMaxMessageSize, 0)
+        {
         }
 
         /// <summary>
@@ -61,6 +65,7 @@ namespace Lextm.SharpSnmpLib
             _messageId = (Integer32)container[0];
             _maxSize = (Integer32)container[1];
             _flags = (OctetString)container[2];
+            SecurityLevel = _flags.ToLevels();
             _securityModel = (Integer32)container[3];
         }
 
@@ -69,28 +74,19 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="messageId">The message id.</param>
         /// <param name="maxMessageSize">Size of the max message.</param>
-        /// <param name="securityBits">The flags.</param>
+        /// <param name="securityLevel">The security level.</param>
         /// <remarks>If you want an empty header, please use <see cref="Empty"/>.</remarks>
-        public Header(Integer32 messageId, Integer32 maxMessageSize, OctetString securityBits)
+        public Header(Integer32 messageId, Integer32 maxMessageSize, Levels securityLevel)
         {
-            if (messageId == null)
-            {
-                throw new ArgumentNullException("messageId");
-            }
-
             if (maxMessageSize == null)
             {
                 throw new ArgumentNullException("maxMessageSize");
             }
 
-            if (securityBits == null)
-            {
-                throw new ArgumentNullException("securityBits");
-            }
-
             _messageId = messageId;
             _maxSize = maxMessageSize;
-            _flags = securityBits;
+            SecurityLevel = securityLevel;
+            _flags = new OctetString(SecurityLevel);
             _securityModel = DefaultSecurityModel;
         }
         
@@ -100,7 +96,12 @@ namespace Lextm.SharpSnmpLib
         public static Header Empty
         {
             get { return EmptyHeader; }
-        }
+        }        
+        
+        /// <summary>
+        /// Security flags.
+        /// </summary>
+        public Levels SecurityLevel { get; private set; }
 
         /// <summary>
         /// Gets the message ID.
@@ -108,10 +109,7 @@ namespace Lextm.SharpSnmpLib
         /// <value>The message ID.</value>
         public int MessageId
         {
-            get
-            {
-                return _messageId.ToInt32();
-            }
+            get { return _messageId.ToInt32(); }
         }
 
         #region ISegment Members
@@ -122,7 +120,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public Sequence ToSequence()
         {
-            return new Sequence(_messageId, _maxSize, _flags, _securityModel);
+            return new Sequence(_messageId, _maxSize, _messageId == null ? null : _flags, _securityModel);
         }
 
         /// <summary>
@@ -145,7 +143,7 @@ namespace Lextm.SharpSnmpLib
         /// </returns>
         public override string ToString()
         {
-            return string.Format(CultureInfo.InvariantCulture, "Header: messageId: {0};maxMessageSize: {1};securityBits: {2};securityModel: {3}", MessageId, _maxSize, _flags.ToHexString(), _securityModel);
+            return string.Format(CultureInfo.InvariantCulture, "Header: messageId: {0};maxMessageSize: {1};securityBits: 0x{2};securityModel: {3}", MessageId, _maxSize, _flags.ToHexString(), _securityModel);
         }
 
         /// <summary>

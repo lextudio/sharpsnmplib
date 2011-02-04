@@ -79,7 +79,7 @@ namespace Lextm.SharpSnmpLib.Browser
             get { return txtUserName.Text; }
         }
 
-        private void FormProfile_Load(object sender, EventArgs e)
+        private void FormProfileLoad(object sender, EventArgs e)
         {
             if (_profile == null)
             {

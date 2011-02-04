@@ -1,4 +1,4 @@
-// Helper class.
+// SNMP message extension class.
 // Copyright (C) 2008-2010 Malcolm Crowe, Lex Li, and other contributors.
 // 
 // This library is free software; you can redistribute it and/or
@@ -23,18 +23,18 @@ using System.Net.Sockets;
 using Lextm.SharpSnmpLib.Security;
 
 namespace Lextm.SharpSnmpLib.Messaging
-{
+{    
     /// <summary>
-    /// Extension methods for <seealso cref="ISnmpMessage"/>.
+    /// Extension methods for <see cref="ISnmpMessage"/>.
     /// </summary>
     public static class SnmpMessageExtension
     {
         /// <summary>
-        /// Gets the <seealso cref="SnmpType"/>.
+        /// Gets the <see cref="SnmpType"/>.
         /// </summary>
-        /// <param name="message">The <seealso cref="ISnmpMessage"/>.</param>
+        /// <param name="message">The <see cref="ISnmpMessage"/>.</param>
         /// <returns></returns>
-        public static SnmpType Type(this ISnmpMessage message)
+        public static SnmpType TypeCode(this ISnmpMessage message)
         {
             if (message == null)
             {
@@ -45,29 +45,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         }
         
         /// <summary>
-        /// Gets the level.
-        /// </summary>
-        /// <param name="message">The <seealso cref="ISnmpMessage"/>.</param>
-        /// <value>The level.</value>
-        internal static Levels Level(this ISnmpMessage message)
-        {
-            if (message == null)
-            {
-                throw new ArgumentNullException("message");
-            }
-            
-            if (message.Version != VersionCode.V3)
-            {
-                throw new ArgumentException("this method only applies to v3 messages", "message");
-            }
-            
-            return message.Privacy.ToSecurityLevel(); 
-        }
-        
-        /// <summary>
         /// Variables.
         /// </summary>
-        /// <param name="message">The <seealso cref="ISnmpMessage"/>.</param>
+        /// <param name="message">The <see cref="ISnmpMessage"/>.</param>
         public static IList<Variable> Variables(this ISnmpMessage message)
         {
             if (message == null)
@@ -75,35 +55,19 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("message");
             }
 
-            var code = message.Type();
-            if (code == SnmpType.Unknown)
-            {
-                return new List<Variable>(0); // malformed message.
-            }
-            
-            return message.Scope.Pdu.Variables; 
+            var code = message.TypeCode();
+            return code == SnmpType.Unknown ? new List<Variable>(0) : message.Scope.Pdu.Variables;
         }
 
         /// <summary>
         /// Request ID.
         /// </summary>
-        /// <param name="message">The <seealso cref="ISnmpMessage"/>.</param>
+        /// <param name="message">The <see cref="ISnmpMessage"/>.</param>
         public static int RequestId(this ISnmpMessage message)
         {
             if (message == null)
             {
                 throw new ArgumentNullException("message");
-            }
-
-            var code = message.Type();
-            if (code == SnmpType.Unknown)
-            {
-                return -1; // malformed message.
-            }
-
-            if (code == SnmpType.TrapV1Pdu)
-            {
-                throw new NotSupportedException();
             }
 
             return message.Scope.Pdu.RequestId.ToInt32(); 
@@ -113,7 +77,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Gets the message ID.
         /// </summary>
         /// <value>The message ID.</value>
-        /// <param name="message">The <seealso cref="ISnmpMessage"/>.</param>
+        /// <param name="message">The <see cref="ISnmpMessage"/>.</param>
         /// <remarks>For v3, message ID is different from request ID. For v1 and v2c, they are the same.</remarks>
         public static int MessageId(this ISnmpMessage message)
         {
@@ -122,19 +86,13 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("message");
             }
 
-            var code = message.Type();
-            if (code == SnmpType.TrapV1Pdu)
-            {
-                throw new NotSupportedException();
-            }
-
             return message.Header == Header.Empty ? message.RequestId() : message.Header.MessageId;
         }
 
         /// <summary>
         /// PDU.
         /// </summary>
-        /// <param name="message">The <seealso cref="ISnmpMessage"/>.</param>
+        /// <param name="message">The <see cref="ISnmpMessage"/>.</param>
         public static ISnmpPdu Pdu(this ISnmpMessage message)
         {
             if (message == null)
@@ -142,19 +100,13 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("message");
             }
 
-            var pdu = message.Scope.Pdu;
-            if (pdu.TypeCode == SnmpType.Unknown)
-            {
-                return MalformedPdu.Instance; // malformed message.
-            }
-
-            return pdu; 
+            return message.Scope.Pdu;
         }
 
         /// <summary>
         /// Community name.
         /// </summary>
-        /// <param name="message">The <seealso cref="ISnmpMessage"/>.</param>
+        /// <param name="message">The <see cref="ISnmpMessage"/>.</param>
         public static OctetString Community(this ISnmpMessage message)
         {
             if (message == null)
@@ -168,7 +120,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Sends an <see cref="ISnmpMessage"/>.
         /// </summary>
-        /// <param name="message">The <seealso cref="ISnmpMessage"/>.</param>
+        /// <param name="message">The <see cref="ISnmpMessage"/>.</param>
         /// <param name="manager">Manager</param>
         public static void Send(this ISnmpMessage message, EndPoint manager)
         {
@@ -182,26 +134,24 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("manager");
             }
 
-            var code = message.Type();
-            if (code == SnmpType.TrapV1Pdu || code == SnmpType.TrapV2Pdu || code == SnmpType.ReportPdu)
-            {
-                using (Socket socket = manager.GetSocket())
-                {
-                    message.Send(manager, socket);
-                }
-            }
-            else
+            var code = message.TypeCode();
+            if ((code != SnmpType.TrapV1Pdu && code != SnmpType.TrapV2Pdu) && code != SnmpType.ReportPdu)
             {
                 throw new InvalidOperationException(String.Format(CultureInfo.InvariantCulture,
-                                                                  "not a trap message: {0}", 
+                                                                  "not a trap message: {0}",
                                                                   code));
+            }
+
+            using (Socket socket = manager.GetSocket())
+            {
+                message.Send(manager, socket);
             }
         }
 
         /// <summary>
         /// Sends an <see cref="ISnmpMessage"/>.
         /// </summary>
-        /// <param name="message">The <seealso cref="ISnmpMessage"/>.</param>
+        /// <param name="message">The <see cref="ISnmpMessage"/>.</param>
         /// <param name="manager">Manager</param>
         /// <param name="socket">The socket.</param>
         public static void Send(this ISnmpMessage message, EndPoint manager, Socket socket)
@@ -221,24 +171,22 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("manager");
             }
 
-            var code = message.Type();
-            if (code == SnmpType.TrapV1Pdu || code == SnmpType.TrapV2Pdu || code == SnmpType.ReportPdu)
-            {
-                byte[] bytes = message.ToBytes();
-                socket.SendTo(bytes, 0, bytes.Length, SocketFlags.None, manager);
-            }
-            else
+            var code = message.TypeCode();
+            if ((code != SnmpType.TrapV1Pdu && code != SnmpType.TrapV2Pdu) && code != SnmpType.ReportPdu)
             {
                 throw new InvalidOperationException(String.Format(CultureInfo.InvariantCulture,
-                                                                  "not a trap message: {0}", 
+                                                                  "not a trap message: {0}",
                                                                   code));
             }
+
+            byte[] bytes = message.ToBytes();
+            socket.SendTo(bytes, 0, bytes.Length, SocketFlags.None, manager);
         }
 
         /// <summary>
         /// Sends an <see cref="ISnmpMessage"/>.
         /// </summary>
-        /// <param name="message">The <seealso cref="ISnmpMessage"/>.</param>
+        /// <param name="message">The <see cref="ISnmpMessage"/>.</param>
         /// <param name="manager">Manager</param>
         public static void SendAsync(this ISnmpMessage message, EndPoint manager)
         {
@@ -252,26 +200,24 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("manager");
             }
 
-            var code = message.Type();
-            if (code == SnmpType.TrapV1Pdu || code == SnmpType.TrapV2Pdu || code == SnmpType.ReportPdu)
-            {
-                using (Socket socket = manager.GetSocket())
-                {
-                    message.SendAsync(manager, socket);
-                }
-            }
-            else
+            var code = message.TypeCode();
+            if ((code != SnmpType.TrapV1Pdu && code != SnmpType.TrapV2Pdu) && code != SnmpType.ReportPdu)
             {
                 throw new InvalidOperationException(String.Format(CultureInfo.InvariantCulture,
-                                                                  "not a trap message: {0}", 
+                                                                  "not a trap message: {0}",
                                                                   code));
+            }
+
+            using (Socket socket = manager.GetSocket())
+            {
+                message.SendAsync(manager, socket);
             }
         }
         
         /// <summary>
         /// Sends an <see cref="ISnmpMessage"/>.
         /// </summary>
-        /// <param name="message">The <seealso cref="ISnmpMessage"/>.</param>
+        /// <param name="message">The <see cref="ISnmpMessage"/>.</param>
         /// <param name="manager">Manager</param>
         /// <param name="socket">The socket.</param>
         public static void SendAsync(this ISnmpMessage message, EndPoint manager, Socket socket)
@@ -291,24 +237,22 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("manager");
             }
 
-            var code = message.Type();
-            if (code == SnmpType.TrapV1Pdu || code == SnmpType.TrapV2Pdu || code == SnmpType.ReportPdu)
-            {
-                byte[] bytes = message.ToBytes();
-                socket.BeginSendTo(bytes, 0, bytes.Length, SocketFlags.None, manager, ar => socket.EndSendTo(ar), null);
-            }
-            else
+            var code = message.TypeCode();
+            if ((code != SnmpType.TrapV1Pdu && code != SnmpType.TrapV2Pdu) && code != SnmpType.ReportPdu)
             {
                 throw new InvalidOperationException(String.Format(CultureInfo.InvariantCulture,
-                                                                  "not a trap message: {0}", 
+                                                                  "not a trap message: {0}",
                                                                   code));
             }
+
+            byte[] bytes = message.ToBytes();
+            socket.BeginSendTo(bytes, 0, bytes.Length, SocketFlags.None, manager, ar => socket.EndSendTo(ar), null);
         }
         
         /// <summary>
         /// Sends this <see cref="ISnmpMessage"/> and handles the response from agent.
         /// </summary>
-        /// <param name="request">The <seealso cref="ISnmpMessage"/>.</param>
+        /// <param name="request">The <see cref="ISnmpMessage"/>.</param>
         /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
         /// <param name="receiver">Port number.</param>
         /// <param name="registry">User registry.</param>
@@ -326,7 +270,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("receiver");
             }
 
-            var code = request.Type();
+            var code = request.TypeCode();
             if (code == SnmpType.TrapV1Pdu || code == SnmpType.TrapV2Pdu || code == SnmpType.ReportPdu)
             {
                 throw new InvalidOperationException(String.Format(CultureInfo.InvariantCulture, "not a request message: {0}", code));
@@ -357,7 +301,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("receiver");
             }
 
-            var code = request.Type();
+            var code = request.TypeCode();
             if (code == SnmpType.TrapV1Pdu || code == SnmpType.TrapV2Pdu || code == SnmpType.ReportPdu)
             {
                 throw new InvalidOperationException(String.Format(CultureInfo.InvariantCulture, "not a request message: {0}", code));
@@ -378,7 +322,22 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
         /// <returns></returns>
         public static ISnmpMessage GetResponse(this ISnmpMessage request, int timeout, IPEndPoint receiver, Socket udpSocket)
-        {  
+        {
+            if (request == null)
+            {
+                throw new ArgumentNullException("request");
+            }
+            
+            if (receiver == null)
+            {
+                throw new ArgumentNullException("receiver");
+            }
+            
+            if (udpSocket == null)
+            {
+                throw new ArgumentNullException("udpSocket");
+            }
+            
             UserRegistry registry = new UserRegistry();
             if (request.Version == VersionCode.V3)
             {
@@ -419,7 +378,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("registry");
             }
 
-            var requestCode = request.Type();
+            var requestCode = request.TypeCode();
             if (requestCode == SnmpType.TrapV1Pdu || requestCode == SnmpType.TrapV2Pdu || requestCode == SnmpType.ReportPdu)
             {
                 throw new InvalidOperationException(String.Format(CultureInfo.InvariantCulture, "not a request message: {0}", requestCode));
@@ -461,7 +420,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             // Passing 'count' is not necessary because ParseMessages should ignore it, but it offer extra safety (and would avoid an issue if parsing >1 response).
             ISnmpMessage response = MessageFactory.ParseMessages(reply, 0, count, registry)[0];
-            var responseCode = response.Type();
+            var responseCode = response.TypeCode();
             if (responseCode == SnmpType.ResponsePdu || responseCode == SnmpType.ReportPdu)
             {
                 int requestId = request.MessageId();
@@ -481,7 +440,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Ends a pending asynchronous read.
         /// </summary>
         /// <param name="request">The <see cref="ISnmpMessage"/>.</param>
-        /// <param name="asyncResult">An <seealso cref="IAsyncResult"/> that stores state information and any user defined data for this asynchronous operation.</param>
+        /// <param name="asyncResult">An <see cref="IAsyncResult"/> that stores state information and any user defined data for this asynchronous operation.</param>
         /// <returns></returns>
         public static ISnmpMessage EndGetResponse(this ISnmpMessage request, IAsyncResult asyncResult)
         {
@@ -495,37 +454,38 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("request");
             }
             
-            StateObject so = (StateObject)asyncResult.AsyncState;
-            Socket s = so.WorkSocket;
-            int count = s.EndReceive(asyncResult);
+            var ar = (SnmpMessageAsyncResult)asyncResult;
+            Socket s = ar.WorkSocket;
+            int count = s.EndReceive(ar.Inner);
             // Passing 'count' is not necessary because ParseMessages should ignore it, but it offer extra safety (and would avoid an issue if parsing >1 response).
-            ISnmpMessage response = MessageFactory.ParseMessages(so.Buffer, 0, count, so.Users)[0];
-            var responseCode = response.Type();
+            ISnmpMessage response = MessageFactory.ParseMessages(ar.GetBuffer(), 0, count, ar.Users)[0];
+            var responseCode = response.TypeCode();
             if (responseCode == SnmpType.ResponsePdu || responseCode == SnmpType.ReportPdu)
             {
                 int requestId = request.MessageId();
                 var responseId = response.MessageId();
                 if (responseId != requestId)
                 {
-                    throw OperationException.Create(String.Format(CultureInfo.InvariantCulture, "wrong response sequence: expected {0}, received {1}", requestId, responseId), so.Receiver.Address);
+                    throw OperationException.Create(String.Format(CultureInfo.InvariantCulture, "wrong response sequence: expected {0}, received {1}", requestId, responseId), ar.Receiver.Address);
                 }
 
                 return response;
             }
 
-            throw OperationException.Create(String.Format(CultureInfo.InvariantCulture, "wrong response type: {0}", responseCode), so.Receiver.Address);
+            throw OperationException.Create(String.Format(CultureInfo.InvariantCulture, "wrong response type: {0}", responseCode), ar.Receiver.Address);
         }
 
         /// <summary>
-        /// Begins to asynchronously send an <see cref="ISnmpMessage"/> to an <seealso cref="IPEndPoint"/>.
+        /// Begins to asynchronously send an <see cref="ISnmpMessage"/> to an <see cref="IPEndPoint"/>.
         /// </summary>
         /// <param name="request">The <see cref="ISnmpMessage"/>.</param>
         /// <param name="receiver">Agent.</param>
         /// <param name="registry">The user registry.</param>
         /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
         /// <param name="callback">The callback.</param>
+        /// <param name="state">The state object.</param>
         /// <returns></returns>
-        public static IAsyncResult BeginGetResponse(this ISnmpMessage request, IPEndPoint receiver, UserRegistry registry, Socket udpSocket, AsyncCallback callback)
+        public static IAsyncResult BeginGetResponse(this ISnmpMessage request, IPEndPoint receiver, UserRegistry registry, Socket udpSocket, AsyncCallback callback, object state)
         {
             if (request == null)
             {
@@ -547,16 +507,22 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("registry");
             }
 
-            var requestCode = request.Type();
+            var requestCode = request.TypeCode();
             if (requestCode == SnmpType.TrapV1Pdu || requestCode == SnmpType.TrapV2Pdu || requestCode == SnmpType.ReportPdu)
             {
                 throw new InvalidOperationException(String.Format(CultureInfo.InvariantCulture, "not a request message: {0}", requestCode));
             }
 
             // Whatever you change, try to keep the Send and the Receive close to each other.
-            StateObject state = new StateObject(udpSocket, registry, receiver);
-            state.WorkSocket.SendTo(request.ToBytes(), receiver);
-            return state.WorkSocket.BeginReceive(state.Buffer, 0, state.BufferSize, SocketFlags.None, callback, state);
+            udpSocket.SendTo(request.ToBytes(), receiver);
+#if CF
+            var bufferSize = 8192;
+#else
+            var bufferSize = udpSocket.ReceiveBufferSize;
+#endif
+            var buffer = new byte[bufferSize];
+            var ar = udpSocket.BeginReceive(buffer, 0, bufferSize, SocketFlags.None, callback, state);
+            return new SnmpMessageAsyncResult(ar, udpSocket, registry, receiver, buffer);
         }
 
         /// <summary>
@@ -565,7 +531,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public static bool IsRunningOnMono
         {
-            get { return System.Type.GetType("Mono.Runtime") != null; }
+            get { return Type.GetType("Mono.Runtime") != null; }
         }
 
         /// <summary>
@@ -583,7 +549,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             return PackMessage(message.Version,
                                message.Header,
                                message.Parameters,
-                               message.Privacy.Encrypt(message.Scope.GetData(message.Version), message.Parameters));
+                               message.Privacy.GetScopeData(message.Header, message.Parameters, message.Scope.GetData(message.Version)));
         }
 
         /// <summary>
@@ -604,7 +570,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             return new Sequence(collection);
         }
 
-        internal static Sequence PackMessage(VersionCode version, ISegment header, SecurityParameters parameters, ISnmpData data)
+        internal static Sequence PackMessage(VersionCode version, ISegment header, ISegment parameters, ISnmpData data)
         {
             if (header == null)
             {
@@ -636,26 +602,50 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         private const int WSAETIMEDOUT = 10060;
 
-        // State object for reading client data asynchronously
-        private class StateObject
-        {
-            public Socket WorkSocket { get; private set; }
-            public UserRegistry Users { get; private set; }
-            public int BufferSize { get; private set; }
-            public byte[] Buffer { get; private set; }
-            public IPEndPoint Receiver { get; private set; }
-
-            public StateObject(Socket socket, UserRegistry users, IPEndPoint receiver)
+        private sealed class SnmpMessageAsyncResult : IAsyncResult
+        {        
+            private readonly byte[] _buffer;
+            
+            public SnmpMessageAsyncResult(IAsyncResult inner, Socket socket, UserRegistry users, IPEndPoint receiver, byte[] buffer)
             {
-#if CF
-                BufferSize = 8192;
-#else
-                BufferSize = socket.ReceiveBufferSize;
-#endif
-                Buffer = new byte[BufferSize];
+                _buffer = buffer;
                 WorkSocket = socket;
                 Users = users;
-                Receiver = receiver;
+                Receiver = receiver;          
+                Inner = inner;
+            }
+            
+            public IAsyncResult Inner { get; private set; }
+            
+            public Socket WorkSocket { get; private set; }
+            
+            public UserRegistry Users { get; private set; }
+
+            public byte[] GetBuffer() 
+            { 
+                return _buffer; 
+            }
+            
+            public IPEndPoint Receiver { get; private set; }
+            
+            public bool IsCompleted 
+            {
+                get { return Inner.IsCompleted; }
+            }
+            
+            public System.Threading.WaitHandle AsyncWaitHandle 
+            {
+                get { return Inner.AsyncWaitHandle; }
+            }
+            
+            public object AsyncState 
+            {
+                get { return Inner.AsyncState; }
+            }
+            
+            public bool CompletedSynchronously 
+            {
+                get { return Inner.CompletedSynchronously; }
             }
         }
     }

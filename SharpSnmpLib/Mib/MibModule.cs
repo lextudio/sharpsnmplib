@@ -10,6 +10,7 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Lextm.SharpSnmpLib.Mib
@@ -241,17 +242,7 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             get
             {
-                IList<IEntity> result = new List<IEntity>();
-                foreach (IConstruct e in _tokens)
-                {
-                    IEntity entity = e as IEntity;
-                    if (entity != null)
-                    {
-                        result.Add(entity);
-                    }
-                }
-                
-                return result;
+                return _tokens.OfType<IEntity>().ToList();
             }
         }
         
@@ -262,17 +253,7 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             get
             {
-                IList<IEntity> result = new List<IEntity>();
-                foreach (IConstruct e in _tokens)
-                {
-                    ObjectType entity = e as ObjectType;
-                    if (entity != null)
-                    {
-                        result.Add(entity);
-                    }
-                }
-                
-                return result;
+                return _tokens.OfType<ObjectType>().Cast<IEntity>().ToList();
             }
         }
 
@@ -298,17 +279,9 @@ namespace Lextm.SharpSnmpLib.Mib
         
         internal static bool AllDependentsAvailable(MibModule module, IDictionary<string, MibModule> modules)
         {
-            foreach (string dependent in module.Dependents)
-            {
-                if (!DependentFound(dependent, modules))
-                {
-                    return false;
-                }
-            }
-            
-            return true;
+            return module.Dependents.All(dependent => DependentFound(dependent, modules));
         }
-        
+
         private static bool DependentFound(string dependent, IDictionary<string, MibModule> modules)
         {
             if (!Regex.IsMatch(dependent, Pattern))

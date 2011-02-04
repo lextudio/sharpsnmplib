@@ -28,6 +28,8 @@ namespace Lextm.SharpSnmpLib.Pipeline
     /// </summary>
     internal sealed class SecureSnmpContext : SnmpContext
     {
+        private static readonly ObjectIdentifier ReportId = new ObjectIdentifier("1.3.6.1.6.3.15.1.1.4.0");
+        
         /// <summary>
         /// Initializes a new instance of the <see cref="SecureSnmpContext"/> class.
         /// </summary>
@@ -52,7 +54,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 new Header(
                     new Integer32(Request.MessageId()),
                     new Integer32(Messenger.MaxMessageSize),
-                    new OctetString(new[] { (byte)Levels.Reportable })),
+                    0),
                 new SecurityParameters(
                     Group.EngineId,
                     new Integer32(Group.EngineBoots),
@@ -85,7 +87,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                     new Header(
                         new Integer32(Request.MessageId()),
                         new Integer32(Messenger.MaxMessageSize),
-                        new OctetString(new[] { (byte)Levels.Reportable })),
+                        0),
                     new SecurityParameters(
                         Group.EngineId,
                         new Integer32(Group.EngineBoots),
@@ -121,7 +123,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 new Header(
                     new Integer32(Request.MessageId()),
                     new Integer32(Messenger.MaxMessageSize),
-                    new OctetString(new[] { (byte)Levels.Reportable })),
+                    0),
                 new SecurityParameters(
                     Group.EngineId,
                     new Integer32(Group.EngineBoots),
@@ -177,13 +179,8 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 return false;
             }
 
-            if (parameters.EngineTime.ToInt32() > Group.EngineTime + 500)
-            {
-                // timeout.
-                return false;
-            }
-
-            return true;
+            // TODO: make 500 configurable
+            return parameters.EngineTime.ToInt32() <= Group.EngineTime + 500;
         }
 
         private void HandleDiscovery()
@@ -196,7 +193,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 new Header(
                     new Integer32(Request.MessageId()),
                     new Integer32(Messenger.MaxMessageSize),
-                    new OctetString(new[] { (byte)Levels.Reportable })),
+                    0),
                 new SecurityParameters(
                     Group.EngineId,
                     Integer32.Zero,
@@ -214,7 +211,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                         new List<Variable>(1)
                             {
                                 new Variable(
-                                    new ObjectIdentifier("1.3.6.1.6.3.15.1.1.4.0"),
+                                    ReportId,
                                     new Counter32(Group.ReportCount))
                             })),
                 DefaultPrivacyProvider.DefaultPair);
@@ -237,7 +234,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 new Header(
                     new Integer32(Request.MessageId()),
                     new Integer32(Messenger.MaxMessageSize),
-                    new OctetString(new[] { (byte)Levels.Reportable })),
+                    0),
                 new SecurityParameters(
                     Group.EngineId,
                     new Integer32(Group.EngineBoots),

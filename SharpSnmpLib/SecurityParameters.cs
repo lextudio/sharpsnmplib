@@ -116,7 +116,7 @@ namespace Lextm.SharpSnmpLib
         }
         
         /// <summary>
-        /// Creates an instance of <seealso cref="SecurityParameters"/>.
+        /// Creates an instance of <see cref="SecurityParameters"/>.
         /// </summary>
         /// <param name="userName">User name.</param>
         /// <returns></returns>

@@ -9,7 +9,7 @@ namespace Lextm.SharpSnmpLib.Tests
         [Test]
         public void Test()
         {
-            var pdu = MalformedPdu.Instance;
+            var pdu = new MalformedPdu();
             Assert.Throws<NotSupportedException>(() => { var test = pdu.ErrorIndex; });
             Assert.Throws<NotSupportedException>(() => { var test = pdu.ErrorStatus; });
             Assert.Throws<NotSupportedException>(() => { var test = pdu.RequestId; });

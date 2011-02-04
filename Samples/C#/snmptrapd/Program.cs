@@ -8,7 +8,9 @@
  */
 using System;
 using System.Net;
+using Lextm.SharpSnmpLib;
 using Lextm.SharpSnmpLib.Pipeline;
+using Lextm.SharpSnmpLib.Security;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
 
@@ -17,7 +19,7 @@ namespace SnmpTrapD
     internal static class Program
     {
         internal static IUnityContainer Container { get; private set; }
-                
+        
         public static void Main(string[] args)
         {
             if (args.Length != 0)
@@ -26,6 +28,11 @@ namespace SnmpTrapD
             }
             
             Container = new UnityContainer().LoadConfiguration("snmptrapd");
+            var users = Program.Container.Resolve<UserRegistry>();
+            users.Add(new OctetString("neither"), DefaultPrivacyProvider.DefaultPair);
+            users.Add(new OctetString("authen"), new DefaultPrivacyProvider(new MD5AuthenticationProvider(new OctetString("authentication"))));
+            users.Add(new OctetString("privacy"), new DESPrivacyProvider(new OctetString("privacyphrase"),
+                                                                         new MD5AuthenticationProvider(new OctetString("authentication")))); 
 
             var trapv1 = Container.Resolve<TrapV1MessageHandler>("TrapV1Handler");
             trapv1.MessageReceived += WatcherTrapV1Received;

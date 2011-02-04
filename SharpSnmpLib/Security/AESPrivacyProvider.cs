@@ -120,7 +120,7 @@ namespace Lextm.SharpSnmpLib.Security
             iv[7] = timeBytes[0];
 
             // Copy salt value to the iv array
-            Array.Copy(privacyParameters, 0, iv, 8, PrivacyParametersLength);
+            Buffer.BlockCopy(privacyParameters, 0, iv, 8, PrivacyParametersLength);
 
             using (Rijndael rm = new RijndaelManaged())
             {
@@ -134,7 +134,7 @@ namespace Lextm.SharpSnmpLib.Security
                 
                 // make sure we have the right key length
                 byte[] pkey = new byte[MinimumKeyLength];
-                Array.Copy(key, pkey, MinimumKeyLength);
+                Buffer.BlockCopy(key, 0, pkey, 0, MinimumKeyLength);
                 rm.Key = pkey;
                 rm.IV = iv;
                 using (ICryptoTransform cryptor = rm.CreateEncryptor())
@@ -146,7 +146,7 @@ namespace Lextm.SharpSnmpLib.Security
                     {
                         // cut out the padding
                         byte[] tmp = new byte[unencryptedData.Length];
-                        Array.Copy(encryptedData, tmp, unencryptedData.Length);
+                        Buffer.BlockCopy(encryptedData, 0, tmp, 0, unencryptedData.Length);
                         return tmp;
                     }
                     
@@ -197,7 +197,7 @@ namespace Lextm.SharpSnmpLib.Security
             iv[7] = timeBytes[0];
 
             // Copy salt value to the iv array
-            Array.Copy(privacyParameters, 0, iv, 8, PrivacyParametersLength);
+            Buffer.BlockCopy(privacyParameters, 0, iv, 8, PrivacyParametersLength);
 
             // now do CFB decryption of the encrypted data
             using (Rijndael rm = Rijndael.Create())
@@ -210,7 +210,7 @@ namespace Lextm.SharpSnmpLib.Security
                 if (key.Length > KeyBytes)
                 {
                     byte[] normKey = new byte[KeyBytes];
-                    Array.Copy(key, normKey, KeyBytes);
+                    Buffer.BlockCopy(key, 0, normKey, 0, KeyBytes);
                     rm.Key = normKey;
                 }
                 else
@@ -226,15 +226,15 @@ namespace Lextm.SharpSnmpLib.Security
                     if ((encryptedData.Length % KeyBytes) != 0)
                     {
                         byte[] buffer = new byte[encryptedData.Length];
-                        Array.Copy(encryptedData, 0, buffer, 0, encryptedData.Length);
+                        Buffer.BlockCopy(encryptedData, 0, buffer, 0, encryptedData.Length);
                         int div = (int)Math.Floor(buffer.Length / (double)16);
                         int newLength = (div + 1) * 16;
                         byte[] decryptBuffer = new byte[newLength];
-                        Array.Copy(buffer, decryptBuffer, buffer.Length);
+                        Buffer.BlockCopy(buffer, 0, decryptBuffer, 0, buffer.Length);
                         decryptedData = cryptor.TransformFinalBlock(decryptBuffer, 0, decryptBuffer.Length);
                         
                         // now remove padding
-                        Array.Copy(decryptedData, buffer, encryptedData.Length);
+                        Buffer.BlockCopy(decryptedData, 0, buffer, 0, encryptedData.Length);
                         return buffer;
                     }
 

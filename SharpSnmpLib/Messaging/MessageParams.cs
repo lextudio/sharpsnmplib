@@ -15,6 +15,7 @@
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
+using System;
 using System.Net;
 
 namespace Lextm.SharpSnmpLib.Messaging
@@ -25,6 +26,16 @@ namespace Lextm.SharpSnmpLib.Messaging
 
         public MessageParams(byte[] bytes, int number, EndPoint sender)
         {
+            if (bytes == null)
+            {
+                throw new ArgumentNullException("bytes");
+            }
+            
+            if (sender == null)
+            {
+                throw new ArgumentNullException("sender");
+            }
+            
             _bytes = bytes;
             Number = number;
             Sender = (IPEndPoint)sender;

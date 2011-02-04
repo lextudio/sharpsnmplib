@@ -382,7 +382,7 @@
             this.Name = "FormProfile";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Profile Editor";
-            this.Load += new System.EventHandler(this.FormProfile_Load);
+            this.Load += new System.EventHandler(this.FormProfileLoad);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();

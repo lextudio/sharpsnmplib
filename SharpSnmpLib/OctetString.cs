@@ -81,7 +81,7 @@ namespace Lextm.SharpSnmpLib
             }
             
             _raw = new byte[raw.Length];
-            Array.Copy(raw, _raw, raw.Length);
+            Buffer.BlockCopy(raw, 0, _raw, 0, raw.Length);
             Encoding = DefaultEncoding;
         }
         
@@ -103,6 +103,14 @@ namespace Lextm.SharpSnmpLib
         public OctetString(string content)
             : this(content, DefaultEncoding)
         {
+        }
+        
+        /// <summary>
+        /// Creates an <see cref="OctetString"/> with a specific <see cref="Levels"/>.
+        /// </summary>
+        /// <param name="level"></param>
+        public OctetString(Levels level) : this(new byte[1] { (byte)level })
+        {            
         }
 
         /// <summary>
@@ -128,6 +136,27 @@ namespace Lextm.SharpSnmpLib
         public static OctetString Empty
         {
             get { return EmptyString; }
+        }
+               
+        /// <summary>
+        /// Returns a <see cref="Levels"/> that represents this <see cref="OctetString"/>.
+        /// </summary>
+        /// <returns></returns>
+        public Levels ToLevels()
+        {          
+            var bytes = GetRaw();
+            if (bytes.Length > 1)
+            {
+                throw new InvalidCastException("Length should be 1");
+            }
+            
+            var b = (int)bytes[0];
+            if (b < 0 || b > 7)
+            {
+                throw new InvalidCastException("Value should be from 0 to 7");
+            }
+            
+            return (Levels)b;
         }
         
         /// <summary>
@@ -249,7 +278,7 @@ namespace Lextm.SharpSnmpLib
             return !(left == right);
         }
 
-        #if (!CF) && (!SILVERLIGHT)
+#if (!CF) && (!SILVERLIGHT)
         /// <summary>
         /// Converts octets to physical address.
         /// </summary>

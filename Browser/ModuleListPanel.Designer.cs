@@ -210,7 +210,7 @@ namespace Lextm.SharpSnmpLib.Browser
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Name = "ModuleListPanel";
             this.TabText = "Module List";
-            this.Load += new System.EventHandler(this.ModuleListPanel_Load);
+            this.Load += new System.EventHandler(this.ModuleListPanelLoad);
             ((System.ComponentModel.ISupportInitialize)(this.actionList1)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();

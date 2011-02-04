@@ -68,13 +68,17 @@ namespace Lextm.SharpSnmpLib.Security
                 return true;
             }
 
+            if (0 == (header.SecurityLevel & Levels.Authentication))
+            {
+                return true;
+            }
+
             var expected = parameters.AuthenticationParameters;
             parameters.AuthenticationParameters = authen.CleanDigest; // clean the hash first.
             bool result = authen.ComputeHash(version, header, parameters, scopeBytes, privacy) == expected;
             parameters.AuthenticationParameters = expected; // restore the hash.
             return result;
         }
-
 
         /// <summary>
         /// Computes the hash.
@@ -85,7 +89,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// <param name="parameters">The parameters.</param>
         /// <param name="scope">The scope.</param>
         /// <param name="privacy">The privacy provider.</param>
-        public static void ComputeHash(this IAuthenticationProvider authen, VersionCode version, Header header, SecurityParameters parameters, Scope scope, IPrivacyProvider privacy)
+        public static void ComputeHash(this IAuthenticationProvider authen, VersionCode version, Header header, SecurityParameters parameters, ISegment scope, IPrivacyProvider privacy)
         {
             if (authen == null)
             {
@@ -117,8 +121,14 @@ namespace Lextm.SharpSnmpLib.Security
                 return;
             }
 
+            if (0 == (header.SecurityLevel & Levels.Authentication))
+            {
+                return;
+            }
+
+            var scopeData = privacy.GetScopeData(header, parameters, scope.GetData(version));
             // replace the hash.
-            parameters.AuthenticationParameters = authen.ComputeHash(version, header, parameters, privacy.Encrypt(scope.GetData(version), parameters), privacy);
+            parameters.AuthenticationParameters = authen.ComputeHash(version, header, parameters, scopeData, privacy);
         }
     }
 }

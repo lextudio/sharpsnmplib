@@ -15,7 +15,6 @@
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -50,7 +49,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         }
 
         /// <summary>
-        /// Adds the specified <seealso cref="ISnmpObject"/>.
+        /// Adds the specified <see cref="ISnmpObject"/>.
         /// </summary>
         /// <param name="newObject">The object.</param>
         public void Add(ISnmpObject newObject)

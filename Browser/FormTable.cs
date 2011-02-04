@@ -91,6 +91,11 @@ namespace Lextm.SharpSnmpLib.Browser
             i.MoveNext();
             IDefinition d = i.Current;
 
+            if (d == null)
+            {
+                return;
+            }
+
             foreach (IDefinition def in d.Children)
             {
                 dataGridTable.Columns[x++].Name = cbColumnDisplay.SelectedIndex == 0 ? new SearchResult(def).AlternativeText : def.Name;
@@ -169,7 +174,7 @@ namespace Lextm.SharpSnmpLib.Browser
             e.SuppressKeyPress = true;
         }
 
-        private void FormTable_FormClosing(object sender, FormClosingEventArgs e)
+        private void FormTableFormClosing(object sender, FormClosingEventArgs e)
         {
             if (_refreshThread != null)
             {

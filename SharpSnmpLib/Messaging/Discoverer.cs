@@ -53,14 +53,14 @@ namespace Lextm.SharpSnmpLib.Messaging
         public event EventHandler<ExceptionRaisedEventArgs> ExceptionRaised;
 
         /// <summary>
-        /// Discovers the specified version.
+        /// Discovers agents of the specified version in a specific time interval.
         /// </summary>
         /// <param name="version">The version.</param>
         /// <param name="broadcastAddress">The broadcast address.</param>
         /// <param name="community">The community.</param>
-        /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
+        /// <param name="interval">The discovering time interval, in milliseconds.</param>
         /// <remarks><paramref name="broadcastAddress"/> must be an IPv4 address. IPv6 is not yet supported here.</remarks>
-        public void Discover(VersionCode version, IPEndPoint broadcastAddress, OctetString community, int timeout)
+        public void Discover(VersionCode version, IPEndPoint broadcastAddress, OctetString community, int interval)
         {
             if (broadcastAddress == null)
             {
@@ -118,7 +118,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 ThreadPool.QueueUserWorkItem(AsyncReceive, udp.Client);
                 #endif
 
-                Thread.Sleep(timeout);                
+                Thread.Sleep(interval);                
                 Interlocked.CompareExchange(ref _active, Inactive, Active);
                 udp.Close();
             }
@@ -183,7 +183,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             foreach (ISnmpMessage message in MessageFactory.ParseMessages(param.GetBytes(), 0, param.Number, Empty))
             {
                 EventHandler<AgentFoundEventArgs> handler;
-                var code = message.Type();
+                var code = message.TypeCode();
                 if (code == SnmpType.ReportPdu)
                 {
                     ReportMessage report = (ReportMessage)message;

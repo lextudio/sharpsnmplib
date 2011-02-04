@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
@@ -160,16 +161,7 @@ namespace Lextm.SharpSnmpLib.Mib
             // we avoid to call d.GetNumericalForm (which clones the uint[] of the OID) but cast 'd' as a Definition
             // and then call directly it _id field (without modifying it of course).
             // Assume all IDefinition are Definition
-            foreach (Definition d in _children.Values)   
-            {
-                uint[] id = d._id;    // use _id rather than GetNumericalForm to avoid the Clone.
-                if (id[id.Length - 1] == index)
-                {
-                    return d;
-                }
-            }
-            
-            return null;
+            return (from Definition d in _children.Values let id = d._id where id[id.Length - 1] == index select d).FirstOrDefault();
         }
 
         /// <summary>
@@ -210,17 +202,8 @@ namespace Lextm.SharpSnmpLib.Mib
                 return new Definition(node, this);
             }
 
-            foreach (Definition d in _children.Values)
-            {
-                Definition result = d.Add(node);
-                if (result != null)
-                {
-                    return result;
-                }
-            }
+            return (from Definition d in _children.Values select d.Add(node)).FirstOrDefault(result => result != null);
 
-            return null;
-            
             // */
 
             /* algorithm 2: put parent locating task outside. slower, so dropped.

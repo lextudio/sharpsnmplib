@@ -28,12 +28,12 @@ using System;
 namespace Lextm.SharpSnmpLib.Security
 {
     /// <summary>
-    /// Extension class for <seealso cref="IPrivacyProvider"/>.
+    /// Extension class for <see cref="IPrivacyProvider"/>.
     /// </summary>
     public static class PrivacyProviderExtension
     {
         /// <summary>
-        /// Converts to <seealso cref="Levels"/>.
+        /// Converts to <see cref="Levels"/>.
         /// </summary>
         /// <returns></returns>
         public static Levels ToSecurityLevel(this IPrivacyProvider privacy)
@@ -58,23 +58,23 @@ namespace Lextm.SharpSnmpLib.Security
             }
 
             return flags;
-        }
-        
-        /// <summary>
-        /// Converts to <seealso cref="OctetString"/>.
-        /// </summary>
-        /// <param name="privacy">Privacy provider.</param>
-        /// <param name="reportable">Reportable flag.</param>
-        /// <returns></returns>
-        public static OctetString ToOctetString(this IPrivacyProvider privacy, bool reportable)
+        } 
+
+        internal static ISnmpData GetScopeData(this IPrivacyProvider privacy, Header header, SecurityParameters parameters, ISnmpData rawScopeData)
         {
-            Levels recordToSecurityLevel = privacy.ToSecurityLevel();
-            if (reportable)
+            if (privacy == null)
             {
-                recordToSecurityLevel |= Levels.Reportable;
+                throw new ArgumentNullException("privacy");
             }
-            
-            return new OctetString(new[] { (byte)recordToSecurityLevel });
+
+            if (header == null)
+            {
+                throw new ArgumentNullException("header");
+            }
+
+            return Levels.Privacy == (header.SecurityLevel & Levels.Privacy)
+                       ? privacy.Encrypt(rawScopeData, parameters)
+                       : rawScopeData;
         }
     }
 }

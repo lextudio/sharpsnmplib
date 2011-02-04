@@ -106,7 +106,7 @@ namespace Lextm.SharpSnmpLib.Browser
             try
             {
                 Logger.Info("==== Begin GET ====");
-                ObjectIdentifier id = GetIdForGet(treeView1.SelectedNode.Tag as IDefinition);
+                ObjectIdentifier id = GetIdForGet((IDefinition)treeView1.SelectedNode.Tag);
                 Profiles.DefaultProfile.Get(new Variable(id));
             }
             catch (Exception ex)
@@ -132,8 +132,7 @@ namespace Lextm.SharpSnmpLib.Browser
                 ISnmpData data;
                 using (FormSet form = new FormSet())
                 {
-                    ObjectIdentifier id = GetIdForGet(
-                        treeView1.SelectedNode.Tag as IDefinition);
+                    ObjectIdentifier id = GetIdForGet((IDefinition)treeView1.SelectedNode.Tag);
                     form.OldVal = Profiles.DefaultProfile.GetValue(new Variable(id));
                     if (form.ShowDialog() != DialogResult.OK)
                     {
@@ -150,8 +149,8 @@ namespace Lextm.SharpSnmpLib.Browser
                         if (!int.TryParse(form.NewVal, out result))
                         {
                             MessageBox.Show(
-                                "Value entered was not an Integer!", 
-                                "SNMP Set Error",
+                                @"Value entered was not an Integer!", 
+                                @"SNMP Set Error",
                                 MessageBoxButtons.OK, 
                                 MessageBoxIcon.Error);
                             return;
@@ -162,7 +161,7 @@ namespace Lextm.SharpSnmpLib.Browser
                 }
 
                 Logger.Info("==== Begin SET ====");
-                ObjectIdentifier id1 = GetIdForGet(treeView1.SelectedNode.Tag as IDefinition);
+                ObjectIdentifier id1 = GetIdForGet((IDefinition)treeView1.SelectedNode.Tag);
                 Profiles.DefaultProfile.Set(new Variable(id1, data));
             }
             catch (Exception ex)
@@ -200,7 +199,7 @@ namespace Lextm.SharpSnmpLib.Browser
         {
             try
             {
-                Profiles.DefaultProfile.GetTable(treeView1.SelectedNode.Tag as IDefinition);
+                Profiles.DefaultProfile.GetTable((IDefinition)treeView1.SelectedNode.Tag);
             }
             catch (Exception ex)
             {
@@ -236,7 +235,7 @@ namespace Lextm.SharpSnmpLib.Browser
             try
             {
                 Logger.Info("==== Begin GET NEXT ====");
-                ObjectIdentifier id = GetIdForGetNext(treeView1.SelectedNode.Tag as IDefinition);
+                ObjectIdentifier id = GetIdForGetNext((IDefinition)treeView1.SelectedNode.Tag);
                 Profiles.DefaultProfile.GetNext(new Variable(id));
             }
             catch (Exception ex)
@@ -254,50 +253,7 @@ namespace Lextm.SharpSnmpLib.Browser
             actGetNext.Enabled = ValidForGetNext(treeView1.SelectedNode);
         }
 
-/*
-        private void ManualWalk(TreeNode node, bool first)
-        {
-            if (node != null)
-            {
-                try
-                {
-                    switch (node.ImageIndex)
-                    {
-                        case 3:
-                            Profiles.DefaultProfile.GetTable(Manager, node.Tag as IDefinition);
-                            break;
-                        default:
-                            if (ValidForGet(node))
-                            {
-                                Profiles.DefaultProfile.Get(Manager, GetIdForGet(node.Tag as IDefinition));
-                            }
-                            else
-                            {
-                                //
-                                // TODO: I would like to be able to put headings for the parent of the child nodes
-                                //
-                                ManualWalk(node.Nodes[0], false);
-                            }
-                            break;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    TraceSource source = new TraceSource("Browser");
-                    source.TraceInformation(ex.ToString());
-                    source.Flush();
-                    source.Close();
-                }
-
-                if (!first)
-                {
-                    ManualWalk(node.NextNode, false);
-                }
-            }
-        }
-*/
-
-        private void MibTreePanel_Load(object sender, EventArgs e)
+        private void MibTreePanelLoad(object sender, EventArgs e)
         {
             RefreshPanel(Objects, EventArgs.Empty);
             Objects.OnChanged += RefreshPanel;
@@ -314,7 +270,7 @@ namespace Lextm.SharpSnmpLib.Browser
             try
             {
                 Logger.Info("==== Begin WALK ====");
-                Profiles.DefaultProfile.Walk(treeView1.SelectedNode.Tag as IDefinition);                
+                Profiles.DefaultProfile.Walk((IDefinition)treeView1.SelectedNode.Tag);                
             }
             catch (Exception ex)
             {
@@ -346,5 +302,21 @@ namespace Lextm.SharpSnmpLib.Browser
         }
 
         #endregion
+
+        private void ActGetNumericExecute(object sender, EventArgs e)
+        {
+            Clipboard.SetText(ObjectIdentifier.Convert(((IDefinition)treeView1.SelectedNode.Tag).GetNumericalForm()));
+        }
+
+        private void ActGetNumericUpdate(object sender, EventArgs e)
+        {
+            actGetNumeric.Enabled = treeView1.SelectedNode != null;
+            actGetTextual.Enabled = treeView1.SelectedNode != null;
+        }
+
+        private void ActGetTextualExecute(object sender, EventArgs e)
+        {
+            Clipboard.SetText(new SearchResult((IDefinition)treeView1.SelectedNode.Tag).AlternativeText);
+        }
     }
 }

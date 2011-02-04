@@ -159,7 +159,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             Privacy = privacy;
             
             // TODO: define more constants.
-            Header = new Header(new Integer32(messageId), new Integer32(maxMessageSize), privacy.ToOctetString(true));
+            Header = new Header(new Integer32(messageId), new Integer32(maxMessageSize), privacy.ToSecurityLevel() | Levels.Reportable);
             var parameters = report.Parameters;
             var authenticationProvider = Privacy.AuthenticationProvider;
             Parameters = new SecurityParameters(
