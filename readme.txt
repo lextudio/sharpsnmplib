@@ -15,7 +15,11 @@ The #SNMP Agent source code (snmpd.exe) is released under MIT/X11 License.
 Other demo source code is released in public domain.
 
 *Build From Source Code*
-http://sharpsnmplib.codeplex.com/wikipage?title=References%20on%20building%20from%20source%20code&referringTitle=References
+From our KB http://sharpsnmplib.codeplex.com/wikipage?title=Knowledge%20Base you can find three articles,
+
+KB 600005 How to compile source code on Windows
+KB 600006 How to compile source code on openSUSE
+KB 600007 How to compile source code on Ubuntu 10.10
 
 *Notes*
 1. VB.NET projects cannot be compiled under Mono at this moment.
