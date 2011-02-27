@@ -19,6 +19,13 @@ namespace Lextm.Common
             _mainForm = mainForm;            
         } 
         
+        protected override void OnStartupNextInstance(StartupNextInstanceEventArgs eventArgs)
+        {
+            MainForm.Show();
+            MainForm.WindowState = FormWindowState.Normal;
+            base.OnStartupNextInstance(eventArgs);
+        }
+        
         protected override void OnCreateMainForm()
         {            
             var handler = MainFormCreated;

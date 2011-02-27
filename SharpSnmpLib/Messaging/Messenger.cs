@@ -35,6 +35,10 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// Messenger class contains all static helper methods you need to send out SNMP messages.
     /// Static methods in Manager or Agent class will be removed in the future.
     /// </summary>
+    /// <remarks>
+    /// SNMP v3 is not supported by this class. Please use ISnmpMessage derived classes directly
+    /// if you want to do v3 operations.
+    /// </remarks>
     public static class Messenger
     {
         /// <summary>
