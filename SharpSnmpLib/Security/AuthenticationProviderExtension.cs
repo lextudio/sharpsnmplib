@@ -16,6 +16,8 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
+using System.IO;
+using Lextm.SharpSnmpLib.Messaging;
 
 namespace Lextm.SharpSnmpLib.Security
 {
@@ -24,6 +26,8 @@ namespace Lextm.SharpSnmpLib.Security
     /// </summary>
     public static class AuthenticationProviderExtension
     {
+        private static byte[] CleanDigest = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+
         /// <summary>
         /// Verifies the hash.
         /// </summary>
@@ -76,6 +80,7 @@ namespace Lextm.SharpSnmpLib.Security
             var expected = parameters.AuthenticationParameters;
             parameters.AuthenticationParameters = authen.CleanDigest; // clean the hash first.
             bool result = authen.ComputeHash(version, header, parameters, scopeBytes, privacy) == expected;
+
             parameters.AuthenticationParameters = expected; // restore the hash.
             return result;
         }
@@ -129,6 +134,90 @@ namespace Lextm.SharpSnmpLib.Security
             var scopeData = privacy.GetScopeData(header, parameters, scope.GetData(version));
             // replace the hash.
             parameters.AuthenticationParameters = authen.ComputeHash(version, header, parameters, scopeData, privacy);
+        }
+
+        /// <summary>
+        /// Verifies the hash.
+        /// </summary>
+        public static bool VerifyHash(this IAuthenticationProvider authen, Stream originalStream, OctetString expected, OctetString engineId)
+        {
+            byte[] bytes;
+
+            if (originalStream == null)
+            {
+                throw new ArgumentNullException("originalStream");
+            }
+
+            if (expected == null)
+            {
+                throw new ArgumentNullException("expected");
+            }
+
+            if (engineId== null)
+            {
+                throw new ArgumentNullException("expected");
+            }
+
+            if (authen is DefaultAuthenticationProvider)
+            {
+                return true;
+            }
+
+            if (originalStream.Position != 0)
+                originalStream.Position = 0; // Seek to the beginning of the stream
+
+            using (Stream stream = new MemoryStream())
+            {
+                originalStream.CopyTo(stream);
+                // Replace with clean digest
+                CleanAuthenticationParameters(stream);
+                // Read stream into byte array
+                bytes = new byte[stream.Length];
+                stream.Position = 0;
+                stream.Read(bytes, 0, bytes.Length);
+            }
+
+            // Compute hash
+            return (authen.ComputeHash(bytes, engineId) == expected);
+
+        }
+
+        /// <summary>
+        /// Cleans the Authentication parameters in the supplied <see cref="System.IO.Stream"/>.
+        /// </summary>
+        /// <param name="stream">The <see cref="System.IO.Stream"/> to be parsed.</param>
+        /// <returns></returns>
+        private static void CleanAuthenticationParameters(Stream stream)
+        {
+            try
+            {
+                if (!stream.CanWrite)
+                    throw new NotSupportedException("stream not writable");
+
+                if (stream.Position != 0)
+                    stream.Position = 0;
+
+                // We look for an exact payload which is at a known position
+
+                stream.IgnorePayloadStart(); // Enter the outer payload
+                stream.IgnorePayloads(2); // Skip 2 payloads
+                stream.IgnorePayloadStart();
+                stream.IgnorePayloadStart();
+                stream.IgnorePayloads(4);
+
+                if ((SnmpType)stream.ReadByte() == SnmpType.OctetString)
+                {
+                    stream.ReadPayloadLength();
+                    stream.Write(CleanDigest, 0, CleanDigest.Length);
+                }
+                else
+                    throw new OperationException("expected OctetString when finding Authentication Parameters");
+
+            }
+            catch (Exception e)
+            {
+                throw new OperationException("could not clean Authentication Parameters", e);
+            }
         }
     }
 }

@@ -76,6 +76,25 @@ namespace Lextm.SharpSnmpLib.Security
         }
 
         /// <summary>
+        /// Computes the hash.
+        /// </summary>
+        /// <returns></returns>
+        public OctetString ComputeHash(byte[] bytes, OctetString engineId)
+        {
+            if (bytes == null)
+            {
+                throw new ArgumentNullException("bytes");
+            }
+
+            if (engineId == null)
+            {
+                throw new ArgumentNullException("engineId");
+            }
+
+            return OctetString.Empty;
+        }
+
+        /// <summary>
         /// Gets the clean digest.
         /// </summary>
         /// <value>The clean digest.</value>

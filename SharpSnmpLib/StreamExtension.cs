@@ -81,6 +81,33 @@ namespace Lextm.SharpSnmpLib
             stream.Read(bytes, 0, length);
         }
 
+        internal static void IgnorePayloads(this Stream stream, int count)
+        {
+            if (stream == null)
+            {
+                throw new ArgumentNullException("stream");
+            }
+
+            while (count > 0)
+            {
+                stream.ReadByte();
+                stream.IgnoreBytes(stream.ReadPayloadLength());
+
+                count--;
+            }
+        }
+
+        internal static void IgnorePayloadStart(this Stream stream)
+        {
+            if (stream == null)
+            {
+                throw new ArgumentNullException("stream");
+            }
+
+            stream.ReadByte();
+            stream.ReadPayloadLength();
+        }
+
         private static int ReadLength(this Stream stream, byte first) // x is initial octet
         {
             if ((first & 0x80) == 0)
@@ -125,5 +152,47 @@ namespace Lextm.SharpSnmpLib
             stream.WritePayloadLength(raw.Length);
             stream.Write(raw, 0, raw.Length);
         }
+        
+ #region Copied from https://github.com/mono/mono/blob/master/mcs/class/corlib/System.IO/Stream.cs       
+        internal static void CopyTo(this Stream source, Stream destination)
+        {
+            if (source == null)
+            {
+                throw new ArgumentNullException("source");
+            }
+            
+            source.CopyTo(destination, 16*1024);
+        }
+        
+        private static void CopyTo(this Stream source, Stream destination, int bufferSize)
+        {
+            if (destination == null)
+            {
+                throw new ArgumentNullException ("destination");
+            }
+            
+            if (!source.CanRead)
+            {
+                throw new NotSupportedException ("This stream does not support reading");
+            }
+            
+            if (!destination.CanWrite)
+            {
+                throw new NotSupportedException ("This destination stream does not support writing");
+            }
+            
+            if (bufferSize <= 0)
+            {
+                throw new ArgumentOutOfRangeException ("bufferSize");
+            }
+            
+            var buffer = new byte [bufferSize];
+            int nread;
+            while ((nread = source.Read(buffer, 0, bufferSize)) != 0)
+            {
+                destination.Write(buffer, 0, nread);
+            }
+        }
+#endregion
     }
 }

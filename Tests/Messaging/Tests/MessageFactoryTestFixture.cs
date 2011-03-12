@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using Lextm.SharpSnmpLib.Security;
 using NUnit.Framework;
+using System.IO;
 
 #pragma warning disable 1591, 0618
 namespace Lextm.SharpSnmpLib.Messaging.Tests
@@ -355,6 +356,33 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             Assert.AreEqual("", message.Scope.ContextName.ToHexString());
             Assert.AreEqual(318463383, message.MessageId());
             Assert.AreEqual(1276263065, message.RequestId());
+        }
+
+        [Test]
+        public void TestTrapV3AuthBytes()
+        {
+            byte[] bytes = Properties.Resources.v3authNoPriv_BER_Issue;
+            Stream stream = new MemoryStream(bytes);
+            UserRegistry registry = new UserRegistry();
+            SHA1AuthenticationProvider authen = new SHA1AuthenticationProvider(new OctetString("testpass"));
+            registry.Add(new OctetString("test"), new DefaultPrivacyProvider(authen));
+            IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes, registry);
+            Assert.AreEqual(1, messages.Count);
+            ISnmpMessage message = messages[0];
+            Assert.AreEqual("80001299030005B706CF69", message.Parameters.EngineId.ToHexString());
+            Assert.AreEqual(41, message.Parameters.EngineBoots.ToInt32());
+            Assert.AreEqual(877, message.Parameters.EngineTime.ToInt32());
+            Assert.AreEqual("test", message.Parameters.UserName.ToString());
+            Assert.AreEqual("C107F9DAA3FC552960E38936", message.Parameters.AuthenticationParameters.ToHexString());
+            Assert.AreEqual("", message.Parameters.PrivacyParameters.ToHexString());
+            Assert.AreEqual("80001299030005B706CF69", message.Scope.ContextEngineId.ToHexString()); // SNMP#NET returns string.Empty here.
+            Assert.AreEqual("", message.Scope.ContextName.ToHexString());
+            Assert.AreEqual(681323585, message.MessageId());
+            Assert.AreEqual(681323584, message.RequestId());
+
+
+            Assert.AreEqual(true, authen.VerifyHash(stream, message.Parameters.AuthenticationParameters, message.Parameters.EngineId));
+
         }
 
         [Test]

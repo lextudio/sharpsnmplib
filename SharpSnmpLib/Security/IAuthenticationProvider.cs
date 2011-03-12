@@ -47,5 +47,13 @@ namespace Lextm.SharpSnmpLib.Security
         /// <returns></returns>
         OctetString ComputeHash(VersionCode version, ISegment header, SecurityParameters parameters,
                                        ISnmpData data, IPrivacyProvider privacy);
+
+        /// <summary>
+        /// Computes the hash.
+        /// </summary>
+        /// <param name="bytes">The bytes.</param>
+        /// <param name="engineId">The engine id.</param>
+        /// <returns></returns>
+        OctetString ComputeHash(byte[] bytes, OctetString engineId);
     }
 }

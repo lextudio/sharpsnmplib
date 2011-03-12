@@ -162,6 +162,7 @@
     <Compile Include="Tests\TrapV2PduTestFixture.cs" />
     <None Include="Resources\empty.txt" />
     <None Include="Resources\httpmib.txt" />
+    <None Include="Resources\v3authNoPriv_BER_Issue" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\ACTONA-ACTASTOR-MIB.mib" />

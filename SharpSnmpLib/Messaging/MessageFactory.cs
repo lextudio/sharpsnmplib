@@ -100,7 +100,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             IList<ISnmpMessage> result = new List<ISnmpMessage>();
-            using (Stream stream = new MemoryStream(buffer, index, length, false))
+            using (Stream stream = new MemoryStream(buffer, index, length, true))
             {                
                 int first;
                 while ((first = stream.ReadByte()) != -1)
@@ -121,6 +121,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         private static ISnmpMessage ParseMessage(int first, Stream stream, UserRegistry registry)
         {
             ISnmpData array = DataFactory.CreateSnmpData(first, stream);
+
             if (array == null)
             {
                 return null;
@@ -184,7 +185,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                     throw new SnmpException(string.Format(CultureInfo.InvariantCulture, "invalid v3 packets scoped data: {0}", code));
                 }
 
-                if (!privacy.AuthenticationProvider.VerifyHash(version, header, parameters, body[3], privacy))
+                if (!privacy.AuthenticationProvider.VerifyHash(stream, parameters.AuthenticationParameters, parameters.EngineId))
                 {
                     throw new SnmpException("invalid v3 packet data hash detected");
                 }
