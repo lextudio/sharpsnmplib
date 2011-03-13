@@ -55,7 +55,7 @@ namespace Lextm.SharpSnmpLib.Mib
             }
 
             _parentNode = parent;
-            var id = string.IsNullOrEmpty(parent.Name) ?
+            uint[] id = string.IsNullOrEmpty(parent.Name) ?
                 null : parent._id; // null for root node    (use _id rather than GetNumericalForm to avoid the Clone)
             _id = ObjectIdentifier.AppendTo(id, entity.Value);
             _parent = parent.Name;
@@ -197,7 +197,12 @@ namespace Lextm.SharpSnmpLib.Mib
         public Definition Add(IEntity node)
         {
             // * algorithm 1: recursive
-            return _name == node.Parent ? new Definition(node, this) : (from Definition d in _children.Values select d.Add(node)).FirstOrDefault(result => result != null);
+            if (_name == node.Parent)
+            {
+                return new Definition(node, this);
+            }
+
+            return (from Definition d in _children.Values select d.Add(node)).FirstOrDefault(result => result != null);
 
             // */
 
@@ -209,7 +214,7 @@ namespace Lextm.SharpSnmpLib.Mib
             return new Definition(node, this);
             // */
         }
-
+        
         /// <summary>
         /// Adds a <see cref="Definition"/> child to this <see cref="Definition"/>.
         /// </summary>
@@ -224,8 +229,8 @@ namespace Lextm.SharpSnmpLib.Mib
         
         internal static uint[] GetParent(IDefinition definition)    // Assume all IDefinition are Definition
         {
-            var self = ((Definition)definition)._id;        // use _id rather than GetNumericalForm to avoid the Clone.
-            var result = new uint[self.Length - 1];
+            uint[] self = ((Definition)definition)._id;        // use _id rather than GetNumericalForm to avoid the Clone.
+            uint[] result = new uint[self.Length - 1];
             Array.Copy(self, result, self.Length - 1);            
             return result;
         }

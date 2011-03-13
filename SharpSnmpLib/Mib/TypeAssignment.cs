@@ -18,9 +18,9 @@ namespace Lextm.SharpSnmpLib.Mib
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         private string _module;
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
-        private readonly string _name;
+        private string _name;
         private readonly Symbol _left;
-        private readonly string _value;
+        private string _value;
         
         /// <summary>
         /// Creates an <see cref="TypeAssignment"/>.
@@ -37,7 +37,7 @@ namespace Lextm.SharpSnmpLib.Mib
             
             Symbol temp;
             Symbol veryPrevious = null;
-            var previous = last;
+            Symbol previous = last;
             while ((temp = lexer.NextSymbol) != null)
             {
                 if (veryPrevious == Symbol.EOL && previous == Symbol.EOL && temp.ValidateType())

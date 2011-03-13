@@ -71,10 +71,10 @@ namespace Lextm.SharpSnmpLib.Browser
                 return;
             }
 
-            var discovery = Messenger.NextDiscovery;
-            var report = discovery.GetResponse(Timeout, Agent);
-            var request = new GetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(UserName), new List<Variable> { variable }, _privacy, Messenger.MaxMessageSize, report);
-            var response = request.GetResponse(Timeout, Agent, _registry);
+            Discovery discovery = Messenger.NextDiscovery;
+            ReportMessage report = discovery.GetResponse(Timeout, Agent);
+            GetRequestMessage request = new GetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(UserName), new List<Variable> { variable }, _privacy, Messenger.MaxMessageSize, report);
+            ISnmpMessage response = request.GetResponse(Timeout, Agent, _registry);
             if (response.Pdu().ErrorStatus.ToInt32() != 0)
             {
                 throw ErrorException.Create(
@@ -88,10 +88,10 @@ namespace Lextm.SharpSnmpLib.Browser
 
         internal override string GetValue(Variable variable)
         {
-            var discovery = Messenger.NextDiscovery;
-            var report = discovery.GetResponse(Timeout, Agent);
-            var request = new GetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(UserName), new List<Variable> { variable }, _privacy, Messenger.MaxMessageSize, report);
-            var response = request.GetResponse(Timeout, Agent, _registry);
+            Discovery discovery = Messenger.NextDiscovery;
+            ReportMessage report = discovery.GetResponse(Timeout, Agent);
+            GetRequestMessage request = new GetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(UserName), new List<Variable> { variable }, _privacy, Messenger.MaxMessageSize, report);
+            ISnmpMessage response = request.GetResponse(Timeout, Agent, _registry);
             if (response.Pdu().ErrorStatus.ToInt32() != 0)
             {
                 throw ErrorException.Create(
@@ -111,10 +111,10 @@ namespace Lextm.SharpSnmpLib.Browser
                 return;
             }
 
-            var discovery = Messenger.NextDiscovery;
-            var report = discovery.GetResponse(Timeout, Agent);
-            var request = new GetNextRequestMessage(VersionCode.V3, 100, 0, new OctetString(UserName), new List<Variable> { variable }, _privacy, Messenger.MaxMessageSize, report);
-            var response = request.GetResponse(Timeout, Agent, _registry);
+            Discovery discovery = Messenger.NextDiscovery;
+            ReportMessage report = discovery.GetResponse(Timeout, Agent);
+            GetNextRequestMessage request = new GetNextRequestMessage(VersionCode.V3, 100, 0, new OctetString(UserName), new List<Variable> { variable }, _privacy, Messenger.MaxMessageSize, report);
+            ISnmpMessage response = request.GetResponse(Timeout, Agent, _registry);
             if (response.Pdu().ErrorStatus.ToInt32() != 0) 
             {
                 throw ErrorException.Create(
@@ -134,10 +134,10 @@ namespace Lextm.SharpSnmpLib.Browser
                 return;
             }
 
-            var discovery = Messenger.NextDiscovery;
-            var report = discovery.GetResponse(Timeout, Agent);
-            var request = new SetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(UserName), new List<Variable> { variable }, _privacy, Messenger.MaxMessageSize, report);
-            var response = request.GetResponse(Timeout, Agent, _registry);
+            Discovery discovery = Messenger.NextDiscovery;
+            ReportMessage report = discovery.GetResponse(Timeout, Agent);
+            SetRequestMessage request = new SetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(UserName), new List<Variable> { variable }, _privacy, Messenger.MaxMessageSize, report);
+            ISnmpMessage response = request.GetResponse(Timeout, Agent, _registry);
             if (response.Pdu().ErrorStatus.ToInt32() != 0)
             {
                 throw ErrorException.Create(
@@ -151,10 +151,10 @@ namespace Lextm.SharpSnmpLib.Browser
 
         internal override void GetTable(IDefinition def)
         {
-            var discovery = Messenger.NextDiscovery;
-            var report = discovery.GetResponse(Timeout, Agent);
-            var list = new List<Variable>();
-            var rows = Messenger.BulkWalk(
+            Discovery discovery = Messenger.NextDiscovery;
+            ReportMessage report = discovery.GetResponse(Timeout, Agent);
+            IList<Variable> list = new List<Variable>();
+            int rows = Messenger.BulkWalk(
                 VersionCode.V3,
                 Agent, 
                 new OctetString(UserName),
@@ -169,14 +169,14 @@ namespace Lextm.SharpSnmpLib.Browser
             // How many rows are there?
             if (rows > 0)
             {
-                var newTable = new FormTable(def);
+                FormTable newTable = new FormTable(def);
                 newTable.SetRows(rows);
                 newTable.PopulateGrid(list);
                 newTable.Show();
             }
             else
             {
-                foreach (var t in list)
+                foreach (Variable t in list)
                 {
                     Logger.Info(t.ToString());
                 }
@@ -191,9 +191,9 @@ namespace Lextm.SharpSnmpLib.Browser
                 return;
             }
 
-            var discovery = Messenger.NextDiscovery;
-            var report = discovery.GetResponse(Timeout, Agent);
-            var list = new List<Variable>();
+            Discovery discovery = Messenger.NextDiscovery;
+            ReportMessage report = discovery.GetResponse(Timeout, Agent);
+            IList<Variable> list = new List<Variable>();
             Messenger.BulkWalk(
                 VersionCode.V3,
                 Agent, 
@@ -206,7 +206,7 @@ namespace Lextm.SharpSnmpLib.Browser
                 _privacy, 
                 report);
 
-            foreach (var v in list)
+            foreach (Variable v in list)
             {
                 Logger.Info(v.ToString(Objects));
             }

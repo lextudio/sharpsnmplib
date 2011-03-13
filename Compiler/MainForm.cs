@@ -38,13 +38,13 @@ namespace Lextm.SharpSnmpLib.Compiler
                 actExit.Image = Properties.Resources.system_log_out;
             }
 
-            var files = Program.Container.Resolve<DockContent>("DocumentList");
+            DockContent files = Program.Container.Resolve<DockContent>("DocumentList");
             files.Show(dockPanel1, DockState.DockLeft);
 
-            var output = Program.Container.Resolve<DockContent>("Output");
+            DockContent output = Program.Container.Resolve<DockContent>("Output");
             output.Show(dockPanel1, DockState.DockBottom);
 
-            var modules = Program.Container.Resolve<DockContent>("ModuleList");
+            DockContent modules = Program.Container.Resolve<DockContent>("ModuleList");
             modules.Show(dockPanel1, DockState.DockRight);
             
             Compiler = Program.Container.Resolve<CompilerCore>();
@@ -72,8 +72,8 @@ namespace Lextm.SharpSnmpLib.Compiler
 
         private void ActCompileExecute(object sender, EventArgs e)
         {
-            var content = dockPanel1.ActiveDocument;
-            var doc = (DocumentPanel)content;
+            IDockContent content = dockPanel1.ActiveDocument;
+            DocumentPanel doc = (DocumentPanel)content;
             Compiler.Compile(new [] { doc.FileName });
         }
 

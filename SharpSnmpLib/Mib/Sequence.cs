@@ -15,7 +15,7 @@ namespace Lextm.SharpSnmpLib.Mib
     /// </summary>
     internal sealed class Sequence : ITypeAssignment
     {
-        private readonly string _name;
+        private string _name;
 
         /// <summary>
         /// Creates a <see cref="Sequence"/> instance.
@@ -29,8 +29,8 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             _name = name;
             // parse between ( )
-            var temp = lexer.NextNonEOLSymbol; 
-            var bracketSection = 0;
+            Symbol temp = lexer.NextNonEOLSymbol; 
+            int bracketSection = 0;
             temp.Expect(Symbol.OpenBracket);
             bracketSection++;
             while (bracketSection > 0)
@@ -50,8 +50,8 @@ namespace Lextm.SharpSnmpLib.Mib
         public Sequence(string module, string name, IEnumerator<Symbol> enumerator)
         {
             // parse between ( )
-            var temp = enumerator.NextNonEOLSymbol();
-            var bracketSection = 0;
+            Symbol temp = enumerator.NextNonEOLSymbol();
+            int bracketSection = 0;
             temp.Expect(Symbol.OpenBracket);
             bracketSection++;
             while (bracketSection > 0)

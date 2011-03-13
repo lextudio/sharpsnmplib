@@ -8,7 +8,7 @@
     <ProjectGuid>{5BED5642-262B-44C7-9017-2A971C18D37D}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Lextm.SharpSnmpLib</RootNamespace>
+    <RootNamespace>Lextm.SharpSnmpLib.Compiler</RootNamespace>
     <AssemblyName>Compiler</AssemblyName>
     <ApplicationIcon>Resources\accessories-text-editor.ico</ApplicationIcon>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
@@ -51,12 +51,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\lib\IOutputPanel.cs">
-      <Link>IOutputPanel.cs</Link>
-    </Compile>
-    <Compile Include="..\lib\OutputPanelAppender.cs">
-      <Link>OutputPanelAppender.cs</Link>
-    </Compile>
     <Compile Include="..\lib\SingleInstanceController.cs">
       <Link>SingleInstanceController.cs</Link>
     </Compile>
@@ -75,39 +69,41 @@
     <None Include="Resources\system-log-out.png" />
     <None Include="Resources\utilities-terminal.ico" />
     <None Include="Resources\x-office-spreadsheet.ico" />
-    <Compile Include="Compiler\CompilerCore.cs" />
-    <Compile Include="Compiler\DocumentListPanel.cs">
+    <Compile Include="CompilerCore.cs" />
+    <Compile Include="DocumentListPanel.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Compiler\DocumentListPanel.Designer.cs">
+    <Compile Include="DocumentListPanel.Designer.cs">
       <DependentUpon>DocumentListPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Compiler\DocumentPanel.cs">
+    <Compile Include="DocumentPanel.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Compiler\DocumentPanel.Designer.cs">
+    <Compile Include="DocumentPanel.Designer.cs">
       <DependentUpon>DocumentPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Compiler\FileAddedEventArgs.cs" />
-    <Compile Include="Compiler\MainForm.cs">
+    <Compile Include="FileAddedEventArgs.cs" />
+    <Compile Include="IOutputPanel.cs" />
+    <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Compiler\MainForm.Designer.cs">
+    <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Compiler\MibCompilerException.cs" />
-    <Compile Include="Compiler\ModuleListPanel.cs">
+    <Compile Include="MibCompilerException.cs" />
+    <Compile Include="ModuleListPanel.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Compiler\ModuleListPanel.Designer.cs">
+    <Compile Include="ModuleListPanel.Designer.cs">
       <DependentUpon>ModuleListPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Compiler\OutputPanel.cs">
+    <Compile Include="OutputPanel.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Compiler\OutputPanel.Designer.cs">
+    <Compile Include="OutputPanel.Designer.cs">
       <DependentUpon>OutputPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="OutputPanelAppender.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -115,23 +111,23 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <EmbeddedResource Include="Compiler\DocumentListPanel.resx">
+    <EmbeddedResource Include="DocumentListPanel.resx">
       <DependentUpon>DocumentListPanel.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Compiler\DocumentPanel.resx">
+    <EmbeddedResource Include="DocumentPanel.resx">
       <DependentUpon>DocumentPanel.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Compiler\MainForm.resx">
+    <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Compiler\ModuleListPanel.resx">
+    <EmbeddedResource Include="ModuleListPanel.resx">
       <DependentUpon>ModuleListPanel.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Compiler\OutputPanel.resx">
+    <EmbeddedResource Include="OutputPanel.resx">
       <DependentUpon>OutputPanel.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>

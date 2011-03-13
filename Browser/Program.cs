@@ -10,12 +10,11 @@
 using System;
 using System.Windows.Forms;
 using Lextm.Common;
-using Lextm.SharpSnmpLib.Browser;
 using Lextm.SharpSnmpLib.Security;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
 
-namespace Lextm.SharpSnmpLib
+namespace Lextm.SharpSnmpLib.Browser
 {
     /// <summary>
     /// Class with program entry point.
@@ -37,7 +36,7 @@ namespace Lextm.SharpSnmpLib
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            var controller = new SingleInstanceController(typeof(MainForm));
+            SingleInstanceController controller = new SingleInstanceController(typeof(MainForm));
             controller.MainFormCreated += delegate 
             {
                 Container = new UnityContainer().LoadConfiguration("browser");

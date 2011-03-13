@@ -26,7 +26,7 @@ namespace Lextm.SharpSnmpLib.Mib
             {
             }
             
-            var succeeded = int.TryParse(temp.ToString(), out _value);
+            bool succeeded = int.TryParse(temp.ToString(), out _value);
             temp.Validate(!succeeded, "not a decimal");
         }
 

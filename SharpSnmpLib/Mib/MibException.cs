@@ -110,7 +110,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 throw new ArgumentNullException("symbol");
             }
 
-            var ex = new MibException(message + ". Wrong entity, " + symbol + " in file \"" + symbol.File + "\". row: " + (symbol.Row + 1).ToString(CultureInfo.InvariantCulture) + "; column: " + (symbol.Column + 1).ToString(CultureInfo.InvariantCulture)) { Symbol = symbol };
+            MibException ex = new MibException(message + ". Wrong entity, " + symbol + " in file \"" + symbol.File + "\". row: " + (symbol.Row + 1).ToString(CultureInfo.InvariantCulture) + "; column: " + (symbol.Column + 1).ToString(CultureInfo.InvariantCulture)) { Symbol = symbol };
             return ex;
         }
     }

@@ -14,7 +14,7 @@ namespace Lextm.SharpSnmpLib.Mib
     /// </summary>
     internal sealed class Choice : ITypeAssignment
     {
-        private readonly string _name;
+        private string _name;
 
         /// <summary>
         /// Creates a <see cref="Choice"/> instance.

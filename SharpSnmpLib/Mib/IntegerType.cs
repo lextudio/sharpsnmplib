@@ -8,7 +8,6 @@
  */
 
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
@@ -24,10 +23,10 @@ namespace Lextm.SharpSnmpLib.Mib
      */
     internal sealed class IntegerType : AbstractTypeAssignment
     {
-        private readonly bool _isEnumeration;
-        private readonly IDictionary<int, string> _map;
-        private readonly IList<ValueRange> _ranges;
-        private readonly string _name;
+        private bool _isEnumeration;
+        private IDictionary<int, string> _map;
+        private IList<ValueRange> _ranges;
+        private string _name;
 
         /// <summary>
         /// Creates an <see cref="IntegerType"/> instance.
@@ -41,7 +40,7 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             _name = name;
 
-            var temp = lexer.NextNonEOLSymbol;
+            Symbol temp = lexer.NextNonEOLSymbol;
             if (temp == Symbol.OpenBracket)
             {
                 _isEnumeration = true;
@@ -107,7 +106,15 @@ namespace Lextm.SharpSnmpLib.Mib
 
         public bool Contains(int value)
         {
-            return _ranges.Any(range => range.Contains(value));
+            foreach (ValueRange range in _ranges)
+            {
+                if (range.Contains(value))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

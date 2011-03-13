@@ -45,7 +45,7 @@ namespace Lextm.SharpSnmpLib.Mib
             _stringSection = false;
             
             string line;
-            var i = 0;
+            int i = 0;
             while ((line = stream.ReadLine()) != null)
             {
                 if (!_stringSection && line.TrimStart().StartsWith("--", StringComparison.Ordinal))
@@ -62,11 +62,11 @@ namespace Lextm.SharpSnmpLib.Mib
         private void ParseLine(string file, string line, int row)
         {
             line = line + "\n";
-            var count = line.Length;
-            for (var i = 0; i < count; i++)
+            int count = line.Length;
+            for (int i = 0; i < count; i++)
             {
-                var current = line[i];
-                var moveNext = Parse(file, _symbols, current, row, i);
+                char current = line[i];
+                bool moveNext = Parse(file, _symbols, current, row, i);
                 if (moveNext)
                 {
                     break;
@@ -161,7 +161,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 case '|':
                     if (!_stringSection)
                     {
-                        var moveNext = ParseLastSymbol(file, list, ref _temp, row, column);
+                        bool moveNext = ParseLastSymbol(file, list, ref _temp, row, column);
                         if (moveNext)
                         {
                             list.Add(CreateSpecialSymbol(file, '\n', row, column));
@@ -187,7 +187,7 @@ namespace Lextm.SharpSnmpLib.Mib
                     
                     if (Char.IsWhiteSpace(current) && !_assignSection && !_stringSection)
                     {                     
-                        var moveNext = ParseLastSymbol(file, list, ref _temp, row, column);
+                        bool moveNext = ParseLastSymbol(file, list, ref _temp, row, column);
                         if (moveNext)
                         {
                             list.Add(CreateSpecialSymbol(file, '\n', row, column));
@@ -246,9 +246,9 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             if (builder.Length > 0)
             {
-                var content = builder.ToString();
+                string content = builder.ToString();
                 builder.Length = 0;
-                var s = new Symbol(file, content, row, column);
+                Symbol s = new Symbol(file, content, row, column);
                 if (s == Symbol.Comment)
                 {
                     // ignore the rest symbols on this line because they are in comment.
@@ -309,9 +309,9 @@ namespace Lextm.SharpSnmpLib.Mib
             value = 0;
             Symbol previous = null;
             
-            var temp = NextNonEOLSymbol;
+            Symbol temp = NextNonEOLSymbol;
             temp.Expect(Symbol.OpenBracket);
-            var longParent = new StringBuilder();
+            StringBuilder longParent = new StringBuilder();
             temp = NextNonEOLSymbol;
             longParent.Append(temp);
             
@@ -321,7 +321,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 {
                     longParent.Append(temp);
                     temp = NextNonEOLSymbol;
-                    var succeed = UInt32.TryParse(temp.ToString(), out value);
+                    bool succeed = UInt32.TryParse(temp.ToString(), out value);
                     temp.Validate(!succeed, "not a decimal");
                     longParent.Append(temp);
                     temp = NextNonEOLSymbol;
@@ -336,7 +336,7 @@ namespace Lextm.SharpSnmpLib.Mib
                     return;
                 }
                 
-                var succeeded = UInt32.TryParse(temp.ToString(), out value);
+                bool succeeded = UInt32.TryParse(temp.ToString(), out value);
                 if (succeeded)
                 {
                     // numerical way

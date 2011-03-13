@@ -52,7 +52,7 @@ namespace Lextm.SharpSnmpLib.Browser
             
             tstxtPort.Text = @"162";
             tscbIP.Items.Add(StrAllUnassigned);
-            foreach (var address in Dns.GetHostEntry(string.Empty).AddressList.Where(address => !address.IsIPv6LinkLocal))
+            foreach (IPAddress address in Dns.GetHostEntry(string.Empty).AddressList.Where(address => !address.IsIPv6LinkLocal))
             {
                 tscbIP.Items.Add(address);
             }
@@ -132,7 +132,7 @@ namespace Lextm.SharpSnmpLib.Browser
         private void StartListeners()
         {
             _engine.Listener.ClearBindings();
-            var port = int.Parse(tstxtPort.Text, CultureInfo.InvariantCulture);
+            int port = int.Parse(tstxtPort.Text, CultureInfo.InvariantCulture);
             if (tscbIP.Text == StrAllUnassigned)
             {
                 if (Socket.SupportsIPv4)
@@ -149,7 +149,7 @@ namespace Lextm.SharpSnmpLib.Browser
                 return;
             }
 
-            var address = IPAddress.Parse(tscbIP.Text);
+            IPAddress address = IPAddress.Parse(tscbIP.Text);
             if (address.AddressFamily == AddressFamily.InterNetwork)
             {
                 if (!Socket.SupportsIPv4)

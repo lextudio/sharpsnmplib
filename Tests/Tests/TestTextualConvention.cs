@@ -1,4 +1,8 @@
-﻿using NUnit.Framework;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using NUnit.Framework;
 using Lextm.SharpSnmpLib.Mib;
 using System.IO;
 
@@ -29,7 +33,7 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual(name, tc.Name);
             Assert.IsNull(tc.Reference);
             Assert.AreEqual(typeof(IntegerType), tc.Syntax.GetType());
-            Assert.AreEqual(Status.Current, tc.Status);
+            Assert.AreEqual(Status.current, tc.Status);
             Assert.IsNull(tc.DisplayHint);
             Assert.AreEqual("A multi line\n        description", tc.Description);
         }

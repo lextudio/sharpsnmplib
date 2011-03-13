@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
@@ -8,26 +9,33 @@ namespace Lextm.SharpSnmpLib.Mib
     {
         protected Symbol Next(object o)
         {
-            var lexer = o as Lexer;
+            Lexer lexer = o as Lexer;
+            IEnumerator<Symbol> enumerator = o as IEnumerator<Symbol>;
+
             if (lexer != null)
             {
                 return lexer.NextNonEOLSymbol;
             }
-
-            var enumerator = o as IEnumerator<Symbol>;
-            return enumerator != null ? enumerator.NextNonEOLSymbol() : null;
+            else if (enumerator != null)
+            {
+                return enumerator.NextNonEOLSymbol();
+            }
+            else
+            {
+                return null;
+            }
         }
 
         protected IList<ValueRange> DecodeRanges(object enumerator)
         {
             Symbol temp = null;
-            var ranges = new List<ValueRange>();
+            List<ValueRange> _ranges = new List<ValueRange>();
 
-            var size = false;
+            bool size = false;
 
             while (temp != Symbol.CloseParentheses)
             {
-                var value1 = Next(enumerator);
+                Symbol value1 = Next(enumerator);
                 Symbol value2 = null;
 
                 if (value1 == Symbol.Size)
@@ -44,20 +52,20 @@ namespace Lextm.SharpSnmpLib.Mib
                     temp = Next(enumerator);
                 }
 
-                var range = new ValueRange(value1, value2);
+                ValueRange range = new ValueRange(value1, value2);
 
                 if (size)
                 {
                     value1.Validate(range.Start < 0, "invalid sub-typing; size must be greater than 0");
                 }
 
-                value1.Validate(Contains(range.Start, ranges), "invalid sub-typing");
+                value1.Validate(this.Contains(range.Start, _ranges), "invalid sub-typing");
                 if (value2 != null)
                 {
-                    value2.Validate(Contains((int)range.End, ranges), "invalid sub-typing");
+                    value2.Validate(this.Contains((int)range.End, _ranges), "invalid sub-typing");
                 }
 
-                foreach (var other in ranges)
+                foreach (ValueRange other in _ranges)
                 {
                     value1.Validate(range.Contains(other.Start), "invalid sub-typing");
                     if (other.End != null)
@@ -66,35 +74,35 @@ namespace Lextm.SharpSnmpLib.Mib
                     }
                 }
 
-                ranges.Add(range);
+                _ranges.Add(range);
             }
 
             if (size)
             {
                 Next(enumerator).Expect(Symbol.CloseParentheses);
             }
-            return ranges;
+            return _ranges;
         }
 
         protected IDictionary<int, string> DecodeEnumerations(object enumerator)
         {
-            var map = new Dictionary<int, string>();
+            Dictionary<int, string> _map = new Dictionary<int, string>();
 
+            int signedNumber;
             do
             {
-                var identifier = Next(enumerator).ToString();
+                string identifier = Next(enumerator).ToString();
 
                 Next(enumerator).Expect(Symbol.OpenParentheses);
 
-                var value = Next(enumerator);
+                Symbol value = Next(enumerator);
 
-                int signedNumber;
                 if (int.TryParse(value.ToString(), out signedNumber))
                 {
                     try
                     {
                         // Have to include the number as it seems repeated identifiers are allowed ??
-                        map.Add(signedNumber, String.Format("{0}({1})", identifier, signedNumber));
+                        _map.Add(signedNumber, String.Format("{0}({1})", identifier, signedNumber));
                     }
                     catch (ArgumentException ex)
                     {
@@ -109,12 +117,20 @@ namespace Lextm.SharpSnmpLib.Mib
                 Next(enumerator).Expect(Symbol.CloseParentheses);
             } while (Next(enumerator) != Symbol.CloseBracket);
 
-            return map;
+            return _map;
         }
 
-        private static bool Contains(Int64 value, IEnumerable<ValueRange> ranges)
+        private bool Contains(Int64 value, IList<ValueRange> ranges)
         {
-            return ranges.Any(range => range.Contains(value));
+            foreach (ValueRange range in ranges)
+            {
+                if (range.Contains(value))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public abstract string Name { get; }

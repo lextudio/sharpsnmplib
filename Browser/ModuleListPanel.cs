@@ -86,18 +86,18 @@ namespace Lextm.SharpSnmpLib.Browser
                 return;
             }
 
-            var reg = (ReloadableObjectRegistry)sender;
+            ReloadableObjectRegistry reg = (ReloadableObjectRegistry)sender;
             SuspendLayout();
             listView1.Items.Clear();
-            var loaded = new List<string>(reg.Tree.LoadedModules);
+            List<string> loaded = new List<string>(reg.Tree.LoadedModules);
             loaded.Sort();
-            foreach (var item in loaded.Select(module => listView1.Items.Add(module)))
+            foreach (ListViewItem item in loaded.Select(module => listView1.Items.Add(module)))
             {
                 item.Group = listView1.Groups["lvgLoaded"];
             }
             
-            var files = Directory.GetFiles(reg.Path, Filter);
-            foreach (var item in from file in files
+            string[] files = Directory.GetFiles(reg.Path, Filter);
+            foreach (ListViewItem item in from file in files
                      select Path.GetFileNameWithoutExtension(file)
                      into name 
                      where !loaded.Contains(name) 
@@ -115,14 +115,14 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void ActAddExecute(object sender, EventArgs e)
         {
-            var reg = (ReloadableObjectRegistry)Objects;
-            var index = Path.Combine(reg.Path, "index");
+            ReloadableObjectRegistry reg = (ReloadableObjectRegistry)Objects;
+            string index = Path.Combine(reg.Path, "index");
             foreach (ListViewItem item in listView1.SelectedItems)
             {
-                var name = item.Text.ToUpperInvariant();
+                string name = item.Text.ToUpperInvariant();
                 
                 // TODO: bad performance. improve later.
-                var list = new List<string>(File.ReadAllLines(index));
+                List<string> list = new List<string>(File.ReadAllLines(index));
                 if (list.Contains(name))
                 {
                     continue;
@@ -137,14 +137,14 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void ActRemoveExecute(object sender, EventArgs e)
         {
-            var reg = (ReloadableObjectRegistry)Objects;
-            var index = Path.Combine(reg.Path, "index");
+            ReloadableObjectRegistry reg = (ReloadableObjectRegistry)Objects;
+            string index = Path.Combine(reg.Path, "index");
             foreach (ListViewItem item in listView1.SelectedItems)
             {
-                var name = item.Text.ToUpperInvariant();
+                string name = item.Text.ToUpperInvariant();
                 
                 // TODO: bad performance. improve later.
-                var list = new List<string>(File.ReadAllLines(index));
+                List<string> list = new List<string>(File.ReadAllLines(index));
                 if (!list.Contains(name))
                 {
                     continue;

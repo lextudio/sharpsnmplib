@@ -20,9 +20,9 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
     public class MessageFactoryTestFixture
     {   
         [Test]
-        public void TrapV1InV2()
+        public void TrapV1InSNMPV2()
         {
-            const string data = "30 42 02 01 01 04 06 70 75 62 6C 69 63 A4 35 06 08 2B 06 01 04 01 81 AB 34 40 04 C0 A8 01 14 02 01 06 02 02 03 E8 43 04 00 00 03 63 30 16 30 14 06 0C 2B 06 01 04 01 81 AB 34 02 01 01 00 02 04 00 00 00 01";
+            var data = "30 42 02 01 01 04 06 70 75 62 6C 69 63 A4 35 06 08 2B 06 01 04 01 81 AB 34 40 04 C0 A8 01 14 02 01 06 02 02 03 E8 43 04 00 00 03 63 30 16 30 14 06 0C 2B 06 01 04 01 81 AB 34 02 01 01 00 02 04 00 00 00 01";
             var bytes = ByteTool.Convert(data);
             Assert.Throws<ArgumentException>(() => MessageFactory.ParseMessages(bytes, new UserRegistry()));
         }

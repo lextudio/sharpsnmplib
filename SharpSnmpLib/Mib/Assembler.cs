@@ -60,7 +60,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 Directory.CreateDirectory(_folder);
             }
 
-            var files = Directory.GetFiles(_folder, "*.module");
+            string[] files = Directory.GetFiles(_folder, "*.module");
             _tree = new ObjectTree(files);
         }
 
@@ -73,7 +73,7 @@ namespace Lextm.SharpSnmpLib.Mib
             RealTree.Import(modules);
             RealTree.Refresh();  
             
-            foreach (var module in
+            foreach (MibModule module in
                 modules.Cast<MibModule>().Where(module => !Tree.PendingModules.Contains(module.Name)))
             {
                 PersistModuleToFile(Folder, module, Tree);
@@ -82,26 +82,26 @@ namespace Lextm.SharpSnmpLib.Mib
 
         private static void PersistModuleToFile(string folder, IModule module, IObjectTree tree)
         {
-            var fileName = Path.Combine(folder, module.Name + ".module");
-            using (var writer = new StreamWriter(fileName))
+            string fileName = Path.Combine(folder, module.Name + ".module");
+            using (StreamWriter writer = new StreamWriter(fileName))
             {
                 writer.Write("#");
-                foreach (var dependent in module.Dependents)
+                foreach (string dependent in module.Dependents)
                 {
                     writer.Write(dependent);
                     writer.Write(',');
                 }
                 
                 writer.WriteLine();
-                foreach (var entity in module.Entities)
+                foreach (IEntity entity in module.Entities)
                 {
-                    var node = tree.Find(module.Name, entity.Name);
+                    IDefinition node = tree.Find(module.Name, entity.Name);
                     if (node == null)
                     {
                         continue;
                     }
                     
-                    var id = node.GetNumericalForm();
+                    uint[] id = node.GetNumericalForm();
                     /* 0: id
                      * 1: type
                      * 2: name

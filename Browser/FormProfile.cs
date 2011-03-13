@@ -109,7 +109,7 @@ namespace Lextm.SharpSnmpLib.Browser
         private void TxtPortValidating(object sender, CancelEventArgs e)
         {
             int result;
-            var succeeded = int.TryParse(txtPort.Text, out result);
+            bool succeeded = int.TryParse(txtPort.Text, out result);
             if (succeeded && result > 0)
             {
                 return;
@@ -195,9 +195,9 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void UpdateControls()
         {
-            var version3Detected = cbVersionCode.SelectedIndex == 2;
-            var authenEnabled = cbAuthentication.SelectedIndex != 0;
-            var privEnabled = cbPrivacy.SelectedIndex != 0;
+            bool version3Detected = cbVersionCode.SelectedIndex == 2;
+            bool authenEnabled = cbAuthentication.SelectedIndex != 0;
+            bool privEnabled = cbPrivacy.SelectedIndex != 0;
 
             cbAuthentication.Enabled = version3Detected;
             cbPrivacy.Enabled = version3Detected && authenEnabled;

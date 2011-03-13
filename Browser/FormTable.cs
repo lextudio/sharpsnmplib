@@ -45,7 +45,7 @@ namespace Lextm.SharpSnmpLib.Browser
             }
             else 
             {
-                var rowCount = dataGridTable.RowCount;
+                int rowCount = dataGridTable.RowCount;
 
                 dataGridTable.ColumnCount = list.Count / dataGridTable.RowCount;
                 dataGridTable.RowCount = 0;
@@ -53,11 +53,11 @@ namespace Lextm.SharpSnmpLib.Browser
 
                 CreateColumns();
 
-                for (var x = 0; x < rowCount; x++)
+                for (int x = 0; x < rowCount; x++)
                 {
-                    var row = new string[dataGridTable.ColumnCount];
+                    string[] row = new string[dataGridTable.ColumnCount];
 
-                    for (var y = 0; y < dataGridTable.ColumnCount; y++)
+                    for (int y = 0; y < dataGridTable.ColumnCount; y++)
                     {
                         row[y] = list[(y * rowCount) + x].Data.ToString();
                     }
@@ -83,20 +83,20 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void CreateColumns()
         {
-            var x = 0;
+            int x = 0;
             
             // We want to move into the table object here
-            var i = _definition.Children.GetEnumerator();
+            IEnumerator<IDefinition> i = _definition.Children.GetEnumerator();
             i.Reset();
             i.MoveNext();
-            var d = i.Current;
+            IDefinition d = i.Current;
 
             if (d == null)
             {
                 return;
             }
 
-            foreach (var def in d.Children)
+            foreach (IDefinition def in d.Children)
             {
                 dataGridTable.Columns[x++].Name = cbColumnDisplay.SelectedIndex == 0 ? new SearchResult(def).AlternativeText : def.Name;
             }
@@ -119,7 +119,7 @@ namespace Lextm.SharpSnmpLib.Browser
             // will use WatchDog class to optimize this.
             while (true)
             {
-                var registry = Program.Container.Resolve<IProfileRegistry>();
+                IProfileRegistry registry = Program.Container.Resolve<IProfileRegistry>();
                 if (registry == null)
                 {
                     break;
@@ -127,7 +127,7 @@ namespace Lextm.SharpSnmpLib.Browser
 
                 IList<Variable> list = new List<Variable>();
                 Thread.Sleep(Convert.ToInt32(textBoxRefresh.Text, CultureInfo.CurrentCulture) * 1000);
-                var prof = registry.DefaultProfile as NormalAgentProfile;
+                NormalAgentProfile prof = registry.DefaultProfile as NormalAgentProfile;
                 int rows;
                 if (prof != null)
                 {
@@ -142,9 +142,9 @@ namespace Lextm.SharpSnmpLib.Browser
                 }
                 else
                 {
-                    var p = (SecureAgentProfile)registry.DefaultProfile;
-                    var discovery = Messenger.NextDiscovery;
-                    var report = discovery.GetResponse(p.Timeout, p.Agent);
+                    SecureAgentProfile p = (SecureAgentProfile)registry.DefaultProfile;
+                    Discovery discovery = Messenger.NextDiscovery;
+                    ReportMessage report = discovery.GetResponse(p.Timeout, p.Agent);
                     rows = Messenger.BulkWalk(
                         VersionCode.V3, 
                         p.Agent, 

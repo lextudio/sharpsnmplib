@@ -18,7 +18,7 @@ namespace Lextm.SharpSnmpLib.Mib
         
         public ImportsFrom(Symbol last, Lexer lexer)
         {
-            var previous = last;
+            Symbol previous = last;
             Symbol temp;
             while ((temp = lexer.NextSymbol) != Symbol.From)
             {

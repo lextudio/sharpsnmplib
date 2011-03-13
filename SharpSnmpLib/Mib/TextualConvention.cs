@@ -4,24 +4,24 @@ namespace Lextm.SharpSnmpLib.Mib
 {
     internal sealed class TextualConvention : ITypeAssignment
     {
-        private readonly string _name;
-        private readonly DisplayHint _displayHint;
-        private readonly Status _status;
-        private readonly string _description;
-        private readonly string _reference;
-        private readonly ITypeAssignment _syntax;
+        private string _name;
+        private DisplayHint _displayHint;
+        private Status _status;
+        private string _description;
+        private string _reference;
+        private ITypeAssignment _syntax;
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "module")]
         public TextualConvention(string module, string name, Lexer lexer)
         {
             _name = name;
 
-            var temp = lexer.NextNonEOLSymbol;
+            Symbol temp = lexer.NextNonEOLSymbol;
 
             if (temp == Symbol.DisplayHint)
             {
                 // TODO: this needs decoding to a useful format.
-                _displayHint = new DisplayHint(lexer.NextNonEOLSymbol.ToString().Trim(new[] { '"' }));
+                _displayHint = new DisplayHint(lexer.NextNonEOLSymbol.ToString().Trim(new char[] { '"' }));
                 temp = lexer.NextNonEOLSymbol;
             }
 
@@ -37,7 +37,7 @@ namespace Lextm.SharpSnmpLib.Mib
             }
 
             temp.Expect(Symbol.Description);
-            _description = lexer.NextNonEOLSymbol.ToString().Trim(new[] { '"' });
+            _description = lexer.NextNonEOLSymbol.ToString().Trim(new char[] { '"' });
             temp = lexer.NextNonEOLSymbol;
 
             if (temp == Symbol.Reference)
@@ -155,39 +155,53 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             if (_syntax is IntegerType)
             {
-                var i = v.Data as Integer32;
+                Integer32 i = v.Data as Integer32;
                 if (i == null || (_syntax as IntegerType).IsEnumeration)
                 {
                     return null;
                 }
-
-                return _displayHint != null ? _displayHint.Decode(i.ToInt32()) : i.ToInt32();
+                else if (_displayHint != null)
+                {
+                    return _displayHint.Decode(i.ToInt32());
+                }
+                else
+                {
+                    return i.ToInt32();
+                }
             }
-
-            if (_syntax is UnsignedType)
+            else if (_syntax is UnsignedType)
             {
-                var i = v.Data as Integer32;
+                Integer32 i = v.Data as Integer32;
                 if (i == null)
                 {
                     return null;
                 }
-
-                return _displayHint != null ? _displayHint.Decode(i.ToInt32()) : i.ToInt32();
+                else if (_displayHint != null)
+                {
+                    return _displayHint.Decode(i.ToInt32());
+                }
+                else
+                {
+                    return i.ToInt32();
+                }
             }
-
-            if (_syntax is OctetStringType)
+            else if (_syntax is OctetStringType)
             {
-                var o = v.Data as OctetString;
+                OctetString o = v.Data as OctetString;
                 if (o == null)
                 {
                     return null;
                 }
-
-                // TODO: Follow the format specifier for octet strings.
+                else
+                {
+                    // TODO: Follow the format specifier for octet strings.
+                    return null;
+                }
+            }
+            else
+            {
                 return null;
             }
-
-            return null;
         }
     }
 }

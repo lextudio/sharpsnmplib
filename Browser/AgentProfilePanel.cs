@@ -40,11 +40,11 @@ namespace Lextm.SharpSnmpLib.Browser
         private void UpdateView(object sender, EventArgs e)
         {
             listView1.Items.Clear();
-            foreach (var profile in Profiles.Profiles)
+            foreach (AgentProfile profile in Profiles.Profiles)
             {
-                var display = profile.Name.Length != 0 ? profile.Name : profile.Agent.ToString();
+                string display = profile.Name.Length != 0 ? profile.Name : profile.Agent.ToString();
 
-                var item = new ListViewItem(new[] { display, profile.Agent.ToString() });
+                ListViewItem item = new ListViewItem(new[] { display, profile.Agent.ToString() });
                 listView1.Items.Add(item);
                 item.Tag = profile;
 
@@ -167,7 +167,7 @@ namespace Lextm.SharpSnmpLib.Browser
         private void ActEditExecute(object sender, EventArgs e)
         {
             AgentProfile profile = listView1.SelectedItems[0].Tag as AgentProfile;
-            using (var editor = new FormProfile(profile))
+            using (FormProfile editor = new FormProfile(profile))
             {
                 if (editor.ShowDialog() == DialogResult.OK)
                 {

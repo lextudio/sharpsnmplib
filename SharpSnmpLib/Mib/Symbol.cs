@@ -249,7 +249,7 @@ namespace Lextm.SharpSnmpLib.Mib
         internal void ValidateIdentifier()
         {
             string message;
-            var condition = !IsValidIdentifier(ToString(), out message);
+            bool condition = !IsValidIdentifier(ToString(), out message);
             Validate(condition, message);
         }
 

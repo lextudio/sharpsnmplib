@@ -66,7 +66,7 @@ namespace Lextm.SharpSnmpLib.Compiler
         
         private void BackgroundWorker1DoWork(object sender, DoWorkEventArgs e)
         {
-            var docs = (IEnumerable<string>)e.Argument;
+            IEnumerable<string> docs = (IEnumerable<string>)e.Argument;
             IEnumerable<MibException> errors;
             CompileInternal(docs, out errors);
             e.Result = errors;
@@ -74,7 +74,7 @@ namespace Lextm.SharpSnmpLib.Compiler
 
         private void CompileInternal(IEnumerable<string> docs, out IEnumerable<MibException> errors)
         {
-            var modules = Parser.ParseToModules(docs, out errors);
+            IEnumerable<IModule> modules = Parser.ParseToModules(docs, out errors);
             Assembler.Assemble(modules);
         }
 
@@ -82,8 +82,8 @@ namespace Lextm.SharpSnmpLib.Compiler
         {
             if (e.Result != null)
             {
-                var errors = (IEnumerable<MibException>)e.Result;
-                foreach (var error in errors)
+                IEnumerable<MibException> errors = (IEnumerable<MibException>)e.Result;
+                foreach (MibException error in errors)
                 {
                     Logger.Info(error.Message);
                 }
@@ -110,7 +110,7 @@ namespace Lextm.SharpSnmpLib.Compiler
             } 
             
             IList<string> filered = new List<string>();
-            foreach (var file in files.Where(file => !_files.Contains(file)))
+            foreach (string file in files.Where(file => !_files.Contains(file)))
             {
                 _files.Add(file);
                 filered.Add(file);

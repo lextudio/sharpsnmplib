@@ -58,13 +58,13 @@ namespace Lextm.SharpSnmpLib.Mib
 
         private static Definition ParseLine(string line, string module)
         {
-            var content = line.Split(',');
+            string[] content = line.Split(',');
             /* 0: id
              * 1: type
              * 2: name
              * 3: parent name
              */
-            var id = ObjectIdentifier.Convert(content[0]);
+            uint[] id = ObjectIdentifier.Convert(content[0]);
             return new Definition(id, content[2], content[3], module, content[1]);
         }
     }

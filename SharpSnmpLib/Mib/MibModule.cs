@@ -52,7 +52,7 @@ namespace Lextm.SharpSnmpLib.Mib
             }
             
             _name = name.ToUpperInvariant(); // all module name are uppercase.
-            var temp = lexer.NextNonEOLSymbol;
+            Symbol temp = lexer.NextNonEOLSymbol;
             temp.Expect(Symbol.Definitions);
             temp = lexer.NextNonEOLSymbol;
             temp.Expect(Symbol.Assign);
@@ -91,7 +91,7 @@ namespace Lextm.SharpSnmpLib.Mib
         
         private static void ParseEntities(ICollection<IConstruct> tokens, Symbol last, string module, Lexer lexer)
         {
-            var temp = last;            
+            Symbol temp = last;            
             if (temp == Symbol.End)
             {
                 return;
@@ -114,7 +114,7 @@ namespace Lextm.SharpSnmpLib.Mib
 
                 ParseEntity(tokens, module, buffer, lexer, ref next);
                 buffer.Clear();
-                foreach (var s in next)
+                foreach (Symbol s in next)
                 {
                     if (s == Symbol.End)
                     {
@@ -196,7 +196,7 @@ namespace Lextm.SharpSnmpLib.Mib
 
         private static IConstruct ParseOthers(string module, IList<Symbol> header, Lexer lexer, ref IList<Symbol> next)
         {
-            var current = lexer.NextNonEOLSymbol;
+            Symbol current = lexer.NextNonEOLSymbol;
             
             if (current == Symbol.Sequence)
             {
@@ -218,7 +218,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 return new TextualConvention(module, header[0].ToString(), lexer);
             }
 
-            var result = new TypeAssignment(module, header[0].ToString(), current, lexer);
+            TypeAssignment result = new TypeAssignment(module, header[0].ToString(), current, lexer);
             next.Add(result.Left);
             return result;
         }
@@ -293,7 +293,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 return true;
             }
             
-            var dependentNonVersion = Regex.Replace(dependent, Pattern, string.Empty);
+            string dependentNonVersion = Regex.Replace(dependent, Pattern, string.Empty);
             return modules.ContainsKey(dependentNonVersion);
         }
     }
