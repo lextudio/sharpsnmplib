@@ -59,12 +59,12 @@ namespace Lextm.SharpSnmpLib
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
-            string s = value as string;
+            var s = value as string;
             if (s != null)
             {
                 try
                 {
-                    uint[] oidVal = ObjectIdentifier.Convert(s);
+                    var oidVal = ObjectIdentifier.Convert(s);
                     return new ObjectIdentifier(oidVal);
                 }
                 catch
@@ -85,7 +85,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
-            ObjectIdentifier oid = value as ObjectIdentifier;
+            var oid = value as ObjectIdentifier;
             if (destinationType == typeof(string) && oid != null)
             {
                 return oid.ToString(); // GetTextual(null);

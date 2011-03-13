@@ -63,7 +63,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("stream");
             }
             
-            int length = stream.ReadPayloadLength();
+            var length = stream.ReadPayloadLength();
             switch ((SnmpType)type)
             {
                 case SnmpType.Counter32:
@@ -135,7 +135,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("buffer");
             }
             
-            using (MemoryStream m = new MemoryStream(buffer, index, count, false))
+            using (var m = new MemoryStream(buffer, index, count, false))
             {
                 return CreateSnmpData(m);
             }

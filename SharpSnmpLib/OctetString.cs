@@ -165,8 +165,8 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public string ToHexString()
         {
-            StringBuilder result = new StringBuilder();
-            foreach (byte b in _raw)
+            var result = new StringBuilder();
+            foreach (var b in _raw)
             {
                 result.Append(b.ToString("X2", CultureInfo.InvariantCulture));
             }

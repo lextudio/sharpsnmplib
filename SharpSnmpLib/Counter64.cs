@@ -65,14 +65,14 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentException("byte length must between 1 and 9");
             }
 
-            byte[] raw = new byte[length];
+            var raw = new byte[length];
             stream.Read(raw, 0, raw.Length);
             if (length == 9 && raw[0] != 0)
             {
                 throw new ArgumentException("if byte length is 5, then first byte must be empty");
             }
 
-            List<byte> list = new List<byte>(raw);
+            var list = new List<byte>(raw);
             list.Reverse();
             while (list.Count > 8)
             {

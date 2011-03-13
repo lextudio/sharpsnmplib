@@ -114,7 +114,7 @@ namespace Lextm.SharpSnmpLib
                     throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "wrong varbind section data type: {0}", item.TypeCode));
                 }
                 
-                Sequence varbind = (Sequence)item;
+                var varbind = (Sequence)item;
                 if (varbind.Length != 2)
                 {
                     throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "wrong varbind data length: {0}", varbind.Length));
@@ -144,10 +144,10 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("variables");
             }
 
-            List<ISnmpData> varbinds = new List<ISnmpData>(variables.Count);
+            var varbinds = new List<ISnmpData>(variables.Count);
             varbinds.AddRange(variables.Select(v => new Sequence(v.Id, v.Data)).Cast<ISnmpData>());
 
-            Sequence result = new Sequence(varbinds);
+            var result = new Sequence(varbinds);
             return result;
         }
         

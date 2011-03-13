@@ -36,7 +36,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("data");
             }
                 
-            using (MemoryStream result = new MemoryStream())
+            using (var result = new MemoryStream())
             {
                 data.AppendBytesTo(result);
                 return result.ToArray();

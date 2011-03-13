@@ -76,7 +76,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             Version = version;
             Header = Header.Empty;
             Parameters = SecurityParameters.Create(community);
-            GetBulkRequestPdu pdu = new GetBulkRequestPdu(
+            var pdu = new GetBulkRequestPdu(
                 requestId,
                 nonRepeaters,
                 maxRepetitions,
@@ -169,7 +169,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 userName,
                 authenticationProvider.CleanDigest,
                 Privacy.Salt);
-            GetBulkRequestPdu pdu = new GetBulkRequestPdu(
+            var pdu = new GetBulkRequestPdu(
                 requestId,
                 nonRepeaters,
                 maxRepetitions,

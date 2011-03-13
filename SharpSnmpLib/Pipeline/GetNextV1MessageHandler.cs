@@ -50,15 +50,15 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 throw new ArgumentNullException("store");
             }  
             
-            ErrorCode status = ErrorCode.NoError;
-            int index = 0;
+            var status = ErrorCode.NoError;
+            var index = 0;
             IList<Variable> result = new List<Variable>();
-            foreach (Variable v in context.Request.Pdu().Variables)
+            foreach (var v in context.Request.Pdu().Variables)
             {
                 index++;
                 try
                 {
-                    ScalarObject next = store.GetNextObject(v.Id);
+                    var next = store.GetNextObject(v.Id);
                     if (next == null)
                     {
                         status = ErrorCode.NoSuchName;

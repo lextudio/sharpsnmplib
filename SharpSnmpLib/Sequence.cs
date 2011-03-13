@@ -62,7 +62,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("items");
             }
 
-            foreach (ISnmpData data in items.Where(data => data != null))
+            foreach (var data in items.Where(data => data != null))
             {
                 _list.Add(data);
             }
@@ -79,7 +79,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("items");
             }
 
-            foreach (ISnmpData data in items.Where(data => data != null))
+            foreach (var data in items.Where(data => data != null))
             {
                 _list.Add(data);
             }
@@ -102,7 +102,7 @@ namespace Lextm.SharpSnmpLib
                 return;
             }
 
-            long original = stream.Position;
+            var original = stream.Position;
             while (stream.Position < original + length)
             {
                 _list.Add(DataFactory.CreateSnmpData(stream));
@@ -159,8 +159,8 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public override string ToString()
         {
-            StringBuilder result = new StringBuilder("SNMP SEQUENCE: ");
-            foreach (ISnmpData item in _list)
+            var result = new StringBuilder("SNMP SEQUENCE: ");
+            foreach (var item in _list)
             {
                 result.Append(item).Append("; ");
             }

@@ -46,18 +46,18 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 throw new ArgumentNullException("store");
             }    
             
-            ISnmpPdu pdu = context.Request.Pdu();
+            var pdu = context.Request.Pdu();
             IList<Variable> result = new List<Variable>();
-            int index = 0;
-            int nonrepeaters = pdu.ErrorStatus.ToInt32();
+            var index = 0;
+            var nonrepeaters = pdu.ErrorStatus.ToInt32();
             var variables = pdu.Variables;
-            for (int i = 0; i < nonrepeaters; i++)
+            for (var i = 0; i < nonrepeaters; i++)
             {
-                Variable v = variables[i];
+                var v = variables[i];
                 index++;
                 try
                 {
-                    ScalarObject next = store.GetNextObject(v.Id);
+                    var next = store.GetNextObject(v.Id);
                     result.Add(next == null ? new Variable(v.Id, new EndOfMibView()) : next.Variable);
                 }
                 catch (Exception)
@@ -67,17 +67,17 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 }
             }
 
-            for (int j = nonrepeaters; j < variables.Count; j++)
+            for (var j = nonrepeaters; j < variables.Count; j++)
             {
-                Variable v = variables[j];
+                var v = variables[j];
                 index++;
-                Variable temp = v;
-                int repetition = pdu.ErrorIndex.ToInt32();
+                var temp = v;
+                var repetition = pdu.ErrorIndex.ToInt32();
                 while (repetition-- > 0)
                 {
                     try
                     {
-                        ScalarObject next = store.GetNextObject(temp.Id);
+                        var next = store.GetNextObject(temp.Id);
                         if (next == null)
                         {
                             temp = new Variable(temp.Id, new EndOfMibView());

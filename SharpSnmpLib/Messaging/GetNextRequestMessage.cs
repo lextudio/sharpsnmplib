@@ -65,7 +65,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             Version = version;
             Header = Header.Empty;
             Parameters = SecurityParameters.Create(community);
-            GetNextRequestPdu pdu = new GetNextRequestPdu(
+            var pdu = new GetNextRequestPdu(
                 requestId,
                 variables);
             Scope = new Scope(pdu);
@@ -141,7 +141,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 userName,
                 authenticationProvider.CleanDigest,
                 Privacy.Salt);
-            GetNextRequestPdu pdu = new GetNextRequestPdu(
+            var pdu = new GetNextRequestPdu(
                 requestId,
                 variables);
             var scope = report.Scope;

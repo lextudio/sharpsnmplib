@@ -48,21 +48,21 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 throw new ArgumentNullException("store");
             }  
             
-            int index = 0;
+            var index = 0;
             IList<Variable> result = new List<Variable>();
-            foreach (Variable v in context.Request.Pdu().Variables)
+            foreach (var v in context.Request.Pdu().Variables)
             {
                 index++;
                 try
                 {
-                    ScalarObject obj = store.GetObject(v.Id);
+                    var obj = store.GetObject(v.Id);
                     if (obj == null)
                     {
                         result.Add(new Variable(v.Id, new NoSuchInstance()));
                     }
                     else
                     {
-                        Variable item = obj.Variable;
+                        var item = obj.Variable;
                         result.Add(item);
                     }
                 }

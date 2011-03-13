@@ -50,9 +50,9 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("description");
             }
             
-            List<byte> result = new List<byte>();
-            string[] content = description.Trim().Split(new[] { ' ' });
-            foreach (string part in content)
+            var result = new List<byte>();
+            var content = description.Trim().Split(new[] { ' ' });
+            foreach (var part in content)
             {
 #if CF
                 result.Add(byte.Parse(part, NumberStyles.Integer, CultureInfo.InvariantCulture));
@@ -80,9 +80,9 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("description");
             }
 
-            List<byte> result = new List<byte>();
-            StringBuilder buffer = new StringBuilder(2);
-            foreach (char c in description.Where(c => !char.IsWhiteSpace(c)))
+            var result = new List<byte>();
+            var buffer = new StringBuilder(2);
+            foreach (var c in description.Where(c => !char.IsWhiteSpace(c)))
             {
                 if (!char.IsLetterOrDigit(c))
                 {
@@ -136,9 +136,9 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("items");
             }
 
-            using (MemoryStream result = new MemoryStream())
+            using (var result = new MemoryStream())
             {
-                foreach (ISnmpData item in items)
+                foreach (var item in items)
                 {
                     if (item == null)
                     {
@@ -159,9 +159,9 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("items");
             }
 
-            using (MemoryStream result = new MemoryStream())
+            using (var result = new MemoryStream())
             {
-                foreach (ISnmpData item in items)
+                foreach (var item in items)
                 {
                     item.AppendBytesTo(result);
                 }
@@ -190,7 +190,7 @@ namespace Lextm.SharpSnmpLib
                 sign = 0x0;
             }
 
-            List<byte> list = new List<byte>(orig);
+            var list = new List<byte>(orig);
             while (list.Count > 1)
             {
                 if (list[list.Count - 1] == flag)

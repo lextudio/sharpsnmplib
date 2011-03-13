@@ -83,23 +83,23 @@ namespace Lextm.SharpSnmpLib.Messaging
             if (version == VersionCode.V3)
             {
                 // throw new NotSupportedException("SNMP v3 is not supported");
-                Discovery discovery = new Discovery(Messenger.NextMessageId, _requestId, Messenger.MaxMessageSize);
+                var discovery = new Discovery(Messenger.NextMessageId, _requestId, Messenger.MaxMessageSize);
                 bytes = discovery.ToBytes();
             }
             else
             {
-                GetRequestMessage message = new GetRequestMessage(_requestId, version, community, _defaultVariables);
+                var message = new GetRequestMessage(_requestId, version, community, _defaultVariables);
                 bytes = message.ToBytes();
             }
 
-            using (UdpClient udp = new UdpClient(addressFamily))
+            using (var udp = new UdpClient(addressFamily))
             {
                 #if (!CF)
                 udp.EnableBroadcast = true;
                 #endif
                 udp.Send(bytes, bytes.Length, broadcastAddress);
 
-                long activeBefore = Interlocked.CompareExchange(ref _active, Active, Inactive);
+                var activeBefore = Interlocked.CompareExchange(ref _active, Active, Inactive);
                 if (activeBefore == Active)
                 {
                     // If already started, we've nothing to do.
@@ -141,9 +141,9 @@ namespace Lextm.SharpSnmpLib.Messaging
 
                 try
                 {
-                    byte[] buffer = new byte[_bufferSize];
+                    var buffer = new byte[_bufferSize];
                     EndPoint remote = new IPEndPoint(IPAddress.Any, 0);
-                    int count = socket.ReceiveFrom(buffer, ref remote);
+                    var count = socket.ReceiveFrom(buffer, ref remote);
                     ThreadPool.QueueUserWorkItem(HandleMessage, new MessageParams(buffer, count, remote));
                 }
                 catch (SocketException ex)
@@ -152,7 +152,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                     {
                         // If the SnmpTrapListener was active, marks it as stopped and call HandleException.
                         // If it was inactive, the exception is likely to result from this, and we raise nothing.
-                        long activeBefore = Interlocked.CompareExchange(ref _active, Inactive, Active);
+                        var activeBefore = Interlocked.CompareExchange(ref _active, Inactive, Active);
                         if (activeBefore == Active)
                         {
                             HandleException(ex);
@@ -164,7 +164,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
         private void HandleException(Exception exception)
         {
-            EventHandler<ExceptionRaisedEventArgs> handler = ExceptionRaised;
+            var handler = ExceptionRaised;
             if (handler == null)
             {
                 return;
@@ -180,13 +180,13 @@ namespace Lextm.SharpSnmpLib.Messaging
 
         private void HandleMessage(MessageParams param)
         {
-            foreach (ISnmpMessage message in MessageFactory.ParseMessages(param.GetBytes(), 0, param.Number, Empty))
+            foreach (var message in MessageFactory.ParseMessages(param.GetBytes(), 0, param.Number, Empty))
             {
                 EventHandler<AgentFoundEventArgs> handler;
                 var code = message.TypeCode();
                 if (code == SnmpType.ReportPdu)
                 {
-                    ReportMessage report = (ReportMessage)message;
+                    var report = (ReportMessage)message;
                     if (report.RequestId() != _requestId)
                     {
                         continue;
@@ -209,7 +209,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                     continue;
                 }
 
-                ResponseMessage response = (ResponseMessage)message;
+                var response = (ResponseMessage)message;
                 if (response.RequestId() != _requestId)
                 {
                     continue;

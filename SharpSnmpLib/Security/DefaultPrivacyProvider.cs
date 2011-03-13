@@ -73,7 +73,7 @@ namespace Lextm.SharpSnmpLib.Security
             
             if (data.TypeCode != SnmpType.Sequence)
             {
-                DecryptionException newException = new DecryptionException("Default decryption failed");
+                var newException = new DecryptionException("Default decryption failed");
                 throw newException;
             }
             

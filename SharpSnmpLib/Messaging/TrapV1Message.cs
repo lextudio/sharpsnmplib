@@ -87,7 +87,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             Generic = generic;
             Specific = specific;
             TimeStamp = time;
-            TrapV1Pdu pdu = new TrapV1Pdu(
+            var pdu = new TrapV1Pdu(
                 Enterprise,
                 new IP(AgentAddress),
                 new Integer32((int)Generic),
@@ -131,7 +131,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentException("wrong message type");
             }
 
-            TrapV1Pdu trapPdu = (TrapV1Pdu)_pdu;
+            var trapPdu = (TrapV1Pdu)_pdu;
             Enterprise = trapPdu.Enterprise;
             AgentAddress = trapPdu.AgentAddress.ToIPAddress();
             Generic = trapPdu.Generic;

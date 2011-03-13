@@ -67,14 +67,14 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 return;
             }
 
-            int index = 0;
-            ErrorCode status = ErrorCode.NoError;
+            var index = 0;
+            var status = ErrorCode.NoError;
 
             IList<Variable> result = new List<Variable>();
-            foreach (Variable v in context.Request.Pdu().Variables)
+            foreach (var v in context.Request.Pdu().Variables)
             {
                 index++;
-                ScalarObject obj = store.GetObject(v.Id);
+                var obj = store.GetObject(v.Id);
                 if (obj != null)
                 {
                     try

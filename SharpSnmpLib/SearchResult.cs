@@ -85,11 +85,11 @@ namespace Lextm.SharpSnmpLib
         {
             get
             {
-                StringBuilder result =
+                var result =
                     new StringBuilder().Append(Definition.ModuleName).Append("::").Append(
                         Definition.Name);
 
-                foreach (uint item in GetRemaining())
+                foreach (var item in GetRemaining())
                 {
                     result.Append(".").Append(item);
                 }
@@ -106,8 +106,8 @@ namespace Lextm.SharpSnmpLib
         {
             get
             {
-                List<string> names = new List<string>();
-                IDefinition current = Definition;
+                var names = new List<string>();
+                var current = Definition;
                 IDefinition parent;
                 while ((parent = current.ParentDefinition) != null)
                 {
@@ -121,13 +121,13 @@ namespace Lextm.SharpSnmpLib
                 }
 
                 names.Reverse();
-                StringBuilder result = new StringBuilder(".").Append(names[0]);
-                for (int i = 1; i < names.Count; i++)
+                var result = new StringBuilder(".").Append(names[0]);
+                for (var i = 1; i < names.Count; i++)
                 {
                     result.Append(".").Append(names[i]);
                 }
 
-                foreach (uint item in GetRemaining())
+                foreach (var item in GetRemaining())
                 {
                     result.Append(".").Append(item);
                 }

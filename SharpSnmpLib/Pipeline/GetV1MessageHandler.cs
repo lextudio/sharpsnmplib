@@ -50,18 +50,18 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 throw new ArgumentNullException("store");
             }  
             
-            ErrorCode status = ErrorCode.NoError;
-            int index = 0;
+            var status = ErrorCode.NoError;
+            var index = 0;
             IList<Variable> result = new List<Variable>();
-            foreach (Variable v in context.Request.Pdu().Variables)
+            foreach (var v in context.Request.Pdu().Variables)
             {
                 index++;
-                ScalarObject obj = store.GetObject(v.Id);
+                var obj = store.GetObject(v.Id);
                 if (obj != null)
                 {
                     try
                     {
-                        Variable item = obj.Variable;
+                        var item = obj.Variable;
                         result.Add(item);
                     }
                     catch (AccessFailureException)

@@ -28,8 +28,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Net;
-using System.Net.Sockets;
-
 using Lextm.SharpSnmpLib.Security;
 
 namespace Lextm.SharpSnmpLib.Messaging
@@ -85,7 +83,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("receiver");
             }
             
-            using (Socket socket = receiver.GetSocket())
+            using (var socket = receiver.GetSocket())
             {
                 return (ReportMessage)_discovery.GetResponse(timeout, receiver, Empty, socket);
             }

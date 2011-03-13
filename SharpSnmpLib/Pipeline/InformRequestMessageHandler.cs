@@ -60,7 +60,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <param name="e">The <see cref="Lextm.SharpSnmpLib.Pipeline.InformRequestMessageReceivedEventArgs"/> instance containing the event data.</param>
         private void InvokeMessageReceived(InformRequestMessageReceivedEventArgs e)
         {
-            EventHandler<InformRequestMessageReceivedEventArgs> handler = MessageReceived;
+            var handler = MessageReceived;
             if (handler != null) 
             {
                 handler(this, e);

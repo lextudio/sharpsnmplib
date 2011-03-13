@@ -41,7 +41,7 @@ namespace Lextm.SharpSnmpLib.Security
                 return;
             }
 
-            foreach (User user in users)
+            foreach (var user in users)
             {
                 Add(user);
             }

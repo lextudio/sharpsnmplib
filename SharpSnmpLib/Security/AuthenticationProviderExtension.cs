@@ -17,7 +17,6 @@
 
 using System;
 using System.IO;
-using Lextm.SharpSnmpLib.Messaging;
 
 namespace Lextm.SharpSnmpLib.Security
 {
@@ -77,7 +76,7 @@ namespace Lextm.SharpSnmpLib.Security
 
             var expected = parameters.AuthenticationParameters;
             parameters.AuthenticationParameters = authen.CleanDigest; // clean the hash first.
-            bool result = authen.ComputeHash(version, header, parameters, scopeBytes, privacy) == expected;
+            var result = authen.ComputeHash(version, header, parameters, scopeBytes, privacy) == expected;
 
             parameters.AuthenticationParameters = expected; // restore the hash.
             return result;
@@ -164,10 +163,7 @@ namespace Lextm.SharpSnmpLib.Security
                 return true;
             }
 
-            if (originalStream.Position != 0)
-            {
-                originalStream.Position = 0; // Seek to the beginning of the stream
-            }
+            originalStream.Position = 0; // Seek to the beginning of the stream
             
             byte[] bytes;
             using (Stream stream = new MemoryStream())
@@ -198,10 +194,7 @@ namespace Lextm.SharpSnmpLib.Security
                     throw new NotSupportedException("stream not writable");
                 }
 
-                if (stream.Position != 0)
-                {
-                    stream.Position = 0;
-                }
+                stream.Position = 0;
 
                 // We look for an exact payload which is at a known position
                 stream.IgnorePayloadStart(); // Enter the outer payload

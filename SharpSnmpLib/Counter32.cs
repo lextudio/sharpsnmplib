@@ -65,7 +65,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentException("byte length must between 1 and 5");
             }
 
-            byte[] raw = new byte[length];
+            var raw = new byte[length];
             stream.Read(raw, 0, raw.Length);
 
             // TODO: improve here to read from stream directly.
@@ -74,7 +74,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentException("if byte length is 5, then first byte must be empty");
             }
 
-            List<byte> list = new List<byte>(raw);
+            var list = new List<byte>(raw);
             list.Reverse();
             while (list.Count > 4)
             {

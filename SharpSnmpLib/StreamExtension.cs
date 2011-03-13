@@ -43,8 +43,8 @@ namespace Lextm.SharpSnmpLib
                 return;
             }
             
-            byte[] c = new byte[16];
-            int j = 0;
+            var c = new byte[16];
+            var j = 0;
             while (length > 0)
             {
                 c[j++] = (byte)(length & 0xff);
@@ -66,7 +66,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("stream");
             }
 
-            int first = stream.ReadByte();
+            var first = stream.ReadByte();
             return stream.ReadLength((byte)first);
         }
 
@@ -77,7 +77,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("stream");
             }
 
-            byte[] bytes = new byte[length];
+            var bytes = new byte[length];
             stream.Read(bytes, 0, length);
         }
 
@@ -115,9 +115,9 @@ namespace Lextm.SharpSnmpLib
                 return first;
             }
             
-            int result = 0;
-            int octets = first & 0x7f;
-            for (int j = 0; j < octets; j++)
+            var result = 0;
+            var octets = first & 0x7f;
+            for (var j = 0; j < octets; j++)
             {
                 result = (result << 8) + ReadByte(stream);
             }
@@ -127,7 +127,7 @@ namespace Lextm.SharpSnmpLib
 
         private static byte ReadByte(Stream s)
         {
-            int n = s.ReadByte();
+            var n = s.ReadByte();
             if (n == -1)
             {
                 throw new SnmpException("BER end of file");

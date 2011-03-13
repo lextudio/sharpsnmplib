@@ -48,14 +48,14 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 throw new ArgumentNullException("store");
             }  
             
-            int index = 0;
+            var index = 0;
             IList<Variable> result = new List<Variable>();
-            foreach (Variable v in context.Request.Pdu().Variables)
+            foreach (var v in context.Request.Pdu().Variables)
             {
                 index++;
                 try
                 {
-                    ScalarObject next = store.GetNextObject(v.Id);
+                    var next = store.GetNextObject(v.Id);
                     result.Add(next == null ? new Variable(v.Id, new EndOfMibView()) : next.Variable);
                 }
                 catch (Exception)

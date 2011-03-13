@@ -143,7 +143,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                     code));
             }
 
-            using (Socket socket = manager.GetSocket())
+            using (var socket = manager.GetSocket())
             {
                 message.Send(manager, socket);
             }
@@ -181,7 +181,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                     code));
             }
 
-            byte[] bytes = message.ToBytes();
+            var bytes = message.ToBytes();
             socket.SendTo(bytes, 0, bytes.Length, SocketFlags.None, manager);
         }
 
@@ -211,7 +211,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                     code));
             }
 
-            using (Socket socket = manager.GetSocket())
+            using (var socket = manager.GetSocket())
             {
                 message.SendAsync(manager, socket);
             }
@@ -249,7 +249,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                     code));
             }
 
-            byte[] bytes = message.ToBytes();
+            var bytes = message.ToBytes();
             socket.BeginSendTo(bytes, 0, bytes.Length, SocketFlags.None, manager, ar => socket.EndSendTo(ar), null);
         }
         
@@ -280,7 +280,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new InvalidOperationException(String.Format(CultureInfo.InvariantCulture, "not a request message: {0}", code));
             }
             
-            using (Socket socket = receiver.GetSocket())
+            using (var socket = receiver.GetSocket())
             {
                 return request.GetResponse(timeout, receiver, registry, socket);
             }
@@ -311,7 +311,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new InvalidOperationException(String.Format(CultureInfo.InvariantCulture, "not a request message: {0}", code));
             }
             
-            using (Socket socket = receiver.GetSocket())
+            using (var socket = receiver.GetSocket())
             {
                 return request.GetResponse(timeout, receiver, socket);
             }
@@ -342,7 +342,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("udpSocket");
             }
             
-            UserRegistry registry = new UserRegistry();
+            var registry = new UserRegistry();
             if (request.Version == VersionCode.V3)
             {
                 registry.Add(request.Parameters.UserName, request.Privacy);
@@ -388,13 +388,13 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new InvalidOperationException(String.Format(CultureInfo.InvariantCulture, "not a request message: {0}", requestCode));
             }
 
-            byte[] bytes = request.ToBytes();
+            var bytes = request.ToBytes();
             #if CF
             int bufSize = 8192;
             #else
-            int bufSize = udpSocket.ReceiveBufferSize;
+            var bufSize = udpSocket.ReceiveBufferSize;
             #endif
-            byte[] reply = new byte[bufSize];
+            var reply = new byte[bufSize];
 
             // Whatever you change, try to keep the Send and the Receive close to each other.
             udpSocket.SendTo(bytes, receiver);
@@ -425,11 +425,11 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             // Passing 'count' is not necessary because ParseMessages should ignore it, but it offer extra safety (and would avoid an issue if parsing >1 response).
-            ISnmpMessage response = MessageFactory.ParseMessages(reply, 0, count, registry)[0];
+            var response = MessageFactory.ParseMessages(reply, 0, count, registry)[0];
             var responseCode = response.TypeCode();
             if (responseCode == SnmpType.ResponsePdu || responseCode == SnmpType.ReportPdu)
             {
-                int requestId = request.MessageId();
+                var requestId = request.MessageId();
                 var responseId = response.MessageId();
                 if (responseId != requestId)
                 {
@@ -461,15 +461,15 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
             
             var ar = (SnmpMessageAsyncResult)asyncResult;
-            Socket s = ar.WorkSocket;
-            int count = s.EndReceive(ar.Inner);
+            var s = ar.WorkSocket;
+            var count = s.EndReceive(ar.Inner);
             
             // Passing 'count' is not necessary because ParseMessages should ignore it, but it offer extra safety (and would avoid an issue if parsing >1 response).
-            ISnmpMessage response = MessageFactory.ParseMessages(ar.GetBuffer(), 0, count, ar.Users)[0];
+            var response = MessageFactory.ParseMessages(ar.GetBuffer(), 0, count, ar.Users)[0];
             var responseCode = response.TypeCode();
             if (responseCode == SnmpType.ResponsePdu || responseCode == SnmpType.ReportPdu)
             {
-                int requestId = request.MessageId();
+                var requestId = request.MessageId();
                 var responseId = response.MessageId();
                 if (responseId != requestId)
                 {
@@ -573,7 +573,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("data");
             }
             
-            List<ISnmpData> collection = new List<ISnmpData>(1 + data.Length) { new Integer32((int)version) };
+            var collection = new List<ISnmpData>(1 + data.Length) { new Integer32((int)version) };
             collection.AddRange(data);
             return new Sequence(collection);
         }
@@ -595,7 +595,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("data");
             }
 
-            ISnmpData[] items = new[]
+            var items = new[]
             {
                 new Integer32((int)version),
                 header.GetData(version),

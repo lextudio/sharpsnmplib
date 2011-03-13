@@ -61,7 +61,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("data");
             }
 
-            Sequence container = (Sequence)data;
+            var container = (Sequence)data;
             _messageId = (Integer32)container[0];
             _maxSize = (Integer32)container[1];
             _flags = (OctetString)container[2];

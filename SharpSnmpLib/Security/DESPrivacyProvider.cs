@@ -97,25 +97,25 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Encryption key length has to 32 bytes or more. Current: {0}", key.Length), "key");
             }
             
-            byte[] iv = GetIV(key, privacyParameters);
+            var iv = GetIV(key, privacyParameters);
 
             // DES uses 8 byte keys but we need 16 to encrypt ScopedPdu. Get first 8 bytes and use them as encryption key
-            byte[] outKey = GetKey(key);
+            var outKey = GetKey(key);
 
-            int div = (int)Math.Floor(unencryptedData.Length / 8.0);
+            var div = (int)Math.Floor(unencryptedData.Length / 8.0);
             if ((unencryptedData.Length % 8) != 0)
             {
                 div += 1;
             }
             
-            int newLength = div * 8;
-            byte[] result = new byte[newLength];
-            byte[] buffer = new byte[newLength];
+            var newLength = div * 8;
+            var result = new byte[newLength];
+            var buffer = new byte[newLength];
 
-            byte[] inbuffer = new byte[8];
-            byte[] cipherText = iv;
-            int posIn = 0;
-            int posResult = 0;
+            var inbuffer = new byte[8];
+            var cipherText = iv;
+            var posIn = 0;
+            var posResult = 0;
             Buffer.BlockCopy(unencryptedData, 0, buffer, 0, unencryptedData.Length);
 
             using (DES des = new DESCryptoServiceProvider())
@@ -123,11 +123,11 @@ namespace Lextm.SharpSnmpLib.Security
                 des.Mode = CipherMode.ECB;
                 des.Padding = PaddingMode.None;
 
-                using (ICryptoTransform transform = des.CreateEncryptor(outKey, null))
+                using (var transform = des.CreateEncryptor(outKey, null))
                 {
-                    for (int b = 0; b < div; b++)
+                    for (var b = 0; b < div; b++)
                     {
-                        for (int i = 0; i < 8; i++)
+                        for (var i = 0; i < 8; i++)
                         {
                             inbuffer[i] = (byte)(buffer[posIn] ^ cipherText[i]);
                             posIn++;
@@ -192,8 +192,8 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentOutOfRangeException("key", "Decryption key has to be at least 16 bytes long.");
             }
 
-            byte[] iv = new byte[8];
-            for (int i = 0; i < 8; ++i)
+            var iv = new byte[8];
+            for (var i = 0; i < 8; ++i)
             {
                 iv[i] = (byte)(key[8 + i] ^ privacyParameters[i]);
             }
@@ -204,14 +204,14 @@ namespace Lextm.SharpSnmpLib.Security
                 des.Padding = PaddingMode.Zeros;
 
                 // .NET implementation only takes an 8 byte key
-                byte[] outKey = new byte[8];
+                var outKey = new byte[8];
                 Buffer.BlockCopy(key, 0, outKey, 0, 8);
 
                 des.Key = outKey;
                 des.IV = iv;
-                using (ICryptoTransform transform = des.CreateDecryptor())
+                using (var transform = des.CreateDecryptor())
                 {
-                    byte[] decryptedData = transform.TransformFinalBlock(encryptedData, 0, encryptedData.Length);
+                    var decryptedData = transform.TransformFinalBlock(encryptedData, 0, encryptedData.Length);
                     des.Clear();
                     return decryptedData;
                 }
@@ -231,8 +231,8 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentException("Invalid privacy key length", "privacyKey");
             }
             
-            byte[] iv = new byte[8];
-            for (int i = 0; i < iv.Length; i++)
+            var iv = new byte[8];
+            for (var i = 0; i < iv.Length; i++)
             {
                 iv[i] = (byte)(salt[i] ^ privacyKey[8 + i]);
             }
@@ -254,7 +254,7 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentException("Invalid privacy key length.", "privacyPassword");
             }
             
-            byte[] key = new byte[8];
+            var key = new byte[8];
             Buffer.BlockCopy(privacyPassword, 0, key, 0, 8);
             return key;
         }
@@ -315,18 +315,18 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "cannot decrypt the scope data: {0}", code), "data");
             }
             
-            OctetString octets = (OctetString)data;
-            byte[] bytes = octets.GetRaw();
-            byte[] pkey = AuthenticationProvider.PasswordToKey(_phrase.GetRaw(), parameters.EngineId.GetRaw());
+            var octets = (OctetString)data;
+            var bytes = octets.GetRaw();
+            var pkey = AuthenticationProvider.PasswordToKey(_phrase.GetRaw(), parameters.EngineId.GetRaw());
             
             try
             {
                 // decode encrypted packet
-                byte[] decrypted = Decrypt(bytes, pkey, parameters.PrivacyParameters.GetRaw());            
-                ISnmpData result = DataFactory.CreateSnmpData(decrypted);
+                var decrypted = Decrypt(bytes, pkey, parameters.PrivacyParameters.GetRaw());            
+                var result = DataFactory.CreateSnmpData(decrypted);
                 if (result.TypeCode != SnmpType.Sequence)
                 {
-                    DecryptionException newException = new DecryptionException("DES decryption failed");
+                    var newException = new DecryptionException("DES decryption failed");
                     newException.SetBytes(bytes);
                     throw newException;
                 }
@@ -335,7 +335,7 @@ namespace Lextm.SharpSnmpLib.Security
             }
             catch (Exception ex)
             {
-                DecryptionException newException = new DecryptionException("DES decryption failed", ex);
+                var newException = new DecryptionException("DES decryption failed", ex);
                 newException.SetBytes(bytes);
                 throw newException;
             }
@@ -364,14 +364,14 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentException("unencrypted data is expected.", "data");
             }        
             
-            byte[] pkey = AuthenticationProvider.PasswordToKey(_phrase.GetRaw(), parameters.EngineId.GetRaw());
-            byte[] bytes = data.ToBytes();
-            int reminder = bytes.Length % 8;
-            int count = reminder == 0 ? 0 : 8 - reminder;
-            using (MemoryStream stream = new MemoryStream())
+            var pkey = AuthenticationProvider.PasswordToKey(_phrase.GetRaw(), parameters.EngineId.GetRaw());
+            var bytes = data.ToBytes();
+            var reminder = bytes.Length % 8;
+            var count = reminder == 0 ? 0 : 8 - reminder;
+            using (var stream = new MemoryStream())
             {
                 stream.Write(bytes, 0, bytes.Length);
-                for (int i = 0; i < count; i++)
+                for (var i = 0; i < count; i++)
                 {
                     stream.WriteByte(1);
                 }
@@ -379,7 +379,7 @@ namespace Lextm.SharpSnmpLib.Security
                 bytes = stream.ToArray();
             }
             
-            byte[] encrypted = Encrypt(bytes, pkey, parameters.PrivacyParameters.GetRaw());
+            var encrypted = Encrypt(bytes, pkey, parameters.PrivacyParameters.GetRaw());
             return new OctetString(encrypted);
         }
 

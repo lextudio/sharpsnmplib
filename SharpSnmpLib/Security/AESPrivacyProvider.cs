@@ -105,15 +105,15 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentNullException("unencryptedData");
             }
             
-            byte[] iv = new byte[16];
+            var iv = new byte[16];
             
             // Set privacy parameters to the local 64 bit salt value
-            byte[] bootsBytes = BitConverter.GetBytes(engineBoots);
+            var bootsBytes = BitConverter.GetBytes(engineBoots);
             iv[0] = bootsBytes[3];
             iv[1] = bootsBytes[2];
             iv[2] = bootsBytes[1];
             iv[3] = bootsBytes[0];
-            byte[] timeBytes = BitConverter.GetBytes(engineTime);
+            var timeBytes = BitConverter.GetBytes(engineTime);
             iv[4] = timeBytes[3];
             iv[5] = timeBytes[2];
             iv[6] = timeBytes[1];
@@ -133,19 +133,19 @@ namespace Lextm.SharpSnmpLib.Security
                 rm.Mode = CipherMode.CFB;
                 
                 // make sure we have the right key length
-                byte[] pkey = new byte[MinimumKeyLength];
+                var pkey = new byte[MinimumKeyLength];
                 Buffer.BlockCopy(key, 0, pkey, 0, MinimumKeyLength);
                 rm.Key = pkey;
                 rm.IV = iv;
-                using (ICryptoTransform cryptor = rm.CreateEncryptor())
+                using (var cryptor = rm.CreateEncryptor())
                 {
-                    byte[] encryptedData = cryptor.TransformFinalBlock(unencryptedData, 0, unencryptedData.Length);
+                    var encryptedData = cryptor.TransformFinalBlock(unencryptedData, 0, unencryptedData.Length);
                     
                     // check if encrypted data is the same length as source data
                     if (encryptedData.Length != unencryptedData.Length)
                     {
                         // cut out the padding
-                        byte[] tmp = new byte[unencryptedData.Length];
+                        var tmp = new byte[unencryptedData.Length];
                         Buffer.BlockCopy(encryptedData, 0, tmp, 0, unencryptedData.Length);
                         return tmp;
                     }
@@ -184,13 +184,13 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentOutOfRangeException("key", "Invalid key length");
             }
 
-            byte[] iv = new byte[16];
-            byte[] bootsBytes = BitConverter.GetBytes(engineBoots);
+            var iv = new byte[16];
+            var bootsBytes = BitConverter.GetBytes(engineBoots);
             iv[0] = bootsBytes[3];
             iv[1] = bootsBytes[2];
             iv[2] = bootsBytes[1];
             iv[3] = bootsBytes[0];
-            byte[] timeBytes = BitConverter.GetBytes(engineTime);
+            var timeBytes = BitConverter.GetBytes(engineTime);
             iv[4] = timeBytes[3];
             iv[5] = timeBytes[2];
             iv[6] = timeBytes[1];
@@ -200,7 +200,7 @@ namespace Lextm.SharpSnmpLib.Security
             Buffer.BlockCopy(privacyParameters, 0, iv, 8, PrivacyParametersLength);
 
             // now do CFB decryption of the encrypted data
-            using (Rijndael rm = Rijndael.Create())
+            using (var rm = Rijndael.Create())
             {
                 rm.KeySize = KeyBytes * 8;
                 rm.FeedbackSize = 128;
@@ -209,7 +209,7 @@ namespace Lextm.SharpSnmpLib.Security
                 rm.Mode = CipherMode.CFB;
                 if (key.Length > KeyBytes)
                 {
-                    byte[] normKey = new byte[KeyBytes];
+                    var normKey = new byte[KeyBytes];
                     Buffer.BlockCopy(key, 0, normKey, 0, KeyBytes);
                     rm.Key = normKey;
                 }
@@ -219,17 +219,17 @@ namespace Lextm.SharpSnmpLib.Security
                 }
                 
                 rm.IV = iv;
-                using (ICryptoTransform cryptor = rm.CreateDecryptor())
+                using (var cryptor = rm.CreateDecryptor())
                 {
                     // We need to make sure that cryptedData is a collection of 128 byte blocks
                     byte[] decryptedData;
                     if ((encryptedData.Length % KeyBytes) != 0)
                     {
-                        byte[] buffer = new byte[encryptedData.Length];
+                        var buffer = new byte[encryptedData.Length];
                         Buffer.BlockCopy(encryptedData, 0, buffer, 0, encryptedData.Length);
-                        int div = (int)Math.Floor(buffer.Length / (double)16);
-                        int newLength = (div + 1) * 16;
-                        byte[] decryptBuffer = new byte[newLength];
+                        var div = (int)Math.Floor(buffer.Length / (double)16);
+                        var newLength = (div + 1) * 16;
+                        var decryptBuffer = new byte[newLength];
                         Buffer.BlockCopy(buffer, 0, decryptBuffer, 0, buffer.Length);
                         decryptedData = cryptor.TransformFinalBlock(decryptBuffer, 0, decryptBuffer.Length);
                         
@@ -299,12 +299,12 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new SnmpException("cannot decrypt the scope data");
             }
             
-            OctetString octets = (OctetString)data;
-            byte[] bytes = octets.GetRaw();
-            byte[] pkey = AuthenticationProvider.PasswordToKey(_phrase.GetRaw(), parameters.EngineId.GetRaw());
+            var octets = (OctetString)data;
+            var bytes = octets.GetRaw();
+            var pkey = AuthenticationProvider.PasswordToKey(_phrase.GetRaw(), parameters.EngineId.GetRaw());
 
             // decode encrypted packet
-            byte[] decrypted = Decrypt(bytes, pkey, parameters.EngineBoots.ToInt32(), parameters.EngineTime.ToInt32(), parameters.PrivacyParameters.GetRaw());
+            var decrypted = Decrypt(bytes, pkey, parameters.EngineBoots.ToInt32(), parameters.EngineTime.ToInt32(), parameters.PrivacyParameters.GetRaw());
             return DataFactory.CreateSnmpData(decrypted);
         }
 
@@ -321,14 +321,14 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentNullException("parameters");
             }
             
-            byte[] pkey = AuthenticationProvider.PasswordToKey(_phrase.GetRaw(), parameters.EngineId.GetRaw());
-            byte[] bytes = data.ToBytes();
-            int reminder = bytes.Length % 8;
-            int count = reminder == 0 ? 0 : 8 - reminder;
-            using (MemoryStream stream = new MemoryStream())
+            var pkey = AuthenticationProvider.PasswordToKey(_phrase.GetRaw(), parameters.EngineId.GetRaw());
+            var bytes = data.ToBytes();
+            var reminder = bytes.Length % 8;
+            var count = reminder == 0 ? 0 : 8 - reminder;
+            using (var stream = new MemoryStream())
             {
                 stream.Write(bytes, 0, bytes.Length);
-                for (int i = 0; i < count; i++)
+                for (var i = 0; i < count; i++)
                 {
                     stream.WriteByte(1);
                 }
@@ -336,7 +336,7 @@ namespace Lextm.SharpSnmpLib.Security
                 bytes = stream.ToArray();
             }
             
-            byte[] encrypted = Encrypt(bytes, pkey, parameters.EngineBoots.ToInt32(), parameters.EngineTime.ToInt32(), parameters.PrivacyParameters.GetRaw());
+            var encrypted = Encrypt(bytes, pkey, parameters.EngineBoots.ToInt32(), parameters.EngineTime.ToInt32(), parameters.PrivacyParameters.GetRaw());
             return new OctetString(encrypted);
         }
 

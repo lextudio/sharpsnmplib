@@ -81,7 +81,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         public override void CopyRequest(ErrorCode status, int index)
         {
             var userName = Request.Parameters.UserName;
-            IPrivacyProvider privacy = Users.Find(userName);
+            var privacy = Users.Find(userName);
             Response = new ResponseMessage(
                     Request.Version,
                     new Header(
@@ -117,7 +117,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         public override void GenerateTooBig()
         {
             var userName = Request.Parameters.UserName;
-            IPrivacyProvider privacy = Users.Find(userName);
+            var privacy = Users.Find(userName);
             Response = new ResponseMessage(
                 Request.Version,
                 new Header(
@@ -155,7 +155,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <returns></returns>
         public override bool HandleMembership()
         {
-            ISnmpMessage request = Request;
+            var request = Request;
             if (request is MalformedMessage)
             {
                 return false;
@@ -229,7 +229,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         public override void GenerateResponse(IList<Variable> variables)
         {
             var userName = Request.Parameters.UserName;
-            IPrivacyProvider privacy = Users.Find(userName);
+            var privacy = Users.Find(userName);
             Response = new ResponseMessage(
                 Request.Version,
                 new Header(

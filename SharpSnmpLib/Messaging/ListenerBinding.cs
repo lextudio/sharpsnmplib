@@ -148,7 +148,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 return;
             }
 
-            byte[] buffer = response.ToBytes();
+            var buffer = response.ToBytes();
             _socket.BeginSendTo(buffer, 0, buffer.Length, 0, receiver, ar => _socket.EndSendTo(ar), null);
         }
 
@@ -180,7 +180,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new InvalidOperationException(Listener.ErrorIPv6NotSupported);
             }
 
-            long activeBefore = Interlocked.CompareExchange(ref _active, Active, Inactive);
+            var activeBefore = Interlocked.CompareExchange(ref _active, Active, Inactive);
             if (activeBefore == Active)
             {
                 // If already started, we've nothing to do.
@@ -228,7 +228,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ObjectDisposedException(GetType().FullName);
             }            
             
-            long activeBefore = Interlocked.CompareExchange(ref _active, Inactive, Active);
+            var activeBefore = Interlocked.CompareExchange(ref _active, Inactive, Active);
             if (activeBefore != Active)
             {
                 return;
@@ -331,10 +331,10 @@ namespace Lextm.SharpSnmpLib.Messaging
 
                 try
                 {
-                    byte[] buffer = new byte[_bufferSize];
+                    var buffer = new byte[_bufferSize];
                     EndPoint remote = _socket.AddressFamily == AddressFamily.InterNetwork ? new IPEndPoint(IPAddress.Any, 0) : new IPEndPoint(IPAddress.IPv6Any, 0);
 
-                    int count = _socket.ReceiveFrom(buffer, ref remote);
+                    var count = _socket.ReceiveFrom(buffer, ref remote);
                     ThreadPool.QueueUserWorkItem(HandleMessage, new MessageParams(buffer, count, remote));
                 }
                 catch (SocketException ex)
@@ -344,7 +344,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                     {
                         // If the SnmpTrapListener was active, marks it as stopped and call HandleException.
                         // If it was inactive, the exception is likely to result from this, and we raise nothing.
-                        long activeBefore = Interlocked.CompareExchange(ref _active, Inactive, Active);
+                        var activeBefore = Interlocked.CompareExchange(ref _active, Inactive, Active);
                         if (activeBefore == Active)
                         {                        
                             HandleException(ex);
@@ -357,7 +357,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
         private void HandleException(Exception exception)
         {
-            EventHandler<ExceptionRaisedEventArgs> handler = ExceptionRaised;
+            var handler = ExceptionRaised;
             if (handler == null)
             {
                 return;
@@ -381,7 +381,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
             catch (Exception ex)
             {
-                MessageFactoryException exception = new MessageFactoryException("Invalid message bytes found. Use tracing to analyze the bytes.", ex);
+                var exception = new MessageFactoryException("Invalid message bytes found. Use tracing to analyze the bytes.", ex);
                 exception.SetBytes(param.GetBytes());
                 HandleException(exception);
             }
@@ -391,9 +391,9 @@ namespace Lextm.SharpSnmpLib.Messaging
                 return;
             }
 
-            foreach (ISnmpMessage message in messages)
+            foreach (var message in messages)
             {
-                EventHandler<MessageReceivedEventArgs> handler = MessageReceived;
+                var handler = MessageReceived;
                 if (handler != null)
                 {
                     handler(this, new MessageReceivedEventArgs(param.Sender, message, this));

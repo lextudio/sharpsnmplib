@@ -115,7 +115,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("agent");
             }
             
-            TimeoutException ex = new TimeoutException { Agent = agent, Timeout = timeout };
+            var ex = new TimeoutException { Agent = agent, Timeout = timeout };
             return ex;
         }
     }

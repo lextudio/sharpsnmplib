@@ -92,7 +92,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 if (Bindings != null)
                 {
-                    foreach (ListenerBinding binding in Bindings)
+                    foreach (var binding in Bindings)
                     {
                         binding.Dispose();
                     }
@@ -153,7 +153,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 return;
             }
             
-            foreach (ListenerBinding binding in Bindings)
+            foreach (var binding in Bindings)
             {
                 binding.Stop();
             }
@@ -179,7 +179,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             
             try
             {
-                foreach (ListenerBinding binding in Bindings)
+                foreach (var binding in Bindings)
                 {
                     binding.Start();
                 }
@@ -266,7 +266,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new InvalidOperationException("Must be called when Active == false");
             }
             
-            for (int i = 0; i < Bindings.Count; i++)
+            for (var i = 0; i < Bindings.Count; i++)
             {
                 if (Bindings[i].Endpoint.Equals(endpoint))
                 {
@@ -285,7 +285,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ObjectDisposedException(GetType().FullName);
             }            
             
-            foreach (ListenerBinding binding in Bindings)
+            foreach (var binding in Bindings)
             {
                 binding.Stop();
                 binding.Dispose();

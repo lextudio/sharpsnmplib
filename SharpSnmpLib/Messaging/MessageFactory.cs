@@ -105,7 +105,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 int first;
                 while ((first = stream.ReadByte()) != -1)
                 {
-                    ISnmpMessage message = ParseMessage(first, stream, registry);
+                    var message = ParseMessage(first, stream, registry);
                     if (message == null)
                     {
                         continue;
@@ -120,7 +120,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
         private static ISnmpMessage ParseMessage(int first, Stream stream, UserRegistry registry)
         {
-            ISnmpData array = DataFactory.CreateSnmpData(first, stream);
+            var array = DataFactory.CreateSnmpData(first, stream);
 
             if (array == null)
             {
@@ -132,13 +132,13 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new SnmpException("not an SNMP message");
             }
 
-            Sequence body = (Sequence)array;
+            var body = (Sequence)array;
             if (body.Length != 3 && body.Length != 4)
             {
                 throw new SnmpException("not an SNMP message");
             }
 
-            VersionCode version = (VersionCode)((Integer32)body[0]).ToInt32();
+            var version = (VersionCode)((Integer32)body[0]).ToInt32();
             Header header;
             SecurityParameters parameters;
             IPrivacyProvider privacy;

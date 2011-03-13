@@ -86,7 +86,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentException("bytes must contain 4 or 16 elements");
             }
 
-            byte[] raw = new byte[length];
+            var raw = new byte[length];
             stream.Read(raw, 0, length);
             _ip = new IPAddress(raw);
         }

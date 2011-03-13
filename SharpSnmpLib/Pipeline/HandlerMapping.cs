@@ -17,7 +17,6 @@
 
 using System;
 using System.Linq;
-using System.Reflection;
 using Lextm.SharpSnmpLib.Messaging;
 
 namespace Lextm.SharpSnmpLib.Pipeline
@@ -99,7 +98,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
 
         private static IMessageHandler CreateMessageHandler(string assemblyName, string type)
         {
-            foreach (Assembly assembly in from assembly in AppDomain.CurrentDomain.GetAssemblies()
+            foreach (var assembly in from assembly in AppDomain.CurrentDomain.GetAssemblies()
                                           let name = assembly.GetName().Name
                                           where string.Compare(name, assemblyName, StringComparison.OrdinalIgnoreCase) == 0
                                           select assembly)

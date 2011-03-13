@@ -91,10 +91,10 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentException("truncation error for 32-bit integer coding", "length");
             }
 
-            byte[] raw = new byte[length];
+            var raw = new byte[length];
             stream.Read(raw, 0, length);
             _int = ((raw[0] & 0x80) == 0x80) ? -1 : 0; // sign extended! Guy McIlroy
-            for (int j = 0; j < length; j++)
+            for (var j = 0; j < length; j++)
             {
                 _int = (_int << 8) | raw[j];
             }

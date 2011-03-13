@@ -81,7 +81,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("parameters");
             }
             
-            Sequence data = (Sequence)DataFactory.CreateSnmpData(parameters.GetRaw());
+            var data = (Sequence)DataFactory.CreateSnmpData(parameters.GetRaw());
             EngineId = (OctetString)data[0];
             EngineBoots = (Integer32)data[1];
             EngineTime = (Integer32)data[2];

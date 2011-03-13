@@ -62,7 +62,7 @@ namespace Lextm.Common
 
         private void TimerElapsed(object sender, ElapsedEventArgs e)
         {
-            EventHandler<EventArgs> handler = Bark;
+            var handler = Bark;
             if (handler != null && Enabled)
             {
                 handler(sender, e);

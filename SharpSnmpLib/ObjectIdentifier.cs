@@ -103,16 +103,16 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("stream");
             }
 
-            byte[] raw = new byte[length];
+            var raw = new byte[length];
             stream.Read(raw, 0, length);
             if (length == 0)
             {
                 throw new ArgumentException("length cannot be 0", "length");
             }
 
-            List<uint> result = new List<uint> { (uint)(raw[0] / 40), (uint)(raw[0] % 40) };
+            var result = new List<uint> { (uint)(raw[0] / 40), (uint)(raw[0] % 40) };
             uint buffer = 0;
-            for (int i = 1; i < raw.Length; i++)
+            for (var i = 1; i < raw.Length; i++)
             {
                 if ((raw[i] & 0x80) == 0)
                 {
@@ -183,8 +183,8 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("other");
             }
 
-            int shortest = (_oid.Length < other._oid.Length) ? _oid.Length : other._oid.Length;
-            for (int i = 0; i < shortest; i++)
+            var shortest = (_oid.Length < other._oid.Length) ? _oid.Length : other._oid.Length;
+            for (var i = 0; i < shortest; i++)
             {
                 if (_oid[i] > other._oid[i])
                 {
@@ -224,8 +224,8 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("numerical");
             }
 
-            StringBuilder result = new StringBuilder();
-            for (int k = 0; k < numerical.Length; k++)
+            var result = new StringBuilder();
+            for (var k = 0; k < numerical.Length; k++)
             {
                 result.Append(".").Append(numerical[k].ToString(CultureInfo.InvariantCulture));
             }
@@ -246,9 +246,9 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("dotted");
             }
 
-            string[] parts = dotted.Split(new[] { '.' });
-            List<uint> result = new List<uint>();
-            foreach (string s in parts.Where(s => !string.IsNullOrEmpty(s)))
+            var parts = dotted.Split(new[] { '.' });
+            var result = new List<uint>();
+            foreach (var s in parts.Where(s => !string.IsNullOrEmpty(s)))
             {
 #if CF
                 result.Add(uint.Parse(s));
@@ -276,10 +276,10 @@ namespace Lextm.SharpSnmpLib
             }
 
             // TODO: improve here.
-            List<byte> temp = new List<byte>();
-            byte first = (byte)((40 * _oid[0]) + _oid[1]);
+            var temp = new List<byte>();
+            var first = (byte)((40 * _oid[0]) + _oid[1]);
             temp.Add(first);
-            for (int i = 2; i < _oid.Length; i++)
+            for (var i = 2; i < _oid.Length; i++)
             {
                 temp.AddRange(ConvertToBytes(_oid[i]));
             }
@@ -289,7 +289,7 @@ namespace Lextm.SharpSnmpLib
 
         private static IEnumerable<byte> ConvertToBytes(uint subIdentifier)
         {
-            List<byte> result = new List<byte> { (byte)(subIdentifier & 0x7F) };
+            var result = new List<byte> { (byte)(subIdentifier & 0x7F) };
             while ((subIdentifier = subIdentifier >> 7) > 0)
             {
                 result.Add((byte)((subIdentifier & 0x7F) | 0x80));
@@ -342,8 +342,8 @@ namespace Lextm.SharpSnmpLib
             {
                 if (_hashcode == 0)
                 {
-                    int hash = 0;
-                    for (int i = _oid.Length - 1; i >= 0; i--)
+                    var hash = 0;
+                    for (var i = _oid.Length - 1; i >= 0; i--)
                     {                        
                         hash ^= (int)_oid[i];                        
                     }
@@ -375,7 +375,7 @@ namespace Lextm.SharpSnmpLib
         /// </exception>
         public int CompareTo(object obj)
         {
-            ObjectIdentifier o = obj as ObjectIdentifier;
+            var o = obj as ObjectIdentifier;
             if (o == null)
             {
                 throw new ArgumentException("obj is not the same type as this instance", "obj");
@@ -437,7 +437,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="right">Right <see cref="ObjectIdentifier"/> object</param>
         /// <returns>
         /// Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
-        private static bool Equals(ObjectIdentifier left, ObjectIdentifier right)
+        private static bool Equals(IComparable<ObjectIdentifier> left, ObjectIdentifier right)
         {
             object lo = left;
             object ro = right;
@@ -469,7 +469,7 @@ namespace Lextm.SharpSnmpLib
                 return ToString();
             }
 
-            string result = objects.Tree.Search(ToNumerical()).AlternativeText;
+            var result = objects.Tree.Search(ToNumerical()).AlternativeText;
             return string.IsNullOrEmpty(result) ? ToString() : result;
         }
 
@@ -505,8 +505,8 @@ namespace Lextm.SharpSnmpLib
             }
 
             // Old method with List<uint> dropped as it incurred two copies of the array (vs 1 for this method).
-            int length = original.Length;
-            uint[] tmp = new uint[length + 1];
+            var length = original.Length;
+            var tmp = new uint[length + 1];
             Array.Copy(original, tmp, length);
             tmp[length] = extra;
             return tmp;

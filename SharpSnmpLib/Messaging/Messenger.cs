@@ -83,8 +83,8 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new NotSupportedException("SNMP v3 is not supported");
             }
 
-            GetRequestMessage message = new GetRequestMessage(RequestCounter.NextId, version, community, variables);
-            ISnmpMessage response = message.GetResponse(timeout, endpoint);
+            var message = new GetRequestMessage(RequestCounter.NextId, version, community, variables);
+            var response = message.GetResponse(timeout, endpoint);
             var pdu = response.Pdu();
             if (pdu.ErrorStatus.ToInt32() != 0)
             {
@@ -128,8 +128,8 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new NotSupportedException("SNMP v3 is not supported");
             }
 
-            SetRequestMessage message = new SetRequestMessage(RequestCounter.NextId, version, community, variables);
-            ISnmpMessage response = message.GetResponse(timeout, endpoint);
+            var message = new SetRequestMessage(RequestCounter.NextId, version, community, variables);
+            var response = message.GetResponse(timeout, endpoint);
             var pdu = response.Pdu();
             if (pdu.ErrorStatus.ToInt32() != 0)
             {
@@ -162,12 +162,12 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("list");
             }
 
-            int result = 0;
-            Variable tableV = new Variable(table);
+            var result = 0;
+            var tableV = new Variable(table);
             Variable seed;
-            Variable next = tableV;
-            string rowMask = string.Format(CultureInfo.InvariantCulture, "{0}.1.1.", table);
-            string subTreeMask = string.Format(CultureInfo.InvariantCulture, "{0}.", table);
+            var next = tableV;
+            var rowMask = string.Format(CultureInfo.InvariantCulture, "{0}.1.1.", table);
+            var subTreeMask = string.Format(CultureInfo.InvariantCulture, "{0}.", table);
             do
             {
                 seed = next;
@@ -212,16 +212,16 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("seed");
             }
 
-            List<Variable> variables = new List<Variable> { new Variable(seed.Id) };
-            GetNextRequestMessage message = new GetNextRequestMessage(
+            var variables = new List<Variable> { new Variable(seed.Id) };
+            var message = new GetNextRequestMessage(
                 RequestCounter.NextId,
                 version,
                 community,
                 variables);
 
-            ISnmpMessage response = message.GetResponse(timeout, endpoint);
+            var response = message.GetResponse(timeout, endpoint);
             var pdu = response.Pdu();
-            bool errorFound = pdu.ErrorStatus.ToErrorCode() == ErrorCode.NoSuchName;
+            var errorFound = pdu.ErrorStatus.ToErrorCode() == ErrorCode.NoSuchName;
             next = errorFound ? null : pdu.Variables[0];
             return !errorFound;
         }
@@ -247,18 +247,18 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("list");
             }
 
-            Variable tableV = new Variable(table);
-            Variable seed = tableV;
+            var tableV = new Variable(table);
+            var seed = tableV;
             IList<Variable> next;
-            int result = 0;
-            ISnmpMessage message = report;
+            var result = 0;
+            var message = report;
             while (BulkHasNext(version, endpoint, community, seed, timeout, maxRepetitions, out next, privacy, ref message))
             {
-                string subTreeMask = string.Format(CultureInfo.InvariantCulture, "{0}.", table);
-                string rowMask = string.Format(CultureInfo.InvariantCulture, "{0}.1.1.", table);
-                foreach (Variable v in next)
+                var subTreeMask = string.Format(CultureInfo.InvariantCulture, "{0}.", table);
+                var rowMask = string.Format(CultureInfo.InvariantCulture, "{0}.1.1.", table);
+                foreach (var v in next)
                 {
-                    string id = v.Id.ToString();
+                    var id = v.Id.ToString();
                     if (v.Data.TypeCode == SnmpType.EndOfMibView)
                     {
                         goto end;
@@ -298,7 +298,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         [CLSCompliant(false)]
         public static void SendTrapV1(EndPoint receiver, IPAddress agent, OctetString community, ObjectIdentifier enterprise, GenericCode generic, int specific, uint timestamp, IList<Variable> variables)
         {
-            TrapV1Message message = new TrapV1Message(VersionCode.V1, agent, community, enterprise, generic, specific, timestamp, variables);
+            var message = new TrapV1Message(VersionCode.V1, agent, community, enterprise, generic, specific, timestamp, variables);
             message.Send(receiver);
         }
 
@@ -320,7 +320,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentException("Only SNMP v2c is supported", "version");
             }
 
-            TrapV2Message message = new TrapV2Message(requestId, version, community, enterprise, timestamp, variables);
+            var message = new TrapV2Message(requestId, version, community, enterprise, timestamp, variables);
             message.Send(receiver);
         }
 
@@ -370,7 +370,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("report");
             }
             
-            InformRequestMessage message = version == VersionCode.V3
+            var message = version == VersionCode.V3
                                     ? new InformRequestMessage(
                                           version,
                                           MessageCounter.NextId,
@@ -390,7 +390,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                                           timestamp,
                                           variables);
             
-            ISnmpMessage response = message.GetResponse(timeout, receiver);
+            var response = message.GetResponse(timeout, receiver);
             if (response.Pdu().ErrorStatus.ToInt32() != 0)
             {
                 throw ErrorException.Create(
@@ -423,27 +423,27 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new NotSupportedException("SNMP v3 is not supported");
             }
 
-            bool canContinue = registry == null || registry.ValidateTable(table);
+            var canContinue = registry == null || registry.ValidateTable(table);
             if (!canContinue)
             {
                 throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "not a table OID: {0}", table));
             }
             
             IList<Variable> list = new List<Variable>();
-            int rows = version == VersionCode.V1 ? Walk(version, endpoint, community, table, list, timeout, WalkMode.WithinSubtree) : BulkWalk(version, endpoint, community, table, list, timeout, maxRepetitions, WalkMode.WithinSubtree, null, null);
+            var rows = version == VersionCode.V1 ? Walk(version, endpoint, community, table, list, timeout, WalkMode.WithinSubtree) : BulkWalk(version, endpoint, community, table, list, timeout, maxRepetitions, WalkMode.WithinSubtree, null, null);
             
             if (rows == 0)
             {
                 return new Variable[0, 0];
             }
 
-            int cols = list.Count / rows;
-            int k = 0;
-            Variable[,] result = new Variable[rows, cols];
+            var cols = list.Count / rows;
+            var k = 0;
+            var result = new Variable[rows, cols];
 
-            for (int j = 0; j < cols; j++)
+            for (var j = 0; j < cols; j++)
             {
-                for (int i = 0; i < rows; i++)
+                for (var i = 0; i < rows; i++)
                 {
                     result[i, j] = list[k];
                     k++;
@@ -516,9 +516,9 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentException("v1 is not supported", "version");
             }
 
-            List<Variable> variables = new List<Variable> { new Variable(seed.Id) };
+            var variables = new List<Variable> { new Variable(seed.Id) };
             var requestId = RequestCounter.NextId;
-            GetBulkRequestMessage message = version == VersionCode.V3
+            var message = version == VersionCode.V3
                                                 ? new GetBulkRequestMessage(
                                                       version,
                                                       MessageCounter.NextId,
@@ -538,7 +538,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                                                       maxRepetitions,
                                                       variables);
 
-            ISnmpMessage response = message.GetResponse(timeout, endpoint);
+            var response = message.GetResponse(timeout, endpoint);
             var pdu = response.Pdu();
             if (pdu.ErrorStatus.ToInt32() != 0)
             {

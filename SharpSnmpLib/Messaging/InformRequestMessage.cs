@@ -74,7 +74,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             TimeStamp = time;
             Header = Header.Empty;
             Parameters = SecurityParameters.Create(community);
-            InformRequestPdu pdu = new InformRequestPdu(
+            var pdu = new InformRequestPdu(
                 requestId,
                 enterprise,
                 time,
@@ -204,7 +204,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             Parameters = parameters;
             Scope = scope;
             Privacy = privacy;
-            InformRequestPdu pdu = (InformRequestPdu)scope.Pdu;
+            var pdu = (InformRequestPdu)scope.Pdu;
             Enterprise = pdu.Enterprise;
             TimeStamp = pdu.TimeStamp;
             
