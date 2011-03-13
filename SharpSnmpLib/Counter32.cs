@@ -35,6 +35,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="raw"></param>
         internal Counter32(byte[] raw) : this(raw.Length, new MemoryStream(raw))
         {
+            // IMPORTANT: for test project only.
         }
         
         /// <summary>

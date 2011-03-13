@@ -34,6 +34,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="raw"></param>
         internal Gauge32(byte[] raw) : this(raw.Length, new MemoryStream(raw))
         {
+            // IMPORTANT: for test project only.
         }
         
         /// <summary>

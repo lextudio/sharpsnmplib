@@ -53,6 +53,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="raw">Raw bytes</param>
         internal TimeTicks(byte[] raw) : this(raw.Length, new MemoryStream(raw))
         {
+            // IMPORTANT: for test project only.
         }
 
         /// <summary>

@@ -86,9 +86,9 @@ namespace Lextm.SharpSnmpLib
         /// Creates an <see cref="ObjectIdentifier"/> instance from raw bytes.
         /// </summary>
         /// <param name="raw">Raw bytes</param>
-        internal ObjectIdentifier(byte[] raw)
-            : this(raw.Length, new MemoryStream(raw))
+        internal ObjectIdentifier(byte[] raw) : this(raw.Length, new MemoryStream(raw))
         {
+            // IMPORTANT: for test project only.
         }
 
         /// <summary>

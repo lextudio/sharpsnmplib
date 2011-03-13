@@ -57,6 +57,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="raw">Raw bytes</param>
         internal Integer32(byte[] raw) : this(raw.Length, new MemoryStream(raw))
         {
+            // IMPORTANT: for test project only.
         }
         
         /// <summary>

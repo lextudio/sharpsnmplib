@@ -139,8 +139,11 @@ namespace Lextm.SharpSnmpLib.Security
         /// </summary>
         public static bool VerifyHash(this IAuthenticationProvider authen, Stream originalStream, OctetString expected, OctetString engineId)
         {
-            byte[] bytes;
-
+            if (authen == null)
+            {
+                throw new ArgumentNullException("authen");
+            }
+            
             if (originalStream == null)
             {
                 throw new ArgumentNullException("originalStream");
@@ -165,7 +168,8 @@ namespace Lextm.SharpSnmpLib.Security
             {
                 originalStream.Position = 0; // Seek to the beginning of the stream
             }
-
+            
+            byte[] bytes;
             using (Stream stream = new MemoryStream())
             {
                 originalStream.CopyTo(stream);                

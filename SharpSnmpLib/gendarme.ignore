@@ -25,6 +25,12 @@ T: Lextm.SharpSnmpLib.Messaging.SnmpMessageExtension.SnmpMessageAsyncResult
 R: Gendarme.Rules.Correctness.EnsureLocalDisposalRule
 M: System.Void Lextm.SharpSnmpLib.Messaging.Listener::AddBinding(System.Net.IPEndPoint)
 M: System.Void Lextm.SharpSnmpLib.Messaging.ListenerBinding::Start()
+M: System.Void Lextm.SharpSnmpLib.Counter32::.ctor(System.Byte[])
+M: System.Void Lextm.SharpSnmpLib.Counter64::.ctor(System.Byte[])
+M: System.Void Lextm.SharpSnmpLib.Gauge32::.ctor(System.Byte[])
+M: System.Void Lextm.SharpSnmpLib.TimeTicks::.ctor(System.Byte[])
+M: System.Void Lextm.SharpSnmpLib.Integer32::.ctor(System.Byte[])
+M: System.Void Lextm.SharpSnmpLib.ObjectIdentifier::.ctor(System.Byte[])
 
 R: Gendarme.Rules.Maintainability.AvoidLackOfCohesionOfMethodsRule
 T: Lextm.SharpSnmpLib.SecurityParameters
