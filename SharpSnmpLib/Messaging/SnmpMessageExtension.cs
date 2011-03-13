@@ -23,7 +23,7 @@ using System.Net.Sockets;
 using Lextm.SharpSnmpLib.Security;
 
 namespace Lextm.SharpSnmpLib.Messaging
-{    
+{
     /// <summary>
     /// Extension methods for <see cref="ISnmpMessage"/>.
     /// </summary>
@@ -70,7 +70,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("message");
             }
 
-            return message.Scope.Pdu.RequestId.ToInt32(); 
+            return message.Scope.Pdu.RequestId.ToInt32();
         }
 
         /// <summary>
@@ -137,9 +137,10 @@ namespace Lextm.SharpSnmpLib.Messaging
             var code = message.TypeCode();
             if ((code != SnmpType.TrapV1Pdu && code != SnmpType.TrapV2Pdu) && code != SnmpType.ReportPdu)
             {
-                throw new InvalidOperationException(String.Format(CultureInfo.InvariantCulture,
-                                                                  "not a trap message: {0}",
-                                                                  code));
+                throw new InvalidOperationException(String.Format(
+                    CultureInfo.InvariantCulture,
+                    "not a trap message: {0}",
+                    code));
             }
 
             using (Socket socket = manager.GetSocket())
@@ -174,9 +175,10 @@ namespace Lextm.SharpSnmpLib.Messaging
             var code = message.TypeCode();
             if ((code != SnmpType.TrapV1Pdu && code != SnmpType.TrapV2Pdu) && code != SnmpType.ReportPdu)
             {
-                throw new InvalidOperationException(String.Format(CultureInfo.InvariantCulture,
-                                                                  "not a trap message: {0}",
-                                                                  code));
+                throw new InvalidOperationException(String.Format(
+                    CultureInfo.InvariantCulture,
+                    "not a trap message: {0}",
+                    code));
             }
 
             byte[] bytes = message.ToBytes();
@@ -203,9 +205,10 @@ namespace Lextm.SharpSnmpLib.Messaging
             var code = message.TypeCode();
             if ((code != SnmpType.TrapV1Pdu && code != SnmpType.TrapV2Pdu) && code != SnmpType.ReportPdu)
             {
-                throw new InvalidOperationException(String.Format(CultureInfo.InvariantCulture,
-                                                                  "not a trap message: {0}",
-                                                                  code));
+                throw new InvalidOperationException(String.Format(
+                    CultureInfo.InvariantCulture,
+                    "not a trap message: {0}",
+                    code));
             }
 
             using (Socket socket = manager.GetSocket())
@@ -240,9 +243,10 @@ namespace Lextm.SharpSnmpLib.Messaging
             var code = message.TypeCode();
             if ((code != SnmpType.TrapV1Pdu && code != SnmpType.TrapV2Pdu) && code != SnmpType.ReportPdu)
             {
-                throw new InvalidOperationException(String.Format(CultureInfo.InvariantCulture,
-                                                                  "not a trap message: {0}",
-                                                                  code));
+                throw new InvalidOperationException(String.Format(
+                    CultureInfo.InvariantCulture,
+                    "not a trap message: {0}",
+                    code));
             }
 
             byte[] bytes = message.ToBytes();
@@ -274,8 +278,8 @@ namespace Lextm.SharpSnmpLib.Messaging
             if (code == SnmpType.TrapV1Pdu || code == SnmpType.TrapV2Pdu || code == SnmpType.ReportPdu)
             {
                 throw new InvalidOperationException(String.Format(CultureInfo.InvariantCulture, "not a request message: {0}", code));
-            } 
-  
+            }
+            
             using (Socket socket = receiver.GetSocket())
             {
                 return request.GetResponse(timeout, receiver, registry, socket);
@@ -305,8 +309,8 @@ namespace Lextm.SharpSnmpLib.Messaging
             if (code == SnmpType.TrapV1Pdu || code == SnmpType.TrapV2Pdu || code == SnmpType.ReportPdu)
             {
                 throw new InvalidOperationException(String.Format(CultureInfo.InvariantCulture, "not a request message: {0}", code));
-            } 
-  
+            }
+            
             using (Socket socket = receiver.GetSocket())
             {
                 return request.GetResponse(timeout, receiver, socket);
@@ -385,18 +389,18 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             byte[] bytes = request.ToBytes();
-#if CF
+            #if CF
             int bufSize = 8192;
-#else
+            #else
             int bufSize = udpSocket.ReceiveBufferSize;
-#endif
+            #endif
             byte[] reply = new byte[bufSize];
 
             // Whatever you change, try to keep the Send and the Receive close to each other.
             udpSocket.SendTo(bytes, receiver);
-#if !(CF)
+            #if !(CF)
             udpSocket.ReceiveTimeout = timeout;
-#endif
+            #endif
             int count;
             try
             {
@@ -405,10 +409,12 @@ namespace Lextm.SharpSnmpLib.Messaging
             catch (SocketException ex)
             {
                 // FIXME: If you use a Mono build without the fix for this issue (https://bugzilla.novell.com/show_bug.cgi?id=599488), please uncomment this code.
-                //if (SnmpMessageExtension.IsRunningOnMono && ex.ErrorCode == 10035)
-                //{
-                //    throw TimeoutException.Create(receiver.Address, timeout);
-                //}
+                /*
+                if (SnmpMessageExtension.IsRunningOnMono && ex.ErrorCode == 10035)
+                {
+                    throw TimeoutException.Create(receiver.Address, timeout);
+                }
+                // */
 
                 if (ex.ErrorCode == WSAETIMEDOUT)
                 {
@@ -434,8 +440,8 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             throw OperationException.Create(String.Format(CultureInfo.InvariantCulture, "wrong response type: {0}", responseCode), receiver.Address);
-        }  
-                
+        }
+        
         /// <summary>
         /// Ends a pending asynchronous read.
         /// </summary>
@@ -457,6 +463,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             var ar = (SnmpMessageAsyncResult)asyncResult;
             Socket s = ar.WorkSocket;
             int count = s.EndReceive(ar.Inner);
+            
             // Passing 'count' is not necessary because ParseMessages should ignore it, but it offer extra safety (and would avoid an issue if parsing >1 response).
             ISnmpMessage response = MessageFactory.ParseMessages(ar.GetBuffer(), 0, count, ar.Users)[0];
             var responseCode = response.TypeCode();
@@ -515,18 +522,18 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             // Whatever you change, try to keep the Send and the Receive close to each other.
             udpSocket.SendTo(request.ToBytes(), receiver);
-#if CF
+            #if CF
             var bufferSize = 8192;
-#else
+            #else
             var bufferSize = udpSocket.ReceiveBufferSize;
-#endif
+            #endif
             var buffer = new byte[bufferSize];
             var ar = udpSocket.BeginReceive(buffer, 0, bufferSize, SocketFlags.None, callback, state);
             return new SnmpMessageAsyncResult(ar, udpSocket, registry, receiver, buffer);
         }
 
         /// <summary>
-        /// Tests if runnning on Mono. 
+        /// Tests if runnning on Mono.
         /// </summary>
         /// <returns></returns>
         public static bool IsRunningOnMono
@@ -546,10 +553,11 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("message");
             }
 
-            return PackMessage(message.Version,
-                               message.Header,
-                               message.Parameters,
-                               message.Privacy.GetScopeData(message.Header, message.Parameters, message.Scope.GetData(message.Version)));
+            return PackMessage(
+                message.Version,
+                message.Header,
+                message.Parameters,
+                message.Privacy.GetScopeData(message.Header, message.Parameters, message.Scope.GetData(message.Version)));
         }
 
         /// <summary>
@@ -588,12 +596,12 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             ISnmpData[] items = new[]
-                                    {
-                                        new Integer32((int)version),
-                                        header.GetData(version),
-                                        parameters.GetData(version),
-                                        data
-                                    };
+            {
+                new Integer32((int)version),
+                header.GetData(version),
+                parameters.GetData(version),
+                data
+            };
             return new Sequence(items);
         }
 
@@ -603,7 +611,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         private const int WSAETIMEDOUT = 10060;
 
         private sealed class SnmpMessageAsyncResult : IAsyncResult
-        {        
+        {
             private readonly byte[] _buffer;
             
             public SnmpMessageAsyncResult(IAsyncResult inner, Socket socket, UserRegistry users, IPEndPoint receiver, byte[] buffer)
@@ -611,7 +619,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 _buffer = buffer;
                 WorkSocket = socket;
                 Users = users;
-                Receiver = receiver;          
+                Receiver = receiver;
                 Inner = inner;
             }
             
@@ -621,29 +629,29 @@ namespace Lextm.SharpSnmpLib.Messaging
             
             public UserRegistry Users { get; private set; }
 
-            public byte[] GetBuffer() 
-            { 
-                return _buffer; 
+            public byte[] GetBuffer()
+            {
+                return _buffer;
             }
             
             public IPEndPoint Receiver { get; private set; }
             
-            public bool IsCompleted 
+            public bool IsCompleted
             {
                 get { return Inner.IsCompleted; }
             }
             
-            public System.Threading.WaitHandle AsyncWaitHandle 
+            public System.Threading.WaitHandle AsyncWaitHandle
             {
                 get { return Inner.AsyncWaitHandle; }
             }
             
-            public object AsyncState 
+            public object AsyncState
             {
                 get { return Inner.AsyncState; }
             }
             
-            public bool CompletedSynchronously 
+            public bool CompletedSynchronously
             {
                 get { return Inner.CompletedSynchronously; }
             }

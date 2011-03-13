@@ -48,6 +48,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Zero.
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes")]
         public static readonly Integer32 Zero = new Integer32(0);
         
         /// <summary>

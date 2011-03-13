@@ -144,6 +144,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
             if (TooBig)
             {
                 Response = null;
+                
                 // TODO: snmpSilentDrops++;
             }
         }

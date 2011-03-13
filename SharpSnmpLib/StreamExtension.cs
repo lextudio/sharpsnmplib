@@ -161,32 +161,32 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("source");
             }
             
-            source.CopyTo(destination, 16*1024);
+            source.CopyTo(destination, 16 * 1024);
         }
         
         private static void CopyTo(this Stream source, Stream destination, int bufferSize)
         {
             if (destination == null)
             {
-                throw new ArgumentNullException ("destination");
+                throw new ArgumentNullException("destination");
             }
             
             if (!source.CanRead)
             {
-                throw new NotSupportedException ("This stream does not support reading");
+                throw new NotSupportedException("This stream does not support reading");
             }
             
             if (!destination.CanWrite)
             {
-                throw new NotSupportedException ("This destination stream does not support writing");
+                throw new NotSupportedException("This destination stream does not support writing");
             }
             
             if (bufferSize <= 0)
             {
-                throw new ArgumentOutOfRangeException ("bufferSize");
+                throw new ArgumentOutOfRangeException("bufferSize");
             }
             
-            var buffer = new byte [bufferSize];
+            var buffer = new byte[bufferSize];
             int nread;
             while ((nread = source.Read(buffer, 0, bufferSize)) != 0)
             {

@@ -122,8 +122,8 @@ namespace Lextm.SharpSnmpLib
         ///     * UInt32
         ///     * UInt64
         /// </summary>
-        /// <param name="v">The variable to decode the value of.</param>
+        /// <param name="variable">The variable to decode the value of.</param>
         /// <returns>The best result based on the loaded MIBs.</returns>
-        object Decode(Variable v);
+        object Decode(Variable variable);
     }
 }

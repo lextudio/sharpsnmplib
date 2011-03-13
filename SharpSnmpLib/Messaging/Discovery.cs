@@ -41,12 +41,14 @@ namespace Lextm.SharpSnmpLib.Messaging
     {
         private readonly GetRequestMessage _discovery;
         private static readonly UserRegistry Empty = new UserRegistry();
-        private static readonly SecurityParameters DefaultSecurityParameters = new SecurityParameters(OctetString.Empty,
-                                                                                                      Integer32.Zero,
-                                                                                                      Integer32.Zero,
-                                                                                                      OctetString.Empty,
-                                                                                                      OctetString.Empty,
-                                                                                                      OctetString.Empty);
+        private static readonly SecurityParameters DefaultSecurityParameters =
+            new SecurityParameters(
+                OctetString.Empty,
+                Integer32.Zero,
+                Integer32.Zero,
+                OctetString.Empty,
+                OctetString.Empty,
+                OctetString.Empty);
         
         /// <summary>
         /// Initializes a new instance of the <see cref="Discovery"/> class.

@@ -156,7 +156,7 @@ namespace Lextm.SharpSnmpLib
         /// </returns>
         public override string ToString()
         {
-            return string.Format(CultureInfo.InvariantCulture, "Security parameters: engineId: {0};engineBoots: {1};engineTime: {2};userName: {3}; authen hash: {4}; privacy hash: {5}", EngineId, EngineBoots, EngineTime, UserName, AuthenticationParameters == null? null: AuthenticationParameters.ToHexString(), PrivacyParameters == null ? null : PrivacyParameters.ToHexString());
+            return string.Format(CultureInfo.InvariantCulture, "Security parameters: engineId: {0};engineBoots: {1};engineTime: {2};userName: {3}; authen hash: {4}; privacy hash: {5}", EngineId, EngineBoots, EngineTime, UserName, AuthenticationParameters == null ? null : AuthenticationParameters.ToHexString(), PrivacyParameters == null ? null : PrivacyParameters.ToHexString());
         }
     }
 }

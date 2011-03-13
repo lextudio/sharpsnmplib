@@ -76,6 +76,8 @@ namespace Lextm.SharpSnmpLib
         /// Initializes a new instance of the <see cref="InformRequestPdu"/> class.
         /// </summary>    
         /// <param name="stream">The stream.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "temp1")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "temp2")]
         public InformRequestPdu(Stream stream)
         {
             if (stream == null)

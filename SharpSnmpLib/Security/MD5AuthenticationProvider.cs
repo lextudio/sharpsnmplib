@@ -159,11 +159,11 @@ namespace Lextm.SharpSnmpLib.Security
         /// Computes the hash.
         /// </summary>
         /// <returns></returns>
-        public OctetString ComputeHash(byte[] bytes, OctetString engineId)
+        public OctetString ComputeHash(byte[] buffer, OctetString engineId)
         {
-            if (bytes == null)
+            if (buffer == null)
             {
-                throw new ArgumentNullException("bytes");
+                throw new ArgumentNullException("buffer");
             }
 
             if (engineId == null)
@@ -174,7 +174,7 @@ namespace Lextm.SharpSnmpLib.Security
             byte[] key = PasswordToKey(_password, engineId.GetRaw());
             using (HMACMD5 md5 = new HMACMD5(key))
             {
-                byte[] hash = md5.ComputeHash(bytes);
+                byte[] hash = md5.ComputeHash(buffer);
                 md5.Clear();
                 byte[] result = new byte[DigestLength];
                 Buffer.BlockCopy(hash, 0, result, 0, result.Length);

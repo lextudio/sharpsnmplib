@@ -79,11 +79,11 @@ namespace Lextm.SharpSnmpLib.Security
         /// Computes the hash.
         /// </summary>
         /// <returns></returns>
-        public OctetString ComputeHash(byte[] bytes, OctetString engineId)
+        public OctetString ComputeHash(byte[] buffer, OctetString engineId)
         {
-            if (bytes == null)
+            if (buffer == null)
             {
-                throw new ArgumentNullException("bytes");
+                throw new ArgumentNullException("buffer");
             }
 
             if (engineId == null)

@@ -26,8 +26,6 @@ namespace Lextm.SharpSnmpLib.Security
     /// </summary>
     public static class AuthenticationProviderExtension
     {
-        private static byte[] CleanDigest = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-
         /// <summary>
         /// Verifies the hash.
         /// </summary>
@@ -153,7 +151,7 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentNullException("expected");
             }
 
-            if (engineId== null)
+            if (engineId == null)
             {
                 throw new ArgumentNullException("expected");
             }
@@ -164,41 +162,44 @@ namespace Lextm.SharpSnmpLib.Security
             }
 
             if (originalStream.Position != 0)
+            {
                 originalStream.Position = 0; // Seek to the beginning of the stream
+            }
 
             using (Stream stream = new MemoryStream())
             {
-                originalStream.CopyTo(stream);
-                // Replace with clean digest
-                CleanAuthenticationParameters(stream);
-                // Read stream into byte array
-                bytes = new byte[stream.Length];
+                originalStream.CopyTo(stream);                
+                CleanAuthenticationParameters(stream, authen.CleanDigest.GetRaw()); // Replace with clean digest
+                bytes = new byte[stream.Length]; // Read stream into byte array
                 stream.Position = 0;
                 stream.Read(bytes, 0, bytes.Length);
             }
 
             // Compute hash
-            return (authen.ComputeHash(bytes, engineId) == expected);
-
+            return authen.ComputeHash(bytes, engineId) == expected;
         }
 
         /// <summary>
         /// Cleans the Authentication parameters in the supplied <see cref="System.IO.Stream"/>.
         /// </summary>
         /// <param name="stream">The <see cref="System.IO.Stream"/> to be parsed.</param>
+        /// <param name="cleanDigest">The clean digest.</param>
         /// <returns></returns>
-        private static void CleanAuthenticationParameters(Stream stream)
+        private static void CleanAuthenticationParameters(Stream stream, byte[] cleanDigest)
         {
             try
             {
                 if (!stream.CanWrite)
+                {
                     throw new NotSupportedException("stream not writable");
+                }
 
                 if (stream.Position != 0)
+                {
                     stream.Position = 0;
+                }
 
                 // We look for an exact payload which is at a known position
-
                 stream.IgnorePayloadStart(); // Enter the outer payload
                 stream.IgnorePayloads(2); // Skip 2 payloads
                 stream.IgnorePayloadStart();
@@ -208,11 +209,12 @@ namespace Lextm.SharpSnmpLib.Security
                 if ((SnmpType)stream.ReadByte() == SnmpType.OctetString)
                 {
                     stream.ReadPayloadLength();
-                    stream.Write(CleanDigest, 0, CleanDigest.Length);
+                    stream.Write(cleanDigest, 0, cleanDigest.Length);
                 }
                 else
+                {
                     throw new OperationException("expected OctetString when finding Authentication Parameters");
-
+                }
             }
             catch (Exception e)
             {

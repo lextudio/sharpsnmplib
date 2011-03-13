@@ -118,6 +118,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             
             Community = (OctetString)body[1];
             Version = (VersionCode)((Integer32)body[0]).ToInt32();
+            
             // IMPORTANT: comment this check out if you need to support 
             if (Version != VersionCode.V1)
             {

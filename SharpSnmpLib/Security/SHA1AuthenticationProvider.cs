@@ -155,18 +155,17 @@ namespace Lextm.SharpSnmpLib.Security
             }
         }
 
-
         /// <summary>
         /// Computes the hash.
         /// </summary>
-        /// <param name="bytes"></param>
+        /// <param name="buffer"></param>
         /// <param name="engineId"></param>
         /// <returns></returns>
-        public OctetString ComputeHash(byte[] bytes, OctetString engineId)
+        public OctetString ComputeHash(byte[] buffer, OctetString engineId)
         {
-            if (bytes == null)
+            if (buffer == null)
             {
-                throw new ArgumentNullException("bytes");
+                throw new ArgumentNullException("buffer");
             }
 
             if (engineId == null)
@@ -178,7 +177,7 @@ namespace Lextm.SharpSnmpLib.Security
 
             using (HMACSHA1 sha1 = new HMACSHA1(key))
             {
-                byte[] hash = sha1.ComputeHash(bytes);
+                byte[] hash = sha1.ComputeHash(buffer);
                 sha1.Clear();
                 byte[] result = new byte[DigestLength];
                 Buffer.BlockCopy(hash, 0, result, 0, result.Length);

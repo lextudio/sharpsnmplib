@@ -47,6 +47,8 @@ namespace Lextm.SharpSnmpLib
         /// <param name="errorIndex">Error index</param>
         /// <param name="variables">Variables</param>
         [Obsolete("Please use other overloaded constructor")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "errorStatus")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "errorIndex")]
         public GetNextRequestPdu(int requestId, ErrorCode errorStatus, int errorIndex, IList<Variable> variables)
             : this(requestId, variables)
         {

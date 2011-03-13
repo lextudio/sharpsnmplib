@@ -27,6 +27,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     public class MalformedMessage : ISnmpMessage
     {
         private static readonly Scope DefaultScope = new Scope(new MalformedPdu());
+        
         /// <summary>
         /// Initializes a new instance of the <see cref="MalformedMessage"/> class.
         /// </summary>
