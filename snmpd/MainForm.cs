@@ -16,7 +16,6 @@ using System.Reflection;
 using System.Windows.Forms;
 
 using Lextm.SharpSnmpLib.Messaging;
-using Lextm.SharpSnmpLib.Objects;
 using Lextm.SharpSnmpLib.Pipeline;
 using Lextm.SharpSnmpLib.Security;
 using Microsoft.Practices.Unity;

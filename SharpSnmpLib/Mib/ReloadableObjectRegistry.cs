@@ -69,11 +69,11 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             if (Directory.Exists(path))
             {
-                string index = System.IO.Path.Combine(path, "index");
+                var index = System.IO.Path.Combine(path, "index");
                 if (File.Exists(index))
                 {
-                    List<string> list = new List<string>();
-                    using (StreamReader reader = new StreamReader(index))
+                    var list = new List<string>();
+                    using (var reader = new StreamReader(index))
                     {
                         string line;
                         while ((line = reader.ReadLine()) != null)

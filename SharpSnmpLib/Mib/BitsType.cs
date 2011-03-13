@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
     internal class BitsType : AbstractTypeAssignment
     {
         private string _module;
-        private string _name;
-        private IDictionary<int, string> _map;
+        private readonly string _name;
+        private readonly IDictionary<int, string> _map;
 
         public BitsType(string module, string name, Lexer lexer)
         {
@@ -31,7 +28,7 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             get
             {
-                return (string)_map[identifier];
+                return _map[identifier];
             }
         }
 

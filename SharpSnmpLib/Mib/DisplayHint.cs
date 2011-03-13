@@ -1,31 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Collections;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
     class DisplayHint
     {
         private enum NumType {
-            dec,
-            hex,
-            oct,
-            bin,
-            str
+            Dec,
+            Hex,
+            Oct,
+            Bin,
+            Str
         }
 
-        private string _str;
-        private NumType _type;
-        private int _decimalPoints = 0;
+        private readonly string _str;
+        private readonly NumType _type;
+        private readonly int _decimalPoints;
 
         public DisplayHint(string str)
         {
             _str = str;
             if (str.StartsWith("d"))
             {
-                _type = NumType.dec;
+                _type = NumType.Dec;
                 if (str.StartsWith("d-"))
                 {
                     _decimalPoints = Convert.ToInt32(str.Substring(2));
@@ -33,22 +29,22 @@ namespace Lextm.SharpSnmpLib.Mib
             }
             else if (str.StartsWith("o"))
             {
-                _type = NumType.oct;
+                _type = NumType.Oct;
             }
             else if (str.StartsWith("h"))
             {
-                _type = NumType.hex;
+                _type = NumType.Hex;
             }
             else if (str.StartsWith("b"))
             {
-                _type = NumType.bin;
+                _type = NumType.Bin;
             }
             else
             {
-                _type = NumType.str;
-                foreach (char c in str)
+                _type = NumType.Str;
+                foreach (var c in str)
                 {
-
+                    // TODO:?
                 }
             }
 
@@ -63,21 +59,19 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             switch (_type)
             {
-                case NumType.dec:
+                case NumType.Dec:
                     if (_decimalPoints == 0)
                     {
                         return i;
                     }
-                    else
-                    {
-                        return i / Math.Pow(10.0, _decimalPoints);
-                    }
-                case NumType.hex:
-                    return System.Convert.ToString(i, 16);
-                case NumType.oct:
-                    return System.Convert.ToString(i, 8);
-                case NumType.bin:
-                    return System.Convert.ToString(i, 2);
+
+                    return i / Math.Pow(10.0, _decimalPoints);
+                case NumType.Hex:
+                    return Convert.ToString(i, 16);
+                case NumType.Oct:
+                    return Convert.ToString(i, 8);
+                case NumType.Bin:
+                    return Convert.ToString(i, 2);
                 default:
                     return null;
             }

@@ -9,7 +9,6 @@
 
 using System;
 using System.Globalization;
-using System.Net;
 using System.Windows.Forms;
 using RemObjects.Mono.Helpers;
 using WeifenLuo.WinFormsUI.Docking;
@@ -38,7 +37,7 @@ namespace Lextm.SharpSnmpLib.Browser
                 return;
             }
 
-            IPEndPoint agent = Profiles.DefaultProfile != null ? Profiles.DefaultProfile.Agent : null;
+            var agent = Profiles.DefaultProfile != null ? Profiles.DefaultProfile.Agent : null;
             txtMessages.AppendText(string.Format(CultureInfo.CurrentCulture, "[{2}] [{0}] {1}", DateTime.Now, message, agent));
             txtMessages.ScrollToCaret();
         }

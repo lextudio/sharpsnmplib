@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
     internal class OctetStringType : AbstractTypeAssignment
     {
         private string _module;
-        private string _name;
-        private IList<ValueRange> _size;
+        private readonly string _name;
+        private readonly IList<ValueRange> _size;
 
         public OctetStringType(string module, string name, Lexer lexer)
         {
@@ -17,7 +15,7 @@ namespace Lextm.SharpSnmpLib.Mib
             _name = name;
             _size = new List<ValueRange>();
 
-            Symbol temp = lexer.NextSymbol;
+            var temp = lexer.NextSymbol;
             if (temp == Symbol.OpenParentheses)
             {
                 _size = DecodeRanges(lexer);
@@ -32,11 +30,13 @@ namespace Lextm.SharpSnmpLib.Mib
             _size = new List<ValueRange>();
 
             temp = enumerator.NextSymbol();
-            if (temp == Symbol.OpenParentheses)
+            if (temp != Symbol.OpenParentheses)
             {
-                _size = DecodeRanges(enumerator);
-                temp = enumerator.NextNonEOLSymbol();
+                return;
             }
+
+            _size = DecodeRanges(enumerator);
+            temp = enumerator.NextNonEOLSymbol();
         }
 
         public override string Name
@@ -46,15 +46,7 @@ namespace Lextm.SharpSnmpLib.Mib
 
         public bool Contains(int p)
         {
-            foreach (ValueRange range in _size)
-            {
-                if (range.Contains(p))
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return _size.Any(range => range.Contains(p));
         }
     }
 }

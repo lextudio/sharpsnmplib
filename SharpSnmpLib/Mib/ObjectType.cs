@@ -1,20 +1,15 @@
 using System.Collections.Generic;
-using System.Text;
 using System;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
     internal sealed class ObjectType : IEntity
     {
-        private readonly string _module;
         private string _parent;
         private readonly uint _value;
-        private readonly string _name;
-        private ITypeAssignment _syntax;
         private string _units;
         private MaxAccess _access;
         private Status _status;
-        private string _description;
         private string _reference;
         private IList<string> _indices;
         private string _augment;
@@ -23,16 +18,16 @@ namespace Lextm.SharpSnmpLib.Mib
 
         public ObjectType(string module, IList<Symbol> header, Lexer lexer)
         {
-            _module = module;
-            _name = header[0].ToString();
+            ModuleName = module;
+            Name = header[0].ToString();
             ParseProperties(header);
             lexer.ParseOidValue(out _parent, out _value);
         }
 
         private void ParseProperties(IEnumerable<Symbol> header)
         {
-            IEnumerator<Symbol> enumerator = header.GetEnumerator();
-            Symbol temp = enumerator.NextNonEOLSymbol();
+            var enumerator = header.GetEnumerator();
+            var temp = enumerator.NextNonEOLSymbol();
 
             // Skip name
             temp = enumerator.NextNonEOLSymbol();
@@ -40,11 +35,11 @@ namespace Lextm.SharpSnmpLib.Mib
             temp.Expect(Symbol.ObjectType);
             temp = enumerator.NextNonEOLSymbol();
 
-            _syntax         = ParseSyntax       (enumerator, ref temp);
+            Syntax         = ParseSyntax       (enumerator, ref temp);
             _units          = ParseUnits        (enumerator, ref temp);
             _access         = ParseAccess       (enumerator, ref temp);
             _status         = ParseStatus       (enumerator, ref temp);
-            _description    = ParseDescription  (enumerator, ref temp);
+            Description    = ParseDescription  (enumerator, ref temp);
             _reference      = ParseReference    (enumerator, ref temp);
             _indices        = ParseIndices      (enumerator, ref temp);
             _augment        = ParseAugments     (enumerator, ref temp);
@@ -158,7 +153,7 @@ namespace Lextm.SharpSnmpLib.Mib
 
         private static Status ParseStatus(IEnumerator<Symbol> enumerator, ref Symbol temp)
         {
-            Status status = Status.obsolete;
+            var status = Status.Obsolete;
 
             temp.Expect(Symbol.Status);
             temp = enumerator.NextNonEOLSymbol();
@@ -177,7 +172,7 @@ namespace Lextm.SharpSnmpLib.Mib
 
         private static MaxAccess ParseAccess(IEnumerator<Symbol> enumerator, ref Symbol temp)
         {
-            MaxAccess access = MaxAccess.notAccessible;
+            var access = MaxAccess.NotAccessible;
 
             if (temp == Symbol.MaxAccess || temp == Symbol.Access)
             {
@@ -186,22 +181,22 @@ namespace Lextm.SharpSnmpLib.Mib
                 switch (temp.ToString())
                 {
                     case "not-accessible":
-                        access = MaxAccess.notAccessible;
+                        access = MaxAccess.NotAccessible;
                         break;
                     case "accessible-for-notify":
-                        access = MaxAccess.accessibleForNotify;
+                        access = MaxAccess.AccessibleForNotify;
                         break;
                     case "read-only":
-                        access = MaxAccess.readOnly;
+                        access = MaxAccess.ReadOnly;
                         break;
                     case "read-write":
-                        access = MaxAccess.readWrite;
+                        access = MaxAccess.ReadWrite;
                         break;
                     case "read-create":
-                        access = MaxAccess.readCreate;
+                        access = MaxAccess.ReadCreate;
                         break;
                     case "write-only":
-                        access = MaxAccess.readWrite;
+                        access = MaxAccess.ReadWrite;
                         break;
                     default:
                         temp.Validate(true, "Invalid access");
@@ -306,14 +301,11 @@ namespace Lextm.SharpSnmpLib.Mib
 
         private static bool IsProperty(Symbol sym)
         {
-            string s = sym.ToString();
+            var s = sym.ToString();
             return s == "SYNTAX" || s == "MAX-ACCESS" || s == "STATUS" || s == "DESCRIPTION";
         }
 
-        public string ModuleName
-        {
-            get { return _module; }
-        }
+        public string ModuleName { get; private set; }
 
         public string Parent
         {
@@ -326,20 +318,10 @@ namespace Lextm.SharpSnmpLib.Mib
             get { return _value; }
         }
 
-        public string Name
-        {
-            get { return _name; }
-        }
+        public string Name { get; private set; }
 
-        public string Description
-        {
-            get { return _description; }
-        }
+        public string Description { get; private set; }
 
-        public ITypeAssignment Syntax
-        {
-            get { return _syntax; }
-            internal set { _syntax = value; }
-        }
+        public ITypeAssignment Syntax { get; internal set; }
     }
 }

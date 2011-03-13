@@ -54,16 +54,16 @@ namespace Lextm.SharpSnmpLib.Compiler
         {
             SuspendLayout();
             listView1.Items.Clear();
-            List<string> loaded = new List<string>(Assembler.Tree.LoadedModules);
+            var loaded = new List<string>(Assembler.Tree.LoadedModules);
             loaded.Sort();
-            foreach (ListViewItem item in loaded.Select(module => listView1.Items.Add(module)))
+            foreach (var item in loaded.Select(module => listView1.Items.Add(module)))
             {
                 item.Group = listView1.Groups["lvgLoaded"];
             }
             
-            List<string> pendings = new List<string>(Assembler.Tree.PendingModules);
+            var pendings = new List<string>(Assembler.Tree.PendingModules);
             pendings.Sort();
-            foreach (ListViewItem item in pendings.Select(pending => listView1.Items.Add(pending)))
+            foreach (var item in pendings.Select(pending => listView1.Items.Add(pending)))
             {
                 item.BackColor = Color.LightGray;
                 item.Group = listView1.Groups["lvgPending"];
@@ -80,7 +80,7 @@ namespace Lextm.SharpSnmpLib.Compiler
 
         private void ActRemoveExecute(object sender, EventArgs e)
         {
-            string mib = listView1.SelectedItems[0].Text;
+            var mib = listView1.SelectedItems[0].Text;
             File.Delete(Path.Combine(Assembler.Folder, mib + ".module"));
             Logger.Info("The change will take effect when you restart compiler");
             Assembler.Tree.Remove(mib);

@@ -33,19 +33,19 @@ namespace Lextm.SharpSnmpLib.Browser
                 actExit.Image = Properties.Resources.system_log_out;
             }
             
-            DockContent agent = Program.Container.Resolve<DockContent>("AgentProfile");
+            var agent = Program.Container.Resolve<DockContent>("AgentProfile");
             agent.Show(dockPanel1, DockState.DockLeft);
 
-            DockContent notification = Program.Container.Resolve<DockContent>("Notification");
+            var notification = Program.Container.Resolve<DockContent>("Notification");
             notification.Show(dockPanel1, DockState.DockBottom);
             
-            DockContent output = Program.Container.Resolve<DockContent>("Output");
+            var output = Program.Container.Resolve<DockContent>("Output");
             output.Show(dockPanel1, DockState.DockBottom);
 
-            DockContent tree = Program.Container.Resolve<DockContent>("MibTree");
+            var tree = Program.Container.Resolve<DockContent>("MibTree");
             tree.Show(dockPanel1, DockState.Document);
 
-            DockContent modules = Program.Container.Resolve<DockContent>("ModuleList");
+            var modules = Program.Container.Resolve<DockContent>("ModuleList");
             modules.Show(dockPanel1, DockState.DockRight);
         }
 

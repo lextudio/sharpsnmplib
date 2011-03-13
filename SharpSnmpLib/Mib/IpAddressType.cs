@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
     class IpAddressType : ITypeAssignment
     {
         private string _module;
-        private string _name;
+        private readonly string _name;
 
         public IpAddressType(string module, string name, Lexer lexer)
         {

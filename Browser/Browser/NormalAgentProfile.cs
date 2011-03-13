@@ -32,12 +32,12 @@ namespace Lextm.SharpSnmpLib.Browser
 
         internal override void GetNext(Variable variable)
         {
-            GetNextRequestMessage message = new GetNextRequestMessage(
+            var message = new GetNextRequestMessage(
                 Messenger.NextRequestId,
                 VersionCode, 
                 GetCommunity,
                 new List<Variable> { variable });
-            ISnmpMessage response = message.GetResponse(Timeout, Agent);
+            var response = message.GetResponse(Timeout, Agent);
             if (response.Pdu().ErrorStatus.ToInt32() != 0)
             {
                 throw ErrorException.Create(
@@ -57,19 +57,19 @@ namespace Lextm.SharpSnmpLib.Browser
         internal override void GetTable(IDefinition def)
         {
             IList<Variable> list = new List<Variable>();
-            int rows = Messenger.Walk(VersionCode, Agent, GetCommunity, new ObjectIdentifier(def.GetNumericalForm()), list, Timeout, WalkMode.WithinSubtree);
+            var rows = Messenger.Walk(VersionCode, Agent, GetCommunity, new ObjectIdentifier(def.GetNumericalForm()), list, Timeout, WalkMode.WithinSubtree);
             
             // How many rows are there?
             if (rows > 0)
             {
-                FormTable newTable = new FormTable(def);
+                var newTable = new FormTable(def);
                 newTable.SetRows(rows);
                 newTable.PopulateGrid(list);
                 newTable.Show();
             }
             else
             {
-                foreach (Variable t in list)
+                foreach (var t in list)
                 {
                     Logger.Info(t.ToString());
                 }
@@ -78,7 +78,7 @@ namespace Lextm.SharpSnmpLib.Browser
 
         public override void Walk(IDefinition definition)
         {
-            IList<Variable> list = new List<Variable>();
+            var list = new List<Variable>();
             if (VersionCode == VersionCode.V1)
             {
                 Messenger.Walk(
@@ -105,7 +105,7 @@ namespace Lextm.SharpSnmpLib.Browser
                     null);
             }
 
-            foreach (Variable v in list)
+            foreach (var v in list)
             {
                 Logger.Info(v.ToString(Objects));
             }

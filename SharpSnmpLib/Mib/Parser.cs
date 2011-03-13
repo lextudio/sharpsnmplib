@@ -36,8 +36,8 @@ namespace Lextm.SharpSnmpLib.Mib
             }
 
             IList<MibException> list = new List<MibException>();
-            List<IModule> modules = new List<IModule>();
-            foreach (string file in files)
+            var modules = new List<IModule>();
+            foreach (var file in files)
             {
                 try
                 {
@@ -102,9 +102,9 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             var watch = new System.Diagnostics.Stopwatch();
             watch.Start();
-            Lexer lexer = new Lexer();
+            var lexer = new Lexer();
             lexer.Parse(file, stream);
-            MibDocument doc = new MibDocument(lexer);
+            var doc = new MibDocument(lexer);
             Logger.Info(watch.ElapsedMilliseconds.ToString(CultureInfo.InvariantCulture) + "-ms used to parse " + file);
             watch.Stop();
             return doc.Modules;

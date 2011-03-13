@@ -48,9 +48,9 @@ namespace Lextm.SharpSnmpLib.Browser
                 return;
             }
 
-            ReloadableObjectRegistry repository = (ReloadableObjectRegistry)sender;
+            var repository = (ReloadableObjectRegistry)sender;
             treeView1.Nodes.Clear();
-            TreeNode root = Wrap(repository.Tree.Root);
+            var root = Wrap(repository.Tree.Root);
             
             // FIXME: worked around a Mono issue.
             treeView1.Nodes.AddRange(root.Nodes.Cast<TreeNode>().ToArray());
@@ -58,8 +58,8 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private TreeNode Wrap(IDefinition definition)
         {
-            string name = _showNumber ? string.Format(CultureInfo.InvariantCulture, "{0}({1})", definition.Name, definition.Value) : definition.Name;
-            TreeNode node = new TreeNode(name)
+            var name = _showNumber ? string.Format(CultureInfo.InvariantCulture, "{0}({1})", definition.Name, definition.Value) : definition.Name;
+            var node = new TreeNode(name)
                                 {
                                     Tag = definition,
                                     ImageIndex = (int)definition.Type,
@@ -69,9 +69,9 @@ namespace Lextm.SharpSnmpLib.Browser
                                         definition.Value
                                 };
 
-            List<IDefinition> list = new List<IDefinition>(definition.Children);
+            var list = new List<IDefinition>(definition.Children);
             list.Sort(new DefinitionComparer());
-            foreach (IDefinition def in list)
+            foreach (var def in list)
             {
                 node.Nodes.Add(Wrap(def));
             }
@@ -87,7 +87,7 @@ namespace Lextm.SharpSnmpLib.Browser
             }
 
             uint index;
-            using (FormIndex form = new FormIndex())
+            using (var form = new FormIndex())
             {
                 form.ShowDialog();
                 index = form.Index;
@@ -106,7 +106,7 @@ namespace Lextm.SharpSnmpLib.Browser
             try
             {
                 Logger.Info("==== Begin GET ====");
-                ObjectIdentifier id = GetIdForGet((IDefinition)treeView1.SelectedNode.Tag);
+                var id = GetIdForGet((IDefinition)treeView1.SelectedNode.Tag);
                 Profiles.DefaultProfile.Get(new Variable(id));
             }
             catch (Exception ex)
@@ -130,9 +130,9 @@ namespace Lextm.SharpSnmpLib.Browser
             try
             {
                 ISnmpData data;
-                using (FormSet form = new FormSet())
+                using (var form = new FormSet())
                 {
-                    ObjectIdentifier id = GetIdForGet((IDefinition)treeView1.SelectedNode.Tag);
+                    var id = GetIdForGet((IDefinition)treeView1.SelectedNode.Tag);
                     form.OldVal = Profiles.DefaultProfile.GetValue(new Variable(id));
                     if (form.ShowDialog() != DialogResult.OK)
                     {
@@ -161,7 +161,7 @@ namespace Lextm.SharpSnmpLib.Browser
                 }
 
                 Logger.Info("==== Begin SET ====");
-                ObjectIdentifier id1 = GetIdForGet((IDefinition)treeView1.SelectedNode.Tag);
+                var id1 = GetIdForGet((IDefinition)treeView1.SelectedNode.Tag);
                 Profiles.DefaultProfile.Set(new Variable(id1, data));
             }
             catch (Exception ex)
@@ -235,7 +235,7 @@ namespace Lextm.SharpSnmpLib.Browser
             try
             {
                 Logger.Info("==== Begin GET NEXT ====");
-                ObjectIdentifier id = GetIdForGetNext((IDefinition)treeView1.SelectedNode.Tag);
+                var id = GetIdForGetNext((IDefinition)treeView1.SelectedNode.Tag);
                 Profiles.DefaultProfile.GetNext(new Variable(id));
             }
             catch (Exception ex)

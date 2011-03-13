@@ -16,7 +16,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 if (first.ToString().EndsWith("B", true, System.Globalization.CultureInfo.InvariantCulture))
                 {
                     // Binary number
-                    string num = first.ToString().TrimStart(new char[] { '\'' }).TrimEnd(new char[] { 'b', 'B', '\'' });
+                    var num = first.ToString().TrimStart(new[] { '\'' }).TrimEnd(new[] { 'b', 'B', '\'' });
                     try
                     {
                         value = Convert.ToInt64(num, 2);
@@ -29,7 +29,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 else if (first.ToString().EndsWith("H", true, System.Globalization.CultureInfo.InvariantCulture))
                 {
                     // Hex number
-                    string num = first.ToString().TrimStart(new char[] { '\'' }).TrimEnd(new char[] { 'h', 'H', '\'' });
+                    var num = first.ToString().TrimStart(new[] { '\'' }).TrimEnd(new[] { 'h', 'H', '\'' });
                     try
                     {
                         value = Convert.ToInt64(num, 16);
@@ -50,48 +50,50 @@ namespace Lextm.SharpSnmpLib.Mib
             }
             _start = value;
 
-            if (second != null)
+            if (second == null)
             {
-                if (second.ToString().StartsWith("'"))
+                return;
+            }
+
+            if (second.ToString().StartsWith("'"))
+            {
+                if (second.ToString().EndsWith("B", true, System.Globalization.CultureInfo.InvariantCulture))
                 {
-                    if (second.ToString().EndsWith("B", true, System.Globalization.CultureInfo.InvariantCulture))
+                    // Binary number
+                    var num = second.ToString().TrimStart(new[] { '\'' }).TrimEnd(new[] { 'b', 'B', '\'' });
+                    try
                     {
-                        // Binary number
-                        string num = second.ToString().TrimStart(new char[] { '\'' }).TrimEnd(new char[] { 'b', 'B', '\'' });
-                        try
-                        {
-                            value = Convert.ToInt64(num, 2);
-                        }
-                        catch (Exception)
-                        {
-                            second.Validate(true, "invalid sub-typing; error parsing start of range");
-                        }
+                        value = Convert.ToInt64(num, 2);
                     }
-                    else if (second.ToString().EndsWith("H", true, System.Globalization.CultureInfo.InvariantCulture))
+                    catch (Exception)
                     {
-                        // Hex number
-                        string num = second.ToString().TrimStart(new char[] { '\'' }).TrimEnd(new char[] { 'h', 'H', '\'' });
-                        try
-                        {
-                            value = Convert.ToInt64(num, 16);
-                        }
-                        catch (Exception)
-                        {
-                            second.Validate(true, "invalid sub-typing; error parsing start of range");
-                        }
+                        second.Validate(true, "invalid sub-typing; error parsing start of range");
                     }
-                    else
+                }
+                else if (second.ToString().EndsWith("H", true, System.Globalization.CultureInfo.InvariantCulture))
+                {
+                    // Hex number
+                    var num = second.ToString().TrimStart(new[] { '\'' }).TrimEnd(new[] { 'h', 'H', '\'' });
+                    try
+                    {
+                        value = Convert.ToInt64(num, 16);
+                    }
+                    catch (Exception)
                     {
                         second.Validate(true, "invalid sub-typing; error parsing start of range");
                     }
                 }
                 else
                 {
-                    second.Validate(!Int64.TryParse(second.ToString(), out value), "invalid sub-typing; error parsing start of range");
+                    second.Validate(true, "invalid sub-typing; error parsing start of range");
                 }
-                _end = value;
-                second.Validate(_start >= _end, "illegal sub-typing; end of range must be less than start of range");
             }
+            else
+            {
+                second.Validate(!Int64.TryParse(second.ToString(), out value), "invalid sub-typing; error parsing start of range");
+            }
+            _end = value;
+            second.Validate(_start >= _end, "illegal sub-typing; end of range must be less than start of range");
         }
 
         public Int64 Start
@@ -110,10 +112,8 @@ namespace Lextm.SharpSnmpLib.Mib
             {
                 return p == _start;
             }
-            else
-            {
-                return _start <= p && p <= _end;
-            }
+
+            return _start <= p && p <= _end;
         }
     }
 }

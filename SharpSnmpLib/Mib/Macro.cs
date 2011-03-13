@@ -4,7 +4,7 @@ namespace Lextm.SharpSnmpLib.Mib
 {
     internal sealed class Macro : ITypeAssignment
     {
-        private string _name;
+        private readonly string _name;
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "temp")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "module")]

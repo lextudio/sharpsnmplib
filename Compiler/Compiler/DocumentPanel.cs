@@ -39,8 +39,8 @@ namespace Lextm.SharpSnmpLib.Compiler
                 throw new InvalidOperationException("cannot work in System MDI mode");
             }
             
-            IDockContent[] documents = panel.DocumentsToArray();
-            foreach (IDockContent content in documents)
+            var documents = panel.DocumentsToArray();
+            foreach (var content in documents)
             {
                 content.DockHandler.Close();
             }

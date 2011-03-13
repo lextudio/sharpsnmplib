@@ -10,7 +10,6 @@ using System;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Windows.Forms;
 using RemObjects.Mono.Helpers;
 using WeifenLuo.WinFormsUI.Docking;
 
@@ -35,13 +34,13 @@ namespace Lextm.SharpSnmpLib.Compiler
         
         private void LvFilesDoubleClick(object sender, EventArgs e)
         {
-            string fileName = lvFiles.SelectedItems[0].Tag.ToString();
+            var fileName = lvFiles.SelectedItems[0].Tag.ToString();
             OpenDocument(fileName);
         }
 
         private void OpenDocument(string fileName)
         {
-            IDockContent opened = FindDocument(fileName);
+            var opened = FindDocument(fileName);
             if (opened != null)
             {
                 opened.DockHandler.Show();
@@ -49,7 +48,7 @@ namespace Lextm.SharpSnmpLib.Compiler
                 return;
             }
             
-            DocumentPanel doc = new DocumentPanel(fileName);
+            var doc = new DocumentPanel(fileName);
             doc.Show(DockPanel, DockState.Document);
         }
         
@@ -70,9 +69,9 @@ namespace Lextm.SharpSnmpLib.Compiler
 
         private void FileOpen(object sender, FileAddedEventArgs e)
         {
-            foreach (string file in e.Files)
+            foreach (var file in e.Files)
             {
-                ListViewItem item = lvFiles.Items.Add(Path.GetFileName(file));
+                var item = lvFiles.Items.Add(Path.GetFileName(file));
                 item.Tag = file;
             }
 
@@ -92,7 +91,7 @@ namespace Lextm.SharpSnmpLib.Compiler
 
         private void ActDeleteExecute(object sender, EventArgs e)
         {
-            string fileName = lvFiles.SelectedItems[0].Tag.ToString();
+            var fileName = lvFiles.SelectedItems[0].Tag.ToString();
             lvFiles.SelectedItems[0].Remove();
             Compiler.Remove(fileName);
         }

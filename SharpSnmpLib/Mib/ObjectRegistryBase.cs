@@ -46,7 +46,7 @@ namespace Lextm.SharpSnmpLib.Mib
             }
             
             // TODO: enhance checking here.
-            string name = Translate(id);
+            var name = Translate(id);
             return name.EndsWith("Table", StringComparison.Ordinal);
         }
 
@@ -83,7 +83,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 throw new ArgumentException("textual cannot be empty");
             }
             
-            string[] content = textual.Split(new[] { "::" }, StringSplitOptions.None);
+            var content = textual.Split(new[] { "::" }, StringSplitOptions.None);
             if (content.Length != 2)
             {
                 throw new ArgumentException("textual format must be '<module>::<name>'");
@@ -126,20 +126,20 @@ namespace Lextm.SharpSnmpLib.Mib
                 return _tree.Find(moduleName, name).GetNumericalForm();
             }
             
-            string[] content = name.Split('.');
+            var content = name.Split('.');
             if (content.Length != 2)
             {
                 throw new ArgumentException("name can only contain one dot");
             }
             
             int value;
-            bool succeeded = int.TryParse(content[1], out value);
+            var succeeded = int.TryParse(content[1], out value);
             if (!succeeded)
             {
                 throw new ArgumentException("not a decimal after dot");
             }
             
-            uint[] oid = _tree.Find(moduleName, content[0]).GetNumericalForm();
+            var oid = _tree.Find(moduleName, content[0]).GetNumericalForm();
             return ObjectIdentifier.AppendTo(oid, (uint)value);
         }
 
@@ -176,7 +176,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 throw new ArgumentException("folder cannot be empty");
             }
             
-            string path = Path.GetFullPath(folder);
+            var path = Path.GetFullPath(folder);
             
             if (!Directory.Exists(path))
             {
@@ -207,7 +207,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 throw new ArgumentNullException("fileNames");
             }
 
-            foreach (string fileName in fileNames)
+            foreach (var fileName in fileNames)
             {
                 Import(Parser.Compile(fileName));
             }
@@ -256,7 +256,7 @@ namespace Lextm.SharpSnmpLib.Mib
         public void Refresh()
         {
             _tree.Refresh();
-            EventHandler<EventArgs> handler = OnChanged;
+            var handler = OnChanged;
             if (handler != null)
             {
                 handler(this, EventArgs.Empty);

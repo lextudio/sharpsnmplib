@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
     class Counter64Type : ITypeAssignment
     {
         private string _module;
-        private string _name;
+        private readonly string _name;
 
         public Counter64Type(string module, string name, Lexer lexer)
         {

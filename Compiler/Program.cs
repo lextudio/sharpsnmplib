@@ -10,10 +10,11 @@
 using System;
 using System.Windows.Forms;
 using Lextm.Common;
+using Lextm.SharpSnmpLib.Compiler;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
 
-namespace Lextm.SharpSnmpLib.Compiler
+namespace Lextm.SharpSnmpLib
 {
     /// <summary>
     /// Class with program entry point.
@@ -36,7 +37,7 @@ namespace Lextm.SharpSnmpLib.Compiler
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            SingleInstanceController controller = new SingleInstanceController(typeof(MainForm));
+            var controller = new SingleInstanceController(typeof(MainForm));
             controller.MainFormCreated += delegate
             {
                 Container = new UnityContainer().LoadConfiguration("compiler");

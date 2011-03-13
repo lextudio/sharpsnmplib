@@ -27,9 +27,9 @@ namespace Lextm.SharpSnmpLib.Mib
         public ObjectTree()
         {
             _root = Definition.RootDefinition;
-            Definition ccitt = new Definition(new OidValueAssignment("SNMPV2-SMI", "ccitt", null, 0), _root);
-            Definition iso = new Definition(new OidValueAssignment("SNMPV2-SMI", "iso", null, 1), _root);
-            Definition jointIsoCcitt = new Definition(new OidValueAssignment("SNMPV2-SMI", "joint-iso-ccitt", null, 2), _root);
+            var ccitt = new Definition(new OidValueAssignment("SNMPV2-SMI", "ccitt", null, 0), _root);
+            var iso = new Definition(new OidValueAssignment("SNMPV2-SMI", "iso", null, 1), _root);
+            var jointIsoCcitt = new Definition(new OidValueAssignment("SNMPV2-SMI", "joint-iso-ccitt", null, 2), _root);
             _nameTable = new Dictionary<string, Definition>
                              {
                                  { iso.TextualForm, iso },
@@ -47,8 +47,8 @@ namespace Lextm.SharpSnmpLib.Mib
             
             Logger.InfoFormat(CultureInfo.InvariantCulture, "{0} module files found", loaders.Count);
 
-            List<Definition> defines = new List<Definition>();
-            foreach (ModuleLoader loader in loaders)
+            var defines = new List<Definition>();
+            foreach (var loader in loaders)
             {
                 Import(loader.Module);
                 defines.AddRange(loader.Nodes);
@@ -70,15 +70,15 @@ namespace Lextm.SharpSnmpLib.Mib
             }
 
             IList<ModuleLoader> result = new List<ModuleLoader>();
-            foreach (string file in files)
+            foreach (var file in files)
             {
                 if (!File.Exists(file))
                 {
                     continue;
                 }
 
-                string moduleName = Path.GetFileNameWithoutExtension(file);
-                using (StreamReader reader = new StreamReader(file))
+                var moduleName = Path.GetFileNameWithoutExtension(file);
+                using (var reader = new StreamReader(file))
                 {
                     result.Add(new ModuleLoader(reader, moduleName));
                     reader.Close();
@@ -101,7 +101,7 @@ namespace Lextm.SharpSnmpLib.Mib
 
         public IDefinition Find(string moduleName, string name)
         {
-            string full = moduleName + "::" + name;
+            var full = moduleName + "::" + name;
             return _nameTable.ContainsKey(full) ? _nameTable[full] : null;
         }
 
@@ -112,7 +112,7 @@ namespace Lextm.SharpSnmpLib.Mib
                     select _nameTable[key]).FirstOrDefault();
         }
 
-        private Definition Find(IList<uint> numerical)
+        private Definition Find(ICollection<uint> numerical)
         {
             if (numerical == null)
             {
@@ -124,12 +124,12 @@ namespace Lextm.SharpSnmpLib.Mib
                 throw new ArgumentException("numerical cannot be empty");
             }
             
-            Definition result = _root;
+            var result = _root;
 // ReSharper disable LoopCanBePartlyConvertedToQuery
-            foreach (uint digit in numerical)
+            foreach (var digit in numerical)
 // ReSharper restore LoopCanBePartlyConvertedToQuery
             {
-                Definition temp = result.GetChildAt(digit) as Definition;
+                var temp = result.GetChildAt(digit) as Definition;
                 if (temp == null)
                 {
                     return null;
@@ -154,10 +154,10 @@ namespace Lextm.SharpSnmpLib.Mib
             }
 
             IDefinition result = _root;
-            int end = id.Length;
-            for (int i = 0; i < id.Length; i++)
+            var end = id.Length;
+            for (var i = 0; i < id.Length; i++)
             {
-                IDefinition temp = result.GetChildAt(id[i]);
+                var temp = result.GetChildAt(id[i]);
                 if (temp == null)
                 {
                     end = i;
@@ -167,8 +167,8 @@ namespace Lextm.SharpSnmpLib.Mib
                 result = temp;
             }
 
-            List<uint> remaining = new List<uint>();
-            for (int j = end; j < id.Length; j++)
+            var remaining = new List<uint>();
+            for (var j = end; j < id.Length; j++)
             {
                 remaining.Add(id[j]);
             }
@@ -183,7 +183,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 return false;
             }
             
-            bool exists = _loaded.ContainsKey(module.Name); // FIXME: don't parse the same module twice now.
+            var exists = _loaded.ContainsKey(module.Name); // FIXME: don't parse the same module twice now.
             if (!exists)
             {
                 _loaded.Add(module.Name, module);
@@ -194,7 +194,7 @@ namespace Lextm.SharpSnmpLib.Mib
 
         private void Parse(IModule module)
         {
-            Stopwatch watch = new Stopwatch();
+            var watch = new Stopwatch();
             AddTypes(module);
             AddNodes(module);
             Logger.InfoFormat(CultureInfo.InvariantCulture, "{0}-ms used to assemble {1}", watch.ElapsedMilliseconds, module.Name);
@@ -203,21 +203,18 @@ namespace Lextm.SharpSnmpLib.Mib
 
         private void AddTypes(IModule module)
         {
-            foreach (KeyValuePair<string, ITypeAssignment> pair in module.Types)
+            foreach (var pair in module.Types.Where(pair => !_types.ContainsKey(pair.Key)))
             {
-                if (!_types.ContainsKey(pair.Key))
-                {
-                    _types.Add(pair);
-                }
+                _types.Add(pair);
             }
         }
 
         private Definition CreateSelf(IEntity node)
         {
-            ObjectType o = node as ObjectType;
+            var o = node as ObjectType;
             if (o != null)
             {
-                TypeAssignment syn = o.Syntax as TypeAssignment;
+                var syn = o.Syntax as TypeAssignment;
                 if (syn != null && _types.ContainsKey(syn.Value))
                 {
                     o.Syntax = _types[syn.Value];
@@ -241,10 +238,10 @@ namespace Lextm.SharpSnmpLib.Mib
 
         private void AddNodes(IModule module)
         {
-            List<IEntity> pendingNodes = new List<IEntity>();
+            var pendingNodes = new List<IEntity>();
             
             // parse all direct nodes.
-            foreach (IEntity node in module.Entities)
+            foreach (var node in module.Entities)
             {
                 if (node.Parent.Contains("."))
                 {
@@ -252,7 +249,7 @@ namespace Lextm.SharpSnmpLib.Mib
                     continue;
                 }
                 
-                Definition result = CreateSelf(node);
+                var result = CreateSelf(node);
                 if (result == null)
                 {
                     pendingNodes.Add(node);
@@ -263,12 +260,12 @@ namespace Lextm.SharpSnmpLib.Mib
             }
 
             // parse indirect nodes.
-            int current = pendingNodes.Count;
+            var current = pendingNodes.Count;
             while (current != 0)
             {
-                List<IEntity> parsed = new List<IEntity>();
-                int previous = current;
-                foreach (IEntity node in pendingNodes)
+                var parsed = new List<IEntity>();
+                var previous = current;
+                foreach (var node in pendingNodes)
                 {
                     if (node.Parent.Contains("."))
                     {
@@ -288,7 +285,7 @@ namespace Lextm.SharpSnmpLib.Mib
                     }
                     else
                     {
-                        Definition result = CreateSelf(node);
+                        var result = CreateSelf(node);
                         if (result == null)
                         {
                             // wait for parent
@@ -301,7 +298,7 @@ namespace Lextm.SharpSnmpLib.Mib
                     parsed.Add(node);
                 }
                 
-                foreach (IEntity en in parsed)
+                foreach (var en in parsed)
                 {
                     pendingNodes.Remove(en);
                 }
@@ -321,21 +318,21 @@ namespace Lextm.SharpSnmpLib.Mib
 
         private Definition CreateExtraNodes(string module, string longParent)
         {
-            string[] content = longParent.Split('.');
-            Definition node = Find(ExtractName(content[0]));
-            uint[] rootId = node.GetNumericalForm();
-            uint[] all = new uint[content.Length + rootId.Length - 1];
-            for (int j = rootId.Length - 1; j >= 0; j--)
+            var content = longParent.Split('.');
+            var node = Find(ExtractName(content[0]));
+            var rootId = node.GetNumericalForm();
+            var all = new uint[content.Length + rootId.Length - 1];
+            for (var j = rootId.Length - 1; j >= 0; j--)
             {
                 all[j] = rootId[j];
             }
             
             // change all to numerical
-            for (int i = 1; i < content.Length; i++)
+            for (var i = 1; i < content.Length; i++)
             {
                 uint value;
-                bool numberFound = UInt32.TryParse(content[i], out value);
-                int currentCursor = rootId.Length + i - 1;
+                var numberFound = UInt32.TryParse(content[i], out value);
+                var currentCursor = rootId.Length + i - 1;
                 if (numberFound)
                 {
                     all[currentCursor] = value;
@@ -354,8 +351,8 @@ namespace Lextm.SharpSnmpLib.Mib
                 }
                 else
                 {
-                    string self = content[i];
-                    string parent = content[i - 1];
+                    var self = content[i];
+                    var parent = content[i - 1];
                     IEntity extra = new OidValueAssignment(module, ExtractName(self), ExtractName(parent), ExtractValue(self));
                     node = CreateSelf(extra);
                     if (node != null)
@@ -375,8 +372,8 @@ namespace Lextm.SharpSnmpLib.Mib
 
         private static uint[] ExtractParent(IList<uint> input, int length)
         {
-            uint[] result = new uint[length];
-            for (int i = 0; i < length; i++)
+            var result = new uint[length];
+            for (var i = 0; i < length; i++)
             {
                 result[i] = input[i];
             }
@@ -395,21 +392,21 @@ namespace Lextm.SharpSnmpLib.Mib
         public void Refresh()
         {
             Logger.Info("loading modules started");
-            Stopwatch watch = new Stopwatch();
+            var watch = new Stopwatch();
             watch.Start();
-            int current = _pendings.Count;
+            var current = _pendings.Count;
             while (current != 0)
             {
-                int previous = current;
+                var previous = current;
                 IList<string> parsed = new List<string>();
-                foreach (MibModule pending in
+                foreach (var pending in
                     from pending in _pendings.Values let succeeded = CanParse(pending) where succeeded select pending)
                 {
                     Parse(pending);
                     parsed.Add(pending.Name);
                 }
 
-                foreach (string file in parsed)
+                foreach (var file in parsed)
                 {
                     _pendings.Remove(file);
                 }
@@ -425,16 +422,16 @@ namespace Lextm.SharpSnmpLib.Mib
             
             watch.Stop();
             
-            foreach (string loaded in _loaded.Keys)
+            foreach (var loaded in _loaded.Keys)
             {
                 Logger.InfoFormat(CultureInfo.InvariantCulture, "{0} is parsed", loaded);
             }
             
-            foreach (MibModule module in _pendings.Values)
+            foreach (var module in _pendings.Values)
             {
-                StringBuilder builder = new StringBuilder(module.Name);
+                var builder = new StringBuilder(module.Name);
                 builder.Append(" is pending. Missing dependencies: ");
-                foreach (string depend in module.Dependents.Where(depend => !LoadedModules.Contains(depend)))
+                foreach (var depend in module.Dependents.Where(depend => !LoadedModules.Contains(depend)))
                 {
                     builder.Append(depend).Append(' ');
                 }
@@ -499,13 +496,13 @@ namespace Lextm.SharpSnmpLib.Mib
 
         private void AddNodes(IEnumerable<Definition> nodes)
         {
-            List<Definition> pendings = new List<Definition>(nodes);
-            int current = pendings.Count;
+            var pendings = new List<Definition>(nodes);
+            var current = pendings.Count;
             while (current != 0)
             {
-                int previous = current;
-                List<Definition> parsed = new List<Definition>();
-                foreach (Definition node in pendings)
+                var previous = current;
+                var parsed = new List<Definition>();
+                foreach (var node in pendings)
                 {
                     IDefinition parent = Find(Definition.GetParent(node));
                     if (parent == null)
@@ -519,7 +516,7 @@ namespace Lextm.SharpSnmpLib.Mib
                     parsed.Add(node);
                 }
 
-                foreach (Definition d in parsed)
+                foreach (var d in parsed)
                 {
                     pendings.Remove(d);
                 }
@@ -558,7 +555,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <returns></returns>
         internal static string ExtractName(string input)
         {
-            int left = input.IndexOf('(');
+            var left = input.IndexOf('(');
             return left == -1 ? input : input.Substring(0, left);
         }
 
@@ -569,8 +566,8 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <returns></returns>
         internal static uint ExtractValue(string input)
         {
-            int left = input.IndexOf('(');
-            int right = input.IndexOf(')');
+            var left = input.IndexOf('(');
+            var right = input.IndexOf(')');
             if (left >= right)
             {
                 throw new FormatException("input does not contain a value");
@@ -599,15 +596,13 @@ namespace Lextm.SharpSnmpLib.Mib
         public object Decode(Variable v)
         {
             var def = Search(v.Id.ToNumerical()).Definition;
-            ObjectType o = def.Entity as ObjectType;
+            var o = def.Entity as ObjectType;
 
             if (o == null) { return null; }
 
-            TextualConvention tc = o.Syntax as TextualConvention;
+            var tc = o.Syntax as TextualConvention;
 
-            if (tc == null) { return null; }
-
-            return tc.Decode(v);
+            return tc == null ? null : tc.Decode(v);
         }
     }
 }

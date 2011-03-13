@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
@@ -14,15 +12,15 @@ namespace Lextm.SharpSnmpLib.Mib
     class UnsignedType : AbstractTypeAssignment
     {
         private string _module;
-        private string _name;
-        private IList<ValueRange> _ranges;
+        private readonly string _name;
+        private readonly IList<ValueRange> _ranges;
 
         public UnsignedType(string module, string name, Lexer lexer)
         {
             _module = module;
             _name = name;
 
-            Symbol temp = lexer.NextNonEOLSymbol;
+            var temp = lexer.NextNonEOLSymbol;
             if (temp == Symbol.OpenParentheses)
             {
                 _ranges = DecodeRanges(lexer);
@@ -39,24 +37,18 @@ namespace Lextm.SharpSnmpLib.Mib
             _name = name;
 
             temp = enumerator.NextNonEOLSymbol();
-            if (temp == Symbol.OpenParentheses)
+            if (temp != Symbol.OpenParentheses)
             {
-                _ranges = DecodeRanges(enumerator);
-                temp = enumerator.NextNonEOLSymbol();
+                return;
             }
+
+            _ranges = DecodeRanges(enumerator);
+            temp = enumerator.NextNonEOLSymbol();
         }
 
         public bool Contains(int value)
         {
-            foreach (ValueRange range in _ranges)
-            {
-                if (range.Contains(value))
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return _ranges.Any(range => range.Contains(value));
         }
 
         public override string Name

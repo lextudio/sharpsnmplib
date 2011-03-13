@@ -8,7 +8,7 @@
     <ProjectGuid>{60EA8A71-EE0B-4F0E-9485-B30B71D454D7}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Lextm.SharpSnmpLib.Browser</RootNamespace>
+    <RootNamespace>Lextm.SharpSnmpLib</RootNamespace>
     <AssemblyName>Browser</AssemblyName>
     <ApplicationIcon>Resources\internet-web-browser.ico</ApplicationIcon>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
@@ -82,80 +82,84 @@
     <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\lib\IOutputPanel.cs">
+      <Link>IOutputPanel.cs</Link>
+    </Compile>
+    <Compile Include="..\lib\OutputPanelAppender.cs">
+      <Link>OutputPanelAppender.cs</Link>
+    </Compile>
     <Compile Include="..\lib\SingleInstanceController.cs">
       <Link>SingleInstanceController.cs</Link>
     </Compile>
     <Compile Include="..\lib\WatchDog.cs">
       <Link>WatchDog.cs</Link>
     </Compile>
-    <Compile Include="AgentProfile.cs" />
-    <Compile Include="AgentProfileFactory.cs" />
-    <Compile Include="AgentProfilePanel.cs">
+    <Compile Include="Browser\AgentProfile.cs" />
+    <Compile Include="Browser\AgentProfileFactory.cs" />
+    <Compile Include="Browser\AgentProfilePanel.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AgentProfilePanel.Designer.cs">
+    <Compile Include="Browser\AgentProfilePanel.Designer.cs">
       <DependentUpon>AgentProfilePanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormIndex.cs">
+    <Compile Include="Browser\FormIndex.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormIndex.Designer.cs">
+    <Compile Include="Browser\FormIndex.Designer.cs">
       <DependentUpon>FormIndex.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormProfile.cs">
+    <Compile Include="Browser\FormProfile.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormProfile.Designer.cs">
+    <Compile Include="Browser\FormProfile.Designer.cs">
       <DependentUpon>FormProfile.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormSet.cs">
+    <Compile Include="Browser\FormSet.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormSet.Designer.cs">
+    <Compile Include="Browser\FormSet.Designer.cs">
       <DependentUpon>FormSet.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormTable.cs">
+    <Compile Include="Browser\FormTable.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormTable.Designer.cs">
+    <Compile Include="Browser\FormTable.Designer.cs">
       <DependentUpon>FormTable.cs</DependentUpon>
     </Compile>
-    <Compile Include="IOutputPanel.cs" />
-    <Compile Include="IProfileRegistry.cs" />
-    <Compile Include="MainForm.cs">
+    <Compile Include="Browser\IProfileRegistry.cs" />
+    <Compile Include="Browser\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
+    <Compile Include="Browser\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MibBrowserException.cs" />
-    <Compile Include="MibTreePanel.cs">
+    <Compile Include="Browser\MibBrowserException.cs" />
+    <Compile Include="Browser\MibTreePanel.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MibTreePanel.Designer.cs">
+    <Compile Include="Browser\MibTreePanel.Designer.cs">
       <DependentUpon>MibTreePanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="ModuleListPanel.cs">
+    <Compile Include="Browser\ModuleListPanel.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ModuleListPanel.Designer.cs">
+    <Compile Include="Browser\ModuleListPanel.Designer.cs">
       <DependentUpon>ModuleListPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="NormalAgentProfile.cs" />
-    <Compile Include="NotificationPanel.cs">
+    <Compile Include="Browser\NormalAgentProfile.cs" />
+    <Compile Include="Browser\NotificationPanel.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="NotificationPanel.Designer.cs">
+    <Compile Include="Browser\NotificationPanel.Designer.cs">
       <DependentUpon>NotificationPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="OutputPanel.cs">
+    <Compile Include="Browser\OutputPanel.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="OutputPanel.Designer.cs">
+    <Compile Include="Browser\OutputPanel.Designer.cs">
       <DependentUpon>OutputPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="OutputPanelAppender.cs" />
-    <Compile Include="ProfileRegistry.cs" />
+    <Compile Include="Browser\ProfileRegistry.cs" />
     <Compile Include="Program.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -165,45 +169,45 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="SecureAgentProfile.cs" />
-    <Compile Include="VersionCodeExtension.cs" />
-    <EmbeddedResource Include="AgentProfilePanel.resx">
+    <Compile Include="Browser\SecureAgentProfile.cs" />
+    <Compile Include="Browser\VersionCodeExtension.cs" />
+    <EmbeddedResource Include="Browser\AgentProfilePanel.resx">
       <DependentUpon>AgentProfilePanel.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormIndex.resx">
+    <EmbeddedResource Include="Browser\FormIndex.resx">
       <DependentUpon>FormIndex.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormProfile.resx">
+    <EmbeddedResource Include="Browser\FormProfile.resx">
       <DependentUpon>FormProfile.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormSet.resx">
+    <EmbeddedResource Include="Browser\FormSet.resx">
       <DependentUpon>FormSet.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormTable.resx">
+    <EmbeddedResource Include="Browser\FormTable.resx">
       <DependentUpon>FormTable.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
+    <EmbeddedResource Include="Browser\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="MibTreePanel.resx">
+    <EmbeddedResource Include="Browser\MibTreePanel.resx">
       <DependentUpon>MibTreePanel.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="ModuleListPanel.resx">
+    <EmbeddedResource Include="Browser\ModuleListPanel.resx">
       <DependentUpon>ModuleListPanel.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="NotificationPanel.resx">
+    <EmbeddedResource Include="Browser\NotificationPanel.resx">
       <DependentUpon>NotificationPanel.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="OutputPanel.resx">
+    <EmbeddedResource Include="Browser\OutputPanel.resx">
       <DependentUpon>OutputPanel.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -211,7 +215,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="license.txt" />
+    <None Include="Browser\license.txt" />
     <None Include="modules\index">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -287,6 +291,7 @@
   <ItemGroup>
     <None Include="Resources\media-playback-start.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\SharpSnmpLib\Microsoft.VersionNumber.targets" Condition=" '$(Configuration)' == 'Debug' " />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

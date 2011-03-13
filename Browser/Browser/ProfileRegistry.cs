@@ -116,8 +116,8 @@ namespace Lextm.SharpSnmpLib.Browser
 
         public void SaveProfiles()
         {
-            ICollection<Guid> keys = _profiles.Keys;
-            using (XmlTextWriter writer = new XmlTextWriter(SettingFile, null))
+            var keys = _profiles.Keys;
+            using (var writer = new XmlTextWriter(SettingFile, null))
             {
                 writer.Formatting = Formatting.Indented;
                 writer.WriteStartDocument();
@@ -126,7 +126,7 @@ namespace Lextm.SharpSnmpLib.Browser
                 writer.WriteString(_defaultProfile.Id.ToString());
                 writer.WriteEndAttribute();
 
-                foreach (Guid k in keys)
+                foreach (var k in keys)
                 {
                     writer.WriteStartElement(NameAdd);
                     
@@ -192,7 +192,7 @@ namespace Lextm.SharpSnmpLib.Browser
 
         private void LoadDefaultProfile()
         {
-            AgentProfile first = AgentProfileFactory.Create(Guid.Empty, VersionCode.V1, new IPEndPoint(IPAddress.Loopback, 161), "public", "private", "localhost", string.Empty, string.Empty, 0, 0, string.Empty, 1000);
+            var first = AgentProfileFactory.Create(Guid.Empty, VersionCode.V1, new IPEndPoint(IPAddress.Loopback, 161), "public", "private", "localhost", string.Empty, string.Empty, 0, 0, string.Empty, 1000);
             AddProfile(first);
             DefaultProfile = first;
         }
@@ -204,8 +204,8 @@ namespace Lextm.SharpSnmpLib.Browser
                 return 0;
             }
 
-            Guid defaultId = Guid.Empty;
-            using (XmlTextReader reader = new XmlTextReader(SettingFile))
+            var defaultId = Guid.Empty;
+            using (var reader = new XmlTextReader(SettingFile))
             {
                 try
                 {
@@ -221,22 +221,22 @@ namespace Lextm.SharpSnmpLib.Browser
                                     }
                                     else if (reader.Name == NameAdd)
                                     {
-                                        string name = reader.GetAttribute(NameName);
-                                        Guid id = new Guid(reader.GetAttribute(NameId));
-                                        string[] parts = reader.GetAttribute(NameBinding).Split(new[] { ':' });
-                                        IPAddress def = IPAddress.Parse(parts[0]);
-                                        int port = int.Parse(parts[1], CultureInfo.InvariantCulture);
-                                        VersionCode vc = (VersionCode)int.Parse(reader.GetAttribute(NameVersion), CultureInfo.InvariantCulture);
-                                        string get = reader.GetAttribute(NameGetCommunity);
-                                        string set = reader.GetAttribute(NameSetCommunity);
-                                        string authenticationPassphrase = reader.GetAttribute(NameAuthenticationPassphrase);
-                                        string privacyPassphrase = reader.GetAttribute(NamePrivacyPassphrase);
-                                        string authenticationMethod = reader.GetAttribute(NameAuthenticationMethod);
-                                        string privacyMethod = reader.GetAttribute(NamePrivacyMethod);
-                                        string userName = reader.GetAttribute(NameUserName);
-                                        int timeout = int.Parse(reader.GetAttribute(NameTimeout), CultureInfo.InvariantCulture);
+                                        var name = reader.GetAttribute(NameName);
+                                        var id = new Guid(reader.GetAttribute(NameId));
+                                        var parts = reader.GetAttribute(NameBinding).Split(new[] { ':' });
+                                        var def = IPAddress.Parse(parts[0]);
+                                        var port = int.Parse(parts[1], CultureInfo.InvariantCulture);
+                                        var vc = (VersionCode)int.Parse(reader.GetAttribute(NameVersion), CultureInfo.InvariantCulture);
+                                        var get = reader.GetAttribute(NameGetCommunity);
+                                        var set = reader.GetAttribute(NameSetCommunity);
+                                        var authenticationPassphrase = reader.GetAttribute(NameAuthenticationPassphrase);
+                                        var privacyPassphrase = reader.GetAttribute(NamePrivacyPassphrase);
+                                        var authenticationMethod = reader.GetAttribute(NameAuthenticationMethod);
+                                        var privacyMethod = reader.GetAttribute(NamePrivacyMethod);
+                                        var userName = reader.GetAttribute(NameUserName);
+                                        var timeout = int.Parse(reader.GetAttribute(NameTimeout), CultureInfo.InvariantCulture);
 
-                                        AgentProfile profile = AgentProfileFactory.Create(
+                                        var profile = AgentProfileFactory.Create(
                                             id, 
                                             vc, 
                                             new IPEndPoint(def, port), 
