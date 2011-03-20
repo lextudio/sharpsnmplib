@@ -36,8 +36,8 @@ namespace SnmpSet
             string privPhrase = string.Empty;
 
             OptionSet p = new OptionSet()
-                .Add("c:", "-c for community name, (default is public)", delegate(string v) { if (v != null) community = v; })
-                .Add("l:", "-l for security level, (default is noAuthNoPriv)", delegate(string v)
+                .Add("c:", "Community name, (default is public)", delegate(string v) { if (v != null) community = v; })
+                .Add("l:", "Security level, (default is noAuthNoPriv)", delegate(string v)
                                                                                    {
                                                                                        if (v.ToUpperInvariant() == "NOAUTHNOPRIV")
                                                                                        {
@@ -56,16 +56,16 @@ namespace SnmpSet
                                                                                            throw new ArgumentException("no such security mode: " + v);
                                                                                        }
                                                                                    })
-                .Add("a:", "-a for authentication method (MD5 or SHA)", delegate(string v) { authentication = v; })
-                .Add("A:", "-A for authentication passphrase", delegate(string v) { authPhrase = v; })
-                .Add("x:", "-x for privacy method", delegate(string v) { privacy = v; })
-                .Add("X:", "-X for privacy passphrase", delegate(string v) { privPhrase = v; })
-                .Add("u:", "-u for security name", delegate(string v) { user = v; })
-                .Add("h|?|help", "-h, -?, -help for help.", delegate(string v) { showHelp = v != null; })
-                .Add("V", "-V to display version number of this application.", delegate(string v) { showVersion = v != null; })
-                .Add("t:", "-t for timeout value (unit is second).", delegate(string v) { timeout = int.Parse(v) * 1000; })
-                .Add("r:", "-r for retry count (default is 0)", delegate(string v) { retry = int.Parse(v); })
-                .Add("v:", "-v for SNMP version (1, 2, and 3 are currently supported)", delegate(string v)
+                .Add("a:", "Authentication method (MD5 or SHA)", delegate(string v) { authentication = v; })
+                .Add("A:", "Authentication passphrase", delegate(string v) { authPhrase = v; })
+                .Add("x:", "Privacy method", delegate(string v) { privacy = v; })
+                .Add("X:", "Privacy passphrase", delegate(string v) { privPhrase = v; })
+                .Add("u:", "Security name", delegate(string v) { user = v; })
+                .Add("h|?|help", "Print this help information.", delegate(string v) { showHelp = v != null; })
+                .Add("V", "Display version number of this application.", delegate(string v) { showVersion = v != null; })
+                .Add("t:", "Timeout value (unit is second).", delegate(string v) { timeout = int.Parse(v) * 1000; })
+                .Add("r:", "Retry count (default is 0)", delegate(string v) { retry = int.Parse(v); })
+                .Add("v:", "SNMP version (1, 2, and 3 are currently supported)", delegate(string v)
                                                                                        {
                                                                                            switch (int.Parse(v))
                                                                                            {
@@ -83,23 +83,38 @@ namespace SnmpSet
                                                                                            }
                                                                                        });
 
-            List<string> extra = p.Parse(args);
+            if (args.Length == 0)
+            {
+                ShowHelp(p);
+                return;
+            }
+
+            List<string> extra;
+            try
+            {
+                extra = p.Parse(args);
+            }
+            catch (OptionException ex)
+            {
+                Console.WriteLine(ex.Message);
+                return;
+            }
 
             if (showHelp)
             {
-                ShowHelp();
+                ShowHelp(p);
+                return;
+            }
+
+            if ((extra.Count - 1) % 3 != 0)
+            {
+                Console.WriteLine("invalid variable number: " + extra.Count);
                 return;
             }
 
             if (showVersion)
             {
                 Console.WriteLine(System.Reflection.Assembly.GetExecutingAssembly().GetName().Version);
-                return;
-            }
-
-            if (extra.Count < 2)
-            {
-                ShowHelp();
                 return;
             }
 
@@ -119,12 +134,6 @@ namespace SnmpSet
                     Console.WriteLine("invalid host or wrong IP address found: " + extra[0]);
                     return;
                 }
-            }
-
-            if ((extra.Count - 1) % 3 != 0)
-            {
-                Console.WriteLine("invalid variable number: " + (extra.Count - 1));
-                return;
             }
 
             try
@@ -255,9 +264,12 @@ namespace SnmpSet
             throw new ArgumentException("unknown name", "authentication");
         }
 
-        private static void ShowHelp()
+        private static void ShowHelp(OptionSet optionSet)
         {
             Console.WriteLine("#SNMP is available at http://sharpsnmplib.codeplex.com");
+            Console.WriteLine("snmpset [Options] IP-address|host-name OID TYPE VALUE [OID TYPE VALUE] ...");
+            Console.WriteLine("Options:");
+            optionSet.WriteOptionDescriptions(Console.Out);
         }
     }
 }

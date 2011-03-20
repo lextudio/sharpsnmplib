@@ -38,8 +38,8 @@ namespace SnmpBulkGet
             int nonRepeaters = 0;
 
             OptionSet p = new OptionSet()
-                .Add("c:", "-c for community name, (default is public)", delegate (string v) { if (v != null) community = v; })
-                .Add("l:", "-l for security level, (default is noAuthNoPriv)", delegate(string v)
+                .Add("c:", "Community name, (default is public)", delegate (string v) { if (v != null) community = v; })
+                .Add("l:", "Security level, (default is noAuthNoPriv)", delegate(string v)
                                                                                    {
                                                                                        if (v.ToUpperInvariant() == "NOAUTHNOPRIV")
                                                                                        {
@@ -58,18 +58,18 @@ namespace SnmpBulkGet
                                                                                            throw new ArgumentException("no such security mode: " + v);
                                                                                        }
                                                                                    })
-                .Add("Cn:", "-Cn for non-repeaters (default is 0)", delegate(string v) { nonRepeaters = int.Parse(v); })
-                .Add("Cr:", "-Cr for max-repetitions (default is 10)", delegate(string v) { maxRepetitions = int.Parse(v); })
-                .Add("a:", "-a for authentication method (MD5 or SHA)", delegate(string v) { authentication = v; })
-                .Add("A:", "-A for authentication passphrase", delegate(string v) { authPhrase = v; })
-                .Add("x:", "-x for privacy method", delegate(string v) { privacy = v; })
-                .Add("X:", "-X for privacy passphrase", delegate(string v) { privPhrase = v; })
-                .Add("u:", "-u for security name", delegate(string v) { user = v; })
-                .Add("h|?|help", "-h, -?, -help for help.", delegate(string v) { showHelp = v != null; })
-                .Add("V", "-V to display version number of this application.", delegate (string v) { showVersion = v != null; })
-                .Add("t:", "-t for timeout value (unit is second).", delegate (string v) { timeout = int.Parse(v) * 1000; })
-                .Add("r:", "-r for retry count (default is 0)", delegate (string v) { retry = int.Parse(v); })
-                .Add("v:", "-v for SNMP version (2 and 3 are currently supported)", delegate (string v)
+                .Add("Cn:", "Non-repeaters (default is 0)", delegate(string v) { nonRepeaters = int.Parse(v); })
+                .Add("Cr:", "Max-repetitions (default is 10)", delegate(string v) { maxRepetitions = int.Parse(v); })
+                .Add("a:", "Authentication method (MD5 or SHA)", delegate(string v) { authentication = v; })
+                .Add("A:", "Authentication passphrase", delegate(string v) { authPhrase = v; })
+                .Add("x:", "Privacy method", delegate(string v) { privacy = v; })
+                .Add("X:", "Privacy passphrase", delegate(string v) { privPhrase = v; })
+                .Add("u:", "Security name", delegate(string v) { user = v; })
+                .Add("h|?|help", "Print this help information.", delegate(string v) { showHelp = v != null; })
+                .Add("V", "Display version number of this application.", delegate (string v) { showVersion = v != null; })
+                .Add("t:", "Timeout value (unit is second).", delegate (string v) { timeout = int.Parse(v) * 1000; })
+                .Add("r:", "Retry count (default is 0)", delegate (string v) { retry = int.Parse(v); })
+                .Add("v:", "SNMP version (2 and 3 are currently supported)", delegate (string v)
                                                                                        {
                                                                                            switch (int.Parse(v))
                                                                                            {
@@ -84,23 +84,38 @@ namespace SnmpBulkGet
                                                                                            }
                                                                                        });
             
-            List<string> extra = p.Parse (args);
-            
-            if (showHelp)
+            if (args.Length == 0)
             {
-                ShowHelp();
+                ShowHelp(p);
                 return;
             }
-            
-            if (showVersion)
+
+            List<string> extra;
+            try
             {
-                Console.WriteLine(System.Reflection.Assembly.GetExecutingAssembly().GetName().Version);
+                extra = p.Parse(args);
+            }
+            catch(OptionException ex)
+            {
+                Console.WriteLine(ex.Message);
+                return;
+            }
+
+            if (showHelp)
+            {
+                ShowHelp(p);
                 return;
             }
 
             if (extra.Count < 2)
             {
-                ShowHelp();
+                Console.WriteLine("invalid variable number: " + extra.Count);
+                return;
+            } 
+            
+            if (showVersion)
+            {
+                Console.WriteLine(System.Reflection.Assembly.GetExecutingAssembly().GetName().Version);
                 return;
             }
             
@@ -221,9 +236,12 @@ namespace SnmpBulkGet
             throw new ArgumentException("unknown name", "authentication");
         }
         
-        private static void ShowHelp()
+        private static void ShowHelp(OptionSet optionSet)
         {
             Console.WriteLine("#SNMP is available at http://sharpsnmplib.codeplex.com");
+            Console.WriteLine("snmpbulkget [Options] IP-address|host-name OID [OID] ...");
+            Console.WriteLine("Options:");
+            optionSet.WriteOptionDescriptions(Console.Out);
         }
     }
 }

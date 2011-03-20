@@ -40,8 +40,8 @@ namespace SnmpWalk
             WalkMode mode = WalkMode.WithinSubtree;
 
             OptionSet p = new OptionSet()
-                .Add("c:", "-c for community name, (default is public)", delegate(string v) { if (v != null) community = v; })
-                .Add("l:", "-l for security level, (default is noAuthNoPriv)", delegate(string v)
+                .Add("c:", "Community name, (default is public)", delegate(string v) { if (v != null) community = v; })
+                .Add("l:", "Security level, (default is noAuthNoPriv)", delegate(string v)
                                                                                    {
                                                                                        if (v.ToUpperInvariant() == "NOAUTHNOPRIV")
                                                                                        {
@@ -60,17 +60,17 @@ namespace SnmpWalk
                                                                                            throw new ArgumentException("no such security mode: " + v);
                                                                                        }
                                                                                    })
-                .Add("a:", "-a for authentication method (MD5 or SHA)", delegate(string v) { authentication = v; })
-                .Add("A:", "-A for authentication passphrase", delegate(string v) { authPhrase = v; })
-                .Add("x:", "-x for privacy method", delegate(string v) { privacy = v; })
-                .Add("X:", "-X for privacy passphrase", delegate(string v) { privPhrase = v; })
-                .Add("u:", "-u for security name", delegate(string v) { user = v; })
-                .Add("h|?|help", "-h, -?, -help for help.", delegate(string v) { showHelp = v != null; })
-                .Add("V", "-V to display version number of this application.", delegate(string v) { showVersion = v != null; })
-                .Add("d", "-d to display message dump", delegate(string v) { dump = true; })
-                .Add("t:", "-t for timeout value (unit is second).", delegate(string v) { timeout = int.Parse(v) * 1000; })
-                .Add("r:", "-r for retry count (default is 0)", delegate(string v) { retry = int.Parse(v); })
-                .Add("v|version:", "-v for SNMP version (1, 2, and 3 are currently supported)", delegate(string v)
+                .Add("a:", "Authentication method (MD5 or SHA)", delegate(string v) { authentication = v; })
+                .Add("A:", "Authentication passphrase", delegate(string v) { authPhrase = v; })
+                .Add("x:", "Privacy method", delegate(string v) { privacy = v; })
+                .Add("X:", "Privacy passphrase", delegate(string v) { privPhrase = v; })
+                .Add("u:", "Security name", delegate(string v) { user = v; })
+                .Add("h|?|help", "Print this help information.", delegate(string v) { showHelp = v != null; })
+                .Add("V", "Display version number of this application.", delegate(string v) { showVersion = v != null; })
+                .Add("d", "Display message dump", delegate(string v) { dump = true; })
+                .Add("t:", "Timeout value (unit is second).", delegate(string v) { timeout = int.Parse(v) * 1000; })
+                .Add("r:", "Retry count (default is 0)", delegate(string v) { retry = int.Parse(v); })
+                .Add("v|version:", "SNMP version (1, 2, and 3 are currently supported)", delegate(string v)
                                                                                                {
                                                                                                    switch (int.Parse(v))
                                                                                                    {
@@ -87,7 +87,7 @@ namespace SnmpWalk
                                                                                                            throw new ArgumentException("no such version: " + v);
                                                                                                    }
                                                                                                })
-                .Add("m|mode:", "-m for WALK mode (subtree, all are supported)", delegate(string v)
+                .Add("m|mode:", "WALK mode (subtree, all are supported)", delegate(string v)
                                                                                      {
                                                                                          if (v == "subtree")
                                                                                          {
@@ -102,13 +102,34 @@ namespace SnmpWalk
                                                                                              throw new ArgumentException("unknown argument: " + v);
                                                                                          }
                                                                                      })
-                .Add("Cr:", "-Cr for max-repetitions (default is 10)", delegate(string v) { maxRepetitions = int.Parse(v); });
-        
-            List<string> extra = p.Parse (args);
-        
+                .Add("Cr:", "Max-repetitions (default is 10)", delegate(string v) { maxRepetitions = int.Parse(v); });
+
+            if (args.Length == 0)
+            {
+                ShowHelp(p);
+                return;
+            }
+
+            List<string> extra;
+            try
+            {
+                extra = p.Parse(args);
+            }
+            catch (OptionException ex)
+            {
+                Console.WriteLine(ex.Message);
+                return;
+            }
+
             if (showHelp)
             {
-                ShowHelp();
+                ShowHelp(p);
+                return;
+            }
+
+           if (extra.Count < 1 || extra.Count > 2)
+            {
+                Console.WriteLine("invalid variable number: " + extra.Count);
                 return;
             }
         
@@ -117,13 +138,7 @@ namespace SnmpWalk
                 Console.WriteLine(System.Reflection.Assembly.GetExecutingAssembly().GetName().Version);
                 return;
             }
-
-            if (extra.Count < 1 || extra.Count > 2)
-            {
-                ShowHelp();
-                return;
-            }
-        
+ 
             IPAddress ip;
             bool parsed = IPAddress.TryParse(extra[0], out ip);
             if (!parsed)
@@ -212,9 +227,12 @@ namespace SnmpWalk
             throw new ArgumentException("unknown name", "authentication");
         }
         
-        private static void ShowHelp()
+        private static void ShowHelp(OptionSet optionSet)
         {
             Console.WriteLine("#SNMP is available at http://sharpsnmplib.codeplex.com");
+            Console.WriteLine("snmpwalk [Options] IP-address|host-name [OID]");
+            Console.WriteLine("Options:");
+            optionSet.WriteOptionDescriptions(Console.Out);
         }
     }
 }

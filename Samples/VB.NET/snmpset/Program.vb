@@ -30,80 +30,90 @@ Module Program
         Dim privacy As String = String.Empty
         Dim privPhrase As String = String.Empty
 
-        Dim p As OptionSet = New OptionSet().Add("c:", "-c for community name, (default is public)",
-                                                 Sub(v As String)
-                                                     If v IsNot Nothing Then
-                                                         community = v
-                                                     End If
-                                                 End Sub).Add("l:", "-l for security level, (default is noAuthNoPriv)",
-                                                              Sub(v As String)
-                                                                  If v.ToUpperInvariant() = "NOAUTHNOPRIV" Then
-                                                                      level = Levels.Reportable
-                                                                  ElseIf v.ToUpperInvariant() = "AUTHNOPRIV" Then
-                                                                      level = Levels.Authentication Or Levels.Reportable
-                                                                  ElseIf v.ToUpperInvariant() = "AUTHPRIV" Then
-                                                                      level = Levels.Authentication Or Levels.Privacy Or Levels.Reportable
-                                                                  Else
-                                                                      Throw New ArgumentException("no such security mode: " & v)
-                                                                  End If
-                                                              End Sub).Add("a:", "-a for authentication method (MD5 or SHA)",
-                                                                           Sub(v As String)
-                                                                               authentication = v
-                                                                           End Sub).Add("A:", "-A for authentication passphrase",
-                                                                                        Sub(v As String)
-                                                                                            authPhrase = v
-                                                                                        End Sub).Add("x:", "-x for privacy method",
-                                                                                                     Sub(v As String)
-                                                                                                         privacy = v
-                                                                                                     End Sub).Add("X:", "-X for privacy passphrase",
-                                                                                                                  Sub(v As String)
-                                                                                                                      privPhrase = v
-                                                                                                                  End Sub).Add("u:", "-u for security name",
-                                                                                                                               Sub(v As String)
-                                                                                                                                   user = v
-                                                                                                                               End Sub).Add("h|?|help", "-h, -?, -help for help.",
-                                                                                                                                            Sub(v As String)
-                                                                                                                                                showHelp__1 = v IsNot Nothing
-                                                                                                                                            End Sub).Add("V", "-V to display version number of this application.",
-                                                                                                                                                         Sub(v As String)
-                                                                                                                                                             showVersion = v IsNot Nothing
-                                                                                                                                                         End Sub).Add("t:", "-t for timeout value (unit is second).",
-                                                                                                                                                                      Sub(v As String)
-                                                                                                                                                                          timeout = Integer.Parse(v) * 1000
-                                                                                                                                                                      End Sub).Add("r:", "-r for retry count (default is 0)",
-                                                                                                                                                                                   Sub(v As String)
-                                                                                                                                                                                       retry = Integer.Parse(v)
-                                                                                                                                                                                   End Sub).Add("v:", "-v for SNMP version (1, 2, and 3 are currently supported)",
-                                                                                                                                                                                                Sub(v As String)
-                                                                                                                                                                                                    Select Case Integer.Parse(v)
-                                                                                                                                                                                                        Case 1
-                                                                                                                                                                                                            version = VersionCode.V1
-                                                                                                                                                                                                            Exit Select
-                                                                                                                                                                                                        Case 2
-                                                                                                                                                                                                            version = VersionCode.V2
-                                                                                                                                                                                                            Exit Select
-                                                                                                                                                                                                        Case 3
-                                                                                                                                                                                                            version = VersionCode.V3
-                                                                                                                                                                                                            Exit Select
-                                                                                                                                                                                                        Case Else
-                                                                                                                                                                                                            Throw New ArgumentException("no such version: " & v)
-                                                                                                                                                                                                    End Select
-                                                                                                                                                                                                End Sub)
+        Dim p As OptionSet = New OptionSet().Add("c:", "Community name, (default is public)", Sub(v As String)
+                                                                                                  If v IsNot Nothing Then
+                                                                                                      community = v
+                                                                                                  End If
+                                                                                              End Sub) _
+                                            .Add("l:", "Security level, (default is noAuthNoPriv)", Sub(v As String)
+                                                                                                        If v.ToUpperInvariant() = "NOAUTHNOPRIV" Then
+                                                                                                            level = Levels.Reportable
+                                                                                                        ElseIf v.ToUpperInvariant() = "AUTHNOPRIV" Then
+                                                                                                            level = Levels.Authentication Or Levels.Reportable
+                                                                                                        ElseIf v.ToUpperInvariant() = "AUTHPRIV" Then
+                                                                                                            level = Levels.Authentication Or Levels.Privacy Or Levels.Reportable
+                                                                                                        Else
+                                                                                                            Throw New ArgumentException("no such security mode: " & v)
+                                                                                                        End If
+                                                                                                    End Sub) _
+                                            .Add("a:", "Authentication method (MD5 or SHA)", Sub(v As String)
+                                                                                                 authentication = v
+                                                                                             End Sub) _
+                                            .Add("A:", "Authentication passphrase", Sub(v As String)
+                                                                                        authPhrase = v
+                                                                                    End Sub) _
+                                            .Add("x:", "Privacy method", Sub(v As String)
+                                                                             privacy = v
+                                                                         End Sub) _
+                                            .Add("X:", "Privacy passphrase", Sub(v As String)
+                                                                                 privPhrase = v
+                                                                             End Sub) _
+                                            .Add("u:", "Security name", Sub(v As String)
+                                                                            user = v
+                                                                        End Sub) _
+                                            .Add("h|?|help", "Print this help information.", Sub(v As String)
+                                                                                                 showHelp__1 = v IsNot Nothing
+                                                                                             End Sub) _
+                                            .Add("V", "Display version number of this application.", Sub(v As String)
+                                                                                                         showVersion = v IsNot Nothing
+                                                                                                     End Sub) _
+                                            .Add("t:", "Timeout value (unit is second).", Sub(v As String)
+                                                                                              timeout = Integer.Parse(v) * 1000
+                                                                                          End Sub) _
+                                            .Add("r:", "Retry count (default is 0)", Sub(v As String)
+                                                                                         retry = Integer.Parse(v)
+                                                                                     End Sub) _
+                                            .Add("v:", "SNMP version (1, 2, and 3 are currently supported)", Sub(v As String)
+                                                                                                                 Select Case Integer.Parse(v)
+                                                                                                                     Case 1
+                                                                                                                         version = VersionCode.V1
+                                                                                                                         Exit Select
+                                                                                                                     Case 2
+                                                                                                                         version = VersionCode.V2
+                                                                                                                         Exit Select
+                                                                                                                     Case 3
+                                                                                                                         version = VersionCode.V3
+                                                                                                                         Exit Select
+                                                                                                                     Case Else
+                                                                                                                         Throw New ArgumentException("no such version: " & v)
+                                                                                                                 End Select
+                                                                                                             End Sub)
 
-        Dim extra As List(Of String) = p.Parse(args)
+        If args.Length = 0 Then
+            ShowHelp(p)
+            Return
+        End If
+
+        Dim extra As List(Of String)
+        Try
+            extra = p.Parse(args)
+        Catch ex As OptionException
+            Console.WriteLine(ex.Message)
+            Return
+        End Try
 
         If showHelp__1 Then
-            ShowHelp()
+            ShowHelp(p)
+            Return
+        End If
+
+        If (extra.Count - 1) Mod 3 <> 0 Then
+            Console.WriteLine("invalid variable number: " & extra.Count)
             Return
         End If
 
         If showVersion Then
             Console.WriteLine(System.Reflection.Assembly.GetExecutingAssembly().GetName().Version)
-            Return
-        End If
-
-        If extra.Count < 2 Then
-            ShowHelp()
             Return
         End If
 
@@ -123,11 +133,6 @@ Module Program
                 Console.WriteLine("invalid host or wrong IP address found: " & extra(0))
                 Return
             End If
-        End If
-
-        If (extra.Count - 1) Mod 3 <> 0 Then
-            Console.WriteLine("invalid variable number: " & (extra.Count - 1))
-            Return
         End If
 
         Try
@@ -236,7 +241,10 @@ Module Program
         Throw New ArgumentException("unknown name", "authentication")
     End Function
 
-    Private Sub ShowHelp()
+    Private Sub ShowHelp(ByRef optionSet As OptionSet)
         Console.WriteLine("#SNMP is available at http://sharpsnmplib.codeplex.com")
+        Console.WriteLine("snmpset [Options] IP-address|host-name OID TYPE VALUE [OID TYPE VALUE] ...")
+        Console.WriteLine("Options:")
+        optionSet.WriteOptionDescriptions(Console.Out)
     End Sub
 End Module
