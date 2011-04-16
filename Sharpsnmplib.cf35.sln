@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-# SharpDevelop 3.2.0.5935
+# SharpDevelop 4.1.0.7387-alpha
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sharpsnmplib.cf35", "SharpSnmpLib\sharpsnmplib.cf35.csproj", "{EBB48F98-32C4-474F-B691-3599827418A2}"
 EndProject
 Global

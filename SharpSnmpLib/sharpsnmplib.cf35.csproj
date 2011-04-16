@@ -92,13 +92,14 @@
     <Compile Include="IModule.cs" />
     <Compile Include="InformRequestPdu.cs" />
     <Compile Include="Integer32.cs" />
-    <Compile Include="Integer64.cs" />
     <Compile Include="IObjectRegistry.cs" />
     <Compile Include="IObjectTree.cs" />
     <Compile Include="IP.cs" />
     <Compile Include="ISegment.cs" />
     <Compile Include="ISnmpData.cs" />
     <Compile Include="ISnmpPdu.cs" />
+    <Compile Include="ITypeAssignment.cs" />
+    <Compile Include="Levels.cs" />
     <Compile Include="MalformedPdu.cs" />
     <Compile Include="Messaging\Discovery.cs" />
     <Compile Include="Messaging\EndPointExtension.cs" />
@@ -138,7 +139,6 @@
     <Compile Include="Security\DESPrivacyProvider.cs" />
     <Compile Include="Security\IAuthenticationProvider.cs" />
     <Compile Include="Security\IPrivacyProvider.cs" />
-    <Compile Include="Security\Levels.cs" />
     <Compile Include="Security\MD5AuthenticationProvider.cs" />
     <Compile Include="Security\PrivacyProviderExtension.cs" />
     <Compile Include="Security\SaltGenerator.cs" />

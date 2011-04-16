@@ -15,7 +15,7 @@
     <TargetFrameworkProfile />
     <SourceAnalysisOverrideSettingsFile>C:\Users\Administrator\AppData\Roaming\ICSharpCode/SharpDevelop3.0\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
     <SignAssembly>True</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\SharpSnmpLib\sharpsnmplib.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>sharpsnmplib.tests.snk</AssemblyOriginatorKeyFile>
     <DelaySign>False</DelaySign>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
     <SccProjectName>
@@ -163,6 +163,7 @@
     <None Include="Resources\empty.txt" />
     <None Include="Resources\httpmib.txt" />
     <None Include="Resources\v3authNoPriv_BER_Issue" />
+    <None Include="sharpsnmplib.tests.snk" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\ACTONA-ACTASTOR-MIB.mib" />
