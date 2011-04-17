@@ -1,1 +1,1 @@
-cp SharpSnmpLib/sharpsnmplib.snk.bak SharpSnmpLib/sharpsnmplib.snk
+cp Tests/sharpsnmplib.tests.snk SharpSnmpLib/sharpsnmplib.snk
