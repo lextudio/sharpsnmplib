@@ -64,6 +64,16 @@ namespace Lextm.SharpSnmpLib.Tests
             ByteTool.WritePayloadLength(m, length);
             Assert.AreEqual(expected, m.ToArray());
         }
+                
+        [Test]
+        public void TestNegative2()
+        {
+            // bug 7217 http://sharpsnmplib.codeplex.com/workitem/7217
+            Integer32 i = new Integer32(-250);
+            var result = DataFactory.CreateSnmpData(i.ToBytes());
+            Assert.AreEqual(SnmpType.Integer32, result.TypeCode);
+            Assert.AreEqual(-250, ((Integer32)result).ToInt32());
+        }
     }
 }
 #pragma warning restore 1591, 0618

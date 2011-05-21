@@ -350,7 +350,7 @@ namespace Lextm.SharpSnmpLib
             // if sign bit is not correct, add an extra byte
             if ((list[list.Count - 1] & 0x80) != sign)
             {
-                list.Add(sign);
+                list.Add(flag);
             }
 
             list.Reverse();
