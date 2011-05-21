@@ -99,6 +99,16 @@ namespace Lextm.SharpSnmpLib.Tests
             Integer32 i = new Integer32(-1);
             Assert.AreEqual(new byte[] {0x02, 0x01, 0xFF}, i.ToBytes());
         }
+        
+        [Test]
+        public void TestNegative2()
+        {
+            // bug 7217 http://sharpsnmplib.codeplex.com/workitem/7217
+            Integer32 i = new Integer32(-250);
+            var result = DataFactory.CreateSnmpData(i.ToBytes());
+            Assert.AreEqual(SnmpType.Integer32, result.TypeCode);
+            Assert.AreEqual(-250, ((Integer32)result).ToInt32());
+        }
     }
 }
 #pragma warning restore 1591,0618
