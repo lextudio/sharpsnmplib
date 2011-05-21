@@ -10,7 +10,10 @@ The #SNMP MIB Compiler source code (Compiler.exe and related) is released under 
 
 The #SNMP Agent source code (snmpd.exe) is released under MIT/X11 License. 
 
-Other demo source code is released in public domain.
+Other sample source code is released in public domain.
+
+*Samples*
+All samples are provided in source code only. Please check out source code and find them.
 
 *Build From Source Code*
 Please read KB articles on the project site, http://sharpsnmplib.codeplex.com/wikipage?title=KB

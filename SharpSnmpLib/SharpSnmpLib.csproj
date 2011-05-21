@@ -135,6 +135,10 @@
     <Compile Include="TrapV2Pdu.cs" />
     <Compile Include="Variable.cs" />
     <Compile Include="VersionCode.cs" />
+    <None Include="..\readme.txt">
+      <Link>readme.txt</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="gendarme.ignore" />
     <None Include="license.txt" />
     <None Include="Microsoft.VersionNumber.targets" />
