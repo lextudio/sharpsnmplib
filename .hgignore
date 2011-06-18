@@ -14,3 +14,6 @@ glob:StyleCop.Cache
 glob:StyleCopViolations.xml
 glob:Tests/PartCover/coverage.xml
 glob:NDependOut/*
+syntax: glob
+SharpSnmpLib.*.ReSharper
+SharpSnmpLib.sln.docstates

@@ -18,17 +18,17 @@
     </Target>
 	<Target Name="Clean">
 	    <MSBuild Projects="sharpsnmplib.sln" Targets="Clean" />
-	    <MSBuild Projects="sharpsnmplib.sln" Properties="Configuration=Release" Targets="Clean" />
+	    <MSBuild Projects="sharpsnmplib.sln" Properties="Configuration=Release;Platform=Any CPU" Targets="Clean" />
 	</Target>	
     <Target Name="Debug">
         <MSBuild Projects="sharpsnmplib.sln" />
     </Target>
     <Target Name="Release">
-        <MSBuild Projects="sharpsnmplib.sln" Properties="Configuration=Release" />
+        <MSBuild Projects="sharpsnmplib.sln" Properties="Configuration=Release;Platform=Any CPU" />
     </Target>
 	<Target Name="Package" DependsOnTargets="Release">
-	    <MSBuild Projects="sharpsnmplib.cf35.sln"  Properties="Configuration=Release" />
-	    <MSBuild Projects="sharpsnmplib.shfbproj" Properties="Configuration=Release" />
+	    <MSBuild Projects="sharpsnmplib.cf35.sln"  Properties="Configuration=Release;Platform=Any CPU" />
+	    <MSBuild Projects="sharpsnmplib.shfbproj" Properties="Configuration=Release;Platform=Any CPU" />
 	</Target>
     <!--<Target Name="CF">
         <MSBuild Projects="sharpsnmplib.cf35.sln" Properties="Configuration=Release"/>
