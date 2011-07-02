@@ -17,3 +17,4 @@ glob:NDependOut/*
 syntax: glob
 SharpSnmpLib.*.ReSharper
 SharpSnmpLib.sln.docstates
+*.dotCover
