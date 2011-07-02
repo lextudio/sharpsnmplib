@@ -35,9 +35,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
     /// <remarks>
     /// Follows RFC 1157, 4.1.5
     /// </remarks>
-// ReSharper disable UnusedMember.Global
     public class SetV1MessageHandler : IMessageHandler
-// ReSharper restore UnusedMember.Global
     {
         /// <summary>
         /// Handles the specified message.

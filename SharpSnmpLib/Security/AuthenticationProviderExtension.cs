@@ -129,6 +129,7 @@ namespace Lextm.SharpSnmpLib.Security
             }
 
             var scopeData = privacy.GetScopeData(header, parameters, scope.GetData(version));
+            
             // replace the hash.
             parameters.AuthenticationParameters = authen.ComputeHash(version, header, parameters, scopeData, privacy);
         }

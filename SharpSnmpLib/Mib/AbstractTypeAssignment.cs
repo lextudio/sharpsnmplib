@@ -59,10 +59,10 @@ namespace Lextm.SharpSnmpLib.Mib
                     value1.Validate(range.Start < 0, "invalid sub-typing; size must be greater than 0");
                 }
 
-                value1.Validate(this.Contains(range.Start, _ranges), "invalid sub-typing");
+                value1.Validate(Contains(range.Start, _ranges), "invalid sub-typing");
                 if (value2 != null)
                 {
-                    value2.Validate(this.Contains((int)range.End, _ranges), "invalid sub-typing");
+                    value2.Validate(Contains((int)range.End, _ranges), "invalid sub-typing");
                 }
 
                 foreach (ValueRange other in _ranges)
@@ -120,7 +120,7 @@ namespace Lextm.SharpSnmpLib.Mib
             return _map;
         }
 
-        private bool Contains(Int64 value, IList<ValueRange> ranges)
+        private static bool Contains(Int64 value, IList<ValueRange> ranges)
         {
             foreach (ValueRange range in ranges)
             {

@@ -23,9 +23,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
     /// <summary>
     /// Message handler for INFORM.
     /// </summary>    
-// ReSharper disable ClassNeverInstantiated.Global
     public class InformRequestMessageHandler : IMessageHandler
-// ReSharper restore ClassNeverInstantiated.Global
     {
         /// <summary>
         /// Handles the specified message.

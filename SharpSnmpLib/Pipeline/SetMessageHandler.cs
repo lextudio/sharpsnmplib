@@ -37,9 +37,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
     ///   commitFailed,
     ///   undoFailed
     /// </remarks>
-    // ReSharper disable UnusedMember.Global
     public class SetMessageHandler : IMessageHandler
-    // ReSharper restore UnusedMember.Global
     {
         /// <summary>
         /// Handles the specified message.

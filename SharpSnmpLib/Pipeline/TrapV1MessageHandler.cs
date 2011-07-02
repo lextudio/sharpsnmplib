@@ -23,9 +23,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
     /// <summary>
     /// Message handler for TRAP v1.
     /// </summary>    
-// ReSharper disable ClassNeverInstantiated.Global
     public class TrapV1MessageHandler : IMessageHandler
-// ReSharper restore ClassNeverInstantiated.Global
     {
         /// <summary>
         /// Handles the specified message.
