@@ -54,7 +54,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 new Header(
                     new Integer32(Request.MessageId()),
                     new Integer32(Messenger.MaxMessageSize),
-                    0),
+                    0), // no need to encrypt.
                 new SecurityParameters(
                     Group.EngineId,
                     new Integer32(Group.EngineBoots),
@@ -87,7 +87,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                     new Header(
                         new Integer32(Request.MessageId()),
                         new Integer32(Messenger.MaxMessageSize),
-                        0),
+                        privacy.ToSecurityLevel()),
                     new SecurityParameters(
                         Group.EngineId,
                         new Integer32(Group.EngineBoots),
@@ -123,7 +123,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 new Header(
                     new Integer32(Request.MessageId()),
                     new Integer32(Messenger.MaxMessageSize),
-                    0),
+                    privacy.ToSecurityLevel()),
                 new SecurityParameters(
                     Group.EngineId,
                     new Integer32(Group.EngineBoots),
@@ -194,7 +194,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 new Header(
                     new Integer32(Request.MessageId()),
                     new Integer32(Messenger.MaxMessageSize),
-                    0),
+                    0), // no need to encrypt for discovery.
                 new SecurityParameters(
                     Group.EngineId,
                     Integer32.Zero,
@@ -235,7 +235,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 new Header(
                     new Integer32(Request.MessageId()),
                     new Integer32(Messenger.MaxMessageSize),
-                    0),
+                    privacy.ToSecurityLevel()),
                 new SecurityParameters(
                     Group.EngineId,
                     new Integer32(Group.EngineBoots),
