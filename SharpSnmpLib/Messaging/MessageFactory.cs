@@ -183,8 +183,15 @@ namespace Lextm.SharpSnmpLib.Messaging
                 else
                 {
                     throw new SnmpException(string.Format(CultureInfo.InvariantCulture, "invalid v3 packets scoped data: {0}", code));
-                }
+                }     
 
+                var error = scope.Pdu.ErrorStatus.ToErrorCode();
+                if (error != ErrorCode.NoError)
+                {
+                    // TODO: how to properly handle other errors?
+                    throw new SnmpException(error.ToString());
+                }                    
+                
                 if (!privacy.AuthenticationProvider.VerifyHash(stream, parameters.AuthenticationParameters, parameters.EngineId))
                 {
                     throw new SnmpException("invalid v3 packet data hash detected");
