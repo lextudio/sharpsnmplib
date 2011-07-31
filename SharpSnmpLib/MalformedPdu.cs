@@ -50,7 +50,7 @@ namespace Lextm.SharpSnmpLib
         /// <value>The request ID.</value>
         public Integer32 RequestId
         {
-            get { throw new NotSupportedException(); }
+            get { return Integer32.Zero; } // return zero to fix SecureSnmpContext.HandleAuthenticationFailure.
         }
 
         /// <summary>
