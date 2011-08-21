@@ -26,17 +26,17 @@ namespace Lextm.SharpSnmpLib.Pipeline
     /// <summary>
     /// SNMP context.
     /// </summary>
-    internal abstract class SnmpContext : ISnmpContext
+    internal abstract class SnmpContextBase : ISnmpContext
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SnmpContext"/> class.
+        /// Initializes a new instance of the <see cref="SnmpContextBase"/> class.
         /// </summary>
         /// <param name="request">The request.</param>
         /// <param name="sender">The sender.</param>
         /// <param name="users">The users.</param>
         /// <param name="group">The engine core group.</param>
         /// <param name="binding">The binding.</param>
-        protected SnmpContext(ISnmpMessage request, IPEndPoint sender, UserRegistry users, EngineGroup group, IListenerBinding binding)
+        protected SnmpContextBase(ISnmpMessage request, IPEndPoint sender, UserRegistry users, EngineGroup group, IListenerBinding binding)
         {
             Request = request;
             Binding = binding;

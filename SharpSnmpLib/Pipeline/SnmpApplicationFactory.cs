@@ -23,7 +23,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
     /// SNMP application factory, who holds all pipeline instances.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
-    public class SnmpApplicationFactory
+    public sealed class SnmpApplicationFactory
     {
         private readonly ILogger _logger;
         private readonly ObjectStore _store;

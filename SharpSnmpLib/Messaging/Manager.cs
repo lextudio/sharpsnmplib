@@ -33,7 +33,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// </remarks>
     [CLSCompliant(false)]
     [Obsolete("Please use Messenger class instead.")]
-    public class Manager
+    public sealed class Manager
     {
         private const int DefaultPort = 161;
         private readonly object _locker = new object();

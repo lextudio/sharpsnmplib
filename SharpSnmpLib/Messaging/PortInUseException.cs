@@ -27,7 +27,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// Exception raised when an IP endpoint is already in use.
     /// </summary>
     [Serializable]
-    public class PortInUseException : SnmpException
+    public sealed class PortInUseException : SnmpException
     {
         /// <summary>
         /// Creates a <see cref="PortInUseException"/>.
@@ -61,7 +61,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         /// <param name="info">Info</param>
         /// <param name="context">Context</param>
-        protected PortInUseException(SerializationInfo info, StreamingContext context)
+        private PortInUseException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
             if (info == null)

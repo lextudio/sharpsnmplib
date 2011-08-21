@@ -23,7 +23,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
     /// <summary>
     /// Message handler for TRAP v1.
     /// </summary>    
-    public class TrapV1MessageHandler : IMessageHandler
+    public sealed class TrapV1MessageHandler : IMessageHandler
     {
         /// <summary>
         /// Handles the specified message.

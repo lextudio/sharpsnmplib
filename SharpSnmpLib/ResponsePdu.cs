@@ -35,7 +35,7 @@ namespace Lextm.SharpSnmpLib
     /// Response PDU.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu")]
-    public class ResponsePdu : ISnmpPdu
+    public sealed class ResponsePdu : ISnmpPdu
     {
         private readonly Sequence _varbindSection;
         private byte[] _raw;

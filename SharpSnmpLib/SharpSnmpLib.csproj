@@ -128,10 +128,10 @@
     <Compile Include="Pipeline\SetV1MessageHandler.cs" />
     <Compile Include="Pipeline\SnmpApplication.cs" />
     <Compile Include="Pipeline\SnmpApplicationFactory.cs" />
-    <Compile Include="Pipeline\SnmpContext.cs" />
+    <Compile Include="Pipeline\SnmpContextBase.cs" />
     <Compile Include="Pipeline\SnmpContextFactory.cs" />
     <Compile Include="Pipeline\SnmpEngine.cs" />
-    <Compile Include="Pipeline\SnmpObject.cs" />
+    <Compile Include="Pipeline\SnmpObjectBase.cs" />
     <Compile Include="Pipeline\TableObject.cs" />
     <Compile Include="Pipeline\TrapV1MessageHandler.cs" />
     <Compile Include="Pipeline\TrapV1MessageReceivedEventArgs.cs" />

@@ -35,7 +35,7 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     /// <remarks>represents the PDU of trap v1 message.</remarks>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu")]
-    public class TrapV1Pdu : ISnmpPdu
+    public sealed class TrapV1Pdu : ISnmpPdu
     {
         private byte[] _raw;
         private readonly Integer32 _generic;

@@ -35,7 +35,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
     /// <remarks>
     /// Follows RFC 1157, 4.1.5
     /// </remarks>
-    public class SetV1MessageHandler : IMessageHandler
+    public sealed class SetV1MessageHandler : IMessageHandler
     {
         /// <summary>
         /// Handles the specified message.

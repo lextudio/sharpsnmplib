@@ -34,7 +34,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
     /// Message handler factory.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
-    public class MessageHandlerFactory
+    public sealed class MessageHandlerFactory
     {
         private readonly HandlerMapping[] _mappings;
         private readonly NullMessageHandler _nullHandler = new NullMessageHandler();

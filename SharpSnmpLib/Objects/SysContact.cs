@@ -23,7 +23,7 @@ namespace Lextm.SharpSnmpLib.Objects
     /// <summary>
     /// sysContact object.
     /// </summary>
-    public class SysContact : ScalarObject
+    public sealed class SysContact : ScalarObject
     {
         private OctetString _contact = new OctetString(Environment.UserName);
 

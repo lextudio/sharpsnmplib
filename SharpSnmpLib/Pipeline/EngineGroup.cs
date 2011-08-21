@@ -22,7 +22,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
     /// <summary>
     /// Engine group which contains all related objects.
     /// </summary>
-    public class EngineGroup
+    public sealed class EngineGroup
     {
         // TODO: make engine ID configurable from outside and unique.
         private readonly OctetString _engineId =

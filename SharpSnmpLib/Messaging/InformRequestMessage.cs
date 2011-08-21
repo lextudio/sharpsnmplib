@@ -33,7 +33,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// <summary>
     /// INFORM request message.
     /// </summary>
-    public class InformRequestMessage : ISnmpMessage
+    public sealed class InformRequestMessage : ISnmpMessage
     {
         private readonly byte[] _bytes;
 

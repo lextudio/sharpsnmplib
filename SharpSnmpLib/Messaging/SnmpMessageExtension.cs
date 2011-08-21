@@ -553,7 +553,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("message");
             }
 
-            return PackMessage(
+            return ByteTool.PackMessage(
                 message.Version,
                 message.Header,
                 message.Parameters,
@@ -576,33 +576,6 @@ namespace Lextm.SharpSnmpLib.Messaging
             var collection = new List<ISnmpData>(1 + data.Length) { new Integer32((int)version) };
             collection.AddRange(data);
             return new Sequence(collection);
-        }
-
-        internal static Sequence PackMessage(VersionCode version, ISegment header, ISegment parameters, ISnmpData data)
-        {
-            if (header == null)
-            {
-                throw new ArgumentNullException("header");
-            }
-
-            if (parameters == null)
-            {
-                throw new ArgumentNullException("parameters");
-            }
-
-            if (data == null)
-            {
-                throw new ArgumentNullException("data");
-            }
-
-            var items = new[]
-            {
-                new Integer32((int)version),
-                header.GetData(version),
-                parameters.GetData(version),
-                data
-            };
-            return new Sequence(items);
         }
 
         /// <summary>

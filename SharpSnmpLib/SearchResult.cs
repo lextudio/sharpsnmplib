@@ -24,7 +24,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// Search result.
     /// </summary>
-    public class SearchResult
+    public sealed class SearchResult
     {
         private readonly uint[] _remaining;
         

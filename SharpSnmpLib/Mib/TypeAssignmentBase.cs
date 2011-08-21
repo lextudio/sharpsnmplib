@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
-    abstract class AbstractTypeAssignment : ITypeAssignment
+    abstract class TypeAssignmentBase : ITypeAssignment
     {
         protected Symbol Next(object o)
         {

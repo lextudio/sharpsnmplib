@@ -25,7 +25,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
     /// <summary>
     /// Nomral SNMP context class. It is v1 and v2c specific.
     /// </summary>
-    internal sealed class NormalSnmpContext : SnmpContext
+    internal sealed class NormalSnmpContext : SnmpContextBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="NormalSnmpContext"/> class.

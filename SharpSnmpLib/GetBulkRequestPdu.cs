@@ -34,7 +34,7 @@ namespace Lextm.SharpSnmpLib
     /// GETBULK request PDU.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu")]
-    public class GetBulkRequestPdu : ISnmpPdu
+    public sealed class GetBulkRequestPdu : ISnmpPdu
     {
         private byte[] _raw;
         private readonly Sequence _varbindSection;

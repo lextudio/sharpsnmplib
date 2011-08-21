@@ -56,7 +56,7 @@
     <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Mib\AbstractTypeAssignment.cs" />
+    <Compile Include="Mib\TypeAssignmentBase.cs" />
     <Compile Include="Mib\Assembler.cs" />
     <Compile Include="Mib\AgentCapabilities.cs" />
     <Compile Include="Mib\BitsType.cs" />

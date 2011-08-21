@@ -23,7 +23,7 @@ namespace Lextm.SharpSnmpLib.Security
     /// <summary>
     /// User class.
     /// </summary>
-    public class User
+    public sealed class User
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="User"/> class.

@@ -24,7 +24,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
     /// <summary>
     /// GET BULK message handler.
     /// </summary>    
-    public class GetBulkMessageHandler : IMessageHandler
+    public sealed class GetBulkMessageHandler : IMessageHandler
     {
         /// <summary>
         /// Handles the specified message.

@@ -28,7 +28,7 @@ namespace Lextm.SharpSnmpLib.Security
     /// Authentication provider using SHA-1.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "SHA", Justification = "definition")]
-    public class SHA1AuthenticationProvider : IAuthenticationProvider
+    public sealed class SHA1AuthenticationProvider : IAuthenticationProvider
     {
         private readonly byte[] _password;
         private const int DigestLength = 12;
@@ -147,7 +147,7 @@ namespace Lextm.SharpSnmpLib.Security
             var key = PasswordToKey(_password, parameters.EngineId.GetRaw());
             using (var sha1 = new HMACSHA1(key))
             {
-                var hash = sha1.ComputeHash(SnmpMessageExtension.PackMessage(version, header, parameters, data).ToBytes());
+                var hash = sha1.ComputeHash(ByteTool.PackMessage(version, header, parameters, data).ToBytes());
                 sha1.Clear();
                 var result = new byte[DigestLength];
                 Buffer.BlockCopy(hash, 0, result, 0, result.Length);

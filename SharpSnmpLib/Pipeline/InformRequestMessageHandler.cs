@@ -23,7 +23,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
     /// <summary>
     /// Message handler for INFORM.
     /// </summary>    
-    public class InformRequestMessageHandler : IMessageHandler
+    public sealed class InformRequestMessageHandler : IMessageHandler
     {
         /// <summary>
         /// Handles the specified message.

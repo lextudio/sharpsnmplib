@@ -26,7 +26,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
     /// <summary>
     /// Secure SNMP context. It is specific to v3.
     /// </summary>
-    internal sealed class SecureSnmpContext : SnmpContext
+    internal sealed class SecureSnmpContext : SnmpContextBase
     {
         private static readonly ObjectIdentifier ReportId = new ObjectIdentifier("1.3.6.1.6.3.15.1.1.4.0");
         

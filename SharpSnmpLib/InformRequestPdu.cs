@@ -34,7 +34,7 @@ namespace Lextm.SharpSnmpLib
     /// INFORM request PDU.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu")]
-    public class InformRequestPdu : ISnmpPdu
+    public sealed class InformRequestPdu : ISnmpPdu
     {
         private readonly uint[] _timeId = new uint[] { 1, 3, 6, 1, 2, 1, 1, 3, 0 };
         private readonly uint[] _enterpriseId = new uint[] { 1, 3, 6, 1, 6, 3, 1, 1, 4, 1, 0 };

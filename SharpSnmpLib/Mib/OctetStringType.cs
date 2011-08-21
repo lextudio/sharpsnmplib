@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
-    internal class OctetStringType : AbstractTypeAssignment
+    internal class OctetStringType : TypeAssignmentBase
     {
         private string _module;
         private string _name;

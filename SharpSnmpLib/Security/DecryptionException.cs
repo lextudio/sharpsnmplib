@@ -25,7 +25,7 @@ namespace Lextm.SharpSnmpLib.Security
     /// Decryption exception.
     /// </summary>
     [Serializable]
-    public class DecryptionException : SnmpException
+    public sealed class DecryptionException : SnmpException
     {
         private byte[] _bytes;
 
@@ -60,7 +60,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// </summary>
         /// <param name="info">Info</param>
         /// <param name="context">Context</param>
-        protected DecryptionException(SerializationInfo info, StreamingContext context)
+        private DecryptionException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
             if (info == null)

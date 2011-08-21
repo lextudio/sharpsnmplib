@@ -23,7 +23,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
     /// <summary>
     /// Object that represents a table.
     /// </summary>
-    public abstract class TableObject : SnmpObject
+    public abstract class TableObject : SnmpObjectBase
     {
         /// <summary>
         /// Gets the objects in the table.

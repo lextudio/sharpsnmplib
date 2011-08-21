@@ -27,7 +27,7 @@ namespace Lextm.SharpSnmpLib.Security
     /// <summary>
     /// Authentication provider using MD5.
     /// </summary>
-    public class MD5AuthenticationProvider : IAuthenticationProvider
+    public sealed class MD5AuthenticationProvider : IAuthenticationProvider
     {
         private readonly byte[] _password;
         private const int DigestLength = 12;
@@ -147,7 +147,7 @@ namespace Lextm.SharpSnmpLib.Security
             var key = PasswordToKey(_password, parameters.EngineId.GetRaw());
             using (var md5 = new HMACMD5(key))
             {
-                var hash = md5.ComputeHash(SnmpMessageExtension.PackMessage(version, header, parameters, data).ToBytes());
+                var hash = md5.ComputeHash(ByteTool.PackMessage(version, header, parameters, data).ToBytes());
                 md5.Clear();
                 var result = new byte[DigestLength];
                 Buffer.BlockCopy(hash, 0, result, 0, result.Length);

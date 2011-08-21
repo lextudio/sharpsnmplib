@@ -37,7 +37,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
     ///   commitFailed,
     ///   undoFailed
     /// </remarks>
-    public class SetMessageHandler : IMessageHandler
+    public sealed class SetMessageHandler : IMessageHandler
     {
         /// <summary>
         /// Handles the specified message.

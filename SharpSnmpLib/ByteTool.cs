@@ -212,5 +212,32 @@ namespace Lextm.SharpSnmpLib
             list.Reverse();
             return list.ToArray();
         }
-    }
+        
+        internal static Sequence PackMessage(VersionCode version, ISegment header, ISegment parameters, ISnmpData data)
+        {
+            if (header == null)
+            {
+                throw new ArgumentNullException("header");
+            }
+
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+
+            if (data == null)
+            {
+                throw new ArgumentNullException("data");
+            }
+
+            var items = new[]
+            {
+                new Integer32((int)version),
+                header.GetData(version),
+                parameters.GetData(version),
+                data
+            };
+            return new Sequence(items);
+        }
+    }    
 }

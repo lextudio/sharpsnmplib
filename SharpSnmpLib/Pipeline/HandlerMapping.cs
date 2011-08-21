@@ -25,7 +25,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
     /// Handler mapping class, who is used to map incoming messages to their handlers.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
-    public class HandlerMapping
+    public sealed class HandlerMapping
     {
         private readonly string[] _version;
         private readonly bool _catchAll;

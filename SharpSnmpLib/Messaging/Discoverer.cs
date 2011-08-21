@@ -27,7 +27,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// <summary>
     /// Discoverer class to discover SNMP agents in the same network.
     /// </summary>
-    public class Discoverer
+    public sealed class Discoverer
     {
         private long _active;
         private int _bufferSize;

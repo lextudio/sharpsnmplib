@@ -22,7 +22,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
     /// <summary>
     /// Scalar object interface.
     /// </summary>
-    public abstract class ScalarObject : SnmpObject
+    public abstract class ScalarObject : SnmpObjectBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ScalarObject"/> class.

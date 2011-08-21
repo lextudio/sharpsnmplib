@@ -25,7 +25,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// <summary>
     /// TRAP v2 message.
     /// </summary>
-    public class TrapV2Message : ISnmpMessage
+    public sealed class TrapV2Message : ISnmpMessage
     {
         private readonly byte[] _bytes;
 

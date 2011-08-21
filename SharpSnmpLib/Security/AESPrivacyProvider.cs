@@ -37,7 +37,7 @@ namespace Lextm.SharpSnmpLib.Security
     /// If you want other AES providers, you can port them from SNMP#NET in a similar manner.
     /// </remarks>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "AES", Justification = "definition")]
-    public class AESPrivacyProvider : IPrivacyProvider
+    public sealed class AESPrivacyProvider : IPrivacyProvider
     {        
         private readonly SaltGenerator _salt = new SaltGenerator();
         private readonly OctetString _phrase;

@@ -34,7 +34,7 @@ namespace Lextm.SharpSnmpLib
     /// GETNEXT request PDU.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu")]
-    public class GetNextRequestPdu : ISnmpPdu
+    public sealed class GetNextRequestPdu : ISnmpPdu
     {
         private byte[] _raw;
         private readonly Sequence _varbindSection;

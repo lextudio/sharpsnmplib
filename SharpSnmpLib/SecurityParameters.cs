@@ -32,7 +32,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// Description of SecurityParameters.
     /// </summary>
-    public class SecurityParameters : ISegment
+    public sealed class SecurityParameters : ISegment
     {
         /// <summary>
         /// Gets the engine ID.

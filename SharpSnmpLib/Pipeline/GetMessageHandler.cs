@@ -27,7 +27,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
     /// <remarks>
     /// Follows RFC 3416 4.2.1.
     /// </remarks>
-    public class GetMessageHandler : IMessageHandler
+    public sealed class GetMessageHandler : IMessageHandler
     {
         /// <summary>
         /// Handles the specified message.

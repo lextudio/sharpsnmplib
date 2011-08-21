@@ -32,7 +32,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// <summary>
     /// REPORT message.
     /// </summary>
-    public class ReportMessage : ISnmpMessage
+    public sealed class ReportMessage : ISnmpMessage
     {
         private readonly byte[] _bytes;
 

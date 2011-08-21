@@ -13,7 +13,7 @@ namespace Lextm.SharpSnmpLib.Mib
     /// <summary>
     /// Alias.
     /// </summary>
-    internal sealed class TypeAssignment : AbstractTypeAssignment
+    internal sealed class TypeAssignment : TypeAssignmentBase
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         private string _module;

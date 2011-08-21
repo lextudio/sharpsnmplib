@@ -33,7 +33,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// <summary>
     /// GETBULK request message.
     /// </summary>
-    public class GetBulkRequestMessage : ISnmpMessage
+    public sealed class GetBulkRequestMessage : ISnmpMessage
     {
         private readonly byte[] _bytes;
 

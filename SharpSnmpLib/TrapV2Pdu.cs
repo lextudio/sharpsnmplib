@@ -26,7 +26,7 @@ namespace Lextm.SharpSnmpLib
     /// TRAP v2 PDU.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu")]
-    public class TrapV2Pdu : ISnmpPdu
+    public sealed class TrapV2Pdu : ISnmpPdu
     {
         private readonly uint[] _timeId = new uint[] { 1, 3, 6, 1, 2, 1, 1, 3, 0 };
         private readonly uint[] _enterpriseId = new uint[] { 1, 3, 6, 1, 6, 3, 1, 1, 4, 1, 0 };

@@ -20,7 +20,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
     /// <summary>
     /// SNMP application class, who is a pipeline for message processing.
     /// </summary>
-    public class SnmpApplication
+    public sealed class SnmpApplication
     {
         private readonly ILogger _logger;
         private readonly IMembershipProvider _provider;

@@ -37,7 +37,7 @@ namespace Lextm.SharpSnmpLib
     /// Array type.
     /// </summary>
     /// <remarks>Represents SMIv1 SEQUENCE.</remarks>
-    public class Sequence : ISnmpData
+    public sealed class Sequence : ISnmpData
     {
         private byte[] _raw;
         private readonly List<ISnmpData> _list = new List<ISnmpData>();

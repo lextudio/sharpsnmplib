@@ -20,7 +20,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
     /// <summary>
     /// SNMP basic object.
     /// </summary>
-    public abstract class SnmpObject : ISnmpObject
+    public abstract class SnmpObjectBase : ISnmpObject
     {
         /// <summary>
         /// Matches the GET NEXT criteria.

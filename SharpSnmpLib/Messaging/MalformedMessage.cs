@@ -24,7 +24,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// <summary>
     /// Malformed message for v3 due to decryption failures or wrong user names. 
     /// </summary>
-    public class MalformedMessage : ISnmpMessage
+    public sealed class MalformedMessage : ISnmpMessage
     {
         private static readonly Scope DefaultScope = new Scope(new MalformedPdu());
         

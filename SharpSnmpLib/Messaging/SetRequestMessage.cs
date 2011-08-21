@@ -25,7 +25,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// <summary>
     /// SET request message.
     /// </summary>
-    public class SetRequestMessage : ISnmpMessage
+    public sealed class SetRequestMessage : ISnmpMessage
     {
         private readonly byte[] _bytes;
 

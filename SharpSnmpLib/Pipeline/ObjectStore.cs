@@ -24,7 +24,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
     /// SNMP object store, who holds all implemented SNMP objects in the agent.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
-    public class ObjectStore
+    public sealed class ObjectStore
     {
         private readonly IList<ISnmpObject> _list = new List<ISnmpObject>();
 

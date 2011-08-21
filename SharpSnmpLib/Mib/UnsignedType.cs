@@ -11,7 +11,7 @@ namespace Lextm.SharpSnmpLib.Mib
      * TimeTicks.  This is ok as currently we do not care about detecting
      * incorrect MIBs and this doesn't block the decoding of correct MIBs.
      */
-    class UnsignedType : AbstractTypeAssignment
+    class UnsignedType : TypeAssignmentBase
     {
         private string _module;
         private string _name;

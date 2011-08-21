@@ -28,7 +28,7 @@ namespace Lextm.SharpSnmpLib.Security
     /// </summary>
     /// <remarks>Ported from SNMP#NET PrivacyDES class.</remarks>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "DES", Justification = "definition")]
-    public class DESPrivacyProvider : IPrivacyProvider
+    public sealed class DESPrivacyProvider : IPrivacyProvider
     {
         private readonly SaltGenerator _salt = new SaltGenerator();
         private readonly OctetString _phrase;

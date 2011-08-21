@@ -34,7 +34,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// <summary>
     /// GETNEXT request message.
     /// </summary>
-    public class GetNextRequestMessage : ISnmpMessage
+    public sealed class GetNextRequestMessage : ISnmpMessage
     {       
         private readonly byte[] _bytes;
         

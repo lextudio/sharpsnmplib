@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
-    internal class BitsType : AbstractTypeAssignment
+    internal class BitsType : TypeAssignmentBase
     {
         private string _module;
         private string _name;
