@@ -101,7 +101,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             IList<ISnmpMessage> result = new List<ISnmpMessage>();
             using (Stream stream = new MemoryStream(buffer, index, length, true))
-            {                
+            {
                 int first;
                 while ((first = stream.ReadByte()) != -1)
                 {
@@ -110,7 +110,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                     {
                         continue;
                     }
-    
+                    
                     result.Add(message);
                 }
             }
@@ -147,7 +147,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 header = Header.Empty;
                 parameters = SecurityParameters.Create((OctetString)body[1]);
-                privacy = DefaultPrivacyProvider.DefaultPair;                
+                privacy = DefaultPrivacyProvider.DefaultPair;
                 scope = new Scope((ISnmpPdu)body[2]);
             }
             else
@@ -183,15 +183,8 @@ namespace Lextm.SharpSnmpLib.Messaging
                 else
                 {
                     throw new SnmpException(string.Format(CultureInfo.InvariantCulture, "invalid v3 packets scoped data: {0}", code));
-                }     
-
-                var error = scope.Pdu.ErrorStatus.ToErrorCode();
-                if (error != ErrorCode.NoError)
-                {
-                    // TODO: how to properly handle other errors?
-                    throw new SnmpException(error.ToString());
-                }                    
-                
+                }
+              
                 if (!privacy.AuthenticationProvider.VerifyHash(stream, parameters.AuthenticationParameters, parameters.EngineId))
                 {
                     throw new SnmpException("invalid v3 packet data hash detected");
