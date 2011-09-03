@@ -273,6 +273,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
         }
         
         [Test]
+        [Category("External"]
         public void TestTimeOutAsync()
         {
             // IMPORTANT: this test case requires a local SNMP agent such as 
@@ -290,6 +291,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
         }
         
         [Test]
+        [Category("External"]
         public void TestTimeOut()
         {
             // IMPORTANT: this test case requires a local SNMP agent such as 
