@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
@@ -31,7 +28,7 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             get
             {
-                return (string)_map[identifier];
+                return _map[identifier];
             }
         }
 

@@ -1,5 +1,4 @@
 ﻿Imports System.Reflection
-Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 
 ' Information about this assembly is defined by the following

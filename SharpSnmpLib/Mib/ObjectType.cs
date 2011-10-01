@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Text;
 using System;
 
 namespace Lextm.SharpSnmpLib.Mib
@@ -150,7 +149,7 @@ namespace Lextm.SharpSnmpLib.Mib
             {
                 temp = enumerator.NextNonEOLSymbol();
 
-                description = temp.ToString().Trim(new char[] { '"' });
+                description = temp.ToString().Trim(new[] { '"' });
                 temp = enumerator.NextNonEOLSymbol();
             }
             return description;
@@ -158,14 +157,14 @@ namespace Lextm.SharpSnmpLib.Mib
 
         private static Status ParseStatus(IEnumerator<Symbol> enumerator, ref Symbol temp)
         {
-            Status status = Status.obsolete;
+            Status status = Status.Obsolete;
 
             temp.Expect(Symbol.Status);
             temp = enumerator.NextNonEOLSymbol();
 
             try
             {
-                status = (Status)Enum.Parse(typeof(Status), temp.ToString());
+                status = StatusHelper.CreateStatus(temp.ToString());
                 temp = enumerator.NextNonEOLSymbol();
             }
             catch (ArgumentException)
@@ -177,7 +176,7 @@ namespace Lextm.SharpSnmpLib.Mib
 
         private static MaxAccess ParseAccess(IEnumerator<Symbol> enumerator, ref Symbol temp)
         {
-            MaxAccess access = MaxAccess.notAccessible;
+            MaxAccess access = MaxAccess.NotAccessible;
 
             if (temp == Symbol.MaxAccess || temp == Symbol.Access)
             {
@@ -186,22 +185,22 @@ namespace Lextm.SharpSnmpLib.Mib
                 switch (temp.ToString())
                 {
                     case "not-accessible":
-                        access = MaxAccess.notAccessible;
+                        access = MaxAccess.NotAccessible;
                         break;
                     case "accessible-for-notify":
-                        access = MaxAccess.accessibleForNotify;
+                        access = MaxAccess.AccessibleForNotify;
                         break;
                     case "read-only":
-                        access = MaxAccess.readOnly;
+                        access = MaxAccess.ReadOnly;
                         break;
                     case "read-write":
-                        access = MaxAccess.readWrite;
+                        access = MaxAccess.ReadWrite;
                         break;
                     case "read-create":
-                        access = MaxAccess.readCreate;
+                        access = MaxAccess.ReadCreate;
                         break;
                     case "write-only":
-                        access = MaxAccess.readWrite;
+                        access = MaxAccess.ReadWrite;
                         break;
                     default:
                         temp.Validate(true, "Invalid access");

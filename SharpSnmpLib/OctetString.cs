@@ -109,7 +109,7 @@ namespace Lextm.SharpSnmpLib
         /// Creates an <see cref="OctetString"/> with a specific <see cref="Levels"/>.
         /// </summary>
         /// <param name="level"></param>
-        public OctetString(Levels level) : this(new byte[1] { (byte)level })
+        public OctetString(Levels level) : this(new byte[] { (byte)level })
         {            
         }
 

@@ -16,7 +16,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 if (first.ToString().EndsWith("B", true, System.Globalization.CultureInfo.InvariantCulture))
                 {
                     // Binary number
-                    string num = first.ToString().TrimStart(new char[] { '\'' }).TrimEnd(new char[] { 'b', 'B', '\'' });
+                    string num = first.ToString().TrimStart(new[] { '\'' }).TrimEnd(new[] { 'b', 'B', '\'' });
                     try
                     {
                         value = Convert.ToInt64(num, 2);
@@ -29,7 +29,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 else if (first.ToString().EndsWith("H", true, System.Globalization.CultureInfo.InvariantCulture))
                 {
                     // Hex number
-                    string num = first.ToString().TrimStart(new char[] { '\'' }).TrimEnd(new char[] { 'h', 'H', '\'' });
+                    string num = first.ToString().TrimStart(new[] { '\'' }).TrimEnd(new[] { 'h', 'H', '\'' });
                     try
                     {
                         value = Convert.ToInt64(num, 16);
@@ -57,7 +57,7 @@ namespace Lextm.SharpSnmpLib.Mib
                     if (second.ToString().EndsWith("B", true, System.Globalization.CultureInfo.InvariantCulture))
                     {
                         // Binary number
-                        string num = second.ToString().TrimStart(new char[] { '\'' }).TrimEnd(new char[] { 'b', 'B', '\'' });
+                        string num = second.ToString().TrimStart(new[] { '\'' }).TrimEnd(new[] { 'b', 'B', '\'' });
                         try
                         {
                             value = Convert.ToInt64(num, 2);
@@ -70,7 +70,7 @@ namespace Lextm.SharpSnmpLib.Mib
                     else if (second.ToString().EndsWith("H", true, System.Globalization.CultureInfo.InvariantCulture))
                     {
                         // Hex number
-                        string num = second.ToString().TrimStart(new char[] { '\'' }).TrimEnd(new char[] { 'h', 'H', '\'' });
+                        string num = second.ToString().TrimStart(new[] { '\'' }).TrimEnd(new[] { 'h', 'H', '\'' });
                         try
                         {
                             value = Convert.ToInt64(num, 16);
@@ -106,14 +106,7 @@ namespace Lextm.SharpSnmpLib.Mib
 
         internal bool Contains(Int64 p)
         {
-            if (_end == null)
-            {
-                return p == _start;
-            }
-            else
-            {
-                return _start <= p && p <= _end;
-            }
+            return _end == null ? p == _start : _start <= p && p <= _end;
         }
     }
 }

@@ -259,9 +259,6 @@ namespace Lextm.SharpSnmpLib.Browser
                                     
                                     break;
                                 }
-                                
-                            default:
-                                break;
                         }
                     }
                 }

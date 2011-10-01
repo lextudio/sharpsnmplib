@@ -1,29 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
     abstract class TypeAssignmentBase : ITypeAssignment
     {
-        protected Symbol Next(object o)
+        private Symbol Next(object o)
         {
             Lexer lexer = o as Lexer;
-            IEnumerator<Symbol> enumerator = o as IEnumerator<Symbol>;
+            var enumerator = o as IEnumerator<Symbol>;
 
             if (lexer != null)
             {
                 return lexer.NextNonEOLSymbol;
             }
-            else if (enumerator != null)
-            {
-                return enumerator.NextNonEOLSymbol();
-            }
-            else
-            {
-                return null;
-            }
+
+            return enumerator != null ? enumerator.NextNonEOLSymbol() : null;
         }
 
         protected IList<ValueRange> DecodeRanges(object enumerator)

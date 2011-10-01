@@ -26,63 +26,6 @@ namespace Lextm.SharpSnmpLib.Security
     public static class AuthenticationProviderExtension
     {
         /// <summary>
-        /// Verifies the hash.
-        /// </summary>
-        /// <param name="authen">The authentication provider.</param>
-        /// <param name="version">The version.</param>
-        /// <param name="header">The header.</param>
-        /// <param name="parameters">The parameters.</param>
-        /// <param name="scopeBytes">The scope bytes.</param>
-        /// <param name="privacy">The privacy provider.</param>
-        /// <returns>
-        /// Returns <code>true</code> if hash matches. Otherwise, returns <code>false</code>.
-        /// </returns>
-        public static bool VerifyHash(this IAuthenticationProvider authen, VersionCode version, Header header, SecurityParameters parameters, ISnmpData scopeBytes, IPrivacyProvider privacy)
-        {
-            if (authen == null)
-            {
-                throw new ArgumentNullException("authen");
-            }
-            
-            if (header == null)
-            {
-                throw new ArgumentNullException("header");
-            }
-
-            if (parameters == null)
-            {
-                throw new ArgumentNullException("parameters");
-            }
-
-            if (scopeBytes == null)
-            {
-                throw new ArgumentNullException("scopeBytes");
-            }
-
-            if (privacy == null)
-            {
-                throw new ArgumentNullException("privacy");
-            }
-
-            if (authen is DefaultAuthenticationProvider)
-            {
-                return true;
-            }
-
-            if (0 == (header.SecurityLevel & Levels.Authentication))
-            {
-                return true;
-            }
-
-            var expected = parameters.AuthenticationParameters;
-            parameters.AuthenticationParameters = authen.CleanDigest; // clean the hash first.
-            var result = authen.ComputeHash(version, header, parameters, scopeBytes, privacy) == expected;
-
-            parameters.AuthenticationParameters = expected; // restore the hash.
-            return result;
-        }
-
-        /// <summary>
         /// Computes the hash.
         /// </summary>
         /// <param name="authen">The authentication provider.</param>

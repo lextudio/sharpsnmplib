@@ -113,7 +113,7 @@ Module Program
         End If
 
         If showVersion Then
-            Console.WriteLine(System.Reflection.Assembly.GetExecutingAssembly().GetName().Version)
+            Console.WriteLine(Reflection.Assembly.GetExecutingAssembly().GetName().Version)
             Return
         End If
 

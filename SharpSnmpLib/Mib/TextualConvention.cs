@@ -21,14 +21,14 @@ namespace Lextm.SharpSnmpLib.Mib
             if (temp == Symbol.DisplayHint)
             {
                 // TODO: this needs decoding to a useful format.
-                _displayHint = new DisplayHint(lexer.NextNonEOLSymbol.ToString().Trim(new char[] { '"' }));
+                _displayHint = new DisplayHint(lexer.NextNonEOLSymbol.ToString().Trim(new[] { '"' }));
                 temp = lexer.NextNonEOLSymbol;
             }
 
             temp.Expect(Symbol.Status);
             try
             {
-                _status = (Status)Enum.Parse(typeof(Status), lexer.NextNonEOLSymbol.ToString());
+                _status = StatusHelper.CreateStatus(lexer.NextNonEOLSymbol.ToString());
                 temp = lexer.NextNonEOLSymbol;
             }
             catch (ArgumentException)
@@ -37,7 +37,7 @@ namespace Lextm.SharpSnmpLib.Mib
             }
 
             temp.Expect(Symbol.Description);
-            _description = lexer.NextNonEOLSymbol.ToString().Trim(new char[] { '"' });
+            _description = lexer.NextNonEOLSymbol.ToString().Trim(new[] { '"' });
             temp = lexer.NextNonEOLSymbol;
 
             if (temp == Symbol.Reference)
@@ -160,48 +160,34 @@ namespace Lextm.SharpSnmpLib.Mib
                 {
                     return null;
                 }
-                else if (_displayHint != null)
-                {
-                    return _displayHint.Decode(i.ToInt32());
-                }
-                else
-                {
-                    return i.ToInt32();
-                }
+
+                return _displayHint != null ? _displayHint.Decode(i.ToInt32()) : i.ToInt32();
             }
-            else if (_syntax is UnsignedType)
+
+            if (_syntax is UnsignedType)
             {
                 Integer32 i = v.Data as Integer32;
                 if (i == null)
                 {
                     return null;
                 }
-                else if (_displayHint != null)
-                {
-                    return _displayHint.Decode(i.ToInt32());
-                }
-                else
-                {
-                    return i.ToInt32();
-                }
+
+                return _displayHint != null ? _displayHint.Decode(i.ToInt32()) : i.ToInt32();
             }
-            else if (_syntax is OctetStringType)
+
+            if (_syntax is OctetStringType)
             {
                 OctetString o = v.Data as OctetString;
                 if (o == null)
                 {
                     return null;
                 }
-                else
-                {
-                    // TODO: Follow the format specifier for octet strings.
-                    return null;
-                }
-            }
-            else
-            {
+
+                // TODO: Follow the format specifier for octet strings.
                 return null;
             }
+
+            return null;
         }
     }
 }

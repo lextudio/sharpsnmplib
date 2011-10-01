@@ -1,17 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Lextm.SharpSnmpLib.Mib
+﻿namespace Lextm.SharpSnmpLib.Mib
 {
+    /// <summary>
+    /// Max access enum.
+    /// </summary>
     public enum MaxAccess
     {
-        notAccessible,
-        accessibleForNotify,
-        readOnly,
-        readWrite,
-        readCreate
+        /// <summary>
+        /// This object is not accessible.
+        /// </summary>
+        NotAccessible,
+
+        /// <summary>
+        /// This object is accessible for notifications.
+        /// </summary>
+        AccessibleForNotify,
+
+        /// <summary>
+        /// This object is readonly.
+        /// </summary>
+        ReadOnly,
+
+        /// <summary>
+        /// This object is read-write.
+        /// </summary>
+        ReadWrite,
+
+        /// <summary>
+        /// This object is read-create (for tables).
+        /// </summary>
+        ReadCreate
     }
 
 }

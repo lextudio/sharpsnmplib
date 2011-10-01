@@ -18,3 +18,4 @@ syntax: glob
 SharpSnmpLib.*.ReSharper
 SharpSnmpLib.sln.docstates
 *.dotCover
+gendarme/*
