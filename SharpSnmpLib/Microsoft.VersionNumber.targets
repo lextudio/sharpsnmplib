@@ -67,7 +67,7 @@
     </PropertyGroup>
     <!-- The items that get processed by the task -->
     <ItemGroup>
-        <AssemblyInfoFiles Include="**\AssemblyInfo.*" Exclude="**\.svn\**\AssemblyInfo.*" />
+        <AssemblyInfoFiles Include="..\lib\SharedAssemblyInfo.*" />
     </ItemGroup>
     <!-- Import the task -->
     <UsingTask AssemblyFile="..\lib\AssemblyInfoTask.dll" TaskName="AssemblyInfo" />
