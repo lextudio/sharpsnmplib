@@ -16,7 +16,9 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Tuples;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -25,26 +27,23 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public static class StreamExtension
     {
-        internal static void WritePayloadLength(this Stream stream, int length) // excluding initial octet
+        internal static byte[] WritePayloadLength(this int length) // excluding initial octet
         {
-            if (stream == null)
-            {
-                throw new ArgumentNullException("stream");
-            }
-
             if (length < 0)
             {
                 throw new ArgumentException("length cannot be negative", "length");
             }
-            
+
+            var stream = new MemoryStream();
+
             if (length < 127)
             {
                 stream.WriteByte((byte)length);
-                return;
+                return stream.ToArray();
             }
             
             var c = new byte[16];
-            var j = 0;
+            int j = 0;
             while (length > 0)
             {
                 c[j++] = (byte)(length & 0xff);
@@ -57,17 +56,43 @@ namespace Lextm.SharpSnmpLib
                 int x = c[--j];
                 stream.WriteByte((byte)x);
             }
+
+            return stream.ToArray();
         }
 
-        internal static int ReadPayloadLength(this Stream stream)
+        internal static Tuple<int, byte[]> ReadPayloadLength(this Stream stream)
         {
             if (stream == null)
             {
                 throw new ArgumentNullException("stream");
             }
 
-            var first = stream.ReadByte();
-            return stream.ReadLength((byte)first);
+            var list = new List<byte>();
+            int first = stream.ReadByte();
+            var firstByte = (byte)first;
+            if ((firstByte & 0x80) == 0)
+            {
+                return new Tuple<int, byte[]>(first, new[] {firstByte});
+            }
+
+            list.Add(firstByte);
+            
+            int result = 0;
+            int octets = firstByte & 0x7f;
+            for (int j = 0; j < octets; j++)
+            {
+                int n = stream.ReadByte();
+                if (n == -1)
+                {
+                    throw new SnmpException("BER end of file");
+                }
+
+                var nextByte = (byte)n;
+                result = (result << 8) + nextByte;
+                list.Add(nextByte);
+            }
+            
+            return new Tuple<int, byte[]>(result, list.ToArray());
         }
 
         internal static void IgnoreBytes(this Stream stream, int length)
@@ -81,62 +106,7 @@ namespace Lextm.SharpSnmpLib
             stream.Read(bytes, 0, length);
         }
 
-        internal static void IgnorePayloads(this Stream stream, int count)
-        {
-            if (stream == null)
-            {
-                throw new ArgumentNullException("stream");
-            }
-
-            while (count > 0)
-            {
-                stream.ReadByte();
-                stream.IgnoreBytes(stream.ReadPayloadLength());
-
-                count--;
-            }
-        }
-
-        internal static void IgnorePayloadStart(this Stream stream)
-        {
-            if (stream == null)
-            {
-                throw new ArgumentNullException("stream");
-            }
-
-            stream.ReadByte();
-            stream.ReadPayloadLength();
-        }
-
-        private static int ReadLength(this Stream stream, byte first) // x is initial octet
-        {
-            if ((first & 0x80) == 0)
-            {
-                return first;
-            }
-            
-            var result = 0;
-            var octets = first & 0x7f;
-            for (var j = 0; j < octets; j++)
-            {
-                result = (result << 8) + ReadByte(stream);
-            }
-            
-            return result;
-        }
-
-        private static byte ReadByte(Stream s)
-        {
-            var n = s.ReadByte();
-            if (n == -1)
-            {
-                throw new SnmpException("BER end of file");
-            }
-            
-            return (byte)n;
-        }
-
-        internal static void AppendBytes(this Stream stream, SnmpType typeCode, byte[] raw)
+        internal static void AppendBytes(this Stream stream, SnmpType typeCode, byte[] length, byte[] raw)
         {
             if (stream == null)
             {
@@ -149,50 +119,13 @@ namespace Lextm.SharpSnmpLib
             }
 
             stream.WriteByte((byte)typeCode);
-            stream.WritePayloadLength(raw.Length);
+            if (length == null)
+            {
+                length = raw.Length.WritePayloadLength();
+            }
+
+            stream.Write(length, 0, length.Length);
             stream.Write(raw, 0, raw.Length);
         }
-        
- #region Copied from https://github.com/mono/mono/blob/master/mcs/class/corlib/System.IO/Stream.cs       
-        internal static void CopyTo(this Stream source, Stream destination)
-        {
-            if (source == null)
-            {
-                throw new ArgumentNullException("source");
-            }
-            
-            source.CopyTo(destination, 16 * 1024);
-        }
-        
-        private static void CopyTo(this Stream source, Stream destination, int bufferSize)
-        {
-            if (destination == null)
-            {
-                throw new ArgumentNullException("destination");
-            }
-            
-            if (!source.CanRead)
-            {
-                throw new NotSupportedException("This stream does not support reading");
-            }
-            
-            if (!destination.CanWrite)
-            {
-                throw new NotSupportedException("This destination stream does not support writing");
-            }
-            
-            if (bufferSize <= 0)
-            {
-                throw new ArgumentOutOfRangeException("bufferSize");
-            }
-            
-            var buffer = new byte[bufferSize];
-            int nread;
-            while ((nread = source.Read(buffer, 0, bufferSize)) != 0)
-            {
-                destination.Write(buffer, 0, nread);
-            }
-        }
-#endregion
     }
 }

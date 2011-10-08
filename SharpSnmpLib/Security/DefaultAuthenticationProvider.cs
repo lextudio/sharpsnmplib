@@ -50,7 +50,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// <param name="data">The scope data.</param>
         /// <param name="privacy">The privacy provider.</param>
         /// <returns></returns>
-        public OctetString ComputeHash(VersionCode version, ISegment header, SecurityParameters parameters, ISnmpData data, IPrivacyProvider privacy)
+        public OctetString ComputeHash(VersionCode version, ISegment header, SecurityParameters parameters, ISnmpData data, IPrivacyProvider privacy, byte[] length)
         {
             if (header == null)
             {

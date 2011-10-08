@@ -9,6 +9,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Tuples;
 using NUnit.Framework;
 
 #pragma warning disable 1591
@@ -20,9 +21,9 @@ namespace Lextm.SharpSnmpLib.Tests
         [Test]
         public void TestException()
         {
-            Assert.Throws<ArgumentNullException>(() => new Sequence(null));
+            Assert.Throws<ArgumentNullException>(() => new Sequence((byte[])null, null));
             Assert.Throws<ArgumentNullException>(() => new Sequence((IEnumerable<ISnmpData>) null));
-            Assert.Throws<ArgumentNullException>(() => new Sequence(0, null));
+            Assert.Throws<ArgumentNullException>(() => new Sequence(new Tuple<int, byte[]>(0, new byte[] { 0 }), null));
         }
 
         [Test]

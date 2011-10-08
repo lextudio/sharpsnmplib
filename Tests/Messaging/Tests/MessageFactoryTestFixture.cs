@@ -300,7 +300,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes, new UserRegistry());
             Assert.AreEqual(1, messages.Count);
             Assert.AreEqual(5, messages[0].Parameters.EngineBoots.ToInt32());
-            Assert.AreEqual(new byte[] {4, 13, 128, 0, 31, 136, 128, 233, 99, 0, 0, 214, 31, 244, 73}, messages[0].Parameters.EngineId.ToBytes());
+            Assert.AreEqual("80001F8880E9630000D61FF449", messages[0].Parameters.EngineId.ToHexString());
             Assert.AreEqual(3867, messages[0].Parameters.EngineTime.ToInt32());
             Assert.AreEqual(ErrorCode.NoError, messages[0].Pdu().ErrorStatus.ToErrorCode());
             Assert.AreEqual(1, messages[0].Pdu().Variables.Count);
@@ -380,9 +380,9 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             Assert.AreEqual(681323585, message.MessageId());
             Assert.AreEqual(681323584, message.RequestId());
 
-
-            Assert.AreEqual(true, authen.VerifyHash(stream, message.Parameters.AuthenticationParameters, message.Parameters.EngineId));
-
+            Console.WriteLine(new OctetString(bytes).ToHexString());
+            Console.WriteLine(new OctetString(message.ToBytes()).ToHexString());
+            Assert.AreEqual(bytes, message.ToBytes());
         }
 
         [Test]

@@ -18,6 +18,7 @@
 using System;
 using System.Globalization;
 using System.IO;
+using System.Tuples;
 
 // ASN.1 BER encoding library by Malcolm Crowe at the University of the West of Scotland
 // See http://cis.paisley.ac.uk/crow-ci0
@@ -50,12 +51,14 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes")]
         public static readonly Integer32 Zero = new Integer32(0);
-        
+
+        private readonly byte[] _length;
+
         /// <summary>
         /// Creates an <see cref="Integer32"/> instance.
         /// </summary>
         /// <param name="raw">Raw bytes</param>
-        internal Integer32(byte[] raw) : this(raw.Length, new MemoryStream(raw))
+        internal Integer32(byte[] raw) : this(new Tuple<int, byte[]>(raw.Length, raw.Length.WritePayloadLength()), new MemoryStream(raw))
         {
             // IMPORTANT: for test project only.
         }
@@ -74,30 +77,32 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="length">The length.</param>
         /// <param name="stream">The stream.</param>
-        public Integer32(int length, Stream stream)
+        public Integer32(Tuple<int, byte[]> length, Stream stream)
         {
             if (stream == null)
             {
                 throw new ArgumentNullException("stream");
             }
 
-            if (length <= 0)
+            if (length.First <= 0)
             {
                 throw new ArgumentException("length cannot be 0.", "length");
             }
 
-            if (length > 4)
+            if (length.First > 4)
             {
                 throw new ArgumentException("truncation error for 32-bit integer coding", "length");
             }
 
-            var raw = new byte[length];
-            stream.Read(raw, 0, length);
+            var raw = new byte[length.First];
+            stream.Read(raw, 0, length.First);
             _int = ((raw[0] & 0x80) == 0x80) ? -1 : 0; // sign extended! Guy McIlroy
-            for (var j = 0; j < length; j++)
+            for (int j = 0; j < length.First; j++)
             {
                 _int = (_int << 8) | raw[j];
             }
+
+            _length = length.Second;
         }
 
         /// <summary>
@@ -154,7 +159,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("stream");
             }
             
-            stream.AppendBytes(TypeCode, ByteTool.GetRawBytes(BitConverter.GetBytes(_int), _int < 0));
+            stream.AppendBytes(TypeCode, _length, ByteTool.GetRawBytes(BitConverter.GetBytes(_int), _int < 0));
         }
 
         /// <summary>

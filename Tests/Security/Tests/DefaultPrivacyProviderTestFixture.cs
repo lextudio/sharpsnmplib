@@ -22,12 +22,12 @@ namespace Lextm.SharpSnmpLib.Security.Tests
             Assert.Throws<ArgumentNullException>(() => provider.Encrypt(OctetString.Empty, null));
             Assert.Throws<ArgumentException>(() => provider.Encrypt(new Null(), SecurityParameters.Create(OctetString.Empty)));
 
-            var expected = new Sequence();
+            var expected = new Sequence((byte[])null);
             Assert.AreEqual(expected, provider.Encrypt(expected, SecurityParameters.Create(OctetString.Empty)));
             
             Assert.Throws<ArgumentNullException>(() => provider.Decrypt(null, null));
-            Assert.Throws<ArgumentNullException>(() => provider.Decrypt(OctetString.Empty, null));           
-            var result = provider.Decrypt(new Sequence(), SecurityParameters.Create(OctetString.Empty));
+            Assert.Throws<ArgumentNullException>(() => provider.Decrypt(OctetString.Empty, null));
+            var result = provider.Decrypt(new Sequence((byte[])null), SecurityParameters.Create(OctetString.Empty));
             Assert.IsNotNull(result);
         }
     }

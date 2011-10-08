@@ -20,13 +20,15 @@ using System.Globalization;
 using System.IO;
 using System.Security.Cryptography;
 
+using Lextm.SharpSnmpLib.Messaging;
+
 namespace Lextm.SharpSnmpLib.Security
 {
     /// <summary>
     /// Authentication provider using SHA-1.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "SHA", Justification = "definition")]
-    public sealed class SHA1AuthenticationProvider : IAuthenticationProvider
+    public class SHA1AuthenticationProvider : IAuthenticationProvider
     {
         private readonly byte[] _password;
         private const int DigestLength = 12;
@@ -72,14 +74,14 @@ namespace Lextm.SharpSnmpLib.Security
             
             using (SHA1 sha = new SHA1CryptoServiceProvider())
             {
-                var passwordIndex = 0;
-                var count = 0;
+                int passwordIndex = 0;
+                int count = 0;
                 /* Use while loop until we've done 1 Megabyte */
-                var sourceBuffer = new byte[1048576];
-                var buf = new byte[64];
+                byte[] sourceBuffer = new byte[1048576];
+                byte[] buf = new byte[64];
                 while (count < 1048576)
                 {
-                    for (var i = 0; i < 64; ++i)
+                    for (int i = 0; i < 64; ++i)
                     {
                         // Take the next octet of the password, wrapping
                         // to the beginning of the password as necessary.
@@ -90,9 +92,9 @@ namespace Lextm.SharpSnmpLib.Security
                     count += 64;
                 }
 
-                var digest = sha.ComputeHash(sourceBuffer);
+                byte[] digest = sha.ComputeHash(sourceBuffer);
 
-                using (var buffer = new MemoryStream())
+                using (MemoryStream buffer = new MemoryStream())
                 {
                     buffer.Write(digest, 0, digest.Length);
                     buffer.Write(engineId, 0, engineId.Length);
@@ -120,7 +122,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// <param name="data">The scope bytes.</param>
         /// <param name="privacy">The privacy provider.</param>
         /// <returns></returns>
-        public OctetString ComputeHash(VersionCode version, ISegment header, SecurityParameters parameters, ISnmpData data, IPrivacyProvider privacy)
+        public OctetString ComputeHash(VersionCode version, ISegment header, SecurityParameters parameters, ISnmpData data, IPrivacyProvider privacy, byte[] length)
         {
             if (header == null)
             {
@@ -142,42 +144,14 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentNullException("privacy");
             }
 
-            var key = PasswordToKey(_password, parameters.EngineId.GetRaw());
-            using (var sha1 = new HMACSHA1(key))
+            byte[] key = PasswordToKey(_password, parameters.EngineId.GetRaw());
+            using (HMACSHA1 sha1 = new HMACSHA1(key))
             {
-                var hash = sha1.ComputeHash(ByteTool.PackMessage(version, header, parameters, data).ToBytes());
+                var sequence = SnmpMessageExtension.PackMessage(length, version, header, parameters, data);
+                byte[] message = sequence.ToBytes();
+                byte[] hash = sha1.ComputeHash(message);
                 sha1.Clear();
-                var result = new byte[DigestLength];
-                Buffer.BlockCopy(hash, 0, result, 0, result.Length);
-                return new OctetString(result);
-            }
-        }
-
-        /// <summary>
-        /// Computes the hash.
-        /// </summary>
-        /// <param name="buffer"></param>
-        /// <param name="engineId"></param>
-        /// <returns></returns>
-        public OctetString ComputeHash(byte[] buffer, OctetString engineId)
-        {
-            if (buffer == null)
-            {
-                throw new ArgumentNullException("buffer");
-            }
-
-            if (engineId == null)
-            {
-                throw new ArgumentNullException("engineId");
-            }
-
-            var key = PasswordToKey(_password, engineId.GetRaw());
-
-            using (var sha1 = new HMACSHA1(key))
-            {
-                var hash = sha1.ComputeHash(buffer);
-                sha1.Clear();
-                var result = new byte[DigestLength];
+                byte[] result = new byte[DigestLength];
                 Buffer.BlockCopy(hash, 0, result, 0, result.Length);
                 return new OctetString(result);
             }

@@ -112,7 +112,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("stream");
             }
             
-            stream.AppendBytes(TypeCode, new byte[0]);
+            stream.AppendBytes(TypeCode, null, new byte[0]);
         }
         
         /// <summary>

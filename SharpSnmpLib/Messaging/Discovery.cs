@@ -67,7 +67,8 @@ namespace Lextm.SharpSnmpLib.Messaging
                     OctetString.Empty,
                     OctetString.Empty,
                     new GetRequestPdu(requestId, new List<Variable>())),
-                DefaultPrivacyProvider.DefaultPair);
+                DefaultPrivacyProvider.DefaultPair,
+                null);
         }
 
         /// <summary>

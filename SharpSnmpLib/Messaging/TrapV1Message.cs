@@ -37,9 +37,9 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// </summary>
     public sealed class TrapV1Message : ISnmpMessage
     {
-        private readonly byte[] _bytes;
         private Scope _scope;
         private readonly ISnmpPdu _pdu;
+        private readonly Sequence _container;
 
         /// <summary>
         /// Creates a <see cref="TrapV1Message"/> with all content.
@@ -96,8 +96,6 @@ namespace Lextm.SharpSnmpLib.Messaging
                 variables);
             _pdu = pdu;
             Parameters = SecurityParameters.Create(Community);
-
-            _bytes = SnmpMessageExtension.PackMessage(Version, Community, pdu).ToBytes();
         }
         
         /// <summary>
@@ -138,8 +136,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             Specific = trapPdu.Specific;
             TimeStamp = trapPdu.TimeStamp.ToUInt32();
             Parameters = SecurityParameters.Create(Community);
-
-            _bytes = SnmpMessageExtension.PackMessage(Version, Community, _pdu).ToBytes();
+            _container = body;
         }
 
         /// <summary>
@@ -200,7 +197,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public byte[] ToBytes()
         {
-            return _bytes;
+            return _container == null ? SnmpMessageExtension.PackMessage(Version, Community, _pdu).ToBytes() : _container.ToBytes();
         }
 
         /// <summary>

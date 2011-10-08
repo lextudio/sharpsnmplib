@@ -71,7 +71,8 @@ namespace Lextm.SharpSnmpLib.Pipeline
                         0,
                         Request.Pdu().Variables)),
                 defaultPair,
-                true);
+                true,
+                null);
             if (TooBig)
             {
                 GenerateTooBig();
@@ -104,7 +105,8 @@ namespace Lextm.SharpSnmpLib.Pipeline
                             index,
                             Request.Pdu().Variables)),
                     privacy,
-                    true);
+                    true,
+                    null);
             if (TooBig)
             {
                 GenerateTooBig();
@@ -140,7 +142,8 @@ namespace Lextm.SharpSnmpLib.Pipeline
                         0,
                         Request.Pdu().Variables)),
                 privacy,
-                true);
+                true,
+                null);
             if (TooBig)
             {
                 Response = null;
@@ -215,7 +218,8 @@ namespace Lextm.SharpSnmpLib.Pipeline
                                     ReportId,
                                     new Counter32(Group.ReportCount))
                             })),
-                DefaultPrivacyProvider.DefaultPair);
+                DefaultPrivacyProvider.DefaultPair,
+                null);
             if (TooBig)
             {
                 GenerateTooBig();
@@ -252,7 +256,8 @@ namespace Lextm.SharpSnmpLib.Pipeline
                         0,
                         variables)),
                 privacy,
-                true);
+                true,
+                null);
             if (TooBig)
             {
                 GenerateTooBig();

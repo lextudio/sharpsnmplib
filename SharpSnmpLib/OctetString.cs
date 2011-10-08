@@ -23,6 +23,7 @@ using System.Linq;
 using System.Net.NetworkInformation;
 #endif
 using System.Text;
+using System.Tuples;
 
 // ASN.1 BER encoding library by Malcolm Crowe at the University of the West of Scotland
 // See http://cis.paisley.ac.uk/crow-ci0
@@ -57,16 +58,17 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="length">The length.</param>
         /// <param name="stream">The stream.</param>
-        public OctetString(int length, Stream stream)
+        public OctetString(Tuple<int, byte[]> length, Stream stream)
         {
             if (stream == null)
             {
                 throw new ArgumentNullException("stream");
             }
 
-            _raw = new byte[length];
-            stream.Read(_raw, 0, length);
+            _raw = new byte[length.First];
+            stream.Read(_raw, 0, length.First);
             Encoding = DefaultEncoding;
+            _length = length.Second;
         }
         
         /// <summary>
@@ -128,6 +130,7 @@ namespace Lextm.SharpSnmpLib
         }
         
         private static readonly OctetString EmptyString = new OctetString(string.Empty, Encoding.GetEncoding("ASCII"));
+        private byte[] _length;
 
         /// <summary>
         /// Gets the empty string.
@@ -220,7 +223,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("stream");
             }
 
-            stream.AppendBytes(TypeCode, _raw);
+            stream.AppendBytes(TypeCode, _length, _raw);
         }
 
         /// <summary>
@@ -325,6 +328,16 @@ namespace Lextm.SharpSnmpLib
             }
 
             return left._raw.SequenceEqual(right._raw); 
+        }
+
+        internal byte[] GetLengthBytes()
+        {
+            return _length;
+        }
+
+        internal void SetLengthBytes(byte[] bytes)
+        {
+            _length = bytes;
         }
     }
     

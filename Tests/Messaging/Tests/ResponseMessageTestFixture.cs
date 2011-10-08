@@ -38,7 +38,8 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
                     OctetString.Empty,
                     new ResponsePdu(0x2C6B, ErrorCode.NoError, 0, new List<Variable>{ new Variable(new ObjectIdentifier("1.3.6.1.1.2.5.0"), new Integer32(400))})),
                 DefaultPrivacyProvider.DefaultPair,
-                true);
+                true,
+                null);
             var registry = new UserRegistry();
             registry.Add(new OctetString("lextm"), DefaultPrivacyProvider.DefaultPair);
             var messages = MessageFactory.ParseMessages(response.ToBytes(), registry);

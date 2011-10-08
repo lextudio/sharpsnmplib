@@ -18,6 +18,7 @@
 using System;
 using System.IO;
 using System.Net;
+using System.Tuples;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -27,6 +28,7 @@ namespace Lextm.SharpSnmpLib
     public sealed class IP : ISnmpData, IEquatable<IP>
     {
         private readonly IPAddress _ip;
+        private readonly byte[] _length;
 // ReSharper disable InconsistentNaming
         private const int IPv4Length = 4;
         private const int IPv6Length = 16;
@@ -74,21 +76,22 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="length">The length.</param>
         /// <param name="stream">The stream.</param>
-        public IP(int length, Stream stream)
+        public IP(Tuple<int, byte[]> length, Stream stream)
         {
             if (stream == null)
             {
                 throw new ArgumentNullException("stream");
             }
 
-            if (length != IPv4Length && length != IPv6Length)
+            if (length.First != IPv4Length && length.First != IPv6Length)
             {
                 throw new ArgumentException("bytes must contain 4 or 16 elements");
             }
 
-            var raw = new byte[length];
-            stream.Read(raw, 0, length);
+            var raw = new byte[length.First];
+            stream.Read(raw, 0, length.First);
             _ip = new IPAddress(raw);
+            _length = length.Second;
         }
 
         /// <summary>
@@ -131,7 +134,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("stream");
             }
             
-            stream.AppendBytes(TypeCode, _ip.GetAddressBytes());
+            stream.AppendBytes(TypeCode, _length, _ip.GetAddressBytes());
         }
 
         /// <summary>

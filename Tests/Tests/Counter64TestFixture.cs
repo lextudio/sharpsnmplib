@@ -9,6 +9,7 @@
 
 using System;
 using System.IO;
+using System.Tuples;
 using NUnit.Framework;
 
 #pragma warning disable 1591,0618,1718
@@ -25,9 +26,9 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual(14532202884452442569.GetHashCode(), counter64.GetHashCode());
             Assert.AreEqual("14532202884452442569", counter64.ToString());
 
-            Assert.Throws<ArgumentNullException>(() => new Counter64(0, null));
-            Assert.Throws<ArgumentException>(() => new Counter64(-1, new MemoryStream()));
-            Assert.Throws<ArgumentException>(() => new Counter64(10, new MemoryStream()));
+            Assert.Throws<ArgumentNullException>(() => new Counter64(new Tuple<int, byte[]>(0, new byte[] { 0 }), null));
+            Assert.Throws<ArgumentException>(() => new Counter64(new Tuple<int, byte[]>(-1, new[] { (byte)255 }), new MemoryStream()));
+            Assert.Throws<ArgumentException>(() => new Counter64(new Tuple<int, byte[]>(10, new byte[]{10}), new MemoryStream()));
             Assert.Throws<ArgumentException>(
                 () => new Counter64(new byte[] {0x05, 0xC9, 0xAC, 0xC1, 0x87, 0x4B, 0xB1, 0xE1, 0xC9}));
 

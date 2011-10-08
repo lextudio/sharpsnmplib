@@ -305,6 +305,10 @@
       <Project>{CBE20411-5DB7-487D-825D-7694267BB6F5}</Project>
       <Name>SharpSnmpLib.Mib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\System.Tuples\System.Tuples.csproj">
+      <Project>{0D826AF6-57A2-46DF-95CF-DEC1CAD1B931}</Project>
+      <Name>System.Tuples</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

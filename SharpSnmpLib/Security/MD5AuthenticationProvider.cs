@@ -20,12 +20,14 @@ using System.Globalization;
 using System.IO;
 using System.Security.Cryptography;
 
+using Lextm.SharpSnmpLib.Messaging;
+
 namespace Lextm.SharpSnmpLib.Security
 {
     /// <summary>
     /// Authentication provider using MD5.
     /// </summary>
-    public sealed class MD5AuthenticationProvider : IAuthenticationProvider
+    public class MD5AuthenticationProvider : IAuthenticationProvider
     {
         private readonly byte[] _password;
         private const int DigestLength = 12;
@@ -72,14 +74,14 @@ namespace Lextm.SharpSnmpLib.Security
             
             using (MD5 md5 = new MD5CryptoServiceProvider())
             {
-                var passwordIndex = 0;
-                var count = 0;
+                int passwordIndex = 0;
+                int count = 0;
                 /* Use while loop until we've done 1 Megabyte */
-                var sourceBuffer = new byte[1048576];
-                var buf = new byte[64];
+                byte[] sourceBuffer = new byte[1048576];
+                byte[] buf = new byte[64];
                 while (count < 1048576)
                 {
-                    for (var i = 0; i < 64; ++i)
+                    for (int i = 0; i < 64; ++i)
                     {
                         // Take the next octet of the password, wrapping
                         // to the beginning of the password as necessary.
@@ -90,9 +92,9 @@ namespace Lextm.SharpSnmpLib.Security
                     count += 64;
                 }
 
-                var digest = md5.ComputeHash(sourceBuffer);
+                byte[] digest = md5.ComputeHash(sourceBuffer);
 
-                using (var buffer = new MemoryStream())
+                using (MemoryStream buffer = new MemoryStream())
                 {
                     buffer.Write(digest, 0, digest.Length);
                     buffer.Write(engineId, 0, engineId.Length);
@@ -120,7 +122,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// <param name="data">The scope data.</param>
         /// <param name="privacy">The privacy provider.</param>
         /// <returns></returns>
-        public OctetString ComputeHash(VersionCode version, ISegment header, SecurityParameters parameters, ISnmpData data, IPrivacyProvider privacy)
+        public OctetString ComputeHash(VersionCode version, ISegment header, SecurityParameters parameters, ISnmpData data, IPrivacyProvider privacy, byte[] length)
         {
             if (header == null)
             {
@@ -142,39 +144,14 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentNullException("privacy");
             }
 
-            var key = PasswordToKey(_password, parameters.EngineId.GetRaw());
-            using (var md5 = new HMACMD5(key))
+            byte[] key = PasswordToKey(_password, parameters.EngineId.GetRaw());
+            using (HMACMD5 md5 = new HMACMD5(key))
             {
-                var hash = md5.ComputeHash(ByteTool.PackMessage(version, header, parameters, data).ToBytes());
+                var sequence = SnmpMessageExtension.PackMessage(length, version, header, parameters, data);
+                byte[] message = sequence.ToBytes();
+                byte[] hash = md5.ComputeHash(message);
                 md5.Clear();
-                var result = new byte[DigestLength];
-                Buffer.BlockCopy(hash, 0, result, 0, result.Length);
-                return new OctetString(result);
-            }
-        }
-
-        /// <summary>
-        /// Computes the hash.
-        /// </summary>
-        /// <returns></returns>
-        public OctetString ComputeHash(byte[] buffer, OctetString engineId)
-        {
-            if (buffer == null)
-            {
-                throw new ArgumentNullException("buffer");
-            }
-
-            if (engineId == null)
-            {
-                throw new ArgumentNullException("engineId");
-            }
-
-            var key = PasswordToKey(_password, engineId.GetRaw());
-            using (var md5 = new HMACMD5(key))
-            {
-                var hash = md5.ComputeHash(buffer);
-                md5.Clear();
-                var result = new byte[DigestLength];
+                byte[] result = new byte[DigestLength];
                 Buffer.BlockCopy(hash, 0, result, 0, result.Length);
                 return new OctetString(result);
             }

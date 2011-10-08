@@ -27,6 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Tuples;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -41,6 +42,7 @@ namespace Lextm.SharpSnmpLib
         private byte[] _raw;
         private readonly Sequence _varbindSection;
         private readonly TimeTicks _time;
+        private readonly byte[] _length;
 
         /// <summary>
         /// Creates a <see cref="InformRequestPdu"/> instance with all content.
@@ -76,9 +78,7 @@ namespace Lextm.SharpSnmpLib
         /// Initializes a new instance of the <see cref="InformRequestPdu"/> class.
         /// </summary>    
         /// <param name="stream">The stream.</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "temp1")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "temp2")]
-        public InformRequestPdu(Stream stream)
+        public InformRequestPdu(Tuple<int, byte[]> length, Stream stream)
         {
             if (stream == null)
             {
@@ -96,6 +96,7 @@ namespace Lextm.SharpSnmpLib
             Variables.RemoveAt(0);
             Enterprise = (ObjectIdentifier)Variables[0].Data;
             Variables.RemoveAt(0);
+            _length = length.Second;
         }
 
         /// <summary>
@@ -169,7 +170,7 @@ namespace Lextm.SharpSnmpLib
                 _raw = ByteTool.ParseItems(RequestId, Integer32.Zero, Integer32.Zero, _varbindSection);
             }
 
-            stream.AppendBytes(TypeCode, _raw);            
+            stream.AppendBytes(TypeCode, _length, _raw);            
         }
 
         #endregion

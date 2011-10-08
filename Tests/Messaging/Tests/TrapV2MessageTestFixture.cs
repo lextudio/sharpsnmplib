@@ -71,7 +71,8 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
                               new ObjectIdentifier("1.3.6"),
                               0,
                               new List<Variable>())),
-                privacy);         
+                privacy, 
+                null);         
             byte[] bytes = trap.ToBytes();
             UserRegistry registry = new UserRegistry();
             registry.Add(new OctetString("lextm"), privacy);

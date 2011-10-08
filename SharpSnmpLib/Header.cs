@@ -32,6 +32,7 @@ namespace Lextm.SharpSnmpLib
         private static readonly Integer32 DefaultSecurityModel = new Integer32(3);
         private static readonly Integer32 DefaultMaxMessageSize = new Integer32(MaxMessageSize);
         private static readonly Header EmptyHeader = new Header();
+        private readonly Sequence _container;
 
         /// <summary>
         /// Max message size used in #SNMP. 
@@ -61,12 +62,12 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("data");
             }
 
-            var container = (Sequence)data;
-            _messageId = (Integer32)container[0];
-            _maxSize = (Integer32)container[1];
-            _flags = (OctetString)container[2];
+            _container = (Sequence)data;
+            _messageId = (Integer32)_container[0];
+            _maxSize = (Integer32)_container[1];
+            _flags = (OctetString)_container[2];
             SecurityLevel = _flags.ToLevels();
-            _securityModel = (Integer32)container[3];
+            _securityModel = (Integer32)_container[3];
         }
 
         /// <summary>
@@ -120,7 +121,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public Sequence ToSequence()
         {
-            return new Sequence(_messageId, _maxSize, _messageId == null ? null : _flags, _securityModel);
+            return _container ?? new Sequence(null, _messageId, _maxSize, _messageId == null ? null : _flags, _securityModel);
         }
 
         /// <summary>

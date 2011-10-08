@@ -22,6 +22,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Tuples;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -40,6 +41,7 @@ namespace Lextm.SharpSnmpLib
         [NonSerialized]
         #endif
         private int _hashcode;
+        private byte[] _length;
 
         #region Constructor
 
@@ -86,7 +88,8 @@ namespace Lextm.SharpSnmpLib
         /// Creates an <see cref="ObjectIdentifier"/> instance from raw bytes.
         /// </summary>
         /// <param name="raw">Raw bytes</param>
-        internal ObjectIdentifier(byte[] raw) : this(raw.Length, new MemoryStream(raw))
+        internal ObjectIdentifier(byte[] raw)
+            : this(new Tuple<int, byte[]>(raw.Length, raw.Length.WritePayloadLength()), new MemoryStream(raw))
         {
             // IMPORTANT: for test project only.
         }
@@ -96,16 +99,16 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="length">The length.</param>
         /// <param name="stream">The stream.</param>
-        public ObjectIdentifier(int length, Stream stream)
+        public ObjectIdentifier(Tuple<int, byte[]> length, Stream stream)
         {
             if (stream == null)
             {
                 throw new ArgumentNullException("stream");
             }
 
-            var raw = new byte[length];
-            stream.Read(raw, 0, length);
-            if (length == 0)
+            var raw = new byte[length.First];
+            stream.Read(raw, 0, length.First);
+            if (length.First == 0)
             {
                 throw new ArgumentException("length cannot be 0", "length");
             }
@@ -127,6 +130,7 @@ namespace Lextm.SharpSnmpLib
             }
 
             _oid = result.ToArray();
+            _length = length.Second;
         }
 
         #endregion Constructor
@@ -284,7 +288,7 @@ namespace Lextm.SharpSnmpLib
                 temp.AddRange(ConvertToBytes(_oid[i]));
             }
 
-            stream.AppendBytes(TypeCode, temp.ToArray());
+            stream.AppendBytes(TypeCode, _length, temp.ToArray());
         }
 
         private static IEnumerable<byte> ConvertToBytes(uint subIdentifier)

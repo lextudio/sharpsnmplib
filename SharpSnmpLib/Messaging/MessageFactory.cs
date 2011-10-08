@@ -185,7 +185,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                     throw new SnmpException(string.Format(CultureInfo.InvariantCulture, "invalid v3 packets scoped data: {0}", code));
                 }
               
-                if (!privacy.AuthenticationProvider.VerifyHash(stream, parameters.AuthenticationParameters, parameters.EngineId))
+                if (!privacy.AuthenticationProvider.VerifyHash(version, header, parameters, body[3], privacy, body.GetLengthBytes()))
                 {
                     throw new SnmpException("invalid v3 packet data hash detected");
                 }
@@ -197,21 +197,21 @@ namespace Lextm.SharpSnmpLib.Messaging
                 case SnmpType.TrapV1Pdu:
                     return new TrapV1Message(body);
                 case SnmpType.TrapV2Pdu:
-                    return new TrapV2Message(version, header, parameters, scope, privacy);
+                    return new TrapV2Message(version, header, parameters, scope, privacy, body.GetLengthBytes());
                 case SnmpType.GetRequestPdu:
-                    return new GetRequestMessage(version, header, parameters, scope, privacy);
+                    return new GetRequestMessage(version, header, parameters, scope, privacy, body.GetLengthBytes());
                 case SnmpType.ResponsePdu:
-                    return new ResponseMessage(version, header, parameters, scope, privacy, false);
+                    return new ResponseMessage(version, header, parameters, scope, privacy, false, body.GetLengthBytes());
                 case SnmpType.SetRequestPdu:
-                    return new SetRequestMessage(version, header, parameters, scope, privacy);
+                    return new SetRequestMessage(version, header, parameters, scope, privacy, body.GetLengthBytes());
                 case SnmpType.GetNextRequestPdu:
-                    return new GetNextRequestMessage(version, header, parameters, scope, privacy);
+                    return new GetNextRequestMessage(version, header, parameters, scope, privacy, body.GetLengthBytes());
                 case SnmpType.GetBulkRequestPdu:
-                    return new GetBulkRequestMessage(version, header, parameters, scope, privacy);
+                    return new GetBulkRequestMessage(version, header, parameters, scope, privacy, body.GetLengthBytes());
                 case SnmpType.ReportPdu:
-                    return new ReportMessage(version, header, parameters, scope, privacy);
+                    return new ReportMessage(version, header, parameters, scope, privacy, body.GetLengthBytes());
                 case SnmpType.InformRequestPdu:
-                    return new InformRequestMessage(version, header, parameters, scope, privacy);
+                    return new InformRequestMessage(version, header, parameters, scope, privacy, body.GetLengthBytes());
                 default:
                     throw new SnmpException(string.Format(CultureInfo.InvariantCulture, "unsupported pdu: {0}", scopeCode));
             }

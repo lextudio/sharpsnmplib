@@ -25,13 +25,13 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.Throws<ArgumentNullException>(() => Variable.Transform((IList<Variable>)null));
             Assert.Throws<ArgumentNullException>(() => Variable.Transform((Sequence)null));
             
-            var seq = new Sequence(new OctetString("test"));
+            var seq = new Sequence(null, new OctetString("test"));
             Assert.Throws<ArgumentException>(() => Variable.Transform(seq));
             
-            var seq2 = new Sequence(new Sequence(new OctetString("test")));
+            var seq2 = new Sequence(null, new Sequence(null, new OctetString("test")));
             Assert.Throws<ArgumentException>(() => Variable.Transform(seq2));
             
-            var seq3 = new Sequence(new Sequence(new OctetString("test"), new Sequence()));
+            var seq3 = new Sequence(null, new Sequence(null, new OctetString("test"), new Sequence((byte[])null)));
             Assert.Throws<ArgumentException>(() => Variable.Transform(seq3));
         }
         

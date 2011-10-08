@@ -145,7 +145,7 @@ namespace Lextm.SharpSnmpLib
             }
 
             var varbinds = new List<ISnmpData>(variables.Count);
-            varbinds.AddRange(variables.Select(v => new Sequence(v.Id, v.Data)).Cast<ISnmpData>());
+            varbinds.AddRange(variables.Select(v => new Sequence(null, v.Id, v.Data)).Cast<ISnmpData>());
 
             var result = new Sequence(varbinds);
             return result;

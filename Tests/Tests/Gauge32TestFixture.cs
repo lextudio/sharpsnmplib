@@ -8,6 +8,7 @@
  */
 
 using System;
+using System.Tuples;
 using NUnit.Framework;
 #pragma warning disable 1591,0618,1718
 namespace Lextm.SharpSnmpLib.Tests
@@ -32,7 +33,7 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual("200", left.ToString());
 
             Assert.Throws<ArgumentNullException>(() => left.AppendBytesTo(null));
-            Assert.Throws<ArgumentNullException>(() => new Gauge32(0, null));
+            Assert.Throws<ArgumentNullException>(() => new Gauge32(new Tuple<int, byte[]>(0, new byte[] { 0 }), null));
         }
         
         [Test]
