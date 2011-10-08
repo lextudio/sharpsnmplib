@@ -66,6 +66,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Initializes a new instance of the <see cref="ResponsePdu"/> class.
         /// </summary>
+        /// <param name="length">The length data.</param>
         /// <param name="stream">The stream.</param>
         public ResponsePdu(Tuple<int, byte[]> length, Stream stream)
         {

@@ -65,10 +65,11 @@ namespace Lextm.SharpSnmpLib
             full.Insert(1, new Variable(_enterpriseId, Enterprise));
             _varbindSection = Variable.Transform(full);
         }
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="TrapV2Pdu"/> class.
         /// </summary>
+        /// <param name="length">The length data.</param>
         /// <param name="stream">The stream.</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "temp2")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "temp1")]

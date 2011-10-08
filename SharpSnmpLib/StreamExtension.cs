@@ -27,39 +27,6 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public static class StreamExtension
     {
-        internal static byte[] WritePayloadLength(this int length) // excluding initial octet
-        {
-            if (length < 0)
-            {
-                throw new ArgumentException("length cannot be negative", "length");
-            }
-
-            var stream = new MemoryStream();
-
-            if (length < 127)
-            {
-                stream.WriteByte((byte)length);
-                return stream.ToArray();
-            }
-            
-            var c = new byte[16];
-            int j = 0;
-            while (length > 0)
-            {
-                c[j++] = (byte)(length & 0xff);
-                length = length >> 8;
-            }
-            
-            stream.WriteByte((byte)(0x80 | j));
-            while (j > 0)
-            {
-                int x = c[--j];
-                stream.WriteByte((byte)x);
-            }
-
-            return stream.ToArray();
-        }
-
         internal static Tuple<int, byte[]> ReadPayloadLength(this Stream stream)
         {
             if (stream == null)
@@ -68,20 +35,20 @@ namespace Lextm.SharpSnmpLib
             }
 
             var list = new List<byte>();
-            int first = stream.ReadByte();
+            var first = stream.ReadByte();
             var firstByte = (byte)first;
             if ((firstByte & 0x80) == 0)
             {
-                return new Tuple<int, byte[]>(first, new[] {firstByte});
+                return new Tuple<int, byte[]>(first, new[] { firstByte });
             }
 
             list.Add(firstByte);
             
-            int result = 0;
-            int octets = firstByte & 0x7f;
-            for (int j = 0; j < octets; j++)
+            var result = 0;
+            var octets = firstByte & 0x7f;
+            for (var j = 0; j < octets; j++)
             {
-                int n = stream.ReadByte();
+                var n = stream.ReadByte();
                 if (n == -1)
                 {
                     throw new SnmpException("BER end of file");

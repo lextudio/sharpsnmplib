@@ -78,6 +78,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Initializes a new instance of the <see cref="GetNextRequestPdu"/> class.
         /// </summary>
+        /// <param name="length">The length data.</param>
         /// <param name="stream">The stream.</param>
         public GetNextRequestPdu(Tuple<int, byte[]> length, Stream stream)
         {
@@ -162,4 +163,3 @@ namespace Lextm.SharpSnmpLib
         }
     }
 }
-

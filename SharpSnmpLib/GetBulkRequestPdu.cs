@@ -65,6 +65,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Initializes a new instance of the <see cref="GetBulkRequestPdu"/> class.
         /// </summary>
+        /// <param name="length">The length data.</param>
         /// <param name="stream">The stream.</param>
         public GetBulkRequestPdu(Tuple<int, byte[]> length, Stream stream)
         {

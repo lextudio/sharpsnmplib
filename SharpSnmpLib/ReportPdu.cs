@@ -61,10 +61,11 @@ namespace Lextm.SharpSnmpLib
             Variables = variables;
             _varbindSection = Variable.Transform(variables);
         }
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ReportPdu"/> class.
-        /// </summary>        
+        /// </summary>
+        /// <param name="length">The length data.</param>
         /// <param name="stream">The stream.</param>
         public ReportPdu(Tuple<int, byte[]> length, Stream stream)
         {

@@ -71,6 +71,7 @@ namespace Lextm.SharpSnmpLib
             {
                 return _authenticationParameters;
             }
+            
             set
             {
                 if (_authenticationParameters == null)
@@ -82,10 +83,11 @@ namespace Lextm.SharpSnmpLib
                 if (value.GetRaw().Length != _authenticationParameters.GetRaw().Length)
                 {
                     throw new ArgumentException(
-                        string.Format(CultureInfo.InvariantCulture,
-                                      "Length of new authentication parameters is invalid: {0} found while {1} expected",
-                                      value.GetRaw().Length,
-                                      _authenticationParameters.GetRaw().Length),
+                        string.Format(
+                            CultureInfo.InvariantCulture,
+                            "Length of new authentication parameters is invalid: {0} found while {1} expected",
+                            value.GetRaw().Length,
+                            _authenticationParameters.GetRaw().Length),
                         "value");
                 }
 

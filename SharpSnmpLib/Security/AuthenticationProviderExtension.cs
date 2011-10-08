@@ -25,76 +25,19 @@ namespace Lextm.SharpSnmpLib.Security
     public static class AuthenticationProviderExtension
     {
         /// <summary>
-        /// Verifies the hash.
-        /// </summary>
-        /// <param name="authen">The authentication provider.</param>
-        /// <param name="version">The version.</param>
-        /// <param name="header">The header.</param>
-        /// <param name="parameters">The parameters.</param>
-        /// <param name="scopeBytes">The scope bytes.</param>
-        /// <param name="privacy">The privacy provider.</param>
-        /// <returns>
-        /// Returns <code>true</code> if hash matches. Otherwise, returns <code>false</code>.
-        /// </returns>
-        public static bool VerifyHash(this IAuthenticationProvider authen, VersionCode version, Header header, SecurityParameters parameters, ISnmpData scopeBytes, IPrivacyProvider privacy, byte[] length)
-        {
-            if (authen == null)
-            {
-                throw new ArgumentNullException("authen");
-            }
-            
-            if (header == null)
-            {
-                throw new ArgumentNullException("header");
-            }
-
-            if (parameters == null)
-            {
-                throw new ArgumentNullException("parameters");
-            }
-
-            if (scopeBytes == null)
-            {
-                throw new ArgumentNullException("scopeBytes");
-            }
-
-            if (privacy == null)
-            {
-                throw new ArgumentNullException("privacy");
-            }
-
-            if (authen is DefaultAuthenticationProvider)
-            {
-                return true;
-            }
-
-            if (0 == (header.SecurityLevel & Levels.Authentication))
-            {
-                return true;
-            }
-
-            var expected = parameters.AuthenticationParameters;
-            parameters.AuthenticationParameters = authen.CleanDigest; // clean the hash first.
-            var newHash = authen.ComputeHash(version, header, parameters, scopeBytes, privacy, length);
-            bool result = newHash == expected;
-            parameters.AuthenticationParameters = expected; // restore the hash.
-            return result;
-        }
-
-        /// <summary>
         /// Computes the hash.
         /// </summary>
-        /// <param name="authen">The authentication provider.</param>
+        /// <param name="provider">The authentication provider.</param>
         /// <param name="version">The version.</param>
         /// <param name="header">The header.</param>
         /// <param name="parameters">The parameters.</param>
         /// <param name="scope">The scope.</param>
         /// <param name="privacy">The privacy provider.</param>
-        public static void ComputeHash(this IAuthenticationProvider authen, VersionCode version, Header header, SecurityParameters parameters, ISegment scope, IPrivacyProvider privacy)
+        public static void ComputeHash(this IAuthenticationProvider provider, VersionCode version, Header header, SecurityParameters parameters, ISegment scope, IPrivacyProvider privacy)
         {
-            if (authen == null)
+            if (provider == null)
             {
-                throw new ArgumentNullException("authen");
+                throw new ArgumentNullException("provider");
             }
             
             if (header == null)
@@ -117,7 +60,7 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentNullException("privacy");
             }
 
-            if (authen is DefaultAuthenticationProvider)
+            if (provider is DefaultAuthenticationProvider)
             {
                 return;
             }
@@ -128,8 +71,64 @@ namespace Lextm.SharpSnmpLib.Security
             }
 
             var scopeData = privacy.GetScopeData(header, parameters, scope.GetData(version));
-            // replace the hash.
-            parameters.AuthenticationParameters = authen.ComputeHash(version, header, parameters, scopeData, privacy, null);
+            parameters.AuthenticationParameters = provider.ComputeHash(version, header, parameters, scopeData, privacy, null); // replace the hash.
+        }
+
+        /// <summary>
+        /// Verifies the hash.
+        /// </summary>
+        /// <param name="provider">The authentication provider.</param>
+        /// <param name="version">The version.</param>
+        /// <param name="header">The header.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="scopeBytes">The scope bytes.</param>
+        /// <param name="privacy">The privacy provider.</param>
+        /// <param name="length">The length bytes.</param>
+        /// <returns>
+        /// Returns <code>true</code> if hash matches. Otherwise, returns <code>false</code>.
+        /// </returns>
+        public static bool VerifyHash(this IAuthenticationProvider provider, VersionCode version, Header header, SecurityParameters parameters, ISnmpData scopeBytes, IPrivacyProvider privacy, byte[] length)
+        {
+            if (provider == null)
+            {
+                throw new ArgumentNullException("provider");
+            }
+            
+            if (header == null)
+            {
+                throw new ArgumentNullException("header");
+            }
+
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+
+            if (scopeBytes == null)
+            {
+                throw new ArgumentNullException("scopeBytes");
+            }
+
+            if (privacy == null)
+            {
+                throw new ArgumentNullException("privacy");
+            }
+
+            if (provider is DefaultAuthenticationProvider)
+            {
+                return true;
+            }
+
+            if (0 == (header.SecurityLevel & Levels.Authentication))
+            {
+                return true;
+            }
+
+            var expected = parameters.AuthenticationParameters;
+            parameters.AuthenticationParameters = provider.CleanDigest; // clean the hash first.
+            var newHash = provider.ComputeHash(version, header, parameters, scopeBytes, privacy, length);
+            parameters.AuthenticationParameters = expected; // restore the hash.
+            return newHash == expected;
         }
     }
 }

@@ -29,6 +29,7 @@ namespace Lextm.SharpSnmpLib
     {
         private readonly IPAddress _ip;
         private readonly byte[] _length;
+
 // ReSharper disable InconsistentNaming
         private const int IPv4Length = 4;
         private const int IPv6Length = 16;

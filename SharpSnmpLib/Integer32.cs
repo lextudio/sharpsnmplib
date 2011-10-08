@@ -45,14 +45,13 @@ namespace Lextm.SharpSnmpLib
         : ISnmpData, IEquatable<Integer32>
     {
         private readonly int _int;
+        private readonly byte[] _length;
         
         /// <summary>
         /// Zero.
         /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes")]
         public static readonly Integer32 Zero = new Integer32(0);
-
-        private readonly byte[] _length;
 
         /// <summary>
         /// Creates an <see cref="Integer32"/> instance.
@@ -97,7 +96,7 @@ namespace Lextm.SharpSnmpLib
             var raw = new byte[length.First];
             stream.Read(raw, 0, length.First);
             _int = ((raw[0] & 0x80) == 0x80) ? -1 : 0; // sign extended! Guy McIlroy
-            for (int j = 0; j < length.First; j++)
+            for (var j = 0; j < length.First; j++)
             {
                 _int = (_int << 8) | raw[j];
             }

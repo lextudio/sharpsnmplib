@@ -25,6 +25,7 @@
  */
 using System;
 using System.IO;
+using System.Tuples;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -33,6 +34,26 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public sealed class NoSuchObject : ISnmpData, IEquatable<NoSuchObject>
     {
+        private readonly byte[] _length;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NoSuchObject"/> class.
+        /// </summary>
+        /// <param name="length">The length data.</param>
+        /// <param name="stream">The stream.</param>
+        public NoSuchObject(Tuple<int, byte[]> length, Stream stream)
+        {
+            stream.IgnoreBytes(length.First);
+            _length = length.Second;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NoSuchObject"/> class.
+        /// </summary>
+        public NoSuchObject()
+        {
+        }
+
         #region Equals and GetHashCode implementation
         /// <summary>
         /// Determines whether the specified <see cref="Object"/> is equal to the current <see cref="NoSuchObject"/>.
@@ -111,7 +132,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("stream");
             }
             
-            stream.AppendBytes(TypeCode, null, new byte[0]);
+            stream.AppendBytes(TypeCode, _length, new byte[0]);
         }
        
         /// <summary>

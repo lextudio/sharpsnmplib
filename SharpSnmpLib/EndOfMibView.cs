@@ -25,6 +25,7 @@
  */
 using System;
 using System.IO;
+using System.Tuples;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -34,6 +35,26 @@ namespace Lextm.SharpSnmpLib
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Mib")]
     public sealed class EndOfMibView : ISnmpData, IEquatable<EndOfMibView>
     {
+        private readonly byte[] _length;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EndOfMibView"/> class.
+        /// </summary>
+        /// <param name="length">The length data.</param>
+        /// <param name="stream">The stream.</param>
+        public EndOfMibView(Tuple<int, byte[]> length, Stream stream)
+        {
+            stream.IgnoreBytes(length.First);
+            _length = length.Second;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EndOfMibView"/> class.
+        /// </summary>
+        public EndOfMibView()
+        {
+        }
+
         #region Equals and GetHashCode implementation
         /// <summary>
         /// Determines whether the specified <see cref="Object"/> is equal to the current <see cref="EndOfMibView"/>.
@@ -112,7 +133,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("stream");
             }
             
-            stream.AppendBytes(TypeCode, null, new byte[0]);
+            stream.AppendBytes(TypeCode, _length, new byte[0]);
         }
         
         /// <summary>

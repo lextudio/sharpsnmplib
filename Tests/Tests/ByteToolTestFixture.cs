@@ -67,7 +67,7 @@ namespace Lextm.SharpSnmpLib.Tests
             m.Write(expected, 0, 4);
             m.Flush();
             m.Position = 0;
-            Assert.AreEqual(7559605, m.ReadPayloadLength());
+            Assert.AreEqual(7559605, m.ReadPayloadLength().First);
         }
         
         [Test]

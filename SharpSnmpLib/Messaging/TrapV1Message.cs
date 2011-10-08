@@ -197,7 +197,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public byte[] ToBytes()
         {
-            return _container == null ? SnmpMessageExtension.PackMessage(Version, Community, _pdu).ToBytes() : _container.ToBytes();
+            return _container == null ? PackMessage(Version, Community, _pdu).ToBytes() : _container.ToBytes();
         }
 
         /// <summary>
@@ -240,6 +240,24 @@ namespace Lextm.SharpSnmpLib.Messaging
                 CultureInfo.InvariantCulture,
                 "SNMPv1 trap: {0}",
                 ((TrapV1Pdu)_pdu).ToString(objects));
+        }
+
+        /// <summary>
+        /// Packs the message.
+        /// </summary>
+        /// <param name="version">The version.</param>
+        /// <param name="data">The data.</param>
+        /// <returns></returns>
+        internal static Sequence PackMessage(VersionCode version, params ISnmpData[] data)
+        {
+            if (data == null)
+            {
+                throw new ArgumentNullException("data");
+            }
+            
+            var collection = new List<ISnmpData>(1 + data.Length) { new Integer32((int)version) };
+            collection.AddRange(data);
+            return new Sequence(collection);
         }
     }
 }

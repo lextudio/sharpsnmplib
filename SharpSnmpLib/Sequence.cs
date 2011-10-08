@@ -56,7 +56,8 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Creates an <see cref="Sequence"/> instance with varied <see cref="ISnmpData"/> instances.
         /// </summary>
-        /// <param name="items"></param>
+        /// <param name="length">The length bytes.</param>
+        /// <param name="items">The items.</param>
         public Sequence(byte[] length, params ISnmpData[] items)
         {
             if (items == null)

@@ -26,6 +26,7 @@
 
 using System;
 using System.IO;
+using System.Tuples;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -34,6 +35,26 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public sealed class Null : ISnmpData, IEquatable<Null>
     {
+        private readonly byte[] _length;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Null"/> class.
+        /// </summary>
+        /// <param name="length">The length data.</param>
+        /// <param name="stream">The stream.</param>
+        public Null(Tuple<int, byte[]> length, Stream stream)
+        {
+            stream.IgnoreBytes(length.First);
+            _length = length.Second;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Null"/> class.
+        /// </summary>
+        public Null()
+        {
+        }
+
         /// <summary>
         /// Type code.
         /// </summary>
@@ -56,7 +77,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("stream");
             }
             
-            stream.AppendBytes(TypeCode, null, new byte[0]);
+            stream.AppendBytes(TypeCode, _length, new byte[0]);
         }
         
         /// <summary>

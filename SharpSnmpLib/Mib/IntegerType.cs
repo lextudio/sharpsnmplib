@@ -60,9 +60,10 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <summary>
         /// Creates an <see cref="IntegerType"/> instance.
         /// </summary>
-        /// <param name="module"></param>
-        /// <param name="name"></param>
-        /// <param name="enumerator"></param>
+        /// <param name="module">The module.</param>
+        /// <param name="name">The name.</param>
+        /// <param name="enumerator">The enumerator.</param>
+        /// <param name="temp">The temp.</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "module")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "name")]
         public IntegerType(string module, string name, IEnumerator<Symbol> enumerator, ref Symbol temp)

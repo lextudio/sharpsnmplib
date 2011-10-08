@@ -117,7 +117,7 @@ namespace Lextm.SharpSnmpLib
 
                 if (names.Count == 0)
                 {
-                    return String.Empty;
+                    return string.Empty;
                 }
 
                 names.Reverse();

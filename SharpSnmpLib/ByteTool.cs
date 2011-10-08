@@ -54,15 +54,15 @@ namespace Lextm.SharpSnmpLib
             var content = description.Trim().Split(new[] { ' ' });
             foreach (var part in content)
             {
-#if CF
+                #if CF
                 result.Add(byte.Parse(part, NumberStyles.Integer, CultureInfo.InvariantCulture));
-#else
+                #else
                 byte temp;
                 if (byte.TryParse(part, out temp))
                 {
                     result.Add(temp);
                 }
-#endif
+                #endif
             }
 
             return result.ToArray();
@@ -94,15 +94,15 @@ namespace Lextm.SharpSnmpLib
                 {
                     continue;
                 }
-#if CF
+                #if CF
                 result.Add(byte.Parse(buffer.ToString(), NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture));
-#else
+                #else
                 byte temp;
                 if (byte.TryParse(buffer.ToString(), NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out temp))
                 {
                     result.Add(temp);
                 }
-#endif                
+                #endif
                 buffer.Length = 0;
             }
             
@@ -212,8 +212,8 @@ namespace Lextm.SharpSnmpLib
             list.Reverse();
             return list.ToArray();
         }
-        
-        internal static Sequence PackMessage(VersionCode version, ISegment header, ISegment parameters, ISnmpData data)
+
+        internal static Sequence PackMessage(byte[] length, VersionCode version, ISegment header, ISegment parameters, ISnmpData data)
         {
             if (header == null)
             {
@@ -230,14 +230,47 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("data");
             }
 
-            var items = new[]
+            var items = new[] 
             {
                 new Integer32((int)version),
                 header.GetData(version),
                 parameters.GetData(version),
                 data
             };
-            return new Sequence(items);
+            return new Sequence(length, items);
         }
-    }    
+
+        internal static byte[] WritePayloadLength(this int length) // excluding initial octet
+        {
+            if (length < 0)
+            {
+                throw new ArgumentException("length cannot be negative", "length");
+            }
+
+            var stream = new MemoryStream();
+
+            if (length < 127)
+            {
+                stream.WriteByte((byte)length);
+                return stream.ToArray();
+            }
+            
+            var c = new byte[16];
+            var j = 0;
+            while (length > 0)
+            {
+                c[j++] = (byte)(length & 0xff);
+                length = length >> 8;
+            }
+            
+            stream.WriteByte((byte)(0x80 | j));
+            while (j > 0)
+            {
+                int x = c[--j];
+                stream.WriteByte((byte)x);
+            }
+
+            return stream.ToArray();
+        }
+    }
 }

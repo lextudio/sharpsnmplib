@@ -44,6 +44,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="parameters">The security parameters.</param>
         /// <param name="scope">The scope.</param>
         /// <param name="privacy">The privacy provider.</param>
+        /// <param name="length">The length bytes.</param>
         public ReportMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, IPrivacyProvider privacy, byte[] length)
         {
             if (scope == null)

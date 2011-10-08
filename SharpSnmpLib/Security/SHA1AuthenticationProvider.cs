@@ -20,15 +20,13 @@ using System.Globalization;
 using System.IO;
 using System.Security.Cryptography;
 
-using Lextm.SharpSnmpLib.Messaging;
-
 namespace Lextm.SharpSnmpLib.Security
 {
     /// <summary>
     /// Authentication provider using SHA-1.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "SHA", Justification = "definition")]
-    public class SHA1AuthenticationProvider : IAuthenticationProvider
+    public sealed class SHA1AuthenticationProvider : IAuthenticationProvider
     {
         private readonly byte[] _password;
         private const int DigestLength = 12;
@@ -74,14 +72,14 @@ namespace Lextm.SharpSnmpLib.Security
             
             using (SHA1 sha = new SHA1CryptoServiceProvider())
             {
-                int passwordIndex = 0;
-                int count = 0;
+                var passwordIndex = 0;
+                var count = 0;
                 /* Use while loop until we've done 1 Megabyte */
-                byte[] sourceBuffer = new byte[1048576];
-                byte[] buf = new byte[64];
+                var sourceBuffer = new byte[1048576];
+                var buf = new byte[64];
                 while (count < 1048576)
                 {
-                    for (int i = 0; i < 64; ++i)
+                    for (var i = 0; i < 64; ++i)
                     {
                         // Take the next octet of the password, wrapping
                         // to the beginning of the password as necessary.
@@ -92,9 +90,9 @@ namespace Lextm.SharpSnmpLib.Security
                     count += 64;
                 }
 
-                byte[] digest = sha.ComputeHash(sourceBuffer);
+                var digest = sha.ComputeHash(sourceBuffer);
 
-                using (MemoryStream buffer = new MemoryStream())
+                using (var buffer = new MemoryStream())
                 {
                     buffer.Write(digest, 0, digest.Length);
                     buffer.Write(engineId, 0, engineId.Length);
@@ -121,6 +119,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// <param name="parameters">The parameters.</param>
         /// <param name="data">The scope bytes.</param>
         /// <param name="privacy">The privacy provider.</param>
+        /// <param name="length">The length bytes.</param>
         /// <returns></returns>
         public OctetString ComputeHash(VersionCode version, ISegment header, SecurityParameters parameters, ISnmpData data, IPrivacyProvider privacy, byte[] length)
         {
@@ -144,14 +143,12 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentNullException("privacy");
             }
 
-            byte[] key = PasswordToKey(_password, parameters.EngineId.GetRaw());
-            using (HMACSHA1 sha1 = new HMACSHA1(key))
+            var key = PasswordToKey(_password, parameters.EngineId.GetRaw());
+            using (var sha1 = new HMACSHA1(key))
             {
-                var sequence = SnmpMessageExtension.PackMessage(length, version, header, parameters, data);
-                byte[] message = sequence.ToBytes();
-                byte[] hash = sha1.ComputeHash(message);
+                var hash = sha1.ComputeHash(ByteTool.PackMessage(length, version, header, parameters, data).ToBytes());
                 sha1.Clear();
-                byte[] result = new byte[DigestLength];
+                var result = new byte[DigestLength];
                 Buffer.BlockCopy(hash, 0, result, 0, result.Length);
                 return new OctetString(result);
             }

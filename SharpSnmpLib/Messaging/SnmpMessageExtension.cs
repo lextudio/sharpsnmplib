@@ -93,6 +93,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// PDU.
         /// </summary>
         /// <param name="message">The <see cref="ISnmpMessage"/>.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu")]
         public static ISnmpPdu Pdu(this ISnmpMessage message)
         {
             if (message == null)
@@ -137,7 +138,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             var code = message.TypeCode();
             if ((code != SnmpType.TrapV1Pdu && code != SnmpType.TrapV2Pdu) && code != SnmpType.ReportPdu)
             {
-                throw new InvalidOperationException(String.Format(
+                throw new InvalidOperationException(string.Format(
                     CultureInfo.InvariantCulture,
                     "not a trap message: {0}",
                     code));
@@ -175,7 +176,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             var code = message.TypeCode();
             if ((code != SnmpType.TrapV1Pdu && code != SnmpType.TrapV2Pdu) && code != SnmpType.ReportPdu)
             {
-                throw new InvalidOperationException(String.Format(
+                throw new InvalidOperationException(string.Format(
                     CultureInfo.InvariantCulture,
                     "not a trap message: {0}",
                     code));
@@ -205,7 +206,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             var code = message.TypeCode();
             if ((code != SnmpType.TrapV1Pdu && code != SnmpType.TrapV2Pdu) && code != SnmpType.ReportPdu)
             {
-                throw new InvalidOperationException(String.Format(
+                throw new InvalidOperationException(string.Format(
                     CultureInfo.InvariantCulture,
                     "not a trap message: {0}",
                     code));
@@ -243,7 +244,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             var code = message.TypeCode();
             if ((code != SnmpType.TrapV1Pdu && code != SnmpType.TrapV2Pdu) && code != SnmpType.ReportPdu)
             {
-                throw new InvalidOperationException(String.Format(
+                throw new InvalidOperationException(string.Format(
                     CultureInfo.InvariantCulture,
                     "not a trap message: {0}",
                     code));
@@ -277,7 +278,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             var code = request.TypeCode();
             if (code == SnmpType.TrapV1Pdu || code == SnmpType.TrapV2Pdu || code == SnmpType.ReportPdu)
             {
-                throw new InvalidOperationException(String.Format(CultureInfo.InvariantCulture, "not a request message: {0}", code));
+                throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, "not a request message: {0}", code));
             }
             
             using (var socket = receiver.GetSocket())
@@ -308,7 +309,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             var code = request.TypeCode();
             if (code == SnmpType.TrapV1Pdu || code == SnmpType.TrapV2Pdu || code == SnmpType.ReportPdu)
             {
-                throw new InvalidOperationException(String.Format(CultureInfo.InvariantCulture, "not a request message: {0}", code));
+                throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, "not a request message: {0}", code));
             }
             
             using (var socket = receiver.GetSocket())
@@ -385,7 +386,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             var requestCode = request.TypeCode();
             if (requestCode == SnmpType.TrapV1Pdu || requestCode == SnmpType.TrapV2Pdu || requestCode == SnmpType.ReportPdu)
             {
-                throw new InvalidOperationException(String.Format(CultureInfo.InvariantCulture, "not a request message: {0}", requestCode));
+                throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, "not a request message: {0}", requestCode));
             }
 
             var bytes = request.ToBytes();
@@ -433,13 +434,13 @@ namespace Lextm.SharpSnmpLib.Messaging
                 var responseId = response.MessageId();
                 if (responseId != requestId)
                 {
-                    throw OperationException.Create(String.Format(CultureInfo.InvariantCulture, "wrong response sequence: expected {0}, received {1}", requestId, responseId), receiver.Address);
+                    throw OperationException.Create(string.Format(CultureInfo.InvariantCulture, "wrong response sequence: expected {0}, received {1}", requestId, responseId), receiver.Address);
                 }
 
                 return response;
             }
 
-            throw OperationException.Create(String.Format(CultureInfo.InvariantCulture, "wrong response type: {0}", responseCode), receiver.Address);
+            throw OperationException.Create(string.Format(CultureInfo.InvariantCulture, "wrong response type: {0}", responseCode), receiver.Address);
         }
         
         /// <summary>
@@ -473,13 +474,13 @@ namespace Lextm.SharpSnmpLib.Messaging
                 var responseId = response.MessageId();
                 if (responseId != requestId)
                 {
-                    throw OperationException.Create(String.Format(CultureInfo.InvariantCulture, "wrong response sequence: expected {0}, received {1}", requestId, responseId), ar.Receiver.Address);
+                    throw OperationException.Create(string.Format(CultureInfo.InvariantCulture, "wrong response sequence: expected {0}, received {1}", requestId, responseId), ar.Receiver.Address);
                 }
 
                 return response;
             }
 
-            throw OperationException.Create(String.Format(CultureInfo.InvariantCulture, "wrong response type: {0}", responseCode), ar.Receiver.Address);
+            throw OperationException.Create(string.Format(CultureInfo.InvariantCulture, "wrong response type: {0}", responseCode), ar.Receiver.Address);
         }
 
         /// <summary>
@@ -517,7 +518,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             var requestCode = request.TypeCode();
             if (requestCode == SnmpType.TrapV1Pdu || requestCode == SnmpType.TrapV2Pdu || requestCode == SnmpType.ReportPdu)
             {
-                throw new InvalidOperationException(String.Format(CultureInfo.InvariantCulture, "not a request message: {0}", requestCode));
+                throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, "not a request message: {0}", requestCode));
             }
 
             // Whatever you change, try to keep the Send and the Receive close to each other.
@@ -545,6 +546,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Packs up the <see cref="ISnmpMessage"/>.
         /// </summary>
         /// <param name="message">The <see cref="ISnmpMessage"/>.</param>
+        /// <param name="length">The length bytes.</param>
         /// <returns></returns>
         internal static Sequence PackMessage(this ISnmpMessage message, byte[] length)
         {
@@ -553,57 +555,12 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("message");
             }
 
-            return PackMessage(length,
-                               message.Version,
-                               message.Header,
-                               message.Parameters,
-                               message.Privacy.GetScopeData(message.Header, message.Parameters,
-                                                            message.Scope.GetData(message.Version)));
-        }
-
-        /// <summary>
-        /// Packs the message.
-        /// </summary>
-        /// <param name="version">The version.</param>
-        /// <param name="data">The data.</param>
-        /// <returns></returns>
-        internal static Sequence PackMessage(VersionCode version, params ISnmpData[] data)
-        {
-            if (data == null)
-            {
-                throw new ArgumentNullException("data");
-            }
-            
-            var collection = new List<ISnmpData>(1 + data.Length) { new Integer32((int)version) };
-            collection.AddRange(data);
-            return new Sequence(collection);
-        }
-
-        internal static Sequence PackMessage(byte[] length, VersionCode version, ISegment header, ISegment parameters, ISnmpData data)
-        {
-            if (header == null)
-            {
-                throw new ArgumentNullException("header");
-            }
-
-            if (parameters == null)
-            {
-                throw new ArgumentNullException("parameters");
-            }
-
-            if (data == null)
-            {
-                throw new ArgumentNullException("data");
-            }
-
-            ISnmpData[] items = new[]
-                                    {
-                                        new Integer32((int)version),
-                                        header.GetData(version),
-                                        parameters.GetData(version),
-                                        data
-                                    };
-            return new Sequence(length, items);
+            return ByteTool.PackMessage(
+                length,
+                message.Version,
+                message.Header,
+                message.Parameters,
+                message.Privacy.GetScopeData(message.Header, message.Parameters, message.Scope.GetData(message.Version)));
         }
 
         /// <summary>

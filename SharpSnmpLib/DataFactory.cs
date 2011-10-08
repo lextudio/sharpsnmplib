@@ -27,7 +27,6 @@
 using System;
 using System.Globalization;
 using System.IO;
-using System.Tuples;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -76,17 +75,13 @@ namespace Lextm.SharpSnmpLib
                 case SnmpType.ObjectIdentifier:
                     return new ObjectIdentifier(length, stream);
                 case SnmpType.Null:
-                    stream.IgnoreBytes(length.First);
-                    return new Null();
+                    return new Null(length, stream);
                 case SnmpType.NoSuchInstance:
-                    stream.IgnoreBytes(length.First);
-                    return new NoSuchInstance();
+                    return new NoSuchInstance(length, stream);
                 case SnmpType.NoSuchObject:
-                    stream.IgnoreBytes(length.First);
-                    return new NoSuchObject();
+                    return new NoSuchObject(length, stream);
                 case SnmpType.EndOfMibView:
-                    stream.IgnoreBytes(length.First);
-                    return new EndOfMibView();
+                    return new EndOfMibView(length, stream);
                 case SnmpType.Integer32:
                     return new Integer32(length, stream);
                 case SnmpType.OctetString:

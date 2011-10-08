@@ -74,7 +74,7 @@ namespace Lextm.SharpSnmpLib.Tests
                                           new Integer32(12),
                                           new TimeTicks(16352),
                                           vList);
-            byte[] bytes = SnmpMessageExtension.PackMessage(VersionCode.V1, new OctetString("public"), pdu).ToBytes();
+            byte[] bytes = TrapV1Message.PackMessage(VersionCode.V1, new OctetString("public"), pdu).ToBytes();
             TrapV1Message message = (TrapV1Message)MessageFactory.ParseMessages(bytes, new UserRegistry())[0];
             Assert.AreEqual("127.0.0.1", message.AgentAddress.ToString());
             Assert.AreEqual(GenericCode.EnterpriseSpecific, message.Generic);
@@ -100,7 +100,7 @@ namespace Lextm.SharpSnmpLib.Tests
                                           new Integer32(12),
                                           new TimeTicks(16352),
                                           vList);
-            byte[] bytes = SnmpMessageExtension.PackMessage(VersionCode.V1, new OctetString("public"), pdu).ToBytes();
+            byte[] bytes = TrapV1Message.PackMessage(VersionCode.V1, new OctetString("public"), pdu).ToBytes();
             TrapV1Message message = (TrapV1Message)MessageFactory.ParseMessages(bytes, new UserRegistry())[0];
             Assert.AreEqual("127.0.0.1", message.AgentAddress.ToString());
             Assert.AreEqual(GenericCode.EnterpriseSpecific, message.Generic);

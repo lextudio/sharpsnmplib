@@ -52,6 +52,7 @@ namespace Lextm.SharpSnmpLib
         // IMPORTANT: use GetEncoding because of CF.
         private static Encoding _defaultEncoding = Encoding.GetEncoding("ASCII");
         private readonly byte[] _raw;
+        private byte[] _length;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OctetString"/> class.
@@ -111,7 +112,7 @@ namespace Lextm.SharpSnmpLib
         /// Creates an <see cref="OctetString"/> with a specific <see cref="Levels"/>.
         /// </summary>
         /// <param name="level"></param>
-        public OctetString(Levels level) : this(new byte[] { (byte)level })
+        public OctetString(Levels level) : this(new[] { (byte)level })
         {            
         }
 
@@ -130,7 +131,6 @@ namespace Lextm.SharpSnmpLib
         }
         
         private static readonly OctetString EmptyString = new OctetString(string.Empty, Encoding.GetEncoding("ASCII"));
-        private byte[] _length;
 
         /// <summary>
         /// Gets the empty string.
