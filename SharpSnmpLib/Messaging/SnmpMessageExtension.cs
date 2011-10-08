@@ -553,11 +553,12 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("message");
             }
 
-            return ByteTool.PackMessage(
-                message.Version,
-                message.Header,
-                message.Parameters,
-                message.Privacy.GetScopeData(message.Header, message.Parameters, message.Scope.GetData(message.Version)));
+            return PackMessage(length,
+                               message.Version,
+                               message.Header,
+                               message.Parameters,
+                               message.Privacy.GetScopeData(message.Header, message.Parameters,
+                                                            message.Scope.GetData(message.Version)));
         }
 
         /// <summary>
