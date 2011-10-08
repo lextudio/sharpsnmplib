@@ -22,6 +22,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Tuples;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -40,6 +41,7 @@ namespace Lextm.SharpSnmpLib
         [NonSerialized]
         #endif
         private int _hashcode;
+        private byte[] _length;
 
         #region Constructor
 
@@ -87,7 +89,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="raw">Raw bytes</param>
         internal ObjectIdentifier(byte[] raw)
-            : this(raw.Length, new MemoryStream(raw))
+            : this(new Tuple<int, byte[]>(raw.Length, raw.Length.WritePayloadLength()), new MemoryStream(raw))
         {
         }
 
@@ -96,21 +98,21 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="length">The length.</param>
         /// <param name="stream">The stream.</param>
-        public ObjectIdentifier(int length, Stream stream)
+        public ObjectIdentifier(Tuple<int, byte[]> length, Stream stream)
         {
             if (stream == null)
             {
                 throw new ArgumentNullException("stream");
             }
 
-            byte[] raw = new byte[length];
-            stream.Read(raw, 0, length);
-            if (length == 0)
+            var raw = new byte[length.First];
+            stream.Read(raw, 0, length.First);
+            if (length.First == 0)
             {
                 throw new ArgumentException("length cannot be 0", "length");
             }
 
-            List<uint> result = new List<uint> { (uint)(raw[0] / 40), (uint)(raw[0] % 40) };
+            var result = new List<uint> { (uint)(raw[0] / 40), (uint)(raw[0] % 40) };
             uint buffer = 0;
             for (int i = 1; i < raw.Length; i++)
             {
@@ -127,6 +129,7 @@ namespace Lextm.SharpSnmpLib
             }
 
             _oid = result.ToArray();
+            _length = length.Second;
         }
 
         #endregion Constructor
@@ -224,7 +227,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("numerical");
             }
 
-            StringBuilder result = new StringBuilder();
+            var result = new StringBuilder();
             for (int k = 0; k < numerical.Length; k++)
             {
                 result.Append(".").Append(numerical[k].ToString(CultureInfo.InvariantCulture));
@@ -247,7 +250,7 @@ namespace Lextm.SharpSnmpLib
             }
 
             string[] parts = dotted.Split(new[] { '.' });
-            List<uint> result = new List<uint>();
+            var result = new List<uint>();
             foreach (string s in parts.Where(s => !string.IsNullOrEmpty(s)))
             {
 #if CF
@@ -276,20 +279,20 @@ namespace Lextm.SharpSnmpLib
             }
 
             // TODO: improve here.
-            List<byte> temp = new List<byte>();
-            byte first = (byte)((40 * _oid[0]) + _oid[1]);
+            var temp = new List<byte>();
+            var first = (byte)((40 * _oid[0]) + _oid[1]);
             temp.Add(first);
             for (int i = 2; i < _oid.Length; i++)
             {
                 temp.AddRange(ConvertToBytes(_oid[i]));
             }
 
-            stream.AppendBytes(TypeCode, temp.ToArray());
+            stream.AppendBytes(TypeCode, _length, temp.ToArray());
         }
 
         private static IEnumerable<byte> ConvertToBytes(uint subIdentifier)
         {
-            List<byte> result = new List<byte> { (byte)(subIdentifier & 0x7F) };
+            var result = new List<byte> { (byte)(subIdentifier & 0x7F) };
             while ((subIdentifier = subIdentifier >> 7) > 0)
             {
                 result.Add((byte)((subIdentifier & 0x7F) | 0x80));
@@ -375,7 +378,7 @@ namespace Lextm.SharpSnmpLib
         /// </exception>
         public int CompareTo(object obj)
         {
-            ObjectIdentifier o = obj as ObjectIdentifier;
+            var o = obj as ObjectIdentifier;
             if (o == null)
             {
                 throw new ArgumentException("obj is not the same type as this instance", "obj");
@@ -506,7 +509,7 @@ namespace Lextm.SharpSnmpLib
 
             // Old method with List<uint> dropped as it incurred two copies of the array (vs 1 for this method).
             int length = original.Length;
-            uint[] tmp = new uint[length + 1];
+            var tmp = new uint[length + 1];
             Array.Copy(original, tmp, length);
             tmp[length] = extra;
             return tmp;

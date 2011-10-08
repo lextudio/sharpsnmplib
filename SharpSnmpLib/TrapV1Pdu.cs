@@ -27,6 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Tuples;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -41,6 +42,7 @@ namespace Lextm.SharpSnmpLib
         private readonly Integer32 _generic;
         private readonly Integer32 _specific;
         private readonly Sequence _varbindSection;
+        private readonly byte[] _length;
 
         /// <summary>
         /// Creates a <see cref="TrapV1Pdu"/> instance with PDU elements.
@@ -111,7 +113,7 @@ namespace Lextm.SharpSnmpLib
         /// Initializes a new instance of the <see cref="TrapV1Pdu"/> class.
         /// </summary>
         /// <param name="stream">The stream.</param>
-        public TrapV1Pdu(Stream stream)
+        public TrapV1Pdu(Tuple<int, byte[]> length, Stream stream)
         {
             if (stream == null) 
             {
@@ -125,6 +127,7 @@ namespace Lextm.SharpSnmpLib
             TimeStamp = (TimeTicks)DataFactory.CreateSnmpData(stream);
             _varbindSection = (Sequence)DataFactory.CreateSnmpData(stream);
             Variables = Variable.Transform(_varbindSection);
+            _length = length.Second;
         }
 
         /// <summary>
@@ -181,7 +184,7 @@ namespace Lextm.SharpSnmpLib
                 _raw = ByteTool.ParseItems(Enterprise, AgentAddress, _generic, _specific, TimeStamp, _varbindSection);
             }
 
-            stream.AppendBytes(TypeCode, _raw);
+            stream.AppendBytes(TypeCode, _length, _raw);
         }
 
         /// <summary>

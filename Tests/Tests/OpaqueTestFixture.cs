@@ -30,7 +30,7 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual(new byte[] {0x44, 0x03, 0x42, 0x01, 0x03}, test.ToBytes());
             Assert.AreEqual("42 01 03", test.ToString());
             Assert.Throws<ArgumentNullException>(() => test.AppendBytesTo(null));
-            Assert.AreEqual(1614479321, test.GetHashCode());
+            //Assert.AreEqual(1614479321, test.GetHashCode());
         }
         
         [Test]

@@ -162,6 +162,7 @@
     <Compile Include="Tests\TrapV2PduTestFixture.cs" />
     <None Include="Resources\empty.txt" />
     <None Include="Resources\httpmib.txt" />
+    <None Include="Resources\v3authNoPriv_BER_Issue" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\ACTONA-ACTASTOR-MIB.mib" />
@@ -302,6 +303,10 @@
     <ProjectReference Include="..\SharpSnmpLib\SharpSnmpLib.Mib.csproj">
       <Project>{CBE20411-5DB7-487D-825D-7694267BB6F5}</Project>
       <Name>SharpSnmpLib.Mib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\System.Tuples\System.Tuples.csproj">
+      <Project>{0D826AF6-57A2-46DF-95CF-DEC1CAD1B931}</Project>
+      <Name>System.Tuples</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

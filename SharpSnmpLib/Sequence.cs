@@ -30,6 +30,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Tuples;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -39,8 +40,9 @@ namespace Lextm.SharpSnmpLib
     /// <remarks>Represents SMIv1 SEQUENCE.</remarks>
     public class Sequence : ISnmpData
     {
-        private byte[] _raw;
+        private byte[] _buffer;
         private readonly List<ISnmpData> _list = new List<ISnmpData>();
+        private readonly byte[] _length;
 
         /// <summary>
         /// Gets the enumerator.
@@ -55,7 +57,7 @@ namespace Lextm.SharpSnmpLib
         /// Creates an <see cref="Sequence"/> instance with varied <see cref="ISnmpData"/> instances.
         /// </summary>
         /// <param name="items"></param>
-        public Sequence(params ISnmpData[] items)
+        public Sequence(byte[] length, params ISnmpData[] items)
         {
             if (items == null)
             {
@@ -66,6 +68,8 @@ namespace Lextm.SharpSnmpLib
             {
                 _list.Add(data);
             }
+
+            _length = length;
         }
 
         /// <summary>
@@ -90,20 +94,21 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="length">The length.</param>
         /// <param name="stream">The stream.</param>
-        public Sequence(int length, Stream stream)
+        public Sequence(Tuple<int, byte[]> length, Stream stream)
         {
             if (stream == null)
             {
                 throw new ArgumentNullException("stream");
             }
-            
-            if (length == 0)
+
+            _length = length.Second;
+            if (length.First == 0)
             {
                 return;
             }
 
             long original = stream.Position;
-            while (stream.Position < original + length)
+            while (stream.Position < original + length.First)
             {
                 _list.Add(DataFactory.CreateSnmpData(stream));
             }
@@ -145,12 +150,12 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("stream");
             }
 
-            if (_raw == null)
+            if (_buffer == null)
             {
-                _raw = ByteTool.ParseItems(_list);
+                _buffer = ByteTool.ParseItems(_list);
             }
 
-            stream.AppendBytes(TypeCode, _raw);
+            stream.AppendBytes(TypeCode, _length, _buffer);
         }
 
         /// <summary>
@@ -159,13 +164,18 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public override string ToString()
         {
-            StringBuilder result = new StringBuilder("SNMP SEQUENCE: ");
+            var result = new StringBuilder("SNMP SEQUENCE: ");
             foreach (ISnmpData item in _list)
             {
                 result.Append(item).Append("; ");
             }
             
             return result.ToString();
+        }
+
+        internal byte[] GetLengthBytes()
+        {
+            return _length;
         }
     }
 }

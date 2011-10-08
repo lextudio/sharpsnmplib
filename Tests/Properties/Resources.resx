@@ -485,4 +485,7 @@
   <data name="trapv3authpriv" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\trapv3authpriv;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="v3authNoPriv_BER_Issue" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\v3authNoPriv_BER_Issue;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

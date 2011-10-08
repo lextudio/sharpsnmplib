@@ -18,6 +18,7 @@
 using System;
 using System.Globalization;
 using System.IO;
+using System.Tuples;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -32,7 +33,7 @@ namespace Lextm.SharpSnmpLib
         /// Creates a <see cref="Gauge32"/> instance from raw bytes.
         /// </summary>
         /// <param name="raw"></param>
-        internal Gauge32(byte[] raw) : this(raw.Length, new MemoryStream(raw))
+        internal Gauge32(byte[] raw) : this(new Tuple<int, byte[]>(raw.Length, raw.Length.WritePayloadLength()), new MemoryStream(raw))
         {
         }
         
@@ -51,7 +52,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="length">The length.</param>
         /// <param name="stream">The stream.</param>
-        public Gauge32(int length, Stream stream)
+        public Gauge32(Tuple<int, byte[]> length, Stream stream)
         {
             if (stream == null)
             {
@@ -81,7 +82,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("stream");
             }
             
-            stream.AppendBytes(TypeCode, _count.GetRaw());
+            stream.AppendBytes(TypeCode, _count.GetLengthBytes(), _count.GetRaw());
         }
 
         #endregion

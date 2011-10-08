@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Tuples;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -33,6 +34,7 @@ namespace Lextm.SharpSnmpLib
         private byte[] _raw;
         private readonly Sequence _varbindSection;
         private readonly TimeTicks _time;
+        private readonly byte[] _length;
 
         /// <summary>
         /// Creates a <see cref="TrapV2Pdu"/> instance with all content.
@@ -70,7 +72,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="stream">The stream.</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "temp2")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "temp1")]
-        public TrapV2Pdu(Stream stream)
+        public TrapV2Pdu(Tuple<int, byte[]> length, Stream stream)
         {
             if (stream == null)
             {
@@ -88,6 +90,7 @@ namespace Lextm.SharpSnmpLib
             Variables.RemoveAt(0);
             Enterprise = (ObjectIdentifier)Variables[0].Data;
             Variables.RemoveAt(0);
+            _length = length.Second;
         }
 
         #region ISnmpPdu Members
@@ -148,7 +151,7 @@ namespace Lextm.SharpSnmpLib
                 _raw = ByteTool.ParseItems(RequestId, Integer32.Zero, Integer32.Zero, _varbindSection);
             }
 
-            stream.AppendBytes(TypeCode, _raw);
+            stream.AppendBytes(TypeCode, _length, _raw);
         }
 
         #endregion

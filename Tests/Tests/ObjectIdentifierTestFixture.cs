@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Tuples;
 using Lextm.SharpSnmpLib.Mib;
 using NUnit.Framework;
 
@@ -16,8 +17,8 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.Throws<ArgumentException>(() => new ObjectIdentifier(new uint[] {1}));
             Assert.Throws<ArgumentException>(() => new ObjectIdentifier(new uint[] {5, 8}));
             Assert.Throws<ArgumentException>(() => new ObjectIdentifier(new uint[] {1, 80}));
-            Assert.Throws<ArgumentNullException>(() => new ObjectIdentifier(0, null));
-            Assert.Throws<ArgumentException>(() => new ObjectIdentifier(0, new MemoryStream()));
+            Assert.Throws<ArgumentNullException>(() => new ObjectIdentifier(new Tuple<int, byte[]>(0, new byte[] { 0 }), null));
+            Assert.Throws<ArgumentException>(() => new ObjectIdentifier(new Tuple<int, byte[]>(0, new byte[] { 0 }), new MemoryStream()));
 // ReSharper disable RedundantCast
             Assert.Throws<ArgumentNullException>(() => new ObjectIdentifier(new uint[] {1, 3}).CompareTo((ObjectIdentifier)null));
 // ReSharper restore RedundantCast

@@ -74,7 +74,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             Scope = new Scope(pdu);
             Privacy = DefaultPrivacyProvider.DefaultPair;
 
-            _bytes = this.PackMessage().ToBytes();
+            _bytes = this.PackMessage(null).ToBytes();
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="scope">The scope.</param>
         /// <param name="privacy">The privacy provider.</param>
         /// <param name="needAuthentication">if set to <c>true</c>, authentication is needed.</param>
-        public ResponseMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, IPrivacyProvider privacy, bool needAuthentication)
+        public ResponseMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, IPrivacyProvider privacy, bool needAuthentication, byte[] length)
         {
             if (scope == null)
             {
@@ -119,7 +119,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 Privacy.AuthenticationProvider.ComputeHash(Version, Header, Parameters, Scope, Privacy);
             }
 
-            _bytes = this.PackMessage().ToBytes();
+            _bytes = this.PackMessage(length).ToBytes();
         }
 
         /// <summary>

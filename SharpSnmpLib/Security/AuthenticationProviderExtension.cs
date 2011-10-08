@@ -36,7 +36,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// <returns>
         /// Returns <code>true</code> if hash matches. Otherwise, returns <code>false</code>.
         /// </returns>
-        public static bool VerifyHash(this IAuthenticationProvider authen, VersionCode version, Header header, SecurityParameters parameters, ISnmpData scopeBytes, IPrivacyProvider privacy)
+        public static bool VerifyHash(this IAuthenticationProvider authen, VersionCode version, Header header, SecurityParameters parameters, ISnmpData scopeBytes, IPrivacyProvider privacy, byte[] length)
         {
             if (authen == null)
             {
@@ -75,7 +75,8 @@ namespace Lextm.SharpSnmpLib.Security
 
             var expected = parameters.AuthenticationParameters;
             parameters.AuthenticationParameters = authen.CleanDigest; // clean the hash first.
-            bool result = authen.ComputeHash(version, header, parameters, scopeBytes, privacy) == expected;
+            var newHash = authen.ComputeHash(version, header, parameters, scopeBytes, privacy, length);
+            bool result = newHash == expected;
             parameters.AuthenticationParameters = expected; // restore the hash.
             return result;
         }
@@ -128,7 +129,7 @@ namespace Lextm.SharpSnmpLib.Security
 
             var scopeData = privacy.GetScopeData(header, parameters, scope.GetData(version));
             // replace the hash.
-            parameters.AuthenticationParameters = authen.ComputeHash(version, header, parameters, scopeData, privacy);
+            parameters.AuthenticationParameters = authen.ComputeHash(version, header, parameters, scopeData, privacy, null);
         }
     }
 }

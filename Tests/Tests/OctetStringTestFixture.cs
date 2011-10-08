@@ -8,6 +8,7 @@
  */
 
 using System;
+using System.Tuples;
 using NUnit.Framework;
 using System.Text;
 
@@ -27,7 +28,7 @@ namespace Lextm.SharpSnmpLib.Tests
         [Test]
         public void TestException()
         {
-            Assert.Throws<ArgumentNullException>(() => new OctetString(0, null));
+            Assert.Throws<ArgumentNullException>(() => new OctetString(new Tuple<int, byte[]>(0, new byte[] { 0 }), null));
             Assert.Throws<ArgumentNullException>(() => new OctetString((byte[])null));
             Assert.Throws<ArgumentNullException>(() => OctetString.Empty.ToString(null));
             Assert.Throws<ArgumentNullException>(() => OctetString.Empty.AppendBytesTo(null));

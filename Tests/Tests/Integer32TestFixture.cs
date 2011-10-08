@@ -8,6 +8,7 @@
  */
 using System;
 using System.IO;
+using System.Tuples;
 using NUnit.Framework;
 #pragma warning disable 1591,0618
 namespace Lextm.SharpSnmpLib.Tests
@@ -21,10 +22,10 @@ namespace Lextm.SharpSnmpLib.Tests
         [Test]
         public void TestException()
         {
-            Assert.Throws<ArgumentNullException>(() => new Integer32(0, null));
-            Assert.Throws<ArgumentException>(() => new Integer32(0, new MemoryStream()));
-            Assert.Throws<ArgumentException>(() => new Integer32(-1, new MemoryStream()));
-            Assert.Throws<ArgumentException>(() => new Integer32(6, new MemoryStream()));
+            Assert.Throws<ArgumentNullException>(() => new Integer32(new Tuple<int, byte[]>(0, new byte[] { 0 }), null));
+            Assert.Throws<ArgumentException>(() => new Integer32(new Tuple<int, byte[]>(0, new byte[] { 0 }), new MemoryStream()));
+            Assert.Throws<ArgumentException>(() => new Integer32(new Tuple<int, byte[]>(-1, new[] { (byte)255 }), new MemoryStream()));
+            Assert.Throws<ArgumentException>(() => new Integer32(new Tuple<int, byte[]>(6, new byte[] { 6 }), new MemoryStream()));
             Assert.Throws<ArgumentNullException>(() => new Integer32(6).AppendBytesTo(null));
         }
 

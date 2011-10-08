@@ -18,6 +18,7 @@
 using System;
 using System.Globalization;
 using System.IO;
+using System.Tuples;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -51,7 +52,7 @@ namespace Lextm.SharpSnmpLib
         /// Creates a <see cref="TimeTicks"/> instance with raw bytes.
         /// </summary>
         /// <param name="raw">Raw bytes</param>
-        internal TimeTicks(byte[] raw) : this(raw.Length, new MemoryStream(raw))
+        internal TimeTicks(byte[] raw) : this(new Tuple<int, byte[]>(raw.Length, raw.Length.WritePayloadLength()), new MemoryStream(raw))
         {
         }
 
@@ -60,7 +61,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="length">The length.</param>
         /// <param name="stream">The stream.</param>
-        public TimeTicks(int length, Stream stream)
+        public TimeTicks(Tuple<int, byte[]> length, Stream stream)
         {
             if (stream == null)
             {
@@ -135,7 +136,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("stream");
             }
             
-            stream.AppendBytes(TypeCode, _count.GetRaw());
+            stream.AppendBytes(TypeCode, _count.GetLengthBytes(), _count.GetRaw());
         }
 
         #endregion

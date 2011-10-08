@@ -46,6 +46,6 @@ namespace Lextm.SharpSnmpLib.Security
         /// <param name="privacy">The privacy provider.</param>
         /// <returns></returns>
         OctetString ComputeHash(VersionCode version, ISegment header, SecurityParameters parameters,
-                                       ISnmpData data, IPrivacyProvider privacy);
+                                       ISnmpData data, IPrivacyProvider privacy, byte[] length);
     }
 }

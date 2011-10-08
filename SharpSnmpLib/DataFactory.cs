@@ -27,6 +27,7 @@
 using System;
 using System.Globalization;
 using System.IO;
+using System.Tuples;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -63,7 +64,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("stream");
             }
             
-            int length = stream.ReadPayloadLength();
+            Tuple<int, byte[]> length = stream.ReadPayloadLength();
             switch ((SnmpType)type)
             {
                 case SnmpType.Counter32:
@@ -75,16 +76,16 @@ namespace Lextm.SharpSnmpLib
                 case SnmpType.ObjectIdentifier:
                     return new ObjectIdentifier(length, stream);
                 case SnmpType.Null:
-                    stream.IgnoreBytes(length);
+                    stream.IgnoreBytes(length.First);
                     return new Null();
                 case SnmpType.NoSuchInstance:
-                    stream.IgnoreBytes(length);
+                    stream.IgnoreBytes(length.First);
                     return new NoSuchInstance();
                 case SnmpType.NoSuchObject:
-                    stream.IgnoreBytes(length);
+                    stream.IgnoreBytes(length.First);
                     return new NoSuchObject();
                 case SnmpType.EndOfMibView:
-                    stream.IgnoreBytes(length);
+                    stream.IgnoreBytes(length.First);
                     return new EndOfMibView();
                 case SnmpType.Integer32:
                     return new Integer32(length, stream);
@@ -97,23 +98,23 @@ namespace Lextm.SharpSnmpLib
                 case SnmpType.Sequence:
                     return new Sequence(length, stream);
                 case SnmpType.TrapV1Pdu:
-                    return new TrapV1Pdu(stream);
+                    return new TrapV1Pdu(length, stream);
                 case SnmpType.TrapV2Pdu:
-                    return new TrapV2Pdu(stream);
+                    return new TrapV2Pdu(length, stream);
                 case SnmpType.GetRequestPdu:
-                    return new GetRequestPdu(stream);
+                    return new GetRequestPdu(length, stream);
                 case SnmpType.ResponsePdu:
-                    return new ResponsePdu(stream);
+                    return new ResponsePdu(length, stream);
                 case SnmpType.GetBulkRequestPdu:
-                    return new GetBulkRequestPdu(stream);
+                    return new GetBulkRequestPdu(length, stream);
                 case SnmpType.GetNextRequestPdu:
-                    return new GetNextRequestPdu(stream);
+                    return new GetNextRequestPdu(length, stream);
                 case SnmpType.SetRequestPdu:
-                    return new SetRequestPdu(stream);
+                    return new SetRequestPdu(length, stream);
                 case SnmpType.InformRequestPdu:
-                    return new InformRequestPdu(stream);
+                    return new InformRequestPdu(length, stream);
                 case SnmpType.ReportPdu:
-                    return new ReportPdu(stream);
+                    return new ReportPdu(length, stream);
                 case SnmpType.EndMarker:
                     return null;
                 default:

@@ -44,7 +44,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="parameters">The security parameters.</param>
         /// <param name="scope">The scope.</param>
         /// <param name="privacy">The privacy provider.</param>
-        public ReportMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, IPrivacyProvider privacy)
+        public ReportMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, IPrivacyProvider privacy, byte[] length)
         {
             if (scope == null)
             {
@@ -77,7 +77,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             Scope = scope;
             Privacy = privacy;
             Privacy.AuthenticationProvider.ComputeHash(Version, Header, Parameters, Scope, Privacy);            
-            _bytes = this.PackMessage().ToBytes();
+            _bytes = this.PackMessage(length).ToBytes();
         }
 
         /// <summary>

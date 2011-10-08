@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Tuples;
 using NUnit.Framework;
 
 namespace Lextm.SharpSnmpLib.Tests
@@ -10,7 +11,7 @@ namespace Lextm.SharpSnmpLib.Tests
         [Test]
         public void TestException()
         {
-            Assert.Throws<ArgumentNullException>(() => new ResponsePdu(null));
+            Assert.Throws<ArgumentNullException>(() => new ResponsePdu(new Tuple<int, byte[]>(0, new byte[] { 0 }), null));
             Assert.Throws<ArgumentNullException>(() => new ResponsePdu(0, ErrorCode.NoError, 0, null));
             var pdu = new ResponsePdu(0, ErrorCode.NoError, 0, new List<Variable>());
             Assert.Throws<ArgumentNullException>(() => pdu.AppendBytesTo(null));

@@ -24,6 +24,8 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public sealed class Scope : ISegment
     {
+        private readonly Sequence _container;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Scope"/> class.
         /// </summary>
@@ -34,7 +36,8 @@ namespace Lextm.SharpSnmpLib
             {
                 throw new ArgumentNullException("data");
             }
-            
+
+            _container = data;
             ContextEngineId = (OctetString)data[0];
             ContextName = (OctetString)data[1];
             Pdu = (ISnmpPdu)data[2];
@@ -112,13 +115,13 @@ namespace Lextm.SharpSnmpLib
         /// Gets or sets the name of the context.
         /// </summary>
         /// <value>The name of the context.</value>
-        public OctetString ContextName { get; set; }
+        public OctetString ContextName { get; private set; }
 
         /// <summary>
         /// Gets or sets the context engine id.
         /// </summary>
         /// <value>The context engine id.</value>
-        public OctetString ContextEngineId { get; set; }
+        public OctetString ContextEngineId { get; private set; }
 
         /// <summary>
         /// Converts to <see cref="Sequence"/> object.
@@ -126,7 +129,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public Sequence ToSequence()
         {
-            return new Sequence(ContextEngineId, ContextName, Pdu);
+            return _container ?? new Sequence(null, ContextEngineId, ContextName, Pdu);
         }
 
         #endregion

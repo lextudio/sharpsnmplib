@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using Lextm.SharpSnmpLib.Security;
 using NUnit.Framework;
+using System.IO;
 
 #pragma warning disable 1591, 0618
 namespace Lextm.SharpSnmpLib.Messaging.Tests
@@ -299,7 +300,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes, new UserRegistry());
             Assert.AreEqual(1, messages.Count);
             Assert.AreEqual(5, messages[0].Parameters.EngineBoots.ToInt32());
-            Assert.AreEqual(new byte[] {4, 13, 128, 0, 31, 136, 128, 233, 99, 0, 0, 214, 31, 244, 73}, messages[0].Parameters.EngineId.ToBytes());
+            Assert.AreEqual("80001F8880E9630000D61FF449", messages[0].Parameters.EngineId.ToHexString());
             Assert.AreEqual(3867, messages[0].Parameters.EngineTime.ToInt32());
             Assert.AreEqual(ErrorCode.NoError, messages[0].Pdu().ErrorStatus.ToErrorCode());
             Assert.AreEqual(1, messages[0].Pdu().Variables.Count);
@@ -355,6 +356,35 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             Assert.AreEqual("", message.Scope.ContextName.ToHexString());
             Assert.AreEqual(318463383, message.MessageId());
             Assert.AreEqual(1276263065, message.RequestId());
+        }
+
+        [Test]
+        public void TestTrapV3AuthBytes()
+        {
+            byte[] bytes = Properties.Resources.v3authNoPriv_BER_Issue;
+            Stream stream = new MemoryStream(bytes);
+            UserRegistry registry = new UserRegistry();
+            SHA1AuthenticationProvider authen = new SHA1AuthenticationProvider(new OctetString("testpass"));
+            registry.Add(new OctetString("test"), new DefaultPrivacyProvider(authen));
+            IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes, registry);
+            Assert.AreEqual(1, messages.Count);
+            ISnmpMessage message = messages[0];
+            Assert.AreEqual("80001299030005B706CF69", message.Parameters.EngineId.ToHexString());
+            Assert.AreEqual(41, message.Parameters.EngineBoots.ToInt32());
+            Assert.AreEqual(877, message.Parameters.EngineTime.ToInt32());
+            Assert.AreEqual("test", message.Parameters.UserName.ToString());
+            Assert.AreEqual("C107F9DAA3FC552960E38936", message.Parameters.AuthenticationParameters.ToHexString());
+            Assert.AreEqual("", message.Parameters.PrivacyParameters.ToHexString());
+            Assert.AreEqual("80001299030005B706CF69", message.Scope.ContextEngineId.ToHexString()); // SNMP#NET returns string.Empty here.
+            Assert.AreEqual("", message.Scope.ContextName.ToHexString());
+            Assert.AreEqual(681323585, message.MessageId());
+            Assert.AreEqual(681323584, message.RequestId());
+
+            Console.WriteLine(new OctetString(bytes).ToHexString());
+            Console.WriteLine(new OctetString(message.ToBytes()).ToHexString());
+            Assert.AreEqual(bytes, message.ToBytes());
+            //Assert.AreEqual(true, authen.VerifyHash(stream, message.Parameters.AuthenticationParameters, message.Parameters.EngineId));
+
         }
 
         [Test]

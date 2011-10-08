@@ -84,7 +84,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             Scope = new Scope(pdu);
             Privacy = DefaultPrivacyProvider.DefaultPair;
 
-            _bytes = this.PackMessage().ToBytes();
+            _bytes = this.PackMessage(null).ToBytes();
         }
 
         /// <summary>
@@ -178,10 +178,10 @@ namespace Lextm.SharpSnmpLib.Messaging
             Scope = new Scope(scope.ContextEngineId, scope.ContextName, pdu);
 
             authenticationProvider.ComputeHash(Version, Header, Parameters, Scope, Privacy);
-            _bytes = this.PackMessage().ToBytes();
+            _bytes = this.PackMessage(null).ToBytes();
         }
 
-        internal GetBulkRequestMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, IPrivacyProvider privacy)
+        internal GetBulkRequestMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, IPrivacyProvider privacy, byte[] length)
         {
             if (scope == null)
             {
@@ -209,7 +209,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             Scope = scope;
             Privacy = privacy;
 
-            _bytes = this.PackMessage().ToBytes();
+            _bytes = this.PackMessage(length).ToBytes();
         }
 
         /// <summary>

@@ -10,6 +10,7 @@
 using System;
 using System.IO;
 using System.Net;
+using System.Tuples;
 using NUnit.Framework;
 
 #pragma warning disable 1591,0618,1718
@@ -23,9 +24,9 @@ namespace Lextm.SharpSnmpLib.Tests
         {
             var test = new IP(IPAddress.Any);
             Assert.Throws<ArgumentNullException>(() => test.AppendBytesTo(null));
-            Assert.Throws<ArgumentNullException>(() => new IP(0, null));
+            Assert.Throws<ArgumentNullException>(() => new IP(new Tuple<int, byte[]>(0, new byte[] { 0 }), null));
             Assert.Throws<ArgumentNullException>(() => new IP((IPAddress) null));
-            Assert.Throws<ArgumentException>(() => new IP(1, new MemoryStream()));
+            Assert.Throws<ArgumentException>(() => new IP(new Tuple<int, byte[]>(1, new byte[] { 1 }), new MemoryStream()));
             Assert.Throws<ArgumentException>(() => new IP("test"));
         }
 

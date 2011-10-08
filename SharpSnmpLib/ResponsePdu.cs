@@ -28,6 +28,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Tuples;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -39,6 +40,7 @@ namespace Lextm.SharpSnmpLib
     {
         private readonly Sequence _varbindSection;
         private byte[] _raw;
+        private readonly byte[] _length;
 
         /// <summary>
         /// Creates a <see cref="ResponsePdu"/> with all contents.
@@ -65,7 +67,7 @@ namespace Lextm.SharpSnmpLib
         /// Initializes a new instance of the <see cref="ResponsePdu"/> class.
         /// </summary>
         /// <param name="stream">The stream.</param>
-        public ResponsePdu(Stream stream)
+        public ResponsePdu(Tuple<int, byte[]> length, Stream stream)
         {
             if (stream == null)
             {
@@ -77,6 +79,7 @@ namespace Lextm.SharpSnmpLib
             ErrorIndex = (Integer32)DataFactory.CreateSnmpData(stream);
             _varbindSection = (Sequence)DataFactory.CreateSnmpData(stream);
             Variables = Variable.Transform(_varbindSection);
+            _length = length.Second;
         }
 
         /// <summary>
@@ -127,7 +130,7 @@ namespace Lextm.SharpSnmpLib
                 _raw = ByteTool.ParseItems(RequestId, ErrorStatus, ErrorIndex, _varbindSection);
             }
 
-            stream.AppendBytes(TypeCode, _raw);
+            stream.AppendBytes(TypeCode, _length, _raw);
         }
 
         /// <summary>

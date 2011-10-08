@@ -10,6 +10,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Tuples;
 using NUnit.Framework;
 #pragma warning disable 1591, 0618
 namespace Lextm.SharpSnmpLib.Tests
@@ -45,7 +46,7 @@ namespace Lextm.SharpSnmpLib.Tests
             m.WriteByte(0x66);
             m.Flush();
             m.Position = 0;
-            Assert.AreEqual(102, m.ReadPayloadLength());
+            Assert.AreEqual(new Tuple<int, byte[]>(102, new byte[] {0x66}), m.ReadPayloadLength());
         }
         
         [Test]
@@ -53,9 +54,7 @@ namespace Lextm.SharpSnmpLib.Tests
         {
             const int length = 102;
             const byte expect = 0x66;
-            MemoryStream m = new MemoryStream();
-            m.WritePayloadLength(length);
-            byte[] array = m.ToArray();
+            var array = length.WritePayloadLength();
             Assert.AreEqual(1, array.Length);
             Assert.AreEqual(expect, array[0]);
         }
@@ -77,8 +76,8 @@ namespace Lextm.SharpSnmpLib.Tests
             const int length = 7559605;
             byte[] expected = new byte[] {0x83, 0x73, 0x59, 0xB5};
             MemoryStream m = new MemoryStream();
-            m.WritePayloadLength(length);
-            Assert.AreEqual(expected, m.ToArray());
+            var array = length.WritePayloadLength();
+            Assert.AreEqual(expected, array);
         }
     }
 }

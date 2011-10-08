@@ -8,6 +8,7 @@
  */
 
 using System;
+using System.Tuples;
 using NUnit.Framework;
 
 #pragma warning disable 1591,0618,1718
@@ -19,7 +20,7 @@ namespace Lextm.SharpSnmpLib.Tests
         [Test]
         public void TestException()
         {
-            Assert.Throws<ArgumentNullException>(() => new TimeTicks(0, null));   
+            Assert.Throws<ArgumentNullException>(() => new TimeTicks(new Tuple<int, byte[]>(0, new byte[] { 0 }), null));   
             Assert.Throws<ArgumentNullException>(() => new TimeTicks(0).AppendBytesTo(null));
         }
         

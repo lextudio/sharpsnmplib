@@ -539,17 +539,19 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         /// <param name="message">The <see cref="ISnmpMessage"/>.</param>
         /// <returns></returns>
-        internal static Sequence PackMessage(this ISnmpMessage message)
+        internal static Sequence PackMessage(this ISnmpMessage message, byte[] length)
         {
             if (message == null)
             {
                 throw new ArgumentNullException("message");
             }
 
-            return PackMessage(message.Version,
-                               message.Header,
-                               message.Parameters,
-                               message.Privacy.GetScopeData(message.Header, message.Parameters, message.Scope.GetData(message.Version)));
+            var result = PackMessage(length, message.Version,
+                                     message.Header,
+                                     message.Parameters,
+                                     message.Privacy.GetScopeData(message.Header, message.Parameters,
+                                                                  message.Scope.GetData(message.Version)));
+            return result;
         }
 
         /// <summary>
@@ -570,7 +572,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             return new Sequence(collection);
         }
 
-        internal static Sequence PackMessage(VersionCode version, ISegment header, ISegment parameters, ISnmpData data)
+        internal static Sequence PackMessage(byte[] length, VersionCode version, ISegment header, ISegment parameters, ISnmpData data)
         {
             if (header == null)
             {
@@ -594,7 +596,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                                         parameters.GetData(version),
                                         data
                                     };
-            return new Sequence(items);
+            return new Sequence(length, items);
         }
 
         /// <summary>

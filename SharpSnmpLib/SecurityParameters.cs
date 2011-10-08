@@ -58,11 +58,45 @@ namespace Lextm.SharpSnmpLib
         /// <value>The user name.</value>
         public OctetString UserName { get; private set; }
 
+        private OctetString _authenticationParameters;
+        private readonly byte[] _length;
+
         /// <summary>
         /// Gets the authentication parameters.
         /// </summary>
         /// <value>The authentication parameters.</value>
-        public OctetString AuthenticationParameters { get; set; }
+        public OctetString AuthenticationParameters
+        {
+            get
+            {
+                return _authenticationParameters;
+            }
+            set
+            {
+                if (_authenticationParameters == null)
+                {
+                    _authenticationParameters = value;
+                    return;
+                }
+
+                if (value.GetRaw().Length != _authenticationParameters.GetRaw().Length)
+                {
+                    throw new ArgumentException(
+                        string.Format(CultureInfo.InvariantCulture,
+                                      "Length of new authentication parameters is invalid: {0} found while {1} expected",
+                                      value.GetRaw().Length,
+                                      _authenticationParameters.GetRaw().Length),
+                        "value");
+                }
+
+                if (value.GetLengthBytes() != _authenticationParameters.GetLengthBytes())
+                {
+                    value.SetLengthBytes(_authenticationParameters.GetLengthBytes());
+                }
+
+                _authenticationParameters = value;
+            }
+        }
 
         /// <summary>
         /// Gets the privacy parameters.
@@ -81,13 +115,14 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("parameters");
             }
             
-            Sequence data = (Sequence)DataFactory.CreateSnmpData(parameters.GetRaw());
-            EngineId = (OctetString)data[0];
-            EngineBoots = (Integer32)data[1];
-            EngineTime = (Integer32)data[2];
-            UserName = (OctetString)data[3];
-            AuthenticationParameters = (OctetString)data[4];
-            PrivacyParameters = (OctetString)data[5];
+            var container = (Sequence)DataFactory.CreateSnmpData(parameters.GetRaw());
+            EngineId = (OctetString)container[0];
+            EngineBoots = (Integer32)container[1];
+            EngineTime = (Integer32)container[2];
+            UserName = (OctetString)container[3];
+            AuthenticationParameters = (OctetString)container[4];
+            PrivacyParameters = (OctetString)container[5];
+            _length = container.GetLengthBytes();
         }
 
         /// <summary>
@@ -131,7 +166,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public Sequence ToSequence()
         {
-            return new Sequence(EngineId, EngineBoots, EngineTime, UserName, AuthenticationParameters, PrivacyParameters);
+            return new Sequence(_length, EngineId, EngineBoots, EngineTime, UserName, AuthenticationParameters, PrivacyParameters);
         }
 
         #region ISegment Members

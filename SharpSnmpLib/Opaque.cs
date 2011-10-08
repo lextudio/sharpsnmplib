@@ -44,6 +44,7 @@ namespace Lextm.SharpSnmpLib
     public sealed class Opaque : ISnmpData, IEquatable<Opaque>
     {
         private readonly byte[] _raw;
+        private readonly byte[] _length;
 
         /// <summary>
         /// Creates an <see cref="Opaque"/> from raw bytes.
@@ -57,6 +58,7 @@ namespace Lextm.SharpSnmpLib
             }
             
             _raw = raw;
+            _length = null;
         }
         
         /// <summary>
@@ -90,7 +92,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("stream");
             }
             
-            stream.AppendBytes(TypeCode, _raw);
+            stream.AppendBytes(TypeCode, _length, _raw);
         }
 
         /// <summary>

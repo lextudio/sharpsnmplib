@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Tuples;
 using NUnit.Framework;
 
 #pragma warning disable 1591,0618, 1718
@@ -71,21 +72,21 @@ namespace Lextm.SharpSnmpLib.Tests
         [ExpectedException(typeof(ArgumentNullException))]
         public void TestContructor3()
         {
-            new Counter32(1, null);
+            new Counter32(new Tuple<int, byte[]>(1, new byte[] { 1 }), null);
         }
         
         [Test]
         [ExpectedException(typeof(ArgumentException))]
         public void TestConstructor4()
         {
-            new Counter32(0, new MemoryStream());
+            new Counter32(new Tuple<int, byte[]>(0, new byte[] { 0 }), new MemoryStream());
         }
         
         [Test]
         [ExpectedException(typeof(ArgumentException))]
         public void TestConstructor5()
         {
-            new Counter32(6, new MemoryStream());
+            new Counter32(new Tuple<int, byte[]>(6, new byte[] { 6 }), new MemoryStream());
         }
         
         [Test]

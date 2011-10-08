@@ -10,7 +10,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-
+using System.Tuples;
 using Lextm.SharpSnmpLib.Messaging;
 using Lextm.SharpSnmpLib.Security;
 using NUnit.Framework;
@@ -24,7 +24,7 @@ namespace Lextm.SharpSnmpLib.Tests
         [Test]
         public void TestException()
         {
-            Assert.Throws<ArgumentNullException>(() => new TrapV1Pdu(null));
+            Assert.Throws<ArgumentNullException>(() => new TrapV1Pdu(new Tuple<int, byte[]>(0, new byte[] { 0 }),null));
             Assert.Throws<ArgumentNullException>(() => new TrapV1Pdu((ObjectIdentifier)null, null, null, null, null, null));
             Assert.Throws<ArgumentNullException>(() => new TrapV1Pdu(new ObjectIdentifier(new uint[] {1, 3, 6, 1, 4, 1, 2162, 1000, 2}), null, null, null, null, null));
             Assert.Throws<ArgumentNullException>(() => new TrapV1Pdu(new ObjectIdentifier(new uint[] {1, 3, 6, 1, 4, 1, 2162, 1000, 2}),

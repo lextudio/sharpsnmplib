@@ -93,7 +93,8 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
                         ErrorCode.NoError,
                         0,
                         new List<Variable>(1) { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0")) })),
-                DefaultPrivacyProvider.DefaultPair);
+                DefaultPrivacyProvider.DefaultPair,
+                null);
             
             IPrivacyProvider privacy = new DefaultPrivacyProvider(new MD5AuthenticationProvider(new OctetString("testpass")));
             GetRequestMessage request = new GetRequestMessage(
@@ -143,7 +144,8 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
                     new GetRequestPdu(
                         0x3A25,
                         new List<Variable>(1) { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0")) })),
-                privacy);
+                privacy,
+                null);
             Assert.AreEqual(Levels.Authentication | Levels.Privacy | Levels.Reportable, request.Header.SecurityLevel);
             Assert.AreEqual(ByteTool.Convert(bytes), request.ToBytes());
         }
@@ -190,7 +192,8 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
                     new GetRequestPdu(
                         0x01AF,
                         new List<Variable>(1) { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0"), new Null()) })),
-                pair);
+                pair,
+                null);
             Assert.AreEqual(Levels.Authentication | Levels.Reportable, request.Header.SecurityLevel);
             Assert.AreEqual(ByteTool.Convert(bytes), request.ToBytes());
         }
@@ -226,7 +229,8 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
                     new GetRequestPdu(
                         0x56FF,
                         new List<Variable>(1) { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0"), new Null()) })),
-                pair);
+                pair,
+                null);
             Assert.AreEqual(Levels.Authentication | Levels.Reportable, request.Header.SecurityLevel);
             Assert.AreEqual(ByteTool.Convert(bytes), request.ToBytes());
         }
@@ -255,7 +259,8 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
                     OctetString.Empty,
                     OctetString.Empty,
                     new GetRequestPdu(0x2C6B, new List<Variable>())),
-                DefaultPrivacyProvider.DefaultPair
+                DefaultPrivacyProvider.DefaultPair,
+                null
                );
             string test = ByteTool.Convert(request.ToBytes());
             Assert.AreEqual(bytes, test);

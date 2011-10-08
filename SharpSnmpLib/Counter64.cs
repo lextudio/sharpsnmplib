@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Tuples;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -28,12 +29,13 @@ namespace Lextm.SharpSnmpLib
     public sealed class Counter64 : ISnmpData, IEquatable<Counter64>
     {
         private readonly ulong _count;
-        
+        private readonly byte[] _length;
+
         /// <summary>
         /// Creates a <see cref="Counter64"/> instance from raw bytes.
         /// </summary>
         /// <param name="raw"></param>
-        internal Counter64(byte[] raw) : this(raw.Length, new MemoryStream(raw))
+        internal Counter64(byte[] raw) : this(new Tuple<int, byte[]>(raw.Length, raw.Length.WritePayloadLength()), new MemoryStream(raw))
         {
         }
         
@@ -52,26 +54,26 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="length">The length.</param>
         /// <param name="stream">The stream.</param>
-        public Counter64(int length, Stream stream)
+        public Counter64(Tuple<int, byte[]> length, Stream stream)
         {
             if (stream == null)
             {
                 throw new ArgumentNullException("stream");
             }
 
-            if (length <= 0 || length > 9)
+            if (length.First <= 0 || length.First > 9)
             {
                 throw new ArgumentException("byte length must between 1 and 9");
             }
 
-            byte[] raw = new byte[length];
+            var raw = new byte[length.First];
             stream.Read(raw, 0, raw.Length);
-            if (length == 9 && raw[0] != 0)
+            if (length.First == 9 && raw[0] != 0)
             {
                 throw new ArgumentException("if byte length is 5, then first byte must be empty");
             }
 
-            List<byte> list = new List<byte>(raw);
+            var list = new List<byte>(raw);
             list.Reverse();
             while (list.Count > 8)
             {
@@ -84,6 +86,7 @@ namespace Lextm.SharpSnmpLib
             }
 
             _count = BitConverter.ToUInt64(list.ToArray(), 0);
+            _length = length.Second;
         }
 
         #region ISnmpData Members
@@ -106,7 +109,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("stream");
             }
             
-            stream.AppendBytes(TypeCode, GetRaw());
+            stream.AppendBytes(TypeCode, _length, GetRaw());
         }
 
         #endregion
