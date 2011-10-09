@@ -130,6 +130,10 @@
       <Project>{286DE6DB-8F95-4BD4-86A2-86488D2E0EE1}</Project>
       <Name>SharpSnmpLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\System.Tuples\System.Tuples.csproj">
+      <Project>{0D826AF6-57A2-46DF-95CF-DEC1CAD1B931}</Project>
+      <Name>System.Tuples</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
