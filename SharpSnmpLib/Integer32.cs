@@ -53,6 +53,8 @@ namespace Lextm.SharpSnmpLib
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes")]
         public static readonly Integer32 Zero = new Integer32(0);
 
+        private byte[] _raw;
+
         /// <summary>
         /// Creates an <see cref="Integer32"/> instance.
         /// </summary>
@@ -93,12 +95,12 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentException("truncation error for 32-bit integer coding", "length");
             }
 
-            var raw = new byte[length.First];
-            stream.Read(raw, 0, length.First);
-            _int = ((raw[0] & 0x80) == 0x80) ? -1 : 0; // sign extended! Guy McIlroy
+            _raw = new byte[length.First];
+            stream.Read(_raw, 0, length.First);
+            _int = ((_raw[0] & 0x80) == 0x80) ? -1 : 0; // sign extended! Guy McIlroy
             for (var j = 0; j < length.First; j++)
             {
-                _int = (_int << 8) | raw[j];
+                _int = (_int << 8) | _raw[j];
             }
 
             _length = length.Second;
@@ -158,7 +160,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("stream");
             }
             
-            stream.AppendBytes(TypeCode, _length, ByteTool.GetRawBytes(BitConverter.GetBytes(_int), _int < 0));
+            stream.AppendBytes(TypeCode, _length, _raw ?? (_raw = ByteTool.GetRawBytes(BitConverter.GetBytes(_int), _int < 0)));
         }
 
         /// <summary>

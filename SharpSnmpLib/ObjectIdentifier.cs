@@ -40,8 +40,10 @@ namespace Lextm.SharpSnmpLib
         #if (CF)
         [NonSerialized]
         #endif
-        private int _hashcode;
-        private byte[] _length;
+        private readonly int _hashcode;
+        private readonly byte[] _length;
+
+        private byte[] _raw;
 
         #region Constructor
 
@@ -82,6 +84,19 @@ namespace Lextm.SharpSnmpLib
             }
 
             _oid = id;
+            unchecked
+            {
+                if (_hashcode == 0)
+                {
+                    var hash = 0;
+                    for (var i = _oid.Length - 1; i >= 0; i--)
+                    {
+                        hash ^= (int)_oid[i];
+                    }
+
+                    _hashcode = hash != 0 ? hash : 1;    // Very unlikely that hash=0, but I prefer to foresee the case.
+                }
+            }
         }
 
         /// <summary>
@@ -106,31 +121,44 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("stream");
             }
 
-            var raw = new byte[length.First];
-            stream.Read(raw, 0, length.First);
+            _raw = new byte[length.First];
+            stream.Read(_raw, 0, length.First);
             if (length.First == 0)
             {
                 throw new ArgumentException("length cannot be 0", "length");
             }
 
-            var result = new List<uint> { (uint)(raw[0] / 40), (uint)(raw[0] % 40) };
+            var result = new List<uint> { (uint)(_raw[0] / 40), (uint)(_raw[0] % 40) };
             uint buffer = 0;
-            for (var i = 1; i < raw.Length; i++)
+            for (var i = 1; i < _raw.Length; i++)
             {
-                if ((raw[i] & 0x80) == 0)
+                if ((_raw[i] & 0x80) == 0)
                 {
-                    result.Add(raw[i] + (buffer << 7));
+                    result.Add(_raw[i] + (buffer << 7));
                     buffer = 0;
                 }
                 else
                 {
                     buffer <<= 7;
-                    buffer += (uint)(raw[i] & 0x7F);
+                    buffer += (uint)(_raw[i] & 0x7F);
                 }
             }
 
             _oid = result.ToArray();
             _length = length.Second;
+            unchecked
+            {
+                if (_hashcode == 0)
+                {
+                    var hash = 0;
+                    for (var i = _oid.Length - 1; i >= 0; i--)
+                    {
+                        hash ^= (int)_oid[i];
+                    }
+
+                    _hashcode = hash != 0 ? hash : 1;    // Very unlikely that hash=0, but I prefer to foresee the case.
+                }
+            }
         }
 
         #endregion Constructor
@@ -279,6 +307,16 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("stream");
             }
 
+            stream.AppendBytes(TypeCode, _length, this.GetRaw());
+        }
+
+        private byte[] GetRaw()
+        {
+            if (_raw != null)
+            {
+                return _raw;
+            }
+
             // TODO: improve here.
             var temp = new List<byte>();
             var first = (byte)((40 * _oid[0]) + _oid[1]);
@@ -288,7 +326,7 @@ namespace Lextm.SharpSnmpLib
                 temp.AddRange(ConvertToBytes(_oid[i]));
             }
 
-            stream.AppendBytes(TypeCode, _length, temp.ToArray());
+            return _raw = temp.ToArray();
         }
 
         private static IEnumerable<byte> ConvertToBytes(uint subIdentifier)
@@ -342,20 +380,6 @@ namespace Lextm.SharpSnmpLib
         /// <returns>A hash code for the current <see cref="ObjectIdentifier"/>.</returns>
         public override int GetHashCode()
         {
-            unchecked
-            {
-                if (_hashcode == 0)
-                {
-                    var hash = 0;
-                    for (var i = _oid.Length - 1; i >= 0; i--)
-                    {                        
-                        hash ^= (int)_oid[i];                        
-                    }
-                    
-                    _hashcode = hash != 0 ? hash : 1;    // Very unlikely that hash=0, but I prefer to foresee the case.
-                }
-            }
-            
             return _hashcode;
         }
 

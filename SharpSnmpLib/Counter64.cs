@@ -31,6 +31,8 @@ namespace Lextm.SharpSnmpLib
         private readonly ulong _count;
         private readonly byte[] _length;
 
+        private byte[] _raw;
+
         /// <summary>
         /// Creates a <see cref="Counter64"/> instance from raw bytes.
         /// </summary>
@@ -67,14 +69,14 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentException("byte length must between 1 and 9");
             }
 
-            var raw = new byte[length.First];
-            stream.Read(raw, 0, raw.Length);
-            if (length.First == 9 && raw[0] != 0)
+            _raw = new byte[length.First];
+            stream.Read(_raw, 0, length.First);
+            if (length.First == 9 && _raw[0] != 0)
             {
                 throw new ArgumentException("if byte length is 5, then first byte must be empty");
             }
 
-            var list = new List<byte>(raw);
+            var list = new List<byte>(_raw);
             list.Reverse();
             while (list.Count > 8)
             {
@@ -139,7 +141,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         private byte[] GetRaw()
         {
-            return ByteTool.GetRawBytes(BitConverter.GetBytes(_count), false);
+            return _raw ?? (_raw = ByteTool.GetRawBytes(BitConverter.GetBytes(_count), false));
         }
 
         /// <summary>
