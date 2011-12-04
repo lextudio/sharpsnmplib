@@ -29,13 +29,13 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             _name = name;
             // parse between ( )
-            Symbol temp = lexer.NextNonEOLSymbol; 
+            Symbol temp = lexer.GetNextNonEOLSymbol(); 
             int bracketSection = 0;
             temp.Expect(Symbol.OpenBracket);
             bracketSection++;
             while (bracketSection > 0)
             {
-                temp = lexer.NextNonEOLSymbol;
+                temp = lexer.GetNextNonEOLSymbol();
                 if (temp == Symbol.OpenBracket)
                 {
                     bracketSection++;

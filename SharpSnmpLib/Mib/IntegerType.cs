@@ -8,6 +8,7 @@
  */
 
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
@@ -40,7 +41,7 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             _name = name;
 
-            Symbol temp = lexer.NextNonEOLSymbol;
+            Symbol temp = lexer.GetNextNonEOLSymbol();
             if (temp == Symbol.OpenBracket)
             {
                 _isEnumeration = true;
@@ -106,15 +107,7 @@ namespace Lextm.SharpSnmpLib.Mib
 
         public bool Contains(int value)
         {
-            foreach (ValueRange range in _ranges)
-            {
-                if (range.Contains(value))
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return _ranges.Any(range => range.Contains(value));
         }
     }
 }

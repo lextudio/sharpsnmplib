@@ -133,7 +133,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <param name="right">Right <see cref="Symbol"/> object</param>
         /// <returns>
         /// Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
-        public static bool Equals(Symbol left, Symbol right)
+        private static bool Equals(Symbol left, Symbol right)
         {
             object l = left;
             object r = right;
@@ -183,7 +183,6 @@ namespace Lextm.SharpSnmpLib.Mib
         internal static readonly Symbol Assign = new Symbol("::=");
         internal static readonly Symbol OpenBracket = new Symbol("{");
         internal static readonly Symbol CloseBracket = new Symbol("}");
-        internal static readonly Symbol Comment = new Symbol("--");
         internal static readonly Symbol Imports = new Symbol("IMPORTS");
         internal static readonly Symbol Semicolon = new Symbol(";");
         internal static readonly Symbol From = new Symbol("FROM");
@@ -235,22 +234,29 @@ namespace Lextm.SharpSnmpLib.Mib
 
         internal void Expect(Symbol expected)
         {
-            Validate(this != expected, expected + " expected");
+            Assert(this == expected, expected + " expected");
         }
 
-        internal void Validate(bool condition, string message)
+        internal void Assert(bool condition, string message)
         {
             if (condition)
             {
-                throw MibException.Create(message, this);
+                return;
             }
+
+            throw MibException.Create(message, this);
+        }
+
+        internal void Throw(string message)
+        {
+            Assert(false, message);
         }
 
         internal void ValidateIdentifier()
         {
             string message;
-            bool condition = !IsValidIdentifier(ToString(), out message);
-            Validate(condition, message);
+            bool condition = IsValidIdentifier(ToString(), out message);
+            Assert(condition, message);
         }
 
         internal bool ValidateType()

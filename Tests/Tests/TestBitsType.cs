@@ -17,9 +17,9 @@ namespace Lextm.SharpSnmpLib.Tests
             Lexer lexer = new Lexer();
             StringReader reader = new StringReader(test);
             lexer.Parse(reader);
-            string name = lexer.NextSymbol.ToString();
-            lexer.NextSymbol.Expect(Symbol.Assign);
-            lexer.NextSymbol.Expect(Symbol.Bits);
+            string name = lexer.GetNextSymbol().ToString();
+            lexer.GetNextSymbol().Expect(Symbol.Assign);
+            lexer.GetNextSymbol().Expect(Symbol.Bits);
 
             BitsType i = new BitsType("module", "name", lexer);
             Assert.AreEqual("first(1)", i[1]);

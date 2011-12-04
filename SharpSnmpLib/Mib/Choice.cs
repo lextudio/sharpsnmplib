@@ -29,11 +29,11 @@ namespace Lextm.SharpSnmpLib.Mib
             _name = name;
 
             Symbol temp;
-            while ((temp = lexer.NextSymbol) != Symbol.OpenBracket)
+            while ((temp = lexer.GetNextSymbol()) != Symbol.OpenBracket)
             {
             }
             
-            while ((temp = lexer.NextSymbol) != Symbol.CloseBracket)
+            while ((temp = lexer.GetNextSymbol()) != Symbol.CloseBracket)
             {
             }
         }

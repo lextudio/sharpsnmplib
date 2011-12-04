@@ -7,6 +7,7 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 
+using System;
 using System.Collections.Generic;
 namespace Lextm.SharpSnmpLib.Mib
 {
@@ -38,7 +39,7 @@ namespace Lextm.SharpSnmpLib.Mib
             Symbol temp;
             Symbol veryPrevious = null;
             Symbol previous = last;
-            while ((temp = lexer.NextSymbol) != null)
+            while ((temp = lexer.GetNextSymbol()) != null)
             {
                 if (veryPrevious == Symbol.EOL && previous == Symbol.EOL && temp.ValidateType())
                 {
@@ -50,7 +51,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 previous = temp;
             }
             
-            previous.Validate(true, "end of file reached");
+            previous.Throw("end of file reached");
         }
 
         public TypeAssignment(string module, string name, IEnumerator<Symbol> enumerator, ref Symbol temp)

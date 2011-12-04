@@ -19,3 +19,4 @@ SharpSnmpLib.*.ReSharper
 SharpSnmpLib.sln.docstates
 *.dotCover
 gendarme/*
+*.orig

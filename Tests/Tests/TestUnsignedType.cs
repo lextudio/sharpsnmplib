@@ -18,9 +18,9 @@ namespace Lextm.SharpSnmpLib.Tests
             Lexer lexer = new Lexer();
             StringReader reader = new StringReader(test);
             lexer.Parse(reader);
-            string name = lexer.NextSymbol.ToString();
-            lexer.NextSymbol.Expect(Symbol.Assign);
-            lexer.NextSymbol.Expect(Symbol.Unsigned32);
+            string name = lexer.GetNextSymbol().ToString();
+            lexer.GetNextSymbol().Expect(Symbol.Assign);
+            lexer.GetNextSymbol().Expect(Symbol.Unsigned32);
 
             UnsignedType i = new UnsignedType("module", "name", lexer);
             Assert.IsTrue(i.Contains(8));
@@ -41,9 +41,9 @@ namespace Lextm.SharpSnmpLib.Tests
             Lexer lexer = new Lexer();
             StringReader reader = new StringReader(test);
             lexer.Parse(reader);
-            string name = lexer.NextSymbol.ToString();
-            lexer.NextSymbol.Expect(Symbol.Assign);
-            lexer.NextSymbol.Expect(Symbol.Gauge32);
+            string name = lexer.GetNextSymbol().ToString();
+            lexer.GetNextSymbol().Expect(Symbol.Assign);
+            lexer.GetNextSymbol().Expect(Symbol.Gauge32);
 
             Assert.Throws<MibException>(() => new UnsignedType("module", "name", lexer));
         }
@@ -55,9 +55,9 @@ namespace Lextm.SharpSnmpLib.Tests
             Lexer lexer = new Lexer();
             StringReader reader = new StringReader(test);
             lexer.Parse(reader);
-            string name = lexer.NextSymbol.ToString();
-            lexer.NextSymbol.Expect(Symbol.Assign);
-            lexer.NextSymbol.Expect(Symbol.Gauge32);
+            string name = lexer.GetNextSymbol().ToString();
+            lexer.GetNextSymbol().Expect(Symbol.Assign);
+            lexer.GetNextSymbol().Expect(Symbol.Gauge32);
 
             Assert.Throws<MibException>(() => new UnsignedType("module", "name", lexer));
         }
@@ -69,9 +69,9 @@ namespace Lextm.SharpSnmpLib.Tests
             Lexer lexer = new Lexer();
             StringReader reader = new StringReader(test);
             lexer.Parse(reader);
-            string name = lexer.NextSymbol.ToString();
-            lexer.NextSymbol.Expect(Symbol.Assign);
-            lexer.NextSymbol.Expect(Symbol.Unsigned32);
+            string name = lexer.GetNextSymbol().ToString();
+            lexer.GetNextSymbol().Expect(Symbol.Assign);
+            lexer.GetNextSymbol().Expect(Symbol.Unsigned32);
 
             Assert.Throws<MibException>(() => new UnsignedType("module", "name", lexer));
         }
@@ -83,9 +83,9 @@ namespace Lextm.SharpSnmpLib.Tests
             Lexer lexer = new Lexer();
             StringReader reader = new StringReader(test);
             lexer.Parse(reader);
-            string name = lexer.NextSymbol.ToString();
-            lexer.NextSymbol.Expect(Symbol.Assign);
-            lexer.NextSymbol.Expect(Symbol.Unsigned32);
+            string name = lexer.GetNextSymbol().ToString();
+            lexer.GetNextSymbol().Expect(Symbol.Assign);
+            lexer.GetNextSymbol().Expect(Symbol.Unsigned32);
 
             Assert.Throws<MibException>(() => new UnsignedType("module", "name", lexer));
         }

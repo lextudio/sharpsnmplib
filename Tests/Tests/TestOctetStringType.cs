@@ -18,10 +18,10 @@ namespace Lextm.SharpSnmpLib.Tests
             Lexer lexer = new Lexer();
             StringReader reader = new StringReader(test);
             lexer.Parse(reader);
-            string name = lexer.NextSymbol.ToString();
-            lexer.NextSymbol.Expect(Symbol.Assign);
-            lexer.NextSymbol.Expect(Symbol.Octet);
-            lexer.NextSymbol.Expect(Symbol.String);
+            string name = lexer.GetNextSymbol().ToString();
+            lexer.GetNextSymbol().Expect(Symbol.Assign);
+            lexer.GetNextSymbol().Expect(Symbol.Octet);
+            lexer.GetNextSymbol().Expect(Symbol.String);
 
             OctetStringType i = new OctetStringType("module", "name", lexer);
             Assert.IsTrue(i.Contains(8));
@@ -42,10 +42,10 @@ namespace Lextm.SharpSnmpLib.Tests
             Lexer lexer = new Lexer();
             StringReader reader = new StringReader(test);
             lexer.Parse(reader);
-            string name = lexer.NextSymbol.ToString();
-            lexer.NextSymbol.Expect(Symbol.Assign);
-            lexer.NextSymbol.Expect(Symbol.Octet);
-            lexer.NextSymbol.Expect(Symbol.String);
+            string name = lexer.GetNextSymbol().ToString();
+            lexer.GetNextSymbol().Expect(Symbol.Assign);
+            lexer.GetNextSymbol().Expect(Symbol.Octet);
+            lexer.GetNextSymbol().Expect(Symbol.String);
 
             Assert.Throws<MibException>(delegate { new OctetStringType("module", "name", lexer); });
         }

@@ -160,8 +160,12 @@
     <Compile Include="Tests\VariableTestFixture.cs" />
     <Compile Include="Tests\WatchdogTestFixture.cs" />
     <Compile Include="Tests\TrapV2PduTestFixture.cs" />
+    <None Include="Resources\ADMIN-AUTH-STATS-MIB.mib" />
+    <None Include="Resources\APPN-MIB.mib" />
     <None Include="Resources\empty.txt" />
     <None Include="Resources\httpmib.txt" />
+    <None Include="Resources\MM200-MIB.mib" />
+    <None Include="Resources\RMON2-MIB.mib" />
     <None Include="Resources\v3authNoPriv_BER_Issue" />
     <None Include="sharpsnmplib.tests.snk" />
   </ItemGroup>

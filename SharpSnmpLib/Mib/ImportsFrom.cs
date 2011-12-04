@@ -20,7 +20,7 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             Symbol previous = last;
             Symbol temp;
-            while ((temp = lexer.NextSymbol) != Symbol.From)
+            while ((temp = lexer.GetNextSymbol()) != Symbol.From)
             {
                 if (temp == Symbol.EOL) 
                 {
@@ -36,7 +36,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 previous = temp;
             }
             
-            _module = lexer.NextSymbol.ToString().ToUpperInvariant(); // module names are uppercase
+            _module = lexer.GetNextSymbol().ToString().ToUpperInvariant(); // module names are uppercase
         }
         
         public string Module
