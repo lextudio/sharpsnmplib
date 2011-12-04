@@ -22,12 +22,12 @@ namespace Lextm.SharpSnmpLib.Mib
             _module = module;
             _name = header[0].ToString();
             Symbol temp;
-            while ((temp = lexer.NextSymbol) == Symbol.EOL)
+            while ((temp = lexer.GetNextSymbol()) == Symbol.EOL)
             {
             }
             
             bool succeeded = int.TryParse(temp.ToString(), out _value);
-            temp.Validate(!succeeded, "not a decimal");
+            temp.Assert(succeeded, "not a decimal");
         }
 
         public string Module

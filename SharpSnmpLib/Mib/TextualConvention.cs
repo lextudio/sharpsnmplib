@@ -4,46 +4,46 @@ namespace Lextm.SharpSnmpLib.Mib
 {
     internal sealed class TextualConvention : ITypeAssignment
     {
-        private string _name;
-        private DisplayHint _displayHint;
-        private Status _status;
-        private string _description;
-        private string _reference;
-        private ITypeAssignment _syntax;
+        private readonly string _name;
+        private readonly DisplayHint _displayHint;
+        private readonly Status _status;
+        private readonly string _description;
+        private readonly string _reference;
+        private readonly ITypeAssignment _syntax;
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "module")]
         public TextualConvention(string module, string name, Lexer lexer)
         {
             _name = name;
 
-            Symbol temp = lexer.NextNonEOLSymbol;
+            Symbol temp = lexer.GetNextNonEOLSymbol();
 
             if (temp == Symbol.DisplayHint)
             {
                 // TODO: this needs decoding to a useful format.
-                _displayHint = new DisplayHint(lexer.NextNonEOLSymbol.ToString().Trim(new[] { '"' }));
-                temp = lexer.NextNonEOLSymbol;
+                _displayHint = new DisplayHint(lexer.GetNextNonEOLSymbol().ToString().Trim(new[] { '"' }));
+                temp = lexer.GetNextNonEOLSymbol();
             }
 
             temp.Expect(Symbol.Status);
             try
             {
-                _status = StatusHelper.CreateStatus(lexer.NextNonEOLSymbol.ToString());
-                temp = lexer.NextNonEOLSymbol;
+                _status = StatusHelper.CreateStatus(lexer.GetNextNonEOLSymbol().ToString());
+                temp = lexer.GetNextNonEOLSymbol();
             }
             catch (ArgumentException)
             {
-                temp.Validate(true, "Invalid status");
+                temp.Throw("Invalid status");
             }
 
             temp.Expect(Symbol.Description);
-            _description = lexer.NextNonEOLSymbol.ToString().Trim(new[] { '"' });
-            temp = lexer.NextNonEOLSymbol;
+            _description = lexer.GetNextNonEOLSymbol().ToString().Trim(new[] { '"' });
+            temp = lexer.GetNextNonEOLSymbol();
 
             if (temp == Symbol.Reference)
             {
-                _reference = lexer.NextNonEOLSymbol.ToString();
-                temp = lexer.NextNonEOLSymbol;
+                _reference = lexer.GetNextNonEOLSymbol().ToString();
+                temp = lexer.GetNextNonEOLSymbol();
             }
 
             temp.Expect(Symbol.Syntax);
@@ -78,7 +78,7 @@ namespace Lextm.SharpSnmpLib.Mib
              * With appropriate sub-typing.
              */
 
-            temp = lexer.NextNonEOLSymbol;
+            temp = lexer.GetNextNonEOLSymbol();
             if (temp == Symbol.Bits)
             {
                 _syntax = new BitsType(module, string.Empty, lexer);
@@ -89,7 +89,7 @@ namespace Lextm.SharpSnmpLib.Mib
             }
             else if (temp == Symbol.Octet)
             {
-                temp = lexer.NextSymbol;
+                temp = lexer.GetNextSymbol();
                 temp.Expect(Symbol.String);
                 _syntax = new OctetStringType(module, string.Empty, lexer);
             }
@@ -111,13 +111,14 @@ namespace Lextm.SharpSnmpLib.Mib
             }
             else if (temp == Symbol.Object)
             {
-                temp = lexer.NextSymbol;
+                temp = lexer.GetNextSymbol();
                 temp.Expect(Symbol.Identifier);
                 _syntax = new ObjectIdentifierType(module, string.Empty, lexer);
             }
             else
             {
-                temp.Validate(true, "illegal syntax for textual convention");
+                //temp.Throw("illegal syntax for textual convention");
+                _syntax = new CustomType(module, string.Empty, lexer);
             }
         }
 
@@ -155,7 +156,7 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             if (_syntax is IntegerType)
             {
-                Integer32 i = v.Data as Integer32;
+                var i = v.Data as Integer32;
                 if (i == null || (_syntax as IntegerType).IsEnumeration)
                 {
                     return null;
@@ -166,7 +167,7 @@ namespace Lextm.SharpSnmpLib.Mib
 
             if (_syntax is UnsignedType)
             {
-                Integer32 i = v.Data as Integer32;
+                var i = v.Data as Integer32;
                 if (i == null)
                 {
                     return null;
@@ -177,7 +178,7 @@ namespace Lextm.SharpSnmpLib.Mib
 
             if (_syntax is OctetStringType)
             {
-                OctetString o = v.Data as OctetString;
+                var o = v.Data as OctetString;
                 if (o == null)
                 {
                     return null;

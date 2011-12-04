@@ -14,9 +14,9 @@ namespace Lextm.SharpSnmpLib.Tests
             Lexer lexer = new Lexer();
             StringReader reader = new StringReader(test);
             lexer.Parse(reader);
-            string name = lexer.NextSymbol.ToString();
-            lexer.NextSymbol.Expect(Symbol.Assign);
-            lexer.NextSymbol.Expect(Symbol.Counter64);
+            string name = lexer.GetNextSymbol().ToString();
+            lexer.GetNextSymbol().Expect(Symbol.Assign);
+            lexer.GetNextSymbol().Expect(Symbol.Counter64);
 
             Counter64Type i = new Counter64Type("module", "name", lexer);
         }

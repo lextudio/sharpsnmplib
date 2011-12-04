@@ -52,13 +52,13 @@ namespace Lextm.SharpSnmpLib.Mib
             }
             
             _name = name.ToUpperInvariant(); // all module name are uppercase.
-            Symbol temp = lexer.NextNonEOLSymbol;
+            Symbol temp = lexer.GetNextNonEOLSymbol();
             temp.Expect(Symbol.Definitions);
-            temp = lexer.NextNonEOLSymbol;
+            temp = lexer.GetNextNonEOLSymbol();
             temp.Expect(Symbol.Assign);
-            temp = lexer.NextSymbol;
+            temp = lexer.GetNextSymbol();
             temp.Expect(Symbol.Begin);
-            temp = lexer.NextNonEOLSymbol;
+            temp = lexer.GetNextNonEOLSymbol();
             if (temp == Symbol.Imports)
             {
                 _imports = ParseDependents(lexer);
@@ -126,13 +126,13 @@ namespace Lextm.SharpSnmpLib.Mib
                     
                 next.Clear();
             }
-            while ((temp = lexer.NextSymbol) != Symbol.End);
+            while ((temp = lexer.GetNextSymbol()) != Symbol.End);
         }
         
         private static void ParseEntity(ICollection<IConstruct> tokens, string module, IList<Symbol> buffer, Lexer lexer, ref IList<Symbol> next)
         {
             next.Clear();
-            buffer[0].Validate(buffer.Count == 1, "unexpected symbol");
+            buffer[0].Assert(buffer.Count > 1, "unexpected symbol");
             buffer[0].ValidateIdentifier();
             if (buffer.Count == 2)
             {
@@ -189,14 +189,14 @@ namespace Lextm.SharpSnmpLib.Mib
         
         private static IEntity ParseObjectIdentifier(string module, IList<Symbol> header, Lexer lexer)
         {
-            header[0].Validate(header.Count != 4, "invalid OID value assignment");
+            header[0].Assert(header.Count == 4, "invalid OID value assignment");
             header[2].Expect(Symbol.Identifier);
             return new OidValueAssignment(module, header[0].ToString(), lexer);
         }
 
         private static IConstruct ParseOthers(string module, IList<Symbol> header, Lexer lexer, ref IList<Symbol> next)
         {
-            Symbol current = lexer.NextNonEOLSymbol;
+            Symbol current = lexer.GetNextNonEOLSymbol();
             
             if (current == Symbol.Sequence)
             {

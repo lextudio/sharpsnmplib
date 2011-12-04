@@ -1,5 +1,5 @@
-﻿
-using System;
+﻿using System;
+
 namespace Lextm.SharpSnmpLib.Mib
 {
     internal class ValueRange
@@ -23,7 +23,7 @@ namespace Lextm.SharpSnmpLib.Mib
                     }
                     catch (Exception)
                     {
-                        first.Validate(true, "invalid sub-typing; error parsing start of range");
+                        first.Throw(string.Format("invalid sub-typing; error parsing start of range: {0}", num));
                     }
                 }
                 else if (first.ToString().EndsWith("H", true, System.Globalization.CultureInfo.InvariantCulture))
@@ -36,18 +36,19 @@ namespace Lextm.SharpSnmpLib.Mib
                     }
                     catch (Exception)
                     {
-                        first.Validate(true, "invalid sub-typing; error parsing start of range");
+                        first.Throw(string.Format("invalid sub-typing; error parsing start of range: {0}", num));
                     }
                 }
                 else
                 {
-                    first.Validate(true, "invalid sub-typing; error parsing start of range");
+                    first.Throw("invalid sub-typing; error parsing start of range: {0}");
                 }
             }
             else
             {
-                first.Validate(!Int64.TryParse(first.ToString(), out value), "invalid sub-typing; error parsing start of range");
+                first.Assert(Int64.TryParse(first.ToString(), out value), "invalid sub-typing; error parsing start of range");
             }
+
             _start = value;
 
             if (second != null)
@@ -64,7 +65,7 @@ namespace Lextm.SharpSnmpLib.Mib
                         }
                         catch (Exception)
                         {
-                            second.Validate(true, "invalid sub-typing; error parsing start of range");
+                            second.Throw(string.Format("invalid sub-typing; error parsing end of range: {0}", num));
                         }
                     }
                     else if (second.ToString().EndsWith("H", true, System.Globalization.CultureInfo.InvariantCulture))
@@ -77,20 +78,28 @@ namespace Lextm.SharpSnmpLib.Mib
                         }
                         catch (Exception)
                         {
-                            second.Validate(true, "invalid sub-typing; error parsing start of range");
+                            second.Throw(string.Format("invalid sub-typing; error parsing end of range: {0}", num));
                         }
                     }
                     else
                     {
-                        second.Validate(true, "invalid sub-typing; error parsing start of range");
+                        second.Throw("invalid sub-typing; error parsing end of range");
                     }
+                }
+                else if (second.ToString() == "MAX")
+                {
+                    value = Int64.MaxValue;
                 }
                 else
                 {
-                    second.Validate(!Int64.TryParse(second.ToString(), out value), "invalid sub-typing; error parsing start of range");
+                    second.Assert(Int64.TryParse(second.ToString(), out value), "invalid sub-typing; error parsing end of range");
                 }
                 _end = value;
-                second.Validate(_start >= _end, "illegal sub-typing; end of range must be less than start of range");
+                second.Assert(_start <= _end,
+                                string.Format(
+                                    "illegal sub-typing; start of range {0} must be less than end of range {1}",
+                                    _start,
+                                    _end));
             }
         }
 

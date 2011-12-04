@@ -48,12 +48,6 @@ namespace Lextm.SharpSnmpLib.Mib
             int i = 0;
             while ((line = stream.ReadLine()) != null)
             {
-                if (!_stringSection && line.TrimStart().StartsWith("--", StringComparison.Ordinal))
-                {
-                    i++;
-                    continue; // commented line
-                }
-
                 ParseLine(file, line, i);
                 i++;
             }
@@ -72,6 +66,10 @@ namespace Lextm.SharpSnmpLib.Mib
                     break;
                 }
             }
+
+            // IMPORTANT: comment does not span lines.
+            _commentSection = false;
+            _singleDashFound = false;
         }
 
         private int _index;
@@ -80,30 +78,35 @@ namespace Lextm.SharpSnmpLib.Mib
         /// Next <see cref="Symbol"/> which is not <see cref="Symbol.EOL"/>.
         /// </summary>
         [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "EOL")]
-        public Symbol NextNonEOLSymbol
+        public Symbol GetNextNonEOLSymbol()
         {
-            get
+            Symbol result;
+            while ((result = GetNextSymbol()) == Symbol.EOL)
             {
-                Symbol result;
-                while ((result = NextSymbol) == Symbol.EOL)
-                {
-                }
-
-                return result;
             }
+
+            return result;
         }
 
         /// <summary>
         /// Next <see cref="Symbol"/>.
         /// </summary>
-        public Symbol NextSymbol
+        public Symbol GetNextSymbol()
         {
-            get
+            while (_index < _symbols.Count)
             {
-                return _index < _symbols.Count ? _symbols[_index++] : null;
+                Symbol next = _symbols[_index++];
+                if (next.IsComment())
+                {
+                    continue;
+                }
+
+                return next;
             }
+
+            return null;
         }
-        
+
         /// <summary>
         /// </summary>
         /// <param name="last"></param>
@@ -130,6 +133,8 @@ namespace Lextm.SharpSnmpLib.Mib
         private bool _assignSection;
         private bool _assignAhead;
         private bool _dotSection;
+        private bool _singleDashFound;
+        private bool _commentSection;
 
         /// <summary>
         /// Parses a list of <see cref="char"/> to <see cref="Symbol"/>.
@@ -150,6 +155,14 @@ namespace Lextm.SharpSnmpLib.Mib
             switch (current)
             {
                 case '\n':
+                    if (!_stringSection)
+                    {
+                        ParseLastSymbol(file, list, ref _temp, row, column);
+                        list.Add(CreateSpecialSymbol(file, current, row, column));
+                        return false;
+                    }
+
+                    break;
                 case '{':
                 case '}':
                 case '(':
@@ -159,22 +172,41 @@ namespace Lextm.SharpSnmpLib.Mib
                 case ';':
                 case ',':
                 case '|':
+                    if (_commentSection)
+                    {
+                        break;
+                    }
+
                     if (!_stringSection)
                     {
-                        bool moveNext = ParseLastSymbol(file, list, ref _temp, row, column);
-                        if (moveNext)
-                        {
-                            list.Add(CreateSpecialSymbol(file, '\n', row, column));
-                            return true;
-                        }
-
+                        ParseLastSymbol(file, list, ref _temp, row, column);
                         list.Add(CreateSpecialSymbol(file, current, row, column));
                         return false;
                     }
 
                     break;
                 case '"':
+                    if (_commentSection)
+                    {
+                        break;
+                    }
+
                     _stringSection = !_stringSection;
+                    break;
+                case '-':
+                    if (_stringSection)
+                    {
+                        break;
+                    }
+
+                    if (!_singleDashFound)
+                    {
+                        _singleDashFound = true;
+                        break;
+                    }
+
+                    _singleDashFound = false;
+                    _commentSection = !_commentSection;
                     break;
                 case '\r':
                     return false;
@@ -184,19 +216,20 @@ namespace Lextm.SharpSnmpLib.Mib
                         // IMPORTANT: ignore invisible characters such as SUB.
                         return false;
                     }
-                    
-                    if (Char.IsWhiteSpace(current) && !_assignSection && !_stringSection)
-                    {                     
-                        bool moveNext = ParseLastSymbol(file, list, ref _temp, row, column);
-                        if (moveNext)
-                        {
-                            list.Add(CreateSpecialSymbol(file, '\n', row, column));
-                            return true;
-                        }
 
+                    _singleDashFound = false;
+                    if (Char.IsWhiteSpace(current) && !_assignSection && !_stringSection && !_commentSection)
+                    {                     
+                        ParseLastSymbol(file, list, ref _temp, row, column);
                         return false;
                     }
-                    
+
+                    if (_commentSection)
+                    {
+                        // TODO: ignore everything here in comment
+                        break;
+                    }
+
                     if (_assignAhead)
                     {
                         _assignAhead = false;
@@ -242,23 +275,16 @@ namespace Lextm.SharpSnmpLib.Mib
             return false;
         }
 
-        private static bool ParseLastSymbol(string file, ICollection<Symbol> list, ref StringBuilder builder, int row, int column)
+        private static void ParseLastSymbol(string file, ICollection<Symbol> list, ref StringBuilder builder, int row, int column)
         {
-            if (builder.Length > 0)
+            if (builder.Length == 0)
             {
-                string content = builder.ToString();
-                builder.Length = 0;
-                Symbol s = new Symbol(file, content, row, column);
-                if (s == Symbol.Comment)
-                {
-                    // ignore the rest symbols on this line because they are in comment.
-                    return true;
-                }
-
-                list.Add(s);
+                return;
             }
 
-            return false;
+            string content = builder.ToString();
+            builder.Length = 0;
+            list.Add(new Symbol(file, content, row, column));
         }
 
         private static Symbol CreateSpecialSymbol(string file, char value, int row, int column)
@@ -309,22 +335,22 @@ namespace Lextm.SharpSnmpLib.Mib
             value = 0;
             Symbol previous = null;
             
-            Symbol temp = NextNonEOLSymbol;
+            Symbol temp = GetNextNonEOLSymbol();
             temp.Expect(Symbol.OpenBracket);
-            StringBuilder longParent = new StringBuilder();
-            temp = NextNonEOLSymbol;
+            var longParent = new StringBuilder();
+            temp = GetNextNonEOLSymbol();
             longParent.Append(temp);
             
-            while ((temp = NextNonEOLSymbol) != null)
+            while ((temp = GetNextNonEOLSymbol()) != null)
             {
                 if (temp == Symbol.OpenParentheses)
                 {
                     longParent.Append(temp);
-                    temp = NextNonEOLSymbol;
+                    temp = GetNextNonEOLSymbol();
                     bool succeed = UInt32.TryParse(temp.ToString(), out value);
-                    temp.Validate(!succeed, "not a decimal");
+                    temp.Assert(succeed, "not a decimal");
                     longParent.Append(temp);
-                    temp = NextNonEOLSymbol;
+                    temp = GetNextNonEOLSymbol();
                     temp.Expect(Symbol.CloseParentheses);
                     longParent.Append(temp);
                     continue;
@@ -340,11 +366,11 @@ namespace Lextm.SharpSnmpLib.Mib
                 if (succeeded)
                 {
                     // numerical way
-                    while ((temp = NextNonEOLSymbol) != Symbol.CloseBracket)
+                    while ((temp = GetNextNonEOLSymbol()) != Symbol.CloseBracket)
                     {
                         longParent.Append(".").Append(value);
                         succeeded = UInt32.TryParse(temp.ToString(), out value);
-                        temp.Validate(!succeeded, "not a decimal");
+                        temp.Assert(succeeded, "not a decimal");
                     }
                     
                     temp.Expect(Symbol.CloseBracket);
@@ -354,14 +380,14 @@ namespace Lextm.SharpSnmpLib.Mib
                 
                 longParent.Append(".");
                 longParent.Append(temp);
-                temp = NextNonEOLSymbol;
+                temp = GetNextNonEOLSymbol();
                 temp.Expect(Symbol.OpenParentheses);
                 longParent.Append(temp);
-                temp = NextNonEOLSymbol;
+                temp = GetNextNonEOLSymbol();
                 succeeded = UInt32.TryParse(temp.ToString(), out value);
-                temp.Validate(!succeeded, "not a decimal");
+                temp.Assert(succeeded, "not a decimal");
                 longParent.Append(temp);
-                temp = NextNonEOLSymbol;
+                temp = GetNextNonEOLSymbol();
                 temp.Expect(Symbol.CloseParentheses);
                 longParent.Append(temp);
                 previous = temp;

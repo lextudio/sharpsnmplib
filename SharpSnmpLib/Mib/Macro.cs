@@ -12,11 +12,11 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             _name = header[0].ToString();
             Symbol temp;
-            while ((temp = lexer.NextSymbol) != Symbol.Begin)
+            while ((temp = lexer.GetNextSymbol()) != Symbol.Begin)
             {                
             }
             
-            while ((temp = lexer.NextSymbol) != Symbol.End)
+            while ((temp = lexer.GetNextSymbol()) != Symbol.End)
             {
             }
         }

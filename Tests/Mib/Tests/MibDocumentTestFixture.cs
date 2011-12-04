@@ -260,25 +260,26 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
         }
         
         // Invalid MIB
-        //[Test]
-        //public void TestAPPC_MIB()
-        //{
-        //    Lexer lexer = new Lexer();
-        //    MemoryStream m = new MemoryStream(Resources.APPC_MIB);
-        //    using (StreamReader reader = new StreamReader(m))
-        //    {
-        //        lexer.Parse(reader);
-        //        reader.Close();
-        //    }
-        //    MibDocument file = new MibDocument(lexer);
-        //    Assert.AreEqual("APPC-MIB", file.Modules[0].Name);
-        //    Assert.AreEqual(4, file.Modules[0].Dependents.Count);
-        //    Assert.AreEqual(305, file.Modules[0].Entities.Count);
-        //    IEntity node = file.Modules[0].Entities[304];
-        //    Assert.AreEqual("appcConversationConfGroup", node.Name);
-        //    Assert.AreEqual(10, node.Value);
-        //    Assert.AreEqual("appcGroups", node.Parent);
-        //}
+        [Test]
+        public void TestAPPC_MIB()
+        {
+            var lexer = new Lexer();
+            var m = new MemoryStream(Properties.Resources.APPC_MIB);
+            using (var reader = new StreamReader(m))
+            {
+                lexer.Parse(reader);
+                reader.Close();
+            }
+
+            var file = new MibDocument(lexer);
+            Assert.AreEqual("APPC-MIB", file.Modules[0].Name);
+            Assert.AreEqual(4, file.Modules[0].Dependents.Count);
+            Assert.AreEqual(305, file.Modules[0].Entities.Count);
+            IEntity node = file.Modules[0].Entities[304];
+            Assert.AreEqual("appcConversationConfGroup", node.Name);
+            Assert.AreEqual(10, node.Value);
+            Assert.AreEqual("appcGroups", node.Parent);
+        }
         
         [Test]
         public void TestALVARION_DOT11_WLAN_MIB()
@@ -359,18 +360,40 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             Assert.AreEqual(4, node.Value);
             Assert.AreEqual("ds3TrapEntry", node.Parent);
         }
-        
+
         [Test]
-        public void TestADSL_TC_MIB()
+        public void TestADMIN_AUTH_STATS_MIB()
         {
-            Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Properties.Resources.ADSL_TC_MIB);
-            using (StreamReader reader = new StreamReader(m))
+            var lexer = new Lexer();
+            var m = new MemoryStream(Properties.Resources.ADMIN_AUTH_STATS_MIB);
+            using (var reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
                 reader.Close();
             }
-            MibDocument file = new MibDocument(lexer);
+
+            var file = new MibDocument(lexer);
+            Assert.AreEqual("ADMIN-AUTH-STATS-MIB", file.Modules[0].Name);
+            Assert.AreEqual(4, file.Modules[0].Dependents.Count);
+            Assert.AreEqual(23, file.Modules[0].Entities.Count);
+            IEntity node = file.Modules[0].Entities[22];
+            Assert.AreEqual("alAdminAuthClientMIBGroup", node.Name);
+            Assert.AreEqual(2, node.Value);
+            Assert.AreEqual("alAdminAuthGroup", node.Parent);
+        }
+        
+        [Test]
+        public void TestADSL_TC_MIB()
+        {
+            var lexer = new Lexer();
+            var m = new MemoryStream(Properties.Resources.ADSL_TC_MIB);
+            using (var reader = new StreamReader(m))
+            {
+                lexer.Parse(reader);
+                reader.Close();
+            }
+
+            var file = new MibDocument(lexer);
             Assert.AreEqual("ADSL-TC-MIB", file.Modules[0].Name);
             Assert.AreEqual(2, file.Modules[0].Dependents.Count);
             Assert.AreEqual(1, file.Modules[0].Entities.Count);
@@ -381,37 +404,39 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
         }
         
         // Invalid MIB
-        //[Test]
-        //public void TestADSL_LINE_MIB()
-        //{
-        //    Lexer lexer = new Lexer();
-        //    MemoryStream m = new MemoryStream(Resources.ADSL_LINE_MIB);
-        //    using (StreamReader reader = new StreamReader(m))
-        //    {
-        //        lexer.Parse(reader);
-        //        reader.Close();
-        //    }
-        //    MibDocument file = new MibDocument(lexer);
-        //    Assert.AreEqual("ADSL-LINE-MIB", file.Modules[0].Name);
-        //    Assert.AreEqual(6, file.Modules[0].Dependents.Count);
-        //    Assert.AreEqual(275, file.Modules[0].Entities.Count);
-        //    IEntity node = file.Modules[0].Entities[274];
-        //    Assert.AreEqual("adslAturLineProfileControlGroup", node.Name);
-        //    Assert.AreEqual(25, node.Value);
-        //    Assert.AreEqual("adslGroups", node.Parent);
-        //}
-        
         [Test]
-        public void TestACTONA_ACTASTOR_MIB()
+        public void TestADSL_LINE_MIB()
         {
-            Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Properties.Resources.ACTONA_ACTASTOR_MIB);
-            using (StreamReader reader = new StreamReader(m))
+            var lexer = new Lexer();
+            var m = new MemoryStream(Properties.Resources.ADSL_LINE_MIB);
+            using (var reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
                 reader.Close();
             }
-            MibDocument file = new MibDocument(lexer);
+
+            var file = new MibDocument(lexer);
+            Assert.AreEqual("ADSL-LINE-MIB", file.Modules[0].Name);
+            Assert.AreEqual(6, file.Modules[0].Dependents.Count);
+            Assert.AreEqual(275, file.Modules[0].Entities.Count);
+            IEntity node = file.Modules[0].Entities[274];
+            Assert.AreEqual("adslAturLineProfileControlGroup", node.Name);
+            Assert.AreEqual(25, node.Value);
+            Assert.AreEqual("adslGroups", node.Parent);
+        }
+        
+        [Test]
+        public void TestACTONA_ACTASTOR_MIB()
+        {
+            var lexer = new Lexer();
+            var m = new MemoryStream(Properties.Resources.ACTONA_ACTASTOR_MIB);
+            using (var reader = new StreamReader(m))
+            {
+                lexer.Parse(reader);
+                reader.Close();
+            }
+
+            var file = new MibDocument(lexer);
             Assert.AreEqual("ACTONA-ACTASTOR-MIB", file.Modules[0].Name);
             Assert.AreEqual(3, file.Modules[0].Dependents.Count);
             Assert.AreEqual(100, file.Modules[0].Entities.Count);
@@ -419,6 +444,27 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             Assert.AreEqual("acNotificationInfoGroup", node.Name);
             Assert.AreEqual(7, node.Value);
             Assert.AreEqual("actastorGroups", node.Parent);
+        }
+
+        [Test]
+        public void TestAPPN_MIB()
+        {
+            var lexer = new Lexer();
+            var m = new MemoryStream(Properties.Resources.APPN_MIB);
+            using (var reader = new StreamReader(m))
+            {
+                lexer.Parse(reader);
+                reader.Close();
+            }
+
+            var file = new MibDocument(lexer);
+            Assert.AreEqual("APPN-MIB", file.Modules[0].Name);
+            Assert.AreEqual(5, file.Modules[0].Dependents.Count);
+            Assert.AreEqual(384, file.Modules[0].Entities.Count);
+            IEntity node = file.Modules[0].Entities[383];
+            Assert.AreEqual("appnLocalEnTopoConfGroup", node.Name);
+            Assert.AreEqual(10, node.Value);
+            Assert.AreEqual("appnGroups", node.Parent);
         }
         
         [Test]
@@ -485,25 +531,26 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
         }
 
         // Invalid MIB
-        //[Test]
-        //public void TestRFC1213_MIB2()
-        //{
-        //    Lexer lexer = new Lexer();
-        //    MemoryStream m = new MemoryStream(Resources.RFC1213_MIB);
-        //    using (StreamReader reader = new StreamReader(m))
-        //    {
-        //        lexer.Parse(reader);
-        //        reader.Close();
-        //    }
-        //    MibDocument file = new MibDocument(lexer);
-        //    Assert.AreEqual(1, file.Modules.Count);
-        //    Assert.AreEqual("RFC1213-MIB", file.Modules[0].Name);
-        //    Assert.AreEqual(206, file.Modules[0].Entities.Count);
-        //    IEntity node = file.Modules[0].Entities[205];
-        //    Assert.AreEqual("snmpEnableAuthenTraps", node.Name);
-        //    Assert.AreEqual(30, node.Value);
-        //    Assert.AreEqual("snmp", node.Parent);
-        //}
+        [Test]
+        public void TestRFC1213_MIB2()
+        {
+            var lexer = new Lexer();
+            var m = new MemoryStream(Properties.Resources.RFC1213_MIB);
+            using (var reader = new StreamReader(m))
+            {
+                lexer.Parse(reader);
+                reader.Close();
+            }
+
+            var file = new MibDocument(lexer);
+            Assert.AreEqual(1, file.Modules.Count);
+            Assert.AreEqual("RFC1213-MIB", file.Modules[0].Name);
+            Assert.AreEqual(206, file.Modules[0].Entities.Count);
+            IEntity node = file.Modules[0].Entities[205];
+            Assert.AreEqual("snmpEnableAuthenTraps", node.Name);
+            Assert.AreEqual(30, node.Value);
+            Assert.AreEqual("snmp", node.Parent);
+        }
 
         [Test]
         public void TestRFC_1215()
@@ -520,6 +567,7 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             Assert.AreEqual("RFC-1215", file.Modules[0].Name);
             Assert.AreEqual(0, file.Modules[0].Entities.Count);
         }
+        
         [Test]
         public void TestRMON_MIB()
         {
@@ -539,6 +587,27 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             Assert.AreEqual(11, node.Value);
             Assert.AreEqual("rmonGroups", node.Parent);
         }
+        
+        [Test]
+        public void TestRMON2_MIB()
+        {
+            Lexer lexer = new Lexer();
+            MemoryStream m = new MemoryStream(Properties.Resources.RMON2_MIB);
+            using (StreamReader reader = new StreamReader(m))
+            {
+                lexer.Parse(reader);
+                reader.Close();
+            }
+            MibDocument file = new MibDocument(lexer);
+            Assert.AreEqual(1, file.Modules.Count);
+            Assert.AreEqual("RMON2-MIB", file.Modules[0].Name);
+            Assert.AreEqual(296, file.Modules[0].Entities.Count);
+            IEntity node = file.Modules[0].Entities[295];
+            Assert.AreEqual("rmon1TokenRingEnhancementGroup", node.Name);
+            Assert.AreEqual(13, node.Value);
+            Assert.AreEqual("rmon2MIBGroups", node.Parent);
+        }
+        
         [Test]
         public void TestSMUX_MIB()
         {
@@ -786,17 +855,18 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             Assert.AreEqual(4, node.Value);
             Assert.AreEqual("udpMIBGroups", node.Parent);
         }
+
         [Test]
         public void TestMTA_MIB()
         {
-            Lexer lexer = new Lexer();
-            MemoryStream m = new MemoryStream(Properties.Resources.MTA_MIB);
-            using (StreamReader reader = new StreamReader(m))
+            var lexer = new Lexer();
+            var m = new MemoryStream(Properties.Resources.MTA_MIB);
+            using (var reader = new StreamReader(m))
             {
                 lexer.Parse(reader);
                 reader.Close();
             }
-            MibDocument file = new MibDocument(lexer);
+            var file = new MibDocument(lexer);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("MTA-MIB", file.Modules[0].Name);
             Assert.AreEqual(81, file.Modules[0].Entities.Count);
@@ -805,6 +875,28 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             Assert.AreEqual(9, node.Value);
             Assert.AreEqual("mtaGroups", node.Parent);
         }
+
+        // TODO: [Test]
+        public void TestMM200_MIB()
+        {
+            var lexer = new Lexer();
+            var m = new MemoryStream(Properties.Resources.MM200_MIB);
+            using (var reader = new StreamReader(m))
+            {
+                lexer.Parse(reader);
+                reader.Close();
+            }
+
+            var file = new MibDocument(lexer);
+            Assert.AreEqual(1, file.Modules.Count);
+            Assert.AreEqual("MM200-MIB", file.Modules[0].Name);
+            Assert.AreEqual(81, file.Modules[0].Entities.Count);
+            IEntity node = file.Modules[0].Entities[80];
+            Assert.AreEqual("mtaRFC2789ErrorGroup", node.Name);
+            Assert.AreEqual(9, node.Value);
+            Assert.AreEqual("mtaGroups", node.Parent);
+        }
+
         [Test]
         public void TestNet_Snmp_Agent_MIB()
         {

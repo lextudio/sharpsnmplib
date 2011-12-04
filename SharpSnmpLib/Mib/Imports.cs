@@ -30,7 +30,7 @@ namespace Lextm.SharpSnmpLib.Mib
         public Imports(Lexer lexer)
         {
             Symbol temp;
-            while ((temp = lexer.NextSymbol) != Symbol.Semicolon)
+            while ((temp = lexer.GetNextSymbol()) != Symbol.Semicolon)
             {
                 if (temp == Symbol.EOL)
                 {

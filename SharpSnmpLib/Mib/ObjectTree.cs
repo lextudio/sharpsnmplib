@@ -194,7 +194,8 @@ namespace Lextm.SharpSnmpLib.Mib
 
         private void Parse(IModule module)
         {
-            Stopwatch watch = new Stopwatch();
+            var watch = new Stopwatch();
+            watch.Start();
             AddTypes(module);
             AddNodes(module);
             Logger.InfoFormat(CultureInfo.InvariantCulture, "{0}-ms used to assemble {1}", watch.ElapsedMilliseconds, module.Name);

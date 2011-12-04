@@ -22,7 +22,7 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             Symbol previous = null;
             Symbol temp;
-            while ((temp = lexer.NextSymbol) != Symbol.Semicolon) 
+            while ((temp = lexer.GetNextSymbol()) != Symbol.Semicolon) 
             {
                 if (temp == Symbol.EOL) 
                 {

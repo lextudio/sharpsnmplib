@@ -14,7 +14,7 @@ namespace Lextm.SharpSnmpLib.Mib
             _name = name;
             _size = new List<ValueRange>();
 
-            Symbol temp = lexer.NextSymbol;
+            Symbol temp = lexer.GetNextSymbol();
             if (temp == Symbol.OpenParentheses)
             {
                 _size = DecodeRanges(lexer);

@@ -39,7 +39,7 @@ namespace Lextm.SharpSnmpLib.Mib
             temp.Expect(Symbol.ObjectType);
             temp = enumerator.NextNonEOLSymbol();
 
-            _syntax         = ParseSyntax       (enumerator, ref temp);
+            _syntax         = ParseSyntax       (_module, _name, enumerator, ref temp);
             _units          = ParseUnits        (enumerator, ref temp);
             _access         = ParseAccess       (enumerator, ref temp);
             _status         = ParseStatus       (enumerator, ref temp);
@@ -169,7 +169,7 @@ namespace Lextm.SharpSnmpLib.Mib
             }
             catch (ArgumentException)
             {
-                temp.Validate(true, "Invalid status");
+                temp.Throw("Invalid status");
             }
             return status;
         }
@@ -203,13 +203,13 @@ namespace Lextm.SharpSnmpLib.Mib
                         access = MaxAccess.ReadWrite;
                         break;
                     default:
-                        temp.Validate(true, "Invalid access");
+                        temp.Throw("Invalid access");
                         break;
                 }
             }
             else
             {
-                temp.Validate(true, "missing access");
+                temp.Throw("missing access");
             }
 
             temp = enumerator.NextNonEOLSymbol();
@@ -231,7 +231,7 @@ namespace Lextm.SharpSnmpLib.Mib
             return units;
         }
 
-        private static ITypeAssignment ParseSyntax(IEnumerator<Symbol> enumerator, ref Symbol temp)
+        private static ITypeAssignment ParseSyntax(string module, string name, IEnumerator<Symbol> enumerator, ref Symbol temp)
         {
             ITypeAssignment syntax;
 
@@ -245,7 +245,7 @@ namespace Lextm.SharpSnmpLib.Mib
             }
             else if (temp == Symbol.Integer || temp == Symbol.Integer32)
             {
-                syntax = new IntegerType(string.Empty, string.Empty, enumerator, ref temp);
+                syntax = new IntegerType(module, name, enumerator, ref temp);
             }
             else if (temp == Symbol.Octet)
             {

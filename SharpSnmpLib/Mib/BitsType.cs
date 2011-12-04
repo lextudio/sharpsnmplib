@@ -12,7 +12,7 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             _module = module;
             _name = name;
-            lexer.NextNonEOLSymbol.Expect(Symbol.OpenBracket);
+            lexer.GetNextNonEOLSymbol().Expect(Symbol.OpenBracket);
             _map = DecodeEnumerations(lexer);
         }
 
