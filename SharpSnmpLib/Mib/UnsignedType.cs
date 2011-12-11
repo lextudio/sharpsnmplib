@@ -20,14 +20,11 @@ namespace Lextm.SharpSnmpLib.Mib
             _module = module;
             _name = name;
 
-            Symbol temp = lexer.GetNextNonEOLSymbol();
+            Symbol temp = lexer.CheckNextNonEOLSymbol();
             if (temp == Symbol.OpenParentheses)
             {
+                lexer.GetNextNonEOLSymbol();
                 _ranges = DecodeRanges(lexer);
-            }
-            else
-            {
-                lexer.Restore(temp);
             }
         }
 

@@ -41,20 +41,18 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             _name = name;
 
-            Symbol temp = lexer.GetNextNonEOLSymbol();
+            Symbol temp = lexer.CheckNextNonEOLSymbol();
             if (temp == Symbol.OpenBracket)
             {
+                lexer.GetNextNonEOLSymbol();
                 _isEnumeration = true;
                 _map = DecodeEnumerations(lexer);
             }
             else if (temp == Symbol.OpenParentheses)
             {
+                lexer.GetNextNonEOLSymbol();
                 _isEnumeration = false;
                 _ranges = DecodeRanges(lexer);
-            }
-            else
-            {
-                lexer.Restore(temp);
             }
         }
 

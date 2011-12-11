@@ -67,6 +67,10 @@ namespace Lextm.SharpSnmpLib.Mib
             {
                 _exports = ParseExports(lexer);
             }
+            else if (temp == Symbol.End)
+            {
+                return;
+            }
 
             ParseEntities(_tokens, temp, _name, lexer);
         }
@@ -91,14 +95,8 @@ namespace Lextm.SharpSnmpLib.Mib
         
         private static void ParseEntities(ICollection<IConstruct> tokens, Symbol last, string module, Lexer lexer)
         {
-            Symbol temp = last;            
-            if (temp == Symbol.End)
-            {
-                return;
-            }
-            
+            Symbol temp = last; 
             IList<Symbol> buffer = new List<Symbol>();
-            IList<Symbol> next = new List<Symbol>(); // symbol that belongs to next token.
             do
             {
                 if (temp == Symbol.Imports || temp == Symbol.Exports || temp == Symbol.EOL)
@@ -112,32 +110,20 @@ namespace Lextm.SharpSnmpLib.Mib
                     continue;
                 }
 
-                ParseEntity(tokens, module, buffer, lexer, ref next);
+                ParseEntity(tokens, module, buffer, lexer);
                 buffer.Clear();
-                foreach (Symbol s in next)
-                {
-                    if (s == Symbol.End)
-                    {
-                        return;
-                    }
-                        
-                    buffer.Add(s);
-                }
-                    
-                next.Clear();
             }
             while ((temp = lexer.GetNextSymbol()) != Symbol.End);
         }
         
-        private static void ParseEntity(ICollection<IConstruct> tokens, string module, IList<Symbol> buffer, Lexer lexer, ref IList<Symbol> next)
+        private static void ParseEntity(ICollection<IConstruct> tokens, string module, IList<Symbol> buffer, Lexer lexer)
         {
-            next.Clear();
             buffer[0].Assert(buffer.Count > 1, "unexpected symbol");
             buffer[0].ValidateIdentifier();
             if (buffer.Count == 2)
             {
                 // others
-                tokens.Add(ParseOthers(module, buffer, lexer, ref next));
+                tokens.Add(ParseOthers(module, buffer, lexer));
             }
             else if (buffer[1] == Symbol.Object)
             {
@@ -194,7 +180,7 @@ namespace Lextm.SharpSnmpLib.Mib
             return new OidValueAssignment(module, header[0].ToString(), lexer);
         }
 
-        private static IConstruct ParseOthers(string module, IList<Symbol> header, Lexer lexer, ref IList<Symbol> next)
+        private static IConstruct ParseOthers(string module, IList<Symbol> header, Lexer lexer)
         {
             Symbol current = lexer.GetNextNonEOLSymbol();
             
@@ -218,9 +204,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 return new TextualConvention(module, header[0].ToString(), lexer);
             }
 
-            TypeAssignment result = new TypeAssignment(module, header[0].ToString(), current, lexer);
-            next.Add(result.Left);
-            return result;
+            return new TypeAssignment(module, header[0].ToString(), current, lexer);
         }
 
         /// <summary>

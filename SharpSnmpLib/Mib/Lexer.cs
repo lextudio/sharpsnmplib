@@ -60,7 +60,7 @@ namespace Lextm.SharpSnmpLib.Mib
             for (int i = 0; i < count; i++)
             {
                 char current = line[i];
-                bool moveNext = Parse(file, _symbols, current, row, i);
+                bool moveNext = Parse(file, current, row, i);
                 if (moveNext)
                 {
                     break;
@@ -108,16 +108,35 @@ namespace Lextm.SharpSnmpLib.Mib
         }
 
         /// <summary>
+        /// Checks next few <see cref="Symbols"/>, without advancing the cursor.
         /// </summary>
-        /// <param name="last"></param>
-        /// <exception cref="ArgumentException"></exception>
-        public void Restore(Symbol last)
+        /// <param name="length">Length.</param>
+        /// <returns></returns>
+        public IList<Symbol> CheckNextSymbols(int length)
         {
-            _index--;
-            if (last != _symbols[_index])
+            var result = new List<Symbol>();
+            for (int i = 0; i < length; i++)
             {
-                throw new ArgumentException(@"wrong last symbol", "last");
+                result.Add(_symbols[_index + i]);
             }
+
+            return result;
+        }
+
+        public Symbol CheckNextSymbol()
+        {
+            return _symbols[_index];
+        }
+
+        public Symbol CheckNextNonEOLSymbol()
+        {
+            int length = 0;
+            while (_symbols[_index + length] == Symbol.EOL)
+            {
+                length++;
+            }
+
+            return _symbols[_index + length];
         }
 
         internal int SymbolCount
@@ -128,7 +147,7 @@ namespace Lextm.SharpSnmpLib.Mib
             }
         }
 
-        private StringBuilder _temp = new StringBuilder();
+        private readonly CharBuffer _buffer = new CharBuffer();
         private bool _stringSection;
         private bool _assignSection;
         private bool _assignAhead;
@@ -143,22 +162,16 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <param name="current">Current <see cref="char"/></param>
         /// <param name="row">Row number</param>
         /// <param name="column">Column number</param>
-        /// <param name="list"></param>
         /// <returns><code>true</code> if no need to process this line. Otherwise, <code>false</code> is returned.</returns>
-        private bool Parse(string file, ICollection<Symbol> list, char current, int row, int column)
+        private bool Parse(string file, char current, int row, int column)
         {
-            if (list == null)
-            {
-                throw new ArgumentNullException("list");
-            }
-
             switch (current)
             {
                 case '\n':
                     if (!_stringSection)
                     {
-                        ParseLastSymbol(file, list, ref _temp, row, column);
-                        list.Add(CreateSpecialSymbol(file, current, row, column));
+                        _buffer.Fill(_symbols, file, row, column);
+                        _symbols.Add(CreateSpecialSymbol(file, current, row, column));
                         return false;
                     }
 
@@ -179,8 +192,8 @@ namespace Lextm.SharpSnmpLib.Mib
 
                     if (!_stringSection)
                     {
-                        ParseLastSymbol(file, list, ref _temp, row, column);
-                        list.Add(CreateSpecialSymbol(file, current, row, column));
+                        _buffer.Fill(_symbols, file, row, column);
+                        _symbols.Add(CreateSpecialSymbol(file, current, row, column));
                         return false;
                     }
 
@@ -219,8 +232,8 @@ namespace Lextm.SharpSnmpLib.Mib
 
                     _singleDashFound = false;
                     if (Char.IsWhiteSpace(current) && !_assignSection && !_stringSection && !_commentSection)
-                    {                     
-                        ParseLastSymbol(file, list, ref _temp, row, column);
+                    {
+                        _buffer.Fill(_symbols, file, row, column);
                         return false;
                     }
 
@@ -233,13 +246,13 @@ namespace Lextm.SharpSnmpLib.Mib
                     if (_assignAhead)
                     {
                         _assignAhead = false;
-                        ParseLastSymbol(file, list, ref _temp, row, column);
+                        _buffer.Fill(_symbols, file, row, column);
                         break;
                     }
 
                     if (_dotSection && current != '.')
                     {
-                        ParseLastSymbol(file, list, ref _temp, row, column);
+                        _buffer.Fill(_symbols, file, row, column);
                         _dotSection = false;
                     }
 
@@ -247,7 +260,7 @@ namespace Lextm.SharpSnmpLib.Mib
                     {
                         if (!_dotSection)
                         {
-                            ParseLastSymbol(file, list, ref _temp, row, column);
+                            _buffer.Fill(_symbols, file, row, column);
                             _dotSection = true;
                         }
                     }
@@ -256,7 +269,7 @@ namespace Lextm.SharpSnmpLib.Mib
                     {    
                         if (!_assignSection)
                         {
-                            ParseLastSymbol(file, list, ref _temp, row, column);
+                            _buffer.Fill(_symbols, file, row, column);
                         }
                         
                         _assignSection = true;
@@ -271,20 +284,8 @@ namespace Lextm.SharpSnmpLib.Mib
                     break;
             }
 
-            _temp.Append(current);
+            _buffer.Append(current);
             return false;
-        }
-
-        private static void ParseLastSymbol(string file, ICollection<Symbol> list, ref StringBuilder builder, int row, int column)
-        {
-            if (builder.Length == 0)
-            {
-                return;
-            }
-
-            string content = builder.ToString();
-            builder.Length = 0;
-            list.Add(new Symbol(file, content, row, column));
         }
 
         private static Symbol CreateSpecialSymbol(string file, char value, int row, int column)

@@ -19,10 +19,8 @@ namespace Lextm.SharpSnmpLib.Mib
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         private string _module;
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
-        private string _name;
-        private readonly Symbol _left;
-        private string _value;
-        
+        private readonly string _name;
+
         /// <summary>
         /// Creates an <see cref="TypeAssignment"/>.
         /// </summary>
@@ -34,20 +32,20 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             _module = module;
             _name = name;
-            _value = last.ToString();
+            Value = last.ToString();
             
             Symbol temp;
             Symbol veryPrevious = null;
             Symbol previous = last;
-            while ((temp = lexer.GetNextSymbol()) != null)
+            while ((temp = lexer.CheckNextSymbol()) != null)
             {
                 if (veryPrevious == Symbol.EOL && previous == Symbol.EOL && temp.ValidateType())
                 {
-                    _left = temp;
                     return;
                 }
                     
                 veryPrevious = previous;
+                temp = lexer.GetNextSymbol();
                 previous = temp;
             }
             
@@ -58,7 +56,7 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             _module = module;
             _name = name;
-            _value = temp.ToString();
+            Value = temp.ToString();
 
             temp = enumerator.NextNonEOLSymbol();
 
@@ -74,22 +72,11 @@ namespace Lextm.SharpSnmpLib.Mib
             }
         }
 
-        public Symbol Left
-        {
-            get
-            {
-                return _left;
-            }
-        }
-
         public override string Name
         {
             get { return _name; }
         }
 
-        public string Value
-        {
-            get { return _value; }
-        }
+        public string Value { get; private set; }
     }
 }
