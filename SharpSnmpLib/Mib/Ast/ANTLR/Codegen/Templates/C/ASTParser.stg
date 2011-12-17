@@ -1,5 +1,5 @@
 /*
- [The "BSD licence"]
+ [The "BSD license"]
  Copyright (c) 2005-2009 Jim Idle, Temporal Wave LLC
  http://www.temporal-wave.com
  http://www.linkedin.com/in/jimidle
@@ -40,7 +40,6 @@
  *  The situation is not too bad as rewrite (->) usage makes ^ and !
  *  invalid. There is no huge explosion of combinations.
  */
-group ASTParser;
 
 @rule.setErrorReturnValue() ::= <<
 retval.tree = (<ASTLabelType>)(ADAPTOR->errorNode(ADAPTOR, INPUT, retval.start, LT(-1), EXCEPTION));
@@ -49,7 +48,7 @@ retval.tree = (<ASTLabelType>)(ADAPTOR->errorNode(ADAPTOR, INPUT, retval.start, 
 // TOKEN AST STUFF
 
 /** ID and output=AST */
-tokenRef(token,label,elementIndex,hetero) ::= <<
+tokenRef(token,label,elementIndex,terminalOptions) ::= <<
 <super.tokenRef(...)>
 <if(backtracking)>if ( <actions.(actionScope).synpredgate> ) {<endif>
 <label>_tree = (<ASTLabelType>)(ADAPTOR->create(ADAPTOR, <label>));
@@ -58,10 +57,10 @@ ADAPTOR->addChild(ADAPTOR, root_0, <label>_tree);
 >>
 
 /** ID! and output=AST (same as plain tokenRef) */
-tokenRefBang(token,label,elementIndex) ::= "<super.tokenRef(...)>"
+tokenRefBang(token,label,elementIndex,terminalOptions) ::= "<super.tokenRef(...)>"
 
 /** ID^ and output=AST */
-tokenRefRuleRoot(token,label,elementIndex,hetero) ::= <<
+tokenRefRuleRoot(token,label,elementIndex,terminalOptions) ::= <<
 <super.tokenRef(...)>
 <if(backtracking)>if ( <actions.(actionScope).synpredgate> ) {<endif>
 <label>_tree = <createNodeFromToken(...)>;
@@ -70,21 +69,21 @@ root_0 = (<ASTLabelType>)(ADAPTOR->becomeRoot(ADAPTOR, <label>_tree, root_0));
 >>
 
 /** ids+=ID! and output=AST */
-tokenRefBangAndListLabel(token,label,elementIndex,hetero) ::= <<
+tokenRefBangAndListLabel(token,label,elementIndex,terminalOptions) ::= <<
 <tokenRefBang(...)>
 <listLabel(elem=label,...)>
 >>
 
 
 /** label+=TOKEN when output=AST but not rewrite alt */
-tokenRefAndListLabel(token,label,elementIndex,hetero) ::= <<
+tokenRefAndListLabel(token,label,elementIndex,terminalOptions) ::= <<
 <tokenRef(...)>
 <listLabel(elem=label,...)>
 >>
 
 
 /** Match label+=TOKEN^ when output=AST but not rewrite alt */
-tokenRefRuleRootAndListLabel(token,label,hetero,elementIndex) ::= <<
+tokenRefRuleRootAndListLabel(token,label,terminalOptions,elementIndex) ::= <<
 <tokenRefRuleRoot(...)>
 <listLabel(elem=label,...)>
 >>
@@ -102,24 +101,24 @@ tokenRefRuleRootAndListLabel(token,label,hetero,elementIndex) ::= <<
 // rather than just added on code.  Investigate that refactoring when
 // I have more time.
 
-matchSet(s,label,hetero,elementIndex,postmatchCode) ::= <<
-<super.matchSet(..., postmatchCode={<if(backtracking)>if ( <actions.(actionScope).synpredgate> ) <endif>ADAPTOR->addChild(ADAPTOR, root_0, <createNodeFromToken(...)>);})>
+matchSet(s,label,terminalOptions,elementIndex,postmatchCode) ::= <<
+<super.matchSet(postmatchCode={<if(backtracking)>if ( <actions.(actionScope).synpredgate> ) <endif>ADAPTOR->addChild(ADAPTOR, root_0, <createNodeFromToken(...)>);},...)>
 >>
 
-matchRuleBlockSet(s,label,hetero,elementIndex,postmatchCode,treeLevel="0") ::= <<
+matchRuleBlockSet(s,label,terminalOptions,elementIndex,postmatchCode,treeLevel="0") ::= <<
 <matchSet(...)>
 >>
 
-matchSetBang(s,label,elementIndex,postmatchCode) ::= "<super.matchSet(...)>"
+matchSetBang(s,label,elementIndex,terminalOptions,postmatchCode) ::= "<super.matchSet(...)>"
 
 // note there is no matchSetTrack because -> rewrites force sets to be
 // plain old blocks of alts: (A|B|...|C)
 
-matchSetRuleRoot(s,label,hetero,elementIndex,debug) ::= <<
+matchSetRuleRoot(s,label,terminalOptions,elementIndex,debug) ::= <<
 <if(label)>
 <label>=(<labelType>)LT(1);<\n>
 <endif>
-<super.matchSet(..., postmatchCode={<if(backtracking)>if ( <actions.(actionScope).synpredgate> ) <endif>root_0 = (<ASTLabelType>)(ADAPTOR->becomeRoot(ADAPTOR, <createNodeFromToken(...)>, root_0));})>
+<super.matchSet(postmatchCode={<if(backtracking)>if ( <actions.(actionScope).synpredgate> ) <endif>root_0 = (<ASTLabelType>)(ADAPTOR->becomeRoot(ADAPTOR, <createNodeFromToken(...)>, root_0));},...)>
 >>
 
 // RULE REF AST
@@ -159,7 +158,7 @@ ruleRefRuleRootAndListLabel(rule,label,elementIndex,args,scope) ::= <<
 
 // WILDCARD AST
 
-wildcard(label,elementIndex) ::= <<
+wildcard(token,label,elementIndex,terminalOptions) ::= <<
 <super.wildcard(...)>
 <if(backtracking)>if ( <actions.(actionScope).synpredgate> ) {<endif>
 <label>_tree = (<ASTLabelType>)(ADAPTOR->create(ADAPTOR, <label>));
@@ -167,7 +166,7 @@ ADAPTOR->addChild(ADAPTOR, root_0, <label>_tree);
 <if(backtracking)>}<endif>
 >>
 
-wildcardBang(label,elementIndex) ::= "<super.wildcard(...)>"
+wildcardBang(token,label,elementIndex,terminalOptions) ::= "<super.wildcard(...)>"
 
 wildcardRuleRoot(label,elementIndex) ::= <<
 <super.wildcard(...)>
@@ -177,16 +176,16 @@ root_0 = (<ASTLabelType>)(ADAPTOR->becomeRoot(ADAPTOR, <label>_tree, root_0));
 <if(backtracking)>}<endif>
 >>
 
-createNodeFromToken(label,hetero) ::= <<
-<if(hetero)>
-<hetero>New(<label>) <! new MethodNode(IDLabel) !>
+createNodeFromToken(label,terminalOptions) ::= <<
+<if(terminalOptions.node)>
+<terminalOptions.node>New(<label>) <! new MethodNode(IDLabel) !>
 <else>
 (<ASTLabelType>)(ADAPTOR->create(ADAPTOR, <label>))
 <endif>
 >>
 
 ruleCleanUp() ::= <<
-<super.ruleCleanUp(...)>
+<super.ruleCleanUp()>
 <if(backtracking)>
 if ( <actions.(actionScope).synpredgate> )
 {<\n>
@@ -197,9 +196,9 @@ if ( <actions.(actionScope).synpredgate> )
 	retval.tree = (<ASTLabelType>)(ADAPTOR->rulePostProcessing(ADAPTOR, root_0));
 	ADAPTOR->setTokenBoundaries(ADAPTOR, retval.tree, retval.start, retval.stop);
     <ruleDescriptor.allTokenRefsInAltsWithRewrites
-    :{if (stream_<it> != NULL) stream_<it>->free(stream_<it>);}; separator="\n">
+    :{it | if (stream_<it> != NULL) stream_<it>->free(stream_<it>);}; separator="\n">
     <ruleDescriptor.allRuleRefsInAltsWithRewrites
-    :{if (stream_<it> != NULL) stream_<it>->free(stream_<it>);}; separator="\n">
+    :{it | if (stream_<it> != NULL) stream_<it>->free(stream_<it>);}; separator="\n">
 <if(backtracking)>
 }<\n>
 <endif>

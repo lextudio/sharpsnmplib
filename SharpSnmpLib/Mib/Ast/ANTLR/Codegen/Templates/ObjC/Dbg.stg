@@ -1,6 +1,6 @@
 /*
- [The "BSD licence"]
- Copyright (c) 2006 Kay Roepke
+ [The "BSD license"]
+ Copyright (c) 2006 Kay Roepke 2010 Alan Condit
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -28,24 +28,74 @@
 /** Template overrides to add debugging to normal Objective-C output;
  *  If ASTs are built, then you'll also get ASTDbg.stg loaded.
  */
-group Dbg;
-
 @headerFile.imports() ::= <<
 <@super.imports()>
 #import \<ANTLR/ANTLRDebug.h>
 >>
 
-@parserHeaderFile.ivars() ::= <<
-int ruleLevel;
+@parserHeaderFile.memVars() ::= <<
+NSInteger ruleLevel;
 NSArray *ruleNames;
 >>
 
-@parserHeaderFile.methodsdecl() ::= <<
+@parserHeaderFile.methodsDecl() ::= <<
 -(BOOL) evalPredicate:(NSString *)predicate matched:(BOOL)result;<\n>
 >>
 
+@genericParser.methods() ::= <<
+<if(grammar.grammarIsRoot)>
+AMutableArray *ruleNames = [AMutableArray arrayWithArray:{
+    @"invalidRule", <grammar.allImportedRules:{rST | @"<rST.name>"}; wrap=@"\n    ", separator=", ">
+};<\n>
+<endif>
+<if(grammar.grammarIsRoot)> <! grammar imports other grammar(s) !>
+    ruleLevel = 0;
+- (NSInteger) getRuleLevel { return ruleLevel; }
+- (void) incRuleLevel { ruleLevel++; }
+- (void) decRuleLevel { ruleLevel--; }
+<if(profile)>
+    <ctorForProfilingRootGrammar()>
+<else>
+    <ctorForRootGrammar()>
+<endif>
+<ctorForPredefinedListener()>
+<else> <! imported grammar !>
+- (NSInteger) getRuleLevel
+{
+    return <grammar.delegators:{g| <g:delegateName()>}>.getRuleLevel();
+}<\n>
+
+- (void) incRuleLevel
+{
+    <grammar.delegators:{g| <g:delegateName()>}>.incRuleLevel();
+}<\n>
+- (void) decRuleLevel
+{
+    <grammar.delegators:{g| <g:delegateName()>}>.decRuleLevel();
+}<\n>
+    <ctorForDelegateGrammar()>
+<endif>
+<if(profile)>
+- (BOOL) alreadyParsedRule:(id<IntStream>) input Index:(NSInteger) ruleIndex
+{
+    [(Profiler)dbg examineRuleMemoization:input, ruleIndex, <grammar.composite.rootGrammar.recognizerName>.ruleNames objectAtIndex:ruleIndex];
+    return super.alreadyParsedRule(input, ruleIndex);
+}<\n>
+- (void) memoize:(id<ANTLRIntStream>)input RuleIndex:(NSInteger)ruleIndex StartIndex:(NSInteger)ruleStartIndex
+{
+    [((Profiler)dbg) memoize:input RuleIndex:ruleIndex StartIndex:ruleStartIndex [<grammar.composite.rootGrammar.recognizerName> ruleNames[ruleIndex]];
+    [super memoize:input RuleIndex:ruleIndex StartIndex:ruleStartIndex];
+}<\n>
+<endif>
+- (BOOL) evalPredicate:(BOOL)result Pred:(NSString *)predicate
+{
+    [dbg semanticPredicate:result Pred:predicate];
+    return result;
+}<\n>
+>>
+
 @genericParser.init() ::= <<
-ruleNames = [[NSArray alloc] initWithObjects:<rules:{rST | @"<rST.ruleName>"}; separator=", ", wrap="\n	">, nil];<\n>
+ruleNames = [NSArray arrayWithObjects:<rules:{rST | @"<rST.ruleName>"}; separator=", ", wrap="\n	">, nil];<\n>
 >>
 
 @genericParser.dealloc() ::= <<
@@ -84,9 +134,9 @@ ruleLevel++;
  * stinks, but that's the easiest way to avoid having to generate two
  * methods for each synpred
 
-@synpred.start() ::= "[debugListener beginBacktrack:backtracking];"
+@synpred.start() ::= "[debugListener beginBacktrack:state.backtracking];"
 
-@synpred.stop() ::= "[debugListener endBacktrack:backtracking wasSuccessful:success];"
+@synpred.stop() ::= "[debugListener endBacktrack:state.backtracking wasSuccessful:success];"
 
  */
 

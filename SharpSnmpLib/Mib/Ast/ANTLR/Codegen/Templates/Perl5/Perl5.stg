@@ -1,5 +1,5 @@
 /*
- [The "BSD licence"]
+ [The "BSD license"]
  Copyright (c) 2005-2006 Terence Parr
  Copyright (c) 2007-2008 Ronald Blaschke
  All rights reserved.
@@ -27,7 +27,7 @@
  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-group Perl5 implements ANTLRCore;
+group Perl5;
 
 /** The overall file structure of a recognizer; stores methods for rules
  *  and cyclic DFAs plus support code.
@@ -57,7 +57,6 @@ outputFile(LEXER,PARSER,TREE_PARSER, actionScope, actions,
 lexer(grammar, name, tokens, scopes, rules, numRules, labelType="Token",
       filterMode, superClass="ANTLR::Runtime::Lexer")  ::= <<
 package <name>;
-use ANTLR::Runtime::Class;
 
 use Carp;
 use English qw( -no_match_vars ) ;
@@ -68,11 +67,12 @@ use ANTLR::Runtime::BaseRecognizer;
 use ANTLR::Runtime::DFA;
 use ANTLR::Runtime::NoViableAltException;
 
+use Moose;
+
 extends 'ANTLR::Runtime::Lexer';
 
-use constant {
-    HIDDEN => ANTLR::Runtime::BaseRecognizer->HIDDEN
-};
+Readonly my $HIDDEN => ANTLR::Runtime::BaseRecognizer->HIDDEN;
+sub HIDDEN { $HIDDEN }
 
 use constant {
     <tokens:{ <it.name> => <it.type>, }; separator="\n">
@@ -111,6 +111,8 @@ sub init_dfas {
 
 <cyclicDFAs:cyclicDFA()> <! dump tables for all DFA !>
 
+no Moose;
+__PACKAGE__->meta->make_immutable();
 1;
 
 >>
@@ -187,13 +189,14 @@ genericParser(grammar, name, scopes, tokens, tokenNames, rules, numRules,
               bitsets, inputStreamType, superClass, filterMode,
               ASTLabelType="Object", labelType, members) ::= <<
 package <name>;
-use ANTLR::Runtime::Class;
 
 use English qw( -no_match_vars ) ;
 use Readonly;
 use Switch;
 use Carp;
 use ANTLR::Runtime::BitSet;
+
+use Moose;
 
 extends '<@superClassName><superClass><@end>';
 
@@ -238,9 +241,10 @@ sub get_grammar_file_name {
 <cyclicDFAs:{dfa | dfa<dfa.decisionNumber> = __PACKAGE__::DFA<dfa.decisionNumber>->new($self);}; separator="\n">
 <cyclicDFAs:cyclicDFA()> <! dump tables for all DFA !>
 
-
-
+no Moose;
+__PACKAGE__->meta->make_immutable();
 1;
+__END__
 >>
 
 parser(grammar, name, scopes, tokens, tokenNames, rules, numRules, bitsets, ASTLabelType, superClass="ANTLR::Runtime::Parser", labelType="ANTLR::Runtime::Token", members={<actions.parser.members>}) ::= <<
@@ -652,13 +656,13 @@ element() ::= <<
 >>
 
 /** match a token optionally with a label in front */
-tokenRef(token,label,elementIndex,hetero) ::= <<
+tokenRef(token,label,elementIndex,terminalOptions) ::= <<
 <if(label)>$<label> =<endif>$self->match($self->input, <token>, $FOLLOW_<token>_in_<ruleName><elementIndex>);
 <checkRuleBacktrackFailure()>
 >>
 
 /** ids+=ID */
-tokenRefAndListLabel(token,label,elementIndex,hetero) ::= <<
+tokenRefAndListLabel(token,label,elementIndex,terminalOptions) ::= <<
 <tokenRef(...)>
 <listLabel(elem=label,...)>
 >>
@@ -726,7 +730,7 @@ matchSetAndListLabel(s,label,elementIndex,postmatchCode) ::= <<
 >>
 
 /** Match a string literal */
-lexerStringRef(string,label) ::= <<
+lexerStringRef(string,label,elementIndex) ::= <<
 <if(label)>
 int <label>Start = getCharIndex();
 $self->match(<string>); <checkRuleBacktrackFailure()>

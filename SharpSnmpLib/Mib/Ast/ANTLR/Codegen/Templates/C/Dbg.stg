@@ -1,5 +1,5 @@
 /*
- [The "BSD licence"]
+ [The "BSD license"]
  Copyright (c) 2005-2009 Jim Idle, Temporal Wave LLC
  http://www.temporal-wave.com
  http://www.linkedin.com/in/jimidle
@@ -31,11 +31,9 @@
 /** Template overrides to add debugging to normal C output;
  *  If ASTs are built, then you'll also get ASTDbg.stg loaded.
  */
-group Dbg;
-
 @genericParser.members() ::= <<
 <if(grammar.grammarIsRoot)>
-const char * 
+const char *
 ruleNames[] =
 	{
 		"invalidRule", <grammar.allImportedRules:{rST | "<rST.name>"}; wrap="\n		", separator=", ">
@@ -43,46 +41,46 @@ ruleNames[] =
 <endif>
 <if(grammar.grammarIsRoot)> <! grammar imports other grammar(s) !>
 static ANTLR3_UINT32 ruleLevel = 0;
-static ANTLR3_UINT32 getRuleLevel() 
-{ 
-	return ruleLevel; 
+static ANTLR3_UINT32 getRuleLevel()
+{
+	return ruleLevel;
 }
-static void incRuleLevel() 
-{ 
-	ruleLevel++; 
+static void incRuleLevel()
+{
+	ruleLevel++;
 }
-static void decRuleLevel() 
-{ 
-	ruleLevel--; 
+static void decRuleLevel()
+{
+	ruleLevel--;
 }
 <else> <! imported grammar !>
-static ANTLR3_UINT32 
-getRuleLevel() 
-{ 
-	return <grammar.delegators:{g| <g:delegateName()>}>->getRuleLevel(); 
+static ANTLR3_UINT32
+getRuleLevel()
+{
+	return <grammar.delegators:{g| <g:delegateName()>}>->getRuleLevel();
 }
-static void incRuleLevel() 
-{ 
-	<grammar.delegators:{g| <g:delegateName()>}>->incRuleLevel(); 
+static void incRuleLevel()
+{
+	<grammar.delegators:{g| <g:delegateName()>}>->incRuleLevel();
 }
-static void 
-decRuleLevel() 
-{ 
-	<grammar.delegators:{g| <g:delegateName()>}>.decRuleLevel(); 
+static void
+decRuleLevel()
+{
+	<grammar.delegators:{g| <g:delegateName()>}>.decRuleLevel();
 }
 <endif>
 <if(profile)>
 // Profiling not yet implemented for C target
 //
 <endif>
-<if(grammar.grammarIsRoot)> 
+<if(grammar.grammarIsRoot)>
 <ctorForPredefinedListener()>
 <else>
 <ctorForDelegateGrammar()>
 <endif>
 
-static ANTLR3_BOOLEAN 
-evalPredicate(p<name> ctx, ANTLR3_BOOLEAN result, const char * predicate) 
+static ANTLR3_BOOLEAN
+evalPredicate(p<name> ctx, ANTLR3_BOOLEAN result, const char * predicate)
 {
     DBG->semanticPredicate(DBG, result, predicate);
     return result;
@@ -90,7 +88,7 @@ evalPredicate(p<name> ctx, ANTLR3_BOOLEAN result, const char * predicate)
 >>
 
 @genericParser.debugStuff() ::= <<
-<if(grammar.grammarIsRoot)> 
+<if(grammar.grammarIsRoot)>
 <createListenerAndHandshake()>
 <endif>
 >>
@@ -114,16 +112,16 @@ createListenerAndHandshake() ::= <<
 	pANTLR3_DEBUG_EVENT_LISTENER	 proxy;
 	proxy = antlr3DebugListenerNew();
 	proxy->grammarFileName = INPUT->tokenSource->strFactory->newStr8(INPUT->tokenSource->strFactory, (pANTLR3_UINT8)ctx->getGrammarFileName());
-	
+
 <if(TREE_PARSER)>
 	proxy->adaptor = ADAPTOR;
 <endif>
 	PARSER->setDebugListener(PARSER, proxy);
 
 	// Try to connect to the debugger (waits forever for a connection)
-	//	
+	//
 	proxy->handshake(proxy);
-	
+
 	// End DEBUG MODE code
 	//
 }
@@ -131,11 +129,11 @@ createListenerAndHandshake() ::= <<
 
 
 @rule.preamble() ::= <<
-DBG->enterRule(DBG, getGrammarFileName(), (const char *)"<ruleName>");
-if ( getRuleLevel()==0 ) 
+if ( getRuleLevel()==0 )
 {
 	DBG->commence(DBG);
 }
+DBG->enterRule(DBG, getGrammarFileName(), (const char *)"<ruleName>");
 incRuleLevel();
 DBG->location(DBG, <ruleDescriptor.tree.line>, <ruleDescriptor.tree.column>);<\n>
 >>
@@ -144,11 +142,16 @@ DBG->location(DBG, <ruleDescriptor.tree.line>, <ruleDescriptor.tree.column>);<\n
 DBG->location(DBG, <ruleDescriptor.EORNode.line>, <ruleDescriptor.EORNode.column>);<\n>
 DBG->exitRule(DBG, getGrammarFileName(), (const char *)"<ruleName>");
 decRuleLevel();
-if ( getRuleLevel()==0 ) 
+if ( getRuleLevel()==0 )
 {
 	DBG->terminate(DBG);
 }
 <\n>
+>>
+
+@checkRuleBacktrackFailure.debugClean() ::= <<
+DBG->exitRule(DBG, getGrammarFileName(), (const char *)"<ruleName>");
+decRuleLevel();
 >>
 
 @synpred.start() ::= "DBG->beginBacktrack(DBG, BACKTRACKING);"
@@ -206,10 +209,10 @@ enterAlt(n) ::= "DBG->enterAlt(DBG, <n>);<\n>"
 
 @closureBlock.postdecision() ::= "<exitDecision()>"
 
-@altSwitchCase.prealt() ::= "<enterAlt(n=i)>"
+@altSwitchCase.prealt() ::= "<enterAlt(altNum)>"
 
 @element.prematch() ::=
-    "DBG->location(DBG, <it.line>, <it.pos>);"
+    "DBG->location(DBG, <e.line>, <e.pos>);" // e is arg of element
 
 @matchSet.mismatchedSetException() ::=
     "DBG->recognitionException(DBG, EXCEPTION);"
@@ -227,8 +230,8 @@ if  (HASEXCEPTION())
 >>
 
 @cyclicDFA.errorMethod() ::= <<
-//static void 
-//dfaError(p<name> ctx) 
+//static void
+//dfaError(p<name> ctx)
 //{
 //    DBG->recognitionException(DBG, EXCEPTION);
 //}

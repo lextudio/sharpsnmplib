@@ -1,5 +1,5 @@
 /*
- * [The "BSD licence"]
+ * [The "BSD license"]
  * Copyright (c) 2005-2008 Terence Parr
  * All rights reserved.
  *
@@ -32,7 +32,6 @@
 /** Template overrides to add debugging to normal Java output;
  *  If ASTs are built, then you'll also get ASTDbg.stg loaded.
  */
-group Dbg;
 
 @outputFile.imports() ::= <<
 <@super.imports()>
@@ -66,15 +65,16 @@ public static readonly string[] ruleNames =
 	<ctorForDelegateGrammar()>
 <endif>
 <if(profile)>
-public virtual bool AlreadyParsedRule( IIntStream input, int ruleIndex )
+public override bool AlreadyParsedRule( IIntStream input, int ruleIndex )
 {
-	((Profiler)dbg).ExamineRuleMemoization(input, ruleIndex, <grammar.composite.rootGrammar.recognizerName>.ruleNames[ruleIndex]);
-	return super.AlreadyParsedRule(input, ruleIndex);
+	int stopIndex = GetRuleMemoization(ruleIndex, input.Index);
+	((Profiler)dbg).ExamineRuleMemoization(input, ruleIndex, stopIndex, <grammar.composite.rootGrammar.recognizerName>.ruleNames[ruleIndex]);
+	return base.AlreadyParsedRule(input, ruleIndex);
 }<\n>
-public virtual void Memoize( IIntStream input, int ruleIndex, int ruleStartIndex )
+public override void Memoize( IIntStream input, int ruleIndex, int ruleStartIndex )
 {
 	((Profiler)dbg).Memoize(input, ruleIndex, ruleStartIndex, <grammar.composite.rootGrammar.recognizerName>.ruleNames[ruleIndex]);
-	super.Memoize(input, ruleIndex, ruleStartIndex);
+	base.Memoize(input, ruleIndex, ruleStartIndex);
 }<\n>
 <endif>
 protected virtual bool EvalPredicate( bool result, string predicate )
@@ -87,34 +87,34 @@ protected virtual bool EvalPredicate( bool result, string predicate )
 ctorForRootGrammar() ::= <<
 <! bug: can't use <@super.members()> cut-n-paste instead !>
 <! Same except we add port number and profile stuff if root grammar !>
-public <name>( <inputStreamType> input )
+<actions.(actionScope).ctorModifier; null="public"> <name>( <inputStreamType> input )
 	: this( input, DebugEventSocketProxy.DefaultDebuggerPort, new RecognizerSharedState() )
 {
 }
-public <name>( <inputStreamType> input, int port, RecognizerSharedState state )
+<actions.(actionScope).ctorModifier; null="public"> <name>( <inputStreamType> input, int port, RecognizerSharedState state )
 	: base( input, state )
 {
-	<parserCtorBody()>
 	<createListenerAndHandshake()>
 	<grammar.directDelegates:{g|<g:delegateName()> = new <g.recognizerName>( input, dbg, this.state, this<grammar.delegators:{g|, <g:delegateName()>}> );}; separator="\n">
+	<parserCtorBody()>
 	<@finally()>
 }<\n>
 >>
 
 ctorForProfilingRootGrammar() ::= <<
 <! bug: can't use <@super.members()> cut-n-paste instead !>
-public <name>( <inputStreamType> input )
+<actions.(actionScope).ctorModifier; null="public"> <name>( <inputStreamType> input )
 	: this( input, new Profiler(null), new RecognizerSharedState() )
 {
 }
-public <name>( <inputStreamType> input, IDebugEventListener dbg, RecognizerSharedState state )
+<actions.(actionScope).ctorModifier; null="public"> <name>( <inputStreamType> input, IDebugEventListener dbg, RecognizerSharedState state )
 	: base( input, dbg, state )
 {
 	Profiler p = (Profiler)dbg;
 	p.setParser(this);
-	<parserCtorBody()>
 	<grammar.directDelegates:
 	 {g|<g:delegateName()> = new <g.recognizerName>( input, dbg, this.state, this<grammar.delegators:{g|, <g:delegateName()>}> );}; separator="\n">
+	<parserCtorBody()>
 	<@finally()>
 }
 <\n>
@@ -122,25 +122,25 @@ public <name>( <inputStreamType> input, IDebugEventListener dbg, RecognizerShare
 
 /** Basically we don't want to set any dbg listeners are root will have it. */
 ctorForDelegateGrammar() ::= <<
-public <name>( <inputStreamType> input, IDebugEventListener dbg, RecognizerSharedState state<grammar.delegators:{g|, <g.recognizerName> <g:delegateName()>}> )
+<actions.(actionScope).ctorModifier; null="public"> <name>( <inputStreamType> input, IDebugEventListener dbg, RecognizerSharedState state<grammar.delegators:{g|, <g.recognizerName> <g:delegateName()>}> )
 	: base( input, dbg, state )
 {
-	<parserCtorBody()>
 	<grammar.directDelegates:
 	 {g|<g:delegateName()> = new <g.recognizerName>( input, this, this.state<grammar.delegators:{g|, <g:delegateName()>}> );}; separator="\n">
+	<parserCtorBody()>
 }<\n>
 >>
 
 ctorForPredefinedListener() ::= <<
-public <name>( <inputStreamType> input, IDebugEventListener dbg )
+<actions.(actionScope).ctorModifier; null="public"> <name>( <inputStreamType> input, IDebugEventListener dbg )
 	<@superClassRef>: base( input, dbg, new RecognizerSharedState() )<@end>
 {
 <if(profile)>
 	Profiler p = (Profiler)dbg;
 	p.setParser(this);
 <endif>
-	<parserCtorBody()>
 	<grammar.directDelegates:{g|<g:delegateName()> = new <g.recognizerName>(input, dbg, this.state, this<grammar.delegators:{g|, <g:delegateName()>}>);}; separator="\n">
+	<parserCtorBody()>
 	<@finally()>
 }<\n>
 >>
@@ -164,136 +164,149 @@ catch ( IOException ioe )
 
 @genericParser.superClassName() ::= "Debug<@super.superClassName()>"
 
+/*
+ * Much of the following rules were merged into CSharp3.stg.
+ */
+
 @rule.preamble() ::= <<
-try
-{
-	dbg.EnterRule( GrammarFileName, "<ruleName>" );
-	if ( RuleLevel == 0 )
-	{
-		dbg.Commence();
-	}
-	IncRuleLevel();
-	dbg.Location( <ruleDescriptor.tree.line>, <ruleDescriptor.tree.charPositionInLine> );<\n>
+if (RuleLevel == 0)
+	DebugListener.Commence();
+IncRuleLevel();
 >>
+//@rule.preamble() ::= <<
+//try
+//{
+//	dbg.EnterRule( GrammarFileName, "<ruleName>" );
+//	if ( RuleLevel == 0 )
+//	{
+//		dbg.Commence();
+//	}
+//	IncRuleLevel();
+//	dbg.Location( <ruleDescriptor.tree.line>, <ruleDescriptor.tree.charPositionInLine> );<\n>
+//>>
 
 @rule.postamble() ::= <<
-dbg.Location(<ruleDescriptor.EORNode.line>, <ruleDescriptor.EORNode.charPositionInLine>);<\n>
-}
-finally
-{
-	dbg.ExitRule( GrammarFileName, "<ruleName>" );
-	DecRuleLevel();
-	if ( RuleLevel == 0 )
-	{
-		dbg.Terminate();
-	}
-}<\n>
+DecRuleLevel();
+if (RuleLevel == 0)
+	DebugListener.Terminate();
 >>
+//@rule.postamble() ::= <<
+//dbg.Location(<ruleDescriptor.EORNode.line>, <ruleDescriptor.EORNode.charPositionInLine>);<\n>
+//}
+//finally
+//{
+//	dbg.ExitRule( GrammarFileName, "<ruleName>" );
+//	DecRuleLevel();
+//	if ( RuleLevel == 0 )
+//	{
+//		dbg.Terminate();
+//	}
+//}<\n>
+//>>
 
-@insertSynpreds.start() ::= "dbg.BeginBacktrack( state.backtracking );"
-
-@insertSynpreds.stop() ::= "dbg.EndBacktrack( state.backtracking, success );"
+//@insertSynpreds.start() ::= "dbg.BeginBacktrack( state.backtracking );"
+//@insertSynpreds.stop() ::= "dbg.EndBacktrack( state.backtracking, success );"
 
 // Common debug event triggers used by region overrides below
 
-enterSubRule() ::= <<
-try
-{
-	dbg.EnterSubRule( <decisionNumber> );<\n>
->>
+//enterSubRule() ::= <<
+//try
+//{
+//	dbg.EnterSubRule( <decisionNumber> );<\n>
+//>>
 
-exitSubRule() ::= <<
-}
-finally
-{
-	dbg.ExitSubRule( <decisionNumber> );
-}<\n>
->>
+//exitSubRule() ::= <<
+//}
+//finally
+//{
+//	dbg.ExitSubRule( <decisionNumber> );
+//}<\n>
+//>>
 
-enterDecision() ::= <<
-try
-{
-	dbg.EnterDecision( <decisionNumber> );<\n>
->>
+//enterDecision() ::= <<
+//try
+//{
+//	dbg.EnterDecision( <decisionNumber> );<\n>
+//>>
 
-exitDecision() ::= <<
-}
-finally
-{
-	dbg.ExitDecision( <decisionNumber> );
-}<\n>
->>
+//exitDecision() ::= <<
+//}
+//finally
+//{
+//	dbg.ExitDecision( <decisionNumber> );
+//}<\n>
+//>>
 
-enterAlt(n) ::= "dbg.EnterAlt( <n> );<\n>"
+//enterAlt(n) ::= "dbg.EnterAlt( <n> );<\n>"
 
 // Region overrides that tell various constructs to add debugging triggers
 
-@block.predecision() ::= "<enterSubRule()><enterDecision()>"
+//@block.predecision() ::= "<enterSubRule()><enterDecision()>"
 
-@block.postdecision() ::= "<exitDecision()>"
+//@block.postdecision() ::= "<exitDecision()>"
 
-@block.postbranch() ::= "<exitSubRule()>"
+//@block.postbranch() ::= "<exitSubRule()>"
 
-@ruleBlock.predecision() ::= "<enterDecision()>"
+//@ruleBlock.predecision() ::= "<enterDecision()>"
 
-@ruleBlock.postdecision() ::= "<exitDecision()>"
+//@ruleBlock.postdecision() ::= "<exitDecision()>"
 
-@ruleBlockSingleAlt.prealt() ::= "<enterAlt(n=\"1\")>"
+//@ruleBlockSingleAlt.prealt() ::= "<enterAlt(n=\"1\")>"
 
-@blockSingleAlt.prealt() ::= "<enterAlt(n=\"1\")>"
+//@blockSingleAlt.prealt() ::= "<enterAlt(n=\"1\")>"
 
-@positiveClosureBlock.preloop() ::= "<enterSubRule()>"
+//@positiveClosureBlock.preloop() ::= "<enterSubRule()>"
 
-@positiveClosureBlock.postloop() ::= "<exitSubRule()>"
+//@positiveClosureBlock.postloop() ::= "<exitSubRule()>"
 
-@positiveClosureBlock.predecision() ::= "<enterDecision()>"
+//@positiveClosureBlock.predecision() ::= "<enterDecision()>"
 
-@positiveClosureBlock.postdecision() ::= "<exitDecision()>"
+//@positiveClosureBlock.postdecision() ::= "<exitDecision()>"
 
-@positiveClosureBlock.earlyExitException() ::=
-	"dbg.RecognitionException( eee<decisionNumber> );<\n>"
+//@positiveClosureBlock.earlyExitException() ::=
+//	"dbg.RecognitionException( eee<decisionNumber> );<\n>"
 
-@closureBlock.preloop() ::= "<enterSubRule()>"
+//@closureBlock.preloop() ::= "<enterSubRule()>"
 
-@closureBlock.postloop() ::= "<exitSubRule()>"
+//@closureBlock.postloop() ::= "<exitSubRule()>"
 
-@closureBlock.predecision() ::= "<enterDecision()>"
+//@closureBlock.predecision() ::= "<enterDecision()>"
 
-@closureBlock.postdecision() ::= "<exitDecision()>"
+//@closureBlock.postdecision() ::= "<exitDecision()>"
 
-@altSwitchCase.prealt() ::= "<enterAlt(n=i)>"
+//@altSwitchCase.prealt() ::= "<enterAlt(n=i)>"
 
-@element.prematch() ::=
-	"dbg.Location( <it.line>, <it.pos> );"
+//@element.prematch() ::=
+//	"dbg.Location( <it.line>, <it.pos> );"
 
-@matchSet.mismatchedSetException() ::=
-	"dbg.RecognitionException( mse );"
+//@matchSet.mismatchedSetException() ::=
+//	"dbg.RecognitionException( mse );"
 
-@dfaState.noViableAltException() ::= "dbg.RecognitionException( nvae );"
+//@dfaState.noViableAltException() ::= "dbg.RecognitionException( nvae );"
 
-@dfaStateSwitch.noViableAltException() ::= "dbg.RecognitionException( nvae );"
+//@dfaStateSwitch.noViableAltException() ::= "dbg.RecognitionException( nvae );"
 
-dfaDecision(decisionNumber,description) ::= <<
-try
-{
-	isCyclicDecision = true;
-	<super.dfaDecision(...)>
-}
-catch ( NoViableAltException nvae )
-{
-	dbg.RecognitionException( nvae );
-	throw nvae;
-}
->>
+//dfaDecision(decisionNumber,description) ::= <<
+//try
+//{
+//	isCyclicDecision = true;
+//	<super.dfaDecision(...)>
+//}
+//catch ( NoViableAltException nvae )
+//{
+//	dbg.RecognitionException( nvae );
+//	throw nvae;
+//}
+//>>
 
-@cyclicDFA.errorMethod() ::= <<
-public override void Error( NoViableAltException nvae )
-{
-	((DebugParser)recognizer).dbg.RecognitionException( nvae );
-}
->>
+//@cyclicDFA.errorMethod() ::= <<
+//public override void Error( NoViableAltException nvae )
+//{
+//	((DebugParser)recognizer).dbg.RecognitionException( nvae );
+//}
+//>>
 
 /** Force predicate validation to trigger an event */
 evalPredicate(pred,description) ::= <<
-EvalPredicate( <pred>, "<description>" )
+EvalPredicate(<pred>, "<description>")
 >>

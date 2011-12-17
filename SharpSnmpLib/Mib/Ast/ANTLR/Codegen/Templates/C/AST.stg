@@ -1,5 +1,5 @@
 /*
- [The "BSD licence"]
+ [The "BSD license"]
  Copyright (c) 2005-2009 Jim Idle, Temporal Wave LLC
  http://www.temporal-wave.com
  http://www.linkedin.com/in/jimidle
@@ -28,8 +28,6 @@
  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-group AST;
-
 /** Add an adaptor property that knows how to build trees */
 @headerFile.members() ::= <<
 /* @headerFile.members() */
@@ -38,7 +36,7 @@ pANTLR3_VECTOR_FACTORY		vectors;
 /* End @headerFile.members() */
 >>
 
-/** Install the tree adaptor interface pointer and anything else that 
+/** Install the tree adaptor interface pointer and anything else that
  *  tree parsers and producers require.
  */
 @genericParser.apifuncs() ::= <<
@@ -76,12 +74,12 @@ root_0 = NULL;<\n>
 
 ruleLabelDefs() ::= <<
 <super.ruleLabelDefs()>
-<ruleDescriptor.tokenLabels:{<ASTLabelType> <it.label.text>_tree;}; separator="\n">
-<ruleDescriptor.tokenListLabels:{<ASTLabelType> <it.label.text>_tree;}; separator="\n">
+<ruleDescriptor.tokenLabels:{it | <ASTLabelType> <it.label.text>_tree;}; separator="\n">
+<ruleDescriptor.tokenListLabels:{it | <ASTLabelType> <it.label.text>_tree;}; separator="\n">
 <ruleDescriptor.allTokenRefsInAltsWithRewrites
-    :{pANTLR3_REWRITE_RULE_<rewriteElementType>_STREAM stream_<it>;}; separator="\n">
+    :{it | pANTLR3_REWRITE_RULE_<rewriteElementType>_STREAM stream_<it>;}; separator="\n">
 <ruleDescriptor.allRuleRefsInAltsWithRewrites
-    :{pANTLR3_REWRITE_RULE_SUBTREE_STREAM stream_<it>;}; separator="\n">
+    :{it | pANTLR3_REWRITE_RULE_SUBTREE_STREAM stream_<it>;}; separator="\n">
 >>
 
 /* Note that we defer the actual creation of any rewrite streams we need here and just initialize
@@ -92,25 +90,26 @@ ruleLabelDefs() ::= <<
  */
 ruleLabelInitializations() ::= <<
 <super.ruleLabelInitializations()>
-<ruleDescriptor.tokenLabels:{<it.label.text>_tree   = NULL;}; separator="\n">
-<ruleDescriptor.tokenListLabels:{<it.label.text>_tree   = NULL;}; separator="\n">
+<ruleDescriptor.tokenLabels:{it | <it.label.text>_tree   = NULL;}; separator="\n">
+<ruleDescriptor.tokenListLabels:{it | <it.label.text>_tree   = NULL;}; separator="\n">
 
 <ruleDescriptor.allTokenRefsInAltsWithRewrites
-:{stream_<it>   = NULL;
-#define CREATE_stream_<it>  if (stream_<it> == NULL) {stream_<it> = antlr3RewriteRule<rewriteElementType>StreamNewAE(ADAPTOR, RECOGNIZER, (pANTLR3_UINT8)"token <it>"); } }; separator="\n">
+:{it | stream_<it>   = NULL;
+#define CREATE_stream_<it>  if (stream_<it> == NULL) {stream_<it> = antlr3RewriteRule<rewriteElementType>StreamNewAE(ADAPTOR, RECOGNIZER, (pANTLR3_UINT8)"token <it>"); \} }; separator="\n">
 <ruleDescriptor.allRuleRefsInAltsWithRewrites
-:{stream_<it>   = NULL;
-#define CREATE_stream_<it>  if (stream_<it> == NULL) {stream_<it> = antlr3RewriteRuleSubtreeStreamNewAE(ADAPTOR, RECOGNIZER, (pANTLR3_UINT8)"rule <it>"); }}; separator="\n">
+:{it | stream_<it>   = NULL;
+#define CREATE_stream_<it>  if (stream_<it> == NULL) {stream_<it> = antlr3RewriteRuleSubtreeStreamNewAE(ADAPTOR, RECOGNIZER, (pANTLR3_UINT8)"rule <it>"); \}}; separator="\n">
 
 <if(ruleDescriptor.hasMultipleReturnValues)>
 retval.tree  = NULL;
 <endif>
 >>
 
+
 /**  a rule label including default value */
 ruleLabelInitVal(label) ::= <<
 <super.ruleLabelInitVal(...)>
-<label.label.text>.tree = <initValue(typeName=ruleLabelType(referencedRule=label.referencedRule))>;<\n>
+<label.label.text>.tree = NULL;
 >>
 
 /** When doing auto AST construction, we must define some variables;
@@ -139,7 +138,7 @@ root_0 = (<ASTLabelType>)(ADAPTOR->nilNode(ADAPTOR));<\n>
 // T r a c k i n g  R u l e  E l e m e n t s
 //
 /** ID but track it for use in a rewrite rule */
-tokenRefTrack(token,label,elementIndex,hetero) ::= <<
+tokenRefTrack(token,label,elementIndex,terminalOptions) ::= <<
 <tokenRefBang(...)> <! Track implies no auto AST construction!>
 <if(backtracking)>if ( <actions.(actionScope).synpredgate> ) { <endif>CREATE_stream_<token>; stream_<token>->add(stream_<token>, <label>, NULL);<if(backtracking)> }<endif><\n>
 >>
@@ -147,20 +146,20 @@ tokenRefTrack(token,label,elementIndex,hetero) ::= <<
 /** ids+=ID and track it for use in a rewrite rule; adds to ids *and*
  *  to the tracking list stream_ID for use in the rewrite.
  */
-tokenRefTrackAndListLabel(token,label,elementIndex,hetero) ::= <<
+tokenRefTrackAndListLabel(token,label,elementIndex,terminalOptions) ::= <<
 <tokenRefTrack(...)>
 <listLabel(elem=label,...)>
 >>
 
 /** ^(ID ...) track for rewrite */
-tokenRefRuleRootTrack(token,label,elementIndex,hetero) ::= <<
+tokenRefRuleRootTrack(token,label,elementIndex,terminalOptions) ::= <<
 <tokenRefBang(...)>
 <if(backtracking)>if ( <actions.(actionScope).synpredgate> ) {<endif>CREATE_stream_<token>; stream_<token>->add(stream_<token>, <label>, NULL);<if(backtracking)> }<endif><\n>
 >>
 
 wildcardTrack(label,elementIndex) ::= <<
 <super.wildcard(...)>
->> 
+>>
 
 /** rule when output=AST and tracking for rewrite */
 ruleRefTrack(rule,label,elementIndex,args,scope) ::= <<
@@ -192,7 +191,7 @@ ruleRefRuleRootTrackAndListLabel(rule,label,elementIndex,args,scope) ::= <<
 
 
 /** Match ^(label+=TOKEN ...) track for rewrite */
-tokenRefRuleRootTrackAndListLabel(token,label,elementIndex,hetero) ::= <<
+tokenRefRuleRootTrackAndListLabel(token,label,elementIndex,terminalOptions) ::= <<
 <tokenRefRuleRootTrack(...)>
 <listLabel(elem=label,...)>
 >>
@@ -218,10 +217,10 @@ list_<label>->add(list_<label>, <label>.tree, NULL);
  * code to copy from heap allocations. However, here we want to accumulate copies
  * of the returned structures because we are adding them to a list. This only makes sense if the
  * grammar is not rewriting the tree as a tree rewrite only preserves the tree, not the object/structure
- * returned from the rule. The rewrite will extract the tree pointer. However, if we are not going to 
- * do a tree re-write, then the user may wish to iterate the structures returned by the rule in 
+ * returned from the rule. The rewrite will extract the tree pointer. However, if we are not going to
+ * do a tree re-write, then the user may wish to iterate the structures returned by the rule in
  * action code and will expect the user defined returns[] elements to be available when they do this.
- * Hence we cannot just preserve the tree that was returned. So, we must copy the local structure and provide 
+ * Hence we cannot just preserve the tree that was returned. So, we must copy the local structure and provide
  * a function that can free the allocated space. We cannot know how to free user allocated elements and
  * presume that the user will know to do this using their own factories for the structures they allocate.
  */
@@ -242,7 +241,7 @@ if (list_<label> == NULL)
 // R e w r i t e
 
 rewriteCode(
-	alts, 
+	alts,
 	description,
 	referencedElementsDeep, // ALL referenced elements to right of ->
 	referencedTokenLabels,
@@ -251,11 +250,11 @@ rewriteCode(
 	referencedRuleListLabels,
     referencedWildcardLabels,
     referencedWildcardListLabels,
-	rewriteBlockLevel, 
-	enclosingTreeLevel, 
+	rewriteBlockLevel,
+	enclosingTreeLevel,
 	treeLevel) ::=
 <<
- 
+
 /* AST REWRITE
  * elements          : <referencedElementsDeep; separator=", ">
  * token labels      : <referencedTokenLabels; separator=", ">
@@ -289,56 +288,56 @@ if ( <actions.(actionScope).synpredgate> ) <\n>
 
 rewriteCodeLabelsDecl() ::= <<
 <referencedTokenLabels
-    :{pANTLR3_REWRITE_RULE_<rewriteElementType>_STREAM stream_<it>;};
+    :{it | pANTLR3_REWRITE_RULE_<rewriteElementType>_STREAM stream_<it>;};
     separator="\n"
 >
 <referencedTokenListLabels
-    :{pANTLR3_REWRITE_RULE_<rewriteElementType>_STREAM stream_<it>;};
+    :{it | pANTLR3_REWRITE_RULE_<rewriteElementType>_STREAM stream_<it>;};
     separator="\n"
 >
 <referencedRuleLabels
-    :{pANTLR3_REWRITE_RULE_SUBTREE_STREAM stream_<it>;};
+    :{it | pANTLR3_REWRITE_RULE_SUBTREE_STREAM stream_<it>;};
     separator="\n"
 >
 <referencedRuleListLabels
-    :{pANTLR3_REWRITE_RULE_SUBTREE_STREAM stream_<it>;};
+    :{it | pANTLR3_REWRITE_RULE_SUBTREE_STREAM stream_<it>;};
     separator="\n"
 >
 >>
 
 rewriteCodeLabelsInit() ::= <<
 <referencedTokenLabels
-:{stream_<it>=antlr3RewriteRule<rewriteElementType>StreamNewAEE(ADAPTOR,  RECOGNIZER, (pANTLR3_UINT8)"token <it>", <it>);};
+:{it | stream_<it>=antlr3RewriteRule<rewriteElementType>StreamNewAEE(ADAPTOR,  RECOGNIZER, (pANTLR3_UINT8)"token <it>", <it>);};
 separator="\n"
 >
 <referencedTokenListLabels
-:{stream_<it>=antlr3RewriteRule<rewriteElementType>StreamNewAEV(ADAPTOR,  RECOGNIZER, (pANTLR3_UINT8)"token <it>", list_<it>); };
+:{it | stream_<it>=antlr3RewriteRule<rewriteElementType>StreamNewAEV(ADAPTOR,  RECOGNIZER, (pANTLR3_UINT8)"token <it>", list_<it>); };
 separator="\n"
 >
 <referencedRuleLabels
-:{stream_<it>=antlr3RewriteRuleSubtreeStreamNewAEE(ADAPTOR,  RECOGNIZER, (pANTLR3_UINT8)"token <it>", <it>.tree != NULL ? <it>.tree : NULL);};
+:{it | stream_<it>=antlr3RewriteRuleSubtreeStreamNewAEE(ADAPTOR,  RECOGNIZER, (pANTLR3_UINT8)"token <it>", <it>.tree != NULL ? <it>.tree : NULL);};
 separator="\n"
 >
 <referencedRuleListLabels
-:{stream_<it>=antlr3RewriteRuleSubtreeStreamNewAEV(ADAPTOR,  RECOGNIZER, (pANTLR3_UINT8)"token <it>", list_<it>);};
+:{it | stream_<it>=antlr3RewriteRuleSubtreeStreamNewAEV(ADAPTOR,  RECOGNIZER, (pANTLR3_UINT8)"token <it>", list_<it>);};
 separator="\n"
 >
 >>
 rewriteCodeLabelsFree() ::= <<
 <referencedTokenLabels
-:{if (stream_<it> != NULL) stream_<it>->free(stream_<it>); };
+:{it | if (stream_<it> != NULL) stream_<it>->free(stream_<it>); };
 separator="\n"
 >
 <referencedTokenListLabels
-:{if (stream_<it> != NULL) stream_<it>->free(stream_<it>);};
+:{it | if (stream_<it> != NULL) stream_<it>->free(stream_<it>);};
 separator="\n"
 >
 <referencedRuleLabels
-:{if (stream_<it> != NULL) stream_<it>->free(stream_<it>);};
+:{it | if (stream_<it> != NULL) stream_<it>->free(stream_<it>);};
 separator="\n"
 >
 <referencedRuleListLabels
-:{if (stream_<it> != NULL) stream_<it>->free(stream_<it>);};
+:{it | if (stream_<it> != NULL) stream_<it>->free(stream_<it>);};
 separator="\n"
 >
 >>
@@ -408,7 +407,7 @@ else
 rewriteAlt(a) ::= <<
 // <a.description>
 <if(a.pred)>
-if (<a.pred>) 
+if (<a.pred>)
 {
     <a.alt>
 }<\n>
@@ -440,9 +439,8 @@ rewriteElement(e) ::= <<
 >>
 
 /** Gen ID or ID[args] */
-rewriteTokenRef(token,elementIndex,hetero,args) ::= <<
+rewriteTokenRef(token,elementIndex,terminalOptions,args) ::= <<
 ADAPTOR->addChild(ADAPTOR, root_<treeLevel>, <createRewriteNodeFromElement(...)>);<\n>
-<endif>
 >>
 
 /** Gen $label ... where defined via label=ID */
@@ -464,15 +462,15 @@ root_<treeLevel> = (<ASTLabelType>)(ADAPTOR->becomeRootToken(ADAPTOR, stream_<la
 rewriteTokenListLabelRefRoot ::= rewriteTokenLabelRefRoot
 
 /** Gen ^(ID ...) or ^(ID[args] ...) */
-rewriteTokenRefRoot(token,elementIndex,hetero,args) ::= <<
+rewriteTokenRefRoot(token,elementIndex,terminalOptions,args) ::= <<
 root_<treeLevel> = (<ASTLabelType>)(ADAPTOR->becomeRoot(ADAPTOR, <createRewriteNodeFromElement(...)>, root_<treeLevel>));<\n>
 >>
 
-rewriteImaginaryTokenRef(args,token,hetero,elementIndex) ::= <<
+rewriteImaginaryTokenRef(args,token,terminalOptions,elementIndex) ::= <<
 ADAPTOR->addChild(ADAPTOR, root_<treeLevel>, <createImaginaryNode(tokenType=token, ...)>);<\n>
 >>
 
-rewriteImaginaryTokenRefRoot(args,token,hetero,elementIndex) ::= <<
+rewriteImaginaryTokenRefRoot(args,token,terminalOptions,elementIndex) ::= <<
 root_<treeLevel> = (<ASTLabelType>)(ADAPTOR->becomeRoot(ADAPTOR, <createImaginaryNode(tokenType=token, ...)>, root_<treeLevel>));<\n>
 >>
 
@@ -528,10 +526,10 @@ rewriteWildcardLabelRef(label) ::= <<
 ADAPTOR->addChild(ADAPTOR, root_<treeLevel>, stream_<label> == NULL ? NULL : stream_<label>->nextTree(stream_<label>));<\n>
 >>
 
-createImaginaryNode(tokenType,hetero,args) ::= <<
-<if(hetero)>
+createImaginaryNode(tokenType,terminalOptions,args) ::= <<
+<if(terminalOptions.node)>
 <! new MethodNode(IDLabel, args) !>
-<hetero>New(<tokenType><if(args)>, <args; separator=", "><endif>)
+<terminalOptions.node>New(<tokenType><if(args)>, <args; separator=", "><endif>)
 <else>
 <if(args)>
 
@@ -547,9 +545,9 @@ createImaginaryNode(tokenType,hetero,args) ::= <<
 <endif>
 >>
 
-createRewriteNodeFromElement(token,hetero,args) ::= <<
-<if(hetero)>
-<hetero>New(stream_<token>->nextToken(stream_<token>)<if(args)>, <args; separator=", "><endif>)
+createRewriteNodeFromElement(token,terminalOptions,args) ::= <<
+<if(terminalOptions.node)>
+<terminalOptions.node>New(stream_<token>->nextToken(stream_<token>)<if(args)>, <args; separator=", "><endif>)
 <else>
 <if(args)> <! must create new node from old !>
 

@@ -1,4 +1,4 @@
-/* [The "BSD licence"] 
+/* [The "BSD license"]
  Copyright (c) 2008 Erik van Bilsen
  Copyright (c) 2007-2008 Johannes Luber
  Copyright (c) 2005-2007 Kunle Odutola
@@ -27,7 +27,7 @@
  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-group Delphi implements ANTLRCore;
+group Delphi;
 
 csharpTypeInitMap ::= [
   "int":"0",
@@ -106,7 +106,7 @@ uses<\n>
   Antlr.Runtime,
   Antlr.Runtime.Collections,
   Antlr.Runtime.Tools;
-  
+
 <docComment>
 <recognizer>
 >>
@@ -119,14 +119,14 @@ lexer(grammar, name, tokens, scopes, rules, numRules, labelType="Token",
 type
   I<grammar.recognizerName> = interface(I<@superClassName><superClass><@end>)
   end;
-  
+
   T<grammar.recognizerName> = class(T<@superClassName><superClass><@end>, I<grammar.recognizerName>)
   strict private
     FCnt: array [0..<grammar.numberOfDecisions>] of Byte;
     FLA: array [0..<grammar.numberOfDecisions>, 0..255] of Integer;
     FException: ERecognitionException;
     procedure InitializeCyclicDFAs;
-  <cyclicDFAs:cyclicDFADeclaration()> 
+  <cyclicDFAs:cyclicDFADeclaration()>
   public
     const
       <tokens:{<it.name> = <it.type>;}; separator="\n">
@@ -163,7 +163,7 @@ type
     <rules: {r | <if(!r.ruleDescriptor.isSynPred)><lexerRuleDeclaration(r)><endif>}>
     <synpreds:{p | <lexerSynpredDeclaration(p)>}; separator="\n">
   end;
-  
+
 implementation
 
 uses
@@ -173,7 +173,7 @@ uses
   SysUtils,
   StrUtils,
   Math;
-  
+
 { T<grammar.recognizerName> }
 
 constructor T<grammar.recognizerName>.Create;
@@ -220,7 +220,7 @@ begin
   <cyclicDFAs:{dfa | FDFA<dfa.decisionNumber> := TDFA<dfa.decisionNumber>.Create(Self<@debugAddition()>);}; separator="\n">
   <cyclicDFAs:{dfa | <if(dfa.specialStateSTs)>FDFA<dfa.decisionNumber>.SpecialStateTransitionHandler := DFA<dfa.decisionNumber>_SpecialStateTransition;<endif>}; separator="\n">
 end;
-  
+
 <cyclicDFAs:cyclicDFA()> <! dump tables for all DFA !>
 end.>>
 
@@ -259,14 +259,14 @@ begin
       State.Backtracking := 0;
 <!
       mTokens backtracks with synpred at backtracking==2
-            and we set the synpredgate to allow actions at level 1. 
+            and we set the synpredgate to allow actions at level 1.
 !>
       if (State.Failed) then
       begin
         Input.Rewind(M);
         Input.Consume; <! // advance one char and try again !>
       end
-      else 
+      else
       begin
         Emit;
         Exit(State.Token);
@@ -283,20 +283,20 @@ begin
 end;
 
 function T<grammar.recognizerName>.AlreadyParsedRule(const Input: IIntStream;
-  const RuleIndex: Integer): Boolean; 
+  const RuleIndex: Integer): Boolean;
 begin
   if (State.Backtracking > 1) then
     Result := inherited AlreadyParsedRule(Input, RuleIndex)
   else
-    Result := False; 
+    Result := False;
 end;
-  
+
 procedure T<grammar.recognizerName>.Memoize(const Input: IIntStream; const RuleIndex,
-  RuleStartIndex: Integer); 
+  RuleStartIndex: Integer);
 begin
   if (State.Backtracking > 1) then
     inherited Memoize(Input, RuleIndex, RuleStartIndex);
-end;  
+end;
 
 >>
 
@@ -311,13 +311,13 @@ type
   I<grammar.recognizerName> = interface(I<@superClassName><superClass><@end>)
     <rules: {r | <genericParserRuleInterface(rule=r, ruleDescriptor=r.ruleDescriptor)>}>
   end;
-  
+
   T<grammar.recognizerName> = class(T<@superClassName><superClass><@end>, I<grammar.recognizerName>)
 <if(grammar.grammarIsRoot)>
   public
     const
       TOKEN_NAMES: array [0..<length(tokenNames)>+3] of String = (
-        '\<invalid>', 
+        '\<invalid>',
         '\<EOR>',
         '\<DOWN>',
         '\<UP>',
@@ -333,7 +333,7 @@ type
     // delegators
     <grammar.delegators: {g|<g:delegateName()>: Pointer; {<g.recognizerName>}}; separator="\n">
     <last(grammar.delegators):{g|gParent: Pointer; {<g.recognizerName>}}>
-    
+
     <scopes:{<if(it.isDynamicGlobalScope)><globalAttributeScopeDeclaration(scope=it)><endif>}>
 <@members>
     <! WARNING. bug in ST: this is cut-n-paste into Dbg.stg !>
@@ -344,7 +344,7 @@ type
   protected
     { IBaseRecognizer }
     function GetTokenNames: TStringArray; override;
-    function GetGrammarFileName: String; override;  
+    function GetGrammarFileName: String; override;
   strict private
     <actions.(actionScope).memberDeclarations>
   <rules: {r | <genericParserRuleDeclaration(rule=r, ruleDescriptor=r.ruleDescriptor)>}>
@@ -355,7 +355,7 @@ type
     <grammar.delegatedRules:{ruleDescriptor| <delegatedRuleDeclaration(ruleDescriptor)>}>
 
     <synpreds:{p | <synpredDeclaration(p)>}; separator="\n">
-  <cyclicDFAs:cyclicDFADeclaration()> 
+  <cyclicDFAs:cyclicDFADeclaration()>
   strict private
     FException: ERecognitionException;
     FLA: array [0..<grammar.numberOfDecisions>, 0..255] of Integer;
@@ -379,15 +379,15 @@ uses
   SysUtils,
   StrUtils,
   Math;
-  
+
 { T<grammar.recognizerName> }
 
 constructor T<grammar.recognizerName>.Create(const AInput: <inputStreamType><grammar.delegators:{g|; const A<g:delegateName()>: IBaseRecognizer{<g.recognizerName>}}>);
 begin
-  Create(AInput, TRecognizerSharedState.Create<grammar.delegators:{g|, A<g:delegateName()>}>);  
+  Create(AInput, TRecognizerSharedState.Create<grammar.delegators:{g|, A<g:delegateName()>}>);
 end;
 
-constructor T<grammar.recognizerName>.Create(const AInput: <inputStreamType>; 
+constructor T<grammar.recognizerName>.Create(const AInput: <inputStreamType>;
   const AState: IRecognizerSharedState<grammar.delegators:{g|; const A<g:delegateName()>: IBaseRecognizer{<g.recognizerName>}}>);
 begin
   inherited Create(AInput, AState);
@@ -398,7 +398,7 @@ begin
   <grammar.indirectDelegates:{g | <g:delegateName()> := <g.delegator:delegateName()>.<g:delegateName()>;}; separator="\n">
   <last(grammar.delegators):{g|gParent := Pointer(A<g:delegateName()>);}>
   <rules: {r | <ruleAttributeScopeInit(scope=r.ruleDescriptor.ruleScope)>}>
-  <scopes:{<if(it.isDynamicGlobalScope)><globalAttributeScope(scope=it)><endif>}>  
+  <scopes:{<if(it.isDynamicGlobalScope)><globalAttributeScope(scope=it)><endif>}>
   <actions.(actionScope).memberInitializations>
 end;
 <actions.(actionScope).memberImplementations>
@@ -537,7 +537,7 @@ begin
   State.Backtracking := State.Backtracking + 1;
   <@start()>
   Start := Input.Mark;
-  try 
+  try
     <name>_fragment(); // can never throw exception
   except
     on RE: ERecognitionException do
@@ -582,7 +582,7 @@ checkRuleBacktrackFailure() ::= <<
 ruleBacktrackFailure() ::= <<
 <if(backtracking)>if (State.Backtracking > 0) then
 begin
-  State.Failed := True; 
+  State.Failed := True;
   Exit(<ruleReturnValue()>);
 end;<endif>
 >>
@@ -663,7 +663,7 @@ var
   Alt: array [0..<grammar.numberOfDecisions>] of Integer;
   <ruleDeclarationVars()>
   <ruleLabelDefVars()>
-begin   
+begin
   Locals.Initialize;
   try
     <if(trace)>TraceIn('<ruleName>', <ruleDescriptor.index>);<endif>
@@ -672,7 +672,7 @@ begin
     <ruleLabelDefs()>
     <ruleDescriptor.actions.init>
     <@preamble()>
-    try 
+    try
       try
         <ruleMemoization(name=ruleName)>
         <block>
@@ -696,7 +696,7 @@ begin
 <endif>
 <endif>
       end;
-    finally 
+    finally
       <if(trace)>TraceOut("<ruleName>", <ruleDescriptor.index>);<endif>
       <memoize()>
       <ruleScopeCleanUp()>
@@ -705,14 +705,14 @@ begin
     <@postamble()>
   finally
     Locals.Finalize;
-  end;  
+  end;
   Exit(<ruleReturnValue()>);
 end;
 // $ANTLR end "<ruleName>"
 >>
 
-catch(decl,action) ::= << 
-catch (<e.decl>) 
+catch(decl,action) ::= <<
+catch (<e.decl>)
 {
     <e.action>
 }
@@ -822,7 +822,7 @@ memoize() ::= <<
 <if(memoize)>
 <if(backtracking)>
 if (State.Backtracking > 0) then
-  Memoize(Input, <ruleDescriptor.index>, <ruleDescriptor.name>_StartIndex); 
+  Memoize(Input, <ruleDescriptor.index>, <ruleDescriptor.name>_StartIndex);
 <endif>
 <endif>
 >>
@@ -865,7 +865,7 @@ begin
       State.Channel := Channel;
       <(ruleDescriptor.actions.after):execAction()>
 <endif>
-    finally 
+    finally
       <if(trace)>TraceOut("<ruleName>", <ruleDescriptor.index>);<endif>
       <ruleScopeCleanUp()>
       <memoize()>
@@ -959,7 +959,7 @@ begin
     begin
       if (FCnt[<decisionNumber>] >= 1) then
         Break;
-      <ruleBacktrackFailure()> 
+      <ruleBacktrackFailure()>
       raise EEarlyExitException.Create(<decisionNumber>, Input);
       <@earlyExitException()>
     end;
@@ -976,7 +976,7 @@ closureBlock(alts,decls,decision,enclosingBlockLevel,blockLevel,decisionNumber,m
 (* <fileName>:<description> *)
 <decls>
 <@preloop()>
-while (True) do 
+while (True) do
 begin
   Alt[<decisionNumber>] := <maxAlt>;
   <@predecision()>
@@ -1035,12 +1035,12 @@ element() ::= <<
 >>
 
 /** match a token optionally with a label in front */
-tokenRef(token,label,elementIndex,hetero) ::= <<
+tokenRef(token,label,elementIndex,terminalOptions) ::= <<
 <if(label)><label> := <endif>Match(Input, <token>, FOLLOW_<token>_in_<ruleName><elementIndex>)<if(label)> as I<labelType><endif>;<\n><checkRuleBacktrackFailure()>
 >>
 
 /** ids+=ID */
-tokenRefAndListLabel(token,label,elementIndex,hetero) ::= <<
+tokenRefAndListLabel(token,label,elementIndex,terminalOptions) ::= <<
 <tokenRef(...)>
 <listLabel(elem=label,...)>
 >>
@@ -1083,10 +1083,10 @@ begin
   State.ErrorRecovery := False;<endif>
   <if(backtracking)>State.Failed := False;<endif>
 end
-else 
+else
 begin
   <ruleBacktrackFailure()>
-  FException := EMismatchedSetException.Create(nil, Input);  
+  FException := EMismatchedSetException.Create(nil, Input);
   <@mismatchedSetException()>
 <if(LEXER)>
   Recover(FException);
@@ -1108,7 +1108,7 @@ matchSetAndListLabel(s,label,elementIndex,postmatchCode) ::= <<
 >>
 
 /** Match a string literal */
-lexerStringRef(string,label) ::= <<
+lexerStringRef(string,label,elementIndex) ::= <<
 <if(label)>
 Locals.AsInteger['<label>Start'] := CharIndex;
 Match(<string>); <checkRuleBacktrackFailure()>
@@ -1176,7 +1176,7 @@ lexerRuleRef(rule,label,args,elementIndex,scope) ::= <<
 <if(label)>
 Locals.AsInteger['<label>Start<elementIndex>'] := CharIndex;
 <if(scope)><scope:delegateName()>.<endif>m<rule.name>(<args; separator=", ">); <checkRuleBacktrackFailure()>
-<label> := TCommonToken.Create(Input, TToken.INVALID_TOKEN_TYPE, TToken.DEFAULT_CHANNEL, 
+<label> := TCommonToken.Create(Input, TToken.INVALID_TOKEN_TYPE, TToken.DEFAULT_CHANNEL,
   Locals.AsInteger['<label>Start<elementIndex>'], CharIndex - 1);
 <else>
 <if(scope)>(<scope:delegateName()>.Implementor as T<scope.recognizerName>).<endif>m<rule.name>(<args; separator=", ">); <checkRuleBacktrackFailure()>
@@ -1235,7 +1235,7 @@ end;<\n>
 dfaState(k,edges,eotPredictsAlt,description,stateNumber,semPredState) ::= <<
 FLA[<decisionNumber>,<stateNumber>] := Input.LA(<k>);<\n>
 <edges; separator="\nelse ">
-else 
+else
 begin
 <if(eotPredictsAlt)>
   Alt[<decisionNumber>] := <eotPredictsAlt>;<\n>
@@ -1269,7 +1269,7 @@ FLA[<decisionNumber>,<stateNumber>] := Input.LA(<k>);
 <if(!edges)>
 Alt[<decisionNumber>] := <eotPredictsAlt>; <! if no edges, don't gen ELSE !>
 <else>
-else 
+else
 begin
   Alt[<decisionNumber>] := <eotPredictsAlt>;
 end;<\n>
@@ -1432,7 +1432,7 @@ begin
 <if(backtracking)>
     if (State.Backtracking > 0) then
     begin
-      State.Failed := True; 
+      State.Failed := True;
       Exit(-1);
     end;<\n>
 <endif>
@@ -1522,7 +1522,7 @@ strict protected
     end;
     T<scope.name>Scope = class(TANTLRObject, I<scope.name>Scope)
     protected
-      <scope.attributes:{<it.name>: <it.type>;}; separator="\n">   
+      <scope.attributes:{<it.name>: <it.type>;}; separator="\n">
     end;
 strict protected
   <scope.name>Stack: IStackList\<I<scope.name>Scope\>;
@@ -1540,7 +1540,7 @@ strict protected
       <scope.attributes:{<it.name>: <it.type>;}; separator="\n">
     end;
 strict protected
-  <scope.name>Stack: IStackList\<I<scope.name>Scope\>;    
+  <scope.name>Stack: IStackList\<I<scope.name>Scope\>;
 <endif>
 >>
 

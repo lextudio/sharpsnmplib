@@ -1,5 +1,5 @@
 /*
- [The "BSD licence"]
+ [The "BSD license"]
  Copyright (c) 2005-2006 Terence Parr
  All rights reserved.
 
@@ -28,8 +28,6 @@
 /** Template overrides to add debugging to normal Java output;
  *  If ASTs are built, then you'll also get ASTDbg.stg loaded.
  */
-group Dbg;
-
 @outputFile.imports() ::= <<
 <@super.imports()>
 import org.antlr.runtime.debug.*;
@@ -42,6 +40,10 @@ public static final String[] ruleNames = new String[] {
     "invalidRule", <grammar.allImportedRules:{rST | "<rST.name>"}; wrap="\n    ", separator=", ">
 };<\n>
 <endif>
+public static final boolean[] decisionCanBacktrack = new boolean[] {
+    false, // invalid decision
+    <grammar.decisions:{d | <d.dfa.hasSynPred; null="false">}; wrap="\n    ", separator=", ">
+};<\n>
 <if(grammar.grammarIsRoot)> <! grammar imports other grammar(s) !>
     public int ruleLevel = 0;
     public int getRuleLevel() { return ruleLevel; }
@@ -61,7 +63,8 @@ public static final String[] ruleNames = new String[] {
 <endif>
 <if(profile)>
 public boolean alreadyParsedRule(IntStream input, int ruleIndex) {
-    ((Profiler)dbg).examineRuleMemoization(input, ruleIndex, <grammar.composite.rootGrammar.recognizerName>.ruleNames[ruleIndex]);
+	int stopIndex = getRuleMemoization(ruleIndex, input.index());
+    ((Profiler)dbg).examineRuleMemoization(input, ruleIndex, stopIndex, <grammar.composite.rootGrammar.recognizerName>.ruleNames[ruleIndex]);
     return super.alreadyParsedRule(input, ruleIndex);
 }<\n>
 public void memoize(IntStream input,
@@ -156,11 +159,11 @@ catch (IOException ioe) {
 try { dbg.enterRule(getGrammarFileName(), "<ruleName>");
 if ( getRuleLevel()==0 ) {dbg.commence();}
 incRuleLevel();
-dbg.location(<ruleDescriptor.tree.line>, <ruleDescriptor.tree.column>);<\n>
+dbg.location(<ruleDescriptor.tree.line>, <ruleDescriptor.tree.charPositionInLine>);<\n>
 >>
 
 @rule.postamble() ::= <<
-dbg.location(<ruleDescriptor.EORNode.line>, <ruleDescriptor.EORNode.column>);<\n>
+dbg.location(<ruleDescriptor.EORNode.line>, <ruleDescriptor.EORNode.charPositionInLine>);<\n>
 }
 finally {
     dbg.exitRule(getGrammarFileName(), "<ruleName>");
@@ -182,7 +185,7 @@ exitSubRule() ::=
     "} finally {dbg.exitSubRule(<decisionNumber>);}<\n>"
 
 enterDecision() ::=
-    "try { dbg.enterDecision(<decisionNumber>);<\n>"
+    "try { dbg.enterDecision(<decisionNumber>, decisionCanBacktrack[<decisionNumber>]);<\n>"
 
 exitDecision() ::=
     "} finally {dbg.exitDecision(<decisionNumber>);}<\n>"
@@ -224,10 +227,10 @@ enterAlt(n) ::= "dbg.enterAlt(<n>);<\n>"
 
 @closureBlock.postdecision() ::= "<exitDecision()>"
 
-@altSwitchCase.prealt() ::= "<enterAlt(n=i)>"
+@altSwitchCase.prealt() ::= "<enterAlt(altNum)>" // altNum is arg of altSwitchCase
 
 @element.prematch() ::=
-    "dbg.location(<it.line>,<it.pos>);"
+    "dbg.location(<e.line>,<e.pos>);" // e is arg of element
 
 @matchSet.mismatchedSetException() ::=
     "dbg.recognitionException(mse);"

@@ -1,5 +1,5 @@
 /*
- [The "BSD licence"]
+ [The "BSD license"]
  Copyright (c) 2005-2006 Terence Parr
  All rights reserved.
 
@@ -25,7 +25,7 @@
  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-group Cpp implements ANTLRCore;
+group Cpp;
 
 cppTypeInitMap ::= [
 	"int":"0",
@@ -134,7 +134,7 @@ public:
 	<tokens:{static const tokenid_type <tokenPrefix()><it.name> = <it.type>;}; separator="\n">
 	<scopes:{<if(it.isDynamicGlobalScope)><globalAttributeScope(scope=it)><endif>}>
 	<actions.lexer.members>
-	
+
 	<name>(StreamType* input)
 	: antlr3::Lexer\<StreamType,TokenType,TokenBuilder>(input)
 	{
@@ -157,21 +157,21 @@ public:
 headerFile( LEXER,
             PARSER,
             TREE_PARSER,
-            actionScope, 
+            actionScope,
             actions,
-            docComment, 
+            docComment,
             recognizer,
-            name, 
-            tokens, 
-            tokenNames, 
+            name,
+            tokens,
+            tokenNames,
             rules,
             cyclicDFAs,
             bitsets,
             buildTemplate,
             profile,
-            backtracking, 
-            synpreds, 
-            memoize, 
+            backtracking,
+            synpreds,
+            memoize,
             numRules,
             fileName,
             ANTLRVersion,
@@ -251,13 +251,13 @@ public Token nextToken() {
 
 public void memoize(IntStream input, int ruleIndex, int ruleStartIndex)
 {
-	if ( backtracking > 1 ) 
+	if ( backtracking > 1 )
 		super.memoize(input, ruleIndex, ruleStartIndex);
 }
 
-public boolean alreadyParsedRule(IntStream input, int ruleIndex) 
+public boolean alreadyParsedRule(IntStream input, int ruleIndex)
 {
-	if ( backtracking > 1 ) 
+	if ( backtracking > 1 )
 		return super.alreadyParsedRule(input, ruleIndex);
 	return false;
 }
@@ -267,11 +267,11 @@ filteringActionGate() ::= "backtracking == 1"
 
 /** How to generate a parser */
 genericParser(
-	grammar, name, scopes, tokens, tokenNames, rules, numRules, cyclicDFAs, 
+	grammar, name, scopes, tokens, tokenNames, rules, numRules, cyclicDFAs,
 	bitsets, inputStreamType, superClass, ASTLabelType="Object",
 	labelType, members, filterMode
 	) ::= <<
-// genericParser	
+// genericParser
 class <name> : public <@superClassName><superClass><@end> {
 public:
 	static const char* tokenNames[] = {
@@ -307,9 +307,9 @@ public:
 >>
 
 parser(
-	grammar, name, scopes, tokens, tokenNames, 
-	rules, numRules, bitsets, ASTLabelType, 
-	superClass="Parser", labelType="Token", 
+	grammar, name, scopes, tokens, tokenNames,
+	rules, numRules, bitsets, ASTLabelType,
+	superClass="Parser", labelType="Token",
 	members={<actions.parser.members>}) ::= <<
 <genericParser(inputStreamType="TokenStream", ...)>
 >>
@@ -317,10 +317,10 @@ parser(
 /** How to generate a tree parser; same as parser except the input
  *  stream is a different type.
  */
-treeParser(grammar, name, scopes, tokens, tokenNames, globalAction, 
-	rules, numRules, 
+treeParser(grammar, name, scopes, tokens, tokenNames, globalAction,
+	rules, numRules,
 	bitsets,
-	labelType={<ASTLabelType>}, ASTLabelType="Object", 
+	labelType={<ASTLabelType>}, ASTLabelType="Object",
 	superClass="TreeParser", members={<actions.treeparser.members>}, filterMode
 	) ::= <<
 <genericParser(inputStreamType="TreeNodeStream", ...)>
@@ -336,7 +336,7 @@ treeParser(grammar, name, scopes, tokens, tokenNames, globalAction,
 synpredRule(ruleName, ruleDescriptor, block, description, nakedBlock) ::=
 <<
 // $ANTLR start <ruleName>
-public void <ruleName>_fragment(<ruleDescriptor.parameterScope:parameterScope(scope=it)>) throws RecognitionException {   
+public void <ruleName>_fragment(<ruleDescriptor.parameterScope:parameterScope(scope=it)>) throws RecognitionException {
 	<if(trace)>System.out.println("enter <ruleName> "+input.LT(1)+" failed="+failed+" backtracking="+backtracking);<endif>
 <if(trace)>
 	try {
@@ -377,7 +377,7 @@ lexerSynpred(name) ::= <<
 
 ruleMemoization(name) ::= <<
 <if(memoize)>
-if ( backtracking > 0 && alreadyParsedRule(input, <ruleDescriptor.index>) ) 
+if ( backtracking > 0 && alreadyParsedRule(input, <ruleDescriptor.index>) )
 	return <ruleReturnValue()>;
 <endif>
 >>
@@ -385,7 +385,7 @@ if ( backtracking > 0 && alreadyParsedRule(input, <ruleDescriptor.index>) )
 /** How to test for failure and return from rule */
 checkRuleBacktrackFailure() ::= <<
 <if(backtracking)>
-if (failed) 
+if (failed)
 	return <ruleReturnValue()>;
 <endif>
 >>
@@ -410,8 +410,8 @@ rule(ruleName,ruleDescriptor,block,emptyRule,description,exceptions,memoize) ::=
 
 // $ANTLR start <ruleName>
 // <fileName>:<description>
-public <returnType()> <ruleName>(<ruleDescriptor.parameterScope:parameterScope(scope=it)>) throw(antlr3::BaseRecognitionException) 
-{   
+public <returnType()> <ruleName>(<ruleDescriptor.parameterScope:parameterScope(scope=it)>) throw(antlr3::BaseRecognitionException)
+{
 <if(trace)>
 	antlr3::Tracer trace(this,"<ruleName>");
 	System.out.println("enter <ruleName> "+input.LT(1)+" failed="+failed+" backtracking="+backtracking);
@@ -717,7 +717,7 @@ charRef(char,label) ::= <<
 <if(label)>
 <tokenid_type()> <label> = input.LA(1);<\n>
 <endif>
-this->match(<char>); 
+this->match(<char>);
 <checkRuleBacktrackFailure()>
 >>
 
@@ -759,15 +759,15 @@ matchSetAndListLabel(s,label,elementIndex,postmatchCode) ::= <<
 >>
 
 /** Match a string literal */
-lexerStringRef(string,label) ::= <<
+lexerStringRef(string,label,elementIndex) ::= <<
 // lexerStringRef
 <if(label)>
 position_type <label>Start(input.getPosition());
-this->match( <string> ); 
+this->match( <string> );
 <checkRuleBacktrackFailure()>
 TokenType* <label> = TokenBuilder::build(Token.INVALID_TOKEN_TYPE,<label>Start,input,Token.DEFAULT_CHANNEL);
 <else>
-this->match( <string> ); 
+this->match( <string> );
 <checkRuleBacktrackFailure()><\n>
 <endif>
 >>
@@ -838,11 +838,11 @@ m<rule>(<args>);
 lexerMatchEOF(label) ::= <<
 <if(label)>
 position_type <label>Start(input.getPosition());
-match(EOF); 
+match(EOF);
 <checkRuleBacktrackFailure()>
 TokenType* <label> = TokenBuilder::build(Token.EOF,<label>Start,input,Token.DEFAULT_CHANNEL);
 <else>
-match(EOF); 
+match(EOF);
 <checkRuleBacktrackFailure()>
 <endif>
 >>
@@ -852,17 +852,17 @@ tree(root, children, nullableChildList) ::= <<
 <root:element()>
 <if(nullableChildList)>
 if ( input.LA(1)==antlr3::Token::DOWN ) {
-    match(input, antlr3::Token::DOWN, null); 
+    match(input, antlr3::Token::DOWN, null);
     <checkRuleBacktrackFailure()>
     <children:element()>
-    match(input, antlr3::Token::UP, null); 
+    match(input, antlr3::Token::UP, null);
     <checkRuleBacktrackFailure()>
 }
 <else>
-match(input, antlr3::Token::DOWN, null); 
+match(input, antlr3::Token::DOWN, null);
 <checkRuleBacktrackFailure()>
 <children:element()>
-match(input, antlr3::Token::UP, null); 
+match(input, antlr3::Token::UP, null);
 <checkRuleBacktrackFailure()>
 <endif>
 >>
@@ -883,7 +883,7 @@ dfaState(k,edges,eotPredictsAlt,description,stateNumber,semPredState) ::= <<
 <tokenid_type()> LA<decisionNumber>_<stateNumber> = input.LA(<k>);<\n>
 <endif>
 <edges; separator="\nelse ">
-else 
+else
 {
 <if(eotPredictsAlt)>
 	alt<decisionNumber> = <eotPredictsAlt>;<\n>
@@ -920,7 +920,7 @@ dfaLoopbackState(k,edges,eotPredictsAlt,description,stateNumber,semPredState) ::
 <endif>
 <edges; separator="\nelse "><\n>
 <if(eotPredictsAlt)>
-else 
+else
 {
 	alt<decisionNumber> = <eotPredictsAlt>;
 }<\n>
@@ -935,7 +935,7 @@ dfaAcceptState(alt) ::= "alt<decisionNumber> = <alt>;"
  *  have to evaluate some predicates for this edge.
  */
 dfaEdge(labelExpr, targetState, predicates) ::= <<
-if ( (<labelExpr>) <if(predicates)>&& (<predicates>)<endif>) 
+if ( (<labelExpr>) <if(predicates)>&& (<predicates>)<endif>)
 {
 	<targetState>
 }
@@ -1321,12 +1321,12 @@ setType(type) ::= "setType(<type>);"
 execAction(action) ::= <<
 <if(backtracking)>
 <if(actions.(actionScope).synpredgate)>
-if ( <actions.(actionScope).synpredgate> ) 
+if ( <actions.(actionScope).synpredgate> )
 {
 	<action>
 }
 <else>
-if ( backtracking == 0 ) 
+if ( backtracking == 0 )
 {
 	<action>
 }

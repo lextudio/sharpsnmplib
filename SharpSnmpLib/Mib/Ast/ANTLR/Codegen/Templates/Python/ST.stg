@@ -1,5 +1,5 @@
 /*
- [The "BSD licence"]
+ [The "BSD license"]
  Copyright (c) 2005-2006 Terence Parr
  All rights reserved.
 
@@ -28,7 +28,6 @@
 /** Template subgroup to add template rewrite output
  *  If debugging, then you'll also get STDbg.stg loaded.
  */
-group ST;
 
 @outputFile.imports() ::= <<
 <@super.imports()>
@@ -73,7 +72,7 @@ def getTemplateLib(self):
 /** x+=rule when output=template */
 ruleRefAndListLabel(rule,label,elementIndex,args,scope) ::= <<
 <ruleRef(...)>
-<listLabel(elem=label+".st",...)>
+<listLabel(label, {<label>.st})>
 >>
 
 rewriteTemplate(alts) ::= <<
@@ -81,12 +80,12 @@ rewriteTemplate(alts) ::= <<
 <if(backtracking)>
 if <actions.(actionScope).synpredgate>:
     <first(alts):rewriteTemplateAltFirst()>
-    <rest(alts):{el<rewriteTemplateAlt()>}>
+    <rest(alts):{it | el<rewriteTemplateAlt(it)>}>
     <if(rewriteMode)><replaceTextInLine()><endif>
 
 <else>
 <first(alts):rewriteTemplateAltFirst()>
-<rest(alts):{el<rewriteTemplateAlt()>}>
+<rest(alts):{it | el<rewriteTemplateAlt(it)>}>
 <if(rewriteMode)><replaceTextInLine()><endif>
 <endif>
 >>
@@ -107,29 +106,27 @@ self.input.replace(
 <endif>
 >>
 
-rewriteTemplateAltFirst() ::= <<
-<if(it.pred)>
-if <it.pred>:
-    # <it.description>
-    retval.st = <it.alt>
+rewriteTemplateAltFirst(alt) ::= <<
+<if(alt.pred)>
+if <alt.pred>:
+    # <alt.description>
+    retval.st = <alt.alt>
 <\n>
 <else>
-# <it.description>
-retval.st = <it.alt>
+# <alt.description>
+retval.st = <alt.alt>
 <\n>
 <endif>
 >>
 
-rewriteTemplateAlt() ::= <<
-<if(it.pred)>
-if <it.pred>:
-    # <it.description>
-    retval.st = <it.alt>
+rewriteTemplateAlt(alt) ::= <<
+<if(alt.pred)>if <alt.pred>:
+    # <alt.description>
+    retval.st = <alt.alt>
 <\n>
-<else>
-se:
-    # <it.description>
-    retval.st = <it.alt>
+<else>se:
+    # <alt.description>
+    retval.st = <alt.alt>
 <\n>
 <endif>
 >>
@@ -144,26 +141,19 @@ None
  *  an attribute to build a bigger template; you get a self-embedded
  *  template.
  */
-rewriteExternalTemplate(name,args) ::= <<
-self.templateLib.getInstanceOf("<name>"<if(args)>,
-    attributes={<args:{a | "<a.name>": <a.value>}; separator=", ">}<endif>)
->>
+rewriteExternalTemplate(name,args) ::= <%
+self.templateLib.getInstanceOf("<name>"<if(args)>, attributes={<args:{a | "<a.name>": <a.value>}; separator=", ">}<endif>)
+%>
 
 /** expr is a string expression that says what template to load */
-rewriteIndirectTemplate(expr,args) ::= <<
-self.templateLib.getInstanceOf(<expr><if(args)>,
-    attributes={<args:{a | "<a.name>": <a.value>}; separator=", ">}<endif>)
->>
+rewriteIndirectTemplate(expr,args) ::= <%
+self.templateLib.getInstanceOf(<expr><if(args)>, attributes={<args:{a | "<a.name>": <a.value>}; separator=", ">}<endif>)
+%>
 
 /** Invoke an inline template with a set of attribute name/value pairs */
-rewriteInlineTemplate(args, template) ::= <<
-stringtemplate3.StringTemplate(
-    "<template>",
-    group=self.templateLib<if(args)>,
-    attributes={<args:{a | "<a.name>": <a.value>}; separator=", ">}
-    <endif>
-    )
->>
+rewriteInlineTemplate(args, template) ::= <%
+stringtemplate3.StringTemplate("<template>", group=self.templateLib<if(args)>, attributes={<args:{a | "<a.name>": <a.value>}; separator=", ">}<endif>)
+%>
 
 /** plain -> {foo} action */
 rewriteAction(action) ::= <<

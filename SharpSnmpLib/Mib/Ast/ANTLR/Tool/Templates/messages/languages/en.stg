@@ -1,6 +1,6 @@
 /*
- [The "BSD licence"]
- Copyright (c) 2005-2006 Terence Parr
+ [The "BSD license"]
+ Copyright (c) 2010 Terence Parr
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -154,10 +154,6 @@ RULE_HAS_NO_ARGS(arg) ::=
 	"rule <arg> has no defined parameters"
 ARGS_ON_TOKEN_REF(arg) ::=
 	"token reference <arg> may not have parameters"
-/*
-NONCHAR_RANGE() ::=
-	"range operator can only be used in the lexer"
-*/
 ILLEGAL_OPTION(arg) ::=
 	"illegal option <arg>"
 LIST_LABEL_INVALID_UNLESS_RETVAL_STRUCT(arg) ::=
@@ -206,7 +202,7 @@ MISSING_AST_TYPE_IN_TREE_GRAMMAR(arg) ::=
   "tree grammar <arg> has no ASTLabelType option"
 REWRITE_FOR_MULTI_ELEMENT_ALT(arg) ::=
   "with rewrite=true, alt <arg> not simple node or obvious tree element; text attribute for rule not guaranteed to be correct"
-RULE_INVALID_SET(arg) ::= 
+RULE_INVALID_SET(arg) ::=
   "Cannot complement rule <arg>; not a simple set or element"
 HETERO_ILLEGAL_IN_REWRITE_ALT(arg) ::=
   "alts with rewrites can't use heterogeneous types left of ->"
@@ -230,6 +226,8 @@ AST_OP_IN_ALT_WITH_REWRITE(arg,arg2) ::=
   "rule <arg> alt <arg2> uses rewrite syntax and also an AST operator"
 WILDCARD_AS_ROOT(arg) ::= "Wildcard invalid as root; wildcard can itself be a tree"
 CONFLICTING_OPTION_IN_TREE_FILTER(arg,arg2) ::= "option <arg>=<arg2> conflicts with tree grammar filter mode"
+ILLEGAL_OPTION_VALUE(arg, arg2) ::= "value '<arg2>' invalid for option <arg>"
+ALL_OPS_NEED_SAME_ASSOC(arg) ::= "all operators of alt <alt> of left-recursive rule must have same associativity"
 
 // GRAMMAR WARNINGS
 
@@ -237,7 +235,7 @@ GRAMMAR_NONDETERMINISM(input,conflictingAlts,paths,disabled,hasPredicateBlockedB
 <<
 <if(paths)>
 Decision can match input such as "<input>" using multiple alternatives:
-<paths:{  alt <it.alt> via NFA path <it.states; separator=","><\n>}>
+<paths:{ it |  alt <it.alt> via NFA path <it.states; separator=","><\n>}>
 <else>
 Decision can match input such as "<input>" using multiple alternatives: <conflictingAlts; separator=", ">
 <endif>
@@ -279,7 +277,7 @@ TOKEN_NONDETERMINISM(input,conflictingTokens,paths,disabled,hasPredicateBlockedB
 <<
 <if(paths)>
 Decision can match input such as "<input>" using multiple alternatives:
-<paths:{  alt <it.alt> via NFA path <it.states; separator=","><\n>}>
+<paths:{ it | alt <it.alt> via NFA path <it.states; separator=","><\n>}>
 <else>
 Multiple token rules can match input such as "<input>": <conflictingTokens; separator=", "><\n>
 <endif>

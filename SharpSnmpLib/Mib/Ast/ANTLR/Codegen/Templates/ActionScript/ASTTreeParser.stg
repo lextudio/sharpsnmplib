@@ -1,5 +1,5 @@
 /*
- [The "BSD licence"]
+ [The "BSD license"]
  Copyright (c) 2005-2006 Terence Parr
  All rights reserved.
 
@@ -110,13 +110,13 @@ _last = <ASTLabelType>(input.LT(1));
 >>
 
 /** ID auto construct */
-tokenRef(token,label,elementIndex,hetero) ::= <<
+tokenRef(token,label,elementIndex,terminalOptions) ::= <<
 _last = <ASTLabelType>(input.LT(1));
 <super.tokenRef(...)>
 <if(!rewriteMode)>
 <if(backtracking)>if ( <actions.(actionScope).synpredgate> ) {<endif>
-<if(hetero)>
-<label>_tree = new <hetero>(<label>);
+<if(terminalOptions.node)>
+<label>_tree = new <terminalOptions.node>(<label>);
 <else>
 <label>_tree = <ASTLabelType>(adaptor.dupNode(<label>));
 <endif><\n>
@@ -135,13 +135,13 @@ tokenRefAndListLabel(token,label,elementIndex) ::= <<
 >>
 
 /** ^(ID ...) auto construct */
-tokenRefRuleRoot(token,label,elementIndex,hetero) ::= <<
+tokenRefRuleRoot(token,label,elementIndex,terminalOptions) ::= <<
 _last = <ASTLabelType>(input.LT(1));
 <super.tokenRef(...)>
 <if(!rewriteMode)>
 <if(backtracking)>if ( <actions.(actionScope).synpredgate> ) {<endif>
-<if(hetero)>
-<label>_tree = new <hetero>(<label>);
+<if(terminalOptions.node)>
+<label>_tree = new <terminalOptions.node>(<label>);
 <else>
 <label>_tree = <ASTLabelType>(adaptor.dupNode(<label>));
 <endif><\n>
@@ -151,13 +151,13 @@ root_<treeLevel> = <ASTLabelType>(adaptor.becomeRoot(<label>_tree, root_<treeLev
 >>
 
 /** Match ^(label+=TOKEN ...) auto construct */
-tokenRefRuleRootAndListLabel(token,label,elementIndex,hetero) ::= <<
+tokenRefRuleRootAndListLabel(token,label,elementIndex,terminalOptions) ::= <<
 <tokenRefRuleRoot(...)>
 <listLabel(elem=label,...)>
 >>
 
 /** Match . wildcard and auto dup the node/subtree */
-wildcard(token,label,elementIndex,hetero) ::= <<
+wildcard(token,label,elementIndex,terminalOptions) ::= <<
 _last = (<ASTLabelType>)input.LT(1);
 <super.wildcard(...)>
 <if(!rewriteMode)>
@@ -173,13 +173,13 @@ if ( _first_<treeLevel>==null ) _first_<treeLevel> = <label>;
 
 // SET AST
 
-matchSet(s,label,hetero,elementIndex,postmatchCode) ::= <<
+matchSet(s,label,terminalOptions,elementIndex,postmatchCode) ::= <<
 _last = <ASTLabelType>(input.LT(1));
 <super.matchSet(..., postmatchCode={
 <if(!rewriteMode)>
 <if(backtracking)>if ( <actions.(actionScope).synpredgate> ) {<endif>
-<if(hetero)>
-<label>_tree = new <hetero>(<label>);
+<if(terminalOptions.node)>
+<label>_tree = new <terminalOptions.node>(<label>);
 <else>
 <label>_tree = <ASTLabelType>(adaptor.dupNode(<label>));
 <endif><\n>
@@ -190,7 +190,7 @@ adaptor.addChild(root_<treeLevel>, <label>_tree);
 )>
 >>
 
-matchRuleBlockSet(s,label,hetero,elementIndex,postmatchCode,treeLevel="0") ::= <<
+matchRuleBlockSet(s,label,terminalOptions,elementIndex,postmatchCode,treeLevel="0") ::= <<
 <matchSet(...)>
 <noRewrite()> <! set return tree !>
 >>
@@ -200,12 +200,12 @@ _last = <ASTLabelType>(input.LT(1));
 <super.matchSet(...)>
 >>
 
-matchSetRuleRoot(s,label,hetero,elementIndex,debug) ::= <<
+matchSetRuleRoot(s,label,terminalOptions,elementIndex,debug) ::= <<
 <super.matchSet(..., postmatchCode={
 <if(!rewriteMode)>
 <if(backtracking)>if ( <actions.(actionScope).synpredgate> ) {<endif>
-<if(hetero)>
-<label>_tree = new <hetero>(<label>);
+<if(terminalOptions.node)>
+<label>_tree = new <terminalOptions.node>(<label>);
 <else>
 <label>_tree = <ASTLabelType>(adaptor.dupNode(<label>));
 <endif><\n>
@@ -278,9 +278,9 @@ _last = <ASTLabelType>(input.LT(1));
 /** Streams for token refs are tree nodes now; override to
  *  change nextToken to nextNode.
  */
-createRewriteNodeFromElement(token,hetero,scope) ::= <<
-<if(hetero)>
-new <hetero>(stream_<token>.nextNode())
+createRewriteNodeFromElement(token,terminalOptions,scope) ::= <<
+<if(terminalOptions.node)>
+new <terminalOptions.node>(stream_<token>.nextNode())
 <else>
 stream_<token>.nextNode()
 <endif>

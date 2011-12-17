@@ -1,4 +1,4 @@
-group JavaScript implements ANTLRCore;
+group JavaScript;
 
 /** The overall file structure of a recognizer; stores methods for rules
  *  and cyclic DFAs plus support code.
@@ -166,7 +166,7 @@ var <grammar.recognizerName> = function(input, state<grammar.delegators:{g|, <g:
 
         <parserCtorBody()>
         <grammar.directDelegates:
-         {g|this.<g:delegateName()> = new <g.recognizerName>(input, state<trunc(g.delegators):{p|, <p:delegateName()>}>, this);}; separator="\n">         
+         {g|this.<g:delegateName()> = new <g.recognizerName>(input, state<trunc(g.delegators):{p|, <p:delegateName()>}>, this);}; separator="\n">
          <grammar.indirectDelegates:{g | this.<g:delegateName()> = <g.delegator:delegateName()>.<g:delegateName()>;}; separator="\n">
          <last(grammar.delegators):{g|this.gParent = this.<g:delegateName()>;}>
 
@@ -243,7 +243,7 @@ parser(grammar, name, scopes, tokens, tokenNames, rules, numRules, bitsets, ASTL
 /** How to generate a tree parser; same as parser except the input
  *  stream is a different type.
  */
-treeParser(grammar, name, scopes, tokens, tokenNames, globalAction, rules, numRules, bitsets, labelType={<ASTLabelType>}, ASTLabelType="var", superClass="tree.TreeParser", members={<actions.treeparser.members>}) ::= <<
+treeParser(grammar, name, scopes, tokens, tokenNames, globalAction, rules, numRules, bitsets, labelType={<ASTLabelType>}, ASTLabelType="var", superClass="tree.TreeParser", members={<actions.treeparser.members>}, filterMode) ::= <<
 <genericParser(inputStreamType="TreeNodeStream", rewriteElementType="Node", ...)>
 >>
 
@@ -636,12 +636,12 @@ element() ::= <<
 >>
 
 /** match a token optionally with a label in front */
-tokenRef(token,label,elementIndex,hetero) ::= <<
+tokenRef(token,label,elementIndex,terminalOptions) ::= <<
 <if(label)><label>=<endif>this.match(this.input,<token>,<grammar.recognizerName>.FOLLOW_<token>_in_<ruleName><elementIndex>); <checkRuleBacktrackFailure()>
 >>
 
 /** ids+=ID */
-tokenRefAndListLabel(token,label,elementIndex,hetero) ::= <<
+tokenRefAndListLabel(token,label,elementIndex,terminalOptions) ::= <<
 <tokenRef(...)>
 <listLabel(elem=label,...)>
 >>
@@ -708,7 +708,7 @@ matchSetAndListLabel(s,label,elementIndex,postmatchCode) ::= <<
 >>
 
 /** Match a string literal */
-lexerStringRef(string,label) ::= <<
+lexerStringRef(string,label,elementIndex) ::= <<
 <if(label)>
 var <label>Start = this.getCharIndex();
 this.match(<string>); <checkRuleBacktrackFailure()>
@@ -787,6 +787,13 @@ var <label> = new org.antlr.runtime.CommonToken(this.input, this.EOF, org.antlr.
 this.match(this.EOF); <checkRuleBacktrackFailure()>
 <endif>
 >>
+
+// used for left-recursive rules
+recRuleDefArg()                       ::= "int <recRuleArg()>"
+recRuleArg()                          ::= "_p"
+recRuleAltPredicate(ruleName,opPrec)  ::= "<recRuleArg()> \<= <opPrec>"
+recRuleSetResultAction()              ::= "root_0=$<ruleName>_primary.tree;"
+recRuleSetReturnAction(src,name)      ::= "$<name>=$<src>.<name>;"
 
 /** match ^(root children) in tree parser */
 tree(root, actionsAfterRoot, children, nullableChildList,enclosingTreeLevel, treeLevel) ::= <<

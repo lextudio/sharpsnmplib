@@ -1,5 +1,5 @@
 /*
- [The "BSD licence"]
+ [The "BSD license"]
  Copyright (c) 2005-2006 Terence Parr
  All rights reserved.
 
@@ -25,7 +25,7 @@
  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-group ActionScript implements ANTLRCore;
+group ActionScript;
 
 asTypeInitMap ::= [
 	"int":"0",
@@ -624,12 +624,12 @@ element() ::= <<
 >>
 
 /** match a token optionally with a label in front */
-tokenRef(token,label,elementIndex,hetero) ::= <<
+tokenRef(token,label,elementIndex,terminalOptions) ::= <<
 <if(label)><label>=<labelType>(<endif>matchStream(input,<token>,FOLLOW_<token>_in_<ruleName><elementIndex>)<if(label)>)<endif>; <checkRuleBacktrackFailure()>
 >>
 
 /** ids+=ID */
-tokenRefAndListLabel(token,label,elementIndex,hetero) ::= <<
+tokenRefAndListLabel(token,label,elementIndex,terminalOptions) ::= <<
 <tokenRef(...)>
 <listLabel(elem=label,...)>
 >>
@@ -694,7 +694,7 @@ matchSetAndListLabel(s,label,elementIndex,postmatchCode) ::= <<
 >>
 
 /** Match a string literal */
-lexerStringRef(string,label) ::= <<
+lexerStringRef(string,label,elementIndex) ::= <<
 <if(label)>
 var <label>Start:int = charIndex;
 matchString(<string>); <checkRuleBacktrackFailure()>
@@ -1209,7 +1209,7 @@ ruleLabelPropertyRef_text(scope,attr) ::= <<
   input.treeAdaptor.getTokenStartIndex(<scope>.start),
   input.treeAdaptor.getTokenStopIndex(<scope>.start))):null)
 <else>
-(<scope>!=null?input.toStringWithRange(<scope>.start,<scope>.stop):null)
+(<scope>!=null?input.toStringWithTokenRange(<scope>.start,<scope>.stop):null)
 <endif>
 >>
 
@@ -1243,7 +1243,7 @@ input.tokenStream.toStringWithRange(
   input.treeAdaptor.getTokenStartIndex(retval.start),
   input.treeAdaptor.getTokenStopIndex(retval.start))
 <else>
-input.toStringWithRange(retval.start,input.LT(-1))
+input.toStringWithTokenRange(retval.start,input.LT(-1))
 <endif>
 >>
 rulePropertyRef_st(scope,attr) ::= "retval.st"

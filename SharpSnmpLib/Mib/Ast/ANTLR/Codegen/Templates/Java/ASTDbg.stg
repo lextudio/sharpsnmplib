@@ -1,5 +1,5 @@
 /*
- [The "BSD licence"]
+ [The "BSD license"]
  Copyright (c) 2005-2006 Terence Parr
  All rights reserved.
 
@@ -29,7 +29,6 @@
 /** Template overrides to add debugging to AST stuff.  Dynamic inheritance
  *  hierarchy is set up as ASTDbg : AST : Dbg : Java by code generator.
  */
-group ASTDbg;
 
 parserMembers() ::= <<
 protected DebugTreeAdaptor adaptor;
@@ -37,7 +36,7 @@ public void setTreeAdaptor(TreeAdaptor adaptor) {
 <if(grammar.grammarIsRoot)>
     this.adaptor = new DebugTreeAdaptor(dbg,adaptor);
 <else>
-    this.adaptor = (DebugTreeAdaptor)adaptor; // delegator sends dbg adaptor 
+    this.adaptor = (DebugTreeAdaptor)adaptor; // delegator sends dbg adaptor
 <endif><\n>
     <grammar.directDelegates:{g|<g:delegateName()>.setTreeAdaptor(this.adaptor);}>
 }
@@ -72,7 +71,6 @@ proxy.setTreeAdaptor(adap);
 @ctorForProfilingRootGrammar.finally() ::=<<
 TreeAdaptor adap = new CommonTreeAdaptor();
 setTreeAdaptor(adap);
-proxy.setTreeAdaptor(adap);
 >>
 
 @ctorForPredefinedListener.superClassRef() ::= "super(input, dbg);"

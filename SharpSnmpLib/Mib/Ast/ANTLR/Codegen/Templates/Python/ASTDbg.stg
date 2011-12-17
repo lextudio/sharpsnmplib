@@ -1,5 +1,5 @@
 /*
- [The "BSD licence"]
+ [The "BSD license"]
  Copyright (c) 2005-2009 Terence Parr
  All rights reserved.
 
@@ -36,7 +36,7 @@ def setTreeAdaptor(self, adaptor):
 <if(grammar.grammarIsRoot)>
     self._adaptor = DebugTreeAdaptor(self.dbg, adaptor)
 <else>
-    self._adaptor = adaptor # delegator sends dbg adaptor 
+    self._adaptor = adaptor # delegator sends dbg adaptor
 <endif>
     <grammar.directDelegates:{g|<g:delegateName()>.setTreeAdaptor(self._adaptor)}>
 

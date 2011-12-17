@@ -1,10 +1,10 @@
 /*
- * [The "BSD licence"]
- * Copyright (c) 2005-2008 Terence Parr
+ * [The "BSD license"]
+ * Copyright (c) 2011 Terence Parr
  * All rights reserved.
  *
  * Conversion to C#:
- * Copyright (c) 2008-2009 Sam Harwell, Pixel Mine, Inc.
+ * Copyright (c) 2011 Sam Harwell, Pixel Mine, Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -32,7 +32,6 @@
 /** Template subgroup to add template rewrite output
  *  If debugging, then you'll also get STDbg.stg loaded.
  */
-group ST;
 
 @outputFile.imports() ::= <<
 <@super.imports()>
@@ -40,49 +39,32 @@ using Antlr3.ST;
 using Antlr3.ST.Language;
 >>
 
-/** Add this to each rule's return value struct */
-@returnScope.ruleReturnMembers() ::= <<
-public StringTemplate st;
-public object getTemplate() { return st; }
-public override string ToString() { return (st==null) ? null : st.ToString(); }
->>
-
 @genericParser.members() ::= <<
 <@super.members()>
-protected StringTemplateGroup templateLib = new StringTemplateGroup("<name>Templates", typeof(AngleBracketTemplateLexer) );
+private StringTemplateGroup _templateGroup = new StringTemplateGroup("<name>Templates", typeof(AngleBracketTemplateLexer) );
 
-public StringTemplateGroup TemplateLib
+public StringTemplateGroup TemplateGroup
 {
-	get { return templateLib; }
-	set { templateLib = value; }
+	get { return _templateGroup; }
+	set { _templateGroup = value; }
 }
-
-///** allows convenient multi-value initialization:
-// *  "new STAttrMap().put(...).put(...)"
-// */
-//public static class STAttrMap extends HashMap {
-//  public STAttrMap put(String attrName, object value) {
-//    super.put(attrName, value);
-//    return this;
-//  }
-//  public STAttrMap put(String attrName, int value) {
-//    super.put(attrName, new Integer(value));
-//    return this;
-//  }
-//}
 >>
+
+ruleReturnBaseType() ::= <%
+Template<if(TREE_PARSER)>Tree<else>Parser<endif>RuleReturnScope\<StringTemplate, <labelType>>
+%>
 
 /** x+=rule when output=template */
 ruleRefAndListLabel(rule,label,elementIndex,args,scope) ::= <<
 <ruleRef(...)>
-<listLabel(elem=label+".getTemplate()",...)>
+<listLabelElem(elem={<label>.Template},elemType="StringTemplate",...)>
 >>
 
 rewriteTemplate(alts) ::= <<
 
 // TEMPLATE REWRITE
 <if(backtracking)>
-if ( <actions.(actionScope).synpredgate> )
+if (<actions.(actionScope).synpredgate>)
 {
 	<alts:rewriteTemplateAlt(); separator="else ">
 	<if(rewriteMode)><replaceTextInLine()><endif>
@@ -95,28 +77,28 @@ if ( <actions.(actionScope).synpredgate> )
 
 replaceTextInLine() ::= <<
 <if(TREE_PARSER)>
-((TokenRewriteStream)input.TokenStream).replace(
-	input.TreeAdaptor.GetTokenStartIndex(retval.start),
-	input.TreeAdaptor.GetTokenStopIndex(retval.start),
-	retval.st );
+((TokenRewriteStream)input.TokenStream).Replace(
+	input.TreeAdaptor.GetTokenStartIndex(retval.Start),
+	input.TreeAdaptor.GetTokenStopIndex(retval.Start),
+	retval.Template);
 <else>
-((TokenRewriteStream)input).replace(
-	((IToken)retval.start).TokenIndex,
+((TokenRewriteStream)input).Replace(
+	retval.Start.TokenIndex,
 	input.LT(-1).TokenIndex,
-	retval.st );
+	retval.Template);
 <endif>
 >>
 
-rewriteTemplateAlt() ::= <<
+rewriteTemplateAlt(it) ::= <<
 // <it.description>
 <if(it.pred)>
 if (<it.pred>)
 {
-	retval.st = <it.alt>;
+	retval.Template = <it.alt>;
 }<\n>
 <else>
 {
-	retval.st = <it.alt>;
+	retval.Template = <it.alt>;
 }<\n>
 <endif>
 >>
@@ -131,24 +113,28 @@ null;
  *  an attribute to build a bigger template; you get a self-embedded
  *  template.
  */
-rewriteExternalTemplate(name,args) ::= <<
-templateLib.getInstanceOf("<name>"<if(args)>,
-	new STAttrMap()<args:{a | .put("<a.name>", <a.value>)}>
-	<endif>)
->>
+rewriteExternalTemplate(name,args) ::= <%
+TemplateGroup.GetInstanceOf("<name>"<optionalArguments(args)>)
+%>
 
 /** expr is a string expression that says what template to load */
-rewriteIndirectTemplate(expr,args) ::= <<
-templateLib.getInstanceOf(<expr><if(args)>,
-	new STAttrMap()<args:{a | .put("<a.name>", <a.value>)}>
-	<endif>)
->>
+rewriteIndirectTemplate(expr,args) ::= <%
+TemplateGroup.GetInstanceOf(<expr><optionalArguments(args)>)
+%>
 
 /** Invoke an inline template with a set of attribute name/value pairs */
-rewriteInlineTemplate(args, template) ::= <<
-new StringTemplate(templateLib, "<template>"<if(args)>,
-	new STAttrMap()<args:{a | .put("<a.name>", <a.value>)}>
-	<endif>)
+rewriteInlineTemplate(args, template) ::= <%
+new StringTemplate(TemplateGroup, "<template>"<optionalArguments(args)>)
+%>
+
+optionalArguments(args) ::= <<
+<if(args)>,
+	new Dictionary\<string, object>() { <args:optionalArgument(); separator=", "> }
+<endif>
+>>
+
+optionalArgument(it) ::= <<
+{"<it.name>", <it.value>}
 >>
 
 /** plain -> {foo} action */
@@ -158,10 +144,10 @@ rewriteAction(action) ::= <<
 
 /** An action has %st.attrName=expr; or %{st}.attrName=expr; */
 actionSetAttribute(st,attrName,expr) ::= <<
-(<st>).setAttribute("<attrName>",<expr>);
+(<st>).SetAttribute("<attrName>",<expr>);
 >>
 
 /** Translate %{stringExpr} */
 actionStringConstructor(stringExpr) ::= <<
-new StringTemplate(templateLib,<stringExpr>)
+new StringTemplate(TemplateGroup,<stringExpr>)
 >>
