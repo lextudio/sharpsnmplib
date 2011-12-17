@@ -7,7 +7,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>Lextm.SharpSnmpLib</RootNamespace>
     <AssemblyName>SharpSnmpLib.Mib.Ast</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>sharpsnmplib.snk</AssemblyOriginatorKeyFile>
     <DocumentationFile>bin\Release\SharpSnmpLib.Mib.xml</DocumentationFile>
@@ -68,8 +68,9 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <ItemGroup>
+    <Reference Include="Accessibility" />
     <Reference Include="Antlr3.Runtime">
-      <HintPath>..\lib\Antlr3.Runtime.dll</HintPath>
+      <HintPath>..\lib\ANTLR\Antlr3.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -78,11 +79,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="Mib\Ast\ANTLR\smiLexer.cs" />
-    <Compile Include="Mib\Ast\ANTLR\smiParser.cs" />
-    <Compile Include="Mib\Ast\ANTLR\SmiWalker.cs" />
+    <Compile Include="Mib\Ast\Exports.cs" />
+    <Compile Include="Mib\Ast\Generated\smiLexer.cs" />
+    <Compile Include="Mib\Ast\Generated\smiParser.cs" />
+    <Compile Include="Mib\Ast\Import.cs" />
+    <Compile Include="Mib\Ast\Imports.cs" />
+    <Compile Include="Mib\Ast\MibDocument.cs" />
+    <Compile Include="Mib\Ast\MibModule.cs" />
     <Compile Include="Mib\Ast\SemanticException.cs" />
-    <None Include="Mib\Ast\ANTLR\SmiWalker.g" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="SharpSnmpLib.csproj">
@@ -91,7 +95,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Mib\Ast\ANTLR\smi.g" />
+    <None Include="Mib\Ast\Generated\smi.g" />
     <None Include="sharpsnmplib.snk" />
   </ItemGroup>
   <ItemGroup>

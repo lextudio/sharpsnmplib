@@ -13,7 +13,7 @@ grammar Smi;
 
 options
 {
-	language=CSharp2;
+	language=CSharp3;
 	output=AST;
 	ASTLabelType=CommonTree;
 }
@@ -30,6 +30,16 @@ options
 
 @parser::namespace { Lextm.SharpSnmpLib.Mib.Ast.ANTLR }
 @lexer::namespace { Lextm.SharpSnmpLib.Mib.Ast.ANTLR }
+
+@parser::members{
+	private MibDocument doc = new MibDocument();
+
+	public MibDocument GetDocument()
+	{
+	    statement();
+	    return doc;
+	}
+}
 
 @parser::footer
 {
@@ -591,20 +601,30 @@ C_STRING 	: 	'"' (options {greedy=false;}
 //*************************************************************************
 
 statement
-    : (module_definition)* 
+    : (mod=module_definition {doc.Add(mod.result);})* EOF
 	;
 	
 // Grammar Definitions
 
 /* NSS 13/1/05: Added 'PIB-DEFINITIONS' for SPPI */
-module_definition: module_identifier ('PIB-DEFINITIONS' | DEFINITIONS_KW) 
+module_definition returns [MibModule result]
+    : name=module_identifier ('PIB-DEFINITIONS' | DEFINITIONS_KW) 
 		( (EXPLICIT_KW | IMPLICIT_KW | AUTOMATIC_KW) TAGS_KW )? 
 		(EXTENSIBILITY_KW IMPLIED_KW)?
-		ASSIGN_OP BEGIN_KW module_body END_KW;
+		ASSIGN_OP BEGIN_KW mod=module_body END_KW 
+		{
+		    $result = $mod.result; 
+			$result.Name = $name.text;
+		}
+    ;
 
 module_identifier: UPPER (obj_id_comp_lst)? ;
 
-module_body: (exports)? (imports)? (assignment)* ;
+module_body returns [MibModule result]
+    : { $result = new MibModule(); }
+	(ex=exports { $result.Exports = $ex.result; })? 
+	(im=imports { $result.Imports = $im.result; })? 
+	(a=assignment { $result.AddAssignment($a.result); })* ;
 
 /* NSS 15/1/05: Added syntactic predicate */
 obj_id_comp_lst: L_BRACE ((LOWER (LOWER|NUMBER)) => defined_value)? (obj_id_component)+ R_BRACE;
@@ -622,12 +642,21 @@ obj_id_component: NUMBER
 
 tag_default: EXPLICIT_KW | IMPLICIT_KW | AUTOMATIC_KW;
 
-exports: EXPORTS_KW ( (symbol_list)? | ALL_KW ) SEMI;
+exports returns [Exports result]
+    : { $result = new Exports(); }
+	EXPORTS_KW (
+	    (sym=symbol_list { $result.Add($sym.text); })? 
+		| ALL_KW { $result.AllExported = true; } 
+    ) SEMI;
 
-imports: IMPORTS_KW (symbols_from_module)* SEMI ;
+imports returns [Imports result]
+    : { $result = new Imports(); }
+	IMPORTS_KW (sym=symbols_from_module { $result.Add($sym.result); })* SEMI ;
 
 /* NSS 14/1/05: Shouldn't need syntactic predicate */
-assignment: UPPER ASSIGN_OP type 
+assignment returns [Assignment result]
+    : { $result = new Assignment(); }
+	UPPER ASSIGN_OP type 
           | LOWER type ASSIGN_OP value 
           | (UPPER | macroName) 'MACRO' ASSIGN_OP BEGIN_KW (~(END_KW))* END_KW ;
 
@@ -637,9 +666,15 @@ assignment: UPPER ASSIGN_OP type
 //                "MACRO" ASSIGN_OP BEGIN_KW (~(END_KW) )* END_KW) => 
 //                (UPPER | macroName) "MACRO" ASSIGN_OP BEGIN_KW (~(END_KW))* END_KW ;
 
-symbol_list: symbol (COMMA symbol)* ;
+symbol_list returns [IList<string> result]
+    : { $result = new List<string>(); }
+	sym=symbol { $result.Add($sym.text); }
+	 (COMMA sym2=symbol { $result.Add($sym2.text); })* ;
 
-symbols_from_module: symbol_list FROM_KW UPPER 
+symbols_from_module returns [Import result]
+    : { $result = new Import(); }
+	syms=symbol_list { $result.Symbols = $syms.result; }
+	FROM_KW mod=UPPER { $result.Module = $mod.text;}
                         ( obj_id_comp_lst 
                           | (defined_value) => defined_value 
                         )? ;
