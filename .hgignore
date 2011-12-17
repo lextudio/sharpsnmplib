@@ -1,0 +1,2 @@
+syntax: glob
+SharpSnmpLib/Mib/Ast/ANTLR/Smi.tokens
