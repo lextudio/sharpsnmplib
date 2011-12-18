@@ -66,6 +66,9 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DocumentationFile>bin\Release\SharpSnmpLib.Mib.xml</DocumentationFile>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DocumentationFile />
+  </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <ItemGroup>
     <Reference Include="Accessibility" />
@@ -79,14 +82,115 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Mib\Ast\Access.cs" />
+    <Compile Include="Mib\Ast\AccessType.cs" />
+    <Compile Include="Mib\Ast\AgentCapabilitiesMacro.cs" />
+    <Compile Include="Mib\Ast\AgentCapabilitiesModule.cs" />
+    <Compile Include="Mib\Ast\AllExceptConstraintElement.cs" />
+    <Compile Include="Mib\Ast\AnyType.cs" />
+    <Compile Include="Mib\Ast\BinaryLiteralValue.cs" />
+    <Compile Include="Mib\Ast\BitStringType.cs" />
+    <Compile Include="Mib\Ast\BitsType.cs" />
+    <Compile Include="Mib\Ast\BooleanType.cs" />
+    <Compile Include="Mib\Ast\Categories.cs" />
+    <Compile Include="Mib\Ast\CharacterSet.cs" />
+    <Compile Include="Mib\Ast\CharacterStringType.cs" />
+    <Compile Include="Mib\Ast\CharDefinition.cs" />
+    <Compile Include="Mib\Ast\CharDefinitionListValue.cs" />
+    <Compile Include="Mib\Ast\ChoiceType.cs" />
+    <Compile Include="Mib\Ast\ChoiceValue.cs" />
+    <Compile Include="Mib\Ast\ClassNumber.cs" />
+    <Compile Include="Mib\Ast\Compliance.cs" />
+    <Compile Include="Mib\Ast\ComponentsOfElementType.cs" />
+    <Compile Include="Mib\Ast\Constraint.cs" />
+    <Compile Include="Mib\Ast\ConstraintElement.cs" />
+    <Compile Include="Mib\Ast\DefinedType.cs" />
+    <Compile Include="Mib\Ast\DefinedValue.cs" />
+    <Compile Include="Mib\Ast\ElementSetConstraintElement.cs" />
+    <Compile Include="Mib\Ast\ElementSetRange.cs" />
+    <Compile Include="Mib\Ast\ElementType.cs" />
+    <Compile Include="Mib\Ast\EmbeddedType.cs" />
+    <Compile Include="Mib\Ast\EntityStatus.cs" />
+    <Compile Include="Mib\Ast\EnumType.cs" />
+    <Compile Include="Mib\Ast\ErrorMacro.cs" />
+    <Compile Include="Mib\Ast\ExceptionSpec.cs" />
     <Compile Include="Mib\Ast\Exports.cs" />
+    <Compile Include="Mib\Ast\ExternalType.cs" />
+    <Compile Include="Mib\Ast\FalseLiteralValue.cs" />
+    <Compile Include="Mib\Ast\FromConstraintElement.cs" />
     <Compile Include="Mib\Ast\Generated\smiLexer.cs" />
     <Compile Include="Mib\Ast\Generated\smiParser.cs" />
+    <Compile Include="Mib\Ast\GroupCompliance.cs" />
+    <Compile Include="Mib\Ast\HexLiteralValue.cs" />
+    <Compile Include="Mib\Ast\IdComponent.cs" />
+    <Compile Include="Mib\Ast\IdComponentList.cs" />
+    <Compile Include="Mib\Ast\IdListValue.cs" />
+    <Compile Include="Mib\Ast\IEntity.cs" />
     <Compile Include="Mib\Ast\Import.cs" />
     <Compile Include="Mib\Ast\Imports.cs" />
+    <Compile Include="Mib\Ast\IncludeTypeConstraintElement.cs" />
+    <Compile Include="Mib\Ast\IntegerType.cs" />
+    <Compile Include="Mib\Ast\ISmiType.cs" />
+    <Compile Include="Mib\Ast\ISmiValue.cs" />
+    <Compile Include="Mib\Ast\LiteralValue.cs" />
+    <Compile Include="Mib\Ast\Macro.cs" />
     <Compile Include="Mib\Ast\MibDocument.cs" />
     <Compile Include="Mib\Ast\MibModule.cs" />
+    <Compile Include="Mib\Ast\MinusInfinityLiteralValue.cs" />
+    <Compile Include="Mib\Ast\ModuleCompliance.cs" />
+    <Compile Include="Mib\Ast\ModuleComplianceMacro.cs" />
+    <Compile Include="Mib\Ast\ModuleIdentityMacro.cs" />
+    <Compile Include="Mib\Ast\NamedBit.cs" />
+    <Compile Include="Mib\Ast\NamedConstraintElement.cs" />
+    <Compile Include="Mib\Ast\NamedNumber.cs" />
+    <Compile Include="Mib\Ast\NamedValue.cs" />
+    <Compile Include="Mib\Ast\NormalConstraintElement.cs" />
+    <Compile Include="Mib\Ast\NotificationGroupMacro.cs" />
+    <Compile Include="Mib\Ast\NotificationTypeMacro.cs" />
+    <Compile Include="Mib\Ast\NullLiteralValue.cs" />
+    <Compile Include="Mib\Ast\NullType.cs" />
+    <Compile Include="Mib\Ast\NumberLiteralValue.cs" />
+    <Compile Include="Mib\Ast\ObjectCompliance.cs" />
+    <Compile Include="Mib\Ast\ObjectGroupMacro.cs" />
+    <Compile Include="Mib\Ast\ObjectIdentifierType.cs" />
+    <Compile Include="Mib\Ast\ObjectIdentityMacro.cs" />
+    <Compile Include="Mib\Ast\ObjectTypeMacro.cs" />
+    <Compile Include="Mib\Ast\OctetStringType.cs" />
+    <Compile Include="Mib\Ast\OperationMacro.cs" />
+    <Compile Include="Mib\Ast\PatternConstraintElement.cs" />
+    <Compile Include="Mib\Ast\PibAccess.cs" />
+    <Compile Include="Mib\Ast\PlusInfinityLiteralValue.cs" />
+    <Compile Include="Mib\Ast\QuadValue.cs" />
+    <Compile Include="Mib\Ast\RealType.cs" />
+    <Compile Include="Mib\Ast\RelativeIdType.cs" />
+    <Compile Include="Mib\Ast\Revision.cs" />
+    <Compile Include="Mib\Ast\SelectionType.cs" />
     <Compile Include="Mib\Ast\SemanticException.cs" />
+    <Compile Include="Mib\Ast\SequenceOfType.cs" />
+    <Compile Include="Mib\Ast\SequenceOfValue.cs" />
+    <Compile Include="Mib\Ast\SequenceType.cs" />
+    <Compile Include="Mib\Ast\SequenceValue.cs" />
+    <Compile Include="Mib\Ast\SetOfType.cs" />
+    <Compile Include="Mib\Ast\SetType.cs" />
+    <Compile Include="Mib\Ast\SizeConstraintElement.cs" />
+    <Compile Include="Mib\Ast\Syntax.cs" />
+    <Compile Include="Mib\Ast\Tag.cs" />
+    <Compile Include="Mib\Ast\TagDefault.cs" />
+    <Compile Include="Mib\Ast\TaggedElementType.cs" />
+    <Compile Include="Mib\Ast\TaggedType.cs" />
+    <Compile Include="Mib\Ast\TextualConventionMacro.cs" />
+    <Compile Include="Mib\Ast\TrapTypeMacro.cs" />
+    <Compile Include="Mib\Ast\TrueLiteralValue.cs" />
+    <Compile Include="Mib\Ast\TupleValue.cs" />
+    <Compile Include="Mib\Ast\TypeOrValue.cs" />
+    <Compile Include="Mib\Ast\UnknownType.cs" />
+    <Compile Include="Mib\Ast\ValueAssignment.cs" />
+    <Compile Include="Mib\Ast\ValueConstraintElement.cs" />
+    <Compile Include="Mib\Ast\ValueRange.cs" />
+    <Compile Include="Mib\Ast\ValueRangeConstraintElement.cs" />
+    <Compile Include="Mib\Ast\Variantion.cs" />
+    <Compile Include="Mib\Ast\WithComponentConstraintElement.cs" />
+    <Compile Include="Mib\Ast\WithComponentsConstraintElement.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="SharpSnmpLib.csproj">

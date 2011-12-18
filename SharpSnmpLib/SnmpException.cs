@@ -53,7 +53,7 @@ namespace Lextm.SharpSnmpLib
         protected SnmpException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
-        } 
+        }
 #endif
        
         /// <summary>

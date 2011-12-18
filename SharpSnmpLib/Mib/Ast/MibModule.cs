@@ -4,7 +4,7 @@ namespace Lextm.SharpSnmpLib.Mib.Ast
 {
     public class MibModule
     {
-        private readonly IList<Assignment> _assignments = new List<Assignment>();
+        private readonly IList<IEntity> _assignments = new List<IEntity>();
         public string Name { get; set; }
         public bool AllExported { get; set; }
 
@@ -22,13 +22,9 @@ namespace Lextm.SharpSnmpLib.Mib.Ast
             set { _imports = value; }
         }
 
-        public void AddAssignment(Assignment assignment)
+        public void AddAssignment(IEntity assignment)
         {
             _assignments.Add(assignment);
         }
-    }
-
-    public class Assignment
-    {
     }
 }
