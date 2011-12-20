@@ -125,7 +125,7 @@
     <Compile Include="Mib\Ast\IdComponent.cs" />
     <Compile Include="Mib\Ast\IdComponentList.cs" />
     <Compile Include="Mib\Ast\IdListValue.cs" />
-    <Compile Include="Mib\Ast\IEntity.cs" />
+    <Compile Include="Mib\Ast\IConstruct.cs" />
     <Compile Include="Mib\Ast\Import.cs" />
     <Compile Include="Mib\Ast\Imports.cs" />
     <Compile Include="Mib\Ast\IncludeTypeConstraintElement.cs" />
@@ -191,12 +191,6 @@
     <Compile Include="Mib\Ast\Variantion.cs" />
     <Compile Include="Mib\Ast\WithComponentConstraintElement.cs" />
     <Compile Include="Mib\Ast\WithComponentsConstraintElement.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="SharpSnmpLib.csproj">
-      <Project>{286DE6DB-8F95-4BD4-86A2-86488D2E0EE1}</Project>
-      <Name>SharpSnmpLib</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Mib\Ast\Generated\smi.g" />

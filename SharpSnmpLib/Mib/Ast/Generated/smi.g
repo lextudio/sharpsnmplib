@@ -546,15 +546,13 @@ SL_COMMENT
 		{Skip();}
 	;
 
-protected
-BDIG		: ('0'|'1') ;
+NUMBER	:	('0'..'9')+ ;
+
 protected
 HDIG		:	( :('0'..'9') )
 			|	('A'..'F')
 			|	('a'..'f')
 			;
-
-NUMBER	:	('0'..'9')+ ;
 
 /* NSS 13/1/05: Added '_' as acceptable character - required for some PIBs */
 
@@ -583,7 +581,7 @@ B_OR_H_STRING
 	
 /* Changed by NSS 13/1/05 - upper case *or* lower case 'B' and 'H'; zero or more digits */
 fragment
-B_STRING 	: 	SINGLE_QUOTE (BDIG)* SINGLE_QUOTE ('B' | 'b') ;
+B_STRING 	: 	SINGLE_QUOTE (('0'|'1'))* SINGLE_QUOTE ('B' | 'b') ;
 fragment
 H_STRING 	: 	SINGLE_QUOTE (HDIG)* SINGLE_QUOTE ('H' | 'h') ;	
 	
@@ -624,7 +622,7 @@ module_body returns [MibModule result]
     : { $result = new MibModule(); }
 	(ex=exports { $result.Exports = $ex.result; })? 
 	(im=imports { $result.Imports = $im.result; })? 
-	(a=assignment { $result.AddAssignment($a.result); })* ;
+	(a=assignment { $result.Add($a.result); })* ;
 
 /* NSS 15/1/05: Added syntactic predicate */
 obj_id_comp_lst returns [IdComponentList result]
@@ -671,7 +669,7 @@ imports returns [Imports result]
 	IMPORTS_KW (sym=symbols_from_module { $result.Add($sym.result); })* SEMI ;
 
 /* NSS 14/1/05: Shouldn't need syntactic predicate */
-assignment returns [IEntity result]
+assignment returns [IConstruct result]
     : 
 	u=UPPER ASSIGN_OP t=type 
 	{ 
@@ -1335,7 +1333,8 @@ namedNumber returns [NamedNumber result]
 
 signed_number returns [NumberLiteralValue result]
     : MINUS num=NUMBER { $result = new NumberLiteralValue(-1 * long.Parse($num.text)); }
-	| num2=NUMBER { $result = new NumberLiteralValue(long.Parse($num2.text)); };
+	| num2=NUMBER { $result = new NumberLiteralValue(ulong.Parse($num2.text)); }
+	;
 
 element_set_specs returns [ElementSetRange result]
     : { $result = new ElementSetRange(); }

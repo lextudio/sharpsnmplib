@@ -16,7 +16,7 @@ namespace Lextm.SharpSnmpLib.Mib.Ast
 
         public void Add(ConstraintElement element)
         {
-            throw new System.NotImplementedException();
+
         }
 
         public ConstraintElement ConstraintElement

@@ -1,6 +1,6 @@
 namespace Lextm.SharpSnmpLib.Mib.Ast
 {
-    public class Macro : IEntity
+    public class Macro : IConstruct
     {
         public string Name { get; set; }
 

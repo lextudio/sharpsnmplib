@@ -1,10 +1,11 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Lextm.SharpSnmpLib.Mib.Ast
 {
     public class MibModule
     {
-        private readonly IList<IEntity> _assignments = new List<IEntity>();
+        private readonly IList<IConstruct> _constructs = new List<IConstruct>();
         public string Name { get; set; }
         public bool AllExported { get; set; }
 
@@ -16,15 +17,29 @@ namespace Lextm.SharpSnmpLib.Mib.Ast
         }
 
         private Imports _imports;
+        private IList<ValueAssignment> _entities;
+
         public Imports Imports
         {
             get { return _imports ?? (_imports = new Imports()); }
             set { _imports = value; }
         }
 
-        public void AddAssignment(IEntity assignment)
+        public IList<IConstruct> Constructs
         {
-            _assignments.Add(assignment);
+            get {
+                return _constructs;
+            }
+        }
+
+        public IList<ValueAssignment> Entities  
+        {
+            get { return _entities ?? (_entities = Constructs.OfType<ValueAssignment>().ToList()); }
+        }
+
+        public void Add(IConstruct construct)
+        {
+            _constructs.Add(construct);
         }
     }
 }

@@ -7,6 +7,7 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
+using System.IO;
 using Antlr.Runtime;
 using Lextm.SharpSnmpLib.Mib.Ast.ANTLR;
 using NUnit.Framework;
@@ -19,6 +20,19 @@ namespace Lextm.SharpSnmpLib.Tests
     [TestFixture]
     public class TestAst
     {  
+        [Test]
+        public void TestSNMPv2_SMI()
+        {
+            var stream = new ANTLRInputStream(new MemoryStream(Resources.SNMPv2_SMI));
+            var lexer = new SmiLexer(stream);
+            var tokens = new CommonTokenStream(lexer);
+            var parser = new SmiParser(tokens);
+            var document = parser.GetDocument();
+            Assert.AreEqual(1, document.Modules.Count);
+            Assert.AreEqual(34, document.Modules[0].Constructs.Count);
+            Assert.AreEqual(16, document.Modules[0].Entities.Count);
+        }
+
         [Test]
         public void TestLexerOK()
         {

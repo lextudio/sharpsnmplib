@@ -1,6 +1,6 @@
 namespace Lextm.SharpSnmpLib.Mib.Ast
 {
-    public interface ISmiType : IEntity
+    public interface ISmiType : IConstruct
     {
         
     }

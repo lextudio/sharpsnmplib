@@ -1,6 +1,6 @@
 namespace Lextm.SharpSnmpLib.Mib.Ast
 {
-    public class ValueAssignment : IEntity
+    public class ValueAssignment : IConstruct
     {
         public ISmiType SmiType { get; set; }
         public ISmiValue SmiValue { get; set; }

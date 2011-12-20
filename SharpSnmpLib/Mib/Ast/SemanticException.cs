@@ -5,7 +5,7 @@ namespace Lextm.SharpSnmpLib.Mib.Ast
     /// <summary>
     /// Semantic exception.
     /// </summary>
-    public class SemanticException : SnmpException
+    public class SemanticException : Exception
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SemanticException"/> class.

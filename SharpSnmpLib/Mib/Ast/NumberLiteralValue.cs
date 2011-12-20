@@ -8,5 +8,10 @@ namespace Lextm.SharpSnmpLib.Mib.Ast
         {
             Value = value;
         }
+
+        public NumberLiteralValue(ulong value)
+        {
+            
+        }
     }
 }
