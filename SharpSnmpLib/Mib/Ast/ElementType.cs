@@ -1,8 +1,8 @@
 namespace Lextm.SharpSnmpLib.Mib.Ast
 {
-    public class ElementType
+    public class ElementType : ISmiType
     {
-        public string Name;
+        public string Name { get; set; }
         public Tag Tag;
         public TagDefault TagDefault;
         public ISmiType Subtype;

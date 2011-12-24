@@ -9,8 +9,19 @@ namespace Lextm.SharpSnmpLib.Mib.Ast
         {
             SmiType = smiType;
             SmiValue = smiValue;
+
         }
 
         public string Name { get; set; }
+
+        public ISmiValue Value
+        {
+            get { return SmiValue; }
+        }
+
+        public string Parent
+        {
+            get { return string.Empty; }
+        }
     }
 }

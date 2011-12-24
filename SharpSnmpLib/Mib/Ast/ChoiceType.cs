@@ -4,9 +4,9 @@ namespace Lextm.SharpSnmpLib.Mib.Ast
 {
     public class ChoiceType : ISmiType
     {
-        public IList<ElementType> ElementTypes { get; set; }
+        public IList<ISmiType> ElementTypes { get; set; }
 
-        public ChoiceType(IList<ElementType> elementTypes)
+        public ChoiceType(IList<ISmiType> elementTypes)
         {
             ElementTypes = elementTypes;
         }

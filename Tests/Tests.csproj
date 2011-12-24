@@ -56,49 +56,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\lib\WatchDog.cs">
-      <Link>WatchDog.cs</Link>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Tests\Mib\NumberLiteralValueTestFixture.cs" />
     <Compile Include="Tests\TestAst.cs" />
-    <Compile Include="Tests\TestDESPrivacyProvider.cs" />
-    <Compile Include="Tests\TestEndOfMibView.cs" />
-    <Compile Include="Tests\TestManager.cs" />
-    <Compile Include="Tests\TestByteTool.cs" />
-    <Compile Include="Tests\TestConstructHelper.cs" />
-    <Compile Include="Tests\TestCounter32.cs" />
-    <Compile Include="Tests\TestCounter64.cs" />
-    <Compile Include="Tests\TestGauge32.cs" />
-    <Compile Include="Tests\TestGetRequestMessage.cs" />
-    <Compile Include="Tests\TestGetResponseMessage.cs" />
-    <Compile Include="Tests\TestInteger32.cs" />
-    <Compile Include="Tests\TestIP.cs" />
-    <Compile Include="Tests\TestLexer.cs" />
-    <Compile Include="Tests\TestMD5AuthenticationProvider.cs" />
-    <Compile Include="Tests\TestMessageFactory.cs" />
-    <Compile Include="Tests\TestMibDocument.cs" />
-    <Compile Include="Tests\TestNoSuchInstance.cs" />
-    <Compile Include="Tests\TestNoSuchObject.cs" />
-    <Compile Include="Tests\TestNull.cs" />
-    <Compile Include="Tests\TestObjectIdentifier.cs" />
-    <Compile Include="Tests\TestObjectRegistry.cs" />
-    <Compile Include="Tests\TestSecurityRecord.cs" />
-    <Compile Include="Tests\TestStringUtilities.cs" />
-    <Compile Include="Tests\TestOctetString.cs" />
-    <Compile Include="Tests\TestOpaque.cs" />
-    <Compile Include="Tests\TestParseItemsException.cs" />
-    <Compile Include="Tests\TestSequence.cs" />
-    <Compile Include="Tests\TestSnmpDataFactory.cs" />
-    <Compile Include="Tests\TestTimeticks.cs" />
-    <Compile Include="Tests\TestTrapMessage.cs" />
-    <Compile Include="Tests\TestTrapV1Pdu.cs" />
-    <Compile Include="Tests\TestVariable.cs" />
-    <Compile Include="Tests\TestWatchDog.cs" />
     <None Include="Resources\empty.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -234,18 +199,6 @@
     <ProjectReference Include="..\SharpSnmpLib\SharpSnmpLib.AST.csproj">
       <Project>{F35C7321-929B-4238-959A-A60A890F10BA}</Project>
       <Name>SharpSnmpLib.AST</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SharpSnmpLib\SharpSnmpLib.Controls.csproj">
-      <Project>{B2E8F73F-072C-4F5B-A42B-315F84A45374}</Project>
-      <Name>SharpSnmpLib.Controls</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SharpSnmpLib\SharpSnmpLib.csproj">
-      <Project>{286DE6DB-8F95-4BD4-86A2-86488D2E0EE1}</Project>
-      <Name>SharpSnmpLib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SharpSnmpLib\SharpSnmpLib.Mib.csproj">
-      <Project>{CBE20411-5DB7-487D-825D-7694267BB6F5}</Project>
-      <Name>SharpSnmpLib.Mib</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -28,18 +28,8 @@ options
 #pragma warning disable 3001, 3003, 3005, 3009, 1591 
 }
 
-@parser::namespace { Lextm.SharpSnmpLib.Mib.Ast.ANTLR }
-@lexer::namespace { Lextm.SharpSnmpLib.Mib.Ast.ANTLR }
-
-@parser::members{
-	private MibDocument doc = new MibDocument();
-
-	public MibDocument GetDocument()
-	{
-	    statement();
-	    return doc;
-	}
-}
+@parser::namespace { Lextm.SharpSnmpLib.Mib.Ast }
+@lexer::namespace { Lextm.SharpSnmpLib.Mib.Ast }
 
 @parser::footer
 {
@@ -539,11 +529,17 @@ WS
 	{ Skip(); }
 	;
 
+BLK_COMMENT        
+    :   COMMENT      
+        (options {greedy=false;} : ~('\n'|'\r') )* 
+        COMMENT { Skip(); }
+    ;
+
 // Single-line comments
 SL_COMMENT
-	: (
-	: COMMENT (  { input.LA(2)!='-' }? '-' 	|	~('-'|'\n'|'\r'))*	( (('\r')? '\n') | COMMENT) )
-		{Skip();}
+	: COMMENT ~('\n'|'\r')* ('\r\n' | '\r' | '\n') { Skip(); } 
+	| COMMENT ~('\n'|'\r')* // a line comment could appear at the end of the file without CR/LF { skip(); }
+		{ Skip(); }
 	;
 
 NUMBER	:	('0'..'9')+ ;
@@ -598,8 +594,8 @@ C_STRING 	: 	'"' (options {greedy=false;}
 //**********		PARSER DEFINITIONS
 //*************************************************************************
 
-statement
-    : (mod=module_definition {doc.Add(mod.result);})* EOF
+statement returns [MibDocument result = new MibDocument()]
+    : (mod=module_definition { $result.Add(mod.result); })* EOF
 	;
 	
 // Grammar Definitions
@@ -618,32 +614,29 @@ module_definition returns [MibModule result]
 
 module_identifier: UPPER (obj_id_comp_lst)? ;
 
-module_body returns [MibModule result]
-    : { $result = new MibModule(); }
+module_body returns [MibModule result = new MibModule()]
+    :
 	(ex=exports { $result.Exports = $ex.result; })? 
 	(im=imports { $result.Imports = $im.result; })? 
 	(a=assignment { $result.Add($a.result); })* ;
 
 /* NSS 15/1/05: Added syntactic predicate */
-obj_id_comp_lst returns [IdComponentList result]
-    : { $result = new IdComponentList(); }
-	L_BRACE ((LOWER (LOWER|NUMBER)) => dv=defined_value { $result.DefinedValue = $dv.result; })?
+obj_id_comp_lst returns [IdComponentList result = new IdComponentList()]
+    : L_BRACE ((LOWER (LOWER|NUMBER)) => dv=defined_value { $result.DefinedValue = $dv.result; })?
 	(oid=obj_id_component { $result.Add($oid.result); })+ 
 	R_BRACE
 	;
 //obj_id_comp_lst: L_BRACE (defined_value)? (obj_id_component)+ R_BRACE;
 
-protected defined_value returns [DefinedValue result]
-    : { $result = new DefinedValue(); }
-	(mod=UPPER DOT { $result.Module = $mod.text; })? 
+protected defined_value returns [DefinedValue result = new DefinedValue()]
+    : (mod=UPPER DOT { $result.Module = $mod.text; })? 
 	v=LOWER { $result.Value = $v.text; }
 	;
 
 /* NSS 14/1/05: Checked against X.680 */
-obj_id_component returns [IdComponent result]
-    : { $result = new IdComponent(); }
-	num1=NUMBER { $result.Number = long.Parse($num1.text); }
-    | name=LOWER { $result.Name = $name.text; }
+obj_id_component returns [IdComponent result = new IdComponent()]
+    : (num1=NUMBER { $result.Number = long.Parse($num1.text); }
+    | name=LOWER { $result.Name = $name.text; })
 	(L_PAREN num2=NUMBER R_PAREN { $result.Number = long.Parse($num2.text); })?
 	;
 
@@ -657,16 +650,14 @@ tag_default returns [TagDefault result]
 	| AUTOMATIC_KW { $result = TagDefault.Automatic; }
 	;
 
-exports returns [Exports result]
-    : { $result = new Exports(); }
-	EXPORTS_KW (
+exports returns [Exports result = new Exports()]
+    : EXPORTS_KW (
 	    (sym=symbol_list { $result.Add($sym.text); })? 
 		| ALL_KW { $result.AllExported = true; } 
     ) SEMI;
 
-imports returns [Imports result]
-    : { $result = new Imports(); }
-	IMPORTS_KW (sym=symbols_from_module { $result.Add($sym.result); })* SEMI ;
+imports returns [Imports result = new Imports()]
+    : IMPORTS_KW (sym=symbols_from_module { $result.Add($sym.result); })* SEMI ;
 
 /* NSS 14/1/05: Shouldn't need syntactic predicate */
 assignment returns [IConstruct result]
@@ -690,14 +681,12 @@ assignment returns [IConstruct result]
 //                "MACRO" ASSIGN_OP BEGIN_KW (~(END_KW) )* END_KW) => 
 //                (UPPER | macroName) "MACRO" ASSIGN_OP BEGIN_KW (~(END_KW))* END_KW ;
 
-symbol_list returns [IList<string> result]
-    : { $result = new List<string>(); }
-	sym=symbol { $result.Add($sym.text); }
+symbol_list returns [IList<string> result = new List<string>()]
+    : sym=symbol { $result.Add($sym.text); }
 	 (COMMA sym2=symbol { $result.Add($sym2.text); })* ;
 
-symbols_from_module returns [Import result]
-    : { $result = new Import(); }
-	syms=symbol_list { $result.Symbols = $syms.result; }
+symbols_from_module returns [Import result = new Import()]
+    : syms=symbol_list { $result.Symbols = $syms.result; }
 	FROM_KW mod=UPPER { $result.Module = $mod.text;}
                         ( obj_id_comp_lst 
                           | (defined_value) => defined_value 
@@ -760,9 +749,8 @@ built_in_type returns [ISmiType result]
 	| t=tagged_type { $result = $t.result; }
 	;
 
-defined_type returns [DefinedType result]
-    : { $result = new DefinedType(); }
-    (mod=UPPER DOT { $result.Module = $mod.text; })? 
+defined_type returns [DefinedType result = new DefinedType()]
+    : (mod=UPPER DOT { $result.Module = $mod.text; })? 
 	name=UPPER { $result.Name = $name.text; }
 	(c=constraint { $result.Constraint = $c.result; })? ;
 
@@ -770,27 +758,24 @@ selection_type returns [SelectionType result]
     : name=LOWER LESS t=type { $result = new SelectionType($name.text, $t.result); }
 	;
 
-any_type returns [AnyType result]
-    : { $result = new AnyType(); }
-	ANY_KW (DEFINED_KW BY_KW def=LOWER { $result.DefinedById = $def.text; })? 
+any_type returns [AnyType result = new AnyType()]
+    : ANY_KW (DEFINED_KW BY_KW def=LOWER { $result.DefinedById = $def.text; })? 
 	;
 
 /* NSS 15/1/2005: Added syntactic predicate */
-bit_string_type returns [BitStringType result]
-    : { $result = new BitStringType(); }
-	BIT_KW STRING_KW ((L_BRACE namedNumber) => n=namedNumber_list { $result.NamedNumberList = $n.result; })? 
+bit_string_type returns [BitStringType result = new BitStringType()]
+    : BIT_KW STRING_KW ((L_BRACE namedNumber) => n=namedNumber_list { $result.NamedNumberList = $n.result; })? 
 	(c=constraint { $result.Constraint = $c.result; })? 
 	;
 
 //bit_string_type: BIT_KW STRING_KW (namedNumber_list)? (constraint)? ;
 
-boolean_type returns [BooleanType result]
-    : BOOLEAN_KW { $result = new BooleanType(); }
+boolean_type returns [BooleanType result = new BooleanType()]
+    : BOOLEAN_KW 
 	;
 
-character_str_type returns [CharacterStringType result]
-    : { $result = new CharacterStringType(); }
-	 CHARACTER_KW STRING_KW 
+character_str_type returns [CharacterStringType result = new CharacterStringType()]
+    : CHARACTER_KW STRING_KW 
 	 | cs=character_set { $result.CharacterSet = $cs.result; }
 	 (c=constraint { $result.Constraint = $c.result; })? 
 	 ;
@@ -799,89 +784,80 @@ choice_type returns [ChoiceType result]
     : CHOICE_KW L_BRACE e=elementType_list R_BRACE { $result = new ChoiceType($e.result); }
 	;
 
-embedded_type returns [EmbeddedType result]
-    : EMBEDDED_KW PDV_KW { $result = new EmbeddedType(); }
+embedded_type returns [EmbeddedType result = new EmbeddedType()]
+    : EMBEDDED_KW PDV_KW 
 	;
 
 enum_type returns [EnumType result]
     : ENUMERATED_KW n=namedNumber_list { $result = new EnumType($n.result); }
 	;
 
-external_type returns [ExternalType result]
-    : EXTERNAL_KW { $result = new ExternalType(); }
+external_type returns [ExternalType result = new ExternalType()]
+    : EXTERNAL_KW 
 	;
 
 /* NSS 15/1/05: Added syntactic predicate */
-integer_type returns [IntegerType result]
-    : { $result = new IntegerType(); }
-	INTEGER_KW ((L_BRACE namedNumber) => n=namedNumber_list { $result.NamedNumberList = $n.result; }
+integer_type returns [IntegerType result = new IntegerType()]
+    : INTEGER_KW ((L_BRACE namedNumber) => n=namedNumber_list { $result.NamedNumberList = $n.result; }
 	| c=constraint { $result.Constraint = $c.result; })? 
 	;
 
 //integer_type: INTEGER_KW (namedNumber_list | constraint)? ;
 
-null_type returns [NullType result]
-    : NULL_KW { $result = new NullType(); }
+null_type returns [NullType result = new NullType()]
+    : NULL_KW 
 	;
 
-object_identifier_type returns [ObjectIdentifierType result]
-    : OBJECT_KW IDENTIFIER_KW { $result = new ObjectIdentifierType(); }
+object_identifier_type returns [ObjectIdentifierType result = new ObjectIdentifierType()]
+    : OBJECT_KW IDENTIFIER_KW 
 	;
 
-octetString_type returns [OctetStringType result]
-    : { $result = new OctetStringType(); } 
-	OCTET_KW STRING_KW (c=constraint { $result.Constraint = $c.result; })? 
+octetString_type returns [OctetStringType result = new OctetStringType()]
+    : OCTET_KW STRING_KW (c=constraint { $result.Constraint = $c.result; })? 
 	;
 
-real_type returns [RealType result]
-    : REAL_KW { $result = new RealType(); }
+real_type returns [RealType result = new RealType()]
+    : REAL_KW 
 	;
 
 /* NSS 14/1/05: Will this work? I think not! This token detected is an UPPER */
-relativeOid_type returns [RelativeIdType result] 
-    : 'RELATIVE-OID' { $result = new RelativeIdType(); } 
+relativeOid_type returns [RelativeIdType result = new RelativeIdType()] 
+    : 'RELATIVE-OID' 
 	;
 
 //relativeOid_type: RELATIVE_KW MINUS OID_KW;
 
-sequence_type returns [SequenceType result]
-    : { $result = new SequenceType(); }
-	SEQUENCE_KW L_BRACE (e=elementType_list { $result.ElementTypeList = $e.result; })? R_BRACE 
+sequence_type returns [SequenceType result = new SequenceType()]
+    : SEQUENCE_KW L_BRACE (e=elementType_list { $result.ElementTypeList = $e.result; })? R_BRACE 
 	;
 
-sequenceof_type returns [SequenceOfType result]
-    : { $result = new SequenceOfType(); }
-	SEQUENCE_KW (SIZE_KW c=constraint { $result.Constraint = $c.result; })?
+sequenceof_type returns [SequenceOfType result = new SequenceOfType()]
+    : SEQUENCE_KW (L_PAREN SIZE_KW c=constraint { $result.Constraint = $c.result; } R_PAREN)?
 	OF_KW t=type { $result.Subtype = $t.result; }
 	;
 
-set_type returns [SetType result]
-    : { $result = new SetType(); }
-	SET_KW L_BRACE (e=elementType_list { $result.ElementTypeList = $e.result; })? R_BRACE
+set_type returns [SetType result = new SetType()]
+    : SET_KW L_BRACE (e=elementType_list { $result.ElementTypeList = $e.result; })? R_BRACE
 	;
 
-setof_type returns [SetOfType result]
-    : { $result = new SetOfType(); }
-	SET_KW (SIZE_KW c=constraint { $result.Constraint = $c.result; })?
+setof_type returns [SetOfType result = new SetOfType()]
+    : SET_KW (SIZE_KW c=constraint { $result.Constraint = $c.result; })?
 	OF_KW t=type { $result.Subtype = $t.result; }
 	;
 
-tagged_type returns [TaggedType result]
-    : { $result = new TaggedType(); }
-	t=tag { $result.Tag = $t.result; }
+tagged_type returns [TaggedType result = new TaggedType()]
+    : t=tag { $result.Tag = $t.result; }
 	(td=tag_default { $result.TagDefault = $td.result; })? 
 	ty=type { $result.Subtype = $ty.result; }
 	;
 
-namedNumber_list returns [IList<ISmiValue> result]
-    : { $result = new List<ISmiValue>(); }
-	L_BRACE num1=namedNumber { $result.Add($num1.result); }
+namedNumber_list returns [IList<ISmiValue> result = new List<ISmiValue>()]
+    : L_BRACE num1=namedNumber { $result.Add($num1.result); }
 	(COMMA num2=namedNumber { $result.Add($num2.result); })* R_BRACE
 	;
 
-constraint returns [Constraint result]
-    : { $result = new Constraint(); }
-	L_PAREN (es=element_set_specs { $result.ElementSetSpecs = $es.result; })? 
+constraint returns [Constraint result = new Constraint()]
+    : L_PAREN (es=element_set_specs { $result.ElementSetSpecs = $es.result; })? 
 	(ex=exception_spec { $result.ExceptionSpec = $ex.result; })? R_PAREN
 	;
 
@@ -903,15 +879,14 @@ character_set returns [CharacterSet result]
 	| VISIBLE_STR_KW { $result = CharacterSet.Visible; }
 	;
 
-elementType_list returns [IList<ElementType> result]
-    : { $result = new List<ElementType>(); }
-	t1=elementType { $result.Add($t1.result); } 
-	(COMMA t2=elementType { $result.Add($t2.result); })* 
+elementType_list returns [IList<ISmiType> result = new List<ISmiType>()]
+    : t1=elementType { $result.Add($t1.result); } 
+	(COMMA t2=elementType { $result.Add($t2.result); }
+	| c=choice_type { $result.Add($c.result); } )* 
 	;
 
-tag returns [Tag result]
-    : { $result = new Tag(); }
-	L_BRACKET (c=clazz { $result.TagType = $c.text; })? 
+tag returns [Tag result = new Tag()]
+    : L_BRACKET (c=clazz { $result.TagType = $c.text; })? 
 	cl=class_NUMBER R_BRACKET { $result.TagNumber = $cl.result; }
 	;
 
@@ -924,8 +899,8 @@ class_NUMBER returns [ClassNumber result]
 	;
 
 /* NSS 15/1/05: Added syntactic predicates; removed 'SEMI' */
-operation_macro returns [OperationMacro result]
-    : 'OPERATION' { $result = new OperationMacro(); }
+operation_macro returns [OperationMacro result = new OperationMacro()]
+    : 'OPERATION' 
 	(ARGUMENT_KW ((LOWER) => l1=LOWER { $result.ArgumentIdentifier = $l1.text; })? 
 	t1=type { $result.ArgumentType = $t1.result; })? 
     ( (RESULT_KW) => RESULT_KW 
@@ -945,8 +920,8 @@ operation_macro returns [OperationMacro result]
 //                    ( LINKED_KW L_BRACE (linkedOp_list)? R_BRACE )? ;
 
 /* NSS 15/1/05: Added syntactic predicate */
-error_macro returns [ErrorMacro result]
-    : ERROR_KW { $result = new ErrorMacro(); }
+error_macro returns [ErrorMacro result = new ErrorMacro()]
+    : ERROR_KW 
 	( PARAMETER_KW ((LOWER) => id=LOWER { $result.Identifier = $id.text; })? 
 	t=type { $result.Subtype = $t.result; })? ;
 //error_macro: ERROR_KW ( PARAMETER_KW (LOWER)? type )? ;
@@ -993,9 +968,8 @@ subtype_range: subtype_value (DOTDOT subtype_value)? ;
 subtype_value: (MINUS)? NUMBER | B_STRING | H_STRING;
 
 /* SMI v1/2 and SPPI: Object-type macro */
-objecttype_macro returns [ObjectTypeMacro result]
-    : { $result = new ObjectTypeMacro(); }
-	'OBJECT-TYPE' 'SYNTAX' 
+objecttype_macro returns [ObjectTypeMacro result = new ObjectTypeMacro()]
+    : 'OBJECT-TYPE' 'SYNTAX' 
                     ( (smi_type L_BRACE) => t1=smi_type nb1=objecttype_macro_namedbits 
 					{  
 					    $result.Syntax = $t1.result;
@@ -1058,9 +1032,8 @@ protected objecttype_macro_statustypes returns [EntityStatus result]
 
 
 // 'typeorvaluelist' in original ASN.1 grammar between braces
-objecttype_macro_index returns [IList<ISmiValue> result]
-    : L_BRACE { $result = new List<ISmiValue>(); }
-	t=objecttype_macro_indextype { $result.Add($t.result); } 
+objecttype_macro_index returns [IList<ISmiValue> result = new List<ISmiValue>()]
+    : L_BRACE t=objecttype_macro_indextype { $result.Add($t.result); } 
 	(COMMA t2=objecttype_macro_indextype { $result.Add($t2.result); })* R_BRACE
 	;       
 
@@ -1073,15 +1046,13 @@ objecttype_macro_augments returns [ISmiValue result]
 	;  
 
 /* NSS 13/1/05: Added LOWER *and* UPPER for a PIB */
-objecttype_macro_namedbits returns [IList<NamedBit> result]
-    : L_BRACE { $result = new List<NamedBit>(); }
-	n=namedbit { $result.Add($n.result); } 
+objecttype_macro_namedbits returns [IList<NamedBit> result = new List<NamedBit>()]
+    : L_BRACE n=namedbit { $result.Add($n.result); } 
 	(COMMA n2=namedbit { $result.Add($n2.result); })* R_BRACE
 	;     //|UPPER
 
-objecttype_macro_bitsvalue returns [IList<string> result]
-    : { $result = new List<string>(); }
-	L_BRACE l=LOWER { $result.Add($l.text); } 
+objecttype_macro_bitsvalue returns [IList<string> result = new List<string>()]
+    : L_BRACE l=LOWER { $result.Add($l.text); } 
 	(COMMA l2=LOWER { $result.Add($l2.text); })* R_BRACE
 	;     
 
@@ -1090,9 +1061,8 @@ objecttype_macro_error returns [NamedBit result]
 	;
 
 /* SMI v2 and SPPI: Module-identity macro */
-moduleidentity_macro returns [ModuleIdentityMacro result]
-    : 'MODULE-IDENTITY' { $result = new ModuleIdentityMacro(); }
-    ('SUBJECT-CATEGORIES' L_BRACE c=moduleidentity_macro_categories R_BRACE { $result.Categories = $c.result; })? /* Only in SPPI */
+moduleidentity_macro returns [ModuleIdentityMacro result = new ModuleIdentityMacro()]
+    : 'MODULE-IDENTITY' ('SUBJECT-CATEGORIES' L_BRACE c=moduleidentity_macro_categories R_BRACE { $result.Categories = $c.result; })? /* Only in SPPI */
     'LAST-UPDATED' c1=C_STRING { $result.LastUpdate = $c1.text; }
 	'ORGANIZATION' c2=C_STRING { $result.Organization = $c2.text; }
 	'CONTACT-INFO' c3=C_STRING { $result.ContactInfo = $c3.text; }
@@ -1103,9 +1073,8 @@ moduleidentity_macro_revision returns [Revision result]
     : 'REVISION' c1=C_STRING 'DESCRIPTION' c2=C_STRING { $result = new Revision($c1.text, $c2.text); }
 	; 
 
-moduleidentity_macro_categories returns [Categories result]
-    : { $result = new Categories(); }
-	l=LOWER {if (l.Text ==  ("all")) $result.AllCategories = true;
+moduleidentity_macro_categories returns [Categories result = new Categories()]
+    : l=LOWER {if (l.Text ==  ("all")) $result.AllCategories = true;
 	         else { throw new SemanticException ("(invalid)"); }
 			} 
     | m1=moduleidentity_macro_categoryid { $result.CategoryIds.Add($m1.result); } 
@@ -1123,9 +1092,8 @@ objectidentity_macro returns [ObjectIdentityMacro result]
 	('REFERENCE' c2=C_STRING { $result.Reference = $c2.text; })? ;
 
 /* SMI v2: Notification-type macro */
-notificationtype_macro returns [NotificationTypeMacro result]
-    : { $result = new NotificationTypeMacro(); }
-    'NOTIFICATION-TYPE' ('OBJECTS' L_BRACE v1=value { $result.Objects.Add($v1.result); } 
+notificationtype_macro returns [NotificationTypeMacro result = new NotificationTypeMacro()]
+    : 'NOTIFICATION-TYPE' ('OBJECTS' L_BRACE v1=value { $result.Objects.Add($v1.result); } 
     (COMMA v2=value { $result.Objects.Add($v2.result); })* R_BRACE)? 
     'STATUS' s=status { $result.Status = $s.result; }
     'DESCRIPTION' c1=C_STRING { $result.Description = $c1.text; }
@@ -1133,9 +1101,8 @@ notificationtype_macro returns [NotificationTypeMacro result]
     ;
 
 /* SMI v2 and SPPI: Textual convention */
-textualconvention_macro returns [TextualConventionMacro result]
-    : { $result = new TextualConventionMacro(); }
-	'TEXTUAL-CONVENTION' ('DISPLAY-HINT' c1=C_STRING { $result.DisplayHint = $c1.text; })?
+textualconvention_macro returns [TextualConventionMacro result = new TextualConventionMacro()]
+    : 'TEXTUAL-CONVENTION' ('DISPLAY-HINT' c1=C_STRING { $result.DisplayHint = $c1.text; })?
     'STATUS' s=status { $result.Status = $s.result; }
     'DESCRIPTION' c2=C_STRING { $result.Description = $c2.text; }
     ('REFERENCE' c3=C_STRING { $result.Reference = $c3.text; })? 
@@ -1184,8 +1151,8 @@ status returns [EntityStatus result]
                else {throw new SemanticException("(invalid)");}}
     ;
 
-modulecompliance_macro_module returns [ModuleCompliance result]
-    : 'MODULE' ((UPPER) => name=UPPER { $result = new ModuleCompliance($name.text); }
+modulecompliance_macro_module returns [ModuleCompliance result = new ModuleCompliance()]
+    : 'MODULE' ((UPPER) => name=UPPER { $result.Name = $name.text; }
 	((value) => v1=value { $result.Value = $v1.result; })? )? 
     ('MANDATORY-GROUPS' L_BRACE v2=value { $result.MandatoryGroups.Add($v2.result); }
 	(COMMA v3=value { $result.MandarotyGroups.Add($v3.result); })* R_BRACE)?
@@ -1255,9 +1222,8 @@ agentcapabilities_macro_variation returns [Variantion result]
     'DESCRIPTION' c1=C_STRING { $result.Description = $c1.text; }
 	;
 
-syntax returns [Syntax result]
-    : { $result = new Syntax();}
-	(smi_type L_BRACE) => st=smi_type { $result.Subtype = $st.result; }
+syntax returns [Syntax result = new Syntax()]
+    : (smi_type L_BRACE) => st=smi_type { $result.Subtype = $st.result; }
 	L_BRACE nb1=namedbit { $result.SubtypeNamedBits.Add($nb1.result); }
 	(COMMA nb2=namedbit { $result.SubtypeNamedBits.Add($nb2.result); })* R_BRACE
     | (smi_type) => st2=smi_type (smi_subtyping)? { $result.Subtype = $st2.result; }
@@ -1279,9 +1245,8 @@ namedbit returns [NamedBit result]
     : name=LOWER L_PAREN num=NUMBER R_PAREN { $result = new NamedBit($name.text, long.Parse($num.text)); };
 
 /* SMI v1: Trap types */
-traptype_macro returns [TrapTypeMacro result]
-    : 'TRAP-TYPE' 'ENTERPRISE' { $result = new TrapTypeMacro(); }
-	v=value { $result.Enterprise = $v.result; }
+traptype_macro returns [TrapTypeMacro result = new TrapTypeMacro()]
+    : 'TRAP-TYPE' 'ENTERPRISE' v=value { $result.Enterprise = $v.result; }
 	('VARIABLES' L_BRACE v2=value { $result.Variables.Add($v2.result); }
 	(COMMA v3=value { $result.Variables.Add($v3.result); })* R_BRACE)? 
     (('DESCRIPTION') => 'DESCRIPTION' v4=value { $result.Description = $v4.result; })? 
@@ -1300,18 +1265,21 @@ typeorvalue returns [TypeOrValue result]
 	| v=value { $result = new TypeOrValue($v.result); };
 
 // ERROR HERE in ASN.1 grammar? '*' was only applied to 'typeorvalue'
-typeorvaluelist returns [IList<TypeOrValue> result]
-    : { $result = new List<TypeOrValue>(); }
-	t1=typeorvalue { $result.Add($t1.result); } 
+typeorvaluelist returns [IList<TypeOrValue> result = new List<TypeOrValue>()]
+    : t1=typeorvalue { $result.Add($t1.result); } 
 	(COMMA t2=typeorvalue { $result.Add($t2.result); })* 
 	;
 
 /* NSS 15/1/05: Added syntactic predicate */
 elementType returns [ElementType result]
+    : t=elementType_tagged { $result = $t.result; }
+    | COMPONENTS_KW OF_KW t4=type { $result = new ComponentsOfElementType($t4.result); }
+	;
+
+elementType_tagged returns [TaggedElementType result]
     : name=LOWER 
 	{ 
-	    $result = new TaggedElementType();
-	    $result.Name = $name.text; 
+	    $result = new TaggedElementType($name.text);
     }
 	((L_BRACKET (NUMBER|UPPER|LOWER)) => t1=tag { $result.Tag = $t1.result; })? 
     (t2=tag_default { $result.TagDefault = $t2.result; })? 
@@ -1319,7 +1287,6 @@ elementType returns [ElementType result]
 	(OPTIONAL_KW { $result.Optional = true; } 
 	| DEFAULT_KW { $result.Default = true; }
 	v=value { $result.Value = $v.result; })? 
-    | COMPONENTS_KW OF_KW t4=type { $result = new ComponentsOfElementType($t4.result); }
 	;
 
 //elementType: LOWER  (tag)? (tag_default)? type (OPTIONAL_KW | DEFAULT_KW value)? 
@@ -1336,9 +1303,8 @@ signed_number returns [NumberLiteralValue result]
 	| num2=NUMBER { $result = new NumberLiteralValue(ulong.Parse($num2.text)); }
 	;
 
-element_set_specs returns [ElementSetRange result]
-    : { $result = new ElementSetRange(); }
-	 left=element_set_spec { $result.LeftElement = $left.result; } 
+element_set_specs returns [ElementSetRange result = new ElementSetRange()]
+    : left=element_set_spec { $result.LeftElement = $left.result; } 
 	 (COMMA DOTDOTDOT { $result.ContainsEllipsis = true; })? 
 	 (COMMA right=element_set_spec { $result.RightElement = $right.result; })? 
 	 ;
@@ -1351,19 +1317,20 @@ exception_spec returns [ExceptionSpec result]
                 );
 
 element_set_spec returns [ConstraintElement result]
-     : 
-	 left=intersections 
-	 {  
-	     $result = new NormalConstraintElement();
-		 $result.Add(new NormalConstraintElement($left.result));
-	 } 
-	 ( ( BAR | UNION_KW ) right=intersections { $result.Add(new NormalConstraintElement($right.result)); })* 
+     : n=element_set_spec_normal { $result = $n.result; }
      | ALL_KW EXCEPT_KW c=constraint_elements { $result = new AllExceptConstraintElement($c.result); }
 	 ;
 
-intersections returns [ConstraintElement result]
-     : { $result = new NormalConstraintElement(); }
-	 c1=constraint_elements_except 
+element_set_spec_normal returns [NormalConstraintElement result = new NormalConstraintElement()]
+    : left=intersections 
+	 {  
+		 $result.Add(new NormalConstraintElement($left.result));
+	 } 
+	 ( ( BAR | UNION_KW ) right=intersections { $result.Add(new NormalConstraintElement($right.result)); })* 
+	 ;
+
+intersections returns [ConstraintElement result = new NormalConstraintElement()]
+     : c1=constraint_elements_except 
 	 {
 	     $result.Add($c1.result); 
      }	 
@@ -1372,8 +1339,8 @@ intersections returns [ConstraintElement result]
 	 )* ;
 
 constraint_elements_except returns [ConstraintElement result]
-     : c=constraint_elements { $result = new NormalConstraintElement($c.result); }
-	 (EXCEPT_KW c2=constraint_elements { $result.ConstraintElement = $c2.result; })?;
+     : c=constraint_elements { $result = $c.result; }
+	 (EXCEPT_KW c2=constraint_elements { $result.Element = $c2.result; })?;
 
 constraint_elements returns [ConstraintElement result]
     : (value_range) => vr=value_range { $result = new ValueRangeConstraintElement($vr.result); }
@@ -1381,20 +1348,25 @@ constraint_elements returns [ConstraintElement result]
     | SIZE_KW c=constraint { $result = new SizeConstraintElement($c.result); }
     | FROM_KW c2=constraint { $result = new FromConstraintElement($c2.result); }
     | L_PAREN e=element_set_spec R_PAREN { $result = new ElementSetConstraintElement($e.result); }
-    | { $result = new IncludeTypeConstraintElement(); }
-	(INCLUDES_KW { $result.Includes = true; })? 
-	t=type { $result.ConstraintType = $t.result; }
+    | i=constraint_elements_includes { $result = $i.result; }
     | PATTERN_KW v2=value { $result = new PatternConstraintElement($v2.result); } 
     | WITH_KW 
 	    (COMPONENT_KW co1=constraint { $result = new WithComponentConstraintElement($co1.result); } 
-		| COMPONENTS_KW L_BRACE { $result = new WithComponentsConstraintElement(); }
-		(DOTDOTDOT COMMA { $result.Ellipsis = true; })? 
-		tcl=type_constraint_list R_BRACE { $result.TypeConstraintList = $tcl.result; })
+		| cs=constraint_elements_components { $result = $cs.result; })
 	;
 
-value_range returns [ValueRange result]
-    : { $result = new ValueRange(); }
-	(lower=value { $result.LowerValue = $lower.result; }
+constraint_elements_includes returns [IncludeTypeConstraintElement result = new IncludeTypeConstraintElement()]
+    : (INCLUDES_KW { $result.Includes = true; })? 
+	t=type { $result.ConstraintType = $t.result; }
+	;
+
+constraint_elements_components returns [WithComponentsConstraintElement result = new WithComponentsConstraintElement()]
+    : COMPONENTS_KW L_BRACE (DOTDOTDOT COMMA { $result.Ellipsis = true; })? 
+    tcl=type_constraint_list R_BRACE { $result.TypeConstraintList = $tcl.result; }
+    ;
+
+value_range returns [ValueRange result = new ValueRange()]
+    : (lower=value { $result.LowerValue = $lower.result; }
 	| MIN_KW { $result.MinValue = true; }) 
 	(LESS { $result.LessThan = true; })? DOTDOT 
 	(LESS { $result.GreaterThan = true; })? 
@@ -1402,9 +1374,8 @@ value_range returns [ValueRange result]
 	MAX_KW { $result.MaxValue = true; }) 
 	;
 
-type_constraint_list returns [IList<ConstraintElement> result]
-    : { $result = new List<ConstraintElement>(); }
-	nc1=named_constraint { $result.Add($nc1.result); } 
+type_constraint_list returns [IList<ConstraintElement> result = new List<ConstraintElement>()]
+    : nc1=named_constraint { $result.Add($nc1.result); } 
 	(COMMA nc2=named_constraint { $result.Add($nc2.result); })* 
 	;
 
@@ -1416,23 +1387,20 @@ named_constraint returns [NamedConstraintElement result]
 	| OPTIONAL_KW { $result.Optinal = true; })? 
 	;
 
-choice_value returns [ChoiceValue result]
-    : { $result = new ChoiceValue(); }
-	name=LOWER { $result.Name = $name.text; } 
+choice_value returns [ChoiceValue result = new ChoiceValue()]
+    : name=LOWER { $result.Name = $name.text; } 
 	(COLON { $result.ContainsColon = true; })? 
 	v=value { $result.Value = $v.result; }
 	;
 
-sequence_value returns [SequenceValue result]
-    : { $result = new SequenceValue(); }
-	L_BRACE (nv1=named_value { $result.Add($nv1.result); })? 
+sequence_value returns [SequenceValue result = new SequenceValue()]
+    : L_BRACE (nv1=named_value { $result.Add($nv1.result); })? 
 	(COMMA nv2=named_value { $result.Add($nv2.result); })* 
 	R_BRACE
 	;
 
-sequenceof_value returns [SequenceOfValue result]
-    : { $result = new SequenceOfValue(); }
-	L_BRACE (v1=value { $result.Add($v1.result); })? 
+sequenceof_value returns [SequenceOfValue result = new SequenceOfValue()]
+    : L_BRACE (v1=value { $result.Add($v1.result); })? 
 	(COMMA v2=value { $result.Add($v2.result); })* 
 	R_BRACE
 	;
@@ -1452,15 +1420,13 @@ cstr_value returns [ISmiValue result]
               | tu=tuple_or_quad { $result = $tu.result; }			  
             ) R_BRACE;
 
-id_list returns [IdListValue result]
-    : { $result = new IdListValue(); }
-	name1=LOWER { $result.Add($name1.text); }
+id_list returns [IdListValue result = new IdListValue()]
+    : name1=LOWER { $result.Add($name1.text); }
 	(COMMA name2=LOWER { $result.Add($name2.text); })* 
 	;
 
-char_defs_list returns [CharDefinitionListValue result]
-    : { $result = new CharDefinitionListValue(); }
-	ch1=char_defs { $result.Add($ch1.result); }
+char_defs_list returns [CharDefinitionListValue result = new CharDefinitionListValue()]
+    : ch1=char_defs { $result.Add($ch1.result); }
 	(COMMA ch2=char_defs { $result.Add($ch2.result); })* 
 	;
 

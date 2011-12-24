@@ -6,6 +6,6 @@ namespace Lextm.SharpSnmpLib.Mib.Ast
     {
         public string Name { get; set; }
 
-        public IList<ElementType> ElementTypeList { get; set; }
+        public IList<ISmiType> ElementTypeList { get; set; }
     }
 }

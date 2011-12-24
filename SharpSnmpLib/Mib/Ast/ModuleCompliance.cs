@@ -4,22 +4,17 @@ namespace Lextm.SharpSnmpLib.Mib.Ast
 {
     public class ModuleCompliance {
         private readonly IList<ISmiValue> _mandarotyGroups = new List<ISmiValue>();
-        public IList<Compliance> Compliances;
+        public IList<Compliance> Compliances = new List<Compliance>();
         public ISmiValue Value;
-        public IList<ISmiValue> MandatoryGroups;
+        public IList<ISmiValue> MandatoryGroups = new List<ISmiValue>();
 
-        public string ModuleName { get; set; }
+        public string Name { get; set; }
 
         public IList<ISmiValue> MandarotyGroups
         {
             get {
                 return _mandarotyGroups;
             }
-        }
-
-        public ModuleCompliance(string name)
-        {
-            ModuleName = name;
         }
     }
 }

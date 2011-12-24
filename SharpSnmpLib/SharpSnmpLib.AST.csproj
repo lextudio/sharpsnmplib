@@ -118,8 +118,9 @@
     <Compile Include="Mib\Ast\ExternalType.cs" />
     <Compile Include="Mib\Ast\FalseLiteralValue.cs" />
     <Compile Include="Mib\Ast\FromConstraintElement.cs" />
-    <Compile Include="Mib\Ast\Generated\smiLexer.cs" />
-    <Compile Include="Mib\Ast\Generated\smiParser.cs" />
+    <Compile Include="Mib\Ast\Generated\SmiLexer.cs" />
+    <Compile Include="Mib\Ast\Generated\SmiParser.cs" />
+    <Compile Include="Mib\Ast\SmiParser.cs" />
     <Compile Include="Mib\Ast\GroupCompliance.cs" />
     <Compile Include="Mib\Ast\HexLiteralValue.cs" />
     <Compile Include="Mib\Ast\IdComponent.cs" />
@@ -193,7 +194,7 @@
     <Compile Include="Mib\Ast\WithComponentsConstraintElement.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Mib\Ast\Generated\smi.g" />
+    <None Include="Mib\Ast\Generated\Smi.g" />
     <None Include="sharpsnmplib.snk" />
   </ItemGroup>
   <ItemGroup>
