@@ -7,7 +7,7 @@ namespace Lextm.SharpSnmpLib.Mib.Ast
         public EntityStatus Status;
         public string Description;
         public string Reference;
-        public IList<AgentCapabilitiesModule> Modules;
+        public IList<AgentCapabilitiesModule> Modules = new List<AgentCapabilitiesModule>();
 
         public AgentCapabilitiesMacro(string productRelease)
         {

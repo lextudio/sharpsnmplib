@@ -6,8 +6,8 @@ namespace Lextm.SharpSnmpLib.Mib.Ast
         public Syntax Syntax;
         public Syntax WriteSyntax;
         public Access Access;
-        public IList<ISmiValue> CreationRequires;
-        public IList<string> DefaultValueIdentifiers;
+        public IList<ISmiValue> CreationRequires = new List<ISmiValue>();
+        public IList<string> DefaultValueIdentifiers = new List<string>();
         public ISmiValue DefaultValue;
         public string Description;
 
