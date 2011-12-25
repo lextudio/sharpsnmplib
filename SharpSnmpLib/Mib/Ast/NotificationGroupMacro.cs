@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Lextm.SharpSnmpLib.Mib.Ast
 {
-    public class NotificationGroupMacro : ISmiType
+    public class NotificationGroupMacro : ISmiType, IEntity
     {
         private readonly IList<ISmiValue> _notifications = new List<ISmiValue>();
         public EntityStatus Status;
@@ -14,6 +14,8 @@ namespace Lextm.SharpSnmpLib.Mib.Ast
             Notifications.Add(value);
         }
 
+        public long Value { get; set; }
+        public string Parent { get; set; }
         public string Name { get; set; }
 
         public IList<ISmiValue> Notifications

@@ -1,6 +1,6 @@
 namespace Lextm.SharpSnmpLib.Mib.Ast
 {
-    public class ObjectIdentityMacro : ISmiType
+    public class ObjectIdentityMacro : ISmiType, IEntity
     {
         public string Reference;
 
@@ -9,6 +9,8 @@ namespace Lextm.SharpSnmpLib.Mib.Ast
             
         }
 
+        public long Value { get; set; }
+        public string Parent { get; set; }
         public string Name { get; set; }
     }
 }

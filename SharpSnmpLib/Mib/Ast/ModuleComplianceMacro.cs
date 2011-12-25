@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Lextm.SharpSnmpLib.Mib.Ast
 {
-    public class ModuleComplianceMacro : ISmiType
+    public class ModuleComplianceMacro : ISmiType, IEntity
     {
         public EntityStatus Status { get; set; }
         public string Description { get; set; }
@@ -15,6 +15,8 @@ namespace Lextm.SharpSnmpLib.Mib.Ast
             Description = description;
         }
 
+        public long Value { get; set; }
+        public string Parent { get; set; }
         public string Name { get; set; }
     }
 }

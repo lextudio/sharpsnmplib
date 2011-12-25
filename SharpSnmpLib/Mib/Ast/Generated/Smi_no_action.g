@@ -560,12 +560,12 @@ HDIG		:	( :('0'..'9') )
 UPPER	
 	:   ('A'..'Z') 
 		(
-	:	( 'a'..'z' | 'A'..'Z' |'-' | '0'..'9' ))* 	;   // '_' | 
+	:	( 'a'..'z' | 'A'..'Z' |'-' | '_' | '0'..'9' ))* 	;   // '_' | 
 
 LOWER
 	:	('a'..'z') 
 		(
-	:	( 'a'..'z' | 'A'..'Z' |'-' | '0'..'9' ))* 	;   // '_' | 
+	:	( 'a'..'z' | 'A'..'Z' |'-' | '_' | '0'..'9' ))* 	;   // '_' | 
 
 
 
@@ -677,7 +677,9 @@ value: (TRUE_KW) => TRUE_KW
      | (cstr_value) => cstr_value 
      | (obj_id_comp_lst) => obj_id_comp_lst 
      | (PLUS_INFINITY_KW) => PLUS_INFINITY_KW 
-     | (MINUS_INFINITY_KW) => MINUS_INFINITY_KW;
+     | (MINUS_INFINITY_KW) => MINUS_INFINITY_KW
+     | (symbol) => symbol 
+     ;
 
 built_in_type: any_type 
              | bit_string_type 

@@ -120,6 +120,7 @@
     <Compile Include="Mib\Ast\FromConstraintElement.cs" />
     <Compile Include="Mib\Ast\Generated\SmiLexer.cs" />
     <Compile Include="Mib\Ast\Generated\SmiParser.cs" />
+    <Compile Include="Mib\Ast\IEntity.cs" />
     <Compile Include="Mib\Ast\SmiParser.cs" />
     <Compile Include="Mib\Ast\GroupCompliance.cs" />
     <Compile Include="Mib\Ast\HexLiteralValue.cs" />

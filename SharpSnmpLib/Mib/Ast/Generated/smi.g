@@ -555,12 +555,12 @@ HDIG		:	( :('0'..'9') )
 UPPER	
 	:   ('A'..'Z') 
 		(
-	:	( 'a'..'z' | 'A'..'Z' |'-' | '0'..'9' ))* 	;   // '_' | 
+	:	( 'a'..'z' | 'A'..'Z' | '-' | '_' | '0'..'9' ))* 	;   // '_' | 
 
 LOWER
 	:	('a'..'z') 
 		(
-	:	( 'a'..'z' | 'A'..'Z' |'-' | '0'..'9' ))* 	;   // '_' | 
+	:	( 'a'..'z' | 'A'..'Z' | '-' | '_' | '0'..'9' ))* 	;   // '_' | 
 
 
 
@@ -725,6 +725,7 @@ value returns [ISmiValue result]
      | (obj_id_comp_lst) => oid=obj_id_comp_lst { $result = $oid.result; }
      | (PLUS_INFINITY_KW) => PLUS_INFINITY_KW { $result = new PlusInfinityLiteralValue(); }
      | (MINUS_INFINITY_KW) => MINUS_INFINITY_KW { $result = new MinusInfinityLiteralValue(); }
+	 | (symbol) => name=symbol { $result = new LiteralValue($name.text); }
 	 ;
 
 built_in_type returns [ISmiType result]

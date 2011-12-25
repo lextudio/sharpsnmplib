@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Lextm.SharpSnmpLib.Mib.Ast
 {
-    public class AgentCapabilitiesMacro : ISmiType
+    public class AgentCapabilitiesMacro : ISmiType, IEntity
     {
         public EntityStatus Status;
         public string Description;
@@ -14,6 +14,8 @@ namespace Lextm.SharpSnmpLib.Mib.Ast
             
         }
 
+        public long Value { get; set; }
+        public string Parent { get; set; }
         public string Name { get; set; }
     }
 }

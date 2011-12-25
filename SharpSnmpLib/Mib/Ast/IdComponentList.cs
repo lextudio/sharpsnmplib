@@ -7,9 +7,14 @@ namespace Lextm.SharpSnmpLib.Mib.Ast
         private readonly IList<IdComponent> _idComponents = new List<IdComponent>();
         public DefinedValue DefinedValue { get; set; }
 
+        public IList<IdComponent> IdComponents
+        {
+            get { return _idComponents; }
+        }
+
         public void Add(IdComponent idComponent)
         {
-            _idComponents.Add(idComponent);
+            IdComponents.Add(idComponent);
         }
     }
 }
