@@ -23,8 +23,9 @@ namespace Lextm.SharpSnmpLib.Mib.Ast
         public ISmiValue PibIndex;
         public ISmiValue DefaultValue;
         public string Description { get; set; }
-        public long Value { get; set; }
+        public uint Value { get; set; }
         public string Parent { get; set; }
         public string Name { get; set; }
+        public string ModuleName { get; set; }
     }
 }

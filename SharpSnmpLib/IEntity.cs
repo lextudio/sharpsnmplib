@@ -37,35 +37,22 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Module name.
         /// </summary>
-        string ModuleName
-        {
-            get;
-        }
-        
+        string ModuleName { get; set; }
+
         /// <summary>
         /// Name.
         /// </summary>
-        string Name
-        {
-            get;
-        }
-        
+        string Name { get; set; }
+
         /// <summary>
         /// Parent name.
         /// </summary>
-        string Parent
-        {
-            get;
-            set;
-        }
-        
+        string Parent { get; set; }
+
         /// <summary>
         /// Value.
         /// </summary>
         [CLSCompliant(false)]
-        uint Value
-        {
-            get;            
-        }
+        uint Value { get; set; }
     }
 }

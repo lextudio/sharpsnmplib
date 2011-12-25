@@ -75,6 +75,10 @@
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\lib\ANTLR\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
@@ -88,6 +92,7 @@
     <Compile Include="Mib\Ast\AgentCapabilitiesModule.cs" />
     <Compile Include="Mib\Ast\AllExceptConstraintElement.cs" />
     <Compile Include="Mib\Ast\AnyType.cs" />
+    <Compile Include="Mib\Ast\Assembler.cs" />
     <Compile Include="Mib\Ast\BinaryLiteralValue.cs" />
     <Compile Include="Mib\Ast\BitStringType.cs" />
     <Compile Include="Mib\Ast\BitsType.cs" />
@@ -106,6 +111,7 @@
     <Compile Include="Mib\Ast\ConstraintElement.cs" />
     <Compile Include="Mib\Ast\DefinedType.cs" />
     <Compile Include="Mib\Ast\DefinedValue.cs" />
+    <Compile Include="Mib\Ast\Definition.cs" />
     <Compile Include="Mib\Ast\ElementSetConstraintElement.cs" />
     <Compile Include="Mib\Ast\ElementSetRange.cs" />
     <Compile Include="Mib\Ast\ElementType.cs" />
@@ -120,7 +126,12 @@
     <Compile Include="Mib\Ast\FromConstraintElement.cs" />
     <Compile Include="Mib\Ast\Generated\SmiLexer.cs" />
     <Compile Include="Mib\Ast\Generated\SmiParser.cs" />
-    <Compile Include="Mib\Ast\IEntity.cs" />
+    <Compile Include="Mib\Ast\MibException.cs" />
+    <Compile Include="Mib\Ast\ModuleLoader.cs" />
+    <Compile Include="Mib\Ast\ObjectRegistryBase.cs" />
+    <Compile Include="Mib\Ast\ObjectTree.cs" />
+    <Compile Include="Mib\Ast\Parser.cs" />
+    <Compile Include="Mib\Ast\ReloadableObjectRegistry.cs" />
     <Compile Include="Mib\Ast\SmiParser.cs" />
     <Compile Include="Mib\Ast\GroupCompliance.cs" />
     <Compile Include="Mib\Ast\HexLiteralValue.cs" />
@@ -222,5 +233,11 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="SharpSnmpLib.csproj">
+      <Project>{286DE6DB-8F95-4BD4-86A2-86488D2E0EE1}</Project>
+      <Name>SharpSnmpLib</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

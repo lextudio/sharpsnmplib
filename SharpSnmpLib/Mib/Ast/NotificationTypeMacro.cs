@@ -8,8 +8,9 @@ namespace Lextm.SharpSnmpLib.Mib.Ast
         public EntityStatus Status;
         public string Description;
         public string Reference;
-        public long Value { get; set; }
+        public uint Value { get; set; }
         public string Parent { get; set; }
         public string Name { get; set; }
+        public string ModuleName { get; set; }
     }
 }

@@ -258,6 +258,10 @@
       <Project>{5E9B9AB3-59E8-44FA-B3DC-5EE67800C462}</Project>
       <Name>RemObjects.Mono.Helpers</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SharpSnmpLib\SharpSnmpLib.AST.csproj">
+      <Project>{F35C7321-929B-4238-959A-A60A890F10BA}</Project>
+      <Name>SharpSnmpLib.AST</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SharpSnmpLib\SharpSnmpLib.Controls.csproj">
       <Project>{B2E8F73F-072C-4F5B-A42B-315F84A45374}</Project>
       <Name>SharpSnmpLib.Controls</Name>
@@ -265,10 +269,6 @@
     <ProjectReference Include="..\SharpSnmpLib\SharpSnmpLib.csproj">
       <Project>{286DE6DB-8F95-4BD4-86A2-86488D2E0EE1}</Project>
       <Name>SharpSnmpLib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SharpSnmpLib\SharpSnmpLib.Mib.csproj">
-      <Project>{CBE20411-5DB7-487D-825D-7694267BB6F5}</Project>
-      <Name>SharpSnmpLib.Mib</Name>
     </ProjectReference>
     <ProjectReference Include="..\SharpSnmpLib\SharpSnmpLib.Optional.csproj">
       <Project>{33110773-3E28-4963-8956-C07FB8A5F7E3}</Project>

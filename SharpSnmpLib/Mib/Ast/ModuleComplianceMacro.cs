@@ -15,8 +15,9 @@ namespace Lextm.SharpSnmpLib.Mib.Ast
             Description = description;
         }
 
-        public long Value { get; set; }
+        public uint Value { get; set; }
         public string Parent { get; set; }
         public string Name { get; set; }
+        public string ModuleName { get; set; }
     }
 }

@@ -14,9 +14,10 @@ namespace Lextm.SharpSnmpLib.Mib.Ast
             Notifications.Add(value);
         }
 
-        public long Value { get; set; }
+        public uint Value { get; set; }
         public string Parent { get; set; }
         public string Name { get; set; }
+        public string ModuleName { get; set; }
 
         public IList<ISmiValue> Notifications
         {

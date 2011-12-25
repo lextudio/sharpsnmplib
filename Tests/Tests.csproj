@@ -200,6 +200,10 @@
       <Project>{F35C7321-929B-4238-959A-A60A890F10BA}</Project>
       <Name>SharpSnmpLib.AST</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SharpSnmpLib\SharpSnmpLib.csproj">
+      <Project>{286DE6DB-8F95-4BD4-86A2-86488D2E0EE1}</Project>
+      <Name>SharpSnmpLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
