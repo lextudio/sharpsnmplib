@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// $ANTLR 3.4.1.9004 Smi.g 2011-12-25 10:05:15
+// $ANTLR 3.4.1.9004 Smi.g 2012-01-01 19:30:19
 
 // The variable 'variable' is assigned but its value is never used.
 #pragma warning disable 219
@@ -2861,11 +2861,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = ABSENT_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:142:2: ( 'ABSENT' )
+			// Smi.g:152:2: ( 'ABSENT' )
 			DebugEnterAlt(1);
-			// Smi.g:142:4: 'ABSENT'
+			// Smi.g:152:4: 'ABSENT'
 			{
-			DebugLocation(142, 4);
+			DebugLocation(152, 4);
 			Match("ABSENT"); if (state.failed) return;
 
 
@@ -2897,11 +2897,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = ABSTRACT_SYNTAX_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:146:2: ( 'ABSTRACT-SYNTAX' )
+			// Smi.g:156:2: ( 'ABSTRACT-SYNTAX' )
 			DebugEnterAlt(1);
-			// Smi.g:146:4: 'ABSTRACT-SYNTAX'
+			// Smi.g:156:4: 'ABSTRACT-SYNTAX'
 			{
-			DebugLocation(146, 4);
+			DebugLocation(156, 4);
 			Match("ABSTRACT-SYNTAX"); if (state.failed) return;
 
 
@@ -2933,11 +2933,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = ALL_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:150:2: ( 'ALL' )
+			// Smi.g:160:2: ( 'ALL' )
 			DebugEnterAlt(1);
-			// Smi.g:150:4: 'ALL'
+			// Smi.g:160:4: 'ALL'
 			{
-			DebugLocation(150, 4);
+			DebugLocation(160, 4);
 			Match("ALL"); if (state.failed) return;
 
 
@@ -2969,11 +2969,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = ANY_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:154:2: ( 'ANY' )
+			// Smi.g:164:2: ( 'ANY' )
 			DebugEnterAlt(1);
-			// Smi.g:154:4: 'ANY'
+			// Smi.g:164:4: 'ANY'
 			{
-			DebugLocation(154, 4);
+			DebugLocation(164, 4);
 			Match("ANY"); if (state.failed) return;
 
 
@@ -3005,11 +3005,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = ARGUMENT_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:158:2: ( 'ARGUMENT' )
+			// Smi.g:168:2: ( 'ARGUMENT' )
 			DebugEnterAlt(1);
-			// Smi.g:158:4: 'ARGUMENT'
+			// Smi.g:168:4: 'ARGUMENT'
 			{
-			DebugLocation(158, 4);
+			DebugLocation(168, 4);
 			Match("ARGUMENT"); if (state.failed) return;
 
 
@@ -3041,11 +3041,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = APPLICATION_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:162:2: ( 'APPLICATION' )
+			// Smi.g:172:2: ( 'APPLICATION' )
 			DebugEnterAlt(1);
-			// Smi.g:162:4: 'APPLICATION'
+			// Smi.g:172:4: 'APPLICATION'
 			{
-			DebugLocation(162, 4);
+			DebugLocation(172, 4);
 			Match("APPLICATION"); if (state.failed) return;
 
 
@@ -3077,11 +3077,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = AUTOMATIC_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:166:2: ( 'AUTOMATIC' )
+			// Smi.g:176:2: ( 'AUTOMATIC' )
 			DebugEnterAlt(1);
-			// Smi.g:166:4: 'AUTOMATIC'
+			// Smi.g:176:4: 'AUTOMATIC'
 			{
-			DebugLocation(166, 4);
+			DebugLocation(176, 4);
 			Match("AUTOMATIC"); if (state.failed) return;
 
 
@@ -3113,11 +3113,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = BASED_NUM_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:170:2: ( 'BASEDNUM' )
+			// Smi.g:180:2: ( 'BASEDNUM' )
 			DebugEnterAlt(1);
-			// Smi.g:170:4: 'BASEDNUM'
+			// Smi.g:180:4: 'BASEDNUM'
 			{
-			DebugLocation(170, 4);
+			DebugLocation(180, 4);
 			Match("BASEDNUM"); if (state.failed) return;
 
 
@@ -3149,11 +3149,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = BEGIN_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:174:2: ( 'BEGIN' )
+			// Smi.g:184:2: ( 'BEGIN' )
 			DebugEnterAlt(1);
-			// Smi.g:174:4: 'BEGIN'
+			// Smi.g:184:4: 'BEGIN'
 			{
-			DebugLocation(174, 4);
+			DebugLocation(184, 4);
 			Match("BEGIN"); if (state.failed) return;
 
 
@@ -3185,11 +3185,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = BIT_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:178:2: ( 'BIT' )
+			// Smi.g:188:2: ( 'BIT' )
 			DebugEnterAlt(1);
-			// Smi.g:178:4: 'BIT'
+			// Smi.g:188:4: 'BIT'
 			{
-			DebugLocation(178, 4);
+			DebugLocation(188, 4);
 			Match("BIT"); if (state.failed) return;
 
 
@@ -3221,11 +3221,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = BMP_STR_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:182:2: ( 'BMPString' )
+			// Smi.g:192:2: ( 'BMPString' )
 			DebugEnterAlt(1);
-			// Smi.g:182:4: 'BMPString'
+			// Smi.g:192:4: 'BMPString'
 			{
-			DebugLocation(182, 4);
+			DebugLocation(192, 4);
 			Match("BMPString"); if (state.failed) return;
 
 
@@ -3257,11 +3257,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = BOOLEAN_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:186:2: ( 'BOOLEAN' )
+			// Smi.g:196:2: ( 'BOOLEAN' )
 			DebugEnterAlt(1);
-			// Smi.g:186:4: 'BOOLEAN'
+			// Smi.g:196:4: 'BOOLEAN'
 			{
-			DebugLocation(186, 4);
+			DebugLocation(196, 4);
 			Match("BOOLEAN"); if (state.failed) return;
 
 
@@ -3293,11 +3293,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = BY_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:190:2: ( 'BY' )
+			// Smi.g:200:2: ( 'BY' )
 			DebugEnterAlt(1);
-			// Smi.g:190:4: 'BY'
+			// Smi.g:200:4: 'BY'
 			{
-			DebugLocation(190, 4);
+			DebugLocation(200, 4);
 			Match("BY"); if (state.failed) return;
 
 
@@ -3329,11 +3329,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = CHARACTER_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:194:2: ( 'CHARACTER' )
+			// Smi.g:204:2: ( 'CHARACTER' )
 			DebugEnterAlt(1);
-			// Smi.g:194:4: 'CHARACTER'
+			// Smi.g:204:4: 'CHARACTER'
 			{
-			DebugLocation(194, 4);
+			DebugLocation(204, 4);
 			Match("CHARACTER"); if (state.failed) return;
 
 
@@ -3365,11 +3365,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = CHOICE_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:198:2: ( 'CHOICE' )
+			// Smi.g:208:2: ( 'CHOICE' )
 			DebugEnterAlt(1);
-			// Smi.g:198:4: 'CHOICE'
+			// Smi.g:208:4: 'CHOICE'
 			{
-			DebugLocation(198, 4);
+			DebugLocation(208, 4);
 			Match("CHOICE"); if (state.failed) return;
 
 
@@ -3401,11 +3401,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = CLASS_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:202:2: ( 'CLASS' )
+			// Smi.g:212:2: ( 'CLASS' )
 			DebugEnterAlt(1);
-			// Smi.g:202:4: 'CLASS'
+			// Smi.g:212:4: 'CLASS'
 			{
-			DebugLocation(202, 4);
+			DebugLocation(212, 4);
 			Match("CLASS"); if (state.failed) return;
 
 
@@ -3437,11 +3437,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = COMPONENTS_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:206:2: ( 'COMPONENTS' )
+			// Smi.g:216:2: ( 'COMPONENTS' )
 			DebugEnterAlt(1);
-			// Smi.g:206:4: 'COMPONENTS'
+			// Smi.g:216:4: 'COMPONENTS'
 			{
-			DebugLocation(206, 4);
+			DebugLocation(216, 4);
 			Match("COMPONENTS"); if (state.failed) return;
 
 
@@ -3473,11 +3473,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = COMPONENT_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:210:2: ( 'COMPONENT' )
+			// Smi.g:220:2: ( 'COMPONENT' )
 			DebugEnterAlt(1);
-			// Smi.g:210:4: 'COMPONENT'
+			// Smi.g:220:4: 'COMPONENT'
 			{
-			DebugLocation(210, 4);
+			DebugLocation(220, 4);
 			Match("COMPONENT"); if (state.failed) return;
 
 
@@ -3509,11 +3509,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = CONSTRAINED_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:214:2: ( 'CONSTRAINED' )
+			// Smi.g:224:2: ( 'CONSTRAINED' )
 			DebugEnterAlt(1);
-			// Smi.g:214:4: 'CONSTRAINED'
+			// Smi.g:224:4: 'CONSTRAINED'
 			{
-			DebugLocation(214, 4);
+			DebugLocation(224, 4);
 			Match("CONSTRAINED"); if (state.failed) return;
 
 
@@ -3545,11 +3545,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = DEFAULT_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:218:2: ( 'DEFAULT' )
+			// Smi.g:228:2: ( 'DEFAULT' )
 			DebugEnterAlt(1);
-			// Smi.g:218:4: 'DEFAULT'
+			// Smi.g:228:4: 'DEFAULT'
 			{
-			DebugLocation(218, 4);
+			DebugLocation(228, 4);
 			Match("DEFAULT"); if (state.failed) return;
 
 
@@ -3581,11 +3581,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = DEFINED_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:222:2: ( 'DEFINED' )
+			// Smi.g:232:2: ( 'DEFINED' )
 			DebugEnterAlt(1);
-			// Smi.g:222:4: 'DEFINED'
+			// Smi.g:232:4: 'DEFINED'
 			{
-			DebugLocation(222, 4);
+			DebugLocation(232, 4);
 			Match("DEFINED"); if (state.failed) return;
 
 
@@ -3617,11 +3617,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = DEFINITIONS_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:226:2: ( 'DEFINITIONS' )
+			// Smi.g:236:2: ( 'DEFINITIONS' )
 			DebugEnterAlt(1);
-			// Smi.g:226:4: 'DEFINITIONS'
+			// Smi.g:236:4: 'DEFINITIONS'
 			{
-			DebugLocation(226, 4);
+			DebugLocation(236, 4);
 			Match("DEFINITIONS"); if (state.failed) return;
 
 
@@ -3653,11 +3653,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = EMBEDDED_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:230:2: ( 'EMBEDDED' )
+			// Smi.g:240:2: ( 'EMBEDDED' )
 			DebugEnterAlt(1);
-			// Smi.g:230:4: 'EMBEDDED'
+			// Smi.g:240:4: 'EMBEDDED'
 			{
-			DebugLocation(230, 4);
+			DebugLocation(240, 4);
 			Match("EMBEDDED"); if (state.failed) return;
 
 
@@ -3689,11 +3689,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = END_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:234:2: ( 'END' )
+			// Smi.g:244:2: ( 'END' )
 			DebugEnterAlt(1);
-			// Smi.g:234:4: 'END'
+			// Smi.g:244:4: 'END'
 			{
-			DebugLocation(234, 4);
+			DebugLocation(244, 4);
 			Match("END"); if (state.failed) return;
 
 
@@ -3725,11 +3725,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = ENUMERATED_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:238:2: ( 'ENUMERATED' )
+			// Smi.g:248:2: ( 'ENUMERATED' )
 			DebugEnterAlt(1);
-			// Smi.g:238:4: 'ENUMERATED'
+			// Smi.g:248:4: 'ENUMERATED'
 			{
-			DebugLocation(238, 4);
+			DebugLocation(248, 4);
 			Match("ENUMERATED"); if (state.failed) return;
 
 
@@ -3761,11 +3761,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = ERROR_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:242:2: ( 'ERROR' )
+			// Smi.g:252:2: ( 'ERROR' )
 			DebugEnterAlt(1);
-			// Smi.g:242:4: 'ERROR'
+			// Smi.g:252:4: 'ERROR'
 			{
-			DebugLocation(242, 4);
+			DebugLocation(252, 4);
 			Match("ERROR"); if (state.failed) return;
 
 
@@ -3797,11 +3797,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = ERRORS_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:246:2: ( 'ERRORS' )
+			// Smi.g:256:2: ( 'ERRORS' )
 			DebugEnterAlt(1);
-			// Smi.g:246:4: 'ERRORS'
+			// Smi.g:256:4: 'ERRORS'
 			{
-			DebugLocation(246, 4);
+			DebugLocation(256, 4);
 			Match("ERRORS"); if (state.failed) return;
 
 
@@ -3833,11 +3833,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = EXCEPT_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:250:2: ( 'EXCEPT' )
+			// Smi.g:260:2: ( 'EXCEPT' )
 			DebugEnterAlt(1);
-			// Smi.g:250:4: 'EXCEPT'
+			// Smi.g:260:4: 'EXCEPT'
 			{
-			DebugLocation(250, 4);
+			DebugLocation(260, 4);
 			Match("EXCEPT"); if (state.failed) return;
 
 
@@ -3869,11 +3869,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = EXPLICIT_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:254:2: ( 'EXPLICIT' )
+			// Smi.g:264:2: ( 'EXPLICIT' )
 			DebugEnterAlt(1);
-			// Smi.g:254:4: 'EXPLICIT'
+			// Smi.g:264:4: 'EXPLICIT'
 			{
-			DebugLocation(254, 4);
+			DebugLocation(264, 4);
 			Match("EXPLICIT"); if (state.failed) return;
 
 
@@ -3905,11 +3905,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = EXPORTS_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:258:2: ( 'EXPORTS' )
+			// Smi.g:268:2: ( 'EXPORTS' )
 			DebugEnterAlt(1);
-			// Smi.g:258:4: 'EXPORTS'
+			// Smi.g:268:4: 'EXPORTS'
 			{
-			DebugLocation(258, 4);
+			DebugLocation(268, 4);
 			Match("EXPORTS"); if (state.failed) return;
 
 
@@ -3941,11 +3941,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = EXTENSIBILITY_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:262:2: ( 'EXTENSIBILITY' )
+			// Smi.g:272:2: ( 'EXTENSIBILITY' )
 			DebugEnterAlt(1);
-			// Smi.g:262:4: 'EXTENSIBILITY'
+			// Smi.g:272:4: 'EXTENSIBILITY'
 			{
-			DebugLocation(262, 4);
+			DebugLocation(272, 4);
 			Match("EXTENSIBILITY"); if (state.failed) return;
 
 
@@ -3977,11 +3977,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = EXTERNAL_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:266:2: ( 'EXTERNAL' )
+			// Smi.g:276:2: ( 'EXTERNAL' )
 			DebugEnterAlt(1);
-			// Smi.g:266:4: 'EXTERNAL'
+			// Smi.g:276:4: 'EXTERNAL'
 			{
-			DebugLocation(266, 4);
+			DebugLocation(276, 4);
 			Match("EXTERNAL"); if (state.failed) return;
 
 
@@ -4013,11 +4013,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = FALSE_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:270:2: ( 'FALSE' )
+			// Smi.g:280:2: ( 'FALSE' )
 			DebugEnterAlt(1);
-			// Smi.g:270:4: 'FALSE'
+			// Smi.g:280:4: 'FALSE'
 			{
-			DebugLocation(270, 4);
+			DebugLocation(280, 4);
 			Match("FALSE"); if (state.failed) return;
 
 
@@ -4049,11 +4049,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = FROM_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:274:2: ( 'FROM' )
+			// Smi.g:284:2: ( 'FROM' )
 			DebugEnterAlt(1);
-			// Smi.g:274:4: 'FROM'
+			// Smi.g:284:4: 'FROM'
 			{
-			DebugLocation(274, 4);
+			DebugLocation(284, 4);
 			Match("FROM"); if (state.failed) return;
 
 
@@ -4085,11 +4085,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = GENERALIZED_TIME_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:278:2: ( 'GeneralizedTime' )
+			// Smi.g:288:2: ( 'GeneralizedTime' )
 			DebugEnterAlt(1);
-			// Smi.g:278:4: 'GeneralizedTime'
+			// Smi.g:288:4: 'GeneralizedTime'
 			{
-			DebugLocation(278, 4);
+			DebugLocation(288, 4);
 			Match("GeneralizedTime"); if (state.failed) return;
 
 
@@ -4121,11 +4121,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = GENERAL_STR_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:282:2: ( 'GeneralString' )
+			// Smi.g:292:2: ( 'GeneralString' )
 			DebugEnterAlt(1);
-			// Smi.g:282:4: 'GeneralString'
+			// Smi.g:292:4: 'GeneralString'
 			{
-			DebugLocation(282, 4);
+			DebugLocation(292, 4);
 			Match("GeneralString"); if (state.failed) return;
 
 
@@ -4157,11 +4157,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = GRAPHIC_STR_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:286:2: ( 'GraphicString' )
+			// Smi.g:296:2: ( 'GraphicString' )
 			DebugEnterAlt(1);
-			// Smi.g:286:4: 'GraphicString'
+			// Smi.g:296:4: 'GraphicString'
 			{
-			DebugLocation(286, 4);
+			DebugLocation(296, 4);
 			Match("GraphicString"); if (state.failed) return;
 
 
@@ -4193,11 +4193,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = IA5_STRING_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:290:2: ( 'IA5String' )
+			// Smi.g:300:2: ( 'IA5String' )
 			DebugEnterAlt(1);
-			// Smi.g:290:4: 'IA5String'
+			// Smi.g:300:4: 'IA5String'
 			{
-			DebugLocation(290, 4);
+			DebugLocation(300, 4);
 			Match("IA5String"); if (state.failed) return;
 
 
@@ -4229,11 +4229,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = IDENTIFIER_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:294:2: ( 'IDENTIFIER' )
+			// Smi.g:304:2: ( 'IDENTIFIER' )
 			DebugEnterAlt(1);
-			// Smi.g:294:4: 'IDENTIFIER'
+			// Smi.g:304:4: 'IDENTIFIER'
 			{
-			DebugLocation(294, 4);
+			DebugLocation(304, 4);
 			Match("IDENTIFIER"); if (state.failed) return;
 
 
@@ -4265,11 +4265,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = IMPLICIT_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:298:2: ( 'IMPLICIT' )
+			// Smi.g:308:2: ( 'IMPLICIT' )
 			DebugEnterAlt(1);
-			// Smi.g:298:4: 'IMPLICIT'
+			// Smi.g:308:4: 'IMPLICIT'
 			{
-			DebugLocation(298, 4);
+			DebugLocation(308, 4);
 			Match("IMPLICIT"); if (state.failed) return;
 
 
@@ -4301,11 +4301,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = IMPLIED_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:302:2: ( 'IMPLIED' )
+			// Smi.g:312:2: ( 'IMPLIED' )
 			DebugEnterAlt(1);
-			// Smi.g:302:4: 'IMPLIED'
+			// Smi.g:312:4: 'IMPLIED'
 			{
-			DebugLocation(302, 4);
+			DebugLocation(312, 4);
 			Match("IMPLIED"); if (state.failed) return;
 
 
@@ -4337,11 +4337,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = IMPORTS_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:306:2: ( 'IMPORTS' )
+			// Smi.g:316:2: ( 'IMPORTS' )
 			DebugEnterAlt(1);
-			// Smi.g:306:4: 'IMPORTS'
+			// Smi.g:316:4: 'IMPORTS'
 			{
-			DebugLocation(306, 4);
+			DebugLocation(316, 4);
 			Match("IMPORTS"); if (state.failed) return;
 
 
@@ -4373,11 +4373,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = INCLUDES_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:310:2: ( 'INCLUDES' )
+			// Smi.g:320:2: ( 'INCLUDES' )
 			DebugEnterAlt(1);
-			// Smi.g:310:4: 'INCLUDES'
+			// Smi.g:320:4: 'INCLUDES'
 			{
-			DebugLocation(310, 4);
+			DebugLocation(320, 4);
 			Match("INCLUDES"); if (state.failed) return;
 
 
@@ -4409,11 +4409,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = INSTANCE_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:314:2: ( 'INSTANCE' )
+			// Smi.g:324:2: ( 'INSTANCE' )
 			DebugEnterAlt(1);
-			// Smi.g:314:4: 'INSTANCE'
+			// Smi.g:324:4: 'INSTANCE'
 			{
-			DebugLocation(314, 4);
+			DebugLocation(324, 4);
 			Match("INSTANCE"); if (state.failed) return;
 
 
@@ -4445,11 +4445,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = INTEGER_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:318:2: ( 'INTEGER' )
+			// Smi.g:328:2: ( 'INTEGER' )
 			DebugEnterAlt(1);
-			// Smi.g:318:4: 'INTEGER'
+			// Smi.g:328:4: 'INTEGER'
 			{
-			DebugLocation(318, 4);
+			DebugLocation(328, 4);
 			Match("INTEGER"); if (state.failed) return;
 
 
@@ -4481,11 +4481,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = INTERSECTION_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:322:2: ( 'INTERSECTION' )
+			// Smi.g:332:2: ( 'INTERSECTION' )
 			DebugEnterAlt(1);
-			// Smi.g:322:4: 'INTERSECTION'
+			// Smi.g:332:4: 'INTERSECTION'
 			{
-			DebugLocation(322, 4);
+			DebugLocation(332, 4);
 			Match("INTERSECTION"); if (state.failed) return;
 
 
@@ -4517,11 +4517,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = ISO646_STR_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:326:2: ( 'ISO646String' )
+			// Smi.g:336:2: ( 'ISO646String' )
 			DebugEnterAlt(1);
-			// Smi.g:326:4: 'ISO646String'
+			// Smi.g:336:4: 'ISO646String'
 			{
-			DebugLocation(326, 4);
+			DebugLocation(336, 4);
 			Match("ISO646String"); if (state.failed) return;
 
 
@@ -4553,11 +4553,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = LINKED_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:330:2: ( 'LINKED' )
+			// Smi.g:340:2: ( 'LINKED' )
 			DebugEnterAlt(1);
-			// Smi.g:330:4: 'LINKED'
+			// Smi.g:340:4: 'LINKED'
 			{
-			DebugLocation(330, 4);
+			DebugLocation(340, 4);
 			Match("LINKED"); if (state.failed) return;
 
 
@@ -4589,11 +4589,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = MAX_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:334:2: ( 'MAX' )
+			// Smi.g:344:2: ( 'MAX' )
 			DebugEnterAlt(1);
-			// Smi.g:334:4: 'MAX'
+			// Smi.g:344:4: 'MAX'
 			{
-			DebugLocation(334, 4);
+			DebugLocation(344, 4);
 			Match("MAX"); if (state.failed) return;
 
 
@@ -4625,11 +4625,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = MINUS_INFINITY_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:338:2: ( 'MINUSINFINITY' )
+			// Smi.g:348:2: ( 'MINUSINFINITY' )
 			DebugEnterAlt(1);
-			// Smi.g:338:4: 'MINUSINFINITY'
+			// Smi.g:348:4: 'MINUSINFINITY'
 			{
-			DebugLocation(338, 4);
+			DebugLocation(348, 4);
 			Match("MINUSINFINITY"); if (state.failed) return;
 
 
@@ -4661,11 +4661,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = MIN_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:342:2: ( 'MIN' )
+			// Smi.g:352:2: ( 'MIN' )
 			DebugEnterAlt(1);
-			// Smi.g:342:4: 'MIN'
+			// Smi.g:352:4: 'MIN'
 			{
-			DebugLocation(342, 4);
+			DebugLocation(352, 4);
 			Match("MIN"); if (state.failed) return;
 
 
@@ -4697,11 +4697,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = NULL_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:346:2: ( 'NULL' )
+			// Smi.g:356:2: ( 'NULL' )
 			DebugEnterAlt(1);
-			// Smi.g:346:4: 'NULL'
+			// Smi.g:356:4: 'NULL'
 			{
-			DebugLocation(346, 4);
+			DebugLocation(356, 4);
 			Match("NULL"); if (state.failed) return;
 
 
@@ -4733,11 +4733,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = NUMERIC_STR_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:350:2: ( 'NumericString' )
+			// Smi.g:360:2: ( 'NumericString' )
 			DebugEnterAlt(1);
-			// Smi.g:350:4: 'NumericString'
+			// Smi.g:360:4: 'NumericString'
 			{
-			DebugLocation(350, 4);
+			DebugLocation(360, 4);
 			Match("NumericString"); if (state.failed) return;
 
 
@@ -4769,11 +4769,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = OBJECT_DESCRIPTOR_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:354:2: ( 'ObjectDescriptor' )
+			// Smi.g:364:2: ( 'ObjectDescriptor' )
 			DebugEnterAlt(1);
-			// Smi.g:354:4: 'ObjectDescriptor'
+			// Smi.g:364:4: 'ObjectDescriptor'
 			{
-			DebugLocation(354, 4);
+			DebugLocation(364, 4);
 			Match("ObjectDescriptor"); if (state.failed) return;
 
 
@@ -4805,11 +4805,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = OBJECT_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:358:2: ( 'OBJECT' )
+			// Smi.g:368:2: ( 'OBJECT' )
 			DebugEnterAlt(1);
-			// Smi.g:358:4: 'OBJECT'
+			// Smi.g:368:4: 'OBJECT'
 			{
-			DebugLocation(358, 4);
+			DebugLocation(368, 4);
 			Match("OBJECT"); if (state.failed) return;
 
 
@@ -4841,11 +4841,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = OCTET_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:362:2: ( 'OCTET' )
+			// Smi.g:372:2: ( 'OCTET' )
 			DebugEnterAlt(1);
-			// Smi.g:362:4: 'OCTET'
+			// Smi.g:372:4: 'OCTET'
 			{
-			DebugLocation(362, 4);
+			DebugLocation(372, 4);
 			Match("OCTET"); if (state.failed) return;
 
 
@@ -4877,11 +4877,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = OPERATION_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:366:2: ( 'OPERATION' )
+			// Smi.g:376:2: ( 'OPERATION' )
 			DebugEnterAlt(1);
-			// Smi.g:366:4: 'OPERATION'
+			// Smi.g:376:4: 'OPERATION'
 			{
-			DebugLocation(366, 4);
+			DebugLocation(376, 4);
 			Match("OPERATION"); if (state.failed) return;
 
 
@@ -4913,11 +4913,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = OF_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:370:2: ( 'OF' )
+			// Smi.g:380:2: ( 'OF' )
 			DebugEnterAlt(1);
-			// Smi.g:370:4: 'OF'
+			// Smi.g:380:4: 'OF'
 			{
-			DebugLocation(370, 4);
+			DebugLocation(380, 4);
 			Match("OF"); if (state.failed) return;
 
 
@@ -4949,11 +4949,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = OID_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:374:2: ( 'OID' )
+			// Smi.g:384:2: ( 'OID' )
 			DebugEnterAlt(1);
-			// Smi.g:374:4: 'OID'
+			// Smi.g:384:4: 'OID'
 			{
-			DebugLocation(374, 4);
+			DebugLocation(384, 4);
 			Match("OID"); if (state.failed) return;
 
 
@@ -4985,11 +4985,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = OPTIONAL_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:378:2: ( 'OPTIONAL' )
+			// Smi.g:388:2: ( 'OPTIONAL' )
 			DebugEnterAlt(1);
-			// Smi.g:378:4: 'OPTIONAL'
+			// Smi.g:388:4: 'OPTIONAL'
 			{
-			DebugLocation(378, 4);
+			DebugLocation(388, 4);
 			Match("OPTIONAL"); if (state.failed) return;
 
 
@@ -5021,11 +5021,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = PARAMETER_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:382:2: ( 'PARAMETER' )
+			// Smi.g:392:2: ( 'PARAMETER' )
 			DebugEnterAlt(1);
-			// Smi.g:382:4: 'PARAMETER'
+			// Smi.g:392:4: 'PARAMETER'
 			{
-			DebugLocation(382, 4);
+			DebugLocation(392, 4);
 			Match("PARAMETER"); if (state.failed) return;
 
 
@@ -5057,11 +5057,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = PDV_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:386:2: ( 'PDV' )
+			// Smi.g:396:2: ( 'PDV' )
 			DebugEnterAlt(1);
-			// Smi.g:386:4: 'PDV'
+			// Smi.g:396:4: 'PDV'
 			{
-			DebugLocation(386, 4);
+			DebugLocation(396, 4);
 			Match("PDV"); if (state.failed) return;
 
 
@@ -5093,11 +5093,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = PLUS_INFINITY_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:390:2: ( 'PLUSINFINITY' )
+			// Smi.g:400:2: ( 'PLUSINFINITY' )
 			DebugEnterAlt(1);
-			// Smi.g:390:4: 'PLUSINFINITY'
+			// Smi.g:400:4: 'PLUSINFINITY'
 			{
-			DebugLocation(390, 4);
+			DebugLocation(400, 4);
 			Match("PLUSINFINITY"); if (state.failed) return;
 
 
@@ -5129,11 +5129,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = PRESENT_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:394:2: ( 'PRESENT' )
+			// Smi.g:404:2: ( 'PRESENT' )
 			DebugEnterAlt(1);
-			// Smi.g:394:4: 'PRESENT'
+			// Smi.g:404:4: 'PRESENT'
 			{
-			DebugLocation(394, 4);
+			DebugLocation(404, 4);
 			Match("PRESENT"); if (state.failed) return;
 
 
@@ -5165,11 +5165,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = PRINTABLE_STR_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:398:2: ( 'PrintableString' )
+			// Smi.g:408:2: ( 'PrintableString' )
 			DebugEnterAlt(1);
-			// Smi.g:398:4: 'PrintableString'
+			// Smi.g:408:4: 'PrintableString'
 			{
-			DebugLocation(398, 4);
+			DebugLocation(408, 4);
 			Match("PrintableString"); if (state.failed) return;
 
 
@@ -5201,11 +5201,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = PRIVATE_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:402:2: ( 'PRIVATE' )
+			// Smi.g:412:2: ( 'PRIVATE' )
 			DebugEnterAlt(1);
-			// Smi.g:402:4: 'PRIVATE'
+			// Smi.g:412:4: 'PRIVATE'
 			{
-			DebugLocation(402, 4);
+			DebugLocation(412, 4);
 			Match("PRIVATE"); if (state.failed) return;
 
 
@@ -5237,11 +5237,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = REAL_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:406:2: ( 'REAL' )
+			// Smi.g:416:2: ( 'REAL' )
 			DebugEnterAlt(1);
-			// Smi.g:406:4: 'REAL'
+			// Smi.g:416:4: 'REAL'
 			{
-			DebugLocation(406, 4);
+			DebugLocation(416, 4);
 			Match("REAL"); if (state.failed) return;
 
 
@@ -5273,11 +5273,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = RELATIVE_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:410:2: ( 'RELATIVE' )
+			// Smi.g:420:2: ( 'RELATIVE' )
 			DebugEnterAlt(1);
-			// Smi.g:410:4: 'RELATIVE'
+			// Smi.g:420:4: 'RELATIVE'
 			{
-			DebugLocation(410, 4);
+			DebugLocation(420, 4);
 			Match("RELATIVE"); if (state.failed) return;
 
 
@@ -5309,11 +5309,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = RESULT_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:414:2: ( 'RESULT' )
+			// Smi.g:424:2: ( 'RESULT' )
 			DebugEnterAlt(1);
-			// Smi.g:414:4: 'RESULT'
+			// Smi.g:424:4: 'RESULT'
 			{
-			DebugLocation(414, 4);
+			DebugLocation(424, 4);
 			Match("RESULT"); if (state.failed) return;
 
 
@@ -5345,11 +5345,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = SEQUENCE_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:418:2: ( 'SEQUENCE' )
+			// Smi.g:428:2: ( 'SEQUENCE' )
 			DebugEnterAlt(1);
-			// Smi.g:418:4: 'SEQUENCE'
+			// Smi.g:428:4: 'SEQUENCE'
 			{
-			DebugLocation(418, 4);
+			DebugLocation(428, 4);
 			Match("SEQUENCE"); if (state.failed) return;
 
 
@@ -5381,11 +5381,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = SET_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:422:2: ( 'SET' )
+			// Smi.g:432:2: ( 'SET' )
 			DebugEnterAlt(1);
-			// Smi.g:422:4: 'SET'
+			// Smi.g:432:4: 'SET'
 			{
-			DebugLocation(422, 4);
+			DebugLocation(432, 4);
 			Match("SET"); if (state.failed) return;
 
 
@@ -5417,11 +5417,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = SIZE_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:426:2: ( 'SIZE' )
+			// Smi.g:436:2: ( 'SIZE' )
 			DebugEnterAlt(1);
-			// Smi.g:426:4: 'SIZE'
+			// Smi.g:436:4: 'SIZE'
 			{
-			DebugLocation(426, 4);
+			DebugLocation(436, 4);
 			Match("SIZE"); if (state.failed) return;
 
 
@@ -5453,11 +5453,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = STRING_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:430:2: ( 'STRING' )
+			// Smi.g:440:2: ( 'STRING' )
 			DebugEnterAlt(1);
-			// Smi.g:430:4: 'STRING'
+			// Smi.g:440:4: 'STRING'
 			{
-			DebugLocation(430, 4);
+			DebugLocation(440, 4);
 			Match("STRING"); if (state.failed) return;
 
 
@@ -5489,11 +5489,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = TAGS_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:434:2: ( 'TAGS' )
+			// Smi.g:444:2: ( 'TAGS' )
 			DebugEnterAlt(1);
-			// Smi.g:434:4: 'TAGS'
+			// Smi.g:444:4: 'TAGS'
 			{
-			DebugLocation(434, 4);
+			DebugLocation(444, 4);
 			Match("TAGS"); if (state.failed) return;
 
 
@@ -5525,11 +5525,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = TELETEX_STR_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:438:2: ( 'TeletexString' )
+			// Smi.g:448:2: ( 'TeletexString' )
 			DebugEnterAlt(1);
-			// Smi.g:438:4: 'TeletexString'
+			// Smi.g:448:4: 'TeletexString'
 			{
-			DebugLocation(438, 4);
+			DebugLocation(448, 4);
 			Match("TeletexString"); if (state.failed) return;
 
 
@@ -5561,11 +5561,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = T61_STR_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:442:2: ( 'T61String' )
+			// Smi.g:452:2: ( 'T61String' )
 			DebugEnterAlt(1);
-			// Smi.g:442:4: 'T61String'
+			// Smi.g:452:4: 'T61String'
 			{
-			DebugLocation(442, 4);
+			DebugLocation(452, 4);
 			Match("T61String"); if (state.failed) return;
 
 
@@ -5597,11 +5597,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = TRUE_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:446:2: ( 'TRUE' )
+			// Smi.g:456:2: ( 'TRUE' )
 			DebugEnterAlt(1);
-			// Smi.g:446:4: 'TRUE'
+			// Smi.g:456:4: 'TRUE'
 			{
-			DebugLocation(446, 4);
+			DebugLocation(456, 4);
 			Match("TRUE"); if (state.failed) return;
 
 
@@ -5633,11 +5633,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = TYPE_IDENTIFIER_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:450:2: ( 'TYPE-IDENTIFIER' )
+			// Smi.g:460:2: ( 'TYPE-IDENTIFIER' )
 			DebugEnterAlt(1);
-			// Smi.g:450:4: 'TYPE-IDENTIFIER'
+			// Smi.g:460:4: 'TYPE-IDENTIFIER'
 			{
-			DebugLocation(450, 4);
+			DebugLocation(460, 4);
 			Match("TYPE-IDENTIFIER"); if (state.failed) return;
 
 
@@ -5669,11 +5669,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = UNION_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:454:2: ( 'UNION' )
+			// Smi.g:464:2: ( 'UNION' )
 			DebugEnterAlt(1);
-			// Smi.g:454:4: 'UNION'
+			// Smi.g:464:4: 'UNION'
 			{
-			DebugLocation(454, 4);
+			DebugLocation(464, 4);
 			Match("UNION"); if (state.failed) return;
 
 
@@ -5705,11 +5705,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = UNIQUE_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:458:2: ( 'UNIQUE' )
+			// Smi.g:468:2: ( 'UNIQUE' )
 			DebugEnterAlt(1);
-			// Smi.g:458:4: 'UNIQUE'
+			// Smi.g:468:4: 'UNIQUE'
 			{
-			DebugLocation(458, 4);
+			DebugLocation(468, 4);
 			Match("UNIQUE"); if (state.failed) return;
 
 
@@ -5741,11 +5741,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = UNIVERSAL_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:462:2: ( 'UNIVERSAL' )
+			// Smi.g:472:2: ( 'UNIVERSAL' )
 			DebugEnterAlt(1);
-			// Smi.g:462:4: 'UNIVERSAL'
+			// Smi.g:472:4: 'UNIVERSAL'
 			{
-			DebugLocation(462, 4);
+			DebugLocation(472, 4);
 			Match("UNIVERSAL"); if (state.failed) return;
 
 
@@ -5777,11 +5777,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = UNIVERSAL_STR_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:466:2: ( 'UniversalString' )
+			// Smi.g:476:2: ( 'UniversalString' )
 			DebugEnterAlt(1);
-			// Smi.g:466:4: 'UniversalString'
+			// Smi.g:476:4: 'UniversalString'
 			{
-			DebugLocation(466, 4);
+			DebugLocation(476, 4);
 			Match("UniversalString"); if (state.failed) return;
 
 
@@ -5813,11 +5813,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = UTC_TIME_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:470:2: ( 'UTCTime' )
+			// Smi.g:480:2: ( 'UTCTime' )
 			DebugEnterAlt(1);
-			// Smi.g:470:4: 'UTCTime'
+			// Smi.g:480:4: 'UTCTime'
 			{
-			DebugLocation(470, 4);
+			DebugLocation(480, 4);
 			Match("UTCTime"); if (state.failed) return;
 
 
@@ -5849,11 +5849,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = UTF8_STR_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:474:2: ( 'UTF8String' )
+			// Smi.g:484:2: ( 'UTF8String' )
 			DebugEnterAlt(1);
-			// Smi.g:474:4: 'UTF8String'
+			// Smi.g:484:4: 'UTF8String'
 			{
-			DebugLocation(474, 4);
+			DebugLocation(484, 4);
 			Match("UTF8String"); if (state.failed) return;
 
 
@@ -5885,11 +5885,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = VIDEOTEX_STR_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:478:2: ( 'VideotexString' )
+			// Smi.g:488:2: ( 'VideotexString' )
 			DebugEnterAlt(1);
-			// Smi.g:478:4: 'VideotexString'
+			// Smi.g:488:4: 'VideotexString'
 			{
-			DebugLocation(478, 4);
+			DebugLocation(488, 4);
 			Match("VideotexString"); if (state.failed) return;
 
 
@@ -5921,11 +5921,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = VISIBLE_STR_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:482:2: ( 'VisibleString' )
+			// Smi.g:492:2: ( 'VisibleString' )
 			DebugEnterAlt(1);
-			// Smi.g:482:4: 'VisibleString'
+			// Smi.g:492:4: 'VisibleString'
 			{
-			DebugLocation(482, 4);
+			DebugLocation(492, 4);
 			Match("VisibleString"); if (state.failed) return;
 
 
@@ -5957,11 +5957,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = WITH_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:486:2: ( 'WITH' )
+			// Smi.g:496:2: ( 'WITH' )
 			DebugEnterAlt(1);
-			// Smi.g:486:4: 'WITH'
+			// Smi.g:496:4: 'WITH'
 			{
-			DebugLocation(486, 4);
+			DebugLocation(496, 4);
 			Match("WITH"); if (state.failed) return;
 
 
@@ -5993,11 +5993,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = PATTERN_KW;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:490:2: ( 'PATTERN' )
+			// Smi.g:500:2: ( 'PATTERN' )
 			DebugEnterAlt(1);
-			// Smi.g:490:4: 'PATTERN'
+			// Smi.g:500:4: 'PATTERN'
 			{
-			DebugLocation(490, 4);
+			DebugLocation(500, 4);
 			Match("PATTERN"); if (state.failed) return;
 
 
@@ -6029,11 +6029,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = ASSIGN_OP;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:495:10: ( '::=' )
+			// Smi.g:505:10: ( '::=' )
 			DebugEnterAlt(1);
-			// Smi.g:495:12: '::='
+			// Smi.g:505:12: '::='
 			{
-			DebugLocation(495, 12);
+			DebugLocation(505, 12);
 			Match("::="); if (state.failed) return;
 
 
@@ -6065,11 +6065,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = BAR;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:496:4: ( '|' )
+			// Smi.g:506:4: ( '|' )
 			DebugEnterAlt(1);
-			// Smi.g:496:7: '|'
+			// Smi.g:506:7: '|'
 			{
-			DebugLocation(496, 7);
+			DebugLocation(506, 7);
 			Match('|'); if (state.failed) return;
 
 			}
@@ -6100,11 +6100,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = COLON;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:497:6: ( ':' )
+			// Smi.g:507:6: ( ':' )
 			DebugEnterAlt(1);
-			// Smi.g:497:9: ':'
+			// Smi.g:507:9: ':'
 			{
-			DebugLocation(497, 9);
+			DebugLocation(507, 9);
 			Match(':'); if (state.failed) return;
 
 			}
@@ -6135,11 +6135,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = COMMA;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:498:6: ( ',' )
+			// Smi.g:508:6: ( ',' )
 			DebugEnterAlt(1);
-			// Smi.g:498:9: ','
+			// Smi.g:508:9: ','
 			{
-			DebugLocation(498, 9);
+			DebugLocation(508, 9);
 			Match(','); if (state.failed) return;
 
 			}
@@ -6170,11 +6170,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = COMMENT;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:499:8: ( '--' )
+			// Smi.g:509:8: ( '--' )
 			DebugEnterAlt(1);
-			// Smi.g:499:10: '--'
+			// Smi.g:509:10: '--'
 			{
-			DebugLocation(499, 10);
+			DebugLocation(509, 10);
 			Match("--"); if (state.failed) return;
 
 
@@ -6206,11 +6206,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = DOT;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:500:4: ( '.' )
+			// Smi.g:510:4: ( '.' )
 			DebugEnterAlt(1);
-			// Smi.g:500:7: '.'
+			// Smi.g:510:7: '.'
 			{
-			DebugLocation(500, 7);
+			DebugLocation(510, 7);
 			Match('.'); if (state.failed) return;
 
 			}
@@ -6241,11 +6241,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = DOTDOT;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:501:7: ( '..' )
+			// Smi.g:511:7: ( '..' )
 			DebugEnterAlt(1);
-			// Smi.g:501:10: '..'
+			// Smi.g:511:10: '..'
 			{
-			DebugLocation(501, 10);
+			DebugLocation(511, 10);
 			Match(".."); if (state.failed) return;
 
 
@@ -6277,11 +6277,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = DOTDOTDOT;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:503:2: ( '...' )
+			// Smi.g:513:2: ( '...' )
 			DebugEnterAlt(1);
-			// Smi.g:503:4: '...'
+			// Smi.g:513:4: '...'
 			{
-			DebugLocation(503, 4);
+			DebugLocation(513, 4);
 			Match("..."); if (state.failed) return;
 
 
@@ -6313,11 +6313,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = EXCLAMATION;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:505:12: ( '!' )
+			// Smi.g:515:12: ( '!' )
 			DebugEnterAlt(1);
-			// Smi.g:505:14: '!'
+			// Smi.g:515:14: '!'
 			{
-			DebugLocation(505, 14);
+			DebugLocation(515, 14);
 			Match('!'); if (state.failed) return;
 
 			}
@@ -6348,11 +6348,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = INTERSECTION;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:506:13: ( '^' )
+			// Smi.g:516:13: ( '^' )
 			DebugEnterAlt(1);
-			// Smi.g:506:15: '^'
+			// Smi.g:516:15: '^'
 			{
-			DebugLocation(506, 15);
+			DebugLocation(516, 15);
 			Match('^'); if (state.failed) return;
 
 			}
@@ -6383,11 +6383,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = LESS;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:507:5: ( '<' )
+			// Smi.g:517:5: ( '<' )
 			DebugEnterAlt(1);
-			// Smi.g:507:8: '<'
+			// Smi.g:517:8: '<'
 			{
-			DebugLocation(507, 8);
+			DebugLocation(517, 8);
 			Match('<'); if (state.failed) return;
 
 			}
@@ -6418,11 +6418,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = L_BRACE;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:508:8: ( '{' )
+			// Smi.g:518:8: ( '{' )
 			DebugEnterAlt(1);
-			// Smi.g:508:10: '{'
+			// Smi.g:518:10: '{'
 			{
-			DebugLocation(508, 10);
+			DebugLocation(518, 10);
 			Match('{'); if (state.failed) return;
 
 			}
@@ -6453,11 +6453,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = L_BRACKET;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:509:10: ( '[' )
+			// Smi.g:519:10: ( '[' )
 			DebugEnterAlt(1);
-			// Smi.g:509:12: '['
+			// Smi.g:519:12: '['
 			{
-			DebugLocation(509, 12);
+			DebugLocation(519, 12);
 			Match('['); if (state.failed) return;
 
 			}
@@ -6488,11 +6488,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = L_PAREN;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:510:8: ( '(' )
+			// Smi.g:520:8: ( '(' )
 			DebugEnterAlt(1);
-			// Smi.g:510:10: '('
+			// Smi.g:520:10: '('
 			{
-			DebugLocation(510, 10);
+			DebugLocation(520, 10);
 			Match('('); if (state.failed) return;
 
 			}
@@ -6523,11 +6523,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = MINUS;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:511:6: ( '-' )
+			// Smi.g:521:6: ( '-' )
 			DebugEnterAlt(1);
-			// Smi.g:511:9: '-'
+			// Smi.g:521:9: '-'
 			{
-			DebugLocation(511, 9);
+			DebugLocation(521, 9);
 			Match('-'); if (state.failed) return;
 
 			}
@@ -6558,11 +6558,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = PLUS;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:512:5: ( '+' )
+			// Smi.g:522:5: ( '+' )
 			DebugEnterAlt(1);
-			// Smi.g:512:8: '+'
+			// Smi.g:522:8: '+'
 			{
-			DebugLocation(512, 8);
+			DebugLocation(522, 8);
 			Match('+'); if (state.failed) return;
 
 			}
@@ -6593,11 +6593,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = R_BRACE;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:513:8: ( '}' )
+			// Smi.g:523:8: ( '}' )
 			DebugEnterAlt(1);
-			// Smi.g:513:10: '}'
+			// Smi.g:523:10: '}'
 			{
-			DebugLocation(513, 10);
+			DebugLocation(523, 10);
 			Match('}'); if (state.failed) return;
 
 			}
@@ -6628,11 +6628,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = R_BRACKET;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:514:10: ( ']' )
+			// Smi.g:524:10: ( ']' )
 			DebugEnterAlt(1);
-			// Smi.g:514:12: ']'
+			// Smi.g:524:12: ']'
 			{
-			DebugLocation(514, 12);
+			DebugLocation(524, 12);
 			Match(']'); if (state.failed) return;
 
 			}
@@ -6663,11 +6663,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = R_PAREN;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:515:8: ( ')' )
+			// Smi.g:525:8: ( ')' )
 			DebugEnterAlt(1);
-			// Smi.g:515:10: ')'
+			// Smi.g:525:10: ')'
 			{
-			DebugLocation(515, 10);
+			DebugLocation(525, 10);
 			Match(')'); if (state.failed) return;
 
 			}
@@ -6698,11 +6698,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = SEMI;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:516:5: ( ';' )
+			// Smi.g:526:5: ( ';' )
 			DebugEnterAlt(1);
-			// Smi.g:516:8: ';'
+			// Smi.g:526:8: ';'
 			{
-			DebugLocation(516, 8);
+			DebugLocation(526, 8);
 			Match(';'); if (state.failed) return;
 
 			}
@@ -6733,11 +6733,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = SINGLE_QUOTE;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:517:13: ( '\\'' )
+			// Smi.g:527:13: ( '\\'' )
 			DebugEnterAlt(1);
-			// Smi.g:517:15: '\\''
+			// Smi.g:527:15: '\\''
 			{
-			DebugLocation(517, 15);
+			DebugLocation(527, 15);
 			Match('\''); if (state.failed) return;
 
 			}
@@ -6768,11 +6768,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = CHARB;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:518:6: ( '\\'B' )
+			// Smi.g:528:6: ( '\\'B' )
 			DebugEnterAlt(1);
-			// Smi.g:518:9: '\\'B'
+			// Smi.g:528:9: '\\'B'
 			{
-			DebugLocation(518, 9);
+			DebugLocation(528, 9);
 			Match("'B"); if (state.failed) return;
 
 
@@ -6804,11 +6804,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = CHARH;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:519:6: ( '\\'H' )
+			// Smi.g:529:6: ( '\\'H' )
 			DebugEnterAlt(1);
-			// Smi.g:519:9: '\\'H'
+			// Smi.g:529:9: '\\'H'
 			{
-			DebugLocation(519, 9);
+			DebugLocation(529, 9);
 			Match("'H"); if (state.failed) return;
 
 
@@ -6840,12 +6840,12 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = WS;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:524:6: ( ( ' ' | '\\t' | '\\f' | ( '\\r\\n' | '\\r' | '\\n' ) )+ )
+			// Smi.g:534:6: ( ( ' ' | '\\t' | '\\f' | ( '\\r\\n' | '\\r' | '\\n' ) )+ )
 			DebugEnterAlt(1);
-			// Smi.g:524:8: ( ' ' | '\\t' | '\\f' | ( '\\r\\n' | '\\r' | '\\n' ) )+
+			// Smi.g:534:8: ( ' ' | '\\t' | '\\f' | ( '\\r\\n' | '\\r' | '\\n' ) )+
 			{
-			DebugLocation(524, 8);
-			// Smi.g:524:8: ( ' ' | '\\t' | '\\f' | ( '\\r\\n' | '\\r' | '\\n' ) )+
+			DebugLocation(534, 8);
+			// Smi.g:534:8: ( ' ' | '\\t' | '\\f' | ( '\\r\\n' | '\\r' | '\\n' ) )+
 			int cnt2=0;
 			try { DebugEnterSubRule(2);
 			while (true)
@@ -6882,37 +6882,37 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:524:10: ' '
+					// Smi.g:534:10: ' '
 					{
-					DebugLocation(524, 10);
+					DebugLocation(534, 10);
 					Match(' '); if (state.failed) return;
 
 					}
 					break;
 				case 2:
 					DebugEnterAlt(2);
-					// Smi.g:524:16: '\\t'
+					// Smi.g:534:16: '\\t'
 					{
-					DebugLocation(524, 16);
+					DebugLocation(534, 16);
 					Match('\t'); if (state.failed) return;
 
 					}
 					break;
 				case 3:
 					DebugEnterAlt(3);
-					// Smi.g:524:23: '\\f'
+					// Smi.g:534:23: '\\f'
 					{
-					DebugLocation(524, 23);
+					DebugLocation(534, 23);
 					Match('\f'); if (state.failed) return;
 
 					}
 					break;
 				case 4:
 					DebugEnterAlt(4);
-					// Smi.g:524:30: ( '\\r\\n' | '\\r' | '\\n' )
+					// Smi.g:534:30: ( '\\r\\n' | '\\r' | '\\n' )
 					{
-					DebugLocation(524, 30);
-					// Smi.g:524:30: ( '\\r\\n' | '\\r' | '\\n' )
+					DebugLocation(534, 30);
+					// Smi.g:534:30: ( '\\r\\n' | '\\r' | '\\n' )
 					int alt1=3;
 					try { DebugEnterSubRule(1);
 					try { DebugEnterDecision(1, false);
@@ -6947,9 +6947,9 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 					{
 					case 1:
 						DebugEnterAlt(1);
-						// Smi.g:525:4: '\\r\\n'
+						// Smi.g:535:4: '\\r\\n'
 						{
-						DebugLocation(525, 4);
+						DebugLocation(535, 4);
 						Match("\r\n"); if (state.failed) return;
 
 
@@ -6957,18 +6957,18 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 						break;
 					case 2:
 						DebugEnterAlt(2);
-						// Smi.g:526:4: '\\r'
+						// Smi.g:536:4: '\\r'
 						{
-						DebugLocation(526, 4);
+						DebugLocation(536, 4);
 						Match('\r'); if (state.failed) return;
 
 						}
 						break;
 					case 3:
 						DebugEnterAlt(3);
-						// Smi.g:527:4: '\\n'
+						// Smi.g:537:4: '\\n'
 						{
-						DebugLocation(527, 4);
+						DebugLocation(537, 4);
 						Match('\n'); if (state.failed) return;
 
 						}
@@ -6997,7 +6997,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 
 			} finally { DebugExitSubRule(2); }
 
-			DebugLocation(529, 2);
+			DebugLocation(539, 2);
 			if (state.backtracking == 0)
 			{
 				 Skip(); 
@@ -7031,14 +7031,14 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = BLK_COMMENT;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:533:5: ( COMMENT ( options {greedy=false; } :~ ( '\\n' | '\\r' ) )* COMMENT )
+			// Smi.g:543:5: ( COMMENT ( options {greedy=false; } :~ ( '\\n' | '\\r' ) )* COMMENT )
 			DebugEnterAlt(1);
-			// Smi.g:533:9: COMMENT ( options {greedy=false; } :~ ( '\\n' | '\\r' ) )* COMMENT
+			// Smi.g:543:9: COMMENT ( options {greedy=false; } :~ ( '\\n' | '\\r' ) )* COMMENT
 			{
-			DebugLocation(533, 9);
+			DebugLocation(543, 9);
 			mCOMMENT(); if (state.failed) return;
-			DebugLocation(534, 9);
-			// Smi.g:534:9: ( options {greedy=false; } :~ ( '\\n' | '\\r' ) )*
+			DebugLocation(544, 9);
+			// Smi.g:544:9: ( options {greedy=false; } :~ ( '\\n' | '\\r' ) )*
 			try { DebugEnterSubRule(3);
 			while (true)
 			{
@@ -7072,9 +7072,9 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:534:36: ~ ( '\\n' | '\\r' )
+					// Smi.g:544:36: ~ ( '\\n' | '\\r' )
 					{
-					DebugLocation(534, 36);
+					DebugLocation(544, 36);
 					input.Consume();
 					state.failed=false;
 
@@ -7091,9 +7091,9 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 
 			} finally { DebugExitSubRule(3); }
 
-			DebugLocation(535, 9);
+			DebugLocation(545, 9);
 			mCOMMENT(); if (state.failed) return;
-			DebugLocation(535, 17);
+			DebugLocation(545, 17);
 			if (state.backtracking == 0)
 			{
 				 Skip(); 
@@ -7127,7 +7127,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = SL_COMMENT;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:540:2: ( COMMENT (~ ( '\\n' | '\\r' ) )* ( '\\r\\n' | '\\r' | '\\n' ) | COMMENT (~ ( '\\n' | '\\r' ) )* )
+			// Smi.g:550:2: ( COMMENT (~ ( '\\n' | '\\r' ) )* ( '\\r\\n' | '\\r' | '\\n' ) | COMMENT (~ ( '\\n' | '\\r' ) )* )
 			int alt7=2;
 			try { DebugEnterDecision(7, false);
 			try
@@ -7144,12 +7144,12 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:540:4: COMMENT (~ ( '\\n' | '\\r' ) )* ( '\\r\\n' | '\\r' | '\\n' )
+				// Smi.g:550:4: COMMENT (~ ( '\\n' | '\\r' ) )* ( '\\r\\n' | '\\r' | '\\n' )
 				{
-				DebugLocation(540, 4);
+				DebugLocation(550, 4);
 				mCOMMENT(); if (state.failed) return;
-				DebugLocation(540, 12);
-				// Smi.g:540:12: (~ ( '\\n' | '\\r' ) )*
+				DebugLocation(550, 12);
+				// Smi.g:550:12: (~ ( '\\n' | '\\r' ) )*
 				try { DebugEnterSubRule(4);
 				while (true)
 				{
@@ -7170,7 +7170,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 						DebugEnterAlt(1);
 						// Smi.g:
 						{
-						DebugLocation(540, 12);
+						DebugLocation(550, 12);
 						input.Consume();
 						state.failed=false;
 
@@ -7187,8 +7187,8 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 
 				} finally { DebugExitSubRule(4); }
 
-				DebugLocation(540, 26);
-				// Smi.g:540:26: ( '\\r\\n' | '\\r' | '\\n' )
+				DebugLocation(550, 26);
+				// Smi.g:550:26: ( '\\r\\n' | '\\r' | '\\n' )
 				int alt5=3;
 				try { DebugEnterSubRule(5);
 				try { DebugEnterDecision(5, false);
@@ -7223,9 +7223,9 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:540:27: '\\r\\n'
+					// Smi.g:550:27: '\\r\\n'
 					{
-					DebugLocation(540, 27);
+					DebugLocation(550, 27);
 					Match("\r\n"); if (state.failed) return;
 
 
@@ -7233,18 +7233,18 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 					break;
 				case 2:
 					DebugEnterAlt(2);
-					// Smi.g:540:36: '\\r'
+					// Smi.g:550:36: '\\r'
 					{
-					DebugLocation(540, 36);
+					DebugLocation(550, 36);
 					Match('\r'); if (state.failed) return;
 
 					}
 					break;
 				case 3:
 					DebugEnterAlt(3);
-					// Smi.g:540:43: '\\n'
+					// Smi.g:550:43: '\\n'
 					{
-					DebugLocation(540, 43);
+					DebugLocation(550, 43);
 					Match('\n'); if (state.failed) return;
 
 					}
@@ -7253,7 +7253,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 				}
 				} finally { DebugExitSubRule(5); }
 
-				DebugLocation(540, 49);
+				DebugLocation(550, 49);
 				if (state.backtracking == 0)
 				{
 					 Skip(); 
@@ -7263,12 +7263,12 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// Smi.g:541:4: COMMENT (~ ( '\\n' | '\\r' ) )*
+				// Smi.g:551:4: COMMENT (~ ( '\\n' | '\\r' ) )*
 				{
-				DebugLocation(541, 4);
+				DebugLocation(551, 4);
 				mCOMMENT(); if (state.failed) return;
-				DebugLocation(541, 12);
-				// Smi.g:541:12: (~ ( '\\n' | '\\r' ) )*
+				DebugLocation(551, 12);
+				// Smi.g:551:12: (~ ( '\\n' | '\\r' ) )*
 				try { DebugEnterSubRule(6);
 				while (true)
 				{
@@ -7289,7 +7289,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 						DebugEnterAlt(1);
 						// Smi.g:
 						{
-						DebugLocation(541, 12);
+						DebugLocation(551, 12);
 						input.Consume();
 						state.failed=false;
 
@@ -7306,7 +7306,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 
 				} finally { DebugExitSubRule(6); }
 
-				DebugLocation(542, 3);
+				DebugLocation(552, 3);
 				if (state.backtracking == 0)
 				{
 					 Skip(); 
@@ -7342,12 +7342,12 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = NUMBER;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:545:8: ( ( '0' .. '9' )+ )
+			// Smi.g:555:8: ( ( '0' .. '9' )+ )
 			DebugEnterAlt(1);
-			// Smi.g:545:10: ( '0' .. '9' )+
+			// Smi.g:555:10: ( '0' .. '9' )+
 			{
-			DebugLocation(545, 10);
-			// Smi.g:545:10: ( '0' .. '9' )+
+			DebugLocation(555, 10);
+			// Smi.g:555:10: ( '0' .. '9' )+
 			int cnt8=0;
 			try { DebugEnterSubRule(8);
 			while (true)
@@ -7369,7 +7369,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 					DebugEnterAlt(1);
 					// Smi.g:
 					{
-					DebugLocation(545, 10);
+					DebugLocation(555, 10);
 					input.Consume();
 					state.failed=false;
 
@@ -7421,11 +7421,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = HDIG;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:549:7: ( ( ( '0' .. '9' ) ) | ( 'A' .. 'F' ) | ( 'a' .. 'f' ) )
+			// Smi.g:559:7: ( ( ( '0' .. '9' ) ) | ( 'A' .. 'F' ) | ( 'a' .. 'f' ) )
 			DebugEnterAlt(1);
 			// Smi.g:
 			{
-			DebugLocation(549, 7);
+			DebugLocation(559, 7);
 			if ((input.LA(1)>='0' && input.LA(1)<='9')||(input.LA(1)>='A' && input.LA(1)<='F')||(input.LA(1)>='a' && input.LA(1)<='f'))
 			{
 				input.Consume();
@@ -7469,11 +7469,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = UPPER;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:556:2: ( ( 'A' .. 'Z' ) ( ( 'a' .. 'z' | 'A' .. 'Z' | '-' | '_' | '0' .. '9' ) )* )
+			// Smi.g:566:2: ( ( 'A' .. 'Z' ) ( ( 'a' .. 'z' | 'A' .. 'Z' | '-' | '_' | '0' .. '9' ) )* )
 			DebugEnterAlt(1);
-			// Smi.g:556:6: ( 'A' .. 'Z' ) ( ( 'a' .. 'z' | 'A' .. 'Z' | '-' | '_' | '0' .. '9' ) )*
+			// Smi.g:566:6: ( 'A' .. 'Z' ) ( ( 'a' .. 'z' | 'A' .. 'Z' | '-' | '_' | '0' .. '9' ) )*
 			{
-			DebugLocation(556, 6);
+			DebugLocation(566, 6);
 			if ((input.LA(1)>='A' && input.LA(1)<='Z'))
 			{
 				input.Consume();
@@ -7488,8 +7488,8 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 				throw mse;
 			}
 
-			DebugLocation(557, 3);
-			// Smi.g:557:3: ( ( 'a' .. 'z' | 'A' .. 'Z' | '-' | '_' | '0' .. '9' ) )*
+			DebugLocation(567, 3);
+			// Smi.g:567:3: ( ( 'a' .. 'z' | 'A' .. 'Z' | '-' | '_' | '0' .. '9' ) )*
 			try { DebugEnterSubRule(9);
 			while (true)
 			{
@@ -7510,7 +7510,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 					DebugEnterAlt(1);
 					// Smi.g:
 					{
-					DebugLocation(557, 3);
+					DebugLocation(567, 3);
 					input.Consume();
 					state.failed=false;
 
@@ -7556,11 +7556,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = LOWER;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:561:2: ( ( 'a' .. 'z' ) ( ( 'a' .. 'z' | 'A' .. 'Z' | '-' | '_' | '0' .. '9' ) )* )
+			// Smi.g:571:2: ( ( 'a' .. 'z' ) ( ( 'a' .. 'z' | 'A' .. 'Z' | '-' | '_' | '0' .. '9' ) )* )
 			DebugEnterAlt(1);
-			// Smi.g:561:4: ( 'a' .. 'z' ) ( ( 'a' .. 'z' | 'A' .. 'Z' | '-' | '_' | '0' .. '9' ) )*
+			// Smi.g:571:4: ( 'a' .. 'z' ) ( ( 'a' .. 'z' | 'A' .. 'Z' | '-' | '_' | '0' .. '9' ) )*
 			{
-			DebugLocation(561, 4);
+			DebugLocation(571, 4);
 			if ((input.LA(1)>='a' && input.LA(1)<='z'))
 			{
 				input.Consume();
@@ -7575,8 +7575,8 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 				throw mse;
 			}
 
-			DebugLocation(562, 3);
-			// Smi.g:562:3: ( ( 'a' .. 'z' | 'A' .. 'Z' | '-' | '_' | '0' .. '9' ) )*
+			DebugLocation(572, 3);
+			// Smi.g:572:3: ( ( 'a' .. 'z' | 'A' .. 'Z' | '-' | '_' | '0' .. '9' ) )*
 			try { DebugEnterSubRule(10);
 			while (true)
 			{
@@ -7597,7 +7597,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 					DebugEnterAlt(1);
 					// Smi.g:
 					{
-					DebugLocation(562, 3);
+					DebugLocation(572, 3);
 					input.Consume();
 					state.failed=false;
 
@@ -7643,12 +7643,12 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = B_OR_H_STRING;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:573:2: ( ( ( B_STRING )=> B_STRING | H_STRING ) )
+			// Smi.g:583:2: ( ( ( B_STRING )=> B_STRING | H_STRING ) )
 			DebugEnterAlt(1);
-			// Smi.g:573:4: ( ( B_STRING )=> B_STRING | H_STRING )
+			// Smi.g:583:4: ( ( B_STRING )=> B_STRING | H_STRING )
 			{
-			DebugLocation(573, 4);
-			// Smi.g:573:4: ( ( B_STRING )=> B_STRING | H_STRING )
+			DebugLocation(583, 4);
+			// Smi.g:583:4: ( ( B_STRING )=> B_STRING | H_STRING )
 			int alt11=2;
 			try { DebugEnterSubRule(11);
 			try { DebugEnterDecision(11, false);
@@ -7666,18 +7666,18 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:574:4: ( B_STRING )=> B_STRING
+				// Smi.g:584:4: ( B_STRING )=> B_STRING
 				{
-				DebugLocation(574, 16);
+				DebugLocation(584, 16);
 				mB_STRING(); if (state.failed) return;
 
 				}
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// Smi.g:575:5: H_STRING
+				// Smi.g:585:5: H_STRING
 				{
-				DebugLocation(575, 5);
+				DebugLocation(585, 5);
 				mH_STRING(); if (state.failed) return;
 
 				}
@@ -7713,14 +7713,14 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		TraceIn("B_STRING", 192);
 		try
 		{
-			// Smi.g:581:11: ( SINGLE_QUOTE ( ( '0' | '1' ) )* SINGLE_QUOTE ( 'B' | 'b' ) )
+			// Smi.g:591:11: ( SINGLE_QUOTE ( ( '0' | '1' ) )* SINGLE_QUOTE ( 'B' | 'b' ) )
 			DebugEnterAlt(1);
-			// Smi.g:581:14: SINGLE_QUOTE ( ( '0' | '1' ) )* SINGLE_QUOTE ( 'B' | 'b' )
+			// Smi.g:591:14: SINGLE_QUOTE ( ( '0' | '1' ) )* SINGLE_QUOTE ( 'B' | 'b' )
 			{
-			DebugLocation(581, 14);
+			DebugLocation(591, 14);
 			mSINGLE_QUOTE(); if (state.failed) return;
-			DebugLocation(581, 27);
-			// Smi.g:581:27: ( ( '0' | '1' ) )*
+			DebugLocation(591, 27);
+			// Smi.g:591:27: ( ( '0' | '1' ) )*
 			try { DebugEnterSubRule(12);
 			while (true)
 			{
@@ -7741,7 +7741,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 					DebugEnterAlt(1);
 					// Smi.g:
 					{
-					DebugLocation(581, 27);
+					DebugLocation(591, 27);
 					input.Consume();
 					state.failed=false;
 
@@ -7758,9 +7758,9 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 
 			} finally { DebugExitSubRule(12); }
 
-			DebugLocation(581, 40);
+			DebugLocation(591, 40);
 			mSINGLE_QUOTE(); if (state.failed) return;
-			DebugLocation(581, 53);
+			DebugLocation(591, 53);
 			if (input.LA(1)=='B'||input.LA(1)=='b')
 			{
 				input.Consume();
@@ -7800,14 +7800,14 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		TraceIn("H_STRING", 193);
 		try
 		{
-			// Smi.g:583:11: ( SINGLE_QUOTE ( HDIG )* SINGLE_QUOTE ( 'H' | 'h' ) )
+			// Smi.g:593:11: ( SINGLE_QUOTE ( HDIG )* SINGLE_QUOTE ( 'H' | 'h' ) )
 			DebugEnterAlt(1);
-			// Smi.g:583:14: SINGLE_QUOTE ( HDIG )* SINGLE_QUOTE ( 'H' | 'h' )
+			// Smi.g:593:14: SINGLE_QUOTE ( HDIG )* SINGLE_QUOTE ( 'H' | 'h' )
 			{
-			DebugLocation(583, 14);
+			DebugLocation(593, 14);
 			mSINGLE_QUOTE(); if (state.failed) return;
-			DebugLocation(583, 27);
-			// Smi.g:583:27: ( HDIG )*
+			DebugLocation(593, 27);
+			// Smi.g:593:27: ( HDIG )*
 			try { DebugEnterSubRule(13);
 			while (true)
 			{
@@ -7828,7 +7828,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 					DebugEnterAlt(1);
 					// Smi.g:
 					{
-					DebugLocation(583, 27);
+					DebugLocation(593, 27);
 					input.Consume();
 					state.failed=false;
 
@@ -7845,9 +7845,9 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 
 			} finally { DebugExitSubRule(13); }
 
-			DebugLocation(583, 35);
+			DebugLocation(593, 35);
 			mSINGLE_QUOTE(); if (state.failed) return;
-			DebugLocation(583, 48);
+			DebugLocation(593, 48);
 			if (input.LA(1)=='H'||input.LA(1)=='h')
 			{
 				input.Consume();
@@ -7889,14 +7889,14 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = C_STRING;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:584:11: ( '\"' ( options {greedy=false; } : '\\r\\n' | '\\r' | '\\n' |~ ( '\\r' | '\\n' ) )* '\"' )
+			// Smi.g:594:11: ( '\"' ( options {greedy=false; } : '\\r\\n' | '\\r' | '\\n' |~ ( '\\r' | '\\n' ) )* '\"' )
 			DebugEnterAlt(1);
-			// Smi.g:584:14: '\"' ( options {greedy=false; } : '\\r\\n' | '\\r' | '\\n' |~ ( '\\r' | '\\n' ) )* '\"'
+			// Smi.g:594:14: '\"' ( options {greedy=false; } : '\\r\\n' | '\\r' | '\\n' |~ ( '\\r' | '\\n' ) )* '\"'
 			{
-			DebugLocation(584, 14);
+			DebugLocation(594, 14);
 			Match('\"'); if (state.failed) return;
-			DebugLocation(584, 18);
-			// Smi.g:584:18: ( options {greedy=false; } : '\\r\\n' | '\\r' | '\\n' |~ ( '\\r' | '\\n' ) )*
+			DebugLocation(594, 18);
+			// Smi.g:594:18: ( options {greedy=false; } : '\\r\\n' | '\\r' | '\\n' |~ ( '\\r' | '\\n' ) )*
 			try { DebugEnterSubRule(14);
 			while (true)
 			{
@@ -7938,9 +7938,9 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:585:32: '\\r\\n'
+					// Smi.g:595:32: '\\r\\n'
 					{
-					DebugLocation(585, 32);
+					DebugLocation(595, 32);
 					Match("\r\n"); if (state.failed) return;
 
 
@@ -7948,27 +7948,27 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 					break;
 				case 2:
 					DebugEnterAlt(2);
-					// Smi.g:586:32: '\\r'
+					// Smi.g:596:32: '\\r'
 					{
-					DebugLocation(586, 32);
+					DebugLocation(596, 32);
 					Match('\r'); if (state.failed) return;
 
 					}
 					break;
 				case 3:
 					DebugEnterAlt(3);
-					// Smi.g:587:32: '\\n'
+					// Smi.g:597:32: '\\n'
 					{
-					DebugLocation(587, 32);
+					DebugLocation(597, 32);
 					Match('\n'); if (state.failed) return;
 
 					}
 					break;
 				case 4:
 					DebugEnterAlt(4);
-					// Smi.g:588:32: ~ ( '\\r' | '\\n' )
+					// Smi.g:598:32: ~ ( '\\r' | '\\n' )
 					{
-					DebugLocation(588, 32);
+					DebugLocation(598, 32);
 					input.Consume();
 					state.failed=false;
 
@@ -7985,7 +7985,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 
 			} finally { DebugExitSubRule(14); }
 
-			DebugLocation(590, 25);
+			DebugLocation(600, 25);
 			Match('\"'); if (state.failed) return;
 
 			}
@@ -9763,11 +9763,11 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		TraceIn("synpred1_Smi_fragment", 196);
 		try
 		{
-			// Smi.g:574:4: ( B_STRING )
+			// Smi.g:584:4: ( B_STRING )
 			DebugEnterAlt(1);
-			// Smi.g:574:5: B_STRING
+			// Smi.g:584:5: B_STRING
 			{
-			DebugLocation(574, 5);
+			DebugLocation(584, 5);
 			mB_STRING(); if (state.failed) return;
 
 			}
@@ -9876,7 +9876,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			this.transition = DFA7_transition;
 		}
 
-		public override string Description { get { return "539:1: SL_COMMENT : ( COMMENT (~ ( '\\n' | '\\r' ) )* ( '\\r\\n' | '\\r' | '\\n' ) | COMMENT (~ ( '\\n' | '\\r' ) )* );"; } }
+		public override string Description { get { return "549:1: SL_COMMENT : ( COMMENT (~ ( '\\n' | '\\r' ) )* ( '\\r\\n' | '\\r' | '\\n' ) | COMMENT (~ ( '\\n' | '\\r' ) )* );"; } }
 
 		public override void Error(NoViableAltException nvae)
 		{
@@ -9982,7 +9982,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			this.transition = DFA11_transition;
 		}
 
-		public override string Description { get { return "573:4: ( ( B_STRING )=> B_STRING | H_STRING )"; } }
+		public override string Description { get { return "583:4: ( ( B_STRING )=> B_STRING | H_STRING )"; } }
 
 		public override void Error(NoViableAltException nvae)
 		{

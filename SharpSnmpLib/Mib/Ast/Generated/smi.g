@@ -40,6 +40,16 @@ options
 {
 #pragma warning restore 3001, 3003, 3005, 3009, 1591 
 }
+
+// Alter code generation so catch-clauses get replace with
+// this action.
+@rulecatch{
+catch (RecognitionException) 
+{
+    throw;
+}
+}
+
 //	Creation of ASN.1 grammar for ANTLR	V2.7.1
 // ===================================================
 //		  TOKENS FOR ASN.1 LEXER DEFINITIONS

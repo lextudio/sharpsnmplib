@@ -8,7 +8,6 @@
  */
 using System;
 using System.IO;
-using System.Linq;
 using Antlr.Runtime;
 using Lextm.SharpSnmpLib.Mib.Ast;
 using NUnit.Framework;
@@ -72,12 +71,39 @@ namespace Lextm.SharpSnmpLib.Tests
         }
 
         [Test]
-        [ExpectedException(typeof (SemanticException))]
+        [ExpectedException(typeof(MismatchedTokenException))]
         public void TestException()
         {
             var stream = new ANTLRInputStream(new MemoryStream(Resources.fivevarbinds));
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
+            var parser = new SmiParser(tokens);
+            var document = parser.GetDocument();
+        }
+
+        [Test]
+        [ExpectedException(typeof(MismatchedTokenException))]
+        public void TestException2()
+        {
+            string test = "ADSL-LINE-MIB DEFINITIONS ::= BEGIN" + Environment.NewLine +
+                          "IMPORTS" + Environment.NewLine +
+                          "transmission           SNMPv2-SMI" + Environment.NewLine +
+                          "END";
+            var lex = new SmiLexer(new ANTLRStringStream(test));
+            var tokens = new CommonTokenStream(lex);
+            var parser = new SmiParser(tokens);
+            var document = parser.GetDocument();
+        }
+
+        [Test]
+        [ExpectedException(typeof(NoViableAltException))]
+        public void TestException3()
+        {
+            string test = "ADSL-LINE-MIB DEFINITIONS ::= BEGIN" + Environment.NewLine +
+                          "TEST" + Environment.NewLine +
+                          "END";
+            var lex = new SmiLexer(new ANTLRStringStream(test));
+            var tokens = new CommonTokenStream(lex);
             var parser = new SmiParser(tokens);
             var document = parser.GetDocument();
         }

@@ -1,16 +1,26 @@
-﻿namespace Lextm.SharpSnmpLib.Mib.Ast
+﻿using System;
+using System.Collections.Generic;
+using Antlr.Runtime;
+
+namespace Lextm.SharpSnmpLib.Mib.Ast
 {
     partial class SmiParser
     {
+        public IList<Exception> Exceptions = new List<Exception>();
+
         public MibDocument GetDocument()
         {
-            var doc = statement().result;
-            if (doc.Modules.Count == 0)
-            {
-                throw new SemanticException("This file does not contain any SMI modules.");
-            }
+            return statement().result;
+        }
 
-            return doc;
+        public override object RecoverFromMismatchedSet(IIntStream input, RecognitionException e, BitSet follow)
+        {
+            throw e;
+        }
+
+        protected override object RecoverFromMismatchedToken(IIntStream input, int ttype, BitSet follow)
+        {
+            throw new MismatchedTokenException(ttype, input);
         }
     }
 }
