@@ -574,17 +574,17 @@ LOWER
 //B_STRING 	: 	SINGLE_QUOTE ({LA(3)!='B'}? BDIG)+  BDIG SINGLE_QUOTE 'B';
 //H_STRING 	: 	SINGLE_QUOTE ({LA(3)!='H'}? HDIG)+  HDIG SINGLE_QUOTE 'H';
 
-B_OR_H_STRING
-	:	(
-		:(B_STRING)=>B_STRING
-		| H_STRING)
-	;
+//B_OR_H_STRING
+//	:	(
+//		:(B_STRING)=>B_STRING
+//		| H_STRING)
+//	;
 	
 /* Changed by NSS 13/1/05 - upper case *or* lower case 'B' and 'H'; zero or more digits */
-fragment
-B_STRING 	: 	SINGLE_QUOTE (('0'|'1'))* SINGLE_QUOTE ('B' | 'b') ;
-fragment
-H_STRING 	: 	SINGLE_QUOTE (HDIG)* SINGLE_QUOTE ('H' | 'h') ;	
+
+B_STRING 	: 	SINGLE_QUOTE (('0'|'1'))+ SINGLE_QUOTE ('B' | 'b') ;
+
+H_STRING 	: 	SINGLE_QUOTE (HDIG)+ SINGLE_QUOTE ('H' | 'h') ;	
 	
 C_STRING 	: 	'"' (options {greedy=false;}
                              : '\r\n'		// DOS
@@ -758,7 +758,7 @@ character_set: BMP_STR_KW | GENERALIZED_TIME_KW | GENERAL_STR_KW | GRAPHIC_STR_K
              | TELETEX_STR_KW | T61_STR_KW | UNIVERSAL_STR_KW | UTF8_STR_KW
              | UTC_TIME_KW | VIDEOTEX_STR_KW | VISIBLE_STR_KW;
 
-elementType_list: elementType (COMMA elementType | choice_type)* ;
+elementType_list: elementType (COMMA ((CHOICE_KW) => choice_type | elementType))* ;
 
 tag: L_BRACKET (clazz)? class_NUMBER R_BRACKET;
 
@@ -814,7 +814,7 @@ subtype_value: (MINUS)? NUMBER | B_STRING | H_STRING;
 
 /* SMI v1/2 and SPPI: Object-type macro */
 objecttype_macro: 'OBJECT-TYPE' 'SYNTAX' 
-                    ( (smi_type L_BRACE) => smi_type objecttype_macro_namedbits 
+                    ( (smi_type L_BRACE) => smi_type namedbits 
                      | (smi_type) => smi_type (smi_subtyping)?
                      | type
                     ) 
@@ -857,12 +857,17 @@ protected objecttype_macro_statustypes: l=LOWER
                                             || l.getText() == ("deprecated"))
                                             {/*DOSOMETHING*/} else {}};
 
+namedbits
+    : L_BRACE n=namedbit 
+	(COMMA n2=namedbit)* R_BRACE
+	;     //|UPPER
+	
 // 'typeorvaluelist' in original ASN.1 grammar between braces
 objecttype_macro_index: L_BRACE objecttype_macro_indextype (COMMA objecttype_macro_indextype)* R_BRACE;       
 objecttype_macro_indextype: ('IMPLIED')? value;
 objecttype_macro_augments: L_BRACE value R_BRACE;  
 /* NSS 13/1/05: Added LOWER *and* UPPER for a PIB */
-objecttype_macro_namedbits: L_BRACE (LOWER) L_PAREN NUMBER R_PAREN (COMMA (LOWER) L_PAREN NUMBER R_PAREN)* R_BRACE;     //|UPPER
+
 objecttype_macro_bitsvalue: L_BRACE LOWER (COMMA LOWER)* R_BRACE;     
 objecttype_macro_error: LOWER L_PAREN NUMBER R_PAREN;
 
@@ -899,14 +904,14 @@ textualconvention_macro: 'TEXTUAL-CONVENTION' ('DISPLAY-HINT' C_STRING)?
                             'STATUS' textualconvention_macro_status 
                             'DESCRIPTION' C_STRING 
                             ('REFERENCE' C_STRING)? 
-                            'SYNTAX' ( (smi_type L_BRACE) => smi_type L_BRACE textualconvention_macro_namedbit 
-                                    (COMMA textualconvention_macro_namedbit)* R_BRACE | type);
+                            'SYNTAX' ( (smi_type L_BRACE) => smi_type L_BRACE namedbit 
+                                    (COMMA namedbit)* R_BRACE | type);
 fragment textualconvention_macro_status: l=LOWER 
                                         {if (l.getText() == ("current") 
                                                 || l.getText() == ("deprecated") 
                                                 || l.getText() == ("obsolete"))
                                             {/*DOSOMETHING*/} else {}};
-textualconvention_macro_namedbit: LOWER L_PAREN (MINUS)? NUMBER R_PAREN;
+namedbit: LOWER L_PAREN (MINUS)? NUMBER R_PAREN;
 
 /* SMI v2 and SPPI: Object group */
 objectgroup_macro: 'OBJECT-GROUP' 'OBJECTS' L_BRACE value (COMMA value)* R_BRACE 
@@ -944,10 +949,10 @@ modulecompliance_macro_compliance: 'GROUP' value 'DESCRIPTION' C_STRING
                                     ('MIN-ACCESS' modulecompliance_macro_access)? 
                                     ('PIB-MIN-ACCESS' modulecompliance_macro_pibaccess)?    /* Only in SPPI */
                                     'DESCRIPTION' C_STRING;
-modulecompliance_macro_syntax: (smi_type L_BRACE) => smi_type L_BRACE modulecompliance_macro_namedbit (COMMA modulecompliance_macro_namedbit)* R_BRACE
+modulecompliance_macro_syntax: (smi_type L_BRACE) => smi_type L_BRACE namedbit (COMMA namedbit)* R_BRACE
                              | (smi_type) => smi_type (smi_subtyping)?
                              | type;
-modulecompliance_macro_namedbit: LOWER L_PAREN NUMBER R_PAREN;
+
 modulecompliance_macro_access: l=LOWER
                                         {if (l.getText() == ("not-accessible") 
                                                 || l.getText() == ("accessible-for-notify") 
@@ -978,7 +983,7 @@ agentcapabilities_macro_variation: 'VARIATION' value ('SYNTAX' agentcapabilities
                                     ('DEFVAL' L_BRACE ((L_BRACE (LOWER | COMMA | R_BRACE)) => L_BRACE (LOWER)? (COMMA LOWER)* R_BRACE | value) )? 
                                     'DESCRIPTION' C_STRING;
 agentcapabilities_macro_syntax: (smi_type L_BRACE) => 
-                                    smi_type L_BRACE agentcapabilities_macro_namedbit (COMMA agentcapabilities_macro_namedbit)* R_BRACE
+                                    smi_type L_BRACE namedbit (COMMA namedbit)* R_BRACE
                               | (smi_type) => smi_type (smi_subtyping)?
                               | type ;
 agentcapabilities_macro_access: l=LOWER
@@ -989,8 +994,6 @@ agentcapabilities_macro_access: l=LOWER
                                                 || l.getText() == ("read-create")
                                                 || l.getText() == ("write-only"))
                                             {/*DOSOMETHING*/} else {}};
-agentcapabilities_macro_namedbit: LOWER L_PAREN NUMBER R_PAREN;
-
 
 /* SMI v1: Trap types */
 traptype_macro: 'TRAP-TYPE' 'ENTERPRISE' value ('VARIABLES' L_BRACE value (COMMA value)* R_BRACE)? 

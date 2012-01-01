@@ -494,6 +494,7 @@ namespace Lextm.SharpSnmpLib.Tests
         }
 
         [Test]
+        [ExpectedException(typeof(MismatchedTokenException))]
         public void TestRFC1213_MIB2()
         {
             var m = new MemoryStream(Resources.RFC1213_MIB);

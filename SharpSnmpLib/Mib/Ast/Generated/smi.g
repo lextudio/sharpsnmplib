@@ -579,16 +579,15 @@ LOWER
 //B_STRING 	: 	SINGLE_QUOTE ({LA(3)!='B'}? BDIG)+  BDIG SINGLE_QUOTE 'B';
 //H_STRING 	: 	SINGLE_QUOTE ({LA(3)!='H'}? HDIG)+  HDIG SINGLE_QUOTE 'H';
 
-B_OR_H_STRING
-	:	(
-		:(B_STRING)=>B_STRING
-		| H_STRING)
-	;
+//B_OR_H_STRING
+//	:	(
+//		:(B_STRING)=>B_STRING
+//		| H_STRING)
+//	;
 	
 /* Changed by NSS 13/1/05 - upper case *or* lower case 'B' and 'H'; zero or more digits */
-fragment
 B_STRING 	: 	SINGLE_QUOTE (('0'|'1'))* SINGLE_QUOTE ('B' | 'b') ;
-fragment
+
 H_STRING 	: 	SINGLE_QUOTE (HDIG)* SINGLE_QUOTE ('H' | 'h') ;	
 	
 C_STRING 	: 	'"' (options {greedy=false;}
@@ -892,8 +891,8 @@ character_set returns [CharacterSet result]
 
 elementType_list returns [IList<ISmiType> result = new List<ISmiType>()]
     : t1=elementType { $result.Add($t1.result); } 
-	(COMMA t2=elementType { $result.Add($t2.result); }
-	| c=choice_type { $result.Add($c.result); } )* 
+	(COMMA ((CHOICE_KW) => c=choice_type { $result.Add($c.result); }
+	| t2=elementType { $result.Add($t2.result); }))*
 	;
 
 tag returns [Tag result = new Tag()]
@@ -981,7 +980,7 @@ subtype_value: (MINUS)? NUMBER | B_STRING | H_STRING;
 /* SMI v1/2 and SPPI: Object-type macro */
 objecttype_macro returns [ObjectTypeMacro result = new ObjectTypeMacro()]
     : 'OBJECT-TYPE' 'SYNTAX' 
-                    ( (smi_type L_BRACE) => t1=smi_type nb1=objecttype_macro_namedbits 
+                    ( (smi_type L_BRACE) => t1=smi_type nb1=namedbits 
 					{  
 					    $result.Syntax = $t1.result;
 						$result.NamedBits = $nb1.result;
@@ -1057,7 +1056,7 @@ objecttype_macro_augments returns [ISmiValue result]
 	;  
 
 /* NSS 13/1/05: Added LOWER *and* UPPER for a PIB */
-objecttype_macro_namedbits returns [IList<NamedBit> result = new List<NamedBit>()]
+namedbits returns [IList<NamedBit> result = new List<NamedBit>()]
     : L_BRACE n=namedbit { $result.Add($n.result); } 
 	(COMMA n2=namedbit { $result.Add($n2.result); })* R_BRACE
 	;     //|UPPER
@@ -1118,12 +1117,12 @@ textualconvention_macro returns [TextualConventionMacro result = new TextualConv
     'DESCRIPTION' c2=C_STRING { $result.Description = $c2.text; }
     ('REFERENCE' c3=C_STRING { $result.Reference = $c3.text; })? 
     'SYNTAX' ( (smi_type L_BRACE) => s2=smi_type { $result.Syntax = $s2.result; }
-	L_BRACE nb1=textualconvention_macro_namedbit { $result.SyntaxNamedBits.Add($nb1.result); }
-            (COMMA nb2=textualconvention_macro_namedbit { $result.SyntaxNamedBits.Add($nb2.result); })* R_BRACE 
+	L_BRACE nb1=namedbit { $result.SyntaxNamedBits.Add($nb1.result); }
+            (COMMA nb2=namedbit { $result.SyntaxNamedBits.Add($nb2.result); })* R_BRACE 
 			| t=type)
 	;
 
-textualconvention_macro_namedbit returns [NamedBit result]
+namedbit returns [NamedBit result]
     : name=LOWER { $result = new NamedBit($name.text); }
 	L_PAREN (MINUS { $result.Minus = true; })? 
 	num=NUMBER R_PAREN { $result.Number = long.Parse($num.text); }
@@ -1251,9 +1250,6 @@ agentcapabilities_macro_access returns [Access result]
      else if (l.Text == ("write-only")) $result = Access.WriteOnly;
      else {throw new SemanticException("(invalid)");}}
 	;
-
-namedbit returns [NamedBit result]
-    : name=LOWER L_PAREN num=NUMBER R_PAREN { $result = new NamedBit($name.text, long.Parse($num.text)); };
 
 /* SMI v1: Trap types */
 traptype_macro returns [TrapTypeMacro result = new TrapTypeMacro()]
