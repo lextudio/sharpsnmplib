@@ -1,52 +1,19 @@
-/*
- * Created by SharpDevelop.
- * User: lextm
- * Date: 2008/5/31
- * Time: 12:07
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
- */
-
 using System.Collections.Generic;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
-    /// <summary>
-    /// The IMPORTS construct is used to specify items used in the current MIB module which are defined in another MIB module or ASN.1 module.
-    /// </summary>
-    internal sealed class Imports : IConstruct
+    public class Imports
     {
-        private readonly List<string> _dependents = new List<string>();
-        
-        public Imports(IEnumerable<string> dependents)
+        private readonly IList<Import> _imports = new List<Import>();
+
+        public IList<Import> Clauses
         {
-            _dependents.AddRange(dependents);
+            get { return _imports; }
         }
-        
-        /// <summary>
-        /// Creates an <see cref="Imports"/> instance.
-        /// </summary>
-        /// <param name="lexer"></param>
-        public Imports(Lexer lexer)
+
+        public void Add(Import import)
         {
-            Symbol temp;
-            while ((temp = lexer.GetNextSymbol()) != Symbol.Semicolon)
-            {
-                if (temp == Symbol.EOL)
-                {
-                    continue;
-                }
-                
-                _dependents.Add(new ImportsFrom(temp, lexer).Module);
-            }
+            _imports.Add(import);
         }
-        
-        internal IList<string> Dependents
-        {
-            get
-            {
-                return _dependents;
-            }
-        }        
     }
 }

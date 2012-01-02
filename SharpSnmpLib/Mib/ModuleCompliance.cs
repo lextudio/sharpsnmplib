@@ -1,58 +1,20 @@
-/*
- * Created by SharpDevelop.
- * User: lextm
- * Date: 2008/5/21
- * Time: 19:35
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
- */
-
 using System.Collections.Generic;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
-    /// <summary>
-    /// Description of ModuleComplianceNode.
-    /// </summary>
-    internal sealed class ModuleCompliance : IEntity
-    {
-        private readonly string _module;
-        private string _parent;
-        private readonly uint _value;
-        private readonly string _name;
+    public class ModuleCompliance {
+        private readonly IList<ISmiValue> _mandarotyGroups = new List<ISmiValue>();
+        public IList<Compliance> Compliances = new List<Compliance>();
+        public ISmiValue Value;
+        public IList<ISmiValue> MandatoryGroups = new List<ISmiValue>();
 
-        public ModuleCompliance(string module, IList<Symbol> header, Lexer lexer)
-        {
-            _module = module;
-            _name = header[0].ToString();
-            lexer.ParseOidValue(out _parent, out _value);
-        }
-        
-        public string ModuleName
-        {
-            get { return _module; }
-        }
+        public string Name { get; set; }
 
-        public string Parent
+        public IList<ISmiValue> MandarotyGroups
         {
-            get { return _parent; }
-            set { _parent = value; }
-        }
-
-        public uint Value
-        {
-            get { return _value; }
-        }
-
-        public string Name
-        {
-            get { return _name; }
-        }
-        
-        public string Description
-        {
-            // TODO: implement this.
-            get { return string.Empty; }
+            get {
+                return _mandarotyGroups;
+            }
         }
     }
 }

@@ -27,9 +27,9 @@ namespace Lextm.SharpSnmpLib.Mib
         public ObjectTree()
         {
             _root = Definition.RootDefinition;
-            Definition ccitt = new Definition(new OidValueAssignment("SNMPV2-SMI", "ccitt", null, 0), _root);
-            Definition iso = new Definition(new OidValueAssignment("SNMPV2-SMI", "iso", null, 1), _root);
-            Definition jointIsoCcitt = new Definition(new OidValueAssignment("SNMPV2-SMI", "joint-iso-ccitt", null, 2), _root);
+            Definition ccitt = new Definition(new ObjectIdentifierType("SNMPv2-SMI", "ccitt", null, 0), _root);
+            Definition iso = new Definition(new ObjectIdentifierType("SNMPv2-SMI", "iso", null, 1), _root);
+            Definition jointIsoCcitt = new Definition(new ObjectIdentifierType("SNMPv2-SMI", "joint-iso-ccitt", null, 2), _root);
             _nameTable = new Dictionary<string, Definition>
                              {
                                  { iso.TextualForm, iso },
@@ -215,13 +215,13 @@ namespace Lextm.SharpSnmpLib.Mib
 
         private Definition CreateSelf(IEntity node)
         {
-            ObjectType o = node as ObjectType;
+            var o = node as ObjectTypeMacro;
             if (o != null)
             {
-                TypeAssignment syn = o.Syntax as TypeAssignment;
-                if (syn != null && _types.ContainsKey(syn.Value))
+                var syn = o.Syntax;
+                if (syn != null && _types.ContainsKey(syn.Name))
                 {
-                    o.Syntax = _types[syn.Value];
+                    // TODO: fix this, o.Syntax = _types[syn.Name];
                 }
             }
             /* algorithm 2: slower, dropped
@@ -242,7 +242,7 @@ namespace Lextm.SharpSnmpLib.Mib
 
         private void AddNodes(IModule module)
         {
-            List<IEntity> pendingNodes = new List<IEntity>();
+            var pendingNodes = new List<IEntity>();
             
             // parse all direct nodes.
             foreach (IEntity node in module.Entities)
@@ -267,7 +267,7 @@ namespace Lextm.SharpSnmpLib.Mib
             int current = pendingNodes.Count;
             while (current != 0)
             {
-                List<IEntity> parsed = new List<IEntity>();
+                var parsed = new List<IEntity>();
                 int previous = current;
                 foreach (IEntity node in pendingNodes)
                 {
@@ -349,7 +349,7 @@ namespace Lextm.SharpSnmpLib.Mib
                     IDefinition subroot = Find(ExtractParent(all, currentCursor));
                     
                     // if not, create Prefix node.
-                    IEntity prefix = new OidValueAssignment(module, subroot.Name + "_" + value.ToString(CultureInfo.InvariantCulture), subroot.Name, value);
+                    IEntity prefix = new ObjectIdentifierType(module, subroot.Name + "_" + value.ToString(CultureInfo.InvariantCulture), subroot.Name, value);
                     node = CreateSelf(prefix);
                     AddToTable(node);
                 }
@@ -357,7 +357,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 {
                     string self = content[i];
                     string parent = content[i - 1];
-                    IEntity extra = new OidValueAssignment(module, ExtractName(self), ExtractName(parent), ExtractValue(self));
+                    IEntity extra = new ObjectIdentifierType(module, ExtractName(self), ExtractName(parent), ExtractValue(self));
                     node = CreateSelf(extra);
                     if (node != null)
                     {
@@ -586,29 +586,31 @@ namespace Lextm.SharpSnmpLib.Mib
             throw new FormatException("input does not contain a value");
         }
 
-        /// <summary>
-        /// Decodes a variable using the loaded definitions to the best type.
-        /// 
-        /// Depending on the variable and loaded MIBs can return:
-        ///     * Double
-        ///     * Int32
-        ///     * UInt32
-        ///     * UInt64
-        /// </summary>
-        /// <param name="v">The variable to decode the value of.</param>
-        /// <returns>The best result based on the loaded MIBs.</returns>
-        public object Decode(Variable v)
-        {
-            var def = Search(v.Id.ToNumerical()).Definition;
-            ObjectType o = def.Entity as ObjectType;
+        // TODO: fix this.
 
-            if (o == null) { return null; }
+        ///// <summary>
+        ///// Decodes a variable using the loaded definitions to the best type.
+        ///// 
+        ///// Depending on the variable and loaded MIBs can return:
+        /////     * Double
+        /////     * Int32
+        /////     * UInt32
+        /////     * UInt64
+        ///// </summary>
+        ///// <param name="v">The variable to decode the value of.</param>
+        ///// <returns>The best result based on the loaded MIBs.</returns>
+        //public object Decode(Variable v)
+        //{
+        //    var def = Search(v.Id.ToNumerical()).Definition;
+        //    var o = def.Entity as ObjectTypeMacro;
 
-            TextualConvention tc = o.Syntax as TextualConvention;
+        //    if (o == null) { return null; }
 
-            if (tc == null) { return null; }
+        //    var tc = o.Syntax as TextualConvention;
 
-            return tc.Decode(v);
-        }
+        //    if (tc == null) { return null; }
+
+        //    return tc.Decode(v);
+        //}
     }
 }

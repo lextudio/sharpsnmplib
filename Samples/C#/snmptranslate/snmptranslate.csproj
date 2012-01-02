@@ -63,13 +63,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\SharpSnmpLib\SharpSnmpLib.AST.csproj">
+      <Project>{f35c7321-929b-4238-959a-a60a890f10ba}</Project>
+      <Name>SharpSnmpLib.AST</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\SharpSnmpLib\SharpSnmpLib.csproj">
       <Project>{286DE6DB-8F95-4BD4-86A2-86488D2E0EE1}</Project>
       <Name>SharpSnmpLib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\SharpSnmpLib\SharpSnmpLib.Mib.csproj">
-      <Project>{CBE20411-5DB7-487D-825D-7694267BB6F5}</Project>
-      <Name>SharpSnmpLib.Mib</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

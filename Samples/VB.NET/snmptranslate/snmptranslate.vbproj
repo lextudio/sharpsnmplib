@@ -16,7 +16,6 @@
     <MyType>Console</MyType>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <SccProjectName>
-    </SccProjectName>
     <SccLocalPath>
     </SccLocalPath>
     <SccAuxPath>
@@ -151,6 +150,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -162,13 +162,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\SharpSnmpLib\SharpSnmpLib.AST.csproj">
+      <Project>{F35C7321-929B-4238-959A-A60A890F10BA}</Project>
+      <Name>SharpSnmpLib.AST</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\SharpSnmpLib\SharpSnmpLib.csproj">
       <Project>{286DE6DB-8F95-4BD4-86A2-86488D2E0EE1}</Project>
       <Name>SharpSnmpLib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\SharpSnmpLib\SharpSnmpLib.Mib.csproj">
-      <Project>{CBE20411-5DB7-487D-825D-7694267BB6F5}</Project>
-      <Name>SharpSnmpLib.Mib</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

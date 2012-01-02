@@ -139,7 +139,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 throw new ArgumentException("not a decimal after dot");
             }
             
-            uint[] oid = _tree.Find(moduleName, content[0]).GetNumericalForm();
+            var oid = _tree.Find(moduleName, content[0]).GetNumericalForm();
             return ObjectIdentifier.AppendTo(oid, (uint)value);
         }
 
@@ -284,20 +284,20 @@ namespace Lextm.SharpSnmpLib.Mib
             return new Variable(Translate(textual), data);
         }
 
-        /// <summary>
-        /// Decodes a variable using the loaded definitions to the best type.
-        /// 
-        /// Depending on the variable and loaded MIBs can return:
-        ///     * Double
-        ///     * Int32
-        ///     * UInt32
-        ///     * UInt64
-        /// </summary>
-        /// <param name="v">The variable to decode the value of.</param>
-        /// <returns>The best result based on the loaded MIBs.</returns>
-        public object Decode(Variable v)
-        {
-            return _tree.Decode(v);
-        }
+        ///// <summary>
+        ///// Decodes a variable using the loaded definitions to the best type.
+        ///// 
+        ///// Depending on the variable and loaded MIBs can return:
+        /////     * Double
+        /////     * Int32
+        /////     * UInt32
+        /////     * UInt64
+        ///// </summary>
+        ///// <param name="v">The variable to decode the value of.</param>
+        ///// <returns>The best result based on the loaded MIBs.</returns>
+        //public object Decode(Variable v)
+        //{
+        //    return _tree.Decode(v);
+        //}
     }
 }

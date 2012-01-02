@@ -20,3 +20,4 @@ SharpSnmpLib.sln.docstates
 *.dotCover
 gendarme/*
 *.orig
+*.tokens

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -44,6 +44,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.4.1.9004, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\ANTLR\Antlr3.Runtime.dll</HintPath>
+    </Reference>
     <Reference Include="Moq">
       <HintPath>..\lib\Moq.dll</HintPath>
     </Reference>
@@ -53,9 +57,6 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\lib\WatchDog.cs">
@@ -98,11 +99,8 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Security\Tests\AuthenticationProviderExtensionTestFixture.cs" />
-    <Compile Include="Tests\TestBitsType.cs" />
-    <Compile Include="Tests\TestCounter64Type.cs" />
-    <Compile Include="Tests\TestIntegerType.cs" />
-    <Compile Include="Tests\TestIpAddressType.cs" />
-    <Compile Include="Tests\TestOctetStringType.cs" />
+    <Compile Include="Tests\Mib\NumberLiteralValueTestFixture.cs" />
+    <Compile Include="Mib\Tests\MibDocumentTestFixture.cs" />
     <Compile Include="Security\Tests\DefaultAuthenticationProviderTestFixture.cs" />
     <Compile Include="Security\Tests\DefaultPrivacyProviderTestFixture.cs" />
     <Compile Include="Security\Tests\DESPrivacyProviderTestFixture.cs" />
@@ -136,8 +134,6 @@
     <Compile Include="Messaging\Tests\ResponseMessageTestFixture.cs" />
     <Compile Include="Tests\Integer32TestFixture.cs" />
     <Compile Include="Tests\IPTestFixture.cs" />
-    <Compile Include="Mib\Tests\LexerTestFixture.cs" />
-    <Compile Include="Mib\Tests\MibDocumentTestFixture.cs" />
     <Compile Include="Tests\NoSuchInstanceTestFixture.cs" />
     <Compile Include="Tests\NoSuchObjectTestFixture.cs" />
     <Compile Include="Tests\NullTestFixture.cs" />
@@ -150,12 +146,10 @@
     <Compile Include="Tests\OpaqueTestFixture.cs" />
     <Compile Include="Tests\SequenceTestFixture.cs" />
     <Compile Include="Tests\DataFactoryTestFixture.cs" />
-    <Compile Include="Tests\TestTextualConvention.cs" />
     <Compile Include="Tests\TimeticksTestFixture.cs" />
     <Compile Include="Messaging\Tests\TrapV1MessageTestFixture.cs" />
     <Compile Include="Tests\TrapV1PduTestFixture.cs" />
     <Compile Include="Messaging\Tests\TrapV2MessageTestFixture.cs" />
-    <Compile Include="Tests\TestUnsignedType.cs" />
     <Compile Include="Tests\VariableTestFixture.cs" />
     <Compile Include="Tests\WatchdogTestFixture.cs" />
     <Compile Include="Tests\TrapV2PduTestFixture.cs" />
@@ -300,13 +294,13 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SharpSnmpLib\SharpSnmpLib.AST.csproj">
+      <Project>{F35C7321-929B-4238-959A-A60A890F10BA}</Project>
+      <Name>SharpSnmpLib.AST</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SharpSnmpLib\SharpSnmpLib.csproj">
       <Project>{286DE6DB-8F95-4BD4-86A2-86488D2E0EE1}</Project>
       <Name>SharpSnmpLib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SharpSnmpLib\SharpSnmpLib.Mib.csproj">
-      <Project>{CBE20411-5DB7-487D-825D-7694267BB6F5}</Project>
-      <Name>SharpSnmpLib.Mib</Name>
     </ProjectReference>
     <ProjectReference Include="..\System.Tuples\System.Tuples.csproj">
       <Project>{0D826AF6-57A2-46DF-95CF-DEC1CAD1B931}</Project>

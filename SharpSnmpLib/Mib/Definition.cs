@@ -10,10 +10,10 @@ namespace Lextm.SharpSnmpLib.Mib
     internal sealed class Definition : IDefinition
     {
         private readonly uint[] _id;
-        private readonly string _name;
+        private string _name;
         private readonly string _module;
         private readonly string _parent;
-        private readonly uint _value;
+        private uint _value;
         private readonly IDictionary<uint, IDefinition> _children = new Dictionary<uint, IDefinition>();
         private Definition _parentNode;
         private readonly string _typeString;
@@ -75,12 +75,12 @@ namespace Lextm.SharpSnmpLib.Mib
         
         private static DefinitionType DetermineType(string type, string name, IDefinition parent)
         {
-            if (type == typeof(OidValueAssignment).ToString()) 
+            if (type == typeof(ObjectIdentifierType).ToString()) 
             {
                 return DefinitionType.OidValueAssignment;
             }
 
-            if (type != typeof(ObjectType).ToString())
+            if (type != typeof(ObjectTypeMacro).ToString())
             {
                 return DefinitionType.Unknown;
             }
@@ -104,6 +104,7 @@ namespace Lextm.SharpSnmpLib.Mib
         public uint Value
         {
             get { return _value; }
+            set { }
         }
         
         public string Parent
@@ -170,6 +171,7 @@ namespace Lextm.SharpSnmpLib.Mib
         public string ModuleName
         {
             get { return _module; }
+            set { }
         }
         
         /// <summary>
@@ -178,8 +180,9 @@ namespace Lextm.SharpSnmpLib.Mib
         public string Name
         {
             get { return _name; }
+            set { }
         }
-        
+
         /// <summary>
         /// Gets the numerical form.
         /// </summary>

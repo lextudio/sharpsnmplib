@@ -1,27 +1,22 @@
-﻿using System.Collections.Generic;
-
-namespace Lextm.SharpSnmpLib.Mib
+﻿namespace Lextm.SharpSnmpLib.Mib
 {
-    class ObjectIdentifierType : ITypeAssignment
+    public class ObjectIdentifierType : ISmiType, IEntity
     {
-        private string _module;
-        private string _name;
-
-        public ObjectIdentifierType(string module, string name, Lexer lexer)
+        public ObjectIdentifierType(string moduleName, string name, string parent, uint value)
         {
-            _module = module;
-            _name = name;
+            ModuleName = moduleName;
+            Name = name;
+            Value = value;
+            Parent = parent;
         }
 
-        public ObjectIdentifierType(string module, string name, IEnumerator<Symbol> enumerator)
+        public ObjectIdentifierType()
         {
-            _module = module;
-            _name = name;
         }
 
-        public string Name
-        {
-            get { return _name; }
-        }
+        public uint Value { get; set; }
+        public string Parent { get; set; }
+        public string Name { get; set; }
+        public string ModuleName { get; set; }
     }
 }

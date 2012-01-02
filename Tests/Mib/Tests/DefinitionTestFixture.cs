@@ -18,13 +18,13 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
         public void TestGetAlternativeTextualForm()
         {            
             Definition root = Definition.RootDefinition;
-            Definition iso = new Definition(new OidValueAssignment("SNMPV2-SMI", "iso", null, 1), root);
-            Definition org = new Definition(new OidValueAssignment("SNMPV2-SMI", "org", "iso", 3), iso);
-            Definition dod = new Definition(new OidValueAssignment("SNMPV2-SMI", "dod", "org", 6), org);
-            Definition internet = new Definition(new OidValueAssignment("SNMPV2-SMI", "internet", "dod", 1), dod);
-            Definition mgmt = new Definition(new OidValueAssignment("SNMPV2-SMI", "mgmt", "internet", 2), internet);
-            Definition mib2 = new Definition(new OidValueAssignment("SNMPV2-SMI", "mib-2", "mgmt", 1), mgmt);
-            Definition system = new Definition(new OidValueAssignment("SNMPV2-SMI", "system", "mib-2", 1), mib2);
+            Definition iso = new Definition(new ObjectIdentifierType("SNMPV2-SMI", "iso", null, 1), root);
+            Definition org = new Definition(new ObjectIdentifierType("SNMPV2-SMI", "org", "iso", 3), iso);
+            Definition dod = new Definition(new ObjectIdentifierType("SNMPV2-SMI", "dod", "org", 6), org);
+            Definition internet = new Definition(new ObjectIdentifierType("SNMPV2-SMI", "internet", "dod", 1), dod);
+            Definition mgmt = new Definition(new ObjectIdentifierType("SNMPV2-SMI", "mgmt", "internet", 2), internet);
+            Definition mib2 = new Definition(new ObjectIdentifierType("SNMPV2-SMI", "mib-2", "mgmt", 1), mgmt);
+            Definition system = new Definition(new ObjectIdentifierType("SNMPV2-SMI", "system", "mib-2", 1), mib2);
             Assert.AreEqual(".iso.org.dod.internet.mgmt.mib-2.system",
                             new SearchResult(system, new uint[0]).AlternativeText);
         }

@@ -1,29 +1,12 @@
-﻿using System.Collections.Generic;
-
 namespace Lextm.SharpSnmpLib.Mib
 {
-    internal sealed class Macro : ITypeAssignment
+    public class Macro : IConstruct
     {
-        private string _name;
+        public string Name { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "temp")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "module")]
-        public Macro(string module, IList<Symbol> header, Lexer lexer)
+        public Macro(string name)
         {
-            _name = header[0].ToString();
-            Symbol temp;
-            while ((temp = lexer.GetNextSymbol()) != Symbol.Begin)
-            {                
-            }
-            
-            while ((temp = lexer.GetNextSymbol()) != Symbol.End)
-            {
-            }
-        }
-
-        public string Name
-        {
-            get { return _name; }
+            Name = name;
         }
     }
 }

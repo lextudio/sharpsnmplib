@@ -10,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
+using Antlr.Runtime;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
@@ -78,36 +80,36 @@ namespace Lextm.SharpSnmpLib.Mib
                 throw new ArgumentException("file does not exist: " + fileName);
             }
 
-            return Compile(fileName, File.OpenText(fileName));
-        }
-
-        private static IList<IModule> Compile(string file, TextReader stream)
-        {
-            try
-            {
-                return CompileToModules(file, stream);
-            }
-            finally
-            {
-                stream.Close();
-            }
-        }
-
-        internal static IList<IModule> Compile(TextReader stream)
-        {
-            return Compile(string.Empty, stream);
-        }
-
-        private static IList<IModule> CompileToModules(string file, TextReader stream)
-        {
             var watch = new System.Diagnostics.Stopwatch();
             watch.Start();
-            Lexer lexer = new Lexer();
-            lexer.Parse(file, stream);
-            MibDocument doc = new MibDocument(lexer);
-            Logger.Info(watch.ElapsedMilliseconds.ToString(CultureInfo.InvariantCulture) + "-ms used to parse " + file);
+            var lexer = new SmiLexer(new ANTLRFileStream(fileName));
+            var tokens = new CommonTokenStream(lexer);
+            var parser = new SmiParser(tokens);
+            var doc = parser.GetDocument();
+            Logger.Info(watch.ElapsedMilliseconds.ToString(CultureInfo.InvariantCulture) + "-ms used to parse " + fileName);
             watch.Stop();
-            return doc.Modules;
+            return doc.Modules.OfType<IModule>();
+        }
+
+        /// <summary>
+        /// Loads a MIB file.
+        /// </summary>
+        public static IList<IModule> Compile(Stream stream)
+        {
+            if (stream == null)
+            {
+                throw new ArgumentNullException("stream");
+            }
+
+            var watch = new System.Diagnostics.Stopwatch();
+            watch.Start();
+            var lexer = new SmiLexer(new ANTLRInputStream(stream));
+            var tokens = new CommonTokenStream(lexer);
+            var parser = new SmiParser(tokens);
+            var doc = parser.GetDocument();
+            Logger.Info(watch.ElapsedMilliseconds.ToString(CultureInfo.InvariantCulture) + "-ms used to parse");
+            watch.Stop();
+            return doc.Modules.OfType<IModule>().ToList();
         }
     }
 }

@@ -21,9 +21,9 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
         [Test]
         public void TestValidateTable()
         {
-            ObjectIdentifier table = new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 1, 9 });
-            ObjectIdentifier entry = new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 1, 9, 1 });
-            ObjectIdentifier unknown = new ObjectIdentifier(new uint[] { 1, 3, 6, 8, 18579, 111111});
+            var table = new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 1, 9 });
+            var entry = new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 1, 9, 1 });
+            var unknown = new ObjectIdentifier(new uint[] { 1, 3, 6, 8, 18579, 111111});
             Assert.IsTrue(DefaultObjectRegistry.Instance.ValidateTable(table));
             Assert.IsFalse(DefaultObjectRegistry.Instance.ValidateTable(entry));
             Assert.IsFalse(DefaultObjectRegistry.Instance.ValidateTable(unknown));
@@ -32,22 +32,22 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
         [Test]
         public void TestGetTextualFrom()
         {
-            uint[] oid = new uint[] {1};
+            var oid = new uint[] {1};
             string result = DefaultObjectRegistry.Instance.Translate(oid);
-            Assert.AreEqual("SNMPV2-SMI::iso", result);
+            Assert.AreEqual("SNMPv2-SMI::iso", result);
         }
         [Test]
         public void TestGetTextualForm()
         {
-            uint[] oid2 = new uint[] {1,3,6,1,2,1,10};
+            var oid2 = new uint[] {1,3,6,1,2,1,10};
             string result2 = DefaultObjectRegistry.Instance.Translate(oid2);
-            Assert.AreEqual("SNMPV2-SMI::transmission", result2);
+            Assert.AreEqual("SNMPv2-SMI::transmission", result2);
         }   
  
         [Test]
         public void TestSNMPv2MIBTextual()
         {
-            uint[] oid = new uint[] {1,3,6,1,2,1,1};
+            var oid = new uint[] {1,3,6,1,2,1,1};
             string result = DefaultObjectRegistry.Instance.Translate(oid);
             Assert.AreEqual("SNMPV2-MIB::system", result);            
         }
@@ -63,7 +63,7 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
         [Test]
         public void TestGetNumericalFrom()
         {
-            uint[] expected = new uint[] {1};
+            var expected = new uint[] {1};
             const string textual = "SNMPV2-SMI::iso";
             uint[] result = DefaultObjectRegistry.Instance.Translate(textual);
             Assert.AreEqual(expected, result);            
@@ -72,7 +72,7 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
         [Test]
         public void TestGetNumericalForm()
         {
-            uint[] expected = new uint[] {1,3,6,1,2,1,10};
+            var expected = new uint[] {1,3,6,1,2,1,10};
             const string textual = "SNMPV2-SMI::transmission";
             uint[] result = DefaultObjectRegistry.Instance.Translate(textual);
             Assert.AreEqual(expected, result);    
@@ -82,7 +82,7 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
         public void TestRFC1155_SMI()
         {
             const string textual = "RFC1155-SMI::private";
-            uint[] expected = new uint[] {1,3,6,1,4};
+            var expected = new uint[] {1,3,6,1,4};
             Assert.AreEqual(expected, DefaultObjectRegistry.Instance.Translate(textual));
             
             Assert.AreEqual("SNMPV2-SMI::private", DefaultObjectRegistry.Instance.Translate(expected));
@@ -93,7 +93,7 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
         {
             Assert.AreEqual(new uint[] {0}, DefaultObjectRegistry.Instance.Translate("SNMPV2-SMI::ccitt"));
             const string textual = "SNMPV2-SMI::zeroDotZero";
-            uint[] expected = new uint[] {0, 0};
+            var expected = new uint[] {0, 0};
             Assert.AreEqual(textual, DefaultObjectRegistry.Instance.Translate(expected));
 
             Assert.AreEqual(expected, DefaultObjectRegistry.Instance.Translate(textual));            
@@ -102,7 +102,7 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
         [Test]
         public void TestSNMPv2MIBNumerical()
         {
-            uint[] expected = new uint[] {1,3,6,1,2,1,1};
+            var expected = new uint[] {1,3,6,1,2,1,1};
             const string textual = "SNMPV2-MIB::system";
             uint[] result = DefaultObjectRegistry.Instance.Translate(textual);
             Assert.AreEqual(expected, result);
@@ -111,7 +111,7 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
         [Test]
         public void TestSNMPv2TMNumerical()
         {
-            uint[] expected = new uint[] {1,3,6,1,6,1,1};
+            var expected = new uint[] {1,3,6,1,6,1,1};
             const string textual = "SNMPV2-TM::snmpUDPDomain";
             uint[] result = DefaultObjectRegistry.Instance.Translate(textual);
             Assert.AreEqual(expected, result);
@@ -128,7 +128,7 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
         [Test]
         public void TestsysORTable0()
         {
-            uint[] expected = new uint[] {1,3,6,1,2,1,1,9,0};
+            var expected = new uint[] {1,3,6,1,2,1,1,9,0};
             const string name = "SNMPV2-MIB::sysORTable.0";
             uint[] id = DefaultObjectRegistry.Instance.Translate(name);
             Assert.AreEqual(expected, id);
@@ -137,7 +137,7 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
         [Test]
         public void TestsysORTable0Reverse()
         {
-            uint[] id = new uint[] {1,3,6,1,2,1,1,9,0};
+            var id = new uint[] {1,3,6,1,2,1,1,9,0};
             const string expected = "SNMPV2-MIB::sysORTable.0";
             string value = DefaultObjectRegistry.Instance.Translate(id);
             Assert.AreEqual(expected, value);
@@ -155,7 +155,7 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
         public void TestActona()
         {
             const string name = "ACTONA-ACTASTOR-MIB::actona";
-            IList<IModule> modules = Parser.Compile(new StreamReader(new MemoryStream(Properties.Resources.ACTONA_ACTASTOR_MIB)));
+            IList<IModule> modules = Parser.Compile(new MemoryStream(Properties.Resources.ACTONA_ACTASTOR_MIB));
             DefaultObjectRegistry.Instance.Import(modules);
             DefaultObjectRegistry.Instance.Refresh();
             uint[] id = DefaultObjectRegistry.Instance.Translate(name);
@@ -168,9 +168,9 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
         public void TestSYMMIB_MIB_MIB()
         {
             const string name = "SYMMIB_MIB-MIB::symbios_3_1";
-            IList<IModule> modules = Parser.Compile(new StreamReader(new MemoryStream(Properties.Resources.SYMMIB_MIB_MIB)));
+            IList<IModule> modules = Parser.Compile(new MemoryStream(Properties.Resources.SYMMIB_MIB_MIB));
             DefaultObjectRegistry.Instance.Import(modules);
-            modules = Parser.Compile(new StreamReader(new MemoryStream(Properties.Resources.DMTF_DMI_MIB)));
+            modules = Parser.Compile(new MemoryStream(Properties.Resources.DMTF_DMI_MIB));
             DefaultObjectRegistry.Instance.Import(modules);
             DefaultObjectRegistry.Instance.Refresh();
             uint[] id = DefaultObjectRegistry.Instance.Translate(name);
@@ -179,11 +179,11 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             Assert.AreEqual(name, DefaultObjectRegistry.Instance.Translate(id));
         }
         
-       //[Test]
+        [Test]
         public void TestIEEE802dot11_MIB()
         {
             const string name = "IEEE802DOT11-MIB::dot11SMTnotification";
-            IList<IModule> modules = Parser.Compile(new StreamReader(new MemoryStream(Properties.Resources.IEEE802DOT11_MIB)));
+            IList<IModule> modules = Parser.Compile(new MemoryStream(Properties.Resources.IEEE802DOT11_MIB));
             DefaultObjectRegistry.Instance.Import(modules);
             DefaultObjectRegistry.Instance.Refresh();
             uint[] id = DefaultObjectRegistry.Instance.Translate(name);
@@ -192,7 +192,7 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             Assert.AreEqual("IEEE802DOT11-MIB::dot11SMTnotification", DefaultObjectRegistry.Instance.Translate(id));
         
             const string name1 = "IEEE802DOT11-MIB::dot11Disassociate";
-            uint[] id1 = new uint[] {1, 2, 840, 10036, 1, 6, 0, 1};
+            var id1 = new uint[] {1, 2, 840, 10036, 1, 6, 0, 1};
             Assert.AreEqual(id1, DefaultObjectRegistry.Instance.Translate(name1));
             Assert.AreEqual(name1, DefaultObjectRegistry.Instance.Translate(id1));
         }

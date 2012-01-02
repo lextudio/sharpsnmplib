@@ -1,269 +1,153 @@
-/*
- * Created by SharpDevelop.
- * User: lextm
- * Date: 2008/5/17
- * Time: 17:38
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
- */
-
-using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
-    /// <summary>
-    /// MIB module class.
-    /// </summary>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Mib")]
-    internal sealed class MibModule : IModule
+    public class MibModule : IModule
     {
-        private readonly string _name;
-        private readonly Imports _imports;
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
-        private readonly Exports _exports;
-        private readonly List<IConstruct> _tokens = new List<IConstruct>();
-        private const string Pattern = "-V[0-9]+$";
-        
-        internal MibModule(string name, IEnumerable<string> dependents)
-        {
-            _name = name;
-            _imports = new Imports(dependents);
-        }
-        
-        /// <summary>
-        /// Creates a <see cref="MibModule"/> with a specific <see cref="Lexer"/>.
-        /// </summary>
-        /// <param name="name">Module name</param>
-        /// <param name="lexer">Lexer</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "lexer")]
-        public MibModule(string name, Lexer lexer)
-        {
-            if (name == null)
-            {
-                throw new ArgumentNullException("name");
-            }
-            
-            if (lexer == null)
-            {
-                throw new ArgumentNullException("lexer");
-            }
-            
-            _name = name.ToUpperInvariant(); // all module name are uppercase.
-            Symbol temp = lexer.GetNextNonEOLSymbol();
-            temp.Expect(Symbol.Definitions);
-            temp = lexer.GetNextNonEOLSymbol();
-            temp.Expect(Symbol.Assign);
-            temp = lexer.GetNextSymbol();
-            temp.Expect(Symbol.Begin);
-            temp = lexer.GetNextNonEOLSymbol();
-            if (temp == Symbol.Imports)
-            {
-                _imports = ParseDependents(lexer);
-            }
-            else if (temp == Symbol.Exports)
-            {
-                _exports = ParseExports(lexer);
-            }
-            else if (temp == Symbol.End)
-            {
-                return;
-            }
+        private readonly IList<IConstruct> _constructs = new List<IConstruct>();
+        public string Name { get; set; }
+        public bool AllExported { get; set; }
 
-            ParseEntities(_tokens, temp, _name, lexer);
-        }
-
-        /// <summary>
-        /// Exports data.
-        /// </summary>
+        private Exports _exports;
         public Exports Exports
         {
-            get { return _exports; }
+            get { return _exports ?? (_exports = new Exports()) ; }
+            set { _exports = value; }
         }
 
-        private static Exports ParseExports(Lexer lexer)
+        private Imports _imports;
+        private IList<IEntity> _entities;
+        private List<IEntity> _objects;
+        private IList<string> _dependents;
+        private readonly Dictionary<string, ITypeAssignment> _typeAssignments = new Dictionary<string, ITypeAssignment>();
+
+        public MibModule(string moduleName, List<string> dependents)
         {
-            return new Exports(lexer);
+            Name = moduleName;
+            _dependents = dependents;
         }
-        
-        private static Imports ParseDependents(Lexer lexer)
+
+        public MibModule()
         {
-            return new Imports(lexer);
         }
-        
-        private static void ParseEntities(ICollection<IConstruct> tokens, Symbol last, string module, Lexer lexer)
+
+        public Imports Imports
         {
-            Symbol temp = last; 
-            IList<Symbol> buffer = new List<Symbol>();
-            do
+            get { return _imports ?? (_imports = new Imports()); }
+            set { _imports = value; }
+        }
+
+        public IList<IConstruct> Constructs
+        {
+            get {
+                return _constructs;
+            }
+        }
+
+        public IList<IEntity> Entities  
+        {
+            get
             {
-                if (temp == Symbol.Imports || temp == Symbol.Exports || temp == Symbol.EOL)
+                if (_entities != null)
                 {
-                    continue;
+                    return _entities;
                 }
-                
-                buffer.Add(temp);
-                if (temp != Symbol.Assign)
+
+                var entities = new List<IEntity>();
+                foreach (var construct in Constructs)
                 {
-                    continue;
+                    var assignment = construct as ValueAssignment;
+                    if (assignment == null)
+                    {
+                        continue;
+                    }
+
+                    var item = assignment.SmiType as IEntity;
+                    if (item == null)
+                    {
+                        continue;
+                    }
+
+                    item.Name = assignment.Name;
+                    item.ModuleName = Name;
+                    var seq = assignment.SmiValue as SequenceValue;
+                    if (seq != null && seq.Values.Count > 0)
+                    {
+                        var number = (NumberLiteralValue) seq.Values[0].Value;
+                        Debug.Assert(number.Value != null, "number.Value != null");
+                        item.Value = (uint) number.Value.Value;
+                        item.Parent = seq.Values[0].Name;
+                    }
+
+                    var v = assignment.SmiValue as IdComponentList;
+                    if (v != null && v.IdComponents.Count > 1)
+                    {
+                        item.Value = (uint) v.IdComponents[v.IdComponents.Count - 1].Number;
+                        var parent = v.IdComponents[v.IdComponents.Count - 2];
+                        if (string.IsNullOrEmpty(parent.Name))
+                        {
+                            if (v.IdComponents.Count == 2 && parent.Number == 0)
+                            {
+                                // IMPORTANT: fix for zeroDotZero.
+                                item.Parent = "ccitt";
+                            }
+                            else
+                            {
+                                item.Parent = parent.Number.ToString();
+                            }
+                        }
+                        else
+                        {
+                            item.Parent = parent.Name;
+                        }
+                    }
+
+                    entities.Add(item);
                 }
 
-                ParseEntity(tokens, module, buffer, lexer);
-                buffer.Clear();
-            }
-            while ((temp = lexer.GetNextSymbol()) != Symbol.End);
-        }
-        
-        private static void ParseEntity(ICollection<IConstruct> tokens, string module, IList<Symbol> buffer, Lexer lexer)
-        {
-            buffer[0].Assert(buffer.Count > 1, "unexpected symbol");
-            buffer[0].ValidateIdentifier();
-            if (buffer.Count == 2)
-            {
-                // others
-                tokens.Add(ParseOthers(module, buffer, lexer));
-            }
-            else if (buffer[1] == Symbol.Object)
-            {
-                // object identifier
-                tokens.Add(ParseObjectIdentifier(module, buffer, lexer));
-            }
-            else if (buffer[1] == Symbol.ModuleIdentity)
-            {
-                // module identity
-                tokens.Add(new ModuleIdentity(module, buffer, lexer));
-            }
-            else if (buffer[1] == Symbol.ObjectType)
-            {
-                tokens.Add(new ObjectType(module, buffer, lexer));
-            }
-            else if (buffer[1] == Symbol.ObjectGroup)
-            {
-                tokens.Add(new ObjectGroup(module, buffer, lexer));
-            }
-            else if (buffer[1] == Symbol.NotificationGroup)
-            {
-                tokens.Add(new NotificationGroup(module, buffer, lexer));
-            }
-            else if (buffer[1] == Symbol.ModuleCompliance)
-            {
-                tokens.Add(new ModuleCompliance(module, buffer, lexer));
-            }
-            else if (buffer[1] == Symbol.NotificationType)
-            {
-                tokens.Add(new NotificationType(module, buffer, lexer));
-            }
-            else if (buffer[1] == Symbol.ObjectIdentity)
-            {
-                tokens.Add(new ObjectIdentity(module, buffer, lexer));
-            }
-            else if (buffer[1] == Symbol.Macro)
-            {
-                tokens.Add(new Macro(module, buffer, lexer));
-            }
-            else if (buffer[1] == Symbol.TrapType)
-            {
-                tokens.Add(new TrapType(module, buffer, lexer));
-            }
-            else if (buffer[1] == Symbol.AgentCapabilities)
-            {
-                tokens.Add(new AgentCapabilities(module, buffer, lexer));
-            }
-        }
-        
-        private static IEntity ParseObjectIdentifier(string module, IList<Symbol> header, Lexer lexer)
-        {
-            header[0].Assert(header.Count == 4, "invalid OID value assignment");
-            header[2].Expect(Symbol.Identifier);
-            return new OidValueAssignment(module, header[0].ToString(), lexer);
-        }
-
-        private static IConstruct ParseOthers(string module, IList<Symbol> header, Lexer lexer)
-        {
-            Symbol current = lexer.GetNextNonEOLSymbol();
-            
-            if (current == Symbol.Sequence)
-            {
-                return new Sequence(module, header[0].ToString(), lexer);
-            }
-
-            if (current == Symbol.Choice)
-            {
-                return new Choice(module, header[0].ToString(), lexer);
-            }
-
-            if (current == Symbol.Integer)
-            {
-                return new IntegerType(module, header[0].ToString(), lexer);
-            }
-
-            if (current == Symbol.TextualConvention)
-            {
-                return new TextualConvention(module, header[0].ToString(), lexer);
-            }
-
-            return new TypeAssignment(module, header[0].ToString(), current, lexer);
-        }
-
-        /// <summary>
-        /// Module name.
-        /// </summary>
-        public string Name
-        {
-            get
-            {
-                return _name;
-            }
-        }
-        
-        /// <summary>
-        /// OID nodes.
-        /// </summary>
-        public IList<IEntity> Entities
-        {
-            get
-            {
-                return _tokens.OfType<IEntity>().ToList();
-            }
-        }
-        
-        /// <summary>
-        /// OID nodes.
-        /// </summary>
-        public IList<IEntity> Objects
-        {
-            get
-            {
-                return _tokens.OfType<ObjectType>().Cast<IEntity>().ToList();
+                return (_entities = entities);
             }
         }
 
         public IDictionary<string, ITypeAssignment> Types
         {
-            get
-            {
-                return _tokens.Where(token => token is ITypeAssignment)
-                              .Cast<ITypeAssignment>()
-                              .Where(type => !string.IsNullOrEmpty(type.Name))
-                              .ToDictionary(type => type.Name);
+            get { return _typeAssignments; }
+        }
+
+        public IList<string> Dependents
+        {
+            get {
+                return _dependents ?? (_dependents = Imports.Clauses.Select(import => import.Module).ToList());
             }
         }
 
-        
-        public IList<string> Dependents
+        public IList<IEntity> Objects
         {
-            get
-            {
-                return (_imports == null) ? new List<string>() : _imports.Dependents;
-            }
+            get { return (_objects ?? (_objects = Entities.OfType<ObjectTypeMacro>().OfType<IEntity>().ToList())); }
         }
-        
+
+        public void Add(IConstruct construct)
+        {
+            _constructs.Add(construct);
+        }
+
         internal static bool AllDependentsAvailable(MibModule module, IDictionary<string, MibModule> modules)
         {
-            return module.Dependents.All(dependent => DependentFound(dependent, modules));
+            foreach (string dependent in module.Dependents)
+            {
+                if (!DependentFound(dependent, modules))
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
+
+        const string Pattern = "-V[0-9]+$";
 
         private static bool DependentFound(string dependent, IDictionary<string, MibModule> modules)
         {
@@ -276,7 +160,7 @@ namespace Lextm.SharpSnmpLib.Mib
             {
                 return true;
             }
-            
+
             string dependentNonVersion = Regex.Replace(dependent, Pattern, string.Empty);
             return modules.ContainsKey(dependentNonVersion);
         }

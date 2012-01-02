@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B2E8F73F-072C-4F5B-A42B-315F84A45374}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Lextm.SharpSnmpLib</RootNamespace>
+    <AssemblyName>SharpSnmpLib.Controls</AssemblyName>
+    <DocumentationFile>..\bin\SharpSnmpLib.Controls.xml</DocumentationFile>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <SourceAnalysisOverrideSettingsFile>D:\sharpsnmplib_svn\SharpSnmpLib\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>sharpsnmplib.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>False</DelaySign>
+    <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <RunSourceAnalysis>False</RunSourceAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Messaging\AgentFoundEventArgs.cs" />
+    <Compile Include="Messaging\DefaultListenerAdapter.cs" />
+    <Compile Include="Messaging\Discoverer.cs" />
+    <Compile Include="Messaging\ExceptionRaisedEventArgs.cs" />
+    <Compile Include="Messaging\IListenerAdapter.cs" />
+    <Compile Include="Messaging\Listener.cs" />
+    <Compile Include="Messaging\ListenerBinding.cs" />
+    <Compile Include="Messaging\Manager.cs" />
+    <Compile Include="Messaging\ManagerV1ListenerAdapter.cs" />
+    <Compile Include="Messaging\ManagerV2ListenerAdapter.cs" />
+    <Compile Include="Messaging\ManagerV3ListenerAdapter.cs" />
+    <Compile Include="Messaging\MessageParams.cs" />
+    <Compile Include="Messaging\MessageReceivedEventArgs.cs" />
+    <Compile Include="Messaging\Messenger.cs" />
+    <Compile Include="Messaging\PduCounter.cs" />
+    <Compile Include="Messaging\WalkMode.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="license.txt" />
+    <None Include="sharpsnmplib.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="SharpSnmpLib.csproj">
+      <Project>{286DE6DB-8F95-4BD4-86A2-86488D2E0EE1}</Project>
+      <Name>SharpSnmpLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
