@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// $ANTLR 3.4.1.9004 Smi.g 2012-01-01 21:23:19
+// $ANTLR 3.4.1.9004 Smi.g 2012-01-02 15:04:04
 
 // The variable 'variable' is assigned but its value is never used.
 #pragma warning disable 219
@@ -27,7 +27,7 @@ using System.Collections.Generic;
 using Antlr.Runtime;
 using Antlr.Runtime.Misc;
 
-namespace  Lextm.SharpSnmpLib.Mib.Ast 
+namespace  Lextm.SharpSnmpLib.Mib 
 {
 [System.CodeDom.Compiler.GeneratedCode("ANTLR", "3.4.1.9004")]
 [System.CLSCompliant(false)]
@@ -11715,4 +11715,4 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 
 }
 
-} // namespace  Lextm.SharpSnmpLib.Mib.Ast 
+} // namespace  Lextm.SharpSnmpLib.Mib 

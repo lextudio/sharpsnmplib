@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Lextm.SharpSnmpLib.Mib.Ast;
 
 namespace Lextm.SharpSnmpLib.Mib
 {

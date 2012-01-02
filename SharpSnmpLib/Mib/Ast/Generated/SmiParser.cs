@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// $ANTLR 3.4.1.9004 Smi.g 2012-01-01 21:23:18
+// $ANTLR 3.4.1.9004 Smi.g 2012-01-02 15:04:03
 
 // The variable 'variable' is assigned but its value is never used.
 #pragma warning disable 219
@@ -31,7 +31,7 @@ using Antlr.Runtime.Misc;
 using Antlr.Runtime.Tree;
 using RewriteRuleITokenStream = Antlr.Runtime.Tree.RewriteRuleTokenStream;
 
-namespace  Lextm.SharpSnmpLib.Mib.Ast 
+namespace  Lextm.SharpSnmpLib.Mib 
 {
 [System.CodeDom.Compiler.GeneratedCode("ANTLR", "3.4.1.9004")]
 [System.CLSCompliant(false)]
@@ -30170,4 +30170,4 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	#endregion Follow sets
 }
 
-} // namespace  Lextm.SharpSnmpLib.Mib.Ast 
+} // namespace  Lextm.SharpSnmpLib.Mib 

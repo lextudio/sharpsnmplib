@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace Lextm.SharpSnmpLib.Mib.Ast
+namespace Lextm.SharpSnmpLib.Mib
 {
     public class MibModule : IModule
     {

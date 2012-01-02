@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Text;
-using Lextm.SharpSnmpLib.Mib.Ast;
 using log4net;
 
 namespace Lextm.SharpSnmpLib.Mib

@@ -1,4 +1,4 @@
-﻿using Lextm.SharpSnmpLib.Mib.Ast;
+﻿using Lextm.SharpSnmpLib.Mib;
 using NUnit.Framework;
 
 namespace Lextm.SharpSnmpLib.Tests.Mib

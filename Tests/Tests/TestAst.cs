@@ -9,7 +9,7 @@
 using System;
 using System.IO;
 using Antlr.Runtime;
-using Lextm.SharpSnmpLib.Mib.Ast;
+using Lextm.SharpSnmpLib.Mib;
 using NUnit.Framework;
 
 namespace Lextm.SharpSnmpLib.Tests
@@ -797,6 +797,7 @@ namespace Lextm.SharpSnmpLib.Tests
         }
 
         [Test]
+        [ExpectedException(typeof(MismatchedTokenException))]
         public void TestNet_Snmp_Agent_MIB()
         {
             var m = new MemoryStream(Resources.NET_SNMP_AGENT_MIB);

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Antlr.Runtime;
 
-namespace Lextm.SharpSnmpLib.Mib.Ast
+namespace Lextm.SharpSnmpLib.Mib
 {
     partial class SmiParser
     {

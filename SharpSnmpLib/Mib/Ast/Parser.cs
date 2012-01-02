@@ -12,7 +12,6 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using Antlr.Runtime;
-using Lextm.SharpSnmpLib.Mib.Ast;
 
 namespace Lextm.SharpSnmpLib.Mib
 {

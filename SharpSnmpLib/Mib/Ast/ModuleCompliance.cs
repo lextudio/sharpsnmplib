@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Lextm.SharpSnmpLib.Mib.Ast
+namespace Lextm.SharpSnmpLib.Mib
 {
     public class ModuleCompliance {
         private readonly IList<ISmiValue> _mandarotyGroups = new List<ISmiValue>();

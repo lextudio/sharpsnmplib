@@ -8,11 +8,7 @@
  */
 
 using System;
-using System.Globalization;
-#if (!SILVERLIGHT)
-using System.Runtime.Serialization;
-using System.Security.Permissions; 
-#endif
+using Antlr.Runtime;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
@@ -55,6 +51,19 @@ namespace Lextm.SharpSnmpLib.Mib
         public override string ToString()
         {
             return "MibException: " + Details;
+        }
+
+        public override string Details
+        {
+            get {
+                var ex = InnerException as RecognitionException;
+                if (ex == null)
+                {
+                    return Message;
+                }
+
+                return ex.Message;
+            }
         }
     }
 }

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Lextm.SharpSnmpLib.Mib.Ast
+namespace Lextm.SharpSnmpLib.Mib
 {
     public class AgentCapabilitiesModule {
         private readonly IList<ISmiValue> _includes = new List<ISmiValue>();

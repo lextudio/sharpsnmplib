@@ -9,7 +9,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Lextm.SharpSnmpLib.Mib.Ast;
 
 namespace Lextm.SharpSnmpLib.Mib
 {

@@ -28,8 +28,8 @@ options
 #pragma warning disable 3001, 3003, 3005, 3009, 1591 
 }
 
-@parser::namespace { Lextm.SharpSnmpLib.Mib.Ast }
-@lexer::namespace { Lextm.SharpSnmpLib.Mib.Ast }
+@parser::namespace { Lextm.SharpSnmpLib.Mib }
+@lexer::namespace { Lextm.SharpSnmpLib.Mib }
 
 @parser::footer
 {

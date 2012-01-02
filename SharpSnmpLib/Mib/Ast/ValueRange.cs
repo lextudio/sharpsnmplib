@@ -1,4 +1,4 @@
-namespace Lextm.SharpSnmpLib.Mib.Ast
+namespace Lextm.SharpSnmpLib.Mib
 {
     public class ValueRange {
         public bool MaxValue;
