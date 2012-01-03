@@ -66,7 +66,7 @@ namespace Lextm.SharpSnmpLib.Compiler
         
         private void BackgroundWorker1DoWork(object sender, DoWorkEventArgs e)
         {
-            IEnumerable<string> docs = (IEnumerable<string>)e.Argument;
+            var docs = (IEnumerable<string>)e.Argument;
             IEnumerable<MibException> errors;
             CompileInternal(docs, out errors);
             e.Result = errors;
@@ -74,7 +74,7 @@ namespace Lextm.SharpSnmpLib.Compiler
 
         private void CompileInternal(IEnumerable<string> docs, out IEnumerable<MibException> errors)
         {
-            IEnumerable<IModule> modules = Parser.ParseToModules(docs, out errors);
+            var modules = Parser.ParseToModules(docs, out errors);
             Assembler.Assemble(modules);
         }
 
@@ -82,16 +82,16 @@ namespace Lextm.SharpSnmpLib.Compiler
         {
             if (e.Result != null)
             {
-                IEnumerable<MibException> errors = (IEnumerable<MibException>)e.Result;
+                var errors = (IEnumerable<MibException>)e.Result;
                 foreach (MibException error in errors)
                 {
-                    Logger.Info(error.Message);
+                    Logger.Info(error.Details);
                 }
             }
 
             if (e.Error != null)
             {
-                Logger.Info(e.Error.Message);
+                Logger.Info(e.Error);
             }
 
             if (RunCompilerCompleted != null)

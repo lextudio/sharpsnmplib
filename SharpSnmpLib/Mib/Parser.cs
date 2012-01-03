@@ -38,7 +38,7 @@ namespace Lextm.SharpSnmpLib.Mib
             }
 
             IList<MibException> list = new List<MibException>();
-            List<IModule> modules = new List<IModule>();
+            var modules = new List<IModule>();
             foreach (string file in files)
             {
                 try
@@ -85,10 +85,18 @@ namespace Lextm.SharpSnmpLib.Mib
             var lexer = new SmiLexer(new ANTLRFileStream(fileName));
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var doc = parser.GetDocument();
-            Logger.Info(watch.ElapsedMilliseconds.ToString(CultureInfo.InvariantCulture) + "-ms used to parse " + fileName);
-            watch.Stop();
-            return doc.Modules.OfType<IModule>();
+            try
+            {
+                var doc = parser.GetDocument();
+                Logger.Info(watch.ElapsedMilliseconds.ToString(CultureInfo.InvariantCulture) + "-ms used to parse " +
+                            fileName);
+                watch.Stop();
+                return doc.Modules.OfType<IModule>();
+            }
+            catch (RecognitionException ex)
+            {
+                throw new MibException("compilation error", ex) { FileName = fileName };
+            }
         }
 
         /// <summary>
@@ -106,10 +114,17 @@ namespace Lextm.SharpSnmpLib.Mib
             var lexer = new SmiLexer(new ANTLRInputStream(stream));
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var doc = parser.GetDocument();
-            Logger.Info(watch.ElapsedMilliseconds.ToString(CultureInfo.InvariantCulture) + "-ms used to parse");
-            watch.Stop();
-            return doc.Modules.OfType<IModule>().ToList();
+            try
+            {
+                var doc = parser.GetDocument();
+                Logger.Info(watch.ElapsedMilliseconds.ToString(CultureInfo.InvariantCulture) + "-ms used to parse");
+                watch.Stop();
+                return doc.Modules.OfType<IModule>().ToList();
+            }
+            catch (RecognitionException ex)
+            {
+                throw new MibException("compilation error", ex);
+            }
         }
     }
 }

@@ -94,7 +94,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Details on error.
         /// </summary>
-        protected override string Details
+        public override string Details
         {
             get
             {

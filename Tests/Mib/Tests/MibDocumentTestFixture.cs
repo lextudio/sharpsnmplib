@@ -8,6 +8,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Antlr.Runtime;
 using Lextm.SharpSnmpLib.Properties;
@@ -30,12 +31,31 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var parser = new SmiParser(tokens);
             var document = parser.GetDocument();
             Assert.AreEqual(1, document.Modules.Count);
+            Assert.AreEqual("SNMPv2-SMI", document.Modules[0].Name);
             Assert.AreEqual(34, document.Modules[0].Constructs.Count);
             Assert.AreEqual(16, document.Modules[0].Entities.Count);
             var node = document.Modules[0].Entities[15];
             Assert.AreEqual("zeroDotZero", node.Name);
             Assert.AreEqual(0, node.Value);
             Assert.AreEqual("ccitt", node.Parent);
+        }
+
+        [Test]
+        public void TestSYMMIB_MIB_MIB()
+        {
+            var stream = new ANTLRInputStream(new MemoryStream(Resources.SYMMIB_MIB_MIB));
+            var lexer = new SmiLexer(stream);
+            var tokens = new CommonTokenStream(lexer);
+            var parser = new SmiParser(tokens);
+            var document = parser.GetDocument();
+            Assert.AreEqual(1, document.Modules.Count);
+            Assert.AreEqual("SYMMIB_MIB-MIB", document.Modules[0].Name);
+            Assert.AreEqual(117, document.Modules[0].Constructs.Count);
+            Assert.AreEqual(98, document.Modules[0].Entities.Count);
+            var node = document.Modules[0].Entities[97];
+            Assert.AreEqual("disableTrapAtt3", node.Name);
+            Assert.AreEqual(3, node.Value);
+            Assert.AreEqual("iNTELMIFTOMIBEntry", node.Parent);
         }
 
         [Test]
@@ -72,18 +92,19 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
         }
 
         [Test]
-        [ExpectedException(typeof(MismatchedTokenException))]
         public void TestException()
         {
             var stream = new ANTLRInputStream(new MemoryStream(Resources.fivevarbinds));
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var document = parser.GetDocument();
+            var exception = Assert.Throws<MismatchedTokenException>(() => parser.GetDocument());
+            var token = exception.Token;
+            Assert.AreEqual(1, token.Line);
+            Assert.AreEqual("0", token.Text);
         }
 
         [Test]
-        [ExpectedException(typeof(MismatchedTokenException))]
         public void TestException2()
         {
             string test = "ADSL-LINE-MIB DEFINITIONS ::= BEGIN" + Environment.NewLine +
@@ -93,11 +114,13 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lex = new SmiLexer(new ANTLRStringStream(test));
             var tokens = new CommonTokenStream(lex);
             var parser = new SmiParser(tokens);
-            var document = parser.GetDocument();
+            var exception = Assert.Throws<MismatchedTokenException>(() => parser.GetDocument());
+            var token = exception.Token;
+            Assert.AreEqual(3, token.Line);
+            Assert.AreEqual("SNMPv2-SMI", token.Text);
         }
 
         [Test]
-        [ExpectedException(typeof(NoViableAltException))]
         public void TestException3()
         {
             string test = "ADSL-LINE-MIB DEFINITIONS ::= BEGIN" + Environment.NewLine +
@@ -106,7 +129,10 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lex = new SmiLexer(new ANTLRStringStream(test));
             var tokens = new CommonTokenStream(lex);
             var parser = new SmiParser(tokens);
-            var document = parser.GetDocument();
+            var exception = Assert.Throws<NoViableAltException>(() => parser.GetDocument());
+            var token = exception.Token;
+            Assert.AreEqual(3, token.Line);
+            Assert.AreEqual("END", token.Text);
         }
 
         [Test]
@@ -185,6 +211,29 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             Assert.AreEqual("dot1xPaeCompliance", node.Name);
             Assert.AreEqual(1, node.Value);
             Assert.AreEqual("dot1xPaeCompliances", node.Parent);
+        }
+
+        [Test]
+        public void TestIEEE802dot11_MIB()
+        {
+            var m = new MemoryStream(Resources.IEEE802DOT11_MIB);
+            var stream = new ANTLRInputStream(m);
+            var lexer = new SmiLexer(stream);
+            var tokens = new CommonTokenStream(lexer);
+            var parser = new SmiParser(tokens);
+            var file = parser.GetDocument();
+            Assert.AreEqual("IEEE802dot11-MIB", file.Modules[0].Name);
+            Assert.AreEqual(4, file.Modules[0].Imports.Clauses.Count);
+            Assert.AreEqual(182, file.Modules[0].Entities.Count);
+            IEntity node = file.Modules[0].Entities[181];
+            Assert.AreEqual("dot11SMTbase2", node.Name);
+            Assert.AreEqual(18, node.Value);
+            Assert.AreEqual("dot11Groups", node.Parent);
+
+            IEntity node2 = file.Modules[0].Entities[58];
+            Assert.AreEqual("dot11Disassociate", node2.Name);
+            Assert.AreEqual(1, node2.Value);
+            Assert.AreEqual("dot11SMTnotification.0", node2.Parent);
         }
 
         [Test]
@@ -401,7 +450,7 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             IEntity node = file.Modules[0].Entities[0];
             Assert.AreEqual("adsltcmib", node.Name);
             Assert.AreEqual(2, node.Value);
-            Assert.AreEqual("94", node.Parent); // TODO: verify this OID can be added to tree
+            Assert.AreEqual("transmission.94", node.Parent); 
         }
 
         [Test]
@@ -455,7 +504,7 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             IEntity node = file.Modules[0].Entities[0];
             Assert.AreEqual("internet", node.Name);
             Assert.AreEqual(1, node.Value);
-            Assert.AreEqual("dod", node.Parent); // TODO: verify if this node added to tree.
+            Assert.AreEqual("iso.org(3).dod(6)", node.Parent); 
         }
 
         [Test]
@@ -495,7 +544,6 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
         }
 
         [Test]
-        [ExpectedException(typeof(MismatchedTokenException))]
         public void TestRFC1213_MIB2()
         {
             var m = new MemoryStream(Resources.RFC1213_MIB);
@@ -503,14 +551,10 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();
-            Assert.AreEqual(1, file.Modules.Count);
-            Assert.AreEqual("RFC1213-MIB", file.Modules[0].Name);
-            Assert.AreEqual(206, file.Modules[0].Entities.Count);
-            IEntity node = file.Modules[0].Entities[205];
-            Assert.AreEqual("snmpEnableAuthenTraps", node.Name);
-            Assert.AreEqual(30, node.Value);
-            Assert.AreEqual("snmp", node.Parent);
+            var exception = Assert.Throws<MismatchedTokenException>(() => parser.GetDocument());
+            var token = exception.Token;
+            Assert.AreEqual(@"""Test Agent Simulator""", token.Text);
+            Assert.AreEqual(1, token.Line);
         }
 
         [Test]

@@ -27,9 +27,9 @@ namespace Lextm.SharpSnmpLib.Mib
         public ObjectTree()
         {
             _root = Definition.RootDefinition;
-            Definition ccitt = new Definition(new ObjectIdentifierType("SNMPv2-SMI", "ccitt", null, 0), _root);
-            Definition iso = new Definition(new ObjectIdentifierType("SNMPv2-SMI", "iso", null, 1), _root);
-            Definition jointIsoCcitt = new Definition(new ObjectIdentifierType("SNMPv2-SMI", "joint-iso-ccitt", null, 2), _root);
+            var ccitt = new Definition(new ObjectIdentifierType("SNMPv2-SMI", "ccitt", null, 0), _root);
+            var iso = new Definition(new ObjectIdentifierType("SNMPv2-SMI", "iso", null, 1), _root);
+            var jointIsoCcitt = new Definition(new ObjectIdentifierType("SNMPv2-SMI", "joint-iso-ccitt", null, 2), _root);
             _nameTable = new Dictionary<string, Definition>
                              {
                                  { iso.TextualForm, iso },
@@ -47,7 +47,7 @@ namespace Lextm.SharpSnmpLib.Mib
             
             Logger.InfoFormat(CultureInfo.InvariantCulture, "{0} module files found", loaders.Count);
 
-            List<Definition> defines = new List<Definition>();
+            var defines = new List<Definition>();
             foreach (ModuleLoader loader in loaders)
             {
                 Import(loader.Module);
@@ -219,7 +219,7 @@ namespace Lextm.SharpSnmpLib.Mib
             if (o != null)
             {
                 var syn = o.Syntax;
-                if (syn != null && _types.ContainsKey(syn.Name))
+                if (syn is UnknownType && !_types.ContainsKey(syn.Name))
                 {
                     // TODO: fix this, o.Syntax = _types[syn.Name];
                 }

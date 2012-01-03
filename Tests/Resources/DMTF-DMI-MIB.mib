@@ -622,7 +622,7 @@ dmiEnumEntry OBJECT-TYPE
 ::= { dmiEnumTable 1 }
 
 DmiEnumEntry ::= SEQUENCE {
-   DmiEnumId   Unsigned32,
+   dmiEnumId   Unsigned32,
    dmiEnumValue  Integer32,
    dmiEnumString DmiString
 }

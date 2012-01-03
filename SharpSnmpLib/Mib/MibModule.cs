@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Lextm.SharpSnmpLib.Mib
@@ -77,35 +77,74 @@ namespace Lextm.SharpSnmpLib.Mib
                     if (seq != null && seq.Values.Count > 0)
                     {
                         var number = (NumberLiteralValue) seq.Values[0].Value;
-                        Debug.Assert(number.Value != null, "number.Value != null");
                         item.Value = (uint) number.Value.Value;
                         item.Parent = seq.Values[0].Name;
+                        entities.Add(item);
+                        continue;
                     }
 
                     var v = assignment.SmiValue as IdComponentList;
-                    if (v != null && v.IdComponents.Count > 1)
+                    if (v != null )
                     {
-                        item.Value = (uint) v.IdComponents[v.IdComponents.Count - 1].Number;
-                        var parent = v.IdComponents[v.IdComponents.Count - 2];
-                        if (string.IsNullOrEmpty(parent.Name))
+                        if (v.IdComponents.Count == 2)
                         {
-                            if (v.IdComponents.Count == 2 && parent.Number == 0)
+                            item.Value = (uint) v.IdComponents[v.IdComponents.Count - 1].Number;
+                            var parent = v.IdComponents[v.IdComponents.Count - 2];
+                            if (string.IsNullOrEmpty(parent.Name))
                             {
-                                // IMPORTANT: fix for zeroDotZero.
-                                item.Parent = "ccitt";
+                                if (v.DefinedValue == null && v.IdComponents.Count == 2 && parent.Number == 0)
+                                {
+                                    // IMPORTANT: fix for zeroDotZero.
+                                    item.Parent = "ccitt";
+                                }
+                                else
+                                {
+                                    if (v.DefinedValue == null)
+                                    {
+                                        throw new SemanticException(string.Format("Invalid value assignment in {1}: {0}",
+                                                                              parent.Number, assignment.Name));
+                                    }
+
+                                    item.Parent = string.Format("{0}.{1}", v.DefinedValue.Value, v.IdComponents[0].Number);
+                                }
                             }
                             else
                             {
-                                item.Parent = parent.Number.ToString();
+                                item.Parent = parent.Name;
                             }
+
+                            entities.Add(item);
+                            continue;
                         }
-                        else
+
+                        if (v.IdComponents.Count > 2)
                         {
-                            item.Parent = parent.Name;
+                            int start = 0;
+                            var parent = new StringBuilder();
+                            if (v.DefinedValue != null)
+                            {
+                                parent.AppendFormat("{0}.", v.DefinedValue.Value);
+                            }
+                            while (start < v.IdComponents.Count - 1)
+                            {
+                                if (string.IsNullOrEmpty(v.IdComponents[start].Name))
+                                {
+                                    parent.AppendFormat("{0}.", v.IdComponents[start].Number);
+                                }
+                                else
+                                {
+                                    parent.AppendFormat("{0}({1}).", v.IdComponents[start].Name, v.IdComponents[start].Number);
+                                }
+
+                                start++;
+                            }
+
+                            parent.Length--;
+                            item.Parent = parent.ToString();
+                            item.Value = (uint)v.IdComponents[v.IdComponents.Count - 1].Number;
+                            entities.Add(item);
                         }
                     }
-
-                    entities.Add(item);
                 }
 
                 return (_entities = entities);
@@ -136,15 +175,7 @@ namespace Lextm.SharpSnmpLib.Mib
 
         internal static bool AllDependentsAvailable(MibModule module, IDictionary<string, MibModule> modules)
         {
-            foreach (string dependent in module.Dependents)
-            {
-                if (!DependentFound(dependent, modules))
-                {
-                    return false;
-                }
-            }
-
-            return true;
+            return module.Dependents.All(dependent => DependentFound(dependent, modules));
         }
 
         const string Pattern = "-V[0-9]+$";

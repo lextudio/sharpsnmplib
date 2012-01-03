@@ -49,53 +49,42 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
         {
             var oid = new uint[] {1,3,6,1,2,1,1};
             string result = DefaultObjectRegistry.Instance.Translate(oid);
-            Assert.AreEqual("SNMPV2-MIB::system", result);            
+            Assert.AreEqual("SNMPv2-MIB::system", result);            
         }
 
         [Test]
         public void TestSNMPv2TMTextual()
         {
-            uint[] old = DefaultObjectRegistry.Instance.Translate("SNMPV2-SMI::snmpDomains");
+            uint[] old = DefaultObjectRegistry.Instance.Translate("SNMPv2-SMI::snmpDomains");
             string result = DefaultObjectRegistry.Instance.Translate(ObjectIdentifier.AppendTo(old, 1));
-            Assert.AreEqual("SNMPV2-TM::snmpUDPDomain", result);
+            Assert.AreEqual("SNMPv2-TM::snmpUDPDomain", result);
         }
 
         [Test]
-        public void TestGetNumericalFrom()
+        public void TestIso()
         {
             var expected = new uint[] {1};
-            const string textual = "SNMPV2-SMI::iso";
+            const string textual = "SNMPv2-SMI::iso";
             uint[] result = DefaultObjectRegistry.Instance.Translate(textual);
             Assert.AreEqual(expected, result);            
         }
 
         [Test]
-        public void TestGetNumericalForm()
+        public void TestTransmission()
         {
             var expected = new uint[] {1,3,6,1,2,1,10};
-            const string textual = "SNMPV2-SMI::transmission";
+            const string textual = "SNMPv2-SMI::transmission";
             uint[] result = DefaultObjectRegistry.Instance.Translate(textual);
             Assert.AreEqual(expected, result);    
         }
         
-      //  [Test]
-        public void TestRFC1155_SMI()
-        {
-            const string textual = "RFC1155-SMI::private";
-            var expected = new uint[] {1,3,6,1,4};
-            Assert.AreEqual(expected, DefaultObjectRegistry.Instance.Translate(textual));
-            
-            Assert.AreEqual("SNMPV2-SMI::private", DefaultObjectRegistry.Instance.Translate(expected));
-        }
-
         [Test]
         public void TestZeroDotZero()
         {
-            Assert.AreEqual(new uint[] {0}, DefaultObjectRegistry.Instance.Translate("SNMPV2-SMI::ccitt"));
-            const string textual = "SNMPV2-SMI::zeroDotZero";
+            Assert.AreEqual(new uint[] {0}, DefaultObjectRegistry.Instance.Translate("SNMPv2-SMI::ccitt"));
+            const string textual = "SNMPv2-SMI::zeroDotZero";
             var expected = new uint[] {0, 0};
             Assert.AreEqual(textual, DefaultObjectRegistry.Instance.Translate(expected));
-
             Assert.AreEqual(expected, DefaultObjectRegistry.Instance.Translate(textual));            
         }
 
@@ -103,7 +92,7 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
         public void TestSNMPv2MIBNumerical()
         {
             var expected = new uint[] {1,3,6,1,2,1,1};
-            const string textual = "SNMPV2-MIB::system";
+            const string textual = "SNMPv2-MIB::system";
             uint[] result = DefaultObjectRegistry.Instance.Translate(textual);
             Assert.AreEqual(expected, result);
         }
@@ -112,7 +101,7 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
         public void TestSNMPv2TMNumerical()
         {
             var expected = new uint[] {1,3,6,1,6,1,1};
-            const string textual = "SNMPV2-TM::snmpUDPDomain";
+            const string textual = "SNMPv2-TM::snmpUDPDomain";
             uint[] result = DefaultObjectRegistry.Instance.Translate(textual);
             Assert.AreEqual(expected, result);
         }
@@ -120,7 +109,7 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
         [Test]
         public void TestsysORTable()
         {
-            const string name = "SNMPV2-MIB::sysORTable";
+            const string name = "SNMPv2-MIB::sysORTable";
             uint[] id = DefaultObjectRegistry.Instance.Translate(name);
             Assert.IsTrue(DefaultObjectRegistry.Instance.IsTableId(id));
         }
@@ -129,7 +118,7 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
         public void TestsysORTable0()
         {
             var expected = new uint[] {1,3,6,1,2,1,1,9,0};
-            const string name = "SNMPV2-MIB::sysORTable.0";
+            const string name = "SNMPv2-MIB::sysORTable.0";
             uint[] id = DefaultObjectRegistry.Instance.Translate(name);
             Assert.AreEqual(expected, id);
         }
@@ -138,7 +127,7 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
         public void TestsysORTable0Reverse()
         {
             var id = new uint[] {1,3,6,1,2,1,1,9,0};
-            const string expected = "SNMPV2-MIB::sysORTable.0";
+            const string expected = "SNMPv2-MIB::sysORTable.0";
             string value = DefaultObjectRegistry.Instance.Translate(id);
             Assert.AreEqual(expected, value);
         }   
@@ -146,7 +135,7 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
         [Test]
         public void TestsnmpMIB()
         {
-            const string name = "SNMPV2-MIB::snmpMIB";
+            const string name = "SNMPv2-MIB::snmpMIB";
             uint[] id = DefaultObjectRegistry.Instance.Translate(name);
             Assert.IsFalse(DefaultObjectRegistry.Instance.IsTableId(id));
         }
@@ -164,37 +153,53 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             Assert.AreEqual("ACTONA-ACTASTOR-MIB::actona", DefaultObjectRegistry.Instance.Translate(id));
         }
         
-       // [Test]
+        [Test]
         public void TestSYMMIB_MIB_MIB()
         {
             const string name = "SYMMIB_MIB-MIB::symbios_3_1";
-            IList<IModule> modules = Parser.Compile(new MemoryStream(Properties.Resources.SYMMIB_MIB_MIB));
-            DefaultObjectRegistry.Instance.Import(modules);
-            modules = Parser.Compile(new MemoryStream(Properties.Resources.DMTF_DMI_MIB));
-            DefaultObjectRegistry.Instance.Import(modules);
-            DefaultObjectRegistry.Instance.Refresh();
-            uint[] id = DefaultObjectRegistry.Instance.Translate(name);
-            
-            Assert.AreEqual(new uint[] {1, 3, 6, 1, 4, 1, 1123, 3, 1}, id);
-            Assert.AreEqual(name, DefaultObjectRegistry.Instance.Translate(id));
+            var registry = new SimpleObjectRegistry();
+            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.RFC_1212)));
+            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.RFC1155_SMI)));
+            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.RFC1213_MIB1)));
+            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.HOST_RESOURCES_MIB)));
+            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.IF_MIB)));
+            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.IANAifType_MIB)));
+            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.SNMPv2_SMI)));
+            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.SNMPv2_CONF)));
+            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.SNMPv2_TC)));
+            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.SNMPv2_MIB)));
+            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.SNMPv2_TM)));
+            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.SYMMIB_MIB_MIB)));
+            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.DMTF_DMI_MIB)));
+            registry.Refresh();
+            uint[] id = registry.Translate(name);
+            Assert.AreEqual(new uint[] { 1, 3, 6, 1, 4, 1, 1123, 3, 1 }, id);
+            Assert.AreEqual(name, registry.Translate(id));
         }
         
         [Test]
         public void TestIEEE802dot11_MIB()
         {
-            const string name = "IEEE802DOT11-MIB::dot11SMTnotification";
-            IList<IModule> modules = Parser.Compile(new MemoryStream(Properties.Resources.IEEE802DOT11_MIB));
-            DefaultObjectRegistry.Instance.Import(modules);
-            DefaultObjectRegistry.Instance.Refresh();
-            uint[] id = DefaultObjectRegistry.Instance.Translate(name);
+            var registry = new SimpleObjectRegistry();
+            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.RFC_1212)));
+            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.RFC1155_SMI)));
+            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.RFC1213_MIB1)));
+            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.SNMPv2_SMI)));
+            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.SNMPv2_CONF)));
+            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.SNMPv2_TC)));
+            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.SNMPv2_MIB)));
+            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.SNMPv2_TM)));
+            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.IEEE802DOT11_MIB)));
+            registry.Refresh();
             
+            Assert.AreEqual("IEEE802dot11-MIB::dot11SMTnotification", registry.Translate(new uint[] {1, 2, 840, 10036, 1, 6}));
+            uint[] id = registry.Translate("IEEE802dot11-MIB::dot11SMTnotification");
             Assert.AreEqual(new uint[] {1, 2, 840, 10036, 1, 6}, id);
-            Assert.AreEqual("IEEE802DOT11-MIB::dot11SMTnotification", DefaultObjectRegistry.Instance.Translate(id));
-        
-            const string name1 = "IEEE802DOT11-MIB::dot11Disassociate";
+
+            const string name1 = "IEEE802dot11-MIB::dot11Disassociate";
             var id1 = new uint[] {1, 2, 840, 10036, 1, 6, 0, 1};
-            Assert.AreEqual(id1, DefaultObjectRegistry.Instance.Translate(name1));
-            Assert.AreEqual(name1, DefaultObjectRegistry.Instance.Translate(id1));
+            Assert.AreEqual(id1, registry.Translate(name1));
+            Assert.AreEqual(name1, registry.Translate(id1));
         }
         // ReSharper restore InconsistentNaming
     }

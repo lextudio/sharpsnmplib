@@ -9,6 +9,7 @@ namespace Lextm.SharpSnmpLib.Mib
     /// <summary>
     /// Default object registry.
     /// </summary>
+    [Obsolete("Use SimpleObjectRegistry instead.")]
     public sealed class DefaultObjectRegistry : ObjectRegistryBase
     {
         private static volatile DefaultObjectRegistry _instance;

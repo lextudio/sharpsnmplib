@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Lextm.SharpSnmpLib.Mib
@@ -7,13 +8,14 @@ namespace Lextm.SharpSnmpLib.Mib
     /// <summary>
     /// Definition class.
     /// </summary>
+    [DebuggerDisplay("{_module}::{_name} ({_value})")]
     internal sealed class Definition : IDefinition
     {
         private readonly uint[] _id;
-        private string _name;
+        private readonly string _name;
         private readonly string _module;
         private readonly string _parent;
-        private uint _value;
+        private readonly uint _value;
         private readonly IDictionary<uint, IDefinition> _children = new Dictionary<uint, IDefinition>();
         private Definition _parentNode;
         private readonly string _typeString;

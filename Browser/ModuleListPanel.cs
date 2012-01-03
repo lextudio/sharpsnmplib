@@ -119,7 +119,7 @@ namespace Lextm.SharpSnmpLib.Browser
             string index = Path.Combine(reg.Path, "index");
             foreach (ListViewItem item in listView1.SelectedItems)
             {
-                string name = item.Text.ToUpperInvariant();
+                string name = item.Text;
                 
                 // TODO: bad performance. improve later.
                 List<string> list = new List<string>(File.ReadAllLines(index));
@@ -141,7 +141,7 @@ namespace Lextm.SharpSnmpLib.Browser
             string index = Path.Combine(reg.Path, "index");
             foreach (ListViewItem item in listView1.SelectedItems)
             {
-                string name = item.Text.ToUpperInvariant();
+                string name = item.Text;
                 
                 // TODO: bad performance. improve later.
                 List<string> list = new List<string>(File.ReadAllLines(index));

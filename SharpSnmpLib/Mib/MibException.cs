@@ -8,6 +8,7 @@
  */
 
 using System;
+using System.Globalization;
 using Antlr.Runtime;
 
 namespace Lextm.SharpSnmpLib.Mib
@@ -53,7 +54,7 @@ namespace Lextm.SharpSnmpLib.Mib
             return "MibException: " + Details;
         }
 
-        protected override string Details
+        public override string Details
         {
             get {
                 var ex = InnerException as RecognitionException;
@@ -62,8 +63,15 @@ namespace Lextm.SharpSnmpLib.Mib
                     return Message;
                 }
 
-                return ex.Message;
+                return string.Format(CultureInfo.InvariantCulture,
+                    "wrong symbol {0} in file \"{1}\". Row {2}. Column: {3}",
+                    ex.Token.Text,
+                    FileName ?? "<unknown>",
+                    ex.Token.Line,
+                    ex.Token.CharPositionInLine + 1);
             }
         }
+
+        public string FileName { get; set; }
     }
 }
