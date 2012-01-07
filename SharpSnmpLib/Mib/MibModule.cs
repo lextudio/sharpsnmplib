@@ -86,38 +86,7 @@ namespace Lextm.SharpSnmpLib.Mib
                     var v = assignment.SmiValue as IdComponentList;
                     if (v != null )
                     {
-                        if (v.IdComponents.Count == 2)
-                        {
-                            item.Value = (uint) v.IdComponents[v.IdComponents.Count - 1].Number;
-                            var parent = v.IdComponents[v.IdComponents.Count - 2];
-                            if (string.IsNullOrEmpty(parent.Name))
-                            {
-                                if (v.DefinedValue == null && v.IdComponents.Count == 2 && parent.Number == 0)
-                                {
-                                    // IMPORTANT: fix for zeroDotZero.
-                                    item.Parent = "ccitt";
-                                }
-                                else
-                                {
-                                    if (v.DefinedValue == null)
-                                    {
-                                        throw new SemanticException(string.Format("Invalid value assignment in {1}: {0}",
-                                                                              parent.Number, assignment.Name));
-                                    }
-
-                                    item.Parent = string.Format("{0}.{1}", v.DefinedValue.Value, v.IdComponents[0].Number);
-                                }
-                            }
-                            else
-                            {
-                                item.Parent = parent.Name;
-                            }
-
-                            entities.Add(item);
-                            continue;
-                        }
-
-                        if (v.IdComponents.Count > 2)
+                        if (v.IdComponents.Count >= 2)
                         {
                             int start = 0;
                             var parent = new StringBuilder();
@@ -141,6 +110,12 @@ namespace Lextm.SharpSnmpLib.Mib
 
                             parent.Length--;
                             item.Parent = parent.ToString();
+                            if (item.Parent == "0")
+                            {
+                                // IMPORTANT: fix for 0.0
+                                item.Parent = "ccitt";
+                            }
+
                             item.Value = (uint)v.IdComponents[v.IdComponents.Count - 1].Number;
                             entities.Add(item);
                         }

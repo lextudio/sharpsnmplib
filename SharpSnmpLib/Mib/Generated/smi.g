@@ -539,17 +539,9 @@ WS
 	{ Skip(); }
 	;
 
-BLK_COMMENT        
-    :   COMMENT      
-        (options {greedy=false;} : ~('\n'|'\r') )* 
-        COMMENT { Skip(); }
-    ;
-
-// Single-line comments
 SL_COMMENT
-	: COMMENT ~('\n'|'\r')* ('\r\n' | '\r' | '\n') { Skip(); } 
-	| COMMENT ~('\n'|'\r')* // a line comment could appear at the end of the file without CR/LF { skip(); }
-		{ Skip(); }
+	: COMMENT ( ({input.LA(2) != '-'}? '-') => '-' 	|	~('-'|'\n'|'\r'))*	( (('\r')? '\n') | COMMENT) 
+		{ Skip();  }
 	;
 
 NUMBER	:	('0'..'9')+ ;

@@ -59,6 +59,39 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
         }
 
         [Test]
+        public void TestComment()
+        {
+            string test = "ADSL-LINE-MIB --c-- DEFINITIONS ::= BEGIN --c " + Environment.NewLine +
+                          "END";
+            var lex = new SmiLexer(new ANTLRStringStream(test));
+            var tokens = new CommonTokenStream(lex);
+            var parser = new SmiParser(tokens);
+            var document = parser.GetDocument();
+        }
+
+        [Test]
+        public void TestComment2()
+        {
+            string test = "ADSL-LINE-MIB --c-c-- DEFINITIONS ::= BEGIN --c " + Environment.NewLine +
+                          "END";
+            var lex = new SmiLexer(new ANTLRStringStream(test));
+            var tokens = new CommonTokenStream(lex);
+            var parser = new SmiParser(tokens);
+            var document = parser.GetDocument();
+        }
+
+        [Test]
+        public void TestComment3()
+        {
+            string test = "ADSL-LINE-MIB --c-- DEFINITIONS ::= BEGIN --c- " + Environment.NewLine +
+                          "END";
+            var lex = new SmiLexer(new ANTLRStringStream(test));
+            var tokens = new CommonTokenStream(lex);
+            var parser = new SmiParser(tokens);
+            var document = parser.GetDocument();
+        }
+
+        [Test]
         public void TestLexerOK()
         {
             string test = "ADSL-LINE-MIB DEFINITIONS ::= BEGIN" + Environment.NewLine +
@@ -842,7 +875,6 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
         }
 
         [Test]
-        [ExpectedException(typeof(MismatchedTokenException))]
         public void TestNet_Snmp_Agent_MIB()
         {
             var m = new MemoryStream(Resources.NET_SNMP_AGENT_MIB);

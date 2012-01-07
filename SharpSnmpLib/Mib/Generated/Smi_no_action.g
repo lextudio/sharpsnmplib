@@ -16,8 +16,6 @@ options
 	language=Java;
 	output=AST;
 	ASTLabelType=CommonTree;
-	backtrack=true; 
-	memoize=true;
 }
 
 @parser::header
@@ -531,20 +529,9 @@ WS
 	{ skip(); }
 	;
 
-BLK_COMMENT        
-    :   COMMENT      
-        (options {greedy=false;} : ~('\n'|'\r') )* 
-        COMMENT
-            {              
-               skip();                
-            }
-    ;
-
-// Single-line comments
 SL_COMMENT
-	: COMMENT ~('\n'|'\r')* ('\r\n' | '\r' | '\n') { skip(); } 
-	| COMMENT ~('\n'|'\r')* // a line comment could appear at the end of the file without CR/LF { skip(); }
-		{skip();}
+	: COMMENT ( ({input.LA(2) != '-'}? '-') => '-' 	|	~('-'|'\n'|'\r'))*	( (('\r')? '\n') | COMMENT) 
+		{ skip();  }
 	;
 
 NUMBER	:	'0'..'9'+ ;
