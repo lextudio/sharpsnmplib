@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace Lextm.SharpSnmpLib.Mib
@@ -15,6 +16,7 @@ namespace Lextm.SharpSnmpLib.Mib
             Description = description;
         }
 
+        [CLSCompliant(false)]
         public uint Value { get; set; }
         public string Parent { get; set; }
         public string Name { get; set; }

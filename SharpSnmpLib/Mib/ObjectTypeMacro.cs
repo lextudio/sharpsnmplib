@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace Lextm.SharpSnmpLib.Mib
@@ -23,6 +24,7 @@ namespace Lextm.SharpSnmpLib.Mib
         public ISmiValue PibIndex;
         public ISmiValue DefaultValue;
         public string Description { get; set; }
+        [CLSCompliant(false)]
         public uint Value { get; set; }
         public string Parent { get; set; }
         public string Name { get; set; }

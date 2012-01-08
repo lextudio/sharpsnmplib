@@ -136,6 +136,9 @@
   <data name="ALLIEDTELESYN_MIB" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ALLIEDTELESYN-MIB.mib;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="ALTIGA_CAP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ALTIGA-CAP.mib;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="ALVARION_DOT11_WLAN_MIB" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ALVARION-DOT11-WLAN-MIB.mib;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -498,5 +501,14 @@
   </data>
   <data name="MM200_MIB" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\MM200-MIB.mib;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="BRCM_BSAPTRAP_MIB" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BRCM-BSAPTRAP-MIB.mib;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CASTELLEMIB" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CASTELLEMIB.mib;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CHECKPOINT_MIB" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CHECKPOINT-MIB.mib;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

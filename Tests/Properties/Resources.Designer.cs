@@ -109,6 +109,13 @@ namespace Lextm.SharpSnmpLib.Properties {
             }
         }
         
+        internal static byte[] ALTIGA_CAP {
+            get {
+                object obj = ResourceManager.GetObject("ALTIGA_CAP", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         internal static byte[] ALVARION_DOT11_WLAN_MIB {
             get {
                 object obj = ResourceManager.GetObject("ALVARION_DOT11_WLAN_MIB", resourceCulture);
@@ -158,9 +165,30 @@ namespace Lextm.SharpSnmpLib.Properties {
             }
         }
         
+        internal static byte[] BRCM_BSAPTRAP_MIB {
+            get {
+                object obj = ResourceManager.GetObject("BRCM_BSAPTRAP_MIB", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         internal static byte[] BRIDGE_MIB {
             get {
                 object obj = ResourceManager.GetObject("BRIDGE_MIB", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] CASTELLEMIB {
+            get {
+                object obj = ResourceManager.GetObject("CASTELLEMIB", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] CHECKPOINT_MIB {
+            get {
+                object obj = ResourceManager.GetObject("CHECKPOINT_MIB", resourceCulture);
                 return ((byte[])(obj));
             }
         }

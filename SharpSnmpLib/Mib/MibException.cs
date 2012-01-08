@@ -63,12 +63,13 @@ namespace Lextm.SharpSnmpLib.Mib
                     return Message;
                 }
 
+                var token = ex.Token;
                 return string.Format(CultureInfo.InvariantCulture,
-                    "wrong symbol {0} in file \"{1}\". Row {2}. Column: {3}",
-                    ex.Token.Text,
-                    FileName ?? "<unknown>",
-                    ex.Token.Line,
-                    ex.Token.CharPositionInLine + 1);
+                                     "wrong symbol {0} in file \"{1}\". Row {2}. Column: {3}",
+                                     token == null ? string.Empty : token.Text,
+                                     FileName ?? "<unknown>",
+                                     token == null ? 0 : token.Line,
+                                     token == null ? 0 : token.CharPositionInLine + 1);
             }
         }
 

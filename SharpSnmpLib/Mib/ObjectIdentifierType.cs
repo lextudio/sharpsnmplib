@@ -1,7 +1,10 @@
-﻿namespace Lextm.SharpSnmpLib.Mib
+﻿using System;
+
+namespace Lextm.SharpSnmpLib.Mib
 {
     public class ObjectIdentifierType : ISmiType, IEntity
     {
+    	[CLSCompliant(false)]
         public ObjectIdentifierType(string moduleName, string name, string parent, uint value)
         {
             ModuleName = moduleName;
@@ -14,6 +17,7 @@
         {
         }
 
+        [CLSCompliant(false)]
         public uint Value { get; set; }
         public string Parent { get; set; }
         public string Name { get; set; }

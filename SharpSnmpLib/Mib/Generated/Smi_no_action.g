@@ -606,7 +606,7 @@ module_body: (exports)? (imports)? (assignment)* ;
 obj_id_comp_lst: L_BRACE ((LOWER (LOWER|NUMBER)) => defined_value)? (obj_id_component)+ R_BRACE;
 //obj_id_comp_lst: L_BRACE (defined_value)? (obj_id_component)+ R_BRACE;
 
-protected defined_value: (UPPER DOT)? LOWER ;
+protected defined_value: ((UPPER | LOWER) DOT)? LOWER ;
 
 /* NSS 14/1/05: Checked against X.680 */
 obj_id_component: NUMBER 
@@ -788,7 +788,7 @@ smi_macros: 'OBJECT-TYPE' | 'MODULE-IDENTITY' | 'OBJECT-IDENTITY' | 'NOTIFICATIO
 
 /* NSS 12-13/1/05: SMI types - some of these are standard 'textual conventions' which can replace BITS */
 /* NSS 13/1/05: Added 'LOWER' since some PIBs can't handle it */
-smi_type: 'BITS' | INTEGER_KW | OCTET_KW STRING_KW | OBJECT_KW IDENTIFIER_KW | UPPER; // | LOWER;
+smi_type: 'BITS' | INTEGER_KW | OCTET_KW STRING_KW | OBJECT_KW IDENTIFIER_KW | UPPER | LOWER;
 
 /* Possible SMI types??? - IpAddress Counter32 TimeTicks Opaque Counter64 Unsigned32 */
 
@@ -797,7 +797,7 @@ smi_type: 'BITS' | INTEGER_KW | OCTET_KW STRING_KW | OBJECT_KW IDENTIFIER_KW | U
 smi_subtyping: L_PAREN subtype_range (BAR subtype_range)* R_PAREN
              | L_PAREN 'SIZE' L_PAREN subtype_range (BAR subtype_range)* R_PAREN R_PAREN;
 subtype_range: subtype_value (DOTDOT subtype_value)? ;
-subtype_value: (MINUS)? NUMBER | B_STRING | H_STRING;
+subtype_value: (MINUS)? NUMBER | B_STRING | H_STRING | MAX_KW;
 
 /* SMI v1/2 and SPPI: Object-type macro */
 objecttype_macro: 'OBJECT-TYPE' 'SYNTAX' 
@@ -898,7 +898,7 @@ fragment textualconvention_macro_status: l=LOWER
                                                 || l.getText() == ("deprecated") 
                                                 || l.getText() == ("obsolete"))
                                             {/*DOSOMETHING*/} else {}};
-namedbit: LOWER L_PAREN (MINUS)? NUMBER R_PAREN;
+namedbit: (LOWER | UPPER) L_PAREN (MINUS)? NUMBER R_PAREN;
 
 /* SMI v2 and SPPI: Object group */
 objectgroup_macro: 'OBJECT-GROUP' 'OBJECTS' L_BRACE value (COMMA value)* R_BRACE 
@@ -962,12 +962,12 @@ agentcapabilities_macro_status: l=LOWER
                                         {if (l.getText() == ("current") 
                                                 || l.getText() == ("obsolete"))
                                             {/*DOSOMETHING*/} else {}};
-agentcapabilities_macro_module: 'SUPPORTS' LOWER (value)? 
+agentcapabilities_macro_module: 'SUPPORTS' (UPPER | LOWER) (value)? 
                                 'INCLUDES' L_BRACE value (COMMA value)* R_BRACE 
                                 (agentcapabilities_macro_variation)*;
 agentcapabilities_macro_variation: 'VARIATION' value ('SYNTAX' agentcapabilities_macro_syntax)? ('WRITE-SYNTAX' agentcapabilities_macro_syntax)? ('ACCESS' agentcapabilities_macro_access)? 
                                     ('CREATION-REQUIRES' L_BRACE value (COMMA value)* R_BRACE)? 
-                                    ('DEFVAL' L_BRACE ((L_BRACE (LOWER | COMMA | R_BRACE)) => L_BRACE (LOWER)? (COMMA LOWER)* R_BRACE | value) )? 
+                                    ('DEFVAL' L_BRACE ((L_BRACE (LOWER | COMMA | R_BRACE)) => L_BRACE (LOWER)? (COMMA LOWER)* | value)  R_BRACE )? 
                                     'DESCRIPTION' C_STRING;
 agentcapabilities_macro_syntax: (smi_type L_BRACE) => 
                                     smi_type L_BRACE namedbit (COMMA namedbit)* R_BRACE

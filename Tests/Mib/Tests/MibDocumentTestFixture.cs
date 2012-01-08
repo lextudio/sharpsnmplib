@@ -8,7 +8,6 @@
  */
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using Antlr.Runtime;
 using Lextm.SharpSnmpLib.Properties;
@@ -62,7 +61,7 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
         public void TestComment()
         {
             string test = "ADSL-LINE-MIB --c-- DEFINITIONS ::= BEGIN --c " + Environment.NewLine +
-                          "END";
+                "END";
             var lex = new SmiLexer(new ANTLRStringStream(test));
             var tokens = new CommonTokenStream(lex);
             var parser = new SmiParser(tokens);
@@ -73,7 +72,7 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
         public void TestComment2()
         {
             string test = "ADSL-LINE-MIB --c-c-- DEFINITIONS ::= BEGIN --c " + Environment.NewLine +
-                          "END";
+                "END";
             var lex = new SmiLexer(new ANTLRStringStream(test));
             var tokens = new CommonTokenStream(lex);
             var parser = new SmiParser(tokens);
@@ -84,7 +83,22 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
         public void TestComment3()
         {
             string test = "ADSL-LINE-MIB --c-- DEFINITIONS ::= BEGIN --c- " + Environment.NewLine +
-                          "END";
+                "END";
+            var lex = new SmiLexer(new ANTLRStringStream(test));
+            var tokens = new CommonTokenStream(lex);
+            var parser = new SmiParser(tokens);
+            var document = parser.GetDocument();
+        }
+        
+        
+        [Test]
+        public void TestComment4()
+        {
+            string test = "ADSL-LINE-MIB DEFINITIONS ::= BEGIN" + Environment.NewLine +
+                "--------------------" + Environment.NewLine +
+                "-- adaptergroup Group" + Environment.NewLine +
+                "--------------------" + Environment.NewLine +
+                "END";
             var lex = new SmiLexer(new ANTLRStringStream(test));
             var tokens = new CommonTokenStream(lex);
             var parser = new SmiParser(tokens);
@@ -95,12 +109,12 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
         public void TestLexerOK()
         {
             string test = "ADSL-LINE-MIB DEFINITIONS ::= BEGIN" + Environment.NewLine +
-                          "IMPORTS" + Environment.NewLine +
-                          "MODULE-IDENTITY, OBJECT-TYPE," + Environment.NewLine +
-                          "Counter32, Gauge32, Integer32," + Environment.NewLine +
-                          "NOTIFICATION-TYPE," + Environment.NewLine +
-                          "transmission           FROM SNMPv2-SMI;" + Environment.NewLine +
-                          "END";
+                "IMPORTS" + Environment.NewLine +
+                "MODULE-IDENTITY, OBJECT-TYPE," + Environment.NewLine +
+                "Counter32, Gauge32, Integer32," + Environment.NewLine +
+                "NOTIFICATION-TYPE," + Environment.NewLine +
+                "transmission           FROM SNMPv2-SMI;" + Environment.NewLine +
+                "END";
             var lex = new SmiLexer(new ANTLRStringStream(test));
             var tokens = new CommonTokenStream(lex);
             var parser = new SmiParser(tokens);
@@ -141,9 +155,9 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
         public void TestException2()
         {
             string test = "ADSL-LINE-MIB DEFINITIONS ::= BEGIN" + Environment.NewLine +
-                          "IMPORTS" + Environment.NewLine +
-                          "transmission           SNMPv2-SMI" + Environment.NewLine +
-                          "END";
+                "IMPORTS" + Environment.NewLine +
+                "transmission           SNMPv2-SMI" + Environment.NewLine +
+                "END";
             var lex = new SmiLexer(new ANTLRStringStream(test));
             var tokens = new CommonTokenStream(lex);
             var parser = new SmiParser(tokens);
@@ -157,8 +171,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
         public void TestException3()
         {
             string test = "ADSL-LINE-MIB DEFINITIONS ::= BEGIN" + Environment.NewLine +
-                          "TEST" + Environment.NewLine +
-                          "END";
+                "TEST" + Environment.NewLine +
+                "END";
             var lex = new SmiLexer(new ANTLRStringStream(test));
             var tokens = new CommonTokenStream(lex);
             var parser = new SmiParser(tokens);
@@ -325,6 +339,78 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
         }
 
         [Test]
+        public void TestCHECKPOINT_MIB()
+        {
+            var m = new MemoryStream(Resources.CHECKPOINT_MIB);
+            var stream = new ANTLRInputStream(m);
+            var lexer = new SmiLexer(stream);
+            var tokens = new CommonTokenStream(lexer);
+            var parser = new SmiParser(tokens);
+            var file = parser.GetDocument();
+            Assert.AreEqual("CHECKPOINT-MIB", file.Modules[0].Name);
+            Assert.AreEqual(3, file.Modules[0].Imports.Clauses.Count);
+            Assert.AreEqual(539, file.Modules[0].Entities.Count);
+            IEntity node = file.Modules[0].Entities[538];
+            Assert.AreEqual("lsApplicationType", node.Name);
+            Assert.AreEqual(5, node.Value);
+            Assert.AreEqual("lsConnectedClientsEntry", node.Parent);
+        }
+
+        [Test]
+        public void TestCASTELLEMIB()
+        {
+            var m = new MemoryStream(Resources.CASTELLEMIB);
+            var stream = new ANTLRInputStream(m);
+            var lexer = new SmiLexer(stream);
+            var tokens = new CommonTokenStream(lexer);
+            var parser = new SmiParser(tokens);
+            var file = parser.GetDocument();
+            Assert.AreEqual("CASTELLEMIB", file.Modules[0].Name);
+            Assert.AreEqual(4, file.Modules[0].Imports.Clauses.Count);
+            Assert.AreEqual(128, file.Modules[0].Entities.Count);
+            IEntity node = file.Modules[0].Entities[127];
+            Assert.AreEqual("fPReboot", node.Name);
+            Assert.AreEqual(1, node.Value);
+            Assert.AreEqual("fPResetInfo", node.Parent);
+        }
+
+        [Test]
+        public void TestBridge()
+        {
+            var m = new MemoryStream(Resources.BRIDGE_MIB);
+            var stream = new ANTLRInputStream(m);
+            var lexer = new SmiLexer(stream);
+            var tokens = new CommonTokenStream(lexer);
+            var parser = new SmiParser(tokens);
+            var file = parser.GetDocument();
+            Assert.AreEqual("BRIDGE-MIB", file.Modules[0].Name);
+            Assert.AreEqual(4, file.Modules[0].Imports.Clauses.Count);
+            Assert.AreEqual(62, file.Modules[0].Entities.Count);
+            IEntity node = file.Modules[0].Entities[61];
+            Assert.AreEqual("dot1dStaticStatus", node.Name);
+            Assert.AreEqual(4, node.Value);
+            Assert.AreEqual("dot1dStaticEntry", node.Parent);
+        }
+
+        [Test]
+        public void TestBRCM_BSAPTRAP_MIB()
+        {
+            var m = new MemoryStream(Resources.BRCM_BSAPTRAP_MIB);
+            var stream = new ANTLRInputStream(m);
+            var lexer = new SmiLexer(stream);
+            var tokens = new CommonTokenStream(lexer);
+            var parser = new SmiParser(tokens);
+            var file = parser.GetDocument();
+            Assert.AreEqual("Brcm-BSAPTrap-MIB", file.Modules[0].Name);
+            Assert.AreEqual(3, file.Modules[0].Imports.Clauses.Count);
+            Assert.AreEqual(10, file.Modules[0].Entities.Count);
+            IEntity node = file.Modules[0].Entities[9];
+            Assert.AreEqual("trapAdapterActivityCause", node.Name);
+            Assert.AreEqual(4, node.Value);
+            Assert.AreEqual("baspTrap", node.Parent);
+        }
+
+        [Test]
         public void TestBASEBRDD_MIB_MIB()
         {
             var m = new MemoryStream(Resources.BASEBRDD_MIB_MIB);
@@ -340,6 +426,24 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             Assert.AreEqual("dMTFVoltageProbeEvSub", node.Name);
             Assert.AreEqual(7, node.Value);
             Assert.AreEqual("dMTFVoltageProbeTable", node.Parent);
+        }
+        
+        [Test]
+        public void TestALTIGA_CAP()
+        {
+            var m = new MemoryStream(Resources.ALTIGA_CAP);
+            var stream = new ANTLRInputStream(m);
+            var lexer = new SmiLexer(stream);
+            var tokens = new CommonTokenStream(lexer);
+            var parser = new SmiParser(tokens);
+            var file = parser.GetDocument();
+            Assert.AreEqual("ALTIGA-CAP", file.Modules[0].Name);
+            Assert.AreEqual(3, file.Modules[0].Imports.Clauses.Count);
+            Assert.AreEqual(3, file.Modules[0].Entities.Count);
+            IEntity node = file.Modules[0].Entities[2];
+            Assert.AreEqual("altigaBasicAgentRev1", node.Name);
+            Assert.AreEqual(1, node.Value);
+            Assert.AreEqual("altigaCapModule", node.Parent);
         }
 
         [Test]
@@ -469,6 +573,24 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
         }
 
         [Test]
+        public void TestADMIN_AUTH_STATS_MIB()
+        {
+            var m = new MemoryStream(Resources.ADMIN_AUTH_STATS_MIB);
+            var stream = new ANTLRInputStream(m);
+            var lexer = new SmiLexer(stream);
+            var tokens = new CommonTokenStream(lexer);
+            var parser = new SmiParser(tokens);
+            var file = parser.GetDocument();
+            Assert.AreEqual("ADMIN-AUTH-STATS-MIB", file.Modules[0].Name);
+            Assert.AreEqual(4, file.Modules[0].Imports.Clauses.Count);
+            Assert.AreEqual(23, file.Modules[0].Entities.Count);
+            IEntity node = file.Modules[0].Entities[22];
+            Assert.AreEqual("alAdminAuthClientMIBGroup", node.Name);
+            Assert.AreEqual(2, node.Value);
+            Assert.AreEqual("alAdminAuthGroup", node.Parent);
+        }
+
+        [Test]
         public void TestADSL_TC_MIB()
         {
             var m = new MemoryStream(Resources.ADSL_TC_MIB);
@@ -483,7 +605,7 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             IEntity node = file.Modules[0].Entities[0];
             Assert.AreEqual("adsltcmib", node.Name);
             Assert.AreEqual(2, node.Value);
-            Assert.AreEqual("transmission.94", node.Parent); 
+            Assert.AreEqual("transmission.94", node.Parent);
         }
 
         [Test]
@@ -537,7 +659,7 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             IEntity node = file.Modules[0].Entities[0];
             Assert.AreEqual("internet", node.Name);
             Assert.AreEqual(1, node.Value);
-            Assert.AreEqual("iso.org(3).dod(6)", node.Parent); 
+            Assert.AreEqual("iso.org(3).dod(6)", node.Parent);
         }
 
         [Test]
@@ -1797,24 +1919,6 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             Assert.AreEqual("rfc1157Domain", node.Name);
             Assert.AreEqual(1, node.Value);
             Assert.AreEqual("rfc1157Proxy", node.Parent);
-        }
-
-        [Test]
-        public void TestBridge()
-        {
-            var m = new MemoryStream(Resources.BRIDGE_MIB);
-            var stream = new ANTLRInputStream(m);
-            var lexer = new SmiLexer(stream);
-            var tokens = new CommonTokenStream(lexer);
-            var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();
-            Assert.AreEqual("BRIDGE-MIB", file.Modules[0].Name);
-            Assert.AreEqual(4, file.Modules[0].Imports.Clauses.Count);
-            Assert.AreEqual(62, file.Modules[0].Entities.Count);
-            IEntity node = file.Modules[0].Entities[61];
-            Assert.AreEqual("dot1dStaticStatus", node.Name);
-            Assert.AreEqual(4, node.Value);
-            Assert.AreEqual("dot1dStaticEntry", node.Parent);
         }
     }
 }

@@ -564,9 +564,6 @@ LOWER
 		(
 	:	( 'a'..'z' | 'A'..'Z' | '-' | '_' | '0'..'9' ))* 	;   // '_' | 
 
-
-
-
 // Unable to resolve a string like 010101 followed by 'H
 //B_STRING 	: 	SINGLE_QUOTE ({LA(3)!='B'}? BDIG)+  BDIG SINGLE_QUOTE 'B';
 //H_STRING 	: 	SINGLE_QUOTE ({LA(3)!='H'}? HDIG)+  HDIG SINGLE_QUOTE 'H';
@@ -630,7 +627,7 @@ obj_id_comp_lst returns [IdComponentList result = new IdComponentList()]
 //obj_id_comp_lst: L_BRACE (defined_value)? (obj_id_component)+ R_BRACE;
 
 protected defined_value returns [DefinedValue result = new DefinedValue()]
-    : (mod=UPPER DOT { $result.Module = $mod.text; })? 
+    : (mod=(UPPER | LOWER) DOT { $result.Module = $mod.text; })? 
 	v=LOWER { $result.Value = $v.text; }
 	;
 
@@ -958,7 +955,8 @@ smi_type returns [ISmiType result]
 	| OCTET_KW STRING_KW { $result = new OctetStringType(); }
 	| OBJECT_KW IDENTIFIER_KW { $result = new ObjectIdentifierType(); } 
 	| name=UPPER { $result = new UnknownType($name.text); }
-	; // | LOWER;
+	| name2=LOWER { $result = new UnknownType($name2.text); }
+	; 
 
 /* Possible SMI types??? - IpAddress Counter32 TimeTicks Opaque Counter64 Unsigned32 */
 
@@ -967,7 +965,7 @@ smi_type returns [ISmiType result]
 smi_subtyping: L_PAREN subtype_range (BAR subtype_range)* R_PAREN
              | L_PAREN 'SIZE' L_PAREN subtype_range (BAR subtype_range)* R_PAREN R_PAREN;
 subtype_range: subtype_value (DOTDOT subtype_value)? ;
-subtype_value: (MINUS)? NUMBER | B_STRING | H_STRING;
+subtype_value: (MINUS)? NUMBER | B_STRING | H_STRING | MAX_KW;
 
 /* SMI v1/2 and SPPI: Object-type macro */
 objecttype_macro returns [ObjectTypeMacro result = new ObjectTypeMacro()]
@@ -1115,7 +1113,7 @@ textualconvention_macro returns [TextualConventionMacro result = new TextualConv
 	;
 
 namedbit returns [NamedBit result]
-    : name=LOWER { $result = new NamedBit($name.text); }
+    : name=(LOWER | UPPER) { $result = new NamedBit($name.text); }
 	L_PAREN (MINUS { $result.Minus = true; })? 
 	num=NUMBER R_PAREN { $result.Number = long.Parse($num.text); }
 	;
@@ -1204,7 +1202,7 @@ agentcapabilities_macro_status returns [EntityStatus result]
                else {throw new SemanticException("(invalid)");}};
 
 agentcapabilities_macro_module returns [AgentCapabilitiesModule result]
-    : 'SUPPORTS' name=LOWER { $result = new AgentCapabilitiesModule($name.text); }
+    : 'SUPPORTS' name=(UPPER | LOWER) { $result = new AgentCapabilitiesModule($name.text); }
 	(v1=value)? { $result.Value = $v1.result; }
     'INCLUDES' L_BRACE v2=value { $result.Includes.Add($v2.result); }
 	(COMMA v3=value)* R_BRACE { $result.Includes.Add($v3.result); }
@@ -1219,8 +1217,8 @@ agentcapabilities_macro_variation returns [Variantion result]
     ('CREATION-REQUIRES' L_BRACE v2=value { $result.CreationRequires.Add($v2.result); }
 	(COMMA v3=value)* R_BRACE)? { $result.CreationRequires.Add($v3.result); }
     ('DEFVAL' L_BRACE ((L_BRACE (LOWER | COMMA | R_BRACE)) => L_BRACE (l1=LOWER)? { $result.DefaultValueIdentifiers.Add($l1.text); } 
-	(COMMA l2=LOWER)* R_BRACE { $result.DefaultValueIdentifiers.Add($l2.text); }
-	| v4=value) )? { $result.DefaultValue = $v4.result; }
+	(COMMA l2=LOWER)* { $result.DefaultValueIdentifiers.Add($l2.text); }
+	| v4=value) R_BRACE)? { $result.DefaultValue = $v4.result; }
     'DESCRIPTION' c1=C_STRING { $result.Description = $c1.text; }
 	;
 
