@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// $ANTLR 3.4.1.9004 Smi.g 2012-01-08 13:58:52
+// $ANTLR 3.4.1.9004 Smi.g 2012-01-10 19:33:44
 
 // The variable 'variable' is assigned but its value is never used.
 #pragma warning disable 219
@@ -272,7 +272,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:15:10: 'ABSTRACT-BIND'
 			{
 			DebugLocation(15, 10);
-			Match("ABSTRACT-BIND"); if (state.failed) return;
+			Match("ABSTRACT-BIND"); 
 
 
 			}
@@ -308,7 +308,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:16:10: 'ABSTRACT-ERROR'
 			{
 			DebugLocation(16, 10);
-			Match("ABSTRACT-ERROR"); if (state.failed) return;
+			Match("ABSTRACT-ERROR"); 
 
 
 			}
@@ -344,7 +344,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:17:10: 'ABSTRACT-OPERATION'
 			{
 			DebugLocation(17, 10);
-			Match("ABSTRACT-OPERATION"); if (state.failed) return;
+			Match("ABSTRACT-OPERATION"); 
 
 
 			}
@@ -380,7 +380,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:18:10: 'ABSTRACT-UNBIND'
 			{
 			DebugLocation(18, 10);
-			Match("ABSTRACT-UNBIND"); if (state.failed) return;
+			Match("ABSTRACT-UNBIND"); 
 
 
 			}
@@ -416,7 +416,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:19:10: 'ACCESS'
 			{
 			DebugLocation(19, 10);
-			Match("ACCESS"); if (state.failed) return;
+			Match("ACCESS"); 
 
 
 			}
@@ -452,7 +452,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:20:10: 'AGENT-CAPABILITIES'
 			{
 			DebugLocation(20, 10);
-			Match("AGENT-CAPABILITIES"); if (state.failed) return;
+			Match("AGENT-CAPABILITIES"); 
 
 
 			}
@@ -488,7 +488,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:21:10: 'ALGORITHM'
 			{
 			DebugLocation(21, 10);
-			Match("ALGORITHM"); if (state.failed) return;
+			Match("ALGORITHM"); 
 
 
 			}
@@ -524,7 +524,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:22:10: 'APPLICATION-CONTEXT'
 			{
 			DebugLocation(22, 10);
-			Match("APPLICATION-CONTEXT"); if (state.failed) return;
+			Match("APPLICATION-CONTEXT"); 
 
 
 			}
@@ -560,7 +560,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:23:10: 'APPLICATION-SERVICE-ELEMENT'
 			{
 			DebugLocation(23, 10);
-			Match("APPLICATION-SERVICE-ELEMENT"); if (state.failed) return;
+			Match("APPLICATION-SERVICE-ELEMENT"); 
 
 
 			}
@@ -596,7 +596,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:24:10: 'AUGMENTS'
 			{
 			DebugLocation(24, 10);
-			Match("AUGMENTS"); if (state.failed) return;
+			Match("AUGMENTS"); 
 
 
 			}
@@ -632,7 +632,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:25:10: 'BIND'
 			{
 			DebugLocation(25, 10);
-			Match("BIND"); if (state.failed) return;
+			Match("BIND"); 
 
 
 			}
@@ -668,7 +668,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:26:10: 'BITS'
 			{
 			DebugLocation(26, 10);
-			Match("BITS"); if (state.failed) return;
+			Match("BITS"); 
 
 
 			}
@@ -704,7 +704,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:27:10: 'CONTACT-INFO'
 			{
 			DebugLocation(27, 10);
-			Match("CONTACT-INFO"); if (state.failed) return;
+			Match("CONTACT-INFO"); 
 
 
 			}
@@ -740,7 +740,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:28:10: 'CREATION-REQUIRES'
 			{
 			DebugLocation(28, 10);
-			Match("CREATION-REQUIRES"); if (state.failed) return;
+			Match("CREATION-REQUIRES"); 
 
 
 			}
@@ -776,7 +776,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:29:10: 'DEFVAL'
 			{
 			DebugLocation(29, 10);
-			Match("DEFVAL"); if (state.failed) return;
+			Match("DEFVAL"); 
 
 
 			}
@@ -812,7 +812,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:30:10: 'DESCRIPTION'
 			{
 			DebugLocation(30, 10);
-			Match("DESCRIPTION"); if (state.failed) return;
+			Match("DESCRIPTION"); 
 
 
 			}
@@ -848,7 +848,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:31:10: 'DISPLAY-HINT'
 			{
 			DebugLocation(31, 10);
-			Match("DISPLAY-HINT"); if (state.failed) return;
+			Match("DISPLAY-HINT"); 
 
 
 			}
@@ -884,7 +884,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:32:10: 'ENCRYPTED'
 			{
 			DebugLocation(32, 10);
-			Match("ENCRYPTED"); if (state.failed) return;
+			Match("ENCRYPTED"); 
 
 
 			}
@@ -920,7 +920,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:33:10: 'ENTERPRISE'
 			{
 			DebugLocation(33, 10);
-			Match("ENTERPRISE"); if (state.failed) return;
+			Match("ENTERPRISE"); 
 
 
 			}
@@ -956,7 +956,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:34:10: 'EXTENDS'
 			{
 			DebugLocation(34, 10);
-			Match("EXTENDS"); if (state.failed) return;
+			Match("EXTENDS"); 
 
 
 			}
@@ -992,7 +992,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:35:10: 'EXTENSION'
 			{
 			DebugLocation(35, 10);
-			Match("EXTENSION"); if (state.failed) return;
+			Match("EXTENSION"); 
 
 
 			}
@@ -1028,7 +1028,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:36:10: 'EXTENSION-ATTRIBUTE'
 			{
 			DebugLocation(36, 10);
-			Match("EXTENSION-ATTRIBUTE"); if (state.failed) return;
+			Match("EXTENSION-ATTRIBUTE"); 
 
 
 			}
@@ -1064,7 +1064,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:37:10: 'EXTENSIONS'
 			{
 			DebugLocation(37, 10);
-			Match("EXTENSIONS"); if (state.failed) return;
+			Match("EXTENSIONS"); 
 
 
 			}
@@ -1100,7 +1100,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:38:10: 'GROUP'
 			{
 			DebugLocation(38, 10);
-			Match("GROUP"); if (state.failed) return;
+			Match("GROUP"); 
 
 
 			}
@@ -1136,7 +1136,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:39:10: 'INDEX'
 			{
 			DebugLocation(39, 10);
-			Match("INDEX"); if (state.failed) return;
+			Match("INDEX"); 
 
 
 			}
@@ -1172,7 +1172,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:40:10: 'INSTALL-ERRORS'
 			{
 			DebugLocation(40, 10);
-			Match("INSTALL-ERRORS"); if (state.failed) return;
+			Match("INSTALL-ERRORS"); 
 
 
 			}
@@ -1208,7 +1208,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:41:10: 'LAST-UPDATED'
 			{
 			DebugLocation(41, 10);
-			Match("LAST-UPDATED"); if (state.failed) return;
+			Match("LAST-UPDATED"); 
 
 
 			}
@@ -1244,7 +1244,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:42:10: 'MACRO'
 			{
 			DebugLocation(42, 10);
-			Match("MACRO"); if (state.failed) return;
+			Match("MACRO"); 
 
 
 			}
@@ -1280,7 +1280,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:43:10: 'MANDATORY-GROUPS'
 			{
 			DebugLocation(43, 10);
-			Match("MANDATORY-GROUPS"); if (state.failed) return;
+			Match("MANDATORY-GROUPS"); 
 
 
 			}
@@ -1316,7 +1316,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:44:10: 'MAX-ACCESS'
 			{
 			DebugLocation(44, 10);
-			Match("MAX-ACCESS"); if (state.failed) return;
+			Match("MAX-ACCESS"); 
 
 
 			}
@@ -1352,7 +1352,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:45:10: 'MIN-ACCESS'
 			{
 			DebugLocation(45, 10);
-			Match("MIN-ACCESS"); if (state.failed) return;
+			Match("MIN-ACCESS"); 
 
 
 			}
@@ -1388,7 +1388,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:46:10: 'MODULE'
 			{
 			DebugLocation(46, 10);
-			Match("MODULE"); if (state.failed) return;
+			Match("MODULE"); 
 
 
 			}
@@ -1424,7 +1424,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:47:10: 'MODULE-COMPLIANCE'
 			{
 			DebugLocation(47, 10);
-			Match("MODULE-COMPLIANCE"); if (state.failed) return;
+			Match("MODULE-COMPLIANCE"); 
 
 
 			}
@@ -1460,7 +1460,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:48:10: 'MODULE-IDENTITY'
 			{
 			DebugLocation(48, 10);
-			Match("MODULE-IDENTITY"); if (state.failed) return;
+			Match("MODULE-IDENTITY"); 
 
 
 			}
@@ -1496,7 +1496,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:49:10: 'NOTIFICATION-GROUP'
 			{
 			DebugLocation(49, 10);
-			Match("NOTIFICATION-GROUP"); if (state.failed) return;
+			Match("NOTIFICATION-GROUP"); 
 
 
 			}
@@ -1532,7 +1532,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:50:10: 'NOTIFICATION-TYPE'
 			{
 			DebugLocation(50, 10);
-			Match("NOTIFICATION-TYPE"); if (state.failed) return;
+			Match("NOTIFICATION-TYPE"); 
 
 
 			}
@@ -1568,7 +1568,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:51:10: 'NOTIFICATIONS'
 			{
 			DebugLocation(51, 10);
-			Match("NOTIFICATIONS"); if (state.failed) return;
+			Match("NOTIFICATIONS"); 
 
 
 			}
@@ -1604,7 +1604,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:52:10: 'OBJECT-GROUP'
 			{
 			DebugLocation(52, 10);
-			Match("OBJECT-GROUP"); if (state.failed) return;
+			Match("OBJECT-GROUP"); 
 
 
 			}
@@ -1640,7 +1640,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:53:10: 'OBJECT-IDENTITY'
 			{
 			DebugLocation(53, 10);
-			Match("OBJECT-IDENTITY"); if (state.failed) return;
+			Match("OBJECT-IDENTITY"); 
 
 
 			}
@@ -1676,7 +1676,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:54:10: 'OBJECT-TYPE'
 			{
 			DebugLocation(54, 10);
-			Match("OBJECT-TYPE"); if (state.failed) return;
+			Match("OBJECT-TYPE"); 
 
 
 			}
@@ -1712,7 +1712,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:55:10: 'OBJECTS'
 			{
 			DebugLocation(55, 10);
-			Match("OBJECTS"); if (state.failed) return;
+			Match("OBJECTS"); 
 
 
 			}
@@ -1748,7 +1748,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:56:10: 'ORGANIZATION'
 			{
 			DebugLocation(56, 10);
-			Match("ORGANIZATION"); if (state.failed) return;
+			Match("ORGANIZATION"); 
 
 
 			}
@@ -1784,7 +1784,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:57:10: 'PIB-ACCESS'
 			{
 			DebugLocation(57, 10);
-			Match("PIB-ACCESS"); if (state.failed) return;
+			Match("PIB-ACCESS"); 
 
 
 			}
@@ -1820,7 +1820,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:58:10: 'PIB-DEFINITIONS'
 			{
 			DebugLocation(58, 10);
-			Match("PIB-DEFINITIONS"); if (state.failed) return;
+			Match("PIB-DEFINITIONS"); 
 
 
 			}
@@ -1856,7 +1856,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:59:10: 'PIB-INDEX'
 			{
 			DebugLocation(59, 10);
-			Match("PIB-INDEX"); if (state.failed) return;
+			Match("PIB-INDEX"); 
 
 
 			}
@@ -1892,7 +1892,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:60:10: 'PIB-MIN-ACCESS'
 			{
 			DebugLocation(60, 10);
-			Match("PIB-MIN-ACCESS"); if (state.failed) return;
+			Match("PIB-MIN-ACCESS"); 
 
 
 			}
@@ -1928,7 +1928,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:61:10: 'PIB-REFERENCES'
 			{
 			DebugLocation(61, 10);
-			Match("PIB-REFERENCES"); if (state.failed) return;
+			Match("PIB-REFERENCES"); 
 
 
 			}
@@ -1964,7 +1964,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:62:10: 'PIB-TAG'
 			{
 			DebugLocation(62, 10);
-			Match("PIB-TAG"); if (state.failed) return;
+			Match("PIB-TAG"); 
 
 
 			}
@@ -2000,7 +2000,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:63:10: 'PORT'
 			{
 			DebugLocation(63, 10);
-			Match("PORT"); if (state.failed) return;
+			Match("PORT"); 
 
 
 			}
@@ -2036,7 +2036,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:64:10: 'PRODUCT-RELEASE'
 			{
 			DebugLocation(64, 10);
-			Match("PRODUCT-RELEASE"); if (state.failed) return;
+			Match("PRODUCT-RELEASE"); 
 
 
 			}
@@ -2072,7 +2072,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:65:10: 'PROTECTED'
 			{
 			DebugLocation(65, 10);
-			Match("PROTECTED"); if (state.failed) return;
+			Match("PROTECTED"); 
 
 
 			}
@@ -2108,7 +2108,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:66:10: 'REFERENCE'
 			{
 			DebugLocation(66, 10);
-			Match("REFERENCE"); if (state.failed) return;
+			Match("REFERENCE"); 
 
 
 			}
@@ -2144,7 +2144,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:67:10: 'REFINE'
 			{
 			DebugLocation(67, 10);
-			Match("REFINE"); if (state.failed) return;
+			Match("REFINE"); 
 
 
 			}
@@ -2180,7 +2180,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:68:10: 'RELATIVE-OID'
 			{
 			DebugLocation(68, 10);
-			Match("RELATIVE-OID"); if (state.failed) return;
+			Match("RELATIVE-OID"); 
 
 
 			}
@@ -2216,7 +2216,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:69:10: 'REVISION'
 			{
 			DebugLocation(69, 10);
-			Match("REVISION"); if (state.failed) return;
+			Match("REVISION"); 
 
 
 			}
@@ -2252,7 +2252,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:70:10: 'SECURITY-CATEGORY'
 			{
 			DebugLocation(70, 10);
-			Match("SECURITY-CATEGORY"); if (state.failed) return;
+			Match("SECURITY-CATEGORY"); 
 
 
 			}
@@ -2288,7 +2288,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:71:10: 'SIGNATURE'
 			{
 			DebugLocation(71, 10);
-			Match("SIGNATURE"); if (state.failed) return;
+			Match("SIGNATURE"); 
 
 
 			}
@@ -2324,7 +2324,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:72:10: 'SIGNED'
 			{
 			DebugLocation(72, 10);
-			Match("SIGNED"); if (state.failed) return;
+			Match("SIGNED"); 
 
 
 			}
@@ -2360,7 +2360,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:73:10: 'STATUS'
 			{
 			DebugLocation(73, 10);
-			Match("STATUS"); if (state.failed) return;
+			Match("STATUS"); 
 
 
 			}
@@ -2396,7 +2396,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:74:10: 'SUBJECT-CATEGORIES'
 			{
 			DebugLocation(74, 10);
-			Match("SUBJECT-CATEGORIES"); if (state.failed) return;
+			Match("SUBJECT-CATEGORIES"); 
 
 
 			}
@@ -2432,7 +2432,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:75:10: 'SUPPORTS'
 			{
 			DebugLocation(75, 10);
-			Match("SUPPORTS"); if (state.failed) return;
+			Match("SUPPORTS"); 
 
 
 			}
@@ -2468,7 +2468,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:76:10: 'SYNTAX'
 			{
 			DebugLocation(76, 10);
-			Match("SYNTAX"); if (state.failed) return;
+			Match("SYNTAX"); 
 
 
 			}
@@ -2504,7 +2504,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:77:10: 'TEXTUAL-CONVENTION'
 			{
 			DebugLocation(77, 10);
-			Match("TEXTUAL-CONVENTION"); if (state.failed) return;
+			Match("TEXTUAL-CONVENTION"); 
 
 
 			}
@@ -2540,7 +2540,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:78:10: 'TOKEN'
 			{
 			DebugLocation(78, 10);
-			Match("TOKEN"); if (state.failed) return;
+			Match("TOKEN"); 
 
 
 			}
@@ -2576,7 +2576,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:79:10: 'TOKEN-DATA'
 			{
 			DebugLocation(79, 10);
-			Match("TOKEN-DATA"); if (state.failed) return;
+			Match("TOKEN-DATA"); 
 
 
 			}
@@ -2612,7 +2612,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:80:10: 'TRAP-TYPE'
 			{
 			DebugLocation(80, 10);
-			Match("TRAP-TYPE"); if (state.failed) return;
+			Match("TRAP-TYPE"); 
 
 
 			}
@@ -2648,7 +2648,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:81:10: 'UNBIND'
 			{
 			DebugLocation(81, 10);
-			Match("UNBIND"); if (state.failed) return;
+			Match("UNBIND"); 
 
 
 			}
@@ -2684,7 +2684,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:82:10: 'UNIQUENESS'
 			{
 			DebugLocation(82, 10);
-			Match("UNIQUENESS"); if (state.failed) return;
+			Match("UNIQUENESS"); 
 
 
 			}
@@ -2720,7 +2720,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:83:10: 'UNITS'
 			{
 			DebugLocation(83, 10);
-			Match("UNITS"); if (state.failed) return;
+			Match("UNITS"); 
 
 
 			}
@@ -2756,7 +2756,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:84:10: 'VARIABLES'
 			{
 			DebugLocation(84, 10);
-			Match("VARIABLES"); if (state.failed) return;
+			Match("VARIABLES"); 
 
 
 			}
@@ -2792,7 +2792,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:85:10: 'VARIATION'
 			{
 			DebugLocation(85, 10);
-			Match("VARIATION"); if (state.failed) return;
+			Match("VARIATION"); 
 
 
 			}
@@ -2828,7 +2828,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:86:10: 'WRITE-SYNTAX'
 			{
 			DebugLocation(86, 10);
-			Match("WRITE-SYNTAX"); if (state.failed) return;
+			Match("WRITE-SYNTAX"); 
 
 
 			}
@@ -2864,7 +2864,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:152:4: 'ABSENT'
 			{
 			DebugLocation(152, 4);
-			Match("ABSENT"); if (state.failed) return;
+			Match("ABSENT"); 
 
 
 			}
@@ -2900,7 +2900,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:156:4: 'ABSTRACT-SYNTAX'
 			{
 			DebugLocation(156, 4);
-			Match("ABSTRACT-SYNTAX"); if (state.failed) return;
+			Match("ABSTRACT-SYNTAX"); 
 
 
 			}
@@ -2936,7 +2936,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:160:4: 'ALL'
 			{
 			DebugLocation(160, 4);
-			Match("ALL"); if (state.failed) return;
+			Match("ALL"); 
 
 
 			}
@@ -2972,7 +2972,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:164:4: 'ANY'
 			{
 			DebugLocation(164, 4);
-			Match("ANY"); if (state.failed) return;
+			Match("ANY"); 
 
 
 			}
@@ -3008,7 +3008,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:168:4: 'ARGUMENT'
 			{
 			DebugLocation(168, 4);
-			Match("ARGUMENT"); if (state.failed) return;
+			Match("ARGUMENT"); 
 
 
 			}
@@ -3044,7 +3044,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:172:4: 'APPLICATION'
 			{
 			DebugLocation(172, 4);
-			Match("APPLICATION"); if (state.failed) return;
+			Match("APPLICATION"); 
 
 
 			}
@@ -3080,7 +3080,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:176:4: 'AUTOMATIC'
 			{
 			DebugLocation(176, 4);
-			Match("AUTOMATIC"); if (state.failed) return;
+			Match("AUTOMATIC"); 
 
 
 			}
@@ -3116,7 +3116,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:180:4: 'BASEDNUM'
 			{
 			DebugLocation(180, 4);
-			Match("BASEDNUM"); if (state.failed) return;
+			Match("BASEDNUM"); 
 
 
 			}
@@ -3152,7 +3152,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:184:4: 'BEGIN'
 			{
 			DebugLocation(184, 4);
-			Match("BEGIN"); if (state.failed) return;
+			Match("BEGIN"); 
 
 
 			}
@@ -3188,7 +3188,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:188:4: 'BIT'
 			{
 			DebugLocation(188, 4);
-			Match("BIT"); if (state.failed) return;
+			Match("BIT"); 
 
 
 			}
@@ -3224,7 +3224,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:192:4: 'BMPString'
 			{
 			DebugLocation(192, 4);
-			Match("BMPString"); if (state.failed) return;
+			Match("BMPString"); 
 
 
 			}
@@ -3260,7 +3260,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:196:4: 'BOOLEAN'
 			{
 			DebugLocation(196, 4);
-			Match("BOOLEAN"); if (state.failed) return;
+			Match("BOOLEAN"); 
 
 
 			}
@@ -3296,7 +3296,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:200:4: 'BY'
 			{
 			DebugLocation(200, 4);
-			Match("BY"); if (state.failed) return;
+			Match("BY"); 
 
 
 			}
@@ -3332,7 +3332,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:204:4: 'CHARACTER'
 			{
 			DebugLocation(204, 4);
-			Match("CHARACTER"); if (state.failed) return;
+			Match("CHARACTER"); 
 
 
 			}
@@ -3368,7 +3368,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:208:4: 'CHOICE'
 			{
 			DebugLocation(208, 4);
-			Match("CHOICE"); if (state.failed) return;
+			Match("CHOICE"); 
 
 
 			}
@@ -3404,7 +3404,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:212:4: 'CLASS'
 			{
 			DebugLocation(212, 4);
-			Match("CLASS"); if (state.failed) return;
+			Match("CLASS"); 
 
 
 			}
@@ -3440,7 +3440,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:216:4: 'COMPONENTS'
 			{
 			DebugLocation(216, 4);
-			Match("COMPONENTS"); if (state.failed) return;
+			Match("COMPONENTS"); 
 
 
 			}
@@ -3476,7 +3476,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:220:4: 'COMPONENT'
 			{
 			DebugLocation(220, 4);
-			Match("COMPONENT"); if (state.failed) return;
+			Match("COMPONENT"); 
 
 
 			}
@@ -3512,7 +3512,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:224:4: 'CONSTRAINED'
 			{
 			DebugLocation(224, 4);
-			Match("CONSTRAINED"); if (state.failed) return;
+			Match("CONSTRAINED"); 
 
 
 			}
@@ -3548,7 +3548,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:228:4: 'DEFAULT'
 			{
 			DebugLocation(228, 4);
-			Match("DEFAULT"); if (state.failed) return;
+			Match("DEFAULT"); 
 
 
 			}
@@ -3584,7 +3584,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:232:4: 'DEFINED'
 			{
 			DebugLocation(232, 4);
-			Match("DEFINED"); if (state.failed) return;
+			Match("DEFINED"); 
 
 
 			}
@@ -3620,7 +3620,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:236:4: 'DEFINITIONS'
 			{
 			DebugLocation(236, 4);
-			Match("DEFINITIONS"); if (state.failed) return;
+			Match("DEFINITIONS"); 
 
 
 			}
@@ -3656,7 +3656,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:240:4: 'EMBEDDED'
 			{
 			DebugLocation(240, 4);
-			Match("EMBEDDED"); if (state.failed) return;
+			Match("EMBEDDED"); 
 
 
 			}
@@ -3692,7 +3692,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:244:4: 'END'
 			{
 			DebugLocation(244, 4);
-			Match("END"); if (state.failed) return;
+			Match("END"); 
 
 
 			}
@@ -3728,7 +3728,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:248:4: 'ENUMERATED'
 			{
 			DebugLocation(248, 4);
-			Match("ENUMERATED"); if (state.failed) return;
+			Match("ENUMERATED"); 
 
 
 			}
@@ -3764,7 +3764,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:252:4: 'ERROR'
 			{
 			DebugLocation(252, 4);
-			Match("ERROR"); if (state.failed) return;
+			Match("ERROR"); 
 
 
 			}
@@ -3800,7 +3800,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:256:4: 'ERRORS'
 			{
 			DebugLocation(256, 4);
-			Match("ERRORS"); if (state.failed) return;
+			Match("ERRORS"); 
 
 
 			}
@@ -3836,7 +3836,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:260:4: 'EXCEPT'
 			{
 			DebugLocation(260, 4);
-			Match("EXCEPT"); if (state.failed) return;
+			Match("EXCEPT"); 
 
 
 			}
@@ -3872,7 +3872,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:264:4: 'EXPLICIT'
 			{
 			DebugLocation(264, 4);
-			Match("EXPLICIT"); if (state.failed) return;
+			Match("EXPLICIT"); 
 
 
 			}
@@ -3908,7 +3908,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:268:4: 'EXPORTS'
 			{
 			DebugLocation(268, 4);
-			Match("EXPORTS"); if (state.failed) return;
+			Match("EXPORTS"); 
 
 
 			}
@@ -3944,7 +3944,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:272:4: 'EXTENSIBILITY'
 			{
 			DebugLocation(272, 4);
-			Match("EXTENSIBILITY"); if (state.failed) return;
+			Match("EXTENSIBILITY"); 
 
 
 			}
@@ -3980,7 +3980,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:276:4: 'EXTERNAL'
 			{
 			DebugLocation(276, 4);
-			Match("EXTERNAL"); if (state.failed) return;
+			Match("EXTERNAL"); 
 
 
 			}
@@ -4016,7 +4016,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:280:4: 'FALSE'
 			{
 			DebugLocation(280, 4);
-			Match("FALSE"); if (state.failed) return;
+			Match("FALSE"); 
 
 
 			}
@@ -4052,7 +4052,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:284:4: 'FROM'
 			{
 			DebugLocation(284, 4);
-			Match("FROM"); if (state.failed) return;
+			Match("FROM"); 
 
 
 			}
@@ -4088,7 +4088,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:288:4: 'GeneralizedTime'
 			{
 			DebugLocation(288, 4);
-			Match("GeneralizedTime"); if (state.failed) return;
+			Match("GeneralizedTime"); 
 
 
 			}
@@ -4124,7 +4124,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:292:4: 'GeneralString'
 			{
 			DebugLocation(292, 4);
-			Match("GeneralString"); if (state.failed) return;
+			Match("GeneralString"); 
 
 
 			}
@@ -4160,7 +4160,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:296:4: 'GraphicString'
 			{
 			DebugLocation(296, 4);
-			Match("GraphicString"); if (state.failed) return;
+			Match("GraphicString"); 
 
 
 			}
@@ -4196,7 +4196,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:300:4: 'IA5String'
 			{
 			DebugLocation(300, 4);
-			Match("IA5String"); if (state.failed) return;
+			Match("IA5String"); 
 
 
 			}
@@ -4232,7 +4232,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:304:4: 'IDENTIFIER'
 			{
 			DebugLocation(304, 4);
-			Match("IDENTIFIER"); if (state.failed) return;
+			Match("IDENTIFIER"); 
 
 
 			}
@@ -4268,7 +4268,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:308:4: 'IMPLICIT'
 			{
 			DebugLocation(308, 4);
-			Match("IMPLICIT"); if (state.failed) return;
+			Match("IMPLICIT"); 
 
 
 			}
@@ -4304,7 +4304,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:312:4: 'IMPLIED'
 			{
 			DebugLocation(312, 4);
-			Match("IMPLIED"); if (state.failed) return;
+			Match("IMPLIED"); 
 
 
 			}
@@ -4340,7 +4340,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:316:4: 'IMPORTS'
 			{
 			DebugLocation(316, 4);
-			Match("IMPORTS"); if (state.failed) return;
+			Match("IMPORTS"); 
 
 
 			}
@@ -4376,7 +4376,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:320:4: 'INCLUDES'
 			{
 			DebugLocation(320, 4);
-			Match("INCLUDES"); if (state.failed) return;
+			Match("INCLUDES"); 
 
 
 			}
@@ -4412,7 +4412,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:324:4: 'INSTANCE'
 			{
 			DebugLocation(324, 4);
-			Match("INSTANCE"); if (state.failed) return;
+			Match("INSTANCE"); 
 
 
 			}
@@ -4448,7 +4448,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:328:4: 'INTEGER'
 			{
 			DebugLocation(328, 4);
-			Match("INTEGER"); if (state.failed) return;
+			Match("INTEGER"); 
 
 
 			}
@@ -4484,7 +4484,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:332:4: 'INTERSECTION'
 			{
 			DebugLocation(332, 4);
-			Match("INTERSECTION"); if (state.failed) return;
+			Match("INTERSECTION"); 
 
 
 			}
@@ -4520,7 +4520,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:336:4: 'ISO646String'
 			{
 			DebugLocation(336, 4);
-			Match("ISO646String"); if (state.failed) return;
+			Match("ISO646String"); 
 
 
 			}
@@ -4556,7 +4556,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:340:4: 'LINKED'
 			{
 			DebugLocation(340, 4);
-			Match("LINKED"); if (state.failed) return;
+			Match("LINKED"); 
 
 
 			}
@@ -4592,7 +4592,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:344:4: 'MAX'
 			{
 			DebugLocation(344, 4);
-			Match("MAX"); if (state.failed) return;
+			Match("MAX"); 
 
 
 			}
@@ -4628,7 +4628,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:348:4: 'MINUSINFINITY'
 			{
 			DebugLocation(348, 4);
-			Match("MINUSINFINITY"); if (state.failed) return;
+			Match("MINUSINFINITY"); 
 
 
 			}
@@ -4664,7 +4664,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:352:4: 'MIN'
 			{
 			DebugLocation(352, 4);
-			Match("MIN"); if (state.failed) return;
+			Match("MIN"); 
 
 
 			}
@@ -4700,7 +4700,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:356:4: 'NULL'
 			{
 			DebugLocation(356, 4);
-			Match("NULL"); if (state.failed) return;
+			Match("NULL"); 
 
 
 			}
@@ -4736,7 +4736,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:360:4: 'NumericString'
 			{
 			DebugLocation(360, 4);
-			Match("NumericString"); if (state.failed) return;
+			Match("NumericString"); 
 
 
 			}
@@ -4772,7 +4772,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:364:4: 'ObjectDescriptor'
 			{
 			DebugLocation(364, 4);
-			Match("ObjectDescriptor"); if (state.failed) return;
+			Match("ObjectDescriptor"); 
 
 
 			}
@@ -4808,7 +4808,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:368:4: 'OBJECT'
 			{
 			DebugLocation(368, 4);
-			Match("OBJECT"); if (state.failed) return;
+			Match("OBJECT"); 
 
 
 			}
@@ -4844,7 +4844,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:372:4: 'OCTET'
 			{
 			DebugLocation(372, 4);
-			Match("OCTET"); if (state.failed) return;
+			Match("OCTET"); 
 
 
 			}
@@ -4880,7 +4880,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:376:4: 'OPERATION'
 			{
 			DebugLocation(376, 4);
-			Match("OPERATION"); if (state.failed) return;
+			Match("OPERATION"); 
 
 
 			}
@@ -4916,7 +4916,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:380:4: 'OF'
 			{
 			DebugLocation(380, 4);
-			Match("OF"); if (state.failed) return;
+			Match("OF"); 
 
 
 			}
@@ -4952,7 +4952,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:384:4: 'OID'
 			{
 			DebugLocation(384, 4);
-			Match("OID"); if (state.failed) return;
+			Match("OID"); 
 
 
 			}
@@ -4988,7 +4988,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:388:4: 'OPTIONAL'
 			{
 			DebugLocation(388, 4);
-			Match("OPTIONAL"); if (state.failed) return;
+			Match("OPTIONAL"); 
 
 
 			}
@@ -5024,7 +5024,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:392:4: 'PARAMETER'
 			{
 			DebugLocation(392, 4);
-			Match("PARAMETER"); if (state.failed) return;
+			Match("PARAMETER"); 
 
 
 			}
@@ -5060,7 +5060,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:396:4: 'PDV'
 			{
 			DebugLocation(396, 4);
-			Match("PDV"); if (state.failed) return;
+			Match("PDV"); 
 
 
 			}
@@ -5096,7 +5096,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:400:4: 'PLUSINFINITY'
 			{
 			DebugLocation(400, 4);
-			Match("PLUSINFINITY"); if (state.failed) return;
+			Match("PLUSINFINITY"); 
 
 
 			}
@@ -5132,7 +5132,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:404:4: 'PRESENT'
 			{
 			DebugLocation(404, 4);
-			Match("PRESENT"); if (state.failed) return;
+			Match("PRESENT"); 
 
 
 			}
@@ -5168,7 +5168,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:408:4: 'PrintableString'
 			{
 			DebugLocation(408, 4);
-			Match("PrintableString"); if (state.failed) return;
+			Match("PrintableString"); 
 
 
 			}
@@ -5204,7 +5204,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:412:4: 'PRIVATE'
 			{
 			DebugLocation(412, 4);
-			Match("PRIVATE"); if (state.failed) return;
+			Match("PRIVATE"); 
 
 
 			}
@@ -5240,7 +5240,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:416:4: 'REAL'
 			{
 			DebugLocation(416, 4);
-			Match("REAL"); if (state.failed) return;
+			Match("REAL"); 
 
 
 			}
@@ -5276,7 +5276,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:420:4: 'RELATIVE'
 			{
 			DebugLocation(420, 4);
-			Match("RELATIVE"); if (state.failed) return;
+			Match("RELATIVE"); 
 
 
 			}
@@ -5312,7 +5312,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:424:4: 'RESULT'
 			{
 			DebugLocation(424, 4);
-			Match("RESULT"); if (state.failed) return;
+			Match("RESULT"); 
 
 
 			}
@@ -5348,7 +5348,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:428:4: 'SEQUENCE'
 			{
 			DebugLocation(428, 4);
-			Match("SEQUENCE"); if (state.failed) return;
+			Match("SEQUENCE"); 
 
 
 			}
@@ -5384,7 +5384,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:432:4: 'SET'
 			{
 			DebugLocation(432, 4);
-			Match("SET"); if (state.failed) return;
+			Match("SET"); 
 
 
 			}
@@ -5420,7 +5420,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:436:4: 'SIZE'
 			{
 			DebugLocation(436, 4);
-			Match("SIZE"); if (state.failed) return;
+			Match("SIZE"); 
 
 
 			}
@@ -5456,7 +5456,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:440:4: 'STRING'
 			{
 			DebugLocation(440, 4);
-			Match("STRING"); if (state.failed) return;
+			Match("STRING"); 
 
 
 			}
@@ -5492,7 +5492,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:444:4: 'TAGS'
 			{
 			DebugLocation(444, 4);
-			Match("TAGS"); if (state.failed) return;
+			Match("TAGS"); 
 
 
 			}
@@ -5528,7 +5528,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:448:4: 'TeletexString'
 			{
 			DebugLocation(448, 4);
-			Match("TeletexString"); if (state.failed) return;
+			Match("TeletexString"); 
 
 
 			}
@@ -5564,7 +5564,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:452:4: 'T61String'
 			{
 			DebugLocation(452, 4);
-			Match("T61String"); if (state.failed) return;
+			Match("T61String"); 
 
 
 			}
@@ -5600,7 +5600,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:456:4: 'TRUE'
 			{
 			DebugLocation(456, 4);
-			Match("TRUE"); if (state.failed) return;
+			Match("TRUE"); 
 
 
 			}
@@ -5636,7 +5636,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:460:4: 'TYPE-IDENTIFIER'
 			{
 			DebugLocation(460, 4);
-			Match("TYPE-IDENTIFIER"); if (state.failed) return;
+			Match("TYPE-IDENTIFIER"); 
 
 
 			}
@@ -5672,7 +5672,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:464:4: 'UNION'
 			{
 			DebugLocation(464, 4);
-			Match("UNION"); if (state.failed) return;
+			Match("UNION"); 
 
 
 			}
@@ -5708,7 +5708,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:468:4: 'UNIQUE'
 			{
 			DebugLocation(468, 4);
-			Match("UNIQUE"); if (state.failed) return;
+			Match("UNIQUE"); 
 
 
 			}
@@ -5744,7 +5744,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:472:4: 'UNIVERSAL'
 			{
 			DebugLocation(472, 4);
-			Match("UNIVERSAL"); if (state.failed) return;
+			Match("UNIVERSAL"); 
 
 
 			}
@@ -5780,7 +5780,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:476:4: 'UniversalString'
 			{
 			DebugLocation(476, 4);
-			Match("UniversalString"); if (state.failed) return;
+			Match("UniversalString"); 
 
 
 			}
@@ -5816,7 +5816,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:480:4: 'UTCTime'
 			{
 			DebugLocation(480, 4);
-			Match("UTCTime"); if (state.failed) return;
+			Match("UTCTime"); 
 
 
 			}
@@ -5852,7 +5852,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:484:4: 'UTF8String'
 			{
 			DebugLocation(484, 4);
-			Match("UTF8String"); if (state.failed) return;
+			Match("UTF8String"); 
 
 
 			}
@@ -5888,7 +5888,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:488:4: 'VideotexString'
 			{
 			DebugLocation(488, 4);
-			Match("VideotexString"); if (state.failed) return;
+			Match("VideotexString"); 
 
 
 			}
@@ -5924,7 +5924,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:492:4: 'VisibleString'
 			{
 			DebugLocation(492, 4);
-			Match("VisibleString"); if (state.failed) return;
+			Match("VisibleString"); 
 
 
 			}
@@ -5960,7 +5960,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:496:4: 'WITH'
 			{
 			DebugLocation(496, 4);
-			Match("WITH"); if (state.failed) return;
+			Match("WITH"); 
 
 
 			}
@@ -5996,7 +5996,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:500:4: 'PATTERN'
 			{
 			DebugLocation(500, 4);
-			Match("PATTERN"); if (state.failed) return;
+			Match("PATTERN"); 
 
 
 			}
@@ -6032,7 +6032,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:505:12: '::='
 			{
 			DebugLocation(505, 12);
-			Match("::="); if (state.failed) return;
+			Match("::="); 
 
 
 			}
@@ -6068,7 +6068,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:506:7: '|'
 			{
 			DebugLocation(506, 7);
-			Match('|'); if (state.failed) return;
+			Match('|'); 
 
 			}
 
@@ -6103,7 +6103,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:507:9: ':'
 			{
 			DebugLocation(507, 9);
-			Match(':'); if (state.failed) return;
+			Match(':'); 
 
 			}
 
@@ -6138,7 +6138,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:508:9: ','
 			{
 			DebugLocation(508, 9);
-			Match(','); if (state.failed) return;
+			Match(','); 
 
 			}
 
@@ -6173,7 +6173,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:509:10: '--'
 			{
 			DebugLocation(509, 10);
-			Match("--"); if (state.failed) return;
+			Match("--"); 
 
 
 			}
@@ -6209,7 +6209,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:510:7: '.'
 			{
 			DebugLocation(510, 7);
-			Match('.'); if (state.failed) return;
+			Match('.'); 
 
 			}
 
@@ -6244,7 +6244,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:511:10: '..'
 			{
 			DebugLocation(511, 10);
-			Match(".."); if (state.failed) return;
+			Match(".."); 
 
 
 			}
@@ -6280,7 +6280,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:513:4: '...'
 			{
 			DebugLocation(513, 4);
-			Match("..."); if (state.failed) return;
+			Match("..."); 
 
 
 			}
@@ -6316,7 +6316,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:515:14: '!'
 			{
 			DebugLocation(515, 14);
-			Match('!'); if (state.failed) return;
+			Match('!'); 
 
 			}
 
@@ -6351,7 +6351,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:516:15: '^'
 			{
 			DebugLocation(516, 15);
-			Match('^'); if (state.failed) return;
+			Match('^'); 
 
 			}
 
@@ -6386,7 +6386,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:517:8: '<'
 			{
 			DebugLocation(517, 8);
-			Match('<'); if (state.failed) return;
+			Match('<'); 
 
 			}
 
@@ -6421,7 +6421,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:518:10: '{'
 			{
 			DebugLocation(518, 10);
-			Match('{'); if (state.failed) return;
+			Match('{'); 
 
 			}
 
@@ -6456,7 +6456,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:519:12: '['
 			{
 			DebugLocation(519, 12);
-			Match('['); if (state.failed) return;
+			Match('['); 
 
 			}
 
@@ -6491,7 +6491,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:520:10: '('
 			{
 			DebugLocation(520, 10);
-			Match('('); if (state.failed) return;
+			Match('('); 
 
 			}
 
@@ -6526,7 +6526,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:521:9: '-'
 			{
 			DebugLocation(521, 9);
-			Match('-'); if (state.failed) return;
+			Match('-'); 
 
 			}
 
@@ -6561,7 +6561,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:522:8: '+'
 			{
 			DebugLocation(522, 8);
-			Match('+'); if (state.failed) return;
+			Match('+'); 
 
 			}
 
@@ -6596,7 +6596,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:523:10: '}'
 			{
 			DebugLocation(523, 10);
-			Match('}'); if (state.failed) return;
+			Match('}'); 
 
 			}
 
@@ -6631,7 +6631,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:524:12: ']'
 			{
 			DebugLocation(524, 12);
-			Match(']'); if (state.failed) return;
+			Match(']'); 
 
 			}
 
@@ -6666,7 +6666,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:525:10: ')'
 			{
 			DebugLocation(525, 10);
-			Match(')'); if (state.failed) return;
+			Match(')'); 
 
 			}
 
@@ -6701,7 +6701,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:526:8: ';'
 			{
 			DebugLocation(526, 8);
-			Match(';'); if (state.failed) return;
+			Match(';'); 
 
 			}
 
@@ -6736,7 +6736,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:527:15: '\\''
 			{
 			DebugLocation(527, 15);
-			Match('\''); if (state.failed) return;
+			Match('\''); 
 
 			}
 
@@ -6771,7 +6771,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:528:9: '\\'B'
 			{
 			DebugLocation(528, 9);
-			Match("'B"); if (state.failed) return;
+			Match("'B"); 
 
 
 			}
@@ -6807,7 +6807,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:529:9: '\\'H'
 			{
 			DebugLocation(529, 9);
-			Match("'H"); if (state.failed) return;
+			Match("'H"); 
 
 
 			}
@@ -6883,7 +6883,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 					// Smi.g:534:10: ' '
 					{
 					DebugLocation(534, 10);
-					Match(' '); if (state.failed) return;
+					Match(' '); 
 
 					}
 					break;
@@ -6892,7 +6892,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 					// Smi.g:534:16: '\\t'
 					{
 					DebugLocation(534, 16);
-					Match('\t'); if (state.failed) return;
+					Match('\t'); 
 
 					}
 					break;
@@ -6901,7 +6901,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 					// Smi.g:534:23: '\\f'
 					{
 					DebugLocation(534, 23);
-					Match('\f'); if (state.failed) return;
+					Match('\f'); 
 
 					}
 					break;
@@ -6935,7 +6935,6 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 					}
 					else
 					{
-						if (state.backtracking>0) {state.failed=true; return;}
 						NoViableAltException nvae = new NoViableAltException("", 1, 0, input, 1);
 						DebugRecognitionException(nvae);
 						throw nvae;
@@ -6948,7 +6947,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 						// Smi.g:535:4: '\\r\\n'
 						{
 						DebugLocation(535, 4);
-						Match("\r\n"); if (state.failed) return;
+						Match("\r\n"); 
 
 
 						}
@@ -6958,7 +6957,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 						// Smi.g:536:4: '\\r'
 						{
 						DebugLocation(536, 4);
-						Match('\r'); if (state.failed) return;
+						Match('\r'); 
 
 						}
 						break;
@@ -6967,7 +6966,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 						// Smi.g:537:4: '\\n'
 						{
 						DebugLocation(537, 4);
-						Match('\n'); if (state.failed) return;
+						Match('\n'); 
 
 						}
 						break;
@@ -6983,7 +6982,6 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 					if (cnt2 >= 1)
 						goto loop2;
 
-					if (state.backtracking>0) {state.failed=true; return;}
 					EarlyExitException eee2 = new EarlyExitException( 2, input );
 					DebugRecognitionException(eee2);
 					throw eee2;
@@ -6996,10 +6994,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			} finally { DebugExitSubRule(2); }
 
 			DebugLocation(539, 2);
-			if (state.backtracking == 0)
-			{
-				 Skip(); 
-			}
+			 Skip(); 
 
 			}
 
@@ -7029,18 +7024,19 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = SL_COMMENT;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:543:2: ( COMMENT ( ({...}? '-' )=> '-' |~ ( '-' | '\\n' | '\\r' ) )* ( ( ( '\\r' )? '\\n' ) | COMMENT ) )
+			// Smi.g:543:2: ( '--' ({...}? =>~ ( '\\r' | '\\n' ) )* ( ( '\\r' )? '\\n' | '--' ) )
 			DebugEnterAlt(1);
-			// Smi.g:543:4: COMMENT ( ({...}? '-' )=> '-' |~ ( '-' | '\\n' | '\\r' ) )* ( ( ( '\\r' )? '\\n' ) | COMMENT )
+			// Smi.g:543:4: '--' ({...}? =>~ ( '\\r' | '\\n' ) )* ( ( '\\r' )? '\\n' | '--' )
 			{
 			DebugLocation(543, 4);
-			mCOMMENT(); if (state.failed) return;
-			DebugLocation(543, 12);
-			// Smi.g:543:12: ( ({...}? '-' )=> '-' |~ ( '-' | '\\n' | '\\r' ) )*
+			Match("--"); 
+
+			DebugLocation(543, 9);
+			// Smi.g:543:9: ({...}? =>~ ( '\\r' | '\\n' ) )*
 			try { DebugEnterSubRule(3);
 			while (true)
 			{
-				int alt3=3;
+				int alt3=2;
 				try { DebugEnterDecision(3, false);
 				int LA3_1 = input.LA(1);
 
@@ -7052,43 +7048,23 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 					{
 						int LA3_3 = input.LA(3);
 
-						if ((LA3_3=='-') && (EvaluatePredicate(synpred1_Smi_fragment)))
-						{
-							alt3 = 1;
-						}
-						else if ((LA3_3=='\r') && (EvaluatePredicate(synpred1_Smi_fragment)))
-						{
-							alt3 = 1;
-						}
-						else if ((LA3_3=='\n') && (EvaluatePredicate(synpred1_Smi_fragment)))
-						{
-							alt3 = 1;
-						}
-						else if (((LA3_3>='\u0000' && LA3_3<='\t')||(LA3_3>='\u000B' && LA3_3<='\f')||(LA3_3>='\u000E' && LA3_3<=',')||(LA3_3>='.' && LA3_3<='\uFFFF')) && (EvaluatePredicate(synpred1_Smi_fragment)))
+						if (((LA3_3>='\u0000' && LA3_3<='\uFFFF')) && ((!(input.LA(1) == '-' && input.LA(2) == '-'))))
 						{
 							alt3 = 1;
 						}
 
 
 					}
-					else if ((LA3_2=='\r') && (EvaluatePredicate(synpred1_Smi_fragment)))
-					{
-						alt3 = 1;
-					}
-					else if ((LA3_2=='\n') && (EvaluatePredicate(synpred1_Smi_fragment)))
-					{
-						alt3 = 1;
-					}
-					else if (((LA3_2>='\u0000' && LA3_2<='\t')||(LA3_2>='\u000B' && LA3_2<='\f')||(LA3_2>='\u000E' && LA3_2<=',')||(LA3_2>='.' && LA3_2<='\uFFFF')) && (EvaluatePredicate(synpred1_Smi_fragment)))
+					else if (((LA3_2>='\u0000' && LA3_2<=',')||(LA3_2>='.' && LA3_2<='\uFFFF')) && ((!(input.LA(1) == '-' && input.LA(2) == '-'))))
 					{
 						alt3 = 1;
 					}
 
 
 				}
-				else if (((LA3_1>='\u0000' && LA3_1<='\t')||(LA3_1>='\u000B' && LA3_1<='\f')||(LA3_1>='\u000E' && LA3_1<=',')||(LA3_1>='.' && LA3_1<='\uFFFF')))
+				else if (((LA3_1>='\u0000' && LA3_1<='\t')||(LA3_1>='\u000B' && LA3_1<='\f')||(LA3_1>='\u000E' && LA3_1<=',')||(LA3_1>='.' && LA3_1<='\uFFFF')) && ((!(input.LA(1) == '-' && input.LA(2) == '-'))))
 				{
-					alt3 = 2;
+					alt3 = 1;
 				}
 
 
@@ -7097,20 +7073,16 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:543:14: ({...}? '-' )=> '-'
+					// Smi.g:543:10: {...}? =>~ ( '\\r' | '\\n' )
 					{
-					DebugLocation(543, 45);
-					Match('-'); if (state.failed) return;
-
+					DebugLocation(543, 10);
+					if (!((!(input.LA(1) == '-' && input.LA(2) == '-'))))
+					{
+						throw new FailedPredicateException(input, "SL_COMMENT", "!(input.LA(1) == '-' && input.LA(2) == '-')");
 					}
-					break;
-				case 2:
-					DebugEnterAlt(2);
-					// Smi.g:543:52: ~ ( '-' | '\\n' | '\\r' )
-					{
-					DebugLocation(543, 52);
+					DebugLocation(543, 59);
 					input.Consume();
-					state.failed=false;
+
 
 					}
 					break;
@@ -7125,8 +7097,8 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 
 			} finally { DebugExitSubRule(3); }
 
-			DebugLocation(543, 71);
-			// Smi.g:543:71: ( ( ( '\\r' )? '\\n' ) | COMMENT )
+			DebugLocation(543, 76);
+			// Smi.g:543:76: ( ( '\\r' )? '\\n' | '--' )
 			int alt5=2;
 			try { DebugEnterSubRule(5);
 			try { DebugEnterDecision(5, false);
@@ -7142,7 +7114,6 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			}
 			else
 			{
-				if (state.backtracking>0) {state.failed=true; return;}
 				NoViableAltException nvae = new NoViableAltException("", 5, 0, input, 1);
 				DebugRecognitionException(nvae);
 				throw nvae;
@@ -7152,15 +7123,10 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:543:73: ( ( '\\r' )? '\\n' )
+				// Smi.g:543:77: ( '\\r' )? '\\n'
 				{
-				DebugLocation(543, 73);
-				// Smi.g:543:73: ( ( '\\r' )? '\\n' )
-				DebugEnterAlt(1);
-				// Smi.g:543:74: ( '\\r' )? '\\n'
-				{
-				DebugLocation(543, 74);
-				// Smi.g:543:74: ( '\\r' )?
+				DebugLocation(543, 77);
+				// Smi.g:543:77: ( '\\r' )?
 				int alt4=2;
 				try { DebugEnterSubRule(4);
 				try { DebugEnterDecision(4, false);
@@ -7175,10 +7141,10 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:543:75: '\\r'
+					// Smi.g:543:77: '\\r'
 					{
-					DebugLocation(543, 75);
-					Match('\r'); if (state.failed) return;
+					DebugLocation(543, 77);
+					Match('\r'); 
 
 					}
 					break;
@@ -7186,20 +7152,18 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 				}
 				} finally { DebugExitSubRule(4); }
 
-				DebugLocation(543, 82);
-				Match('\n'); if (state.failed) return;
-
-				}
-
+				DebugLocation(543, 83);
+				Match('\n'); 
 
 				}
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// Smi.g:543:90: COMMENT
+				// Smi.g:543:90: '--'
 				{
 				DebugLocation(543, 90);
-				mCOMMENT(); if (state.failed) return;
+				Match("--"); 
+
 
 				}
 				break;
@@ -7207,11 +7171,8 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			}
 			} finally { DebugExitSubRule(5); }
 
-			DebugLocation(544, 3);
-			if (state.backtracking == 0)
-			{
-				 Skip();  
-			}
+			DebugLocation(544, 2);
+			 Skip(); 
 
 			}
 
@@ -7270,7 +7231,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 					{
 					DebugLocation(547, 10);
 					input.Consume();
-					state.failed=false;
+
 
 					}
 					break;
@@ -7279,7 +7240,6 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 					if (cnt6 >= 1)
 						goto loop6;
 
-					if (state.backtracking>0) {state.failed=true; return;}
 					EarlyExitException eee6 = new EarlyExitException( 6, input );
 					DebugRecognitionException(eee6);
 					throw eee6;
@@ -7328,11 +7288,9 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			if ((input.LA(1)>='0' && input.LA(1)<='9')||(input.LA(1)>='A' && input.LA(1)<='F')||(input.LA(1)>='a' && input.LA(1)<='f'))
 			{
 				input.Consume();
-			state.failed=false;
 			}
 			else
 			{
-				if (state.backtracking>0) {state.failed=true; return;}
 				MismatchedSetException mse = new MismatchedSetException(null,input);
 				DebugRecognitionException(mse);
 				Recover(mse);
@@ -7376,11 +7334,9 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			if ((input.LA(1)>='A' && input.LA(1)<='Z'))
 			{
 				input.Consume();
-			state.failed=false;
 			}
 			else
 			{
-				if (state.backtracking>0) {state.failed=true; return;}
 				MismatchedSetException mse = new MismatchedSetException(null,input);
 				DebugRecognitionException(mse);
 				Recover(mse);
@@ -7411,7 +7367,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 					{
 					DebugLocation(559, 3);
 					input.Consume();
-					state.failed=false;
+
 
 					}
 					break;
@@ -7463,11 +7419,9 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			if ((input.LA(1)>='a' && input.LA(1)<='z'))
 			{
 				input.Consume();
-			state.failed=false;
 			}
 			else
 			{
-				if (state.backtracking>0) {state.failed=true; return;}
 				MismatchedSetException mse = new MismatchedSetException(null,input);
 				DebugRecognitionException(mse);
 				Recover(mse);
@@ -7498,7 +7452,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 					{
 					DebugLocation(564, 3);
 					input.Consume();
-					state.failed=false;
+
 
 					}
 					break;
@@ -7542,14 +7496,14 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = B_STRING;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:581:11: ( SINGLE_QUOTE ( ( '0' | '1' ) )* SINGLE_QUOTE ( 'B' | 'b' ) )
+			// Smi.g:578:11: ( SINGLE_QUOTE ( ( '0' | '1' ) )* SINGLE_QUOTE ( 'B' | 'b' ) )
 			DebugEnterAlt(1);
-			// Smi.g:581:14: SINGLE_QUOTE ( ( '0' | '1' ) )* SINGLE_QUOTE ( 'B' | 'b' )
+			// Smi.g:578:14: SINGLE_QUOTE ( ( '0' | '1' ) )* SINGLE_QUOTE ( 'B' | 'b' )
 			{
-			DebugLocation(581, 14);
-			mSINGLE_QUOTE(); if (state.failed) return;
-			DebugLocation(581, 27);
-			// Smi.g:581:27: ( ( '0' | '1' ) )*
+			DebugLocation(578, 14);
+			mSINGLE_QUOTE(); 
+			DebugLocation(578, 27);
+			// Smi.g:578:27: ( ( '0' | '1' ) )*
 			try { DebugEnterSubRule(9);
 			while (true)
 			{
@@ -7570,9 +7524,9 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 					DebugEnterAlt(1);
 					// Smi.g:
 					{
-					DebugLocation(581, 27);
+					DebugLocation(578, 27);
 					input.Consume();
-					state.failed=false;
+
 
 					}
 					break;
@@ -7587,17 +7541,15 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 
 			} finally { DebugExitSubRule(9); }
 
-			DebugLocation(581, 40);
-			mSINGLE_QUOTE(); if (state.failed) return;
-			DebugLocation(581, 53);
+			DebugLocation(578, 40);
+			mSINGLE_QUOTE(); 
+			DebugLocation(578, 53);
 			if (input.LA(1)=='B'||input.LA(1)=='b')
 			{
 				input.Consume();
-			state.failed=false;
 			}
 			else
 			{
-				if (state.backtracking>0) {state.failed=true; return;}
 				MismatchedSetException mse = new MismatchedSetException(null,input);
 				DebugRecognitionException(mse);
 				Recover(mse);
@@ -7633,14 +7585,14 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = H_STRING;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:583:11: ( SINGLE_QUOTE ( HDIG )* SINGLE_QUOTE ( 'H' | 'h' ) )
+			// Smi.g:580:11: ( SINGLE_QUOTE ( HDIG )* SINGLE_QUOTE ( 'H' | 'h' ) )
 			DebugEnterAlt(1);
-			// Smi.g:583:14: SINGLE_QUOTE ( HDIG )* SINGLE_QUOTE ( 'H' | 'h' )
+			// Smi.g:580:14: SINGLE_QUOTE ( HDIG )* SINGLE_QUOTE ( 'H' | 'h' )
 			{
-			DebugLocation(583, 14);
-			mSINGLE_QUOTE(); if (state.failed) return;
-			DebugLocation(583, 27);
-			// Smi.g:583:27: ( HDIG )*
+			DebugLocation(580, 14);
+			mSINGLE_QUOTE(); 
+			DebugLocation(580, 27);
+			// Smi.g:580:27: ( HDIG )*
 			try { DebugEnterSubRule(10);
 			while (true)
 			{
@@ -7661,9 +7613,9 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 					DebugEnterAlt(1);
 					// Smi.g:
 					{
-					DebugLocation(583, 27);
+					DebugLocation(580, 27);
 					input.Consume();
-					state.failed=false;
+
 
 					}
 					break;
@@ -7678,17 +7630,15 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 
 			} finally { DebugExitSubRule(10); }
 
-			DebugLocation(583, 35);
-			mSINGLE_QUOTE(); if (state.failed) return;
-			DebugLocation(583, 48);
+			DebugLocation(580, 35);
+			mSINGLE_QUOTE(); 
+			DebugLocation(580, 48);
 			if (input.LA(1)=='H'||input.LA(1)=='h')
 			{
 				input.Consume();
-			state.failed=false;
 			}
 			else
 			{
-				if (state.backtracking>0) {state.failed=true; return;}
 				MismatchedSetException mse = new MismatchedSetException(null,input);
 				DebugRecognitionException(mse);
 				Recover(mse);
@@ -7724,14 +7674,14 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		{
 			int _type = C_STRING;
 			int _channel = DefaultTokenChannel;
-			// Smi.g:585:11: ( '\"' ( options {greedy=false; } : '\\r\\n' | '\\r' | '\\n' |~ ( '\\r' | '\\n' ) )* '\"' )
+			// Smi.g:582:11: ( '\"' ( options {greedy=false; } : '\\r\\n' | '\\r' | '\\n' |~ ( '\\r' | '\\n' ) )* '\"' )
 			DebugEnterAlt(1);
-			// Smi.g:585:14: '\"' ( options {greedy=false; } : '\\r\\n' | '\\r' | '\\n' |~ ( '\\r' | '\\n' ) )* '\"'
+			// Smi.g:582:14: '\"' ( options {greedy=false; } : '\\r\\n' | '\\r' | '\\n' |~ ( '\\r' | '\\n' ) )* '\"'
 			{
-			DebugLocation(585, 14);
-			Match('\"'); if (state.failed) return;
-			DebugLocation(585, 18);
-			// Smi.g:585:18: ( options {greedy=false; } : '\\r\\n' | '\\r' | '\\n' |~ ( '\\r' | '\\n' ) )*
+			DebugLocation(582, 14);
+			Match('\"'); 
+			DebugLocation(582, 18);
+			// Smi.g:582:18: ( options {greedy=false; } : '\\r\\n' | '\\r' | '\\n' |~ ( '\\r' | '\\n' ) )*
 			try { DebugEnterSubRule(11);
 			while (true)
 			{
@@ -7773,39 +7723,39 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:586:32: '\\r\\n'
+					// Smi.g:583:32: '\\r\\n'
 					{
-					DebugLocation(586, 32);
-					Match("\r\n"); if (state.failed) return;
+					DebugLocation(583, 32);
+					Match("\r\n"); 
 
 
 					}
 					break;
 				case 2:
 					DebugEnterAlt(2);
-					// Smi.g:587:32: '\\r'
+					// Smi.g:584:32: '\\r'
 					{
-					DebugLocation(587, 32);
-					Match('\r'); if (state.failed) return;
+					DebugLocation(584, 32);
+					Match('\r'); 
 
 					}
 					break;
 				case 3:
 					DebugEnterAlt(3);
-					// Smi.g:588:32: '\\n'
+					// Smi.g:585:32: '\\n'
 					{
-					DebugLocation(588, 32);
-					Match('\n'); if (state.failed) return;
+					DebugLocation(585, 32);
+					Match('\n'); 
 
 					}
 					break;
 				case 4:
 					DebugEnterAlt(4);
-					// Smi.g:589:32: ~ ( '\\r' | '\\n' )
+					// Smi.g:586:32: ~ ( '\\r' | '\\n' )
 					{
-					DebugLocation(589, 32);
+					DebugLocation(586, 32);
 					input.Consume();
-					state.failed=false;
+
 
 					}
 					break;
@@ -7820,8 +7770,8 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 
 			} finally { DebugExitSubRule(11); }
 
-			DebugLocation(591, 25);
-			Match('\"'); if (state.failed) return;
+			DebugLocation(588, 25);
+			Match('\"'); 
 
 			}
 
@@ -7859,7 +7809,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:10: T__124
 			{
 			DebugLocation(1, 10);
-			mT__124(); if (state.failed) return;
+			mT__124(); 
 
 			}
 			break;
@@ -7868,7 +7818,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:17: T__125
 			{
 			DebugLocation(1, 17);
-			mT__125(); if (state.failed) return;
+			mT__125(); 
 
 			}
 			break;
@@ -7877,7 +7827,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:24: T__126
 			{
 			DebugLocation(1, 24);
-			mT__126(); if (state.failed) return;
+			mT__126(); 
 
 			}
 			break;
@@ -7886,7 +7836,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:31: T__127
 			{
 			DebugLocation(1, 31);
-			mT__127(); if (state.failed) return;
+			mT__127(); 
 
 			}
 			break;
@@ -7895,7 +7845,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:38: T__128
 			{
 			DebugLocation(1, 38);
-			mT__128(); if (state.failed) return;
+			mT__128(); 
 
 			}
 			break;
@@ -7904,7 +7854,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:45: T__129
 			{
 			DebugLocation(1, 45);
-			mT__129(); if (state.failed) return;
+			mT__129(); 
 
 			}
 			break;
@@ -7913,7 +7863,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:52: T__130
 			{
 			DebugLocation(1, 52);
-			mT__130(); if (state.failed) return;
+			mT__130(); 
 
 			}
 			break;
@@ -7922,7 +7872,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:59: T__131
 			{
 			DebugLocation(1, 59);
-			mT__131(); if (state.failed) return;
+			mT__131(); 
 
 			}
 			break;
@@ -7931,7 +7881,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:66: T__132
 			{
 			DebugLocation(1, 66);
-			mT__132(); if (state.failed) return;
+			mT__132(); 
 
 			}
 			break;
@@ -7940,7 +7890,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:73: T__133
 			{
 			DebugLocation(1, 73);
-			mT__133(); if (state.failed) return;
+			mT__133(); 
 
 			}
 			break;
@@ -7949,7 +7899,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:80: T__134
 			{
 			DebugLocation(1, 80);
-			mT__134(); if (state.failed) return;
+			mT__134(); 
 
 			}
 			break;
@@ -7958,7 +7908,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:87: T__135
 			{
 			DebugLocation(1, 87);
-			mT__135(); if (state.failed) return;
+			mT__135(); 
 
 			}
 			break;
@@ -7967,7 +7917,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:94: T__136
 			{
 			DebugLocation(1, 94);
-			mT__136(); if (state.failed) return;
+			mT__136(); 
 
 			}
 			break;
@@ -7976,7 +7926,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:101: T__137
 			{
 			DebugLocation(1, 101);
-			mT__137(); if (state.failed) return;
+			mT__137(); 
 
 			}
 			break;
@@ -7985,7 +7935,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:108: T__138
 			{
 			DebugLocation(1, 108);
-			mT__138(); if (state.failed) return;
+			mT__138(); 
 
 			}
 			break;
@@ -7994,7 +7944,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:115: T__139
 			{
 			DebugLocation(1, 115);
-			mT__139(); if (state.failed) return;
+			mT__139(); 
 
 			}
 			break;
@@ -8003,7 +7953,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:122: T__140
 			{
 			DebugLocation(1, 122);
-			mT__140(); if (state.failed) return;
+			mT__140(); 
 
 			}
 			break;
@@ -8012,7 +7962,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:129: T__141
 			{
 			DebugLocation(1, 129);
-			mT__141(); if (state.failed) return;
+			mT__141(); 
 
 			}
 			break;
@@ -8021,7 +7971,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:136: T__142
 			{
 			DebugLocation(1, 136);
-			mT__142(); if (state.failed) return;
+			mT__142(); 
 
 			}
 			break;
@@ -8030,7 +7980,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:143: T__143
 			{
 			DebugLocation(1, 143);
-			mT__143(); if (state.failed) return;
+			mT__143(); 
 
 			}
 			break;
@@ -8039,7 +7989,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:150: T__144
 			{
 			DebugLocation(1, 150);
-			mT__144(); if (state.failed) return;
+			mT__144(); 
 
 			}
 			break;
@@ -8048,7 +7998,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:157: T__145
 			{
 			DebugLocation(1, 157);
-			mT__145(); if (state.failed) return;
+			mT__145(); 
 
 			}
 			break;
@@ -8057,7 +8007,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:164: T__146
 			{
 			DebugLocation(1, 164);
-			mT__146(); if (state.failed) return;
+			mT__146(); 
 
 			}
 			break;
@@ -8066,7 +8016,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:171: T__147
 			{
 			DebugLocation(1, 171);
-			mT__147(); if (state.failed) return;
+			mT__147(); 
 
 			}
 			break;
@@ -8075,7 +8025,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:178: T__148
 			{
 			DebugLocation(1, 178);
-			mT__148(); if (state.failed) return;
+			mT__148(); 
 
 			}
 			break;
@@ -8084,7 +8034,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:185: T__149
 			{
 			DebugLocation(1, 185);
-			mT__149(); if (state.failed) return;
+			mT__149(); 
 
 			}
 			break;
@@ -8093,7 +8043,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:192: T__150
 			{
 			DebugLocation(1, 192);
-			mT__150(); if (state.failed) return;
+			mT__150(); 
 
 			}
 			break;
@@ -8102,7 +8052,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:199: T__151
 			{
 			DebugLocation(1, 199);
-			mT__151(); if (state.failed) return;
+			mT__151(); 
 
 			}
 			break;
@@ -8111,7 +8061,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:206: T__152
 			{
 			DebugLocation(1, 206);
-			mT__152(); if (state.failed) return;
+			mT__152(); 
 
 			}
 			break;
@@ -8120,7 +8070,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:213: T__153
 			{
 			DebugLocation(1, 213);
-			mT__153(); if (state.failed) return;
+			mT__153(); 
 
 			}
 			break;
@@ -8129,7 +8079,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:220: T__154
 			{
 			DebugLocation(1, 220);
-			mT__154(); if (state.failed) return;
+			mT__154(); 
 
 			}
 			break;
@@ -8138,7 +8088,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:227: T__155
 			{
 			DebugLocation(1, 227);
-			mT__155(); if (state.failed) return;
+			mT__155(); 
 
 			}
 			break;
@@ -8147,7 +8097,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:234: T__156
 			{
 			DebugLocation(1, 234);
-			mT__156(); if (state.failed) return;
+			mT__156(); 
 
 			}
 			break;
@@ -8156,7 +8106,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:241: T__157
 			{
 			DebugLocation(1, 241);
-			mT__157(); if (state.failed) return;
+			mT__157(); 
 
 			}
 			break;
@@ -8165,7 +8115,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:248: T__158
 			{
 			DebugLocation(1, 248);
-			mT__158(); if (state.failed) return;
+			mT__158(); 
 
 			}
 			break;
@@ -8174,7 +8124,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:255: T__159
 			{
 			DebugLocation(1, 255);
-			mT__159(); if (state.failed) return;
+			mT__159(); 
 
 			}
 			break;
@@ -8183,7 +8133,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:262: T__160
 			{
 			DebugLocation(1, 262);
-			mT__160(); if (state.failed) return;
+			mT__160(); 
 
 			}
 			break;
@@ -8192,7 +8142,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:269: T__161
 			{
 			DebugLocation(1, 269);
-			mT__161(); if (state.failed) return;
+			mT__161(); 
 
 			}
 			break;
@@ -8201,7 +8151,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:276: T__162
 			{
 			DebugLocation(1, 276);
-			mT__162(); if (state.failed) return;
+			mT__162(); 
 
 			}
 			break;
@@ -8210,7 +8160,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:283: T__163
 			{
 			DebugLocation(1, 283);
-			mT__163(); if (state.failed) return;
+			mT__163(); 
 
 			}
 			break;
@@ -8219,7 +8169,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:290: T__164
 			{
 			DebugLocation(1, 290);
-			mT__164(); if (state.failed) return;
+			mT__164(); 
 
 			}
 			break;
@@ -8228,7 +8178,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:297: T__165
 			{
 			DebugLocation(1, 297);
-			mT__165(); if (state.failed) return;
+			mT__165(); 
 
 			}
 			break;
@@ -8237,7 +8187,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:304: T__166
 			{
 			DebugLocation(1, 304);
-			mT__166(); if (state.failed) return;
+			mT__166(); 
 
 			}
 			break;
@@ -8246,7 +8196,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:311: T__167
 			{
 			DebugLocation(1, 311);
-			mT__167(); if (state.failed) return;
+			mT__167(); 
 
 			}
 			break;
@@ -8255,7 +8205,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:318: T__168
 			{
 			DebugLocation(1, 318);
-			mT__168(); if (state.failed) return;
+			mT__168(); 
 
 			}
 			break;
@@ -8264,7 +8214,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:325: T__169
 			{
 			DebugLocation(1, 325);
-			mT__169(); if (state.failed) return;
+			mT__169(); 
 
 			}
 			break;
@@ -8273,7 +8223,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:332: T__170
 			{
 			DebugLocation(1, 332);
-			mT__170(); if (state.failed) return;
+			mT__170(); 
 
 			}
 			break;
@@ -8282,7 +8232,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:339: T__171
 			{
 			DebugLocation(1, 339);
-			mT__171(); if (state.failed) return;
+			mT__171(); 
 
 			}
 			break;
@@ -8291,7 +8241,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:346: T__172
 			{
 			DebugLocation(1, 346);
-			mT__172(); if (state.failed) return;
+			mT__172(); 
 
 			}
 			break;
@@ -8300,7 +8250,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:353: T__173
 			{
 			DebugLocation(1, 353);
-			mT__173(); if (state.failed) return;
+			mT__173(); 
 
 			}
 			break;
@@ -8309,7 +8259,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:360: T__174
 			{
 			DebugLocation(1, 360);
-			mT__174(); if (state.failed) return;
+			mT__174(); 
 
 			}
 			break;
@@ -8318,7 +8268,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:367: T__175
 			{
 			DebugLocation(1, 367);
-			mT__175(); if (state.failed) return;
+			mT__175(); 
 
 			}
 			break;
@@ -8327,7 +8277,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:374: T__176
 			{
 			DebugLocation(1, 374);
-			mT__176(); if (state.failed) return;
+			mT__176(); 
 
 			}
 			break;
@@ -8336,7 +8286,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:381: T__177
 			{
 			DebugLocation(1, 381);
-			mT__177(); if (state.failed) return;
+			mT__177(); 
 
 			}
 			break;
@@ -8345,7 +8295,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:388: T__178
 			{
 			DebugLocation(1, 388);
-			mT__178(); if (state.failed) return;
+			mT__178(); 
 
 			}
 			break;
@@ -8354,7 +8304,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:395: T__179
 			{
 			DebugLocation(1, 395);
-			mT__179(); if (state.failed) return;
+			mT__179(); 
 
 			}
 			break;
@@ -8363,7 +8313,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:402: T__180
 			{
 			DebugLocation(1, 402);
-			mT__180(); if (state.failed) return;
+			mT__180(); 
 
 			}
 			break;
@@ -8372,7 +8322,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:409: T__181
 			{
 			DebugLocation(1, 409);
-			mT__181(); if (state.failed) return;
+			mT__181(); 
 
 			}
 			break;
@@ -8381,7 +8331,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:416: T__182
 			{
 			DebugLocation(1, 416);
-			mT__182(); if (state.failed) return;
+			mT__182(); 
 
 			}
 			break;
@@ -8390,7 +8340,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:423: T__183
 			{
 			DebugLocation(1, 423);
-			mT__183(); if (state.failed) return;
+			mT__183(); 
 
 			}
 			break;
@@ -8399,7 +8349,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:430: T__184
 			{
 			DebugLocation(1, 430);
-			mT__184(); if (state.failed) return;
+			mT__184(); 
 
 			}
 			break;
@@ -8408,7 +8358,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:437: T__185
 			{
 			DebugLocation(1, 437);
-			mT__185(); if (state.failed) return;
+			mT__185(); 
 
 			}
 			break;
@@ -8417,7 +8367,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:444: T__186
 			{
 			DebugLocation(1, 444);
-			mT__186(); if (state.failed) return;
+			mT__186(); 
 
 			}
 			break;
@@ -8426,7 +8376,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:451: T__187
 			{
 			DebugLocation(1, 451);
-			mT__187(); if (state.failed) return;
+			mT__187(); 
 
 			}
 			break;
@@ -8435,7 +8385,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:458: T__188
 			{
 			DebugLocation(1, 458);
-			mT__188(); if (state.failed) return;
+			mT__188(); 
 
 			}
 			break;
@@ -8444,7 +8394,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:465: T__189
 			{
 			DebugLocation(1, 465);
-			mT__189(); if (state.failed) return;
+			mT__189(); 
 
 			}
 			break;
@@ -8453,7 +8403,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:472: T__190
 			{
 			DebugLocation(1, 472);
-			mT__190(); if (state.failed) return;
+			mT__190(); 
 
 			}
 			break;
@@ -8462,7 +8412,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:479: T__191
 			{
 			DebugLocation(1, 479);
-			mT__191(); if (state.failed) return;
+			mT__191(); 
 
 			}
 			break;
@@ -8471,7 +8421,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:486: T__192
 			{
 			DebugLocation(1, 486);
-			mT__192(); if (state.failed) return;
+			mT__192(); 
 
 			}
 			break;
@@ -8480,7 +8430,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:493: T__193
 			{
 			DebugLocation(1, 493);
-			mT__193(); if (state.failed) return;
+			mT__193(); 
 
 			}
 			break;
@@ -8489,7 +8439,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:500: T__194
 			{
 			DebugLocation(1, 500);
-			mT__194(); if (state.failed) return;
+			mT__194(); 
 
 			}
 			break;
@@ -8498,7 +8448,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:507: T__195
 			{
 			DebugLocation(1, 507);
-			mT__195(); if (state.failed) return;
+			mT__195(); 
 
 			}
 			break;
@@ -8507,7 +8457,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:514: ABSENT_KW
 			{
 			DebugLocation(1, 514);
-			mABSENT_KW(); if (state.failed) return;
+			mABSENT_KW(); 
 
 			}
 			break;
@@ -8516,7 +8466,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:524: ABSTRACT_SYNTAX_KW
 			{
 			DebugLocation(1, 524);
-			mABSTRACT_SYNTAX_KW(); if (state.failed) return;
+			mABSTRACT_SYNTAX_KW(); 
 
 			}
 			break;
@@ -8525,7 +8475,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:543: ALL_KW
 			{
 			DebugLocation(1, 543);
-			mALL_KW(); if (state.failed) return;
+			mALL_KW(); 
 
 			}
 			break;
@@ -8534,7 +8484,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:550: ANY_KW
 			{
 			DebugLocation(1, 550);
-			mANY_KW(); if (state.failed) return;
+			mANY_KW(); 
 
 			}
 			break;
@@ -8543,7 +8493,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:557: ARGUMENT_KW
 			{
 			DebugLocation(1, 557);
-			mARGUMENT_KW(); if (state.failed) return;
+			mARGUMENT_KW(); 
 
 			}
 			break;
@@ -8552,7 +8502,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:569: APPLICATION_KW
 			{
 			DebugLocation(1, 569);
-			mAPPLICATION_KW(); if (state.failed) return;
+			mAPPLICATION_KW(); 
 
 			}
 			break;
@@ -8561,7 +8511,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:584: AUTOMATIC_KW
 			{
 			DebugLocation(1, 584);
-			mAUTOMATIC_KW(); if (state.failed) return;
+			mAUTOMATIC_KW(); 
 
 			}
 			break;
@@ -8570,7 +8520,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:597: BASED_NUM_KW
 			{
 			DebugLocation(1, 597);
-			mBASED_NUM_KW(); if (state.failed) return;
+			mBASED_NUM_KW(); 
 
 			}
 			break;
@@ -8579,7 +8529,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:610: BEGIN_KW
 			{
 			DebugLocation(1, 610);
-			mBEGIN_KW(); if (state.failed) return;
+			mBEGIN_KW(); 
 
 			}
 			break;
@@ -8588,7 +8538,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:619: BIT_KW
 			{
 			DebugLocation(1, 619);
-			mBIT_KW(); if (state.failed) return;
+			mBIT_KW(); 
 
 			}
 			break;
@@ -8597,7 +8547,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:626: BMP_STR_KW
 			{
 			DebugLocation(1, 626);
-			mBMP_STR_KW(); if (state.failed) return;
+			mBMP_STR_KW(); 
 
 			}
 			break;
@@ -8606,7 +8556,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:637: BOOLEAN_KW
 			{
 			DebugLocation(1, 637);
-			mBOOLEAN_KW(); if (state.failed) return;
+			mBOOLEAN_KW(); 
 
 			}
 			break;
@@ -8615,7 +8565,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:648: BY_KW
 			{
 			DebugLocation(1, 648);
-			mBY_KW(); if (state.failed) return;
+			mBY_KW(); 
 
 			}
 			break;
@@ -8624,7 +8574,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:654: CHARACTER_KW
 			{
 			DebugLocation(1, 654);
-			mCHARACTER_KW(); if (state.failed) return;
+			mCHARACTER_KW(); 
 
 			}
 			break;
@@ -8633,7 +8583,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:667: CHOICE_KW
 			{
 			DebugLocation(1, 667);
-			mCHOICE_KW(); if (state.failed) return;
+			mCHOICE_KW(); 
 
 			}
 			break;
@@ -8642,7 +8592,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:677: CLASS_KW
 			{
 			DebugLocation(1, 677);
-			mCLASS_KW(); if (state.failed) return;
+			mCLASS_KW(); 
 
 			}
 			break;
@@ -8651,7 +8601,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:686: COMPONENTS_KW
 			{
 			DebugLocation(1, 686);
-			mCOMPONENTS_KW(); if (state.failed) return;
+			mCOMPONENTS_KW(); 
 
 			}
 			break;
@@ -8660,7 +8610,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:700: COMPONENT_KW
 			{
 			DebugLocation(1, 700);
-			mCOMPONENT_KW(); if (state.failed) return;
+			mCOMPONENT_KW(); 
 
 			}
 			break;
@@ -8669,7 +8619,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:713: CONSTRAINED_KW
 			{
 			DebugLocation(1, 713);
-			mCONSTRAINED_KW(); if (state.failed) return;
+			mCONSTRAINED_KW(); 
 
 			}
 			break;
@@ -8678,7 +8628,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:728: DEFAULT_KW
 			{
 			DebugLocation(1, 728);
-			mDEFAULT_KW(); if (state.failed) return;
+			mDEFAULT_KW(); 
 
 			}
 			break;
@@ -8687,7 +8637,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:739: DEFINED_KW
 			{
 			DebugLocation(1, 739);
-			mDEFINED_KW(); if (state.failed) return;
+			mDEFINED_KW(); 
 
 			}
 			break;
@@ -8696,7 +8646,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:750: DEFINITIONS_KW
 			{
 			DebugLocation(1, 750);
-			mDEFINITIONS_KW(); if (state.failed) return;
+			mDEFINITIONS_KW(); 
 
 			}
 			break;
@@ -8705,7 +8655,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:765: EMBEDDED_KW
 			{
 			DebugLocation(1, 765);
-			mEMBEDDED_KW(); if (state.failed) return;
+			mEMBEDDED_KW(); 
 
 			}
 			break;
@@ -8714,7 +8664,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:777: END_KW
 			{
 			DebugLocation(1, 777);
-			mEND_KW(); if (state.failed) return;
+			mEND_KW(); 
 
 			}
 			break;
@@ -8723,7 +8673,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:784: ENUMERATED_KW
 			{
 			DebugLocation(1, 784);
-			mENUMERATED_KW(); if (state.failed) return;
+			mENUMERATED_KW(); 
 
 			}
 			break;
@@ -8732,7 +8682,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:798: ERROR_KW
 			{
 			DebugLocation(1, 798);
-			mERROR_KW(); if (state.failed) return;
+			mERROR_KW(); 
 
 			}
 			break;
@@ -8741,7 +8691,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:807: ERRORS_KW
 			{
 			DebugLocation(1, 807);
-			mERRORS_KW(); if (state.failed) return;
+			mERRORS_KW(); 
 
 			}
 			break;
@@ -8750,7 +8700,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:817: EXCEPT_KW
 			{
 			DebugLocation(1, 817);
-			mEXCEPT_KW(); if (state.failed) return;
+			mEXCEPT_KW(); 
 
 			}
 			break;
@@ -8759,7 +8709,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:827: EXPLICIT_KW
 			{
 			DebugLocation(1, 827);
-			mEXPLICIT_KW(); if (state.failed) return;
+			mEXPLICIT_KW(); 
 
 			}
 			break;
@@ -8768,7 +8718,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:839: EXPORTS_KW
 			{
 			DebugLocation(1, 839);
-			mEXPORTS_KW(); if (state.failed) return;
+			mEXPORTS_KW(); 
 
 			}
 			break;
@@ -8777,7 +8727,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:850: EXTENSIBILITY_KW
 			{
 			DebugLocation(1, 850);
-			mEXTENSIBILITY_KW(); if (state.failed) return;
+			mEXTENSIBILITY_KW(); 
 
 			}
 			break;
@@ -8786,7 +8736,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:867: EXTERNAL_KW
 			{
 			DebugLocation(1, 867);
-			mEXTERNAL_KW(); if (state.failed) return;
+			mEXTERNAL_KW(); 
 
 			}
 			break;
@@ -8795,7 +8745,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:879: FALSE_KW
 			{
 			DebugLocation(1, 879);
-			mFALSE_KW(); if (state.failed) return;
+			mFALSE_KW(); 
 
 			}
 			break;
@@ -8804,7 +8754,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:888: FROM_KW
 			{
 			DebugLocation(1, 888);
-			mFROM_KW(); if (state.failed) return;
+			mFROM_KW(); 
 
 			}
 			break;
@@ -8813,7 +8763,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:896: GENERALIZED_TIME_KW
 			{
 			DebugLocation(1, 896);
-			mGENERALIZED_TIME_KW(); if (state.failed) return;
+			mGENERALIZED_TIME_KW(); 
 
 			}
 			break;
@@ -8822,7 +8772,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:916: GENERAL_STR_KW
 			{
 			DebugLocation(1, 916);
-			mGENERAL_STR_KW(); if (state.failed) return;
+			mGENERAL_STR_KW(); 
 
 			}
 			break;
@@ -8831,7 +8781,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:931: GRAPHIC_STR_KW
 			{
 			DebugLocation(1, 931);
-			mGRAPHIC_STR_KW(); if (state.failed) return;
+			mGRAPHIC_STR_KW(); 
 
 			}
 			break;
@@ -8840,7 +8790,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:946: IA5_STRING_KW
 			{
 			DebugLocation(1, 946);
-			mIA5_STRING_KW(); if (state.failed) return;
+			mIA5_STRING_KW(); 
 
 			}
 			break;
@@ -8849,7 +8799,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:960: IDENTIFIER_KW
 			{
 			DebugLocation(1, 960);
-			mIDENTIFIER_KW(); if (state.failed) return;
+			mIDENTIFIER_KW(); 
 
 			}
 			break;
@@ -8858,7 +8808,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:974: IMPLICIT_KW
 			{
 			DebugLocation(1, 974);
-			mIMPLICIT_KW(); if (state.failed) return;
+			mIMPLICIT_KW(); 
 
 			}
 			break;
@@ -8867,7 +8817,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:986: IMPLIED_KW
 			{
 			DebugLocation(1, 986);
-			mIMPLIED_KW(); if (state.failed) return;
+			mIMPLIED_KW(); 
 
 			}
 			break;
@@ -8876,7 +8826,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:997: IMPORTS_KW
 			{
 			DebugLocation(1, 997);
-			mIMPORTS_KW(); if (state.failed) return;
+			mIMPORTS_KW(); 
 
 			}
 			break;
@@ -8885,7 +8835,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1008: INCLUDES_KW
 			{
 			DebugLocation(1, 1008);
-			mINCLUDES_KW(); if (state.failed) return;
+			mINCLUDES_KW(); 
 
 			}
 			break;
@@ -8894,7 +8844,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1020: INSTANCE_KW
 			{
 			DebugLocation(1, 1020);
-			mINSTANCE_KW(); if (state.failed) return;
+			mINSTANCE_KW(); 
 
 			}
 			break;
@@ -8903,7 +8853,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1032: INTEGER_KW
 			{
 			DebugLocation(1, 1032);
-			mINTEGER_KW(); if (state.failed) return;
+			mINTEGER_KW(); 
 
 			}
 			break;
@@ -8912,7 +8862,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1043: INTERSECTION_KW
 			{
 			DebugLocation(1, 1043);
-			mINTERSECTION_KW(); if (state.failed) return;
+			mINTERSECTION_KW(); 
 
 			}
 			break;
@@ -8921,7 +8871,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1059: ISO646_STR_KW
 			{
 			DebugLocation(1, 1059);
-			mISO646_STR_KW(); if (state.failed) return;
+			mISO646_STR_KW(); 
 
 			}
 			break;
@@ -8930,7 +8880,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1073: LINKED_KW
 			{
 			DebugLocation(1, 1073);
-			mLINKED_KW(); if (state.failed) return;
+			mLINKED_KW(); 
 
 			}
 			break;
@@ -8939,7 +8889,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1083: MAX_KW
 			{
 			DebugLocation(1, 1083);
-			mMAX_KW(); if (state.failed) return;
+			mMAX_KW(); 
 
 			}
 			break;
@@ -8948,7 +8898,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1090: MINUS_INFINITY_KW
 			{
 			DebugLocation(1, 1090);
-			mMINUS_INFINITY_KW(); if (state.failed) return;
+			mMINUS_INFINITY_KW(); 
 
 			}
 			break;
@@ -8957,7 +8907,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1108: MIN_KW
 			{
 			DebugLocation(1, 1108);
-			mMIN_KW(); if (state.failed) return;
+			mMIN_KW(); 
 
 			}
 			break;
@@ -8966,7 +8916,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1115: NULL_KW
 			{
 			DebugLocation(1, 1115);
-			mNULL_KW(); if (state.failed) return;
+			mNULL_KW(); 
 
 			}
 			break;
@@ -8975,7 +8925,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1123: NUMERIC_STR_KW
 			{
 			DebugLocation(1, 1123);
-			mNUMERIC_STR_KW(); if (state.failed) return;
+			mNUMERIC_STR_KW(); 
 
 			}
 			break;
@@ -8984,7 +8934,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1138: OBJECT_DESCRIPTOR_KW
 			{
 			DebugLocation(1, 1138);
-			mOBJECT_DESCRIPTOR_KW(); if (state.failed) return;
+			mOBJECT_DESCRIPTOR_KW(); 
 
 			}
 			break;
@@ -8993,7 +8943,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1159: OBJECT_KW
 			{
 			DebugLocation(1, 1159);
-			mOBJECT_KW(); if (state.failed) return;
+			mOBJECT_KW(); 
 
 			}
 			break;
@@ -9002,7 +8952,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1169: OCTET_KW
 			{
 			DebugLocation(1, 1169);
-			mOCTET_KW(); if (state.failed) return;
+			mOCTET_KW(); 
 
 			}
 			break;
@@ -9011,7 +8961,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1178: OPERATION_KW
 			{
 			DebugLocation(1, 1178);
-			mOPERATION_KW(); if (state.failed) return;
+			mOPERATION_KW(); 
 
 			}
 			break;
@@ -9020,7 +8970,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1191: OF_KW
 			{
 			DebugLocation(1, 1191);
-			mOF_KW(); if (state.failed) return;
+			mOF_KW(); 
 
 			}
 			break;
@@ -9029,7 +8979,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1197: OID_KW
 			{
 			DebugLocation(1, 1197);
-			mOID_KW(); if (state.failed) return;
+			mOID_KW(); 
 
 			}
 			break;
@@ -9038,7 +8988,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1204: OPTIONAL_KW
 			{
 			DebugLocation(1, 1204);
-			mOPTIONAL_KW(); if (state.failed) return;
+			mOPTIONAL_KW(); 
 
 			}
 			break;
@@ -9047,7 +8997,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1216: PARAMETER_KW
 			{
 			DebugLocation(1, 1216);
-			mPARAMETER_KW(); if (state.failed) return;
+			mPARAMETER_KW(); 
 
 			}
 			break;
@@ -9056,7 +9006,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1229: PDV_KW
 			{
 			DebugLocation(1, 1229);
-			mPDV_KW(); if (state.failed) return;
+			mPDV_KW(); 
 
 			}
 			break;
@@ -9065,7 +9015,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1236: PLUS_INFINITY_KW
 			{
 			DebugLocation(1, 1236);
-			mPLUS_INFINITY_KW(); if (state.failed) return;
+			mPLUS_INFINITY_KW(); 
 
 			}
 			break;
@@ -9074,7 +9024,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1253: PRESENT_KW
 			{
 			DebugLocation(1, 1253);
-			mPRESENT_KW(); if (state.failed) return;
+			mPRESENT_KW(); 
 
 			}
 			break;
@@ -9083,7 +9033,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1264: PRINTABLE_STR_KW
 			{
 			DebugLocation(1, 1264);
-			mPRINTABLE_STR_KW(); if (state.failed) return;
+			mPRINTABLE_STR_KW(); 
 
 			}
 			break;
@@ -9092,7 +9042,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1281: PRIVATE_KW
 			{
 			DebugLocation(1, 1281);
-			mPRIVATE_KW(); if (state.failed) return;
+			mPRIVATE_KW(); 
 
 			}
 			break;
@@ -9101,7 +9051,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1292: REAL_KW
 			{
 			DebugLocation(1, 1292);
-			mREAL_KW(); if (state.failed) return;
+			mREAL_KW(); 
 
 			}
 			break;
@@ -9110,7 +9060,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1300: RELATIVE_KW
 			{
 			DebugLocation(1, 1300);
-			mRELATIVE_KW(); if (state.failed) return;
+			mRELATIVE_KW(); 
 
 			}
 			break;
@@ -9119,7 +9069,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1312: RESULT_KW
 			{
 			DebugLocation(1, 1312);
-			mRESULT_KW(); if (state.failed) return;
+			mRESULT_KW(); 
 
 			}
 			break;
@@ -9128,7 +9078,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1322: SEQUENCE_KW
 			{
 			DebugLocation(1, 1322);
-			mSEQUENCE_KW(); if (state.failed) return;
+			mSEQUENCE_KW(); 
 
 			}
 			break;
@@ -9137,7 +9087,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1334: SET_KW
 			{
 			DebugLocation(1, 1334);
-			mSET_KW(); if (state.failed) return;
+			mSET_KW(); 
 
 			}
 			break;
@@ -9146,7 +9096,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1341: SIZE_KW
 			{
 			DebugLocation(1, 1341);
-			mSIZE_KW(); if (state.failed) return;
+			mSIZE_KW(); 
 
 			}
 			break;
@@ -9155,7 +9105,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1349: STRING_KW
 			{
 			DebugLocation(1, 1349);
-			mSTRING_KW(); if (state.failed) return;
+			mSTRING_KW(); 
 
 			}
 			break;
@@ -9164,7 +9114,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1359: TAGS_KW
 			{
 			DebugLocation(1, 1359);
-			mTAGS_KW(); if (state.failed) return;
+			mTAGS_KW(); 
 
 			}
 			break;
@@ -9173,7 +9123,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1367: TELETEX_STR_KW
 			{
 			DebugLocation(1, 1367);
-			mTELETEX_STR_KW(); if (state.failed) return;
+			mTELETEX_STR_KW(); 
 
 			}
 			break;
@@ -9182,7 +9132,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1382: T61_STR_KW
 			{
 			DebugLocation(1, 1382);
-			mT61_STR_KW(); if (state.failed) return;
+			mT61_STR_KW(); 
 
 			}
 			break;
@@ -9191,7 +9141,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1393: TRUE_KW
 			{
 			DebugLocation(1, 1393);
-			mTRUE_KW(); if (state.failed) return;
+			mTRUE_KW(); 
 
 			}
 			break;
@@ -9200,7 +9150,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1401: TYPE_IDENTIFIER_KW
 			{
 			DebugLocation(1, 1401);
-			mTYPE_IDENTIFIER_KW(); if (state.failed) return;
+			mTYPE_IDENTIFIER_KW(); 
 
 			}
 			break;
@@ -9209,7 +9159,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1420: UNION_KW
 			{
 			DebugLocation(1, 1420);
-			mUNION_KW(); if (state.failed) return;
+			mUNION_KW(); 
 
 			}
 			break;
@@ -9218,7 +9168,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1429: UNIQUE_KW
 			{
 			DebugLocation(1, 1429);
-			mUNIQUE_KW(); if (state.failed) return;
+			mUNIQUE_KW(); 
 
 			}
 			break;
@@ -9227,7 +9177,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1439: UNIVERSAL_KW
 			{
 			DebugLocation(1, 1439);
-			mUNIVERSAL_KW(); if (state.failed) return;
+			mUNIVERSAL_KW(); 
 
 			}
 			break;
@@ -9236,7 +9186,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1452: UNIVERSAL_STR_KW
 			{
 			DebugLocation(1, 1452);
-			mUNIVERSAL_STR_KW(); if (state.failed) return;
+			mUNIVERSAL_STR_KW(); 
 
 			}
 			break;
@@ -9245,7 +9195,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1469: UTC_TIME_KW
 			{
 			DebugLocation(1, 1469);
-			mUTC_TIME_KW(); if (state.failed) return;
+			mUTC_TIME_KW(); 
 
 			}
 			break;
@@ -9254,7 +9204,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1481: UTF8_STR_KW
 			{
 			DebugLocation(1, 1481);
-			mUTF8_STR_KW(); if (state.failed) return;
+			mUTF8_STR_KW(); 
 
 			}
 			break;
@@ -9263,7 +9213,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1493: VIDEOTEX_STR_KW
 			{
 			DebugLocation(1, 1493);
-			mVIDEOTEX_STR_KW(); if (state.failed) return;
+			mVIDEOTEX_STR_KW(); 
 
 			}
 			break;
@@ -9272,7 +9222,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1509: VISIBLE_STR_KW
 			{
 			DebugLocation(1, 1509);
-			mVISIBLE_STR_KW(); if (state.failed) return;
+			mVISIBLE_STR_KW(); 
 
 			}
 			break;
@@ -9281,7 +9231,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1524: WITH_KW
 			{
 			DebugLocation(1, 1524);
-			mWITH_KW(); if (state.failed) return;
+			mWITH_KW(); 
 
 			}
 			break;
@@ -9290,7 +9240,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1532: PATTERN_KW
 			{
 			DebugLocation(1, 1532);
-			mPATTERN_KW(); if (state.failed) return;
+			mPATTERN_KW(); 
 
 			}
 			break;
@@ -9299,7 +9249,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1543: ASSIGN_OP
 			{
 			DebugLocation(1, 1543);
-			mASSIGN_OP(); if (state.failed) return;
+			mASSIGN_OP(); 
 
 			}
 			break;
@@ -9308,7 +9258,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1553: BAR
 			{
 			DebugLocation(1, 1553);
-			mBAR(); if (state.failed) return;
+			mBAR(); 
 
 			}
 			break;
@@ -9317,7 +9267,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1557: COLON
 			{
 			DebugLocation(1, 1557);
-			mCOLON(); if (state.failed) return;
+			mCOLON(); 
 
 			}
 			break;
@@ -9326,7 +9276,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1563: COMMA
 			{
 			DebugLocation(1, 1563);
-			mCOMMA(); if (state.failed) return;
+			mCOMMA(); 
 
 			}
 			break;
@@ -9335,7 +9285,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1569: COMMENT
 			{
 			DebugLocation(1, 1569);
-			mCOMMENT(); if (state.failed) return;
+			mCOMMENT(); 
 
 			}
 			break;
@@ -9344,7 +9294,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1577: DOT
 			{
 			DebugLocation(1, 1577);
-			mDOT(); if (state.failed) return;
+			mDOT(); 
 
 			}
 			break;
@@ -9353,7 +9303,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1581: DOTDOT
 			{
 			DebugLocation(1, 1581);
-			mDOTDOT(); if (state.failed) return;
+			mDOTDOT(); 
 
 			}
 			break;
@@ -9362,7 +9312,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1588: DOTDOTDOT
 			{
 			DebugLocation(1, 1588);
-			mDOTDOTDOT(); if (state.failed) return;
+			mDOTDOTDOT(); 
 
 			}
 			break;
@@ -9371,7 +9321,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1598: EXCLAMATION
 			{
 			DebugLocation(1, 1598);
-			mEXCLAMATION(); if (state.failed) return;
+			mEXCLAMATION(); 
 
 			}
 			break;
@@ -9380,7 +9330,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1610: INTERSECTION
 			{
 			DebugLocation(1, 1610);
-			mINTERSECTION(); if (state.failed) return;
+			mINTERSECTION(); 
 
 			}
 			break;
@@ -9389,7 +9339,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1623: LESS
 			{
 			DebugLocation(1, 1623);
-			mLESS(); if (state.failed) return;
+			mLESS(); 
 
 			}
 			break;
@@ -9398,7 +9348,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1628: L_BRACE
 			{
 			DebugLocation(1, 1628);
-			mL_BRACE(); if (state.failed) return;
+			mL_BRACE(); 
 
 			}
 			break;
@@ -9407,7 +9357,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1636: L_BRACKET
 			{
 			DebugLocation(1, 1636);
-			mL_BRACKET(); if (state.failed) return;
+			mL_BRACKET(); 
 
 			}
 			break;
@@ -9416,7 +9366,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1646: L_PAREN
 			{
 			DebugLocation(1, 1646);
-			mL_PAREN(); if (state.failed) return;
+			mL_PAREN(); 
 
 			}
 			break;
@@ -9425,7 +9375,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1654: MINUS
 			{
 			DebugLocation(1, 1654);
-			mMINUS(); if (state.failed) return;
+			mMINUS(); 
 
 			}
 			break;
@@ -9434,7 +9384,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1660: PLUS
 			{
 			DebugLocation(1, 1660);
-			mPLUS(); if (state.failed) return;
+			mPLUS(); 
 
 			}
 			break;
@@ -9443,7 +9393,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1665: R_BRACE
 			{
 			DebugLocation(1, 1665);
-			mR_BRACE(); if (state.failed) return;
+			mR_BRACE(); 
 
 			}
 			break;
@@ -9452,7 +9402,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1673: R_BRACKET
 			{
 			DebugLocation(1, 1673);
-			mR_BRACKET(); if (state.failed) return;
+			mR_BRACKET(); 
 
 			}
 			break;
@@ -9461,7 +9411,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1683: R_PAREN
 			{
 			DebugLocation(1, 1683);
-			mR_PAREN(); if (state.failed) return;
+			mR_PAREN(); 
 
 			}
 			break;
@@ -9470,7 +9420,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1691: SEMI
 			{
 			DebugLocation(1, 1691);
-			mSEMI(); if (state.failed) return;
+			mSEMI(); 
 
 			}
 			break;
@@ -9479,7 +9429,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1696: SINGLE_QUOTE
 			{
 			DebugLocation(1, 1696);
-			mSINGLE_QUOTE(); if (state.failed) return;
+			mSINGLE_QUOTE(); 
 
 			}
 			break;
@@ -9488,7 +9438,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1709: CHARB
 			{
 			DebugLocation(1, 1709);
-			mCHARB(); if (state.failed) return;
+			mCHARB(); 
 
 			}
 			break;
@@ -9497,7 +9447,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1715: CHARH
 			{
 			DebugLocation(1, 1715);
-			mCHARH(); if (state.failed) return;
+			mCHARH(); 
 
 			}
 			break;
@@ -9506,7 +9456,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1721: WS
 			{
 			DebugLocation(1, 1721);
-			mWS(); if (state.failed) return;
+			mWS(); 
 
 			}
 			break;
@@ -9515,7 +9465,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1724: SL_COMMENT
 			{
 			DebugLocation(1, 1724);
-			mSL_COMMENT(); if (state.failed) return;
+			mSL_COMMENT(); 
 
 			}
 			break;
@@ -9524,7 +9474,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1735: NUMBER
 			{
 			DebugLocation(1, 1735);
-			mNUMBER(); if (state.failed) return;
+			mNUMBER(); 
 
 			}
 			break;
@@ -9533,7 +9483,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1742: HDIG
 			{
 			DebugLocation(1, 1742);
-			mHDIG(); if (state.failed) return;
+			mHDIG(); 
 
 			}
 			break;
@@ -9542,7 +9492,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1747: UPPER
 			{
 			DebugLocation(1, 1747);
-			mUPPER(); if (state.failed) return;
+			mUPPER(); 
 
 			}
 			break;
@@ -9551,7 +9501,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1753: LOWER
 			{
 			DebugLocation(1, 1753);
-			mLOWER(); if (state.failed) return;
+			mLOWER(); 
 
 			}
 			break;
@@ -9560,7 +9510,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1759: B_STRING
 			{
 			DebugLocation(1, 1759);
-			mB_STRING(); if (state.failed) return;
+			mB_STRING(); 
 
 			}
 			break;
@@ -9569,7 +9519,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1768: H_STRING
 			{
 			DebugLocation(1, 1768);
-			mH_STRING(); if (state.failed) return;
+			mH_STRING(); 
 
 			}
 			break;
@@ -9578,7 +9528,7 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 			// Smi.g:1:1777: C_STRING
 			{
 			DebugLocation(1, 1777);
-			mC_STRING(); if (state.failed) return;
+			mC_STRING(); 
 
 			}
 			break;
@@ -9586,66 +9536,6 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		}
 
 	}
-
-	partial void EnterRule_synpred1_Smi_fragment();
-	partial void LeaveRule_synpred1_Smi_fragment();
-
-	// $ANTLR start synpred1_Smi
-	public void synpred1_Smi_fragment()
-	{
-		EnterRule_synpred1_Smi_fragment();
-		EnterRule("synpred1_Smi_fragment", 194);
-		TraceIn("synpred1_Smi_fragment", 194);
-		try
-		{
-			// Smi.g:543:14: ({...}? '-' )
-			DebugEnterAlt(1);
-			// Smi.g:543:15: {...}? '-'
-			{
-			DebugLocation(543, 15);
-			if (!((input.LA(2) != '-')))
-			{
-				if (state.backtracking>0) {state.failed=true; return;}
-				throw new FailedPredicateException(input, "synpred1_Smi", "input.LA(2) != '-'");
-			}
-			DebugLocation(543, 37);
-			Match('-'); if (state.failed) return;
-
-			}
-
-		}
-		finally
-		{
-			TraceOut("synpred1_Smi_fragment", 194);
-			LeaveRule("synpred1_Smi_fragment", 194);
-			LeaveRule_synpred1_Smi_fragment();
-		}
-	}
-	// $ANTLR end synpred1_Smi
-
-	#region Synpreds
-	private bool EvaluatePredicate(System.Action fragment)
-	{
-		bool success = false;
-		state.backtracking++;
-		try { DebugBeginBacktrack(state.backtracking);
-		int start = input.Mark();
-		try
-		{
-			fragment();
-		}
-		catch ( RecognitionException re )
-		{
-			System.Console.Error.WriteLine("impossible: "+re);
-		}
-		success = !state.failed;
-		input.Rewind(start);
-		} finally { DebugEndBacktrack(state.backtracking, success); }
-		state.backtracking--;
-		state.failed=false;
-		return success;
-	}
-	#endregion Synpreds
 
 
 	#region DFA
@@ -11525,7 +11415,6 @@ public partial class SmiLexer : Antlr.Runtime.Lexer
 		if (s >= 0)
 			return s;
 
-		if (state.backtracking > 0) {state.failed=true; return -1;}
 		NoViableAltException nvae = new NoViableAltException(dfa.Description, 12, _s, input);
 		dfa.Error(nvae);
 		throw nvae;

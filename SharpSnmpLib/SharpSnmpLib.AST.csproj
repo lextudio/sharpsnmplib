@@ -127,6 +127,7 @@
     <Compile Include="Mib\ExternalType.cs" />
     <Compile Include="Mib\FalseLiteralValue.cs" />
     <Compile Include="Mib\FromConstraintElement.cs" />
+    <Compile Include="Mib\FullQualifiedValue.cs" />
     <Compile Include="Mib\Generated\SmiLexer.cs" />
     <Compile Include="Mib\Generated\SmiParser.cs" />
     <Compile Include="Mib\GroupCompliance.cs" />

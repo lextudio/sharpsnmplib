@@ -538,11 +538,11 @@ WS
 	))+
 	{ Skip(); }
 	;
-
-SL_COMMENT
-	: COMMENT ( ({input.LA(2) != '-'}? '-') => '-' 	|	~('-'|'\n'|'\r'))*	( (('\r')? '\n') | COMMENT) 
-		{ Skip();  }
-	;
+	
+SL_COMMENT 
+ : COMMENT ({!(input.LA(1) == '-' && input.LA(2) == '-')}?=> ~('\r' | '\n'))* ('\r'? '\n' | COMMENT)
+ { Skip(); }
+ ;
 
 NUMBER	:	('0'..'9')+ ;
 

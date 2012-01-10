@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// $ANTLR 3.4.1.9004 Smi.g 2012-01-08 13:58:51
+// $ANTLR 3.4.1.9004 Smi.g 2012-01-10 19:33:43
 
 // The variable 'variable' is assigned but its value is never used.
 #pragma warning disable 219
@@ -283,7 +283,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_statement();
 	partial void LeaveRule_statement();
 	// $ANTLR start "statement"
-	// Smi.g:598:1: statement returns [MibDocument result = new MibDocument()] : (mod= module_definition )* EOF ;
+	// Smi.g:595:1: statement returns [MibDocument result = new MibDocument()] : (mod= module_definition )* EOF ;
 	[GrammarRule("statement")]
 	private SmiParser.statement_return statement()
 	{
@@ -300,17 +300,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 		CommonTree EOF1_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "statement");
-		DebugLocation(598, 1);
+		DebugLocation(595, 1);
 		try
 		{
-			// Smi.g:599:5: ( (mod= module_definition )* EOF )
+			// Smi.g:596:5: ( (mod= module_definition )* EOF )
 			DebugEnterAlt(1);
-			// Smi.g:599:7: (mod= module_definition )* EOF
+			// Smi.g:596:7: (mod= module_definition )* EOF
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(599, 7);
-			// Smi.g:599:7: (mod= module_definition )*
+			DebugLocation(596, 7);
+			// Smi.g:596:7: (mod= module_definition )*
 			try { DebugEnterSubRule(1);
 			while (true)
 			{
@@ -329,15 +329,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:599:8: mod= module_definition
+					// Smi.g:596:8: mod= module_definition
 					{
-					DebugLocation(599, 11);
-					PushFollow(Follow._module_definition_in_statement1849);
+					DebugLocation(596, 11);
+					PushFollow(Follow._module_definition_in_statement1830);
 					mod=module_definition();
 					PopFollow();
 					if (state.failed) return retval;
 					if (state.backtracking == 0) adaptor.AddChild(root_0, mod.Tree);
-					DebugLocation(599, 30);
+					DebugLocation(596, 30);
 					if (state.backtracking == 0)
 					{
 						 retval.result.Add(mod.result); 
@@ -356,8 +356,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 			} finally { DebugExitSubRule(1); }
 
-			DebugLocation(599, 61);
-			EOF1=(IToken)Match(input,EOF,Follow._EOF_in_statement1855); if (state.failed) return retval;
+			DebugLocation(596, 61);
+			EOF1=(IToken)Match(input,EOF,Follow._EOF_in_statement1836); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			EOF1_tree = (CommonTree)adaptor.Create(EOF1);
 			adaptor.AddChild(root_0, EOF1_tree);
@@ -384,7 +384,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("statement", 1);
 			LeaveRule_statement();
 		}
-		DebugLocation(600, 1);
+		DebugLocation(597, 1);
 		} finally { DebugExitRule(GrammarFileName, "statement"); }
 		return retval;
 
@@ -401,7 +401,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_module_definition();
 	partial void LeaveRule_module_definition();
 	// $ANTLR start "module_definition"
-	// Smi.g:605:1: module_definition returns [MibModule result] : name= module_identifier ( 'PIB-DEFINITIONS' | DEFINITIONS_KW ) ( ( EXPLICIT_KW | IMPLICIT_KW | AUTOMATIC_KW ) TAGS_KW )? ( EXTENSIBILITY_KW IMPLIED_KW )? ASSIGN_OP BEGIN_KW mod= module_body END_KW ;
+	// Smi.g:602:1: module_definition returns [MibModule result] : name= module_identifier ( 'PIB-DEFINITIONS' | DEFINITIONS_KW ) ( ( EXPLICIT_KW | IMPLICIT_KW | AUTOMATIC_KW ) TAGS_KW )? ( EXTENSIBILITY_KW IMPLIED_KW )? ASSIGN_OP BEGIN_KW mod= module_body END_KW ;
 	[GrammarRule("module_definition")]
 	private SmiParser.module_definition_return module_definition()
 	{
@@ -433,22 +433,22 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree BEGIN_KW8_tree = default(CommonTree);
 		CommonTree END_KW9_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "module_definition");
-		DebugLocation(605, 4);
+		DebugLocation(602, 4);
 		try
 		{
-			// Smi.g:606:5: (name= module_identifier ( 'PIB-DEFINITIONS' | DEFINITIONS_KW ) ( ( EXPLICIT_KW | IMPLICIT_KW | AUTOMATIC_KW ) TAGS_KW )? ( EXTENSIBILITY_KW IMPLIED_KW )? ASSIGN_OP BEGIN_KW mod= module_body END_KW )
+			// Smi.g:603:5: (name= module_identifier ( 'PIB-DEFINITIONS' | DEFINITIONS_KW ) ( ( EXPLICIT_KW | IMPLICIT_KW | AUTOMATIC_KW ) TAGS_KW )? ( EXTENSIBILITY_KW IMPLIED_KW )? ASSIGN_OP BEGIN_KW mod= module_body END_KW )
 			DebugEnterAlt(1);
-			// Smi.g:606:7: name= module_identifier ( 'PIB-DEFINITIONS' | DEFINITIONS_KW ) ( ( EXPLICIT_KW | IMPLICIT_KW | AUTOMATIC_KW ) TAGS_KW )? ( EXTENSIBILITY_KW IMPLIED_KW )? ASSIGN_OP BEGIN_KW mod= module_body END_KW
+			// Smi.g:603:7: name= module_identifier ( 'PIB-DEFINITIONS' | DEFINITIONS_KW ) ( ( EXPLICIT_KW | IMPLICIT_KW | AUTOMATIC_KW ) TAGS_KW )? ( EXTENSIBILITY_KW IMPLIED_KW )? ASSIGN_OP BEGIN_KW mod= module_body END_KW
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(606, 11);
-			PushFollow(Follow._module_identifier_in_module_definition1880);
+			DebugLocation(603, 11);
+			PushFollow(Follow._module_identifier_in_module_definition1861);
 			name=module_identifier();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, name.Tree);
-			DebugLocation(606, 30);
+			DebugLocation(603, 30);
 
 			set2=(IToken)input.LT(1);
 			if (input.LA(1)==DEFINITIONS_KW||input.LA(1)==167)
@@ -465,8 +465,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				throw mse;
 			}
 
-			DebugLocation(607, 3);
-			// Smi.g:607:3: ( ( EXPLICIT_KW | IMPLICIT_KW | AUTOMATIC_KW ) TAGS_KW )?
+			DebugLocation(604, 3);
+			// Smi.g:604:3: ( ( EXPLICIT_KW | IMPLICIT_KW | AUTOMATIC_KW ) TAGS_KW )?
 			int alt2=2;
 			try { DebugEnterSubRule(2);
 			try { DebugEnterDecision(2, false);
@@ -481,9 +481,9 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:607:5: ( EXPLICIT_KW | IMPLICIT_KW | AUTOMATIC_KW ) TAGS_KW
+				// Smi.g:604:5: ( EXPLICIT_KW | IMPLICIT_KW | AUTOMATIC_KW ) TAGS_KW
 				{
-				DebugLocation(607, 5);
+				DebugLocation(604, 5);
 
 				set3=(IToken)input.LT(1);
 				if (input.LA(1)==AUTOMATIC_KW||input.LA(1)==EXPLICIT_KW||input.LA(1)==IMPLICIT_KW)
@@ -500,8 +500,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 					throw mse;
 				}
 
-				DebugLocation(607, 48);
-				TAGS_KW4=(IToken)Match(input,TAGS_KW,Follow._TAGS_KW_in_module_definition1907); if (state.failed) return retval;
+				DebugLocation(604, 48);
+				TAGS_KW4=(IToken)Match(input,TAGS_KW,Follow._TAGS_KW_in_module_definition1888); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				TAGS_KW4_tree = (CommonTree)adaptor.Create(TAGS_KW4);
 				adaptor.AddChild(root_0, TAGS_KW4_tree);
@@ -513,8 +513,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(2); }
 
-			DebugLocation(608, 3);
-			// Smi.g:608:3: ( EXTENSIBILITY_KW IMPLIED_KW )?
+			DebugLocation(605, 3);
+			// Smi.g:605:3: ( EXTENSIBILITY_KW IMPLIED_KW )?
 			int alt3=2;
 			try { DebugEnterSubRule(3);
 			try { DebugEnterDecision(3, false);
@@ -529,16 +529,16 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:608:4: EXTENSIBILITY_KW IMPLIED_KW
+				// Smi.g:605:4: EXTENSIBILITY_KW IMPLIED_KW
 				{
-				DebugLocation(608, 4);
-				EXTENSIBILITY_KW5=(IToken)Match(input,EXTENSIBILITY_KW,Follow._EXTENSIBILITY_KW_in_module_definition1916); if (state.failed) return retval;
+				DebugLocation(605, 4);
+				EXTENSIBILITY_KW5=(IToken)Match(input,EXTENSIBILITY_KW,Follow._EXTENSIBILITY_KW_in_module_definition1897); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				EXTENSIBILITY_KW5_tree = (CommonTree)adaptor.Create(EXTENSIBILITY_KW5);
 				adaptor.AddChild(root_0, EXTENSIBILITY_KW5_tree);
 				}
-				DebugLocation(608, 21);
-				IMPLIED_KW6=(IToken)Match(input,IMPLIED_KW,Follow._IMPLIED_KW_in_module_definition1918); if (state.failed) return retval;
+				DebugLocation(605, 21);
+				IMPLIED_KW6=(IToken)Match(input,IMPLIED_KW,Follow._IMPLIED_KW_in_module_definition1899); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				IMPLIED_KW6_tree = (CommonTree)adaptor.Create(IMPLIED_KW6);
 				adaptor.AddChild(root_0, IMPLIED_KW6_tree);
@@ -550,31 +550,31 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(3); }
 
-			DebugLocation(609, 3);
-			ASSIGN_OP7=(IToken)Match(input,ASSIGN_OP,Follow._ASSIGN_OP_in_module_definition1924); if (state.failed) return retval;
+			DebugLocation(606, 3);
+			ASSIGN_OP7=(IToken)Match(input,ASSIGN_OP,Follow._ASSIGN_OP_in_module_definition1905); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			ASSIGN_OP7_tree = (CommonTree)adaptor.Create(ASSIGN_OP7);
 			adaptor.AddChild(root_0, ASSIGN_OP7_tree);
 			}
-			DebugLocation(609, 13);
-			BEGIN_KW8=(IToken)Match(input,BEGIN_KW,Follow._BEGIN_KW_in_module_definition1926); if (state.failed) return retval;
+			DebugLocation(606, 13);
+			BEGIN_KW8=(IToken)Match(input,BEGIN_KW,Follow._BEGIN_KW_in_module_definition1907); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			BEGIN_KW8_tree = (CommonTree)adaptor.Create(BEGIN_KW8);
 			adaptor.AddChild(root_0, BEGIN_KW8_tree);
 			}
-			DebugLocation(609, 25);
-			PushFollow(Follow._module_body_in_module_definition1930);
+			DebugLocation(606, 25);
+			PushFollow(Follow._module_body_in_module_definition1911);
 			mod=module_body();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, mod.Tree);
-			DebugLocation(609, 38);
-			END_KW9=(IToken)Match(input,END_KW,Follow._END_KW_in_module_definition1932); if (state.failed) return retval;
+			DebugLocation(606, 38);
+			END_KW9=(IToken)Match(input,END_KW,Follow._END_KW_in_module_definition1913); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			END_KW9_tree = (CommonTree)adaptor.Create(END_KW9);
 			adaptor.AddChild(root_0, END_KW9_tree);
 			}
-			DebugLocation(610, 3);
+			DebugLocation(607, 3);
 			if (state.backtracking == 0)
 			{
 
@@ -604,7 +604,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("module_definition", 2);
 			LeaveRule_module_definition();
 		}
-		DebugLocation(614, 4);
+		DebugLocation(611, 4);
 		} finally { DebugExitRule(GrammarFileName, "module_definition"); }
 		return retval;
 
@@ -614,7 +614,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_module_identifier();
 	partial void LeaveRule_module_identifier();
 	// $ANTLR start "module_identifier"
-	// Smi.g:616:1: module_identifier : UPPER ( obj_id_comp_lst )? ;
+	// Smi.g:613:1: module_identifier : UPPER ( obj_id_comp_lst )? ;
 	[GrammarRule("module_identifier")]
 	private AstParserRuleReturnScope<CommonTree, IToken> module_identifier()
 	{
@@ -631,23 +631,23 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 		CommonTree UPPER10_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "module_identifier");
-		DebugLocation(616, 44);
+		DebugLocation(613, 44);
 		try
 		{
-			// Smi.g:616:18: ( UPPER ( obj_id_comp_lst )? )
+			// Smi.g:613:18: ( UPPER ( obj_id_comp_lst )? )
 			DebugEnterAlt(1);
-			// Smi.g:616:20: UPPER ( obj_id_comp_lst )?
+			// Smi.g:613:20: UPPER ( obj_id_comp_lst )?
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(616, 20);
-			UPPER10=(IToken)Match(input,UPPER,Follow._UPPER_in_module_identifier1949); if (state.failed) return retval;
+			DebugLocation(613, 20);
+			UPPER10=(IToken)Match(input,UPPER,Follow._UPPER_in_module_identifier1930); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			UPPER10_tree = (CommonTree)adaptor.Create(UPPER10);
 			adaptor.AddChild(root_0, UPPER10_tree);
 			}
-			DebugLocation(616, 26);
-			// Smi.g:616:26: ( obj_id_comp_lst )?
+			DebugLocation(613, 26);
+			// Smi.g:613:26: ( obj_id_comp_lst )?
 			int alt4=2;
 			try { DebugEnterSubRule(4);
 			try { DebugEnterDecision(4, false);
@@ -662,10 +662,10 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:616:27: obj_id_comp_lst
+				// Smi.g:613:27: obj_id_comp_lst
 				{
-				DebugLocation(616, 27);
-				PushFollow(Follow._obj_id_comp_lst_in_module_identifier1952);
+				DebugLocation(613, 27);
+				PushFollow(Follow._obj_id_comp_lst_in_module_identifier1933);
 				obj_id_comp_lst11=obj_id_comp_lst();
 				PopFollow();
 				if (state.failed) return retval;
@@ -699,7 +699,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("module_identifier", 3);
 			LeaveRule_module_identifier();
 		}
-		DebugLocation(616, 44);
+		DebugLocation(613, 44);
 		} finally { DebugExitRule(GrammarFileName, "module_identifier"); }
 		return retval;
 
@@ -716,7 +716,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_module_body();
 	partial void LeaveRule_module_body();
 	// $ANTLR start "module_body"
-	// Smi.g:618:1: module_body returns [MibModule result = new MibModule()] : (ex= exports )? (im= imports )? (a= assignment )* ;
+	// Smi.g:615:1: module_body returns [MibModule result = new MibModule()] : (ex= exports )? (im= imports )? (a= assignment )* ;
 	[GrammarRule("module_body")]
 	private SmiParser.module_body_return module_body()
 	{
@@ -733,17 +733,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		SmiParser.assignment_return a = default(SmiParser.assignment_return);
 
 		try { DebugEnterRule(GrammarFileName, "module_body");
-		DebugLocation(618, 45);
+		DebugLocation(615, 45);
 		try
 		{
-			// Smi.g:619:5: ( (ex= exports )? (im= imports )? (a= assignment )* )
+			// Smi.g:616:5: ( (ex= exports )? (im= imports )? (a= assignment )* )
 			DebugEnterAlt(1);
-			// Smi.g:620:2: (ex= exports )? (im= imports )? (a= assignment )*
+			// Smi.g:617:2: (ex= exports )? (im= imports )? (a= assignment )*
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(620, 2);
-			// Smi.g:620:2: (ex= exports )?
+			DebugLocation(617, 2);
+			// Smi.g:617:2: (ex= exports )?
 			int alt5=2;
 			try { DebugEnterSubRule(5);
 			try { DebugEnterDecision(5, false);
@@ -758,15 +758,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:620:3: ex= exports
+				// Smi.g:617:3: ex= exports
 				{
-				DebugLocation(620, 5);
-				PushFollow(Follow._exports_in_module_body1975);
+				DebugLocation(617, 5);
+				PushFollow(Follow._exports_in_module_body1956);
 				ex=exports();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, ex.Tree);
-				DebugLocation(620, 14);
+				DebugLocation(617, 14);
 				if (state.backtracking == 0)
 				{
 					 retval.result.Exports = (ex!=null?ex.result:default(Exports)); 
@@ -778,8 +778,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(5); }
 
-			DebugLocation(621, 2);
-			// Smi.g:621:2: (im= imports )?
+			DebugLocation(618, 2);
+			// Smi.g:618:2: (im= imports )?
 			int alt6=2;
 			try { DebugEnterSubRule(6);
 			try { DebugEnterDecision(6, false);
@@ -794,15 +794,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:621:3: im= imports
+				// Smi.g:618:3: im= imports
 				{
-				DebugLocation(621, 5);
-				PushFollow(Follow._imports_in_module_body1986);
+				DebugLocation(618, 5);
+				PushFollow(Follow._imports_in_module_body1967);
 				im=imports();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, im.Tree);
-				DebugLocation(621, 14);
+				DebugLocation(618, 14);
 				if (state.backtracking == 0)
 				{
 					 retval.result.Imports = (im!=null?im.result:default(Imports)); 
@@ -814,8 +814,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(6); }
 
-			DebugLocation(622, 2);
-			// Smi.g:622:2: (a= assignment )*
+			DebugLocation(619, 2);
+			// Smi.g:619:2: (a= assignment )*
 			try { DebugEnterSubRule(7);
 			while (true)
 			{
@@ -834,15 +834,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:622:3: a= assignment
+					// Smi.g:619:3: a= assignment
 					{
-					DebugLocation(622, 4);
-					PushFollow(Follow._assignment_in_module_body1997);
+					DebugLocation(619, 4);
+					PushFollow(Follow._assignment_in_module_body1978);
 					a=assignment();
 					PopFollow();
 					if (state.failed) return retval;
 					if (state.backtracking == 0) adaptor.AddChild(root_0, a.Tree);
-					DebugLocation(622, 16);
+					DebugLocation(619, 16);
 					if (state.backtracking == 0)
 					{
 						 retval.result.Add((a!=null?a.result:default(IConstruct))); 
@@ -883,7 +883,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("module_body", 4);
 			LeaveRule_module_body();
 		}
-		DebugLocation(622, 45);
+		DebugLocation(619, 45);
 		} finally { DebugExitRule(GrammarFileName, "module_body"); }
 		return retval;
 
@@ -900,7 +900,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_obj_id_comp_lst();
 	partial void LeaveRule_obj_id_comp_lst();
 	// $ANTLR start "obj_id_comp_lst"
-	// Smi.g:625:1: obj_id_comp_lst returns [IdComponentList result = new IdComponentList()] : L_BRACE ( ( LOWER ( LOWER | NUMBER ) )=>dv= defined_value )? (oid= obj_id_component )+ R_BRACE ;
+	// Smi.g:622:1: obj_id_comp_lst returns [IdComponentList result = new IdComponentList()] : L_BRACE ( ( LOWER ( LOWER | NUMBER ) )=>dv= defined_value )? (oid= obj_id_component )+ R_BRACE ;
 	[GrammarRule("obj_id_comp_lst")]
 	private SmiParser.obj_id_comp_lst_return obj_id_comp_lst()
 	{
@@ -920,23 +920,23 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree L_BRACE12_tree = default(CommonTree);
 		CommonTree R_BRACE13_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "obj_id_comp_lst");
-		DebugLocation(625, 1);
+		DebugLocation(622, 1);
 		try
 		{
-			// Smi.g:626:5: ( L_BRACE ( ( LOWER ( LOWER | NUMBER ) )=>dv= defined_value )? (oid= obj_id_component )+ R_BRACE )
+			// Smi.g:623:5: ( L_BRACE ( ( LOWER ( LOWER | NUMBER ) )=>dv= defined_value )? (oid= obj_id_component )+ R_BRACE )
 			DebugEnterAlt(1);
-			// Smi.g:626:7: L_BRACE ( ( LOWER ( LOWER | NUMBER ) )=>dv= defined_value )? (oid= obj_id_component )+ R_BRACE
+			// Smi.g:623:7: L_BRACE ( ( LOWER ( LOWER | NUMBER ) )=>dv= defined_value )? (oid= obj_id_component )+ R_BRACE
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(626, 7);
-			L_BRACE12=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_obj_id_comp_lst2020); if (state.failed) return retval;
+			DebugLocation(623, 7);
+			L_BRACE12=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_obj_id_comp_lst2001); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			L_BRACE12_tree = (CommonTree)adaptor.Create(L_BRACE12);
 			adaptor.AddChild(root_0, L_BRACE12_tree);
 			}
-			DebugLocation(626, 15);
-			// Smi.g:626:15: ( ( LOWER ( LOWER | NUMBER ) )=>dv= defined_value )?
+			DebugLocation(623, 15);
+			// Smi.g:623:15: ( ( LOWER ( LOWER | NUMBER ) )=>dv= defined_value )?
 			int alt8=2;
 			try { DebugEnterSubRule(8);
 			try { DebugEnterDecision(8, false);
@@ -960,15 +960,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:626:16: ( LOWER ( LOWER | NUMBER ) )=>dv= defined_value
+				// Smi.g:623:16: ( LOWER ( LOWER | NUMBER ) )=>dv= defined_value
 				{
-				DebugLocation(626, 44);
-				PushFollow(Follow._defined_value_in_obj_id_comp_lst2037);
+				DebugLocation(623, 44);
+				PushFollow(Follow._defined_value_in_obj_id_comp_lst2018);
 				dv=defined_value();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, dv.Tree);
-				DebugLocation(626, 59);
+				DebugLocation(623, 59);
 				if (state.backtracking == 0)
 				{
 					 retval.result.DefinedValue = (dv!=null?dv.result:default(DefinedValue)); 
@@ -980,8 +980,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(8); }
 
-			DebugLocation(627, 2);
-			// Smi.g:627:2: (oid= obj_id_component )+
+			DebugLocation(624, 2);
+			// Smi.g:624:2: (oid= obj_id_component )+
 			int cnt9=0;
 			try { DebugEnterSubRule(9);
 			while (true)
@@ -1001,15 +1001,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:627:3: oid= obj_id_component
+					// Smi.g:624:3: oid= obj_id_component
 					{
-					DebugLocation(627, 6);
-					PushFollow(Follow._obj_id_component_in_obj_id_comp_lst2047);
+					DebugLocation(624, 6);
+					PushFollow(Follow._obj_id_component_in_obj_id_comp_lst2028);
 					oid=obj_id_component();
 					PopFollow();
 					if (state.failed) return retval;
 					if (state.backtracking == 0) adaptor.AddChild(root_0, oid.Tree);
-					DebugLocation(627, 24);
+					DebugLocation(624, 24);
 					if (state.backtracking == 0)
 					{
 						 retval.result.Add((oid!=null?oid.result:default(IdComponent))); 
@@ -1034,8 +1034,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 			} finally { DebugExitSubRule(9); }
 
-			DebugLocation(628, 2);
-			R_BRACE13=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_obj_id_comp_lst2055); if (state.failed) return retval;
+			DebugLocation(625, 2);
+			R_BRACE13=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_obj_id_comp_lst2036); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			R_BRACE13_tree = (CommonTree)adaptor.Create(R_BRACE13);
 			adaptor.AddChild(root_0, R_BRACE13_tree);
@@ -1062,7 +1062,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("obj_id_comp_lst", 5);
 			LeaveRule_obj_id_comp_lst();
 		}
-		DebugLocation(629, 1);
+		DebugLocation(626, 1);
 		} finally { DebugExitRule(GrammarFileName, "obj_id_comp_lst"); }
 		return retval;
 
@@ -1079,7 +1079,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_defined_value();
 	partial void LeaveRule_defined_value();
 	// $ANTLR start "defined_value"
-	// Smi.g:632:11: protected defined_value returns [DefinedValue result = new DefinedValue()] : (mod= ( UPPER | LOWER ) DOT )? v= LOWER ;
+	// Smi.g:629:11: protected defined_value returns [DefinedValue result = new DefinedValue()] : (mod= ( UPPER | LOWER ) DOT )? v= LOWER ;
 	[GrammarRule("defined_value")]
 	protected SmiParser.defined_value_return defined_value()
 	{
@@ -1099,17 +1099,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree v_tree = default(CommonTree);
 		CommonTree DOT14_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "defined_value");
-		DebugLocation(632, 1);
+		DebugLocation(629, 1);
 		try
 		{
-			// Smi.g:633:5: ( (mod= ( UPPER | LOWER ) DOT )? v= LOWER )
+			// Smi.g:630:5: ( (mod= ( UPPER | LOWER ) DOT )? v= LOWER )
 			DebugEnterAlt(1);
-			// Smi.g:633:7: (mod= ( UPPER | LOWER ) DOT )? v= LOWER
+			// Smi.g:630:7: (mod= ( UPPER | LOWER ) DOT )? v= LOWER
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(633, 7);
-			// Smi.g:633:7: (mod= ( UPPER | LOWER ) DOT )?
+			DebugLocation(630, 7);
+			// Smi.g:630:7: (mod= ( UPPER | LOWER ) DOT )?
 			int alt10=2;
 			try { DebugEnterSubRule(10);
 			try { DebugEnterDecision(10, false);
@@ -1133,9 +1133,9 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:633:8: mod= ( UPPER | LOWER ) DOT
+				// Smi.g:630:8: mod= ( UPPER | LOWER ) DOT
 				{
-				DebugLocation(633, 11);
+				DebugLocation(630, 11);
 
 				mod=(IToken)input.LT(1);
 				if (input.LA(1)==LOWER||input.LA(1)==UPPER)
@@ -1152,13 +1152,13 @@ public partial class SmiParser : Antlr.Runtime.Parser
 					throw mse;
 				}
 
-				DebugLocation(633, 28);
-				DOT14=(IToken)Match(input,DOT,Follow._DOT_in_defined_value2087); if (state.failed) return retval;
+				DebugLocation(630, 28);
+				DOT14=(IToken)Match(input,DOT,Follow._DOT_in_defined_value2068); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				DOT14_tree = (CommonTree)adaptor.Create(DOT14);
 				adaptor.AddChild(root_0, DOT14_tree);
 				}
-				DebugLocation(633, 32);
+				DebugLocation(630, 32);
 				if (state.backtracking == 0)
 				{
 					 retval.result.Module = (mod!=null?mod.Text:null); 
@@ -1170,13 +1170,13 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(10); }
 
-			DebugLocation(634, 3);
-			v=(IToken)Match(input,LOWER,Follow._LOWER_in_defined_value2097); if (state.failed) return retval;
+			DebugLocation(631, 3);
+			v=(IToken)Match(input,LOWER,Follow._LOWER_in_defined_value2078); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			v_tree = (CommonTree)adaptor.Create(v);
 			adaptor.AddChild(root_0, v_tree);
 			}
-			DebugLocation(634, 10);
+			DebugLocation(631, 10);
 			if (state.backtracking == 0)
 			{
 				 retval.result.Value = (v!=null?v.Text:null); 
@@ -1203,7 +1203,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("defined_value", 6);
 			LeaveRule_defined_value();
 		}
-		DebugLocation(635, 1);
+		DebugLocation(632, 1);
 		} finally { DebugExitRule(GrammarFileName, "defined_value"); }
 		return retval;
 
@@ -1220,7 +1220,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_obj_id_component();
 	partial void LeaveRule_obj_id_component();
 	// $ANTLR start "obj_id_component"
-	// Smi.g:638:1: obj_id_component returns [IdComponent result = new IdComponent()] : (num1= NUMBER |name= LOWER ) ( L_PAREN num2= NUMBER R_PAREN )? ;
+	// Smi.g:635:1: obj_id_component returns [IdComponent result = new IdComponent()] : (num1= NUMBER |name= LOWER ) ( L_PAREN num2= NUMBER R_PAREN )? ;
 	[GrammarRule("obj_id_component")]
 	private SmiParser.obj_id_component_return obj_id_component()
 	{
@@ -1244,17 +1244,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree L_PAREN15_tree = default(CommonTree);
 		CommonTree R_PAREN16_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "obj_id_component");
-		DebugLocation(638, 1);
+		DebugLocation(635, 1);
 		try
 		{
-			// Smi.g:639:5: ( (num1= NUMBER |name= LOWER ) ( L_PAREN num2= NUMBER R_PAREN )? )
+			// Smi.g:636:5: ( (num1= NUMBER |name= LOWER ) ( L_PAREN num2= NUMBER R_PAREN )? )
 			DebugEnterAlt(1);
-			// Smi.g:639:7: (num1= NUMBER |name= LOWER ) ( L_PAREN num2= NUMBER R_PAREN )?
+			// Smi.g:636:7: (num1= NUMBER |name= LOWER ) ( L_PAREN num2= NUMBER R_PAREN )?
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(639, 7);
-			// Smi.g:639:7: (num1= NUMBER |name= LOWER )
+			DebugLocation(636, 7);
+			// Smi.g:636:7: (num1= NUMBER |name= LOWER )
 			int alt11=2;
 			try { DebugEnterSubRule(11);
 			try { DebugEnterDecision(11, false);
@@ -1280,15 +1280,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:639:8: num1= NUMBER
+				// Smi.g:636:8: num1= NUMBER
 				{
-				DebugLocation(639, 12);
-				num1=(IToken)Match(input,NUMBER,Follow._NUMBER_in_obj_id_component2122); if (state.failed) return retval;
+				DebugLocation(636, 12);
+				num1=(IToken)Match(input,NUMBER,Follow._NUMBER_in_obj_id_component2103); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				num1_tree = (CommonTree)adaptor.Create(num1);
 				adaptor.AddChild(root_0, num1_tree);
 				}
-				DebugLocation(639, 20);
+				DebugLocation(636, 20);
 				if (state.backtracking == 0)
 				{
 					 retval.result.Number = long.Parse((num1!=null?num1.Text:null)); 
@@ -1298,15 +1298,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// Smi.g:640:7: name= LOWER
+				// Smi.g:637:7: name= LOWER
 				{
-				DebugLocation(640, 11);
-				name=(IToken)Match(input,LOWER,Follow._LOWER_in_obj_id_component2134); if (state.failed) return retval;
+				DebugLocation(637, 11);
+				name=(IToken)Match(input,LOWER,Follow._LOWER_in_obj_id_component2115); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				name_tree = (CommonTree)adaptor.Create(name);
 				adaptor.AddChild(root_0, name_tree);
 				}
-				DebugLocation(640, 18);
+				DebugLocation(637, 18);
 				if (state.backtracking == 0)
 				{
 					 retval.result.Name = (name!=null?name.Text:null); 
@@ -1318,8 +1318,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(11); }
 
-			DebugLocation(641, 2);
-			// Smi.g:641:2: ( L_PAREN num2= NUMBER R_PAREN )?
+			DebugLocation(638, 2);
+			// Smi.g:638:2: ( L_PAREN num2= NUMBER R_PAREN )?
 			int alt12=2;
 			try { DebugEnterSubRule(12);
 			try { DebugEnterDecision(12, false);
@@ -1334,27 +1334,27 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:641:3: L_PAREN num2= NUMBER R_PAREN
+				// Smi.g:638:3: L_PAREN num2= NUMBER R_PAREN
 				{
-				DebugLocation(641, 3);
-				L_PAREN15=(IToken)Match(input,L_PAREN,Follow._L_PAREN_in_obj_id_component2141); if (state.failed) return retval;
+				DebugLocation(638, 3);
+				L_PAREN15=(IToken)Match(input,L_PAREN,Follow._L_PAREN_in_obj_id_component2122); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				L_PAREN15_tree = (CommonTree)adaptor.Create(L_PAREN15);
 				adaptor.AddChild(root_0, L_PAREN15_tree);
 				}
-				DebugLocation(641, 15);
-				num2=(IToken)Match(input,NUMBER,Follow._NUMBER_in_obj_id_component2145); if (state.failed) return retval;
+				DebugLocation(638, 15);
+				num2=(IToken)Match(input,NUMBER,Follow._NUMBER_in_obj_id_component2126); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				num2_tree = (CommonTree)adaptor.Create(num2);
 				adaptor.AddChild(root_0, num2_tree);
 				}
-				DebugLocation(641, 23);
-				R_PAREN16=(IToken)Match(input,R_PAREN,Follow._R_PAREN_in_obj_id_component2147); if (state.failed) return retval;
+				DebugLocation(638, 23);
+				R_PAREN16=(IToken)Match(input,R_PAREN,Follow._R_PAREN_in_obj_id_component2128); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				R_PAREN16_tree = (CommonTree)adaptor.Create(R_PAREN16);
 				adaptor.AddChild(root_0, R_PAREN16_tree);
 				}
-				DebugLocation(641, 31);
+				DebugLocation(638, 31);
 				if (state.backtracking == 0)
 				{
 					 retval.result.Number = long.Parse((num2!=null?num2.Text:null)); 
@@ -1388,7 +1388,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("obj_id_component", 7);
 			LeaveRule_obj_id_component();
 		}
-		DebugLocation(642, 1);
+		DebugLocation(639, 1);
 		} finally { DebugExitRule(GrammarFileName, "obj_id_component"); }
 		return retval;
 
@@ -1405,7 +1405,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_tag_default();
 	partial void LeaveRule_tag_default();
 	// $ANTLR start "tag_default"
-	// Smi.g:648:1: tag_default returns [TagDefault result] : ( EXPLICIT_KW | IMPLICIT_KW | AUTOMATIC_KW );
+	// Smi.g:645:1: tag_default returns [TagDefault result] : ( EXPLICIT_KW | IMPLICIT_KW | AUTOMATIC_KW );
 	[GrammarRule("tag_default")]
 	private SmiParser.tag_default_return tag_default()
 	{
@@ -1425,10 +1425,10 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree IMPLICIT_KW18_tree = default(CommonTree);
 		CommonTree AUTOMATIC_KW19_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "tag_default");
-		DebugLocation(648, 1);
+		DebugLocation(645, 1);
 		try
 		{
-			// Smi.g:649:5: ( EXPLICIT_KW | IMPLICIT_KW | AUTOMATIC_KW )
+			// Smi.g:646:5: ( EXPLICIT_KW | IMPLICIT_KW | AUTOMATIC_KW )
 			int alt13=3;
 			try { DebugEnterDecision(13, false);
 			switch (input.LA(1))
@@ -1462,17 +1462,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:649:7: EXPLICIT_KW
+				// Smi.g:646:7: EXPLICIT_KW
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(649, 7);
-				EXPLICIT_KW17=(IToken)Match(input,EXPLICIT_KW,Follow._EXPLICIT_KW_in_tag_default2173); if (state.failed) return retval;
+				DebugLocation(646, 7);
+				EXPLICIT_KW17=(IToken)Match(input,EXPLICIT_KW,Follow._EXPLICIT_KW_in_tag_default2154); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				EXPLICIT_KW17_tree = (CommonTree)adaptor.Create(EXPLICIT_KW17);
 				adaptor.AddChild(root_0, EXPLICIT_KW17_tree);
 				}
-				DebugLocation(649, 19);
+				DebugLocation(646, 19);
 				if (state.backtracking == 0)
 				{
 					 retval.result = TagDefault.Explicit; 
@@ -1482,17 +1482,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// Smi.g:650:4: IMPLICIT_KW
+				// Smi.g:647:4: IMPLICIT_KW
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(650, 4);
-				IMPLICIT_KW18=(IToken)Match(input,IMPLICIT_KW,Follow._IMPLICIT_KW_in_tag_default2180); if (state.failed) return retval;
+				DebugLocation(647, 4);
+				IMPLICIT_KW18=(IToken)Match(input,IMPLICIT_KW,Follow._IMPLICIT_KW_in_tag_default2161); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				IMPLICIT_KW18_tree = (CommonTree)adaptor.Create(IMPLICIT_KW18);
 				adaptor.AddChild(root_0, IMPLICIT_KW18_tree);
 				}
-				DebugLocation(650, 16);
+				DebugLocation(647, 16);
 				if (state.backtracking == 0)
 				{
 					 retval.result = TagDefault.Implicit; 
@@ -1502,17 +1502,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 3:
 				DebugEnterAlt(3);
-				// Smi.g:651:4: AUTOMATIC_KW
+				// Smi.g:648:4: AUTOMATIC_KW
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(651, 4);
-				AUTOMATIC_KW19=(IToken)Match(input,AUTOMATIC_KW,Follow._AUTOMATIC_KW_in_tag_default2187); if (state.failed) return retval;
+				DebugLocation(648, 4);
+				AUTOMATIC_KW19=(IToken)Match(input,AUTOMATIC_KW,Follow._AUTOMATIC_KW_in_tag_default2168); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				AUTOMATIC_KW19_tree = (CommonTree)adaptor.Create(AUTOMATIC_KW19);
 				adaptor.AddChild(root_0, AUTOMATIC_KW19_tree);
 				}
-				DebugLocation(651, 17);
+				DebugLocation(648, 17);
 				if (state.backtracking == 0)
 				{
 					 retval.result = TagDefault.Automatic; 
@@ -1541,7 +1541,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("tag_default", 8);
 			LeaveRule_tag_default();
 		}
-		DebugLocation(652, 1);
+		DebugLocation(649, 1);
 		} finally { DebugExitRule(GrammarFileName, "tag_default"); }
 		return retval;
 
@@ -1558,7 +1558,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_exports();
 	partial void LeaveRule_exports();
 	// $ANTLR start "exports"
-	// Smi.g:654:1: exports returns [Exports result = new Exports()] : EXPORTS_KW ( (sym= symbol_list )? | ALL_KW ) SEMI ;
+	// Smi.g:651:1: exports returns [Exports result = new Exports()] : EXPORTS_KW ( (sym= symbol_list )? | ALL_KW ) SEMI ;
 	[GrammarRule("exports")]
 	private SmiParser.exports_return exports()
 	{
@@ -1579,23 +1579,23 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree ALL_KW21_tree = default(CommonTree);
 		CommonTree SEMI22_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "exports");
-		DebugLocation(654, 10);
+		DebugLocation(651, 10);
 		try
 		{
-			// Smi.g:655:5: ( EXPORTS_KW ( (sym= symbol_list )? | ALL_KW ) SEMI )
+			// Smi.g:652:5: ( EXPORTS_KW ( (sym= symbol_list )? | ALL_KW ) SEMI )
 			DebugEnterAlt(1);
-			// Smi.g:655:7: EXPORTS_KW ( (sym= symbol_list )? | ALL_KW ) SEMI
+			// Smi.g:652:7: EXPORTS_KW ( (sym= symbol_list )? | ALL_KW ) SEMI
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(655, 7);
-			EXPORTS_KW20=(IToken)Match(input,EXPORTS_KW,Follow._EXPORTS_KW_in_exports2207); if (state.failed) return retval;
+			DebugLocation(652, 7);
+			EXPORTS_KW20=(IToken)Match(input,EXPORTS_KW,Follow._EXPORTS_KW_in_exports2188); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			EXPORTS_KW20_tree = (CommonTree)adaptor.Create(EXPORTS_KW20);
 			adaptor.AddChild(root_0, EXPORTS_KW20_tree);
 			}
-			DebugLocation(655, 18);
-			// Smi.g:655:18: ( (sym= symbol_list )? | ALL_KW )
+			DebugLocation(652, 18);
+			// Smi.g:652:18: ( (sym= symbol_list )? | ALL_KW )
 			int alt15=2;
 			try { DebugEnterSubRule(15);
 			try { DebugEnterDecision(15, false);
@@ -1621,10 +1621,10 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:656:6: (sym= symbol_list )?
+				// Smi.g:653:6: (sym= symbol_list )?
 				{
-				DebugLocation(656, 6);
-				// Smi.g:656:6: (sym= symbol_list )?
+				DebugLocation(653, 6);
+				// Smi.g:653:6: (sym= symbol_list )?
 				int alt14=2;
 				try { DebugEnterSubRule(14);
 				try { DebugEnterDecision(14, false);
@@ -1639,15 +1639,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:656:7: sym= symbol_list
+					// Smi.g:653:7: sym= symbol_list
 					{
-					DebugLocation(656, 10);
-					PushFollow(Follow._symbol_list_in_exports2219);
+					DebugLocation(653, 10);
+					PushFollow(Follow._symbol_list_in_exports2200);
 					sym=symbol_list();
 					PopFollow();
 					if (state.failed) return retval;
 					if (state.backtracking == 0) adaptor.AddChild(root_0, sym.Tree);
-					DebugLocation(656, 23);
+					DebugLocation(653, 23);
 					if (state.backtracking == 0)
 					{
 						 retval.result.Add((sym!=null?input.ToString(sym.Start,sym.Stop):null)); 
@@ -1664,15 +1664,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// Smi.g:657:5: ALL_KW
+				// Smi.g:654:5: ALL_KW
 				{
-				DebugLocation(657, 5);
-				ALL_KW21=(IToken)Match(input,ALL_KW,Follow._ALL_KW_in_exports2230); if (state.failed) return retval;
+				DebugLocation(654, 5);
+				ALL_KW21=(IToken)Match(input,ALL_KW,Follow._ALL_KW_in_exports2211); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				ALL_KW21_tree = (CommonTree)adaptor.Create(ALL_KW21);
 				adaptor.AddChild(root_0, ALL_KW21_tree);
 				}
-				DebugLocation(657, 12);
+				DebugLocation(654, 12);
 				if (state.backtracking == 0)
 				{
 					 retval.result.AllExported = true; 
@@ -1684,8 +1684,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(15); }
 
-			DebugLocation(658, 7);
-			SEMI22=(IToken)Match(input,SEMI,Follow._SEMI_in_exports2241); if (state.failed) return retval;
+			DebugLocation(655, 7);
+			SEMI22=(IToken)Match(input,SEMI,Follow._SEMI_in_exports2222); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			SEMI22_tree = (CommonTree)adaptor.Create(SEMI22);
 			adaptor.AddChild(root_0, SEMI22_tree);
@@ -1712,7 +1712,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("exports", 9);
 			LeaveRule_exports();
 		}
-		DebugLocation(658, 10);
+		DebugLocation(655, 10);
 		} finally { DebugExitRule(GrammarFileName, "exports"); }
 		return retval;
 
@@ -1729,7 +1729,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_imports();
 	partial void LeaveRule_imports();
 	// $ANTLR start "imports"
-	// Smi.g:660:1: imports returns [Imports result = new Imports()] : IMPORTS_KW (sym= symbols_from_module )* SEMI ;
+	// Smi.g:657:1: imports returns [Imports result = new Imports()] : IMPORTS_KW (sym= symbols_from_module )* SEMI ;
 	[GrammarRule("imports")]
 	private SmiParser.imports_return imports()
 	{
@@ -1748,23 +1748,23 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree IMPORTS_KW23_tree = default(CommonTree);
 		CommonTree SEMI24_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "imports");
-		DebugLocation(660, 79);
+		DebugLocation(657, 79);
 		try
 		{
-			// Smi.g:661:5: ( IMPORTS_KW (sym= symbols_from_module )* SEMI )
+			// Smi.g:658:5: ( IMPORTS_KW (sym= symbols_from_module )* SEMI )
 			DebugEnterAlt(1);
-			// Smi.g:661:7: IMPORTS_KW (sym= symbols_from_module )* SEMI
+			// Smi.g:658:7: IMPORTS_KW (sym= symbols_from_module )* SEMI
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(661, 7);
-			IMPORTS_KW23=(IToken)Match(input,IMPORTS_KW,Follow._IMPORTS_KW_in_imports2257); if (state.failed) return retval;
+			DebugLocation(658, 7);
+			IMPORTS_KW23=(IToken)Match(input,IMPORTS_KW,Follow._IMPORTS_KW_in_imports2238); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			IMPORTS_KW23_tree = (CommonTree)adaptor.Create(IMPORTS_KW23);
 			adaptor.AddChild(root_0, IMPORTS_KW23_tree);
 			}
-			DebugLocation(661, 18);
-			// Smi.g:661:18: (sym= symbols_from_module )*
+			DebugLocation(658, 18);
+			// Smi.g:658:18: (sym= symbols_from_module )*
 			try { DebugEnterSubRule(16);
 			while (true)
 			{
@@ -1783,15 +1783,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:661:19: sym= symbols_from_module
+					// Smi.g:658:19: sym= symbols_from_module
 					{
-					DebugLocation(661, 22);
-					PushFollow(Follow._symbols_from_module_in_imports2262);
+					DebugLocation(658, 22);
+					PushFollow(Follow._symbols_from_module_in_imports2243);
 					sym=symbols_from_module();
 					PopFollow();
 					if (state.failed) return retval;
 					if (state.backtracking == 0) adaptor.AddChild(root_0, sym.Tree);
-					DebugLocation(661, 43);
+					DebugLocation(658, 43);
 					if (state.backtracking == 0)
 					{
 						 retval.result.Add((sym!=null?sym.result:default(Import))); 
@@ -1810,8 +1810,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 			} finally { DebugExitSubRule(16); }
 
-			DebugLocation(661, 75);
-			SEMI24=(IToken)Match(input,SEMI,Follow._SEMI_in_imports2268); if (state.failed) return retval;
+			DebugLocation(658, 75);
+			SEMI24=(IToken)Match(input,SEMI,Follow._SEMI_in_imports2249); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			SEMI24_tree = (CommonTree)adaptor.Create(SEMI24);
 			adaptor.AddChild(root_0, SEMI24_tree);
@@ -1838,7 +1838,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("imports", 10);
 			LeaveRule_imports();
 		}
-		DebugLocation(661, 79);
+		DebugLocation(658, 79);
 		} finally { DebugExitRule(GrammarFileName, "imports"); }
 		return retval;
 
@@ -1855,7 +1855,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_assignment();
 	partial void LeaveRule_assignment();
 	// $ANTLR start "assignment"
-	// Smi.g:664:1: assignment returns [IConstruct result] : (u= UPPER ASSIGN_OP t= type |l= LOWER t2= type ASSIGN_OP v= value |name= ( UPPER | macroName ) 'MACRO' ASSIGN_OP BEGIN_KW (~ ( END_KW ) )* END_KW );
+	// Smi.g:661:1: assignment returns [IConstruct result] : (u= UPPER ASSIGN_OP t= type |l= LOWER t2= type ASSIGN_OP v= value |name= ( UPPER | macroName ) 'MACRO' ASSIGN_OP BEGIN_KW (~ ( END_KW ) )* END_KW );
 	[GrammarRule("assignment")]
 	private SmiParser.assignment_return assignment()
 	{
@@ -1895,10 +1895,10 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree set32_tree = default(CommonTree);
 		CommonTree END_KW33_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "assignment");
-		DebugLocation(664, 1);
+		DebugLocation(661, 1);
 		try
 		{
-			// Smi.g:665:5: (u= UPPER ASSIGN_OP t= type |l= LOWER t2= type ASSIGN_OP v= value |name= ( UPPER | macroName ) 'MACRO' ASSIGN_OP BEGIN_KW (~ ( END_KW ) )* END_KW )
+			// Smi.g:662:5: (u= UPPER ASSIGN_OP t= type |l= LOWER t2= type ASSIGN_OP v= value |name= ( UPPER | macroName ) 'MACRO' ASSIGN_OP BEGIN_KW (~ ( END_KW ) )* END_KW )
 			int alt19=3;
 			try { DebugEnterDecision(19, false);
 			switch (input.LA(1))
@@ -1981,29 +1981,29 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:666:2: u= UPPER ASSIGN_OP t= type
+				// Smi.g:663:2: u= UPPER ASSIGN_OP t= type
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(666, 3);
-				u=(IToken)Match(input,UPPER,Follow._UPPER_in_assignment2291); if (state.failed) return retval;
+				DebugLocation(663, 3);
+				u=(IToken)Match(input,UPPER,Follow._UPPER_in_assignment2272); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				u_tree = (CommonTree)adaptor.Create(u);
 				adaptor.AddChild(root_0, u_tree);
 				}
-				DebugLocation(666, 10);
-				ASSIGN_OP25=(IToken)Match(input,ASSIGN_OP,Follow._ASSIGN_OP_in_assignment2293); if (state.failed) return retval;
+				DebugLocation(663, 10);
+				ASSIGN_OP25=(IToken)Match(input,ASSIGN_OP,Follow._ASSIGN_OP_in_assignment2274); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				ASSIGN_OP25_tree = (CommonTree)adaptor.Create(ASSIGN_OP25);
 				adaptor.AddChild(root_0, ASSIGN_OP25_tree);
 				}
-				DebugLocation(666, 21);
-				PushFollow(Follow._type_in_assignment2297);
+				DebugLocation(663, 21);
+				PushFollow(Follow._type_in_assignment2278);
 				t=type();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, t.Tree);
-				DebugLocation(667, 2);
+				DebugLocation(664, 2);
 				if (state.backtracking == 0)
 				{
 					 
@@ -2016,35 +2016,35 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// Smi.g:671:7: l= LOWER t2= type ASSIGN_OP v= value
+				// Smi.g:668:7: l= LOWER t2= type ASSIGN_OP v= value
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(671, 8);
-				l=(IToken)Match(input,LOWER,Follow._LOWER_in_assignment2311); if (state.failed) return retval;
+				DebugLocation(668, 8);
+				l=(IToken)Match(input,LOWER,Follow._LOWER_in_assignment2292); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				l_tree = (CommonTree)adaptor.Create(l);
 				adaptor.AddChild(root_0, l_tree);
 				}
-				DebugLocation(671, 17);
-				PushFollow(Follow._type_in_assignment2315);
+				DebugLocation(668, 17);
+				PushFollow(Follow._type_in_assignment2296);
 				t2=type();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, t2.Tree);
-				DebugLocation(671, 23);
-				ASSIGN_OP26=(IToken)Match(input,ASSIGN_OP,Follow._ASSIGN_OP_in_assignment2317); if (state.failed) return retval;
+				DebugLocation(668, 23);
+				ASSIGN_OP26=(IToken)Match(input,ASSIGN_OP,Follow._ASSIGN_OP_in_assignment2298); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				ASSIGN_OP26_tree = (CommonTree)adaptor.Create(ASSIGN_OP26);
 				adaptor.AddChild(root_0, ASSIGN_OP26_tree);
 				}
-				DebugLocation(671, 34);
-				PushFollow(Follow._value_in_assignment2321);
+				DebugLocation(668, 34);
+				PushFollow(Follow._value_in_assignment2302);
 				v=value();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, v.Tree);
-				DebugLocation(672, 2);
+				DebugLocation(669, 2);
 				if (state.backtracking == 0)
 				{
 					 
@@ -2057,12 +2057,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 3:
 				DebugEnterAlt(3);
-				// Smi.g:676:7: name= ( UPPER | macroName ) 'MACRO' ASSIGN_OP BEGIN_KW (~ ( END_KW ) )* END_KW
+				// Smi.g:673:7: name= ( UPPER | macroName ) 'MACRO' ASSIGN_OP BEGIN_KW (~ ( END_KW ) )* END_KW
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(676, 11);
-				// Smi.g:676:12: ( UPPER | macroName )
+				DebugLocation(673, 11);
+				// Smi.g:673:12: ( UPPER | macroName )
 				int alt17=2;
 				try { DebugEnterSubRule(17);
 				try { DebugEnterDecision(17, false);
@@ -2088,10 +2088,10 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:676:13: UPPER
+					// Smi.g:673:13: UPPER
 					{
-					DebugLocation(676, 13);
-					UPPER27=(IToken)Match(input,UPPER,Follow._UPPER_in_assignment2336); if (state.failed) return retval;
+					DebugLocation(673, 13);
+					UPPER27=(IToken)Match(input,UPPER,Follow._UPPER_in_assignment2317); if (state.failed) return retval;
 					if (state.backtracking == 0) {
 					UPPER27_tree = (CommonTree)adaptor.Create(UPPER27);
 					adaptor.AddChild(root_0, UPPER27_tree);
@@ -2101,10 +2101,10 @@ public partial class SmiParser : Antlr.Runtime.Parser
 					break;
 				case 2:
 					DebugEnterAlt(2);
-					// Smi.g:676:21: macroName
+					// Smi.g:673:21: macroName
 					{
-					DebugLocation(676, 21);
-					PushFollow(Follow._macroName_in_assignment2340);
+					DebugLocation(673, 21);
+					PushFollow(Follow._macroName_in_assignment2321);
 					macroName28=macroName();
 					PopFollow();
 					if (state.failed) return retval;
@@ -2116,26 +2116,26 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				}
 				} finally { DebugExitSubRule(17); }
 
-				DebugLocation(676, 32);
-				string_literal29=(IToken)Match(input,151,Follow._151_in_assignment2343); if (state.failed) return retval;
+				DebugLocation(673, 32);
+				string_literal29=(IToken)Match(input,151,Follow._151_in_assignment2324); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal29_tree = (CommonTree)adaptor.Create(string_literal29);
 				adaptor.AddChild(root_0, string_literal29_tree);
 				}
-				DebugLocation(676, 40);
-				ASSIGN_OP30=(IToken)Match(input,ASSIGN_OP,Follow._ASSIGN_OP_in_assignment2345); if (state.failed) return retval;
+				DebugLocation(673, 40);
+				ASSIGN_OP30=(IToken)Match(input,ASSIGN_OP,Follow._ASSIGN_OP_in_assignment2326); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				ASSIGN_OP30_tree = (CommonTree)adaptor.Create(ASSIGN_OP30);
 				adaptor.AddChild(root_0, ASSIGN_OP30_tree);
 				}
-				DebugLocation(676, 50);
-				BEGIN_KW31=(IToken)Match(input,BEGIN_KW,Follow._BEGIN_KW_in_assignment2347); if (state.failed) return retval;
+				DebugLocation(673, 50);
+				BEGIN_KW31=(IToken)Match(input,BEGIN_KW,Follow._BEGIN_KW_in_assignment2328); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				BEGIN_KW31_tree = (CommonTree)adaptor.Create(BEGIN_KW31);
 				adaptor.AddChild(root_0, BEGIN_KW31_tree);
 				}
-				DebugLocation(676, 59);
-				// Smi.g:676:59: (~ ( END_KW ) )*
+				DebugLocation(673, 59);
+				// Smi.g:673:59: (~ ( END_KW ) )*
 				try { DebugEnterSubRule(18);
 				while (true)
 				{
@@ -2156,7 +2156,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 						DebugEnterAlt(1);
 						// Smi.g:
 						{
-						DebugLocation(676, 59);
+						DebugLocation(673, 59);
 
 						set32=(IToken)input.LT(1);
 						if ((input.LA(1)>=ABSENT_KW && input.LA(1)<=EMBEDDED_KW)||(input.LA(1)>=ENUMERATED_KW && input.LA(1)<=195))
@@ -2187,13 +2187,13 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 				} finally { DebugExitSubRule(18); }
 
-				DebugLocation(676, 72);
-				END_KW33=(IToken)Match(input,END_KW,Follow._END_KW_in_assignment2357); if (state.failed) return retval;
+				DebugLocation(673, 72);
+				END_KW33=(IToken)Match(input,END_KW,Follow._END_KW_in_assignment2338); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				END_KW33_tree = (CommonTree)adaptor.Create(END_KW33);
 				adaptor.AddChild(root_0, END_KW33_tree);
 				}
-				DebugLocation(676, 79);
+				DebugLocation(673, 79);
 				if (state.backtracking == 0)
 				{
 					 retval.result = new Macro((name!=null?name.Text:null)); 
@@ -2222,7 +2222,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("assignment", 11);
 			LeaveRule_assignment();
 		}
-		DebugLocation(677, 1);
+		DebugLocation(674, 1);
 		} finally { DebugExitRule(GrammarFileName, "assignment"); }
 		return retval;
 
@@ -2239,7 +2239,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_symbol_list();
 	partial void LeaveRule_symbol_list();
 	// $ANTLR start "symbol_list"
-	// Smi.g:685:1: symbol_list returns [IList<string> result = new List<string>()] : sym= symbol ( COMMA sym2= symbol )* ;
+	// Smi.g:682:1: symbol_list returns [IList<string> result = new List<string>()] : sym= symbol ( COMMA sym2= symbol )* ;
 	[GrammarRule("symbol_list")]
 	private SmiParser.symbol_list_return symbol_list()
 	{
@@ -2257,28 +2257,28 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 		CommonTree COMMA34_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "symbol_list");
-		DebugLocation(685, 52);
+		DebugLocation(682, 52);
 		try
 		{
-			// Smi.g:686:5: (sym= symbol ( COMMA sym2= symbol )* )
+			// Smi.g:683:5: (sym= symbol ( COMMA sym2= symbol )* )
 			DebugEnterAlt(1);
-			// Smi.g:686:7: sym= symbol ( COMMA sym2= symbol )*
+			// Smi.g:683:7: sym= symbol ( COMMA sym2= symbol )*
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(686, 10);
-			PushFollow(Follow._symbol_in_symbol_list2385);
+			DebugLocation(683, 10);
+			PushFollow(Follow._symbol_in_symbol_list2366);
 			sym=symbol();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, sym.Tree);
-			DebugLocation(686, 18);
+			DebugLocation(683, 18);
 			if (state.backtracking == 0)
 			{
 				 retval.result.Add((sym!=null?input.ToString(sym.Start,sym.Stop):null)); 
 			}
-			DebugLocation(687, 3);
-			// Smi.g:687:3: ( COMMA sym2= symbol )*
+			DebugLocation(684, 3);
+			// Smi.g:684:3: ( COMMA sym2= symbol )*
 			try { DebugEnterSubRule(20);
 			while (true)
 			{
@@ -2297,21 +2297,21 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:687:4: COMMA sym2= symbol
+					// Smi.g:684:4: COMMA sym2= symbol
 					{
-					DebugLocation(687, 4);
-					COMMA34=(IToken)Match(input,COMMA,Follow._COMMA_in_symbol_list2392); if (state.failed) return retval;
+					DebugLocation(684, 4);
+					COMMA34=(IToken)Match(input,COMMA,Follow._COMMA_in_symbol_list2373); if (state.failed) return retval;
 					if (state.backtracking == 0) {
 					COMMA34_tree = (CommonTree)adaptor.Create(COMMA34);
 					adaptor.AddChild(root_0, COMMA34_tree);
 					}
-					DebugLocation(687, 14);
-					PushFollow(Follow._symbol_in_symbol_list2396);
+					DebugLocation(684, 14);
+					PushFollow(Follow._symbol_in_symbol_list2377);
 					sym2=symbol();
 					PopFollow();
 					if (state.failed) return retval;
 					if (state.backtracking == 0) adaptor.AddChild(root_0, sym2.Tree);
-					DebugLocation(687, 22);
+					DebugLocation(684, 22);
 					if (state.backtracking == 0)
 					{
 						 retval.result.Add((sym2!=null?input.ToString(sym2.Start,sym2.Stop):null)); 
@@ -2352,7 +2352,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("symbol_list", 12);
 			LeaveRule_symbol_list();
 		}
-		DebugLocation(687, 52);
+		DebugLocation(684, 52);
 		} finally { DebugExitRule(GrammarFileName, "symbol_list"); }
 		return retval;
 
@@ -2369,7 +2369,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_symbols_from_module();
 	partial void LeaveRule_symbols_from_module();
 	// $ANTLR start "symbols_from_module"
-	// Smi.g:689:1: symbols_from_module returns [Import result = new Import()] : syms= symbol_list FROM_KW mod= UPPER ( obj_id_comp_lst | ( defined_value )=> defined_value )? ;
+	// Smi.g:686:1: symbols_from_module returns [Import result = new Import()] : syms= symbol_list FROM_KW mod= UPPER ( obj_id_comp_lst | ( defined_value )=> defined_value )? ;
 	[GrammarRule("symbols_from_module")]
 	private SmiParser.symbols_from_module_return symbols_from_module()
 	{
@@ -2390,45 +2390,45 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree mod_tree = default(CommonTree);
 		CommonTree FROM_KW35_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "symbols_from_module");
-		DebugLocation(689, 27);
+		DebugLocation(686, 27);
 		try
 		{
-			// Smi.g:690:5: (syms= symbol_list FROM_KW mod= UPPER ( obj_id_comp_lst | ( defined_value )=> defined_value )? )
+			// Smi.g:687:5: (syms= symbol_list FROM_KW mod= UPPER ( obj_id_comp_lst | ( defined_value )=> defined_value )? )
 			DebugEnterAlt(1);
-			// Smi.g:690:7: syms= symbol_list FROM_KW mod= UPPER ( obj_id_comp_lst | ( defined_value )=> defined_value )?
+			// Smi.g:687:7: syms= symbol_list FROM_KW mod= UPPER ( obj_id_comp_lst | ( defined_value )=> defined_value )?
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(690, 11);
-			PushFollow(Follow._symbol_list_in_symbols_from_module2419);
+			DebugLocation(687, 11);
+			PushFollow(Follow._symbol_list_in_symbols_from_module2400);
 			syms=symbol_list();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, syms.Tree);
-			DebugLocation(690, 24);
+			DebugLocation(687, 24);
 			if (state.backtracking == 0)
 			{
 				 retval.result.Symbols = (syms!=null?syms.result:default(IList<string>)); 
 			}
-			DebugLocation(691, 2);
-			FROM_KW35=(IToken)Match(input,FROM_KW,Follow._FROM_KW_in_symbols_from_module2424); if (state.failed) return retval;
+			DebugLocation(688, 2);
+			FROM_KW35=(IToken)Match(input,FROM_KW,Follow._FROM_KW_in_symbols_from_module2405); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			FROM_KW35_tree = (CommonTree)adaptor.Create(FROM_KW35);
 			adaptor.AddChild(root_0, FROM_KW35_tree);
 			}
-			DebugLocation(691, 13);
-			mod=(IToken)Match(input,UPPER,Follow._UPPER_in_symbols_from_module2428); if (state.failed) return retval;
+			DebugLocation(688, 13);
+			mod=(IToken)Match(input,UPPER,Follow._UPPER_in_symbols_from_module2409); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			mod_tree = (CommonTree)adaptor.Create(mod);
 			adaptor.AddChild(root_0, mod_tree);
 			}
-			DebugLocation(691, 20);
+			DebugLocation(688, 20);
 			if (state.backtracking == 0)
 			{
 				 retval.result.Module = (mod!=null?mod.Text:null);
 			}
-			DebugLocation(692, 25);
-			// Smi.g:692:25: ( obj_id_comp_lst | ( defined_value )=> defined_value )?
+			DebugLocation(689, 25);
+			// Smi.g:689:25: ( obj_id_comp_lst | ( defined_value )=> defined_value )?
 			int alt21=3;
 			try { DebugEnterSubRule(21);
 			try { DebugEnterDecision(21, false);
@@ -2578,10 +2578,10 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:692:27: obj_id_comp_lst
+				// Smi.g:689:27: obj_id_comp_lst
 				{
-				DebugLocation(692, 27);
-				PushFollow(Follow._obj_id_comp_lst_in_symbols_from_module2458);
+				DebugLocation(689, 27);
+				PushFollow(Follow._obj_id_comp_lst_in_symbols_from_module2439);
 				obj_id_comp_lst36=obj_id_comp_lst();
 				PopFollow();
 				if (state.failed) return retval;
@@ -2591,10 +2591,10 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// Smi.g:693:29: ( defined_value )=> defined_value
+				// Smi.g:690:29: ( defined_value )=> defined_value
 				{
-				DebugLocation(693, 48);
-				PushFollow(Follow._defined_value_in_symbols_from_module2495);
+				DebugLocation(690, 48);
+				PushFollow(Follow._defined_value_in_symbols_from_module2476);
 				defined_value37=defined_value();
 				PopFollow();
 				if (state.failed) return retval;
@@ -2628,7 +2628,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("symbols_from_module", 13);
 			LeaveRule_symbols_from_module();
 		}
-		DebugLocation(694, 27);
+		DebugLocation(691, 27);
 		} finally { DebugExitRule(GrammarFileName, "symbols_from_module"); }
 		return retval;
 
@@ -2638,7 +2638,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_symbol();
 	partial void LeaveRule_symbol();
 	// $ANTLR start "symbol"
-	// Smi.g:696:1: symbol : ( UPPER | LOWER | macroName );
+	// Smi.g:693:1: symbol : ( UPPER | LOWER | macroName );
 	[GrammarRule("symbol")]
 	private AstParserRuleReturnScope<CommonTree, IToken> symbol()
 	{
@@ -2657,10 +2657,10 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree UPPER38_tree = default(CommonTree);
 		CommonTree LOWER39_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "symbol");
-		DebugLocation(696, 33);
+		DebugLocation(693, 33);
 		try
 		{
-			// Smi.g:696:7: ( UPPER | LOWER | macroName )
+			// Smi.g:693:7: ( UPPER | LOWER | macroName )
 			int alt22=3;
 			try { DebugEnterDecision(22, false);
 			switch (input.LA(1))
@@ -2727,12 +2727,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:696:9: UPPER
+				// Smi.g:693:9: UPPER
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(696, 9);
-				UPPER38=(IToken)Match(input,UPPER,Follow._UPPER_in_symbol2531); if (state.failed) return retval;
+				DebugLocation(693, 9);
+				UPPER38=(IToken)Match(input,UPPER,Follow._UPPER_in_symbol2512); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				UPPER38_tree = (CommonTree)adaptor.Create(UPPER38);
 				adaptor.AddChild(root_0, UPPER38_tree);
@@ -2742,12 +2742,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// Smi.g:696:17: LOWER
+				// Smi.g:693:17: LOWER
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(696, 17);
-				LOWER39=(IToken)Match(input,LOWER,Follow._LOWER_in_symbol2535); if (state.failed) return retval;
+				DebugLocation(693, 17);
+				LOWER39=(IToken)Match(input,LOWER,Follow._LOWER_in_symbol2516); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				LOWER39_tree = (CommonTree)adaptor.Create(LOWER39);
 				adaptor.AddChild(root_0, LOWER39_tree);
@@ -2757,12 +2757,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 3:
 				DebugEnterAlt(3);
-				// Smi.g:696:25: macroName
+				// Smi.g:693:25: macroName
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(696, 25);
-				PushFollow(Follow._macroName_in_symbol2539);
+				DebugLocation(693, 25);
+				PushFollow(Follow._macroName_in_symbol2520);
 				macroName40=macroName();
 				PopFollow();
 				if (state.failed) return retval;
@@ -2791,7 +2791,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("symbol", 14);
 			LeaveRule_symbol();
 		}
-		DebugLocation(696, 33);
+		DebugLocation(693, 33);
 		} finally { DebugExitRule(GrammarFileName, "symbol"); }
 		return retval;
 
@@ -2801,7 +2801,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_macroName();
 	partial void LeaveRule_macroName();
 	// $ANTLR start "macroName"
-	// Smi.g:698:1: macroName : ( OPERATION_KW | ERROR_KW | 'BIND' | 'UNBIND' | 'APPLICATION-SERVICE-ELEMENT' | 'APPLICATION-CONTEXT' | 'EXTENSION' | 'EXTENSIONS' | 'EXTENSION-ATTRIBUTE' | 'TOKEN' | 'TOKEN-DATA' | 'SECURITY-CATEGORY' | 'OBJECT' | 'PORT' | 'REFINE' | 'ABSTRACT-BIND' | 'ABSTRACT-UNBIND' | 'ABSTRACT-OPERATION' | 'ABSTRACT-ERROR' | 'ALGORITHM' | 'ENCRYPTED' | 'SIGNED' | 'SIGNATURE' | 'PROTECTED' | smi_macros );
+	// Smi.g:695:1: macroName : ( OPERATION_KW | ERROR_KW | 'BIND' | 'UNBIND' | 'APPLICATION-SERVICE-ELEMENT' | 'APPLICATION-CONTEXT' | 'EXTENSION' | 'EXTENSIONS' | 'EXTENSION-ATTRIBUTE' | 'TOKEN' | 'TOKEN-DATA' | 'SECURITY-CATEGORY' | 'OBJECT' | 'PORT' | 'REFINE' | 'ABSTRACT-BIND' | 'ABSTRACT-UNBIND' | 'ABSTRACT-OPERATION' | 'ABSTRACT-ERROR' | 'ALGORITHM' | 'ENCRYPTED' | 'SIGNED' | 'SIGNATURE' | 'PROTECTED' | smi_macros );
 	[GrammarRule("macroName")]
 	private AstParserRuleReturnScope<CommonTree, IToken> macroName()
 	{
@@ -2864,10 +2864,10 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree string_literal63_tree = default(CommonTree);
 		CommonTree string_literal64_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "macroName");
-		DebugLocation(698, 14);
+		DebugLocation(695, 14);
 		try
 		{
-			// Smi.g:698:10: ( OPERATION_KW | ERROR_KW | 'BIND' | 'UNBIND' | 'APPLICATION-SERVICE-ELEMENT' | 'APPLICATION-CONTEXT' | 'EXTENSION' | 'EXTENSIONS' | 'EXTENSION-ATTRIBUTE' | 'TOKEN' | 'TOKEN-DATA' | 'SECURITY-CATEGORY' | 'OBJECT' | 'PORT' | 'REFINE' | 'ABSTRACT-BIND' | 'ABSTRACT-UNBIND' | 'ABSTRACT-OPERATION' | 'ABSTRACT-ERROR' | 'ALGORITHM' | 'ENCRYPTED' | 'SIGNED' | 'SIGNATURE' | 'PROTECTED' | smi_macros )
+			// Smi.g:695:10: ( OPERATION_KW | ERROR_KW | 'BIND' | 'UNBIND' | 'APPLICATION-SERVICE-ELEMENT' | 'APPLICATION-CONTEXT' | 'EXTENSION' | 'EXTENSIONS' | 'EXTENSION-ATTRIBUTE' | 'TOKEN' | 'TOKEN-DATA' | 'SECURITY-CATEGORY' | 'OBJECT' | 'PORT' | 'REFINE' | 'ABSTRACT-BIND' | 'ABSTRACT-UNBIND' | 'ABSTRACT-OPERATION' | 'ABSTRACT-ERROR' | 'ALGORITHM' | 'ENCRYPTED' | 'SIGNED' | 'SIGNATURE' | 'PROTECTED' | smi_macros )
 			int alt23=25;
 			try { DebugEnterDecision(23, false);
 			switch (input.LA(1))
@@ -3020,12 +3020,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:698:12: OPERATION_KW
+				// Smi.g:695:12: OPERATION_KW
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(698, 12);
-				OPERATION_KW41=(IToken)Match(input,OPERATION_KW,Follow._OPERATION_KW_in_macroName2546); if (state.failed) return retval;
+				DebugLocation(695, 12);
+				OPERATION_KW41=(IToken)Match(input,OPERATION_KW,Follow._OPERATION_KW_in_macroName2527); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				OPERATION_KW41_tree = (CommonTree)adaptor.Create(OPERATION_KW41);
 				adaptor.AddChild(root_0, OPERATION_KW41_tree);
@@ -3035,12 +3035,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// Smi.g:698:27: ERROR_KW
+				// Smi.g:695:27: ERROR_KW
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(698, 27);
-				ERROR_KW42=(IToken)Match(input,ERROR_KW,Follow._ERROR_KW_in_macroName2550); if (state.failed) return retval;
+				DebugLocation(695, 27);
+				ERROR_KW42=(IToken)Match(input,ERROR_KW,Follow._ERROR_KW_in_macroName2531); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				ERROR_KW42_tree = (CommonTree)adaptor.Create(ERROR_KW42);
 				adaptor.AddChild(root_0, ERROR_KW42_tree);
@@ -3050,12 +3050,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 3:
 				DebugEnterAlt(3);
-				// Smi.g:698:39: 'BIND'
+				// Smi.g:695:39: 'BIND'
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(698, 39);
-				string_literal43=(IToken)Match(input,134,Follow._134_in_macroName2555); if (state.failed) return retval;
+				DebugLocation(695, 39);
+				string_literal43=(IToken)Match(input,134,Follow._134_in_macroName2536); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal43_tree = (CommonTree)adaptor.Create(string_literal43);
 				adaptor.AddChild(root_0, string_literal43_tree);
@@ -3065,12 +3065,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 4:
 				DebugEnterAlt(4);
-				// Smi.g:698:48: 'UNBIND'
+				// Smi.g:695:48: 'UNBIND'
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(698, 48);
-				string_literal44=(IToken)Match(input,190,Follow._190_in_macroName2559); if (state.failed) return retval;
+				DebugLocation(695, 48);
+				string_literal44=(IToken)Match(input,190,Follow._190_in_macroName2540); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal44_tree = (CommonTree)adaptor.Create(string_literal44);
 				adaptor.AddChild(root_0, string_literal44_tree);
@@ -3080,12 +3080,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 5:
 				DebugEnterAlt(5);
-				// Smi.g:699:12: 'APPLICATION-SERVICE-ELEMENT'
+				// Smi.g:696:12: 'APPLICATION-SERVICE-ELEMENT'
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(699, 12);
-				string_literal45=(IToken)Match(input,132,Follow._132_in_macroName2573); if (state.failed) return retval;
+				DebugLocation(696, 12);
+				string_literal45=(IToken)Match(input,132,Follow._132_in_macroName2554); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal45_tree = (CommonTree)adaptor.Create(string_literal45);
 				adaptor.AddChild(root_0, string_literal45_tree);
@@ -3095,12 +3095,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 6:
 				DebugEnterAlt(6);
-				// Smi.g:699:44: 'APPLICATION-CONTEXT'
+				// Smi.g:696:44: 'APPLICATION-CONTEXT'
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(699, 44);
-				string_literal46=(IToken)Match(input,131,Follow._131_in_macroName2577); if (state.failed) return retval;
+				DebugLocation(696, 44);
+				string_literal46=(IToken)Match(input,131,Follow._131_in_macroName2558); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal46_tree = (CommonTree)adaptor.Create(string_literal46);
 				adaptor.AddChild(root_0, string_literal46_tree);
@@ -3110,12 +3110,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 7:
 				DebugEnterAlt(7);
-				// Smi.g:699:68: 'EXTENSION'
+				// Smi.g:696:68: 'EXTENSION'
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(699, 68);
-				string_literal47=(IToken)Match(input,144,Follow._144_in_macroName2581); if (state.failed) return retval;
+				DebugLocation(696, 68);
+				string_literal47=(IToken)Match(input,144,Follow._144_in_macroName2562); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal47_tree = (CommonTree)adaptor.Create(string_literal47);
 				adaptor.AddChild(root_0, string_literal47_tree);
@@ -3125,12 +3125,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 8:
 				DebugEnterAlt(8);
-				// Smi.g:700:12: 'EXTENSIONS'
+				// Smi.g:697:12: 'EXTENSIONS'
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(700, 12);
-				string_literal48=(IToken)Match(input,146,Follow._146_in_macroName2595); if (state.failed) return retval;
+				DebugLocation(697, 12);
+				string_literal48=(IToken)Match(input,146,Follow._146_in_macroName2576); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal48_tree = (CommonTree)adaptor.Create(string_literal48);
 				adaptor.AddChild(root_0, string_literal48_tree);
@@ -3140,12 +3140,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 9:
 				DebugEnterAlt(9);
-				// Smi.g:700:27: 'EXTENSION-ATTRIBUTE'
+				// Smi.g:697:27: 'EXTENSION-ATTRIBUTE'
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(700, 27);
-				string_literal49=(IToken)Match(input,145,Follow._145_in_macroName2599); if (state.failed) return retval;
+				DebugLocation(697, 27);
+				string_literal49=(IToken)Match(input,145,Follow._145_in_macroName2580); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal49_tree = (CommonTree)adaptor.Create(string_literal49);
 				adaptor.AddChild(root_0, string_literal49_tree);
@@ -3155,12 +3155,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 10:
 				DebugEnterAlt(10);
-				// Smi.g:700:51: 'TOKEN'
+				// Smi.g:697:51: 'TOKEN'
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(700, 51);
-				string_literal50=(IToken)Match(input,187,Follow._187_in_macroName2603); if (state.failed) return retval;
+				DebugLocation(697, 51);
+				string_literal50=(IToken)Match(input,187,Follow._187_in_macroName2584); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal50_tree = (CommonTree)adaptor.Create(string_literal50);
 				adaptor.AddChild(root_0, string_literal50_tree);
@@ -3170,12 +3170,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 11:
 				DebugEnterAlt(11);
-				// Smi.g:700:61: 'TOKEN-DATA'
+				// Smi.g:697:61: 'TOKEN-DATA'
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(700, 61);
-				string_literal51=(IToken)Match(input,188,Follow._188_in_macroName2607); if (state.failed) return retval;
+				DebugLocation(697, 61);
+				string_literal51=(IToken)Match(input,188,Follow._188_in_macroName2588); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal51_tree = (CommonTree)adaptor.Create(string_literal51);
 				adaptor.AddChild(root_0, string_literal51_tree);
@@ -3185,12 +3185,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 12:
 				DebugEnterAlt(12);
-				// Smi.g:701:5: 'SECURITY-CATEGORY'
+				// Smi.g:698:5: 'SECURITY-CATEGORY'
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(701, 5);
-				string_literal52=(IToken)Match(input,179,Follow._179_in_macroName2614); if (state.failed) return retval;
+				DebugLocation(698, 5);
+				string_literal52=(IToken)Match(input,179,Follow._179_in_macroName2595); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal52_tree = (CommonTree)adaptor.Create(string_literal52);
 				adaptor.AddChild(root_0, string_literal52_tree);
@@ -3200,12 +3200,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 13:
 				DebugEnterAlt(13);
-				// Smi.g:701:27: 'OBJECT'
+				// Smi.g:698:27: 'OBJECT'
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(701, 27);
-				string_literal53=(IToken)Match(input,OBJECT_KW,Follow._OBJECT_KW_in_macroName2618); if (state.failed) return retval;
+				DebugLocation(698, 27);
+				string_literal53=(IToken)Match(input,OBJECT_KW,Follow._OBJECT_KW_in_macroName2599); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal53_tree = (CommonTree)adaptor.Create(string_literal53);
 				adaptor.AddChild(root_0, string_literal53_tree);
@@ -3215,12 +3215,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 14:
 				DebugEnterAlt(14);
-				// Smi.g:701:38: 'PORT'
+				// Smi.g:698:38: 'PORT'
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(701, 38);
-				string_literal54=(IToken)Match(input,172,Follow._172_in_macroName2622); if (state.failed) return retval;
+				DebugLocation(698, 38);
+				string_literal54=(IToken)Match(input,172,Follow._172_in_macroName2603); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal54_tree = (CommonTree)adaptor.Create(string_literal54);
 				adaptor.AddChild(root_0, string_literal54_tree);
@@ -3230,12 +3230,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 15:
 				DebugEnterAlt(15);
-				// Smi.g:701:47: 'REFINE'
+				// Smi.g:698:47: 'REFINE'
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(701, 47);
-				string_literal55=(IToken)Match(input,176,Follow._176_in_macroName2626); if (state.failed) return retval;
+				DebugLocation(698, 47);
+				string_literal55=(IToken)Match(input,176,Follow._176_in_macroName2607); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal55_tree = (CommonTree)adaptor.Create(string_literal55);
 				adaptor.AddChild(root_0, string_literal55_tree);
@@ -3245,12 +3245,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 16:
 				DebugEnterAlt(16);
-				// Smi.g:701:58: 'ABSTRACT-BIND'
+				// Smi.g:698:58: 'ABSTRACT-BIND'
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(701, 58);
-				string_literal56=(IToken)Match(input,124,Follow._124_in_macroName2630); if (state.failed) return retval;
+				DebugLocation(698, 58);
+				string_literal56=(IToken)Match(input,124,Follow._124_in_macroName2611); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal56_tree = (CommonTree)adaptor.Create(string_literal56);
 				adaptor.AddChild(root_0, string_literal56_tree);
@@ -3260,12 +3260,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 17:
 				DebugEnterAlt(17);
-				// Smi.g:702:5: 'ABSTRACT-UNBIND'
+				// Smi.g:699:5: 'ABSTRACT-UNBIND'
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(702, 5);
-				string_literal57=(IToken)Match(input,127,Follow._127_in_macroName2637); if (state.failed) return retval;
+				DebugLocation(699, 5);
+				string_literal57=(IToken)Match(input,127,Follow._127_in_macroName2618); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal57_tree = (CommonTree)adaptor.Create(string_literal57);
 				adaptor.AddChild(root_0, string_literal57_tree);
@@ -3275,12 +3275,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 18:
 				DebugEnterAlt(18);
-				// Smi.g:702:25: 'ABSTRACT-OPERATION'
+				// Smi.g:699:25: 'ABSTRACT-OPERATION'
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(702, 25);
-				string_literal58=(IToken)Match(input,126,Follow._126_in_macroName2641); if (state.failed) return retval;
+				DebugLocation(699, 25);
+				string_literal58=(IToken)Match(input,126,Follow._126_in_macroName2622); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal58_tree = (CommonTree)adaptor.Create(string_literal58);
 				adaptor.AddChild(root_0, string_literal58_tree);
@@ -3290,12 +3290,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 19:
 				DebugEnterAlt(19);
-				// Smi.g:702:48: 'ABSTRACT-ERROR'
+				// Smi.g:699:48: 'ABSTRACT-ERROR'
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(702, 48);
-				string_literal59=(IToken)Match(input,125,Follow._125_in_macroName2645); if (state.failed) return retval;
+				DebugLocation(699, 48);
+				string_literal59=(IToken)Match(input,125,Follow._125_in_macroName2626); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal59_tree = (CommonTree)adaptor.Create(string_literal59);
 				adaptor.AddChild(root_0, string_literal59_tree);
@@ -3305,12 +3305,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 20:
 				DebugEnterAlt(20);
-				// Smi.g:703:5: 'ALGORITHM'
+				// Smi.g:700:5: 'ALGORITHM'
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(703, 5);
-				string_literal60=(IToken)Match(input,130,Follow._130_in_macroName2652); if (state.failed) return retval;
+				DebugLocation(700, 5);
+				string_literal60=(IToken)Match(input,130,Follow._130_in_macroName2633); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal60_tree = (CommonTree)adaptor.Create(string_literal60);
 				adaptor.AddChild(root_0, string_literal60_tree);
@@ -3320,12 +3320,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 21:
 				DebugEnterAlt(21);
-				// Smi.g:703:19: 'ENCRYPTED'
+				// Smi.g:700:19: 'ENCRYPTED'
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(703, 19);
-				string_literal61=(IToken)Match(input,141,Follow._141_in_macroName2656); if (state.failed) return retval;
+				DebugLocation(700, 19);
+				string_literal61=(IToken)Match(input,141,Follow._141_in_macroName2637); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal61_tree = (CommonTree)adaptor.Create(string_literal61);
 				adaptor.AddChild(root_0, string_literal61_tree);
@@ -3335,12 +3335,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 22:
 				DebugEnterAlt(22);
-				// Smi.g:703:33: 'SIGNED'
+				// Smi.g:700:33: 'SIGNED'
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(703, 33);
-				string_literal62=(IToken)Match(input,181,Follow._181_in_macroName2660); if (state.failed) return retval;
+				DebugLocation(700, 33);
+				string_literal62=(IToken)Match(input,181,Follow._181_in_macroName2641); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal62_tree = (CommonTree)adaptor.Create(string_literal62);
 				adaptor.AddChild(root_0, string_literal62_tree);
@@ -3350,12 +3350,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 23:
 				DebugEnterAlt(23);
-				// Smi.g:703:44: 'SIGNATURE'
+				// Smi.g:700:44: 'SIGNATURE'
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(703, 44);
-				string_literal63=(IToken)Match(input,180,Follow._180_in_macroName2664); if (state.failed) return retval;
+				DebugLocation(700, 44);
+				string_literal63=(IToken)Match(input,180,Follow._180_in_macroName2645); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal63_tree = (CommonTree)adaptor.Create(string_literal63);
 				adaptor.AddChild(root_0, string_literal63_tree);
@@ -3365,12 +3365,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 24:
 				DebugEnterAlt(24);
-				// Smi.g:703:58: 'PROTECTED'
+				// Smi.g:700:58: 'PROTECTED'
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(703, 58);
-				string_literal64=(IToken)Match(input,174,Follow._174_in_macroName2668); if (state.failed) return retval;
+				DebugLocation(700, 58);
+				string_literal64=(IToken)Match(input,174,Follow._174_in_macroName2649); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal64_tree = (CommonTree)adaptor.Create(string_literal64);
 				adaptor.AddChild(root_0, string_literal64_tree);
@@ -3380,12 +3380,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 25:
 				DebugEnterAlt(25);
-				// Smi.g:704:5: smi_macros
+				// Smi.g:701:5: smi_macros
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(704, 5);
-				PushFollow(Follow._smi_macros_in_macroName2675);
+				DebugLocation(701, 5);
+				PushFollow(Follow._smi_macros_in_macroName2656);
 				smi_macros65=smi_macros();
 				PopFollow();
 				if (state.failed) return retval;
@@ -3414,7 +3414,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("macroName", 15);
 			LeaveRule_macroName();
 		}
-		DebugLocation(704, 14);
+		DebugLocation(701, 14);
 		} finally { DebugExitRule(GrammarFileName, "macroName"); }
 		return retval;
 
@@ -3431,7 +3431,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_type();
 	partial void LeaveRule_type();
 	// $ANTLR start "type"
-	// Smi.g:706:1: type returns [ISmiType result] : (b= built_in_type |d= defined_type |s= selection_type |m= macros_type |sm= smi_type );
+	// Smi.g:703:1: type returns [ISmiType result] : (b= built_in_type |d= defined_type |s= selection_type |m= macros_type |sm= smi_type );
 	[GrammarRule("type")]
 	private SmiParser.type_return type()
 	{
@@ -3450,10 +3450,10 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		SmiParser.smi_type_return sm = default(SmiParser.smi_type_return);
 
 		try { DebugEnterRule(GrammarFileName, "type");
-		DebugLocation(706, 1);
+		DebugLocation(703, 1);
 		try
 		{
-			// Smi.g:707:5: (b= built_in_type |d= defined_type |s= selection_type |m= macros_type |sm= smi_type )
+			// Smi.g:704:5: (b= built_in_type |d= defined_type |s= selection_type |m= macros_type |sm= smi_type )
 			int alt24=5;
 			try { DebugEnterDecision(24, false);
 			switch (input.LA(1))
@@ -3591,17 +3591,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:708:2: b= built_in_type
+				// Smi.g:705:2: b= built_in_type
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(708, 3);
-				PushFollow(Follow._built_in_type_in_type2695);
+				DebugLocation(705, 3);
+				PushFollow(Follow._built_in_type_in_type2676);
 				b=built_in_type();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, b.Tree);
-				DebugLocation(708, 18);
+				DebugLocation(705, 18);
 				if (state.backtracking == 0)
 				{
 					 retval.result = (b!=null?b.result:default(ISmiType)); 
@@ -3611,17 +3611,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// Smi.g:709:4: d= defined_type
+				// Smi.g:706:4: d= defined_type
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(709, 5);
-				PushFollow(Follow._defined_type_in_type2704);
+				DebugLocation(706, 5);
+				PushFollow(Follow._defined_type_in_type2685);
 				d=defined_type();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, d.Tree);
-				DebugLocation(709, 19);
+				DebugLocation(706, 19);
 				if (state.backtracking == 0)
 				{
 					 retval.result = (d!=null?d.result:default(DefinedType)); 
@@ -3631,17 +3631,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 3:
 				DebugEnterAlt(3);
-				// Smi.g:710:4: s= selection_type
+				// Smi.g:707:4: s= selection_type
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(710, 5);
-				PushFollow(Follow._selection_type_in_type2713);
+				DebugLocation(707, 5);
+				PushFollow(Follow._selection_type_in_type2694);
 				s=selection_type();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, s.Tree);
-				DebugLocation(710, 21);
+				DebugLocation(707, 21);
 				if (state.backtracking == 0)
 				{
 					 retval.result = (s!=null?s.result:default(SelectionType)); 
@@ -3651,17 +3651,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 4:
 				DebugEnterAlt(4);
-				// Smi.g:711:4: m= macros_type
+				// Smi.g:708:4: m= macros_type
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(711, 5);
-				PushFollow(Follow._macros_type_in_type2722);
+				DebugLocation(708, 5);
+				PushFollow(Follow._macros_type_in_type2703);
 				m=macros_type();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, m.Tree);
-				DebugLocation(711, 18);
+				DebugLocation(708, 18);
 				if (state.backtracking == 0)
 				{
 					 retval.result = (m!=null?m.result:default(ISmiType)); 
@@ -3671,17 +3671,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 5:
 				DebugEnterAlt(5);
-				// Smi.g:712:4: sm= smi_type
+				// Smi.g:709:4: sm= smi_type
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(712, 6);
-				PushFollow(Follow._smi_type_in_type2731);
+				DebugLocation(709, 6);
+				PushFollow(Follow._smi_type_in_type2712);
 				sm=smi_type();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, sm.Tree);
-				DebugLocation(712, 16);
+				DebugLocation(709, 16);
 				if (state.backtracking == 0)
 				{
 					 retval.result = (sm!=null?sm.result:default(ISmiType)); 
@@ -3710,7 +3710,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("type", 16);
 			LeaveRule_type();
 		}
-		DebugLocation(713, 1);
+		DebugLocation(710, 1);
 		} finally { DebugExitRule(GrammarFileName, "type"); }
 		return retval;
 
@@ -3727,7 +3727,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_value();
 	partial void LeaveRule_value();
 	// $ANTLR start "value"
-	// Smi.g:715:1: value returns [ISmiValue result] : ( ( TRUE_KW )=> TRUE_KW | ( FALSE_KW )=> FALSE_KW | ( NULL_KW )=> NULL_KW | ( C_STRING )=>s= C_STRING | ( defined_value )=>dv= defined_value | ( signed_number )=>sn= signed_number | ( choice_value )=>cv= choice_value | ( sequence_value )=>sv= sequence_value | ( sequenceof_value )=>sov= sequenceof_value | ( cstr_value )=>csv= cstr_value | ( obj_id_comp_lst )=>oid= obj_id_comp_lst | ( PLUS_INFINITY_KW )=> PLUS_INFINITY_KW | ( MINUS_INFINITY_KW )=> MINUS_INFINITY_KW | ( symbol )=>name= symbol );
+	// Smi.g:712:1: value returns [ISmiValue result] : ( ( TRUE_KW )=> TRUE_KW | ( FALSE_KW )=> FALSE_KW | ( NULL_KW )=> NULL_KW | ( C_STRING )=>s= C_STRING | ( defined_value )=>dv= defined_value | ( signed_number )=>sn= signed_number | ( choice_value )=>cv= choice_value | ( sequence_value )=>sv= sequence_value | ( sequenceof_value )=>sov= sequenceof_value | ( cstr_value )=>csv= cstr_value | ( obj_id_comp_lst )=>oid= obj_id_comp_lst | ( PLUS_INFINITY_KW )=> PLUS_INFINITY_KW | ( MINUS_INFINITY_KW )=> MINUS_INFINITY_KW | ( symbol )=>name= symbol );
 	[GrammarRule("value")]
 	private SmiParser.value_return value()
 	{
@@ -3761,10 +3761,10 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree PLUS_INFINITY_KW69_tree = default(CommonTree);
 		CommonTree MINUS_INFINITY_KW70_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "value");
-		DebugLocation(715, 2);
+		DebugLocation(712, 2);
 		try
 		{
-			// Smi.g:716:5: ( ( TRUE_KW )=> TRUE_KW | ( FALSE_KW )=> FALSE_KW | ( NULL_KW )=> NULL_KW | ( C_STRING )=>s= C_STRING | ( defined_value )=>dv= defined_value | ( signed_number )=>sn= signed_number | ( choice_value )=>cv= choice_value | ( sequence_value )=>sv= sequence_value | ( sequenceof_value )=>sov= sequenceof_value | ( cstr_value )=>csv= cstr_value | ( obj_id_comp_lst )=>oid= obj_id_comp_lst | ( PLUS_INFINITY_KW )=> PLUS_INFINITY_KW | ( MINUS_INFINITY_KW )=> MINUS_INFINITY_KW | ( symbol )=>name= symbol )
+			// Smi.g:713:5: ( ( TRUE_KW )=> TRUE_KW | ( FALSE_KW )=> FALSE_KW | ( NULL_KW )=> NULL_KW | ( C_STRING )=>s= C_STRING | ( defined_value )=>dv= defined_value | ( signed_number )=>sn= signed_number | ( choice_value )=>cv= choice_value | ( sequence_value )=>sv= sequence_value | ( sequenceof_value )=>sov= sequenceof_value | ( cstr_value )=>csv= cstr_value | ( obj_id_comp_lst )=>oid= obj_id_comp_lst | ( PLUS_INFINITY_KW )=> PLUS_INFINITY_KW | ( MINUS_INFINITY_KW )=> MINUS_INFINITY_KW | ( symbol )=>name= symbol )
 			int alt25=14;
 			try { DebugEnterDecision(25, false);
 			int LA25_1 = input.LA(1);
@@ -3993,17 +3993,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:716:7: ( TRUE_KW )=> TRUE_KW
+				// Smi.g:713:7: ( TRUE_KW )=> TRUE_KW
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(716, 20);
-				TRUE_KW66=(IToken)Match(input,TRUE_KW,Follow._TRUE_KW_in_value2757); if (state.failed) return retval;
+				DebugLocation(713, 20);
+				TRUE_KW66=(IToken)Match(input,TRUE_KW,Follow._TRUE_KW_in_value2738); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				TRUE_KW66_tree = (CommonTree)adaptor.Create(TRUE_KW66);
 				adaptor.AddChild(root_0, TRUE_KW66_tree);
 				}
-				DebugLocation(716, 28);
+				DebugLocation(713, 28);
 				if (state.backtracking == 0)
 				{
 					 retval.result = new TrueLiteralValue(); 
@@ -4013,17 +4013,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// Smi.g:717:8: ( FALSE_KW )=> FALSE_KW
+				// Smi.g:714:8: ( FALSE_KW )=> FALSE_KW
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(717, 22);
-				FALSE_KW67=(IToken)Match(input,FALSE_KW,Follow._FALSE_KW_in_value2774); if (state.failed) return retval;
+				DebugLocation(714, 22);
+				FALSE_KW67=(IToken)Match(input,FALSE_KW,Follow._FALSE_KW_in_value2755); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				FALSE_KW67_tree = (CommonTree)adaptor.Create(FALSE_KW67);
 				adaptor.AddChild(root_0, FALSE_KW67_tree);
 				}
-				DebugLocation(717, 31);
+				DebugLocation(714, 31);
 				if (state.backtracking == 0)
 				{
 					 retval.result = new FalseLiteralValue(); 
@@ -4033,17 +4033,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 3:
 				DebugEnterAlt(3);
-				// Smi.g:718:8: ( NULL_KW )=> NULL_KW
+				// Smi.g:715:8: ( NULL_KW )=> NULL_KW
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(718, 21);
-				NULL_KW68=(IToken)Match(input,NULL_KW,Follow._NULL_KW_in_value2791); if (state.failed) return retval;
+				DebugLocation(715, 21);
+				NULL_KW68=(IToken)Match(input,NULL_KW,Follow._NULL_KW_in_value2772); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				NULL_KW68_tree = (CommonTree)adaptor.Create(NULL_KW68);
 				adaptor.AddChild(root_0, NULL_KW68_tree);
 				}
-				DebugLocation(718, 29);
+				DebugLocation(715, 29);
 				if (state.backtracking == 0)
 				{
 					 retval.result = new NullLiteralValue(); 
@@ -4053,17 +4053,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 4:
 				DebugEnterAlt(4);
-				// Smi.g:719:8: ( C_STRING )=>s= C_STRING
+				// Smi.g:716:8: ( C_STRING )=>s= C_STRING
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(719, 23);
-				s=(IToken)Match(input,C_STRING,Follow._C_STRING_in_value2810); if (state.failed) return retval;
+				DebugLocation(716, 23);
+				s=(IToken)Match(input,C_STRING,Follow._C_STRING_in_value2791); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				s_tree = (CommonTree)adaptor.Create(s);
 				adaptor.AddChild(root_0, s_tree);
 				}
-				DebugLocation(719, 33);
+				DebugLocation(716, 33);
 				if (state.backtracking == 0)
 				{
 					 retval.result = new LiteralValue((s!=null?s.Text:null)); 
@@ -4073,17 +4073,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 5:
 				DebugEnterAlt(5);
-				// Smi.g:720:8: ( defined_value )=>dv= defined_value
+				// Smi.g:717:8: ( defined_value )=>dv= defined_value
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(720, 29);
-				PushFollow(Follow._defined_value_in_value2830);
+				DebugLocation(717, 29);
+				PushFollow(Follow._defined_value_in_value2811);
 				dv=defined_value();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, dv.Tree);
-				DebugLocation(720, 44);
+				DebugLocation(717, 44);
 				if (state.backtracking == 0)
 				{
 					 retval.result = (dv!=null?dv.result:default(DefinedValue)); 
@@ -4093,17 +4093,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 6:
 				DebugEnterAlt(6);
-				// Smi.g:721:8: ( signed_number )=>sn= signed_number
+				// Smi.g:718:8: ( signed_number )=>sn= signed_number
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(721, 29);
-				PushFollow(Follow._signed_number_in_value2849);
+				DebugLocation(718, 29);
+				PushFollow(Follow._signed_number_in_value2830);
 				sn=signed_number();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, sn.Tree);
-				DebugLocation(721, 44);
+				DebugLocation(718, 44);
 				if (state.backtracking == 0)
 				{
 					 retval.result = (sn!=null?sn.result:default(NumberLiteralValue)); 
@@ -4113,17 +4113,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 7:
 				DebugEnterAlt(7);
-				// Smi.g:722:8: ( choice_value )=>cv= choice_value
+				// Smi.g:719:8: ( choice_value )=>cv= choice_value
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(722, 28);
-				PushFollow(Follow._choice_value_in_value2868);
+				DebugLocation(719, 28);
+				PushFollow(Follow._choice_value_in_value2849);
 				cv=choice_value();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, cv.Tree);
-				DebugLocation(722, 42);
+				DebugLocation(719, 42);
 				if (state.backtracking == 0)
 				{
 					 retval.result = (cv!=null?cv.result:default(ChoiceValue)); 
@@ -4133,17 +4133,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 8:
 				DebugEnterAlt(8);
-				// Smi.g:723:8: ( sequence_value )=>sv= sequence_value
+				// Smi.g:720:8: ( sequence_value )=>sv= sequence_value
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(723, 30);
-				PushFollow(Follow._sequence_value_in_value2887);
+				DebugLocation(720, 30);
+				PushFollow(Follow._sequence_value_in_value2868);
 				sv=sequence_value();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, sv.Tree);
-				DebugLocation(723, 46);
+				DebugLocation(720, 46);
 				if (state.backtracking == 0)
 				{
 					 retval.result = (sv!=null?sv.result:default(SequenceValue)); 
@@ -4153,17 +4153,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 9:
 				DebugEnterAlt(9);
-				// Smi.g:724:8: ( sequenceof_value )=>sov= sequenceof_value
+				// Smi.g:721:8: ( sequenceof_value )=>sov= sequenceof_value
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(724, 33);
-				PushFollow(Follow._sequenceof_value_in_value2906);
+				DebugLocation(721, 33);
+				PushFollow(Follow._sequenceof_value_in_value2887);
 				sov=sequenceof_value();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, sov.Tree);
-				DebugLocation(724, 51);
+				DebugLocation(721, 51);
 				if (state.backtracking == 0)
 				{
 					 retval.result = (sov!=null?sov.result:default(SequenceOfValue)); 
@@ -4173,17 +4173,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 10:
 				DebugEnterAlt(10);
-				// Smi.g:725:8: ( cstr_value )=>csv= cstr_value
+				// Smi.g:722:8: ( cstr_value )=>csv= cstr_value
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(725, 27);
-				PushFollow(Follow._cstr_value_in_value2925);
+				DebugLocation(722, 27);
+				PushFollow(Follow._cstr_value_in_value2906);
 				csv=cstr_value();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, csv.Tree);
-				DebugLocation(725, 39);
+				DebugLocation(722, 39);
 				if (state.backtracking == 0)
 				{
 					 retval.result = (csv!=null?csv.result:default(ISmiValue)); 
@@ -4193,17 +4193,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 11:
 				DebugEnterAlt(11);
-				// Smi.g:726:8: ( obj_id_comp_lst )=>oid= obj_id_comp_lst
+				// Smi.g:723:8: ( obj_id_comp_lst )=>oid= obj_id_comp_lst
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(726, 32);
-				PushFollow(Follow._obj_id_comp_lst_in_value2944);
+				DebugLocation(723, 32);
+				PushFollow(Follow._obj_id_comp_lst_in_value2925);
 				oid=obj_id_comp_lst();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, oid.Tree);
-				DebugLocation(726, 49);
+				DebugLocation(723, 49);
 				if (state.backtracking == 0)
 				{
 					 retval.result = (oid!=null?oid.result:default(IdComponentList)); 
@@ -4213,17 +4213,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 12:
 				DebugEnterAlt(12);
-				// Smi.g:727:8: ( PLUS_INFINITY_KW )=> PLUS_INFINITY_KW
+				// Smi.g:724:8: ( PLUS_INFINITY_KW )=> PLUS_INFINITY_KW
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(727, 30);
-				PLUS_INFINITY_KW69=(IToken)Match(input,PLUS_INFINITY_KW,Follow._PLUS_INFINITY_KW_in_value2961); if (state.failed) return retval;
+				DebugLocation(724, 30);
+				PLUS_INFINITY_KW69=(IToken)Match(input,PLUS_INFINITY_KW,Follow._PLUS_INFINITY_KW_in_value2942); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				PLUS_INFINITY_KW69_tree = (CommonTree)adaptor.Create(PLUS_INFINITY_KW69);
 				adaptor.AddChild(root_0, PLUS_INFINITY_KW69_tree);
 				}
-				DebugLocation(727, 47);
+				DebugLocation(724, 47);
 				if (state.backtracking == 0)
 				{
 					 retval.result = new PlusInfinityLiteralValue(); 
@@ -4233,17 +4233,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 13:
 				DebugEnterAlt(13);
-				// Smi.g:728:8: ( MINUS_INFINITY_KW )=> MINUS_INFINITY_KW
+				// Smi.g:725:8: ( MINUS_INFINITY_KW )=> MINUS_INFINITY_KW
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(728, 31);
-				MINUS_INFINITY_KW70=(IToken)Match(input,MINUS_INFINITY_KW,Follow._MINUS_INFINITY_KW_in_value2978); if (state.failed) return retval;
+				DebugLocation(725, 31);
+				MINUS_INFINITY_KW70=(IToken)Match(input,MINUS_INFINITY_KW,Follow._MINUS_INFINITY_KW_in_value2959); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				MINUS_INFINITY_KW70_tree = (CommonTree)adaptor.Create(MINUS_INFINITY_KW70);
 				adaptor.AddChild(root_0, MINUS_INFINITY_KW70_tree);
 				}
-				DebugLocation(728, 49);
+				DebugLocation(725, 49);
 				if (state.backtracking == 0)
 				{
 					 retval.result = new MinusInfinityLiteralValue(); 
@@ -4253,17 +4253,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 14:
 				DebugEnterAlt(14);
-				// Smi.g:729:5: ( symbol )=>name= symbol
+				// Smi.g:726:5: ( symbol )=>name= symbol
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(729, 21);
-				PushFollow(Follow._symbol_in_value2994);
+				DebugLocation(726, 21);
+				PushFollow(Follow._symbol_in_value2975);
 				name=symbol();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, name.Tree);
-				DebugLocation(729, 29);
+				DebugLocation(726, 29);
 				if (state.backtracking == 0)
 				{
 					 retval.result = new LiteralValue((name!=null?input.ToString(name.Start,name.Stop):null)); 
@@ -4292,7 +4292,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("value", 17);
 			LeaveRule_value();
 		}
-		DebugLocation(730, 2);
+		DebugLocation(727, 2);
 		} finally { DebugExitRule(GrammarFileName, "value"); }
 		return retval;
 
@@ -4309,7 +4309,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_built_in_type();
 	partial void LeaveRule_built_in_type();
 	// $ANTLR start "built_in_type"
-	// Smi.g:732:1: built_in_type returns [ISmiType result] : (a= any_type |bs= bit_string_type |b= boolean_type |cs= character_str_type |c= choice_type |em= embedded_type EMBEDDED_KW PDV_KW |en= enum_type |ex= external_type |i= integer_type |n= null_type |oid= object_identifier_type |oct= octetString_type |real= real_type |r= relativeOid_type |se= sequence_type |so= sequenceof_type |s= set_type |s1= setof_type |t= tagged_type );
+	// Smi.g:729:1: built_in_type returns [ISmiType result] : (a= any_type |bs= bit_string_type |b= boolean_type |cs= character_str_type |c= choice_type |em= embedded_type EMBEDDED_KW PDV_KW |en= enum_type |ex= external_type |i= integer_type |n= null_type |oid= object_identifier_type |oct= octetString_type |real= real_type |r= relativeOid_type |se= sequence_type |so= sequenceof_type |s= set_type |s1= setof_type |t= tagged_type );
 	[GrammarRule("built_in_type")]
 	private SmiParser.built_in_type_return built_in_type()
 	{
@@ -4346,10 +4346,10 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree EMBEDDED_KW71_tree = default(CommonTree);
 		CommonTree PDV_KW72_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "built_in_type");
-		DebugLocation(732, 1);
+		DebugLocation(729, 1);
 		try
 		{
-			// Smi.g:733:5: (a= any_type |bs= bit_string_type |b= boolean_type |cs= character_str_type |c= choice_type |em= embedded_type EMBEDDED_KW PDV_KW |en= enum_type |ex= external_type |i= integer_type |n= null_type |oid= object_identifier_type |oct= octetString_type |real= real_type |r= relativeOid_type |se= sequence_type |so= sequenceof_type |s= set_type |s1= setof_type |t= tagged_type )
+			// Smi.g:730:5: (a= any_type |bs= bit_string_type |b= boolean_type |cs= character_str_type |c= choice_type |em= embedded_type EMBEDDED_KW PDV_KW |en= enum_type |ex= external_type |i= integer_type |n= null_type |oid= object_identifier_type |oct= octetString_type |real= real_type |r= relativeOid_type |se= sequence_type |so= sequenceof_type |s= set_type |s1= setof_type |t= tagged_type )
 			int alt26=19;
 			try { DebugEnterDecision(26, false);
 			switch (input.LA(1))
@@ -4500,17 +4500,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:733:7: a= any_type
+				// Smi.g:730:7: a= any_type
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(733, 8);
-				PushFollow(Follow._any_type_in_built_in_type3017);
+				DebugLocation(730, 8);
+				PushFollow(Follow._any_type_in_built_in_type2998);
 				a=any_type();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, a.Tree);
-				DebugLocation(733, 18);
+				DebugLocation(730, 18);
 				if (state.backtracking == 0)
 				{
 					 retval.result = (a!=null?a.result:default(AnyType)); 
@@ -4520,17 +4520,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// Smi.g:734:7: bs= bit_string_type
+				// Smi.g:731:7: bs= bit_string_type
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(734, 9);
-				PushFollow(Follow._bit_string_type_in_built_in_type3029);
+				DebugLocation(731, 9);
+				PushFollow(Follow._bit_string_type_in_built_in_type3010);
 				bs=bit_string_type();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, bs.Tree);
-				DebugLocation(734, 26);
+				DebugLocation(731, 26);
 				if (state.backtracking == 0)
 				{
 					 retval.result = (bs!=null?bs.result:default(BitStringType)); 
@@ -4540,17 +4540,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 3:
 				DebugEnterAlt(3);
-				// Smi.g:735:7: b= boolean_type
+				// Smi.g:732:7: b= boolean_type
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(735, 8);
-				PushFollow(Follow._boolean_type_in_built_in_type3041);
+				DebugLocation(732, 8);
+				PushFollow(Follow._boolean_type_in_built_in_type3022);
 				b=boolean_type();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, b.Tree);
-				DebugLocation(735, 22);
+				DebugLocation(732, 22);
 				if (state.backtracking == 0)
 				{
 					 retval.result = (b!=null?b.result:default(BooleanType)); 
@@ -4560,17 +4560,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 4:
 				DebugEnterAlt(4);
-				// Smi.g:736:7: cs= character_str_type
+				// Smi.g:733:7: cs= character_str_type
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(736, 9);
-				PushFollow(Follow._character_str_type_in_built_in_type3053);
+				DebugLocation(733, 9);
+				PushFollow(Follow._character_str_type_in_built_in_type3034);
 				cs=character_str_type();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, cs.Tree);
-				DebugLocation(736, 29);
+				DebugLocation(733, 29);
 				if (state.backtracking == 0)
 				{
 					 retval.result = (cs!=null?cs.result:default(CharacterStringType)); 
@@ -4580,17 +4580,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 5:
 				DebugEnterAlt(5);
-				// Smi.g:737:7: c= choice_type
+				// Smi.g:734:7: c= choice_type
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(737, 8);
-				PushFollow(Follow._choice_type_in_built_in_type3065);
+				DebugLocation(734, 8);
+				PushFollow(Follow._choice_type_in_built_in_type3046);
 				c=choice_type();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, c.Tree);
-				DebugLocation(737, 21);
+				DebugLocation(734, 21);
 				if (state.backtracking == 0)
 				{
 					 retval.result = (c!=null?c.result:default(ChoiceType)); 
@@ -4600,29 +4600,29 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 6:
 				DebugEnterAlt(6);
-				// Smi.g:738:7: em= embedded_type EMBEDDED_KW PDV_KW
+				// Smi.g:735:7: em= embedded_type EMBEDDED_KW PDV_KW
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(738, 9);
-				PushFollow(Follow._embedded_type_in_built_in_type3077);
+				DebugLocation(735, 9);
+				PushFollow(Follow._embedded_type_in_built_in_type3058);
 				em=embedded_type();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, em.Tree);
-				DebugLocation(738, 24);
-				EMBEDDED_KW71=(IToken)Match(input,EMBEDDED_KW,Follow._EMBEDDED_KW_in_built_in_type3079); if (state.failed) return retval;
+				DebugLocation(735, 24);
+				EMBEDDED_KW71=(IToken)Match(input,EMBEDDED_KW,Follow._EMBEDDED_KW_in_built_in_type3060); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				EMBEDDED_KW71_tree = (CommonTree)adaptor.Create(EMBEDDED_KW71);
 				adaptor.AddChild(root_0, EMBEDDED_KW71_tree);
 				}
-				DebugLocation(738, 36);
-				PDV_KW72=(IToken)Match(input,PDV_KW,Follow._PDV_KW_in_built_in_type3081); if (state.failed) return retval;
+				DebugLocation(735, 36);
+				PDV_KW72=(IToken)Match(input,PDV_KW,Follow._PDV_KW_in_built_in_type3062); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				PDV_KW72_tree = (CommonTree)adaptor.Create(PDV_KW72);
 				adaptor.AddChild(root_0, PDV_KW72_tree);
 				}
-				DebugLocation(738, 43);
+				DebugLocation(735, 43);
 				if (state.backtracking == 0)
 				{
 					 retval.result = (em!=null?em.result:default(EmbeddedType)); 
@@ -4632,17 +4632,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 7:
 				DebugEnterAlt(7);
-				// Smi.g:739:7: en= enum_type
+				// Smi.g:736:7: en= enum_type
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(739, 9);
-				PushFollow(Follow._enum_type_in_built_in_type3093);
+				DebugLocation(736, 9);
+				PushFollow(Follow._enum_type_in_built_in_type3074);
 				en=enum_type();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, en.Tree);
-				DebugLocation(739, 20);
+				DebugLocation(736, 20);
 				if (state.backtracking == 0)
 				{
 					 retval.result = (en!=null?en.result:default(EnumType)); 
@@ -4652,17 +4652,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 8:
 				DebugEnterAlt(8);
-				// Smi.g:740:7: ex= external_type
+				// Smi.g:737:7: ex= external_type
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(740, 9);
-				PushFollow(Follow._external_type_in_built_in_type3105);
+				DebugLocation(737, 9);
+				PushFollow(Follow._external_type_in_built_in_type3086);
 				ex=external_type();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, ex.Tree);
-				DebugLocation(740, 24);
+				DebugLocation(737, 24);
 				if (state.backtracking == 0)
 				{
 					 retval.result = (ex!=null?ex.result:default(ExternalType)); 
@@ -4672,17 +4672,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 9:
 				DebugEnterAlt(9);
-				// Smi.g:741:4: i= integer_type
+				// Smi.g:738:4: i= integer_type
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(741, 5);
-				PushFollow(Follow._integer_type_in_built_in_type3114);
+				DebugLocation(738, 5);
+				PushFollow(Follow._integer_type_in_built_in_type3095);
 				i=integer_type();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, i.Tree);
-				DebugLocation(741, 19);
+				DebugLocation(738, 19);
 				if (state.backtracking == 0)
 				{
 					 retval.result = (i!=null?i.result:default(IntegerType)); 
@@ -4692,17 +4692,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 10:
 				DebugEnterAlt(10);
-				// Smi.g:742:4: n= null_type
+				// Smi.g:739:4: n= null_type
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(742, 5);
-				PushFollow(Follow._null_type_in_built_in_type3123);
+				DebugLocation(739, 5);
+				PushFollow(Follow._null_type_in_built_in_type3104);
 				n=null_type();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, n.Tree);
-				DebugLocation(742, 16);
+				DebugLocation(739, 16);
 				if (state.backtracking == 0)
 				{
 					 retval.result = (n!=null?n.result:default(NullType)); 
@@ -4712,17 +4712,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 11:
 				DebugEnterAlt(11);
-				// Smi.g:743:4: oid= object_identifier_type
+				// Smi.g:740:4: oid= object_identifier_type
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(743, 7);
-				PushFollow(Follow._object_identifier_type_in_built_in_type3132);
+				DebugLocation(740, 7);
+				PushFollow(Follow._object_identifier_type_in_built_in_type3113);
 				oid=object_identifier_type();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, oid.Tree);
-				DebugLocation(743, 31);
+				DebugLocation(740, 31);
 				if (state.backtracking == 0)
 				{
 					 retval.result = (oid!=null?oid.result:default(ObjectIdentifierType)); 
@@ -4732,17 +4732,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 12:
 				DebugEnterAlt(12);
-				// Smi.g:744:4: oct= octetString_type
+				// Smi.g:741:4: oct= octetString_type
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(744, 7);
-				PushFollow(Follow._octetString_type_in_built_in_type3141);
+				DebugLocation(741, 7);
+				PushFollow(Follow._octetString_type_in_built_in_type3122);
 				oct=octetString_type();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, oct.Tree);
-				DebugLocation(744, 25);
+				DebugLocation(741, 25);
 				if (state.backtracking == 0)
 				{
 					 retval.result = (oct!=null?oct.result:default(OctetStringType)); 
@@ -4752,17 +4752,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 13:
 				DebugEnterAlt(13);
-				// Smi.g:745:4: real= real_type
+				// Smi.g:742:4: real= real_type
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(745, 8);
-				PushFollow(Follow._real_type_in_built_in_type3150);
+				DebugLocation(742, 8);
+				PushFollow(Follow._real_type_in_built_in_type3131);
 				real=real_type();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, real.Tree);
-				DebugLocation(745, 19);
+				DebugLocation(742, 19);
 				if (state.backtracking == 0)
 				{
 					 retval.result = (real!=null?real.result:default(RealType)); 
@@ -4772,17 +4772,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 14:
 				DebugEnterAlt(14);
-				// Smi.g:746:4: r= relativeOid_type
+				// Smi.g:743:4: r= relativeOid_type
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(746, 5);
-				PushFollow(Follow._relativeOid_type_in_built_in_type3159);
+				DebugLocation(743, 5);
+				PushFollow(Follow._relativeOid_type_in_built_in_type3140);
 				r=relativeOid_type();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, r.Tree);
-				DebugLocation(746, 23);
+				DebugLocation(743, 23);
 				if (state.backtracking == 0)
 				{
 					 retval.result = (r!=null?r.result:default(RelativeIdType)); 
@@ -4792,17 +4792,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 15:
 				DebugEnterAlt(15);
-				// Smi.g:747:4: se= sequence_type
+				// Smi.g:744:4: se= sequence_type
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(747, 6);
-				PushFollow(Follow._sequence_type_in_built_in_type3168);
+				DebugLocation(744, 6);
+				PushFollow(Follow._sequence_type_in_built_in_type3149);
 				se=sequence_type();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, se.Tree);
-				DebugLocation(747, 21);
+				DebugLocation(744, 21);
 				if (state.backtracking == 0)
 				{
 					 retval.result = (se!=null?se.result:default(SequenceType)); 
@@ -4812,17 +4812,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 16:
 				DebugEnterAlt(16);
-				// Smi.g:748:4: so= sequenceof_type
+				// Smi.g:745:4: so= sequenceof_type
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(748, 6);
-				PushFollow(Follow._sequenceof_type_in_built_in_type3177);
+				DebugLocation(745, 6);
+				PushFollow(Follow._sequenceof_type_in_built_in_type3158);
 				so=sequenceof_type();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, so.Tree);
-				DebugLocation(748, 23);
+				DebugLocation(745, 23);
 				if (state.backtracking == 0)
 				{
 					 retval.result = (so!=null?so.result:default(SequenceOfType)); 
@@ -4832,17 +4832,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 17:
 				DebugEnterAlt(17);
-				// Smi.g:749:4: s= set_type
+				// Smi.g:746:4: s= set_type
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(749, 5);
-				PushFollow(Follow._set_type_in_built_in_type3186);
+				DebugLocation(746, 5);
+				PushFollow(Follow._set_type_in_built_in_type3167);
 				s=set_type();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, s.Tree);
-				DebugLocation(749, 15);
+				DebugLocation(746, 15);
 				if (state.backtracking == 0)
 				{
 					 retval.result = (s!=null?s.result:default(SetType)); 
@@ -4852,17 +4852,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 18:
 				DebugEnterAlt(18);
-				// Smi.g:750:4: s1= setof_type
+				// Smi.g:747:4: s1= setof_type
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(750, 6);
-				PushFollow(Follow._setof_type_in_built_in_type3195);
+				DebugLocation(747, 6);
+				PushFollow(Follow._setof_type_in_built_in_type3176);
 				s1=setof_type();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, s1.Tree);
-				DebugLocation(750, 18);
+				DebugLocation(747, 18);
 				if (state.backtracking == 0)
 				{
 					 retval.result = (s1!=null?s1.result:default(SetOfType)); 
@@ -4872,17 +4872,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 19:
 				DebugEnterAlt(19);
-				// Smi.g:751:4: t= tagged_type
+				// Smi.g:748:4: t= tagged_type
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(751, 5);
-				PushFollow(Follow._tagged_type_in_built_in_type3204);
+				DebugLocation(748, 5);
+				PushFollow(Follow._tagged_type_in_built_in_type3185);
 				t=tagged_type();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, t.Tree);
-				DebugLocation(751, 18);
+				DebugLocation(748, 18);
 				if (state.backtracking == 0)
 				{
 					 retval.result = (t!=null?t.result:default(TaggedType)); 
@@ -4911,7 +4911,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("built_in_type", 18);
 			LeaveRule_built_in_type();
 		}
-		DebugLocation(752, 1);
+		DebugLocation(749, 1);
 		} finally { DebugExitRule(GrammarFileName, "built_in_type"); }
 		return retval;
 
@@ -4928,7 +4928,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_defined_type();
 	partial void LeaveRule_defined_type();
 	// $ANTLR start "defined_type"
-	// Smi.g:754:1: defined_type returns [DefinedType result = new DefinedType()] : (mod= UPPER DOT )? name= UPPER (c= constraint )? ;
+	// Smi.g:751:1: defined_type returns [DefinedType result = new DefinedType()] : (mod= UPPER DOT )? name= UPPER (c= constraint )? ;
 	[GrammarRule("defined_type")]
 	private SmiParser.defined_type_return defined_type()
 	{
@@ -4949,17 +4949,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree name_tree = default(CommonTree);
 		CommonTree DOT73_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "defined_type");
-		DebugLocation(754, 53);
+		DebugLocation(751, 53);
 		try
 		{
-			// Smi.g:755:5: ( (mod= UPPER DOT )? name= UPPER (c= constraint )? )
+			// Smi.g:752:5: ( (mod= UPPER DOT )? name= UPPER (c= constraint )? )
 			DebugEnterAlt(1);
-			// Smi.g:755:7: (mod= UPPER DOT )? name= UPPER (c= constraint )?
+			// Smi.g:752:7: (mod= UPPER DOT )? name= UPPER (c= constraint )?
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(755, 7);
-			// Smi.g:755:7: (mod= UPPER DOT )?
+			DebugLocation(752, 7);
+			// Smi.g:752:7: (mod= UPPER DOT )?
 			int alt27=2;
 			try { DebugEnterSubRule(27);
 			try { DebugEnterDecision(27, false);
@@ -4979,21 +4979,21 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:755:8: mod= UPPER DOT
+				// Smi.g:752:8: mod= UPPER DOT
 				{
-				DebugLocation(755, 11);
-				mod=(IToken)Match(input,UPPER,Follow._UPPER_in_defined_type3227); if (state.failed) return retval;
+				DebugLocation(752, 11);
+				mod=(IToken)Match(input,UPPER,Follow._UPPER_in_defined_type3208); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				mod_tree = (CommonTree)adaptor.Create(mod);
 				adaptor.AddChild(root_0, mod_tree);
 				}
-				DebugLocation(755, 18);
-				DOT73=(IToken)Match(input,DOT,Follow._DOT_in_defined_type3229); if (state.failed) return retval;
+				DebugLocation(752, 18);
+				DOT73=(IToken)Match(input,DOT,Follow._DOT_in_defined_type3210); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				DOT73_tree = (CommonTree)adaptor.Create(DOT73);
 				adaptor.AddChild(root_0, DOT73_tree);
 				}
-				DebugLocation(755, 22);
+				DebugLocation(752, 22);
 				if (state.backtracking == 0)
 				{
 					 retval.result.Module = (mod!=null?mod.Text:null); 
@@ -5005,19 +5005,19 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(27); }
 
-			DebugLocation(756, 6);
-			name=(IToken)Match(input,UPPER,Follow._UPPER_in_defined_type3239); if (state.failed) return retval;
+			DebugLocation(753, 6);
+			name=(IToken)Match(input,UPPER,Follow._UPPER_in_defined_type3220); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			name_tree = (CommonTree)adaptor.Create(name);
 			adaptor.AddChild(root_0, name_tree);
 			}
-			DebugLocation(756, 13);
+			DebugLocation(753, 13);
 			if (state.backtracking == 0)
 			{
 				 retval.result.Name = (name!=null?name.Text:null); 
 			}
-			DebugLocation(757, 2);
-			// Smi.g:757:2: (c= constraint )?
+			DebugLocation(754, 2);
+			// Smi.g:754:2: (c= constraint )?
 			int alt28=2;
 			try { DebugEnterSubRule(28);
 			try { DebugEnterDecision(28, false);
@@ -5032,15 +5032,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:757:3: c= constraint
+				// Smi.g:754:3: c= constraint
 				{
-				DebugLocation(757, 4);
-				PushFollow(Follow._constraint_in_defined_type3247);
+				DebugLocation(754, 4);
+				PushFollow(Follow._constraint_in_defined_type3228);
 				c=constraint();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, c.Tree);
-				DebugLocation(757, 16);
+				DebugLocation(754, 16);
 				if (state.backtracking == 0)
 				{
 					 retval.result.Constraint = (c!=null?c.result:default(Constraint)); 
@@ -5074,7 +5074,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("defined_type", 19);
 			LeaveRule_defined_type();
 		}
-		DebugLocation(757, 53);
+		DebugLocation(754, 53);
 		} finally { DebugExitRule(GrammarFileName, "defined_type"); }
 		return retval;
 
@@ -5091,7 +5091,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_selection_type();
 	partial void LeaveRule_selection_type();
 	// $ANTLR start "selection_type"
-	// Smi.g:759:1: selection_type returns [SelectionType result] : name= LOWER LESS t= type ;
+	// Smi.g:756:1: selection_type returns [SelectionType result] : name= LOWER LESS t= type ;
 	[GrammarRule("selection_type")]
 	private SmiParser.selection_type_return selection_type()
 	{
@@ -5110,34 +5110,34 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree name_tree = default(CommonTree);
 		CommonTree LESS74_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "selection_type");
-		DebugLocation(759, 1);
+		DebugLocation(756, 1);
 		try
 		{
-			// Smi.g:760:5: (name= LOWER LESS t= type )
+			// Smi.g:757:5: (name= LOWER LESS t= type )
 			DebugEnterAlt(1);
-			// Smi.g:760:7: name= LOWER LESS t= type
+			// Smi.g:757:7: name= LOWER LESS t= type
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(760, 11);
-			name=(IToken)Match(input,LOWER,Follow._LOWER_in_selection_type3270); if (state.failed) return retval;
+			DebugLocation(757, 11);
+			name=(IToken)Match(input,LOWER,Follow._LOWER_in_selection_type3251); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			name_tree = (CommonTree)adaptor.Create(name);
 			adaptor.AddChild(root_0, name_tree);
 			}
-			DebugLocation(760, 18);
-			LESS74=(IToken)Match(input,LESS,Follow._LESS_in_selection_type3272); if (state.failed) return retval;
+			DebugLocation(757, 18);
+			LESS74=(IToken)Match(input,LESS,Follow._LESS_in_selection_type3253); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			LESS74_tree = (CommonTree)adaptor.Create(LESS74);
 			adaptor.AddChild(root_0, LESS74_tree);
 			}
-			DebugLocation(760, 24);
-			PushFollow(Follow._type_in_selection_type3276);
+			DebugLocation(757, 24);
+			PushFollow(Follow._type_in_selection_type3257);
 			t=type();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, t.Tree);
-			DebugLocation(760, 30);
+			DebugLocation(757, 30);
 			if (state.backtracking == 0)
 			{
 				 retval.result = new SelectionType((name!=null?name.Text:null), (t!=null?t.result:default(ISmiType))); 
@@ -5164,7 +5164,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("selection_type", 20);
 			LeaveRule_selection_type();
 		}
-		DebugLocation(761, 1);
+		DebugLocation(758, 1);
 		} finally { DebugExitRule(GrammarFileName, "selection_type"); }
 		return retval;
 
@@ -5181,7 +5181,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_any_type();
 	partial void LeaveRule_any_type();
 	// $ANTLR start "any_type"
-	// Smi.g:763:1: any_type returns [AnyType result = new AnyType()] : ANY_KW ( DEFINED_KW BY_KW def= LOWER )? ;
+	// Smi.g:760:1: any_type returns [AnyType result = new AnyType()] : ANY_KW ( DEFINED_KW BY_KW def= LOWER )? ;
 	[GrammarRule("any_type")]
 	private SmiParser.any_type_return any_type()
 	{
@@ -5203,23 +5203,23 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree DEFINED_KW76_tree = default(CommonTree);
 		CommonTree BY_KW77_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "any_type");
-		DebugLocation(763, 1);
+		DebugLocation(760, 1);
 		try
 		{
-			// Smi.g:764:5: ( ANY_KW ( DEFINED_KW BY_KW def= LOWER )? )
+			// Smi.g:761:5: ( ANY_KW ( DEFINED_KW BY_KW def= LOWER )? )
 			DebugEnterAlt(1);
-			// Smi.g:764:7: ANY_KW ( DEFINED_KW BY_KW def= LOWER )?
+			// Smi.g:761:7: ANY_KW ( DEFINED_KW BY_KW def= LOWER )?
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(764, 7);
-			ANY_KW75=(IToken)Match(input,ANY_KW,Follow._ANY_KW_in_any_type3296); if (state.failed) return retval;
+			DebugLocation(761, 7);
+			ANY_KW75=(IToken)Match(input,ANY_KW,Follow._ANY_KW_in_any_type3277); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			ANY_KW75_tree = (CommonTree)adaptor.Create(ANY_KW75);
 			adaptor.AddChild(root_0, ANY_KW75_tree);
 			}
-			DebugLocation(764, 14);
-			// Smi.g:764:14: ( DEFINED_KW BY_KW def= LOWER )?
+			DebugLocation(761, 14);
+			// Smi.g:761:14: ( DEFINED_KW BY_KW def= LOWER )?
 			int alt29=2;
 			try { DebugEnterSubRule(29);
 			try { DebugEnterDecision(29, false);
@@ -5234,27 +5234,27 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:764:15: DEFINED_KW BY_KW def= LOWER
+				// Smi.g:761:15: DEFINED_KW BY_KW def= LOWER
 				{
-				DebugLocation(764, 15);
-				DEFINED_KW76=(IToken)Match(input,DEFINED_KW,Follow._DEFINED_KW_in_any_type3299); if (state.failed) return retval;
+				DebugLocation(761, 15);
+				DEFINED_KW76=(IToken)Match(input,DEFINED_KW,Follow._DEFINED_KW_in_any_type3280); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				DEFINED_KW76_tree = (CommonTree)adaptor.Create(DEFINED_KW76);
 				adaptor.AddChild(root_0, DEFINED_KW76_tree);
 				}
-				DebugLocation(764, 26);
-				BY_KW77=(IToken)Match(input,BY_KW,Follow._BY_KW_in_any_type3301); if (state.failed) return retval;
+				DebugLocation(761, 26);
+				BY_KW77=(IToken)Match(input,BY_KW,Follow._BY_KW_in_any_type3282); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				BY_KW77_tree = (CommonTree)adaptor.Create(BY_KW77);
 				adaptor.AddChild(root_0, BY_KW77_tree);
 				}
-				DebugLocation(764, 35);
-				def=(IToken)Match(input,LOWER,Follow._LOWER_in_any_type3305); if (state.failed) return retval;
+				DebugLocation(761, 35);
+				def=(IToken)Match(input,LOWER,Follow._LOWER_in_any_type3286); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				def_tree = (CommonTree)adaptor.Create(def);
 				adaptor.AddChild(root_0, def_tree);
 				}
-				DebugLocation(764, 42);
+				DebugLocation(761, 42);
 				if (state.backtracking == 0)
 				{
 					 retval.result.DefinedById = (def!=null?def.Text:null); 
@@ -5288,7 +5288,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("any_type", 21);
 			LeaveRule_any_type();
 		}
-		DebugLocation(765, 1);
+		DebugLocation(762, 1);
 		} finally { DebugExitRule(GrammarFileName, "any_type"); }
 		return retval;
 
@@ -5305,7 +5305,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_bit_string_type();
 	partial void LeaveRule_bit_string_type();
 	// $ANTLR start "bit_string_type"
-	// Smi.g:768:1: bit_string_type returns [BitStringType result = new BitStringType()] : BIT_KW STRING_KW ( ( L_BRACE namedNumber )=>n= namedNumber_list )? (c= constraint )? ;
+	// Smi.g:765:1: bit_string_type returns [BitStringType result = new BitStringType()] : BIT_KW STRING_KW ( ( L_BRACE namedNumber )=>n= namedNumber_list )? (c= constraint )? ;
 	[GrammarRule("bit_string_type")]
 	private SmiParser.bit_string_type_return bit_string_type()
 	{
@@ -5325,29 +5325,29 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree BIT_KW78_tree = default(CommonTree);
 		CommonTree STRING_KW79_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "bit_string_type");
-		DebugLocation(768, 1);
+		DebugLocation(765, 1);
 		try
 		{
-			// Smi.g:769:5: ( BIT_KW STRING_KW ( ( L_BRACE namedNumber )=>n= namedNumber_list )? (c= constraint )? )
+			// Smi.g:766:5: ( BIT_KW STRING_KW ( ( L_BRACE namedNumber )=>n= namedNumber_list )? (c= constraint )? )
 			DebugEnterAlt(1);
-			// Smi.g:769:7: BIT_KW STRING_KW ( ( L_BRACE namedNumber )=>n= namedNumber_list )? (c= constraint )?
+			// Smi.g:766:7: BIT_KW STRING_KW ( ( L_BRACE namedNumber )=>n= namedNumber_list )? (c= constraint )?
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(769, 7);
-			BIT_KW78=(IToken)Match(input,BIT_KW,Follow._BIT_KW_in_bit_string_type3330); if (state.failed) return retval;
+			DebugLocation(766, 7);
+			BIT_KW78=(IToken)Match(input,BIT_KW,Follow._BIT_KW_in_bit_string_type3311); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			BIT_KW78_tree = (CommonTree)adaptor.Create(BIT_KW78);
 			adaptor.AddChild(root_0, BIT_KW78_tree);
 			}
-			DebugLocation(769, 14);
-			STRING_KW79=(IToken)Match(input,STRING_KW,Follow._STRING_KW_in_bit_string_type3332); if (state.failed) return retval;
+			DebugLocation(766, 14);
+			STRING_KW79=(IToken)Match(input,STRING_KW,Follow._STRING_KW_in_bit_string_type3313); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			STRING_KW79_tree = (CommonTree)adaptor.Create(STRING_KW79);
 			adaptor.AddChild(root_0, STRING_KW79_tree);
 			}
-			DebugLocation(769, 24);
-			// Smi.g:769:24: ( ( L_BRACE namedNumber )=>n= namedNumber_list )?
+			DebugLocation(766, 24);
+			// Smi.g:766:24: ( ( L_BRACE namedNumber )=>n= namedNumber_list )?
 			int alt30=2;
 			try { DebugEnterSubRule(30);
 			try { DebugEnterDecision(30, false);
@@ -5362,15 +5362,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:769:25: ( L_BRACE namedNumber )=>n= namedNumber_list
+				// Smi.g:766:25: ( L_BRACE namedNumber )=>n= namedNumber_list
 				{
-				DebugLocation(769, 51);
-				PushFollow(Follow._namedNumber_list_in_bit_string_type3345);
+				DebugLocation(766, 51);
+				PushFollow(Follow._namedNumber_list_in_bit_string_type3326);
 				n=namedNumber_list();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, n.Tree);
-				DebugLocation(769, 69);
+				DebugLocation(766, 69);
 				if (state.backtracking == 0)
 				{
 					 retval.result.NamedNumberList = (n!=null?n.result:default(IList<ISmiValue>)); 
@@ -5382,8 +5382,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(30); }
 
-			DebugLocation(770, 2);
-			// Smi.g:770:2: (c= constraint )?
+			DebugLocation(767, 2);
+			// Smi.g:767:2: (c= constraint )?
 			int alt31=2;
 			try { DebugEnterSubRule(31);
 			try { DebugEnterDecision(31, false);
@@ -5398,15 +5398,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:770:3: c= constraint
+				// Smi.g:767:3: c= constraint
 				{
-				DebugLocation(770, 4);
-				PushFollow(Follow._constraint_in_bit_string_type3356);
+				DebugLocation(767, 4);
+				PushFollow(Follow._constraint_in_bit_string_type3337);
 				c=constraint();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, c.Tree);
-				DebugLocation(770, 16);
+				DebugLocation(767, 16);
 				if (state.backtracking == 0)
 				{
 					 retval.result.Constraint = (c!=null?c.result:default(Constraint)); 
@@ -5440,7 +5440,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("bit_string_type", 22);
 			LeaveRule_bit_string_type();
 		}
-		DebugLocation(771, 1);
+		DebugLocation(768, 1);
 		} finally { DebugExitRule(GrammarFileName, "bit_string_type"); }
 		return retval;
 
@@ -5457,7 +5457,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_boolean_type();
 	partial void LeaveRule_boolean_type();
 	// $ANTLR start "boolean_type"
-	// Smi.g:775:1: boolean_type returns [BooleanType result = new BooleanType()] : BOOLEAN_KW ;
+	// Smi.g:772:1: boolean_type returns [BooleanType result = new BooleanType()] : BOOLEAN_KW ;
 	[GrammarRule("boolean_type")]
 	private SmiParser.boolean_type_return boolean_type()
 	{
@@ -5473,17 +5473,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 		CommonTree BOOLEAN_KW80_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "boolean_type");
-		DebugLocation(775, 1);
+		DebugLocation(772, 1);
 		try
 		{
-			// Smi.g:776:5: ( BOOLEAN_KW )
+			// Smi.g:773:5: ( BOOLEAN_KW )
 			DebugEnterAlt(1);
-			// Smi.g:776:7: BOOLEAN_KW
+			// Smi.g:773:7: BOOLEAN_KW
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(776, 7);
-			BOOLEAN_KW80=(IToken)Match(input,BOOLEAN_KW,Follow._BOOLEAN_KW_in_boolean_type3381); if (state.failed) return retval;
+			DebugLocation(773, 7);
+			BOOLEAN_KW80=(IToken)Match(input,BOOLEAN_KW,Follow._BOOLEAN_KW_in_boolean_type3362); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			BOOLEAN_KW80_tree = (CommonTree)adaptor.Create(BOOLEAN_KW80);
 			adaptor.AddChild(root_0, BOOLEAN_KW80_tree);
@@ -5510,7 +5510,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("boolean_type", 23);
 			LeaveRule_boolean_type();
 		}
-		DebugLocation(777, 1);
+		DebugLocation(774, 1);
 		} finally { DebugExitRule(GrammarFileName, "boolean_type"); }
 		return retval;
 
@@ -5527,7 +5527,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_character_str_type();
 	partial void LeaveRule_character_str_type();
 	// $ANTLR start "character_str_type"
-	// Smi.g:779:1: character_str_type returns [CharacterStringType result = new CharacterStringType()] : ( CHARACTER_KW STRING_KW |cs= character_set (c= constraint )? );
+	// Smi.g:776:1: character_str_type returns [CharacterStringType result = new CharacterStringType()] : ( CHARACTER_KW STRING_KW |cs= character_set (c= constraint )? );
 	[GrammarRule("character_str_type")]
 	private SmiParser.character_str_type_return character_str_type()
 	{
@@ -5547,10 +5547,10 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree CHARACTER_KW81_tree = default(CommonTree);
 		CommonTree STRING_KW82_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "character_str_type");
-		DebugLocation(779, 2);
+		DebugLocation(776, 2);
 		try
 		{
-			// Smi.g:780:5: ( CHARACTER_KW STRING_KW |cs= character_set (c= constraint )? )
+			// Smi.g:777:5: ( CHARACTER_KW STRING_KW |cs= character_set (c= constraint )? )
 			int alt33=2;
 			try { DebugEnterDecision(33, false);
 			int LA33_1 = input.LA(1);
@@ -5575,18 +5575,18 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:780:7: CHARACTER_KW STRING_KW
+				// Smi.g:777:7: CHARACTER_KW STRING_KW
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(780, 7);
-				CHARACTER_KW81=(IToken)Match(input,CHARACTER_KW,Follow._CHARACTER_KW_in_character_str_type3400); if (state.failed) return retval;
+				DebugLocation(777, 7);
+				CHARACTER_KW81=(IToken)Match(input,CHARACTER_KW,Follow._CHARACTER_KW_in_character_str_type3381); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				CHARACTER_KW81_tree = (CommonTree)adaptor.Create(CHARACTER_KW81);
 				adaptor.AddChild(root_0, CHARACTER_KW81_tree);
 				}
-				DebugLocation(780, 20);
-				STRING_KW82=(IToken)Match(input,STRING_KW,Follow._STRING_KW_in_character_str_type3402); if (state.failed) return retval;
+				DebugLocation(777, 20);
+				STRING_KW82=(IToken)Match(input,STRING_KW,Follow._STRING_KW_in_character_str_type3383); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				STRING_KW82_tree = (CommonTree)adaptor.Create(STRING_KW82);
 				adaptor.AddChild(root_0, STRING_KW82_tree);
@@ -5596,23 +5596,23 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// Smi.g:781:5: cs= character_set (c= constraint )?
+				// Smi.g:778:5: cs= character_set (c= constraint )?
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(781, 7);
-				PushFollow(Follow._character_set_in_character_str_type3411);
+				DebugLocation(778, 7);
+				PushFollow(Follow._character_set_in_character_str_type3392);
 				cs=character_set();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, cs.Tree);
-				DebugLocation(781, 22);
+				DebugLocation(778, 22);
 				if (state.backtracking == 0)
 				{
 					 retval.result.CharacterSet = (cs!=null?cs.result:default(CharacterSet)); 
 				}
-				DebugLocation(782, 3);
-				// Smi.g:782:3: (c= constraint )?
+				DebugLocation(779, 3);
+				// Smi.g:779:3: (c= constraint )?
 				int alt32=2;
 				try { DebugEnterSubRule(32);
 				try { DebugEnterDecision(32, false);
@@ -5627,15 +5627,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:782:4: c= constraint
+					// Smi.g:779:4: c= constraint
 					{
-					DebugLocation(782, 5);
-					PushFollow(Follow._constraint_in_character_str_type3420);
+					DebugLocation(779, 5);
+					PushFollow(Follow._constraint_in_character_str_type3401);
 					c=constraint();
 					PopFollow();
 					if (state.failed) return retval;
 					if (state.backtracking == 0) adaptor.AddChild(root_0, c.Tree);
-					DebugLocation(782, 17);
+					DebugLocation(779, 17);
 					if (state.backtracking == 0)
 					{
 						 retval.result.Constraint = (c!=null?c.result:default(Constraint)); 
@@ -5671,7 +5671,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("character_str_type", 24);
 			LeaveRule_character_str_type();
 		}
-		DebugLocation(783, 2);
+		DebugLocation(780, 2);
 		} finally { DebugExitRule(GrammarFileName, "character_str_type"); }
 		return retval;
 
@@ -5688,7 +5688,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_choice_type();
 	partial void LeaveRule_choice_type();
 	// $ANTLR start "choice_type"
-	// Smi.g:785:1: choice_type returns [ChoiceType result] : CHOICE_KW L_BRACE e= elementType_list R_BRACE ;
+	// Smi.g:782:1: choice_type returns [ChoiceType result] : CHOICE_KW L_BRACE e= elementType_list R_BRACE ;
 	[GrammarRule("choice_type")]
 	private SmiParser.choice_type_return choice_type()
 	{
@@ -5709,40 +5709,40 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree L_BRACE84_tree = default(CommonTree);
 		CommonTree R_BRACE85_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "choice_type");
-		DebugLocation(785, 1);
+		DebugLocation(782, 1);
 		try
 		{
-			// Smi.g:786:5: ( CHOICE_KW L_BRACE e= elementType_list R_BRACE )
+			// Smi.g:783:5: ( CHOICE_KW L_BRACE e= elementType_list R_BRACE )
 			DebugEnterAlt(1);
-			// Smi.g:786:7: CHOICE_KW L_BRACE e= elementType_list R_BRACE
+			// Smi.g:783:7: CHOICE_KW L_BRACE e= elementType_list R_BRACE
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(786, 7);
-			CHOICE_KW83=(IToken)Match(input,CHOICE_KW,Follow._CHOICE_KW_in_choice_type3444); if (state.failed) return retval;
+			DebugLocation(783, 7);
+			CHOICE_KW83=(IToken)Match(input,CHOICE_KW,Follow._CHOICE_KW_in_choice_type3425); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			CHOICE_KW83_tree = (CommonTree)adaptor.Create(CHOICE_KW83);
 			adaptor.AddChild(root_0, CHOICE_KW83_tree);
 			}
-			DebugLocation(786, 17);
-			L_BRACE84=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_choice_type3446); if (state.failed) return retval;
+			DebugLocation(783, 17);
+			L_BRACE84=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_choice_type3427); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			L_BRACE84_tree = (CommonTree)adaptor.Create(L_BRACE84);
 			adaptor.AddChild(root_0, L_BRACE84_tree);
 			}
-			DebugLocation(786, 26);
-			PushFollow(Follow._elementType_list_in_choice_type3450);
+			DebugLocation(783, 26);
+			PushFollow(Follow._elementType_list_in_choice_type3431);
 			e=elementType_list();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, e.Tree);
-			DebugLocation(786, 44);
-			R_BRACE85=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_choice_type3452); if (state.failed) return retval;
+			DebugLocation(783, 44);
+			R_BRACE85=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_choice_type3433); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			R_BRACE85_tree = (CommonTree)adaptor.Create(R_BRACE85);
 			adaptor.AddChild(root_0, R_BRACE85_tree);
 			}
-			DebugLocation(786, 52);
+			DebugLocation(783, 52);
 			if (state.backtracking == 0)
 			{
 				 retval.result = new ChoiceType((e!=null?e.result:default(IList<ISmiType>))); 
@@ -5769,7 +5769,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("choice_type", 25);
 			LeaveRule_choice_type();
 		}
-		DebugLocation(787, 1);
+		DebugLocation(784, 1);
 		} finally { DebugExitRule(GrammarFileName, "choice_type"); }
 		return retval;
 
@@ -5786,7 +5786,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_embedded_type();
 	partial void LeaveRule_embedded_type();
 	// $ANTLR start "embedded_type"
-	// Smi.g:789:1: embedded_type returns [EmbeddedType result = new EmbeddedType()] : EMBEDDED_KW PDV_KW ;
+	// Smi.g:786:1: embedded_type returns [EmbeddedType result = new EmbeddedType()] : EMBEDDED_KW PDV_KW ;
 	[GrammarRule("embedded_type")]
 	private SmiParser.embedded_type_return embedded_type()
 	{
@@ -5804,23 +5804,23 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree EMBEDDED_KW86_tree = default(CommonTree);
 		CommonTree PDV_KW87_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "embedded_type");
-		DebugLocation(789, 1);
+		DebugLocation(786, 1);
 		try
 		{
-			// Smi.g:790:5: ( EMBEDDED_KW PDV_KW )
+			// Smi.g:787:5: ( EMBEDDED_KW PDV_KW )
 			DebugEnterAlt(1);
-			// Smi.g:790:7: EMBEDDED_KW PDV_KW
+			// Smi.g:787:7: EMBEDDED_KW PDV_KW
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(790, 7);
-			EMBEDDED_KW86=(IToken)Match(input,EMBEDDED_KW,Follow._EMBEDDED_KW_in_embedded_type3472); if (state.failed) return retval;
+			DebugLocation(787, 7);
+			EMBEDDED_KW86=(IToken)Match(input,EMBEDDED_KW,Follow._EMBEDDED_KW_in_embedded_type3453); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			EMBEDDED_KW86_tree = (CommonTree)adaptor.Create(EMBEDDED_KW86);
 			adaptor.AddChild(root_0, EMBEDDED_KW86_tree);
 			}
-			DebugLocation(790, 19);
-			PDV_KW87=(IToken)Match(input,PDV_KW,Follow._PDV_KW_in_embedded_type3474); if (state.failed) return retval;
+			DebugLocation(787, 19);
+			PDV_KW87=(IToken)Match(input,PDV_KW,Follow._PDV_KW_in_embedded_type3455); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			PDV_KW87_tree = (CommonTree)adaptor.Create(PDV_KW87);
 			adaptor.AddChild(root_0, PDV_KW87_tree);
@@ -5847,7 +5847,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("embedded_type", 26);
 			LeaveRule_embedded_type();
 		}
-		DebugLocation(791, 1);
+		DebugLocation(788, 1);
 		} finally { DebugExitRule(GrammarFileName, "embedded_type"); }
 		return retval;
 
@@ -5864,7 +5864,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_enum_type();
 	partial void LeaveRule_enum_type();
 	// $ANTLR start "enum_type"
-	// Smi.g:793:1: enum_type returns [EnumType result] : ENUMERATED_KW n= namedNumber_list ;
+	// Smi.g:790:1: enum_type returns [EnumType result] : ENUMERATED_KW n= namedNumber_list ;
 	[GrammarRule("enum_type")]
 	private SmiParser.enum_type_return enum_type()
 	{
@@ -5881,28 +5881,28 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 		CommonTree ENUMERATED_KW88_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "enum_type");
-		DebugLocation(793, 1);
+		DebugLocation(790, 1);
 		try
 		{
-			// Smi.g:794:5: ( ENUMERATED_KW n= namedNumber_list )
+			// Smi.g:791:5: ( ENUMERATED_KW n= namedNumber_list )
 			DebugEnterAlt(1);
-			// Smi.g:794:7: ENUMERATED_KW n= namedNumber_list
+			// Smi.g:791:7: ENUMERATED_KW n= namedNumber_list
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(794, 7);
-			ENUMERATED_KW88=(IToken)Match(input,ENUMERATED_KW,Follow._ENUMERATED_KW_in_enum_type3493); if (state.failed) return retval;
+			DebugLocation(791, 7);
+			ENUMERATED_KW88=(IToken)Match(input,ENUMERATED_KW,Follow._ENUMERATED_KW_in_enum_type3474); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			ENUMERATED_KW88_tree = (CommonTree)adaptor.Create(ENUMERATED_KW88);
 			adaptor.AddChild(root_0, ENUMERATED_KW88_tree);
 			}
-			DebugLocation(794, 22);
-			PushFollow(Follow._namedNumber_list_in_enum_type3497);
+			DebugLocation(791, 22);
+			PushFollow(Follow._namedNumber_list_in_enum_type3478);
 			n=namedNumber_list();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, n.Tree);
-			DebugLocation(794, 40);
+			DebugLocation(791, 40);
 			if (state.backtracking == 0)
 			{
 				 retval.result = new EnumType((n!=null?n.result:default(IList<ISmiValue>))); 
@@ -5929,7 +5929,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("enum_type", 27);
 			LeaveRule_enum_type();
 		}
-		DebugLocation(795, 1);
+		DebugLocation(792, 1);
 		} finally { DebugExitRule(GrammarFileName, "enum_type"); }
 		return retval;
 
@@ -5946,7 +5946,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_external_type();
 	partial void LeaveRule_external_type();
 	// $ANTLR start "external_type"
-	// Smi.g:797:1: external_type returns [ExternalType result = new ExternalType()] : EXTERNAL_KW ;
+	// Smi.g:794:1: external_type returns [ExternalType result = new ExternalType()] : EXTERNAL_KW ;
 	[GrammarRule("external_type")]
 	private SmiParser.external_type_return external_type()
 	{
@@ -5962,17 +5962,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 		CommonTree EXTERNAL_KW89_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "external_type");
-		DebugLocation(797, 1);
+		DebugLocation(794, 1);
 		try
 		{
-			// Smi.g:798:5: ( EXTERNAL_KW )
+			// Smi.g:795:5: ( EXTERNAL_KW )
 			DebugEnterAlt(1);
-			// Smi.g:798:7: EXTERNAL_KW
+			// Smi.g:795:7: EXTERNAL_KW
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(798, 7);
-			EXTERNAL_KW89=(IToken)Match(input,EXTERNAL_KW,Follow._EXTERNAL_KW_in_external_type3517); if (state.failed) return retval;
+			DebugLocation(795, 7);
+			EXTERNAL_KW89=(IToken)Match(input,EXTERNAL_KW,Follow._EXTERNAL_KW_in_external_type3498); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			EXTERNAL_KW89_tree = (CommonTree)adaptor.Create(EXTERNAL_KW89);
 			adaptor.AddChild(root_0, EXTERNAL_KW89_tree);
@@ -5999,7 +5999,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("external_type", 28);
 			LeaveRule_external_type();
 		}
-		DebugLocation(799, 1);
+		DebugLocation(796, 1);
 		} finally { DebugExitRule(GrammarFileName, "external_type"); }
 		return retval;
 
@@ -6016,7 +6016,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_integer_type();
 	partial void LeaveRule_integer_type();
 	// $ANTLR start "integer_type"
-	// Smi.g:802:1: integer_type returns [IntegerType result = new IntegerType()] : INTEGER_KW ( ( L_BRACE namedNumber )=>n= namedNumber_list |c= constraint )? ;
+	// Smi.g:799:1: integer_type returns [IntegerType result = new IntegerType()] : INTEGER_KW ( ( L_BRACE namedNumber )=>n= namedNumber_list |c= constraint )? ;
 	[GrammarRule("integer_type")]
 	private SmiParser.integer_type_return integer_type()
 	{
@@ -6034,23 +6034,23 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 		CommonTree INTEGER_KW90_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "integer_type");
-		DebugLocation(802, 1);
+		DebugLocation(799, 1);
 		try
 		{
-			// Smi.g:803:5: ( INTEGER_KW ( ( L_BRACE namedNumber )=>n= namedNumber_list |c= constraint )? )
+			// Smi.g:800:5: ( INTEGER_KW ( ( L_BRACE namedNumber )=>n= namedNumber_list |c= constraint )? )
 			DebugEnterAlt(1);
-			// Smi.g:803:7: INTEGER_KW ( ( L_BRACE namedNumber )=>n= namedNumber_list |c= constraint )?
+			// Smi.g:800:7: INTEGER_KW ( ( L_BRACE namedNumber )=>n= namedNumber_list |c= constraint )?
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(803, 7);
-			INTEGER_KW90=(IToken)Match(input,INTEGER_KW,Follow._INTEGER_KW_in_integer_type3538); if (state.failed) return retval;
+			DebugLocation(800, 7);
+			INTEGER_KW90=(IToken)Match(input,INTEGER_KW,Follow._INTEGER_KW_in_integer_type3519); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			INTEGER_KW90_tree = (CommonTree)adaptor.Create(INTEGER_KW90);
 			adaptor.AddChild(root_0, INTEGER_KW90_tree);
 			}
-			DebugLocation(803, 18);
-			// Smi.g:803:18: ( ( L_BRACE namedNumber )=>n= namedNumber_list |c= constraint )?
+			DebugLocation(800, 18);
+			// Smi.g:800:18: ( ( L_BRACE namedNumber )=>n= namedNumber_list |c= constraint )?
 			int alt34=3;
 			try { DebugEnterSubRule(34);
 			try { DebugEnterDecision(34, false);
@@ -6069,15 +6069,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:803:19: ( L_BRACE namedNumber )=>n= namedNumber_list
+				// Smi.g:800:19: ( L_BRACE namedNumber )=>n= namedNumber_list
 				{
-				DebugLocation(803, 45);
-				PushFollow(Follow._namedNumber_list_in_integer_type3551);
+				DebugLocation(800, 45);
+				PushFollow(Follow._namedNumber_list_in_integer_type3532);
 				n=namedNumber_list();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, n.Tree);
-				DebugLocation(803, 63);
+				DebugLocation(800, 63);
 				if (state.backtracking == 0)
 				{
 					 retval.result.NamedNumberList = (n!=null?n.result:default(IList<ISmiValue>)); 
@@ -6087,15 +6087,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// Smi.g:804:4: c= constraint
+				// Smi.g:801:4: c= constraint
 				{
-				DebugLocation(804, 5);
-				PushFollow(Follow._constraint_in_integer_type3560);
+				DebugLocation(801, 5);
+				PushFollow(Follow._constraint_in_integer_type3541);
 				c=constraint();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, c.Tree);
-				DebugLocation(804, 17);
+				DebugLocation(801, 17);
 				if (state.backtracking == 0)
 				{
 					 retval.result.Constraint = (c!=null?c.result:default(Constraint)); 
@@ -6129,7 +6129,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("integer_type", 29);
 			LeaveRule_integer_type();
 		}
-		DebugLocation(805, 1);
+		DebugLocation(802, 1);
 		} finally { DebugExitRule(GrammarFileName, "integer_type"); }
 		return retval;
 
@@ -6146,7 +6146,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_null_type();
 	partial void LeaveRule_null_type();
 	// $ANTLR start "null_type"
-	// Smi.g:809:1: null_type returns [NullType result = new NullType()] : NULL_KW ;
+	// Smi.g:806:1: null_type returns [NullType result = new NullType()] : NULL_KW ;
 	[GrammarRule("null_type")]
 	private SmiParser.null_type_return null_type()
 	{
@@ -6162,17 +6162,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 		CommonTree NULL_KW91_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "null_type");
-		DebugLocation(809, 1);
+		DebugLocation(806, 1);
 		try
 		{
-			// Smi.g:810:5: ( NULL_KW )
+			// Smi.g:807:5: ( NULL_KW )
 			DebugEnterAlt(1);
-			// Smi.g:810:7: NULL_KW
+			// Smi.g:807:7: NULL_KW
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(810, 7);
-			NULL_KW91=(IToken)Match(input,NULL_KW,Follow._NULL_KW_in_null_type3585); if (state.failed) return retval;
+			DebugLocation(807, 7);
+			NULL_KW91=(IToken)Match(input,NULL_KW,Follow._NULL_KW_in_null_type3566); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			NULL_KW91_tree = (CommonTree)adaptor.Create(NULL_KW91);
 			adaptor.AddChild(root_0, NULL_KW91_tree);
@@ -6199,7 +6199,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("null_type", 30);
 			LeaveRule_null_type();
 		}
-		DebugLocation(811, 1);
+		DebugLocation(808, 1);
 		} finally { DebugExitRule(GrammarFileName, "null_type"); }
 		return retval;
 
@@ -6216,7 +6216,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_object_identifier_type();
 	partial void LeaveRule_object_identifier_type();
 	// $ANTLR start "object_identifier_type"
-	// Smi.g:813:1: object_identifier_type returns [ObjectIdentifierType result = new ObjectIdentifierType()] : OBJECT_KW IDENTIFIER_KW ;
+	// Smi.g:810:1: object_identifier_type returns [ObjectIdentifierType result = new ObjectIdentifierType()] : OBJECT_KW IDENTIFIER_KW ;
 	[GrammarRule("object_identifier_type")]
 	private SmiParser.object_identifier_type_return object_identifier_type()
 	{
@@ -6234,23 +6234,23 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree OBJECT_KW92_tree = default(CommonTree);
 		CommonTree IDENTIFIER_KW93_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "object_identifier_type");
-		DebugLocation(813, 1);
+		DebugLocation(810, 1);
 		try
 		{
-			// Smi.g:814:5: ( OBJECT_KW IDENTIFIER_KW )
+			// Smi.g:811:5: ( OBJECT_KW IDENTIFIER_KW )
 			DebugEnterAlt(1);
-			// Smi.g:814:7: OBJECT_KW IDENTIFIER_KW
+			// Smi.g:811:7: OBJECT_KW IDENTIFIER_KW
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(814, 7);
-			OBJECT_KW92=(IToken)Match(input,OBJECT_KW,Follow._OBJECT_KW_in_object_identifier_type3604); if (state.failed) return retval;
+			DebugLocation(811, 7);
+			OBJECT_KW92=(IToken)Match(input,OBJECT_KW,Follow._OBJECT_KW_in_object_identifier_type3585); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			OBJECT_KW92_tree = (CommonTree)adaptor.Create(OBJECT_KW92);
 			adaptor.AddChild(root_0, OBJECT_KW92_tree);
 			}
-			DebugLocation(814, 17);
-			IDENTIFIER_KW93=(IToken)Match(input,IDENTIFIER_KW,Follow._IDENTIFIER_KW_in_object_identifier_type3606); if (state.failed) return retval;
+			DebugLocation(811, 17);
+			IDENTIFIER_KW93=(IToken)Match(input,IDENTIFIER_KW,Follow._IDENTIFIER_KW_in_object_identifier_type3587); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			IDENTIFIER_KW93_tree = (CommonTree)adaptor.Create(IDENTIFIER_KW93);
 			adaptor.AddChild(root_0, IDENTIFIER_KW93_tree);
@@ -6277,7 +6277,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("object_identifier_type", 31);
 			LeaveRule_object_identifier_type();
 		}
-		DebugLocation(815, 1);
+		DebugLocation(812, 1);
 		} finally { DebugExitRule(GrammarFileName, "object_identifier_type"); }
 		return retval;
 
@@ -6294,7 +6294,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_octetString_type();
 	partial void LeaveRule_octetString_type();
 	// $ANTLR start "octetString_type"
-	// Smi.g:817:1: octetString_type returns [OctetStringType result = new OctetStringType()] : OCTET_KW STRING_KW (c= constraint )? ;
+	// Smi.g:814:1: octetString_type returns [OctetStringType result = new OctetStringType()] : OCTET_KW STRING_KW (c= constraint )? ;
 	[GrammarRule("octetString_type")]
 	private SmiParser.octetString_type_return octetString_type()
 	{
@@ -6313,29 +6313,29 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree OCTET_KW94_tree = default(CommonTree);
 		CommonTree STRING_KW95_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "octetString_type");
-		DebugLocation(817, 1);
+		DebugLocation(814, 1);
 		try
 		{
-			// Smi.g:818:5: ( OCTET_KW STRING_KW (c= constraint )? )
+			// Smi.g:815:5: ( OCTET_KW STRING_KW (c= constraint )? )
 			DebugEnterAlt(1);
-			// Smi.g:818:7: OCTET_KW STRING_KW (c= constraint )?
+			// Smi.g:815:7: OCTET_KW STRING_KW (c= constraint )?
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(818, 7);
-			OCTET_KW94=(IToken)Match(input,OCTET_KW,Follow._OCTET_KW_in_octetString_type3625); if (state.failed) return retval;
+			DebugLocation(815, 7);
+			OCTET_KW94=(IToken)Match(input,OCTET_KW,Follow._OCTET_KW_in_octetString_type3606); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			OCTET_KW94_tree = (CommonTree)adaptor.Create(OCTET_KW94);
 			adaptor.AddChild(root_0, OCTET_KW94_tree);
 			}
-			DebugLocation(818, 16);
-			STRING_KW95=(IToken)Match(input,STRING_KW,Follow._STRING_KW_in_octetString_type3627); if (state.failed) return retval;
+			DebugLocation(815, 16);
+			STRING_KW95=(IToken)Match(input,STRING_KW,Follow._STRING_KW_in_octetString_type3608); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			STRING_KW95_tree = (CommonTree)adaptor.Create(STRING_KW95);
 			adaptor.AddChild(root_0, STRING_KW95_tree);
 			}
-			DebugLocation(818, 26);
-			// Smi.g:818:26: (c= constraint )?
+			DebugLocation(815, 26);
+			// Smi.g:815:26: (c= constraint )?
 			int alt35=2;
 			try { DebugEnterSubRule(35);
 			try { DebugEnterDecision(35, false);
@@ -6350,15 +6350,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:818:27: c= constraint
+				// Smi.g:815:27: c= constraint
 				{
-				DebugLocation(818, 28);
-				PushFollow(Follow._constraint_in_octetString_type3632);
+				DebugLocation(815, 28);
+				PushFollow(Follow._constraint_in_octetString_type3613);
 				c=constraint();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, c.Tree);
-				DebugLocation(818, 40);
+				DebugLocation(815, 40);
 				if (state.backtracking == 0)
 				{
 					 retval.result.Constraint = (c!=null?c.result:default(Constraint)); 
@@ -6392,7 +6392,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("octetString_type", 32);
 			LeaveRule_octetString_type();
 		}
-		DebugLocation(819, 1);
+		DebugLocation(816, 1);
 		} finally { DebugExitRule(GrammarFileName, "octetString_type"); }
 		return retval;
 
@@ -6409,7 +6409,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_real_type();
 	partial void LeaveRule_real_type();
 	// $ANTLR start "real_type"
-	// Smi.g:821:1: real_type returns [RealType result = new RealType()] : REAL_KW ;
+	// Smi.g:818:1: real_type returns [RealType result = new RealType()] : REAL_KW ;
 	[GrammarRule("real_type")]
 	private SmiParser.real_type_return real_type()
 	{
@@ -6425,17 +6425,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 		CommonTree REAL_KW96_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "real_type");
-		DebugLocation(821, 1);
+		DebugLocation(818, 1);
 		try
 		{
-			// Smi.g:822:5: ( REAL_KW )
+			// Smi.g:819:5: ( REAL_KW )
 			DebugEnterAlt(1);
-			// Smi.g:822:7: REAL_KW
+			// Smi.g:819:7: REAL_KW
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(822, 7);
-			REAL_KW96=(IToken)Match(input,REAL_KW,Follow._REAL_KW_in_real_type3655); if (state.failed) return retval;
+			DebugLocation(819, 7);
+			REAL_KW96=(IToken)Match(input,REAL_KW,Follow._REAL_KW_in_real_type3636); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			REAL_KW96_tree = (CommonTree)adaptor.Create(REAL_KW96);
 			adaptor.AddChild(root_0, REAL_KW96_tree);
@@ -6462,7 +6462,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("real_type", 33);
 			LeaveRule_real_type();
 		}
-		DebugLocation(823, 1);
+		DebugLocation(820, 1);
 		} finally { DebugExitRule(GrammarFileName, "real_type"); }
 		return retval;
 
@@ -6479,7 +6479,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_relativeOid_type();
 	partial void LeaveRule_relativeOid_type();
 	// $ANTLR start "relativeOid_type"
-	// Smi.g:826:1: relativeOid_type returns [RelativeIdType result = new RelativeIdType()] : 'RELATIVE-OID' ;
+	// Smi.g:823:1: relativeOid_type returns [RelativeIdType result = new RelativeIdType()] : 'RELATIVE-OID' ;
 	[GrammarRule("relativeOid_type")]
 	private SmiParser.relativeOid_type_return relativeOid_type()
 	{
@@ -6495,17 +6495,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 		CommonTree string_literal97_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "relativeOid_type");
-		DebugLocation(826, 1);
+		DebugLocation(823, 1);
 		try
 		{
-			// Smi.g:827:5: ( 'RELATIVE-OID' )
+			// Smi.g:824:5: ( 'RELATIVE-OID' )
 			DebugEnterAlt(1);
-			// Smi.g:827:7: 'RELATIVE-OID'
+			// Smi.g:824:7: 'RELATIVE-OID'
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(827, 7);
-			string_literal97=(IToken)Match(input,177,Follow._177_in_relativeOid_type3677); if (state.failed) return retval;
+			DebugLocation(824, 7);
+			string_literal97=(IToken)Match(input,177,Follow._177_in_relativeOid_type3658); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			string_literal97_tree = (CommonTree)adaptor.Create(string_literal97);
 			adaptor.AddChild(root_0, string_literal97_tree);
@@ -6532,7 +6532,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("relativeOid_type", 34);
 			LeaveRule_relativeOid_type();
 		}
-		DebugLocation(828, 1);
+		DebugLocation(825, 1);
 		} finally { DebugExitRule(GrammarFileName, "relativeOid_type"); }
 		return retval;
 
@@ -6549,7 +6549,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_sequence_type();
 	partial void LeaveRule_sequence_type();
 	// $ANTLR start "sequence_type"
-	// Smi.g:832:1: sequence_type returns [SequenceType result = new SequenceType()] : SEQUENCE_KW L_BRACE (e= elementType_list )? R_BRACE ;
+	// Smi.g:829:1: sequence_type returns [SequenceType result = new SequenceType()] : SEQUENCE_KW L_BRACE (e= elementType_list )? R_BRACE ;
 	[GrammarRule("sequence_type")]
 	private SmiParser.sequence_type_return sequence_type()
 	{
@@ -6570,29 +6570,29 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree L_BRACE99_tree = default(CommonTree);
 		CommonTree R_BRACE100_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "sequence_type");
-		DebugLocation(832, 1);
+		DebugLocation(829, 1);
 		try
 		{
-			// Smi.g:833:5: ( SEQUENCE_KW L_BRACE (e= elementType_list )? R_BRACE )
+			// Smi.g:830:5: ( SEQUENCE_KW L_BRACE (e= elementType_list )? R_BRACE )
 			DebugEnterAlt(1);
-			// Smi.g:833:7: SEQUENCE_KW L_BRACE (e= elementType_list )? R_BRACE
+			// Smi.g:830:7: SEQUENCE_KW L_BRACE (e= elementType_list )? R_BRACE
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(833, 7);
-			SEQUENCE_KW98=(IToken)Match(input,SEQUENCE_KW,Follow._SEQUENCE_KW_in_sequence_type3698); if (state.failed) return retval;
+			DebugLocation(830, 7);
+			SEQUENCE_KW98=(IToken)Match(input,SEQUENCE_KW,Follow._SEQUENCE_KW_in_sequence_type3679); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			SEQUENCE_KW98_tree = (CommonTree)adaptor.Create(SEQUENCE_KW98);
 			adaptor.AddChild(root_0, SEQUENCE_KW98_tree);
 			}
-			DebugLocation(833, 19);
-			L_BRACE99=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_sequence_type3700); if (state.failed) return retval;
+			DebugLocation(830, 19);
+			L_BRACE99=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_sequence_type3681); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			L_BRACE99_tree = (CommonTree)adaptor.Create(L_BRACE99);
 			adaptor.AddChild(root_0, L_BRACE99_tree);
 			}
-			DebugLocation(833, 27);
-			// Smi.g:833:27: (e= elementType_list )?
+			DebugLocation(830, 27);
+			// Smi.g:830:27: (e= elementType_list )?
 			int alt36=2;
 			try { DebugEnterSubRule(36);
 			try { DebugEnterDecision(36, false);
@@ -6607,15 +6607,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:833:28: e= elementType_list
+				// Smi.g:830:28: e= elementType_list
 				{
-				DebugLocation(833, 29);
-				PushFollow(Follow._elementType_list_in_sequence_type3705);
+				DebugLocation(830, 29);
+				PushFollow(Follow._elementType_list_in_sequence_type3686);
 				e=elementType_list();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, e.Tree);
-				DebugLocation(833, 47);
+				DebugLocation(830, 47);
 				if (state.backtracking == 0)
 				{
 					 retval.result.ElementTypeList = (e!=null?e.result:default(IList<ISmiType>)); 
@@ -6627,8 +6627,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(36); }
 
-			DebugLocation(833, 90);
-			R_BRACE100=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_sequence_type3711); if (state.failed) return retval;
+			DebugLocation(830, 90);
+			R_BRACE100=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_sequence_type3692); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			R_BRACE100_tree = (CommonTree)adaptor.Create(R_BRACE100);
 			adaptor.AddChild(root_0, R_BRACE100_tree);
@@ -6655,7 +6655,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("sequence_type", 35);
 			LeaveRule_sequence_type();
 		}
-		DebugLocation(834, 1);
+		DebugLocation(831, 1);
 		} finally { DebugExitRule(GrammarFileName, "sequence_type"); }
 		return retval;
 
@@ -6672,7 +6672,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_sequenceof_type();
 	partial void LeaveRule_sequenceof_type();
 	// $ANTLR start "sequenceof_type"
-	// Smi.g:836:1: sequenceof_type returns [SequenceOfType result = new SequenceOfType()] : SEQUENCE_KW ( L_PAREN SIZE_KW c= constraint R_PAREN )? OF_KW t= type ;
+	// Smi.g:833:1: sequenceof_type returns [SequenceOfType result = new SequenceOfType()] : SEQUENCE_KW ( L_PAREN SIZE_KW c= constraint R_PAREN )? OF_KW t= type ;
 	[GrammarRule("sequenceof_type")]
 	private SmiParser.sequenceof_type_return sequenceof_type()
 	{
@@ -6698,23 +6698,23 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree R_PAREN104_tree = default(CommonTree);
 		CommonTree OF_KW105_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "sequenceof_type");
-		DebugLocation(836, 1);
+		DebugLocation(833, 1);
 		try
 		{
-			// Smi.g:837:5: ( SEQUENCE_KW ( L_PAREN SIZE_KW c= constraint R_PAREN )? OF_KW t= type )
+			// Smi.g:834:5: ( SEQUENCE_KW ( L_PAREN SIZE_KW c= constraint R_PAREN )? OF_KW t= type )
 			DebugEnterAlt(1);
-			// Smi.g:837:7: SEQUENCE_KW ( L_PAREN SIZE_KW c= constraint R_PAREN )? OF_KW t= type
+			// Smi.g:834:7: SEQUENCE_KW ( L_PAREN SIZE_KW c= constraint R_PAREN )? OF_KW t= type
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(837, 7);
-			SEQUENCE_KW101=(IToken)Match(input,SEQUENCE_KW,Follow._SEQUENCE_KW_in_sequenceof_type3730); if (state.failed) return retval;
+			DebugLocation(834, 7);
+			SEQUENCE_KW101=(IToken)Match(input,SEQUENCE_KW,Follow._SEQUENCE_KW_in_sequenceof_type3711); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			SEQUENCE_KW101_tree = (CommonTree)adaptor.Create(SEQUENCE_KW101);
 			adaptor.AddChild(root_0, SEQUENCE_KW101_tree);
 			}
-			DebugLocation(837, 19);
-			// Smi.g:837:19: ( L_PAREN SIZE_KW c= constraint R_PAREN )?
+			DebugLocation(834, 19);
+			// Smi.g:834:19: ( L_PAREN SIZE_KW c= constraint R_PAREN )?
 			int alt37=2;
 			try { DebugEnterSubRule(37);
 			try { DebugEnterDecision(37, false);
@@ -6729,33 +6729,33 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:837:20: L_PAREN SIZE_KW c= constraint R_PAREN
+				// Smi.g:834:20: L_PAREN SIZE_KW c= constraint R_PAREN
 				{
-				DebugLocation(837, 20);
-				L_PAREN102=(IToken)Match(input,L_PAREN,Follow._L_PAREN_in_sequenceof_type3733); if (state.failed) return retval;
+				DebugLocation(834, 20);
+				L_PAREN102=(IToken)Match(input,L_PAREN,Follow._L_PAREN_in_sequenceof_type3714); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				L_PAREN102_tree = (CommonTree)adaptor.Create(L_PAREN102);
 				adaptor.AddChild(root_0, L_PAREN102_tree);
 				}
-				DebugLocation(837, 28);
-				SIZE_KW103=(IToken)Match(input,SIZE_KW,Follow._SIZE_KW_in_sequenceof_type3735); if (state.failed) return retval;
+				DebugLocation(834, 28);
+				SIZE_KW103=(IToken)Match(input,SIZE_KW,Follow._SIZE_KW_in_sequenceof_type3716); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				SIZE_KW103_tree = (CommonTree)adaptor.Create(SIZE_KW103);
 				adaptor.AddChild(root_0, SIZE_KW103_tree);
 				}
-				DebugLocation(837, 37);
-				PushFollow(Follow._constraint_in_sequenceof_type3739);
+				DebugLocation(834, 37);
+				PushFollow(Follow._constraint_in_sequenceof_type3720);
 				c=constraint();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, c.Tree);
-				DebugLocation(837, 49);
+				DebugLocation(834, 49);
 				if (state.backtracking == 0)
 				{
 					 retval.result.Constraint = (c!=null?c.result:default(Constraint)); 
 				}
-				DebugLocation(837, 85);
-				R_PAREN104=(IToken)Match(input,R_PAREN,Follow._R_PAREN_in_sequenceof_type3743); if (state.failed) return retval;
+				DebugLocation(834, 85);
+				R_PAREN104=(IToken)Match(input,R_PAREN,Follow._R_PAREN_in_sequenceof_type3724); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				R_PAREN104_tree = (CommonTree)adaptor.Create(R_PAREN104);
 				adaptor.AddChild(root_0, R_PAREN104_tree);
@@ -6767,19 +6767,19 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(37); }
 
-			DebugLocation(838, 2);
-			OF_KW105=(IToken)Match(input,OF_KW,Follow._OF_KW_in_sequenceof_type3748); if (state.failed) return retval;
+			DebugLocation(835, 2);
+			OF_KW105=(IToken)Match(input,OF_KW,Follow._OF_KW_in_sequenceof_type3729); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			OF_KW105_tree = (CommonTree)adaptor.Create(OF_KW105);
 			adaptor.AddChild(root_0, OF_KW105_tree);
 			}
-			DebugLocation(838, 9);
-			PushFollow(Follow._type_in_sequenceof_type3752);
+			DebugLocation(835, 9);
+			PushFollow(Follow._type_in_sequenceof_type3733);
 			t=type();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, t.Tree);
-			DebugLocation(838, 15);
+			DebugLocation(835, 15);
 			if (state.backtracking == 0)
 			{
 				 retval.result.Subtype = (t!=null?t.result:default(ISmiType)); 
@@ -6806,7 +6806,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("sequenceof_type", 36);
 			LeaveRule_sequenceof_type();
 		}
-		DebugLocation(839, 1);
+		DebugLocation(836, 1);
 		} finally { DebugExitRule(GrammarFileName, "sequenceof_type"); }
 		return retval;
 
@@ -6823,7 +6823,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_set_type();
 	partial void LeaveRule_set_type();
 	// $ANTLR start "set_type"
-	// Smi.g:841:1: set_type returns [SetType result = new SetType()] : SET_KW L_BRACE (e= elementType_list )? R_BRACE ;
+	// Smi.g:838:1: set_type returns [SetType result = new SetType()] : SET_KW L_BRACE (e= elementType_list )? R_BRACE ;
 	[GrammarRule("set_type")]
 	private SmiParser.set_type_return set_type()
 	{
@@ -6844,29 +6844,29 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree L_BRACE107_tree = default(CommonTree);
 		CommonTree R_BRACE108_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "set_type");
-		DebugLocation(841, 1);
+		DebugLocation(838, 1);
 		try
 		{
-			// Smi.g:842:5: ( SET_KW L_BRACE (e= elementType_list )? R_BRACE )
+			// Smi.g:839:5: ( SET_KW L_BRACE (e= elementType_list )? R_BRACE )
 			DebugEnterAlt(1);
-			// Smi.g:842:7: SET_KW L_BRACE (e= elementType_list )? R_BRACE
+			// Smi.g:839:7: SET_KW L_BRACE (e= elementType_list )? R_BRACE
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(842, 7);
-			SET_KW106=(IToken)Match(input,SET_KW,Follow._SET_KW_in_set_type3772); if (state.failed) return retval;
+			DebugLocation(839, 7);
+			SET_KW106=(IToken)Match(input,SET_KW,Follow._SET_KW_in_set_type3753); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			SET_KW106_tree = (CommonTree)adaptor.Create(SET_KW106);
 			adaptor.AddChild(root_0, SET_KW106_tree);
 			}
-			DebugLocation(842, 14);
-			L_BRACE107=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_set_type3774); if (state.failed) return retval;
+			DebugLocation(839, 14);
+			L_BRACE107=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_set_type3755); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			L_BRACE107_tree = (CommonTree)adaptor.Create(L_BRACE107);
 			adaptor.AddChild(root_0, L_BRACE107_tree);
 			}
-			DebugLocation(842, 22);
-			// Smi.g:842:22: (e= elementType_list )?
+			DebugLocation(839, 22);
+			// Smi.g:839:22: (e= elementType_list )?
 			int alt38=2;
 			try { DebugEnterSubRule(38);
 			try { DebugEnterDecision(38, false);
@@ -6881,15 +6881,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:842:23: e= elementType_list
+				// Smi.g:839:23: e= elementType_list
 				{
-				DebugLocation(842, 24);
-				PushFollow(Follow._elementType_list_in_set_type3779);
+				DebugLocation(839, 24);
+				PushFollow(Follow._elementType_list_in_set_type3760);
 				e=elementType_list();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, e.Tree);
-				DebugLocation(842, 42);
+				DebugLocation(839, 42);
 				if (state.backtracking == 0)
 				{
 					 retval.result.ElementTypeList = (e!=null?e.result:default(IList<ISmiType>)); 
@@ -6901,8 +6901,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(38); }
 
-			DebugLocation(842, 85);
-			R_BRACE108=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_set_type3785); if (state.failed) return retval;
+			DebugLocation(839, 85);
+			R_BRACE108=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_set_type3766); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			R_BRACE108_tree = (CommonTree)adaptor.Create(R_BRACE108);
 			adaptor.AddChild(root_0, R_BRACE108_tree);
@@ -6929,7 +6929,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("set_type", 37);
 			LeaveRule_set_type();
 		}
-		DebugLocation(843, 1);
+		DebugLocation(840, 1);
 		} finally { DebugExitRule(GrammarFileName, "set_type"); }
 		return retval;
 
@@ -6946,7 +6946,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_setof_type();
 	partial void LeaveRule_setof_type();
 	// $ANTLR start "setof_type"
-	// Smi.g:845:1: setof_type returns [SetOfType result = new SetOfType()] : SET_KW ( SIZE_KW c= constraint )? OF_KW t= type ;
+	// Smi.g:842:1: setof_type returns [SetOfType result = new SetOfType()] : SET_KW ( SIZE_KW c= constraint )? OF_KW t= type ;
 	[GrammarRule("setof_type")]
 	private SmiParser.setof_type_return setof_type()
 	{
@@ -6968,23 +6968,23 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree SIZE_KW110_tree = default(CommonTree);
 		CommonTree OF_KW111_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "setof_type");
-		DebugLocation(845, 1);
+		DebugLocation(842, 1);
 		try
 		{
-			// Smi.g:846:5: ( SET_KW ( SIZE_KW c= constraint )? OF_KW t= type )
+			// Smi.g:843:5: ( SET_KW ( SIZE_KW c= constraint )? OF_KW t= type )
 			DebugEnterAlt(1);
-			// Smi.g:846:7: SET_KW ( SIZE_KW c= constraint )? OF_KW t= type
+			// Smi.g:843:7: SET_KW ( SIZE_KW c= constraint )? OF_KW t= type
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(846, 7);
-			SET_KW109=(IToken)Match(input,SET_KW,Follow._SET_KW_in_setof_type3803); if (state.failed) return retval;
+			DebugLocation(843, 7);
+			SET_KW109=(IToken)Match(input,SET_KW,Follow._SET_KW_in_setof_type3784); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			SET_KW109_tree = (CommonTree)adaptor.Create(SET_KW109);
 			adaptor.AddChild(root_0, SET_KW109_tree);
 			}
-			DebugLocation(846, 14);
-			// Smi.g:846:14: ( SIZE_KW c= constraint )?
+			DebugLocation(843, 14);
+			// Smi.g:843:14: ( SIZE_KW c= constraint )?
 			int alt39=2;
 			try { DebugEnterSubRule(39);
 			try { DebugEnterDecision(39, false);
@@ -6999,21 +6999,21 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:846:15: SIZE_KW c= constraint
+				// Smi.g:843:15: SIZE_KW c= constraint
 				{
-				DebugLocation(846, 15);
-				SIZE_KW110=(IToken)Match(input,SIZE_KW,Follow._SIZE_KW_in_setof_type3806); if (state.failed) return retval;
+				DebugLocation(843, 15);
+				SIZE_KW110=(IToken)Match(input,SIZE_KW,Follow._SIZE_KW_in_setof_type3787); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				SIZE_KW110_tree = (CommonTree)adaptor.Create(SIZE_KW110);
 				adaptor.AddChild(root_0, SIZE_KW110_tree);
 				}
-				DebugLocation(846, 24);
-				PushFollow(Follow._constraint_in_setof_type3810);
+				DebugLocation(843, 24);
+				PushFollow(Follow._constraint_in_setof_type3791);
 				c=constraint();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, c.Tree);
-				DebugLocation(846, 36);
+				DebugLocation(843, 36);
 				if (state.backtracking == 0)
 				{
 					 retval.result.Constraint = (c!=null?c.result:default(Constraint)); 
@@ -7025,19 +7025,19 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(39); }
 
-			DebugLocation(847, 2);
-			OF_KW111=(IToken)Match(input,OF_KW,Follow._OF_KW_in_setof_type3817); if (state.failed) return retval;
+			DebugLocation(844, 2);
+			OF_KW111=(IToken)Match(input,OF_KW,Follow._OF_KW_in_setof_type3798); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			OF_KW111_tree = (CommonTree)adaptor.Create(OF_KW111);
 			adaptor.AddChild(root_0, OF_KW111_tree);
 			}
-			DebugLocation(847, 9);
-			PushFollow(Follow._type_in_setof_type3821);
+			DebugLocation(844, 9);
+			PushFollow(Follow._type_in_setof_type3802);
 			t=type();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, t.Tree);
-			DebugLocation(847, 15);
+			DebugLocation(844, 15);
 			if (state.backtracking == 0)
 			{
 				 retval.result.Subtype = (t!=null?t.result:default(ISmiType)); 
@@ -7064,7 +7064,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("setof_type", 38);
 			LeaveRule_setof_type();
 		}
-		DebugLocation(848, 1);
+		DebugLocation(845, 1);
 		} finally { DebugExitRule(GrammarFileName, "setof_type"); }
 		return retval;
 
@@ -7081,7 +7081,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_tagged_type();
 	partial void LeaveRule_tagged_type();
 	// $ANTLR start "tagged_type"
-	// Smi.g:850:1: tagged_type returns [TaggedType result = new TaggedType()] : t= tag (td= tag_default )? ty= type ;
+	// Smi.g:847:1: tagged_type returns [TaggedType result = new TaggedType()] : t= tag (td= tag_default )? ty= type ;
 	[GrammarRule("tagged_type")]
 	private SmiParser.tagged_type_return tagged_type()
 	{
@@ -7098,28 +7098,28 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		SmiParser.type_return ty = default(SmiParser.type_return);
 
 		try { DebugEnterRule(GrammarFileName, "tagged_type");
-		DebugLocation(850, 1);
+		DebugLocation(847, 1);
 		try
 		{
-			// Smi.g:851:5: (t= tag (td= tag_default )? ty= type )
+			// Smi.g:848:5: (t= tag (td= tag_default )? ty= type )
 			DebugEnterAlt(1);
-			// Smi.g:851:7: t= tag (td= tag_default )? ty= type
+			// Smi.g:848:7: t= tag (td= tag_default )? ty= type
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(851, 8);
-			PushFollow(Follow._tag_in_tagged_type3843);
+			DebugLocation(848, 8);
+			PushFollow(Follow._tag_in_tagged_type3824);
 			t=tag();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, t.Tree);
-			DebugLocation(851, 13);
+			DebugLocation(848, 13);
 			if (state.backtracking == 0)
 			{
 				 retval.result.Tag = (t!=null?t.result:default(Tag)); 
 			}
-			DebugLocation(852, 2);
-			// Smi.g:852:2: (td= tag_default )?
+			DebugLocation(849, 2);
+			// Smi.g:849:2: (td= tag_default )?
 			int alt40=2;
 			try { DebugEnterSubRule(40);
 			try { DebugEnterDecision(40, false);
@@ -7134,15 +7134,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:852:3: td= tag_default
+				// Smi.g:849:3: td= tag_default
 				{
-				DebugLocation(852, 5);
-				PushFollow(Follow._tag_default_in_tagged_type3851);
+				DebugLocation(849, 5);
+				PushFollow(Follow._tag_default_in_tagged_type3832);
 				td=tag_default();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, td.Tree);
-				DebugLocation(852, 18);
+				DebugLocation(849, 18);
 				if (state.backtracking == 0)
 				{
 					 retval.result.TagDefault = (td!=null?td.result:default(TagDefault)); 
@@ -7154,13 +7154,13 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(40); }
 
-			DebugLocation(853, 4);
-			PushFollow(Follow._type_in_tagged_type3861);
+			DebugLocation(850, 4);
+			PushFollow(Follow._type_in_tagged_type3842);
 			ty=type();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, ty.Tree);
-			DebugLocation(853, 10);
+			DebugLocation(850, 10);
 			if (state.backtracking == 0)
 			{
 				 retval.result.Subtype = (ty!=null?ty.result:default(ISmiType)); 
@@ -7187,7 +7187,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("tagged_type", 39);
 			LeaveRule_tagged_type();
 		}
-		DebugLocation(854, 1);
+		DebugLocation(851, 1);
 		} finally { DebugExitRule(GrammarFileName, "tagged_type"); }
 		return retval;
 
@@ -7204,7 +7204,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_namedNumber_list();
 	partial void LeaveRule_namedNumber_list();
 	// $ANTLR start "namedNumber_list"
-	// Smi.g:856:1: namedNumber_list returns [IList<ISmiValue> result = new List<ISmiValue>()] : L_BRACE num1= namedNumber ( COMMA num2= namedNumber )* R_BRACE ;
+	// Smi.g:853:1: namedNumber_list returns [IList<ISmiValue> result = new List<ISmiValue>()] : L_BRACE num1= namedNumber ( COMMA num2= namedNumber )* R_BRACE ;
 	[GrammarRule("namedNumber_list")]
 	private SmiParser.namedNumber_list_return namedNumber_list()
 	{
@@ -7226,34 +7226,34 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree COMMA113_tree = default(CommonTree);
 		CommonTree R_BRACE114_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "namedNumber_list");
-		DebugLocation(856, 1);
+		DebugLocation(853, 1);
 		try
 		{
-			// Smi.g:857:5: ( L_BRACE num1= namedNumber ( COMMA num2= namedNumber )* R_BRACE )
+			// Smi.g:854:5: ( L_BRACE num1= namedNumber ( COMMA num2= namedNumber )* R_BRACE )
 			DebugEnterAlt(1);
-			// Smi.g:857:7: L_BRACE num1= namedNumber ( COMMA num2= namedNumber )* R_BRACE
+			// Smi.g:854:7: L_BRACE num1= namedNumber ( COMMA num2= namedNumber )* R_BRACE
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(857, 7);
-			L_BRACE112=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_namedNumber_list3881); if (state.failed) return retval;
+			DebugLocation(854, 7);
+			L_BRACE112=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_namedNumber_list3862); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			L_BRACE112_tree = (CommonTree)adaptor.Create(L_BRACE112);
 			adaptor.AddChild(root_0, L_BRACE112_tree);
 			}
-			DebugLocation(857, 19);
-			PushFollow(Follow._namedNumber_in_namedNumber_list3885);
+			DebugLocation(854, 19);
+			PushFollow(Follow._namedNumber_in_namedNumber_list3866);
 			num1=namedNumber();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, num1.Tree);
-			DebugLocation(857, 32);
+			DebugLocation(854, 32);
 			if (state.backtracking == 0)
 			{
 				 retval.result.Add((num1!=null?num1.result:default(NamedNumber))); 
 			}
-			DebugLocation(858, 2);
-			// Smi.g:858:2: ( COMMA num2= namedNumber )*
+			DebugLocation(855, 2);
+			// Smi.g:855:2: ( COMMA num2= namedNumber )*
 			try { DebugEnterSubRule(41);
 			while (true)
 			{
@@ -7272,21 +7272,21 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:858:3: COMMA num2= namedNumber
+					// Smi.g:855:3: COMMA num2= namedNumber
 					{
-					DebugLocation(858, 3);
-					COMMA113=(IToken)Match(input,COMMA,Follow._COMMA_in_namedNumber_list3891); if (state.failed) return retval;
+					DebugLocation(855, 3);
+					COMMA113=(IToken)Match(input,COMMA,Follow._COMMA_in_namedNumber_list3872); if (state.failed) return retval;
 					if (state.backtracking == 0) {
 					COMMA113_tree = (CommonTree)adaptor.Create(COMMA113);
 					adaptor.AddChild(root_0, COMMA113_tree);
 					}
-					DebugLocation(858, 13);
-					PushFollow(Follow._namedNumber_in_namedNumber_list3895);
+					DebugLocation(855, 13);
+					PushFollow(Follow._namedNumber_in_namedNumber_list3876);
 					num2=namedNumber();
 					PopFollow();
 					if (state.failed) return retval;
 					if (state.backtracking == 0) adaptor.AddChild(root_0, num2.Tree);
-					DebugLocation(858, 26);
+					DebugLocation(855, 26);
 					if (state.backtracking == 0)
 					{
 						 retval.result.Add((num2!=null?num2.result:default(NamedNumber))); 
@@ -7305,8 +7305,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 			} finally { DebugExitSubRule(41); }
 
-			DebugLocation(858, 59);
-			R_BRACE114=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_namedNumber_list3901); if (state.failed) return retval;
+			DebugLocation(855, 59);
+			R_BRACE114=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_namedNumber_list3882); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			R_BRACE114_tree = (CommonTree)adaptor.Create(R_BRACE114);
 			adaptor.AddChild(root_0, R_BRACE114_tree);
@@ -7333,7 +7333,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("namedNumber_list", 40);
 			LeaveRule_namedNumber_list();
 		}
-		DebugLocation(859, 1);
+		DebugLocation(856, 1);
 		} finally { DebugExitRule(GrammarFileName, "namedNumber_list"); }
 		return retval;
 
@@ -7350,7 +7350,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_constraint();
 	partial void LeaveRule_constraint();
 	// $ANTLR start "constraint"
-	// Smi.g:861:1: constraint returns [Constraint result = new Constraint()] : L_PAREN (es= element_set_specs )? (ex= exception_spec )? R_PAREN ;
+	// Smi.g:858:1: constraint returns [Constraint result = new Constraint()] : L_PAREN (es= element_set_specs )? (ex= exception_spec )? R_PAREN ;
 	[GrammarRule("constraint")]
 	private SmiParser.constraint_return constraint()
 	{
@@ -7370,23 +7370,23 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree L_PAREN115_tree = default(CommonTree);
 		CommonTree R_PAREN116_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "constraint");
-		DebugLocation(861, 1);
+		DebugLocation(858, 1);
 		try
 		{
-			// Smi.g:862:5: ( L_PAREN (es= element_set_specs )? (ex= exception_spec )? R_PAREN )
+			// Smi.g:859:5: ( L_PAREN (es= element_set_specs )? (ex= exception_spec )? R_PAREN )
 			DebugEnterAlt(1);
-			// Smi.g:862:7: L_PAREN (es= element_set_specs )? (ex= exception_spec )? R_PAREN
+			// Smi.g:859:7: L_PAREN (es= element_set_specs )? (ex= exception_spec )? R_PAREN
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(862, 7);
-			L_PAREN115=(IToken)Match(input,L_PAREN,Follow._L_PAREN_in_constraint3919); if (state.failed) return retval;
+			DebugLocation(859, 7);
+			L_PAREN115=(IToken)Match(input,L_PAREN,Follow._L_PAREN_in_constraint3900); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			L_PAREN115_tree = (CommonTree)adaptor.Create(L_PAREN115);
 			adaptor.AddChild(root_0, L_PAREN115_tree);
 			}
-			DebugLocation(862, 15);
-			// Smi.g:862:15: (es= element_set_specs )?
+			DebugLocation(859, 15);
+			// Smi.g:859:15: (es= element_set_specs )?
 			int alt42=2;
 			try { DebugEnterSubRule(42);
 			try { DebugEnterDecision(42, false);
@@ -7401,15 +7401,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:862:16: es= element_set_specs
+				// Smi.g:859:16: es= element_set_specs
 				{
-				DebugLocation(862, 18);
-				PushFollow(Follow._element_set_specs_in_constraint3924);
+				DebugLocation(859, 18);
+				PushFollow(Follow._element_set_specs_in_constraint3905);
 				es=element_set_specs();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, es.Tree);
-				DebugLocation(862, 37);
+				DebugLocation(859, 37);
 				if (state.backtracking == 0)
 				{
 					 retval.result.ElementSetSpecs = (es!=null?es.result:default(ElementSetRange)); 
@@ -7421,8 +7421,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(42); }
 
-			DebugLocation(863, 2);
-			// Smi.g:863:2: (ex= exception_spec )?
+			DebugLocation(860, 2);
+			// Smi.g:860:2: (ex= exception_spec )?
 			int alt43=2;
 			try { DebugEnterSubRule(43);
 			try { DebugEnterDecision(43, false);
@@ -7437,15 +7437,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:863:3: ex= exception_spec
+				// Smi.g:860:3: ex= exception_spec
 				{
-				DebugLocation(863, 5);
-				PushFollow(Follow._exception_spec_in_constraint3935);
+				DebugLocation(860, 5);
+				PushFollow(Follow._exception_spec_in_constraint3916);
 				ex=exception_spec();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, ex.Tree);
-				DebugLocation(863, 21);
+				DebugLocation(860, 21);
 				if (state.backtracking == 0)
 				{
 					 retval.result.ExceptionSpec = (ex!=null?ex.result:default(ExceptionSpec)); 
@@ -7457,8 +7457,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(43); }
 
-			DebugLocation(863, 63);
-			R_PAREN116=(IToken)Match(input,R_PAREN,Follow._R_PAREN_in_constraint3941); if (state.failed) return retval;
+			DebugLocation(860, 63);
+			R_PAREN116=(IToken)Match(input,R_PAREN,Follow._R_PAREN_in_constraint3922); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			R_PAREN116_tree = (CommonTree)adaptor.Create(R_PAREN116);
 			adaptor.AddChild(root_0, R_PAREN116_tree);
@@ -7485,7 +7485,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("constraint", 41);
 			LeaveRule_constraint();
 		}
-		DebugLocation(864, 1);
+		DebugLocation(861, 1);
 		} finally { DebugExitRule(GrammarFileName, "constraint"); }
 		return retval;
 
@@ -7502,7 +7502,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_character_set();
 	partial void LeaveRule_character_set();
 	// $ANTLR start "character_set"
-	// Smi.g:866:1: character_set returns [CharacterSet result] : ( BMP_STR_KW | GENERALIZED_TIME_KW | GENERAL_STR_KW | GRAPHIC_STR_KW | IA5_STRING_KW | ISO646_STR_KW | NUMERIC_STR_KW | PRINTABLE_STR_KW | TELETEX_STR_KW | T61_STR_KW | UNIVERSAL_STR_KW | UTF8_STR_KW | UTC_TIME_KW | VIDEOTEX_STR_KW | VISIBLE_STR_KW );
+	// Smi.g:863:1: character_set returns [CharacterSet result] : ( BMP_STR_KW | GENERALIZED_TIME_KW | GENERAL_STR_KW | GRAPHIC_STR_KW | IA5_STRING_KW | ISO646_STR_KW | NUMERIC_STR_KW | PRINTABLE_STR_KW | TELETEX_STR_KW | T61_STR_KW | UNIVERSAL_STR_KW | UTF8_STR_KW | UTC_TIME_KW | VIDEOTEX_STR_KW | VISIBLE_STR_KW );
 	[GrammarRule("character_set")]
 	private SmiParser.character_set_return character_set()
 	{
@@ -7546,10 +7546,10 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree VIDEOTEX_STR_KW130_tree = default(CommonTree);
 		CommonTree VISIBLE_STR_KW131_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "character_set");
-		DebugLocation(866, 1);
+		DebugLocation(863, 1);
 		try
 		{
-			// Smi.g:867:5: ( BMP_STR_KW | GENERALIZED_TIME_KW | GENERAL_STR_KW | GRAPHIC_STR_KW | IA5_STRING_KW | ISO646_STR_KW | NUMERIC_STR_KW | PRINTABLE_STR_KW | TELETEX_STR_KW | T61_STR_KW | UNIVERSAL_STR_KW | UTF8_STR_KW | UTC_TIME_KW | VIDEOTEX_STR_KW | VISIBLE_STR_KW )
+			// Smi.g:864:5: ( BMP_STR_KW | GENERALIZED_TIME_KW | GENERAL_STR_KW | GRAPHIC_STR_KW | IA5_STRING_KW | ISO646_STR_KW | NUMERIC_STR_KW | PRINTABLE_STR_KW | TELETEX_STR_KW | T61_STR_KW | UNIVERSAL_STR_KW | UTF8_STR_KW | UTC_TIME_KW | VIDEOTEX_STR_KW | VISIBLE_STR_KW )
 			int alt44=15;
 			try { DebugEnterDecision(44, false);
 			switch (input.LA(1))
@@ -7643,17 +7643,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:867:7: BMP_STR_KW
+				// Smi.g:864:7: BMP_STR_KW
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(867, 7);
-				BMP_STR_KW117=(IToken)Match(input,BMP_STR_KW,Follow._BMP_STR_KW_in_character_set3959); if (state.failed) return retval;
+				DebugLocation(864, 7);
+				BMP_STR_KW117=(IToken)Match(input,BMP_STR_KW,Follow._BMP_STR_KW_in_character_set3940); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				BMP_STR_KW117_tree = (CommonTree)adaptor.Create(BMP_STR_KW117);
 				adaptor.AddChild(root_0, BMP_STR_KW117_tree);
 				}
-				DebugLocation(867, 18);
+				DebugLocation(864, 18);
 				if (state.backtracking == 0)
 				{
 					 retval.result = CharacterSet.Bmp; 
@@ -7663,17 +7663,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// Smi.g:868:4: GENERALIZED_TIME_KW
+				// Smi.g:865:4: GENERALIZED_TIME_KW
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(868, 4);
-				GENERALIZED_TIME_KW118=(IToken)Match(input,GENERALIZED_TIME_KW,Follow._GENERALIZED_TIME_KW_in_character_set3966); if (state.failed) return retval;
+				DebugLocation(865, 4);
+				GENERALIZED_TIME_KW118=(IToken)Match(input,GENERALIZED_TIME_KW,Follow._GENERALIZED_TIME_KW_in_character_set3947); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				GENERALIZED_TIME_KW118_tree = (CommonTree)adaptor.Create(GENERALIZED_TIME_KW118);
 				adaptor.AddChild(root_0, GENERALIZED_TIME_KW118_tree);
 				}
-				DebugLocation(868, 24);
+				DebugLocation(865, 24);
 				if (state.backtracking == 0)
 				{
 					 retval.result = CharacterSet.GeneralizedTime; 
@@ -7683,17 +7683,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 3:
 				DebugEnterAlt(3);
-				// Smi.g:869:4: GENERAL_STR_KW
+				// Smi.g:866:4: GENERAL_STR_KW
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(869, 4);
-				GENERAL_STR_KW119=(IToken)Match(input,GENERAL_STR_KW,Follow._GENERAL_STR_KW_in_character_set3973); if (state.failed) return retval;
+				DebugLocation(866, 4);
+				GENERAL_STR_KW119=(IToken)Match(input,GENERAL_STR_KW,Follow._GENERAL_STR_KW_in_character_set3954); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				GENERAL_STR_KW119_tree = (CommonTree)adaptor.Create(GENERAL_STR_KW119);
 				adaptor.AddChild(root_0, GENERAL_STR_KW119_tree);
 				}
-				DebugLocation(869, 19);
+				DebugLocation(866, 19);
 				if (state.backtracking == 0)
 				{
 					 retval.result = CharacterSet.General; 
@@ -7703,17 +7703,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 4:
 				DebugEnterAlt(4);
-				// Smi.g:870:4: GRAPHIC_STR_KW
+				// Smi.g:867:4: GRAPHIC_STR_KW
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(870, 4);
-				GRAPHIC_STR_KW120=(IToken)Match(input,GRAPHIC_STR_KW,Follow._GRAPHIC_STR_KW_in_character_set3980); if (state.failed) return retval;
+				DebugLocation(867, 4);
+				GRAPHIC_STR_KW120=(IToken)Match(input,GRAPHIC_STR_KW,Follow._GRAPHIC_STR_KW_in_character_set3961); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				GRAPHIC_STR_KW120_tree = (CommonTree)adaptor.Create(GRAPHIC_STR_KW120);
 				adaptor.AddChild(root_0, GRAPHIC_STR_KW120_tree);
 				}
-				DebugLocation(870, 19);
+				DebugLocation(867, 19);
 				if (state.backtracking == 0)
 				{
 					 retval.result = CharacterSet.Graphic; 
@@ -7723,17 +7723,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 5:
 				DebugEnterAlt(5);
-				// Smi.g:871:7: IA5_STRING_KW
+				// Smi.g:868:7: IA5_STRING_KW
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(871, 7);
-				IA5_STRING_KW121=(IToken)Match(input,IA5_STRING_KW,Follow._IA5_STRING_KW_in_character_set3990); if (state.failed) return retval;
+				DebugLocation(868, 7);
+				IA5_STRING_KW121=(IToken)Match(input,IA5_STRING_KW,Follow._IA5_STRING_KW_in_character_set3971); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				IA5_STRING_KW121_tree = (CommonTree)adaptor.Create(IA5_STRING_KW121);
 				adaptor.AddChild(root_0, IA5_STRING_KW121_tree);
 				}
-				DebugLocation(871, 21);
+				DebugLocation(868, 21);
 				if (state.backtracking == 0)
 				{
 					 retval.result = CharacterSet.IA5; 
@@ -7743,17 +7743,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 6:
 				DebugEnterAlt(6);
-				// Smi.g:872:4: ISO646_STR_KW
+				// Smi.g:869:4: ISO646_STR_KW
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(872, 4);
-				ISO646_STR_KW122=(IToken)Match(input,ISO646_STR_KW,Follow._ISO646_STR_KW_in_character_set3997); if (state.failed) return retval;
+				DebugLocation(869, 4);
+				ISO646_STR_KW122=(IToken)Match(input,ISO646_STR_KW,Follow._ISO646_STR_KW_in_character_set3978); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				ISO646_STR_KW122_tree = (CommonTree)adaptor.Create(ISO646_STR_KW122);
 				adaptor.AddChild(root_0, ISO646_STR_KW122_tree);
 				}
-				DebugLocation(872, 18);
+				DebugLocation(869, 18);
 				if (state.backtracking == 0)
 				{
 					 retval.result = CharacterSet.ISO646; 
@@ -7763,17 +7763,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 7:
 				DebugEnterAlt(7);
-				// Smi.g:873:4: NUMERIC_STR_KW
+				// Smi.g:870:4: NUMERIC_STR_KW
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(873, 4);
-				NUMERIC_STR_KW123=(IToken)Match(input,NUMERIC_STR_KW,Follow._NUMERIC_STR_KW_in_character_set4004); if (state.failed) return retval;
+				DebugLocation(870, 4);
+				NUMERIC_STR_KW123=(IToken)Match(input,NUMERIC_STR_KW,Follow._NUMERIC_STR_KW_in_character_set3985); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				NUMERIC_STR_KW123_tree = (CommonTree)adaptor.Create(NUMERIC_STR_KW123);
 				adaptor.AddChild(root_0, NUMERIC_STR_KW123_tree);
 				}
-				DebugLocation(873, 19);
+				DebugLocation(870, 19);
 				if (state.backtracking == 0)
 				{
 					 retval.result = CharacterSet.Numeric; 
@@ -7783,17 +7783,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 8:
 				DebugEnterAlt(8);
-				// Smi.g:874:4: PRINTABLE_STR_KW
+				// Smi.g:871:4: PRINTABLE_STR_KW
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(874, 4);
-				PRINTABLE_STR_KW124=(IToken)Match(input,PRINTABLE_STR_KW,Follow._PRINTABLE_STR_KW_in_character_set4011); if (state.failed) return retval;
+				DebugLocation(871, 4);
+				PRINTABLE_STR_KW124=(IToken)Match(input,PRINTABLE_STR_KW,Follow._PRINTABLE_STR_KW_in_character_set3992); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				PRINTABLE_STR_KW124_tree = (CommonTree)adaptor.Create(PRINTABLE_STR_KW124);
 				adaptor.AddChild(root_0, PRINTABLE_STR_KW124_tree);
 				}
-				DebugLocation(874, 21);
+				DebugLocation(871, 21);
 				if (state.backtracking == 0)
 				{
 					 retval.result = CharacterSet.Printable; 
@@ -7803,17 +7803,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 9:
 				DebugEnterAlt(9);
-				// Smi.g:875:7: TELETEX_STR_KW
+				// Smi.g:872:7: TELETEX_STR_KW
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(875, 7);
-				TELETEX_STR_KW125=(IToken)Match(input,TELETEX_STR_KW,Follow._TELETEX_STR_KW_in_character_set4021); if (state.failed) return retval;
+				DebugLocation(872, 7);
+				TELETEX_STR_KW125=(IToken)Match(input,TELETEX_STR_KW,Follow._TELETEX_STR_KW_in_character_set4002); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				TELETEX_STR_KW125_tree = (CommonTree)adaptor.Create(TELETEX_STR_KW125);
 				adaptor.AddChild(root_0, TELETEX_STR_KW125_tree);
 				}
-				DebugLocation(875, 22);
+				DebugLocation(872, 22);
 				if (state.backtracking == 0)
 				{
 					 retval.result = CharacterSet.TeleTex; 
@@ -7823,17 +7823,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 10:
 				DebugEnterAlt(10);
-				// Smi.g:876:4: T61_STR_KW
+				// Smi.g:873:4: T61_STR_KW
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(876, 4);
-				T61_STR_KW126=(IToken)Match(input,T61_STR_KW,Follow._T61_STR_KW_in_character_set4028); if (state.failed) return retval;
+				DebugLocation(873, 4);
+				T61_STR_KW126=(IToken)Match(input,T61_STR_KW,Follow._T61_STR_KW_in_character_set4009); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				T61_STR_KW126_tree = (CommonTree)adaptor.Create(T61_STR_KW126);
 				adaptor.AddChild(root_0, T61_STR_KW126_tree);
 				}
-				DebugLocation(876, 15);
+				DebugLocation(873, 15);
 				if (state.backtracking == 0)
 				{
 					 retval.result = CharacterSet.T61; 
@@ -7843,17 +7843,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 11:
 				DebugEnterAlt(11);
-				// Smi.g:877:4: UNIVERSAL_STR_KW
+				// Smi.g:874:4: UNIVERSAL_STR_KW
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(877, 4);
-				UNIVERSAL_STR_KW127=(IToken)Match(input,UNIVERSAL_STR_KW,Follow._UNIVERSAL_STR_KW_in_character_set4035); if (state.failed) return retval;
+				DebugLocation(874, 4);
+				UNIVERSAL_STR_KW127=(IToken)Match(input,UNIVERSAL_STR_KW,Follow._UNIVERSAL_STR_KW_in_character_set4016); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				UNIVERSAL_STR_KW127_tree = (CommonTree)adaptor.Create(UNIVERSAL_STR_KW127);
 				adaptor.AddChild(root_0, UNIVERSAL_STR_KW127_tree);
 				}
-				DebugLocation(877, 21);
+				DebugLocation(874, 21);
 				if (state.backtracking == 0)
 				{
 					 retval.result = CharacterSet.Universal; 
@@ -7863,17 +7863,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 12:
 				DebugEnterAlt(12);
-				// Smi.g:878:4: UTF8_STR_KW
+				// Smi.g:875:4: UTF8_STR_KW
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(878, 4);
-				UTF8_STR_KW128=(IToken)Match(input,UTF8_STR_KW,Follow._UTF8_STR_KW_in_character_set4042); if (state.failed) return retval;
+				DebugLocation(875, 4);
+				UTF8_STR_KW128=(IToken)Match(input,UTF8_STR_KW,Follow._UTF8_STR_KW_in_character_set4023); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				UTF8_STR_KW128_tree = (CommonTree)adaptor.Create(UTF8_STR_KW128);
 				adaptor.AddChild(root_0, UTF8_STR_KW128_tree);
 				}
-				DebugLocation(878, 16);
+				DebugLocation(875, 16);
 				if (state.backtracking == 0)
 				{
 					 retval.result = CharacterSet.UTF8; 
@@ -7883,17 +7883,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 13:
 				DebugEnterAlt(13);
-				// Smi.g:879:7: UTC_TIME_KW
+				// Smi.g:876:7: UTC_TIME_KW
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(879, 7);
-				UTC_TIME_KW129=(IToken)Match(input,UTC_TIME_KW,Follow._UTC_TIME_KW_in_character_set4052); if (state.failed) return retval;
+				DebugLocation(876, 7);
+				UTC_TIME_KW129=(IToken)Match(input,UTC_TIME_KW,Follow._UTC_TIME_KW_in_character_set4033); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				UTC_TIME_KW129_tree = (CommonTree)adaptor.Create(UTC_TIME_KW129);
 				adaptor.AddChild(root_0, UTC_TIME_KW129_tree);
 				}
-				DebugLocation(879, 19);
+				DebugLocation(876, 19);
 				if (state.backtracking == 0)
 				{
 					 retval.result = CharacterSet.UTCTime; 
@@ -7903,17 +7903,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 14:
 				DebugEnterAlt(14);
-				// Smi.g:880:4: VIDEOTEX_STR_KW
+				// Smi.g:877:4: VIDEOTEX_STR_KW
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(880, 4);
-				VIDEOTEX_STR_KW130=(IToken)Match(input,VIDEOTEX_STR_KW,Follow._VIDEOTEX_STR_KW_in_character_set4059); if (state.failed) return retval;
+				DebugLocation(877, 4);
+				VIDEOTEX_STR_KW130=(IToken)Match(input,VIDEOTEX_STR_KW,Follow._VIDEOTEX_STR_KW_in_character_set4040); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				VIDEOTEX_STR_KW130_tree = (CommonTree)adaptor.Create(VIDEOTEX_STR_KW130);
 				adaptor.AddChild(root_0, VIDEOTEX_STR_KW130_tree);
 				}
-				DebugLocation(880, 20);
+				DebugLocation(877, 20);
 				if (state.backtracking == 0)
 				{
 					 retval.result = CharacterSet.VideoTex; 
@@ -7923,17 +7923,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 15:
 				DebugEnterAlt(15);
-				// Smi.g:881:4: VISIBLE_STR_KW
+				// Smi.g:878:4: VISIBLE_STR_KW
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(881, 4);
-				VISIBLE_STR_KW131=(IToken)Match(input,VISIBLE_STR_KW,Follow._VISIBLE_STR_KW_in_character_set4066); if (state.failed) return retval;
+				DebugLocation(878, 4);
+				VISIBLE_STR_KW131=(IToken)Match(input,VISIBLE_STR_KW,Follow._VISIBLE_STR_KW_in_character_set4047); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				VISIBLE_STR_KW131_tree = (CommonTree)adaptor.Create(VISIBLE_STR_KW131);
 				adaptor.AddChild(root_0, VISIBLE_STR_KW131_tree);
 				}
-				DebugLocation(881, 19);
+				DebugLocation(878, 19);
 				if (state.backtracking == 0)
 				{
 					 retval.result = CharacterSet.Visible; 
@@ -7962,7 +7962,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("character_set", 42);
 			LeaveRule_character_set();
 		}
-		DebugLocation(882, 1);
+		DebugLocation(879, 1);
 		} finally { DebugExitRule(GrammarFileName, "character_set"); }
 		return retval;
 
@@ -7979,7 +7979,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_elementType_list();
 	partial void LeaveRule_elementType_list();
 	// $ANTLR start "elementType_list"
-	// Smi.g:884:1: elementType_list returns [IList<ISmiType> result = new List<ISmiType>()] : t1= elementType ( COMMA ( ( CHOICE_KW )=>c= choice_type |t2= elementType ) )* ;
+	// Smi.g:881:1: elementType_list returns [IList<ISmiType> result = new List<ISmiType>()] : t1= elementType ( COMMA ( ( CHOICE_KW )=>c= choice_type |t2= elementType ) )* ;
 	[GrammarRule("elementType_list")]
 	private SmiParser.elementType_list_return elementType_list()
 	{
@@ -7998,28 +7998,28 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 		CommonTree COMMA132_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "elementType_list");
-		DebugLocation(884, 1);
+		DebugLocation(881, 1);
 		try
 		{
-			// Smi.g:885:5: (t1= elementType ( COMMA ( ( CHOICE_KW )=>c= choice_type |t2= elementType ) )* )
+			// Smi.g:882:5: (t1= elementType ( COMMA ( ( CHOICE_KW )=>c= choice_type |t2= elementType ) )* )
 			DebugEnterAlt(1);
-			// Smi.g:885:7: t1= elementType ( COMMA ( ( CHOICE_KW )=>c= choice_type |t2= elementType ) )*
+			// Smi.g:882:7: t1= elementType ( COMMA ( ( CHOICE_KW )=>c= choice_type |t2= elementType ) )*
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(885, 9);
-			PushFollow(Follow._elementType_in_elementType_list4088);
+			DebugLocation(882, 9);
+			PushFollow(Follow._elementType_in_elementType_list4069);
 			t1=elementType();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, t1.Tree);
-			DebugLocation(885, 22);
+			DebugLocation(882, 22);
 			if (state.backtracking == 0)
 			{
 				 retval.result.Add((t1!=null?t1.result:default(ElementType))); 
 			}
-			DebugLocation(886, 2);
-			// Smi.g:886:2: ( COMMA ( ( CHOICE_KW )=>c= choice_type |t2= elementType ) )*
+			DebugLocation(883, 2);
+			// Smi.g:883:2: ( COMMA ( ( CHOICE_KW )=>c= choice_type |t2= elementType ) )*
 			try { DebugEnterSubRule(46);
 			while (true)
 			{
@@ -8038,16 +8038,16 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:886:3: COMMA ( ( CHOICE_KW )=>c= choice_type |t2= elementType )
+					// Smi.g:883:3: COMMA ( ( CHOICE_KW )=>c= choice_type |t2= elementType )
 					{
-					DebugLocation(886, 3);
-					COMMA132=(IToken)Match(input,COMMA,Follow._COMMA_in_elementType_list4095); if (state.failed) return retval;
+					DebugLocation(883, 3);
+					COMMA132=(IToken)Match(input,COMMA,Follow._COMMA_in_elementType_list4076); if (state.failed) return retval;
 					if (state.backtracking == 0) {
 					COMMA132_tree = (CommonTree)adaptor.Create(COMMA132);
 					adaptor.AddChild(root_0, COMMA132_tree);
 					}
-					DebugLocation(886, 9);
-					// Smi.g:886:9: ( ( CHOICE_KW )=>c= choice_type |t2= elementType )
+					DebugLocation(883, 9);
+					// Smi.g:883:9: ( ( CHOICE_KW )=>c= choice_type |t2= elementType )
 					int alt45=2;
 					try { DebugEnterSubRule(45);
 					try { DebugEnterDecision(45, false);
@@ -8073,15 +8073,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 					{
 					case 1:
 						DebugEnterAlt(1);
-						// Smi.g:886:10: ( CHOICE_KW )=>c= choice_type
+						// Smi.g:883:10: ( CHOICE_KW )=>c= choice_type
 						{
-						DebugLocation(886, 26);
-						PushFollow(Follow._choice_type_in_elementType_list4106);
+						DebugLocation(883, 26);
+						PushFollow(Follow._choice_type_in_elementType_list4087);
 						c=choice_type();
 						PopFollow();
 						if (state.failed) return retval;
 						if (state.backtracking == 0) adaptor.AddChild(root_0, c.Tree);
-						DebugLocation(886, 39);
+						DebugLocation(883, 39);
 						if (state.backtracking == 0)
 						{
 							 retval.result.Add((c!=null?c.result:default(ChoiceType))); 
@@ -8091,15 +8091,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 						break;
 					case 2:
 						DebugEnterAlt(2);
-						// Smi.g:887:4: t2= elementType
+						// Smi.g:884:4: t2= elementType
 						{
-						DebugLocation(887, 6);
-						PushFollow(Follow._elementType_in_elementType_list4115);
+						DebugLocation(884, 6);
+						PushFollow(Follow._elementType_in_elementType_list4096);
 						t2=elementType();
 						PopFollow();
 						if (state.failed) return retval;
 						if (state.backtracking == 0) adaptor.AddChild(root_0, t2.Tree);
-						DebugLocation(887, 19);
+						DebugLocation(884, 19);
 						if (state.backtracking == 0)
 						{
 							 retval.result.Add((t2!=null?t2.result:default(ElementType))); 
@@ -8147,7 +8147,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("elementType_list", 43);
 			LeaveRule_elementType_list();
 		}
-		DebugLocation(888, 1);
+		DebugLocation(885, 1);
 		} finally { DebugExitRule(GrammarFileName, "elementType_list"); }
 		return retval;
 
@@ -8164,7 +8164,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_tag();
 	partial void LeaveRule_tag();
 	// $ANTLR start "tag"
-	// Smi.g:890:1: tag returns [Tag result = new Tag()] : L_BRACKET (c= clazz )? cl= class_NUMBER R_BRACKET ;
+	// Smi.g:887:1: tag returns [Tag result = new Tag()] : L_BRACKET (c= clazz )? cl= class_NUMBER R_BRACKET ;
 	[GrammarRule("tag")]
 	private SmiParser.tag_return tag()
 	{
@@ -8184,23 +8184,23 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree L_BRACKET133_tree = default(CommonTree);
 		CommonTree R_BRACKET134_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "tag");
-		DebugLocation(890, 1);
+		DebugLocation(887, 1);
 		try
 		{
-			// Smi.g:891:5: ( L_BRACKET (c= clazz )? cl= class_NUMBER R_BRACKET )
+			// Smi.g:888:5: ( L_BRACKET (c= clazz )? cl= class_NUMBER R_BRACKET )
 			DebugEnterAlt(1);
-			// Smi.g:891:7: L_BRACKET (c= clazz )? cl= class_NUMBER R_BRACKET
+			// Smi.g:888:7: L_BRACKET (c= clazz )? cl= class_NUMBER R_BRACKET
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(891, 7);
-			L_BRACKET133=(IToken)Match(input,L_BRACKET,Follow._L_BRACKET_in_tag4138); if (state.failed) return retval;
+			DebugLocation(888, 7);
+			L_BRACKET133=(IToken)Match(input,L_BRACKET,Follow._L_BRACKET_in_tag4119); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			L_BRACKET133_tree = (CommonTree)adaptor.Create(L_BRACKET133);
 			adaptor.AddChild(root_0, L_BRACKET133_tree);
 			}
-			DebugLocation(891, 17);
-			// Smi.g:891:17: (c= clazz )?
+			DebugLocation(888, 17);
+			// Smi.g:888:17: (c= clazz )?
 			int alt47=2;
 			try { DebugEnterSubRule(47);
 			try { DebugEnterDecision(47, false);
@@ -8215,15 +8215,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:891:18: c= clazz
+				// Smi.g:888:18: c= clazz
 				{
-				DebugLocation(891, 19);
-				PushFollow(Follow._clazz_in_tag4143);
+				DebugLocation(888, 19);
+				PushFollow(Follow._clazz_in_tag4124);
 				c=clazz();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, c.Tree);
-				DebugLocation(891, 26);
+				DebugLocation(888, 26);
 				if (state.backtracking == 0)
 				{
 					 retval.result.TagType = (c!=null?input.ToString(c.Start,c.Stop):null); 
@@ -8235,19 +8235,19 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(47); }
 
-			DebugLocation(892, 4);
-			PushFollow(Follow._class_NUMBER_in_tag4153);
+			DebugLocation(889, 4);
+			PushFollow(Follow._class_NUMBER_in_tag4134);
 			cl=class_NUMBER();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, cl.Tree);
-			DebugLocation(892, 18);
-			R_BRACKET134=(IToken)Match(input,R_BRACKET,Follow._R_BRACKET_in_tag4155); if (state.failed) return retval;
+			DebugLocation(889, 18);
+			R_BRACKET134=(IToken)Match(input,R_BRACKET,Follow._R_BRACKET_in_tag4136); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			R_BRACKET134_tree = (CommonTree)adaptor.Create(R_BRACKET134);
 			adaptor.AddChild(root_0, R_BRACKET134_tree);
 			}
-			DebugLocation(892, 28);
+			DebugLocation(889, 28);
 			if (state.backtracking == 0)
 			{
 				 retval.result.TagNumber = (cl!=null?cl.result:default(ClassNumber)); 
@@ -8274,7 +8274,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("tag", 44);
 			LeaveRule_tag();
 		}
-		DebugLocation(893, 1);
+		DebugLocation(890, 1);
 		} finally { DebugExitRule(GrammarFileName, "tag"); }
 		return retval;
 
@@ -8284,7 +8284,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_clazz();
 	partial void LeaveRule_clazz();
 	// $ANTLR start "clazz"
-	// Smi.g:895:1: clazz : ( UNIVERSAL_KW | APPLICATION_KW | PRIVATE_KW );
+	// Smi.g:892:1: clazz : ( UNIVERSAL_KW | APPLICATION_KW | PRIVATE_KW );
 	[GrammarRule("clazz")]
 	private AstParserRuleReturnScope<CommonTree, IToken> clazz()
 	{
@@ -8300,16 +8300,16 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 		CommonTree set135_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "clazz");
-		DebugLocation(895, 49);
+		DebugLocation(892, 49);
 		try
 		{
-			// Smi.g:895:6: ( UNIVERSAL_KW | APPLICATION_KW | PRIVATE_KW )
+			// Smi.g:892:6: ( UNIVERSAL_KW | APPLICATION_KW | PRIVATE_KW )
 			DebugEnterAlt(1);
 			// Smi.g:
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(895, 6);
+			DebugLocation(892, 6);
 
 			set135=(IToken)input.LT(1);
 			if (input.LA(1)==APPLICATION_KW||input.LA(1)==PRIVATE_KW||input.LA(1)==UNIVERSAL_KW)
@@ -8348,7 +8348,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("clazz", 45);
 			LeaveRule_clazz();
 		}
-		DebugLocation(895, 49);
+		DebugLocation(892, 49);
 		} finally { DebugExitRule(GrammarFileName, "clazz"); }
 		return retval;
 
@@ -8365,7 +8365,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_class_NUMBER();
 	partial void LeaveRule_class_NUMBER();
 	// $ANTLR start "class_NUMBER"
-	// Smi.g:898:1: class_NUMBER returns [ClassNumber result] : (num= NUMBER |dv= defined_value );
+	// Smi.g:895:1: class_NUMBER returns [ClassNumber result] : (num= NUMBER |dv= defined_value );
 	[GrammarRule("class_NUMBER")]
 	private SmiParser.class_NUMBER_return class_NUMBER()
 	{
@@ -8382,10 +8382,10 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 		CommonTree num_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "class_NUMBER");
-		DebugLocation(898, 1);
+		DebugLocation(895, 1);
 		try
 		{
-			// Smi.g:899:5: (num= NUMBER |dv= defined_value )
+			// Smi.g:896:5: (num= NUMBER |dv= defined_value )
 			int alt48=2;
 			try { DebugEnterDecision(48, false);
 			int LA48_1 = input.LA(1);
@@ -8410,17 +8410,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:899:7: num= NUMBER
+				// Smi.g:896:7: num= NUMBER
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(899, 10);
-				num=(IToken)Match(input,NUMBER,Follow._NUMBER_in_class_NUMBER4194); if (state.failed) return retval;
+				DebugLocation(896, 10);
+				num=(IToken)Match(input,NUMBER,Follow._NUMBER_in_class_NUMBER4175); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				num_tree = (CommonTree)adaptor.Create(num);
 				adaptor.AddChild(root_0, num_tree);
 				}
-				DebugLocation(899, 18);
+				DebugLocation(896, 18);
 				if (state.backtracking == 0)
 				{
 					 retval.result = new ClassNumber((num!=null?num.Text:null)); 
@@ -8430,17 +8430,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// Smi.g:900:4: dv= defined_value
+				// Smi.g:897:4: dv= defined_value
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(900, 6);
-				PushFollow(Follow._defined_value_in_class_NUMBER4203);
+				DebugLocation(897, 6);
+				PushFollow(Follow._defined_value_in_class_NUMBER4184);
 				dv=defined_value();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, dv.Tree);
-				DebugLocation(900, 21);
+				DebugLocation(897, 21);
 				if (state.backtracking == 0)
 				{
 					 retval.result = new ClassNumber((dv!=null?dv.result:default(DefinedValue))); 
@@ -8469,7 +8469,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("class_NUMBER", 46);
 			LeaveRule_class_NUMBER();
 		}
-		DebugLocation(901, 1);
+		DebugLocation(898, 1);
 		} finally { DebugExitRule(GrammarFileName, "class_NUMBER"); }
 		return retval;
 
@@ -8486,7 +8486,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_operation_macro();
 	partial void LeaveRule_operation_macro();
 	// $ANTLR start "operation_macro"
-	// Smi.g:904:1: operation_macro returns [OperationMacro result = new OperationMacro()] : 'OPERATION' ( ARGUMENT_KW ( ( LOWER )=>l1= LOWER )? t1= type )? ( ( RESULT_KW )=> RESULT_KW ( ( LOWER )=> ( ( LOWER )=>l2= LOWER )? t2= type )? )? ( ( ERRORS_KW )=> ERRORS_KW L_BRACE (o= operation_errorlist )? R_BRACE )? ( ( LINKED_KW )=> LINKED_KW L_BRACE (l= linkedOp_list )? R_BRACE )? ;
+	// Smi.g:901:1: operation_macro returns [OperationMacro result = new OperationMacro()] : 'OPERATION' ( ARGUMENT_KW ( ( LOWER )=>l1= LOWER )? t1= type )? ( ( RESULT_KW )=> RESULT_KW ( ( LOWER )=> ( ( LOWER )=>l2= LOWER )? t2= type )? )? ( ( ERRORS_KW )=> ERRORS_KW L_BRACE (o= operation_errorlist )? R_BRACE )? ( ( LINKED_KW )=> LINKED_KW L_BRACE (l= linkedOp_list )? R_BRACE )? ;
 	[GrammarRule("operation_macro")]
 	private SmiParser.operation_macro_return operation_macro()
 	{
@@ -8526,23 +8526,23 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree L_BRACE143_tree = default(CommonTree);
 		CommonTree R_BRACE144_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "operation_macro");
-		DebugLocation(904, 1);
+		DebugLocation(901, 1);
 		try
 		{
-			// Smi.g:905:5: ( 'OPERATION' ( ARGUMENT_KW ( ( LOWER )=>l1= LOWER )? t1= type )? ( ( RESULT_KW )=> RESULT_KW ( ( LOWER )=> ( ( LOWER )=>l2= LOWER )? t2= type )? )? ( ( ERRORS_KW )=> ERRORS_KW L_BRACE (o= operation_errorlist )? R_BRACE )? ( ( LINKED_KW )=> LINKED_KW L_BRACE (l= linkedOp_list )? R_BRACE )? )
+			// Smi.g:902:5: ( 'OPERATION' ( ARGUMENT_KW ( ( LOWER )=>l1= LOWER )? t1= type )? ( ( RESULT_KW )=> RESULT_KW ( ( LOWER )=> ( ( LOWER )=>l2= LOWER )? t2= type )? )? ( ( ERRORS_KW )=> ERRORS_KW L_BRACE (o= operation_errorlist )? R_BRACE )? ( ( LINKED_KW )=> LINKED_KW L_BRACE (l= linkedOp_list )? R_BRACE )? )
 			DebugEnterAlt(1);
-			// Smi.g:905:7: 'OPERATION' ( ARGUMENT_KW ( ( LOWER )=>l1= LOWER )? t1= type )? ( ( RESULT_KW )=> RESULT_KW ( ( LOWER )=> ( ( LOWER )=>l2= LOWER )? t2= type )? )? ( ( ERRORS_KW )=> ERRORS_KW L_BRACE (o= operation_errorlist )? R_BRACE )? ( ( LINKED_KW )=> LINKED_KW L_BRACE (l= linkedOp_list )? R_BRACE )?
+			// Smi.g:902:7: 'OPERATION' ( ARGUMENT_KW ( ( LOWER )=>l1= LOWER )? t1= type )? ( ( RESULT_KW )=> RESULT_KW ( ( LOWER )=> ( ( LOWER )=>l2= LOWER )? t2= type )? )? ( ( ERRORS_KW )=> ERRORS_KW L_BRACE (o= operation_errorlist )? R_BRACE )? ( ( LINKED_KW )=> LINKED_KW L_BRACE (l= linkedOp_list )? R_BRACE )?
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(905, 7);
-			string_literal136=(IToken)Match(input,OPERATION_KW,Follow._OPERATION_KW_in_operation_macro4225); if (state.failed) return retval;
+			DebugLocation(902, 7);
+			string_literal136=(IToken)Match(input,OPERATION_KW,Follow._OPERATION_KW_in_operation_macro4206); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			string_literal136_tree = (CommonTree)adaptor.Create(string_literal136);
 			adaptor.AddChild(root_0, string_literal136_tree);
 			}
-			DebugLocation(906, 2);
-			// Smi.g:906:2: ( ARGUMENT_KW ( ( LOWER )=>l1= LOWER )? t1= type )?
+			DebugLocation(903, 2);
+			// Smi.g:903:2: ( ARGUMENT_KW ( ( LOWER )=>l1= LOWER )? t1= type )?
 			int alt50=2;
 			try { DebugEnterSubRule(50);
 			try { DebugEnterDecision(50, false);
@@ -8557,16 +8557,16 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:906:3: ARGUMENT_KW ( ( LOWER )=>l1= LOWER )? t1= type
+				// Smi.g:903:3: ARGUMENT_KW ( ( LOWER )=>l1= LOWER )? t1= type
 				{
-				DebugLocation(906, 3);
-				ARGUMENT_KW137=(IToken)Match(input,ARGUMENT_KW,Follow._ARGUMENT_KW_in_operation_macro4230); if (state.failed) return retval;
+				DebugLocation(903, 3);
+				ARGUMENT_KW137=(IToken)Match(input,ARGUMENT_KW,Follow._ARGUMENT_KW_in_operation_macro4211); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				ARGUMENT_KW137_tree = (CommonTree)adaptor.Create(ARGUMENT_KW137);
 				adaptor.AddChild(root_0, ARGUMENT_KW137_tree);
 				}
-				DebugLocation(906, 15);
-				// Smi.g:906:15: ( ( LOWER )=>l1= LOWER )?
+				DebugLocation(903, 15);
+				// Smi.g:903:15: ( ( LOWER )=>l1= LOWER )?
 				int alt49=2;
 				try { DebugEnterSubRule(49);
 				try { DebugEnterDecision(49, false);
@@ -8586,15 +8586,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:906:16: ( LOWER )=>l1= LOWER
+					// Smi.g:903:16: ( LOWER )=>l1= LOWER
 					{
-					DebugLocation(906, 29);
-					l1=(IToken)Match(input,LOWER,Follow._LOWER_in_operation_macro4241); if (state.failed) return retval;
+					DebugLocation(903, 29);
+					l1=(IToken)Match(input,LOWER,Follow._LOWER_in_operation_macro4222); if (state.failed) return retval;
 					if (state.backtracking == 0) {
 					l1_tree = (CommonTree)adaptor.Create(l1);
 					adaptor.AddChild(root_0, l1_tree);
 					}
-					DebugLocation(906, 36);
+					DebugLocation(903, 36);
 					if (state.backtracking == 0)
 					{
 						 retval.result.ArgumentIdentifier = (l1!=null?l1.Text:null); 
@@ -8606,13 +8606,13 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				}
 				} finally { DebugExitSubRule(49); }
 
-				DebugLocation(907, 4);
-				PushFollow(Follow._type_in_operation_macro4251);
+				DebugLocation(904, 4);
+				PushFollow(Follow._type_in_operation_macro4232);
 				t1=type();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, t1.Tree);
-				DebugLocation(907, 10);
+				DebugLocation(904, 10);
 				if (state.backtracking == 0)
 				{
 					 retval.result.ArgumentType = (t1!=null?t1.result:default(ISmiType)); 
@@ -8624,8 +8624,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(50); }
 
-			DebugLocation(908, 5);
-			// Smi.g:908:5: ( ( RESULT_KW )=> RESULT_KW ( ( LOWER )=> ( ( LOWER )=>l2= LOWER )? t2= type )? )?
+			DebugLocation(905, 5);
+			// Smi.g:905:5: ( ( RESULT_KW )=> RESULT_KW ( ( LOWER )=> ( ( LOWER )=>l2= LOWER )? t2= type )? )?
 			int alt53=2;
 			try { DebugEnterSubRule(53);
 			try { DebugEnterDecision(53, false);
@@ -8645,16 +8645,16 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:908:7: ( RESULT_KW )=> RESULT_KW ( ( LOWER )=> ( ( LOWER )=>l2= LOWER )? t2= type )?
+				// Smi.g:905:7: ( RESULT_KW )=> RESULT_KW ( ( LOWER )=> ( ( LOWER )=>l2= LOWER )? t2= type )?
 				{
-				DebugLocation(908, 22);
-				RESULT_KW138=(IToken)Match(input,RESULT_KW,Follow._RESULT_KW_in_operation_macro4270); if (state.failed) return retval;
+				DebugLocation(905, 22);
+				RESULT_KW138=(IToken)Match(input,RESULT_KW,Follow._RESULT_KW_in_operation_macro4251); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				RESULT_KW138_tree = (CommonTree)adaptor.Create(RESULT_KW138);
 				adaptor.AddChild(root_0, RESULT_KW138_tree);
 				}
-				DebugLocation(909, 9);
-				// Smi.g:909:9: ( ( LOWER )=> ( ( LOWER )=>l2= LOWER )? t2= type )?
+				DebugLocation(906, 9);
+				// Smi.g:906:9: ( ( LOWER )=> ( ( LOWER )=>l2= LOWER )? t2= type )?
 				int alt52=2;
 				try { DebugEnterSubRule(52);
 				try { DebugEnterDecision(52, false);
@@ -8672,10 +8672,10 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:909:10: ( LOWER )=> ( ( LOWER )=>l2= LOWER )? t2= type
+					// Smi.g:906:10: ( LOWER )=> ( ( LOWER )=>l2= LOWER )? t2= type
 					{
-					DebugLocation(909, 21);
-					// Smi.g:909:21: ( ( LOWER )=>l2= LOWER )?
+					DebugLocation(906, 21);
+					// Smi.g:906:21: ( ( LOWER )=>l2= LOWER )?
 					int alt51=2;
 					try { DebugEnterSubRule(51);
 					try { DebugEnterDecision(51, false);
@@ -8695,15 +8695,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 					{
 					case 1:
 						DebugEnterAlt(1);
-						// Smi.g:909:22: ( LOWER )=>l2= LOWER
+						// Smi.g:906:22: ( LOWER )=>l2= LOWER
 						{
-						DebugLocation(909, 35);
-						l2=(IToken)Match(input,LOWER,Follow._LOWER_in_operation_macro4297); if (state.failed) return retval;
+						DebugLocation(906, 35);
+						l2=(IToken)Match(input,LOWER,Follow._LOWER_in_operation_macro4278); if (state.failed) return retval;
 						if (state.backtracking == 0) {
 						l2_tree = (CommonTree)adaptor.Create(l2);
 						adaptor.AddChild(root_0, l2_tree);
 						}
-						DebugLocation(909, 42);
+						DebugLocation(906, 42);
 						if (state.backtracking == 0)
 						{
 							 retval.result.ResultIdentifier = (l2!=null?l2.Text:null); 
@@ -8715,13 +8715,13 @@ public partial class SmiParser : Antlr.Runtime.Parser
 					}
 					} finally { DebugExitSubRule(51); }
 
-					DebugLocation(910, 5);
-					PushFollow(Follow._type_in_operation_macro4308);
+					DebugLocation(907, 5);
+					PushFollow(Follow._type_in_operation_macro4289);
 					t2=type();
 					PopFollow();
 					if (state.failed) return retval;
 					if (state.backtracking == 0) adaptor.AddChild(root_0, t2.Tree);
-					DebugLocation(910, 11);
+					DebugLocation(907, 11);
 					if (state.backtracking == 0)
 					{
 						 retval.result.ResultType = (t2!=null?t2.result:default(ISmiType)); 
@@ -8740,8 +8740,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(53); }
 
-			DebugLocation(912, 5);
-			// Smi.g:912:5: ( ( ERRORS_KW )=> ERRORS_KW L_BRACE (o= operation_errorlist )? R_BRACE )?
+			DebugLocation(909, 5);
+			// Smi.g:909:5: ( ( ERRORS_KW )=> ERRORS_KW L_BRACE (o= operation_errorlist )? R_BRACE )?
 			int alt55=2;
 			try { DebugEnterSubRule(55);
 			try { DebugEnterDecision(55, false);
@@ -8761,22 +8761,22 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:912:7: ( ERRORS_KW )=> ERRORS_KW L_BRACE (o= operation_errorlist )? R_BRACE
+				// Smi.g:909:7: ( ERRORS_KW )=> ERRORS_KW L_BRACE (o= operation_errorlist )? R_BRACE
 				{
-				DebugLocation(912, 22);
-				ERRORS_KW139=(IToken)Match(input,ERRORS_KW,Follow._ERRORS_KW_in_operation_macro4331); if (state.failed) return retval;
+				DebugLocation(909, 22);
+				ERRORS_KW139=(IToken)Match(input,ERRORS_KW,Follow._ERRORS_KW_in_operation_macro4312); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				ERRORS_KW139_tree = (CommonTree)adaptor.Create(ERRORS_KW139);
 				adaptor.AddChild(root_0, ERRORS_KW139_tree);
 				}
-				DebugLocation(912, 32);
-				L_BRACE140=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_operation_macro4333); if (state.failed) return retval;
+				DebugLocation(909, 32);
+				L_BRACE140=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_operation_macro4314); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				L_BRACE140_tree = (CommonTree)adaptor.Create(L_BRACE140);
 				adaptor.AddChild(root_0, L_BRACE140_tree);
 				}
-				DebugLocation(912, 40);
-				// Smi.g:912:40: (o= operation_errorlist )?
+				DebugLocation(909, 40);
+				// Smi.g:909:40: (o= operation_errorlist )?
 				int alt54=2;
 				try { DebugEnterSubRule(54);
 				try { DebugEnterDecision(54, false);
@@ -8791,15 +8791,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:912:41: o= operation_errorlist
+					// Smi.g:909:41: o= operation_errorlist
 					{
-					DebugLocation(912, 42);
-					PushFollow(Follow._operation_errorlist_in_operation_macro4338);
+					DebugLocation(909, 42);
+					PushFollow(Follow._operation_errorlist_in_operation_macro4319);
 					o=operation_errorlist();
 					PopFollow();
 					if (state.failed) return retval;
 					if (state.backtracking == 0) adaptor.AddChild(root_0, o.Tree);
-					DebugLocation(912, 63);
+					DebugLocation(909, 63);
 					if (state.backtracking == 0)
 					{
 						 retval.result.ErrorList = (o!=null?o.result:default(IList<TypeOrValue>)); 
@@ -8811,8 +8811,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				}
 				} finally { DebugExitSubRule(54); }
 
-				DebugLocation(912, 100);
-				R_BRACE141=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_operation_macro4344); if (state.failed) return retval;
+				DebugLocation(909, 100);
+				R_BRACE141=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_operation_macro4325); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				R_BRACE141_tree = (CommonTree)adaptor.Create(R_BRACE141);
 				adaptor.AddChild(root_0, R_BRACE141_tree);
@@ -8824,8 +8824,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(55); }
 
-			DebugLocation(913, 5);
-			// Smi.g:913:5: ( ( LINKED_KW )=> LINKED_KW L_BRACE (l= linkedOp_list )? R_BRACE )?
+			DebugLocation(910, 5);
+			// Smi.g:910:5: ( ( LINKED_KW )=> LINKED_KW L_BRACE (l= linkedOp_list )? R_BRACE )?
 			int alt57=2;
 			try { DebugEnterSubRule(57);
 			try { DebugEnterDecision(57, false);
@@ -8845,22 +8845,22 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:913:7: ( LINKED_KW )=> LINKED_KW L_BRACE (l= linkedOp_list )? R_BRACE
+				// Smi.g:910:7: ( LINKED_KW )=> LINKED_KW L_BRACE (l= linkedOp_list )? R_BRACE
 				{
-				DebugLocation(913, 22);
-				LINKED_KW142=(IToken)Match(input,LINKED_KW,Follow._LINKED_KW_in_operation_macro4362); if (state.failed) return retval;
+				DebugLocation(910, 22);
+				LINKED_KW142=(IToken)Match(input,LINKED_KW,Follow._LINKED_KW_in_operation_macro4343); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				LINKED_KW142_tree = (CommonTree)adaptor.Create(LINKED_KW142);
 				adaptor.AddChild(root_0, LINKED_KW142_tree);
 				}
-				DebugLocation(913, 32);
-				L_BRACE143=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_operation_macro4364); if (state.failed) return retval;
+				DebugLocation(910, 32);
+				L_BRACE143=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_operation_macro4345); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				L_BRACE143_tree = (CommonTree)adaptor.Create(L_BRACE143);
 				adaptor.AddChild(root_0, L_BRACE143_tree);
 				}
-				DebugLocation(913, 40);
-				// Smi.g:913:40: (l= linkedOp_list )?
+				DebugLocation(910, 40);
+				// Smi.g:910:40: (l= linkedOp_list )?
 				int alt56=2;
 				try { DebugEnterSubRule(56);
 				try { DebugEnterDecision(56, false);
@@ -8875,15 +8875,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:913:41: l= linkedOp_list
+					// Smi.g:910:41: l= linkedOp_list
 					{
-					DebugLocation(913, 42);
-					PushFollow(Follow._linkedOp_list_in_operation_macro4369);
+					DebugLocation(910, 42);
+					PushFollow(Follow._linkedOp_list_in_operation_macro4350);
 					l=linkedOp_list();
 					PopFollow();
 					if (state.failed) return retval;
 					if (state.backtracking == 0) adaptor.AddChild(root_0, l.Tree);
-					DebugLocation(913, 57);
+					DebugLocation(910, 57);
 					if (state.backtracking == 0)
 					{
 						 retval.result.LinkedOperationList = (l!=null?l.result:default(IList<TypeOrValue>)); 
@@ -8895,8 +8895,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				}
 				} finally { DebugExitSubRule(56); }
 
-				DebugLocation(913, 104);
-				R_BRACE144=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_operation_macro4375); if (state.failed) return retval;
+				DebugLocation(910, 104);
+				R_BRACE144=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_operation_macro4356); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				R_BRACE144_tree = (CommonTree)adaptor.Create(R_BRACE144);
 				adaptor.AddChild(root_0, R_BRACE144_tree);
@@ -8930,7 +8930,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("operation_macro", 47);
 			LeaveRule_operation_macro();
 		}
-		DebugLocation(914, 1);
+		DebugLocation(911, 1);
 		} finally { DebugExitRule(GrammarFileName, "operation_macro"); }
 		return retval;
 
@@ -8947,7 +8947,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_error_macro();
 	partial void LeaveRule_error_macro();
 	// $ANTLR start "error_macro"
-	// Smi.g:925:1: error_macro returns [ErrorMacro result = new ErrorMacro()] : ERROR_KW ( PARAMETER_KW ( ( LOWER )=>id= LOWER )? t= type )? ;
+	// Smi.g:922:1: error_macro returns [ErrorMacro result = new ErrorMacro()] : ERROR_KW ( PARAMETER_KW ( ( LOWER )=>id= LOWER )? t= type )? ;
 	[GrammarRule("error_macro")]
 	private SmiParser.error_macro_return error_macro()
 	{
@@ -8968,23 +8968,23 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree ERROR_KW145_tree = default(CommonTree);
 		CommonTree PARAMETER_KW146_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "error_macro");
-		DebugLocation(925, 43);
+		DebugLocation(922, 43);
 		try
 		{
-			// Smi.g:926:5: ( ERROR_KW ( PARAMETER_KW ( ( LOWER )=>id= LOWER )? t= type )? )
+			// Smi.g:923:5: ( ERROR_KW ( PARAMETER_KW ( ( LOWER )=>id= LOWER )? t= type )? )
 			DebugEnterAlt(1);
-			// Smi.g:926:7: ERROR_KW ( PARAMETER_KW ( ( LOWER )=>id= LOWER )? t= type )?
+			// Smi.g:923:7: ERROR_KW ( PARAMETER_KW ( ( LOWER )=>id= LOWER )? t= type )?
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(926, 7);
-			ERROR_KW145=(IToken)Match(input,ERROR_KW,Follow._ERROR_KW_in_error_macro4407); if (state.failed) return retval;
+			DebugLocation(923, 7);
+			ERROR_KW145=(IToken)Match(input,ERROR_KW,Follow._ERROR_KW_in_error_macro4388); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			ERROR_KW145_tree = (CommonTree)adaptor.Create(ERROR_KW145);
 			adaptor.AddChild(root_0, ERROR_KW145_tree);
 			}
-			DebugLocation(927, 2);
-			// Smi.g:927:2: ( PARAMETER_KW ( ( LOWER )=>id= LOWER )? t= type )?
+			DebugLocation(924, 2);
+			// Smi.g:924:2: ( PARAMETER_KW ( ( LOWER )=>id= LOWER )? t= type )?
 			int alt59=2;
 			try { DebugEnterSubRule(59);
 			try { DebugEnterDecision(59, false);
@@ -8999,16 +8999,16 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:927:4: PARAMETER_KW ( ( LOWER )=>id= LOWER )? t= type
+				// Smi.g:924:4: PARAMETER_KW ( ( LOWER )=>id= LOWER )? t= type
 				{
-				DebugLocation(927, 4);
-				PARAMETER_KW146=(IToken)Match(input,PARAMETER_KW,Follow._PARAMETER_KW_in_error_macro4413); if (state.failed) return retval;
+				DebugLocation(924, 4);
+				PARAMETER_KW146=(IToken)Match(input,PARAMETER_KW,Follow._PARAMETER_KW_in_error_macro4394); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				PARAMETER_KW146_tree = (CommonTree)adaptor.Create(PARAMETER_KW146);
 				adaptor.AddChild(root_0, PARAMETER_KW146_tree);
 				}
-				DebugLocation(927, 17);
-				// Smi.g:927:17: ( ( LOWER )=>id= LOWER )?
+				DebugLocation(924, 17);
+				// Smi.g:924:17: ( ( LOWER )=>id= LOWER )?
 				int alt58=2;
 				try { DebugEnterSubRule(58);
 				try { DebugEnterDecision(58, false);
@@ -9028,15 +9028,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:927:18: ( LOWER )=>id= LOWER
+					// Smi.g:924:18: ( LOWER )=>id= LOWER
 					{
-					DebugLocation(927, 31);
-					id=(IToken)Match(input,LOWER,Follow._LOWER_in_error_macro4424); if (state.failed) return retval;
+					DebugLocation(924, 31);
+					id=(IToken)Match(input,LOWER,Follow._LOWER_in_error_macro4405); if (state.failed) return retval;
 					if (state.backtracking == 0) {
 					id_tree = (CommonTree)adaptor.Create(id);
 					adaptor.AddChild(root_0, id_tree);
 					}
-					DebugLocation(927, 38);
+					DebugLocation(924, 38);
 					if (state.backtracking == 0)
 					{
 						 retval.result.Identifier = (id!=null?id.Text:null); 
@@ -9048,13 +9048,13 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				}
 				} finally { DebugExitSubRule(58); }
 
-				DebugLocation(928, 3);
-				PushFollow(Follow._type_in_error_macro4434);
+				DebugLocation(925, 3);
+				PushFollow(Follow._type_in_error_macro4415);
 				t=type();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, t.Tree);
-				DebugLocation(928, 9);
+				DebugLocation(925, 9);
 				if (state.backtracking == 0)
 				{
 					 retval.result.Subtype = (t!=null?t.result:default(ISmiType)); 
@@ -9088,7 +9088,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("error_macro", 48);
 			LeaveRule_error_macro();
 		}
-		DebugLocation(928, 43);
+		DebugLocation(925, 43);
 		} finally { DebugExitRule(GrammarFileName, "error_macro"); }
 		return retval;
 
@@ -9105,7 +9105,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_macros_type();
 	partial void LeaveRule_macros_type();
 	// $ANTLR start "macros_type"
-	// Smi.g:935:1: macros_type returns [ISmiType result] : (om= operation_macro |em= error_macro |otm= objecttype_macro |mm= moduleidentity_macro |oim= objectidentity_macro |ntm= notificationtype_macro |tcm= textualconvention_macro |ogm= objectgroup_macro |ngm= notificationgroup_macro |mcm= modulecompliance_macro |acm= agentcapabilities_macro |ttm= traptype_macro );
+	// Smi.g:932:1: macros_type returns [ISmiType result] : (om= operation_macro |em= error_macro |otm= objecttype_macro |mm= moduleidentity_macro |oim= objectidentity_macro |ntm= notificationtype_macro |tcm= textualconvention_macro |ogm= objectgroup_macro |ngm= notificationgroup_macro |mcm= modulecompliance_macro |acm= agentcapabilities_macro |ttm= traptype_macro );
 	[GrammarRule("macros_type")]
 	private SmiParser.macros_type_return macros_type()
 	{
@@ -9131,10 +9131,10 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		SmiParser.traptype_macro_return ttm = default(SmiParser.traptype_macro_return);
 
 		try { DebugEnterRule(GrammarFileName, "macros_type");
-		DebugLocation(935, 48);
+		DebugLocation(932, 48);
 		try
 		{
-			// Smi.g:936:5: (om= operation_macro |em= error_macro |otm= objecttype_macro |mm= moduleidentity_macro |oim= objectidentity_macro |ntm= notificationtype_macro |tcm= textualconvention_macro |ogm= objectgroup_macro |ngm= notificationgroup_macro |mcm= modulecompliance_macro |acm= agentcapabilities_macro |ttm= traptype_macro )
+			// Smi.g:933:5: (om= operation_macro |em= error_macro |otm= objecttype_macro |mm= moduleidentity_macro |oim= objectidentity_macro |ntm= notificationtype_macro |tcm= textualconvention_macro |ogm= objectgroup_macro |ngm= notificationgroup_macro |mcm= modulecompliance_macro |acm= agentcapabilities_macro |ttm= traptype_macro )
 			int alt60=12;
 			try { DebugEnterDecision(60, false);
 			switch (input.LA(1))
@@ -9213,17 +9213,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:936:7: om= operation_macro
+				// Smi.g:933:7: om= operation_macro
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(936, 9);
-				PushFollow(Follow._operation_macro_in_macros_type4464);
+				DebugLocation(933, 9);
+				PushFollow(Follow._operation_macro_in_macros_type4445);
 				om=operation_macro();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, om.Tree);
-				DebugLocation(936, 26);
+				DebugLocation(933, 26);
 				if (state.backtracking == 0)
 				{
 					 retval.result = (om!=null?om.result:default(OperationMacro)); 
@@ -9233,17 +9233,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// Smi.g:937:4: em= error_macro
+				// Smi.g:934:4: em= error_macro
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(937, 6);
-				PushFollow(Follow._error_macro_in_macros_type4473);
+				DebugLocation(934, 6);
+				PushFollow(Follow._error_macro_in_macros_type4454);
 				em=error_macro();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, em.Tree);
-				DebugLocation(937, 19);
+				DebugLocation(934, 19);
 				if (state.backtracking == 0)
 				{
 					 retval.result = (em!=null?em.result:default(ErrorMacro)); 
@@ -9253,17 +9253,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 3:
 				DebugEnterAlt(3);
-				// Smi.g:938:4: otm= objecttype_macro
+				// Smi.g:935:4: otm= objecttype_macro
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(938, 7);
-				PushFollow(Follow._objecttype_macro_in_macros_type4482);
+				DebugLocation(935, 7);
+				PushFollow(Follow._objecttype_macro_in_macros_type4463);
 				otm=objecttype_macro();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, otm.Tree);
-				DebugLocation(938, 25);
+				DebugLocation(935, 25);
 				if (state.backtracking == 0)
 				{
 					 retval.result = (otm!=null?otm.result:default(ObjectTypeMacro)); 
@@ -9273,17 +9273,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 4:
 				DebugEnterAlt(4);
-				// Smi.g:939:4: mm= moduleidentity_macro
+				// Smi.g:936:4: mm= moduleidentity_macro
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(939, 6);
-				PushFollow(Follow._moduleidentity_macro_in_macros_type4491);
+				DebugLocation(936, 6);
+				PushFollow(Follow._moduleidentity_macro_in_macros_type4472);
 				mm=moduleidentity_macro();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, mm.Tree);
-				DebugLocation(939, 28);
+				DebugLocation(936, 28);
 				if (state.backtracking == 0)
 				{
 					 retval.result = (mm!=null?mm.result:default(ModuleIdentityMacro)); 
@@ -9293,17 +9293,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 5:
 				DebugEnterAlt(5);
-				// Smi.g:940:7: oim= objectidentity_macro
+				// Smi.g:937:7: oim= objectidentity_macro
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(940, 10);
-				PushFollow(Follow._objectidentity_macro_in_macros_type4503);
+				DebugLocation(937, 10);
+				PushFollow(Follow._objectidentity_macro_in_macros_type4484);
 				oim=objectidentity_macro();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, oim.Tree);
-				DebugLocation(940, 32);
+				DebugLocation(937, 32);
 				if (state.backtracking == 0)
 				{
 					 retval.result = (oim!=null?oim.result:default(ObjectIdentityMacro)); 
@@ -9313,17 +9313,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 6:
 				DebugEnterAlt(6);
-				// Smi.g:941:4: ntm= notificationtype_macro
+				// Smi.g:938:4: ntm= notificationtype_macro
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(941, 7);
-				PushFollow(Follow._notificationtype_macro_in_macros_type4512);
+				DebugLocation(938, 7);
+				PushFollow(Follow._notificationtype_macro_in_macros_type4493);
 				ntm=notificationtype_macro();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, ntm.Tree);
-				DebugLocation(941, 31);
+				DebugLocation(938, 31);
 				if (state.backtracking == 0)
 				{
 					 retval.result = (ntm!=null?ntm.result:default(NotificationTypeMacro)); 
@@ -9333,17 +9333,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 7:
 				DebugEnterAlt(7);
-				// Smi.g:942:4: tcm= textualconvention_macro
+				// Smi.g:939:4: tcm= textualconvention_macro
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(942, 7);
-				PushFollow(Follow._textualconvention_macro_in_macros_type4521);
+				DebugLocation(939, 7);
+				PushFollow(Follow._textualconvention_macro_in_macros_type4502);
 				tcm=textualconvention_macro();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, tcm.Tree);
-				DebugLocation(942, 32);
+				DebugLocation(939, 32);
 				if (state.backtracking == 0)
 				{
 					 retval.result = (tcm!=null?tcm.result:default(TextualConventionMacro)); 
@@ -9353,17 +9353,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 8:
 				DebugEnterAlt(8);
-				// Smi.g:943:7: ogm= objectgroup_macro
+				// Smi.g:940:7: ogm= objectgroup_macro
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(943, 10);
-				PushFollow(Follow._objectgroup_macro_in_macros_type4533);
+				DebugLocation(940, 10);
+				PushFollow(Follow._objectgroup_macro_in_macros_type4514);
 				ogm=objectgroup_macro();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, ogm.Tree);
-				DebugLocation(943, 29);
+				DebugLocation(940, 29);
 				if (state.backtracking == 0)
 				{
 					 retval.result = (ogm!=null?ogm.result:default(ObjectGroupMacro)); 
@@ -9373,17 +9373,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 9:
 				DebugEnterAlt(9);
-				// Smi.g:944:4: ngm= notificationgroup_macro
+				// Smi.g:941:4: ngm= notificationgroup_macro
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(944, 7);
-				PushFollow(Follow._notificationgroup_macro_in_macros_type4542);
+				DebugLocation(941, 7);
+				PushFollow(Follow._notificationgroup_macro_in_macros_type4523);
 				ngm=notificationgroup_macro();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, ngm.Tree);
-				DebugLocation(944, 32);
+				DebugLocation(941, 32);
 				if (state.backtracking == 0)
 				{
 					 retval.result = (ngm!=null?ngm.result:default(NotificationGroupMacro)); 
@@ -9393,17 +9393,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 10:
 				DebugEnterAlt(10);
-				// Smi.g:945:4: mcm= modulecompliance_macro
+				// Smi.g:942:4: mcm= modulecompliance_macro
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(945, 7);
-				PushFollow(Follow._modulecompliance_macro_in_macros_type4551);
+				DebugLocation(942, 7);
+				PushFollow(Follow._modulecompliance_macro_in_macros_type4532);
 				mcm=modulecompliance_macro();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, mcm.Tree);
-				DebugLocation(945, 31);
+				DebugLocation(942, 31);
 				if (state.backtracking == 0)
 				{
 					 retval.result = (mcm!=null?mcm.result:default(ModuleComplianceMacro)); 
@@ -9413,17 +9413,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 11:
 				DebugEnterAlt(11);
-				// Smi.g:946:7: acm= agentcapabilities_macro
+				// Smi.g:943:7: acm= agentcapabilities_macro
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(946, 10);
-				PushFollow(Follow._agentcapabilities_macro_in_macros_type4563);
+				DebugLocation(943, 10);
+				PushFollow(Follow._agentcapabilities_macro_in_macros_type4544);
 				acm=agentcapabilities_macro();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, acm.Tree);
-				DebugLocation(946, 35);
+				DebugLocation(943, 35);
 				if (state.backtracking == 0)
 				{
 					 retval.result = (acm!=null?acm.result:default(AgentCapabilitiesMacro)); 
@@ -9433,17 +9433,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 12:
 				DebugEnterAlt(12);
-				// Smi.g:947:4: ttm= traptype_macro
+				// Smi.g:944:4: ttm= traptype_macro
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(947, 7);
-				PushFollow(Follow._traptype_macro_in_macros_type4572);
+				DebugLocation(944, 7);
+				PushFollow(Follow._traptype_macro_in_macros_type4553);
 				ttm=traptype_macro();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, ttm.Tree);
-				DebugLocation(947, 23);
+				DebugLocation(944, 23);
 				if (state.backtracking == 0)
 				{
 					 retval.result = (ttm!=null?ttm.result:default(TrapTypeMacro)); 
@@ -9472,7 +9472,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("macros_type", 49);
 			LeaveRule_macros_type();
 		}
-		DebugLocation(947, 48);
+		DebugLocation(944, 48);
 		} finally { DebugExitRule(GrammarFileName, "macros_type"); }
 		return retval;
 
@@ -9482,7 +9482,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_smi_macros();
 	partial void LeaveRule_smi_macros();
 	// $ANTLR start "smi_macros"
-	// Smi.g:949:1: smi_macros : ( 'OBJECT-TYPE' | 'MODULE-IDENTITY' | 'OBJECT-IDENTITY' | 'NOTIFICATION-TYPE' | 'TEXTUAL-CONVENTION' | 'OBJECT-GROUP' | 'NOTIFICATION-GROUP' | 'MODULE-COMPLIANCE' | 'AGENT-CAPABILITIES' | 'TRAP-TYPE' );
+	// Smi.g:946:1: smi_macros : ( 'OBJECT-TYPE' | 'MODULE-IDENTITY' | 'OBJECT-IDENTITY' | 'NOTIFICATION-TYPE' | 'TEXTUAL-CONVENTION' | 'OBJECT-GROUP' | 'NOTIFICATION-GROUP' | 'MODULE-COMPLIANCE' | 'AGENT-CAPABILITIES' | 'TRAP-TYPE' );
 	[GrammarRule("smi_macros")]
 	private AstParserRuleReturnScope<CommonTree, IToken> smi_macros()
 	{
@@ -9498,16 +9498,16 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 		CommonTree set147_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "smi_macros");
-		DebugLocation(949, 45);
+		DebugLocation(946, 45);
 		try
 		{
-			// Smi.g:949:11: ( 'OBJECT-TYPE' | 'MODULE-IDENTITY' | 'OBJECT-IDENTITY' | 'NOTIFICATION-TYPE' | 'TEXTUAL-CONVENTION' | 'OBJECT-GROUP' | 'NOTIFICATION-GROUP' | 'MODULE-COMPLIANCE' | 'AGENT-CAPABILITIES' | 'TRAP-TYPE' )
+			// Smi.g:946:11: ( 'OBJECT-TYPE' | 'MODULE-IDENTITY' | 'OBJECT-IDENTITY' | 'NOTIFICATION-TYPE' | 'TEXTUAL-CONVENTION' | 'OBJECT-GROUP' | 'NOTIFICATION-GROUP' | 'MODULE-COMPLIANCE' | 'AGENT-CAPABILITIES' | 'TRAP-TYPE' )
 			DebugEnterAlt(1);
 			// Smi.g:
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(949, 11);
+			DebugLocation(946, 11);
 
 			set147=(IToken)input.LT(1);
 			if (input.LA(1)==129||(input.LA(1)>=156 && input.LA(1)<=159)||(input.LA(1)>=161 && input.LA(1)<=163)||input.LA(1)==186||input.LA(1)==189)
@@ -9546,7 +9546,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("smi_macros", 50);
 			LeaveRule_smi_macros();
 		}
-		DebugLocation(951, 45);
+		DebugLocation(948, 45);
 		} finally { DebugExitRule(GrammarFileName, "smi_macros"); }
 		return retval;
 
@@ -9563,7 +9563,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_smi_type();
 	partial void LeaveRule_smi_type();
 	// $ANTLR start "smi_type"
-	// Smi.g:955:1: smi_type returns [ISmiType result] : ( 'BITS' | INTEGER_KW | OCTET_KW STRING_KW | OBJECT_KW IDENTIFIER_KW |name= UPPER |name2= LOWER );
+	// Smi.g:952:1: smi_type returns [ISmiType result] : ( 'BITS' | INTEGER_KW | OCTET_KW STRING_KW | OBJECT_KW IDENTIFIER_KW |name= UPPER |name2= LOWER );
 	[GrammarRule("smi_type")]
 	private SmiParser.smi_type_return smi_type()
 	{
@@ -9593,10 +9593,10 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree OBJECT_KW152_tree = default(CommonTree);
 		CommonTree IDENTIFIER_KW153_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "smi_type");
-		DebugLocation(955, 1);
+		DebugLocation(952, 1);
 		try
 		{
-			// Smi.g:956:5: ( 'BITS' | INTEGER_KW | OCTET_KW STRING_KW | OBJECT_KW IDENTIFIER_KW |name= UPPER |name2= LOWER )
+			// Smi.g:953:5: ( 'BITS' | INTEGER_KW | OCTET_KW STRING_KW | OBJECT_KW IDENTIFIER_KW |name= UPPER |name2= LOWER )
 			int alt61=6;
 			try { DebugEnterDecision(61, false);
 			switch (input.LA(1))
@@ -9645,17 +9645,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:956:7: 'BITS'
+				// Smi.g:953:7: 'BITS'
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(956, 7);
-				string_literal148=(IToken)Match(input,135,Follow._135_in_smi_type4657); if (state.failed) return retval;
+				DebugLocation(953, 7);
+				string_literal148=(IToken)Match(input,135,Follow._135_in_smi_type4638); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal148_tree = (CommonTree)adaptor.Create(string_literal148);
 				adaptor.AddChild(root_0, string_literal148_tree);
 				}
-				DebugLocation(956, 14);
+				DebugLocation(953, 14);
 				if (state.backtracking == 0)
 				{
 					 retval.result = new BitsType(); 
@@ -9665,17 +9665,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// Smi.g:957:4: INTEGER_KW
+				// Smi.g:954:4: INTEGER_KW
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(957, 4);
-				INTEGER_KW149=(IToken)Match(input,INTEGER_KW,Follow._INTEGER_KW_in_smi_type4664); if (state.failed) return retval;
+				DebugLocation(954, 4);
+				INTEGER_KW149=(IToken)Match(input,INTEGER_KW,Follow._INTEGER_KW_in_smi_type4645); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				INTEGER_KW149_tree = (CommonTree)adaptor.Create(INTEGER_KW149);
 				adaptor.AddChild(root_0, INTEGER_KW149_tree);
 				}
-				DebugLocation(957, 15);
+				DebugLocation(954, 15);
 				if (state.backtracking == 0)
 				{
 					 retval.result = new IntegerType(); 
@@ -9685,23 +9685,23 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 3:
 				DebugEnterAlt(3);
-				// Smi.g:958:4: OCTET_KW STRING_KW
+				// Smi.g:955:4: OCTET_KW STRING_KW
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(958, 4);
-				OCTET_KW150=(IToken)Match(input,OCTET_KW,Follow._OCTET_KW_in_smi_type4671); if (state.failed) return retval;
+				DebugLocation(955, 4);
+				OCTET_KW150=(IToken)Match(input,OCTET_KW,Follow._OCTET_KW_in_smi_type4652); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				OCTET_KW150_tree = (CommonTree)adaptor.Create(OCTET_KW150);
 				adaptor.AddChild(root_0, OCTET_KW150_tree);
 				}
-				DebugLocation(958, 13);
-				STRING_KW151=(IToken)Match(input,STRING_KW,Follow._STRING_KW_in_smi_type4673); if (state.failed) return retval;
+				DebugLocation(955, 13);
+				STRING_KW151=(IToken)Match(input,STRING_KW,Follow._STRING_KW_in_smi_type4654); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				STRING_KW151_tree = (CommonTree)adaptor.Create(STRING_KW151);
 				adaptor.AddChild(root_0, STRING_KW151_tree);
 				}
-				DebugLocation(958, 23);
+				DebugLocation(955, 23);
 				if (state.backtracking == 0)
 				{
 					 retval.result = new OctetStringType(); 
@@ -9711,23 +9711,23 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 4:
 				DebugEnterAlt(4);
-				// Smi.g:959:4: OBJECT_KW IDENTIFIER_KW
+				// Smi.g:956:4: OBJECT_KW IDENTIFIER_KW
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(959, 4);
-				OBJECT_KW152=(IToken)Match(input,OBJECT_KW,Follow._OBJECT_KW_in_smi_type4680); if (state.failed) return retval;
+				DebugLocation(956, 4);
+				OBJECT_KW152=(IToken)Match(input,OBJECT_KW,Follow._OBJECT_KW_in_smi_type4661); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				OBJECT_KW152_tree = (CommonTree)adaptor.Create(OBJECT_KW152);
 				adaptor.AddChild(root_0, OBJECT_KW152_tree);
 				}
-				DebugLocation(959, 14);
-				IDENTIFIER_KW153=(IToken)Match(input,IDENTIFIER_KW,Follow._IDENTIFIER_KW_in_smi_type4682); if (state.failed) return retval;
+				DebugLocation(956, 14);
+				IDENTIFIER_KW153=(IToken)Match(input,IDENTIFIER_KW,Follow._IDENTIFIER_KW_in_smi_type4663); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				IDENTIFIER_KW153_tree = (CommonTree)adaptor.Create(IDENTIFIER_KW153);
 				adaptor.AddChild(root_0, IDENTIFIER_KW153_tree);
 				}
-				DebugLocation(959, 28);
+				DebugLocation(956, 28);
 				if (state.backtracking == 0)
 				{
 					 retval.result = new ObjectIdentifierType(); 
@@ -9737,17 +9737,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 5:
 				DebugEnterAlt(5);
-				// Smi.g:960:4: name= UPPER
+				// Smi.g:957:4: name= UPPER
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(960, 8);
-				name=(IToken)Match(input,UPPER,Follow._UPPER_in_smi_type4692); if (state.failed) return retval;
+				DebugLocation(957, 8);
+				name=(IToken)Match(input,UPPER,Follow._UPPER_in_smi_type4673); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				name_tree = (CommonTree)adaptor.Create(name);
 				adaptor.AddChild(root_0, name_tree);
 				}
-				DebugLocation(960, 15);
+				DebugLocation(957, 15);
 				if (state.backtracking == 0)
 				{
 					 retval.result = new UnknownType((name!=null?name.Text:null)); 
@@ -9757,17 +9757,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 6:
 				DebugEnterAlt(6);
-				// Smi.g:961:4: name2= LOWER
+				// Smi.g:958:4: name2= LOWER
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(961, 9);
-				name2=(IToken)Match(input,LOWER,Follow._LOWER_in_smi_type4701); if (state.failed) return retval;
+				DebugLocation(958, 9);
+				name2=(IToken)Match(input,LOWER,Follow._LOWER_in_smi_type4682); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				name2_tree = (CommonTree)adaptor.Create(name2);
 				adaptor.AddChild(root_0, name2_tree);
 				}
-				DebugLocation(961, 16);
+				DebugLocation(958, 16);
 				if (state.backtracking == 0)
 				{
 					 retval.result = new UnknownType((name2!=null?name2.Text:null)); 
@@ -9796,7 +9796,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("smi_type", 51);
 			LeaveRule_smi_type();
 		}
-		DebugLocation(962, 1);
+		DebugLocation(959, 1);
 		} finally { DebugExitRule(GrammarFileName, "smi_type"); }
 		return retval;
 
@@ -9806,7 +9806,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_smi_subtyping();
 	partial void LeaveRule_smi_subtyping();
 	// $ANTLR start "smi_subtyping"
-	// Smi.g:968:1: smi_subtyping : ( L_PAREN subtype_range ( BAR subtype_range )* R_PAREN | L_PAREN 'SIZE' L_PAREN subtype_range ( BAR subtype_range )* R_PAREN R_PAREN );
+	// Smi.g:965:1: smi_subtyping : ( L_PAREN subtype_range ( BAR subtype_range )* R_PAREN | L_PAREN 'SIZE' L_PAREN subtype_range ( BAR subtype_range )* R_PAREN R_PAREN );
 	[GrammarRule("smi_subtyping")]
 	private AstParserRuleReturnScope<CommonTree, IToken> smi_subtyping()
 	{
@@ -9842,10 +9842,10 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree R_PAREN165_tree = default(CommonTree);
 		CommonTree R_PAREN166_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "smi_subtyping");
-		DebugLocation(968, 88);
+		DebugLocation(965, 88);
 		try
 		{
-			// Smi.g:968:14: ( L_PAREN subtype_range ( BAR subtype_range )* R_PAREN | L_PAREN 'SIZE' L_PAREN subtype_range ( BAR subtype_range )* R_PAREN R_PAREN )
+			// Smi.g:965:14: ( L_PAREN subtype_range ( BAR subtype_range )* R_PAREN | L_PAREN 'SIZE' L_PAREN subtype_range ( BAR subtype_range )* R_PAREN R_PAREN )
 			int alt64=2;
 			try { DebugEnterDecision(64, false);
 			int LA64_1 = input.LA(1);
@@ -9882,24 +9882,24 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:968:16: L_PAREN subtype_range ( BAR subtype_range )* R_PAREN
+				// Smi.g:965:16: L_PAREN subtype_range ( BAR subtype_range )* R_PAREN
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(968, 16);
-				L_PAREN154=(IToken)Match(input,L_PAREN,Follow._L_PAREN_in_smi_subtyping4719); if (state.failed) return retval;
+				DebugLocation(965, 16);
+				L_PAREN154=(IToken)Match(input,L_PAREN,Follow._L_PAREN_in_smi_subtyping4700); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				L_PAREN154_tree = (CommonTree)adaptor.Create(L_PAREN154);
 				adaptor.AddChild(root_0, L_PAREN154_tree);
 				}
-				DebugLocation(968, 24);
-				PushFollow(Follow._subtype_range_in_smi_subtyping4721);
+				DebugLocation(965, 24);
+				PushFollow(Follow._subtype_range_in_smi_subtyping4702);
 				subtype_range155=subtype_range();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, subtype_range155.Tree);
-				DebugLocation(968, 38);
-				// Smi.g:968:38: ( BAR subtype_range )*
+				DebugLocation(965, 38);
+				// Smi.g:965:38: ( BAR subtype_range )*
 				try { DebugEnterSubRule(62);
 				while (true)
 				{
@@ -9918,16 +9918,16 @@ public partial class SmiParser : Antlr.Runtime.Parser
 					{
 					case 1:
 						DebugEnterAlt(1);
-						// Smi.g:968:39: BAR subtype_range
+						// Smi.g:965:39: BAR subtype_range
 						{
-						DebugLocation(968, 39);
-						BAR156=(IToken)Match(input,BAR,Follow._BAR_in_smi_subtyping4724); if (state.failed) return retval;
+						DebugLocation(965, 39);
+						BAR156=(IToken)Match(input,BAR,Follow._BAR_in_smi_subtyping4705); if (state.failed) return retval;
 						if (state.backtracking == 0) {
 						BAR156_tree = (CommonTree)adaptor.Create(BAR156);
 						adaptor.AddChild(root_0, BAR156_tree);
 						}
-						DebugLocation(968, 43);
-						PushFollow(Follow._subtype_range_in_smi_subtyping4726);
+						DebugLocation(965, 43);
+						PushFollow(Follow._subtype_range_in_smi_subtyping4707);
 						subtype_range157=subtype_range();
 						PopFollow();
 						if (state.failed) return retval;
@@ -9946,8 +9946,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 				} finally { DebugExitSubRule(62); }
 
-				DebugLocation(968, 59);
-				R_PAREN158=(IToken)Match(input,R_PAREN,Follow._R_PAREN_in_smi_subtyping4730); if (state.failed) return retval;
+				DebugLocation(965, 59);
+				R_PAREN158=(IToken)Match(input,R_PAREN,Follow._R_PAREN_in_smi_subtyping4711); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				R_PAREN158_tree = (CommonTree)adaptor.Create(R_PAREN158);
 				adaptor.AddChild(root_0, R_PAREN158_tree);
@@ -9957,36 +9957,36 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// Smi.g:969:16: L_PAREN 'SIZE' L_PAREN subtype_range ( BAR subtype_range )* R_PAREN R_PAREN
+				// Smi.g:966:16: L_PAREN 'SIZE' L_PAREN subtype_range ( BAR subtype_range )* R_PAREN R_PAREN
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(969, 16);
-				L_PAREN159=(IToken)Match(input,L_PAREN,Follow._L_PAREN_in_smi_subtyping4747); if (state.failed) return retval;
+				DebugLocation(966, 16);
+				L_PAREN159=(IToken)Match(input,L_PAREN,Follow._L_PAREN_in_smi_subtyping4728); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				L_PAREN159_tree = (CommonTree)adaptor.Create(L_PAREN159);
 				adaptor.AddChild(root_0, L_PAREN159_tree);
 				}
-				DebugLocation(969, 24);
-				string_literal160=(IToken)Match(input,SIZE_KW,Follow._SIZE_KW_in_smi_subtyping4749); if (state.failed) return retval;
+				DebugLocation(966, 24);
+				string_literal160=(IToken)Match(input,SIZE_KW,Follow._SIZE_KW_in_smi_subtyping4730); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal160_tree = (CommonTree)adaptor.Create(string_literal160);
 				adaptor.AddChild(root_0, string_literal160_tree);
 				}
-				DebugLocation(969, 31);
-				L_PAREN161=(IToken)Match(input,L_PAREN,Follow._L_PAREN_in_smi_subtyping4751); if (state.failed) return retval;
+				DebugLocation(966, 31);
+				L_PAREN161=(IToken)Match(input,L_PAREN,Follow._L_PAREN_in_smi_subtyping4732); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				L_PAREN161_tree = (CommonTree)adaptor.Create(L_PAREN161);
 				adaptor.AddChild(root_0, L_PAREN161_tree);
 				}
-				DebugLocation(969, 39);
-				PushFollow(Follow._subtype_range_in_smi_subtyping4753);
+				DebugLocation(966, 39);
+				PushFollow(Follow._subtype_range_in_smi_subtyping4734);
 				subtype_range162=subtype_range();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, subtype_range162.Tree);
-				DebugLocation(969, 53);
-				// Smi.g:969:53: ( BAR subtype_range )*
+				DebugLocation(966, 53);
+				// Smi.g:966:53: ( BAR subtype_range )*
 				try { DebugEnterSubRule(63);
 				while (true)
 				{
@@ -10005,16 +10005,16 @@ public partial class SmiParser : Antlr.Runtime.Parser
 					{
 					case 1:
 						DebugEnterAlt(1);
-						// Smi.g:969:54: BAR subtype_range
+						// Smi.g:966:54: BAR subtype_range
 						{
-						DebugLocation(969, 54);
-						BAR163=(IToken)Match(input,BAR,Follow._BAR_in_smi_subtyping4756); if (state.failed) return retval;
+						DebugLocation(966, 54);
+						BAR163=(IToken)Match(input,BAR,Follow._BAR_in_smi_subtyping4737); if (state.failed) return retval;
 						if (state.backtracking == 0) {
 						BAR163_tree = (CommonTree)adaptor.Create(BAR163);
 						adaptor.AddChild(root_0, BAR163_tree);
 						}
-						DebugLocation(969, 58);
-						PushFollow(Follow._subtype_range_in_smi_subtyping4758);
+						DebugLocation(966, 58);
+						PushFollow(Follow._subtype_range_in_smi_subtyping4739);
 						subtype_range164=subtype_range();
 						PopFollow();
 						if (state.failed) return retval;
@@ -10033,14 +10033,14 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 				} finally { DebugExitSubRule(63); }
 
-				DebugLocation(969, 74);
-				R_PAREN165=(IToken)Match(input,R_PAREN,Follow._R_PAREN_in_smi_subtyping4762); if (state.failed) return retval;
+				DebugLocation(966, 74);
+				R_PAREN165=(IToken)Match(input,R_PAREN,Follow._R_PAREN_in_smi_subtyping4743); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				R_PAREN165_tree = (CommonTree)adaptor.Create(R_PAREN165);
 				adaptor.AddChild(root_0, R_PAREN165_tree);
 				}
-				DebugLocation(969, 82);
-				R_PAREN166=(IToken)Match(input,R_PAREN,Follow._R_PAREN_in_smi_subtyping4764); if (state.failed) return retval;
+				DebugLocation(966, 82);
+				R_PAREN166=(IToken)Match(input,R_PAREN,Follow._R_PAREN_in_smi_subtyping4745); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				R_PAREN166_tree = (CommonTree)adaptor.Create(R_PAREN166);
 				adaptor.AddChild(root_0, R_PAREN166_tree);
@@ -10069,7 +10069,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("smi_subtyping", 52);
 			LeaveRule_smi_subtyping();
 		}
-		DebugLocation(969, 88);
+		DebugLocation(966, 88);
 		} finally { DebugExitRule(GrammarFileName, "smi_subtyping"); }
 		return retval;
 
@@ -10079,7 +10079,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_subtype_range();
 	partial void LeaveRule_subtype_range();
 	// $ANTLR start "subtype_range"
-	// Smi.g:970:1: subtype_range : subtype_value ( DOTDOT subtype_value )? ;
+	// Smi.g:967:1: subtype_range : subtype_value ( DOTDOT subtype_value )? ;
 	[GrammarRule("subtype_range")]
 	private AstParserRuleReturnScope<CommonTree, IToken> subtype_range()
 	{
@@ -10097,23 +10097,23 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 		CommonTree DOTDOT168_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "subtype_range");
-		DebugLocation(970, 53);
+		DebugLocation(967, 53);
 		try
 		{
-			// Smi.g:970:14: ( subtype_value ( DOTDOT subtype_value )? )
+			// Smi.g:967:14: ( subtype_value ( DOTDOT subtype_value )? )
 			DebugEnterAlt(1);
-			// Smi.g:970:16: subtype_value ( DOTDOT subtype_value )?
+			// Smi.g:967:16: subtype_value ( DOTDOT subtype_value )?
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(970, 16);
-			PushFollow(Follow._subtype_value_in_subtype_range4770);
+			DebugLocation(967, 16);
+			PushFollow(Follow._subtype_value_in_subtype_range4751);
 			subtype_value167=subtype_value();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, subtype_value167.Tree);
-			DebugLocation(970, 30);
-			// Smi.g:970:30: ( DOTDOT subtype_value )?
+			DebugLocation(967, 30);
+			// Smi.g:967:30: ( DOTDOT subtype_value )?
 			int alt65=2;
 			try { DebugEnterSubRule(65);
 			try { DebugEnterDecision(65, false);
@@ -10128,16 +10128,16 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:970:31: DOTDOT subtype_value
+				// Smi.g:967:31: DOTDOT subtype_value
 				{
-				DebugLocation(970, 31);
-				DOTDOT168=(IToken)Match(input,DOTDOT,Follow._DOTDOT_in_subtype_range4773); if (state.failed) return retval;
+				DebugLocation(967, 31);
+				DOTDOT168=(IToken)Match(input,DOTDOT,Follow._DOTDOT_in_subtype_range4754); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				DOTDOT168_tree = (CommonTree)adaptor.Create(DOTDOT168);
 				adaptor.AddChild(root_0, DOTDOT168_tree);
 				}
-				DebugLocation(970, 38);
-				PushFollow(Follow._subtype_value_in_subtype_range4775);
+				DebugLocation(967, 38);
+				PushFollow(Follow._subtype_value_in_subtype_range4756);
 				subtype_value169=subtype_value();
 				PopFollow();
 				if (state.failed) return retval;
@@ -10171,7 +10171,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("subtype_range", 53);
 			LeaveRule_subtype_range();
 		}
-		DebugLocation(970, 53);
+		DebugLocation(967, 53);
 		} finally { DebugExitRule(GrammarFileName, "subtype_range"); }
 		return retval;
 
@@ -10181,7 +10181,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_subtype_value();
 	partial void LeaveRule_subtype_value();
 	// $ANTLR start "subtype_value"
-	// Smi.g:971:1: subtype_value : ( ( MINUS )? NUMBER | B_STRING | H_STRING | MAX_KW );
+	// Smi.g:968:1: subtype_value : ( ( MINUS )? NUMBER | B_STRING | H_STRING | MAX_KW );
 	[GrammarRule("subtype_value")]
 	private AstParserRuleReturnScope<CommonTree, IToken> subtype_value()
 	{
@@ -10205,10 +10205,10 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree H_STRING173_tree = default(CommonTree);
 		CommonTree MAX_KW174_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "subtype_value");
-		DebugLocation(971, 61);
+		DebugLocation(968, 61);
 		try
 		{
-			// Smi.g:971:14: ( ( MINUS )? NUMBER | B_STRING | H_STRING | MAX_KW )
+			// Smi.g:968:14: ( ( MINUS )? NUMBER | B_STRING | H_STRING | MAX_KW )
 			int alt67=4;
 			try { DebugEnterDecision(67, false);
 			switch (input.LA(1))
@@ -10248,12 +10248,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:971:16: ( MINUS )? NUMBER
+				// Smi.g:968:16: ( MINUS )? NUMBER
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(971, 16);
-				// Smi.g:971:16: ( MINUS )?
+				DebugLocation(968, 16);
+				// Smi.g:968:16: ( MINUS )?
 				int alt66=2;
 				try { DebugEnterSubRule(66);
 				try { DebugEnterDecision(66, false);
@@ -10268,10 +10268,10 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:971:17: MINUS
+					// Smi.g:968:17: MINUS
 					{
-					DebugLocation(971, 17);
-					MINUS170=(IToken)Match(input,MINUS,Follow._MINUS_in_subtype_value4785); if (state.failed) return retval;
+					DebugLocation(968, 17);
+					MINUS170=(IToken)Match(input,MINUS,Follow._MINUS_in_subtype_value4766); if (state.failed) return retval;
 					if (state.backtracking == 0) {
 					MINUS170_tree = (CommonTree)adaptor.Create(MINUS170);
 					adaptor.AddChild(root_0, MINUS170_tree);
@@ -10283,8 +10283,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				}
 				} finally { DebugExitSubRule(66); }
 
-				DebugLocation(971, 25);
-				NUMBER171=(IToken)Match(input,NUMBER,Follow._NUMBER_in_subtype_value4789); if (state.failed) return retval;
+				DebugLocation(968, 25);
+				NUMBER171=(IToken)Match(input,NUMBER,Follow._NUMBER_in_subtype_value4770); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				NUMBER171_tree = (CommonTree)adaptor.Create(NUMBER171);
 				adaptor.AddChild(root_0, NUMBER171_tree);
@@ -10294,12 +10294,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// Smi.g:971:34: B_STRING
+				// Smi.g:968:34: B_STRING
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(971, 34);
-				B_STRING172=(IToken)Match(input,B_STRING,Follow._B_STRING_in_subtype_value4793); if (state.failed) return retval;
+				DebugLocation(968, 34);
+				B_STRING172=(IToken)Match(input,B_STRING,Follow._B_STRING_in_subtype_value4774); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				B_STRING172_tree = (CommonTree)adaptor.Create(B_STRING172);
 				adaptor.AddChild(root_0, B_STRING172_tree);
@@ -10309,12 +10309,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 3:
 				DebugEnterAlt(3);
-				// Smi.g:971:45: H_STRING
+				// Smi.g:968:45: H_STRING
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(971, 45);
-				H_STRING173=(IToken)Match(input,H_STRING,Follow._H_STRING_in_subtype_value4797); if (state.failed) return retval;
+				DebugLocation(968, 45);
+				H_STRING173=(IToken)Match(input,H_STRING,Follow._H_STRING_in_subtype_value4778); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				H_STRING173_tree = (CommonTree)adaptor.Create(H_STRING173);
 				adaptor.AddChild(root_0, H_STRING173_tree);
@@ -10324,12 +10324,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 4:
 				DebugEnterAlt(4);
-				// Smi.g:971:56: MAX_KW
+				// Smi.g:968:56: MAX_KW
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(971, 56);
-				MAX_KW174=(IToken)Match(input,MAX_KW,Follow._MAX_KW_in_subtype_value4801); if (state.failed) return retval;
+				DebugLocation(968, 56);
+				MAX_KW174=(IToken)Match(input,MAX_KW,Follow._MAX_KW_in_subtype_value4782); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				MAX_KW174_tree = (CommonTree)adaptor.Create(MAX_KW174);
 				adaptor.AddChild(root_0, MAX_KW174_tree);
@@ -10358,7 +10358,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("subtype_value", 54);
 			LeaveRule_subtype_value();
 		}
-		DebugLocation(971, 61);
+		DebugLocation(968, 61);
 		} finally { DebugExitRule(GrammarFileName, "subtype_value"); }
 		return retval;
 
@@ -10375,7 +10375,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_objecttype_macro();
 	partial void LeaveRule_objecttype_macro();
 	// $ANTLR start "objecttype_macro"
-	// Smi.g:974:1: objecttype_macro returns [ObjectTypeMacro result = new ObjectTypeMacro()] : 'OBJECT-TYPE' 'SYNTAX' ( ( smi_type L_BRACE )=>t1= smi_type nb1= namedbits | ( smi_type )=>t2= smi_type ( smi_subtyping )? |t3= type ) ( 'UNITS' u1= C_STRING )? ( ( 'MAX-ACCESS' | 'ACCESS' ) ma= objecttype_macro_accesstypes | 'PIB-ACCESS' pa= objecttype_macro_pibaccess )? ( 'PIB-REFERENCES' L_BRACE v1= value R_BRACE )? ( 'PIB-TAG' L_BRACE v2= value R_BRACE )? 'STATUS' s= objecttype_macro_statustypes ( ( 'DESCRIPTION' )=> 'DESCRIPTION' c1= C_STRING )? ( 'INSTALL-ERRORS' L_BRACE e1= objecttype_macro_error ( COMMA e2= objecttype_macro_error )* R_BRACE )? ( 'REFERENCE' c2= C_STRING )? ( (~ ( 'PIB-INDEX' ) )=> 'INDEX' i3= objecttype_macro_index | 'AUGMENTS' i4= objecttype_macro_augments | 'PIB-INDEX' L_BRACE v3= value R_BRACE | 'EXTENDS' L_BRACE v4= value R_BRACE )? ( 'INDEX' i5= objecttype_macro_index )? ( 'UNIQUENESS' L_BRACE (v5= value ( COMMA v6= value )* )? R_BRACE )? ( ( 'DEFVAL' )=> 'DEFVAL' L_BRACE ( ( L_BRACE LOWER ( COMMA | R_BRACE ) )=>b= objecttype_macro_bitsvalue |v7= value ) R_BRACE )? ;
+	// Smi.g:971:1: objecttype_macro returns [ObjectTypeMacro result = new ObjectTypeMacro()] : 'OBJECT-TYPE' 'SYNTAX' ( ( smi_type L_BRACE )=>t1= smi_type nb1= namedbits | ( smi_type )=>t2= smi_type ( smi_subtyping )? |t3= type ) ( 'UNITS' u1= C_STRING )? ( ( 'MAX-ACCESS' | 'ACCESS' ) ma= objecttype_macro_accesstypes | 'PIB-ACCESS' pa= objecttype_macro_pibaccess )? ( 'PIB-REFERENCES' L_BRACE v1= value R_BRACE )? ( 'PIB-TAG' L_BRACE v2= value R_BRACE )? 'STATUS' s= objecttype_macro_statustypes ( ( 'DESCRIPTION' )=> 'DESCRIPTION' c1= C_STRING )? ( 'INSTALL-ERRORS' L_BRACE e1= objecttype_macro_error ( COMMA e2= objecttype_macro_error )* R_BRACE )? ( 'REFERENCE' c2= C_STRING )? ( (~ ( 'PIB-INDEX' ) )=> 'INDEX' i3= objecttype_macro_index | 'AUGMENTS' i4= objecttype_macro_augments | 'PIB-INDEX' L_BRACE v3= value R_BRACE | 'EXTENDS' L_BRACE v4= value R_BRACE )? ( 'INDEX' i5= objecttype_macro_index )? ( 'UNIQUENESS' L_BRACE (v5= value ( COMMA v6= value )* )? R_BRACE )? ( ( 'DEFVAL' )=> 'DEFVAL' L_BRACE ( ( L_BRACE LOWER ( COMMA | R_BRACE ) )=>b= objecttype_macro_bitsvalue |v7= value ) R_BRACE )? ;
 	[GrammarRule("objecttype_macro")]
 	private SmiParser.objecttype_macro_return objecttype_macro()
 	{
@@ -10486,29 +10486,29 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree L_BRACE209_tree = default(CommonTree);
 		CommonTree R_BRACE210_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "objecttype_macro");
-		DebugLocation(974, 31);
+		DebugLocation(971, 31);
 		try
 		{
-			// Smi.g:975:5: ( 'OBJECT-TYPE' 'SYNTAX' ( ( smi_type L_BRACE )=>t1= smi_type nb1= namedbits | ( smi_type )=>t2= smi_type ( smi_subtyping )? |t3= type ) ( 'UNITS' u1= C_STRING )? ( ( 'MAX-ACCESS' | 'ACCESS' ) ma= objecttype_macro_accesstypes | 'PIB-ACCESS' pa= objecttype_macro_pibaccess )? ( 'PIB-REFERENCES' L_BRACE v1= value R_BRACE )? ( 'PIB-TAG' L_BRACE v2= value R_BRACE )? 'STATUS' s= objecttype_macro_statustypes ( ( 'DESCRIPTION' )=> 'DESCRIPTION' c1= C_STRING )? ( 'INSTALL-ERRORS' L_BRACE e1= objecttype_macro_error ( COMMA e2= objecttype_macro_error )* R_BRACE )? ( 'REFERENCE' c2= C_STRING )? ( (~ ( 'PIB-INDEX' ) )=> 'INDEX' i3= objecttype_macro_index | 'AUGMENTS' i4= objecttype_macro_augments | 'PIB-INDEX' L_BRACE v3= value R_BRACE | 'EXTENDS' L_BRACE v4= value R_BRACE )? ( 'INDEX' i5= objecttype_macro_index )? ( 'UNIQUENESS' L_BRACE (v5= value ( COMMA v6= value )* )? R_BRACE )? ( ( 'DEFVAL' )=> 'DEFVAL' L_BRACE ( ( L_BRACE LOWER ( COMMA | R_BRACE ) )=>b= objecttype_macro_bitsvalue |v7= value ) R_BRACE )? )
+			// Smi.g:972:5: ( 'OBJECT-TYPE' 'SYNTAX' ( ( smi_type L_BRACE )=>t1= smi_type nb1= namedbits | ( smi_type )=>t2= smi_type ( smi_subtyping )? |t3= type ) ( 'UNITS' u1= C_STRING )? ( ( 'MAX-ACCESS' | 'ACCESS' ) ma= objecttype_macro_accesstypes | 'PIB-ACCESS' pa= objecttype_macro_pibaccess )? ( 'PIB-REFERENCES' L_BRACE v1= value R_BRACE )? ( 'PIB-TAG' L_BRACE v2= value R_BRACE )? 'STATUS' s= objecttype_macro_statustypes ( ( 'DESCRIPTION' )=> 'DESCRIPTION' c1= C_STRING )? ( 'INSTALL-ERRORS' L_BRACE e1= objecttype_macro_error ( COMMA e2= objecttype_macro_error )* R_BRACE )? ( 'REFERENCE' c2= C_STRING )? ( (~ ( 'PIB-INDEX' ) )=> 'INDEX' i3= objecttype_macro_index | 'AUGMENTS' i4= objecttype_macro_augments | 'PIB-INDEX' L_BRACE v3= value R_BRACE | 'EXTENDS' L_BRACE v4= value R_BRACE )? ( 'INDEX' i5= objecttype_macro_index )? ( 'UNIQUENESS' L_BRACE (v5= value ( COMMA v6= value )* )? R_BRACE )? ( ( 'DEFVAL' )=> 'DEFVAL' L_BRACE ( ( L_BRACE LOWER ( COMMA | R_BRACE ) )=>b= objecttype_macro_bitsvalue |v7= value ) R_BRACE )? )
 			DebugEnterAlt(1);
-			// Smi.g:975:7: 'OBJECT-TYPE' 'SYNTAX' ( ( smi_type L_BRACE )=>t1= smi_type nb1= namedbits | ( smi_type )=>t2= smi_type ( smi_subtyping )? |t3= type ) ( 'UNITS' u1= C_STRING )? ( ( 'MAX-ACCESS' | 'ACCESS' ) ma= objecttype_macro_accesstypes | 'PIB-ACCESS' pa= objecttype_macro_pibaccess )? ( 'PIB-REFERENCES' L_BRACE v1= value R_BRACE )? ( 'PIB-TAG' L_BRACE v2= value R_BRACE )? 'STATUS' s= objecttype_macro_statustypes ( ( 'DESCRIPTION' )=> 'DESCRIPTION' c1= C_STRING )? ( 'INSTALL-ERRORS' L_BRACE e1= objecttype_macro_error ( COMMA e2= objecttype_macro_error )* R_BRACE )? ( 'REFERENCE' c2= C_STRING )? ( (~ ( 'PIB-INDEX' ) )=> 'INDEX' i3= objecttype_macro_index | 'AUGMENTS' i4= objecttype_macro_augments | 'PIB-INDEX' L_BRACE v3= value R_BRACE | 'EXTENDS' L_BRACE v4= value R_BRACE )? ( 'INDEX' i5= objecttype_macro_index )? ( 'UNIQUENESS' L_BRACE (v5= value ( COMMA v6= value )* )? R_BRACE )? ( ( 'DEFVAL' )=> 'DEFVAL' L_BRACE ( ( L_BRACE LOWER ( COMMA | R_BRACE ) )=>b= objecttype_macro_bitsvalue |v7= value ) R_BRACE )?
+			// Smi.g:972:7: 'OBJECT-TYPE' 'SYNTAX' ( ( smi_type L_BRACE )=>t1= smi_type nb1= namedbits | ( smi_type )=>t2= smi_type ( smi_subtyping )? |t3= type ) ( 'UNITS' u1= C_STRING )? ( ( 'MAX-ACCESS' | 'ACCESS' ) ma= objecttype_macro_accesstypes | 'PIB-ACCESS' pa= objecttype_macro_pibaccess )? ( 'PIB-REFERENCES' L_BRACE v1= value R_BRACE )? ( 'PIB-TAG' L_BRACE v2= value R_BRACE )? 'STATUS' s= objecttype_macro_statustypes ( ( 'DESCRIPTION' )=> 'DESCRIPTION' c1= C_STRING )? ( 'INSTALL-ERRORS' L_BRACE e1= objecttype_macro_error ( COMMA e2= objecttype_macro_error )* R_BRACE )? ( 'REFERENCE' c2= C_STRING )? ( (~ ( 'PIB-INDEX' ) )=> 'INDEX' i3= objecttype_macro_index | 'AUGMENTS' i4= objecttype_macro_augments | 'PIB-INDEX' L_BRACE v3= value R_BRACE | 'EXTENDS' L_BRACE v4= value R_BRACE )? ( 'INDEX' i5= objecttype_macro_index )? ( 'UNIQUENESS' L_BRACE (v5= value ( COMMA v6= value )* )? R_BRACE )? ( ( 'DEFVAL' )=> 'DEFVAL' L_BRACE ( ( L_BRACE LOWER ( COMMA | R_BRACE ) )=>b= objecttype_macro_bitsvalue |v7= value ) R_BRACE )?
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(975, 7);
-			string_literal175=(IToken)Match(input,163,Follow._163_in_objecttype_macro4819); if (state.failed) return retval;
+			DebugLocation(972, 7);
+			string_literal175=(IToken)Match(input,163,Follow._163_in_objecttype_macro4800); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			string_literal175_tree = (CommonTree)adaptor.Create(string_literal175);
 			adaptor.AddChild(root_0, string_literal175_tree);
 			}
-			DebugLocation(975, 21);
-			string_literal176=(IToken)Match(input,185,Follow._185_in_objecttype_macro4821); if (state.failed) return retval;
+			DebugLocation(972, 21);
+			string_literal176=(IToken)Match(input,185,Follow._185_in_objecttype_macro4802); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			string_literal176_tree = (CommonTree)adaptor.Create(string_literal176);
 			adaptor.AddChild(root_0, string_literal176_tree);
 			}
-			DebugLocation(976, 21);
-			// Smi.g:976:21: ( ( smi_type L_BRACE )=>t1= smi_type nb1= namedbits | ( smi_type )=>t2= smi_type ( smi_subtyping )? |t3= type )
+			DebugLocation(973, 21);
+			// Smi.g:973:21: ( ( smi_type L_BRACE )=>t1= smi_type nb1= namedbits | ( smi_type )=>t2= smi_type ( smi_subtyping )? |t3= type )
 			int alt69=3;
 			try { DebugEnterSubRule(69);
 			try { DebugEnterDecision(69, false);
@@ -10747,21 +10747,21 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:976:23: ( smi_type L_BRACE )=>t1= smi_type nb1= namedbits
+				// Smi.g:973:23: ( smi_type L_BRACE )=>t1= smi_type nb1= namedbits
 				{
-				DebugLocation(976, 47);
-				PushFollow(Follow._smi_type_in_objecttype_macro4856);
+				DebugLocation(973, 47);
+				PushFollow(Follow._smi_type_in_objecttype_macro4837);
 				t1=smi_type();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, t1.Tree);
-				DebugLocation(976, 60);
-				PushFollow(Follow._namedbits_in_objecttype_macro4860);
+				DebugLocation(973, 60);
+				PushFollow(Follow._namedbits_in_objecttype_macro4841);
 				nb1=namedbits();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, nb1.Tree);
-				DebugLocation(977, 6);
+				DebugLocation(974, 6);
 				if (state.backtracking == 0)
 				{
 					  
@@ -10774,16 +10774,16 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// Smi.g:981:24: ( smi_type )=>t2= smi_type ( smi_subtyping )?
+				// Smi.g:978:24: ( smi_type )=>t2= smi_type ( smi_subtyping )?
 				{
-				DebugLocation(981, 40);
-				PushFollow(Follow._smi_type_in_objecttype_macro4901);
+				DebugLocation(978, 40);
+				PushFollow(Follow._smi_type_in_objecttype_macro4882);
 				t2=smi_type();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, t2.Tree);
-				DebugLocation(981, 50);
-				// Smi.g:981:50: ( smi_subtyping )?
+				DebugLocation(978, 50);
+				// Smi.g:978:50: ( smi_subtyping )?
 				int alt68=2;
 				try { DebugEnterSubRule(68);
 				try { DebugEnterDecision(68, false);
@@ -10798,10 +10798,10 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:981:51: smi_subtyping
+					// Smi.g:978:51: smi_subtyping
 					{
-					DebugLocation(981, 51);
-					PushFollow(Follow._smi_subtyping_in_objecttype_macro4904);
+					DebugLocation(978, 51);
+					PushFollow(Follow._smi_subtyping_in_objecttype_macro4885);
 					smi_subtyping177=smi_subtyping();
 					PopFollow();
 					if (state.failed) return retval;
@@ -10813,7 +10813,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				}
 				} finally { DebugExitSubRule(68); }
 
-				DebugLocation(981, 67);
+				DebugLocation(978, 67);
 				if (state.backtracking == 0)
 				{
 					 retval.result.Syntax = (t2!=null?t2.result:default(ISmiType)); 
@@ -10823,15 +10823,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 3:
 				DebugEnterAlt(3);
-				// Smi.g:982:24: t3= type
+				// Smi.g:979:24: t3= type
 				{
-				DebugLocation(982, 26);
-				PushFollow(Follow._type_in_objecttype_macro4935);
+				DebugLocation(979, 26);
+				PushFollow(Follow._type_in_objecttype_macro4916);
 				t3=type();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, t3.Tree);
-				DebugLocation(982, 32);
+				DebugLocation(979, 32);
 				if (state.backtracking == 0)
 				{
 					 retval.result.Syntax = (t3!=null?t3.result:default(ISmiType)); 
@@ -10843,8 +10843,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(69); }
 
-			DebugLocation(984, 19);
-			// Smi.g:984:19: ( 'UNITS' u1= C_STRING )?
+			DebugLocation(981, 19);
+			// Smi.g:981:19: ( 'UNITS' u1= C_STRING )?
 			int alt70=2;
 			try { DebugEnterSubRule(70);
 			try { DebugEnterDecision(70, false);
@@ -10859,21 +10859,21 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:984:20: 'UNITS' u1= C_STRING
+				// Smi.g:981:20: 'UNITS' u1= C_STRING
 				{
-				DebugLocation(984, 20);
-				string_literal178=(IToken)Match(input,192,Follow._192_in_objecttype_macro4981); if (state.failed) return retval;
+				DebugLocation(981, 20);
+				string_literal178=(IToken)Match(input,192,Follow._192_in_objecttype_macro4962); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal178_tree = (CommonTree)adaptor.Create(string_literal178);
 				adaptor.AddChild(root_0, string_literal178_tree);
 				}
-				DebugLocation(984, 30);
-				u1=(IToken)Match(input,C_STRING,Follow._C_STRING_in_objecttype_macro4985); if (state.failed) return retval;
+				DebugLocation(981, 30);
+				u1=(IToken)Match(input,C_STRING,Follow._C_STRING_in_objecttype_macro4966); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				u1_tree = (CommonTree)adaptor.Create(u1);
 				adaptor.AddChild(root_0, u1_tree);
 				}
-				DebugLocation(984, 40);
+				DebugLocation(981, 40);
 				if (state.backtracking == 0)
 				{
 					 retval.result.Units = (u1!=null?u1.Text:null); 
@@ -10885,8 +10885,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(70); }
 
-			DebugLocation(985, 19);
-			// Smi.g:985:19: ( ( 'MAX-ACCESS' | 'ACCESS' ) ma= objecttype_macro_accesstypes | 'PIB-ACCESS' pa= objecttype_macro_pibaccess )?
+			DebugLocation(982, 19);
+			// Smi.g:982:19: ( ( 'MAX-ACCESS' | 'ACCESS' ) ma= objecttype_macro_accesstypes | 'PIB-ACCESS' pa= objecttype_macro_pibaccess )?
 			int alt72=3;
 			try { DebugEnterSubRule(72);
 			try { DebugEnterDecision(72, false);
@@ -10905,10 +10905,10 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:985:21: ( 'MAX-ACCESS' | 'ACCESS' ) ma= objecttype_macro_accesstypes
+				// Smi.g:982:21: ( 'MAX-ACCESS' | 'ACCESS' ) ma= objecttype_macro_accesstypes
 				{
-				DebugLocation(985, 21);
-				// Smi.g:985:21: ( 'MAX-ACCESS' | 'ACCESS' )
+				DebugLocation(982, 21);
+				// Smi.g:982:21: ( 'MAX-ACCESS' | 'ACCESS' )
 				int alt71=2;
 				try { DebugEnterSubRule(71);
 				try { DebugEnterDecision(71, false);
@@ -10934,15 +10934,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:985:22: 'MAX-ACCESS'
+					// Smi.g:982:22: 'MAX-ACCESS'
 					{
-					DebugLocation(985, 22);
-					string_literal179=(IToken)Match(input,153,Follow._153_in_objecttype_macro5013); if (state.failed) return retval;
+					DebugLocation(982, 22);
+					string_literal179=(IToken)Match(input,153,Follow._153_in_objecttype_macro4994); if (state.failed) return retval;
 					if (state.backtracking == 0) {
 					string_literal179_tree = (CommonTree)adaptor.Create(string_literal179);
 					adaptor.AddChild(root_0, string_literal179_tree);
 					}
-					DebugLocation(985, 35);
+					DebugLocation(982, 35);
 					if (state.backtracking == 0)
 					{
 						 retval.result.AccessType = AccessType.MaxAccess; 
@@ -10952,15 +10952,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 					break;
 				case 2:
 					DebugEnterAlt(2);
-					// Smi.g:986:10: 'ACCESS'
+					// Smi.g:983:10: 'ACCESS'
 					{
-					DebugLocation(986, 10);
-					string_literal180=(IToken)Match(input,128,Follow._128_in_objecttype_macro5026); if (state.failed) return retval;
+					DebugLocation(983, 10);
+					string_literal180=(IToken)Match(input,128,Follow._128_in_objecttype_macro5007); if (state.failed) return retval;
 					if (state.backtracking == 0) {
 					string_literal180_tree = (CommonTree)adaptor.Create(string_literal180);
 					adaptor.AddChild(root_0, string_literal180_tree);
 					}
-					DebugLocation(986, 19);
+					DebugLocation(983, 19);
 					if (state.backtracking == 0)
 					{
 						 retval.result.AccessType = AccessType.Access; 
@@ -10972,13 +10972,13 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				}
 				} finally { DebugExitSubRule(71); }
 
-				DebugLocation(987, 10);
-				PushFollow(Follow._objecttype_macro_accesstypes_in_objecttype_macro5041);
+				DebugLocation(984, 10);
+				PushFollow(Follow._objecttype_macro_accesstypes_in_objecttype_macro5022);
 				ma=objecttype_macro_accesstypes();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, ma.Tree);
-				DebugLocation(987, 40);
+				DebugLocation(984, 40);
 				if (state.backtracking == 0)
 				{
 					 retval.result.MibAccess = (ma!=null?ma.result:default(Access)); 
@@ -10988,21 +10988,21 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// Smi.g:988:22: 'PIB-ACCESS' pa= objecttype_macro_pibaccess
+				// Smi.g:985:22: 'PIB-ACCESS' pa= objecttype_macro_pibaccess
 				{
-				DebugLocation(988, 22);
-				string_literal181=(IToken)Match(input,166,Follow._166_in_objecttype_macro5066); if (state.failed) return retval;
+				DebugLocation(985, 22);
+				string_literal181=(IToken)Match(input,166,Follow._166_in_objecttype_macro5047); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal181_tree = (CommonTree)adaptor.Create(string_literal181);
 				adaptor.AddChild(root_0, string_literal181_tree);
 				}
-				DebugLocation(988, 37);
-				PushFollow(Follow._objecttype_macro_pibaccess_in_objecttype_macro5070);
+				DebugLocation(985, 37);
+				PushFollow(Follow._objecttype_macro_pibaccess_in_objecttype_macro5051);
 				pa=objecttype_macro_pibaccess();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, pa.Tree);
-				DebugLocation(988, 65);
+				DebugLocation(985, 65);
 				if (state.backtracking == 0)
 				{
 					 retval.result.PibAccess = (pa!=null?pa.result:default(PibAccess)); 
@@ -11014,8 +11014,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(72); }
 
-			DebugLocation(989, 19);
-			// Smi.g:989:19: ( 'PIB-REFERENCES' L_BRACE v1= value R_BRACE )?
+			DebugLocation(986, 19);
+			// Smi.g:986:19: ( 'PIB-REFERENCES' L_BRACE v1= value R_BRACE )?
 			int alt73=2;
 			try { DebugEnterSubRule(73);
 			try { DebugEnterDecision(73, false);
@@ -11030,33 +11030,33 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:989:20: 'PIB-REFERENCES' L_BRACE v1= value R_BRACE
+				// Smi.g:986:20: 'PIB-REFERENCES' L_BRACE v1= value R_BRACE
 				{
-				DebugLocation(989, 20);
-				string_literal182=(IToken)Match(input,170,Follow._170_in_objecttype_macro5110); if (state.failed) return retval;
+				DebugLocation(986, 20);
+				string_literal182=(IToken)Match(input,170,Follow._170_in_objecttype_macro5091); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal182_tree = (CommonTree)adaptor.Create(string_literal182);
 				adaptor.AddChild(root_0, string_literal182_tree);
 				}
-				DebugLocation(989, 37);
-				L_BRACE183=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_objecttype_macro5112); if (state.failed) return retval;
+				DebugLocation(986, 37);
+				L_BRACE183=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_objecttype_macro5093); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				L_BRACE183_tree = (CommonTree)adaptor.Create(L_BRACE183);
 				adaptor.AddChild(root_0, L_BRACE183_tree);
 				}
-				DebugLocation(989, 47);
-				PushFollow(Follow._value_in_objecttype_macro5116);
+				DebugLocation(986, 47);
+				PushFollow(Follow._value_in_objecttype_macro5097);
 				v1=value();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, v1.Tree);
-				DebugLocation(989, 54);
-				R_BRACE184=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_objecttype_macro5118); if (state.failed) return retval;
+				DebugLocation(986, 54);
+				R_BRACE184=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_objecttype_macro5099); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				R_BRACE184_tree = (CommonTree)adaptor.Create(R_BRACE184);
 				adaptor.AddChild(root_0, R_BRACE184_tree);
 				}
-				DebugLocation(989, 62);
+				DebugLocation(986, 62);
 				if (state.backtracking == 0)
 				{
 					 retval.result.PibReference = (v1!=null?v1.result:default(ISmiValue)); 
@@ -11068,8 +11068,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(73); }
 
-			DebugLocation(990, 19);
-			// Smi.g:990:19: ( 'PIB-TAG' L_BRACE v2= value R_BRACE )?
+			DebugLocation(987, 19);
+			// Smi.g:987:19: ( 'PIB-TAG' L_BRACE v2= value R_BRACE )?
 			int alt74=2;
 			try { DebugEnterSubRule(74);
 			try { DebugEnterDecision(74, false);
@@ -11084,33 +11084,33 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:990:20: 'PIB-TAG' L_BRACE v2= value R_BRACE
+				// Smi.g:987:20: 'PIB-TAG' L_BRACE v2= value R_BRACE
 				{
-				DebugLocation(990, 20);
-				string_literal185=(IToken)Match(input,171,Follow._171_in_objecttype_macro5161); if (state.failed) return retval;
+				DebugLocation(987, 20);
+				string_literal185=(IToken)Match(input,171,Follow._171_in_objecttype_macro5142); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal185_tree = (CommonTree)adaptor.Create(string_literal185);
 				adaptor.AddChild(root_0, string_literal185_tree);
 				}
-				DebugLocation(990, 30);
-				L_BRACE186=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_objecttype_macro5163); if (state.failed) return retval;
+				DebugLocation(987, 30);
+				L_BRACE186=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_objecttype_macro5144); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				L_BRACE186_tree = (CommonTree)adaptor.Create(L_BRACE186);
 				adaptor.AddChild(root_0, L_BRACE186_tree);
 				}
-				DebugLocation(990, 40);
-				PushFollow(Follow._value_in_objecttype_macro5167);
+				DebugLocation(987, 40);
+				PushFollow(Follow._value_in_objecttype_macro5148);
 				v2=value();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, v2.Tree);
-				DebugLocation(990, 47);
-				R_BRACE187=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_objecttype_macro5169); if (state.failed) return retval;
+				DebugLocation(987, 47);
+				R_BRACE187=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_objecttype_macro5150); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				R_BRACE187_tree = (CommonTree)adaptor.Create(R_BRACE187);
 				adaptor.AddChild(root_0, R_BRACE187_tree);
 				}
-				DebugLocation(990, 55);
+				DebugLocation(987, 55);
 				if (state.backtracking == 0)
 				{
 					 retval.result.PibTag = (v2!=null?v2.result:default(ISmiValue)); 
@@ -11122,25 +11122,25 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(74); }
 
-			DebugLocation(991, 19);
-			string_literal188=(IToken)Match(input,182,Follow._182_in_objecttype_macro5218); if (state.failed) return retval;
+			DebugLocation(988, 19);
+			string_literal188=(IToken)Match(input,182,Follow._182_in_objecttype_macro5199); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			string_literal188_tree = (CommonTree)adaptor.Create(string_literal188);
 			adaptor.AddChild(root_0, string_literal188_tree);
 			}
-			DebugLocation(991, 29);
-			PushFollow(Follow._objecttype_macro_statustypes_in_objecttype_macro5222);
+			DebugLocation(988, 29);
+			PushFollow(Follow._objecttype_macro_statustypes_in_objecttype_macro5203);
 			s=objecttype_macro_statustypes();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, s.Tree);
-			DebugLocation(991, 59);
+			DebugLocation(988, 59);
 			if (state.backtracking == 0)
 			{
 				 retval.result.Status = (s!=null?s.result:default(EntityStatus)); 
 			}
-			DebugLocation(992, 19);
-			// Smi.g:992:19: ( ( 'DESCRIPTION' )=> 'DESCRIPTION' c1= C_STRING )?
+			DebugLocation(989, 19);
+			// Smi.g:989:19: ( ( 'DESCRIPTION' )=> 'DESCRIPTION' c1= C_STRING )?
 			int alt75=2;
 			try { DebugEnterSubRule(75);
 			try { DebugEnterDecision(75, false);
@@ -11165,21 +11165,21 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:992:21: ( 'DESCRIPTION' )=> 'DESCRIPTION' c1= C_STRING
+				// Smi.g:989:21: ( 'DESCRIPTION' )=> 'DESCRIPTION' c1= C_STRING
 				{
-				DebugLocation(992, 40);
-				string_literal189=(IToken)Match(input,139,Follow._139_in_objecttype_macro5252); if (state.failed) return retval;
+				DebugLocation(989, 40);
+				string_literal189=(IToken)Match(input,139,Follow._139_in_objecttype_macro5233); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal189_tree = (CommonTree)adaptor.Create(string_literal189);
 				adaptor.AddChild(root_0, string_literal189_tree);
 				}
-				DebugLocation(992, 56);
-				c1=(IToken)Match(input,C_STRING,Follow._C_STRING_in_objecttype_macro5256); if (state.failed) return retval;
+				DebugLocation(989, 56);
+				c1=(IToken)Match(input,C_STRING,Follow._C_STRING_in_objecttype_macro5237); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				c1_tree = (CommonTree)adaptor.Create(c1);
 				adaptor.AddChild(root_0, c1_tree);
 				}
-				DebugLocation(992, 66);
+				DebugLocation(989, 66);
 				if (state.backtracking == 0)
 				{
 					 retval.result.Description = (c1!=null?c1.Text:null); 
@@ -11191,8 +11191,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(75); }
 
-			DebugLocation(993, 19);
-			// Smi.g:993:19: ( 'INSTALL-ERRORS' L_BRACE e1= objecttype_macro_error ( COMMA e2= objecttype_macro_error )* R_BRACE )?
+			DebugLocation(990, 19);
+			// Smi.g:990:19: ( 'INSTALL-ERRORS' L_BRACE e1= objecttype_macro_error ( COMMA e2= objecttype_macro_error )* R_BRACE )?
 			int alt77=2;
 			try { DebugEnterSubRule(77);
 			try { DebugEnterDecision(77, false);
@@ -11207,33 +11207,33 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:993:20: 'INSTALL-ERRORS' L_BRACE e1= objecttype_macro_error ( COMMA e2= objecttype_macro_error )* R_BRACE
+				// Smi.g:990:20: 'INSTALL-ERRORS' L_BRACE e1= objecttype_macro_error ( COMMA e2= objecttype_macro_error )* R_BRACE
 				{
-				DebugLocation(993, 20);
-				string_literal190=(IToken)Match(input,149,Follow._149_in_objecttype_macro5313); if (state.failed) return retval;
+				DebugLocation(990, 20);
+				string_literal190=(IToken)Match(input,149,Follow._149_in_objecttype_macro5294); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal190_tree = (CommonTree)adaptor.Create(string_literal190);
 				adaptor.AddChild(root_0, string_literal190_tree);
 				}
-				DebugLocation(993, 37);
-				L_BRACE191=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_objecttype_macro5315); if (state.failed) return retval;
+				DebugLocation(990, 37);
+				L_BRACE191=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_objecttype_macro5296); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				L_BRACE191_tree = (CommonTree)adaptor.Create(L_BRACE191);
 				adaptor.AddChild(root_0, L_BRACE191_tree);
 				}
-				DebugLocation(993, 47);
-				PushFollow(Follow._objecttype_macro_error_in_objecttype_macro5319);
+				DebugLocation(990, 47);
+				PushFollow(Follow._objecttype_macro_error_in_objecttype_macro5300);
 				e1=objecttype_macro_error();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, e1.Tree);
-				DebugLocation(993, 71);
+				DebugLocation(990, 71);
 				if (state.backtracking == 0)
 				{
 					 retval.result.InstallErrors.Add((e1!=null?e1.result:default(NamedBit))); 
 				}
-				DebugLocation(994, 7);
-				// Smi.g:994:7: ( COMMA e2= objecttype_macro_error )*
+				DebugLocation(991, 7);
+				// Smi.g:991:7: ( COMMA e2= objecttype_macro_error )*
 				try { DebugEnterSubRule(76);
 				while (true)
 				{
@@ -11252,21 +11252,21 @@ public partial class SmiParser : Antlr.Runtime.Parser
 					{
 					case 1:
 						DebugEnterAlt(1);
-						// Smi.g:994:8: COMMA e2= objecttype_macro_error
+						// Smi.g:991:8: COMMA e2= objecttype_macro_error
 						{
-						DebugLocation(994, 8);
-						COMMA192=(IToken)Match(input,COMMA,Follow._COMMA_in_objecttype_macro5330); if (state.failed) return retval;
+						DebugLocation(991, 8);
+						COMMA192=(IToken)Match(input,COMMA,Follow._COMMA_in_objecttype_macro5311); if (state.failed) return retval;
 						if (state.backtracking == 0) {
 						COMMA192_tree = (CommonTree)adaptor.Create(COMMA192);
 						adaptor.AddChild(root_0, COMMA192_tree);
 						}
-						DebugLocation(994, 16);
-						PushFollow(Follow._objecttype_macro_error_in_objecttype_macro5334);
+						DebugLocation(991, 16);
+						PushFollow(Follow._objecttype_macro_error_in_objecttype_macro5315);
 						e2=objecttype_macro_error();
 						PopFollow();
 						if (state.failed) return retval;
 						if (state.backtracking == 0) adaptor.AddChild(root_0, e2.Tree);
-						DebugLocation(994, 40);
+						DebugLocation(991, 40);
 						if (state.backtracking == 0)
 						{
 							 retval.result.InstallErrors.Add((e2!=null?e2.result:default(NamedBit))); 
@@ -11285,8 +11285,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 				} finally { DebugExitSubRule(76); }
 
-				DebugLocation(994, 85);
-				R_BRACE193=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_objecttype_macro5340); if (state.failed) return retval;
+				DebugLocation(991, 85);
+				R_BRACE193=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_objecttype_macro5321); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				R_BRACE193_tree = (CommonTree)adaptor.Create(R_BRACE193);
 				adaptor.AddChild(root_0, R_BRACE193_tree);
@@ -11298,8 +11298,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(77); }
 
-			DebugLocation(995, 5);
-			// Smi.g:995:5: ( 'REFERENCE' c2= C_STRING )?
+			DebugLocation(992, 5);
+			// Smi.g:992:5: ( 'REFERENCE' c2= C_STRING )?
 			int alt78=2;
 			try { DebugEnterSubRule(78);
 			try { DebugEnterDecision(78, false);
@@ -11314,21 +11314,21 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:995:7: 'REFERENCE' c2= C_STRING
+				// Smi.g:992:7: 'REFERENCE' c2= C_STRING
 				{
-				DebugLocation(995, 7);
-				string_literal194=(IToken)Match(input,175,Follow._175_in_objecttype_macro5355); if (state.failed) return retval;
+				DebugLocation(992, 7);
+				string_literal194=(IToken)Match(input,175,Follow._175_in_objecttype_macro5336); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal194_tree = (CommonTree)adaptor.Create(string_literal194);
 				adaptor.AddChild(root_0, string_literal194_tree);
 				}
-				DebugLocation(995, 21);
-				c2=(IToken)Match(input,C_STRING,Follow._C_STRING_in_objecttype_macro5359); if (state.failed) return retval;
+				DebugLocation(992, 21);
+				c2=(IToken)Match(input,C_STRING,Follow._C_STRING_in_objecttype_macro5340); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				c2_tree = (CommonTree)adaptor.Create(c2);
 				adaptor.AddChild(root_0, c2_tree);
 				}
-				DebugLocation(995, 31);
+				DebugLocation(992, 31);
 				if (state.backtracking == 0)
 				{
 					 retval.result.Reference = (c2!=null?c2.Text:null); 
@@ -11340,8 +11340,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(78); }
 
-			DebugLocation(996, 5);
-			// Smi.g:996:5: ( (~ ( 'PIB-INDEX' ) )=> 'INDEX' i3= objecttype_macro_index | 'AUGMENTS' i4= objecttype_macro_augments | 'PIB-INDEX' L_BRACE v3= value R_BRACE | 'EXTENDS' L_BRACE v4= value R_BRACE )?
+			DebugLocation(993, 5);
+			// Smi.g:993:5: ( (~ ( 'PIB-INDEX' ) )=> 'INDEX' i3= objecttype_macro_index | 'AUGMENTS' i4= objecttype_macro_augments | 'PIB-INDEX' L_BRACE v3= value R_BRACE | 'EXTENDS' L_BRACE v4= value R_BRACE )?
 			int alt79=5;
 			try { DebugEnterSubRule(79);
 			try { DebugEnterDecision(79, false);
@@ -11359,21 +11359,21 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:996:7: (~ ( 'PIB-INDEX' ) )=> 'INDEX' i3= objecttype_macro_index
+				// Smi.g:993:7: (~ ( 'PIB-INDEX' ) )=> 'INDEX' i3= objecttype_macro_index
 				{
-				DebugLocation(996, 27);
-				string_literal195=(IToken)Match(input,148,Follow._148_in_objecttype_macro5381); if (state.failed) return retval;
+				DebugLocation(993, 27);
+				string_literal195=(IToken)Match(input,148,Follow._148_in_objecttype_macro5362); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal195_tree = (CommonTree)adaptor.Create(string_literal195);
 				adaptor.AddChild(root_0, string_literal195_tree);
 				}
-				DebugLocation(996, 37);
-				PushFollow(Follow._objecttype_macro_index_in_objecttype_macro5385);
+				DebugLocation(993, 37);
+				PushFollow(Follow._objecttype_macro_index_in_objecttype_macro5366);
 				i3=objecttype_macro_index();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, i3.Tree);
-				DebugLocation(996, 61);
+				DebugLocation(993, 61);
 				if (state.backtracking == 0)
 				{
 					 retval.result.MibIndex = (i3!=null?i3.result:default(IList<ISmiValue>)); 
@@ -11383,21 +11383,21 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// Smi.g:997:23: 'AUGMENTS' i4= objecttype_macro_augments
+				// Smi.g:994:23: 'AUGMENTS' i4= objecttype_macro_augments
 				{
-				DebugLocation(997, 23);
-				string_literal196=(IToken)Match(input,133,Follow._133_in_objecttype_macro5411); if (state.failed) return retval;
+				DebugLocation(994, 23);
+				string_literal196=(IToken)Match(input,133,Follow._133_in_objecttype_macro5392); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal196_tree = (CommonTree)adaptor.Create(string_literal196);
 				adaptor.AddChild(root_0, string_literal196_tree);
 				}
-				DebugLocation(997, 36);
-				PushFollow(Follow._objecttype_macro_augments_in_objecttype_macro5415);
+				DebugLocation(994, 36);
+				PushFollow(Follow._objecttype_macro_augments_in_objecttype_macro5396);
 				i4=objecttype_macro_augments();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, i4.Tree);
-				DebugLocation(997, 63);
+				DebugLocation(994, 63);
 				if (state.backtracking == 0)
 				{
 					 retval.result.MibArguments = (i4!=null?i4.result:default(ISmiValue)); 
@@ -11407,33 +11407,33 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 3:
 				DebugEnterAlt(3);
-				// Smi.g:998:23: 'PIB-INDEX' L_BRACE v3= value R_BRACE
+				// Smi.g:995:23: 'PIB-INDEX' L_BRACE v3= value R_BRACE
 				{
-				DebugLocation(998, 23);
-				string_literal197=(IToken)Match(input,168,Follow._168_in_objecttype_macro5441); if (state.failed) return retval;
+				DebugLocation(995, 23);
+				string_literal197=(IToken)Match(input,168,Follow._168_in_objecttype_macro5422); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal197_tree = (CommonTree)adaptor.Create(string_literal197);
 				adaptor.AddChild(root_0, string_literal197_tree);
 				}
-				DebugLocation(998, 35);
-				L_BRACE198=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_objecttype_macro5443); if (state.failed) return retval;
+				DebugLocation(995, 35);
+				L_BRACE198=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_objecttype_macro5424); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				L_BRACE198_tree = (CommonTree)adaptor.Create(L_BRACE198);
 				adaptor.AddChild(root_0, L_BRACE198_tree);
 				}
-				DebugLocation(998, 45);
-				PushFollow(Follow._value_in_objecttype_macro5447);
+				DebugLocation(995, 45);
+				PushFollow(Follow._value_in_objecttype_macro5428);
 				v3=value();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, v3.Tree);
-				DebugLocation(998, 52);
-				R_BRACE199=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_objecttype_macro5449); if (state.failed) return retval;
+				DebugLocation(995, 52);
+				R_BRACE199=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_objecttype_macro5430); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				R_BRACE199_tree = (CommonTree)adaptor.Create(R_BRACE199);
 				adaptor.AddChild(root_0, R_BRACE199_tree);
 				}
-				DebugLocation(998, 60);
+				DebugLocation(995, 60);
 				if (state.backtracking == 0)
 				{
 					 retval.result.PibIndex = (v3!=null?v3.result:default(ISmiValue)); 
@@ -11443,33 +11443,33 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 4:
 				DebugEnterAlt(4);
-				// Smi.g:999:23: 'EXTENDS' L_BRACE v4= value R_BRACE
+				// Smi.g:996:23: 'EXTENDS' L_BRACE v4= value R_BRACE
 				{
-				DebugLocation(999, 23);
-				string_literal200=(IToken)Match(input,143,Follow._143_in_objecttype_macro5496); if (state.failed) return retval;
+				DebugLocation(996, 23);
+				string_literal200=(IToken)Match(input,143,Follow._143_in_objecttype_macro5477); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal200_tree = (CommonTree)adaptor.Create(string_literal200);
 				adaptor.AddChild(root_0, string_literal200_tree);
 				}
-				DebugLocation(999, 33);
-				L_BRACE201=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_objecttype_macro5498); if (state.failed) return retval;
+				DebugLocation(996, 33);
+				L_BRACE201=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_objecttype_macro5479); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				L_BRACE201_tree = (CommonTree)adaptor.Create(L_BRACE201);
 				adaptor.AddChild(root_0, L_BRACE201_tree);
 				}
-				DebugLocation(999, 43);
-				PushFollow(Follow._value_in_objecttype_macro5502);
+				DebugLocation(996, 43);
+				PushFollow(Follow._value_in_objecttype_macro5483);
 				v4=value();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, v4.Tree);
-				DebugLocation(999, 50);
-				R_BRACE202=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_objecttype_macro5504); if (state.failed) return retval;
+				DebugLocation(996, 50);
+				R_BRACE202=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_objecttype_macro5485); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				R_BRACE202_tree = (CommonTree)adaptor.Create(R_BRACE202);
 				adaptor.AddChild(root_0, R_BRACE202_tree);
 				}
-				DebugLocation(999, 58);
+				DebugLocation(996, 58);
 				if (state.backtracking == 0)
 				{
 					 retval.result.PibExtends = (v4!=null?v4.result:default(ISmiValue)); 
@@ -11481,8 +11481,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(79); }
 
-			DebugLocation(1001, 19);
-			// Smi.g:1001:19: ( 'INDEX' i5= objecttype_macro_index )?
+			DebugLocation(998, 19);
+			// Smi.g:998:19: ( 'INDEX' i5= objecttype_macro_index )?
 			int alt80=2;
 			try { DebugEnterSubRule(80);
 			try { DebugEnterDecision(80, false);
@@ -11497,21 +11497,21 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1001:21: 'INDEX' i5= objecttype_macro_index
+				// Smi.g:998:21: 'INDEX' i5= objecttype_macro_index
 				{
-				DebugLocation(1001, 21);
-				string_literal203=(IToken)Match(input,148,Follow._148_in_objecttype_macro5574); if (state.failed) return retval;
+				DebugLocation(998, 21);
+				string_literal203=(IToken)Match(input,148,Follow._148_in_objecttype_macro5555); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal203_tree = (CommonTree)adaptor.Create(string_literal203);
 				adaptor.AddChild(root_0, string_literal203_tree);
 				}
-				DebugLocation(1001, 31);
-				PushFollow(Follow._objecttype_macro_index_in_objecttype_macro5578);
+				DebugLocation(998, 31);
+				PushFollow(Follow._objecttype_macro_index_in_objecttype_macro5559);
 				i5=objecttype_macro_index();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, i5.Tree);
-				DebugLocation(1001, 55);
+				DebugLocation(998, 55);
 				if (state.backtracking == 0)
 				{
 					 retval.result.MibIndex = (i5!=null?i5.result:default(IList<ISmiValue>)); 
@@ -11523,8 +11523,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(80); }
 
-			DebugLocation(1002, 19);
-			// Smi.g:1002:19: ( 'UNIQUENESS' L_BRACE (v5= value ( COMMA v6= value )* )? R_BRACE )?
+			DebugLocation(999, 19);
+			// Smi.g:999:19: ( 'UNIQUENESS' L_BRACE (v5= value ( COMMA v6= value )* )? R_BRACE )?
 			int alt83=2;
 			try { DebugEnterSubRule(83);
 			try { DebugEnterDecision(83, false);
@@ -11539,22 +11539,22 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1002:21: 'UNIQUENESS' L_BRACE (v5= value ( COMMA v6= value )* )? R_BRACE
+				// Smi.g:999:21: 'UNIQUENESS' L_BRACE (v5= value ( COMMA v6= value )* )? R_BRACE
 				{
-				DebugLocation(1002, 21);
-				string_literal204=(IToken)Match(input,191,Follow._191_in_objecttype_macro5628); if (state.failed) return retval;
+				DebugLocation(999, 21);
+				string_literal204=(IToken)Match(input,191,Follow._191_in_objecttype_macro5609); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal204_tree = (CommonTree)adaptor.Create(string_literal204);
 				adaptor.AddChild(root_0, string_literal204_tree);
 				}
-				DebugLocation(1002, 34);
-				L_BRACE205=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_objecttype_macro5630); if (state.failed) return retval;
+				DebugLocation(999, 34);
+				L_BRACE205=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_objecttype_macro5611); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				L_BRACE205_tree = (CommonTree)adaptor.Create(L_BRACE205);
 				adaptor.AddChild(root_0, L_BRACE205_tree);
 				}
-				DebugLocation(1002, 42);
-				// Smi.g:1002:42: (v5= value ( COMMA v6= value )* )?
+				DebugLocation(999, 42);
+				// Smi.g:999:42: (v5= value ( COMMA v6= value )* )?
 				int alt82=2;
 				try { DebugEnterSubRule(82);
 				try { DebugEnterDecision(82, false);
@@ -11569,21 +11569,21 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:1002:43: v5= value ( COMMA v6= value )*
+					// Smi.g:999:43: v5= value ( COMMA v6= value )*
 					{
-					DebugLocation(1002, 45);
-					PushFollow(Follow._value_in_objecttype_macro5635);
+					DebugLocation(999, 45);
+					PushFollow(Follow._value_in_objecttype_macro5616);
 					v5=value();
 					PopFollow();
 					if (state.failed) return retval;
 					if (state.backtracking == 0) adaptor.AddChild(root_0, v5.Tree);
-					DebugLocation(1002, 52);
+					DebugLocation(999, 52);
 					if (state.backtracking == 0)
 					{
 						 retval.result.UniquenessValues.Add((v5!=null?v5.result:default(ISmiValue))); 
 					}
-					DebugLocation(1003, 7);
-					// Smi.g:1003:7: ( COMMA v6= value )*
+					DebugLocation(1000, 7);
+					// Smi.g:1000:7: ( COMMA v6= value )*
 					try { DebugEnterSubRule(81);
 					while (true)
 					{
@@ -11602,21 +11602,21 @@ public partial class SmiParser : Antlr.Runtime.Parser
 						{
 						case 1:
 							DebugEnterAlt(1);
-							// Smi.g:1003:8: COMMA v6= value
+							// Smi.g:1000:8: COMMA v6= value
 							{
-							DebugLocation(1003, 8);
-							COMMA206=(IToken)Match(input,COMMA,Follow._COMMA_in_objecttype_macro5646); if (state.failed) return retval;
+							DebugLocation(1000, 8);
+							COMMA206=(IToken)Match(input,COMMA,Follow._COMMA_in_objecttype_macro5627); if (state.failed) return retval;
 							if (state.backtracking == 0) {
 							COMMA206_tree = (CommonTree)adaptor.Create(COMMA206);
 							adaptor.AddChild(root_0, COMMA206_tree);
 							}
-							DebugLocation(1003, 16);
-							PushFollow(Follow._value_in_objecttype_macro5650);
+							DebugLocation(1000, 16);
+							PushFollow(Follow._value_in_objecttype_macro5631);
 							v6=value();
 							PopFollow();
 							if (state.failed) return retval;
 							if (state.backtracking == 0) adaptor.AddChild(root_0, v6.Tree);
-							DebugLocation(1003, 23);
+							DebugLocation(1000, 23);
 							if (state.backtracking == 0)
 							{
 								 retval.result.UniquenessValues.Add((v6!=null?v6.result:default(ISmiValue))); 
@@ -11642,8 +11642,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				}
 				} finally { DebugExitSubRule(82); }
 
-				DebugLocation(1003, 74);
-				R_BRACE207=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_objecttype_macro5659); if (state.failed) return retval;
+				DebugLocation(1000, 74);
+				R_BRACE207=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_objecttype_macro5640); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				R_BRACE207_tree = (CommonTree)adaptor.Create(R_BRACE207);
 				adaptor.AddChild(root_0, R_BRACE207_tree);
@@ -11655,8 +11655,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(83); }
 
-			DebugLocation(1004, 5);
-			// Smi.g:1004:5: ( ( 'DEFVAL' )=> 'DEFVAL' L_BRACE ( ( L_BRACE LOWER ( COMMA | R_BRACE ) )=>b= objecttype_macro_bitsvalue |v7= value ) R_BRACE )?
+			DebugLocation(1001, 5);
+			// Smi.g:1001:5: ( ( 'DEFVAL' )=> 'DEFVAL' L_BRACE ( ( L_BRACE LOWER ( COMMA | R_BRACE ) )=>b= objecttype_macro_bitsvalue |v7= value ) R_BRACE )?
 			int alt85=2;
 			try { DebugEnterSubRule(85);
 			try { DebugEnterDecision(85, false);
@@ -11676,22 +11676,22 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1004:7: ( 'DEFVAL' )=> 'DEFVAL' L_BRACE ( ( L_BRACE LOWER ( COMMA | R_BRACE ) )=>b= objecttype_macro_bitsvalue |v7= value ) R_BRACE
+				// Smi.g:1001:7: ( 'DEFVAL' )=> 'DEFVAL' L_BRACE ( ( L_BRACE LOWER ( COMMA | R_BRACE ) )=>b= objecttype_macro_bitsvalue |v7= value ) R_BRACE
 				{
-				DebugLocation(1004, 21);
-				string_literal208=(IToken)Match(input,138,Follow._138_in_objecttype_macro5698); if (state.failed) return retval;
+				DebugLocation(1001, 21);
+				string_literal208=(IToken)Match(input,138,Follow._138_in_objecttype_macro5679); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal208_tree = (CommonTree)adaptor.Create(string_literal208);
 				adaptor.AddChild(root_0, string_literal208_tree);
 				}
-				DebugLocation(1004, 30);
-				L_BRACE209=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_objecttype_macro5700); if (state.failed) return retval;
+				DebugLocation(1001, 30);
+				L_BRACE209=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_objecttype_macro5681); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				L_BRACE209_tree = (CommonTree)adaptor.Create(L_BRACE209);
 				adaptor.AddChild(root_0, L_BRACE209_tree);
 				}
-				DebugLocation(1005, 21);
-				// Smi.g:1005:21: ( ( L_BRACE LOWER ( COMMA | R_BRACE ) )=>b= objecttype_macro_bitsvalue |v7= value )
+				DebugLocation(1002, 21);
+				// Smi.g:1002:21: ( ( L_BRACE LOWER ( COMMA | R_BRACE ) )=>b= objecttype_macro_bitsvalue |v7= value )
 				int alt84=2;
 				try { DebugEnterSubRule(84);
 				try { DebugEnterDecision(84, false);
@@ -11709,15 +11709,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:1005:23: ( L_BRACE LOWER ( COMMA | R_BRACE ) )=>b= objecttype_macro_bitsvalue
+					// Smi.g:1002:23: ( L_BRACE LOWER ( COMMA | R_BRACE ) )=>b= objecttype_macro_bitsvalue
 					{
-					DebugLocation(1005, 61);
-					PushFollow(Follow._objecttype_macro_bitsvalue_in_objecttype_macro5743);
+					DebugLocation(1002, 61);
+					PushFollow(Follow._objecttype_macro_bitsvalue_in_objecttype_macro5724);
 					b=objecttype_macro_bitsvalue();
 					PopFollow();
 					if (state.failed) return retval;
 					if (state.backtracking == 0) adaptor.AddChild(root_0, b.Tree);
-					DebugLocation(1005, 89);
+					DebugLocation(1002, 89);
 					if (state.backtracking == 0)
 					{
 						 retval.result.DefaultValueBits = (b!=null?b.result:default(IList<string>)); 
@@ -11727,15 +11727,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 					break;
 				case 2:
 					DebugEnterAlt(2);
-					// Smi.g:1006:26: v7= value
+					// Smi.g:1003:26: v7= value
 					{
-					DebugLocation(1006, 28);
-					PushFollow(Follow._value_in_objecttype_macro5774);
+					DebugLocation(1003, 28);
+					PushFollow(Follow._value_in_objecttype_macro5755);
 					v7=value();
 					PopFollow();
 					if (state.failed) return retval;
 					if (state.backtracking == 0) adaptor.AddChild(root_0, v7.Tree);
-					DebugLocation(1006, 35);
+					DebugLocation(1003, 35);
 					if (state.backtracking == 0)
 					{
 						 retval.result.DefaultValue = (v7!=null?v7.result:default(ISmiValue)); 
@@ -11747,8 +11747,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				}
 				} finally { DebugExitSubRule(84); }
 
-				DebugLocation(1007, 21);
-				R_BRACE210=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_objecttype_macro5800); if (state.failed) return retval;
+				DebugLocation(1004, 21);
+				R_BRACE210=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_objecttype_macro5781); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				R_BRACE210_tree = (CommonTree)adaptor.Create(R_BRACE210);
 				adaptor.AddChild(root_0, R_BRACE210_tree);
@@ -11782,7 +11782,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("objecttype_macro", 55);
 			LeaveRule_objecttype_macro();
 		}
-		DebugLocation(1007, 31);
+		DebugLocation(1004, 31);
 		} finally { DebugExitRule(GrammarFileName, "objecttype_macro"); }
 		return retval;
 
@@ -11799,7 +11799,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_objecttype_macro_accesstypes();
 	partial void LeaveRule_objecttype_macro_accesstypes();
 	// $ANTLR start "objecttype_macro_accesstypes"
-	// Smi.g:1009:11: protected objecttype_macro_accesstypes returns [Access result] : l= LOWER ;
+	// Smi.g:1006:11: protected objecttype_macro_accesstypes returns [Access result] : l= LOWER ;
 	[GrammarRule("objecttype_macro_accesstypes")]
 	protected SmiParser.objecttype_macro_accesstypes_return objecttype_macro_accesstypes()
 	{
@@ -11815,22 +11815,22 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 		CommonTree l_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "objecttype_macro_accesstypes");
-		DebugLocation(1009, 4);
+		DebugLocation(1006, 4);
 		try
 		{
-			// Smi.g:1010:5: (l= LOWER )
+			// Smi.g:1007:5: (l= LOWER )
 			DebugEnterAlt(1);
-			// Smi.g:1010:7: l= LOWER
+			// Smi.g:1007:7: l= LOWER
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(1010, 8);
-			l=(IToken)Match(input,LOWER,Follow._LOWER_in_objecttype_macro_accesstypes5824); if (state.failed) return retval;
+			DebugLocation(1007, 8);
+			l=(IToken)Match(input,LOWER,Follow._LOWER_in_objecttype_macro_accesstypes5805); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			l_tree = (CommonTree)adaptor.Create(l);
 			adaptor.AddChild(root_0, l_tree);
 			}
-			DebugLocation(1010, 15);
+			DebugLocation(1007, 15);
 			if (state.backtracking == 0)
 			{
 				if (l.Text == ("read-only")) retval.result = Access.ReadOnly;
@@ -11863,7 +11863,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("objecttype_macro_accesstypes", 56);
 			LeaveRule_objecttype_macro_accesstypes();
 		}
-		DebugLocation(1017, 4);
+		DebugLocation(1014, 4);
 		} finally { DebugExitRule(GrammarFileName, "objecttype_macro_accesstypes"); }
 		return retval;
 
@@ -11880,7 +11880,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_objecttype_macro_pibaccess();
 	partial void LeaveRule_objecttype_macro_pibaccess();
 	// $ANTLR start "objecttype_macro_pibaccess"
-	// Smi.g:1019:11: protected objecttype_macro_pibaccess returns [PibAccess result] : l= LOWER ;
+	// Smi.g:1016:11: protected objecttype_macro_pibaccess returns [PibAccess result] : l= LOWER ;
 	[GrammarRule("objecttype_macro_pibaccess")]
 	protected SmiParser.objecttype_macro_pibaccess_return objecttype_macro_pibaccess()
 	{
@@ -11896,22 +11896,22 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 		CommonTree l_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "objecttype_macro_pibaccess");
-		DebugLocation(1019, 1);
+		DebugLocation(1016, 1);
 		try
 		{
-			// Smi.g:1020:5: (l= LOWER )
+			// Smi.g:1017:5: (l= LOWER )
 			DebugEnterAlt(1);
-			// Smi.g:1020:7: l= LOWER
+			// Smi.g:1017:7: l= LOWER
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(1020, 8);
-			l=(IToken)Match(input,LOWER,Follow._LOWER_in_objecttype_macro_pibaccess5851); if (state.failed) return retval;
+			DebugLocation(1017, 8);
+			l=(IToken)Match(input,LOWER,Follow._LOWER_in_objecttype_macro_pibaccess5832); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			l_tree = (CommonTree)adaptor.Create(l);
 			adaptor.AddChild(root_0, l_tree);
 			}
-			DebugLocation(1020, 15);
+			DebugLocation(1017, 15);
 			if (state.backtracking == 0)
 			{
 				if (l.Text == ("install")) retval.result = PibAccess.Install; 
@@ -11942,7 +11942,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("objecttype_macro_pibaccess", 57);
 			LeaveRule_objecttype_macro_pibaccess();
 		}
-		DebugLocation(1025, 1);
+		DebugLocation(1022, 1);
 		} finally { DebugExitRule(GrammarFileName, "objecttype_macro_pibaccess"); }
 		return retval;
 
@@ -11959,7 +11959,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_objecttype_macro_statustypes();
 	partial void LeaveRule_objecttype_macro_statustypes();
 	// $ANTLR start "objecttype_macro_statustypes"
-	// Smi.g:1027:11: protected objecttype_macro_statustypes returns [EntityStatus result] : l= LOWER ;
+	// Smi.g:1024:11: protected objecttype_macro_statustypes returns [EntityStatus result] : l= LOWER ;
 	[GrammarRule("objecttype_macro_statustypes")]
 	protected SmiParser.objecttype_macro_statustypes_return objecttype_macro_statustypes()
 	{
@@ -11975,22 +11975,22 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 		CommonTree l_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "objecttype_macro_statustypes");
-		DebugLocation(1027, 1);
+		DebugLocation(1024, 1);
 		try
 		{
-			// Smi.g:1028:5: (l= LOWER )
+			// Smi.g:1025:5: (l= LOWER )
 			DebugEnterAlt(1);
-			// Smi.g:1028:7: l= LOWER
+			// Smi.g:1025:7: l= LOWER
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(1028, 8);
-			l=(IToken)Match(input,LOWER,Follow._LOWER_in_objecttype_macro_statustypes5875); if (state.failed) return retval;
+			DebugLocation(1025, 8);
+			l=(IToken)Match(input,LOWER,Follow._LOWER_in_objecttype_macro_statustypes5856); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			l_tree = (CommonTree)adaptor.Create(l);
 			adaptor.AddChild(root_0, l_tree);
 			}
-			DebugLocation(1028, 15);
+			DebugLocation(1025, 15);
 			if (state.backtracking == 0)
 			{
 				if (l.Text == ("mandatory")) retval.result = EntityStatus.Mandatory; 
@@ -12022,7 +12022,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("objecttype_macro_statustypes", 58);
 			LeaveRule_objecttype_macro_statustypes();
 		}
-		DebugLocation(1034, 1);
+		DebugLocation(1031, 1);
 		} finally { DebugExitRule(GrammarFileName, "objecttype_macro_statustypes"); }
 		return retval;
 
@@ -12039,7 +12039,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_objecttype_macro_index();
 	partial void LeaveRule_objecttype_macro_index();
 	// $ANTLR start "objecttype_macro_index"
-	// Smi.g:1038:1: objecttype_macro_index returns [IList<ISmiValue> result = new List<ISmiValue>()] : L_BRACE t= objecttype_macro_indextype ( COMMA t2= objecttype_macro_indextype )* R_BRACE ;
+	// Smi.g:1035:1: objecttype_macro_index returns [IList<ISmiValue> result = new List<ISmiValue>()] : L_BRACE t= objecttype_macro_indextype ( COMMA t2= objecttype_macro_indextype )* R_BRACE ;
 	[GrammarRule("objecttype_macro_index")]
 	private SmiParser.objecttype_macro_index_return objecttype_macro_index()
 	{
@@ -12061,34 +12061,34 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree COMMA212_tree = default(CommonTree);
 		CommonTree R_BRACE213_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "objecttype_macro_index");
-		DebugLocation(1038, 1);
+		DebugLocation(1035, 1);
 		try
 		{
-			// Smi.g:1039:5: ( L_BRACE t= objecttype_macro_indextype ( COMMA t2= objecttype_macro_indextype )* R_BRACE )
+			// Smi.g:1036:5: ( L_BRACE t= objecttype_macro_indextype ( COMMA t2= objecttype_macro_indextype )* R_BRACE )
 			DebugEnterAlt(1);
-			// Smi.g:1039:7: L_BRACE t= objecttype_macro_indextype ( COMMA t2= objecttype_macro_indextype )* R_BRACE
+			// Smi.g:1036:7: L_BRACE t= objecttype_macro_indextype ( COMMA t2= objecttype_macro_indextype )* R_BRACE
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(1039, 7);
-			L_BRACE211=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_objecttype_macro_index5897); if (state.failed) return retval;
+			DebugLocation(1036, 7);
+			L_BRACE211=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_objecttype_macro_index5878); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			L_BRACE211_tree = (CommonTree)adaptor.Create(L_BRACE211);
 			adaptor.AddChild(root_0, L_BRACE211_tree);
 			}
-			DebugLocation(1039, 16);
-			PushFollow(Follow._objecttype_macro_indextype_in_objecttype_macro_index5901);
+			DebugLocation(1036, 16);
+			PushFollow(Follow._objecttype_macro_indextype_in_objecttype_macro_index5882);
 			t=objecttype_macro_indextype();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, t.Tree);
-			DebugLocation(1039, 44);
+			DebugLocation(1036, 44);
 			if (state.backtracking == 0)
 			{
 				 retval.result.Add((t!=null?t.result:default(ISmiValue))); 
 			}
-			DebugLocation(1040, 2);
-			// Smi.g:1040:2: ( COMMA t2= objecttype_macro_indextype )*
+			DebugLocation(1037, 2);
+			// Smi.g:1037:2: ( COMMA t2= objecttype_macro_indextype )*
 			try { DebugEnterSubRule(86);
 			while (true)
 			{
@@ -12107,21 +12107,21 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:1040:3: COMMA t2= objecttype_macro_indextype
+					// Smi.g:1037:3: COMMA t2= objecttype_macro_indextype
 					{
-					DebugLocation(1040, 3);
-					COMMA212=(IToken)Match(input,COMMA,Follow._COMMA_in_objecttype_macro_index5908); if (state.failed) return retval;
+					DebugLocation(1037, 3);
+					COMMA212=(IToken)Match(input,COMMA,Follow._COMMA_in_objecttype_macro_index5889); if (state.failed) return retval;
 					if (state.backtracking == 0) {
 					COMMA212_tree = (CommonTree)adaptor.Create(COMMA212);
 					adaptor.AddChild(root_0, COMMA212_tree);
 					}
-					DebugLocation(1040, 11);
-					PushFollow(Follow._objecttype_macro_indextype_in_objecttype_macro_index5912);
+					DebugLocation(1037, 11);
+					PushFollow(Follow._objecttype_macro_indextype_in_objecttype_macro_index5893);
 					t2=objecttype_macro_indextype();
 					PopFollow();
 					if (state.failed) return retval;
 					if (state.backtracking == 0) adaptor.AddChild(root_0, t2.Tree);
-					DebugLocation(1040, 39);
+					DebugLocation(1037, 39);
 					if (state.backtracking == 0)
 					{
 						 retval.result.Add((t2!=null?t2.result:default(ISmiValue))); 
@@ -12140,8 +12140,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 			} finally { DebugExitSubRule(86); }
 
-			DebugLocation(1040, 70);
-			R_BRACE213=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_objecttype_macro_index5918); if (state.failed) return retval;
+			DebugLocation(1037, 70);
+			R_BRACE213=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_objecttype_macro_index5899); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			R_BRACE213_tree = (CommonTree)adaptor.Create(R_BRACE213);
 			adaptor.AddChild(root_0, R_BRACE213_tree);
@@ -12168,7 +12168,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("objecttype_macro_index", 59);
 			LeaveRule_objecttype_macro_index();
 		}
-		DebugLocation(1041, 1);
+		DebugLocation(1038, 1);
 		} finally { DebugExitRule(GrammarFileName, "objecttype_macro_index"); }
 		return retval;
 
@@ -12185,7 +12185,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_objecttype_macro_indextype();
 	partial void LeaveRule_objecttype_macro_indextype();
 	// $ANTLR start "objecttype_macro_indextype"
-	// Smi.g:1043:1: objecttype_macro_indextype returns [ISmiValue result] : ( 'IMPLIED' )? v= value ;
+	// Smi.g:1040:1: objecttype_macro_indextype returns [ISmiValue result] : ( 'IMPLIED' )? v= value ;
 	[GrammarRule("objecttype_macro_indextype")]
 	private SmiParser.objecttype_macro_indextype_return objecttype_macro_indextype()
 	{
@@ -12202,17 +12202,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 		CommonTree string_literal214_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "objecttype_macro_indextype");
-		DebugLocation(1043, 1);
+		DebugLocation(1040, 1);
 		try
 		{
-			// Smi.g:1044:5: ( ( 'IMPLIED' )? v= value )
+			// Smi.g:1041:5: ( ( 'IMPLIED' )? v= value )
 			DebugEnterAlt(1);
-			// Smi.g:1044:7: ( 'IMPLIED' )? v= value
+			// Smi.g:1041:7: ( 'IMPLIED' )? v= value
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(1044, 7);
-			// Smi.g:1044:7: ( 'IMPLIED' )?
+			DebugLocation(1041, 7);
+			// Smi.g:1041:7: ( 'IMPLIED' )?
 			int alt87=2;
 			try { DebugEnterSubRule(87);
 			try { DebugEnterDecision(87, false);
@@ -12227,10 +12227,10 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1044:8: 'IMPLIED'
+				// Smi.g:1041:8: 'IMPLIED'
 				{
-				DebugLocation(1044, 8);
-				string_literal214=(IToken)Match(input,IMPLIED_KW,Follow._IMPLIED_KW_in_objecttype_macro_indextype5944); if (state.failed) return retval;
+				DebugLocation(1041, 8);
+				string_literal214=(IToken)Match(input,IMPLIED_KW,Follow._IMPLIED_KW_in_objecttype_macro_indextype5925); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal214_tree = (CommonTree)adaptor.Create(string_literal214);
 				adaptor.AddChild(root_0, string_literal214_tree);
@@ -12242,13 +12242,13 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(87); }
 
-			DebugLocation(1044, 21);
-			PushFollow(Follow._value_in_objecttype_macro_indextype5950);
+			DebugLocation(1041, 21);
+			PushFollow(Follow._value_in_objecttype_macro_indextype5931);
 			v=value();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, v.Tree);
-			DebugLocation(1044, 28);
+			DebugLocation(1041, 28);
 			if (state.backtracking == 0)
 			{
 				 retval.result = (v!=null?v.result:default(ISmiValue)); 
@@ -12275,7 +12275,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("objecttype_macro_indextype", 60);
 			LeaveRule_objecttype_macro_indextype();
 		}
-		DebugLocation(1045, 1);
+		DebugLocation(1042, 1);
 		} finally { DebugExitRule(GrammarFileName, "objecttype_macro_indextype"); }
 		return retval;
 
@@ -12292,7 +12292,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_objecttype_macro_augments();
 	partial void LeaveRule_objecttype_macro_augments();
 	// $ANTLR start "objecttype_macro_augments"
-	// Smi.g:1047:1: objecttype_macro_augments returns [ISmiValue result] : L_BRACE v= value R_BRACE ;
+	// Smi.g:1044:1: objecttype_macro_augments returns [ISmiValue result] : L_BRACE v= value R_BRACE ;
 	[GrammarRule("objecttype_macro_augments")]
 	private SmiParser.objecttype_macro_augments_return objecttype_macro_augments()
 	{
@@ -12311,34 +12311,34 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree L_BRACE215_tree = default(CommonTree);
 		CommonTree R_BRACE216_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "objecttype_macro_augments");
-		DebugLocation(1047, 1);
+		DebugLocation(1044, 1);
 		try
 		{
-			// Smi.g:1048:5: ( L_BRACE v= value R_BRACE )
+			// Smi.g:1045:5: ( L_BRACE v= value R_BRACE )
 			DebugEnterAlt(1);
-			// Smi.g:1048:7: L_BRACE v= value R_BRACE
+			// Smi.g:1045:7: L_BRACE v= value R_BRACE
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(1048, 7);
-			L_BRACE215=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_objecttype_macro_augments5970); if (state.failed) return retval;
+			DebugLocation(1045, 7);
+			L_BRACE215=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_objecttype_macro_augments5951); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			L_BRACE215_tree = (CommonTree)adaptor.Create(L_BRACE215);
 			adaptor.AddChild(root_0, L_BRACE215_tree);
 			}
-			DebugLocation(1048, 16);
-			PushFollow(Follow._value_in_objecttype_macro_augments5974);
+			DebugLocation(1045, 16);
+			PushFollow(Follow._value_in_objecttype_macro_augments5955);
 			v=value();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, v.Tree);
-			DebugLocation(1048, 23);
-			R_BRACE216=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_objecttype_macro_augments5976); if (state.failed) return retval;
+			DebugLocation(1045, 23);
+			R_BRACE216=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_objecttype_macro_augments5957); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			R_BRACE216_tree = (CommonTree)adaptor.Create(R_BRACE216);
 			adaptor.AddChild(root_0, R_BRACE216_tree);
 			}
-			DebugLocation(1048, 31);
+			DebugLocation(1045, 31);
 			if (state.backtracking == 0)
 			{
 				 retval.result = (v!=null?v.result:default(ISmiValue)); 
@@ -12365,7 +12365,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("objecttype_macro_augments", 61);
 			LeaveRule_objecttype_macro_augments();
 		}
-		DebugLocation(1049, 1);
+		DebugLocation(1046, 1);
 		} finally { DebugExitRule(GrammarFileName, "objecttype_macro_augments"); }
 		return retval;
 
@@ -12382,7 +12382,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_namedbits();
 	partial void LeaveRule_namedbits();
 	// $ANTLR start "namedbits"
-	// Smi.g:1052:1: namedbits returns [IList<NamedBit> result = new List<NamedBit>()] : L_BRACE n= namedbit ( COMMA n2= namedbit )* R_BRACE ;
+	// Smi.g:1049:1: namedbits returns [IList<NamedBit> result = new List<NamedBit>()] : L_BRACE n= namedbit ( COMMA n2= namedbit )* R_BRACE ;
 	[GrammarRule("namedbits")]
 	private SmiParser.namedbits_return namedbits()
 	{
@@ -12404,34 +12404,34 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree COMMA218_tree = default(CommonTree);
 		CommonTree R_BRACE219_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "namedbits");
-		DebugLocation(1052, 1);
+		DebugLocation(1049, 1);
 		try
 		{
-			// Smi.g:1053:5: ( L_BRACE n= namedbit ( COMMA n2= namedbit )* R_BRACE )
+			// Smi.g:1050:5: ( L_BRACE n= namedbit ( COMMA n2= namedbit )* R_BRACE )
 			DebugEnterAlt(1);
-			// Smi.g:1053:7: L_BRACE n= namedbit ( COMMA n2= namedbit )* R_BRACE
+			// Smi.g:1050:7: L_BRACE n= namedbit ( COMMA n2= namedbit )* R_BRACE
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(1053, 7);
-			L_BRACE217=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_namedbits6000); if (state.failed) return retval;
+			DebugLocation(1050, 7);
+			L_BRACE217=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_namedbits5981); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			L_BRACE217_tree = (CommonTree)adaptor.Create(L_BRACE217);
 			adaptor.AddChild(root_0, L_BRACE217_tree);
 			}
-			DebugLocation(1053, 16);
-			PushFollow(Follow._namedbit_in_namedbits6004);
+			DebugLocation(1050, 16);
+			PushFollow(Follow._namedbit_in_namedbits5985);
 			n=namedbit();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, n.Tree);
-			DebugLocation(1053, 26);
+			DebugLocation(1050, 26);
 			if (state.backtracking == 0)
 			{
 				 retval.result.Add((n!=null?n.result:default(NamedBit))); 
 			}
-			DebugLocation(1054, 2);
-			// Smi.g:1054:2: ( COMMA n2= namedbit )*
+			DebugLocation(1051, 2);
+			// Smi.g:1051:2: ( COMMA n2= namedbit )*
 			try { DebugEnterSubRule(88);
 			while (true)
 			{
@@ -12450,21 +12450,21 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:1054:3: COMMA n2= namedbit
+					// Smi.g:1051:3: COMMA n2= namedbit
 					{
-					DebugLocation(1054, 3);
-					COMMA218=(IToken)Match(input,COMMA,Follow._COMMA_in_namedbits6011); if (state.failed) return retval;
+					DebugLocation(1051, 3);
+					COMMA218=(IToken)Match(input,COMMA,Follow._COMMA_in_namedbits5992); if (state.failed) return retval;
 					if (state.backtracking == 0) {
 					COMMA218_tree = (CommonTree)adaptor.Create(COMMA218);
 					adaptor.AddChild(root_0, COMMA218_tree);
 					}
-					DebugLocation(1054, 11);
-					PushFollow(Follow._namedbit_in_namedbits6015);
+					DebugLocation(1051, 11);
+					PushFollow(Follow._namedbit_in_namedbits5996);
 					n2=namedbit();
 					PopFollow();
 					if (state.failed) return retval;
 					if (state.backtracking == 0) adaptor.AddChild(root_0, n2.Tree);
-					DebugLocation(1054, 21);
+					DebugLocation(1051, 21);
 					if (state.backtracking == 0)
 					{
 						 retval.result.Add((n2!=null?n2.result:default(NamedBit))); 
@@ -12483,8 +12483,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 			} finally { DebugExitSubRule(88); }
 
-			DebugLocation(1054, 52);
-			R_BRACE219=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_namedbits6021); if (state.failed) return retval;
+			DebugLocation(1051, 52);
+			R_BRACE219=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_namedbits6002); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			R_BRACE219_tree = (CommonTree)adaptor.Create(R_BRACE219);
 			adaptor.AddChild(root_0, R_BRACE219_tree);
@@ -12511,7 +12511,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("namedbits", 62);
 			LeaveRule_namedbits();
 		}
-		DebugLocation(1055, 1);
+		DebugLocation(1052, 1);
 		} finally { DebugExitRule(GrammarFileName, "namedbits"); }
 		return retval;
 
@@ -12528,7 +12528,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_objecttype_macro_bitsvalue();
 	partial void LeaveRule_objecttype_macro_bitsvalue();
 	// $ANTLR start "objecttype_macro_bitsvalue"
-	// Smi.g:1057:1: objecttype_macro_bitsvalue returns [IList<string> result = new List<string>()] : L_BRACE l= LOWER ( COMMA l2= LOWER )* R_BRACE ;
+	// Smi.g:1054:1: objecttype_macro_bitsvalue returns [IList<string> result = new List<string>()] : L_BRACE l= LOWER ( COMMA l2= LOWER )* R_BRACE ;
 	[GrammarRule("objecttype_macro_bitsvalue")]
 	private SmiParser.objecttype_macro_bitsvalue_return objecttype_macro_bitsvalue()
 	{
@@ -12552,34 +12552,34 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree COMMA221_tree = default(CommonTree);
 		CommonTree R_BRACE222_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "objecttype_macro_bitsvalue");
-		DebugLocation(1057, 1);
+		DebugLocation(1054, 1);
 		try
 		{
-			// Smi.g:1058:5: ( L_BRACE l= LOWER ( COMMA l2= LOWER )* R_BRACE )
+			// Smi.g:1055:5: ( L_BRACE l= LOWER ( COMMA l2= LOWER )* R_BRACE )
 			DebugEnterAlt(1);
-			// Smi.g:1058:7: L_BRACE l= LOWER ( COMMA l2= LOWER )* R_BRACE
+			// Smi.g:1055:7: L_BRACE l= LOWER ( COMMA l2= LOWER )* R_BRACE
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(1058, 7);
-			L_BRACE220=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_objecttype_macro_bitsvalue6044); if (state.failed) return retval;
+			DebugLocation(1055, 7);
+			L_BRACE220=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_objecttype_macro_bitsvalue6025); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			L_BRACE220_tree = (CommonTree)adaptor.Create(L_BRACE220);
 			adaptor.AddChild(root_0, L_BRACE220_tree);
 			}
-			DebugLocation(1058, 16);
-			l=(IToken)Match(input,LOWER,Follow._LOWER_in_objecttype_macro_bitsvalue6048); if (state.failed) return retval;
+			DebugLocation(1055, 16);
+			l=(IToken)Match(input,LOWER,Follow._LOWER_in_objecttype_macro_bitsvalue6029); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			l_tree = (CommonTree)adaptor.Create(l);
 			adaptor.AddChild(root_0, l_tree);
 			}
-			DebugLocation(1058, 23);
+			DebugLocation(1055, 23);
 			if (state.backtracking == 0)
 			{
 				 retval.result.Add((l!=null?l.Text:null)); 
 			}
-			DebugLocation(1059, 2);
-			// Smi.g:1059:2: ( COMMA l2= LOWER )*
+			DebugLocation(1056, 2);
+			// Smi.g:1056:2: ( COMMA l2= LOWER )*
 			try { DebugEnterSubRule(89);
 			while (true)
 			{
@@ -12598,21 +12598,21 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:1059:3: COMMA l2= LOWER
+					// Smi.g:1056:3: COMMA l2= LOWER
 					{
-					DebugLocation(1059, 3);
-					COMMA221=(IToken)Match(input,COMMA,Follow._COMMA_in_objecttype_macro_bitsvalue6055); if (state.failed) return retval;
+					DebugLocation(1056, 3);
+					COMMA221=(IToken)Match(input,COMMA,Follow._COMMA_in_objecttype_macro_bitsvalue6036); if (state.failed) return retval;
 					if (state.backtracking == 0) {
 					COMMA221_tree = (CommonTree)adaptor.Create(COMMA221);
 					adaptor.AddChild(root_0, COMMA221_tree);
 					}
-					DebugLocation(1059, 11);
-					l2=(IToken)Match(input,LOWER,Follow._LOWER_in_objecttype_macro_bitsvalue6059); if (state.failed) return retval;
+					DebugLocation(1056, 11);
+					l2=(IToken)Match(input,LOWER,Follow._LOWER_in_objecttype_macro_bitsvalue6040); if (state.failed) return retval;
 					if (state.backtracking == 0) {
 					l2_tree = (CommonTree)adaptor.Create(l2);
 					adaptor.AddChild(root_0, l2_tree);
 					}
-					DebugLocation(1059, 18);
+					DebugLocation(1056, 18);
 					if (state.backtracking == 0)
 					{
 						 retval.result.Add((l2!=null?l2.Text:null)); 
@@ -12631,8 +12631,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 			} finally { DebugExitSubRule(89); }
 
-			DebugLocation(1059, 47);
-			R_BRACE222=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_objecttype_macro_bitsvalue6065); if (state.failed) return retval;
+			DebugLocation(1056, 47);
+			R_BRACE222=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_objecttype_macro_bitsvalue6046); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			R_BRACE222_tree = (CommonTree)adaptor.Create(R_BRACE222);
 			adaptor.AddChild(root_0, R_BRACE222_tree);
@@ -12659,7 +12659,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("objecttype_macro_bitsvalue", 63);
 			LeaveRule_objecttype_macro_bitsvalue();
 		}
-		DebugLocation(1060, 1);
+		DebugLocation(1057, 1);
 		} finally { DebugExitRule(GrammarFileName, "objecttype_macro_bitsvalue"); }
 		return retval;
 
@@ -12676,7 +12676,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_objecttype_macro_error();
 	partial void LeaveRule_objecttype_macro_error();
 	// $ANTLR start "objecttype_macro_error"
-	// Smi.g:1062:1: objecttype_macro_error returns [NamedBit result] : n= namedbit ;
+	// Smi.g:1059:1: objecttype_macro_error returns [NamedBit result] : n= namedbit ;
 	[GrammarRule("objecttype_macro_error")]
 	private SmiParser.objecttype_macro_error_return objecttype_macro_error()
 	{
@@ -12691,22 +12691,22 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		SmiParser.namedbit_return n = default(SmiParser.namedbit_return);
 
 		try { DebugEnterRule(GrammarFileName, "objecttype_macro_error");
-		DebugLocation(1062, 1);
+		DebugLocation(1059, 1);
 		try
 		{
-			// Smi.g:1063:5: (n= namedbit )
+			// Smi.g:1060:5: (n= namedbit )
 			DebugEnterAlt(1);
-			// Smi.g:1063:7: n= namedbit
+			// Smi.g:1060:7: n= namedbit
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(1063, 8);
-			PushFollow(Follow._namedbit_in_objecttype_macro_error6091);
+			DebugLocation(1060, 8);
+			PushFollow(Follow._namedbit_in_objecttype_macro_error6072);
 			n=namedbit();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, n.Tree);
-			DebugLocation(1063, 18);
+			DebugLocation(1060, 18);
 			if (state.backtracking == 0)
 			{
 				 retval.result = (n!=null?n.result:default(NamedBit)); 
@@ -12733,7 +12733,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("objecttype_macro_error", 64);
 			LeaveRule_objecttype_macro_error();
 		}
-		DebugLocation(1064, 1);
+		DebugLocation(1061, 1);
 		} finally { DebugExitRule(GrammarFileName, "objecttype_macro_error"); }
 		return retval;
 
@@ -12750,7 +12750,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_moduleidentity_macro();
 	partial void LeaveRule_moduleidentity_macro();
 	// $ANTLR start "moduleidentity_macro"
-	// Smi.g:1067:1: moduleidentity_macro returns [ModuleIdentityMacro result = new ModuleIdentityMacro()] : 'MODULE-IDENTITY' ( 'SUBJECT-CATEGORIES' L_BRACE c= moduleidentity_macro_categories R_BRACE )? 'LAST-UPDATED' c1= C_STRING 'ORGANIZATION' c2= C_STRING 'CONTACT-INFO' c3= C_STRING 'DESCRIPTION' c4= C_STRING (m= moduleidentity_macro_revision )* ;
+	// Smi.g:1064:1: moduleidentity_macro returns [ModuleIdentityMacro result = new ModuleIdentityMacro()] : 'MODULE-IDENTITY' ( 'SUBJECT-CATEGORIES' L_BRACE c= moduleidentity_macro_categories R_BRACE )? 'LAST-UPDATED' c1= C_STRING 'ORGANIZATION' c2= C_STRING 'CONTACT-INFO' c3= C_STRING 'DESCRIPTION' c4= C_STRING (m= moduleidentity_macro_revision )* ;
 	[GrammarRule("moduleidentity_macro")]
 	private SmiParser.moduleidentity_macro_return moduleidentity_macro()
 	{
@@ -12790,23 +12790,23 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree string_literal229_tree = default(CommonTree);
 		CommonTree string_literal230_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "moduleidentity_macro");
-		DebugLocation(1067, 74);
+		DebugLocation(1064, 74);
 		try
 		{
-			// Smi.g:1068:5: ( 'MODULE-IDENTITY' ( 'SUBJECT-CATEGORIES' L_BRACE c= moduleidentity_macro_categories R_BRACE )? 'LAST-UPDATED' c1= C_STRING 'ORGANIZATION' c2= C_STRING 'CONTACT-INFO' c3= C_STRING 'DESCRIPTION' c4= C_STRING (m= moduleidentity_macro_revision )* )
+			// Smi.g:1065:5: ( 'MODULE-IDENTITY' ( 'SUBJECT-CATEGORIES' L_BRACE c= moduleidentity_macro_categories R_BRACE )? 'LAST-UPDATED' c1= C_STRING 'ORGANIZATION' c2= C_STRING 'CONTACT-INFO' c3= C_STRING 'DESCRIPTION' c4= C_STRING (m= moduleidentity_macro_revision )* )
 			DebugEnterAlt(1);
-			// Smi.g:1068:7: 'MODULE-IDENTITY' ( 'SUBJECT-CATEGORIES' L_BRACE c= moduleidentity_macro_categories R_BRACE )? 'LAST-UPDATED' c1= C_STRING 'ORGANIZATION' c2= C_STRING 'CONTACT-INFO' c3= C_STRING 'DESCRIPTION' c4= C_STRING (m= moduleidentity_macro_revision )*
+			// Smi.g:1065:7: 'MODULE-IDENTITY' ( 'SUBJECT-CATEGORIES' L_BRACE c= moduleidentity_macro_categories R_BRACE )? 'LAST-UPDATED' c1= C_STRING 'ORGANIZATION' c2= C_STRING 'CONTACT-INFO' c3= C_STRING 'DESCRIPTION' c4= C_STRING (m= moduleidentity_macro_revision )*
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(1068, 7);
-			string_literal223=(IToken)Match(input,157,Follow._157_in_moduleidentity_macro6113); if (state.failed) return retval;
+			DebugLocation(1065, 7);
+			string_literal223=(IToken)Match(input,157,Follow._157_in_moduleidentity_macro6094); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			string_literal223_tree = (CommonTree)adaptor.Create(string_literal223);
 			adaptor.AddChild(root_0, string_literal223_tree);
 			}
-			DebugLocation(1068, 25);
-			// Smi.g:1068:25: ( 'SUBJECT-CATEGORIES' L_BRACE c= moduleidentity_macro_categories R_BRACE )?
+			DebugLocation(1065, 25);
+			// Smi.g:1065:25: ( 'SUBJECT-CATEGORIES' L_BRACE c= moduleidentity_macro_categories R_BRACE )?
 			int alt90=2;
 			try { DebugEnterSubRule(90);
 			try { DebugEnterDecision(90, false);
@@ -12821,33 +12821,33 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1068:26: 'SUBJECT-CATEGORIES' L_BRACE c= moduleidentity_macro_categories R_BRACE
+				// Smi.g:1065:26: 'SUBJECT-CATEGORIES' L_BRACE c= moduleidentity_macro_categories R_BRACE
 				{
-				DebugLocation(1068, 26);
-				string_literal224=(IToken)Match(input,183,Follow._183_in_moduleidentity_macro6116); if (state.failed) return retval;
+				DebugLocation(1065, 26);
+				string_literal224=(IToken)Match(input,183,Follow._183_in_moduleidentity_macro6097); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal224_tree = (CommonTree)adaptor.Create(string_literal224);
 				adaptor.AddChild(root_0, string_literal224_tree);
 				}
-				DebugLocation(1068, 47);
-				L_BRACE225=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_moduleidentity_macro6118); if (state.failed) return retval;
+				DebugLocation(1065, 47);
+				L_BRACE225=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_moduleidentity_macro6099); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				L_BRACE225_tree = (CommonTree)adaptor.Create(L_BRACE225);
 				adaptor.AddChild(root_0, L_BRACE225_tree);
 				}
-				DebugLocation(1068, 56);
-				PushFollow(Follow._moduleidentity_macro_categories_in_moduleidentity_macro6122);
+				DebugLocation(1065, 56);
+				PushFollow(Follow._moduleidentity_macro_categories_in_moduleidentity_macro6103);
 				c=moduleidentity_macro_categories();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, c.Tree);
-				DebugLocation(1068, 89);
-				R_BRACE226=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_moduleidentity_macro6124); if (state.failed) return retval;
+				DebugLocation(1065, 89);
+				R_BRACE226=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_moduleidentity_macro6105); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				R_BRACE226_tree = (CommonTree)adaptor.Create(R_BRACE226);
 				adaptor.AddChild(root_0, R_BRACE226_tree);
 				}
-				DebugLocation(1068, 97);
+				DebugLocation(1065, 97);
 				if (state.backtracking == 0)
 				{
 					 retval.result.Categories = (c!=null?c.result:default(Categories)); 
@@ -12859,76 +12859,76 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(90); }
 
-			DebugLocation(1069, 5);
-			string_literal227=(IToken)Match(input,150,Follow._150_in_moduleidentity_macro6136); if (state.failed) return retval;
+			DebugLocation(1066, 5);
+			string_literal227=(IToken)Match(input,150,Follow._150_in_moduleidentity_macro6117); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			string_literal227_tree = (CommonTree)adaptor.Create(string_literal227);
 			adaptor.AddChild(root_0, string_literal227_tree);
 			}
-			DebugLocation(1069, 22);
-			c1=(IToken)Match(input,C_STRING,Follow._C_STRING_in_moduleidentity_macro6140); if (state.failed) return retval;
+			DebugLocation(1066, 22);
+			c1=(IToken)Match(input,C_STRING,Follow._C_STRING_in_moduleidentity_macro6121); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			c1_tree = (CommonTree)adaptor.Create(c1);
 			adaptor.AddChild(root_0, c1_tree);
 			}
-			DebugLocation(1069, 32);
+			DebugLocation(1066, 32);
 			if (state.backtracking == 0)
 			{
 				 retval.result.LastUpdate = (c1!=null?c1.Text:null); 
 			}
-			DebugLocation(1070, 2);
-			string_literal228=(IToken)Match(input,165,Follow._165_in_moduleidentity_macro6145); if (state.failed) return retval;
+			DebugLocation(1067, 2);
+			string_literal228=(IToken)Match(input,165,Follow._165_in_moduleidentity_macro6126); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			string_literal228_tree = (CommonTree)adaptor.Create(string_literal228);
 			adaptor.AddChild(root_0, string_literal228_tree);
 			}
-			DebugLocation(1070, 19);
-			c2=(IToken)Match(input,C_STRING,Follow._C_STRING_in_moduleidentity_macro6149); if (state.failed) return retval;
+			DebugLocation(1067, 19);
+			c2=(IToken)Match(input,C_STRING,Follow._C_STRING_in_moduleidentity_macro6130); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			c2_tree = (CommonTree)adaptor.Create(c2);
 			adaptor.AddChild(root_0, c2_tree);
 			}
-			DebugLocation(1070, 29);
+			DebugLocation(1067, 29);
 			if (state.backtracking == 0)
 			{
 				 retval.result.Organization = (c2!=null?c2.Text:null); 
 			}
-			DebugLocation(1071, 2);
-			string_literal229=(IToken)Match(input,136,Follow._136_in_moduleidentity_macro6154); if (state.failed) return retval;
+			DebugLocation(1068, 2);
+			string_literal229=(IToken)Match(input,136,Follow._136_in_moduleidentity_macro6135); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			string_literal229_tree = (CommonTree)adaptor.Create(string_literal229);
 			adaptor.AddChild(root_0, string_literal229_tree);
 			}
-			DebugLocation(1071, 19);
-			c3=(IToken)Match(input,C_STRING,Follow._C_STRING_in_moduleidentity_macro6158); if (state.failed) return retval;
+			DebugLocation(1068, 19);
+			c3=(IToken)Match(input,C_STRING,Follow._C_STRING_in_moduleidentity_macro6139); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			c3_tree = (CommonTree)adaptor.Create(c3);
 			adaptor.AddChild(root_0, c3_tree);
 			}
-			DebugLocation(1071, 29);
+			DebugLocation(1068, 29);
 			if (state.backtracking == 0)
 			{
 				 retval.result.ContactInfo = (c3!=null?c3.Text:null); 
 			}
-			DebugLocation(1072, 5);
-			string_literal230=(IToken)Match(input,139,Follow._139_in_moduleidentity_macro6166); if (state.failed) return retval;
+			DebugLocation(1069, 5);
+			string_literal230=(IToken)Match(input,139,Follow._139_in_moduleidentity_macro6147); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			string_literal230_tree = (CommonTree)adaptor.Create(string_literal230);
 			adaptor.AddChild(root_0, string_literal230_tree);
 			}
-			DebugLocation(1072, 21);
-			c4=(IToken)Match(input,C_STRING,Follow._C_STRING_in_moduleidentity_macro6170); if (state.failed) return retval;
+			DebugLocation(1069, 21);
+			c4=(IToken)Match(input,C_STRING,Follow._C_STRING_in_moduleidentity_macro6151); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			c4_tree = (CommonTree)adaptor.Create(c4);
 			adaptor.AddChild(root_0, c4_tree);
 			}
-			DebugLocation(1072, 31);
+			DebugLocation(1069, 31);
 			if (state.backtracking == 0)
 			{
 				 retval.result.Description = (c4!=null?c4.Text:null); 
 			}
-			DebugLocation(1073, 2);
-			// Smi.g:1073:2: (m= moduleidentity_macro_revision )*
+			DebugLocation(1070, 2);
+			// Smi.g:1070:2: (m= moduleidentity_macro_revision )*
 			try { DebugEnterSubRule(91);
 			while (true)
 			{
@@ -12947,15 +12947,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:1073:3: m= moduleidentity_macro_revision
+					// Smi.g:1070:3: m= moduleidentity_macro_revision
 					{
-					DebugLocation(1073, 4);
-					PushFollow(Follow._moduleidentity_macro_revision_in_moduleidentity_macro6178);
+					DebugLocation(1070, 4);
+					PushFollow(Follow._moduleidentity_macro_revision_in_moduleidentity_macro6159);
 					m=moduleidentity_macro_revision();
 					PopFollow();
 					if (state.failed) return retval;
 					if (state.backtracking == 0) adaptor.AddChild(root_0, m.Tree);
-					DebugLocation(1073, 35);
+					DebugLocation(1070, 35);
 					if (state.backtracking == 0)
 					{
 						 retval.result.Revisions.Add((m!=null?m.result:default(Revision))); 
@@ -12996,7 +12996,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("moduleidentity_macro", 65);
 			LeaveRule_moduleidentity_macro();
 		}
-		DebugLocation(1073, 74);
+		DebugLocation(1070, 74);
 		} finally { DebugExitRule(GrammarFileName, "moduleidentity_macro"); }
 		return retval;
 
@@ -13013,7 +13013,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_moduleidentity_macro_revision();
 	partial void LeaveRule_moduleidentity_macro_revision();
 	// $ANTLR start "moduleidentity_macro_revision"
-	// Smi.g:1075:1: moduleidentity_macro_revision returns [Revision result] : 'REVISION' c1= C_STRING 'DESCRIPTION' c2= C_STRING ;
+	// Smi.g:1072:1: moduleidentity_macro_revision returns [Revision result] : 'REVISION' c1= C_STRING 'DESCRIPTION' c2= C_STRING ;
 	[GrammarRule("moduleidentity_macro_revision")]
 	private SmiParser.moduleidentity_macro_revision_return moduleidentity_macro_revision()
 	{
@@ -13035,40 +13035,40 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree string_literal231_tree = default(CommonTree);
 		CommonTree string_literal232_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "moduleidentity_macro_revision");
-		DebugLocation(1075, 1);
+		DebugLocation(1072, 1);
 		try
 		{
-			// Smi.g:1076:5: ( 'REVISION' c1= C_STRING 'DESCRIPTION' c2= C_STRING )
+			// Smi.g:1073:5: ( 'REVISION' c1= C_STRING 'DESCRIPTION' c2= C_STRING )
 			DebugEnterAlt(1);
-			// Smi.g:1076:7: 'REVISION' c1= C_STRING 'DESCRIPTION' c2= C_STRING
+			// Smi.g:1073:7: 'REVISION' c1= C_STRING 'DESCRIPTION' c2= C_STRING
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(1076, 7);
-			string_literal231=(IToken)Match(input,178,Follow._178_in_moduleidentity_macro_revision6199); if (state.failed) return retval;
+			DebugLocation(1073, 7);
+			string_literal231=(IToken)Match(input,178,Follow._178_in_moduleidentity_macro_revision6180); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			string_literal231_tree = (CommonTree)adaptor.Create(string_literal231);
 			adaptor.AddChild(root_0, string_literal231_tree);
 			}
-			DebugLocation(1076, 20);
-			c1=(IToken)Match(input,C_STRING,Follow._C_STRING_in_moduleidentity_macro_revision6203); if (state.failed) return retval;
+			DebugLocation(1073, 20);
+			c1=(IToken)Match(input,C_STRING,Follow._C_STRING_in_moduleidentity_macro_revision6184); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			c1_tree = (CommonTree)adaptor.Create(c1);
 			adaptor.AddChild(root_0, c1_tree);
 			}
-			DebugLocation(1076, 30);
-			string_literal232=(IToken)Match(input,139,Follow._139_in_moduleidentity_macro_revision6205); if (state.failed) return retval;
+			DebugLocation(1073, 30);
+			string_literal232=(IToken)Match(input,139,Follow._139_in_moduleidentity_macro_revision6186); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			string_literal232_tree = (CommonTree)adaptor.Create(string_literal232);
 			adaptor.AddChild(root_0, string_literal232_tree);
 			}
-			DebugLocation(1076, 46);
-			c2=(IToken)Match(input,C_STRING,Follow._C_STRING_in_moduleidentity_macro_revision6209); if (state.failed) return retval;
+			DebugLocation(1073, 46);
+			c2=(IToken)Match(input,C_STRING,Follow._C_STRING_in_moduleidentity_macro_revision6190); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			c2_tree = (CommonTree)adaptor.Create(c2);
 			adaptor.AddChild(root_0, c2_tree);
 			}
-			DebugLocation(1076, 56);
+			DebugLocation(1073, 56);
 			if (state.backtracking == 0)
 			{
 				 retval.result = new Revision((c1!=null?c1.Text:null), (c2!=null?c2.Text:null)); 
@@ -13095,7 +13095,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("moduleidentity_macro_revision", 66);
 			LeaveRule_moduleidentity_macro_revision();
 		}
-		DebugLocation(1077, 1);
+		DebugLocation(1074, 1);
 		} finally { DebugExitRule(GrammarFileName, "moduleidentity_macro_revision"); }
 		return retval;
 
@@ -13112,7 +13112,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_moduleidentity_macro_categories();
 	partial void LeaveRule_moduleidentity_macro_categories();
 	// $ANTLR start "moduleidentity_macro_categories"
-	// Smi.g:1079:1: moduleidentity_macro_categories returns [Categories result = new Categories()] : (l= LOWER |m1= moduleidentity_macro_categoryid ( COMMA m2= moduleidentity_macro_categoryid )* );
+	// Smi.g:1076:1: moduleidentity_macro_categories returns [Categories result = new Categories()] : (l= LOWER |m1= moduleidentity_macro_categoryid ( COMMA m2= moduleidentity_macro_categoryid )* );
 	[GrammarRule("moduleidentity_macro_categories")]
 	private SmiParser.moduleidentity_macro_categories_return moduleidentity_macro_categories()
 	{
@@ -13132,10 +13132,10 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree l_tree = default(CommonTree);
 		CommonTree COMMA233_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "moduleidentity_macro_categories");
-		DebugLocation(1079, 1);
+		DebugLocation(1076, 1);
 		try
 		{
-			// Smi.g:1080:5: (l= LOWER |m1= moduleidentity_macro_categoryid ( COMMA m2= moduleidentity_macro_categoryid )* )
+			// Smi.g:1077:5: (l= LOWER |m1= moduleidentity_macro_categoryid ( COMMA m2= moduleidentity_macro_categoryid )* )
 			int alt93=2;
 			try { DebugEnterDecision(93, false);
 			int LA93_1 = input.LA(1);
@@ -13176,17 +13176,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1080:7: l= LOWER
+				// Smi.g:1077:7: l= LOWER
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(1080, 8);
-				l=(IToken)Match(input,LOWER,Follow._LOWER_in_moduleidentity_macro_categories6232); if (state.failed) return retval;
+				DebugLocation(1077, 8);
+				l=(IToken)Match(input,LOWER,Follow._LOWER_in_moduleidentity_macro_categories6213); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				l_tree = (CommonTree)adaptor.Create(l);
 				adaptor.AddChild(root_0, l_tree);
 				}
-				DebugLocation(1080, 15);
+				DebugLocation(1077, 15);
 				if (state.backtracking == 0)
 				{
 					if (l.Text ==  ("all")) retval.result.AllCategories = true;
@@ -13198,23 +13198,23 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// Smi.g:1083:7: m1= moduleidentity_macro_categoryid ( COMMA m2= moduleidentity_macro_categoryid )*
+				// Smi.g:1080:7: m1= moduleidentity_macro_categoryid ( COMMA m2= moduleidentity_macro_categoryid )*
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(1083, 9);
-				PushFollow(Follow._moduleidentity_macro_categoryid_in_moduleidentity_macro_categories6245);
+				DebugLocation(1080, 9);
+				PushFollow(Follow._moduleidentity_macro_categoryid_in_moduleidentity_macro_categories6226);
 				m1=moduleidentity_macro_categoryid();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, m1.Tree);
-				DebugLocation(1083, 42);
+				DebugLocation(1080, 42);
 				if (state.backtracking == 0)
 				{
 					 retval.result.CategoryIds.Add((m1!=null?m1.result:default(NamedBit))); 
 				}
-				DebugLocation(1084, 2);
-				// Smi.g:1084:2: ( COMMA m2= moduleidentity_macro_categoryid )*
+				DebugLocation(1081, 2);
+				// Smi.g:1081:2: ( COMMA m2= moduleidentity_macro_categoryid )*
 				try { DebugEnterSubRule(92);
 				while (true)
 				{
@@ -13233,21 +13233,21 @@ public partial class SmiParser : Antlr.Runtime.Parser
 					{
 					case 1:
 						DebugEnterAlt(1);
-						// Smi.g:1084:3: COMMA m2= moduleidentity_macro_categoryid
+						// Smi.g:1081:3: COMMA m2= moduleidentity_macro_categoryid
 						{
-						DebugLocation(1084, 3);
-						COMMA233=(IToken)Match(input,COMMA,Follow._COMMA_in_moduleidentity_macro_categories6252); if (state.failed) return retval;
+						DebugLocation(1081, 3);
+						COMMA233=(IToken)Match(input,COMMA,Follow._COMMA_in_moduleidentity_macro_categories6233); if (state.failed) return retval;
 						if (state.backtracking == 0) {
 						COMMA233_tree = (CommonTree)adaptor.Create(COMMA233);
 						adaptor.AddChild(root_0, COMMA233_tree);
 						}
-						DebugLocation(1084, 11);
-						PushFollow(Follow._moduleidentity_macro_categoryid_in_moduleidentity_macro_categories6256);
+						DebugLocation(1081, 11);
+						PushFollow(Follow._moduleidentity_macro_categoryid_in_moduleidentity_macro_categories6237);
 						m2=moduleidentity_macro_categoryid();
 						PopFollow();
 						if (state.failed) return retval;
 						if (state.backtracking == 0) adaptor.AddChild(root_0, m2.Tree);
-						DebugLocation(1084, 44);
+						DebugLocation(1081, 44);
 						if (state.backtracking == 0)
 						{
 							 retval.result.CategoryIds.Add((m2!=null?m2.result:default(NamedBit))); 
@@ -13290,7 +13290,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("moduleidentity_macro_categories", 67);
 			LeaveRule_moduleidentity_macro_categories();
 		}
-		DebugLocation(1085, 1);
+		DebugLocation(1082, 1);
 		} finally { DebugExitRule(GrammarFileName, "moduleidentity_macro_categories"); }
 		return retval;
 
@@ -13307,7 +13307,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_moduleidentity_macro_categoryid();
 	partial void LeaveRule_moduleidentity_macro_categoryid();
 	// $ANTLR start "moduleidentity_macro_categoryid"
-	// Smi.g:1087:1: moduleidentity_macro_categoryid returns [NamedBit result] : n= namedbit ;
+	// Smi.g:1084:1: moduleidentity_macro_categoryid returns [NamedBit result] : n= namedbit ;
 	[GrammarRule("moduleidentity_macro_categoryid")]
 	private SmiParser.moduleidentity_macro_categoryid_return moduleidentity_macro_categoryid()
 	{
@@ -13322,22 +13322,22 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		SmiParser.namedbit_return n = default(SmiParser.namedbit_return);
 
 		try { DebugEnterRule(GrammarFileName, "moduleidentity_macro_categoryid");
-		DebugLocation(1087, 1);
+		DebugLocation(1084, 1);
 		try
 		{
-			// Smi.g:1088:5: (n= namedbit )
+			// Smi.g:1085:5: (n= namedbit )
 			DebugEnterAlt(1);
-			// Smi.g:1088:7: n= namedbit
+			// Smi.g:1085:7: n= namedbit
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(1088, 8);
-			PushFollow(Follow._namedbit_in_moduleidentity_macro_categoryid6280);
+			DebugLocation(1085, 8);
+			PushFollow(Follow._namedbit_in_moduleidentity_macro_categoryid6261);
 			n=namedbit();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, n.Tree);
-			DebugLocation(1088, 18);
+			DebugLocation(1085, 18);
 			if (state.backtracking == 0)
 			{
 				 retval.result = (n!=null?n.result:default(NamedBit)); 
@@ -13364,7 +13364,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("moduleidentity_macro_categoryid", 68);
 			LeaveRule_moduleidentity_macro_categoryid();
 		}
-		DebugLocation(1089, 1);
+		DebugLocation(1086, 1);
 		} finally { DebugExitRule(GrammarFileName, "moduleidentity_macro_categoryid"); }
 		return retval;
 
@@ -13381,7 +13381,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_objectidentity_macro();
 	partial void LeaveRule_objectidentity_macro();
 	// $ANTLR start "objectidentity_macro"
-	// Smi.g:1092:1: objectidentity_macro returns [ObjectIdentityMacro result] : 'OBJECT-IDENTITY' 'STATUS' s= status 'DESCRIPTION' c1= C_STRING ( 'REFERENCE' c2= C_STRING )? ;
+	// Smi.g:1089:1: objectidentity_macro returns [ObjectIdentityMacro result] : 'OBJECT-IDENTITY' 'STATUS' s= status 'DESCRIPTION' c1= C_STRING ( 'REFERENCE' c2= C_STRING )? ;
 	[GrammarRule("objectidentity_macro")]
 	private SmiParser.objectidentity_macro_return objectidentity_macro()
 	{
@@ -13408,52 +13408,52 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree string_literal236_tree = default(CommonTree);
 		CommonTree string_literal237_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "objectidentity_macro");
-		DebugLocation(1092, 62);
+		DebugLocation(1089, 62);
 		try
 		{
-			// Smi.g:1093:5: ( 'OBJECT-IDENTITY' 'STATUS' s= status 'DESCRIPTION' c1= C_STRING ( 'REFERENCE' c2= C_STRING )? )
+			// Smi.g:1090:5: ( 'OBJECT-IDENTITY' 'STATUS' s= status 'DESCRIPTION' c1= C_STRING ( 'REFERENCE' c2= C_STRING )? )
 			DebugEnterAlt(1);
-			// Smi.g:1093:7: 'OBJECT-IDENTITY' 'STATUS' s= status 'DESCRIPTION' c1= C_STRING ( 'REFERENCE' c2= C_STRING )?
+			// Smi.g:1090:7: 'OBJECT-IDENTITY' 'STATUS' s= status 'DESCRIPTION' c1= C_STRING ( 'REFERENCE' c2= C_STRING )?
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(1093, 7);
-			string_literal234=(IToken)Match(input,162,Follow._162_in_objectidentity_macro6303); if (state.failed) return retval;
+			DebugLocation(1090, 7);
+			string_literal234=(IToken)Match(input,162,Follow._162_in_objectidentity_macro6284); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			string_literal234_tree = (CommonTree)adaptor.Create(string_literal234);
 			adaptor.AddChild(root_0, string_literal234_tree);
 			}
-			DebugLocation(1093, 25);
-			string_literal235=(IToken)Match(input,182,Follow._182_in_objectidentity_macro6305); if (state.failed) return retval;
+			DebugLocation(1090, 25);
+			string_literal235=(IToken)Match(input,182,Follow._182_in_objectidentity_macro6286); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			string_literal235_tree = (CommonTree)adaptor.Create(string_literal235);
 			adaptor.AddChild(root_0, string_literal235_tree);
 			}
-			DebugLocation(1093, 35);
-			PushFollow(Follow._status_in_objectidentity_macro6309);
+			DebugLocation(1090, 35);
+			PushFollow(Follow._status_in_objectidentity_macro6290);
 			s=status();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, s.Tree);
-			DebugLocation(1094, 2);
-			string_literal236=(IToken)Match(input,139,Follow._139_in_objectidentity_macro6313); if (state.failed) return retval;
+			DebugLocation(1091, 2);
+			string_literal236=(IToken)Match(input,139,Follow._139_in_objectidentity_macro6294); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			string_literal236_tree = (CommonTree)adaptor.Create(string_literal236);
 			adaptor.AddChild(root_0, string_literal236_tree);
 			}
-			DebugLocation(1094, 18);
-			c1=(IToken)Match(input,C_STRING,Follow._C_STRING_in_objectidentity_macro6317); if (state.failed) return retval;
+			DebugLocation(1091, 18);
+			c1=(IToken)Match(input,C_STRING,Follow._C_STRING_in_objectidentity_macro6298); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			c1_tree = (CommonTree)adaptor.Create(c1);
 			adaptor.AddChild(root_0, c1_tree);
 			}
-			DebugLocation(1094, 28);
+			DebugLocation(1091, 28);
 			if (state.backtracking == 0)
 			{
 				 retval.result = new ObjectIdentityMacro((s!=null?s.result:default(EntityStatus)), (c1!=null?c1.Text:null)); 
 			}
-			DebugLocation(1095, 2);
-			// Smi.g:1095:2: ( 'REFERENCE' c2= C_STRING )?
+			DebugLocation(1092, 2);
+			// Smi.g:1092:2: ( 'REFERENCE' c2= C_STRING )?
 			int alt94=2;
 			try { DebugEnterSubRule(94);
 			try { DebugEnterDecision(94, false);
@@ -13468,21 +13468,21 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1095:3: 'REFERENCE' c2= C_STRING
+				// Smi.g:1092:3: 'REFERENCE' c2= C_STRING
 				{
-				DebugLocation(1095, 3);
-				string_literal237=(IToken)Match(input,175,Follow._175_in_objectidentity_macro6324); if (state.failed) return retval;
+				DebugLocation(1092, 3);
+				string_literal237=(IToken)Match(input,175,Follow._175_in_objectidentity_macro6305); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal237_tree = (CommonTree)adaptor.Create(string_literal237);
 				adaptor.AddChild(root_0, string_literal237_tree);
 				}
-				DebugLocation(1095, 17);
-				c2=(IToken)Match(input,C_STRING,Follow._C_STRING_in_objectidentity_macro6328); if (state.failed) return retval;
+				DebugLocation(1092, 17);
+				c2=(IToken)Match(input,C_STRING,Follow._C_STRING_in_objectidentity_macro6309); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				c2_tree = (CommonTree)adaptor.Create(c2);
 				adaptor.AddChild(root_0, c2_tree);
 				}
-				DebugLocation(1095, 27);
+				DebugLocation(1092, 27);
 				if (state.backtracking == 0)
 				{
 					 retval.result.Reference = (c2!=null?c2.Text:null); 
@@ -13516,7 +13516,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("objectidentity_macro", 69);
 			LeaveRule_objectidentity_macro();
 		}
-		DebugLocation(1095, 62);
+		DebugLocation(1092, 62);
 		} finally { DebugExitRule(GrammarFileName, "objectidentity_macro"); }
 		return retval;
 
@@ -13533,7 +13533,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_notificationtype_macro();
 	partial void LeaveRule_notificationtype_macro();
 	// $ANTLR start "notificationtype_macro"
-	// Smi.g:1098:1: notificationtype_macro returns [NotificationTypeMacro result = new NotificationTypeMacro()] : 'NOTIFICATION-TYPE' ( 'OBJECTS' L_BRACE v1= value ( COMMA v2= value )* R_BRACE )? 'STATUS' s= status 'DESCRIPTION' c1= C_STRING ( 'REFERENCE' c2= C_STRING )? ;
+	// Smi.g:1095:1: notificationtype_macro returns [NotificationTypeMacro result = new NotificationTypeMacro()] : 'NOTIFICATION-TYPE' ( 'OBJECTS' L_BRACE v1= value ( COMMA v2= value )* R_BRACE )? 'STATUS' s= status 'DESCRIPTION' c1= C_STRING ( 'REFERENCE' c2= C_STRING )? ;
 	[GrammarRule("notificationtype_macro")]
 	private SmiParser.notificationtype_macro_return notificationtype_macro()
 	{
@@ -13570,23 +13570,23 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree string_literal244_tree = default(CommonTree);
 		CommonTree string_literal245_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "notificationtype_macro");
-		DebugLocation(1098, 4);
+		DebugLocation(1095, 4);
 		try
 		{
-			// Smi.g:1099:5: ( 'NOTIFICATION-TYPE' ( 'OBJECTS' L_BRACE v1= value ( COMMA v2= value )* R_BRACE )? 'STATUS' s= status 'DESCRIPTION' c1= C_STRING ( 'REFERENCE' c2= C_STRING )? )
+			// Smi.g:1096:5: ( 'NOTIFICATION-TYPE' ( 'OBJECTS' L_BRACE v1= value ( COMMA v2= value )* R_BRACE )? 'STATUS' s= status 'DESCRIPTION' c1= C_STRING ( 'REFERENCE' c2= C_STRING )? )
 			DebugEnterAlt(1);
-			// Smi.g:1099:7: 'NOTIFICATION-TYPE' ( 'OBJECTS' L_BRACE v1= value ( COMMA v2= value )* R_BRACE )? 'STATUS' s= status 'DESCRIPTION' c1= C_STRING ( 'REFERENCE' c2= C_STRING )?
+			// Smi.g:1096:7: 'NOTIFICATION-TYPE' ( 'OBJECTS' L_BRACE v1= value ( COMMA v2= value )* R_BRACE )? 'STATUS' s= status 'DESCRIPTION' c1= C_STRING ( 'REFERENCE' c2= C_STRING )?
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(1099, 7);
-			string_literal238=(IToken)Match(input,159,Follow._159_in_notificationtype_macro6351); if (state.failed) return retval;
+			DebugLocation(1096, 7);
+			string_literal238=(IToken)Match(input,159,Follow._159_in_notificationtype_macro6332); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			string_literal238_tree = (CommonTree)adaptor.Create(string_literal238);
 			adaptor.AddChild(root_0, string_literal238_tree);
 			}
-			DebugLocation(1099, 27);
-			// Smi.g:1099:27: ( 'OBJECTS' L_BRACE v1= value ( COMMA v2= value )* R_BRACE )?
+			DebugLocation(1096, 27);
+			// Smi.g:1096:27: ( 'OBJECTS' L_BRACE v1= value ( COMMA v2= value )* R_BRACE )?
 			int alt96=2;
 			try { DebugEnterSubRule(96);
 			try { DebugEnterDecision(96, false);
@@ -13601,33 +13601,33 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1099:28: 'OBJECTS' L_BRACE v1= value ( COMMA v2= value )* R_BRACE
+				// Smi.g:1096:28: 'OBJECTS' L_BRACE v1= value ( COMMA v2= value )* R_BRACE
 				{
-				DebugLocation(1099, 28);
-				string_literal239=(IToken)Match(input,164,Follow._164_in_notificationtype_macro6354); if (state.failed) return retval;
+				DebugLocation(1096, 28);
+				string_literal239=(IToken)Match(input,164,Follow._164_in_notificationtype_macro6335); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal239_tree = (CommonTree)adaptor.Create(string_literal239);
 				adaptor.AddChild(root_0, string_literal239_tree);
 				}
-				DebugLocation(1099, 38);
-				L_BRACE240=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_notificationtype_macro6356); if (state.failed) return retval;
+				DebugLocation(1096, 38);
+				L_BRACE240=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_notificationtype_macro6337); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				L_BRACE240_tree = (CommonTree)adaptor.Create(L_BRACE240);
 				adaptor.AddChild(root_0, L_BRACE240_tree);
 				}
-				DebugLocation(1099, 48);
-				PushFollow(Follow._value_in_notificationtype_macro6360);
+				DebugLocation(1096, 48);
+				PushFollow(Follow._value_in_notificationtype_macro6341);
 				v1=value();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, v1.Tree);
-				DebugLocation(1099, 55);
+				DebugLocation(1096, 55);
 				if (state.backtracking == 0)
 				{
 					 retval.result.Objects.Add((v1!=null?v1.result:default(ISmiValue))); 
 				}
-				DebugLocation(1100, 5);
-				// Smi.g:1100:5: ( COMMA v2= value )*
+				DebugLocation(1097, 5);
+				// Smi.g:1097:5: ( COMMA v2= value )*
 				try { DebugEnterSubRule(95);
 				while (true)
 				{
@@ -13646,21 +13646,21 @@ public partial class SmiParser : Antlr.Runtime.Parser
 					{
 					case 1:
 						DebugEnterAlt(1);
-						// Smi.g:1100:6: COMMA v2= value
+						// Smi.g:1097:6: COMMA v2= value
 						{
-						DebugLocation(1100, 6);
-						COMMA241=(IToken)Match(input,COMMA,Follow._COMMA_in_notificationtype_macro6370); if (state.failed) return retval;
+						DebugLocation(1097, 6);
+						COMMA241=(IToken)Match(input,COMMA,Follow._COMMA_in_notificationtype_macro6351); if (state.failed) return retval;
 						if (state.backtracking == 0) {
 						COMMA241_tree = (CommonTree)adaptor.Create(COMMA241);
 						adaptor.AddChild(root_0, COMMA241_tree);
 						}
-						DebugLocation(1100, 14);
-						PushFollow(Follow._value_in_notificationtype_macro6374);
+						DebugLocation(1097, 14);
+						PushFollow(Follow._value_in_notificationtype_macro6355);
 						v2=value();
 						PopFollow();
 						if (state.failed) return retval;
 						if (state.backtracking == 0) adaptor.AddChild(root_0, v2.Tree);
-						DebugLocation(1100, 21);
+						DebugLocation(1097, 21);
 						if (state.backtracking == 0)
 						{
 							 retval.result.Objects.Add((v2!=null?v2.result:default(ISmiValue))); 
@@ -13679,8 +13679,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 				} finally { DebugExitSubRule(95); }
 
-				DebugLocation(1100, 60);
-				R_BRACE242=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_notificationtype_macro6380); if (state.failed) return retval;
+				DebugLocation(1097, 60);
+				R_BRACE242=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_notificationtype_macro6361); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				R_BRACE242_tree = (CommonTree)adaptor.Create(R_BRACE242);
 				adaptor.AddChild(root_0, R_BRACE242_tree);
@@ -13692,42 +13692,42 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(96); }
 
-			DebugLocation(1101, 5);
-			string_literal243=(IToken)Match(input,182,Follow._182_in_notificationtype_macro6389); if (state.failed) return retval;
+			DebugLocation(1098, 5);
+			string_literal243=(IToken)Match(input,182,Follow._182_in_notificationtype_macro6370); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			string_literal243_tree = (CommonTree)adaptor.Create(string_literal243);
 			adaptor.AddChild(root_0, string_literal243_tree);
 			}
-			DebugLocation(1101, 15);
-			PushFollow(Follow._status_in_notificationtype_macro6393);
+			DebugLocation(1098, 15);
+			PushFollow(Follow._status_in_notificationtype_macro6374);
 			s=status();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, s.Tree);
-			DebugLocation(1101, 23);
+			DebugLocation(1098, 23);
 			if (state.backtracking == 0)
 			{
 				 retval.result.Status = (s!=null?s.result:default(EntityStatus)); 
 			}
-			DebugLocation(1102, 5);
-			string_literal244=(IToken)Match(input,139,Follow._139_in_notificationtype_macro6401); if (state.failed) return retval;
+			DebugLocation(1099, 5);
+			string_literal244=(IToken)Match(input,139,Follow._139_in_notificationtype_macro6382); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			string_literal244_tree = (CommonTree)adaptor.Create(string_literal244);
 			adaptor.AddChild(root_0, string_literal244_tree);
 			}
-			DebugLocation(1102, 21);
-			c1=(IToken)Match(input,C_STRING,Follow._C_STRING_in_notificationtype_macro6405); if (state.failed) return retval;
+			DebugLocation(1099, 21);
+			c1=(IToken)Match(input,C_STRING,Follow._C_STRING_in_notificationtype_macro6386); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			c1_tree = (CommonTree)adaptor.Create(c1);
 			adaptor.AddChild(root_0, c1_tree);
 			}
-			DebugLocation(1102, 31);
+			DebugLocation(1099, 31);
 			if (state.backtracking == 0)
 			{
 				 retval.result.Description = (c1!=null?c1.Text:null); 
 			}
-			DebugLocation(1103, 5);
-			// Smi.g:1103:5: ( 'REFERENCE' c2= C_STRING )?
+			DebugLocation(1100, 5);
+			// Smi.g:1100:5: ( 'REFERENCE' c2= C_STRING )?
 			int alt97=2;
 			try { DebugEnterSubRule(97);
 			try { DebugEnterDecision(97, false);
@@ -13742,21 +13742,21 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1103:6: 'REFERENCE' c2= C_STRING
+				// Smi.g:1100:6: 'REFERENCE' c2= C_STRING
 				{
-				DebugLocation(1103, 6);
-				string_literal245=(IToken)Match(input,175,Follow._175_in_notificationtype_macro6414); if (state.failed) return retval;
+				DebugLocation(1100, 6);
+				string_literal245=(IToken)Match(input,175,Follow._175_in_notificationtype_macro6395); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal245_tree = (CommonTree)adaptor.Create(string_literal245);
 				adaptor.AddChild(root_0, string_literal245_tree);
 				}
-				DebugLocation(1103, 20);
-				c2=(IToken)Match(input,C_STRING,Follow._C_STRING_in_notificationtype_macro6418); if (state.failed) return retval;
+				DebugLocation(1100, 20);
+				c2=(IToken)Match(input,C_STRING,Follow._C_STRING_in_notificationtype_macro6399); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				c2_tree = (CommonTree)adaptor.Create(c2);
 				adaptor.AddChild(root_0, c2_tree);
 				}
-				DebugLocation(1103, 30);
+				DebugLocation(1100, 30);
 				if (state.backtracking == 0)
 				{
 					 retval.result.Reference = (c2!=null?c2.Text:null); 
@@ -13790,7 +13790,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("notificationtype_macro", 70);
 			LeaveRule_notificationtype_macro();
 		}
-		DebugLocation(1104, 4);
+		DebugLocation(1101, 4);
 		} finally { DebugExitRule(GrammarFileName, "notificationtype_macro"); }
 		return retval;
 
@@ -13807,7 +13807,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_textualconvention_macro();
 	partial void LeaveRule_textualconvention_macro();
 	// $ANTLR start "textualconvention_macro"
-	// Smi.g:1107:1: textualconvention_macro returns [TextualConventionMacro result = new TextualConventionMacro()] : 'TEXTUAL-CONVENTION' ( 'DISPLAY-HINT' c1= C_STRING )? 'STATUS' s= status 'DESCRIPTION' c2= C_STRING ( 'REFERENCE' c3= C_STRING )? 'SYNTAX' ( ( smi_type L_BRACE )=>s2= smi_type L_BRACE nb1= namedbit ( COMMA nb2= namedbit )* R_BRACE |t= type ) ;
+	// Smi.g:1104:1: textualconvention_macro returns [TextualConventionMacro result = new TextualConventionMacro()] : 'TEXTUAL-CONVENTION' ( 'DISPLAY-HINT' c1= C_STRING )? 'STATUS' s= status 'DESCRIPTION' c2= C_STRING ( 'REFERENCE' c3= C_STRING )? 'SYNTAX' ( ( smi_type L_BRACE )=>s2= smi_type L_BRACE nb1= namedbit ( COMMA nb2= namedbit )* R_BRACE |t= type ) ;
 	[GrammarRule("textualconvention_macro")]
 	private SmiParser.textualconvention_macro_return textualconvention_macro()
 	{
@@ -13850,23 +13850,23 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree COMMA253_tree = default(CommonTree);
 		CommonTree R_BRACE254_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "textualconvention_macro");
-		DebugLocation(1107, 1);
+		DebugLocation(1104, 1);
 		try
 		{
-			// Smi.g:1108:5: ( 'TEXTUAL-CONVENTION' ( 'DISPLAY-HINT' c1= C_STRING )? 'STATUS' s= status 'DESCRIPTION' c2= C_STRING ( 'REFERENCE' c3= C_STRING )? 'SYNTAX' ( ( smi_type L_BRACE )=>s2= smi_type L_BRACE nb1= namedbit ( COMMA nb2= namedbit )* R_BRACE |t= type ) )
+			// Smi.g:1105:5: ( 'TEXTUAL-CONVENTION' ( 'DISPLAY-HINT' c1= C_STRING )? 'STATUS' s= status 'DESCRIPTION' c2= C_STRING ( 'REFERENCE' c3= C_STRING )? 'SYNTAX' ( ( smi_type L_BRACE )=>s2= smi_type L_BRACE nb1= namedbit ( COMMA nb2= namedbit )* R_BRACE |t= type ) )
 			DebugEnterAlt(1);
-			// Smi.g:1108:7: 'TEXTUAL-CONVENTION' ( 'DISPLAY-HINT' c1= C_STRING )? 'STATUS' s= status 'DESCRIPTION' c2= C_STRING ( 'REFERENCE' c3= C_STRING )? 'SYNTAX' ( ( smi_type L_BRACE )=>s2= smi_type L_BRACE nb1= namedbit ( COMMA nb2= namedbit )* R_BRACE |t= type )
+			// Smi.g:1105:7: 'TEXTUAL-CONVENTION' ( 'DISPLAY-HINT' c1= C_STRING )? 'STATUS' s= status 'DESCRIPTION' c2= C_STRING ( 'REFERENCE' c3= C_STRING )? 'SYNTAX' ( ( smi_type L_BRACE )=>s2= smi_type L_BRACE nb1= namedbit ( COMMA nb2= namedbit )* R_BRACE |t= type )
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(1108, 7);
-			string_literal246=(IToken)Match(input,186,Follow._186_in_textualconvention_macro6446); if (state.failed) return retval;
+			DebugLocation(1105, 7);
+			string_literal246=(IToken)Match(input,186,Follow._186_in_textualconvention_macro6427); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			string_literal246_tree = (CommonTree)adaptor.Create(string_literal246);
 			adaptor.AddChild(root_0, string_literal246_tree);
 			}
-			DebugLocation(1108, 28);
-			// Smi.g:1108:28: ( 'DISPLAY-HINT' c1= C_STRING )?
+			DebugLocation(1105, 28);
+			// Smi.g:1105:28: ( 'DISPLAY-HINT' c1= C_STRING )?
 			int alt98=2;
 			try { DebugEnterSubRule(98);
 			try { DebugEnterDecision(98, false);
@@ -13881,21 +13881,21 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1108:29: 'DISPLAY-HINT' c1= C_STRING
+				// Smi.g:1105:29: 'DISPLAY-HINT' c1= C_STRING
 				{
-				DebugLocation(1108, 29);
-				string_literal247=(IToken)Match(input,140,Follow._140_in_textualconvention_macro6449); if (state.failed) return retval;
+				DebugLocation(1105, 29);
+				string_literal247=(IToken)Match(input,140,Follow._140_in_textualconvention_macro6430); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal247_tree = (CommonTree)adaptor.Create(string_literal247);
 				adaptor.AddChild(root_0, string_literal247_tree);
 				}
-				DebugLocation(1108, 46);
-				c1=(IToken)Match(input,C_STRING,Follow._C_STRING_in_textualconvention_macro6453); if (state.failed) return retval;
+				DebugLocation(1105, 46);
+				c1=(IToken)Match(input,C_STRING,Follow._C_STRING_in_textualconvention_macro6434); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				c1_tree = (CommonTree)adaptor.Create(c1);
 				adaptor.AddChild(root_0, c1_tree);
 				}
-				DebugLocation(1108, 56);
+				DebugLocation(1105, 56);
 				if (state.backtracking == 0)
 				{
 					 retval.result.DisplayHint = (c1!=null?c1.Text:null); 
@@ -13907,42 +13907,42 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(98); }
 
-			DebugLocation(1109, 5);
-			string_literal248=(IToken)Match(input,182,Follow._182_in_textualconvention_macro6463); if (state.failed) return retval;
+			DebugLocation(1106, 5);
+			string_literal248=(IToken)Match(input,182,Follow._182_in_textualconvention_macro6444); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			string_literal248_tree = (CommonTree)adaptor.Create(string_literal248);
 			adaptor.AddChild(root_0, string_literal248_tree);
 			}
-			DebugLocation(1109, 15);
-			PushFollow(Follow._status_in_textualconvention_macro6467);
+			DebugLocation(1106, 15);
+			PushFollow(Follow._status_in_textualconvention_macro6448);
 			s=status();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, s.Tree);
-			DebugLocation(1109, 23);
+			DebugLocation(1106, 23);
 			if (state.backtracking == 0)
 			{
 				 retval.result.Status = (s!=null?s.result:default(EntityStatus)); 
 			}
-			DebugLocation(1110, 5);
-			string_literal249=(IToken)Match(input,139,Follow._139_in_textualconvention_macro6475); if (state.failed) return retval;
+			DebugLocation(1107, 5);
+			string_literal249=(IToken)Match(input,139,Follow._139_in_textualconvention_macro6456); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			string_literal249_tree = (CommonTree)adaptor.Create(string_literal249);
 			adaptor.AddChild(root_0, string_literal249_tree);
 			}
-			DebugLocation(1110, 21);
-			c2=(IToken)Match(input,C_STRING,Follow._C_STRING_in_textualconvention_macro6479); if (state.failed) return retval;
+			DebugLocation(1107, 21);
+			c2=(IToken)Match(input,C_STRING,Follow._C_STRING_in_textualconvention_macro6460); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			c2_tree = (CommonTree)adaptor.Create(c2);
 			adaptor.AddChild(root_0, c2_tree);
 			}
-			DebugLocation(1110, 31);
+			DebugLocation(1107, 31);
 			if (state.backtracking == 0)
 			{
 				 retval.result.Description = (c2!=null?c2.Text:null); 
 			}
-			DebugLocation(1111, 5);
-			// Smi.g:1111:5: ( 'REFERENCE' c3= C_STRING )?
+			DebugLocation(1108, 5);
+			// Smi.g:1108:5: ( 'REFERENCE' c3= C_STRING )?
 			int alt99=2;
 			try { DebugEnterSubRule(99);
 			try { DebugEnterDecision(99, false);
@@ -13957,21 +13957,21 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1111:6: 'REFERENCE' c3= C_STRING
+				// Smi.g:1108:6: 'REFERENCE' c3= C_STRING
 				{
-				DebugLocation(1111, 6);
-				string_literal250=(IToken)Match(input,175,Follow._175_in_textualconvention_macro6488); if (state.failed) return retval;
+				DebugLocation(1108, 6);
+				string_literal250=(IToken)Match(input,175,Follow._175_in_textualconvention_macro6469); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal250_tree = (CommonTree)adaptor.Create(string_literal250);
 				adaptor.AddChild(root_0, string_literal250_tree);
 				}
-				DebugLocation(1111, 20);
-				c3=(IToken)Match(input,C_STRING,Follow._C_STRING_in_textualconvention_macro6492); if (state.failed) return retval;
+				DebugLocation(1108, 20);
+				c3=(IToken)Match(input,C_STRING,Follow._C_STRING_in_textualconvention_macro6473); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				c3_tree = (CommonTree)adaptor.Create(c3);
 				adaptor.AddChild(root_0, c3_tree);
 				}
-				DebugLocation(1111, 30);
+				DebugLocation(1108, 30);
 				if (state.backtracking == 0)
 				{
 					 retval.result.Reference = (c3!=null?c3.Text:null); 
@@ -13983,14 +13983,14 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(99); }
 
-			DebugLocation(1112, 5);
-			string_literal251=(IToken)Match(input,185,Follow._185_in_textualconvention_macro6503); if (state.failed) return retval;
+			DebugLocation(1109, 5);
+			string_literal251=(IToken)Match(input,185,Follow._185_in_textualconvention_macro6484); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			string_literal251_tree = (CommonTree)adaptor.Create(string_literal251);
 			adaptor.AddChild(root_0, string_literal251_tree);
 			}
-			DebugLocation(1112, 14);
-			// Smi.g:1112:14: ( ( smi_type L_BRACE )=>s2= smi_type L_BRACE nb1= namedbit ( COMMA nb2= namedbit )* R_BRACE |t= type )
+			DebugLocation(1109, 14);
+			// Smi.g:1109:14: ( ( smi_type L_BRACE )=>s2= smi_type L_BRACE nb1= namedbit ( COMMA nb2= namedbit )* R_BRACE |t= type )
 			int alt101=2;
 			try { DebugEnterSubRule(101);
 			try { DebugEnterDecision(101, false);
@@ -14008,38 +14008,38 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1112:16: ( smi_type L_BRACE )=>s2= smi_type L_BRACE nb1= namedbit ( COMMA nb2= namedbit )* R_BRACE
+				// Smi.g:1109:16: ( smi_type L_BRACE )=>s2= smi_type L_BRACE nb1= namedbit ( COMMA nb2= namedbit )* R_BRACE
 				{
-				DebugLocation(1112, 40);
-				PushFollow(Follow._smi_type_in_textualconvention_macro6517);
+				DebugLocation(1109, 40);
+				PushFollow(Follow._smi_type_in_textualconvention_macro6498);
 				s2=smi_type();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, s2.Tree);
-				DebugLocation(1112, 50);
+				DebugLocation(1109, 50);
 				if (state.backtracking == 0)
 				{
 					 retval.result.Syntax = (s2!=null?s2.result:default(ISmiType)); 
 				}
-				DebugLocation(1113, 2);
-				L_BRACE252=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_textualconvention_macro6522); if (state.failed) return retval;
+				DebugLocation(1110, 2);
+				L_BRACE252=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_textualconvention_macro6503); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				L_BRACE252_tree = (CommonTree)adaptor.Create(L_BRACE252);
 				adaptor.AddChild(root_0, L_BRACE252_tree);
 				}
-				DebugLocation(1113, 13);
-				PushFollow(Follow._namedbit_in_textualconvention_macro6526);
+				DebugLocation(1110, 13);
+				PushFollow(Follow._namedbit_in_textualconvention_macro6507);
 				nb1=namedbit();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, nb1.Tree);
-				DebugLocation(1113, 23);
+				DebugLocation(1110, 23);
 				if (state.backtracking == 0)
 				{
 					 retval.result.SyntaxNamedBits.Add((nb1!=null?nb1.result:default(NamedBit))); 
 				}
-				DebugLocation(1114, 13);
-				// Smi.g:1114:13: ( COMMA nb2= namedbit )*
+				DebugLocation(1111, 13);
+				// Smi.g:1111:13: ( COMMA nb2= namedbit )*
 				try { DebugEnterSubRule(100);
 				while (true)
 				{
@@ -14058,21 +14058,21 @@ public partial class SmiParser : Antlr.Runtime.Parser
 					{
 					case 1:
 						DebugEnterAlt(1);
-						// Smi.g:1114:14: COMMA nb2= namedbit
+						// Smi.g:1111:14: COMMA nb2= namedbit
 						{
-						DebugLocation(1114, 14);
-						COMMA253=(IToken)Match(input,COMMA,Follow._COMMA_in_textualconvention_macro6543); if (state.failed) return retval;
+						DebugLocation(1111, 14);
+						COMMA253=(IToken)Match(input,COMMA,Follow._COMMA_in_textualconvention_macro6524); if (state.failed) return retval;
 						if (state.backtracking == 0) {
 						COMMA253_tree = (CommonTree)adaptor.Create(COMMA253);
 						adaptor.AddChild(root_0, COMMA253_tree);
 						}
-						DebugLocation(1114, 23);
-						PushFollow(Follow._namedbit_in_textualconvention_macro6547);
+						DebugLocation(1111, 23);
+						PushFollow(Follow._namedbit_in_textualconvention_macro6528);
 						nb2=namedbit();
 						PopFollow();
 						if (state.failed) return retval;
 						if (state.backtracking == 0) adaptor.AddChild(root_0, nb2.Tree);
-						DebugLocation(1114, 33);
+						DebugLocation(1111, 33);
 						if (state.backtracking == 0)
 						{
 							 retval.result.SyntaxNamedBits.Add((nb2!=null?nb2.result:default(NamedBit))); 
@@ -14091,8 +14091,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 				} finally { DebugExitSubRule(100); }
 
-				DebugLocation(1114, 81);
-				R_BRACE254=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_textualconvention_macro6553); if (state.failed) return retval;
+				DebugLocation(1111, 81);
+				R_BRACE254=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_textualconvention_macro6534); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				R_BRACE254_tree = (CommonTree)adaptor.Create(R_BRACE254);
 				adaptor.AddChild(root_0, R_BRACE254_tree);
@@ -14102,10 +14102,10 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// Smi.g:1115:6: t= type
+				// Smi.g:1112:6: t= type
 				{
-				DebugLocation(1115, 7);
-				PushFollow(Follow._type_in_textualconvention_macro6563);
+				DebugLocation(1112, 7);
+				PushFollow(Follow._type_in_textualconvention_macro6544);
 				t=type();
 				PopFollow();
 				if (state.failed) return retval;
@@ -14139,7 +14139,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("textualconvention_macro", 71);
 			LeaveRule_textualconvention_macro();
 		}
-		DebugLocation(1116, 1);
+		DebugLocation(1113, 1);
 		} finally { DebugExitRule(GrammarFileName, "textualconvention_macro"); }
 		return retval;
 
@@ -14156,7 +14156,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_namedbit();
 	partial void LeaveRule_namedbit();
 	// $ANTLR start "namedbit"
-	// Smi.g:1118:1: namedbit returns [NamedBit result] : name= ( LOWER | UPPER ) L_PAREN ( MINUS )? num= NUMBER R_PAREN ;
+	// Smi.g:1115:1: namedbit returns [NamedBit result] : name= ( LOWER | UPPER ) L_PAREN ( MINUS )? num= NUMBER R_PAREN ;
 	[GrammarRule("namedbit")]
 	private SmiParser.namedbit_return namedbit()
 	{
@@ -14180,16 +14180,16 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree MINUS256_tree = default(CommonTree);
 		CommonTree R_PAREN257_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "namedbit");
-		DebugLocation(1118, 1);
+		DebugLocation(1115, 1);
 		try
 		{
-			// Smi.g:1119:5: (name= ( LOWER | UPPER ) L_PAREN ( MINUS )? num= NUMBER R_PAREN )
+			// Smi.g:1116:5: (name= ( LOWER | UPPER ) L_PAREN ( MINUS )? num= NUMBER R_PAREN )
 			DebugEnterAlt(1);
-			// Smi.g:1119:7: name= ( LOWER | UPPER ) L_PAREN ( MINUS )? num= NUMBER R_PAREN
+			// Smi.g:1116:7: name= ( LOWER | UPPER ) L_PAREN ( MINUS )? num= NUMBER R_PAREN
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(1119, 11);
+			DebugLocation(1116, 11);
 
 			name=(IToken)input.LT(1);
 			if (input.LA(1)==LOWER||input.LA(1)==UPPER)
@@ -14206,19 +14206,19 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				throw mse;
 			}
 
-			DebugLocation(1119, 28);
+			DebugLocation(1116, 28);
 			if (state.backtracking == 0)
 			{
 				 retval.result = new NamedBit((name!=null?name.Text:null)); 
 			}
-			DebugLocation(1120, 2);
-			L_PAREN255=(IToken)Match(input,L_PAREN,Follow._L_PAREN_in_namedbit6595); if (state.failed) return retval;
+			DebugLocation(1117, 2);
+			L_PAREN255=(IToken)Match(input,L_PAREN,Follow._L_PAREN_in_namedbit6576); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			L_PAREN255_tree = (CommonTree)adaptor.Create(L_PAREN255);
 			adaptor.AddChild(root_0, L_PAREN255_tree);
 			}
-			DebugLocation(1120, 10);
-			// Smi.g:1120:10: ( MINUS )?
+			DebugLocation(1117, 10);
+			// Smi.g:1117:10: ( MINUS )?
 			int alt102=2;
 			try { DebugEnterSubRule(102);
 			try { DebugEnterDecision(102, false);
@@ -14233,15 +14233,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1120:11: MINUS
+				// Smi.g:1117:11: MINUS
 				{
-				DebugLocation(1120, 11);
-				MINUS256=(IToken)Match(input,MINUS,Follow._MINUS_in_namedbit6598); if (state.failed) return retval;
+				DebugLocation(1117, 11);
+				MINUS256=(IToken)Match(input,MINUS,Follow._MINUS_in_namedbit6579); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				MINUS256_tree = (CommonTree)adaptor.Create(MINUS256);
 				adaptor.AddChild(root_0, MINUS256_tree);
 				}
-				DebugLocation(1120, 17);
+				DebugLocation(1117, 17);
 				if (state.backtracking == 0)
 				{
 					 retval.result.Minus = true; 
@@ -14253,19 +14253,19 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(102); }
 
-			DebugLocation(1121, 5);
-			num=(IToken)Match(input,NUMBER,Follow._NUMBER_in_namedbit6608); if (state.failed) return retval;
+			DebugLocation(1118, 5);
+			num=(IToken)Match(input,NUMBER,Follow._NUMBER_in_namedbit6589); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			num_tree = (CommonTree)adaptor.Create(num);
 			adaptor.AddChild(root_0, num_tree);
 			}
-			DebugLocation(1121, 13);
-			R_PAREN257=(IToken)Match(input,R_PAREN,Follow._R_PAREN_in_namedbit6610); if (state.failed) return retval;
+			DebugLocation(1118, 13);
+			R_PAREN257=(IToken)Match(input,R_PAREN,Follow._R_PAREN_in_namedbit6591); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			R_PAREN257_tree = (CommonTree)adaptor.Create(R_PAREN257);
 			adaptor.AddChild(root_0, R_PAREN257_tree);
 			}
-			DebugLocation(1121, 21);
+			DebugLocation(1118, 21);
 			if (state.backtracking == 0)
 			{
 				 retval.result.Number = long.Parse((num!=null?num.Text:null)); 
@@ -14292,7 +14292,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("namedbit", 72);
 			LeaveRule_namedbit();
 		}
-		DebugLocation(1122, 1);
+		DebugLocation(1119, 1);
 		} finally { DebugExitRule(GrammarFileName, "namedbit"); }
 		return retval;
 
@@ -14309,7 +14309,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_objectgroup_macro();
 	partial void LeaveRule_objectgroup_macro();
 	// $ANTLR start "objectgroup_macro"
-	// Smi.g:1125:1: objectgroup_macro returns [ObjectGroupMacro result] : 'OBJECT-GROUP' 'OBJECTS' L_BRACE v1= value ( COMMA v2= value )* R_BRACE 'STATUS' s= status 'DESCRIPTION' c1= C_STRING ( 'REFERENCE' c2= C_STRING )? ;
+	// Smi.g:1122:1: objectgroup_macro returns [ObjectGroupMacro result] : 'OBJECT-GROUP' 'OBJECTS' L_BRACE v1= value ( COMMA v2= value )* R_BRACE 'STATUS' s= status 'DESCRIPTION' c1= C_STRING ( 'REFERENCE' c2= C_STRING )? ;
 	[GrammarRule("objectgroup_macro")]
 	private SmiParser.objectgroup_macro_return objectgroup_macro()
 	{
@@ -14346,46 +14346,46 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree string_literal264_tree = default(CommonTree);
 		CommonTree string_literal265_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "objectgroup_macro");
-		DebugLocation(1125, 1);
+		DebugLocation(1122, 1);
 		try
 		{
-			// Smi.g:1126:5: ( 'OBJECT-GROUP' 'OBJECTS' L_BRACE v1= value ( COMMA v2= value )* R_BRACE 'STATUS' s= status 'DESCRIPTION' c1= C_STRING ( 'REFERENCE' c2= C_STRING )? )
+			// Smi.g:1123:5: ( 'OBJECT-GROUP' 'OBJECTS' L_BRACE v1= value ( COMMA v2= value )* R_BRACE 'STATUS' s= status 'DESCRIPTION' c1= C_STRING ( 'REFERENCE' c2= C_STRING )? )
 			DebugEnterAlt(1);
-			// Smi.g:1126:7: 'OBJECT-GROUP' 'OBJECTS' L_BRACE v1= value ( COMMA v2= value )* R_BRACE 'STATUS' s= status 'DESCRIPTION' c1= C_STRING ( 'REFERENCE' c2= C_STRING )?
+			// Smi.g:1123:7: 'OBJECT-GROUP' 'OBJECTS' L_BRACE v1= value ( COMMA v2= value )* R_BRACE 'STATUS' s= status 'DESCRIPTION' c1= C_STRING ( 'REFERENCE' c2= C_STRING )?
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(1126, 7);
-			string_literal258=(IToken)Match(input,161,Follow._161_in_objectgroup_macro6632); if (state.failed) return retval;
+			DebugLocation(1123, 7);
+			string_literal258=(IToken)Match(input,161,Follow._161_in_objectgroup_macro6613); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			string_literal258_tree = (CommonTree)adaptor.Create(string_literal258);
 			adaptor.AddChild(root_0, string_literal258_tree);
 			}
-			DebugLocation(1126, 22);
-			string_literal259=(IToken)Match(input,164,Follow._164_in_objectgroup_macro6634); if (state.failed) return retval;
+			DebugLocation(1123, 22);
+			string_literal259=(IToken)Match(input,164,Follow._164_in_objectgroup_macro6615); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			string_literal259_tree = (CommonTree)adaptor.Create(string_literal259);
 			adaptor.AddChild(root_0, string_literal259_tree);
 			}
-			DebugLocation(1126, 32);
-			L_BRACE260=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_objectgroup_macro6636); if (state.failed) return retval;
+			DebugLocation(1123, 32);
+			L_BRACE260=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_objectgroup_macro6617); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			L_BRACE260_tree = (CommonTree)adaptor.Create(L_BRACE260);
 			adaptor.AddChild(root_0, L_BRACE260_tree);
 			}
-			DebugLocation(1126, 42);
-			PushFollow(Follow._value_in_objectgroup_macro6640);
+			DebugLocation(1123, 42);
+			PushFollow(Follow._value_in_objectgroup_macro6621);
 			v1=value();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, v1.Tree);
-			DebugLocation(1126, 49);
+			DebugLocation(1123, 49);
 			if (state.backtracking == 0)
 			{
 				 retval.result = new ObjectGroupMacro((v1!=null?v1.result:default(ISmiValue))); 
 			}
-			DebugLocation(1127, 2);
-			// Smi.g:1127:2: ( COMMA v2= value )*
+			DebugLocation(1124, 2);
+			// Smi.g:1124:2: ( COMMA v2= value )*
 			try { DebugEnterSubRule(103);
 			while (true)
 			{
@@ -14404,21 +14404,21 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:1127:3: COMMA v2= value
+					// Smi.g:1124:3: COMMA v2= value
 					{
-					DebugLocation(1127, 3);
-					COMMA261=(IToken)Match(input,COMMA,Follow._COMMA_in_objectgroup_macro6646); if (state.failed) return retval;
+					DebugLocation(1124, 3);
+					COMMA261=(IToken)Match(input,COMMA,Follow._COMMA_in_objectgroup_macro6627); if (state.failed) return retval;
 					if (state.backtracking == 0) {
 					COMMA261_tree = (CommonTree)adaptor.Create(COMMA261);
 					adaptor.AddChild(root_0, COMMA261_tree);
 					}
-					DebugLocation(1127, 11);
-					PushFollow(Follow._value_in_objectgroup_macro6650);
+					DebugLocation(1124, 11);
+					PushFollow(Follow._value_in_objectgroup_macro6631);
 					v2=value();
 					PopFollow();
 					if (state.failed) return retval;
 					if (state.backtracking == 0) adaptor.AddChild(root_0, v2.Tree);
-					DebugLocation(1127, 18);
+					DebugLocation(1124, 18);
 					if (state.backtracking == 0)
 					{
 						 retval.result.Objects.Add((v2!=null?v2.result:default(ISmiValue))); 
@@ -14437,48 +14437,48 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 			} finally { DebugExitSubRule(103); }
 
-			DebugLocation(1127, 57);
-			R_BRACE262=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_objectgroup_macro6656); if (state.failed) return retval;
+			DebugLocation(1124, 57);
+			R_BRACE262=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_objectgroup_macro6637); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			R_BRACE262_tree = (CommonTree)adaptor.Create(R_BRACE262);
 			adaptor.AddChild(root_0, R_BRACE262_tree);
 			}
-			DebugLocation(1128, 5);
-			string_literal263=(IToken)Match(input,182,Follow._182_in_objectgroup_macro6663); if (state.failed) return retval;
+			DebugLocation(1125, 5);
+			string_literal263=(IToken)Match(input,182,Follow._182_in_objectgroup_macro6644); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			string_literal263_tree = (CommonTree)adaptor.Create(string_literal263);
 			adaptor.AddChild(root_0, string_literal263_tree);
 			}
-			DebugLocation(1128, 15);
-			PushFollow(Follow._status_in_objectgroup_macro6667);
+			DebugLocation(1125, 15);
+			PushFollow(Follow._status_in_objectgroup_macro6648);
 			s=status();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, s.Tree);
-			DebugLocation(1128, 23);
+			DebugLocation(1125, 23);
 			if (state.backtracking == 0)
 			{
 				 retval.result.Status = (s!=null?s.result:default(EntityStatus)); 
 			}
-			DebugLocation(1129, 2);
-			string_literal264=(IToken)Match(input,139,Follow._139_in_objectgroup_macro6672); if (state.failed) return retval;
+			DebugLocation(1126, 2);
+			string_literal264=(IToken)Match(input,139,Follow._139_in_objectgroup_macro6653); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			string_literal264_tree = (CommonTree)adaptor.Create(string_literal264);
 			adaptor.AddChild(root_0, string_literal264_tree);
 			}
-			DebugLocation(1129, 18);
-			c1=(IToken)Match(input,C_STRING,Follow._C_STRING_in_objectgroup_macro6676); if (state.failed) return retval;
+			DebugLocation(1126, 18);
+			c1=(IToken)Match(input,C_STRING,Follow._C_STRING_in_objectgroup_macro6657); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			c1_tree = (CommonTree)adaptor.Create(c1);
 			adaptor.AddChild(root_0, c1_tree);
 			}
-			DebugLocation(1129, 28);
+			DebugLocation(1126, 28);
 			if (state.backtracking == 0)
 			{
 				 retval.result.Description = (c1!=null?c1.Text:null); 
 			}
-			DebugLocation(1130, 2);
-			// Smi.g:1130:2: ( 'REFERENCE' c2= C_STRING )?
+			DebugLocation(1127, 2);
+			// Smi.g:1127:2: ( 'REFERENCE' c2= C_STRING )?
 			int alt104=2;
 			try { DebugEnterSubRule(104);
 			try { DebugEnterDecision(104, false);
@@ -14493,21 +14493,21 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1130:3: 'REFERENCE' c2= C_STRING
+				// Smi.g:1127:3: 'REFERENCE' c2= C_STRING
 				{
-				DebugLocation(1130, 3);
-				string_literal265=(IToken)Match(input,175,Follow._175_in_objectgroup_macro6682); if (state.failed) return retval;
+				DebugLocation(1127, 3);
+				string_literal265=(IToken)Match(input,175,Follow._175_in_objectgroup_macro6663); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal265_tree = (CommonTree)adaptor.Create(string_literal265);
 				adaptor.AddChild(root_0, string_literal265_tree);
 				}
-				DebugLocation(1130, 17);
-				c2=(IToken)Match(input,C_STRING,Follow._C_STRING_in_objectgroup_macro6686); if (state.failed) return retval;
+				DebugLocation(1127, 17);
+				c2=(IToken)Match(input,C_STRING,Follow._C_STRING_in_objectgroup_macro6667); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				c2_tree = (CommonTree)adaptor.Create(c2);
 				adaptor.AddChild(root_0, c2_tree);
 				}
-				DebugLocation(1130, 27);
+				DebugLocation(1127, 27);
 				if (state.backtracking == 0)
 				{
 					 retval.result.Reference = (c2!=null?c2.Text:null); 
@@ -14541,7 +14541,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("objectgroup_macro", 73);
 			LeaveRule_objectgroup_macro();
 		}
-		DebugLocation(1131, 1);
+		DebugLocation(1128, 1);
 		} finally { DebugExitRule(GrammarFileName, "objectgroup_macro"); }
 		return retval;
 
@@ -14558,7 +14558,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_notificationgroup_macro();
 	partial void LeaveRule_notificationgroup_macro();
 	// $ANTLR start "notificationgroup_macro"
-	// Smi.g:1134:1: notificationgroup_macro returns [NotificationGroupMacro result] : 'NOTIFICATION-GROUP' 'NOTIFICATIONS' L_BRACE v1= value ( COMMA v2= value )* R_BRACE 'STATUS' s= status 'DESCRIPTION' c1= C_STRING ( 'REFERENCE' c2= C_STRING )? ;
+	// Smi.g:1131:1: notificationgroup_macro returns [NotificationGroupMacro result] : 'NOTIFICATION-GROUP' 'NOTIFICATIONS' L_BRACE v1= value ( COMMA v2= value )* R_BRACE 'STATUS' s= status 'DESCRIPTION' c1= C_STRING ( 'REFERENCE' c2= C_STRING )? ;
 	[GrammarRule("notificationgroup_macro")]
 	private SmiParser.notificationgroup_macro_return notificationgroup_macro()
 	{
@@ -14595,46 +14595,46 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree string_literal272_tree = default(CommonTree);
 		CommonTree string_literal273_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "notificationgroup_macro");
-		DebugLocation(1134, 1);
+		DebugLocation(1131, 1);
 		try
 		{
-			// Smi.g:1135:5: ( 'NOTIFICATION-GROUP' 'NOTIFICATIONS' L_BRACE v1= value ( COMMA v2= value )* R_BRACE 'STATUS' s= status 'DESCRIPTION' c1= C_STRING ( 'REFERENCE' c2= C_STRING )? )
+			// Smi.g:1132:5: ( 'NOTIFICATION-GROUP' 'NOTIFICATIONS' L_BRACE v1= value ( COMMA v2= value )* R_BRACE 'STATUS' s= status 'DESCRIPTION' c1= C_STRING ( 'REFERENCE' c2= C_STRING )? )
 			DebugEnterAlt(1);
-			// Smi.g:1135:7: 'NOTIFICATION-GROUP' 'NOTIFICATIONS' L_BRACE v1= value ( COMMA v2= value )* R_BRACE 'STATUS' s= status 'DESCRIPTION' c1= C_STRING ( 'REFERENCE' c2= C_STRING )?
+			// Smi.g:1132:7: 'NOTIFICATION-GROUP' 'NOTIFICATIONS' L_BRACE v1= value ( COMMA v2= value )* R_BRACE 'STATUS' s= status 'DESCRIPTION' c1= C_STRING ( 'REFERENCE' c2= C_STRING )?
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(1135, 7);
-			string_literal266=(IToken)Match(input,158,Follow._158_in_notificationgroup_macro6711); if (state.failed) return retval;
+			DebugLocation(1132, 7);
+			string_literal266=(IToken)Match(input,158,Follow._158_in_notificationgroup_macro6692); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			string_literal266_tree = (CommonTree)adaptor.Create(string_literal266);
 			adaptor.AddChild(root_0, string_literal266_tree);
 			}
-			DebugLocation(1135, 28);
-			string_literal267=(IToken)Match(input,160,Follow._160_in_notificationgroup_macro6713); if (state.failed) return retval;
+			DebugLocation(1132, 28);
+			string_literal267=(IToken)Match(input,160,Follow._160_in_notificationgroup_macro6694); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			string_literal267_tree = (CommonTree)adaptor.Create(string_literal267);
 			adaptor.AddChild(root_0, string_literal267_tree);
 			}
-			DebugLocation(1135, 44);
-			L_BRACE268=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_notificationgroup_macro6715); if (state.failed) return retval;
+			DebugLocation(1132, 44);
+			L_BRACE268=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_notificationgroup_macro6696); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			L_BRACE268_tree = (CommonTree)adaptor.Create(L_BRACE268);
 			adaptor.AddChild(root_0, L_BRACE268_tree);
 			}
-			DebugLocation(1135, 54);
-			PushFollow(Follow._value_in_notificationgroup_macro6719);
+			DebugLocation(1132, 54);
+			PushFollow(Follow._value_in_notificationgroup_macro6700);
 			v1=value();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, v1.Tree);
-			DebugLocation(1135, 61);
+			DebugLocation(1132, 61);
 			if (state.backtracking == 0)
 			{
 				 retval.result = new NotificationGroupMacro((v1!=null?v1.result:default(ISmiValue)));
 			}
-			DebugLocation(1136, 2);
-			// Smi.g:1136:2: ( COMMA v2= value )*
+			DebugLocation(1133, 2);
+			// Smi.g:1133:2: ( COMMA v2= value )*
 			try { DebugEnterSubRule(105);
 			while (true)
 			{
@@ -14653,21 +14653,21 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:1136:3: COMMA v2= value
+					// Smi.g:1133:3: COMMA v2= value
 					{
-					DebugLocation(1136, 3);
-					COMMA269=(IToken)Match(input,COMMA,Follow._COMMA_in_notificationgroup_macro6725); if (state.failed) return retval;
+					DebugLocation(1133, 3);
+					COMMA269=(IToken)Match(input,COMMA,Follow._COMMA_in_notificationgroup_macro6706); if (state.failed) return retval;
 					if (state.backtracking == 0) {
 					COMMA269_tree = (CommonTree)adaptor.Create(COMMA269);
 					adaptor.AddChild(root_0, COMMA269_tree);
 					}
-					DebugLocation(1136, 11);
-					PushFollow(Follow._value_in_notificationgroup_macro6729);
+					DebugLocation(1133, 11);
+					PushFollow(Follow._value_in_notificationgroup_macro6710);
 					v2=value();
 					PopFollow();
 					if (state.failed) return retval;
 					if (state.backtracking == 0) adaptor.AddChild(root_0, v2.Tree);
-					DebugLocation(1136, 18);
+					DebugLocation(1133, 18);
 					if (state.backtracking == 0)
 					{
 						 retval.result.Notifications.Add((v2!=null?v2.result:default(ISmiValue))); 
@@ -14686,48 +14686,48 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 			} finally { DebugExitSubRule(105); }
 
-			DebugLocation(1136, 63);
-			R_BRACE270=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_notificationgroup_macro6735); if (state.failed) return retval;
+			DebugLocation(1133, 63);
+			R_BRACE270=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_notificationgroup_macro6716); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			R_BRACE270_tree = (CommonTree)adaptor.Create(R_BRACE270);
 			adaptor.AddChild(root_0, R_BRACE270_tree);
 			}
-			DebugLocation(1137, 5);
-			string_literal271=(IToken)Match(input,182,Follow._182_in_notificationgroup_macro6742); if (state.failed) return retval;
+			DebugLocation(1134, 5);
+			string_literal271=(IToken)Match(input,182,Follow._182_in_notificationgroup_macro6723); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			string_literal271_tree = (CommonTree)adaptor.Create(string_literal271);
 			adaptor.AddChild(root_0, string_literal271_tree);
 			}
-			DebugLocation(1137, 15);
-			PushFollow(Follow._status_in_notificationgroup_macro6746);
+			DebugLocation(1134, 15);
+			PushFollow(Follow._status_in_notificationgroup_macro6727);
 			s=status();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, s.Tree);
-			DebugLocation(1137, 23);
+			DebugLocation(1134, 23);
 			if (state.backtracking == 0)
 			{
 				 retval.result.Status = (s!=null?s.result:default(EntityStatus)); 
 			}
-			DebugLocation(1138, 2);
-			string_literal272=(IToken)Match(input,139,Follow._139_in_notificationgroup_macro6751); if (state.failed) return retval;
+			DebugLocation(1135, 2);
+			string_literal272=(IToken)Match(input,139,Follow._139_in_notificationgroup_macro6732); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			string_literal272_tree = (CommonTree)adaptor.Create(string_literal272);
 			adaptor.AddChild(root_0, string_literal272_tree);
 			}
-			DebugLocation(1138, 18);
-			c1=(IToken)Match(input,C_STRING,Follow._C_STRING_in_notificationgroup_macro6755); if (state.failed) return retval;
+			DebugLocation(1135, 18);
+			c1=(IToken)Match(input,C_STRING,Follow._C_STRING_in_notificationgroup_macro6736); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			c1_tree = (CommonTree)adaptor.Create(c1);
 			adaptor.AddChild(root_0, c1_tree);
 			}
-			DebugLocation(1138, 28);
+			DebugLocation(1135, 28);
 			if (state.backtracking == 0)
 			{
 				 retval.result.Description = (c1!=null?c1.Text:null); 
 			}
-			DebugLocation(1139, 2);
-			// Smi.g:1139:2: ( 'REFERENCE' c2= C_STRING )?
+			DebugLocation(1136, 2);
+			// Smi.g:1136:2: ( 'REFERENCE' c2= C_STRING )?
 			int alt106=2;
 			try { DebugEnterSubRule(106);
 			try { DebugEnterDecision(106, false);
@@ -14742,21 +14742,21 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1139:3: 'REFERENCE' c2= C_STRING
+				// Smi.g:1136:3: 'REFERENCE' c2= C_STRING
 				{
-				DebugLocation(1139, 3);
-				string_literal273=(IToken)Match(input,175,Follow._175_in_notificationgroup_macro6761); if (state.failed) return retval;
+				DebugLocation(1136, 3);
+				string_literal273=(IToken)Match(input,175,Follow._175_in_notificationgroup_macro6742); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal273_tree = (CommonTree)adaptor.Create(string_literal273);
 				adaptor.AddChild(root_0, string_literal273_tree);
 				}
-				DebugLocation(1139, 17);
-				c2=(IToken)Match(input,C_STRING,Follow._C_STRING_in_notificationgroup_macro6765); if (state.failed) return retval;
+				DebugLocation(1136, 17);
+				c2=(IToken)Match(input,C_STRING,Follow._C_STRING_in_notificationgroup_macro6746); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				c2_tree = (CommonTree)adaptor.Create(c2);
 				adaptor.AddChild(root_0, c2_tree);
 				}
-				DebugLocation(1139, 27);
+				DebugLocation(1136, 27);
 				if (state.backtracking == 0)
 				{
 					 retval.result.Reference = (c2!=null?c2.Text:null); 
@@ -14790,7 +14790,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("notificationgroup_macro", 74);
 			LeaveRule_notificationgroup_macro();
 		}
-		DebugLocation(1140, 1);
+		DebugLocation(1137, 1);
 		} finally { DebugExitRule(GrammarFileName, "notificationgroup_macro"); }
 		return retval;
 
@@ -14807,7 +14807,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_modulecompliance_macro();
 	partial void LeaveRule_modulecompliance_macro();
 	// $ANTLR start "modulecompliance_macro"
-	// Smi.g:1143:1: modulecompliance_macro returns [ModuleComplianceMacro result] : 'MODULE-COMPLIANCE' 'STATUS' s= status 'DESCRIPTION' c1= C_STRING ( 'REFERENCE' c2= C_STRING )? (m= modulecompliance_macro_module )+ ;
+	// Smi.g:1140:1: modulecompliance_macro returns [ModuleComplianceMacro result] : 'MODULE-COMPLIANCE' 'STATUS' s= status 'DESCRIPTION' c1= C_STRING ( 'REFERENCE' c2= C_STRING )? (m= modulecompliance_macro_module )+ ;
 	[GrammarRule("modulecompliance_macro")]
 	private SmiParser.modulecompliance_macro_return modulecompliance_macro()
 	{
@@ -14835,52 +14835,52 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree string_literal276_tree = default(CommonTree);
 		CommonTree string_literal277_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "modulecompliance_macro");
-		DebugLocation(1143, 1);
+		DebugLocation(1140, 1);
 		try
 		{
-			// Smi.g:1144:5: ( 'MODULE-COMPLIANCE' 'STATUS' s= status 'DESCRIPTION' c1= C_STRING ( 'REFERENCE' c2= C_STRING )? (m= modulecompliance_macro_module )+ )
+			// Smi.g:1141:5: ( 'MODULE-COMPLIANCE' 'STATUS' s= status 'DESCRIPTION' c1= C_STRING ( 'REFERENCE' c2= C_STRING )? (m= modulecompliance_macro_module )+ )
 			DebugEnterAlt(1);
-			// Smi.g:1144:7: 'MODULE-COMPLIANCE' 'STATUS' s= status 'DESCRIPTION' c1= C_STRING ( 'REFERENCE' c2= C_STRING )? (m= modulecompliance_macro_module )+
+			// Smi.g:1141:7: 'MODULE-COMPLIANCE' 'STATUS' s= status 'DESCRIPTION' c1= C_STRING ( 'REFERENCE' c2= C_STRING )? (m= modulecompliance_macro_module )+
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(1144, 7);
-			string_literal274=(IToken)Match(input,156,Follow._156_in_modulecompliance_macro6790); if (state.failed) return retval;
+			DebugLocation(1141, 7);
+			string_literal274=(IToken)Match(input,156,Follow._156_in_modulecompliance_macro6771); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			string_literal274_tree = (CommonTree)adaptor.Create(string_literal274);
 			adaptor.AddChild(root_0, string_literal274_tree);
 			}
-			DebugLocation(1144, 27);
-			string_literal275=(IToken)Match(input,182,Follow._182_in_modulecompliance_macro6792); if (state.failed) return retval;
+			DebugLocation(1141, 27);
+			string_literal275=(IToken)Match(input,182,Follow._182_in_modulecompliance_macro6773); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			string_literal275_tree = (CommonTree)adaptor.Create(string_literal275);
 			adaptor.AddChild(root_0, string_literal275_tree);
 			}
-			DebugLocation(1144, 37);
-			PushFollow(Follow._status_in_modulecompliance_macro6796);
+			DebugLocation(1141, 37);
+			PushFollow(Follow._status_in_modulecompliance_macro6777);
 			s=status();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, s.Tree);
-			DebugLocation(1145, 5);
-			string_literal276=(IToken)Match(input,139,Follow._139_in_modulecompliance_macro6802); if (state.failed) return retval;
+			DebugLocation(1142, 5);
+			string_literal276=(IToken)Match(input,139,Follow._139_in_modulecompliance_macro6783); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			string_literal276_tree = (CommonTree)adaptor.Create(string_literal276);
 			adaptor.AddChild(root_0, string_literal276_tree);
 			}
-			DebugLocation(1145, 21);
-			c1=(IToken)Match(input,C_STRING,Follow._C_STRING_in_modulecompliance_macro6806); if (state.failed) return retval;
+			DebugLocation(1142, 21);
+			c1=(IToken)Match(input,C_STRING,Follow._C_STRING_in_modulecompliance_macro6787); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			c1_tree = (CommonTree)adaptor.Create(c1);
 			adaptor.AddChild(root_0, c1_tree);
 			}
-			DebugLocation(1145, 31);
+			DebugLocation(1142, 31);
 			if (state.backtracking == 0)
 			{
 				 retval.result = new ModuleComplianceMacro((s!=null?s.result:default(EntityStatus)), (c1!=null?c1.Text:null)); 
 			}
-			DebugLocation(1146, 2);
-			// Smi.g:1146:2: ( 'REFERENCE' c2= C_STRING )?
+			DebugLocation(1143, 2);
+			// Smi.g:1143:2: ( 'REFERENCE' c2= C_STRING )?
 			int alt107=2;
 			try { DebugEnterSubRule(107);
 			try { DebugEnterDecision(107, false);
@@ -14895,21 +14895,21 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1146:3: 'REFERENCE' c2= C_STRING
+				// Smi.g:1143:3: 'REFERENCE' c2= C_STRING
 				{
-				DebugLocation(1146, 3);
-				string_literal277=(IToken)Match(input,175,Follow._175_in_modulecompliance_macro6812); if (state.failed) return retval;
+				DebugLocation(1143, 3);
+				string_literal277=(IToken)Match(input,175,Follow._175_in_modulecompliance_macro6793); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal277_tree = (CommonTree)adaptor.Create(string_literal277);
 				adaptor.AddChild(root_0, string_literal277_tree);
 				}
-				DebugLocation(1146, 17);
-				c2=(IToken)Match(input,C_STRING,Follow._C_STRING_in_modulecompliance_macro6816); if (state.failed) return retval;
+				DebugLocation(1143, 17);
+				c2=(IToken)Match(input,C_STRING,Follow._C_STRING_in_modulecompliance_macro6797); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				c2_tree = (CommonTree)adaptor.Create(c2);
 				adaptor.AddChild(root_0, c2_tree);
 				}
-				DebugLocation(1146, 27);
+				DebugLocation(1143, 27);
 				if (state.backtracking == 0)
 				{
 					 retval.result.Reference = (c2!=null?c2.Text:null); 
@@ -14921,8 +14921,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(107); }
 
-			DebugLocation(1147, 2);
-			// Smi.g:1147:2: (m= modulecompliance_macro_module )+
+			DebugLocation(1144, 2);
+			// Smi.g:1144:2: (m= modulecompliance_macro_module )+
 			int cnt108=0;
 			try { DebugEnterSubRule(108);
 			while (true)
@@ -14942,15 +14942,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:1147:3: m= modulecompliance_macro_module
+					// Smi.g:1144:3: m= modulecompliance_macro_module
 					{
-					DebugLocation(1147, 4);
-					PushFollow(Follow._modulecompliance_macro_module_in_modulecompliance_macro6827);
+					DebugLocation(1144, 4);
+					PushFollow(Follow._modulecompliance_macro_module_in_modulecompliance_macro6808);
 					m=modulecompliance_macro_module();
 					PopFollow();
 					if (state.failed) return retval;
 					if (state.backtracking == 0) adaptor.AddChild(root_0, m.Tree);
-					DebugLocation(1147, 35);
+					DebugLocation(1144, 35);
 					if (state.backtracking == 0)
 					{
 						 retval.result.Modules.Add((m!=null?m.result:default(ModuleCompliance))); 
@@ -14997,7 +14997,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("modulecompliance_macro", 75);
 			LeaveRule_modulecompliance_macro();
 		}
-		DebugLocation(1148, 1);
+		DebugLocation(1145, 1);
 		} finally { DebugExitRule(GrammarFileName, "modulecompliance_macro"); }
 		return retval;
 
@@ -15014,7 +15014,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_status();
 	partial void LeaveRule_status();
 	// $ANTLR start "status"
-	// Smi.g:1150:1: status returns [EntityStatus result] : l= LOWER ;
+	// Smi.g:1147:1: status returns [EntityStatus result] : l= LOWER ;
 	[GrammarRule("status")]
 	private SmiParser.status_return status()
 	{
@@ -15030,22 +15030,22 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 		CommonTree l_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "status");
-		DebugLocation(1150, 4);
+		DebugLocation(1147, 4);
 		try
 		{
-			// Smi.g:1151:5: (l= LOWER )
+			// Smi.g:1148:5: (l= LOWER )
 			DebugEnterAlt(1);
-			// Smi.g:1151:7: l= LOWER
+			// Smi.g:1148:7: l= LOWER
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(1151, 8);
-			l=(IToken)Match(input,LOWER,Follow._LOWER_in_status6852); if (state.failed) return retval;
+			DebugLocation(1148, 8);
+			l=(IToken)Match(input,LOWER,Follow._LOWER_in_status6833); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			l_tree = (CommonTree)adaptor.Create(l);
 			adaptor.AddChild(root_0, l_tree);
 			}
-			DebugLocation(1151, 15);
+			DebugLocation(1148, 15);
 			if (state.backtracking == 0)
 			{
 				if (l.Text == ("current")) retval.result = EntityStatus.Current;
@@ -15075,7 +15075,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("status", 76);
 			LeaveRule_status();
 		}
-		DebugLocation(1155, 4);
+		DebugLocation(1152, 4);
 		} finally { DebugExitRule(GrammarFileName, "status"); }
 		return retval;
 
@@ -15092,7 +15092,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_modulecompliance_macro_module();
 	partial void LeaveRule_modulecompliance_macro_module();
 	// $ANTLR start "modulecompliance_macro_module"
-	// Smi.g:1157:1: modulecompliance_macro_module returns [ModuleCompliance result = new ModuleCompliance()] : 'MODULE' ( ( UPPER )=>name= UPPER ( ( value )=>v1= value )? )? ( 'MANDATORY-GROUPS' L_BRACE v2= value ( COMMA v3= value )* R_BRACE )? (c= modulecompliance_macro_compliance )* ;
+	// Smi.g:1154:1: modulecompliance_macro_module returns [ModuleCompliance result = new ModuleCompliance()] : 'MODULE' ( ( UPPER )=>name= UPPER ( ( value )=>v1= value )? )? ( 'MANDATORY-GROUPS' L_BRACE v2= value ( COMMA v3= value )* R_BRACE )? (c= modulecompliance_macro_compliance )* ;
 	[GrammarRule("modulecompliance_macro_module")]
 	private SmiParser.modulecompliance_macro_module_return modulecompliance_macro_module()
 	{
@@ -15122,23 +15122,23 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree COMMA281_tree = default(CommonTree);
 		CommonTree R_BRACE282_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "modulecompliance_macro_module");
-		DebugLocation(1157, 1);
+		DebugLocation(1154, 1);
 		try
 		{
-			// Smi.g:1158:5: ( 'MODULE' ( ( UPPER )=>name= UPPER ( ( value )=>v1= value )? )? ( 'MANDATORY-GROUPS' L_BRACE v2= value ( COMMA v3= value )* R_BRACE )? (c= modulecompliance_macro_compliance )* )
+			// Smi.g:1155:5: ( 'MODULE' ( ( UPPER )=>name= UPPER ( ( value )=>v1= value )? )? ( 'MANDATORY-GROUPS' L_BRACE v2= value ( COMMA v3= value )* R_BRACE )? (c= modulecompliance_macro_compliance )* )
 			DebugEnterAlt(1);
-			// Smi.g:1158:7: 'MODULE' ( ( UPPER )=>name= UPPER ( ( value )=>v1= value )? )? ( 'MANDATORY-GROUPS' L_BRACE v2= value ( COMMA v3= value )* R_BRACE )? (c= modulecompliance_macro_compliance )*
+			// Smi.g:1155:7: 'MODULE' ( ( UPPER )=>name= UPPER ( ( value )=>v1= value )? )? ( 'MANDATORY-GROUPS' L_BRACE v2= value ( COMMA v3= value )* R_BRACE )? (c= modulecompliance_macro_compliance )*
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(1158, 7);
-			string_literal278=(IToken)Match(input,155,Follow._155_in_modulecompliance_macro_module6875); if (state.failed) return retval;
+			DebugLocation(1155, 7);
+			string_literal278=(IToken)Match(input,155,Follow._155_in_modulecompliance_macro_module6856); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			string_literal278_tree = (CommonTree)adaptor.Create(string_literal278);
 			adaptor.AddChild(root_0, string_literal278_tree);
 			}
-			DebugLocation(1158, 16);
-			// Smi.g:1158:16: ( ( UPPER )=>name= UPPER ( ( value )=>v1= value )? )?
+			DebugLocation(1155, 16);
+			// Smi.g:1155:16: ( ( UPPER )=>name= UPPER ( ( value )=>v1= value )? )?
 			int alt110=2;
 			try { DebugEnterSubRule(110);
 			try { DebugEnterDecision(110, false);
@@ -15156,21 +15156,21 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1158:17: ( UPPER )=>name= UPPER ( ( value )=>v1= value )?
+				// Smi.g:1155:17: ( UPPER )=>name= UPPER ( ( value )=>v1= value )?
 				{
-				DebugLocation(1158, 32);
-				name=(IToken)Match(input,UPPER,Follow._UPPER_in_modulecompliance_macro_module6886); if (state.failed) return retval;
+				DebugLocation(1155, 32);
+				name=(IToken)Match(input,UPPER,Follow._UPPER_in_modulecompliance_macro_module6867); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				name_tree = (CommonTree)adaptor.Create(name);
 				adaptor.AddChild(root_0, name_tree);
 				}
-				DebugLocation(1158, 39);
+				DebugLocation(1155, 39);
 				if (state.backtracking == 0)
 				{
 					 retval.result.Name = (name!=null?name.Text:null); 
 				}
-				DebugLocation(1159, 2);
-				// Smi.g:1159:2: ( ( value )=>v1= value )?
+				DebugLocation(1156, 2);
+				// Smi.g:1156:2: ( ( value )=>v1= value )?
 				int alt109=2;
 				try { DebugEnterSubRule(109);
 				try { DebugEnterDecision(109, false);
@@ -15188,15 +15188,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:1159:3: ( value )=>v1= value
+					// Smi.g:1156:3: ( value )=>v1= value
 					{
-					DebugLocation(1159, 16);
-					PushFollow(Follow._value_in_modulecompliance_macro_module6900);
+					DebugLocation(1156, 16);
+					PushFollow(Follow._value_in_modulecompliance_macro_module6881);
 					v1=value();
 					PopFollow();
 					if (state.failed) return retval;
 					if (state.backtracking == 0) adaptor.AddChild(root_0, v1.Tree);
-					DebugLocation(1159, 23);
+					DebugLocation(1156, 23);
 					if (state.backtracking == 0)
 					{
 						 retval.result.Value = (v1!=null?v1.result:default(ISmiValue)); 
@@ -15215,8 +15215,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(110); }
 
-			DebugLocation(1160, 5);
-			// Smi.g:1160:5: ( 'MANDATORY-GROUPS' L_BRACE v2= value ( COMMA v3= value )* R_BRACE )?
+			DebugLocation(1157, 5);
+			// Smi.g:1157:5: ( 'MANDATORY-GROUPS' L_BRACE v2= value ( COMMA v3= value )* R_BRACE )?
 			int alt112=2;
 			try { DebugEnterSubRule(112);
 			try { DebugEnterDecision(112, false);
@@ -15231,33 +15231,33 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1160:6: 'MANDATORY-GROUPS' L_BRACE v2= value ( COMMA v3= value )* R_BRACE
+				// Smi.g:1157:6: 'MANDATORY-GROUPS' L_BRACE v2= value ( COMMA v3= value )* R_BRACE
 				{
-				DebugLocation(1160, 6);
-				string_literal279=(IToken)Match(input,152,Follow._152_in_modulecompliance_macro_module6915); if (state.failed) return retval;
+				DebugLocation(1157, 6);
+				string_literal279=(IToken)Match(input,152,Follow._152_in_modulecompliance_macro_module6896); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal279_tree = (CommonTree)adaptor.Create(string_literal279);
 				adaptor.AddChild(root_0, string_literal279_tree);
 				}
-				DebugLocation(1160, 25);
-				L_BRACE280=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_modulecompliance_macro_module6917); if (state.failed) return retval;
+				DebugLocation(1157, 25);
+				L_BRACE280=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_modulecompliance_macro_module6898); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				L_BRACE280_tree = (CommonTree)adaptor.Create(L_BRACE280);
 				adaptor.AddChild(root_0, L_BRACE280_tree);
 				}
-				DebugLocation(1160, 35);
-				PushFollow(Follow._value_in_modulecompliance_macro_module6921);
+				DebugLocation(1157, 35);
+				PushFollow(Follow._value_in_modulecompliance_macro_module6902);
 				v2=value();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, v2.Tree);
-				DebugLocation(1160, 42);
+				DebugLocation(1157, 42);
 				if (state.backtracking == 0)
 				{
 					 retval.result.MandatoryGroups.Add((v2!=null?v2.result:default(ISmiValue))); 
 				}
-				DebugLocation(1161, 2);
-				// Smi.g:1161:2: ( COMMA v3= value )*
+				DebugLocation(1158, 2);
+				// Smi.g:1158:2: ( COMMA v3= value )*
 				try { DebugEnterSubRule(111);
 				while (true)
 				{
@@ -15276,21 +15276,21 @@ public partial class SmiParser : Antlr.Runtime.Parser
 					{
 					case 1:
 						DebugEnterAlt(1);
-						// Smi.g:1161:3: COMMA v3= value
+						// Smi.g:1158:3: COMMA v3= value
 						{
-						DebugLocation(1161, 3);
-						COMMA281=(IToken)Match(input,COMMA,Follow._COMMA_in_modulecompliance_macro_module6927); if (state.failed) return retval;
+						DebugLocation(1158, 3);
+						COMMA281=(IToken)Match(input,COMMA,Follow._COMMA_in_modulecompliance_macro_module6908); if (state.failed) return retval;
 						if (state.backtracking == 0) {
 						COMMA281_tree = (CommonTree)adaptor.Create(COMMA281);
 						adaptor.AddChild(root_0, COMMA281_tree);
 						}
-						DebugLocation(1161, 11);
-						PushFollow(Follow._value_in_modulecompliance_macro_module6931);
+						DebugLocation(1158, 11);
+						PushFollow(Follow._value_in_modulecompliance_macro_module6912);
 						v3=value();
 						PopFollow();
 						if (state.failed) return retval;
 						if (state.backtracking == 0) adaptor.AddChild(root_0, v3.Tree);
-						DebugLocation(1161, 18);
+						DebugLocation(1158, 18);
 						if (state.backtracking == 0)
 						{
 							 retval.result.MandarotyGroups.Add((v3!=null?v3.result:default(ISmiValue))); 
@@ -15309,8 +15309,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 				} finally { DebugExitSubRule(111); }
 
-				DebugLocation(1161, 65);
-				R_BRACE282=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_modulecompliance_macro_module6937); if (state.failed) return retval;
+				DebugLocation(1158, 65);
+				R_BRACE282=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_modulecompliance_macro_module6918); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				R_BRACE282_tree = (CommonTree)adaptor.Create(R_BRACE282);
 				adaptor.AddChild(root_0, R_BRACE282_tree);
@@ -15322,8 +15322,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(112); }
 
-			DebugLocation(1162, 5);
-			// Smi.g:1162:5: (c= modulecompliance_macro_compliance )*
+			DebugLocation(1159, 5);
+			// Smi.g:1159:5: (c= modulecompliance_macro_compliance )*
 			try { DebugEnterSubRule(113);
 			while (true)
 			{
@@ -15353,15 +15353,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:1162:6: c= modulecompliance_macro_compliance
+					// Smi.g:1159:6: c= modulecompliance_macro_compliance
 					{
-					DebugLocation(1162, 7);
-					PushFollow(Follow._modulecompliance_macro_compliance_in_modulecompliance_macro_module6948);
+					DebugLocation(1159, 7);
+					PushFollow(Follow._modulecompliance_macro_compliance_in_modulecompliance_macro_module6929);
 					c=modulecompliance_macro_compliance();
 					PopFollow();
 					if (state.failed) return retval;
 					if (state.backtracking == 0) adaptor.AddChild(root_0, c.Tree);
-					DebugLocation(1162, 42);
+					DebugLocation(1159, 42);
 					if (state.backtracking == 0)
 					{
 						 retval.result.Compliances.Add((c!=null?c.result:default(Compliance))); 
@@ -15402,7 +15402,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("modulecompliance_macro_module", 77);
 			LeaveRule_modulecompliance_macro_module();
 		}
-		DebugLocation(1163, 1);
+		DebugLocation(1160, 1);
 		} finally { DebugExitRule(GrammarFileName, "modulecompliance_macro_module"); }
 		return retval;
 
@@ -15419,7 +15419,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_modulecompliance_macro_compliance();
 	partial void LeaveRule_modulecompliance_macro_compliance();
 	// $ANTLR start "modulecompliance_macro_compliance"
-	// Smi.g:1165:1: modulecompliance_macro_compliance returns [Compliance result] : ( 'GROUP' v1= value 'DESCRIPTION' c1= C_STRING | 'OBJECT' v2= value ( 'SYNTAX' s= syntax )? ( 'WRITE-SYNTAX' s2= syntax )? ( 'MIN-ACCESS' a= modulecompliance_macro_access )? ( 'PIB-MIN-ACCESS' a2= modulecompliance_macro_pibaccess )? 'DESCRIPTION' c2= C_STRING );
+	// Smi.g:1162:1: modulecompliance_macro_compliance returns [Compliance result] : ( 'GROUP' v1= value 'DESCRIPTION' c1= C_STRING | 'OBJECT' v2= value ( 'SYNTAX' s= syntax )? ( 'WRITE-SYNTAX' s2= syntax )? ( 'MIN-ACCESS' a= modulecompliance_macro_access )? ( 'PIB-MIN-ACCESS' a2= modulecompliance_macro_pibaccess )? 'DESCRIPTION' c2= C_STRING );
 	[GrammarRule("modulecompliance_macro_compliance")]
 	private SmiParser.modulecompliance_macro_compliance_return modulecompliance_macro_compliance()
 	{
@@ -15459,10 +15459,10 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree string_literal289_tree = default(CommonTree);
 		CommonTree string_literal290_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "modulecompliance_macro_compliance");
-		DebugLocation(1165, 1);
+		DebugLocation(1162, 1);
 		try
 		{
-			// Smi.g:1166:5: ( 'GROUP' v1= value 'DESCRIPTION' c1= C_STRING | 'OBJECT' v2= value ( 'SYNTAX' s= syntax )? ( 'WRITE-SYNTAX' s2= syntax )? ( 'MIN-ACCESS' a= modulecompliance_macro_access )? ( 'PIB-MIN-ACCESS' a2= modulecompliance_macro_pibaccess )? 'DESCRIPTION' c2= C_STRING )
+			// Smi.g:1163:5: ( 'GROUP' v1= value 'DESCRIPTION' c1= C_STRING | 'OBJECT' v2= value ( 'SYNTAX' s= syntax )? ( 'WRITE-SYNTAX' s2= syntax )? ( 'MIN-ACCESS' a= modulecompliance_macro_access )? ( 'PIB-MIN-ACCESS' a2= modulecompliance_macro_pibaccess )? 'DESCRIPTION' c2= C_STRING )
 			int alt118=2;
 			try { DebugEnterDecision(118, false);
 			int LA118_1 = input.LA(1);
@@ -15487,35 +15487,35 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1166:7: 'GROUP' v1= value 'DESCRIPTION' c1= C_STRING
+				// Smi.g:1163:7: 'GROUP' v1= value 'DESCRIPTION' c1= C_STRING
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(1166, 7);
-				string_literal283=(IToken)Match(input,147,Follow._147_in_modulecompliance_macro_compliance6971); if (state.failed) return retval;
+				DebugLocation(1163, 7);
+				string_literal283=(IToken)Match(input,147,Follow._147_in_modulecompliance_macro_compliance6952); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal283_tree = (CommonTree)adaptor.Create(string_literal283);
 				adaptor.AddChild(root_0, string_literal283_tree);
 				}
-				DebugLocation(1166, 17);
-				PushFollow(Follow._value_in_modulecompliance_macro_compliance6975);
+				DebugLocation(1163, 17);
+				PushFollow(Follow._value_in_modulecompliance_macro_compliance6956);
 				v1=value();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, v1.Tree);
-				DebugLocation(1166, 24);
-				string_literal284=(IToken)Match(input,139,Follow._139_in_modulecompliance_macro_compliance6977); if (state.failed) return retval;
+				DebugLocation(1163, 24);
+				string_literal284=(IToken)Match(input,139,Follow._139_in_modulecompliance_macro_compliance6958); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal284_tree = (CommonTree)adaptor.Create(string_literal284);
 				adaptor.AddChild(root_0, string_literal284_tree);
 				}
-				DebugLocation(1166, 40);
-				c1=(IToken)Match(input,C_STRING,Follow._C_STRING_in_modulecompliance_macro_compliance6981); if (state.failed) return retval;
+				DebugLocation(1163, 40);
+				c1=(IToken)Match(input,C_STRING,Follow._C_STRING_in_modulecompliance_macro_compliance6962); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				c1_tree = (CommonTree)adaptor.Create(c1);
 				adaptor.AddChild(root_0, c1_tree);
 				}
-				DebugLocation(1166, 50);
+				DebugLocation(1163, 50);
 				if (state.backtracking == 0)
 				{
 					 retval.result = new GroupCompliance((v1!=null?v1.result:default(ISmiValue)), (c1!=null?c1.Text:null)); 
@@ -15525,29 +15525,29 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// Smi.g:1167:7: 'OBJECT' v2= value ( 'SYNTAX' s= syntax )? ( 'WRITE-SYNTAX' s2= syntax )? ( 'MIN-ACCESS' a= modulecompliance_macro_access )? ( 'PIB-MIN-ACCESS' a2= modulecompliance_macro_pibaccess )? 'DESCRIPTION' c2= C_STRING
+				// Smi.g:1164:7: 'OBJECT' v2= value ( 'SYNTAX' s= syntax )? ( 'WRITE-SYNTAX' s2= syntax )? ( 'MIN-ACCESS' a= modulecompliance_macro_access )? ( 'PIB-MIN-ACCESS' a2= modulecompliance_macro_pibaccess )? 'DESCRIPTION' c2= C_STRING
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(1167, 7);
-				string_literal285=(IToken)Match(input,OBJECT_KW,Follow._OBJECT_KW_in_modulecompliance_macro_compliance6991); if (state.failed) return retval;
+				DebugLocation(1164, 7);
+				string_literal285=(IToken)Match(input,OBJECT_KW,Follow._OBJECT_KW_in_modulecompliance_macro_compliance6972); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal285_tree = (CommonTree)adaptor.Create(string_literal285);
 				adaptor.AddChild(root_0, string_literal285_tree);
 				}
-				DebugLocation(1167, 18);
-				PushFollow(Follow._value_in_modulecompliance_macro_compliance6995);
+				DebugLocation(1164, 18);
+				PushFollow(Follow._value_in_modulecompliance_macro_compliance6976);
 				v2=value();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, v2.Tree);
-				DebugLocation(1167, 25);
+				DebugLocation(1164, 25);
 				if (state.backtracking == 0)
 				{
 					 retval.result = new ObjectCompliance((v2!=null?v2.result:default(ISmiValue))); 
 				}
-				DebugLocation(1168, 5);
-				// Smi.g:1168:5: ( 'SYNTAX' s= syntax )?
+				DebugLocation(1165, 5);
+				// Smi.g:1165:5: ( 'SYNTAX' s= syntax )?
 				int alt114=2;
 				try { DebugEnterSubRule(114);
 				try { DebugEnterDecision(114, false);
@@ -15562,21 +15562,21 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:1168:6: 'SYNTAX' s= syntax
+					// Smi.g:1165:6: 'SYNTAX' s= syntax
 					{
-					DebugLocation(1168, 6);
-					string_literal286=(IToken)Match(input,185,Follow._185_in_modulecompliance_macro_compliance7005); if (state.failed) return retval;
+					DebugLocation(1165, 6);
+					string_literal286=(IToken)Match(input,185,Follow._185_in_modulecompliance_macro_compliance6986); if (state.failed) return retval;
 					if (state.backtracking == 0) {
 					string_literal286_tree = (CommonTree)adaptor.Create(string_literal286);
 					adaptor.AddChild(root_0, string_literal286_tree);
 					}
-					DebugLocation(1168, 16);
-					PushFollow(Follow._syntax_in_modulecompliance_macro_compliance7009);
+					DebugLocation(1165, 16);
+					PushFollow(Follow._syntax_in_modulecompliance_macro_compliance6990);
 					s=syntax();
 					PopFollow();
 					if (state.failed) return retval;
 					if (state.backtracking == 0) adaptor.AddChild(root_0, s.Tree);
-					DebugLocation(1168, 24);
+					DebugLocation(1165, 24);
 					if (state.backtracking == 0)
 					{
 						 retval.result.Syntax = (s!=null?s.result:default(Syntax)); 
@@ -15588,8 +15588,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				}
 				} finally { DebugExitSubRule(114); }
 
-				DebugLocation(1169, 5);
-				// Smi.g:1169:5: ( 'WRITE-SYNTAX' s2= syntax )?
+				DebugLocation(1166, 5);
+				// Smi.g:1166:5: ( 'WRITE-SYNTAX' s2= syntax )?
 				int alt115=2;
 				try { DebugEnterSubRule(115);
 				try { DebugEnterDecision(115, false);
@@ -15604,21 +15604,21 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:1169:6: 'WRITE-SYNTAX' s2= syntax
+					// Smi.g:1166:6: 'WRITE-SYNTAX' s2= syntax
 					{
-					DebugLocation(1169, 6);
-					string_literal287=(IToken)Match(input,195,Follow._195_in_modulecompliance_macro_compliance7020); if (state.failed) return retval;
+					DebugLocation(1166, 6);
+					string_literal287=(IToken)Match(input,195,Follow._195_in_modulecompliance_macro_compliance7001); if (state.failed) return retval;
 					if (state.backtracking == 0) {
 					string_literal287_tree = (CommonTree)adaptor.Create(string_literal287);
 					adaptor.AddChild(root_0, string_literal287_tree);
 					}
-					DebugLocation(1169, 23);
-					PushFollow(Follow._syntax_in_modulecompliance_macro_compliance7024);
+					DebugLocation(1166, 23);
+					PushFollow(Follow._syntax_in_modulecompliance_macro_compliance7005);
 					s2=syntax();
 					PopFollow();
 					if (state.failed) return retval;
 					if (state.backtracking == 0) adaptor.AddChild(root_0, s2.Tree);
-					DebugLocation(1169, 31);
+					DebugLocation(1166, 31);
 					if (state.backtracking == 0)
 					{
 						 retval.result.WriteSyntax = (s2!=null?s2.result:default(Syntax)); 
@@ -15630,8 +15630,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				}
 				} finally { DebugExitSubRule(115); }
 
-				DebugLocation(1170, 5);
-				// Smi.g:1170:5: ( 'MIN-ACCESS' a= modulecompliance_macro_access )?
+				DebugLocation(1167, 5);
+				// Smi.g:1167:5: ( 'MIN-ACCESS' a= modulecompliance_macro_access )?
 				int alt116=2;
 				try { DebugEnterSubRule(116);
 				try { DebugEnterDecision(116, false);
@@ -15646,21 +15646,21 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:1170:6: 'MIN-ACCESS' a= modulecompliance_macro_access
+					// Smi.g:1167:6: 'MIN-ACCESS' a= modulecompliance_macro_access
 					{
-					DebugLocation(1170, 6);
-					string_literal288=(IToken)Match(input,154,Follow._154_in_modulecompliance_macro_compliance7041); if (state.failed) return retval;
+					DebugLocation(1167, 6);
+					string_literal288=(IToken)Match(input,154,Follow._154_in_modulecompliance_macro_compliance7022); if (state.failed) return retval;
 					if (state.backtracking == 0) {
 					string_literal288_tree = (CommonTree)adaptor.Create(string_literal288);
 					adaptor.AddChild(root_0, string_literal288_tree);
 					}
-					DebugLocation(1170, 20);
-					PushFollow(Follow._modulecompliance_macro_access_in_modulecompliance_macro_compliance7045);
+					DebugLocation(1167, 20);
+					PushFollow(Follow._modulecompliance_macro_access_in_modulecompliance_macro_compliance7026);
 					a=modulecompliance_macro_access();
 					PopFollow();
 					if (state.failed) return retval;
 					if (state.backtracking == 0) adaptor.AddChild(root_0, a.Tree);
-					DebugLocation(1170, 51);
+					DebugLocation(1167, 51);
 					if (state.backtracking == 0)
 					{
 						 retval.result.MinAccess = (a!=null?a.result:default(Access)); 
@@ -15672,8 +15672,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				}
 				} finally { DebugExitSubRule(116); }
 
-				DebugLocation(1171, 5);
-				// Smi.g:1171:5: ( 'PIB-MIN-ACCESS' a2= modulecompliance_macro_pibaccess )?
+				DebugLocation(1168, 5);
+				// Smi.g:1168:5: ( 'PIB-MIN-ACCESS' a2= modulecompliance_macro_pibaccess )?
 				int alt117=2;
 				try { DebugEnterSubRule(117);
 				try { DebugEnterDecision(117, false);
@@ -15688,21 +15688,21 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:1171:6: 'PIB-MIN-ACCESS' a2= modulecompliance_macro_pibaccess
+					// Smi.g:1168:6: 'PIB-MIN-ACCESS' a2= modulecompliance_macro_pibaccess
 					{
-					DebugLocation(1171, 6);
-					string_literal289=(IToken)Match(input,169,Follow._169_in_modulecompliance_macro_compliance7057); if (state.failed) return retval;
+					DebugLocation(1168, 6);
+					string_literal289=(IToken)Match(input,169,Follow._169_in_modulecompliance_macro_compliance7038); if (state.failed) return retval;
 					if (state.backtracking == 0) {
 					string_literal289_tree = (CommonTree)adaptor.Create(string_literal289);
 					adaptor.AddChild(root_0, string_literal289_tree);
 					}
-					DebugLocation(1171, 25);
-					PushFollow(Follow._modulecompliance_macro_pibaccess_in_modulecompliance_macro_compliance7061);
+					DebugLocation(1168, 25);
+					PushFollow(Follow._modulecompliance_macro_pibaccess_in_modulecompliance_macro_compliance7042);
 					a2=modulecompliance_macro_pibaccess();
 					PopFollow();
 					if (state.failed) return retval;
 					if (state.backtracking == 0) adaptor.AddChild(root_0, a2.Tree);
-					DebugLocation(1171, 59);
+					DebugLocation(1168, 59);
 					if (state.backtracking == 0)
 					{
 						 retval.result.PibMinAccess = (a2!=null?a2.result:default(PibAccess)); 
@@ -15714,19 +15714,19 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				}
 				} finally { DebugExitSubRule(117); }
 
-				DebugLocation(1172, 5);
-				string_literal290=(IToken)Match(input,139,Follow._139_in_modulecompliance_macro_compliance7076); if (state.failed) return retval;
+				DebugLocation(1169, 5);
+				string_literal290=(IToken)Match(input,139,Follow._139_in_modulecompliance_macro_compliance7057); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal290_tree = (CommonTree)adaptor.Create(string_literal290);
 				adaptor.AddChild(root_0, string_literal290_tree);
 				}
-				DebugLocation(1172, 21);
-				c2=(IToken)Match(input,C_STRING,Follow._C_STRING_in_modulecompliance_macro_compliance7080); if (state.failed) return retval;
+				DebugLocation(1169, 21);
+				c2=(IToken)Match(input,C_STRING,Follow._C_STRING_in_modulecompliance_macro_compliance7061); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				c2_tree = (CommonTree)adaptor.Create(c2);
 				adaptor.AddChild(root_0, c2_tree);
 				}
-				DebugLocation(1172, 31);
+				DebugLocation(1169, 31);
 				if (state.backtracking == 0)
 				{
 					 retval.result.Description = (c2!=null?c2.Text:null); 
@@ -15755,7 +15755,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("modulecompliance_macro_compliance", 78);
 			LeaveRule_modulecompliance_macro_compliance();
 		}
-		DebugLocation(1173, 1);
+		DebugLocation(1170, 1);
 		} finally { DebugExitRule(GrammarFileName, "modulecompliance_macro_compliance"); }
 		return retval;
 
@@ -15772,7 +15772,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_modulecompliance_macro_access();
 	partial void LeaveRule_modulecompliance_macro_access();
 	// $ANTLR start "modulecompliance_macro_access"
-	// Smi.g:1175:1: modulecompliance_macro_access returns [Access result] : l= LOWER ;
+	// Smi.g:1172:1: modulecompliance_macro_access returns [Access result] : l= LOWER ;
 	[GrammarRule("modulecompliance_macro_access")]
 	private SmiParser.modulecompliance_macro_access_return modulecompliance_macro_access()
 	{
@@ -15788,22 +15788,22 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 		CommonTree l_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "modulecompliance_macro_access");
-		DebugLocation(1175, 4);
+		DebugLocation(1172, 4);
 		try
 		{
-			// Smi.g:1176:5: (l= LOWER )
+			// Smi.g:1173:5: (l= LOWER )
 			DebugEnterAlt(1);
-			// Smi.g:1176:7: l= LOWER
+			// Smi.g:1173:7: l= LOWER
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(1176, 8);
-			l=(IToken)Match(input,LOWER,Follow._LOWER_in_modulecompliance_macro_access7102); if (state.failed) return retval;
+			DebugLocation(1173, 8);
+			l=(IToken)Match(input,LOWER,Follow._LOWER_in_modulecompliance_macro_access7083); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			l_tree = (CommonTree)adaptor.Create(l);
 			adaptor.AddChild(root_0, l_tree);
 			}
-			DebugLocation(1176, 15);
+			DebugLocation(1173, 15);
 			if (state.backtracking == 0)
 			{
 				if (l.Text == ("not-accessible")) retval.result = Access.NotAccessible;
@@ -15835,7 +15835,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("modulecompliance_macro_access", 79);
 			LeaveRule_modulecompliance_macro_access();
 		}
-		DebugLocation(1182, 4);
+		DebugLocation(1179, 4);
 		} finally { DebugExitRule(GrammarFileName, "modulecompliance_macro_access"); }
 		return retval;
 
@@ -15852,7 +15852,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_modulecompliance_macro_pibaccess();
 	partial void LeaveRule_modulecompliance_macro_pibaccess();
 	// $ANTLR start "modulecompliance_macro_pibaccess"
-	// Smi.g:1184:1: modulecompliance_macro_pibaccess returns [PibAccess result] : l= LOWER ;
+	// Smi.g:1181:1: modulecompliance_macro_pibaccess returns [PibAccess result] : l= LOWER ;
 	[GrammarRule("modulecompliance_macro_pibaccess")]
 	private SmiParser.modulecompliance_macro_pibaccess_return modulecompliance_macro_pibaccess()
 	{
@@ -15868,22 +15868,22 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 		CommonTree l_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "modulecompliance_macro_pibaccess");
-		DebugLocation(1184, 1);
+		DebugLocation(1181, 1);
 		try
 		{
-			// Smi.g:1185:5: (l= LOWER )
+			// Smi.g:1182:5: (l= LOWER )
 			DebugEnterAlt(1);
-			// Smi.g:1185:7: l= LOWER
+			// Smi.g:1182:7: l= LOWER
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(1185, 8);
-			l=(IToken)Match(input,LOWER,Follow._LOWER_in_modulecompliance_macro_pibaccess7127); if (state.failed) return retval;
+			DebugLocation(1182, 8);
+			l=(IToken)Match(input,LOWER,Follow._LOWER_in_modulecompliance_macro_pibaccess7108); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			l_tree = (CommonTree)adaptor.Create(l);
 			adaptor.AddChild(root_0, l_tree);
 			}
-			DebugLocation(1185, 15);
+			DebugLocation(1182, 15);
 			if (state.backtracking == 0)
 			{
 				if (l.Text == ("not-accessible")) retval.result = PibAccess.NotAccessible;
@@ -15915,7 +15915,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("modulecompliance_macro_pibaccess", 80);
 			LeaveRule_modulecompliance_macro_pibaccess();
 		}
-		DebugLocation(1191, 1);
+		DebugLocation(1188, 1);
 		} finally { DebugExitRule(GrammarFileName, "modulecompliance_macro_pibaccess"); }
 		return retval;
 
@@ -15932,7 +15932,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_agentcapabilities_macro();
 	partial void LeaveRule_agentcapabilities_macro();
 	// $ANTLR start "agentcapabilities_macro"
-	// Smi.g:1194:1: agentcapabilities_macro returns [AgentCapabilitiesMacro result] : 'AGENT-CAPABILITIES' 'PRODUCT-RELEASE' c1= C_STRING 'STATUS' s= agentcapabilities_macro_status 'DESCRIPTION' c2= C_STRING ( 'REFERENCE' c3= C_STRING )? (m= agentcapabilities_macro_module )* ;
+	// Smi.g:1191:1: agentcapabilities_macro returns [AgentCapabilitiesMacro result] : 'AGENT-CAPABILITIES' 'PRODUCT-RELEASE' c1= C_STRING 'STATUS' s= agentcapabilities_macro_status 'DESCRIPTION' c2= C_STRING ( 'REFERENCE' c3= C_STRING )? (m= agentcapabilities_macro_module )* ;
 	[GrammarRule("agentcapabilities_macro")]
 	private SmiParser.agentcapabilities_macro_return agentcapabilities_macro()
 	{
@@ -15964,74 +15964,74 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree string_literal294_tree = default(CommonTree);
 		CommonTree string_literal295_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "agentcapabilities_macro");
-		DebugLocation(1194, 1);
+		DebugLocation(1191, 1);
 		try
 		{
-			// Smi.g:1195:5: ( 'AGENT-CAPABILITIES' 'PRODUCT-RELEASE' c1= C_STRING 'STATUS' s= agentcapabilities_macro_status 'DESCRIPTION' c2= C_STRING ( 'REFERENCE' c3= C_STRING )? (m= agentcapabilities_macro_module )* )
+			// Smi.g:1192:5: ( 'AGENT-CAPABILITIES' 'PRODUCT-RELEASE' c1= C_STRING 'STATUS' s= agentcapabilities_macro_status 'DESCRIPTION' c2= C_STRING ( 'REFERENCE' c3= C_STRING )? (m= agentcapabilities_macro_module )* )
 			DebugEnterAlt(1);
-			// Smi.g:1195:7: 'AGENT-CAPABILITIES' 'PRODUCT-RELEASE' c1= C_STRING 'STATUS' s= agentcapabilities_macro_status 'DESCRIPTION' c2= C_STRING ( 'REFERENCE' c3= C_STRING )? (m= agentcapabilities_macro_module )*
+			// Smi.g:1192:7: 'AGENT-CAPABILITIES' 'PRODUCT-RELEASE' c1= C_STRING 'STATUS' s= agentcapabilities_macro_status 'DESCRIPTION' c2= C_STRING ( 'REFERENCE' c3= C_STRING )? (m= agentcapabilities_macro_module )*
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(1195, 7);
-			string_literal291=(IToken)Match(input,129,Follow._129_in_agentcapabilities_macro7149); if (state.failed) return retval;
+			DebugLocation(1192, 7);
+			string_literal291=(IToken)Match(input,129,Follow._129_in_agentcapabilities_macro7130); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			string_literal291_tree = (CommonTree)adaptor.Create(string_literal291);
 			adaptor.AddChild(root_0, string_literal291_tree);
 			}
-			DebugLocation(1195, 28);
-			string_literal292=(IToken)Match(input,173,Follow._173_in_agentcapabilities_macro7151); if (state.failed) return retval;
+			DebugLocation(1192, 28);
+			string_literal292=(IToken)Match(input,173,Follow._173_in_agentcapabilities_macro7132); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			string_literal292_tree = (CommonTree)adaptor.Create(string_literal292);
 			adaptor.AddChild(root_0, string_literal292_tree);
 			}
-			DebugLocation(1195, 48);
-			c1=(IToken)Match(input,C_STRING,Follow._C_STRING_in_agentcapabilities_macro7155); if (state.failed) return retval;
+			DebugLocation(1192, 48);
+			c1=(IToken)Match(input,C_STRING,Follow._C_STRING_in_agentcapabilities_macro7136); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			c1_tree = (CommonTree)adaptor.Create(c1);
 			adaptor.AddChild(root_0, c1_tree);
 			}
-			DebugLocation(1195, 58);
+			DebugLocation(1192, 58);
 			if (state.backtracking == 0)
 			{
 				 retval.result = new AgentCapabilitiesMacro((c1!=null?c1.Text:null)); 
 			}
-			DebugLocation(1196, 2);
-			string_literal293=(IToken)Match(input,182,Follow._182_in_agentcapabilities_macro7160); if (state.failed) return retval;
+			DebugLocation(1193, 2);
+			string_literal293=(IToken)Match(input,182,Follow._182_in_agentcapabilities_macro7141); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			string_literal293_tree = (CommonTree)adaptor.Create(string_literal293);
 			adaptor.AddChild(root_0, string_literal293_tree);
 			}
-			DebugLocation(1196, 12);
-			PushFollow(Follow._agentcapabilities_macro_status_in_agentcapabilities_macro7164);
+			DebugLocation(1193, 12);
+			PushFollow(Follow._agentcapabilities_macro_status_in_agentcapabilities_macro7145);
 			s=agentcapabilities_macro_status();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, s.Tree);
-			DebugLocation(1196, 44);
+			DebugLocation(1193, 44);
 			if (state.backtracking == 0)
 			{
 				 retval.result.Status = (s!=null?s.result:default(EntityStatus)); 
 			}
-			DebugLocation(1197, 2);
-			string_literal294=(IToken)Match(input,139,Follow._139_in_agentcapabilities_macro7169); if (state.failed) return retval;
+			DebugLocation(1194, 2);
+			string_literal294=(IToken)Match(input,139,Follow._139_in_agentcapabilities_macro7150); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			string_literal294_tree = (CommonTree)adaptor.Create(string_literal294);
 			adaptor.AddChild(root_0, string_literal294_tree);
 			}
-			DebugLocation(1197, 18);
-			c2=(IToken)Match(input,C_STRING,Follow._C_STRING_in_agentcapabilities_macro7173); if (state.failed) return retval;
+			DebugLocation(1194, 18);
+			c2=(IToken)Match(input,C_STRING,Follow._C_STRING_in_agentcapabilities_macro7154); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			c2_tree = (CommonTree)adaptor.Create(c2);
 			adaptor.AddChild(root_0, c2_tree);
 			}
-			DebugLocation(1197, 28);
+			DebugLocation(1194, 28);
 			if (state.backtracking == 0)
 			{
 				 retval.result.Description = (c2!=null?c2.Text:null); 
 			}
-			DebugLocation(1198, 2);
-			// Smi.g:1198:2: ( 'REFERENCE' c3= C_STRING )?
+			DebugLocation(1195, 2);
+			// Smi.g:1195:2: ( 'REFERENCE' c3= C_STRING )?
 			int alt119=2;
 			try { DebugEnterSubRule(119);
 			try { DebugEnterDecision(119, false);
@@ -16046,16 +16046,16 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1198:3: 'REFERENCE' c3= C_STRING
+				// Smi.g:1195:3: 'REFERENCE' c3= C_STRING
 				{
-				DebugLocation(1198, 3);
-				string_literal295=(IToken)Match(input,175,Follow._175_in_agentcapabilities_macro7179); if (state.failed) return retval;
+				DebugLocation(1195, 3);
+				string_literal295=(IToken)Match(input,175,Follow._175_in_agentcapabilities_macro7160); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal295_tree = (CommonTree)adaptor.Create(string_literal295);
 				adaptor.AddChild(root_0, string_literal295_tree);
 				}
-				DebugLocation(1198, 17);
-				c3=(IToken)Match(input,C_STRING,Follow._C_STRING_in_agentcapabilities_macro7183); if (state.failed) return retval;
+				DebugLocation(1195, 17);
+				c3=(IToken)Match(input,C_STRING,Follow._C_STRING_in_agentcapabilities_macro7164); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				c3_tree = (CommonTree)adaptor.Create(c3);
 				adaptor.AddChild(root_0, c3_tree);
@@ -16067,13 +16067,13 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(119); }
 
-			DebugLocation(1198, 29);
+			DebugLocation(1195, 29);
 			if (state.backtracking == 0)
 			{
 				 retval.result.Reference = (c3!=null?c3.Text:null); 
 			}
-			DebugLocation(1199, 2);
-			// Smi.g:1199:2: (m= agentcapabilities_macro_module )*
+			DebugLocation(1196, 2);
+			// Smi.g:1196:2: (m= agentcapabilities_macro_module )*
 			try { DebugEnterSubRule(120);
 			while (true)
 			{
@@ -16092,15 +16092,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:1199:3: m= agentcapabilities_macro_module
+					// Smi.g:1196:3: m= agentcapabilities_macro_module
 					{
-					DebugLocation(1199, 4);
-					PushFollow(Follow._agentcapabilities_macro_module_in_agentcapabilities_macro7193);
+					DebugLocation(1196, 4);
+					PushFollow(Follow._agentcapabilities_macro_module_in_agentcapabilities_macro7174);
 					m=agentcapabilities_macro_module();
 					PopFollow();
 					if (state.failed) return retval;
 					if (state.backtracking == 0) adaptor.AddChild(root_0, m.Tree);
-					DebugLocation(1199, 36);
+					DebugLocation(1196, 36);
 					if (state.backtracking == 0)
 					{
 						 retval.result.Modules.Add((m!=null?m.result:default(AgentCapabilitiesModule))); 
@@ -16141,7 +16141,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("agentcapabilities_macro", 81);
 			LeaveRule_agentcapabilities_macro();
 		}
-		DebugLocation(1200, 1);
+		DebugLocation(1197, 1);
 		} finally { DebugExitRule(GrammarFileName, "agentcapabilities_macro"); }
 		return retval;
 
@@ -16158,7 +16158,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_agentcapabilities_macro_status();
 	partial void LeaveRule_agentcapabilities_macro_status();
 	// $ANTLR start "agentcapabilities_macro_status"
-	// Smi.g:1202:1: agentcapabilities_macro_status returns [EntityStatus result] : l= LOWER ;
+	// Smi.g:1199:1: agentcapabilities_macro_status returns [EntityStatus result] : l= LOWER ;
 	[GrammarRule("agentcapabilities_macro_status")]
 	private SmiParser.agentcapabilities_macro_status_return agentcapabilities_macro_status()
 	{
@@ -16174,22 +16174,22 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 		CommonTree l_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "agentcapabilities_macro_status");
-		DebugLocation(1202, 64);
+		DebugLocation(1199, 64);
 		try
 		{
-			// Smi.g:1203:5: (l= LOWER )
+			// Smi.g:1200:5: (l= LOWER )
 			DebugEnterAlt(1);
-			// Smi.g:1203:7: l= LOWER
+			// Smi.g:1200:7: l= LOWER
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(1203, 8);
-			l=(IToken)Match(input,LOWER,Follow._LOWER_in_agentcapabilities_macro_status7217); if (state.failed) return retval;
+			DebugLocation(1200, 8);
+			l=(IToken)Match(input,LOWER,Follow._LOWER_in_agentcapabilities_macro_status7198); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			l_tree = (CommonTree)adaptor.Create(l);
 			adaptor.AddChild(root_0, l_tree);
 			}
-			DebugLocation(1203, 15);
+			DebugLocation(1200, 15);
 			if (state.backtracking == 0)
 			{
 				if (l.Text == ("current")) retval.result = EntityStatus.Current;
@@ -16218,7 +16218,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("agentcapabilities_macro_status", 82);
 			LeaveRule_agentcapabilities_macro_status();
 		}
-		DebugLocation(1205, 64);
+		DebugLocation(1202, 64);
 		} finally { DebugExitRule(GrammarFileName, "agentcapabilities_macro_status"); }
 		return retval;
 
@@ -16235,7 +16235,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_agentcapabilities_macro_module();
 	partial void LeaveRule_agentcapabilities_macro_module();
 	// $ANTLR start "agentcapabilities_macro_module"
-	// Smi.g:1207:1: agentcapabilities_macro_module returns [AgentCapabilitiesModule result] : 'SUPPORTS' name= ( UPPER | LOWER ) (v1= value )? 'INCLUDES' L_BRACE v2= value ( COMMA v3= value )* R_BRACE (va= agentcapabilities_macro_variation )* ;
+	// Smi.g:1204:1: agentcapabilities_macro_module returns [AgentCapabilitiesModule result] : 'SUPPORTS' name= ( UPPER | LOWER ) (v1= value )? 'INCLUDES' L_BRACE v2= value ( COMMA v3= value )* R_BRACE (va= agentcapabilities_macro_variation )* ;
 	[GrammarRule("agentcapabilities_macro_module")]
 	private SmiParser.agentcapabilities_macro_module_return agentcapabilities_macro_module()
 	{
@@ -16265,22 +16265,22 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree COMMA299_tree = default(CommonTree);
 		CommonTree R_BRACE300_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "agentcapabilities_macro_module");
-		DebugLocation(1207, 1);
+		DebugLocation(1204, 1);
 		try
 		{
-			// Smi.g:1208:5: ( 'SUPPORTS' name= ( UPPER | LOWER ) (v1= value )? 'INCLUDES' L_BRACE v2= value ( COMMA v3= value )* R_BRACE (va= agentcapabilities_macro_variation )* )
+			// Smi.g:1205:5: ( 'SUPPORTS' name= ( UPPER | LOWER ) (v1= value )? 'INCLUDES' L_BRACE v2= value ( COMMA v3= value )* R_BRACE (va= agentcapabilities_macro_variation )* )
 			DebugEnterAlt(1);
-			// Smi.g:1208:7: 'SUPPORTS' name= ( UPPER | LOWER ) (v1= value )? 'INCLUDES' L_BRACE v2= value ( COMMA v3= value )* R_BRACE (va= agentcapabilities_macro_variation )*
+			// Smi.g:1205:7: 'SUPPORTS' name= ( UPPER | LOWER ) (v1= value )? 'INCLUDES' L_BRACE v2= value ( COMMA v3= value )* R_BRACE (va= agentcapabilities_macro_variation )*
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(1208, 7);
-			string_literal296=(IToken)Match(input,184,Follow._184_in_agentcapabilities_macro_module7235); if (state.failed) return retval;
+			DebugLocation(1205, 7);
+			string_literal296=(IToken)Match(input,184,Follow._184_in_agentcapabilities_macro_module7216); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			string_literal296_tree = (CommonTree)adaptor.Create(string_literal296);
 			adaptor.AddChild(root_0, string_literal296_tree);
 			}
-			DebugLocation(1208, 22);
+			DebugLocation(1205, 22);
 
 			name=(IToken)input.LT(1);
 			if (input.LA(1)==LOWER||input.LA(1)==UPPER)
@@ -16297,13 +16297,13 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				throw mse;
 			}
 
-			DebugLocation(1208, 39);
+			DebugLocation(1205, 39);
 			if (state.backtracking == 0)
 			{
 				 retval.result = new AgentCapabilitiesModule((name!=null?name.Text:null)); 
 			}
-			DebugLocation(1209, 2);
-			// Smi.g:1209:2: (v1= value )?
+			DebugLocation(1206, 2);
+			// Smi.g:1206:2: (v1= value )?
 			int alt121=2;
 			try { DebugEnterSubRule(121);
 			try { DebugEnterDecision(121, false);
@@ -16318,10 +16318,10 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1209:3: v1= value
+				// Smi.g:1206:3: v1= value
 				{
-				DebugLocation(1209, 5);
-				PushFollow(Follow._value_in_agentcapabilities_macro_module7253);
+				DebugLocation(1206, 5);
+				PushFollow(Follow._value_in_agentcapabilities_macro_module7234);
 				v1=value();
 				PopFollow();
 				if (state.failed) return retval;
@@ -16333,36 +16333,36 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(121); }
 
-			DebugLocation(1209, 14);
+			DebugLocation(1206, 14);
 			if (state.backtracking == 0)
 			{
 				 retval.result.Value = (v1!=null?v1.result:default(ISmiValue)); 
 			}
-			DebugLocation(1210, 5);
-			string_literal297=(IToken)Match(input,INCLUDES_KW,Follow._INCLUDES_KW_in_agentcapabilities_macro_module7263); if (state.failed) return retval;
+			DebugLocation(1207, 5);
+			string_literal297=(IToken)Match(input,INCLUDES_KW,Follow._INCLUDES_KW_in_agentcapabilities_macro_module7244); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			string_literal297_tree = (CommonTree)adaptor.Create(string_literal297);
 			adaptor.AddChild(root_0, string_literal297_tree);
 			}
-			DebugLocation(1210, 16);
-			L_BRACE298=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_agentcapabilities_macro_module7265); if (state.failed) return retval;
+			DebugLocation(1207, 16);
+			L_BRACE298=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_agentcapabilities_macro_module7246); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			L_BRACE298_tree = (CommonTree)adaptor.Create(L_BRACE298);
 			adaptor.AddChild(root_0, L_BRACE298_tree);
 			}
-			DebugLocation(1210, 26);
-			PushFollow(Follow._value_in_agentcapabilities_macro_module7269);
+			DebugLocation(1207, 26);
+			PushFollow(Follow._value_in_agentcapabilities_macro_module7250);
 			v2=value();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, v2.Tree);
-			DebugLocation(1210, 33);
+			DebugLocation(1207, 33);
 			if (state.backtracking == 0)
 			{
 				 retval.result.Includes.Add((v2!=null?v2.result:default(ISmiValue))); 
 			}
-			DebugLocation(1211, 2);
-			// Smi.g:1211:2: ( COMMA v3= value )*
+			DebugLocation(1208, 2);
+			// Smi.g:1208:2: ( COMMA v3= value )*
 			try { DebugEnterSubRule(122);
 			while (true)
 			{
@@ -16381,16 +16381,16 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:1211:3: COMMA v3= value
+					// Smi.g:1208:3: COMMA v3= value
 					{
-					DebugLocation(1211, 3);
-					COMMA299=(IToken)Match(input,COMMA,Follow._COMMA_in_agentcapabilities_macro_module7275); if (state.failed) return retval;
+					DebugLocation(1208, 3);
+					COMMA299=(IToken)Match(input,COMMA,Follow._COMMA_in_agentcapabilities_macro_module7256); if (state.failed) return retval;
 					if (state.backtracking == 0) {
 					COMMA299_tree = (CommonTree)adaptor.Create(COMMA299);
 					adaptor.AddChild(root_0, COMMA299_tree);
 					}
-					DebugLocation(1211, 11);
-					PushFollow(Follow._value_in_agentcapabilities_macro_module7279);
+					DebugLocation(1208, 11);
+					PushFollow(Follow._value_in_agentcapabilities_macro_module7260);
 					v3=value();
 					PopFollow();
 					if (state.failed) return retval;
@@ -16409,19 +16409,19 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 			} finally { DebugExitSubRule(122); }
 
-			DebugLocation(1211, 20);
-			R_BRACE300=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_agentcapabilities_macro_module7283); if (state.failed) return retval;
+			DebugLocation(1208, 20);
+			R_BRACE300=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_agentcapabilities_macro_module7264); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			R_BRACE300_tree = (CommonTree)adaptor.Create(R_BRACE300);
 			adaptor.AddChild(root_0, R_BRACE300_tree);
 			}
-			DebugLocation(1211, 28);
+			DebugLocation(1208, 28);
 			if (state.backtracking == 0)
 			{
 				 retval.result.Includes.Add((v3!=null?v3.result:default(ISmiValue))); 
 			}
-			DebugLocation(1212, 2);
-			// Smi.g:1212:2: (va= agentcapabilities_macro_variation )*
+			DebugLocation(1209, 2);
+			// Smi.g:1209:2: (va= agentcapabilities_macro_variation )*
 			try { DebugEnterSubRule(123);
 			while (true)
 			{
@@ -16440,15 +16440,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:1212:3: va= agentcapabilities_macro_variation
+					// Smi.g:1209:3: va= agentcapabilities_macro_variation
 					{
-					DebugLocation(1212, 5);
-					PushFollow(Follow._agentcapabilities_macro_variation_in_agentcapabilities_macro_module7291);
+					DebugLocation(1209, 5);
+					PushFollow(Follow._agentcapabilities_macro_variation_in_agentcapabilities_macro_module7272);
 					va=agentcapabilities_macro_variation();
 					PopFollow();
 					if (state.failed) return retval;
 					if (state.backtracking == 0) adaptor.AddChild(root_0, va.Tree);
-					DebugLocation(1212, 40);
+					DebugLocation(1209, 40);
 					if (state.backtracking == 0)
 					{
 						 retval.result.Variations.Add((va!=null?va.result:default(Variantion))); 
@@ -16489,7 +16489,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("agentcapabilities_macro_module", 83);
 			LeaveRule_agentcapabilities_macro_module();
 		}
-		DebugLocation(1213, 1);
+		DebugLocation(1210, 1);
 		} finally { DebugExitRule(GrammarFileName, "agentcapabilities_macro_module"); }
 		return retval;
 
@@ -16506,7 +16506,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_agentcapabilities_macro_variation();
 	partial void LeaveRule_agentcapabilities_macro_variation();
 	// $ANTLR start "agentcapabilities_macro_variation"
-	// Smi.g:1215:1: agentcapabilities_macro_variation returns [Variantion result] : 'VARIATION' v1= value ( 'SYNTAX' s1= syntax )? ( 'WRITE-SYNTAX' s2= syntax )? ( 'ACCESS' a1= agentcapabilities_macro_access )? ( 'CREATION-REQUIRES' L_BRACE v2= value ( COMMA v3= value )* R_BRACE )? ( 'DEFVAL' L_BRACE ( ( L_BRACE ( LOWER | COMMA | R_BRACE ) )=> L_BRACE (l1= LOWER )? ( COMMA l2= LOWER )* |v4= value ) R_BRACE )? 'DESCRIPTION' c1= C_STRING ;
+	// Smi.g:1212:1: agentcapabilities_macro_variation returns [Variantion result] : 'VARIATION' v1= value ( 'SYNTAX' s1= syntax )? ( 'WRITE-SYNTAX' s2= syntax )? ( 'ACCESS' a1= agentcapabilities_macro_access )? ( 'CREATION-REQUIRES' L_BRACE v2= value ( COMMA v3= value )* R_BRACE )? ( 'DEFVAL' L_BRACE ( ( L_BRACE ( LOWER | COMMA | R_BRACE ) )=> L_BRACE (l1= LOWER )? ( COMMA l2= LOWER )* |v4= value ) R_BRACE )? 'DESCRIPTION' c1= C_STRING ;
 	[GrammarRule("agentcapabilities_macro_variation")]
 	private SmiParser.agentcapabilities_macro_variation_return agentcapabilities_macro_variation()
 	{
@@ -16561,34 +16561,34 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree R_BRACE313_tree = default(CommonTree);
 		CommonTree string_literal314_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "agentcapabilities_macro_variation");
-		DebugLocation(1215, 1);
+		DebugLocation(1212, 1);
 		try
 		{
-			// Smi.g:1216:5: ( 'VARIATION' v1= value ( 'SYNTAX' s1= syntax )? ( 'WRITE-SYNTAX' s2= syntax )? ( 'ACCESS' a1= agentcapabilities_macro_access )? ( 'CREATION-REQUIRES' L_BRACE v2= value ( COMMA v3= value )* R_BRACE )? ( 'DEFVAL' L_BRACE ( ( L_BRACE ( LOWER | COMMA | R_BRACE ) )=> L_BRACE (l1= LOWER )? ( COMMA l2= LOWER )* |v4= value ) R_BRACE )? 'DESCRIPTION' c1= C_STRING )
+			// Smi.g:1213:5: ( 'VARIATION' v1= value ( 'SYNTAX' s1= syntax )? ( 'WRITE-SYNTAX' s2= syntax )? ( 'ACCESS' a1= agentcapabilities_macro_access )? ( 'CREATION-REQUIRES' L_BRACE v2= value ( COMMA v3= value )* R_BRACE )? ( 'DEFVAL' L_BRACE ( ( L_BRACE ( LOWER | COMMA | R_BRACE ) )=> L_BRACE (l1= LOWER )? ( COMMA l2= LOWER )* |v4= value ) R_BRACE )? 'DESCRIPTION' c1= C_STRING )
 			DebugEnterAlt(1);
-			// Smi.g:1216:7: 'VARIATION' v1= value ( 'SYNTAX' s1= syntax )? ( 'WRITE-SYNTAX' s2= syntax )? ( 'ACCESS' a1= agentcapabilities_macro_access )? ( 'CREATION-REQUIRES' L_BRACE v2= value ( COMMA v3= value )* R_BRACE )? ( 'DEFVAL' L_BRACE ( ( L_BRACE ( LOWER | COMMA | R_BRACE ) )=> L_BRACE (l1= LOWER )? ( COMMA l2= LOWER )* |v4= value ) R_BRACE )? 'DESCRIPTION' c1= C_STRING
+			// Smi.g:1213:7: 'VARIATION' v1= value ( 'SYNTAX' s1= syntax )? ( 'WRITE-SYNTAX' s2= syntax )? ( 'ACCESS' a1= agentcapabilities_macro_access )? ( 'CREATION-REQUIRES' L_BRACE v2= value ( COMMA v3= value )* R_BRACE )? ( 'DEFVAL' L_BRACE ( ( L_BRACE ( LOWER | COMMA | R_BRACE ) )=> L_BRACE (l1= LOWER )? ( COMMA l2= LOWER )* |v4= value ) R_BRACE )? 'DESCRIPTION' c1= C_STRING
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(1216, 7);
-			string_literal301=(IToken)Match(input,194,Follow._194_in_agentcapabilities_macro_variation7313); if (state.failed) return retval;
+			DebugLocation(1213, 7);
+			string_literal301=(IToken)Match(input,194,Follow._194_in_agentcapabilities_macro_variation7294); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			string_literal301_tree = (CommonTree)adaptor.Create(string_literal301);
 			adaptor.AddChild(root_0, string_literal301_tree);
 			}
-			DebugLocation(1216, 21);
-			PushFollow(Follow._value_in_agentcapabilities_macro_variation7317);
+			DebugLocation(1213, 21);
+			PushFollow(Follow._value_in_agentcapabilities_macro_variation7298);
 			v1=value();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, v1.Tree);
-			DebugLocation(1216, 28);
+			DebugLocation(1213, 28);
 			if (state.backtracking == 0)
 			{
 				 retval.result = new Variantion((v1!=null?v1.result:default(ISmiValue))); 
 			}
-			DebugLocation(1217, 2);
-			// Smi.g:1217:2: ( 'SYNTAX' s1= syntax )?
+			DebugLocation(1214, 2);
+			// Smi.g:1214:2: ( 'SYNTAX' s1= syntax )?
 			int alt124=2;
 			try { DebugEnterSubRule(124);
 			try { DebugEnterDecision(124, false);
@@ -16603,16 +16603,16 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1217:3: 'SYNTAX' s1= syntax
+				// Smi.g:1214:3: 'SYNTAX' s1= syntax
 				{
-				DebugLocation(1217, 3);
-				string_literal302=(IToken)Match(input,185,Follow._185_in_agentcapabilities_macro_variation7323); if (state.failed) return retval;
+				DebugLocation(1214, 3);
+				string_literal302=(IToken)Match(input,185,Follow._185_in_agentcapabilities_macro_variation7304); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal302_tree = (CommonTree)adaptor.Create(string_literal302);
 				adaptor.AddChild(root_0, string_literal302_tree);
 				}
-				DebugLocation(1217, 14);
-				PushFollow(Follow._syntax_in_agentcapabilities_macro_variation7327);
+				DebugLocation(1214, 14);
+				PushFollow(Follow._syntax_in_agentcapabilities_macro_variation7308);
 				s1=syntax();
 				PopFollow();
 				if (state.failed) return retval;
@@ -16624,13 +16624,13 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(124); }
 
-			DebugLocation(1217, 24);
+			DebugLocation(1214, 24);
 			if (state.backtracking == 0)
 			{
 				 retval.result.Syntax = (s1!=null?s1.result:default(Syntax)); 
 			}
-			DebugLocation(1218, 2);
-			// Smi.g:1218:2: ( 'WRITE-SYNTAX' s2= syntax )?
+			DebugLocation(1215, 2);
+			// Smi.g:1215:2: ( 'WRITE-SYNTAX' s2= syntax )?
 			int alt125=2;
 			try { DebugEnterSubRule(125);
 			try { DebugEnterDecision(125, false);
@@ -16645,16 +16645,16 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1218:3: 'WRITE-SYNTAX' s2= syntax
+				// Smi.g:1215:3: 'WRITE-SYNTAX' s2= syntax
 				{
-				DebugLocation(1218, 3);
-				string_literal303=(IToken)Match(input,195,Follow._195_in_agentcapabilities_macro_variation7335); if (state.failed) return retval;
+				DebugLocation(1215, 3);
+				string_literal303=(IToken)Match(input,195,Follow._195_in_agentcapabilities_macro_variation7316); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal303_tree = (CommonTree)adaptor.Create(string_literal303);
 				adaptor.AddChild(root_0, string_literal303_tree);
 				}
-				DebugLocation(1218, 20);
-				PushFollow(Follow._syntax_in_agentcapabilities_macro_variation7339);
+				DebugLocation(1215, 20);
+				PushFollow(Follow._syntax_in_agentcapabilities_macro_variation7320);
 				s2=syntax();
 				PopFollow();
 				if (state.failed) return retval;
@@ -16666,13 +16666,13 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(125); }
 
-			DebugLocation(1218, 30);
+			DebugLocation(1215, 30);
 			if (state.backtracking == 0)
 			{
 				 retval.result.WriteSyntax = (s2!=null?s2.result:default(Syntax)); 
 			}
-			DebugLocation(1219, 2);
-			// Smi.g:1219:2: ( 'ACCESS' a1= agentcapabilities_macro_access )?
+			DebugLocation(1216, 2);
+			// Smi.g:1216:2: ( 'ACCESS' a1= agentcapabilities_macro_access )?
 			int alt126=2;
 			try { DebugEnterSubRule(126);
 			try { DebugEnterDecision(126, false);
@@ -16687,16 +16687,16 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1219:3: 'ACCESS' a1= agentcapabilities_macro_access
+				// Smi.g:1216:3: 'ACCESS' a1= agentcapabilities_macro_access
 				{
-				DebugLocation(1219, 3);
-				string_literal304=(IToken)Match(input,128,Follow._128_in_agentcapabilities_macro_variation7347); if (state.failed) return retval;
+				DebugLocation(1216, 3);
+				string_literal304=(IToken)Match(input,128,Follow._128_in_agentcapabilities_macro_variation7328); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal304_tree = (CommonTree)adaptor.Create(string_literal304);
 				adaptor.AddChild(root_0, string_literal304_tree);
 				}
-				DebugLocation(1219, 14);
-				PushFollow(Follow._agentcapabilities_macro_access_in_agentcapabilities_macro_variation7351);
+				DebugLocation(1216, 14);
+				PushFollow(Follow._agentcapabilities_macro_access_in_agentcapabilities_macro_variation7332);
 				a1=agentcapabilities_macro_access();
 				PopFollow();
 				if (state.failed) return retval;
@@ -16708,13 +16708,13 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(126); }
 
-			DebugLocation(1219, 48);
+			DebugLocation(1216, 48);
 			if (state.backtracking == 0)
 			{
 				 retval.result.Access = (a1!=null?a1.result:default(Access)); 
 			}
-			DebugLocation(1220, 5);
-			// Smi.g:1220:5: ( 'CREATION-REQUIRES' L_BRACE v2= value ( COMMA v3= value )* R_BRACE )?
+			DebugLocation(1217, 5);
+			// Smi.g:1217:5: ( 'CREATION-REQUIRES' L_BRACE v2= value ( COMMA v3= value )* R_BRACE )?
 			int alt128=2;
 			try { DebugEnterSubRule(128);
 			try { DebugEnterDecision(128, false);
@@ -16729,33 +16729,33 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1220:6: 'CREATION-REQUIRES' L_BRACE v2= value ( COMMA v3= value )* R_BRACE
+				// Smi.g:1217:6: 'CREATION-REQUIRES' L_BRACE v2= value ( COMMA v3= value )* R_BRACE
 				{
-				DebugLocation(1220, 6);
-				string_literal305=(IToken)Match(input,137,Follow._137_in_agentcapabilities_macro_variation7362); if (state.failed) return retval;
+				DebugLocation(1217, 6);
+				string_literal305=(IToken)Match(input,137,Follow._137_in_agentcapabilities_macro_variation7343); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal305_tree = (CommonTree)adaptor.Create(string_literal305);
 				adaptor.AddChild(root_0, string_literal305_tree);
 				}
-				DebugLocation(1220, 26);
-				L_BRACE306=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_agentcapabilities_macro_variation7364); if (state.failed) return retval;
+				DebugLocation(1217, 26);
+				L_BRACE306=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_agentcapabilities_macro_variation7345); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				L_BRACE306_tree = (CommonTree)adaptor.Create(L_BRACE306);
 				adaptor.AddChild(root_0, L_BRACE306_tree);
 				}
-				DebugLocation(1220, 36);
-				PushFollow(Follow._value_in_agentcapabilities_macro_variation7368);
+				DebugLocation(1217, 36);
+				PushFollow(Follow._value_in_agentcapabilities_macro_variation7349);
 				v2=value();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, v2.Tree);
-				DebugLocation(1220, 43);
+				DebugLocation(1217, 43);
 				if (state.backtracking == 0)
 				{
 					 retval.result.CreationRequires.Add((v2!=null?v2.result:default(ISmiValue))); 
 				}
-				DebugLocation(1221, 2);
-				// Smi.g:1221:2: ( COMMA v3= value )*
+				DebugLocation(1218, 2);
+				// Smi.g:1218:2: ( COMMA v3= value )*
 				try { DebugEnterSubRule(127);
 				while (true)
 				{
@@ -16774,16 +16774,16 @@ public partial class SmiParser : Antlr.Runtime.Parser
 					{
 					case 1:
 						DebugEnterAlt(1);
-						// Smi.g:1221:3: COMMA v3= value
+						// Smi.g:1218:3: COMMA v3= value
 						{
-						DebugLocation(1221, 3);
-						COMMA307=(IToken)Match(input,COMMA,Follow._COMMA_in_agentcapabilities_macro_variation7374); if (state.failed) return retval;
+						DebugLocation(1218, 3);
+						COMMA307=(IToken)Match(input,COMMA,Follow._COMMA_in_agentcapabilities_macro_variation7355); if (state.failed) return retval;
 						if (state.backtracking == 0) {
 						COMMA307_tree = (CommonTree)adaptor.Create(COMMA307);
 						adaptor.AddChild(root_0, COMMA307_tree);
 						}
-						DebugLocation(1221, 11);
-						PushFollow(Follow._value_in_agentcapabilities_macro_variation7378);
+						DebugLocation(1218, 11);
+						PushFollow(Follow._value_in_agentcapabilities_macro_variation7359);
 						v3=value();
 						PopFollow();
 						if (state.failed) return retval;
@@ -16802,8 +16802,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 				} finally { DebugExitSubRule(127); }
 
-				DebugLocation(1221, 20);
-				R_BRACE308=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_agentcapabilities_macro_variation7382); if (state.failed) return retval;
+				DebugLocation(1218, 20);
+				R_BRACE308=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_agentcapabilities_macro_variation7363); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				R_BRACE308_tree = (CommonTree)adaptor.Create(R_BRACE308);
 				adaptor.AddChild(root_0, R_BRACE308_tree);
@@ -16815,13 +16815,13 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(128); }
 
-			DebugLocation(1221, 30);
+			DebugLocation(1218, 30);
 			if (state.backtracking == 0)
 			{
 				 retval.result.CreationRequires.Add((v3!=null?v3.result:default(ISmiValue))); 
 			}
-			DebugLocation(1222, 5);
-			// Smi.g:1222:5: ( 'DEFVAL' L_BRACE ( ( L_BRACE ( LOWER | COMMA | R_BRACE ) )=> L_BRACE (l1= LOWER )? ( COMMA l2= LOWER )* |v4= value ) R_BRACE )?
+			DebugLocation(1219, 5);
+			// Smi.g:1219:5: ( 'DEFVAL' L_BRACE ( ( L_BRACE ( LOWER | COMMA | R_BRACE ) )=> L_BRACE (l1= LOWER )? ( COMMA l2= LOWER )* |v4= value ) R_BRACE )?
 			int alt132=2;
 			try { DebugEnterSubRule(132);
 			try { DebugEnterDecision(132, false);
@@ -16836,22 +16836,22 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1222:6: 'DEFVAL' L_BRACE ( ( L_BRACE ( LOWER | COMMA | R_BRACE ) )=> L_BRACE (l1= LOWER )? ( COMMA l2= LOWER )* |v4= value ) R_BRACE
+				// Smi.g:1219:6: 'DEFVAL' L_BRACE ( ( L_BRACE ( LOWER | COMMA | R_BRACE ) )=> L_BRACE (l1= LOWER )? ( COMMA l2= LOWER )* |v4= value ) R_BRACE
 				{
-				DebugLocation(1222, 6);
-				string_literal309=(IToken)Match(input,138,Follow._138_in_agentcapabilities_macro_variation7393); if (state.failed) return retval;
+				DebugLocation(1219, 6);
+				string_literal309=(IToken)Match(input,138,Follow._138_in_agentcapabilities_macro_variation7374); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal309_tree = (CommonTree)adaptor.Create(string_literal309);
 				adaptor.AddChild(root_0, string_literal309_tree);
 				}
-				DebugLocation(1222, 15);
-				L_BRACE310=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_agentcapabilities_macro_variation7395); if (state.failed) return retval;
+				DebugLocation(1219, 15);
+				L_BRACE310=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_agentcapabilities_macro_variation7376); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				L_BRACE310_tree = (CommonTree)adaptor.Create(L_BRACE310);
 				adaptor.AddChild(root_0, L_BRACE310_tree);
 				}
-				DebugLocation(1222, 23);
-				// Smi.g:1222:23: ( ( L_BRACE ( LOWER | COMMA | R_BRACE ) )=> L_BRACE (l1= LOWER )? ( COMMA l2= LOWER )* |v4= value )
+				DebugLocation(1219, 23);
+				// Smi.g:1219:23: ( ( L_BRACE ( LOWER | COMMA | R_BRACE ) )=> L_BRACE (l1= LOWER )? ( COMMA l2= LOWER )* |v4= value )
 				int alt131=2;
 				try { DebugEnterSubRule(131);
 				try { DebugEnterDecision(131, false);
@@ -16869,16 +16869,16 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:1222:24: ( L_BRACE ( LOWER | COMMA | R_BRACE ) )=> L_BRACE (l1= LOWER )? ( COMMA l2= LOWER )*
+					// Smi.g:1219:24: ( L_BRACE ( LOWER | COMMA | R_BRACE ) )=> L_BRACE (l1= LOWER )? ( COMMA l2= LOWER )*
 					{
-					DebugLocation(1222, 63);
-					L_BRACE311=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_agentcapabilities_macro_variation7416); if (state.failed) return retval;
+					DebugLocation(1219, 63);
+					L_BRACE311=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_agentcapabilities_macro_variation7397); if (state.failed) return retval;
 					if (state.backtracking == 0) {
 					L_BRACE311_tree = (CommonTree)adaptor.Create(L_BRACE311);
 					adaptor.AddChild(root_0, L_BRACE311_tree);
 					}
-					DebugLocation(1222, 71);
-					// Smi.g:1222:71: (l1= LOWER )?
+					DebugLocation(1219, 71);
+					// Smi.g:1219:71: (l1= LOWER )?
 					int alt129=2;
 					try { DebugEnterSubRule(129);
 					try { DebugEnterDecision(129, false);
@@ -16893,10 +16893,10 @@ public partial class SmiParser : Antlr.Runtime.Parser
 					{
 					case 1:
 						DebugEnterAlt(1);
-						// Smi.g:1222:72: l1= LOWER
+						// Smi.g:1219:72: l1= LOWER
 						{
-						DebugLocation(1222, 74);
-						l1=(IToken)Match(input,LOWER,Follow._LOWER_in_agentcapabilities_macro_variation7421); if (state.failed) return retval;
+						DebugLocation(1219, 74);
+						l1=(IToken)Match(input,LOWER,Follow._LOWER_in_agentcapabilities_macro_variation7402); if (state.failed) return retval;
 						if (state.backtracking == 0) {
 						l1_tree = (CommonTree)adaptor.Create(l1);
 						adaptor.AddChild(root_0, l1_tree);
@@ -16908,13 +16908,13 @@ public partial class SmiParser : Antlr.Runtime.Parser
 					}
 					} finally { DebugExitSubRule(129); }
 
-					DebugLocation(1222, 83);
+					DebugLocation(1219, 83);
 					if (state.backtracking == 0)
 					{
 						 retval.result.DefaultValueIdentifiers.Add((l1!=null?l1.Text:null)); 
 					}
-					DebugLocation(1223, 2);
-					// Smi.g:1223:2: ( COMMA l2= LOWER )*
+					DebugLocation(1220, 2);
+					// Smi.g:1220:2: ( COMMA l2= LOWER )*
 					try { DebugEnterSubRule(130);
 					while (true)
 					{
@@ -16933,16 +16933,16 @@ public partial class SmiParser : Antlr.Runtime.Parser
 						{
 						case 1:
 							DebugEnterAlt(1);
-							// Smi.g:1223:3: COMMA l2= LOWER
+							// Smi.g:1220:3: COMMA l2= LOWER
 							{
-							DebugLocation(1223, 3);
-							COMMA312=(IToken)Match(input,COMMA,Follow._COMMA_in_agentcapabilities_macro_variation7430); if (state.failed) return retval;
+							DebugLocation(1220, 3);
+							COMMA312=(IToken)Match(input,COMMA,Follow._COMMA_in_agentcapabilities_macro_variation7411); if (state.failed) return retval;
 							if (state.backtracking == 0) {
 							COMMA312_tree = (CommonTree)adaptor.Create(COMMA312);
 							adaptor.AddChild(root_0, COMMA312_tree);
 							}
-							DebugLocation(1223, 11);
-							l2=(IToken)Match(input,LOWER,Follow._LOWER_in_agentcapabilities_macro_variation7434); if (state.failed) return retval;
+							DebugLocation(1220, 11);
+							l2=(IToken)Match(input,LOWER,Follow._LOWER_in_agentcapabilities_macro_variation7415); if (state.failed) return retval;
 							if (state.backtracking == 0) {
 							l2_tree = (CommonTree)adaptor.Create(l2);
 							adaptor.AddChild(root_0, l2_tree);
@@ -16961,7 +16961,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 					} finally { DebugExitSubRule(130); }
 
-					DebugLocation(1223, 20);
+					DebugLocation(1220, 20);
 					if (state.backtracking == 0)
 					{
 						 retval.result.DefaultValueIdentifiers.Add((l2!=null?l2.Text:null)); 
@@ -16971,10 +16971,10 @@ public partial class SmiParser : Antlr.Runtime.Parser
 					break;
 				case 2:
 					DebugEnterAlt(2);
-					// Smi.g:1224:4: v4= value
+					// Smi.g:1221:4: v4= value
 					{
-					DebugLocation(1224, 6);
-					PushFollow(Follow._value_in_agentcapabilities_macro_variation7445);
+					DebugLocation(1221, 6);
+					PushFollow(Follow._value_in_agentcapabilities_macro_variation7426);
 					v4=value();
 					PopFollow();
 					if (state.failed) return retval;
@@ -16986,8 +16986,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				}
 				} finally { DebugExitSubRule(131); }
 
-				DebugLocation(1224, 14);
-				R_BRACE313=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_agentcapabilities_macro_variation7448); if (state.failed) return retval;
+				DebugLocation(1221, 14);
+				R_BRACE313=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_agentcapabilities_macro_variation7429); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				R_BRACE313_tree = (CommonTree)adaptor.Create(R_BRACE313);
 				adaptor.AddChild(root_0, R_BRACE313_tree);
@@ -16999,24 +16999,24 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(132); }
 
-			DebugLocation(1224, 24);
+			DebugLocation(1221, 24);
 			if (state.backtracking == 0)
 			{
 				 retval.result.DefaultValue = (v4!=null?v4.result:default(ISmiValue)); 
 			}
-			DebugLocation(1225, 5);
-			string_literal314=(IToken)Match(input,139,Follow._139_in_agentcapabilities_macro_variation7458); if (state.failed) return retval;
+			DebugLocation(1222, 5);
+			string_literal314=(IToken)Match(input,139,Follow._139_in_agentcapabilities_macro_variation7439); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			string_literal314_tree = (CommonTree)adaptor.Create(string_literal314);
 			adaptor.AddChild(root_0, string_literal314_tree);
 			}
-			DebugLocation(1225, 21);
-			c1=(IToken)Match(input,C_STRING,Follow._C_STRING_in_agentcapabilities_macro_variation7462); if (state.failed) return retval;
+			DebugLocation(1222, 21);
+			c1=(IToken)Match(input,C_STRING,Follow._C_STRING_in_agentcapabilities_macro_variation7443); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			c1_tree = (CommonTree)adaptor.Create(c1);
 			adaptor.AddChild(root_0, c1_tree);
 			}
-			DebugLocation(1225, 31);
+			DebugLocation(1222, 31);
 			if (state.backtracking == 0)
 			{
 				 retval.result.Description = (c1!=null?c1.Text:null); 
@@ -17043,7 +17043,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("agentcapabilities_macro_variation", 84);
 			LeaveRule_agentcapabilities_macro_variation();
 		}
-		DebugLocation(1226, 1);
+		DebugLocation(1223, 1);
 		} finally { DebugExitRule(GrammarFileName, "agentcapabilities_macro_variation"); }
 		return retval;
 
@@ -17060,7 +17060,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_syntax();
 	partial void LeaveRule_syntax();
 	// $ANTLR start "syntax"
-	// Smi.g:1228:1: syntax returns [Syntax result = new Syntax()] : ( ( smi_type L_BRACE )=>st= smi_type L_BRACE nb1= namedbit ( COMMA nb2= namedbit )* R_BRACE | ( smi_type )=>st2= smi_type ( smi_subtyping )? |t= type );
+	// Smi.g:1225:1: syntax returns [Syntax result = new Syntax()] : ( ( smi_type L_BRACE )=>st= smi_type L_BRACE nb1= namedbit ( COMMA nb2= namedbit )* R_BRACE | ( smi_type )=>st2= smi_type ( smi_subtyping )? |t= type );
 	[GrammarRule("syntax")]
 	private SmiParser.syntax_return syntax()
 	{
@@ -17086,10 +17086,10 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree COMMA316_tree = default(CommonTree);
 		CommonTree R_BRACE317_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "syntax");
-		DebugLocation(1228, 1);
+		DebugLocation(1225, 1);
 		try
 		{
-			// Smi.g:1229:5: ( ( smi_type L_BRACE )=>st= smi_type L_BRACE nb1= namedbit ( COMMA nb2= namedbit )* R_BRACE | ( smi_type )=>st2= smi_type ( smi_subtyping )? |t= type )
+			// Smi.g:1226:5: ( ( smi_type L_BRACE )=>st= smi_type L_BRACE nb1= namedbit ( COMMA nb2= namedbit )* R_BRACE | ( smi_type )=>st2= smi_type ( smi_subtyping )? |t= type )
 			int alt135=3;
 			try { DebugEnterDecision(135, false);
 			switch (input.LA(1))
@@ -17327,40 +17327,40 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1229:7: ( smi_type L_BRACE )=>st= smi_type L_BRACE nb1= namedbit ( COMMA nb2= namedbit )* R_BRACE
+				// Smi.g:1226:7: ( smi_type L_BRACE )=>st= smi_type L_BRACE nb1= namedbit ( COMMA nb2= namedbit )* R_BRACE
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(1229, 31);
-				PushFollow(Follow._smi_type_in_syntax7492);
+				DebugLocation(1226, 31);
+				PushFollow(Follow._smi_type_in_syntax7473);
 				st=smi_type();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, st.Tree);
-				DebugLocation(1229, 41);
+				DebugLocation(1226, 41);
 				if (state.backtracking == 0)
 				{
 					 retval.result.Subtype = (st!=null?st.result:default(ISmiType)); 
 				}
-				DebugLocation(1230, 2);
-				L_BRACE315=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_syntax7497); if (state.failed) return retval;
+				DebugLocation(1227, 2);
+				L_BRACE315=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_syntax7478); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				L_BRACE315_tree = (CommonTree)adaptor.Create(L_BRACE315);
 				adaptor.AddChild(root_0, L_BRACE315_tree);
 				}
-				DebugLocation(1230, 13);
-				PushFollow(Follow._namedbit_in_syntax7501);
+				DebugLocation(1227, 13);
+				PushFollow(Follow._namedbit_in_syntax7482);
 				nb1=namedbit();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, nb1.Tree);
-				DebugLocation(1230, 23);
+				DebugLocation(1227, 23);
 				if (state.backtracking == 0)
 				{
 					 retval.result.SubtypeNamedBits.Add((nb1!=null?nb1.result:default(NamedBit))); 
 				}
-				DebugLocation(1231, 2);
-				// Smi.g:1231:2: ( COMMA nb2= namedbit )*
+				DebugLocation(1228, 2);
+				// Smi.g:1228:2: ( COMMA nb2= namedbit )*
 				try { DebugEnterSubRule(133);
 				while (true)
 				{
@@ -17379,21 +17379,21 @@ public partial class SmiParser : Antlr.Runtime.Parser
 					{
 					case 1:
 						DebugEnterAlt(1);
-						// Smi.g:1231:3: COMMA nb2= namedbit
+						// Smi.g:1228:3: COMMA nb2= namedbit
 						{
-						DebugLocation(1231, 3);
-						COMMA316=(IToken)Match(input,COMMA,Follow._COMMA_in_syntax7507); if (state.failed) return retval;
+						DebugLocation(1228, 3);
+						COMMA316=(IToken)Match(input,COMMA,Follow._COMMA_in_syntax7488); if (state.failed) return retval;
 						if (state.backtracking == 0) {
 						COMMA316_tree = (CommonTree)adaptor.Create(COMMA316);
 						adaptor.AddChild(root_0, COMMA316_tree);
 						}
-						DebugLocation(1231, 12);
-						PushFollow(Follow._namedbit_in_syntax7511);
+						DebugLocation(1228, 12);
+						PushFollow(Follow._namedbit_in_syntax7492);
 						nb2=namedbit();
 						PopFollow();
 						if (state.failed) return retval;
 						if (state.backtracking == 0) adaptor.AddChild(root_0, nb2.Tree);
-						DebugLocation(1231, 22);
+						DebugLocation(1228, 22);
 						if (state.backtracking == 0)
 						{
 							 retval.result.SubtypeNamedBits.Add((nb2!=null?nb2.result:default(NamedBit))); 
@@ -17412,8 +17412,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 				} finally { DebugExitSubRule(133); }
 
-				DebugLocation(1231, 71);
-				R_BRACE317=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_syntax7517); if (state.failed) return retval;
+				DebugLocation(1228, 71);
+				R_BRACE317=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_syntax7498); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				R_BRACE317_tree = (CommonTree)adaptor.Create(R_BRACE317);
 				adaptor.AddChild(root_0, R_BRACE317_tree);
@@ -17423,18 +17423,18 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// Smi.g:1232:7: ( smi_type )=>st2= smi_type ( smi_subtyping )?
+				// Smi.g:1229:7: ( smi_type )=>st2= smi_type ( smi_subtyping )?
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(1232, 24);
-				PushFollow(Follow._smi_type_in_syntax7533);
+				DebugLocation(1229, 24);
+				PushFollow(Follow._smi_type_in_syntax7514);
 				st2=smi_type();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, st2.Tree);
-				DebugLocation(1232, 34);
-				// Smi.g:1232:34: ( smi_subtyping )?
+				DebugLocation(1229, 34);
+				// Smi.g:1229:34: ( smi_subtyping )?
 				int alt134=2;
 				try { DebugEnterSubRule(134);
 				try { DebugEnterDecision(134, false);
@@ -17449,10 +17449,10 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:1232:35: smi_subtyping
+					// Smi.g:1229:35: smi_subtyping
 					{
-					DebugLocation(1232, 35);
-					PushFollow(Follow._smi_subtyping_in_syntax7536);
+					DebugLocation(1229, 35);
+					PushFollow(Follow._smi_subtyping_in_syntax7517);
 					smi_subtyping318=smi_subtyping();
 					PopFollow();
 					if (state.failed) return retval;
@@ -17464,7 +17464,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				}
 				} finally { DebugExitSubRule(134); }
 
-				DebugLocation(1232, 51);
+				DebugLocation(1229, 51);
 				if (state.backtracking == 0)
 				{
 					 retval.result.Subtype = (st2!=null?st2.result:default(ISmiType)); 
@@ -17474,17 +17474,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 3:
 				DebugEnterAlt(3);
-				// Smi.g:1233:7: t= type
+				// Smi.g:1230:7: t= type
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(1233, 8);
-				PushFollow(Follow._type_in_syntax7550);
+				DebugLocation(1230, 8);
+				PushFollow(Follow._type_in_syntax7531);
 				t=type();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, t.Tree);
-				DebugLocation(1233, 14);
+				DebugLocation(1230, 14);
 				if (state.backtracking == 0)
 				{
 					 retval.result.Subtype=(t!=null?t.result:default(ISmiType)); 
@@ -17513,7 +17513,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("syntax", 85);
 			LeaveRule_syntax();
 		}
-		DebugLocation(1234, 1);
+		DebugLocation(1231, 1);
 		} finally { DebugExitRule(GrammarFileName, "syntax"); }
 		return retval;
 
@@ -17530,7 +17530,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_agentcapabilities_macro_access();
 	partial void LeaveRule_agentcapabilities_macro_access();
 	// $ANTLR start "agentcapabilities_macro_access"
-	// Smi.g:1236:1: agentcapabilities_macro_access returns [Access result] : l= LOWER ;
+	// Smi.g:1233:1: agentcapabilities_macro_access returns [Access result] : l= LOWER ;
 	[GrammarRule("agentcapabilities_macro_access")]
 	private SmiParser.agentcapabilities_macro_access_return agentcapabilities_macro_access()
 	{
@@ -17546,22 +17546,22 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 		CommonTree l_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "agentcapabilities_macro_access");
-		DebugLocation(1236, 1);
+		DebugLocation(1233, 1);
 		try
 		{
-			// Smi.g:1237:5: (l= LOWER )
+			// Smi.g:1234:5: (l= LOWER )
 			DebugEnterAlt(1);
-			// Smi.g:1237:7: l= LOWER
+			// Smi.g:1234:7: l= LOWER
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(1237, 8);
-			l=(IToken)Match(input,LOWER,Follow._LOWER_in_agentcapabilities_macro_access7572); if (state.failed) return retval;
+			DebugLocation(1234, 8);
+			l=(IToken)Match(input,LOWER,Follow._LOWER_in_agentcapabilities_macro_access7553); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			l_tree = (CommonTree)adaptor.Create(l);
 			adaptor.AddChild(root_0, l_tree);
 			}
-			DebugLocation(1238, 5);
+			DebugLocation(1235, 5);
 			if (state.backtracking == 0)
 			{
 				if (l.Text == ("not-implemented")) retval.result = Access.NotImplemented;
@@ -17594,7 +17594,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("agentcapabilities_macro_access", 86);
 			LeaveRule_agentcapabilities_macro_access();
 		}
-		DebugLocation(1245, 1);
+		DebugLocation(1242, 1);
 		} finally { DebugExitRule(GrammarFileName, "agentcapabilities_macro_access"); }
 		return retval;
 
@@ -17611,7 +17611,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_traptype_macro();
 	partial void LeaveRule_traptype_macro();
 	// $ANTLR start "traptype_macro"
-	// Smi.g:1248:1: traptype_macro returns [TrapTypeMacro result = new TrapTypeMacro()] : 'TRAP-TYPE' 'ENTERPRISE' v= value ( 'VARIABLES' L_BRACE v2= value ( COMMA v3= value )* R_BRACE )? ( ( 'DESCRIPTION' )=> 'DESCRIPTION' v4= value )? ( 'REFERENCE' v5= value )? ;
+	// Smi.g:1245:1: traptype_macro returns [TrapTypeMacro result = new TrapTypeMacro()] : 'TRAP-TYPE' 'ENTERPRISE' v= value ( 'VARIABLES' L_BRACE v2= value ( COMMA v3= value )* R_BRACE )? ( ( 'DESCRIPTION' )=> 'DESCRIPTION' v4= value )? ( 'REFERENCE' v5= value )? ;
 	[GrammarRule("traptype_macro")]
 	private SmiParser.traptype_macro_return traptype_macro()
 	{
@@ -17646,40 +17646,40 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree string_literal325_tree = default(CommonTree);
 		CommonTree string_literal326_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "traptype_macro");
-		DebugLocation(1248, 61);
+		DebugLocation(1245, 61);
 		try
 		{
-			// Smi.g:1249:5: ( 'TRAP-TYPE' 'ENTERPRISE' v= value ( 'VARIABLES' L_BRACE v2= value ( COMMA v3= value )* R_BRACE )? ( ( 'DESCRIPTION' )=> 'DESCRIPTION' v4= value )? ( 'REFERENCE' v5= value )? )
+			// Smi.g:1246:5: ( 'TRAP-TYPE' 'ENTERPRISE' v= value ( 'VARIABLES' L_BRACE v2= value ( COMMA v3= value )* R_BRACE )? ( ( 'DESCRIPTION' )=> 'DESCRIPTION' v4= value )? ( 'REFERENCE' v5= value )? )
 			DebugEnterAlt(1);
-			// Smi.g:1249:7: 'TRAP-TYPE' 'ENTERPRISE' v= value ( 'VARIABLES' L_BRACE v2= value ( COMMA v3= value )* R_BRACE )? ( ( 'DESCRIPTION' )=> 'DESCRIPTION' v4= value )? ( 'REFERENCE' v5= value )?
+			// Smi.g:1246:7: 'TRAP-TYPE' 'ENTERPRISE' v= value ( 'VARIABLES' L_BRACE v2= value ( COMMA v3= value )* R_BRACE )? ( ( 'DESCRIPTION' )=> 'DESCRIPTION' v4= value )? ( 'REFERENCE' v5= value )?
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(1249, 7);
-			string_literal319=(IToken)Match(input,189,Follow._189_in_traptype_macro7598); if (state.failed) return retval;
+			DebugLocation(1246, 7);
+			string_literal319=(IToken)Match(input,189,Follow._189_in_traptype_macro7579); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			string_literal319_tree = (CommonTree)adaptor.Create(string_literal319);
 			adaptor.AddChild(root_0, string_literal319_tree);
 			}
-			DebugLocation(1249, 19);
-			string_literal320=(IToken)Match(input,142,Follow._142_in_traptype_macro7600); if (state.failed) return retval;
+			DebugLocation(1246, 19);
+			string_literal320=(IToken)Match(input,142,Follow._142_in_traptype_macro7581); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			string_literal320_tree = (CommonTree)adaptor.Create(string_literal320);
 			adaptor.AddChild(root_0, string_literal320_tree);
 			}
-			DebugLocation(1249, 33);
-			PushFollow(Follow._value_in_traptype_macro7604);
+			DebugLocation(1246, 33);
+			PushFollow(Follow._value_in_traptype_macro7585);
 			v=value();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, v.Tree);
-			DebugLocation(1249, 40);
+			DebugLocation(1246, 40);
 			if (state.backtracking == 0)
 			{
 				 retval.result.Enterprise = (v!=null?v.result:default(ISmiValue)); 
 			}
-			DebugLocation(1250, 2);
-			// Smi.g:1250:2: ( 'VARIABLES' L_BRACE v2= value ( COMMA v3= value )* R_BRACE )?
+			DebugLocation(1247, 2);
+			// Smi.g:1247:2: ( 'VARIABLES' L_BRACE v2= value ( COMMA v3= value )* R_BRACE )?
 			int alt137=2;
 			try { DebugEnterSubRule(137);
 			try { DebugEnterDecision(137, false);
@@ -17694,33 +17694,33 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1250:3: 'VARIABLES' L_BRACE v2= value ( COMMA v3= value )* R_BRACE
+				// Smi.g:1247:3: 'VARIABLES' L_BRACE v2= value ( COMMA v3= value )* R_BRACE
 				{
-				DebugLocation(1250, 3);
-				string_literal321=(IToken)Match(input,193,Follow._193_in_traptype_macro7610); if (state.failed) return retval;
+				DebugLocation(1247, 3);
+				string_literal321=(IToken)Match(input,193,Follow._193_in_traptype_macro7591); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal321_tree = (CommonTree)adaptor.Create(string_literal321);
 				adaptor.AddChild(root_0, string_literal321_tree);
 				}
-				DebugLocation(1250, 15);
-				L_BRACE322=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_traptype_macro7612); if (state.failed) return retval;
+				DebugLocation(1247, 15);
+				L_BRACE322=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_traptype_macro7593); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				L_BRACE322_tree = (CommonTree)adaptor.Create(L_BRACE322);
 				adaptor.AddChild(root_0, L_BRACE322_tree);
 				}
-				DebugLocation(1250, 25);
-				PushFollow(Follow._value_in_traptype_macro7616);
+				DebugLocation(1247, 25);
+				PushFollow(Follow._value_in_traptype_macro7597);
 				v2=value();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, v2.Tree);
-				DebugLocation(1250, 32);
+				DebugLocation(1247, 32);
 				if (state.backtracking == 0)
 				{
 					 retval.result.Variables.Add((v2!=null?v2.result:default(ISmiValue))); 
 				}
-				DebugLocation(1251, 2);
-				// Smi.g:1251:2: ( COMMA v3= value )*
+				DebugLocation(1248, 2);
+				// Smi.g:1248:2: ( COMMA v3= value )*
 				try { DebugEnterSubRule(136);
 				while (true)
 				{
@@ -17739,21 +17739,21 @@ public partial class SmiParser : Antlr.Runtime.Parser
 					{
 					case 1:
 						DebugEnterAlt(1);
-						// Smi.g:1251:3: COMMA v3= value
+						// Smi.g:1248:3: COMMA v3= value
 						{
-						DebugLocation(1251, 3);
-						COMMA323=(IToken)Match(input,COMMA,Follow._COMMA_in_traptype_macro7622); if (state.failed) return retval;
+						DebugLocation(1248, 3);
+						COMMA323=(IToken)Match(input,COMMA,Follow._COMMA_in_traptype_macro7603); if (state.failed) return retval;
 						if (state.backtracking == 0) {
 						COMMA323_tree = (CommonTree)adaptor.Create(COMMA323);
 						adaptor.AddChild(root_0, COMMA323_tree);
 						}
-						DebugLocation(1251, 11);
-						PushFollow(Follow._value_in_traptype_macro7626);
+						DebugLocation(1248, 11);
+						PushFollow(Follow._value_in_traptype_macro7607);
 						v3=value();
 						PopFollow();
 						if (state.failed) return retval;
 						if (state.backtracking == 0) adaptor.AddChild(root_0, v3.Tree);
-						DebugLocation(1251, 18);
+						DebugLocation(1248, 18);
 						if (state.backtracking == 0)
 						{
 							 retval.result.Variables.Add((v3!=null?v3.result:default(ISmiValue))); 
@@ -17772,8 +17772,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 				} finally { DebugExitSubRule(136); }
 
-				DebugLocation(1251, 59);
-				R_BRACE324=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_traptype_macro7632); if (state.failed) return retval;
+				DebugLocation(1248, 59);
+				R_BRACE324=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_traptype_macro7613); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				R_BRACE324_tree = (CommonTree)adaptor.Create(R_BRACE324);
 				adaptor.AddChild(root_0, R_BRACE324_tree);
@@ -17785,8 +17785,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(137); }
 
-			DebugLocation(1252, 5);
-			// Smi.g:1252:5: ( ( 'DESCRIPTION' )=> 'DESCRIPTION' v4= value )?
+			DebugLocation(1249, 5);
+			// Smi.g:1249:5: ( ( 'DESCRIPTION' )=> 'DESCRIPTION' v4= value )?
 			int alt138=2;
 			try { DebugEnterSubRule(138);
 			try { DebugEnterDecision(138, false);
@@ -17959,21 +17959,21 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1252:6: ( 'DESCRIPTION' )=> 'DESCRIPTION' v4= value
+				// Smi.g:1249:6: ( 'DESCRIPTION' )=> 'DESCRIPTION' v4= value
 				{
-				DebugLocation(1252, 25);
-				string_literal325=(IToken)Match(input,139,Follow._139_in_traptype_macro7648); if (state.failed) return retval;
+				DebugLocation(1249, 25);
+				string_literal325=(IToken)Match(input,139,Follow._139_in_traptype_macro7629); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal325_tree = (CommonTree)adaptor.Create(string_literal325);
 				adaptor.AddChild(root_0, string_literal325_tree);
 				}
-				DebugLocation(1252, 41);
-				PushFollow(Follow._value_in_traptype_macro7652);
+				DebugLocation(1249, 41);
+				PushFollow(Follow._value_in_traptype_macro7633);
 				v4=value();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, v4.Tree);
-				DebugLocation(1252, 48);
+				DebugLocation(1249, 48);
 				if (state.backtracking == 0)
 				{
 					 retval.result.Description = (v4!=null?v4.result:default(ISmiValue)); 
@@ -17985,8 +17985,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(138); }
 
-			DebugLocation(1253, 2);
-			// Smi.g:1253:2: ( 'REFERENCE' v5= value )?
+			DebugLocation(1250, 2);
+			// Smi.g:1250:2: ( 'REFERENCE' v5= value )?
 			int alt139=2;
 			try { DebugEnterSubRule(139);
 			try { DebugEnterDecision(139, false);
@@ -18001,21 +18001,21 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1253:3: 'REFERENCE' v5= value
+				// Smi.g:1250:3: 'REFERENCE' v5= value
 				{
-				DebugLocation(1253, 3);
-				string_literal326=(IToken)Match(input,175,Follow._175_in_traptype_macro7661); if (state.failed) return retval;
+				DebugLocation(1250, 3);
+				string_literal326=(IToken)Match(input,175,Follow._175_in_traptype_macro7642); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				string_literal326_tree = (CommonTree)adaptor.Create(string_literal326);
 				adaptor.AddChild(root_0, string_literal326_tree);
 				}
-				DebugLocation(1253, 17);
-				PushFollow(Follow._value_in_traptype_macro7665);
+				DebugLocation(1250, 17);
+				PushFollow(Follow._value_in_traptype_macro7646);
 				v5=value();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, v5.Tree);
-				DebugLocation(1253, 24);
+				DebugLocation(1250, 24);
 				if (state.backtracking == 0)
 				{
 					 retval.result.Reference = (v5!=null?v5.result:default(ISmiValue)); 
@@ -18049,7 +18049,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("traptype_macro", 87);
 			LeaveRule_traptype_macro();
 		}
-		DebugLocation(1253, 61);
+		DebugLocation(1250, 61);
 		} finally { DebugExitRule(GrammarFileName, "traptype_macro"); }
 		return retval;
 
@@ -18066,7 +18066,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_operation_errorlist();
 	partial void LeaveRule_operation_errorlist();
 	// $ANTLR start "operation_errorlist"
-	// Smi.g:1255:1: operation_errorlist returns [IList<TypeOrValue> result] : t= typeorvaluelist ;
+	// Smi.g:1252:1: operation_errorlist returns [IList<TypeOrValue> result] : t= typeorvaluelist ;
 	[GrammarRule("operation_errorlist")]
 	private SmiParser.operation_errorlist_return operation_errorlist()
 	{
@@ -18081,22 +18081,22 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		SmiParser.typeorvaluelist_return t = default(SmiParser.typeorvaluelist_return);
 
 		try { DebugEnterRule(GrammarFileName, "operation_errorlist");
-		DebugLocation(1255, 1);
+		DebugLocation(1252, 1);
 		try
 		{
-			// Smi.g:1256:5: (t= typeorvaluelist )
+			// Smi.g:1253:5: (t= typeorvaluelist )
 			DebugEnterAlt(1);
-			// Smi.g:1256:7: t= typeorvaluelist
+			// Smi.g:1253:7: t= typeorvaluelist
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(1256, 8);
-			PushFollow(Follow._typeorvaluelist_in_operation_errorlist7688);
+			DebugLocation(1253, 8);
+			PushFollow(Follow._typeorvaluelist_in_operation_errorlist7669);
 			t=typeorvaluelist();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, t.Tree);
-			DebugLocation(1256, 25);
+			DebugLocation(1253, 25);
 			if (state.backtracking == 0)
 			{
 				 retval.result = (t!=null?t.result:default(IList<TypeOrValue>)); 
@@ -18123,7 +18123,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("operation_errorlist", 88);
 			LeaveRule_operation_errorlist();
 		}
-		DebugLocation(1257, 1);
+		DebugLocation(1254, 1);
 		} finally { DebugExitRule(GrammarFileName, "operation_errorlist"); }
 		return retval;
 
@@ -18140,7 +18140,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_linkedOp_list();
 	partial void LeaveRule_linkedOp_list();
 	// $ANTLR start "linkedOp_list"
-	// Smi.g:1259:1: linkedOp_list returns [IList<TypeOrValue> result] : t= typeorvaluelist ;
+	// Smi.g:1256:1: linkedOp_list returns [IList<TypeOrValue> result] : t= typeorvaluelist ;
 	[GrammarRule("linkedOp_list")]
 	private SmiParser.linkedOp_list_return linkedOp_list()
 	{
@@ -18155,22 +18155,22 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		SmiParser.typeorvaluelist_return t = default(SmiParser.typeorvaluelist_return);
 
 		try { DebugEnterRule(GrammarFileName, "linkedOp_list");
-		DebugLocation(1259, 1);
+		DebugLocation(1256, 1);
 		try
 		{
-			// Smi.g:1260:5: (t= typeorvaluelist )
+			// Smi.g:1257:5: (t= typeorvaluelist )
 			DebugEnterAlt(1);
-			// Smi.g:1260:7: t= typeorvaluelist
+			// Smi.g:1257:7: t= typeorvaluelist
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(1260, 8);
-			PushFollow(Follow._typeorvaluelist_in_linkedOp_list7710);
+			DebugLocation(1257, 8);
+			PushFollow(Follow._typeorvaluelist_in_linkedOp_list7691);
 			t=typeorvaluelist();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, t.Tree);
-			DebugLocation(1260, 25);
+			DebugLocation(1257, 25);
 			if (state.backtracking == 0)
 			{
 				 retval.result = (t!=null?t.result:default(IList<TypeOrValue>)); 
@@ -18197,7 +18197,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("linkedOp_list", 89);
 			LeaveRule_linkedOp_list();
 		}
-		DebugLocation(1261, 1);
+		DebugLocation(1258, 1);
 		} finally { DebugExitRule(GrammarFileName, "linkedOp_list"); }
 		return retval;
 
@@ -18214,7 +18214,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_typeorvalue();
 	partial void LeaveRule_typeorvalue();
 	// $ANTLR start "typeorvalue"
-	// Smi.g:1263:1: typeorvalue returns [TypeOrValue result] : ( ( type )=>t= type |v= value );
+	// Smi.g:1260:1: typeorvalue returns [TypeOrValue result] : ( ( type )=>t= type |v= value );
 	[GrammarRule("typeorvalue")]
 	private SmiParser.typeorvalue_return typeorvalue()
 	{
@@ -18230,10 +18230,10 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		SmiParser.value_return v = default(SmiParser.value_return);
 
 		try { DebugEnterRule(GrammarFileName, "typeorvalue");
-		DebugLocation(1263, 52);
+		DebugLocation(1260, 52);
 		try
 		{
-			// Smi.g:1264:5: ( ( type )=>t= type |v= value )
+			// Smi.g:1261:5: ( ( type )=>t= type |v= value )
 			int alt140=2;
 			try { DebugEnterDecision(140, false);
 			try
@@ -18250,17 +18250,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1264:7: ( type )=>t= type
+				// Smi.g:1261:7: ( type )=>t= type
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(1264, 18);
-				PushFollow(Follow._type_in_typeorvalue7738);
+				DebugLocation(1261, 18);
+				PushFollow(Follow._type_in_typeorvalue7719);
 				t=type();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, t.Tree);
-				DebugLocation(1264, 24);
+				DebugLocation(1261, 24);
 				if (state.backtracking == 0)
 				{
 					 retval.result = new TypeOrValue((t!=null?t.result:default(ISmiType))); 
@@ -18270,17 +18270,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// Smi.g:1265:4: v= value
+				// Smi.g:1262:4: v= value
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(1265, 5);
-				PushFollow(Follow._value_in_typeorvalue7748);
+				DebugLocation(1262, 5);
+				PushFollow(Follow._value_in_typeorvalue7729);
 				v=value();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, v.Tree);
-				DebugLocation(1265, 12);
+				DebugLocation(1262, 12);
 				if (state.backtracking == 0)
 				{
 					 retval.result = new TypeOrValue((v!=null?v.result:default(ISmiValue))); 
@@ -18309,7 +18309,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("typeorvalue", 90);
 			LeaveRule_typeorvalue();
 		}
-		DebugLocation(1265, 52);
+		DebugLocation(1262, 52);
 		} finally { DebugExitRule(GrammarFileName, "typeorvalue"); }
 		return retval;
 
@@ -18326,7 +18326,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_typeorvaluelist();
 	partial void LeaveRule_typeorvaluelist();
 	// $ANTLR start "typeorvaluelist"
-	// Smi.g:1268:1: typeorvaluelist returns [IList<TypeOrValue> result = new List<TypeOrValue>()] : t1= typeorvalue ( COMMA t2= typeorvalue )* ;
+	// Smi.g:1265:1: typeorvaluelist returns [IList<TypeOrValue> result = new List<TypeOrValue>()] : t1= typeorvalue ( COMMA t2= typeorvalue )* ;
 	[GrammarRule("typeorvaluelist")]
 	private SmiParser.typeorvaluelist_return typeorvaluelist()
 	{
@@ -18344,28 +18344,28 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 		CommonTree COMMA327_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "typeorvaluelist");
-		DebugLocation(1268, 1);
+		DebugLocation(1265, 1);
 		try
 		{
-			// Smi.g:1269:5: (t1= typeorvalue ( COMMA t2= typeorvalue )* )
+			// Smi.g:1266:5: (t1= typeorvalue ( COMMA t2= typeorvalue )* )
 			DebugEnterAlt(1);
-			// Smi.g:1269:7: t1= typeorvalue ( COMMA t2= typeorvalue )*
+			// Smi.g:1266:7: t1= typeorvalue ( COMMA t2= typeorvalue )*
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(1269, 9);
-			PushFollow(Follow._typeorvalue_in_typeorvaluelist7769);
+			DebugLocation(1266, 9);
+			PushFollow(Follow._typeorvalue_in_typeorvaluelist7750);
 			t1=typeorvalue();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, t1.Tree);
-			DebugLocation(1269, 22);
+			DebugLocation(1266, 22);
 			if (state.backtracking == 0)
 			{
 				 retval.result.Add((t1!=null?t1.result:default(TypeOrValue))); 
 			}
-			DebugLocation(1270, 2);
-			// Smi.g:1270:2: ( COMMA t2= typeorvalue )*
+			DebugLocation(1267, 2);
+			// Smi.g:1267:2: ( COMMA t2= typeorvalue )*
 			try { DebugEnterSubRule(141);
 			while (true)
 			{
@@ -18384,21 +18384,21 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:1270:3: COMMA t2= typeorvalue
+					// Smi.g:1267:3: COMMA t2= typeorvalue
 					{
-					DebugLocation(1270, 3);
-					COMMA327=(IToken)Match(input,COMMA,Follow._COMMA_in_typeorvaluelist7776); if (state.failed) return retval;
+					DebugLocation(1267, 3);
+					COMMA327=(IToken)Match(input,COMMA,Follow._COMMA_in_typeorvaluelist7757); if (state.failed) return retval;
 					if (state.backtracking == 0) {
 					COMMA327_tree = (CommonTree)adaptor.Create(COMMA327);
 					adaptor.AddChild(root_0, COMMA327_tree);
 					}
-					DebugLocation(1270, 11);
-					PushFollow(Follow._typeorvalue_in_typeorvaluelist7780);
+					DebugLocation(1267, 11);
+					PushFollow(Follow._typeorvalue_in_typeorvaluelist7761);
 					t2=typeorvalue();
 					PopFollow();
 					if (state.failed) return retval;
 					if (state.backtracking == 0) adaptor.AddChild(root_0, t2.Tree);
-					DebugLocation(1270, 24);
+					DebugLocation(1267, 24);
 					if (state.backtracking == 0)
 					{
 						 retval.result.Add((t2!=null?t2.result:default(TypeOrValue))); 
@@ -18439,7 +18439,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("typeorvaluelist", 91);
 			LeaveRule_typeorvaluelist();
 		}
-		DebugLocation(1271, 1);
+		DebugLocation(1268, 1);
 		} finally { DebugExitRule(GrammarFileName, "typeorvaluelist"); }
 		return retval;
 
@@ -18456,7 +18456,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_elementType();
 	partial void LeaveRule_elementType();
 	// $ANTLR start "elementType"
-	// Smi.g:1274:1: elementType returns [ElementType result] : (t= elementType_tagged | COMPONENTS_KW OF_KW t4= type );
+	// Smi.g:1271:1: elementType returns [ElementType result] : (t= elementType_tagged | COMPONENTS_KW OF_KW t4= type );
 	[GrammarRule("elementType")]
 	private SmiParser.elementType_return elementType()
 	{
@@ -18476,10 +18476,10 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree COMPONENTS_KW328_tree = default(CommonTree);
 		CommonTree OF_KW329_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "elementType");
-		DebugLocation(1274, 1);
+		DebugLocation(1271, 1);
 		try
 		{
-			// Smi.g:1275:5: (t= elementType_tagged | COMPONENTS_KW OF_KW t4= type )
+			// Smi.g:1272:5: (t= elementType_tagged | COMPONENTS_KW OF_KW t4= type )
 			int alt142=2;
 			try { DebugEnterDecision(142, false);
 			int LA142_1 = input.LA(1);
@@ -18504,17 +18504,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1275:7: t= elementType_tagged
+				// Smi.g:1272:7: t= elementType_tagged
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(1275, 8);
-				PushFollow(Follow._elementType_tagged_in_elementType7807);
+				DebugLocation(1272, 8);
+				PushFollow(Follow._elementType_tagged_in_elementType7788);
 				t=elementType_tagged();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, t.Tree);
-				DebugLocation(1275, 28);
+				DebugLocation(1272, 28);
 				if (state.backtracking == 0)
 				{
 					 retval.result = (t!=null?t.result:default(TaggedElementType)); 
@@ -18524,29 +18524,29 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// Smi.g:1276:7: COMPONENTS_KW OF_KW t4= type
+				// Smi.g:1273:7: COMPONENTS_KW OF_KW t4= type
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(1276, 7);
-				COMPONENTS_KW328=(IToken)Match(input,COMPONENTS_KW,Follow._COMPONENTS_KW_in_elementType7817); if (state.failed) return retval;
+				DebugLocation(1273, 7);
+				COMPONENTS_KW328=(IToken)Match(input,COMPONENTS_KW,Follow._COMPONENTS_KW_in_elementType7798); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				COMPONENTS_KW328_tree = (CommonTree)adaptor.Create(COMPONENTS_KW328);
 				adaptor.AddChild(root_0, COMPONENTS_KW328_tree);
 				}
-				DebugLocation(1276, 21);
-				OF_KW329=(IToken)Match(input,OF_KW,Follow._OF_KW_in_elementType7819); if (state.failed) return retval;
+				DebugLocation(1273, 21);
+				OF_KW329=(IToken)Match(input,OF_KW,Follow._OF_KW_in_elementType7800); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				OF_KW329_tree = (CommonTree)adaptor.Create(OF_KW329);
 				adaptor.AddChild(root_0, OF_KW329_tree);
 				}
-				DebugLocation(1276, 29);
-				PushFollow(Follow._type_in_elementType7823);
+				DebugLocation(1273, 29);
+				PushFollow(Follow._type_in_elementType7804);
 				t4=type();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, t4.Tree);
-				DebugLocation(1276, 35);
+				DebugLocation(1273, 35);
 				if (state.backtracking == 0)
 				{
 					 retval.result = new ComponentsOfElementType((t4!=null?t4.result:default(ISmiType))); 
@@ -18575,7 +18575,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("elementType", 92);
 			LeaveRule_elementType();
 		}
-		DebugLocation(1277, 1);
+		DebugLocation(1274, 1);
 		} finally { DebugExitRule(GrammarFileName, "elementType"); }
 		return retval;
 
@@ -18592,7 +18592,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_elementType_tagged();
 	partial void LeaveRule_elementType_tagged();
 	// $ANTLR start "elementType_tagged"
-	// Smi.g:1279:1: elementType_tagged returns [TaggedElementType result] : name= LOWER ( ( L_BRACKET ( NUMBER | UPPER | LOWER ) )=>t1= tag )? (t2= tag_default )? t3= type ( OPTIONAL_KW | DEFAULT_KW v= value )? ;
+	// Smi.g:1276:1: elementType_tagged returns [TaggedElementType result] : name= LOWER ( ( L_BRACKET ( NUMBER | UPPER | LOWER ) )=>t1= tag )? (t2= tag_default )? t3= type ( OPTIONAL_KW | DEFAULT_KW v= value )? ;
 	[GrammarRule("elementType_tagged")]
 	private SmiParser.elementType_tagged_return elementType_tagged()
 	{
@@ -18616,30 +18616,30 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree OPTIONAL_KW330_tree = default(CommonTree);
 		CommonTree DEFAULT_KW331_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "elementType_tagged");
-		DebugLocation(1279, 1);
+		DebugLocation(1276, 1);
 		try
 		{
-			// Smi.g:1280:5: (name= LOWER ( ( L_BRACKET ( NUMBER | UPPER | LOWER ) )=>t1= tag )? (t2= tag_default )? t3= type ( OPTIONAL_KW | DEFAULT_KW v= value )? )
+			// Smi.g:1277:5: (name= LOWER ( ( L_BRACKET ( NUMBER | UPPER | LOWER ) )=>t1= tag )? (t2= tag_default )? t3= type ( OPTIONAL_KW | DEFAULT_KW v= value )? )
 			DebugEnterAlt(1);
-			// Smi.g:1280:7: name= LOWER ( ( L_BRACKET ( NUMBER | UPPER | LOWER ) )=>t1= tag )? (t2= tag_default )? t3= type ( OPTIONAL_KW | DEFAULT_KW v= value )?
+			// Smi.g:1277:7: name= LOWER ( ( L_BRACKET ( NUMBER | UPPER | LOWER ) )=>t1= tag )? (t2= tag_default )? t3= type ( OPTIONAL_KW | DEFAULT_KW v= value )?
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(1280, 11);
-			name=(IToken)Match(input,LOWER,Follow._LOWER_in_elementType_tagged7845); if (state.failed) return retval;
+			DebugLocation(1277, 11);
+			name=(IToken)Match(input,LOWER,Follow._LOWER_in_elementType_tagged7826); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			name_tree = (CommonTree)adaptor.Create(name);
 			adaptor.AddChild(root_0, name_tree);
 			}
-			DebugLocation(1281, 2);
+			DebugLocation(1278, 2);
 			if (state.backtracking == 0)
 			{
 				 
 					    retval.result = new TaggedElementType((name!=null?name.Text:null));
 				    
 			}
-			DebugLocation(1284, 2);
-			// Smi.g:1284:2: ( ( L_BRACKET ( NUMBER | UPPER | LOWER ) )=>t1= tag )?
+			DebugLocation(1281, 2);
+			// Smi.g:1281:2: ( ( L_BRACKET ( NUMBER | UPPER | LOWER ) )=>t1= tag )?
 			int alt143=2;
 			try { DebugEnterSubRule(143);
 			try { DebugEnterDecision(143, false);
@@ -18659,15 +18659,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1284:3: ( L_BRACKET ( NUMBER | UPPER | LOWER ) )=>t1= tag
+				// Smi.g:1281:3: ( L_BRACKET ( NUMBER | UPPER | LOWER ) )=>t1= tag
 				{
-				DebugLocation(1284, 41);
-				PushFollow(Follow._tag_in_elementType_tagged7869);
+				DebugLocation(1281, 41);
+				PushFollow(Follow._tag_in_elementType_tagged7850);
 				t1=tag();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, t1.Tree);
-				DebugLocation(1284, 46);
+				DebugLocation(1281, 46);
 				if (state.backtracking == 0)
 				{
 					 retval.result.Tag = (t1!=null?t1.result:default(Tag)); 
@@ -18679,8 +18679,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(143); }
 
-			DebugLocation(1285, 5);
-			// Smi.g:1285:5: (t2= tag_default )?
+			DebugLocation(1282, 5);
+			// Smi.g:1282:5: (t2= tag_default )?
 			int alt144=2;
 			try { DebugEnterSubRule(144);
 			try { DebugEnterDecision(144, false);
@@ -18695,15 +18695,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1285:6: t2= tag_default
+				// Smi.g:1282:6: t2= tag_default
 				{
-				DebugLocation(1285, 8);
-				PushFollow(Follow._tag_default_in_elementType_tagged7883);
+				DebugLocation(1282, 8);
+				PushFollow(Follow._tag_default_in_elementType_tagged7864);
 				t2=tag_default();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, t2.Tree);
-				DebugLocation(1285, 21);
+				DebugLocation(1282, 21);
 				if (state.backtracking == 0)
 				{
 					 retval.result.TagDefault = (t2!=null?t2.result:default(TagDefault)); 
@@ -18715,19 +18715,19 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(144); }
 
-			DebugLocation(1286, 4);
-			PushFollow(Follow._type_in_elementType_tagged7893);
+			DebugLocation(1283, 4);
+			PushFollow(Follow._type_in_elementType_tagged7874);
 			t3=type();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, t3.Tree);
-			DebugLocation(1286, 10);
+			DebugLocation(1283, 10);
 			if (state.backtracking == 0)
 			{
 				  retval.result.Subtype = (t3!=null?t3.result:default(ISmiType)); 
 			}
-			DebugLocation(1287, 2);
-			// Smi.g:1287:2: ( OPTIONAL_KW | DEFAULT_KW v= value )?
+			DebugLocation(1284, 2);
+			// Smi.g:1284:2: ( OPTIONAL_KW | DEFAULT_KW v= value )?
 			int alt145=3;
 			try { DebugEnterSubRule(145);
 			try { DebugEnterDecision(145, false);
@@ -18746,15 +18746,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1287:3: OPTIONAL_KW
+				// Smi.g:1284:3: OPTIONAL_KW
 				{
-				DebugLocation(1287, 3);
-				OPTIONAL_KW330=(IToken)Match(input,OPTIONAL_KW,Follow._OPTIONAL_KW_in_elementType_tagged7899); if (state.failed) return retval;
+				DebugLocation(1284, 3);
+				OPTIONAL_KW330=(IToken)Match(input,OPTIONAL_KW,Follow._OPTIONAL_KW_in_elementType_tagged7880); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				OPTIONAL_KW330_tree = (CommonTree)adaptor.Create(OPTIONAL_KW330);
 				adaptor.AddChild(root_0, OPTIONAL_KW330_tree);
 				}
-				DebugLocation(1287, 15);
+				DebugLocation(1284, 15);
 				if (state.backtracking == 0)
 				{
 					 retval.result.Optional = true; 
@@ -18764,26 +18764,26 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// Smi.g:1288:4: DEFAULT_KW v= value
+				// Smi.g:1285:4: DEFAULT_KW v= value
 				{
-				DebugLocation(1288, 4);
-				DEFAULT_KW331=(IToken)Match(input,DEFAULT_KW,Follow._DEFAULT_KW_in_elementType_tagged7907); if (state.failed) return retval;
+				DebugLocation(1285, 4);
+				DEFAULT_KW331=(IToken)Match(input,DEFAULT_KW,Follow._DEFAULT_KW_in_elementType_tagged7888); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				DEFAULT_KW331_tree = (CommonTree)adaptor.Create(DEFAULT_KW331);
 				adaptor.AddChild(root_0, DEFAULT_KW331_tree);
 				}
-				DebugLocation(1288, 15);
+				DebugLocation(1285, 15);
 				if (state.backtracking == 0)
 				{
 					 retval.result.Default = true; 
 				}
-				DebugLocation(1289, 3);
-				PushFollow(Follow._value_in_elementType_tagged7914);
+				DebugLocation(1286, 3);
+				PushFollow(Follow._value_in_elementType_tagged7895);
 				v=value();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, v.Tree);
-				DebugLocation(1289, 10);
+				DebugLocation(1286, 10);
 				if (state.backtracking == 0)
 				{
 					 retval.result.Value = (v!=null?v.result:default(ISmiValue)); 
@@ -18817,7 +18817,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("elementType_tagged", 93);
 			LeaveRule_elementType_tagged();
 		}
-		DebugLocation(1290, 1);
+		DebugLocation(1287, 1);
 		} finally { DebugExitRule(GrammarFileName, "elementType_tagged"); }
 		return retval;
 
@@ -18834,7 +18834,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_namedNumber();
 	partial void LeaveRule_namedNumber();
 	// $ANTLR start "namedNumber"
-	// Smi.g:1295:1: namedNumber returns [NamedNumber result] : name= LOWER L_PAREN (sn= signed_number |dv= defined_value ) R_PAREN ;
+	// Smi.g:1292:1: namedNumber returns [NamedNumber result] : name= LOWER L_PAREN (sn= signed_number |dv= defined_value ) R_PAREN ;
 	[GrammarRule("namedNumber")]
 	private SmiParser.namedNumber_return namedNumber()
 	{
@@ -18856,29 +18856,29 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree L_PAREN332_tree = default(CommonTree);
 		CommonTree R_PAREN333_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "namedNumber");
-		DebugLocation(1295, 1);
+		DebugLocation(1292, 1);
 		try
 		{
-			// Smi.g:1296:5: (name= LOWER L_PAREN (sn= signed_number |dv= defined_value ) R_PAREN )
+			// Smi.g:1293:5: (name= LOWER L_PAREN (sn= signed_number |dv= defined_value ) R_PAREN )
 			DebugEnterAlt(1);
-			// Smi.g:1296:7: name= LOWER L_PAREN (sn= signed_number |dv= defined_value ) R_PAREN
+			// Smi.g:1293:7: name= LOWER L_PAREN (sn= signed_number |dv= defined_value ) R_PAREN
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(1296, 11);
-			name=(IToken)Match(input,LOWER,Follow._LOWER_in_namedNumber7942); if (state.failed) return retval;
+			DebugLocation(1293, 11);
+			name=(IToken)Match(input,LOWER,Follow._LOWER_in_namedNumber7923); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			name_tree = (CommonTree)adaptor.Create(name);
 			adaptor.AddChild(root_0, name_tree);
 			}
-			DebugLocation(1297, 2);
-			L_PAREN332=(IToken)Match(input,L_PAREN,Follow._L_PAREN_in_namedNumber7946); if (state.failed) return retval;
+			DebugLocation(1294, 2);
+			L_PAREN332=(IToken)Match(input,L_PAREN,Follow._L_PAREN_in_namedNumber7927); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			L_PAREN332_tree = (CommonTree)adaptor.Create(L_PAREN332);
 			adaptor.AddChild(root_0, L_PAREN332_tree);
 			}
-			DebugLocation(1297, 10);
-			// Smi.g:1297:10: (sn= signed_number |dv= defined_value )
+			DebugLocation(1294, 10);
+			// Smi.g:1294:10: (sn= signed_number |dv= defined_value )
 			int alt146=2;
 			try { DebugEnterSubRule(146);
 			try { DebugEnterDecision(146, false);
@@ -18904,15 +18904,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1297:11: sn= signed_number
+				// Smi.g:1294:11: sn= signed_number
 				{
-				DebugLocation(1297, 13);
-				PushFollow(Follow._signed_number_in_namedNumber7951);
+				DebugLocation(1294, 13);
+				PushFollow(Follow._signed_number_in_namedNumber7932);
 				sn=signed_number();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, sn.Tree);
-				DebugLocation(1297, 28);
+				DebugLocation(1294, 28);
 				if (state.backtracking == 0)
 				{
 					 retval.result = new NamedNumber((name!=null?name.Text:null), (sn!=null?sn.result:default(NumberLiteralValue))); 
@@ -18922,15 +18922,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// Smi.g:1298:4: dv= defined_value
+				// Smi.g:1295:4: dv= defined_value
 				{
-				DebugLocation(1298, 6);
-				PushFollow(Follow._defined_value_in_namedNumber7961);
+				DebugLocation(1295, 6);
+				PushFollow(Follow._defined_value_in_namedNumber7942);
 				dv=defined_value();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, dv.Tree);
-				DebugLocation(1298, 21);
+				DebugLocation(1295, 21);
 				if (state.backtracking == 0)
 				{
 					 retval.result = new NamedNumber((name!=null?name.Text:null), (dv!=null?dv.result:default(DefinedValue))); 
@@ -18942,8 +18942,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(146); }
 
-			DebugLocation(1298, 77);
-			R_PAREN333=(IToken)Match(input,R_PAREN,Follow._R_PAREN_in_namedNumber7966); if (state.failed) return retval;
+			DebugLocation(1295, 77);
+			R_PAREN333=(IToken)Match(input,R_PAREN,Follow._R_PAREN_in_namedNumber7947); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			R_PAREN333_tree = (CommonTree)adaptor.Create(R_PAREN333);
 			adaptor.AddChild(root_0, R_PAREN333_tree);
@@ -18970,7 +18970,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("namedNumber", 94);
 			LeaveRule_namedNumber();
 		}
-		DebugLocation(1299, 1);
+		DebugLocation(1296, 1);
 		} finally { DebugExitRule(GrammarFileName, "namedNumber"); }
 		return retval;
 
@@ -18987,7 +18987,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_signed_number();
 	partial void LeaveRule_signed_number();
 	// $ANTLR start "signed_number"
-	// Smi.g:1301:1: signed_number returns [NumberLiteralValue result] : ( MINUS num= NUMBER |num2= NUMBER );
+	// Smi.g:1298:1: signed_number returns [NumberLiteralValue result] : ( MINUS num= NUMBER |num2= NUMBER );
 	[GrammarRule("signed_number")]
 	private SmiParser.signed_number_return signed_number()
 	{
@@ -19007,10 +19007,10 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree num2_tree = default(CommonTree);
 		CommonTree MINUS334_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "signed_number");
-		DebugLocation(1301, 1);
+		DebugLocation(1298, 1);
 		try
 		{
-			// Smi.g:1302:5: ( MINUS num= NUMBER |num2= NUMBER )
+			// Smi.g:1299:5: ( MINUS num= NUMBER |num2= NUMBER )
 			int alt147=2;
 			try { DebugEnterDecision(147, false);
 			int LA147_1 = input.LA(1);
@@ -19035,23 +19035,23 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1302:7: MINUS num= NUMBER
+				// Smi.g:1299:7: MINUS num= NUMBER
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(1302, 7);
-				MINUS334=(IToken)Match(input,MINUS,Follow._MINUS_in_signed_number7984); if (state.failed) return retval;
+				DebugLocation(1299, 7);
+				MINUS334=(IToken)Match(input,MINUS,Follow._MINUS_in_signed_number7965); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				MINUS334_tree = (CommonTree)adaptor.Create(MINUS334);
 				adaptor.AddChild(root_0, MINUS334_tree);
 				}
-				DebugLocation(1302, 16);
-				num=(IToken)Match(input,NUMBER,Follow._NUMBER_in_signed_number7988); if (state.failed) return retval;
+				DebugLocation(1299, 16);
+				num=(IToken)Match(input,NUMBER,Follow._NUMBER_in_signed_number7969); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				num_tree = (CommonTree)adaptor.Create(num);
 				adaptor.AddChild(root_0, num_tree);
 				}
-				DebugLocation(1302, 24);
+				DebugLocation(1299, 24);
 				if (state.backtracking == 0)
 				{
 					 retval.result = new NumberLiteralValue(-1 * long.Parse((num!=null?num.Text:null))); 
@@ -19061,17 +19061,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// Smi.g:1303:4: num2= NUMBER
+				// Smi.g:1300:4: num2= NUMBER
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(1303, 8);
-				num2=(IToken)Match(input,NUMBER,Follow._NUMBER_in_signed_number7997); if (state.failed) return retval;
+				DebugLocation(1300, 8);
+				num2=(IToken)Match(input,NUMBER,Follow._NUMBER_in_signed_number7978); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				num2_tree = (CommonTree)adaptor.Create(num2);
 				adaptor.AddChild(root_0, num2_tree);
 				}
-				DebugLocation(1303, 16);
+				DebugLocation(1300, 16);
 				if (state.backtracking == 0)
 				{
 					 retval.result = new NumberLiteralValue(ulong.Parse((num2!=null?num2.Text:null))); 
@@ -19100,7 +19100,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("signed_number", 95);
 			LeaveRule_signed_number();
 		}
-		DebugLocation(1304, 1);
+		DebugLocation(1301, 1);
 		} finally { DebugExitRule(GrammarFileName, "signed_number"); }
 		return retval;
 
@@ -19117,7 +19117,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_element_set_specs();
 	partial void LeaveRule_element_set_specs();
 	// $ANTLR start "element_set_specs"
-	// Smi.g:1306:1: element_set_specs returns [ElementSetRange result = new ElementSetRange()] : left= element_set_spec ( COMMA DOTDOTDOT )? ( COMMA right= element_set_spec )? ;
+	// Smi.g:1303:1: element_set_specs returns [ElementSetRange result = new ElementSetRange()] : left= element_set_spec ( COMMA DOTDOTDOT )? ( COMMA right= element_set_spec )? ;
 	[GrammarRule("element_set_specs")]
 	private SmiParser.element_set_specs_return element_set_specs()
 	{
@@ -19139,28 +19139,28 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree DOTDOTDOT336_tree = default(CommonTree);
 		CommonTree COMMA337_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "element_set_specs");
-		DebugLocation(1306, 2);
+		DebugLocation(1303, 2);
 		try
 		{
-			// Smi.g:1307:5: (left= element_set_spec ( COMMA DOTDOTDOT )? ( COMMA right= element_set_spec )? )
+			// Smi.g:1304:5: (left= element_set_spec ( COMMA DOTDOTDOT )? ( COMMA right= element_set_spec )? )
 			DebugEnterAlt(1);
-			// Smi.g:1307:7: left= element_set_spec ( COMMA DOTDOTDOT )? ( COMMA right= element_set_spec )?
+			// Smi.g:1304:7: left= element_set_spec ( COMMA DOTDOTDOT )? ( COMMA right= element_set_spec )?
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(1307, 11);
-			PushFollow(Follow._element_set_spec_in_element_set_specs8019);
+			DebugLocation(1304, 11);
+			PushFollow(Follow._element_set_spec_in_element_set_specs8000);
 			left=element_set_spec();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, left.Tree);
-			DebugLocation(1307, 29);
+			DebugLocation(1304, 29);
 			if (state.backtracking == 0)
 			{
 				 retval.result.LeftElement = (left!=null?left.result:default(ConstraintElement)); 
 			}
-			DebugLocation(1308, 3);
-			// Smi.g:1308:3: ( COMMA DOTDOTDOT )?
+			DebugLocation(1305, 3);
+			// Smi.g:1305:3: ( COMMA DOTDOTDOT )?
 			int alt148=2;
 			try { DebugEnterSubRule(148);
 			try { DebugEnterDecision(148, false);
@@ -19180,21 +19180,21 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1308:4: COMMA DOTDOTDOT
+				// Smi.g:1305:4: COMMA DOTDOTDOT
 				{
-				DebugLocation(1308, 4);
-				COMMA335=(IToken)Match(input,COMMA,Follow._COMMA_in_element_set_specs8027); if (state.failed) return retval;
+				DebugLocation(1305, 4);
+				COMMA335=(IToken)Match(input,COMMA,Follow._COMMA_in_element_set_specs8008); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				COMMA335_tree = (CommonTree)adaptor.Create(COMMA335);
 				adaptor.AddChild(root_0, COMMA335_tree);
 				}
-				DebugLocation(1308, 10);
-				DOTDOTDOT336=(IToken)Match(input,DOTDOTDOT,Follow._DOTDOTDOT_in_element_set_specs8029); if (state.failed) return retval;
+				DebugLocation(1305, 10);
+				DOTDOTDOT336=(IToken)Match(input,DOTDOTDOT,Follow._DOTDOTDOT_in_element_set_specs8010); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				DOTDOTDOT336_tree = (CommonTree)adaptor.Create(DOTDOTDOT336);
 				adaptor.AddChild(root_0, DOTDOTDOT336_tree);
 				}
-				DebugLocation(1308, 20);
+				DebugLocation(1305, 20);
 				if (state.backtracking == 0)
 				{
 					 retval.result.ContainsEllipsis = true; 
@@ -19206,8 +19206,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(148); }
 
-			DebugLocation(1309, 3);
-			// Smi.g:1309:3: ( COMMA right= element_set_spec )?
+			DebugLocation(1306, 3);
+			// Smi.g:1306:3: ( COMMA right= element_set_spec )?
 			int alt149=2;
 			try { DebugEnterSubRule(149);
 			try { DebugEnterDecision(149, false);
@@ -19222,21 +19222,21 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1309:4: COMMA right= element_set_spec
+				// Smi.g:1306:4: COMMA right= element_set_spec
 				{
-				DebugLocation(1309, 4);
-				COMMA337=(IToken)Match(input,COMMA,Follow._COMMA_in_element_set_specs8039); if (state.failed) return retval;
+				DebugLocation(1306, 4);
+				COMMA337=(IToken)Match(input,COMMA,Follow._COMMA_in_element_set_specs8020); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				COMMA337_tree = (CommonTree)adaptor.Create(COMMA337);
 				adaptor.AddChild(root_0, COMMA337_tree);
 				}
-				DebugLocation(1309, 15);
-				PushFollow(Follow._element_set_spec_in_element_set_specs8043);
+				DebugLocation(1306, 15);
+				PushFollow(Follow._element_set_spec_in_element_set_specs8024);
 				right=element_set_spec();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, right.Tree);
-				DebugLocation(1309, 33);
+				DebugLocation(1306, 33);
 				if (state.backtracking == 0)
 				{
 					 retval.result.RightElement = (right!=null?right.result:default(ConstraintElement)); 
@@ -19270,7 +19270,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("element_set_specs", 96);
 			LeaveRule_element_set_specs();
 		}
-		DebugLocation(1310, 2);
+		DebugLocation(1307, 2);
 		} finally { DebugExitRule(GrammarFileName, "element_set_specs"); }
 		return retval;
 
@@ -19287,7 +19287,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_exception_spec();
 	partial void LeaveRule_exception_spec();
 	// $ANTLR start "exception_spec"
-	// Smi.g:1312:1: exception_spec returns [ExceptionSpec result] : EXCLAMATION ( ( signed_number )=>sn= signed_number | ( defined_value )=>dv= defined_value |t= type COLON v= value ) ;
+	// Smi.g:1309:1: exception_spec returns [ExceptionSpec result] : EXCLAMATION ( ( signed_number )=>sn= signed_number | ( defined_value )=>dv= defined_value |t= type COLON v= value ) ;
 	[GrammarRule("exception_spec")]
 	private SmiParser.exception_spec_return exception_spec()
 	{
@@ -19309,23 +19309,23 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree EXCLAMATION338_tree = default(CommonTree);
 		CommonTree COLON339_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "exception_spec");
-		DebugLocation(1312, 17);
+		DebugLocation(1309, 17);
 		try
 		{
-			// Smi.g:1313:6: ( EXCLAMATION ( ( signed_number )=>sn= signed_number | ( defined_value )=>dv= defined_value |t= type COLON v= value ) )
+			// Smi.g:1310:6: ( EXCLAMATION ( ( signed_number )=>sn= signed_number | ( defined_value )=>dv= defined_value |t= type COLON v= value ) )
 			DebugEnterAlt(1);
-			// Smi.g:1313:8: EXCLAMATION ( ( signed_number )=>sn= signed_number | ( defined_value )=>dv= defined_value |t= type COLON v= value )
+			// Smi.g:1310:8: EXCLAMATION ( ( signed_number )=>sn= signed_number | ( defined_value )=>dv= defined_value |t= type COLON v= value )
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(1313, 8);
-			EXCLAMATION338=(IToken)Match(input,EXCLAMATION,Follow._EXCLAMATION_in_exception_spec8068); if (state.failed) return retval;
+			DebugLocation(1310, 8);
+			EXCLAMATION338=(IToken)Match(input,EXCLAMATION,Follow._EXCLAMATION_in_exception_spec8049); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			EXCLAMATION338_tree = (CommonTree)adaptor.Create(EXCLAMATION338);
 			adaptor.AddChild(root_0, EXCLAMATION338_tree);
 			}
-			DebugLocation(1314, 17);
-			// Smi.g:1314:17: ( ( signed_number )=>sn= signed_number | ( defined_value )=>dv= defined_value |t= type COLON v= value )
+			DebugLocation(1311, 17);
+			// Smi.g:1311:17: ( ( signed_number )=>sn= signed_number | ( defined_value )=>dv= defined_value |t= type COLON v= value )
 			int alt150=3;
 			try { DebugEnterSubRule(150);
 			try { DebugEnterDecision(150, false);
@@ -19415,15 +19415,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1314:19: ( signed_number )=>sn= signed_number
+				// Smi.g:1311:19: ( signed_number )=>sn= signed_number
 				{
-				DebugLocation(1314, 40);
-				PushFollow(Follow._signed_number_in_exception_spec8097);
+				DebugLocation(1311, 40);
+				PushFollow(Follow._signed_number_in_exception_spec8078);
 				sn=signed_number();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, sn.Tree);
-				DebugLocation(1314, 55);
+				DebugLocation(1311, 55);
 				if (state.backtracking == 0)
 				{
 					 retval.result = new ExceptionSpec((sn!=null?sn.result:default(NumberLiteralValue))); 
@@ -19433,15 +19433,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// Smi.g:1315:21: ( defined_value )=>dv= defined_value
+				// Smi.g:1312:21: ( defined_value )=>dv= defined_value
 				{
-				DebugLocation(1315, 42);
-				PushFollow(Follow._defined_value_in_exception_spec8129);
+				DebugLocation(1312, 42);
+				PushFollow(Follow._defined_value_in_exception_spec8110);
 				dv=defined_value();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, dv.Tree);
-				DebugLocation(1315, 57);
+				DebugLocation(1312, 57);
 				if (state.backtracking == 0)
 				{
 					 retval.result = new ExceptionSpec((dv!=null?dv.result:default(DefinedValue))); 
@@ -19451,27 +19451,27 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 3:
 				DebugEnterAlt(3);
-				// Smi.g:1316:21: t= type COLON v= value
+				// Smi.g:1313:21: t= type COLON v= value
 				{
-				DebugLocation(1316, 22);
-				PushFollow(Follow._type_in_exception_spec8155);
+				DebugLocation(1313, 22);
+				PushFollow(Follow._type_in_exception_spec8136);
 				t=type();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, t.Tree);
-				DebugLocation(1316, 28);
-				COLON339=(IToken)Match(input,COLON,Follow._COLON_in_exception_spec8157); if (state.failed) return retval;
+				DebugLocation(1313, 28);
+				COLON339=(IToken)Match(input,COLON,Follow._COLON_in_exception_spec8138); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				COLON339_tree = (CommonTree)adaptor.Create(COLON339);
 				adaptor.AddChild(root_0, COLON339_tree);
 				}
-				DebugLocation(1316, 35);
-				PushFollow(Follow._value_in_exception_spec8161);
+				DebugLocation(1313, 35);
+				PushFollow(Follow._value_in_exception_spec8142);
 				v=value();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, v.Tree);
-				DebugLocation(1316, 42);
+				DebugLocation(1313, 42);
 				if (state.backtracking == 0)
 				{
 					 retval.result = new ExceptionSpec((t!=null?t.result:default(ISmiType)), (v!=null?v.result:default(ISmiValue))); 
@@ -19505,7 +19505,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("exception_spec", 97);
 			LeaveRule_exception_spec();
 		}
-		DebugLocation(1317, 17);
+		DebugLocation(1314, 17);
 		} finally { DebugExitRule(GrammarFileName, "exception_spec"); }
 		return retval;
 
@@ -19522,7 +19522,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_element_set_spec();
 	partial void LeaveRule_element_set_spec();
 	// $ANTLR start "element_set_spec"
-	// Smi.g:1319:1: element_set_spec returns [ConstraintElement result] : (n= element_set_spec_normal | ALL_KW EXCEPT_KW c= constraint_elements );
+	// Smi.g:1316:1: element_set_spec returns [ConstraintElement result] : (n= element_set_spec_normal | ALL_KW EXCEPT_KW c= constraint_elements );
 	[GrammarRule("element_set_spec")]
 	private SmiParser.element_set_spec_return element_set_spec()
 	{
@@ -19542,10 +19542,10 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree ALL_KW340_tree = default(CommonTree);
 		CommonTree EXCEPT_KW341_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "element_set_spec");
-		DebugLocation(1319, 2);
+		DebugLocation(1316, 2);
 		try
 		{
-			// Smi.g:1320:6: (n= element_set_spec_normal | ALL_KW EXCEPT_KW c= constraint_elements )
+			// Smi.g:1317:6: (n= element_set_spec_normal | ALL_KW EXCEPT_KW c= constraint_elements )
 			int alt151=2;
 			try { DebugEnterDecision(151, false);
 			int LA151_1 = input.LA(1);
@@ -19570,17 +19570,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1320:8: n= element_set_spec_normal
+				// Smi.g:1317:8: n= element_set_spec_normal
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(1320, 9);
-				PushFollow(Follow._element_set_spec_normal_in_element_set_spec8200);
+				DebugLocation(1317, 9);
+				PushFollow(Follow._element_set_spec_normal_in_element_set_spec8181);
 				n=element_set_spec_normal();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, n.Tree);
-				DebugLocation(1320, 34);
+				DebugLocation(1317, 34);
 				if (state.backtracking == 0)
 				{
 					 retval.result = (n!=null?n.result:default(NormalConstraintElement)); 
@@ -19590,29 +19590,29 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// Smi.g:1321:8: ALL_KW EXCEPT_KW c= constraint_elements
+				// Smi.g:1318:8: ALL_KW EXCEPT_KW c= constraint_elements
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(1321, 8);
-				ALL_KW340=(IToken)Match(input,ALL_KW,Follow._ALL_KW_in_element_set_spec8211); if (state.failed) return retval;
+				DebugLocation(1318, 8);
+				ALL_KW340=(IToken)Match(input,ALL_KW,Follow._ALL_KW_in_element_set_spec8192); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				ALL_KW340_tree = (CommonTree)adaptor.Create(ALL_KW340);
 				adaptor.AddChild(root_0, ALL_KW340_tree);
 				}
-				DebugLocation(1321, 15);
-				EXCEPT_KW341=(IToken)Match(input,EXCEPT_KW,Follow._EXCEPT_KW_in_element_set_spec8213); if (state.failed) return retval;
+				DebugLocation(1318, 15);
+				EXCEPT_KW341=(IToken)Match(input,EXCEPT_KW,Follow._EXCEPT_KW_in_element_set_spec8194); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				EXCEPT_KW341_tree = (CommonTree)adaptor.Create(EXCEPT_KW341);
 				adaptor.AddChild(root_0, EXCEPT_KW341_tree);
 				}
-				DebugLocation(1321, 26);
-				PushFollow(Follow._constraint_elements_in_element_set_spec8217);
+				DebugLocation(1318, 26);
+				PushFollow(Follow._constraint_elements_in_element_set_spec8198);
 				c=constraint_elements();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, c.Tree);
-				DebugLocation(1321, 47);
+				DebugLocation(1318, 47);
 				if (state.backtracking == 0)
 				{
 					 retval.result = new AllExceptConstraintElement((c!=null?c.result:default(ConstraintElement))); 
@@ -19641,7 +19641,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("element_set_spec", 98);
 			LeaveRule_element_set_spec();
 		}
-		DebugLocation(1322, 2);
+		DebugLocation(1319, 2);
 		} finally { DebugExitRule(GrammarFileName, "element_set_spec"); }
 		return retval;
 
@@ -19658,7 +19658,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_element_set_spec_normal();
 	partial void LeaveRule_element_set_spec_normal();
 	// $ANTLR start "element_set_spec_normal"
-	// Smi.g:1324:1: element_set_spec_normal returns [NormalConstraintElement result = new NormalConstraintElement()] : left= intersections ( ( BAR | UNION_KW ) right= intersections )* ;
+	// Smi.g:1321:1: element_set_spec_normal returns [NormalConstraintElement result = new NormalConstraintElement()] : left= intersections ( ( BAR | UNION_KW ) right= intersections )* ;
 	[GrammarRule("element_set_spec_normal")]
 	private SmiParser.element_set_spec_normal_return element_set_spec_normal()
 	{
@@ -19676,30 +19676,30 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 		CommonTree set342_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "element_set_spec_normal");
-		DebugLocation(1324, 2);
+		DebugLocation(1321, 2);
 		try
 		{
-			// Smi.g:1325:5: (left= intersections ( ( BAR | UNION_KW ) right= intersections )* )
+			// Smi.g:1322:5: (left= intersections ( ( BAR | UNION_KW ) right= intersections )* )
 			DebugEnterAlt(1);
-			// Smi.g:1325:7: left= intersections ( ( BAR | UNION_KW ) right= intersections )*
+			// Smi.g:1322:7: left= intersections ( ( BAR | UNION_KW ) right= intersections )*
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(1325, 11);
-			PushFollow(Follow._intersections_in_element_set_spec_normal8240);
+			DebugLocation(1322, 11);
+			PushFollow(Follow._intersections_in_element_set_spec_normal8221);
 			left=intersections();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, left.Tree);
-			DebugLocation(1326, 3);
+			DebugLocation(1323, 3);
 			if (state.backtracking == 0)
 			{
 				  
 						 retval.result.Add(new NormalConstraintElement((left!=null?left.result:default(ConstraintElement))));
 					 
 			}
-			DebugLocation(1329, 3);
-			// Smi.g:1329:3: ( ( BAR | UNION_KW ) right= intersections )*
+			DebugLocation(1326, 3);
+			// Smi.g:1326:3: ( ( BAR | UNION_KW ) right= intersections )*
 			try { DebugEnterSubRule(152);
 			while (true)
 			{
@@ -19718,9 +19718,9 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:1329:5: ( BAR | UNION_KW ) right= intersections
+					// Smi.g:1326:5: ( BAR | UNION_KW ) right= intersections
 					{
-					DebugLocation(1329, 5);
+					DebugLocation(1326, 5);
 
 					set342=(IToken)input.LT(1);
 					if (input.LA(1)==BAR||input.LA(1)==UNION_KW)
@@ -19737,13 +19737,13 @@ public partial class SmiParser : Antlr.Runtime.Parser
 						throw mse;
 					}
 
-					DebugLocation(1329, 29);
-					PushFollow(Follow._intersections_in_element_set_spec_normal8264);
+					DebugLocation(1326, 29);
+					PushFollow(Follow._intersections_in_element_set_spec_normal8245);
 					right=intersections();
 					PopFollow();
 					if (state.failed) return retval;
 					if (state.backtracking == 0) adaptor.AddChild(root_0, right.Tree);
-					DebugLocation(1329, 44);
+					DebugLocation(1326, 44);
 					if (state.backtracking == 0)
 					{
 						 retval.result.Add(new NormalConstraintElement((right!=null?right.result:default(ConstraintElement)))); 
@@ -19784,7 +19784,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("element_set_spec_normal", 99);
 			LeaveRule_element_set_spec_normal();
 		}
-		DebugLocation(1330, 2);
+		DebugLocation(1327, 2);
 		} finally { DebugExitRule(GrammarFileName, "element_set_spec_normal"); }
 		return retval;
 
@@ -19801,7 +19801,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_intersections();
 	partial void LeaveRule_intersections();
 	// $ANTLR start "intersections"
-	// Smi.g:1332:1: intersections returns [ConstraintElement result = new NormalConstraintElement()] : c1= constraint_elements_except ( ( INTERSECTION | INTERSECTION_KW ) c2= constraint_elements_except )* ;
+	// Smi.g:1329:1: intersections returns [ConstraintElement result = new NormalConstraintElement()] : c1= constraint_elements_except ( ( INTERSECTION | INTERSECTION_KW ) c2= constraint_elements_except )* ;
 	[GrammarRule("intersections")]
 	private SmiParser.intersections_return intersections()
 	{
@@ -19819,30 +19819,30 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 		CommonTree set343_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "intersections");
-		DebugLocation(1332, 5);
+		DebugLocation(1329, 5);
 		try
 		{
-			// Smi.g:1333:6: (c1= constraint_elements_except ( ( INTERSECTION | INTERSECTION_KW ) c2= constraint_elements_except )* )
+			// Smi.g:1330:6: (c1= constraint_elements_except ( ( INTERSECTION | INTERSECTION_KW ) c2= constraint_elements_except )* )
 			DebugEnterAlt(1);
-			// Smi.g:1333:8: c1= constraint_elements_except ( ( INTERSECTION | INTERSECTION_KW ) c2= constraint_elements_except )*
+			// Smi.g:1330:8: c1= constraint_elements_except ( ( INTERSECTION | INTERSECTION_KW ) c2= constraint_elements_except )*
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(1333, 10);
-			PushFollow(Follow._constraint_elements_except_in_intersections8291);
+			DebugLocation(1330, 10);
+			PushFollow(Follow._constraint_elements_except_in_intersections8272);
 			c1=constraint_elements_except();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, c1.Tree);
-			DebugLocation(1334, 3);
+			DebugLocation(1331, 3);
 			if (state.backtracking == 0)
 			{
 
 					     retval.result.Add((c1!=null?c1.result:default(ConstraintElement))); 
 				     
 			}
-			DebugLocation(1337, 6);
-			// Smi.g:1337:6: ( ( INTERSECTION | INTERSECTION_KW ) c2= constraint_elements_except )*
+			DebugLocation(1334, 6);
+			// Smi.g:1334:6: ( ( INTERSECTION | INTERSECTION_KW ) c2= constraint_elements_except )*
 			try { DebugEnterSubRule(153);
 			while (true)
 			{
@@ -19861,9 +19861,9 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:1337:8: ( INTERSECTION | INTERSECTION_KW ) c2= constraint_elements_except
+					// Smi.g:1334:8: ( INTERSECTION | INTERSECTION_KW ) c2= constraint_elements_except
 					{
-					DebugLocation(1337, 8);
+					DebugLocation(1334, 8);
 
 					set343=(IToken)input.LT(1);
 					if ((input.LA(1)>=INTERSECTION && input.LA(1)<=INTERSECTION_KW))
@@ -19880,13 +19880,13 @@ public partial class SmiParser : Antlr.Runtime.Parser
 						throw mse;
 					}
 
-					DebugLocation(1338, 5);
-					PushFollow(Follow._constraint_elements_except_in_intersections8320);
+					DebugLocation(1335, 5);
+					PushFollow(Follow._constraint_elements_except_in_intersections8301);
 					c2=constraint_elements_except();
 					PopFollow();
 					if (state.failed) return retval;
 					if (state.backtracking == 0) adaptor.AddChild(root_0, c2.Tree);
-					DebugLocation(1338, 33);
+					DebugLocation(1335, 33);
 					if (state.backtracking == 0)
 					{
 						 retval.result.Add((c2!=null?c2.result:default(ConstraintElement))); 
@@ -19927,7 +19927,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("intersections", 100);
 			LeaveRule_intersections();
 		}
-		DebugLocation(1339, 5);
+		DebugLocation(1336, 5);
 		} finally { DebugExitRule(GrammarFileName, "intersections"); }
 		return retval;
 
@@ -19944,7 +19944,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_constraint_elements_except();
 	partial void LeaveRule_constraint_elements_except();
 	// $ANTLR start "constraint_elements_except"
-	// Smi.g:1341:1: constraint_elements_except returns [ConstraintElement result] : c= constraint_elements ( EXCEPT_KW c2= constraint_elements )? ;
+	// Smi.g:1338:1: constraint_elements_except returns [ConstraintElement result] : c= constraint_elements ( EXCEPT_KW c2= constraint_elements )? ;
 	[GrammarRule("constraint_elements_except")]
 	private SmiParser.constraint_elements_except_return constraint_elements_except()
 	{
@@ -19962,28 +19962,28 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 		CommonTree EXCEPT_KW344_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "constraint_elements_except");
-		DebugLocation(1341, 71);
+		DebugLocation(1338, 71);
 		try
 		{
-			// Smi.g:1342:6: (c= constraint_elements ( EXCEPT_KW c2= constraint_elements )? )
+			// Smi.g:1339:6: (c= constraint_elements ( EXCEPT_KW c2= constraint_elements )? )
 			DebugEnterAlt(1);
-			// Smi.g:1342:8: c= constraint_elements ( EXCEPT_KW c2= constraint_elements )?
+			// Smi.g:1339:8: c= constraint_elements ( EXCEPT_KW c2= constraint_elements )?
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(1342, 9);
-			PushFollow(Follow._constraint_elements_in_constraint_elements_except8347);
+			DebugLocation(1339, 9);
+			PushFollow(Follow._constraint_elements_in_constraint_elements_except8328);
 			c=constraint_elements();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, c.Tree);
-			DebugLocation(1342, 30);
+			DebugLocation(1339, 30);
 			if (state.backtracking == 0)
 			{
 				 retval.result = (c!=null?c.result:default(ConstraintElement)); 
 			}
-			DebugLocation(1343, 3);
-			// Smi.g:1343:3: ( EXCEPT_KW c2= constraint_elements )?
+			DebugLocation(1340, 3);
+			// Smi.g:1340:3: ( EXCEPT_KW c2= constraint_elements )?
 			int alt154=2;
 			try { DebugEnterSubRule(154);
 			try { DebugEnterDecision(154, false);
@@ -19998,21 +19998,21 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1343:4: EXCEPT_KW c2= constraint_elements
+				// Smi.g:1340:4: EXCEPT_KW c2= constraint_elements
 				{
-				DebugLocation(1343, 4);
-				EXCEPT_KW344=(IToken)Match(input,EXCEPT_KW,Follow._EXCEPT_KW_in_constraint_elements_except8354); if (state.failed) return retval;
+				DebugLocation(1340, 4);
+				EXCEPT_KW344=(IToken)Match(input,EXCEPT_KW,Follow._EXCEPT_KW_in_constraint_elements_except8335); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				EXCEPT_KW344_tree = (CommonTree)adaptor.Create(EXCEPT_KW344);
 				adaptor.AddChild(root_0, EXCEPT_KW344_tree);
 				}
-				DebugLocation(1343, 16);
-				PushFollow(Follow._constraint_elements_in_constraint_elements_except8358);
+				DebugLocation(1340, 16);
+				PushFollow(Follow._constraint_elements_in_constraint_elements_except8339);
 				c2=constraint_elements();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, c2.Tree);
-				DebugLocation(1343, 37);
+				DebugLocation(1340, 37);
 				if (state.backtracking == 0)
 				{
 					 retval.result.Element = (c2!=null?c2.result:default(ConstraintElement)); 
@@ -20046,7 +20046,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("constraint_elements_except", 101);
 			LeaveRule_constraint_elements_except();
 		}
-		DebugLocation(1343, 71);
+		DebugLocation(1340, 71);
 		} finally { DebugExitRule(GrammarFileName, "constraint_elements_except"); }
 		return retval;
 
@@ -20063,7 +20063,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_constraint_elements();
 	partial void LeaveRule_constraint_elements();
 	// $ANTLR start "constraint_elements"
-	// Smi.g:1345:1: constraint_elements returns [ConstraintElement result] : ( ( value_range )=>vr= value_range | ( value )=>v= value | SIZE_KW c= constraint | FROM_KW c2= constraint | L_PAREN e= element_set_spec R_PAREN |i= constraint_elements_includes | PATTERN_KW v2= value | WITH_KW ( COMPONENT_KW co1= constraint |cs= constraint_elements_components ) );
+	// Smi.g:1342:1: constraint_elements returns [ConstraintElement result] : ( ( value_range )=>vr= value_range | ( value )=>v= value | SIZE_KW c= constraint | FROM_KW c2= constraint | L_PAREN e= element_set_spec R_PAREN |i= constraint_elements_includes | PATTERN_KW v2= value | WITH_KW ( COMPONENT_KW co1= constraint |cs= constraint_elements_components ) );
 	[GrammarRule("constraint_elements")]
 	private SmiParser.constraint_elements_return constraint_elements()
 	{
@@ -20100,10 +20100,10 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree WITH_KW350_tree = default(CommonTree);
 		CommonTree COMPONENT_KW351_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "constraint_elements");
-		DebugLocation(1345, 1);
+		DebugLocation(1342, 1);
 		try
 		{
-			// Smi.g:1346:5: ( ( value_range )=>vr= value_range | ( value )=>v= value | SIZE_KW c= constraint | FROM_KW c2= constraint | L_PAREN e= element_set_spec R_PAREN |i= constraint_elements_includes | PATTERN_KW v2= value | WITH_KW ( COMPONENT_KW co1= constraint |cs= constraint_elements_components ) )
+			// Smi.g:1343:5: ( ( value_range )=>vr= value_range | ( value )=>v= value | SIZE_KW c= constraint | FROM_KW c2= constraint | L_PAREN e= element_set_spec R_PAREN |i= constraint_elements_includes | PATTERN_KW v2= value | WITH_KW ( COMPONENT_KW co1= constraint |cs= constraint_elements_components ) )
 			int alt156=8;
 			try { DebugEnterDecision(156, false);
 			try
@@ -20120,17 +20120,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1346:7: ( value_range )=>vr= value_range
+				// Smi.g:1343:7: ( value_range )=>vr= value_range
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(1346, 26);
-				PushFollow(Follow._value_range_in_constraint_elements8386);
+				DebugLocation(1343, 26);
+				PushFollow(Follow._value_range_in_constraint_elements8367);
 				vr=value_range();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, vr.Tree);
-				DebugLocation(1346, 39);
+				DebugLocation(1343, 39);
 				if (state.backtracking == 0)
 				{
 					 retval.result = new ValueRangeConstraintElement((vr!=null?vr.result:default(ValueRange))); 
@@ -20140,17 +20140,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// Smi.g:1347:7: ( value )=>v= value
+				// Smi.g:1344:7: ( value )=>v= value
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(1347, 19);
-				PushFollow(Follow._value_in_constraint_elements8404);
+				DebugLocation(1344, 19);
+				PushFollow(Follow._value_in_constraint_elements8385);
 				v=value();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, v.Tree);
-				DebugLocation(1347, 26);
+				DebugLocation(1344, 26);
 				if (state.backtracking == 0)
 				{
 					 retval.result = new ValueConstraintElement((v!=null?v.result:default(ISmiValue))); 
@@ -20160,23 +20160,23 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 3:
 				DebugEnterAlt(3);
-				// Smi.g:1348:7: SIZE_KW c= constraint
+				// Smi.g:1345:7: SIZE_KW c= constraint
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(1348, 7);
-				SIZE_KW345=(IToken)Match(input,SIZE_KW,Follow._SIZE_KW_in_constraint_elements8414); if (state.failed) return retval;
+				DebugLocation(1345, 7);
+				SIZE_KW345=(IToken)Match(input,SIZE_KW,Follow._SIZE_KW_in_constraint_elements8395); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				SIZE_KW345_tree = (CommonTree)adaptor.Create(SIZE_KW345);
 				adaptor.AddChild(root_0, SIZE_KW345_tree);
 				}
-				DebugLocation(1348, 16);
-				PushFollow(Follow._constraint_in_constraint_elements8418);
+				DebugLocation(1345, 16);
+				PushFollow(Follow._constraint_in_constraint_elements8399);
 				c=constraint();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, c.Tree);
-				DebugLocation(1348, 28);
+				DebugLocation(1345, 28);
 				if (state.backtracking == 0)
 				{
 					 retval.result = new SizeConstraintElement((c!=null?c.result:default(Constraint))); 
@@ -20186,23 +20186,23 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 4:
 				DebugEnterAlt(4);
-				// Smi.g:1349:7: FROM_KW c2= constraint
+				// Smi.g:1346:7: FROM_KW c2= constraint
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(1349, 7);
-				FROM_KW346=(IToken)Match(input,FROM_KW,Follow._FROM_KW_in_constraint_elements8428); if (state.failed) return retval;
+				DebugLocation(1346, 7);
+				FROM_KW346=(IToken)Match(input,FROM_KW,Follow._FROM_KW_in_constraint_elements8409); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				FROM_KW346_tree = (CommonTree)adaptor.Create(FROM_KW346);
 				adaptor.AddChild(root_0, FROM_KW346_tree);
 				}
-				DebugLocation(1349, 17);
-				PushFollow(Follow._constraint_in_constraint_elements8432);
+				DebugLocation(1346, 17);
+				PushFollow(Follow._constraint_in_constraint_elements8413);
 				c2=constraint();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, c2.Tree);
-				DebugLocation(1349, 29);
+				DebugLocation(1346, 29);
 				if (state.backtracking == 0)
 				{
 					 retval.result = new FromConstraintElement((c2!=null?c2.result:default(Constraint))); 
@@ -20212,29 +20212,29 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 5:
 				DebugEnterAlt(5);
-				// Smi.g:1350:7: L_PAREN e= element_set_spec R_PAREN
+				// Smi.g:1347:7: L_PAREN e= element_set_spec R_PAREN
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(1350, 7);
-				L_PAREN347=(IToken)Match(input,L_PAREN,Follow._L_PAREN_in_constraint_elements8442); if (state.failed) return retval;
+				DebugLocation(1347, 7);
+				L_PAREN347=(IToken)Match(input,L_PAREN,Follow._L_PAREN_in_constraint_elements8423); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				L_PAREN347_tree = (CommonTree)adaptor.Create(L_PAREN347);
 				adaptor.AddChild(root_0, L_PAREN347_tree);
 				}
-				DebugLocation(1350, 16);
-				PushFollow(Follow._element_set_spec_in_constraint_elements8446);
+				DebugLocation(1347, 16);
+				PushFollow(Follow._element_set_spec_in_constraint_elements8427);
 				e=element_set_spec();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, e.Tree);
-				DebugLocation(1350, 34);
-				R_PAREN348=(IToken)Match(input,R_PAREN,Follow._R_PAREN_in_constraint_elements8448); if (state.failed) return retval;
+				DebugLocation(1347, 34);
+				R_PAREN348=(IToken)Match(input,R_PAREN,Follow._R_PAREN_in_constraint_elements8429); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				R_PAREN348_tree = (CommonTree)adaptor.Create(R_PAREN348);
 				adaptor.AddChild(root_0, R_PAREN348_tree);
 				}
-				DebugLocation(1350, 42);
+				DebugLocation(1347, 42);
 				if (state.backtracking == 0)
 				{
 					 retval.result = new ElementSetConstraintElement((e!=null?e.result:default(ConstraintElement))); 
@@ -20244,17 +20244,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 6:
 				DebugEnterAlt(6);
-				// Smi.g:1351:7: i= constraint_elements_includes
+				// Smi.g:1348:7: i= constraint_elements_includes
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(1351, 8);
-				PushFollow(Follow._constraint_elements_includes_in_constraint_elements8460);
+				DebugLocation(1348, 8);
+				PushFollow(Follow._constraint_elements_includes_in_constraint_elements8441);
 				i=constraint_elements_includes();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, i.Tree);
-				DebugLocation(1351, 38);
+				DebugLocation(1348, 38);
 				if (state.backtracking == 0)
 				{
 					 retval.result = (i!=null?i.result:default(IncludeTypeConstraintElement)); 
@@ -20264,23 +20264,23 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 7:
 				DebugEnterAlt(7);
-				// Smi.g:1352:7: PATTERN_KW v2= value
+				// Smi.g:1349:7: PATTERN_KW v2= value
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(1352, 7);
-				PATTERN_KW349=(IToken)Match(input,PATTERN_KW,Follow._PATTERN_KW_in_constraint_elements8470); if (state.failed) return retval;
+				DebugLocation(1349, 7);
+				PATTERN_KW349=(IToken)Match(input,PATTERN_KW,Follow._PATTERN_KW_in_constraint_elements8451); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				PATTERN_KW349_tree = (CommonTree)adaptor.Create(PATTERN_KW349);
 				adaptor.AddChild(root_0, PATTERN_KW349_tree);
 				}
-				DebugLocation(1352, 20);
-				PushFollow(Follow._value_in_constraint_elements8474);
+				DebugLocation(1349, 20);
+				PushFollow(Follow._value_in_constraint_elements8455);
 				v2=value();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, v2.Tree);
-				DebugLocation(1352, 27);
+				DebugLocation(1349, 27);
 				if (state.backtracking == 0)
 				{
 					 retval.result = new PatternConstraintElement((v2!=null?v2.result:default(ISmiValue))); 
@@ -20290,18 +20290,18 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 8:
 				DebugEnterAlt(8);
-				// Smi.g:1353:7: WITH_KW ( COMPONENT_KW co1= constraint |cs= constraint_elements_components )
+				// Smi.g:1350:7: WITH_KW ( COMPONENT_KW co1= constraint |cs= constraint_elements_components )
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(1353, 7);
-				WITH_KW350=(IToken)Match(input,WITH_KW,Follow._WITH_KW_in_constraint_elements8485); if (state.failed) return retval;
+				DebugLocation(1350, 7);
+				WITH_KW350=(IToken)Match(input,WITH_KW,Follow._WITH_KW_in_constraint_elements8466); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				WITH_KW350_tree = (CommonTree)adaptor.Create(WITH_KW350);
 				adaptor.AddChild(root_0, WITH_KW350_tree);
 				}
-				DebugLocation(1354, 6);
-				// Smi.g:1354:6: ( COMPONENT_KW co1= constraint |cs= constraint_elements_components )
+				DebugLocation(1351, 6);
+				// Smi.g:1351:6: ( COMPONENT_KW co1= constraint |cs= constraint_elements_components )
 				int alt155=2;
 				try { DebugEnterSubRule(155);
 				try { DebugEnterDecision(155, false);
@@ -20327,21 +20327,21 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:1354:7: COMPONENT_KW co1= constraint
+					// Smi.g:1351:7: COMPONENT_KW co1= constraint
 					{
-					DebugLocation(1354, 7);
-					COMPONENT_KW351=(IToken)Match(input,COMPONENT_KW,Follow._COMPONENT_KW_in_constraint_elements8494); if (state.failed) return retval;
+					DebugLocation(1351, 7);
+					COMPONENT_KW351=(IToken)Match(input,COMPONENT_KW,Follow._COMPONENT_KW_in_constraint_elements8475); if (state.failed) return retval;
 					if (state.backtracking == 0) {
 					COMPONENT_KW351_tree = (CommonTree)adaptor.Create(COMPONENT_KW351);
 					adaptor.AddChild(root_0, COMPONENT_KW351_tree);
 					}
-					DebugLocation(1354, 23);
-					PushFollow(Follow._constraint_in_constraint_elements8498);
+					DebugLocation(1351, 23);
+					PushFollow(Follow._constraint_in_constraint_elements8479);
 					co1=constraint();
 					PopFollow();
 					if (state.failed) return retval;
 					if (state.backtracking == 0) adaptor.AddChild(root_0, co1.Tree);
-					DebugLocation(1354, 35);
+					DebugLocation(1351, 35);
 					if (state.backtracking == 0)
 					{
 						 retval.result = new WithComponentConstraintElement((co1!=null?co1.result:default(Constraint))); 
@@ -20351,15 +20351,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 					break;
 				case 2:
 					DebugEnterAlt(2);
-					// Smi.g:1355:5: cs= constraint_elements_components
+					// Smi.g:1352:5: cs= constraint_elements_components
 					{
-					DebugLocation(1355, 7);
-					PushFollow(Follow._constraint_elements_components_in_constraint_elements8509);
+					DebugLocation(1352, 7);
+					PushFollow(Follow._constraint_elements_components_in_constraint_elements8490);
 					cs=constraint_elements_components();
 					PopFollow();
 					if (state.failed) return retval;
 					if (state.backtracking == 0) adaptor.AddChild(root_0, cs.Tree);
-					DebugLocation(1355, 39);
+					DebugLocation(1352, 39);
 					if (state.backtracking == 0)
 					{
 						 retval.result = (cs!=null?cs.result:default(WithComponentsConstraintElement)); 
@@ -20395,7 +20395,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("constraint_elements", 102);
 			LeaveRule_constraint_elements();
 		}
-		DebugLocation(1356, 1);
+		DebugLocation(1353, 1);
 		} finally { DebugExitRule(GrammarFileName, "constraint_elements"); }
 		return retval;
 
@@ -20412,7 +20412,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_constraint_elements_includes();
 	partial void LeaveRule_constraint_elements_includes();
 	// $ANTLR start "constraint_elements_includes"
-	// Smi.g:1358:1: constraint_elements_includes returns [IncludeTypeConstraintElement result = new IncludeTypeConstraintElement()] : ( INCLUDES_KW )? t= type ;
+	// Smi.g:1355:1: constraint_elements_includes returns [IncludeTypeConstraintElement result = new IncludeTypeConstraintElement()] : ( INCLUDES_KW )? t= type ;
 	[GrammarRule("constraint_elements_includes")]
 	private SmiParser.constraint_elements_includes_return constraint_elements_includes()
 	{
@@ -20429,17 +20429,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 		CommonTree INCLUDES_KW352_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "constraint_elements_includes");
-		DebugLocation(1358, 1);
+		DebugLocation(1355, 1);
 		try
 		{
-			// Smi.g:1359:5: ( ( INCLUDES_KW )? t= type )
+			// Smi.g:1356:5: ( ( INCLUDES_KW )? t= type )
 			DebugEnterAlt(1);
-			// Smi.g:1359:7: ( INCLUDES_KW )? t= type
+			// Smi.g:1356:7: ( INCLUDES_KW )? t= type
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(1359, 7);
-			// Smi.g:1359:7: ( INCLUDES_KW )?
+			DebugLocation(1356, 7);
+			// Smi.g:1356:7: ( INCLUDES_KW )?
 			int alt157=2;
 			try { DebugEnterSubRule(157);
 			try { DebugEnterDecision(157, false);
@@ -20454,15 +20454,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1359:8: INCLUDES_KW
+				// Smi.g:1356:8: INCLUDES_KW
 				{
-				DebugLocation(1359, 8);
-				INCLUDES_KW352=(IToken)Match(input,INCLUDES_KW,Follow._INCLUDES_KW_in_constraint_elements_includes8531); if (state.failed) return retval;
+				DebugLocation(1356, 8);
+				INCLUDES_KW352=(IToken)Match(input,INCLUDES_KW,Follow._INCLUDES_KW_in_constraint_elements_includes8512); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				INCLUDES_KW352_tree = (CommonTree)adaptor.Create(INCLUDES_KW352);
 				adaptor.AddChild(root_0, INCLUDES_KW352_tree);
 				}
-				DebugLocation(1359, 20);
+				DebugLocation(1356, 20);
 				if (state.backtracking == 0)
 				{
 					 retval.result.Includes = true; 
@@ -20474,13 +20474,13 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(157); }
 
-			DebugLocation(1360, 3);
-			PushFollow(Follow._type_in_constraint_elements_includes8541);
+			DebugLocation(1357, 3);
+			PushFollow(Follow._type_in_constraint_elements_includes8522);
 			t=type();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, t.Tree);
-			DebugLocation(1360, 9);
+			DebugLocation(1357, 9);
 			if (state.backtracking == 0)
 			{
 				 retval.result.ConstraintType = (t!=null?t.result:default(ISmiType)); 
@@ -20507,7 +20507,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("constraint_elements_includes", 103);
 			LeaveRule_constraint_elements_includes();
 		}
-		DebugLocation(1361, 1);
+		DebugLocation(1358, 1);
 		} finally { DebugExitRule(GrammarFileName, "constraint_elements_includes"); }
 		return retval;
 
@@ -20524,7 +20524,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_constraint_elements_components();
 	partial void LeaveRule_constraint_elements_components();
 	// $ANTLR start "constraint_elements_components"
-	// Smi.g:1363:1: constraint_elements_components returns [WithComponentsConstraintElement result = new WithComponentsConstraintElement()] : COMPONENTS_KW L_BRACE ( DOTDOTDOT COMMA )? tcl= type_constraint_list R_BRACE ;
+	// Smi.g:1360:1: constraint_elements_components returns [WithComponentsConstraintElement result = new WithComponentsConstraintElement()] : COMPONENTS_KW L_BRACE ( DOTDOTDOT COMMA )? tcl= type_constraint_list R_BRACE ;
 	[GrammarRule("constraint_elements_components")]
 	private SmiParser.constraint_elements_components_return constraint_elements_components()
 	{
@@ -20549,29 +20549,29 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree COMMA356_tree = default(CommonTree);
 		CommonTree R_BRACE357_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "constraint_elements_components");
-		DebugLocation(1363, 4);
+		DebugLocation(1360, 4);
 		try
 		{
-			// Smi.g:1364:5: ( COMPONENTS_KW L_BRACE ( DOTDOTDOT COMMA )? tcl= type_constraint_list R_BRACE )
+			// Smi.g:1361:5: ( COMPONENTS_KW L_BRACE ( DOTDOTDOT COMMA )? tcl= type_constraint_list R_BRACE )
 			DebugEnterAlt(1);
-			// Smi.g:1364:7: COMPONENTS_KW L_BRACE ( DOTDOTDOT COMMA )? tcl= type_constraint_list R_BRACE
+			// Smi.g:1361:7: COMPONENTS_KW L_BRACE ( DOTDOTDOT COMMA )? tcl= type_constraint_list R_BRACE
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(1364, 7);
-			COMPONENTS_KW353=(IToken)Match(input,COMPONENTS_KW,Follow._COMPONENTS_KW_in_constraint_elements_components8561); if (state.failed) return retval;
+			DebugLocation(1361, 7);
+			COMPONENTS_KW353=(IToken)Match(input,COMPONENTS_KW,Follow._COMPONENTS_KW_in_constraint_elements_components8542); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			COMPONENTS_KW353_tree = (CommonTree)adaptor.Create(COMPONENTS_KW353);
 			adaptor.AddChild(root_0, COMPONENTS_KW353_tree);
 			}
-			DebugLocation(1364, 21);
-			L_BRACE354=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_constraint_elements_components8563); if (state.failed) return retval;
+			DebugLocation(1361, 21);
+			L_BRACE354=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_constraint_elements_components8544); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			L_BRACE354_tree = (CommonTree)adaptor.Create(L_BRACE354);
 			adaptor.AddChild(root_0, L_BRACE354_tree);
 			}
-			DebugLocation(1364, 29);
-			// Smi.g:1364:29: ( DOTDOTDOT COMMA )?
+			DebugLocation(1361, 29);
+			// Smi.g:1361:29: ( DOTDOTDOT COMMA )?
 			int alt158=2;
 			try { DebugEnterSubRule(158);
 			try { DebugEnterDecision(158, false);
@@ -20586,21 +20586,21 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1364:30: DOTDOTDOT COMMA
+				// Smi.g:1361:30: DOTDOTDOT COMMA
 				{
-				DebugLocation(1364, 30);
-				DOTDOTDOT355=(IToken)Match(input,DOTDOTDOT,Follow._DOTDOTDOT_in_constraint_elements_components8566); if (state.failed) return retval;
+				DebugLocation(1361, 30);
+				DOTDOTDOT355=(IToken)Match(input,DOTDOTDOT,Follow._DOTDOTDOT_in_constraint_elements_components8547); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				DOTDOTDOT355_tree = (CommonTree)adaptor.Create(DOTDOTDOT355);
 				adaptor.AddChild(root_0, DOTDOTDOT355_tree);
 				}
-				DebugLocation(1364, 40);
-				COMMA356=(IToken)Match(input,COMMA,Follow._COMMA_in_constraint_elements_components8568); if (state.failed) return retval;
+				DebugLocation(1361, 40);
+				COMMA356=(IToken)Match(input,COMMA,Follow._COMMA_in_constraint_elements_components8549); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				COMMA356_tree = (CommonTree)adaptor.Create(COMMA356);
 				adaptor.AddChild(root_0, COMMA356_tree);
 				}
-				DebugLocation(1364, 46);
+				DebugLocation(1361, 46);
 				if (state.backtracking == 0)
 				{
 					 retval.result.Ellipsis = true; 
@@ -20612,19 +20612,19 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(158); }
 
-			DebugLocation(1365, 8);
-			PushFollow(Follow._type_constraint_list_in_constraint_elements_components8581);
+			DebugLocation(1362, 8);
+			PushFollow(Follow._type_constraint_list_in_constraint_elements_components8562);
 			tcl=type_constraint_list();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, tcl.Tree);
-			DebugLocation(1365, 30);
-			R_BRACE357=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_constraint_elements_components8583); if (state.failed) return retval;
+			DebugLocation(1362, 30);
+			R_BRACE357=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_constraint_elements_components8564); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			R_BRACE357_tree = (CommonTree)adaptor.Create(R_BRACE357);
 			adaptor.AddChild(root_0, R_BRACE357_tree);
 			}
-			DebugLocation(1365, 38);
+			DebugLocation(1362, 38);
 			if (state.backtracking == 0)
 			{
 				 retval.result.TypeConstraintList = (tcl!=null?tcl.result:default(IList<ConstraintElement>)); 
@@ -20651,7 +20651,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("constraint_elements_components", 104);
 			LeaveRule_constraint_elements_components();
 		}
-		DebugLocation(1366, 4);
+		DebugLocation(1363, 4);
 		} finally { DebugExitRule(GrammarFileName, "constraint_elements_components"); }
 		return retval;
 
@@ -20668,7 +20668,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_value_range();
 	partial void LeaveRule_value_range();
 	// $ANTLR start "value_range"
-	// Smi.g:1368:1: value_range returns [ValueRange result = new ValueRange()] : (lower= value | MIN_KW ) ( LESS )? DOTDOT ( LESS )? (upper= value | MAX_KW ) ;
+	// Smi.g:1365:1: value_range returns [ValueRange result = new ValueRange()] : (lower= value | MIN_KW ) ( LESS )? DOTDOT ( LESS )? (upper= value | MAX_KW ) ;
 	[GrammarRule("value_range")]
 	private SmiParser.value_range_return value_range()
 	{
@@ -20694,17 +20694,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree LESS361_tree = default(CommonTree);
 		CommonTree MAX_KW362_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "value_range");
-		DebugLocation(1368, 1);
+		DebugLocation(1365, 1);
 		try
 		{
-			// Smi.g:1369:5: ( (lower= value | MIN_KW ) ( LESS )? DOTDOT ( LESS )? (upper= value | MAX_KW ) )
+			// Smi.g:1366:5: ( (lower= value | MIN_KW ) ( LESS )? DOTDOT ( LESS )? (upper= value | MAX_KW ) )
 			DebugEnterAlt(1);
-			// Smi.g:1369:7: (lower= value | MIN_KW ) ( LESS )? DOTDOT ( LESS )? (upper= value | MAX_KW )
+			// Smi.g:1366:7: (lower= value | MIN_KW ) ( LESS )? DOTDOT ( LESS )? (upper= value | MAX_KW )
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(1369, 7);
-			// Smi.g:1369:7: (lower= value | MIN_KW )
+			DebugLocation(1366, 7);
+			// Smi.g:1366:7: (lower= value | MIN_KW )
 			int alt159=2;
 			try { DebugEnterSubRule(159);
 			try { DebugEnterDecision(159, false);
@@ -20730,15 +20730,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1369:8: lower= value
+				// Smi.g:1366:8: lower= value
 				{
-				DebugLocation(1369, 13);
-				PushFollow(Follow._value_in_value_range8609);
+				DebugLocation(1366, 13);
+				PushFollow(Follow._value_in_value_range8590);
 				lower=value();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, lower.Tree);
-				DebugLocation(1369, 20);
+				DebugLocation(1366, 20);
 				if (state.backtracking == 0)
 				{
 					 retval.result.LowerValue = (lower!=null?lower.result:default(ISmiValue)); 
@@ -20748,15 +20748,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// Smi.g:1370:4: MIN_KW
+				// Smi.g:1367:4: MIN_KW
 				{
-				DebugLocation(1370, 4);
-				MIN_KW358=(IToken)Match(input,MIN_KW,Follow._MIN_KW_in_value_range8616); if (state.failed) return retval;
+				DebugLocation(1367, 4);
+				MIN_KW358=(IToken)Match(input,MIN_KW,Follow._MIN_KW_in_value_range8597); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				MIN_KW358_tree = (CommonTree)adaptor.Create(MIN_KW358);
 				adaptor.AddChild(root_0, MIN_KW358_tree);
 				}
-				DebugLocation(1370, 11);
+				DebugLocation(1367, 11);
 				if (state.backtracking == 0)
 				{
 					 retval.result.MinValue = true; 
@@ -20768,8 +20768,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(159); }
 
-			DebugLocation(1371, 2);
-			// Smi.g:1371:2: ( LESS )?
+			DebugLocation(1368, 2);
+			// Smi.g:1368:2: ( LESS )?
 			int alt160=2;
 			try { DebugEnterSubRule(160);
 			try { DebugEnterDecision(160, false);
@@ -20784,15 +20784,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1371:3: LESS
+				// Smi.g:1368:3: LESS
 				{
-				DebugLocation(1371, 3);
-				LESS359=(IToken)Match(input,LESS,Follow._LESS_in_value_range8624); if (state.failed) return retval;
+				DebugLocation(1368, 3);
+				LESS359=(IToken)Match(input,LESS,Follow._LESS_in_value_range8605); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				LESS359_tree = (CommonTree)adaptor.Create(LESS359);
 				adaptor.AddChild(root_0, LESS359_tree);
 				}
-				DebugLocation(1371, 8);
+				DebugLocation(1368, 8);
 				if (state.backtracking == 0)
 				{
 					 retval.result.LessThan = true; 
@@ -20804,14 +20804,14 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(160); }
 
-			DebugLocation(1371, 39);
-			DOTDOT360=(IToken)Match(input,DOTDOT,Follow._DOTDOT_in_value_range8630); if (state.failed) return retval;
+			DebugLocation(1368, 39);
+			DOTDOT360=(IToken)Match(input,DOTDOT,Follow._DOTDOT_in_value_range8611); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			DOTDOT360_tree = (CommonTree)adaptor.Create(DOTDOT360);
 			adaptor.AddChild(root_0, DOTDOT360_tree);
 			}
-			DebugLocation(1372, 2);
-			// Smi.g:1372:2: ( LESS )?
+			DebugLocation(1369, 2);
+			// Smi.g:1369:2: ( LESS )?
 			int alt161=2;
 			try { DebugEnterSubRule(161);
 			try { DebugEnterDecision(161, false);
@@ -20826,15 +20826,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1372:3: LESS
+				// Smi.g:1369:3: LESS
 				{
-				DebugLocation(1372, 3);
-				LESS361=(IToken)Match(input,LESS,Follow._LESS_in_value_range8635); if (state.failed) return retval;
+				DebugLocation(1369, 3);
+				LESS361=(IToken)Match(input,LESS,Follow._LESS_in_value_range8616); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				LESS361_tree = (CommonTree)adaptor.Create(LESS361);
 				adaptor.AddChild(root_0, LESS361_tree);
 				}
-				DebugLocation(1372, 8);
+				DebugLocation(1369, 8);
 				if (state.backtracking == 0)
 				{
 					 retval.result.GreaterThan = true; 
@@ -20846,8 +20846,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(161); }
 
-			DebugLocation(1373, 2);
-			// Smi.g:1373:2: (upper= value | MAX_KW )
+			DebugLocation(1370, 2);
+			// Smi.g:1370:2: (upper= value | MAX_KW )
 			int alt162=2;
 			try { DebugEnterSubRule(162);
 			try { DebugEnterDecision(162, false);
@@ -20873,15 +20873,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1373:3: upper= value
+				// Smi.g:1370:3: upper= value
 				{
-				DebugLocation(1373, 8);
-				PushFollow(Follow._value_in_value_range8646);
+				DebugLocation(1370, 8);
+				PushFollow(Follow._value_in_value_range8627);
 				upper=value();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, upper.Tree);
-				DebugLocation(1373, 15);
+				DebugLocation(1370, 15);
 				if (state.backtracking == 0)
 				{
 					 retval.result.UpperValue = (upper!=null?upper.result:default(ISmiValue)); 
@@ -20891,15 +20891,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// Smi.g:1374:2: MAX_KW
+				// Smi.g:1371:2: MAX_KW
 				{
-				DebugLocation(1374, 2);
-				MAX_KW362=(IToken)Match(input,MAX_KW,Follow._MAX_KW_in_value_range8654); if (state.failed) return retval;
+				DebugLocation(1371, 2);
+				MAX_KW362=(IToken)Match(input,MAX_KW,Follow._MAX_KW_in_value_range8635); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				MAX_KW362_tree = (CommonTree)adaptor.Create(MAX_KW362);
 				adaptor.AddChild(root_0, MAX_KW362_tree);
 				}
-				DebugLocation(1374, 9);
+				DebugLocation(1371, 9);
 				if (state.backtracking == 0)
 				{
 					 retval.result.MaxValue = true; 
@@ -20933,7 +20933,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("value_range", 105);
 			LeaveRule_value_range();
 		}
-		DebugLocation(1375, 1);
+		DebugLocation(1372, 1);
 		} finally { DebugExitRule(GrammarFileName, "value_range"); }
 		return retval;
 
@@ -20950,7 +20950,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_type_constraint_list();
 	partial void LeaveRule_type_constraint_list();
 	// $ANTLR start "type_constraint_list"
-	// Smi.g:1377:1: type_constraint_list returns [IList<ConstraintElement> result = new List<ConstraintElement>()] : nc1= named_constraint ( COMMA nc2= named_constraint )* ;
+	// Smi.g:1374:1: type_constraint_list returns [IList<ConstraintElement> result = new List<ConstraintElement>()] : nc1= named_constraint ( COMMA nc2= named_constraint )* ;
 	[GrammarRule("type_constraint_list")]
 	private SmiParser.type_constraint_list_return type_constraint_list()
 	{
@@ -20968,28 +20968,28 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 		CommonTree COMMA363_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "type_constraint_list");
-		DebugLocation(1377, 1);
+		DebugLocation(1374, 1);
 		try
 		{
-			// Smi.g:1378:5: (nc1= named_constraint ( COMMA nc2= named_constraint )* )
+			// Smi.g:1375:5: (nc1= named_constraint ( COMMA nc2= named_constraint )* )
 			DebugEnterAlt(1);
-			// Smi.g:1378:7: nc1= named_constraint ( COMMA nc2= named_constraint )*
+			// Smi.g:1375:7: nc1= named_constraint ( COMMA nc2= named_constraint )*
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(1378, 10);
-			PushFollow(Follow._named_constraint_in_type_constraint_list8678);
+			DebugLocation(1375, 10);
+			PushFollow(Follow._named_constraint_in_type_constraint_list8659);
 			nc1=named_constraint();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, nc1.Tree);
-			DebugLocation(1378, 28);
+			DebugLocation(1375, 28);
 			if (state.backtracking == 0)
 			{
 				 retval.result.Add((nc1!=null?nc1.result:default(NamedConstraintElement))); 
 			}
-			DebugLocation(1379, 2);
-			// Smi.g:1379:2: ( COMMA nc2= named_constraint )*
+			DebugLocation(1376, 2);
+			// Smi.g:1376:2: ( COMMA nc2= named_constraint )*
 			try { DebugEnterSubRule(163);
 			while (true)
 			{
@@ -21008,21 +21008,21 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:1379:3: COMMA nc2= named_constraint
+					// Smi.g:1376:3: COMMA nc2= named_constraint
 					{
-					DebugLocation(1379, 3);
-					COMMA363=(IToken)Match(input,COMMA,Follow._COMMA_in_type_constraint_list8685); if (state.failed) return retval;
+					DebugLocation(1376, 3);
+					COMMA363=(IToken)Match(input,COMMA,Follow._COMMA_in_type_constraint_list8666); if (state.failed) return retval;
 					if (state.backtracking == 0) {
 					COMMA363_tree = (CommonTree)adaptor.Create(COMMA363);
 					adaptor.AddChild(root_0, COMMA363_tree);
 					}
-					DebugLocation(1379, 12);
-					PushFollow(Follow._named_constraint_in_type_constraint_list8689);
+					DebugLocation(1376, 12);
+					PushFollow(Follow._named_constraint_in_type_constraint_list8670);
 					nc2=named_constraint();
 					PopFollow();
 					if (state.failed) return retval;
 					if (state.backtracking == 0) adaptor.AddChild(root_0, nc2.Tree);
-					DebugLocation(1379, 30);
+					DebugLocation(1376, 30);
 					if (state.backtracking == 0)
 					{
 						 retval.result.Add((nc2!=null?nc2.result:default(NamedConstraintElement))); 
@@ -21063,7 +21063,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("type_constraint_list", 106);
 			LeaveRule_type_constraint_list();
 		}
-		DebugLocation(1380, 1);
+		DebugLocation(1377, 1);
 		} finally { DebugExitRule(GrammarFileName, "type_constraint_list"); }
 		return retval;
 
@@ -21080,7 +21080,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_named_constraint();
 	partial void LeaveRule_named_constraint();
 	// $ANTLR start "named_constraint"
-	// Smi.g:1382:1: named_constraint returns [NamedConstraintElement result] : name= LOWER (c= constraint )? ( PRESENT_KW | ABSENT_KW | OPTIONAL_KW )? ;
+	// Smi.g:1379:1: named_constraint returns [NamedConstraintElement result] : name= LOWER (c= constraint )? ( PRESENT_KW | ABSENT_KW | OPTIONAL_KW )? ;
 	[GrammarRule("named_constraint")]
 	private SmiParser.named_constraint_return named_constraint()
 	{
@@ -21103,28 +21103,28 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree ABSENT_KW365_tree = default(CommonTree);
 		CommonTree OPTIONAL_KW366_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "named_constraint");
-		DebugLocation(1382, 1);
+		DebugLocation(1379, 1);
 		try
 		{
-			// Smi.g:1383:5: (name= LOWER (c= constraint )? ( PRESENT_KW | ABSENT_KW | OPTIONAL_KW )? )
+			// Smi.g:1380:5: (name= LOWER (c= constraint )? ( PRESENT_KW | ABSENT_KW | OPTIONAL_KW )? )
 			DebugEnterAlt(1);
-			// Smi.g:1383:7: name= LOWER (c= constraint )? ( PRESENT_KW | ABSENT_KW | OPTIONAL_KW )?
+			// Smi.g:1380:7: name= LOWER (c= constraint )? ( PRESENT_KW | ABSENT_KW | OPTIONAL_KW )?
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(1383, 11);
-			name=(IToken)Match(input,LOWER,Follow._LOWER_in_named_constraint8714); if (state.failed) return retval;
+			DebugLocation(1380, 11);
+			name=(IToken)Match(input,LOWER,Follow._LOWER_in_named_constraint8695); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			name_tree = (CommonTree)adaptor.Create(name);
 			adaptor.AddChild(root_0, name_tree);
 			}
-			DebugLocation(1383, 18);
+			DebugLocation(1380, 18);
 			if (state.backtracking == 0)
 			{
 				 retval.result = new NamedConstraintElement((name!=null?name.Text:null)); 
 			}
-			DebugLocation(1384, 2);
-			// Smi.g:1384:2: (c= constraint )?
+			DebugLocation(1381, 2);
+			// Smi.g:1381:2: (c= constraint )?
 			int alt164=2;
 			try { DebugEnterSubRule(164);
 			try { DebugEnterDecision(164, false);
@@ -21139,15 +21139,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1384:3: c= constraint
+				// Smi.g:1381:3: c= constraint
 				{
-				DebugLocation(1384, 4);
-				PushFollow(Follow._constraint_in_named_constraint8722);
+				DebugLocation(1381, 4);
+				PushFollow(Follow._constraint_in_named_constraint8703);
 				c=constraint();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, c.Tree);
-				DebugLocation(1384, 16);
+				DebugLocation(1381, 16);
 				if (state.backtracking == 0)
 				{
 					 retval.result.Constraint = (c!=null?c.result:default(Constraint)); 
@@ -21159,8 +21159,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(164); }
 
-			DebugLocation(1385, 2);
-			// Smi.g:1385:2: ( PRESENT_KW | ABSENT_KW | OPTIONAL_KW )?
+			DebugLocation(1382, 2);
+			// Smi.g:1382:2: ( PRESENT_KW | ABSENT_KW | OPTIONAL_KW )?
 			int alt165=4;
 			try { DebugEnterSubRule(165);
 			try { DebugEnterDecision(165, false);
@@ -21188,15 +21188,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1385:3: PRESENT_KW
+				// Smi.g:1382:3: PRESENT_KW
 				{
-				DebugLocation(1385, 3);
-				PRESENT_KW364=(IToken)Match(input,PRESENT_KW,Follow._PRESENT_KW_in_named_constraint8731); if (state.failed) return retval;
+				DebugLocation(1382, 3);
+				PRESENT_KW364=(IToken)Match(input,PRESENT_KW,Follow._PRESENT_KW_in_named_constraint8712); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				PRESENT_KW364_tree = (CommonTree)adaptor.Create(PRESENT_KW364);
 				adaptor.AddChild(root_0, PRESENT_KW364_tree);
 				}
-				DebugLocation(1385, 14);
+				DebugLocation(1382, 14);
 				if (state.backtracking == 0)
 				{
 					 retval.result.Present = true; 
@@ -21206,15 +21206,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// Smi.g:1386:4: ABSENT_KW
+				// Smi.g:1383:4: ABSENT_KW
 				{
-				DebugLocation(1386, 4);
-				ABSENT_KW365=(IToken)Match(input,ABSENT_KW,Follow._ABSENT_KW_in_named_constraint8738); if (state.failed) return retval;
+				DebugLocation(1383, 4);
+				ABSENT_KW365=(IToken)Match(input,ABSENT_KW,Follow._ABSENT_KW_in_named_constraint8719); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				ABSENT_KW365_tree = (CommonTree)adaptor.Create(ABSENT_KW365);
 				adaptor.AddChild(root_0, ABSENT_KW365_tree);
 				}
-				DebugLocation(1386, 14);
+				DebugLocation(1383, 14);
 				if (state.backtracking == 0)
 				{
 					 retval.result.Absent = true; 
@@ -21224,15 +21224,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 3:
 				DebugEnterAlt(3);
-				// Smi.g:1387:4: OPTIONAL_KW
+				// Smi.g:1384:4: OPTIONAL_KW
 				{
-				DebugLocation(1387, 4);
-				OPTIONAL_KW366=(IToken)Match(input,OPTIONAL_KW,Follow._OPTIONAL_KW_in_named_constraint8745); if (state.failed) return retval;
+				DebugLocation(1384, 4);
+				OPTIONAL_KW366=(IToken)Match(input,OPTIONAL_KW,Follow._OPTIONAL_KW_in_named_constraint8726); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				OPTIONAL_KW366_tree = (CommonTree)adaptor.Create(OPTIONAL_KW366);
 				adaptor.AddChild(root_0, OPTIONAL_KW366_tree);
 				}
-				DebugLocation(1387, 16);
+				DebugLocation(1384, 16);
 				if (state.backtracking == 0)
 				{
 					 retval.result.Optinal = true; 
@@ -21266,7 +21266,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("named_constraint", 107);
 			LeaveRule_named_constraint();
 		}
-		DebugLocation(1388, 1);
+		DebugLocation(1385, 1);
 		} finally { DebugExitRule(GrammarFileName, "named_constraint"); }
 		return retval;
 
@@ -21283,7 +21283,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_choice_value();
 	partial void LeaveRule_choice_value();
 	// $ANTLR start "choice_value"
-	// Smi.g:1390:1: choice_value returns [ChoiceValue result = new ChoiceValue()] : name= LOWER ( COLON )? v= value ;
+	// Smi.g:1387:1: choice_value returns [ChoiceValue result = new ChoiceValue()] : name= LOWER ( COLON )? v= value ;
 	[GrammarRule("choice_value")]
 	private SmiParser.choice_value_return choice_value()
 	{
@@ -21302,28 +21302,28 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree name_tree = default(CommonTree);
 		CommonTree COLON367_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "choice_value");
-		DebugLocation(1390, 1);
+		DebugLocation(1387, 1);
 		try
 		{
-			// Smi.g:1391:5: (name= LOWER ( COLON )? v= value )
+			// Smi.g:1388:5: (name= LOWER ( COLON )? v= value )
 			DebugEnterAlt(1);
-			// Smi.g:1391:7: name= LOWER ( COLON )? v= value
+			// Smi.g:1388:7: name= LOWER ( COLON )? v= value
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(1391, 11);
-			name=(IToken)Match(input,LOWER,Follow._LOWER_in_choice_value8770); if (state.failed) return retval;
+			DebugLocation(1388, 11);
+			name=(IToken)Match(input,LOWER,Follow._LOWER_in_choice_value8751); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			name_tree = (CommonTree)adaptor.Create(name);
 			adaptor.AddChild(root_0, name_tree);
 			}
-			DebugLocation(1391, 18);
+			DebugLocation(1388, 18);
 			if (state.backtracking == 0)
 			{
 				 retval.result.Name = (name!=null?name.Text:null); 
 			}
-			DebugLocation(1392, 2);
-			// Smi.g:1392:2: ( COLON )?
+			DebugLocation(1389, 2);
+			// Smi.g:1389:2: ( COLON )?
 			int alt166=2;
 			try { DebugEnterSubRule(166);
 			try { DebugEnterDecision(166, false);
@@ -21338,15 +21338,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1392:3: COLON
+				// Smi.g:1389:3: COLON
 				{
-				DebugLocation(1392, 3);
-				COLON367=(IToken)Match(input,COLON,Follow._COLON_in_choice_value8777); if (state.failed) return retval;
+				DebugLocation(1389, 3);
+				COLON367=(IToken)Match(input,COLON,Follow._COLON_in_choice_value8758); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				COLON367_tree = (CommonTree)adaptor.Create(COLON367);
 				adaptor.AddChild(root_0, COLON367_tree);
 				}
-				DebugLocation(1392, 9);
+				DebugLocation(1389, 9);
 				if (state.backtracking == 0)
 				{
 					 retval.result.ContainsColon = true; 
@@ -21358,13 +21358,13 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(166); }
 
-			DebugLocation(1393, 3);
-			PushFollow(Follow._value_in_choice_value8787);
+			DebugLocation(1390, 3);
+			PushFollow(Follow._value_in_choice_value8768);
 			v=value();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, v.Tree);
-			DebugLocation(1393, 10);
+			DebugLocation(1390, 10);
 			if (state.backtracking == 0)
 			{
 				 retval.result.Value = (v!=null?v.result:default(ISmiValue)); 
@@ -21391,7 +21391,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("choice_value", 108);
 			LeaveRule_choice_value();
 		}
-		DebugLocation(1394, 1);
+		DebugLocation(1391, 1);
 		} finally { DebugExitRule(GrammarFileName, "choice_value"); }
 		return retval;
 
@@ -21408,7 +21408,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_sequence_value();
 	partial void LeaveRule_sequence_value();
 	// $ANTLR start "sequence_value"
-	// Smi.g:1396:1: sequence_value returns [SequenceValue result = new SequenceValue()] : L_BRACE (nv1= named_value )? ( COMMA nv2= named_value )* R_BRACE ;
+	// Smi.g:1393:1: sequence_value returns [SequenceValue result = new SequenceValue()] : L_BRACE (nv1= named_value )? ( COMMA nv2= named_value )* R_BRACE ;
 	[GrammarRule("sequence_value")]
 	private SmiParser.sequence_value_return sequence_value()
 	{
@@ -21430,23 +21430,23 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree COMMA369_tree = default(CommonTree);
 		CommonTree R_BRACE370_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "sequence_value");
-		DebugLocation(1396, 1);
+		DebugLocation(1393, 1);
 		try
 		{
-			// Smi.g:1397:5: ( L_BRACE (nv1= named_value )? ( COMMA nv2= named_value )* R_BRACE )
+			// Smi.g:1394:5: ( L_BRACE (nv1= named_value )? ( COMMA nv2= named_value )* R_BRACE )
 			DebugEnterAlt(1);
-			// Smi.g:1397:7: L_BRACE (nv1= named_value )? ( COMMA nv2= named_value )* R_BRACE
+			// Smi.g:1394:7: L_BRACE (nv1= named_value )? ( COMMA nv2= named_value )* R_BRACE
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(1397, 7);
-			L_BRACE368=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_sequence_value8807); if (state.failed) return retval;
+			DebugLocation(1394, 7);
+			L_BRACE368=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_sequence_value8788); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			L_BRACE368_tree = (CommonTree)adaptor.Create(L_BRACE368);
 			adaptor.AddChild(root_0, L_BRACE368_tree);
 			}
-			DebugLocation(1397, 15);
-			// Smi.g:1397:15: (nv1= named_value )?
+			DebugLocation(1394, 15);
+			// Smi.g:1394:15: (nv1= named_value )?
 			int alt167=2;
 			try { DebugEnterSubRule(167);
 			try { DebugEnterDecision(167, false);
@@ -21461,15 +21461,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1397:16: nv1= named_value
+				// Smi.g:1394:16: nv1= named_value
 				{
-				DebugLocation(1397, 19);
-				PushFollow(Follow._named_value_in_sequence_value8812);
+				DebugLocation(1394, 19);
+				PushFollow(Follow._named_value_in_sequence_value8793);
 				nv1=named_value();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, nv1.Tree);
-				DebugLocation(1397, 32);
+				DebugLocation(1394, 32);
 				if (state.backtracking == 0)
 				{
 					 retval.result.Add((nv1!=null?nv1.result:default(NamedValue))); 
@@ -21481,8 +21481,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(167); }
 
-			DebugLocation(1398, 2);
-			// Smi.g:1398:2: ( COMMA nv2= named_value )*
+			DebugLocation(1395, 2);
+			// Smi.g:1395:2: ( COMMA nv2= named_value )*
 			try { DebugEnterSubRule(168);
 			while (true)
 			{
@@ -21501,21 +21501,21 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:1398:3: COMMA nv2= named_value
+					// Smi.g:1395:3: COMMA nv2= named_value
 					{
-					DebugLocation(1398, 3);
-					COMMA369=(IToken)Match(input,COMMA,Follow._COMMA_in_sequence_value8821); if (state.failed) return retval;
+					DebugLocation(1395, 3);
+					COMMA369=(IToken)Match(input,COMMA,Follow._COMMA_in_sequence_value8802); if (state.failed) return retval;
 					if (state.backtracking == 0) {
 					COMMA369_tree = (CommonTree)adaptor.Create(COMMA369);
 					adaptor.AddChild(root_0, COMMA369_tree);
 					}
-					DebugLocation(1398, 12);
-					PushFollow(Follow._named_value_in_sequence_value8825);
+					DebugLocation(1395, 12);
+					PushFollow(Follow._named_value_in_sequence_value8806);
 					nv2=named_value();
 					PopFollow();
 					if (state.failed) return retval;
 					if (state.backtracking == 0) adaptor.AddChild(root_0, nv2.Tree);
-					DebugLocation(1398, 25);
+					DebugLocation(1395, 25);
 					if (state.backtracking == 0)
 					{
 						 retval.result.Add((nv2!=null?nv2.result:default(NamedValue))); 
@@ -21534,8 +21534,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 			} finally { DebugExitSubRule(168); }
 
-			DebugLocation(1399, 2);
-			R_BRACE370=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_sequence_value8833); if (state.failed) return retval;
+			DebugLocation(1396, 2);
+			R_BRACE370=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_sequence_value8814); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			R_BRACE370_tree = (CommonTree)adaptor.Create(R_BRACE370);
 			adaptor.AddChild(root_0, R_BRACE370_tree);
@@ -21562,7 +21562,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("sequence_value", 109);
 			LeaveRule_sequence_value();
 		}
-		DebugLocation(1400, 1);
+		DebugLocation(1397, 1);
 		} finally { DebugExitRule(GrammarFileName, "sequence_value"); }
 		return retval;
 
@@ -21579,7 +21579,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_sequenceof_value();
 	partial void LeaveRule_sequenceof_value();
 	// $ANTLR start "sequenceof_value"
-	// Smi.g:1402:1: sequenceof_value returns [SequenceOfValue result = new SequenceOfValue()] : L_BRACE (v1= value )? ( COMMA v2= value )* R_BRACE ;
+	// Smi.g:1399:1: sequenceof_value returns [SequenceOfValue result = new SequenceOfValue()] : L_BRACE (v1= value )? ( COMMA v2= value )* R_BRACE ;
 	[GrammarRule("sequenceof_value")]
 	private SmiParser.sequenceof_value_return sequenceof_value()
 	{
@@ -21601,23 +21601,23 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree COMMA372_tree = default(CommonTree);
 		CommonTree R_BRACE373_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "sequenceof_value");
-		DebugLocation(1402, 1);
+		DebugLocation(1399, 1);
 		try
 		{
-			// Smi.g:1403:5: ( L_BRACE (v1= value )? ( COMMA v2= value )* R_BRACE )
+			// Smi.g:1400:5: ( L_BRACE (v1= value )? ( COMMA v2= value )* R_BRACE )
 			DebugEnterAlt(1);
-			// Smi.g:1403:7: L_BRACE (v1= value )? ( COMMA v2= value )* R_BRACE
+			// Smi.g:1400:7: L_BRACE (v1= value )? ( COMMA v2= value )* R_BRACE
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(1403, 7);
-			L_BRACE371=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_sequenceof_value8851); if (state.failed) return retval;
+			DebugLocation(1400, 7);
+			L_BRACE371=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_sequenceof_value8832); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			L_BRACE371_tree = (CommonTree)adaptor.Create(L_BRACE371);
 			adaptor.AddChild(root_0, L_BRACE371_tree);
 			}
-			DebugLocation(1403, 15);
-			// Smi.g:1403:15: (v1= value )?
+			DebugLocation(1400, 15);
+			// Smi.g:1400:15: (v1= value )?
 			int alt169=2;
 			try { DebugEnterSubRule(169);
 			try { DebugEnterDecision(169, false);
@@ -21632,15 +21632,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1403:16: v1= value
+				// Smi.g:1400:16: v1= value
 				{
-				DebugLocation(1403, 18);
-				PushFollow(Follow._value_in_sequenceof_value8856);
+				DebugLocation(1400, 18);
+				PushFollow(Follow._value_in_sequenceof_value8837);
 				v1=value();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, v1.Tree);
-				DebugLocation(1403, 25);
+				DebugLocation(1400, 25);
 				if (state.backtracking == 0)
 				{
 					 retval.result.Add((v1!=null?v1.result:default(ISmiValue))); 
@@ -21652,8 +21652,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(169); }
 
-			DebugLocation(1404, 2);
-			// Smi.g:1404:2: ( COMMA v2= value )*
+			DebugLocation(1401, 2);
+			// Smi.g:1401:2: ( COMMA v2= value )*
 			try { DebugEnterSubRule(170);
 			while (true)
 			{
@@ -21672,21 +21672,21 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:1404:3: COMMA v2= value
+					// Smi.g:1401:3: COMMA v2= value
 					{
-					DebugLocation(1404, 3);
-					COMMA372=(IToken)Match(input,COMMA,Follow._COMMA_in_sequenceof_value8865); if (state.failed) return retval;
+					DebugLocation(1401, 3);
+					COMMA372=(IToken)Match(input,COMMA,Follow._COMMA_in_sequenceof_value8846); if (state.failed) return retval;
 					if (state.backtracking == 0) {
 					COMMA372_tree = (CommonTree)adaptor.Create(COMMA372);
 					adaptor.AddChild(root_0, COMMA372_tree);
 					}
-					DebugLocation(1404, 11);
-					PushFollow(Follow._value_in_sequenceof_value8869);
+					DebugLocation(1401, 11);
+					PushFollow(Follow._value_in_sequenceof_value8850);
 					v2=value();
 					PopFollow();
 					if (state.failed) return retval;
 					if (state.backtracking == 0) adaptor.AddChild(root_0, v2.Tree);
-					DebugLocation(1404, 18);
+					DebugLocation(1401, 18);
 					if (state.backtracking == 0)
 					{
 						 retval.result.Add((v2!=null?v2.result:default(ISmiValue))); 
@@ -21705,8 +21705,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 			} finally { DebugExitSubRule(170); }
 
-			DebugLocation(1405, 2);
-			R_BRACE373=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_sequenceof_value8877); if (state.failed) return retval;
+			DebugLocation(1402, 2);
+			R_BRACE373=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_sequenceof_value8858); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			R_BRACE373_tree = (CommonTree)adaptor.Create(R_BRACE373);
 			adaptor.AddChild(root_0, R_BRACE373_tree);
@@ -21733,7 +21733,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("sequenceof_value", 110);
 			LeaveRule_sequenceof_value();
 		}
-		DebugLocation(1406, 1);
+		DebugLocation(1403, 1);
 		} finally { DebugExitRule(GrammarFileName, "sequenceof_value"); }
 		return retval;
 
@@ -21750,7 +21750,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_cstr_value();
 	partial void LeaveRule_cstr_value();
 	// $ANTLR start "cstr_value"
-	// Smi.g:1408:1: cstr_value returns [ISmiValue result] : ( ( H_STRING )=>h= H_STRING | ( B_STRING )=>b= B_STRING | L_BRACE ( ( id_list )=>id= id_list | ( char_defs_list )=>ch= char_defs_list |tu= tuple_or_quad ) R_BRACE );
+	// Smi.g:1405:1: cstr_value returns [ISmiValue result] : ( ( H_STRING )=>h= H_STRING | ( B_STRING )=>b= B_STRING | L_BRACE ( ( id_list )=>id= id_list | ( char_defs_list )=>ch= char_defs_list |tu= tuple_or_quad ) R_BRACE );
 	[GrammarRule("cstr_value")]
 	private SmiParser.cstr_value_return cstr_value()
 	{
@@ -21775,10 +21775,10 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree L_BRACE374_tree = default(CommonTree);
 		CommonTree R_BRACE375_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "cstr_value");
-		DebugLocation(1408, 21);
+		DebugLocation(1405, 21);
 		try
 		{
-			// Smi.g:1409:5: ( ( H_STRING )=>h= H_STRING | ( B_STRING )=>b= B_STRING | L_BRACE ( ( id_list )=>id= id_list | ( char_defs_list )=>ch= char_defs_list |tu= tuple_or_quad ) R_BRACE )
+			// Smi.g:1406:5: ( ( H_STRING )=>h= H_STRING | ( B_STRING )=>b= B_STRING | L_BRACE ( ( id_list )=>id= id_list | ( char_defs_list )=>ch= char_defs_list |tu= tuple_or_quad ) R_BRACE )
 			int alt172=3;
 			try { DebugEnterDecision(172, false);
 			int LA172_1 = input.LA(1);
@@ -21807,17 +21807,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1409:7: ( H_STRING )=>h= H_STRING
+				// Smi.g:1406:7: ( H_STRING )=>h= H_STRING
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(1409, 22);
-				h=(IToken)Match(input,H_STRING,Follow._H_STRING_in_cstr_value8903); if (state.failed) return retval;
+				DebugLocation(1406, 22);
+				h=(IToken)Match(input,H_STRING,Follow._H_STRING_in_cstr_value8884); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				h_tree = (CommonTree)adaptor.Create(h);
 				adaptor.AddChild(root_0, h_tree);
 				}
-				DebugLocation(1410, 2);
+				DebugLocation(1407, 2);
 				if (state.backtracking == 0)
 				{
 					 
@@ -21829,17 +21829,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// Smi.g:1413:7: ( B_STRING )=>b= B_STRING
+				// Smi.g:1410:7: ( B_STRING )=>b= B_STRING
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(1413, 22);
-				b=(IToken)Match(input,B_STRING,Follow._B_STRING_in_cstr_value8923); if (state.failed) return retval;
+				DebugLocation(1410, 22);
+				b=(IToken)Match(input,B_STRING,Follow._B_STRING_in_cstr_value8904); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				b_tree = (CommonTree)adaptor.Create(b);
 				adaptor.AddChild(root_0, b_tree);
 				}
-				DebugLocation(1414, 2);
+				DebugLocation(1411, 2);
 				if (state.backtracking == 0)
 				{
 
@@ -21851,18 +21851,18 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 3:
 				DebugEnterAlt(3);
-				// Smi.g:1417:7: L_BRACE ( ( id_list )=>id= id_list | ( char_defs_list )=>ch= char_defs_list |tu= tuple_or_quad ) R_BRACE
+				// Smi.g:1414:7: L_BRACE ( ( id_list )=>id= id_list | ( char_defs_list )=>ch= char_defs_list |tu= tuple_or_quad ) R_BRACE
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(1417, 7);
-				L_BRACE374=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_cstr_value8935); if (state.failed) return retval;
+				DebugLocation(1414, 7);
+				L_BRACE374=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_cstr_value8916); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				L_BRACE374_tree = (CommonTree)adaptor.Create(L_BRACE374);
 				adaptor.AddChild(root_0, L_BRACE374_tree);
 				}
-				DebugLocation(1418, 13);
-				// Smi.g:1418:13: ( ( id_list )=>id= id_list | ( char_defs_list )=>ch= char_defs_list |tu= tuple_or_quad )
+				DebugLocation(1415, 13);
+				// Smi.g:1415:13: ( ( id_list )=>id= id_list | ( char_defs_list )=>ch= char_defs_list |tu= tuple_or_quad )
 				int alt171=3;
 				try { DebugEnterSubRule(171);
 				try { DebugEnterDecision(171, false);
@@ -21916,15 +21916,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:1418:15: ( id_list )=>id= id_list
+					// Smi.g:1415:15: ( id_list )=>id= id_list
 					{
-					DebugLocation(1418, 30);
-					PushFollow(Follow._id_list_in_cstr_value8960);
+					DebugLocation(1415, 30);
+					PushFollow(Follow._id_list_in_cstr_value8941);
 					id=id_list();
 					PopFollow();
 					if (state.failed) return retval;
 					if (state.backtracking == 0) adaptor.AddChild(root_0, id.Tree);
-					DebugLocation(1418, 39);
+					DebugLocation(1415, 39);
 					if (state.backtracking == 0)
 					{
 						 retval.result = (id!=null?id.result:default(IdListValue)); 
@@ -21934,15 +21934,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 					break;
 				case 2:
 					DebugEnterAlt(2);
-					// Smi.g:1419:17: ( char_defs_list )=>ch= char_defs_list
+					// Smi.g:1416:17: ( char_defs_list )=>ch= char_defs_list
 					{
-					DebugLocation(1419, 39);
-					PushFollow(Follow._char_defs_list_in_cstr_value8988);
+					DebugLocation(1416, 39);
+					PushFollow(Follow._char_defs_list_in_cstr_value8969);
 					ch=char_defs_list();
 					PopFollow();
 					if (state.failed) return retval;
 					if (state.backtracking == 0) adaptor.AddChild(root_0, ch.Tree);
-					DebugLocation(1419, 55);
+					DebugLocation(1416, 55);
 					if (state.backtracking == 0)
 					{
 						 retval.result = (ch!=null?ch.result:default(CharDefinitionListValue)); 
@@ -21952,15 +21952,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 					break;
 				case 3:
 					DebugEnterAlt(3);
-					// Smi.g:1420:17: tu= tuple_or_quad
+					// Smi.g:1417:17: tu= tuple_or_quad
 					{
-					DebugLocation(1420, 19);
-					PushFollow(Follow._tuple_or_quad_in_cstr_value9010);
+					DebugLocation(1417, 19);
+					PushFollow(Follow._tuple_or_quad_in_cstr_value8991);
 					tu=tuple_or_quad();
 					PopFollow();
 					if (state.failed) return retval;
 					if (state.backtracking == 0) adaptor.AddChild(root_0, tu.Tree);
-					DebugLocation(1420, 34);
+					DebugLocation(1417, 34);
 					if (state.backtracking == 0)
 					{
 						 retval.result = (tu!=null?tu.result:default(ISmiValue)); 
@@ -21972,8 +21972,8 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				}
 				} finally { DebugExitSubRule(171); }
 
-				DebugLocation(1421, 15);
-				R_BRACE375=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_cstr_value9033); if (state.failed) return retval;
+				DebugLocation(1418, 15);
+				R_BRACE375=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_cstr_value9014); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				R_BRACE375_tree = (CommonTree)adaptor.Create(R_BRACE375);
 				adaptor.AddChild(root_0, R_BRACE375_tree);
@@ -22002,7 +22002,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("cstr_value", 111);
 			LeaveRule_cstr_value();
 		}
-		DebugLocation(1421, 21);
+		DebugLocation(1418, 21);
 		} finally { DebugExitRule(GrammarFileName, "cstr_value"); }
 		return retval;
 
@@ -22019,7 +22019,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_id_list();
 	partial void LeaveRule_id_list();
 	// $ANTLR start "id_list"
-	// Smi.g:1423:1: id_list returns [IdListValue result = new IdListValue()] : name1= LOWER ( COMMA name2= LOWER )* ;
+	// Smi.g:1420:1: id_list returns [IdListValue result = new IdListValue()] : name1= LOWER ( COMMA name2= LOWER )* ;
 	[GrammarRule("id_list")]
 	private SmiParser.id_list_return id_list()
 	{
@@ -22039,28 +22039,28 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree name2_tree = default(CommonTree);
 		CommonTree COMMA376_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "id_list");
-		DebugLocation(1423, 1);
+		DebugLocation(1420, 1);
 		try
 		{
-			// Smi.g:1424:5: (name1= LOWER ( COMMA name2= LOWER )* )
+			// Smi.g:1421:5: (name1= LOWER ( COMMA name2= LOWER )* )
 			DebugEnterAlt(1);
-			// Smi.g:1424:7: name1= LOWER ( COMMA name2= LOWER )*
+			// Smi.g:1421:7: name1= LOWER ( COMMA name2= LOWER )*
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(1424, 12);
-			name1=(IToken)Match(input,LOWER,Follow._LOWER_in_id_list9051); if (state.failed) return retval;
+			DebugLocation(1421, 12);
+			name1=(IToken)Match(input,LOWER,Follow._LOWER_in_id_list9032); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			name1_tree = (CommonTree)adaptor.Create(name1);
 			adaptor.AddChild(root_0, name1_tree);
 			}
-			DebugLocation(1424, 19);
+			DebugLocation(1421, 19);
 			if (state.backtracking == 0)
 			{
 				 retval.result.Add((name1!=null?name1.Text:null)); 
 			}
-			DebugLocation(1425, 2);
-			// Smi.g:1425:2: ( COMMA name2= LOWER )*
+			DebugLocation(1422, 2);
+			// Smi.g:1422:2: ( COMMA name2= LOWER )*
 			try { DebugEnterSubRule(173);
 			while (true)
 			{
@@ -22079,21 +22079,21 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:1425:3: COMMA name2= LOWER
+					// Smi.g:1422:3: COMMA name2= LOWER
 					{
-					DebugLocation(1425, 3);
-					COMMA376=(IToken)Match(input,COMMA,Follow._COMMA_in_id_list9057); if (state.failed) return retval;
+					DebugLocation(1422, 3);
+					COMMA376=(IToken)Match(input,COMMA,Follow._COMMA_in_id_list9038); if (state.failed) return retval;
 					if (state.backtracking == 0) {
 					COMMA376_tree = (CommonTree)adaptor.Create(COMMA376);
 					adaptor.AddChild(root_0, COMMA376_tree);
 					}
-					DebugLocation(1425, 14);
-					name2=(IToken)Match(input,LOWER,Follow._LOWER_in_id_list9061); if (state.failed) return retval;
+					DebugLocation(1422, 14);
+					name2=(IToken)Match(input,LOWER,Follow._LOWER_in_id_list9042); if (state.failed) return retval;
 					if (state.backtracking == 0) {
 					name2_tree = (CommonTree)adaptor.Create(name2);
 					adaptor.AddChild(root_0, name2_tree);
 					}
-					DebugLocation(1425, 21);
+					DebugLocation(1422, 21);
 					if (state.backtracking == 0)
 					{
 						 retval.result.Add((name2!=null?name2.Text:null)); 
@@ -22134,7 +22134,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("id_list", 112);
 			LeaveRule_id_list();
 		}
-		DebugLocation(1426, 1);
+		DebugLocation(1423, 1);
 		} finally { DebugExitRule(GrammarFileName, "id_list"); }
 		return retval;
 
@@ -22151,7 +22151,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_char_defs_list();
 	partial void LeaveRule_char_defs_list();
 	// $ANTLR start "char_defs_list"
-	// Smi.g:1428:1: char_defs_list returns [CharDefinitionListValue result = new CharDefinitionListValue()] : ch1= char_defs ( COMMA ch2= char_defs )* ;
+	// Smi.g:1425:1: char_defs_list returns [CharDefinitionListValue result = new CharDefinitionListValue()] : ch1= char_defs ( COMMA ch2= char_defs )* ;
 	[GrammarRule("char_defs_list")]
 	private SmiParser.char_defs_list_return char_defs_list()
 	{
@@ -22169,28 +22169,28 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 		CommonTree COMMA377_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "char_defs_list");
-		DebugLocation(1428, 1);
+		DebugLocation(1425, 1);
 		try
 		{
-			// Smi.g:1429:5: (ch1= char_defs ( COMMA ch2= char_defs )* )
+			// Smi.g:1426:5: (ch1= char_defs ( COMMA ch2= char_defs )* )
 			DebugEnterAlt(1);
-			// Smi.g:1429:7: ch1= char_defs ( COMMA ch2= char_defs )*
+			// Smi.g:1426:7: ch1= char_defs ( COMMA ch2= char_defs )*
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(1429, 10);
-			PushFollow(Follow._char_defs_in_char_defs_list9086);
+			DebugLocation(1426, 10);
+			PushFollow(Follow._char_defs_in_char_defs_list9067);
 			ch1=char_defs();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, ch1.Tree);
-			DebugLocation(1429, 21);
+			DebugLocation(1426, 21);
 			if (state.backtracking == 0)
 			{
 				 retval.result.Add((ch1!=null?ch1.result:default(CharDefinition))); 
 			}
-			DebugLocation(1430, 2);
-			// Smi.g:1430:2: ( COMMA ch2= char_defs )*
+			DebugLocation(1427, 2);
+			// Smi.g:1427:2: ( COMMA ch2= char_defs )*
 			try { DebugEnterSubRule(174);
 			while (true)
 			{
@@ -22209,21 +22209,21 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// Smi.g:1430:3: COMMA ch2= char_defs
+					// Smi.g:1427:3: COMMA ch2= char_defs
 					{
-					DebugLocation(1430, 3);
-					COMMA377=(IToken)Match(input,COMMA,Follow._COMMA_in_char_defs_list9092); if (state.failed) return retval;
+					DebugLocation(1427, 3);
+					COMMA377=(IToken)Match(input,COMMA,Follow._COMMA_in_char_defs_list9073); if (state.failed) return retval;
 					if (state.backtracking == 0) {
 					COMMA377_tree = (CommonTree)adaptor.Create(COMMA377);
 					adaptor.AddChild(root_0, COMMA377_tree);
 					}
-					DebugLocation(1430, 12);
-					PushFollow(Follow._char_defs_in_char_defs_list9096);
+					DebugLocation(1427, 12);
+					PushFollow(Follow._char_defs_in_char_defs_list9077);
 					ch2=char_defs();
 					PopFollow();
 					if (state.failed) return retval;
 					if (state.backtracking == 0) adaptor.AddChild(root_0, ch2.Tree);
-					DebugLocation(1430, 23);
+					DebugLocation(1427, 23);
 					if (state.backtracking == 0)
 					{
 						 retval.result.Add((ch2!=null?ch2.result:default(CharDefinition))); 
@@ -22264,7 +22264,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("char_defs_list", 113);
 			LeaveRule_char_defs_list();
 		}
-		DebugLocation(1431, 1);
+		DebugLocation(1428, 1);
 		} finally { DebugExitRule(GrammarFileName, "char_defs_list"); }
 		return retval;
 
@@ -22281,7 +22281,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_tuple_or_quad();
 	partial void LeaveRule_tuple_or_quad();
 	// $ANTLR start "tuple_or_quad"
-	// Smi.g:1434:1: tuple_or_quad returns [ISmiValue result] : (tu= tuple_number |qu= quad_number );
+	// Smi.g:1431:1: tuple_or_quad returns [ISmiValue result] : (tu= tuple_number |qu= quad_number );
 	[GrammarRule("tuple_or_quad")]
 	private SmiParser.tuple_or_quad_return tuple_or_quad()
 	{
@@ -22297,10 +22297,10 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		SmiParser.quad_number_return qu = default(SmiParser.quad_number_return);
 
 		try { DebugEnterRule(GrammarFileName, "tuple_or_quad");
-		DebugLocation(1434, 1);
+		DebugLocation(1431, 1);
 		try
 		{
-			// Smi.g:1435:5: (tu= tuple_number |qu= quad_number )
+			// Smi.g:1432:5: (tu= tuple_number |qu= quad_number )
 			int alt175=2;
 			try { DebugEnterDecision(175, false);
 			int LA175_1 = input.LA(1);
@@ -22481,17 +22481,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1435:7: tu= tuple_number
+				// Smi.g:1432:7: tu= tuple_number
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(1435, 9);
-				PushFollow(Follow._tuple_number_in_tuple_or_quad9122);
+				DebugLocation(1432, 9);
+				PushFollow(Follow._tuple_number_in_tuple_or_quad9103);
 				tu=tuple_number();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, tu.Tree);
-				DebugLocation(1435, 23);
+				DebugLocation(1432, 23);
 				if (state.backtracking == 0)
 				{
 					 retval.result = (tu!=null?tu.result:default(TupleValue)); 
@@ -22501,17 +22501,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// Smi.g:1436:4: qu= quad_number
+				// Smi.g:1433:4: qu= quad_number
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(1436, 6);
-				PushFollow(Follow._quad_number_in_tuple_or_quad9131);
+				DebugLocation(1433, 6);
+				PushFollow(Follow._quad_number_in_tuple_or_quad9112);
 				qu=quad_number();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, qu.Tree);
-				DebugLocation(1436, 19);
+				DebugLocation(1433, 19);
 				if (state.backtracking == 0)
 				{
 					 retval.result = (qu!=null?qu.result:default(QuadValue)); 
@@ -22540,7 +22540,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("tuple_or_quad", 114);
 			LeaveRule_tuple_or_quad();
 		}
-		DebugLocation(1437, 1);
+		DebugLocation(1434, 1);
 		} finally { DebugExitRule(GrammarFileName, "tuple_or_quad"); }
 		return retval;
 
@@ -22557,7 +22557,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_tuple_number();
 	partial void LeaveRule_tuple_number();
 	// $ANTLR start "tuple_number"
-	// Smi.g:1439:1: tuple_number returns [TupleValue result] : sn1= signed_number COMMA sn2= signed_number ;
+	// Smi.g:1436:1: tuple_number returns [TupleValue result] : sn1= signed_number COMMA sn2= signed_number ;
 	[GrammarRule("tuple_number")]
 	private SmiParser.tuple_number_return tuple_number()
 	{
@@ -22575,34 +22575,34 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 		CommonTree COMMA378_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "tuple_number");
-		DebugLocation(1439, 1);
+		DebugLocation(1436, 1);
 		try
 		{
-			// Smi.g:1440:5: (sn1= signed_number COMMA sn2= signed_number )
+			// Smi.g:1437:5: (sn1= signed_number COMMA sn2= signed_number )
 			DebugEnterAlt(1);
-			// Smi.g:1440:7: sn1= signed_number COMMA sn2= signed_number
+			// Smi.g:1437:7: sn1= signed_number COMMA sn2= signed_number
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(1440, 10);
-			PushFollow(Follow._signed_number_in_tuple_number9153);
+			DebugLocation(1437, 10);
+			PushFollow(Follow._signed_number_in_tuple_number9134);
 			sn1=signed_number();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, sn1.Tree);
-			DebugLocation(1440, 25);
-			COMMA378=(IToken)Match(input,COMMA,Follow._COMMA_in_tuple_number9155); if (state.failed) return retval;
+			DebugLocation(1437, 25);
+			COMMA378=(IToken)Match(input,COMMA,Follow._COMMA_in_tuple_number9136); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			COMMA378_tree = (CommonTree)adaptor.Create(COMMA378);
 			adaptor.AddChild(root_0, COMMA378_tree);
 			}
-			DebugLocation(1440, 34);
-			PushFollow(Follow._signed_number_in_tuple_number9159);
+			DebugLocation(1437, 34);
+			PushFollow(Follow._signed_number_in_tuple_number9140);
 			sn2=signed_number();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, sn2.Tree);
-			DebugLocation(1440, 49);
+			DebugLocation(1437, 49);
 			if (state.backtracking == 0)
 			{
 				 retval.result = new TupleValue((sn1!=null?sn1.result:default(NumberLiteralValue)), (sn2!=null?sn2.result:default(NumberLiteralValue))); 
@@ -22629,7 +22629,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("tuple_number", 115);
 			LeaveRule_tuple_number();
 		}
-		DebugLocation(1441, 1);
+		DebugLocation(1438, 1);
 		} finally { DebugExitRule(GrammarFileName, "tuple_number"); }
 		return retval;
 
@@ -22646,7 +22646,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_quad_number();
 	partial void LeaveRule_quad_number();
 	// $ANTLR start "quad_number"
-	// Smi.g:1443:1: quad_number returns [QuadValue result] : sn1= signed_number COMMA sn2= signed_number COMMA sn3= signed_number COMMA sn4= signed_number ;
+	// Smi.g:1440:1: quad_number returns [QuadValue result] : sn1= signed_number COMMA sn2= signed_number COMMA sn3= signed_number COMMA sn4= signed_number ;
 	[GrammarRule("quad_number")]
 	private SmiParser.quad_number_return quad_number()
 	{
@@ -22670,58 +22670,58 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree COMMA380_tree = default(CommonTree);
 		CommonTree COMMA381_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "quad_number");
-		DebugLocation(1443, 1);
+		DebugLocation(1440, 1);
 		try
 		{
-			// Smi.g:1444:5: (sn1= signed_number COMMA sn2= signed_number COMMA sn3= signed_number COMMA sn4= signed_number )
+			// Smi.g:1441:5: (sn1= signed_number COMMA sn2= signed_number COMMA sn3= signed_number COMMA sn4= signed_number )
 			DebugEnterAlt(1);
-			// Smi.g:1444:7: sn1= signed_number COMMA sn2= signed_number COMMA sn3= signed_number COMMA sn4= signed_number
+			// Smi.g:1441:7: sn1= signed_number COMMA sn2= signed_number COMMA sn3= signed_number COMMA sn4= signed_number
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(1444, 10);
-			PushFollow(Follow._signed_number_in_quad_number9181);
+			DebugLocation(1441, 10);
+			PushFollow(Follow._signed_number_in_quad_number9162);
 			sn1=signed_number();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, sn1.Tree);
-			DebugLocation(1444, 25);
-			COMMA379=(IToken)Match(input,COMMA,Follow._COMMA_in_quad_number9183); if (state.failed) return retval;
+			DebugLocation(1441, 25);
+			COMMA379=(IToken)Match(input,COMMA,Follow._COMMA_in_quad_number9164); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			COMMA379_tree = (CommonTree)adaptor.Create(COMMA379);
 			adaptor.AddChild(root_0, COMMA379_tree);
 			}
-			DebugLocation(1444, 34);
-			PushFollow(Follow._signed_number_in_quad_number9187);
+			DebugLocation(1441, 34);
+			PushFollow(Follow._signed_number_in_quad_number9168);
 			sn2=signed_number();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, sn2.Tree);
-			DebugLocation(1444, 49);
-			COMMA380=(IToken)Match(input,COMMA,Follow._COMMA_in_quad_number9189); if (state.failed) return retval;
+			DebugLocation(1441, 49);
+			COMMA380=(IToken)Match(input,COMMA,Follow._COMMA_in_quad_number9170); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			COMMA380_tree = (CommonTree)adaptor.Create(COMMA380);
 			adaptor.AddChild(root_0, COMMA380_tree);
 			}
-			DebugLocation(1444, 58);
-			PushFollow(Follow._signed_number_in_quad_number9193);
+			DebugLocation(1441, 58);
+			PushFollow(Follow._signed_number_in_quad_number9174);
 			sn3=signed_number();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, sn3.Tree);
-			DebugLocation(1444, 73);
-			COMMA381=(IToken)Match(input,COMMA,Follow._COMMA_in_quad_number9195); if (state.failed) return retval;
+			DebugLocation(1441, 73);
+			COMMA381=(IToken)Match(input,COMMA,Follow._COMMA_in_quad_number9176); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			COMMA381_tree = (CommonTree)adaptor.Create(COMMA381);
 			adaptor.AddChild(root_0, COMMA381_tree);
 			}
-			DebugLocation(1444, 82);
-			PushFollow(Follow._signed_number_in_quad_number9199);
+			DebugLocation(1441, 82);
+			PushFollow(Follow._signed_number_in_quad_number9180);
 			sn4=signed_number();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, sn4.Tree);
-			DebugLocation(1445, 2);
+			DebugLocation(1442, 2);
 			if (state.backtracking == 0)
 			{
 				 retval.result = new QuadValue((sn1!=null?sn1.result:default(NumberLiteralValue)), (sn2!=null?sn2.result:default(NumberLiteralValue)), (sn3!=null?sn3.result:default(NumberLiteralValue)), (sn4!=null?sn4.result:default(NumberLiteralValue))); 
@@ -22748,7 +22748,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("quad_number", 116);
 			LeaveRule_quad_number();
 		}
-		DebugLocation(1446, 1);
+		DebugLocation(1443, 1);
 		} finally { DebugExitRule(GrammarFileName, "quad_number"); }
 		return retval;
 
@@ -22765,7 +22765,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_char_defs();
 	partial void LeaveRule_char_defs();
 	// $ANTLR start "char_defs"
-	// Smi.g:1448:1: char_defs returns [CharDefinition result] : (cs= C_STRING | L_BRACE tu= tuple_or_quad R_BRACE |dv= defined_value );
+	// Smi.g:1445:1: char_defs returns [CharDefinition result] : (cs= C_STRING | L_BRACE tu= tuple_or_quad R_BRACE |dv= defined_value );
 	[GrammarRule("char_defs")]
 	private SmiParser.char_defs_return char_defs()
 	{
@@ -22787,10 +22787,10 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		CommonTree L_BRACE382_tree = default(CommonTree);
 		CommonTree R_BRACE383_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "char_defs");
-		DebugLocation(1448, 68);
+		DebugLocation(1445, 68);
 		try
 		{
-			// Smi.g:1449:5: (cs= C_STRING | L_BRACE tu= tuple_or_quad R_BRACE |dv= defined_value )
+			// Smi.g:1446:5: (cs= C_STRING | L_BRACE tu= tuple_or_quad R_BRACE |dv= defined_value )
 			int alt176=3;
 			try { DebugEnterDecision(176, false);
 			switch (input.LA(1))
@@ -22825,17 +22825,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// Smi.g:1450:2: cs= C_STRING
+				// Smi.g:1447:2: cs= C_STRING
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(1450, 4);
-				cs=(IToken)Match(input,C_STRING,Follow._C_STRING_in_char_defs9224); if (state.failed) return retval;
+				DebugLocation(1447, 4);
+				cs=(IToken)Match(input,C_STRING,Follow._C_STRING_in_char_defs9205); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				cs_tree = (CommonTree)adaptor.Create(cs);
 				adaptor.AddChild(root_0, cs_tree);
 				}
-				DebugLocation(1450, 14);
+				DebugLocation(1447, 14);
 				if (state.backtracking == 0)
 				{
 					 retval.result = new CharDefinition((cs!=null?cs.Text:null)); 
@@ -22845,29 +22845,29 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// Smi.g:1451:7: L_BRACE tu= tuple_or_quad R_BRACE
+				// Smi.g:1448:7: L_BRACE tu= tuple_or_quad R_BRACE
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(1451, 7);
-				L_BRACE382=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_char_defs9234); if (state.failed) return retval;
+				DebugLocation(1448, 7);
+				L_BRACE382=(IToken)Match(input,L_BRACE,Follow._L_BRACE_in_char_defs9215); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				L_BRACE382_tree = (CommonTree)adaptor.Create(L_BRACE382);
 				adaptor.AddChild(root_0, L_BRACE382_tree);
 				}
-				DebugLocation(1451, 17);
-				PushFollow(Follow._tuple_or_quad_in_char_defs9238);
+				DebugLocation(1448, 17);
+				PushFollow(Follow._tuple_or_quad_in_char_defs9219);
 				tu=tuple_or_quad();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, tu.Tree);
-				DebugLocation(1451, 32);
-				R_BRACE383=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_char_defs9240); if (state.failed) return retval;
+				DebugLocation(1448, 32);
+				R_BRACE383=(IToken)Match(input,R_BRACE,Follow._R_BRACE_in_char_defs9221); if (state.failed) return retval;
 				if (state.backtracking == 0) {
 				R_BRACE383_tree = (CommonTree)adaptor.Create(R_BRACE383);
 				adaptor.AddChild(root_0, R_BRACE383_tree);
 				}
-				DebugLocation(1451, 40);
+				DebugLocation(1448, 40);
 				if (state.backtracking == 0)
 				{
 					 retval.result = new CharDefinition((tu!=null?tu.result:default(ISmiValue))); 
@@ -22877,17 +22877,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 				break;
 			case 3:
 				DebugEnterAlt(3);
-				// Smi.g:1452:7: dv= defined_value
+				// Smi.g:1449:7: dv= defined_value
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(1452, 9);
-				PushFollow(Follow._defined_value_in_char_defs9252);
+				DebugLocation(1449, 9);
+				PushFollow(Follow._defined_value_in_char_defs9233);
 				dv=defined_value();
 				PopFollow();
 				if (state.failed) return retval;
 				if (state.backtracking == 0) adaptor.AddChild(root_0, dv.Tree);
-				DebugLocation(1452, 24);
+				DebugLocation(1449, 24);
 				if (state.backtracking == 0)
 				{
 					 retval.result = new CharDefinition((dv!=null?dv.result:default(DefinedValue))); 
@@ -22916,7 +22916,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("char_defs", 117);
 			LeaveRule_char_defs();
 		}
-		DebugLocation(1452, 68);
+		DebugLocation(1449, 68);
 		} finally { DebugExitRule(GrammarFileName, "char_defs"); }
 		return retval;
 
@@ -22933,7 +22933,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	partial void EnterRule_named_value();
 	partial void LeaveRule_named_value();
 	// $ANTLR start "named_value"
-	// Smi.g:1457:1: named_value returns [NamedValue result] : name= LOWER v= value ;
+	// Smi.g:1454:1: named_value returns [NamedValue result] : name= LOWER v= value ;
 	[GrammarRule("named_value")]
 	private SmiParser.named_value_return named_value()
 	{
@@ -22950,28 +22950,28 @@ public partial class SmiParser : Antlr.Runtime.Parser
 
 		CommonTree name_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "named_value");
-		DebugLocation(1457, 1);
+		DebugLocation(1454, 1);
 		try
 		{
-			// Smi.g:1458:5: (name= LOWER v= value )
+			// Smi.g:1455:5: (name= LOWER v= value )
 			DebugEnterAlt(1);
-			// Smi.g:1458:7: name= LOWER v= value
+			// Smi.g:1455:7: name= LOWER v= value
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(1458, 11);
-			name=(IToken)Match(input,LOWER,Follow._LOWER_in_named_value9275); if (state.failed) return retval;
+			DebugLocation(1455, 11);
+			name=(IToken)Match(input,LOWER,Follow._LOWER_in_named_value9256); if (state.failed) return retval;
 			if (state.backtracking == 0) {
 			name_tree = (CommonTree)adaptor.Create(name);
 			adaptor.AddChild(root_0, name_tree);
 			}
-			DebugLocation(1458, 19);
-			PushFollow(Follow._value_in_named_value9279);
+			DebugLocation(1455, 19);
+			PushFollow(Follow._value_in_named_value9260);
 			v=value();
 			PopFollow();
 			if (state.failed) return retval;
 			if (state.backtracking == 0) adaptor.AddChild(root_0, v.Tree);
-			DebugLocation(1458, 26);
+			DebugLocation(1455, 26);
 			if (state.backtracking == 0)
 			{
 				 retval.result = new NamedValue((name!=null?name.Text:null), (v!=null?v.result:default(ISmiValue))); 
@@ -22998,7 +22998,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			LeaveRule("named_value", 118);
 			LeaveRule_named_value();
 		}
-		DebugLocation(1459, 1);
+		DebugLocation(1456, 1);
 		} finally { DebugExitRule(GrammarFileName, "named_value"); }
 		return retval;
 
@@ -23016,13 +23016,13 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		TraceIn("synpred1_Smi_fragment", 119);
 		try
 		{
-			// Smi.g:626:16: ( LOWER ( LOWER | NUMBER ) )
+			// Smi.g:623:16: ( LOWER ( LOWER | NUMBER ) )
 			DebugEnterAlt(1);
-			// Smi.g:626:17: LOWER ( LOWER | NUMBER )
+			// Smi.g:623:17: LOWER ( LOWER | NUMBER )
 			{
-			DebugLocation(626, 17);
-			Match(input,LOWER,Follow._LOWER_in_synpred1_Smi2024); if (state.failed) return;
-			DebugLocation(626, 23);
+			DebugLocation(623, 17);
+			Match(input,LOWER,Follow._LOWER_in_synpred1_Smi2005); if (state.failed) return;
+			DebugLocation(623, 23);
 			if (input.LA(1)==LOWER||input.LA(1)==NUMBER)
 			{
 				input.Consume();
@@ -23060,12 +23060,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		TraceIn("synpred2_Smi_fragment", 120);
 		try
 		{
-			// Smi.g:693:29: ( defined_value )
+			// Smi.g:690:29: ( defined_value )
 			DebugEnterAlt(1);
-			// Smi.g:693:30: defined_value
+			// Smi.g:690:30: defined_value
 			{
-			DebugLocation(693, 30);
-			PushFollow(Follow._defined_value_in_synpred2_Smi2490);
+			DebugLocation(690, 30);
+			PushFollow(Follow._defined_value_in_synpred2_Smi2471);
 			defined_value();
 			PopFollow();
 			if (state.failed) return;
@@ -23093,12 +23093,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		TraceIn("synpred3_Smi_fragment", 121);
 		try
 		{
-			// Smi.g:716:7: ( TRUE_KW )
+			// Smi.g:713:7: ( TRUE_KW )
 			DebugEnterAlt(1);
-			// Smi.g:716:8: TRUE_KW
+			// Smi.g:713:8: TRUE_KW
 			{
-			DebugLocation(716, 8);
-			Match(input,TRUE_KW,Follow._TRUE_KW_in_synpred3_Smi2752); if (state.failed) return;
+			DebugLocation(713, 8);
+			Match(input,TRUE_KW,Follow._TRUE_KW_in_synpred3_Smi2733); if (state.failed) return;
 
 			}
 
@@ -23123,12 +23123,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		TraceIn("synpred4_Smi_fragment", 122);
 		try
 		{
-			// Smi.g:717:8: ( FALSE_KW )
+			// Smi.g:714:8: ( FALSE_KW )
 			DebugEnterAlt(1);
-			// Smi.g:717:9: FALSE_KW
+			// Smi.g:714:9: FALSE_KW
 			{
-			DebugLocation(717, 9);
-			Match(input,FALSE_KW,Follow._FALSE_KW_in_synpred4_Smi2769); if (state.failed) return;
+			DebugLocation(714, 9);
+			Match(input,FALSE_KW,Follow._FALSE_KW_in_synpred4_Smi2750); if (state.failed) return;
 
 			}
 
@@ -23153,12 +23153,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		TraceIn("synpred5_Smi_fragment", 123);
 		try
 		{
-			// Smi.g:718:8: ( NULL_KW )
+			// Smi.g:715:8: ( NULL_KW )
 			DebugEnterAlt(1);
-			// Smi.g:718:9: NULL_KW
+			// Smi.g:715:9: NULL_KW
 			{
-			DebugLocation(718, 9);
-			Match(input,NULL_KW,Follow._NULL_KW_in_synpred5_Smi2786); if (state.failed) return;
+			DebugLocation(715, 9);
+			Match(input,NULL_KW,Follow._NULL_KW_in_synpred5_Smi2767); if (state.failed) return;
 
 			}
 
@@ -23183,12 +23183,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		TraceIn("synpred6_Smi_fragment", 124);
 		try
 		{
-			// Smi.g:719:8: ( C_STRING )
+			// Smi.g:716:8: ( C_STRING )
 			DebugEnterAlt(1);
-			// Smi.g:719:9: C_STRING
+			// Smi.g:716:9: C_STRING
 			{
-			DebugLocation(719, 9);
-			Match(input,C_STRING,Follow._C_STRING_in_synpred6_Smi2803); if (state.failed) return;
+			DebugLocation(716, 9);
+			Match(input,C_STRING,Follow._C_STRING_in_synpred6_Smi2784); if (state.failed) return;
 
 			}
 
@@ -23213,12 +23213,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		TraceIn("synpred7_Smi_fragment", 125);
 		try
 		{
-			// Smi.g:720:8: ( defined_value )
+			// Smi.g:717:8: ( defined_value )
 			DebugEnterAlt(1);
-			// Smi.g:720:9: defined_value
+			// Smi.g:717:9: defined_value
 			{
-			DebugLocation(720, 9);
-			PushFollow(Follow._defined_value_in_synpred7_Smi2823);
+			DebugLocation(717, 9);
+			PushFollow(Follow._defined_value_in_synpred7_Smi2804);
 			defined_value();
 			PopFollow();
 			if (state.failed) return;
@@ -23246,12 +23246,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		TraceIn("synpred8_Smi_fragment", 126);
 		try
 		{
-			// Smi.g:721:8: ( signed_number )
+			// Smi.g:718:8: ( signed_number )
 			DebugEnterAlt(1);
-			// Smi.g:721:9: signed_number
+			// Smi.g:718:9: signed_number
 			{
-			DebugLocation(721, 9);
-			PushFollow(Follow._signed_number_in_synpred8_Smi2842);
+			DebugLocation(718, 9);
+			PushFollow(Follow._signed_number_in_synpred8_Smi2823);
 			signed_number();
 			PopFollow();
 			if (state.failed) return;
@@ -23279,12 +23279,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		TraceIn("synpred9_Smi_fragment", 127);
 		try
 		{
-			// Smi.g:722:8: ( choice_value )
+			// Smi.g:719:8: ( choice_value )
 			DebugEnterAlt(1);
-			// Smi.g:722:9: choice_value
+			// Smi.g:719:9: choice_value
 			{
-			DebugLocation(722, 9);
-			PushFollow(Follow._choice_value_in_synpred9_Smi2861);
+			DebugLocation(719, 9);
+			PushFollow(Follow._choice_value_in_synpred9_Smi2842);
 			choice_value();
 			PopFollow();
 			if (state.failed) return;
@@ -23312,12 +23312,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		TraceIn("synpred10_Smi_fragment", 128);
 		try
 		{
-			// Smi.g:723:8: ( sequence_value )
+			// Smi.g:720:8: ( sequence_value )
 			DebugEnterAlt(1);
-			// Smi.g:723:9: sequence_value
+			// Smi.g:720:9: sequence_value
 			{
-			DebugLocation(723, 9);
-			PushFollow(Follow._sequence_value_in_synpred10_Smi2880);
+			DebugLocation(720, 9);
+			PushFollow(Follow._sequence_value_in_synpred10_Smi2861);
 			sequence_value();
 			PopFollow();
 			if (state.failed) return;
@@ -23345,12 +23345,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		TraceIn("synpred11_Smi_fragment", 129);
 		try
 		{
-			// Smi.g:724:8: ( sequenceof_value )
+			// Smi.g:721:8: ( sequenceof_value )
 			DebugEnterAlt(1);
-			// Smi.g:724:9: sequenceof_value
+			// Smi.g:721:9: sequenceof_value
 			{
-			DebugLocation(724, 9);
-			PushFollow(Follow._sequenceof_value_in_synpred11_Smi2899);
+			DebugLocation(721, 9);
+			PushFollow(Follow._sequenceof_value_in_synpred11_Smi2880);
 			sequenceof_value();
 			PopFollow();
 			if (state.failed) return;
@@ -23378,12 +23378,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		TraceIn("synpred12_Smi_fragment", 130);
 		try
 		{
-			// Smi.g:725:8: ( cstr_value )
+			// Smi.g:722:8: ( cstr_value )
 			DebugEnterAlt(1);
-			// Smi.g:725:9: cstr_value
+			// Smi.g:722:9: cstr_value
 			{
-			DebugLocation(725, 9);
-			PushFollow(Follow._cstr_value_in_synpred12_Smi2918);
+			DebugLocation(722, 9);
+			PushFollow(Follow._cstr_value_in_synpred12_Smi2899);
 			cstr_value();
 			PopFollow();
 			if (state.failed) return;
@@ -23411,12 +23411,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		TraceIn("synpred13_Smi_fragment", 131);
 		try
 		{
-			// Smi.g:726:8: ( obj_id_comp_lst )
+			// Smi.g:723:8: ( obj_id_comp_lst )
 			DebugEnterAlt(1);
-			// Smi.g:726:9: obj_id_comp_lst
+			// Smi.g:723:9: obj_id_comp_lst
 			{
-			DebugLocation(726, 9);
-			PushFollow(Follow._obj_id_comp_lst_in_synpred13_Smi2937);
+			DebugLocation(723, 9);
+			PushFollow(Follow._obj_id_comp_lst_in_synpred13_Smi2918);
 			obj_id_comp_lst();
 			PopFollow();
 			if (state.failed) return;
@@ -23444,12 +23444,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		TraceIn("synpred14_Smi_fragment", 132);
 		try
 		{
-			// Smi.g:727:8: ( PLUS_INFINITY_KW )
+			// Smi.g:724:8: ( PLUS_INFINITY_KW )
 			DebugEnterAlt(1);
-			// Smi.g:727:9: PLUS_INFINITY_KW
+			// Smi.g:724:9: PLUS_INFINITY_KW
 			{
-			DebugLocation(727, 9);
-			Match(input,PLUS_INFINITY_KW,Follow._PLUS_INFINITY_KW_in_synpred14_Smi2956); if (state.failed) return;
+			DebugLocation(724, 9);
+			Match(input,PLUS_INFINITY_KW,Follow._PLUS_INFINITY_KW_in_synpred14_Smi2937); if (state.failed) return;
 
 			}
 
@@ -23474,12 +23474,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		TraceIn("synpred15_Smi_fragment", 133);
 		try
 		{
-			// Smi.g:728:8: ( MINUS_INFINITY_KW )
+			// Smi.g:725:8: ( MINUS_INFINITY_KW )
 			DebugEnterAlt(1);
-			// Smi.g:728:9: MINUS_INFINITY_KW
+			// Smi.g:725:9: MINUS_INFINITY_KW
 			{
-			DebugLocation(728, 9);
-			Match(input,MINUS_INFINITY_KW,Follow._MINUS_INFINITY_KW_in_synpred15_Smi2973); if (state.failed) return;
+			DebugLocation(725, 9);
+			Match(input,MINUS_INFINITY_KW,Follow._MINUS_INFINITY_KW_in_synpred15_Smi2954); if (state.failed) return;
 
 			}
 
@@ -23504,12 +23504,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		TraceIn("synpred16_Smi_fragment", 134);
 		try
 		{
-			// Smi.g:729:5: ( symbol )
+			// Smi.g:726:5: ( symbol )
 			DebugEnterAlt(1);
-			// Smi.g:729:6: symbol
+			// Smi.g:726:6: symbol
 			{
-			DebugLocation(729, 6);
-			PushFollow(Follow._symbol_in_synpred16_Smi2987);
+			DebugLocation(726, 6);
+			PushFollow(Follow._symbol_in_synpred16_Smi2968);
 			symbol();
 			PopFollow();
 			if (state.failed) return;
@@ -23537,14 +23537,14 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		TraceIn("synpred17_Smi_fragment", 135);
 		try
 		{
-			// Smi.g:769:25: ( L_BRACE namedNumber )
+			// Smi.g:766:25: ( L_BRACE namedNumber )
 			DebugEnterAlt(1);
-			// Smi.g:769:26: L_BRACE namedNumber
+			// Smi.g:766:26: L_BRACE namedNumber
 			{
-			DebugLocation(769, 26);
-			Match(input,L_BRACE,Follow._L_BRACE_in_synpred17_Smi3336); if (state.failed) return;
-			DebugLocation(769, 34);
-			PushFollow(Follow._namedNumber_in_synpred17_Smi3338);
+			DebugLocation(766, 26);
+			Match(input,L_BRACE,Follow._L_BRACE_in_synpred17_Smi3317); if (state.failed) return;
+			DebugLocation(766, 34);
+			PushFollow(Follow._namedNumber_in_synpred17_Smi3319);
 			namedNumber();
 			PopFollow();
 			if (state.failed) return;
@@ -23572,14 +23572,14 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		TraceIn("synpred18_Smi_fragment", 136);
 		try
 		{
-			// Smi.g:803:19: ( L_BRACE namedNumber )
+			// Smi.g:800:19: ( L_BRACE namedNumber )
 			DebugEnterAlt(1);
-			// Smi.g:803:20: L_BRACE namedNumber
+			// Smi.g:800:20: L_BRACE namedNumber
 			{
-			DebugLocation(803, 20);
-			Match(input,L_BRACE,Follow._L_BRACE_in_synpred18_Smi3542); if (state.failed) return;
-			DebugLocation(803, 28);
-			PushFollow(Follow._namedNumber_in_synpred18_Smi3544);
+			DebugLocation(800, 20);
+			Match(input,L_BRACE,Follow._L_BRACE_in_synpred18_Smi3523); if (state.failed) return;
+			DebugLocation(800, 28);
+			PushFollow(Follow._namedNumber_in_synpred18_Smi3525);
 			namedNumber();
 			PopFollow();
 			if (state.failed) return;
@@ -23607,12 +23607,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		TraceIn("synpred19_Smi_fragment", 137);
 		try
 		{
-			// Smi.g:886:10: ( CHOICE_KW )
+			// Smi.g:883:10: ( CHOICE_KW )
 			DebugEnterAlt(1);
-			// Smi.g:886:11: CHOICE_KW
+			// Smi.g:883:11: CHOICE_KW
 			{
-			DebugLocation(886, 11);
-			Match(input,CHOICE_KW,Follow._CHOICE_KW_in_synpred19_Smi4099); if (state.failed) return;
+			DebugLocation(883, 11);
+			Match(input,CHOICE_KW,Follow._CHOICE_KW_in_synpred19_Smi4080); if (state.failed) return;
 
 			}
 
@@ -23637,12 +23637,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		TraceIn("synpred20_Smi_fragment", 138);
 		try
 		{
-			// Smi.g:906:16: ( LOWER )
+			// Smi.g:903:16: ( LOWER )
 			DebugEnterAlt(1);
-			// Smi.g:906:17: LOWER
+			// Smi.g:903:17: LOWER
 			{
-			DebugLocation(906, 17);
-			Match(input,LOWER,Follow._LOWER_in_synpred20_Smi4234); if (state.failed) return;
+			DebugLocation(903, 17);
+			Match(input,LOWER,Follow._LOWER_in_synpred20_Smi4215); if (state.failed) return;
 
 			}
 
@@ -23667,12 +23667,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		TraceIn("synpred21_Smi_fragment", 139);
 		try
 		{
-			// Smi.g:908:7: ( RESULT_KW )
+			// Smi.g:905:7: ( RESULT_KW )
 			DebugEnterAlt(1);
-			// Smi.g:908:8: RESULT_KW
+			// Smi.g:905:8: RESULT_KW
 			{
-			DebugLocation(908, 8);
-			Match(input,RESULT_KW,Follow._RESULT_KW_in_synpred21_Smi4265); if (state.failed) return;
+			DebugLocation(905, 8);
+			Match(input,RESULT_KW,Follow._RESULT_KW_in_synpred21_Smi4246); if (state.failed) return;
 
 			}
 
@@ -23697,12 +23697,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		TraceIn("synpred22_Smi_fragment", 140);
 		try
 		{
-			// Smi.g:909:10: ( LOWER )
+			// Smi.g:906:10: ( LOWER )
 			DebugEnterAlt(1);
-			// Smi.g:909:11: LOWER
+			// Smi.g:906:11: LOWER
 			{
-			DebugLocation(909, 11);
-			Match(input,LOWER,Follow._LOWER_in_synpred22_Smi4283); if (state.failed) return;
+			DebugLocation(906, 11);
+			Match(input,LOWER,Follow._LOWER_in_synpred22_Smi4264); if (state.failed) return;
 
 			}
 
@@ -23727,12 +23727,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		TraceIn("synpred23_Smi_fragment", 141);
 		try
 		{
-			// Smi.g:909:22: ( LOWER )
+			// Smi.g:906:22: ( LOWER )
 			DebugEnterAlt(1);
-			// Smi.g:909:23: LOWER
+			// Smi.g:906:23: LOWER
 			{
-			DebugLocation(909, 23);
-			Match(input,LOWER,Follow._LOWER_in_synpred23_Smi4290); if (state.failed) return;
+			DebugLocation(906, 23);
+			Match(input,LOWER,Follow._LOWER_in_synpred23_Smi4271); if (state.failed) return;
 
 			}
 
@@ -23757,12 +23757,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		TraceIn("synpred24_Smi_fragment", 142);
 		try
 		{
-			// Smi.g:912:7: ( ERRORS_KW )
+			// Smi.g:909:7: ( ERRORS_KW )
 			DebugEnterAlt(1);
-			// Smi.g:912:8: ERRORS_KW
+			// Smi.g:909:8: ERRORS_KW
 			{
-			DebugLocation(912, 8);
-			Match(input,ERRORS_KW,Follow._ERRORS_KW_in_synpred24_Smi4326); if (state.failed) return;
+			DebugLocation(909, 8);
+			Match(input,ERRORS_KW,Follow._ERRORS_KW_in_synpred24_Smi4307); if (state.failed) return;
 
 			}
 
@@ -23787,12 +23787,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		TraceIn("synpred25_Smi_fragment", 143);
 		try
 		{
-			// Smi.g:913:7: ( LINKED_KW )
+			// Smi.g:910:7: ( LINKED_KW )
 			DebugEnterAlt(1);
-			// Smi.g:913:8: LINKED_KW
+			// Smi.g:910:8: LINKED_KW
 			{
-			DebugLocation(913, 8);
-			Match(input,LINKED_KW,Follow._LINKED_KW_in_synpred25_Smi4357); if (state.failed) return;
+			DebugLocation(910, 8);
+			Match(input,LINKED_KW,Follow._LINKED_KW_in_synpred25_Smi4338); if (state.failed) return;
 
 			}
 
@@ -23817,12 +23817,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		TraceIn("synpred26_Smi_fragment", 144);
 		try
 		{
-			// Smi.g:927:18: ( LOWER )
+			// Smi.g:924:18: ( LOWER )
 			DebugEnterAlt(1);
-			// Smi.g:927:19: LOWER
+			// Smi.g:924:19: LOWER
 			{
-			DebugLocation(927, 19);
-			Match(input,LOWER,Follow._LOWER_in_synpred26_Smi4417); if (state.failed) return;
+			DebugLocation(924, 19);
+			Match(input,LOWER,Follow._LOWER_in_synpred26_Smi4398); if (state.failed) return;
 
 			}
 
@@ -23847,17 +23847,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		TraceIn("synpred27_Smi_fragment", 145);
 		try
 		{
-			// Smi.g:976:23: ( smi_type L_BRACE )
+			// Smi.g:973:23: ( smi_type L_BRACE )
 			DebugEnterAlt(1);
-			// Smi.g:976:24: smi_type L_BRACE
+			// Smi.g:973:24: smi_type L_BRACE
 			{
-			DebugLocation(976, 24);
-			PushFollow(Follow._smi_type_in_synpred27_Smi4847);
+			DebugLocation(973, 24);
+			PushFollow(Follow._smi_type_in_synpred27_Smi4828);
 			smi_type();
 			PopFollow();
 			if (state.failed) return;
-			DebugLocation(976, 33);
-			Match(input,L_BRACE,Follow._L_BRACE_in_synpred27_Smi4849); if (state.failed) return;
+			DebugLocation(973, 33);
+			Match(input,L_BRACE,Follow._L_BRACE_in_synpred27_Smi4830); if (state.failed) return;
 
 			}
 
@@ -23882,12 +23882,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		TraceIn("synpred28_Smi_fragment", 146);
 		try
 		{
-			// Smi.g:981:24: ( smi_type )
+			// Smi.g:978:24: ( smi_type )
 			DebugEnterAlt(1);
-			// Smi.g:981:25: smi_type
+			// Smi.g:978:25: smi_type
 			{
-			DebugLocation(981, 25);
-			PushFollow(Follow._smi_type_in_synpred28_Smi4894);
+			DebugLocation(978, 25);
+			PushFollow(Follow._smi_type_in_synpred28_Smi4875);
 			smi_type();
 			PopFollow();
 			if (state.failed) return;
@@ -23915,12 +23915,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		TraceIn("synpred29_Smi_fragment", 147);
 		try
 		{
-			// Smi.g:992:21: ( 'DESCRIPTION' )
+			// Smi.g:989:21: ( 'DESCRIPTION' )
 			DebugEnterAlt(1);
-			// Smi.g:992:22: 'DESCRIPTION'
+			// Smi.g:989:22: 'DESCRIPTION'
 			{
-			DebugLocation(992, 22);
-			Match(input,139,Follow._139_in_synpred29_Smi5247); if (state.failed) return;
+			DebugLocation(989, 22);
+			Match(input,139,Follow._139_in_synpred29_Smi5228); if (state.failed) return;
 
 			}
 
@@ -23945,11 +23945,11 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		TraceIn("synpred30_Smi_fragment", 148);
 		try
 		{
-			// Smi.g:996:7: (~ ( 'PIB-INDEX' ) )
+			// Smi.g:993:7: (~ ( 'PIB-INDEX' ) )
 			DebugEnterAlt(1);
 			// Smi.g:
 			{
-			DebugLocation(996, 7);
+			DebugLocation(993, 7);
 			if ((input.LA(1)>=ABSENT_KW && input.LA(1)<=167)||(input.LA(1)>=169 && input.LA(1)<=195))
 			{
 				input.Consume();
@@ -23987,12 +23987,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		TraceIn("synpred31_Smi_fragment", 149);
 		try
 		{
-			// Smi.g:1004:7: ( 'DEFVAL' )
+			// Smi.g:1001:7: ( 'DEFVAL' )
 			DebugEnterAlt(1);
-			// Smi.g:1004:8: 'DEFVAL'
+			// Smi.g:1001:8: 'DEFVAL'
 			{
-			DebugLocation(1004, 8);
-			Match(input,138,Follow._138_in_synpred31_Smi5693); if (state.failed) return;
+			DebugLocation(1001, 8);
+			Match(input,138,Follow._138_in_synpred31_Smi5674); if (state.failed) return;
 
 			}
 
@@ -24017,15 +24017,15 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		TraceIn("synpred32_Smi_fragment", 150);
 		try
 		{
-			// Smi.g:1005:23: ( L_BRACE LOWER ( COMMA | R_BRACE ) )
+			// Smi.g:1002:23: ( L_BRACE LOWER ( COMMA | R_BRACE ) )
 			DebugEnterAlt(1);
-			// Smi.g:1005:24: L_BRACE LOWER ( COMMA | R_BRACE )
+			// Smi.g:1002:24: L_BRACE LOWER ( COMMA | R_BRACE )
 			{
-			DebugLocation(1005, 24);
-			Match(input,L_BRACE,Follow._L_BRACE_in_synpred32_Smi5726); if (state.failed) return;
-			DebugLocation(1005, 32);
-			Match(input,LOWER,Follow._LOWER_in_synpred32_Smi5728); if (state.failed) return;
-			DebugLocation(1005, 38);
+			DebugLocation(1002, 24);
+			Match(input,L_BRACE,Follow._L_BRACE_in_synpred32_Smi5707); if (state.failed) return;
+			DebugLocation(1002, 32);
+			Match(input,LOWER,Follow._LOWER_in_synpred32_Smi5709); if (state.failed) return;
+			DebugLocation(1002, 38);
 			if (input.LA(1)==COMMA||input.LA(1)==R_BRACE)
 			{
 				input.Consume();
@@ -24063,17 +24063,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		TraceIn("synpred33_Smi_fragment", 151);
 		try
 		{
-			// Smi.g:1112:16: ( smi_type L_BRACE )
+			// Smi.g:1109:16: ( smi_type L_BRACE )
 			DebugEnterAlt(1);
-			// Smi.g:1112:17: smi_type L_BRACE
+			// Smi.g:1109:17: smi_type L_BRACE
 			{
-			DebugLocation(1112, 17);
-			PushFollow(Follow._smi_type_in_synpred33_Smi6508);
+			DebugLocation(1109, 17);
+			PushFollow(Follow._smi_type_in_synpred33_Smi6489);
 			smi_type();
 			PopFollow();
 			if (state.failed) return;
-			DebugLocation(1112, 26);
-			Match(input,L_BRACE,Follow._L_BRACE_in_synpred33_Smi6510); if (state.failed) return;
+			DebugLocation(1109, 26);
+			Match(input,L_BRACE,Follow._L_BRACE_in_synpred33_Smi6491); if (state.failed) return;
 
 			}
 
@@ -24098,12 +24098,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		TraceIn("synpred34_Smi_fragment", 152);
 		try
 		{
-			// Smi.g:1158:17: ( UPPER )
+			// Smi.g:1155:17: ( UPPER )
 			DebugEnterAlt(1);
-			// Smi.g:1158:18: UPPER
+			// Smi.g:1155:18: UPPER
 			{
-			DebugLocation(1158, 18);
-			Match(input,UPPER,Follow._UPPER_in_synpred34_Smi6879); if (state.failed) return;
+			DebugLocation(1155, 18);
+			Match(input,UPPER,Follow._UPPER_in_synpred34_Smi6860); if (state.failed) return;
 
 			}
 
@@ -24128,12 +24128,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		TraceIn("synpred35_Smi_fragment", 153);
 		try
 		{
-			// Smi.g:1159:3: ( value )
+			// Smi.g:1156:3: ( value )
 			DebugEnterAlt(1);
-			// Smi.g:1159:4: value
+			// Smi.g:1156:4: value
 			{
-			DebugLocation(1159, 4);
-			PushFollow(Follow._value_in_synpred35_Smi6893);
+			DebugLocation(1156, 4);
+			PushFollow(Follow._value_in_synpred35_Smi6874);
 			value();
 			PopFollow();
 			if (state.failed) return;
@@ -24161,13 +24161,13 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		TraceIn("synpred36_Smi_fragment", 154);
 		try
 		{
-			// Smi.g:1222:24: ( L_BRACE ( LOWER | COMMA | R_BRACE ) )
+			// Smi.g:1219:24: ( L_BRACE ( LOWER | COMMA | R_BRACE ) )
 			DebugEnterAlt(1);
-			// Smi.g:1222:25: L_BRACE ( LOWER | COMMA | R_BRACE )
+			// Smi.g:1219:25: L_BRACE ( LOWER | COMMA | R_BRACE )
 			{
-			DebugLocation(1222, 25);
-			Match(input,L_BRACE,Follow._L_BRACE_in_synpred36_Smi7399); if (state.failed) return;
-			DebugLocation(1222, 33);
+			DebugLocation(1219, 25);
+			Match(input,L_BRACE,Follow._L_BRACE_in_synpred36_Smi7380); if (state.failed) return;
+			DebugLocation(1219, 33);
 			if (input.LA(1)==COMMA||input.LA(1)==LOWER||input.LA(1)==R_BRACE)
 			{
 				input.Consume();
@@ -24205,17 +24205,17 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		TraceIn("synpred37_Smi_fragment", 155);
 		try
 		{
-			// Smi.g:1229:7: ( smi_type L_BRACE )
+			// Smi.g:1226:7: ( smi_type L_BRACE )
 			DebugEnterAlt(1);
-			// Smi.g:1229:8: smi_type L_BRACE
+			// Smi.g:1226:8: smi_type L_BRACE
 			{
-			DebugLocation(1229, 8);
-			PushFollow(Follow._smi_type_in_synpred37_Smi7483);
+			DebugLocation(1226, 8);
+			PushFollow(Follow._smi_type_in_synpred37_Smi7464);
 			smi_type();
 			PopFollow();
 			if (state.failed) return;
-			DebugLocation(1229, 17);
-			Match(input,L_BRACE,Follow._L_BRACE_in_synpred37_Smi7485); if (state.failed) return;
+			DebugLocation(1226, 17);
+			Match(input,L_BRACE,Follow._L_BRACE_in_synpred37_Smi7466); if (state.failed) return;
 
 			}
 
@@ -24240,12 +24240,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		TraceIn("synpred38_Smi_fragment", 156);
 		try
 		{
-			// Smi.g:1232:7: ( smi_type )
+			// Smi.g:1229:7: ( smi_type )
 			DebugEnterAlt(1);
-			// Smi.g:1232:8: smi_type
+			// Smi.g:1229:8: smi_type
 			{
-			DebugLocation(1232, 8);
-			PushFollow(Follow._smi_type_in_synpred38_Smi7526);
+			DebugLocation(1229, 8);
+			PushFollow(Follow._smi_type_in_synpred38_Smi7507);
 			smi_type();
 			PopFollow();
 			if (state.failed) return;
@@ -24273,12 +24273,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		TraceIn("synpred39_Smi_fragment", 157);
 		try
 		{
-			// Smi.g:1252:6: ( 'DESCRIPTION' )
+			// Smi.g:1249:6: ( 'DESCRIPTION' )
 			DebugEnterAlt(1);
-			// Smi.g:1252:7: 'DESCRIPTION'
+			// Smi.g:1249:7: 'DESCRIPTION'
 			{
-			DebugLocation(1252, 7);
-			Match(input,139,Follow._139_in_synpred39_Smi7643); if (state.failed) return;
+			DebugLocation(1249, 7);
+			Match(input,139,Follow._139_in_synpred39_Smi7624); if (state.failed) return;
 
 			}
 
@@ -24303,12 +24303,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		TraceIn("synpred40_Smi_fragment", 158);
 		try
 		{
-			// Smi.g:1264:7: ( type )
+			// Smi.g:1261:7: ( type )
 			DebugEnterAlt(1);
-			// Smi.g:1264:8: type
+			// Smi.g:1261:8: type
 			{
-			DebugLocation(1264, 8);
-			PushFollow(Follow._type_in_synpred40_Smi7731);
+			DebugLocation(1261, 8);
+			PushFollow(Follow._type_in_synpred40_Smi7712);
 			type();
 			PopFollow();
 			if (state.failed) return;
@@ -24336,13 +24336,13 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		TraceIn("synpred41_Smi_fragment", 159);
 		try
 		{
-			// Smi.g:1284:3: ( L_BRACKET ( NUMBER | UPPER | LOWER ) )
+			// Smi.g:1281:3: ( L_BRACKET ( NUMBER | UPPER | LOWER ) )
 			DebugEnterAlt(1);
-			// Smi.g:1284:4: L_BRACKET ( NUMBER | UPPER | LOWER )
+			// Smi.g:1281:4: L_BRACKET ( NUMBER | UPPER | LOWER )
 			{
-			DebugLocation(1284, 4);
-			Match(input,L_BRACKET,Follow._L_BRACKET_in_synpred41_Smi7854); if (state.failed) return;
-			DebugLocation(1284, 14);
+			DebugLocation(1281, 4);
+			Match(input,L_BRACKET,Follow._L_BRACKET_in_synpred41_Smi7835); if (state.failed) return;
+			DebugLocation(1281, 14);
 			if (input.LA(1)==LOWER||input.LA(1)==NUMBER||input.LA(1)==UPPER)
 			{
 				input.Consume();
@@ -24380,12 +24380,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		TraceIn("synpred42_Smi_fragment", 160);
 		try
 		{
-			// Smi.g:1314:19: ( signed_number )
+			// Smi.g:1311:19: ( signed_number )
 			DebugEnterAlt(1);
-			// Smi.g:1314:20: signed_number
+			// Smi.g:1311:20: signed_number
 			{
-			DebugLocation(1314, 20);
-			PushFollow(Follow._signed_number_in_synpred42_Smi8090);
+			DebugLocation(1311, 20);
+			PushFollow(Follow._signed_number_in_synpred42_Smi8071);
 			signed_number();
 			PopFollow();
 			if (state.failed) return;
@@ -24413,12 +24413,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		TraceIn("synpred43_Smi_fragment", 161);
 		try
 		{
-			// Smi.g:1315:21: ( defined_value )
+			// Smi.g:1312:21: ( defined_value )
 			DebugEnterAlt(1);
-			// Smi.g:1315:22: defined_value
+			// Smi.g:1312:22: defined_value
 			{
-			DebugLocation(1315, 22);
-			PushFollow(Follow._defined_value_in_synpred43_Smi8122);
+			DebugLocation(1312, 22);
+			PushFollow(Follow._defined_value_in_synpred43_Smi8103);
 			defined_value();
 			PopFollow();
 			if (state.failed) return;
@@ -24446,12 +24446,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		TraceIn("synpred44_Smi_fragment", 162);
 		try
 		{
-			// Smi.g:1346:7: ( value_range )
+			// Smi.g:1343:7: ( value_range )
 			DebugEnterAlt(1);
-			// Smi.g:1346:8: value_range
+			// Smi.g:1343:8: value_range
 			{
-			DebugLocation(1346, 8);
-			PushFollow(Follow._value_range_in_synpred44_Smi8379);
+			DebugLocation(1343, 8);
+			PushFollow(Follow._value_range_in_synpred44_Smi8360);
 			value_range();
 			PopFollow();
 			if (state.failed) return;
@@ -24479,12 +24479,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		TraceIn("synpred45_Smi_fragment", 163);
 		try
 		{
-			// Smi.g:1347:7: ( value )
+			// Smi.g:1344:7: ( value )
 			DebugEnterAlt(1);
-			// Smi.g:1347:8: value
+			// Smi.g:1344:8: value
 			{
-			DebugLocation(1347, 8);
-			PushFollow(Follow._value_in_synpred45_Smi8397);
+			DebugLocation(1344, 8);
+			PushFollow(Follow._value_in_synpred45_Smi8378);
 			value();
 			PopFollow();
 			if (state.failed) return;
@@ -24512,12 +24512,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		TraceIn("synpred46_Smi_fragment", 164);
 		try
 		{
-			// Smi.g:1409:7: ( H_STRING )
+			// Smi.g:1406:7: ( H_STRING )
 			DebugEnterAlt(1);
-			// Smi.g:1409:8: H_STRING
+			// Smi.g:1406:8: H_STRING
 			{
-			DebugLocation(1409, 8);
-			Match(input,H_STRING,Follow._H_STRING_in_synpred46_Smi8896); if (state.failed) return;
+			DebugLocation(1406, 8);
+			Match(input,H_STRING,Follow._H_STRING_in_synpred46_Smi8877); if (state.failed) return;
 
 			}
 
@@ -24542,12 +24542,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		TraceIn("synpred47_Smi_fragment", 165);
 		try
 		{
-			// Smi.g:1413:7: ( B_STRING )
+			// Smi.g:1410:7: ( B_STRING )
 			DebugEnterAlt(1);
-			// Smi.g:1413:8: B_STRING
+			// Smi.g:1410:8: B_STRING
 			{
-			DebugLocation(1413, 8);
-			Match(input,B_STRING,Follow._B_STRING_in_synpred47_Smi8916); if (state.failed) return;
+			DebugLocation(1410, 8);
+			Match(input,B_STRING,Follow._B_STRING_in_synpred47_Smi8897); if (state.failed) return;
 
 			}
 
@@ -24572,12 +24572,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		TraceIn("synpred48_Smi_fragment", 166);
 		try
 		{
-			// Smi.g:1418:15: ( id_list )
+			// Smi.g:1415:15: ( id_list )
 			DebugEnterAlt(1);
-			// Smi.g:1418:16: id_list
+			// Smi.g:1415:16: id_list
 			{
-			DebugLocation(1418, 16);
-			PushFollow(Follow._id_list_in_synpred48_Smi8953);
+			DebugLocation(1415, 16);
+			PushFollow(Follow._id_list_in_synpred48_Smi8934);
 			id_list();
 			PopFollow();
 			if (state.failed) return;
@@ -24605,12 +24605,12 @@ public partial class SmiParser : Antlr.Runtime.Parser
 		TraceIn("synpred49_Smi_fragment", 167);
 		try
 		{
-			// Smi.g:1419:17: ( char_defs_list )
+			// Smi.g:1416:17: ( char_defs_list )
 			DebugEnterAlt(1);
-			// Smi.g:1419:18: char_defs_list
+			// Smi.g:1416:18: char_defs_list
 			{
-			DebugLocation(1419, 18);
-			PushFollow(Follow._char_defs_list_in_synpred49_Smi8981);
+			DebugLocation(1416, 18);
+			PushFollow(Follow._char_defs_list_in_synpred49_Smi8962);
 			char_defs_list();
 			PopFollow();
 			if (state.failed) return;
@@ -24840,7 +24840,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			this.transition = DFA52_transition;
 		}
 
-		public override string Description { get { return "909:9: ( ( LOWER )=> ( ( LOWER )=>l2= LOWER )? t2= type )?"; } }
+		public override string Description { get { return "906:9: ( ( LOWER )=> ( ( LOWER )=>l2= LOWER )? t2= type )?"; } }
 
 		public override void Error(NoViableAltException nvae)
 		{
@@ -25241,7 +25241,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			this.transition = DFA79_transition;
 		}
 
-		public override string Description { get { return "996:5: ( (~ ( 'PIB-INDEX' ) )=> 'INDEX' i3= objecttype_macro_index | 'AUGMENTS' i4= objecttype_macro_augments | 'PIB-INDEX' L_BRACE v3= value R_BRACE | 'EXTENDS' L_BRACE v4= value R_BRACE )?"; } }
+		public override string Description { get { return "993:5: ( (~ ( 'PIB-INDEX' ) )=> 'INDEX' i3= objecttype_macro_index | 'AUGMENTS' i4= objecttype_macro_augments | 'PIB-INDEX' L_BRACE v3= value R_BRACE | 'EXTENDS' L_BRACE v4= value R_BRACE )?"; } }
 
 		public override void Error(NoViableAltException nvae)
 		{
@@ -25372,7 +25372,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			this.transition = DFA84_transition;
 		}
 
-		public override string Description { get { return "1005:21: ( ( L_BRACE LOWER ( COMMA | R_BRACE ) )=>b= objecttype_macro_bitsvalue |v7= value )"; } }
+		public override string Description { get { return "1002:21: ( ( L_BRACE LOWER ( COMMA | R_BRACE ) )=>b= objecttype_macro_bitsvalue |v7= value )"; } }
 
 		public override void Error(NoViableAltException nvae)
 		{
@@ -25548,7 +25548,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			this.transition = DFA101_transition;
 		}
 
-		public override string Description { get { return "1112:14: ( ( smi_type L_BRACE )=>s2= smi_type L_BRACE nb1= namedbit ( COMMA nb2= namedbit )* R_BRACE |t= type )"; } }
+		public override string Description { get { return "1109:14: ( ( smi_type L_BRACE )=>s2= smi_type L_BRACE nb1= namedbit ( COMMA nb2= namedbit )* R_BRACE |t= type )"; } }
 
 		public override void Error(NoViableAltException nvae)
 		{
@@ -25950,7 +25950,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			this.transition = DFA110_transition;
 		}
 
-		public override string Description { get { return "1158:16: ( ( UPPER )=>name= UPPER ( ( value )=>v1= value )? )?"; } }
+		public override string Description { get { return "1155:16: ( ( UPPER )=>name= UPPER ( ( value )=>v1= value )? )?"; } }
 
 		public override void Error(NoViableAltException nvae)
 		{
@@ -27117,7 +27117,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			this.transition = DFA109_transition;
 		}
 
-		public override string Description { get { return "1159:2: ( ( value )=>v1= value )?"; } }
+		public override string Description { get { return "1156:2: ( ( value )=>v1= value )?"; } }
 
 		public override void Error(NoViableAltException nvae)
 		{
@@ -27620,7 +27620,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			this.transition = DFA131_transition;
 		}
 
-		public override string Description { get { return "1222:23: ( ( L_BRACE ( LOWER | COMMA | R_BRACE ) )=> L_BRACE (l1= LOWER )? ( COMMA l2= LOWER )* |v4= value )"; } }
+		public override string Description { get { return "1219:23: ( ( L_BRACE ( LOWER | COMMA | R_BRACE ) )=> L_BRACE (l1= LOWER )? ( COMMA l2= LOWER )* |v4= value )"; } }
 
 		public override void Error(NoViableAltException nvae)
 		{
@@ -27816,7 +27816,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			this.transition = DFA140_transition;
 		}
 
-		public override string Description { get { return "1263:1: typeorvalue returns [TypeOrValue result] : ( ( type )=>t= type |v= value );"; } }
+		public override string Description { get { return "1260:1: typeorvalue returns [TypeOrValue result] : ( ( type )=>t= type |v= value );"; } }
 
 		public override void Error(NoViableAltException nvae)
 		{
@@ -28267,7 +28267,7 @@ public partial class SmiParser : Antlr.Runtime.Parser
 			this.transition = DFA156_transition;
 		}
 
-		public override string Description { get { return "1345:1: constraint_elements returns [ConstraintElement result] : ( ( value_range )=>vr= value_range | ( value )=>v= value | SIZE_KW c= constraint | FROM_KW c2= constraint | L_PAREN e= element_set_spec R_PAREN |i= constraint_elements_includes | PATTERN_KW v2= value | WITH_KW ( COMPONENT_KW co1= constraint |cs= constraint_elements_components ) );"; } }
+		public override string Description { get { return "1342:1: constraint_elements returns [ConstraintElement result] : ( ( value_range )=>vr= value_range | ( value )=>v= value | SIZE_KW c= constraint | FROM_KW c2= constraint | L_PAREN e= element_set_spec R_PAREN |i= constraint_elements_includes | PATTERN_KW v2= value | WITH_KW ( COMPONENT_KW co1= constraint |cs= constraint_elements_components ) );"; } }
 
 		public override void Error(NoViableAltException nvae)
 		{
@@ -28919,762 +28919,762 @@ public partial class SmiParser : Antlr.Runtime.Parser
 	#region Follow sets
 	private static class Follow
 	{
-		public static readonly BitSet _module_definition_in_statement1849 = new BitSet(new ulong[]{0x0UL});
-		public static readonly BitSet _EOF_in_statement1855 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _module_identifier_in_module_definition1880 = new BitSet(new ulong[]{0x400000000UL,0x0UL,0x8000000000UL});
-		public static readonly BitSet _set_in_module_definition1882 = new BitSet(new ulong[]{0x400A00000000C00UL});
-		public static readonly BitSet _set_in_module_definition1895 = new BitSet(new ulong[]{0x0UL,0x200000000000UL});
-		public static readonly BitSet _TAGS_KW_in_module_definition1907 = new BitSet(new ulong[]{0x800000000400UL});
-		public static readonly BitSet _EXTENSIBILITY_KW_in_module_definition1916 = new BitSet(new ulong[]{0x800000000000000UL});
-		public static readonly BitSet _IMPLIED_KW_in_module_definition1918 = new BitSet(new ulong[]{0x400UL});
-		public static readonly BitSet _ASSIGN_OP_in_module_definition1924 = new BitSet(new ulong[]{0x4000UL});
-		public static readonly BitSet _BEGIN_KW_in_module_definition1926 = new BitSet(new ulong[]{0x1000448000000000UL,0xF020000000220020UL,0x7C39500EF007205EUL});
-		public static readonly BitSet _module_body_in_module_definition1930 = new BitSet(new ulong[]{0x8000000000UL});
-		public static readonly BitSet _END_KW_in_module_definition1932 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _UPPER_in_module_identifier1949 = new BitSet(new ulong[]{0x2UL,0x40UL});
-		public static readonly BitSet _obj_id_comp_lst_in_module_identifier1952 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _exports_in_module_body1975 = new BitSet(new ulong[]{0x1000040000000002UL,0xF020000000220020UL,0x7C39500EF007205EUL});
-		public static readonly BitSet _imports_in_module_body1986 = new BitSet(new ulong[]{0x40000000002UL,0xF020000000220020UL,0x7C39500EF007205EUL});
-		public static readonly BitSet _assignment_in_module_body1997 = new BitSet(new ulong[]{0x40000000002UL,0xF020000000220020UL,0x7C39500EF007205EUL});
-		public static readonly BitSet _L_BRACE_in_obj_id_comp_lst2020 = new BitSet(new ulong[]{0x0UL,0x20000000004020UL});
-		public static readonly BitSet _defined_value_in_obj_id_comp_lst2037 = new BitSet(new ulong[]{0x0UL,0x4020UL});
-		public static readonly BitSet _obj_id_component_in_obj_id_comp_lst2047 = new BitSet(new ulong[]{0x0UL,0x400004020UL});
-		public static readonly BitSet _R_BRACE_in_obj_id_comp_lst2055 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _set_in_defined_value2079 = new BitSet(new ulong[]{0x800000000UL});
-		public static readonly BitSet _DOT_in_defined_value2087 = new BitSet(new ulong[]{0x0UL,0x20UL});
-		public static readonly BitSet _LOWER_in_defined_value2097 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _NUMBER_in_obj_id_component2122 = new BitSet(new ulong[]{0x2UL,0x100UL});
-		public static readonly BitSet _LOWER_in_obj_id_component2134 = new BitSet(new ulong[]{0x2UL,0x100UL});
-		public static readonly BitSet _L_PAREN_in_obj_id_component2141 = new BitSet(new ulong[]{0x0UL,0x4000UL});
-		public static readonly BitSet _NUMBER_in_obj_id_component2145 = new BitSet(new ulong[]{0x0UL,0x1000000000UL});
-		public static readonly BitSet _R_PAREN_in_obj_id_component2147 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _EXPLICIT_KW_in_tag_default2173 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _IMPLICIT_KW_in_tag_default2180 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _AUTOMATIC_KW_in_tag_default2187 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _EXPORTS_KW_in_exports2207 = new BitSet(new ulong[]{0x40000000040UL,0xF020002000220020UL,0x7C39500EF007205EUL});
-		public static readonly BitSet _symbol_list_in_exports2219 = new BitSet(new ulong[]{0x0UL,0x2000000000UL});
-		public static readonly BitSet _ALL_KW_in_exports2230 = new BitSet(new ulong[]{0x0UL,0x2000000000UL});
-		public static readonly BitSet _SEMI_in_exports2241 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _IMPORTS_KW_in_imports2257 = new BitSet(new ulong[]{0x40000000000UL,0xF020002000220020UL,0x7C39500EF007205EUL});
-		public static readonly BitSet _symbols_from_module_in_imports2262 = new BitSet(new ulong[]{0x40000000000UL,0xF020002000220020UL,0x7C39500EF007205EUL});
-		public static readonly BitSet _SEMI_in_imports2268 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _UPPER_in_assignment2291 = new BitSet(new ulong[]{0x400UL});
-		public static readonly BitSet _ASSIGN_OP_in_assignment2293 = new BitSet(new ulong[]{0x8139054000938080UL,0x3F050C0A026A0A4UL,0x2402000EF0000082UL});
-		public static readonly BitSet _type_in_assignment2297 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _LOWER_in_assignment2311 = new BitSet(new ulong[]{0x8139054000938080UL,0x3F050C0A026A0A4UL,0x2402000EF0000082UL});
-		public static readonly BitSet _type_in_assignment2315 = new BitSet(new ulong[]{0x400UL});
-		public static readonly BitSet _ASSIGN_OP_in_assignment2317 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
-		public static readonly BitSet _value_in_assignment2321 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _UPPER_in_assignment2336 = new BitSet(new ulong[]{0x0UL,0x0UL,0x800000UL});
-		public static readonly BitSet _macroName_in_assignment2340 = new BitSet(new ulong[]{0x0UL,0x0UL,0x800000UL});
-		public static readonly BitSet _151_in_assignment2343 = new BitSet(new ulong[]{0x400UL});
-		public static readonly BitSet _ASSIGN_OP_in_assignment2345 = new BitSet(new ulong[]{0x4000UL});
-		public static readonly BitSet _BEGIN_KW_in_assignment2347 = new BitSet(new ulong[]{0xFFFFFFFFFFFFFFF0UL,0xFFFFFFFFFFFFFFFFUL,0xFFFFFFFFFFFFFFFFUL,0xFUL});
-		public static readonly BitSet _END_KW_in_assignment2357 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _symbol_in_symbol_list2385 = new BitSet(new ulong[]{0x4000002UL});
-		public static readonly BitSet _COMMA_in_symbol_list2392 = new BitSet(new ulong[]{0x40000000000UL,0xF020000000220020UL,0x7C39500EF007205EUL});
-		public static readonly BitSet _symbol_in_symbol_list2396 = new BitSet(new ulong[]{0x4000002UL});
-		public static readonly BitSet _symbol_list_in_symbols_from_module2419 = new BitSet(new ulong[]{0x4000000000000UL});
-		public static readonly BitSet _FROM_KW_in_symbols_from_module2424 = new BitSet(new ulong[]{0x0UL,0x20000000000000UL});
-		public static readonly BitSet _UPPER_in_symbols_from_module2428 = new BitSet(new ulong[]{0x2UL,0x20000000000060UL});
-		public static readonly BitSet _obj_id_comp_lst_in_symbols_from_module2458 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _defined_value_in_symbols_from_module2495 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _UPPER_in_symbol2531 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _LOWER_in_symbol2535 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _macroName_in_symbol2539 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _OPERATION_KW_in_macroName2546 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _ERROR_KW_in_macroName2550 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _134_in_macroName2555 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _190_in_macroName2559 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _132_in_macroName2573 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _131_in_macroName2577 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _144_in_macroName2581 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _146_in_macroName2595 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _145_in_macroName2599 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _187_in_macroName2603 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _188_in_macroName2607 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _179_in_macroName2614 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _OBJECT_KW_in_macroName2618 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _172_in_macroName2622 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _176_in_macroName2626 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _124_in_macroName2630 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _127_in_macroName2637 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _126_in_macroName2641 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _125_in_macroName2645 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _130_in_macroName2652 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _141_in_macroName2656 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _181_in_macroName2660 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _180_in_macroName2664 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _174_in_macroName2668 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _smi_macros_in_macroName2675 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _built_in_type_in_type2695 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _defined_type_in_type2704 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _selection_type_in_type2713 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _macros_type_in_type2722 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _smi_type_in_type2731 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _TRUE_KW_in_value2757 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _FALSE_KW_in_value2774 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _NULL_KW_in_value2791 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _C_STRING_in_value2810 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _defined_value_in_value2830 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _signed_number_in_value2849 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _choice_value_in_value2868 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _sequence_value_in_value2887 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _sequenceof_value_in_value2906 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _cstr_value_in_value2925 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _obj_id_comp_lst_in_value2944 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _PLUS_INFINITY_KW_in_value2961 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _MINUS_INFINITY_KW_in_value2978 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _symbol_in_value2994 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _any_type_in_built_in_type3017 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _bit_string_type_in_built_in_type3029 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _boolean_type_in_built_in_type3041 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _character_str_type_in_built_in_type3053 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _choice_type_in_built_in_type3065 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _embedded_type_in_built_in_type3077 = new BitSet(new ulong[]{0x4000000000UL});
-		public static readonly BitSet _EMBEDDED_KW_in_built_in_type3079 = new BitSet(new ulong[]{0x0UL,0x2000000UL});
-		public static readonly BitSet _PDV_KW_in_built_in_type3081 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _enum_type_in_built_in_type3093 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _external_type_in_built_in_type3105 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _integer_type_in_built_in_type3114 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _null_type_in_built_in_type3123 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _object_identifier_type_in_built_in_type3132 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _octetString_type_in_built_in_type3141 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _real_type_in_built_in_type3150 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _relativeOid_type_in_built_in_type3159 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _sequence_type_in_built_in_type3168 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _sequenceof_type_in_built_in_type3177 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _set_type_in_built_in_type3186 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _setof_type_in_built_in_type3195 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _tagged_type_in_built_in_type3204 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _UPPER_in_defined_type3227 = new BitSet(new ulong[]{0x800000000UL});
-		public static readonly BitSet _DOT_in_defined_type3229 = new BitSet(new ulong[]{0x0UL,0x20000000000000UL});
-		public static readonly BitSet _UPPER_in_defined_type3239 = new BitSet(new ulong[]{0x2UL,0x100UL});
-		public static readonly BitSet _constraint_in_defined_type3247 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _LOWER_in_selection_type3270 = new BitSet(new ulong[]{0x0UL,0x8UL});
-		public static readonly BitSet _LESS_in_selection_type3272 = new BitSet(new ulong[]{0x8139054000938080UL,0x3F050C0A026A0A4UL,0x2402000EF0000082UL});
-		public static readonly BitSet _type_in_selection_type3276 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _ANY_KW_in_any_type3296 = new BitSet(new ulong[]{0x200000002UL});
-		public static readonly BitSet _DEFINED_KW_in_any_type3299 = new BitSet(new ulong[]{0x40000UL});
-		public static readonly BitSet _BY_KW_in_any_type3301 = new BitSet(new ulong[]{0x0UL,0x20UL});
-		public static readonly BitSet _LOWER_in_any_type3305 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _BIT_KW_in_bit_string_type3330 = new BitSet(new ulong[]{0x0UL,0x80000000000UL});
-		public static readonly BitSet _STRING_KW_in_bit_string_type3332 = new BitSet(new ulong[]{0x2UL,0x140UL});
-		public static readonly BitSet _namedNumber_list_in_bit_string_type3345 = new BitSet(new ulong[]{0x2UL,0x100UL});
-		public static readonly BitSet _constraint_in_bit_string_type3356 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _BOOLEAN_KW_in_boolean_type3381 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _CHARACTER_KW_in_character_str_type3400 = new BitSet(new ulong[]{0x0UL,0x80000000000UL});
-		public static readonly BitSet _STRING_KW_in_character_str_type3402 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _character_set_in_character_str_type3411 = new BitSet(new ulong[]{0x2UL,0x100UL});
-		public static readonly BitSet _constraint_in_character_str_type3420 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _CHOICE_KW_in_choice_type3444 = new BitSet(new ulong[]{0x0UL,0x40UL});
-		public static readonly BitSet _L_BRACE_in_choice_type3446 = new BitSet(new ulong[]{0x10000000UL,0x20UL});
-		public static readonly BitSet _elementType_list_in_choice_type3450 = new BitSet(new ulong[]{0x0UL,0x400000000UL});
-		public static readonly BitSet _R_BRACE_in_choice_type3452 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _EMBEDDED_KW_in_embedded_type3472 = new BitSet(new ulong[]{0x0UL,0x2000000UL});
-		public static readonly BitSet _PDV_KW_in_embedded_type3474 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _ENUMERATED_KW_in_enum_type3493 = new BitSet(new ulong[]{0x0UL,0x40UL});
-		public static readonly BitSet _namedNumber_list_in_enum_type3497 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _EXTERNAL_KW_in_external_type3517 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _INTEGER_KW_in_integer_type3538 = new BitSet(new ulong[]{0x2UL,0x140UL});
-		public static readonly BitSet _namedNumber_list_in_integer_type3551 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _constraint_in_integer_type3560 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _NULL_KW_in_null_type3585 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _OBJECT_KW_in_object_identifier_type3604 = new BitSet(new ulong[]{0x200000000000000UL});
-		public static readonly BitSet _IDENTIFIER_KW_in_object_identifier_type3606 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _OCTET_KW_in_octetString_type3625 = new BitSet(new ulong[]{0x0UL,0x80000000000UL});
-		public static readonly BitSet _STRING_KW_in_octetString_type3627 = new BitSet(new ulong[]{0x2UL,0x100UL});
-		public static readonly BitSet _constraint_in_octetString_type3632 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _REAL_KW_in_real_type3655 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _177_in_relativeOid_type3677 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _SEQUENCE_KW_in_sequence_type3698 = new BitSet(new ulong[]{0x0UL,0x40UL});
-		public static readonly BitSet _L_BRACE_in_sequence_type3700 = new BitSet(new ulong[]{0x10000000UL,0x400000020UL});
-		public static readonly BitSet _elementType_list_in_sequence_type3705 = new BitSet(new ulong[]{0x0UL,0x400000000UL});
-		public static readonly BitSet _R_BRACE_in_sequence_type3711 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _SEQUENCE_KW_in_sequenceof_type3730 = new BitSet(new ulong[]{0x0UL,0x80100UL});
-		public static readonly BitSet _L_PAREN_in_sequenceof_type3733 = new BitSet(new ulong[]{0x0UL,0x20000000000UL});
-		public static readonly BitSet _SIZE_KW_in_sequenceof_type3735 = new BitSet(new ulong[]{0x0UL,0x100UL});
-		public static readonly BitSet _constraint_in_sequenceof_type3739 = new BitSet(new ulong[]{0x0UL,0x1000000000UL});
-		public static readonly BitSet _R_PAREN_in_sequenceof_type3743 = new BitSet(new ulong[]{0x0UL,0x80000UL});
-		public static readonly BitSet _OF_KW_in_sequenceof_type3748 = new BitSet(new ulong[]{0x8139054000938080UL,0x3F050C0A026A0A4UL,0x2402000EF0000082UL});
-		public static readonly BitSet _type_in_sequenceof_type3752 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _SET_KW_in_set_type3772 = new BitSet(new ulong[]{0x0UL,0x40UL});
-		public static readonly BitSet _L_BRACE_in_set_type3774 = new BitSet(new ulong[]{0x10000000UL,0x400000020UL});
-		public static readonly BitSet _elementType_list_in_set_type3779 = new BitSet(new ulong[]{0x0UL,0x400000000UL});
-		public static readonly BitSet _R_BRACE_in_set_type3785 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _SET_KW_in_setof_type3803 = new BitSet(new ulong[]{0x0UL,0x20000080000UL});
-		public static readonly BitSet _SIZE_KW_in_setof_type3806 = new BitSet(new ulong[]{0x0UL,0x100UL});
-		public static readonly BitSet _constraint_in_setof_type3810 = new BitSet(new ulong[]{0x0UL,0x80000UL});
-		public static readonly BitSet _OF_KW_in_setof_type3817 = new BitSet(new ulong[]{0x8139054000938080UL,0x3F050C0A026A0A4UL,0x2402000EF0000082UL});
-		public static readonly BitSet _type_in_setof_type3821 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _tag_in_tagged_type3843 = new BitSet(new ulong[]{0x8539254000938880UL,0x3F050C0A026A0A4UL,0x2402000EF0000082UL});
-		public static readonly BitSet _tag_default_in_tagged_type3851 = new BitSet(new ulong[]{0x8139054000938080UL,0x3F050C0A026A0A4UL,0x2402000EF0000082UL});
-		public static readonly BitSet _type_in_tagged_type3861 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _L_BRACE_in_namedNumber_list3881 = new BitSet(new ulong[]{0x0UL,0x20UL});
-		public static readonly BitSet _namedNumber_in_namedNumber_list3885 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
-		public static readonly BitSet _COMMA_in_namedNumber_list3891 = new BitSet(new ulong[]{0x0UL,0x20UL});
-		public static readonly BitSet _namedNumber_in_namedNumber_list3895 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
-		public static readonly BitSet _R_BRACE_in_namedNumber_list3901 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _L_PAREN_in_constraint3919 = new BitSet(new ulong[]{0xA1BF1540809B80C0UL,0xF7F0D2D0A926FDE4UL,0x7C3B500EF00720DEUL});
-		public static readonly BitSet _element_set_specs_in_constraint3924 = new BitSet(new ulong[]{0x100000000000UL,0x1000000000UL});
-		public static readonly BitSet _exception_spec_in_constraint3935 = new BitSet(new ulong[]{0x0UL,0x1000000000UL});
-		public static readonly BitSet _R_PAREN_in_constraint3941 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _BMP_STR_KW_in_character_set3959 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _GENERALIZED_TIME_KW_in_character_set3966 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _GENERAL_STR_KW_in_character_set3973 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _GRAPHIC_STR_KW_in_character_set3980 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _IA5_STRING_KW_in_character_set3990 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _ISO646_STR_KW_in_character_set3997 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _NUMERIC_STR_KW_in_character_set4004 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _PRINTABLE_STR_KW_in_character_set4011 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _TELETEX_STR_KW_in_character_set4021 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _T61_STR_KW_in_character_set4028 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _UNIVERSAL_STR_KW_in_character_set4035 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _UTF8_STR_KW_in_character_set4042 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _UTC_TIME_KW_in_character_set4052 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _VIDEOTEX_STR_KW_in_character_set4059 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _VISIBLE_STR_KW_in_character_set4066 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _elementType_in_elementType_list4088 = new BitSet(new ulong[]{0x4000002UL});
-		public static readonly BitSet _COMMA_in_elementType_list4095 = new BitSet(new ulong[]{0x10800000UL,0x20UL});
-		public static readonly BitSet _choice_type_in_elementType_list4106 = new BitSet(new ulong[]{0x4000002UL});
-		public static readonly BitSet _elementType_in_elementType_list4115 = new BitSet(new ulong[]{0x4000002UL});
-		public static readonly BitSet _L_BRACKET_in_tag4138 = new BitSet(new ulong[]{0x100UL,0x28000040004020UL});
-		public static readonly BitSet _clazz_in_tag4143 = new BitSet(new ulong[]{0x0UL,0x20000000004020UL});
-		public static readonly BitSet _class_NUMBER_in_tag4153 = new BitSet(new ulong[]{0x0UL,0x800000000UL});
-		public static readonly BitSet _R_BRACKET_in_tag4155 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _NUMBER_in_class_NUMBER4194 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _defined_value_in_class_NUMBER4203 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _OPERATION_KW_in_operation_macro4225 = new BitSet(new ulong[]{0x20000000202UL,0x200000010UL});
-		public static readonly BitSet _ARGUMENT_KW_in_operation_macro4230 = new BitSet(new ulong[]{0x8139054000938080UL,0x3F050C0A026A0A4UL,0x2402000EF0000082UL});
-		public static readonly BitSet _LOWER_in_operation_macro4241 = new BitSet(new ulong[]{0x8139054000938080UL,0x3F050C0A026A0A4UL,0x2402000EF0000082UL});
-		public static readonly BitSet _type_in_operation_macro4251 = new BitSet(new ulong[]{0x20000000002UL,0x200000010UL});
-		public static readonly BitSet _RESULT_KW_in_operation_macro4270 = new BitSet(new ulong[]{0x8139074000938082UL,0x3F050C0A026A0B4UL,0x2402000EF0000082UL});
-		public static readonly BitSet _LOWER_in_operation_macro4297 = new BitSet(new ulong[]{0x8139054000938080UL,0x3F050C0A026A0A4UL,0x2402000EF0000082UL});
-		public static readonly BitSet _type_in_operation_macro4308 = new BitSet(new ulong[]{0x20000000002UL,0x10UL});
-		public static readonly BitSet _ERRORS_KW_in_operation_macro4331 = new BitSet(new ulong[]{0x0UL,0x40UL});
-		public static readonly BitSet _L_BRACE_in_operation_macro4333 = new BitSet(new ulong[]{0x81BB0540809B8080UL,0xF3F0D0C4A826ECE4UL,0x7C3B500EF00720DEUL});
-		public static readonly BitSet _operation_errorlist_in_operation_macro4338 = new BitSet(new ulong[]{0x0UL,0x400000000UL});
-		public static readonly BitSet _R_BRACE_in_operation_macro4344 = new BitSet(new ulong[]{0x2UL,0x10UL});
-		public static readonly BitSet _LINKED_KW_in_operation_macro4362 = new BitSet(new ulong[]{0x0UL,0x40UL});
-		public static readonly BitSet _L_BRACE_in_operation_macro4364 = new BitSet(new ulong[]{0x81BB0540809B8080UL,0xF3F0D0C4A826ECE4UL,0x7C3B500EF00720DEUL});
-		public static readonly BitSet _linkedOp_list_in_operation_macro4369 = new BitSet(new ulong[]{0x0UL,0x400000000UL});
-		public static readonly BitSet _R_BRACE_in_operation_macro4375 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _ERROR_KW_in_error_macro4407 = new BitSet(new ulong[]{0x2UL,0x800000UL});
-		public static readonly BitSet _PARAMETER_KW_in_error_macro4413 = new BitSet(new ulong[]{0x8139054000938080UL,0x3F050C0A026A0A4UL,0x2402000EF0000082UL});
-		public static readonly BitSet _LOWER_in_error_macro4424 = new BitSet(new ulong[]{0x8139054000938080UL,0x3F050C0A026A0A4UL,0x2402000EF0000082UL});
-		public static readonly BitSet _type_in_error_macro4434 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _operation_macro_in_macros_type4464 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _error_macro_in_macros_type4473 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _objecttype_macro_in_macros_type4482 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _moduleidentity_macro_in_macros_type4491 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _objectidentity_macro_in_macros_type4503 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _notificationtype_macro_in_macros_type4512 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _textualconvention_macro_in_macros_type4521 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _objectgroup_macro_in_macros_type4533 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _notificationgroup_macro_in_macros_type4542 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _modulecompliance_macro_in_macros_type4551 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _agentcapabilities_macro_in_macros_type4563 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _traptype_macro_in_macros_type4572 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _135_in_smi_type4657 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _INTEGER_KW_in_smi_type4664 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _OCTET_KW_in_smi_type4671 = new BitSet(new ulong[]{0x0UL,0x80000000000UL});
-		public static readonly BitSet _STRING_KW_in_smi_type4673 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _OBJECT_KW_in_smi_type4680 = new BitSet(new ulong[]{0x200000000000000UL});
-		public static readonly BitSet _IDENTIFIER_KW_in_smi_type4682 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _UPPER_in_smi_type4692 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _LOWER_in_smi_type4701 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _L_PAREN_in_smi_subtyping4719 = new BitSet(new ulong[]{0x80000000080000UL,0x4600UL});
-		public static readonly BitSet _subtype_range_in_smi_subtyping4721 = new BitSet(new ulong[]{0x1000UL,0x1000000000UL});
-		public static readonly BitSet _BAR_in_smi_subtyping4724 = new BitSet(new ulong[]{0x80000000080000UL,0x4600UL});
-		public static readonly BitSet _subtype_range_in_smi_subtyping4726 = new BitSet(new ulong[]{0x1000UL,0x1000000000UL});
-		public static readonly BitSet _R_PAREN_in_smi_subtyping4730 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _L_PAREN_in_smi_subtyping4747 = new BitSet(new ulong[]{0x0UL,0x20000000000UL});
-		public static readonly BitSet _SIZE_KW_in_smi_subtyping4749 = new BitSet(new ulong[]{0x0UL,0x100UL});
-		public static readonly BitSet _L_PAREN_in_smi_subtyping4751 = new BitSet(new ulong[]{0x80000000080000UL,0x4600UL});
-		public static readonly BitSet _subtype_range_in_smi_subtyping4753 = new BitSet(new ulong[]{0x1000UL,0x1000000000UL});
-		public static readonly BitSet _BAR_in_smi_subtyping4756 = new BitSet(new ulong[]{0x80000000080000UL,0x4600UL});
-		public static readonly BitSet _subtype_range_in_smi_subtyping4758 = new BitSet(new ulong[]{0x1000UL,0x1000000000UL});
-		public static readonly BitSet _R_PAREN_in_smi_subtyping4762 = new BitSet(new ulong[]{0x0UL,0x1000000000UL});
-		public static readonly BitSet _R_PAREN_in_smi_subtyping4764 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _subtype_value_in_subtype_range4770 = new BitSet(new ulong[]{0x1000000002UL});
-		public static readonly BitSet _DOTDOT_in_subtype_range4773 = new BitSet(new ulong[]{0x80000000080000UL,0x4600UL});
-		public static readonly BitSet _subtype_value_in_subtype_range4775 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _MINUS_in_subtype_value4785 = new BitSet(new ulong[]{0x0UL,0x4000UL});
-		public static readonly BitSet _NUMBER_in_subtype_value4789 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _B_STRING_in_subtype_value4793 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _H_STRING_in_subtype_value4797 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _MAX_KW_in_subtype_value4801 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _163_in_objecttype_macro4819 = new BitSet(new ulong[]{0x0UL,0x0UL,0x200000000000000UL});
-		public static readonly BitSet _185_in_objecttype_macro4821 = new BitSet(new ulong[]{0x8139054000938080UL,0x3F050C0A026A0A4UL,0x2402000EF0000082UL});
-		public static readonly BitSet _smi_type_in_objecttype_macro4856 = new BitSet(new ulong[]{0x0UL,0x40UL});
-		public static readonly BitSet _namedbits_in_objecttype_macro4860 = new BitSet(new ulong[]{0x0UL,0x0UL,0x400C4002000001UL,0x1UL});
-		public static readonly BitSet _smi_type_in_objecttype_macro4901 = new BitSet(new ulong[]{0x0UL,0x100UL,0x400C4002000001UL,0x1UL});
-		public static readonly BitSet _smi_subtyping_in_objecttype_macro4904 = new BitSet(new ulong[]{0x0UL,0x0UL,0x400C4002000001UL,0x1UL});
-		public static readonly BitSet _type_in_objecttype_macro4935 = new BitSet(new ulong[]{0x0UL,0x0UL,0x400C4002000001UL,0x1UL});
-		public static readonly BitSet _192_in_objecttype_macro4981 = new BitSet(new ulong[]{0x80000000UL});
-		public static readonly BitSet _C_STRING_in_objecttype_macro4985 = new BitSet(new ulong[]{0x0UL,0x0UL,0x400C4002000001UL});
-		public static readonly BitSet _153_in_objecttype_macro5013 = new BitSet(new ulong[]{0x0UL,0x20UL});
-		public static readonly BitSet _128_in_objecttype_macro5026 = new BitSet(new ulong[]{0x0UL,0x20UL});
-		public static readonly BitSet _objecttype_macro_accesstypes_in_objecttype_macro5041 = new BitSet(new ulong[]{0x0UL,0x0UL,0x400C0000000000UL});
-		public static readonly BitSet _166_in_objecttype_macro5066 = new BitSet(new ulong[]{0x0UL,0x20UL});
-		public static readonly BitSet _objecttype_macro_pibaccess_in_objecttype_macro5070 = new BitSet(new ulong[]{0x0UL,0x0UL,0x400C0000000000UL});
-		public static readonly BitSet _170_in_objecttype_macro5110 = new BitSet(new ulong[]{0x0UL,0x40UL});
-		public static readonly BitSet _L_BRACE_in_objecttype_macro5112 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
-		public static readonly BitSet _value_in_objecttype_macro5116 = new BitSet(new ulong[]{0x0UL,0x400000000UL});
-		public static readonly BitSet _R_BRACE_in_objecttype_macro5118 = new BitSet(new ulong[]{0x0UL,0x0UL,0x40080000000000UL});
-		public static readonly BitSet _171_in_objecttype_macro5161 = new BitSet(new ulong[]{0x0UL,0x40UL});
-		public static readonly BitSet _L_BRACE_in_objecttype_macro5163 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
-		public static readonly BitSet _value_in_objecttype_macro5167 = new BitSet(new ulong[]{0x0UL,0x400000000UL});
-		public static readonly BitSet _R_BRACE_in_objecttype_macro5169 = new BitSet(new ulong[]{0x0UL,0x0UL,0x40000000000000UL});
-		public static readonly BitSet _182_in_objecttype_macro5218 = new BitSet(new ulong[]{0x0UL,0x20UL});
-		public static readonly BitSet _objecttype_macro_statustypes_in_objecttype_macro5222 = new BitSet(new ulong[]{0x2UL,0x0UL,0x8000810000308C20UL});
-		public static readonly BitSet _139_in_objecttype_macro5252 = new BitSet(new ulong[]{0x80000000UL});
-		public static readonly BitSet _C_STRING_in_objecttype_macro5256 = new BitSet(new ulong[]{0x2UL,0x0UL,0x8000810000308420UL});
-		public static readonly BitSet _149_in_objecttype_macro5313 = new BitSet(new ulong[]{0x0UL,0x40UL});
-		public static readonly BitSet _L_BRACE_in_objecttype_macro5315 = new BitSet(new ulong[]{0x0UL,0x20000000000020UL});
-		public static readonly BitSet _objecttype_macro_error_in_objecttype_macro5319 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
-		public static readonly BitSet _COMMA_in_objecttype_macro5330 = new BitSet(new ulong[]{0x0UL,0x20000000000020UL});
-		public static readonly BitSet _objecttype_macro_error_in_objecttype_macro5334 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
-		public static readonly BitSet _R_BRACE_in_objecttype_macro5340 = new BitSet(new ulong[]{0x2UL,0x0UL,0x8000810000108420UL});
-		public static readonly BitSet _175_in_objecttype_macro5355 = new BitSet(new ulong[]{0x80000000UL});
-		public static readonly BitSet _C_STRING_in_objecttype_macro5359 = new BitSet(new ulong[]{0x2UL,0x0UL,0x8000010000108420UL});
-		public static readonly BitSet _148_in_objecttype_macro5381 = new BitSet(new ulong[]{0x0UL,0x40UL});
-		public static readonly BitSet _objecttype_macro_index_in_objecttype_macro5385 = new BitSet(new ulong[]{0x2UL,0x0UL,0x8000000000100400UL});
-		public static readonly BitSet _133_in_objecttype_macro5411 = new BitSet(new ulong[]{0x0UL,0x40UL});
-		public static readonly BitSet _objecttype_macro_augments_in_objecttype_macro5415 = new BitSet(new ulong[]{0x2UL,0x0UL,0x8000000000100400UL});
-		public static readonly BitSet _168_in_objecttype_macro5441 = new BitSet(new ulong[]{0x0UL,0x40UL});
-		public static readonly BitSet _L_BRACE_in_objecttype_macro5443 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
-		public static readonly BitSet _value_in_objecttype_macro5447 = new BitSet(new ulong[]{0x0UL,0x400000000UL});
-		public static readonly BitSet _R_BRACE_in_objecttype_macro5449 = new BitSet(new ulong[]{0x2UL,0x0UL,0x8000000000100400UL});
-		public static readonly BitSet _143_in_objecttype_macro5496 = new BitSet(new ulong[]{0x0UL,0x40UL});
-		public static readonly BitSet _L_BRACE_in_objecttype_macro5498 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
-		public static readonly BitSet _value_in_objecttype_macro5502 = new BitSet(new ulong[]{0x0UL,0x400000000UL});
-		public static readonly BitSet _R_BRACE_in_objecttype_macro5504 = new BitSet(new ulong[]{0x2UL,0x0UL,0x8000000000100400UL});
-		public static readonly BitSet _148_in_objecttype_macro5574 = new BitSet(new ulong[]{0x0UL,0x40UL});
-		public static readonly BitSet _objecttype_macro_index_in_objecttype_macro5578 = new BitSet(new ulong[]{0x2UL,0x0UL,0x8000000000000400UL});
-		public static readonly BitSet _191_in_objecttype_macro5628 = new BitSet(new ulong[]{0x0UL,0x40UL});
-		public static readonly BitSet _L_BRACE_in_objecttype_macro5630 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800408226C60UL,0x7C39500EF007205EUL});
-		public static readonly BitSet _value_in_objecttype_macro5635 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
-		public static readonly BitSet _COMMA_in_objecttype_macro5646 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
-		public static readonly BitSet _value_in_objecttype_macro5650 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
-		public static readonly BitSet _R_BRACE_in_objecttype_macro5659 = new BitSet(new ulong[]{0x2UL,0x0UL,0x400UL});
-		public static readonly BitSet _138_in_objecttype_macro5698 = new BitSet(new ulong[]{0x0UL,0x40UL});
-		public static readonly BitSet _L_BRACE_in_objecttype_macro5700 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
-		public static readonly BitSet _objecttype_macro_bitsvalue_in_objecttype_macro5743 = new BitSet(new ulong[]{0x0UL,0x400000000UL});
-		public static readonly BitSet _value_in_objecttype_macro5774 = new BitSet(new ulong[]{0x0UL,0x400000000UL});
-		public static readonly BitSet _R_BRACE_in_objecttype_macro5800 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _LOWER_in_objecttype_macro_accesstypes5824 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _LOWER_in_objecttype_macro_pibaccess5851 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _LOWER_in_objecttype_macro_statustypes5875 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _L_BRACE_in_objecttype_macro_index5897 = new BitSet(new ulong[]{0x882040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
-		public static readonly BitSet _objecttype_macro_indextype_in_objecttype_macro_index5901 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
-		public static readonly BitSet _COMMA_in_objecttype_macro_index5908 = new BitSet(new ulong[]{0x882040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
-		public static readonly BitSet _objecttype_macro_indextype_in_objecttype_macro_index5912 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
-		public static readonly BitSet _R_BRACE_in_objecttype_macro_index5918 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _IMPLIED_KW_in_objecttype_macro_indextype5944 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
-		public static readonly BitSet _value_in_objecttype_macro_indextype5950 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _L_BRACE_in_objecttype_macro_augments5970 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
-		public static readonly BitSet _value_in_objecttype_macro_augments5974 = new BitSet(new ulong[]{0x0UL,0x400000000UL});
-		public static readonly BitSet _R_BRACE_in_objecttype_macro_augments5976 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _L_BRACE_in_namedbits6000 = new BitSet(new ulong[]{0x0UL,0x20000000000020UL});
-		public static readonly BitSet _namedbit_in_namedbits6004 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
-		public static readonly BitSet _COMMA_in_namedbits6011 = new BitSet(new ulong[]{0x0UL,0x20000000000020UL});
-		public static readonly BitSet _namedbit_in_namedbits6015 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
-		public static readonly BitSet _R_BRACE_in_namedbits6021 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _L_BRACE_in_objecttype_macro_bitsvalue6044 = new BitSet(new ulong[]{0x0UL,0x20UL});
-		public static readonly BitSet _LOWER_in_objecttype_macro_bitsvalue6048 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
-		public static readonly BitSet _COMMA_in_objecttype_macro_bitsvalue6055 = new BitSet(new ulong[]{0x0UL,0x20UL});
-		public static readonly BitSet _LOWER_in_objecttype_macro_bitsvalue6059 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
-		public static readonly BitSet _R_BRACE_in_objecttype_macro_bitsvalue6065 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _namedbit_in_objecttype_macro_error6091 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _157_in_moduleidentity_macro6113 = new BitSet(new ulong[]{0x0UL,0x0UL,0x80000000400000UL});
-		public static readonly BitSet _183_in_moduleidentity_macro6116 = new BitSet(new ulong[]{0x0UL,0x40UL});
-		public static readonly BitSet _L_BRACE_in_moduleidentity_macro6118 = new BitSet(new ulong[]{0x0UL,0x20000000000020UL});
-		public static readonly BitSet _moduleidentity_macro_categories_in_moduleidentity_macro6122 = new BitSet(new ulong[]{0x0UL,0x400000000UL});
-		public static readonly BitSet _R_BRACE_in_moduleidentity_macro6124 = new BitSet(new ulong[]{0x0UL,0x0UL,0x400000UL});
-		public static readonly BitSet _150_in_moduleidentity_macro6136 = new BitSet(new ulong[]{0x80000000UL});
-		public static readonly BitSet _C_STRING_in_moduleidentity_macro6140 = new BitSet(new ulong[]{0x0UL,0x0UL,0x2000000000UL});
-		public static readonly BitSet _165_in_moduleidentity_macro6145 = new BitSet(new ulong[]{0x80000000UL});
-		public static readonly BitSet _C_STRING_in_moduleidentity_macro6149 = new BitSet(new ulong[]{0x0UL,0x0UL,0x100UL});
-		public static readonly BitSet _136_in_moduleidentity_macro6154 = new BitSet(new ulong[]{0x80000000UL});
-		public static readonly BitSet _C_STRING_in_moduleidentity_macro6158 = new BitSet(new ulong[]{0x0UL,0x0UL,0x800UL});
-		public static readonly BitSet _139_in_moduleidentity_macro6166 = new BitSet(new ulong[]{0x80000000UL});
-		public static readonly BitSet _C_STRING_in_moduleidentity_macro6170 = new BitSet(new ulong[]{0x2UL,0x0UL,0x4000000000000UL});
-		public static readonly BitSet _moduleidentity_macro_revision_in_moduleidentity_macro6178 = new BitSet(new ulong[]{0x2UL,0x0UL,0x4000000000000UL});
-		public static readonly BitSet _178_in_moduleidentity_macro_revision6199 = new BitSet(new ulong[]{0x80000000UL});
-		public static readonly BitSet _C_STRING_in_moduleidentity_macro_revision6203 = new BitSet(new ulong[]{0x0UL,0x0UL,0x800UL});
-		public static readonly BitSet _139_in_moduleidentity_macro_revision6205 = new BitSet(new ulong[]{0x80000000UL});
-		public static readonly BitSet _C_STRING_in_moduleidentity_macro_revision6209 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _LOWER_in_moduleidentity_macro_categories6232 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _moduleidentity_macro_categoryid_in_moduleidentity_macro_categories6245 = new BitSet(new ulong[]{0x4000002UL});
-		public static readonly BitSet _COMMA_in_moduleidentity_macro_categories6252 = new BitSet(new ulong[]{0x0UL,0x20000000000020UL});
-		public static readonly BitSet _moduleidentity_macro_categoryid_in_moduleidentity_macro_categories6256 = new BitSet(new ulong[]{0x4000002UL});
-		public static readonly BitSet _namedbit_in_moduleidentity_macro_categoryid6280 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _162_in_objectidentity_macro6303 = new BitSet(new ulong[]{0x0UL,0x0UL,0x40000000000000UL});
-		public static readonly BitSet _182_in_objectidentity_macro6305 = new BitSet(new ulong[]{0x0UL,0x20UL});
-		public static readonly BitSet _status_in_objectidentity_macro6309 = new BitSet(new ulong[]{0x0UL,0x0UL,0x800UL});
-		public static readonly BitSet _139_in_objectidentity_macro6313 = new BitSet(new ulong[]{0x80000000UL});
-		public static readonly BitSet _C_STRING_in_objectidentity_macro6317 = new BitSet(new ulong[]{0x2UL,0x0UL,0x800000000000UL});
-		public static readonly BitSet _175_in_objectidentity_macro6324 = new BitSet(new ulong[]{0x80000000UL});
-		public static readonly BitSet _C_STRING_in_objectidentity_macro6328 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _159_in_notificationtype_macro6351 = new BitSet(new ulong[]{0x0UL,0x0UL,0x40001000000000UL});
-		public static readonly BitSet _164_in_notificationtype_macro6354 = new BitSet(new ulong[]{0x0UL,0x40UL});
-		public static readonly BitSet _L_BRACE_in_notificationtype_macro6356 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
-		public static readonly BitSet _value_in_notificationtype_macro6360 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
-		public static readonly BitSet _COMMA_in_notificationtype_macro6370 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
-		public static readonly BitSet _value_in_notificationtype_macro6374 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
-		public static readonly BitSet _R_BRACE_in_notificationtype_macro6380 = new BitSet(new ulong[]{0x0UL,0x0UL,0x40000000000000UL});
-		public static readonly BitSet _182_in_notificationtype_macro6389 = new BitSet(new ulong[]{0x0UL,0x20UL});
-		public static readonly BitSet _status_in_notificationtype_macro6393 = new BitSet(new ulong[]{0x0UL,0x0UL,0x800UL});
-		public static readonly BitSet _139_in_notificationtype_macro6401 = new BitSet(new ulong[]{0x80000000UL});
-		public static readonly BitSet _C_STRING_in_notificationtype_macro6405 = new BitSet(new ulong[]{0x2UL,0x0UL,0x800000000000UL});
-		public static readonly BitSet _175_in_notificationtype_macro6414 = new BitSet(new ulong[]{0x80000000UL});
-		public static readonly BitSet _C_STRING_in_notificationtype_macro6418 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _186_in_textualconvention_macro6446 = new BitSet(new ulong[]{0x0UL,0x0UL,0x40000000001000UL});
-		public static readonly BitSet _140_in_textualconvention_macro6449 = new BitSet(new ulong[]{0x80000000UL});
-		public static readonly BitSet _C_STRING_in_textualconvention_macro6453 = new BitSet(new ulong[]{0x0UL,0x0UL,0x40000000000000UL});
-		public static readonly BitSet _182_in_textualconvention_macro6463 = new BitSet(new ulong[]{0x0UL,0x20UL});
-		public static readonly BitSet _status_in_textualconvention_macro6467 = new BitSet(new ulong[]{0x0UL,0x0UL,0x800UL});
-		public static readonly BitSet _139_in_textualconvention_macro6475 = new BitSet(new ulong[]{0x80000000UL});
-		public static readonly BitSet _C_STRING_in_textualconvention_macro6479 = new BitSet(new ulong[]{0x0UL,0x0UL,0x200800000000000UL});
-		public static readonly BitSet _175_in_textualconvention_macro6488 = new BitSet(new ulong[]{0x80000000UL});
-		public static readonly BitSet _C_STRING_in_textualconvention_macro6492 = new BitSet(new ulong[]{0x0UL,0x0UL,0x200000000000000UL});
-		public static readonly BitSet _185_in_textualconvention_macro6503 = new BitSet(new ulong[]{0x8139054000938080UL,0x3F050C0A026A0A4UL,0x2402000EF0000082UL});
-		public static readonly BitSet _smi_type_in_textualconvention_macro6517 = new BitSet(new ulong[]{0x0UL,0x40UL});
-		public static readonly BitSet _L_BRACE_in_textualconvention_macro6522 = new BitSet(new ulong[]{0x0UL,0x20000000000020UL});
-		public static readonly BitSet _namedbit_in_textualconvention_macro6526 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
-		public static readonly BitSet _COMMA_in_textualconvention_macro6543 = new BitSet(new ulong[]{0x0UL,0x20000000000020UL});
-		public static readonly BitSet _namedbit_in_textualconvention_macro6547 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
-		public static readonly BitSet _R_BRACE_in_textualconvention_macro6553 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _type_in_textualconvention_macro6563 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _set_in_namedbit6584 = new BitSet(new ulong[]{0x0UL,0x100UL});
-		public static readonly BitSet _L_PAREN_in_namedbit6595 = new BitSet(new ulong[]{0x0UL,0x4400UL});
-		public static readonly BitSet _MINUS_in_namedbit6598 = new BitSet(new ulong[]{0x0UL,0x4000UL});
-		public static readonly BitSet _NUMBER_in_namedbit6608 = new BitSet(new ulong[]{0x0UL,0x1000000000UL});
-		public static readonly BitSet _R_PAREN_in_namedbit6610 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _161_in_objectgroup_macro6632 = new BitSet(new ulong[]{0x0UL,0x0UL,0x1000000000UL});
-		public static readonly BitSet _164_in_objectgroup_macro6634 = new BitSet(new ulong[]{0x0UL,0x40UL});
-		public static readonly BitSet _L_BRACE_in_objectgroup_macro6636 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
-		public static readonly BitSet _value_in_objectgroup_macro6640 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
-		public static readonly BitSet _COMMA_in_objectgroup_macro6646 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
-		public static readonly BitSet _value_in_objectgroup_macro6650 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
-		public static readonly BitSet _R_BRACE_in_objectgroup_macro6656 = new BitSet(new ulong[]{0x0UL,0x0UL,0x40000000000000UL});
-		public static readonly BitSet _182_in_objectgroup_macro6663 = new BitSet(new ulong[]{0x0UL,0x20UL});
-		public static readonly BitSet _status_in_objectgroup_macro6667 = new BitSet(new ulong[]{0x0UL,0x0UL,0x800UL});
-		public static readonly BitSet _139_in_objectgroup_macro6672 = new BitSet(new ulong[]{0x80000000UL});
-		public static readonly BitSet _C_STRING_in_objectgroup_macro6676 = new BitSet(new ulong[]{0x2UL,0x0UL,0x800000000000UL});
-		public static readonly BitSet _175_in_objectgroup_macro6682 = new BitSet(new ulong[]{0x80000000UL});
-		public static readonly BitSet _C_STRING_in_objectgroup_macro6686 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _158_in_notificationgroup_macro6711 = new BitSet(new ulong[]{0x0UL,0x0UL,0x100000000UL});
-		public static readonly BitSet _160_in_notificationgroup_macro6713 = new BitSet(new ulong[]{0x0UL,0x40UL});
-		public static readonly BitSet _L_BRACE_in_notificationgroup_macro6715 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
-		public static readonly BitSet _value_in_notificationgroup_macro6719 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
-		public static readonly BitSet _COMMA_in_notificationgroup_macro6725 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
-		public static readonly BitSet _value_in_notificationgroup_macro6729 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
-		public static readonly BitSet _R_BRACE_in_notificationgroup_macro6735 = new BitSet(new ulong[]{0x0UL,0x0UL,0x40000000000000UL});
-		public static readonly BitSet _182_in_notificationgroup_macro6742 = new BitSet(new ulong[]{0x0UL,0x20UL});
-		public static readonly BitSet _status_in_notificationgroup_macro6746 = new BitSet(new ulong[]{0x0UL,0x0UL,0x800UL});
-		public static readonly BitSet _139_in_notificationgroup_macro6751 = new BitSet(new ulong[]{0x80000000UL});
-		public static readonly BitSet _C_STRING_in_notificationgroup_macro6755 = new BitSet(new ulong[]{0x2UL,0x0UL,0x800000000000UL});
-		public static readonly BitSet _175_in_notificationgroup_macro6761 = new BitSet(new ulong[]{0x80000000UL});
-		public static readonly BitSet _C_STRING_in_notificationgroup_macro6765 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _156_in_modulecompliance_macro6790 = new BitSet(new ulong[]{0x0UL,0x0UL,0x40000000000000UL});
-		public static readonly BitSet _182_in_modulecompliance_macro6792 = new BitSet(new ulong[]{0x0UL,0x20UL});
-		public static readonly BitSet _status_in_modulecompliance_macro6796 = new BitSet(new ulong[]{0x0UL,0x0UL,0x800UL});
-		public static readonly BitSet _139_in_modulecompliance_macro6802 = new BitSet(new ulong[]{0x80000000UL});
-		public static readonly BitSet _C_STRING_in_modulecompliance_macro6806 = new BitSet(new ulong[]{0x0UL,0x0UL,0x800008000000UL});
-		public static readonly BitSet _175_in_modulecompliance_macro6812 = new BitSet(new ulong[]{0x80000000UL});
-		public static readonly BitSet _C_STRING_in_modulecompliance_macro6816 = new BitSet(new ulong[]{0x0UL,0x0UL,0x8000000UL});
-		public static readonly BitSet _modulecompliance_macro_module_in_modulecompliance_macro6827 = new BitSet(new ulong[]{0x2UL,0x0UL,0x8000000UL});
-		public static readonly BitSet _LOWER_in_status6852 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _155_in_modulecompliance_macro_module6875 = new BitSet(new ulong[]{0x2UL,0x20000000020000UL,0x1080000UL});
-		public static readonly BitSet _UPPER_in_modulecompliance_macro_module6886 = new BitSet(new ulong[]{0x82040080080002UL,0xF020800008226C60UL,0x7C39500EF10F205EUL});
-		public static readonly BitSet _value_in_modulecompliance_macro_module6900 = new BitSet(new ulong[]{0x2UL,0x20000UL,0x1080000UL});
-		public static readonly BitSet _152_in_modulecompliance_macro_module6915 = new BitSet(new ulong[]{0x0UL,0x40UL});
-		public static readonly BitSet _L_BRACE_in_modulecompliance_macro_module6917 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
-		public static readonly BitSet _value_in_modulecompliance_macro_module6921 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
-		public static readonly BitSet _COMMA_in_modulecompliance_macro_module6927 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
-		public static readonly BitSet _value_in_modulecompliance_macro_module6931 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
-		public static readonly BitSet _R_BRACE_in_modulecompliance_macro_module6937 = new BitSet(new ulong[]{0x2UL,0x20000UL,0x80000UL});
-		public static readonly BitSet _modulecompliance_macro_compliance_in_modulecompliance_macro_module6948 = new BitSet(new ulong[]{0x2UL,0x20000UL,0x80000UL});
-		public static readonly BitSet _147_in_modulecompliance_macro_compliance6971 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
-		public static readonly BitSet _value_in_modulecompliance_macro_compliance6975 = new BitSet(new ulong[]{0x0UL,0x0UL,0x800UL});
-		public static readonly BitSet _139_in_modulecompliance_macro_compliance6977 = new BitSet(new ulong[]{0x80000000UL});
-		public static readonly BitSet _C_STRING_in_modulecompliance_macro_compliance6981 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _OBJECT_KW_in_modulecompliance_macro_compliance6991 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
-		public static readonly BitSet _value_in_modulecompliance_macro_compliance6995 = new BitSet(new ulong[]{0x0UL,0x0UL,0x200020004000800UL,0x8UL});
-		public static readonly BitSet _185_in_modulecompliance_macro_compliance7005 = new BitSet(new ulong[]{0x8139054000938080UL,0x3F050C0A026A0A4UL,0x2402000EF0000082UL});
-		public static readonly BitSet _syntax_in_modulecompliance_macro_compliance7009 = new BitSet(new ulong[]{0x0UL,0x0UL,0x20004000800UL,0x8UL});
-		public static readonly BitSet _195_in_modulecompliance_macro_compliance7020 = new BitSet(new ulong[]{0x8139054000938080UL,0x3F050C0A026A0A4UL,0x2402000EF0000082UL});
-		public static readonly BitSet _syntax_in_modulecompliance_macro_compliance7024 = new BitSet(new ulong[]{0x0UL,0x0UL,0x20004000800UL});
-		public static readonly BitSet _154_in_modulecompliance_macro_compliance7041 = new BitSet(new ulong[]{0x0UL,0x20UL});
-		public static readonly BitSet _modulecompliance_macro_access_in_modulecompliance_macro_compliance7045 = new BitSet(new ulong[]{0x0UL,0x0UL,0x20000000800UL});
-		public static readonly BitSet _169_in_modulecompliance_macro_compliance7057 = new BitSet(new ulong[]{0x0UL,0x20UL});
-		public static readonly BitSet _modulecompliance_macro_pibaccess_in_modulecompliance_macro_compliance7061 = new BitSet(new ulong[]{0x0UL,0x0UL,0x800UL});
-		public static readonly BitSet _139_in_modulecompliance_macro_compliance7076 = new BitSet(new ulong[]{0x80000000UL});
-		public static readonly BitSet _C_STRING_in_modulecompliance_macro_compliance7080 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _LOWER_in_modulecompliance_macro_access7102 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _LOWER_in_modulecompliance_macro_pibaccess7127 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _129_in_agentcapabilities_macro7149 = new BitSet(new ulong[]{0x0UL,0x0UL,0x200000000000UL});
-		public static readonly BitSet _173_in_agentcapabilities_macro7151 = new BitSet(new ulong[]{0x80000000UL});
-		public static readonly BitSet _C_STRING_in_agentcapabilities_macro7155 = new BitSet(new ulong[]{0x0UL,0x0UL,0x40000000000000UL});
-		public static readonly BitSet _182_in_agentcapabilities_macro7160 = new BitSet(new ulong[]{0x0UL,0x20UL});
-		public static readonly BitSet _agentcapabilities_macro_status_in_agentcapabilities_macro7164 = new BitSet(new ulong[]{0x0UL,0x0UL,0x800UL});
-		public static readonly BitSet _139_in_agentcapabilities_macro7169 = new BitSet(new ulong[]{0x80000000UL});
-		public static readonly BitSet _C_STRING_in_agentcapabilities_macro7173 = new BitSet(new ulong[]{0x2UL,0x0UL,0x100800000000000UL});
-		public static readonly BitSet _175_in_agentcapabilities_macro7179 = new BitSet(new ulong[]{0x80000000UL});
-		public static readonly BitSet _C_STRING_in_agentcapabilities_macro7183 = new BitSet(new ulong[]{0x2UL,0x0UL,0x100000000000000UL});
-		public static readonly BitSet _agentcapabilities_macro_module_in_agentcapabilities_macro7193 = new BitSet(new ulong[]{0x2UL,0x0UL,0x100000000000000UL});
-		public static readonly BitSet _LOWER_in_agentcapabilities_macro_status7217 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _184_in_agentcapabilities_macro_module7235 = new BitSet(new ulong[]{0x0UL,0x20000000000020UL});
-		public static readonly BitSet _set_in_agentcapabilities_macro_module7239 = new BitSet(new ulong[]{0x2082040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
-		public static readonly BitSet _value_in_agentcapabilities_macro_module7253 = new BitSet(new ulong[]{0x2000000000000000UL});
-		public static readonly BitSet _INCLUDES_KW_in_agentcapabilities_macro_module7263 = new BitSet(new ulong[]{0x0UL,0x40UL});
-		public static readonly BitSet _L_BRACE_in_agentcapabilities_macro_module7265 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
-		public static readonly BitSet _value_in_agentcapabilities_macro_module7269 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
-		public static readonly BitSet _COMMA_in_agentcapabilities_macro_module7275 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
-		public static readonly BitSet _value_in_agentcapabilities_macro_module7279 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
-		public static readonly BitSet _R_BRACE_in_agentcapabilities_macro_module7283 = new BitSet(new ulong[]{0x2UL,0x0UL,0x0UL,0x4UL});
-		public static readonly BitSet _agentcapabilities_macro_variation_in_agentcapabilities_macro_module7291 = new BitSet(new ulong[]{0x2UL,0x0UL,0x0UL,0x4UL});
-		public static readonly BitSet _194_in_agentcapabilities_macro_variation7313 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
-		public static readonly BitSet _value_in_agentcapabilities_macro_variation7317 = new BitSet(new ulong[]{0x0UL,0x0UL,0x200000000000E01UL,0x8UL});
-		public static readonly BitSet _185_in_agentcapabilities_macro_variation7323 = new BitSet(new ulong[]{0x8139054000938080UL,0x3F050C0A026A0A4UL,0x2402000EF0000082UL});
-		public static readonly BitSet _syntax_in_agentcapabilities_macro_variation7327 = new BitSet(new ulong[]{0x0UL,0x0UL,0xE01UL,0x8UL});
-		public static readonly BitSet _195_in_agentcapabilities_macro_variation7335 = new BitSet(new ulong[]{0x8139054000938080UL,0x3F050C0A026A0A4UL,0x2402000EF0000082UL});
-		public static readonly BitSet _syntax_in_agentcapabilities_macro_variation7339 = new BitSet(new ulong[]{0x0UL,0x0UL,0xE01UL});
-		public static readonly BitSet _128_in_agentcapabilities_macro_variation7347 = new BitSet(new ulong[]{0x0UL,0x20UL});
-		public static readonly BitSet _agentcapabilities_macro_access_in_agentcapabilities_macro_variation7351 = new BitSet(new ulong[]{0x0UL,0x0UL,0xE00UL});
-		public static readonly BitSet _137_in_agentcapabilities_macro_variation7362 = new BitSet(new ulong[]{0x0UL,0x40UL});
-		public static readonly BitSet _L_BRACE_in_agentcapabilities_macro_variation7364 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
-		public static readonly BitSet _value_in_agentcapabilities_macro_variation7368 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
-		public static readonly BitSet _COMMA_in_agentcapabilities_macro_variation7374 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
-		public static readonly BitSet _value_in_agentcapabilities_macro_variation7378 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
-		public static readonly BitSet _R_BRACE_in_agentcapabilities_macro_variation7382 = new BitSet(new ulong[]{0x0UL,0x0UL,0xC00UL});
-		public static readonly BitSet _138_in_agentcapabilities_macro_variation7393 = new BitSet(new ulong[]{0x0UL,0x40UL});
-		public static readonly BitSet _L_BRACE_in_agentcapabilities_macro_variation7395 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
-		public static readonly BitSet _L_BRACE_in_agentcapabilities_macro_variation7416 = new BitSet(new ulong[]{0x4000000UL,0x400000020UL});
-		public static readonly BitSet _LOWER_in_agentcapabilities_macro_variation7421 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
-		public static readonly BitSet _COMMA_in_agentcapabilities_macro_variation7430 = new BitSet(new ulong[]{0x0UL,0x20UL});
-		public static readonly BitSet _LOWER_in_agentcapabilities_macro_variation7434 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
-		public static readonly BitSet _value_in_agentcapabilities_macro_variation7445 = new BitSet(new ulong[]{0x0UL,0x400000000UL});
-		public static readonly BitSet _R_BRACE_in_agentcapabilities_macro_variation7448 = new BitSet(new ulong[]{0x0UL,0x0UL,0x800UL});
-		public static readonly BitSet _139_in_agentcapabilities_macro_variation7458 = new BitSet(new ulong[]{0x80000000UL});
-		public static readonly BitSet _C_STRING_in_agentcapabilities_macro_variation7462 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _smi_type_in_syntax7492 = new BitSet(new ulong[]{0x0UL,0x40UL});
-		public static readonly BitSet _L_BRACE_in_syntax7497 = new BitSet(new ulong[]{0x0UL,0x20000000000020UL});
-		public static readonly BitSet _namedbit_in_syntax7501 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
-		public static readonly BitSet _COMMA_in_syntax7507 = new BitSet(new ulong[]{0x0UL,0x20000000000020UL});
-		public static readonly BitSet _namedbit_in_syntax7511 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
-		public static readonly BitSet _R_BRACE_in_syntax7517 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _smi_type_in_syntax7533 = new BitSet(new ulong[]{0x2UL,0x100UL});
-		public static readonly BitSet _smi_subtyping_in_syntax7536 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _type_in_syntax7550 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _LOWER_in_agentcapabilities_macro_access7572 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _189_in_traptype_macro7598 = new BitSet(new ulong[]{0x0UL,0x0UL,0x4000UL});
-		public static readonly BitSet _142_in_traptype_macro7600 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
-		public static readonly BitSet _value_in_traptype_macro7604 = new BitSet(new ulong[]{0x2UL,0x0UL,0x800000000800UL,0x2UL});
-		public static readonly BitSet _193_in_traptype_macro7610 = new BitSet(new ulong[]{0x0UL,0x40UL});
-		public static readonly BitSet _L_BRACE_in_traptype_macro7612 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
-		public static readonly BitSet _value_in_traptype_macro7616 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
-		public static readonly BitSet _COMMA_in_traptype_macro7622 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
-		public static readonly BitSet _value_in_traptype_macro7626 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
-		public static readonly BitSet _R_BRACE_in_traptype_macro7632 = new BitSet(new ulong[]{0x2UL,0x0UL,0x800000000800UL});
-		public static readonly BitSet _139_in_traptype_macro7648 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
-		public static readonly BitSet _value_in_traptype_macro7652 = new BitSet(new ulong[]{0x2UL,0x0UL,0x800000000000UL});
-		public static readonly BitSet _175_in_traptype_macro7661 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
-		public static readonly BitSet _value_in_traptype_macro7665 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _typeorvaluelist_in_operation_errorlist7688 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _typeorvaluelist_in_linkedOp_list7710 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _type_in_typeorvalue7738 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _value_in_typeorvalue7748 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _typeorvalue_in_typeorvaluelist7769 = new BitSet(new ulong[]{0x4000002UL});
-		public static readonly BitSet _COMMA_in_typeorvaluelist7776 = new BitSet(new ulong[]{0x81BB0540809B8080UL,0xF3F0D0C0A826ECE4UL,0x7C3B500EF00720DEUL});
-		public static readonly BitSet _typeorvalue_in_typeorvaluelist7780 = new BitSet(new ulong[]{0x4000002UL});
-		public static readonly BitSet _elementType_tagged_in_elementType7807 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _COMPONENTS_KW_in_elementType7817 = new BitSet(new ulong[]{0x0UL,0x80000UL});
-		public static readonly BitSet _OF_KW_in_elementType7819 = new BitSet(new ulong[]{0x8139054000938080UL,0x3F050C0A026A0A4UL,0x2402000EF0000082UL});
-		public static readonly BitSet _type_in_elementType7823 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _LOWER_in_elementType_tagged7845 = new BitSet(new ulong[]{0x8539254000938880UL,0x3F050C0A026A0A4UL,0x2402000EF0000082UL});
-		public static readonly BitSet _tag_in_elementType_tagged7869 = new BitSet(new ulong[]{0x8539254000938880UL,0x3F050C0A026A0A4UL,0x2402000EF0000082UL});
-		public static readonly BitSet _tag_default_in_elementType_tagged7883 = new BitSet(new ulong[]{0x8139054000938080UL,0x3F050C0A026A0A4UL,0x2402000EF0000082UL});
-		public static readonly BitSet _type_in_elementType_tagged7893 = new BitSet(new ulong[]{0x100000002UL,0x400000UL});
-		public static readonly BitSet _OPTIONAL_KW_in_elementType_tagged7899 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _DEFAULT_KW_in_elementType_tagged7907 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
-		public static readonly BitSet _value_in_elementType_tagged7914 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _LOWER_in_namedNumber7942 = new BitSet(new ulong[]{0x0UL,0x100UL});
-		public static readonly BitSet _L_PAREN_in_namedNumber7946 = new BitSet(new ulong[]{0x0UL,0x20000000004420UL});
-		public static readonly BitSet _signed_number_in_namedNumber7951 = new BitSet(new ulong[]{0x0UL,0x1000000000UL});
-		public static readonly BitSet _defined_value_in_namedNumber7961 = new BitSet(new ulong[]{0x0UL,0x1000000000UL});
-		public static readonly BitSet _R_PAREN_in_namedNumber7966 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _MINUS_in_signed_number7984 = new BitSet(new ulong[]{0x0UL,0x4000UL});
-		public static readonly BitSet _NUMBER_in_signed_number7988 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _NUMBER_in_signed_number7997 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _element_set_spec_in_element_set_specs8019 = new BitSet(new ulong[]{0x4000002UL});
-		public static readonly BitSet _COMMA_in_element_set_specs8027 = new BitSet(new ulong[]{0x2000000000UL});
-		public static readonly BitSet _DOTDOTDOT_in_element_set_specs8029 = new BitSet(new ulong[]{0x4000002UL});
-		public static readonly BitSet _COMMA_in_element_set_specs8039 = new BitSet(new ulong[]{0xA1BF0540809B80C0UL,0xF7F0D2C0A926FDE4UL,0x7C3B500EF00720DEUL});
-		public static readonly BitSet _element_set_spec_in_element_set_specs8043 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _EXCLAMATION_in_exception_spec8068 = new BitSet(new ulong[]{0x8139054000938080UL,0x3F050C0A026E4A4UL,0x2402000EF0000082UL});
-		public static readonly BitSet _signed_number_in_exception_spec8097 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _defined_value_in_exception_spec8129 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _type_in_exception_spec8155 = new BitSet(new ulong[]{0x2000000UL});
-		public static readonly BitSet _COLON_in_exception_spec8157 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
-		public static readonly BitSet _value_in_exception_spec8161 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _element_set_spec_normal_in_element_set_spec8200 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _ALL_KW_in_element_set_spec8211 = new BitSet(new ulong[]{0x80000000000UL});
-		public static readonly BitSet _EXCEPT_KW_in_element_set_spec8213 = new BitSet(new ulong[]{0xA1BF0540809B8080UL,0xF7F0D2C0A926FDE4UL,0x7C3B500EF00720DEUL});
-		public static readonly BitSet _constraint_elements_in_element_set_spec8217 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _intersections_in_element_set_spec_normal8240 = new BitSet(new ulong[]{0x1002UL,0x2000000000000UL});
-		public static readonly BitSet _set_in_element_set_spec_normal8252 = new BitSet(new ulong[]{0xA1BF0540809B8080UL,0xF7F0D2C0A926FDE4UL,0x7C3B500EF00720DEUL});
-		public static readonly BitSet _intersections_in_element_set_spec_normal8264 = new BitSet(new ulong[]{0x1002UL,0x2000000000000UL});
-		public static readonly BitSet _constraint_elements_except_in_intersections8291 = new BitSet(new ulong[]{0x2UL,0x3UL});
-		public static readonly BitSet _set_in_intersections8307 = new BitSet(new ulong[]{0xA1BF0540809B8080UL,0xF7F0D2C0A926FDE4UL,0x7C3B500EF00720DEUL});
-		public static readonly BitSet _constraint_elements_except_in_intersections8320 = new BitSet(new ulong[]{0x2UL,0x3UL});
-		public static readonly BitSet _constraint_elements_in_constraint_elements_except8347 = new BitSet(new ulong[]{0x80000000002UL});
-		public static readonly BitSet _EXCEPT_KW_in_constraint_elements_except8354 = new BitSet(new ulong[]{0xA1BF0540809B8080UL,0xF7F0D2C0A926FDE4UL,0x7C3B500EF00720DEUL});
-		public static readonly BitSet _constraint_elements_in_constraint_elements_except8358 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _value_range_in_constraint_elements8386 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _value_in_constraint_elements8404 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _SIZE_KW_in_constraint_elements8414 = new BitSet(new ulong[]{0x0UL,0x100UL});
-		public static readonly BitSet _constraint_in_constraint_elements8418 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _FROM_KW_in_constraint_elements8428 = new BitSet(new ulong[]{0x0UL,0x100UL});
-		public static readonly BitSet _constraint_in_constraint_elements8432 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _L_PAREN_in_constraint_elements8442 = new BitSet(new ulong[]{0xA1BF0540809B80C0UL,0xF7F0D2C0A926FDE4UL,0x7C3B500EF00720DEUL});
-		public static readonly BitSet _element_set_spec_in_constraint_elements8446 = new BitSet(new ulong[]{0x0UL,0x1000000000UL});
-		public static readonly BitSet _R_PAREN_in_constraint_elements8448 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _constraint_elements_includes_in_constraint_elements8460 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _PATTERN_KW_in_constraint_elements8470 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
-		public static readonly BitSet _value_in_constraint_elements8474 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _WITH_KW_in_constraint_elements8485 = new BitSet(new ulong[]{0x30000000UL});
-		public static readonly BitSet _COMPONENT_KW_in_constraint_elements8494 = new BitSet(new ulong[]{0x0UL,0x100UL});
-		public static readonly BitSet _constraint_in_constraint_elements8498 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _constraint_elements_components_in_constraint_elements8509 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _INCLUDES_KW_in_constraint_elements_includes8531 = new BitSet(new ulong[]{0x8139054000938080UL,0x3F050C0A026A0A4UL,0x2402000EF0000082UL});
-		public static readonly BitSet _type_in_constraint_elements_includes8541 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _COMPONENTS_KW_in_constraint_elements_components8561 = new BitSet(new ulong[]{0x0UL,0x40UL});
-		public static readonly BitSet _L_BRACE_in_constraint_elements_components8563 = new BitSet(new ulong[]{0x2000000000UL,0x20UL});
-		public static readonly BitSet _DOTDOTDOT_in_constraint_elements_components8566 = new BitSet(new ulong[]{0x4000000UL});
-		public static readonly BitSet _COMMA_in_constraint_elements_components8568 = new BitSet(new ulong[]{0x0UL,0x20UL});
-		public static readonly BitSet _type_constraint_list_in_constraint_elements_components8581 = new BitSet(new ulong[]{0x0UL,0x400000000UL});
-		public static readonly BitSet _R_BRACE_in_constraint_elements_components8583 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _value_in_value_range8609 = new BitSet(new ulong[]{0x1000000000UL,0x8UL});
-		public static readonly BitSet _MIN_KW_in_value_range8616 = new BitSet(new ulong[]{0x1000000000UL,0x8UL});
-		public static readonly BitSet _LESS_in_value_range8624 = new BitSet(new ulong[]{0x1000000000UL});
-		public static readonly BitSet _DOTDOT_in_value_range8630 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226E68UL,0x7C39500EF007205EUL});
-		public static readonly BitSet _LESS_in_value_range8635 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226E60UL,0x7C39500EF007205EUL});
-		public static readonly BitSet _value_in_value_range8646 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _MAX_KW_in_value_range8654 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _named_constraint_in_type_constraint_list8678 = new BitSet(new ulong[]{0x4000002UL});
-		public static readonly BitSet _COMMA_in_type_constraint_list8685 = new BitSet(new ulong[]{0x0UL,0x20UL});
-		public static readonly BitSet _named_constraint_in_type_constraint_list8689 = new BitSet(new ulong[]{0x4000002UL});
-		public static readonly BitSet _LOWER_in_named_constraint8714 = new BitSet(new ulong[]{0x12UL,0x10400100UL});
-		public static readonly BitSet _constraint_in_named_constraint8722 = new BitSet(new ulong[]{0x12UL,0x10400000UL});
-		public static readonly BitSet _PRESENT_KW_in_named_constraint8731 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _ABSENT_KW_in_named_constraint8738 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _OPTIONAL_KW_in_named_constraint8745 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _LOWER_in_choice_value8770 = new BitSet(new ulong[]{0x82040082080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
-		public static readonly BitSet _COLON_in_choice_value8777 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
-		public static readonly BitSet _value_in_choice_value8787 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _L_BRACE_in_sequence_value8807 = new BitSet(new ulong[]{0x4000000UL,0x400000020UL});
-		public static readonly BitSet _named_value_in_sequence_value8812 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
-		public static readonly BitSet _COMMA_in_sequence_value8821 = new BitSet(new ulong[]{0x0UL,0x20UL});
-		public static readonly BitSet _named_value_in_sequence_value8825 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
-		public static readonly BitSet _R_BRACE_in_sequence_value8833 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _L_BRACE_in_sequenceof_value8851 = new BitSet(new ulong[]{0x82040084080000UL,0xF020800408226C60UL,0x7C39500EF007205EUL});
-		public static readonly BitSet _value_in_sequenceof_value8856 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
-		public static readonly BitSet _COMMA_in_sequenceof_value8865 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
-		public static readonly BitSet _value_in_sequenceof_value8869 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
-		public static readonly BitSet _R_BRACE_in_sequenceof_value8877 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _H_STRING_in_cstr_value8903 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _B_STRING_in_cstr_value8923 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _L_BRACE_in_cstr_value8935 = new BitSet(new ulong[]{0x80000000UL,0x20000000004460UL});
-		public static readonly BitSet _id_list_in_cstr_value8960 = new BitSet(new ulong[]{0x0UL,0x400000000UL});
-		public static readonly BitSet _char_defs_list_in_cstr_value8988 = new BitSet(new ulong[]{0x0UL,0x400000000UL});
-		public static readonly BitSet _tuple_or_quad_in_cstr_value9010 = new BitSet(new ulong[]{0x0UL,0x400000000UL});
-		public static readonly BitSet _R_BRACE_in_cstr_value9033 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _LOWER_in_id_list9051 = new BitSet(new ulong[]{0x4000002UL});
-		public static readonly BitSet _COMMA_in_id_list9057 = new BitSet(new ulong[]{0x0UL,0x20UL});
-		public static readonly BitSet _LOWER_in_id_list9061 = new BitSet(new ulong[]{0x4000002UL});
-		public static readonly BitSet _char_defs_in_char_defs_list9086 = new BitSet(new ulong[]{0x4000002UL});
-		public static readonly BitSet _COMMA_in_char_defs_list9092 = new BitSet(new ulong[]{0x80000000UL,0x20000000000060UL});
-		public static readonly BitSet _char_defs_in_char_defs_list9096 = new BitSet(new ulong[]{0x4000002UL});
-		public static readonly BitSet _tuple_number_in_tuple_or_quad9122 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _quad_number_in_tuple_or_quad9131 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _signed_number_in_tuple_number9153 = new BitSet(new ulong[]{0x4000000UL});
-		public static readonly BitSet _COMMA_in_tuple_number9155 = new BitSet(new ulong[]{0x0UL,0x4400UL});
-		public static readonly BitSet _signed_number_in_tuple_number9159 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _signed_number_in_quad_number9181 = new BitSet(new ulong[]{0x4000000UL});
-		public static readonly BitSet _COMMA_in_quad_number9183 = new BitSet(new ulong[]{0x0UL,0x4400UL});
-		public static readonly BitSet _signed_number_in_quad_number9187 = new BitSet(new ulong[]{0x4000000UL});
-		public static readonly BitSet _COMMA_in_quad_number9189 = new BitSet(new ulong[]{0x0UL,0x4400UL});
-		public static readonly BitSet _signed_number_in_quad_number9193 = new BitSet(new ulong[]{0x4000000UL});
-		public static readonly BitSet _COMMA_in_quad_number9195 = new BitSet(new ulong[]{0x0UL,0x4400UL});
-		public static readonly BitSet _signed_number_in_quad_number9199 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _C_STRING_in_char_defs9224 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _L_BRACE_in_char_defs9234 = new BitSet(new ulong[]{0x0UL,0x4400UL});
-		public static readonly BitSet _tuple_or_quad_in_char_defs9238 = new BitSet(new ulong[]{0x0UL,0x400000000UL});
-		public static readonly BitSet _R_BRACE_in_char_defs9240 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _defined_value_in_char_defs9252 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _LOWER_in_named_value9275 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
-		public static readonly BitSet _value_in_named_value9279 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _LOWER_in_synpred1_Smi2024 = new BitSet(new ulong[]{0x0UL,0x4020UL});
-		public static readonly BitSet _set_in_synpred1_Smi2026 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _defined_value_in_synpred2_Smi2490 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _TRUE_KW_in_synpred3_Smi2752 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _FALSE_KW_in_synpred4_Smi2769 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _NULL_KW_in_synpred5_Smi2786 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _C_STRING_in_synpred6_Smi2803 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _defined_value_in_synpred7_Smi2823 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _signed_number_in_synpred8_Smi2842 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _choice_value_in_synpred9_Smi2861 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _sequence_value_in_synpred10_Smi2880 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _sequenceof_value_in_synpred11_Smi2899 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _cstr_value_in_synpred12_Smi2918 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _obj_id_comp_lst_in_synpred13_Smi2937 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _PLUS_INFINITY_KW_in_synpred14_Smi2956 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _MINUS_INFINITY_KW_in_synpred15_Smi2973 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _symbol_in_synpred16_Smi2987 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _L_BRACE_in_synpred17_Smi3336 = new BitSet(new ulong[]{0x0UL,0x20UL});
-		public static readonly BitSet _namedNumber_in_synpred17_Smi3338 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _L_BRACE_in_synpred18_Smi3542 = new BitSet(new ulong[]{0x0UL,0x20UL});
-		public static readonly BitSet _namedNumber_in_synpred18_Smi3544 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _CHOICE_KW_in_synpred19_Smi4099 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _LOWER_in_synpred20_Smi4234 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _RESULT_KW_in_synpred21_Smi4265 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _LOWER_in_synpred22_Smi4283 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _LOWER_in_synpred23_Smi4290 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _ERRORS_KW_in_synpred24_Smi4326 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _LINKED_KW_in_synpred25_Smi4357 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _LOWER_in_synpred26_Smi4417 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _smi_type_in_synpred27_Smi4847 = new BitSet(new ulong[]{0x0UL,0x40UL});
-		public static readonly BitSet _L_BRACE_in_synpred27_Smi4849 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _smi_type_in_synpred28_Smi4894 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _139_in_synpred29_Smi5247 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _138_in_synpred31_Smi5693 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _L_BRACE_in_synpred32_Smi5726 = new BitSet(new ulong[]{0x0UL,0x20UL});
-		public static readonly BitSet _LOWER_in_synpred32_Smi5728 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
-		public static readonly BitSet _set_in_synpred32_Smi5730 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _smi_type_in_synpred33_Smi6508 = new BitSet(new ulong[]{0x0UL,0x40UL});
-		public static readonly BitSet _L_BRACE_in_synpred33_Smi6510 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _UPPER_in_synpred34_Smi6879 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _value_in_synpred35_Smi6893 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _L_BRACE_in_synpred36_Smi7399 = new BitSet(new ulong[]{0x4000000UL,0x400000020UL});
-		public static readonly BitSet _set_in_synpred36_Smi7401 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _smi_type_in_synpred37_Smi7483 = new BitSet(new ulong[]{0x0UL,0x40UL});
-		public static readonly BitSet _L_BRACE_in_synpred37_Smi7485 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _smi_type_in_synpred38_Smi7526 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _139_in_synpred39_Smi7643 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _type_in_synpred40_Smi7731 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _L_BRACKET_in_synpred41_Smi7854 = new BitSet(new ulong[]{0x0UL,0x20000000004020UL});
-		public static readonly BitSet _set_in_synpred41_Smi7856 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _signed_number_in_synpred42_Smi8090 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _defined_value_in_synpred43_Smi8122 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _value_range_in_synpred44_Smi8379 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _value_in_synpred45_Smi8397 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _H_STRING_in_synpred46_Smi8896 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _B_STRING_in_synpred47_Smi8916 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _id_list_in_synpred48_Smi8953 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _char_defs_list_in_synpred49_Smi8981 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _module_definition_in_statement1830 = new BitSet(new ulong[]{0x0UL});
+		public static readonly BitSet _EOF_in_statement1836 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _module_identifier_in_module_definition1861 = new BitSet(new ulong[]{0x400000000UL,0x0UL,0x8000000000UL});
+		public static readonly BitSet _set_in_module_definition1863 = new BitSet(new ulong[]{0x400A00000000C00UL});
+		public static readonly BitSet _set_in_module_definition1876 = new BitSet(new ulong[]{0x0UL,0x200000000000UL});
+		public static readonly BitSet _TAGS_KW_in_module_definition1888 = new BitSet(new ulong[]{0x800000000400UL});
+		public static readonly BitSet _EXTENSIBILITY_KW_in_module_definition1897 = new BitSet(new ulong[]{0x800000000000000UL});
+		public static readonly BitSet _IMPLIED_KW_in_module_definition1899 = new BitSet(new ulong[]{0x400UL});
+		public static readonly BitSet _ASSIGN_OP_in_module_definition1905 = new BitSet(new ulong[]{0x4000UL});
+		public static readonly BitSet _BEGIN_KW_in_module_definition1907 = new BitSet(new ulong[]{0x1000448000000000UL,0xF020000000220020UL,0x7C39500EF007205EUL});
+		public static readonly BitSet _module_body_in_module_definition1911 = new BitSet(new ulong[]{0x8000000000UL});
+		public static readonly BitSet _END_KW_in_module_definition1913 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _UPPER_in_module_identifier1930 = new BitSet(new ulong[]{0x2UL,0x40UL});
+		public static readonly BitSet _obj_id_comp_lst_in_module_identifier1933 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _exports_in_module_body1956 = new BitSet(new ulong[]{0x1000040000000002UL,0xF020000000220020UL,0x7C39500EF007205EUL});
+		public static readonly BitSet _imports_in_module_body1967 = new BitSet(new ulong[]{0x40000000002UL,0xF020000000220020UL,0x7C39500EF007205EUL});
+		public static readonly BitSet _assignment_in_module_body1978 = new BitSet(new ulong[]{0x40000000002UL,0xF020000000220020UL,0x7C39500EF007205EUL});
+		public static readonly BitSet _L_BRACE_in_obj_id_comp_lst2001 = new BitSet(new ulong[]{0x0UL,0x20000000004020UL});
+		public static readonly BitSet _defined_value_in_obj_id_comp_lst2018 = new BitSet(new ulong[]{0x0UL,0x4020UL});
+		public static readonly BitSet _obj_id_component_in_obj_id_comp_lst2028 = new BitSet(new ulong[]{0x0UL,0x400004020UL});
+		public static readonly BitSet _R_BRACE_in_obj_id_comp_lst2036 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _set_in_defined_value2060 = new BitSet(new ulong[]{0x800000000UL});
+		public static readonly BitSet _DOT_in_defined_value2068 = new BitSet(new ulong[]{0x0UL,0x20UL});
+		public static readonly BitSet _LOWER_in_defined_value2078 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _NUMBER_in_obj_id_component2103 = new BitSet(new ulong[]{0x2UL,0x100UL});
+		public static readonly BitSet _LOWER_in_obj_id_component2115 = new BitSet(new ulong[]{0x2UL,0x100UL});
+		public static readonly BitSet _L_PAREN_in_obj_id_component2122 = new BitSet(new ulong[]{0x0UL,0x4000UL});
+		public static readonly BitSet _NUMBER_in_obj_id_component2126 = new BitSet(new ulong[]{0x0UL,0x1000000000UL});
+		public static readonly BitSet _R_PAREN_in_obj_id_component2128 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _EXPLICIT_KW_in_tag_default2154 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _IMPLICIT_KW_in_tag_default2161 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _AUTOMATIC_KW_in_tag_default2168 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _EXPORTS_KW_in_exports2188 = new BitSet(new ulong[]{0x40000000040UL,0xF020002000220020UL,0x7C39500EF007205EUL});
+		public static readonly BitSet _symbol_list_in_exports2200 = new BitSet(new ulong[]{0x0UL,0x2000000000UL});
+		public static readonly BitSet _ALL_KW_in_exports2211 = new BitSet(new ulong[]{0x0UL,0x2000000000UL});
+		public static readonly BitSet _SEMI_in_exports2222 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _IMPORTS_KW_in_imports2238 = new BitSet(new ulong[]{0x40000000000UL,0xF020002000220020UL,0x7C39500EF007205EUL});
+		public static readonly BitSet _symbols_from_module_in_imports2243 = new BitSet(new ulong[]{0x40000000000UL,0xF020002000220020UL,0x7C39500EF007205EUL});
+		public static readonly BitSet _SEMI_in_imports2249 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _UPPER_in_assignment2272 = new BitSet(new ulong[]{0x400UL});
+		public static readonly BitSet _ASSIGN_OP_in_assignment2274 = new BitSet(new ulong[]{0x8139054000938080UL,0x3F050C0A026A0A4UL,0x2402000EF0000082UL});
+		public static readonly BitSet _type_in_assignment2278 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _LOWER_in_assignment2292 = new BitSet(new ulong[]{0x8139054000938080UL,0x3F050C0A026A0A4UL,0x2402000EF0000082UL});
+		public static readonly BitSet _type_in_assignment2296 = new BitSet(new ulong[]{0x400UL});
+		public static readonly BitSet _ASSIGN_OP_in_assignment2298 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
+		public static readonly BitSet _value_in_assignment2302 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _UPPER_in_assignment2317 = new BitSet(new ulong[]{0x0UL,0x0UL,0x800000UL});
+		public static readonly BitSet _macroName_in_assignment2321 = new BitSet(new ulong[]{0x0UL,0x0UL,0x800000UL});
+		public static readonly BitSet _151_in_assignment2324 = new BitSet(new ulong[]{0x400UL});
+		public static readonly BitSet _ASSIGN_OP_in_assignment2326 = new BitSet(new ulong[]{0x4000UL});
+		public static readonly BitSet _BEGIN_KW_in_assignment2328 = new BitSet(new ulong[]{0xFFFFFFFFFFFFFFF0UL,0xFFFFFFFFFFFFFFFFUL,0xFFFFFFFFFFFFFFFFUL,0xFUL});
+		public static readonly BitSet _END_KW_in_assignment2338 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _symbol_in_symbol_list2366 = new BitSet(new ulong[]{0x4000002UL});
+		public static readonly BitSet _COMMA_in_symbol_list2373 = new BitSet(new ulong[]{0x40000000000UL,0xF020000000220020UL,0x7C39500EF007205EUL});
+		public static readonly BitSet _symbol_in_symbol_list2377 = new BitSet(new ulong[]{0x4000002UL});
+		public static readonly BitSet _symbol_list_in_symbols_from_module2400 = new BitSet(new ulong[]{0x4000000000000UL});
+		public static readonly BitSet _FROM_KW_in_symbols_from_module2405 = new BitSet(new ulong[]{0x0UL,0x20000000000000UL});
+		public static readonly BitSet _UPPER_in_symbols_from_module2409 = new BitSet(new ulong[]{0x2UL,0x20000000000060UL});
+		public static readonly BitSet _obj_id_comp_lst_in_symbols_from_module2439 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _defined_value_in_symbols_from_module2476 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _UPPER_in_symbol2512 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _LOWER_in_symbol2516 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _macroName_in_symbol2520 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _OPERATION_KW_in_macroName2527 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _ERROR_KW_in_macroName2531 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _134_in_macroName2536 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _190_in_macroName2540 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _132_in_macroName2554 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _131_in_macroName2558 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _144_in_macroName2562 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _146_in_macroName2576 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _145_in_macroName2580 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _187_in_macroName2584 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _188_in_macroName2588 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _179_in_macroName2595 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _OBJECT_KW_in_macroName2599 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _172_in_macroName2603 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _176_in_macroName2607 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _124_in_macroName2611 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _127_in_macroName2618 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _126_in_macroName2622 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _125_in_macroName2626 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _130_in_macroName2633 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _141_in_macroName2637 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _181_in_macroName2641 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _180_in_macroName2645 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _174_in_macroName2649 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _smi_macros_in_macroName2656 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _built_in_type_in_type2676 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _defined_type_in_type2685 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _selection_type_in_type2694 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _macros_type_in_type2703 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _smi_type_in_type2712 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _TRUE_KW_in_value2738 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _FALSE_KW_in_value2755 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _NULL_KW_in_value2772 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _C_STRING_in_value2791 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _defined_value_in_value2811 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _signed_number_in_value2830 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _choice_value_in_value2849 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _sequence_value_in_value2868 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _sequenceof_value_in_value2887 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _cstr_value_in_value2906 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _obj_id_comp_lst_in_value2925 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _PLUS_INFINITY_KW_in_value2942 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _MINUS_INFINITY_KW_in_value2959 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _symbol_in_value2975 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _any_type_in_built_in_type2998 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _bit_string_type_in_built_in_type3010 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _boolean_type_in_built_in_type3022 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _character_str_type_in_built_in_type3034 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _choice_type_in_built_in_type3046 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _embedded_type_in_built_in_type3058 = new BitSet(new ulong[]{0x4000000000UL});
+		public static readonly BitSet _EMBEDDED_KW_in_built_in_type3060 = new BitSet(new ulong[]{0x0UL,0x2000000UL});
+		public static readonly BitSet _PDV_KW_in_built_in_type3062 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _enum_type_in_built_in_type3074 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _external_type_in_built_in_type3086 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _integer_type_in_built_in_type3095 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _null_type_in_built_in_type3104 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _object_identifier_type_in_built_in_type3113 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _octetString_type_in_built_in_type3122 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _real_type_in_built_in_type3131 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _relativeOid_type_in_built_in_type3140 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _sequence_type_in_built_in_type3149 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _sequenceof_type_in_built_in_type3158 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _set_type_in_built_in_type3167 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _setof_type_in_built_in_type3176 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _tagged_type_in_built_in_type3185 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _UPPER_in_defined_type3208 = new BitSet(new ulong[]{0x800000000UL});
+		public static readonly BitSet _DOT_in_defined_type3210 = new BitSet(new ulong[]{0x0UL,0x20000000000000UL});
+		public static readonly BitSet _UPPER_in_defined_type3220 = new BitSet(new ulong[]{0x2UL,0x100UL});
+		public static readonly BitSet _constraint_in_defined_type3228 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _LOWER_in_selection_type3251 = new BitSet(new ulong[]{0x0UL,0x8UL});
+		public static readonly BitSet _LESS_in_selection_type3253 = new BitSet(new ulong[]{0x8139054000938080UL,0x3F050C0A026A0A4UL,0x2402000EF0000082UL});
+		public static readonly BitSet _type_in_selection_type3257 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _ANY_KW_in_any_type3277 = new BitSet(new ulong[]{0x200000002UL});
+		public static readonly BitSet _DEFINED_KW_in_any_type3280 = new BitSet(new ulong[]{0x40000UL});
+		public static readonly BitSet _BY_KW_in_any_type3282 = new BitSet(new ulong[]{0x0UL,0x20UL});
+		public static readonly BitSet _LOWER_in_any_type3286 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _BIT_KW_in_bit_string_type3311 = new BitSet(new ulong[]{0x0UL,0x80000000000UL});
+		public static readonly BitSet _STRING_KW_in_bit_string_type3313 = new BitSet(new ulong[]{0x2UL,0x140UL});
+		public static readonly BitSet _namedNumber_list_in_bit_string_type3326 = new BitSet(new ulong[]{0x2UL,0x100UL});
+		public static readonly BitSet _constraint_in_bit_string_type3337 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _BOOLEAN_KW_in_boolean_type3362 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _CHARACTER_KW_in_character_str_type3381 = new BitSet(new ulong[]{0x0UL,0x80000000000UL});
+		public static readonly BitSet _STRING_KW_in_character_str_type3383 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _character_set_in_character_str_type3392 = new BitSet(new ulong[]{0x2UL,0x100UL});
+		public static readonly BitSet _constraint_in_character_str_type3401 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _CHOICE_KW_in_choice_type3425 = new BitSet(new ulong[]{0x0UL,0x40UL});
+		public static readonly BitSet _L_BRACE_in_choice_type3427 = new BitSet(new ulong[]{0x10000000UL,0x20UL});
+		public static readonly BitSet _elementType_list_in_choice_type3431 = new BitSet(new ulong[]{0x0UL,0x400000000UL});
+		public static readonly BitSet _R_BRACE_in_choice_type3433 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _EMBEDDED_KW_in_embedded_type3453 = new BitSet(new ulong[]{0x0UL,0x2000000UL});
+		public static readonly BitSet _PDV_KW_in_embedded_type3455 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _ENUMERATED_KW_in_enum_type3474 = new BitSet(new ulong[]{0x0UL,0x40UL});
+		public static readonly BitSet _namedNumber_list_in_enum_type3478 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _EXTERNAL_KW_in_external_type3498 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _INTEGER_KW_in_integer_type3519 = new BitSet(new ulong[]{0x2UL,0x140UL});
+		public static readonly BitSet _namedNumber_list_in_integer_type3532 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _constraint_in_integer_type3541 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _NULL_KW_in_null_type3566 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _OBJECT_KW_in_object_identifier_type3585 = new BitSet(new ulong[]{0x200000000000000UL});
+		public static readonly BitSet _IDENTIFIER_KW_in_object_identifier_type3587 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _OCTET_KW_in_octetString_type3606 = new BitSet(new ulong[]{0x0UL,0x80000000000UL});
+		public static readonly BitSet _STRING_KW_in_octetString_type3608 = new BitSet(new ulong[]{0x2UL,0x100UL});
+		public static readonly BitSet _constraint_in_octetString_type3613 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _REAL_KW_in_real_type3636 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _177_in_relativeOid_type3658 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _SEQUENCE_KW_in_sequence_type3679 = new BitSet(new ulong[]{0x0UL,0x40UL});
+		public static readonly BitSet _L_BRACE_in_sequence_type3681 = new BitSet(new ulong[]{0x10000000UL,0x400000020UL});
+		public static readonly BitSet _elementType_list_in_sequence_type3686 = new BitSet(new ulong[]{0x0UL,0x400000000UL});
+		public static readonly BitSet _R_BRACE_in_sequence_type3692 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _SEQUENCE_KW_in_sequenceof_type3711 = new BitSet(new ulong[]{0x0UL,0x80100UL});
+		public static readonly BitSet _L_PAREN_in_sequenceof_type3714 = new BitSet(new ulong[]{0x0UL,0x20000000000UL});
+		public static readonly BitSet _SIZE_KW_in_sequenceof_type3716 = new BitSet(new ulong[]{0x0UL,0x100UL});
+		public static readonly BitSet _constraint_in_sequenceof_type3720 = new BitSet(new ulong[]{0x0UL,0x1000000000UL});
+		public static readonly BitSet _R_PAREN_in_sequenceof_type3724 = new BitSet(new ulong[]{0x0UL,0x80000UL});
+		public static readonly BitSet _OF_KW_in_sequenceof_type3729 = new BitSet(new ulong[]{0x8139054000938080UL,0x3F050C0A026A0A4UL,0x2402000EF0000082UL});
+		public static readonly BitSet _type_in_sequenceof_type3733 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _SET_KW_in_set_type3753 = new BitSet(new ulong[]{0x0UL,0x40UL});
+		public static readonly BitSet _L_BRACE_in_set_type3755 = new BitSet(new ulong[]{0x10000000UL,0x400000020UL});
+		public static readonly BitSet _elementType_list_in_set_type3760 = new BitSet(new ulong[]{0x0UL,0x400000000UL});
+		public static readonly BitSet _R_BRACE_in_set_type3766 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _SET_KW_in_setof_type3784 = new BitSet(new ulong[]{0x0UL,0x20000080000UL});
+		public static readonly BitSet _SIZE_KW_in_setof_type3787 = new BitSet(new ulong[]{0x0UL,0x100UL});
+		public static readonly BitSet _constraint_in_setof_type3791 = new BitSet(new ulong[]{0x0UL,0x80000UL});
+		public static readonly BitSet _OF_KW_in_setof_type3798 = new BitSet(new ulong[]{0x8139054000938080UL,0x3F050C0A026A0A4UL,0x2402000EF0000082UL});
+		public static readonly BitSet _type_in_setof_type3802 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _tag_in_tagged_type3824 = new BitSet(new ulong[]{0x8539254000938880UL,0x3F050C0A026A0A4UL,0x2402000EF0000082UL});
+		public static readonly BitSet _tag_default_in_tagged_type3832 = new BitSet(new ulong[]{0x8139054000938080UL,0x3F050C0A026A0A4UL,0x2402000EF0000082UL});
+		public static readonly BitSet _type_in_tagged_type3842 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _L_BRACE_in_namedNumber_list3862 = new BitSet(new ulong[]{0x0UL,0x20UL});
+		public static readonly BitSet _namedNumber_in_namedNumber_list3866 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
+		public static readonly BitSet _COMMA_in_namedNumber_list3872 = new BitSet(new ulong[]{0x0UL,0x20UL});
+		public static readonly BitSet _namedNumber_in_namedNumber_list3876 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
+		public static readonly BitSet _R_BRACE_in_namedNumber_list3882 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _L_PAREN_in_constraint3900 = new BitSet(new ulong[]{0xA1BF1540809B80C0UL,0xF7F0D2D0A926FDE4UL,0x7C3B500EF00720DEUL});
+		public static readonly BitSet _element_set_specs_in_constraint3905 = new BitSet(new ulong[]{0x100000000000UL,0x1000000000UL});
+		public static readonly BitSet _exception_spec_in_constraint3916 = new BitSet(new ulong[]{0x0UL,0x1000000000UL});
+		public static readonly BitSet _R_PAREN_in_constraint3922 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _BMP_STR_KW_in_character_set3940 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _GENERALIZED_TIME_KW_in_character_set3947 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _GENERAL_STR_KW_in_character_set3954 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _GRAPHIC_STR_KW_in_character_set3961 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _IA5_STRING_KW_in_character_set3971 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _ISO646_STR_KW_in_character_set3978 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _NUMERIC_STR_KW_in_character_set3985 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _PRINTABLE_STR_KW_in_character_set3992 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _TELETEX_STR_KW_in_character_set4002 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _T61_STR_KW_in_character_set4009 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _UNIVERSAL_STR_KW_in_character_set4016 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _UTF8_STR_KW_in_character_set4023 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _UTC_TIME_KW_in_character_set4033 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _VIDEOTEX_STR_KW_in_character_set4040 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _VISIBLE_STR_KW_in_character_set4047 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _elementType_in_elementType_list4069 = new BitSet(new ulong[]{0x4000002UL});
+		public static readonly BitSet _COMMA_in_elementType_list4076 = new BitSet(new ulong[]{0x10800000UL,0x20UL});
+		public static readonly BitSet _choice_type_in_elementType_list4087 = new BitSet(new ulong[]{0x4000002UL});
+		public static readonly BitSet _elementType_in_elementType_list4096 = new BitSet(new ulong[]{0x4000002UL});
+		public static readonly BitSet _L_BRACKET_in_tag4119 = new BitSet(new ulong[]{0x100UL,0x28000040004020UL});
+		public static readonly BitSet _clazz_in_tag4124 = new BitSet(new ulong[]{0x0UL,0x20000000004020UL});
+		public static readonly BitSet _class_NUMBER_in_tag4134 = new BitSet(new ulong[]{0x0UL,0x800000000UL});
+		public static readonly BitSet _R_BRACKET_in_tag4136 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _NUMBER_in_class_NUMBER4175 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _defined_value_in_class_NUMBER4184 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _OPERATION_KW_in_operation_macro4206 = new BitSet(new ulong[]{0x20000000202UL,0x200000010UL});
+		public static readonly BitSet _ARGUMENT_KW_in_operation_macro4211 = new BitSet(new ulong[]{0x8139054000938080UL,0x3F050C0A026A0A4UL,0x2402000EF0000082UL});
+		public static readonly BitSet _LOWER_in_operation_macro4222 = new BitSet(new ulong[]{0x8139054000938080UL,0x3F050C0A026A0A4UL,0x2402000EF0000082UL});
+		public static readonly BitSet _type_in_operation_macro4232 = new BitSet(new ulong[]{0x20000000002UL,0x200000010UL});
+		public static readonly BitSet _RESULT_KW_in_operation_macro4251 = new BitSet(new ulong[]{0x8139074000938082UL,0x3F050C0A026A0B4UL,0x2402000EF0000082UL});
+		public static readonly BitSet _LOWER_in_operation_macro4278 = new BitSet(new ulong[]{0x8139054000938080UL,0x3F050C0A026A0A4UL,0x2402000EF0000082UL});
+		public static readonly BitSet _type_in_operation_macro4289 = new BitSet(new ulong[]{0x20000000002UL,0x10UL});
+		public static readonly BitSet _ERRORS_KW_in_operation_macro4312 = new BitSet(new ulong[]{0x0UL,0x40UL});
+		public static readonly BitSet _L_BRACE_in_operation_macro4314 = new BitSet(new ulong[]{0x81BB0540809B8080UL,0xF3F0D0C4A826ECE4UL,0x7C3B500EF00720DEUL});
+		public static readonly BitSet _operation_errorlist_in_operation_macro4319 = new BitSet(new ulong[]{0x0UL,0x400000000UL});
+		public static readonly BitSet _R_BRACE_in_operation_macro4325 = new BitSet(new ulong[]{0x2UL,0x10UL});
+		public static readonly BitSet _LINKED_KW_in_operation_macro4343 = new BitSet(new ulong[]{0x0UL,0x40UL});
+		public static readonly BitSet _L_BRACE_in_operation_macro4345 = new BitSet(new ulong[]{0x81BB0540809B8080UL,0xF3F0D0C4A826ECE4UL,0x7C3B500EF00720DEUL});
+		public static readonly BitSet _linkedOp_list_in_operation_macro4350 = new BitSet(new ulong[]{0x0UL,0x400000000UL});
+		public static readonly BitSet _R_BRACE_in_operation_macro4356 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _ERROR_KW_in_error_macro4388 = new BitSet(new ulong[]{0x2UL,0x800000UL});
+		public static readonly BitSet _PARAMETER_KW_in_error_macro4394 = new BitSet(new ulong[]{0x8139054000938080UL,0x3F050C0A026A0A4UL,0x2402000EF0000082UL});
+		public static readonly BitSet _LOWER_in_error_macro4405 = new BitSet(new ulong[]{0x8139054000938080UL,0x3F050C0A026A0A4UL,0x2402000EF0000082UL});
+		public static readonly BitSet _type_in_error_macro4415 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _operation_macro_in_macros_type4445 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _error_macro_in_macros_type4454 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _objecttype_macro_in_macros_type4463 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _moduleidentity_macro_in_macros_type4472 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _objectidentity_macro_in_macros_type4484 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _notificationtype_macro_in_macros_type4493 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _textualconvention_macro_in_macros_type4502 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _objectgroup_macro_in_macros_type4514 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _notificationgroup_macro_in_macros_type4523 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _modulecompliance_macro_in_macros_type4532 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _agentcapabilities_macro_in_macros_type4544 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _traptype_macro_in_macros_type4553 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _135_in_smi_type4638 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _INTEGER_KW_in_smi_type4645 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _OCTET_KW_in_smi_type4652 = new BitSet(new ulong[]{0x0UL,0x80000000000UL});
+		public static readonly BitSet _STRING_KW_in_smi_type4654 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _OBJECT_KW_in_smi_type4661 = new BitSet(new ulong[]{0x200000000000000UL});
+		public static readonly BitSet _IDENTIFIER_KW_in_smi_type4663 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _UPPER_in_smi_type4673 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _LOWER_in_smi_type4682 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _L_PAREN_in_smi_subtyping4700 = new BitSet(new ulong[]{0x80000000080000UL,0x4600UL});
+		public static readonly BitSet _subtype_range_in_smi_subtyping4702 = new BitSet(new ulong[]{0x1000UL,0x1000000000UL});
+		public static readonly BitSet _BAR_in_smi_subtyping4705 = new BitSet(new ulong[]{0x80000000080000UL,0x4600UL});
+		public static readonly BitSet _subtype_range_in_smi_subtyping4707 = new BitSet(new ulong[]{0x1000UL,0x1000000000UL});
+		public static readonly BitSet _R_PAREN_in_smi_subtyping4711 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _L_PAREN_in_smi_subtyping4728 = new BitSet(new ulong[]{0x0UL,0x20000000000UL});
+		public static readonly BitSet _SIZE_KW_in_smi_subtyping4730 = new BitSet(new ulong[]{0x0UL,0x100UL});
+		public static readonly BitSet _L_PAREN_in_smi_subtyping4732 = new BitSet(new ulong[]{0x80000000080000UL,0x4600UL});
+		public static readonly BitSet _subtype_range_in_smi_subtyping4734 = new BitSet(new ulong[]{0x1000UL,0x1000000000UL});
+		public static readonly BitSet _BAR_in_smi_subtyping4737 = new BitSet(new ulong[]{0x80000000080000UL,0x4600UL});
+		public static readonly BitSet _subtype_range_in_smi_subtyping4739 = new BitSet(new ulong[]{0x1000UL,0x1000000000UL});
+		public static readonly BitSet _R_PAREN_in_smi_subtyping4743 = new BitSet(new ulong[]{0x0UL,0x1000000000UL});
+		public static readonly BitSet _R_PAREN_in_smi_subtyping4745 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _subtype_value_in_subtype_range4751 = new BitSet(new ulong[]{0x1000000002UL});
+		public static readonly BitSet _DOTDOT_in_subtype_range4754 = new BitSet(new ulong[]{0x80000000080000UL,0x4600UL});
+		public static readonly BitSet _subtype_value_in_subtype_range4756 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _MINUS_in_subtype_value4766 = new BitSet(new ulong[]{0x0UL,0x4000UL});
+		public static readonly BitSet _NUMBER_in_subtype_value4770 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _B_STRING_in_subtype_value4774 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _H_STRING_in_subtype_value4778 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _MAX_KW_in_subtype_value4782 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _163_in_objecttype_macro4800 = new BitSet(new ulong[]{0x0UL,0x0UL,0x200000000000000UL});
+		public static readonly BitSet _185_in_objecttype_macro4802 = new BitSet(new ulong[]{0x8139054000938080UL,0x3F050C0A026A0A4UL,0x2402000EF0000082UL});
+		public static readonly BitSet _smi_type_in_objecttype_macro4837 = new BitSet(new ulong[]{0x0UL,0x40UL});
+		public static readonly BitSet _namedbits_in_objecttype_macro4841 = new BitSet(new ulong[]{0x0UL,0x0UL,0x400C4002000001UL,0x1UL});
+		public static readonly BitSet _smi_type_in_objecttype_macro4882 = new BitSet(new ulong[]{0x0UL,0x100UL,0x400C4002000001UL,0x1UL});
+		public static readonly BitSet _smi_subtyping_in_objecttype_macro4885 = new BitSet(new ulong[]{0x0UL,0x0UL,0x400C4002000001UL,0x1UL});
+		public static readonly BitSet _type_in_objecttype_macro4916 = new BitSet(new ulong[]{0x0UL,0x0UL,0x400C4002000001UL,0x1UL});
+		public static readonly BitSet _192_in_objecttype_macro4962 = new BitSet(new ulong[]{0x80000000UL});
+		public static readonly BitSet _C_STRING_in_objecttype_macro4966 = new BitSet(new ulong[]{0x0UL,0x0UL,0x400C4002000001UL});
+		public static readonly BitSet _153_in_objecttype_macro4994 = new BitSet(new ulong[]{0x0UL,0x20UL});
+		public static readonly BitSet _128_in_objecttype_macro5007 = new BitSet(new ulong[]{0x0UL,0x20UL});
+		public static readonly BitSet _objecttype_macro_accesstypes_in_objecttype_macro5022 = new BitSet(new ulong[]{0x0UL,0x0UL,0x400C0000000000UL});
+		public static readonly BitSet _166_in_objecttype_macro5047 = new BitSet(new ulong[]{0x0UL,0x20UL});
+		public static readonly BitSet _objecttype_macro_pibaccess_in_objecttype_macro5051 = new BitSet(new ulong[]{0x0UL,0x0UL,0x400C0000000000UL});
+		public static readonly BitSet _170_in_objecttype_macro5091 = new BitSet(new ulong[]{0x0UL,0x40UL});
+		public static readonly BitSet _L_BRACE_in_objecttype_macro5093 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
+		public static readonly BitSet _value_in_objecttype_macro5097 = new BitSet(new ulong[]{0x0UL,0x400000000UL});
+		public static readonly BitSet _R_BRACE_in_objecttype_macro5099 = new BitSet(new ulong[]{0x0UL,0x0UL,0x40080000000000UL});
+		public static readonly BitSet _171_in_objecttype_macro5142 = new BitSet(new ulong[]{0x0UL,0x40UL});
+		public static readonly BitSet _L_BRACE_in_objecttype_macro5144 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
+		public static readonly BitSet _value_in_objecttype_macro5148 = new BitSet(new ulong[]{0x0UL,0x400000000UL});
+		public static readonly BitSet _R_BRACE_in_objecttype_macro5150 = new BitSet(new ulong[]{0x0UL,0x0UL,0x40000000000000UL});
+		public static readonly BitSet _182_in_objecttype_macro5199 = new BitSet(new ulong[]{0x0UL,0x20UL});
+		public static readonly BitSet _objecttype_macro_statustypes_in_objecttype_macro5203 = new BitSet(new ulong[]{0x2UL,0x0UL,0x8000810000308C20UL});
+		public static readonly BitSet _139_in_objecttype_macro5233 = new BitSet(new ulong[]{0x80000000UL});
+		public static readonly BitSet _C_STRING_in_objecttype_macro5237 = new BitSet(new ulong[]{0x2UL,0x0UL,0x8000810000308420UL});
+		public static readonly BitSet _149_in_objecttype_macro5294 = new BitSet(new ulong[]{0x0UL,0x40UL});
+		public static readonly BitSet _L_BRACE_in_objecttype_macro5296 = new BitSet(new ulong[]{0x0UL,0x20000000000020UL});
+		public static readonly BitSet _objecttype_macro_error_in_objecttype_macro5300 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
+		public static readonly BitSet _COMMA_in_objecttype_macro5311 = new BitSet(new ulong[]{0x0UL,0x20000000000020UL});
+		public static readonly BitSet _objecttype_macro_error_in_objecttype_macro5315 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
+		public static readonly BitSet _R_BRACE_in_objecttype_macro5321 = new BitSet(new ulong[]{0x2UL,0x0UL,0x8000810000108420UL});
+		public static readonly BitSet _175_in_objecttype_macro5336 = new BitSet(new ulong[]{0x80000000UL});
+		public static readonly BitSet _C_STRING_in_objecttype_macro5340 = new BitSet(new ulong[]{0x2UL,0x0UL,0x8000010000108420UL});
+		public static readonly BitSet _148_in_objecttype_macro5362 = new BitSet(new ulong[]{0x0UL,0x40UL});
+		public static readonly BitSet _objecttype_macro_index_in_objecttype_macro5366 = new BitSet(new ulong[]{0x2UL,0x0UL,0x8000000000100400UL});
+		public static readonly BitSet _133_in_objecttype_macro5392 = new BitSet(new ulong[]{0x0UL,0x40UL});
+		public static readonly BitSet _objecttype_macro_augments_in_objecttype_macro5396 = new BitSet(new ulong[]{0x2UL,0x0UL,0x8000000000100400UL});
+		public static readonly BitSet _168_in_objecttype_macro5422 = new BitSet(new ulong[]{0x0UL,0x40UL});
+		public static readonly BitSet _L_BRACE_in_objecttype_macro5424 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
+		public static readonly BitSet _value_in_objecttype_macro5428 = new BitSet(new ulong[]{0x0UL,0x400000000UL});
+		public static readonly BitSet _R_BRACE_in_objecttype_macro5430 = new BitSet(new ulong[]{0x2UL,0x0UL,0x8000000000100400UL});
+		public static readonly BitSet _143_in_objecttype_macro5477 = new BitSet(new ulong[]{0x0UL,0x40UL});
+		public static readonly BitSet _L_BRACE_in_objecttype_macro5479 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
+		public static readonly BitSet _value_in_objecttype_macro5483 = new BitSet(new ulong[]{0x0UL,0x400000000UL});
+		public static readonly BitSet _R_BRACE_in_objecttype_macro5485 = new BitSet(new ulong[]{0x2UL,0x0UL,0x8000000000100400UL});
+		public static readonly BitSet _148_in_objecttype_macro5555 = new BitSet(new ulong[]{0x0UL,0x40UL});
+		public static readonly BitSet _objecttype_macro_index_in_objecttype_macro5559 = new BitSet(new ulong[]{0x2UL,0x0UL,0x8000000000000400UL});
+		public static readonly BitSet _191_in_objecttype_macro5609 = new BitSet(new ulong[]{0x0UL,0x40UL});
+		public static readonly BitSet _L_BRACE_in_objecttype_macro5611 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800408226C60UL,0x7C39500EF007205EUL});
+		public static readonly BitSet _value_in_objecttype_macro5616 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
+		public static readonly BitSet _COMMA_in_objecttype_macro5627 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
+		public static readonly BitSet _value_in_objecttype_macro5631 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
+		public static readonly BitSet _R_BRACE_in_objecttype_macro5640 = new BitSet(new ulong[]{0x2UL,0x0UL,0x400UL});
+		public static readonly BitSet _138_in_objecttype_macro5679 = new BitSet(new ulong[]{0x0UL,0x40UL});
+		public static readonly BitSet _L_BRACE_in_objecttype_macro5681 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
+		public static readonly BitSet _objecttype_macro_bitsvalue_in_objecttype_macro5724 = new BitSet(new ulong[]{0x0UL,0x400000000UL});
+		public static readonly BitSet _value_in_objecttype_macro5755 = new BitSet(new ulong[]{0x0UL,0x400000000UL});
+		public static readonly BitSet _R_BRACE_in_objecttype_macro5781 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _LOWER_in_objecttype_macro_accesstypes5805 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _LOWER_in_objecttype_macro_pibaccess5832 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _LOWER_in_objecttype_macro_statustypes5856 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _L_BRACE_in_objecttype_macro_index5878 = new BitSet(new ulong[]{0x882040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
+		public static readonly BitSet _objecttype_macro_indextype_in_objecttype_macro_index5882 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
+		public static readonly BitSet _COMMA_in_objecttype_macro_index5889 = new BitSet(new ulong[]{0x882040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
+		public static readonly BitSet _objecttype_macro_indextype_in_objecttype_macro_index5893 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
+		public static readonly BitSet _R_BRACE_in_objecttype_macro_index5899 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _IMPLIED_KW_in_objecttype_macro_indextype5925 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
+		public static readonly BitSet _value_in_objecttype_macro_indextype5931 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _L_BRACE_in_objecttype_macro_augments5951 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
+		public static readonly BitSet _value_in_objecttype_macro_augments5955 = new BitSet(new ulong[]{0x0UL,0x400000000UL});
+		public static readonly BitSet _R_BRACE_in_objecttype_macro_augments5957 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _L_BRACE_in_namedbits5981 = new BitSet(new ulong[]{0x0UL,0x20000000000020UL});
+		public static readonly BitSet _namedbit_in_namedbits5985 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
+		public static readonly BitSet _COMMA_in_namedbits5992 = new BitSet(new ulong[]{0x0UL,0x20000000000020UL});
+		public static readonly BitSet _namedbit_in_namedbits5996 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
+		public static readonly BitSet _R_BRACE_in_namedbits6002 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _L_BRACE_in_objecttype_macro_bitsvalue6025 = new BitSet(new ulong[]{0x0UL,0x20UL});
+		public static readonly BitSet _LOWER_in_objecttype_macro_bitsvalue6029 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
+		public static readonly BitSet _COMMA_in_objecttype_macro_bitsvalue6036 = new BitSet(new ulong[]{0x0UL,0x20UL});
+		public static readonly BitSet _LOWER_in_objecttype_macro_bitsvalue6040 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
+		public static readonly BitSet _R_BRACE_in_objecttype_macro_bitsvalue6046 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _namedbit_in_objecttype_macro_error6072 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _157_in_moduleidentity_macro6094 = new BitSet(new ulong[]{0x0UL,0x0UL,0x80000000400000UL});
+		public static readonly BitSet _183_in_moduleidentity_macro6097 = new BitSet(new ulong[]{0x0UL,0x40UL});
+		public static readonly BitSet _L_BRACE_in_moduleidentity_macro6099 = new BitSet(new ulong[]{0x0UL,0x20000000000020UL});
+		public static readonly BitSet _moduleidentity_macro_categories_in_moduleidentity_macro6103 = new BitSet(new ulong[]{0x0UL,0x400000000UL});
+		public static readonly BitSet _R_BRACE_in_moduleidentity_macro6105 = new BitSet(new ulong[]{0x0UL,0x0UL,0x400000UL});
+		public static readonly BitSet _150_in_moduleidentity_macro6117 = new BitSet(new ulong[]{0x80000000UL});
+		public static readonly BitSet _C_STRING_in_moduleidentity_macro6121 = new BitSet(new ulong[]{0x0UL,0x0UL,0x2000000000UL});
+		public static readonly BitSet _165_in_moduleidentity_macro6126 = new BitSet(new ulong[]{0x80000000UL});
+		public static readonly BitSet _C_STRING_in_moduleidentity_macro6130 = new BitSet(new ulong[]{0x0UL,0x0UL,0x100UL});
+		public static readonly BitSet _136_in_moduleidentity_macro6135 = new BitSet(new ulong[]{0x80000000UL});
+		public static readonly BitSet _C_STRING_in_moduleidentity_macro6139 = new BitSet(new ulong[]{0x0UL,0x0UL,0x800UL});
+		public static readonly BitSet _139_in_moduleidentity_macro6147 = new BitSet(new ulong[]{0x80000000UL});
+		public static readonly BitSet _C_STRING_in_moduleidentity_macro6151 = new BitSet(new ulong[]{0x2UL,0x0UL,0x4000000000000UL});
+		public static readonly BitSet _moduleidentity_macro_revision_in_moduleidentity_macro6159 = new BitSet(new ulong[]{0x2UL,0x0UL,0x4000000000000UL});
+		public static readonly BitSet _178_in_moduleidentity_macro_revision6180 = new BitSet(new ulong[]{0x80000000UL});
+		public static readonly BitSet _C_STRING_in_moduleidentity_macro_revision6184 = new BitSet(new ulong[]{0x0UL,0x0UL,0x800UL});
+		public static readonly BitSet _139_in_moduleidentity_macro_revision6186 = new BitSet(new ulong[]{0x80000000UL});
+		public static readonly BitSet _C_STRING_in_moduleidentity_macro_revision6190 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _LOWER_in_moduleidentity_macro_categories6213 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _moduleidentity_macro_categoryid_in_moduleidentity_macro_categories6226 = new BitSet(new ulong[]{0x4000002UL});
+		public static readonly BitSet _COMMA_in_moduleidentity_macro_categories6233 = new BitSet(new ulong[]{0x0UL,0x20000000000020UL});
+		public static readonly BitSet _moduleidentity_macro_categoryid_in_moduleidentity_macro_categories6237 = new BitSet(new ulong[]{0x4000002UL});
+		public static readonly BitSet _namedbit_in_moduleidentity_macro_categoryid6261 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _162_in_objectidentity_macro6284 = new BitSet(new ulong[]{0x0UL,0x0UL,0x40000000000000UL});
+		public static readonly BitSet _182_in_objectidentity_macro6286 = new BitSet(new ulong[]{0x0UL,0x20UL});
+		public static readonly BitSet _status_in_objectidentity_macro6290 = new BitSet(new ulong[]{0x0UL,0x0UL,0x800UL});
+		public static readonly BitSet _139_in_objectidentity_macro6294 = new BitSet(new ulong[]{0x80000000UL});
+		public static readonly BitSet _C_STRING_in_objectidentity_macro6298 = new BitSet(new ulong[]{0x2UL,0x0UL,0x800000000000UL});
+		public static readonly BitSet _175_in_objectidentity_macro6305 = new BitSet(new ulong[]{0x80000000UL});
+		public static readonly BitSet _C_STRING_in_objectidentity_macro6309 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _159_in_notificationtype_macro6332 = new BitSet(new ulong[]{0x0UL,0x0UL,0x40001000000000UL});
+		public static readonly BitSet _164_in_notificationtype_macro6335 = new BitSet(new ulong[]{0x0UL,0x40UL});
+		public static readonly BitSet _L_BRACE_in_notificationtype_macro6337 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
+		public static readonly BitSet _value_in_notificationtype_macro6341 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
+		public static readonly BitSet _COMMA_in_notificationtype_macro6351 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
+		public static readonly BitSet _value_in_notificationtype_macro6355 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
+		public static readonly BitSet _R_BRACE_in_notificationtype_macro6361 = new BitSet(new ulong[]{0x0UL,0x0UL,0x40000000000000UL});
+		public static readonly BitSet _182_in_notificationtype_macro6370 = new BitSet(new ulong[]{0x0UL,0x20UL});
+		public static readonly BitSet _status_in_notificationtype_macro6374 = new BitSet(new ulong[]{0x0UL,0x0UL,0x800UL});
+		public static readonly BitSet _139_in_notificationtype_macro6382 = new BitSet(new ulong[]{0x80000000UL});
+		public static readonly BitSet _C_STRING_in_notificationtype_macro6386 = new BitSet(new ulong[]{0x2UL,0x0UL,0x800000000000UL});
+		public static readonly BitSet _175_in_notificationtype_macro6395 = new BitSet(new ulong[]{0x80000000UL});
+		public static readonly BitSet _C_STRING_in_notificationtype_macro6399 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _186_in_textualconvention_macro6427 = new BitSet(new ulong[]{0x0UL,0x0UL,0x40000000001000UL});
+		public static readonly BitSet _140_in_textualconvention_macro6430 = new BitSet(new ulong[]{0x80000000UL});
+		public static readonly BitSet _C_STRING_in_textualconvention_macro6434 = new BitSet(new ulong[]{0x0UL,0x0UL,0x40000000000000UL});
+		public static readonly BitSet _182_in_textualconvention_macro6444 = new BitSet(new ulong[]{0x0UL,0x20UL});
+		public static readonly BitSet _status_in_textualconvention_macro6448 = new BitSet(new ulong[]{0x0UL,0x0UL,0x800UL});
+		public static readonly BitSet _139_in_textualconvention_macro6456 = new BitSet(new ulong[]{0x80000000UL});
+		public static readonly BitSet _C_STRING_in_textualconvention_macro6460 = new BitSet(new ulong[]{0x0UL,0x0UL,0x200800000000000UL});
+		public static readonly BitSet _175_in_textualconvention_macro6469 = new BitSet(new ulong[]{0x80000000UL});
+		public static readonly BitSet _C_STRING_in_textualconvention_macro6473 = new BitSet(new ulong[]{0x0UL,0x0UL,0x200000000000000UL});
+		public static readonly BitSet _185_in_textualconvention_macro6484 = new BitSet(new ulong[]{0x8139054000938080UL,0x3F050C0A026A0A4UL,0x2402000EF0000082UL});
+		public static readonly BitSet _smi_type_in_textualconvention_macro6498 = new BitSet(new ulong[]{0x0UL,0x40UL});
+		public static readonly BitSet _L_BRACE_in_textualconvention_macro6503 = new BitSet(new ulong[]{0x0UL,0x20000000000020UL});
+		public static readonly BitSet _namedbit_in_textualconvention_macro6507 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
+		public static readonly BitSet _COMMA_in_textualconvention_macro6524 = new BitSet(new ulong[]{0x0UL,0x20000000000020UL});
+		public static readonly BitSet _namedbit_in_textualconvention_macro6528 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
+		public static readonly BitSet _R_BRACE_in_textualconvention_macro6534 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _type_in_textualconvention_macro6544 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _set_in_namedbit6565 = new BitSet(new ulong[]{0x0UL,0x100UL});
+		public static readonly BitSet _L_PAREN_in_namedbit6576 = new BitSet(new ulong[]{0x0UL,0x4400UL});
+		public static readonly BitSet _MINUS_in_namedbit6579 = new BitSet(new ulong[]{0x0UL,0x4000UL});
+		public static readonly BitSet _NUMBER_in_namedbit6589 = new BitSet(new ulong[]{0x0UL,0x1000000000UL});
+		public static readonly BitSet _R_PAREN_in_namedbit6591 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _161_in_objectgroup_macro6613 = new BitSet(new ulong[]{0x0UL,0x0UL,0x1000000000UL});
+		public static readonly BitSet _164_in_objectgroup_macro6615 = new BitSet(new ulong[]{0x0UL,0x40UL});
+		public static readonly BitSet _L_BRACE_in_objectgroup_macro6617 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
+		public static readonly BitSet _value_in_objectgroup_macro6621 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
+		public static readonly BitSet _COMMA_in_objectgroup_macro6627 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
+		public static readonly BitSet _value_in_objectgroup_macro6631 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
+		public static readonly BitSet _R_BRACE_in_objectgroup_macro6637 = new BitSet(new ulong[]{0x0UL,0x0UL,0x40000000000000UL});
+		public static readonly BitSet _182_in_objectgroup_macro6644 = new BitSet(new ulong[]{0x0UL,0x20UL});
+		public static readonly BitSet _status_in_objectgroup_macro6648 = new BitSet(new ulong[]{0x0UL,0x0UL,0x800UL});
+		public static readonly BitSet _139_in_objectgroup_macro6653 = new BitSet(new ulong[]{0x80000000UL});
+		public static readonly BitSet _C_STRING_in_objectgroup_macro6657 = new BitSet(new ulong[]{0x2UL,0x0UL,0x800000000000UL});
+		public static readonly BitSet _175_in_objectgroup_macro6663 = new BitSet(new ulong[]{0x80000000UL});
+		public static readonly BitSet _C_STRING_in_objectgroup_macro6667 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _158_in_notificationgroup_macro6692 = new BitSet(new ulong[]{0x0UL,0x0UL,0x100000000UL});
+		public static readonly BitSet _160_in_notificationgroup_macro6694 = new BitSet(new ulong[]{0x0UL,0x40UL});
+		public static readonly BitSet _L_BRACE_in_notificationgroup_macro6696 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
+		public static readonly BitSet _value_in_notificationgroup_macro6700 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
+		public static readonly BitSet _COMMA_in_notificationgroup_macro6706 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
+		public static readonly BitSet _value_in_notificationgroup_macro6710 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
+		public static readonly BitSet _R_BRACE_in_notificationgroup_macro6716 = new BitSet(new ulong[]{0x0UL,0x0UL,0x40000000000000UL});
+		public static readonly BitSet _182_in_notificationgroup_macro6723 = new BitSet(new ulong[]{0x0UL,0x20UL});
+		public static readonly BitSet _status_in_notificationgroup_macro6727 = new BitSet(new ulong[]{0x0UL,0x0UL,0x800UL});
+		public static readonly BitSet _139_in_notificationgroup_macro6732 = new BitSet(new ulong[]{0x80000000UL});
+		public static readonly BitSet _C_STRING_in_notificationgroup_macro6736 = new BitSet(new ulong[]{0x2UL,0x0UL,0x800000000000UL});
+		public static readonly BitSet _175_in_notificationgroup_macro6742 = new BitSet(new ulong[]{0x80000000UL});
+		public static readonly BitSet _C_STRING_in_notificationgroup_macro6746 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _156_in_modulecompliance_macro6771 = new BitSet(new ulong[]{0x0UL,0x0UL,0x40000000000000UL});
+		public static readonly BitSet _182_in_modulecompliance_macro6773 = new BitSet(new ulong[]{0x0UL,0x20UL});
+		public static readonly BitSet _status_in_modulecompliance_macro6777 = new BitSet(new ulong[]{0x0UL,0x0UL,0x800UL});
+		public static readonly BitSet _139_in_modulecompliance_macro6783 = new BitSet(new ulong[]{0x80000000UL});
+		public static readonly BitSet _C_STRING_in_modulecompliance_macro6787 = new BitSet(new ulong[]{0x0UL,0x0UL,0x800008000000UL});
+		public static readonly BitSet _175_in_modulecompliance_macro6793 = new BitSet(new ulong[]{0x80000000UL});
+		public static readonly BitSet _C_STRING_in_modulecompliance_macro6797 = new BitSet(new ulong[]{0x0UL,0x0UL,0x8000000UL});
+		public static readonly BitSet _modulecompliance_macro_module_in_modulecompliance_macro6808 = new BitSet(new ulong[]{0x2UL,0x0UL,0x8000000UL});
+		public static readonly BitSet _LOWER_in_status6833 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _155_in_modulecompliance_macro_module6856 = new BitSet(new ulong[]{0x2UL,0x20000000020000UL,0x1080000UL});
+		public static readonly BitSet _UPPER_in_modulecompliance_macro_module6867 = new BitSet(new ulong[]{0x82040080080002UL,0xF020800008226C60UL,0x7C39500EF10F205EUL});
+		public static readonly BitSet _value_in_modulecompliance_macro_module6881 = new BitSet(new ulong[]{0x2UL,0x20000UL,0x1080000UL});
+		public static readonly BitSet _152_in_modulecompliance_macro_module6896 = new BitSet(new ulong[]{0x0UL,0x40UL});
+		public static readonly BitSet _L_BRACE_in_modulecompliance_macro_module6898 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
+		public static readonly BitSet _value_in_modulecompliance_macro_module6902 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
+		public static readonly BitSet _COMMA_in_modulecompliance_macro_module6908 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
+		public static readonly BitSet _value_in_modulecompliance_macro_module6912 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
+		public static readonly BitSet _R_BRACE_in_modulecompliance_macro_module6918 = new BitSet(new ulong[]{0x2UL,0x20000UL,0x80000UL});
+		public static readonly BitSet _modulecompliance_macro_compliance_in_modulecompliance_macro_module6929 = new BitSet(new ulong[]{0x2UL,0x20000UL,0x80000UL});
+		public static readonly BitSet _147_in_modulecompliance_macro_compliance6952 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
+		public static readonly BitSet _value_in_modulecompliance_macro_compliance6956 = new BitSet(new ulong[]{0x0UL,0x0UL,0x800UL});
+		public static readonly BitSet _139_in_modulecompliance_macro_compliance6958 = new BitSet(new ulong[]{0x80000000UL});
+		public static readonly BitSet _C_STRING_in_modulecompliance_macro_compliance6962 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _OBJECT_KW_in_modulecompliance_macro_compliance6972 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
+		public static readonly BitSet _value_in_modulecompliance_macro_compliance6976 = new BitSet(new ulong[]{0x0UL,0x0UL,0x200020004000800UL,0x8UL});
+		public static readonly BitSet _185_in_modulecompliance_macro_compliance6986 = new BitSet(new ulong[]{0x8139054000938080UL,0x3F050C0A026A0A4UL,0x2402000EF0000082UL});
+		public static readonly BitSet _syntax_in_modulecompliance_macro_compliance6990 = new BitSet(new ulong[]{0x0UL,0x0UL,0x20004000800UL,0x8UL});
+		public static readonly BitSet _195_in_modulecompliance_macro_compliance7001 = new BitSet(new ulong[]{0x8139054000938080UL,0x3F050C0A026A0A4UL,0x2402000EF0000082UL});
+		public static readonly BitSet _syntax_in_modulecompliance_macro_compliance7005 = new BitSet(new ulong[]{0x0UL,0x0UL,0x20004000800UL});
+		public static readonly BitSet _154_in_modulecompliance_macro_compliance7022 = new BitSet(new ulong[]{0x0UL,0x20UL});
+		public static readonly BitSet _modulecompliance_macro_access_in_modulecompliance_macro_compliance7026 = new BitSet(new ulong[]{0x0UL,0x0UL,0x20000000800UL});
+		public static readonly BitSet _169_in_modulecompliance_macro_compliance7038 = new BitSet(new ulong[]{0x0UL,0x20UL});
+		public static readonly BitSet _modulecompliance_macro_pibaccess_in_modulecompliance_macro_compliance7042 = new BitSet(new ulong[]{0x0UL,0x0UL,0x800UL});
+		public static readonly BitSet _139_in_modulecompliance_macro_compliance7057 = new BitSet(new ulong[]{0x80000000UL});
+		public static readonly BitSet _C_STRING_in_modulecompliance_macro_compliance7061 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _LOWER_in_modulecompliance_macro_access7083 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _LOWER_in_modulecompliance_macro_pibaccess7108 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _129_in_agentcapabilities_macro7130 = new BitSet(new ulong[]{0x0UL,0x0UL,0x200000000000UL});
+		public static readonly BitSet _173_in_agentcapabilities_macro7132 = new BitSet(new ulong[]{0x80000000UL});
+		public static readonly BitSet _C_STRING_in_agentcapabilities_macro7136 = new BitSet(new ulong[]{0x0UL,0x0UL,0x40000000000000UL});
+		public static readonly BitSet _182_in_agentcapabilities_macro7141 = new BitSet(new ulong[]{0x0UL,0x20UL});
+		public static readonly BitSet _agentcapabilities_macro_status_in_agentcapabilities_macro7145 = new BitSet(new ulong[]{0x0UL,0x0UL,0x800UL});
+		public static readonly BitSet _139_in_agentcapabilities_macro7150 = new BitSet(new ulong[]{0x80000000UL});
+		public static readonly BitSet _C_STRING_in_agentcapabilities_macro7154 = new BitSet(new ulong[]{0x2UL,0x0UL,0x100800000000000UL});
+		public static readonly BitSet _175_in_agentcapabilities_macro7160 = new BitSet(new ulong[]{0x80000000UL});
+		public static readonly BitSet _C_STRING_in_agentcapabilities_macro7164 = new BitSet(new ulong[]{0x2UL,0x0UL,0x100000000000000UL});
+		public static readonly BitSet _agentcapabilities_macro_module_in_agentcapabilities_macro7174 = new BitSet(new ulong[]{0x2UL,0x0UL,0x100000000000000UL});
+		public static readonly BitSet _LOWER_in_agentcapabilities_macro_status7198 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _184_in_agentcapabilities_macro_module7216 = new BitSet(new ulong[]{0x0UL,0x20000000000020UL});
+		public static readonly BitSet _set_in_agentcapabilities_macro_module7220 = new BitSet(new ulong[]{0x2082040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
+		public static readonly BitSet _value_in_agentcapabilities_macro_module7234 = new BitSet(new ulong[]{0x2000000000000000UL});
+		public static readonly BitSet _INCLUDES_KW_in_agentcapabilities_macro_module7244 = new BitSet(new ulong[]{0x0UL,0x40UL});
+		public static readonly BitSet _L_BRACE_in_agentcapabilities_macro_module7246 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
+		public static readonly BitSet _value_in_agentcapabilities_macro_module7250 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
+		public static readonly BitSet _COMMA_in_agentcapabilities_macro_module7256 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
+		public static readonly BitSet _value_in_agentcapabilities_macro_module7260 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
+		public static readonly BitSet _R_BRACE_in_agentcapabilities_macro_module7264 = new BitSet(new ulong[]{0x2UL,0x0UL,0x0UL,0x4UL});
+		public static readonly BitSet _agentcapabilities_macro_variation_in_agentcapabilities_macro_module7272 = new BitSet(new ulong[]{0x2UL,0x0UL,0x0UL,0x4UL});
+		public static readonly BitSet _194_in_agentcapabilities_macro_variation7294 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
+		public static readonly BitSet _value_in_agentcapabilities_macro_variation7298 = new BitSet(new ulong[]{0x0UL,0x0UL,0x200000000000E01UL,0x8UL});
+		public static readonly BitSet _185_in_agentcapabilities_macro_variation7304 = new BitSet(new ulong[]{0x8139054000938080UL,0x3F050C0A026A0A4UL,0x2402000EF0000082UL});
+		public static readonly BitSet _syntax_in_agentcapabilities_macro_variation7308 = new BitSet(new ulong[]{0x0UL,0x0UL,0xE01UL,0x8UL});
+		public static readonly BitSet _195_in_agentcapabilities_macro_variation7316 = new BitSet(new ulong[]{0x8139054000938080UL,0x3F050C0A026A0A4UL,0x2402000EF0000082UL});
+		public static readonly BitSet _syntax_in_agentcapabilities_macro_variation7320 = new BitSet(new ulong[]{0x0UL,0x0UL,0xE01UL});
+		public static readonly BitSet _128_in_agentcapabilities_macro_variation7328 = new BitSet(new ulong[]{0x0UL,0x20UL});
+		public static readonly BitSet _agentcapabilities_macro_access_in_agentcapabilities_macro_variation7332 = new BitSet(new ulong[]{0x0UL,0x0UL,0xE00UL});
+		public static readonly BitSet _137_in_agentcapabilities_macro_variation7343 = new BitSet(new ulong[]{0x0UL,0x40UL});
+		public static readonly BitSet _L_BRACE_in_agentcapabilities_macro_variation7345 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
+		public static readonly BitSet _value_in_agentcapabilities_macro_variation7349 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
+		public static readonly BitSet _COMMA_in_agentcapabilities_macro_variation7355 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
+		public static readonly BitSet _value_in_agentcapabilities_macro_variation7359 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
+		public static readonly BitSet _R_BRACE_in_agentcapabilities_macro_variation7363 = new BitSet(new ulong[]{0x0UL,0x0UL,0xC00UL});
+		public static readonly BitSet _138_in_agentcapabilities_macro_variation7374 = new BitSet(new ulong[]{0x0UL,0x40UL});
+		public static readonly BitSet _L_BRACE_in_agentcapabilities_macro_variation7376 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
+		public static readonly BitSet _L_BRACE_in_agentcapabilities_macro_variation7397 = new BitSet(new ulong[]{0x4000000UL,0x400000020UL});
+		public static readonly BitSet _LOWER_in_agentcapabilities_macro_variation7402 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
+		public static readonly BitSet _COMMA_in_agentcapabilities_macro_variation7411 = new BitSet(new ulong[]{0x0UL,0x20UL});
+		public static readonly BitSet _LOWER_in_agentcapabilities_macro_variation7415 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
+		public static readonly BitSet _value_in_agentcapabilities_macro_variation7426 = new BitSet(new ulong[]{0x0UL,0x400000000UL});
+		public static readonly BitSet _R_BRACE_in_agentcapabilities_macro_variation7429 = new BitSet(new ulong[]{0x0UL,0x0UL,0x800UL});
+		public static readonly BitSet _139_in_agentcapabilities_macro_variation7439 = new BitSet(new ulong[]{0x80000000UL});
+		public static readonly BitSet _C_STRING_in_agentcapabilities_macro_variation7443 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _smi_type_in_syntax7473 = new BitSet(new ulong[]{0x0UL,0x40UL});
+		public static readonly BitSet _L_BRACE_in_syntax7478 = new BitSet(new ulong[]{0x0UL,0x20000000000020UL});
+		public static readonly BitSet _namedbit_in_syntax7482 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
+		public static readonly BitSet _COMMA_in_syntax7488 = new BitSet(new ulong[]{0x0UL,0x20000000000020UL});
+		public static readonly BitSet _namedbit_in_syntax7492 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
+		public static readonly BitSet _R_BRACE_in_syntax7498 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _smi_type_in_syntax7514 = new BitSet(new ulong[]{0x2UL,0x100UL});
+		public static readonly BitSet _smi_subtyping_in_syntax7517 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _type_in_syntax7531 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _LOWER_in_agentcapabilities_macro_access7553 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _189_in_traptype_macro7579 = new BitSet(new ulong[]{0x0UL,0x0UL,0x4000UL});
+		public static readonly BitSet _142_in_traptype_macro7581 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
+		public static readonly BitSet _value_in_traptype_macro7585 = new BitSet(new ulong[]{0x2UL,0x0UL,0x800000000800UL,0x2UL});
+		public static readonly BitSet _193_in_traptype_macro7591 = new BitSet(new ulong[]{0x0UL,0x40UL});
+		public static readonly BitSet _L_BRACE_in_traptype_macro7593 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
+		public static readonly BitSet _value_in_traptype_macro7597 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
+		public static readonly BitSet _COMMA_in_traptype_macro7603 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
+		public static readonly BitSet _value_in_traptype_macro7607 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
+		public static readonly BitSet _R_BRACE_in_traptype_macro7613 = new BitSet(new ulong[]{0x2UL,0x0UL,0x800000000800UL});
+		public static readonly BitSet _139_in_traptype_macro7629 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
+		public static readonly BitSet _value_in_traptype_macro7633 = new BitSet(new ulong[]{0x2UL,0x0UL,0x800000000000UL});
+		public static readonly BitSet _175_in_traptype_macro7642 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
+		public static readonly BitSet _value_in_traptype_macro7646 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _typeorvaluelist_in_operation_errorlist7669 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _typeorvaluelist_in_linkedOp_list7691 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _type_in_typeorvalue7719 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _value_in_typeorvalue7729 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _typeorvalue_in_typeorvaluelist7750 = new BitSet(new ulong[]{0x4000002UL});
+		public static readonly BitSet _COMMA_in_typeorvaluelist7757 = new BitSet(new ulong[]{0x81BB0540809B8080UL,0xF3F0D0C0A826ECE4UL,0x7C3B500EF00720DEUL});
+		public static readonly BitSet _typeorvalue_in_typeorvaluelist7761 = new BitSet(new ulong[]{0x4000002UL});
+		public static readonly BitSet _elementType_tagged_in_elementType7788 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _COMPONENTS_KW_in_elementType7798 = new BitSet(new ulong[]{0x0UL,0x80000UL});
+		public static readonly BitSet _OF_KW_in_elementType7800 = new BitSet(new ulong[]{0x8139054000938080UL,0x3F050C0A026A0A4UL,0x2402000EF0000082UL});
+		public static readonly BitSet _type_in_elementType7804 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _LOWER_in_elementType_tagged7826 = new BitSet(new ulong[]{0x8539254000938880UL,0x3F050C0A026A0A4UL,0x2402000EF0000082UL});
+		public static readonly BitSet _tag_in_elementType_tagged7850 = new BitSet(new ulong[]{0x8539254000938880UL,0x3F050C0A026A0A4UL,0x2402000EF0000082UL});
+		public static readonly BitSet _tag_default_in_elementType_tagged7864 = new BitSet(new ulong[]{0x8139054000938080UL,0x3F050C0A026A0A4UL,0x2402000EF0000082UL});
+		public static readonly BitSet _type_in_elementType_tagged7874 = new BitSet(new ulong[]{0x100000002UL,0x400000UL});
+		public static readonly BitSet _OPTIONAL_KW_in_elementType_tagged7880 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _DEFAULT_KW_in_elementType_tagged7888 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
+		public static readonly BitSet _value_in_elementType_tagged7895 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _LOWER_in_namedNumber7923 = new BitSet(new ulong[]{0x0UL,0x100UL});
+		public static readonly BitSet _L_PAREN_in_namedNumber7927 = new BitSet(new ulong[]{0x0UL,0x20000000004420UL});
+		public static readonly BitSet _signed_number_in_namedNumber7932 = new BitSet(new ulong[]{0x0UL,0x1000000000UL});
+		public static readonly BitSet _defined_value_in_namedNumber7942 = new BitSet(new ulong[]{0x0UL,0x1000000000UL});
+		public static readonly BitSet _R_PAREN_in_namedNumber7947 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _MINUS_in_signed_number7965 = new BitSet(new ulong[]{0x0UL,0x4000UL});
+		public static readonly BitSet _NUMBER_in_signed_number7969 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _NUMBER_in_signed_number7978 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _element_set_spec_in_element_set_specs8000 = new BitSet(new ulong[]{0x4000002UL});
+		public static readonly BitSet _COMMA_in_element_set_specs8008 = new BitSet(new ulong[]{0x2000000000UL});
+		public static readonly BitSet _DOTDOTDOT_in_element_set_specs8010 = new BitSet(new ulong[]{0x4000002UL});
+		public static readonly BitSet _COMMA_in_element_set_specs8020 = new BitSet(new ulong[]{0xA1BF0540809B80C0UL,0xF7F0D2C0A926FDE4UL,0x7C3B500EF00720DEUL});
+		public static readonly BitSet _element_set_spec_in_element_set_specs8024 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _EXCLAMATION_in_exception_spec8049 = new BitSet(new ulong[]{0x8139054000938080UL,0x3F050C0A026E4A4UL,0x2402000EF0000082UL});
+		public static readonly BitSet _signed_number_in_exception_spec8078 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _defined_value_in_exception_spec8110 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _type_in_exception_spec8136 = new BitSet(new ulong[]{0x2000000UL});
+		public static readonly BitSet _COLON_in_exception_spec8138 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
+		public static readonly BitSet _value_in_exception_spec8142 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _element_set_spec_normal_in_element_set_spec8181 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _ALL_KW_in_element_set_spec8192 = new BitSet(new ulong[]{0x80000000000UL});
+		public static readonly BitSet _EXCEPT_KW_in_element_set_spec8194 = new BitSet(new ulong[]{0xA1BF0540809B8080UL,0xF7F0D2C0A926FDE4UL,0x7C3B500EF00720DEUL});
+		public static readonly BitSet _constraint_elements_in_element_set_spec8198 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _intersections_in_element_set_spec_normal8221 = new BitSet(new ulong[]{0x1002UL,0x2000000000000UL});
+		public static readonly BitSet _set_in_element_set_spec_normal8233 = new BitSet(new ulong[]{0xA1BF0540809B8080UL,0xF7F0D2C0A926FDE4UL,0x7C3B500EF00720DEUL});
+		public static readonly BitSet _intersections_in_element_set_spec_normal8245 = new BitSet(new ulong[]{0x1002UL,0x2000000000000UL});
+		public static readonly BitSet _constraint_elements_except_in_intersections8272 = new BitSet(new ulong[]{0x2UL,0x3UL});
+		public static readonly BitSet _set_in_intersections8288 = new BitSet(new ulong[]{0xA1BF0540809B8080UL,0xF7F0D2C0A926FDE4UL,0x7C3B500EF00720DEUL});
+		public static readonly BitSet _constraint_elements_except_in_intersections8301 = new BitSet(new ulong[]{0x2UL,0x3UL});
+		public static readonly BitSet _constraint_elements_in_constraint_elements_except8328 = new BitSet(new ulong[]{0x80000000002UL});
+		public static readonly BitSet _EXCEPT_KW_in_constraint_elements_except8335 = new BitSet(new ulong[]{0xA1BF0540809B8080UL,0xF7F0D2C0A926FDE4UL,0x7C3B500EF00720DEUL});
+		public static readonly BitSet _constraint_elements_in_constraint_elements_except8339 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _value_range_in_constraint_elements8367 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _value_in_constraint_elements8385 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _SIZE_KW_in_constraint_elements8395 = new BitSet(new ulong[]{0x0UL,0x100UL});
+		public static readonly BitSet _constraint_in_constraint_elements8399 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _FROM_KW_in_constraint_elements8409 = new BitSet(new ulong[]{0x0UL,0x100UL});
+		public static readonly BitSet _constraint_in_constraint_elements8413 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _L_PAREN_in_constraint_elements8423 = new BitSet(new ulong[]{0xA1BF0540809B80C0UL,0xF7F0D2C0A926FDE4UL,0x7C3B500EF00720DEUL});
+		public static readonly BitSet _element_set_spec_in_constraint_elements8427 = new BitSet(new ulong[]{0x0UL,0x1000000000UL});
+		public static readonly BitSet _R_PAREN_in_constraint_elements8429 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _constraint_elements_includes_in_constraint_elements8441 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _PATTERN_KW_in_constraint_elements8451 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
+		public static readonly BitSet _value_in_constraint_elements8455 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _WITH_KW_in_constraint_elements8466 = new BitSet(new ulong[]{0x30000000UL});
+		public static readonly BitSet _COMPONENT_KW_in_constraint_elements8475 = new BitSet(new ulong[]{0x0UL,0x100UL});
+		public static readonly BitSet _constraint_in_constraint_elements8479 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _constraint_elements_components_in_constraint_elements8490 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _INCLUDES_KW_in_constraint_elements_includes8512 = new BitSet(new ulong[]{0x8139054000938080UL,0x3F050C0A026A0A4UL,0x2402000EF0000082UL});
+		public static readonly BitSet _type_in_constraint_elements_includes8522 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _COMPONENTS_KW_in_constraint_elements_components8542 = new BitSet(new ulong[]{0x0UL,0x40UL});
+		public static readonly BitSet _L_BRACE_in_constraint_elements_components8544 = new BitSet(new ulong[]{0x2000000000UL,0x20UL});
+		public static readonly BitSet _DOTDOTDOT_in_constraint_elements_components8547 = new BitSet(new ulong[]{0x4000000UL});
+		public static readonly BitSet _COMMA_in_constraint_elements_components8549 = new BitSet(new ulong[]{0x0UL,0x20UL});
+		public static readonly BitSet _type_constraint_list_in_constraint_elements_components8562 = new BitSet(new ulong[]{0x0UL,0x400000000UL});
+		public static readonly BitSet _R_BRACE_in_constraint_elements_components8564 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _value_in_value_range8590 = new BitSet(new ulong[]{0x1000000000UL,0x8UL});
+		public static readonly BitSet _MIN_KW_in_value_range8597 = new BitSet(new ulong[]{0x1000000000UL,0x8UL});
+		public static readonly BitSet _LESS_in_value_range8605 = new BitSet(new ulong[]{0x1000000000UL});
+		public static readonly BitSet _DOTDOT_in_value_range8611 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226E68UL,0x7C39500EF007205EUL});
+		public static readonly BitSet _LESS_in_value_range8616 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226E60UL,0x7C39500EF007205EUL});
+		public static readonly BitSet _value_in_value_range8627 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _MAX_KW_in_value_range8635 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _named_constraint_in_type_constraint_list8659 = new BitSet(new ulong[]{0x4000002UL});
+		public static readonly BitSet _COMMA_in_type_constraint_list8666 = new BitSet(new ulong[]{0x0UL,0x20UL});
+		public static readonly BitSet _named_constraint_in_type_constraint_list8670 = new BitSet(new ulong[]{0x4000002UL});
+		public static readonly BitSet _LOWER_in_named_constraint8695 = new BitSet(new ulong[]{0x12UL,0x10400100UL});
+		public static readonly BitSet _constraint_in_named_constraint8703 = new BitSet(new ulong[]{0x12UL,0x10400000UL});
+		public static readonly BitSet _PRESENT_KW_in_named_constraint8712 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _ABSENT_KW_in_named_constraint8719 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _OPTIONAL_KW_in_named_constraint8726 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _LOWER_in_choice_value8751 = new BitSet(new ulong[]{0x82040082080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
+		public static readonly BitSet _COLON_in_choice_value8758 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
+		public static readonly BitSet _value_in_choice_value8768 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _L_BRACE_in_sequence_value8788 = new BitSet(new ulong[]{0x4000000UL,0x400000020UL});
+		public static readonly BitSet _named_value_in_sequence_value8793 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
+		public static readonly BitSet _COMMA_in_sequence_value8802 = new BitSet(new ulong[]{0x0UL,0x20UL});
+		public static readonly BitSet _named_value_in_sequence_value8806 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
+		public static readonly BitSet _R_BRACE_in_sequence_value8814 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _L_BRACE_in_sequenceof_value8832 = new BitSet(new ulong[]{0x82040084080000UL,0xF020800408226C60UL,0x7C39500EF007205EUL});
+		public static readonly BitSet _value_in_sequenceof_value8837 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
+		public static readonly BitSet _COMMA_in_sequenceof_value8846 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
+		public static readonly BitSet _value_in_sequenceof_value8850 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
+		public static readonly BitSet _R_BRACE_in_sequenceof_value8858 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _H_STRING_in_cstr_value8884 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _B_STRING_in_cstr_value8904 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _L_BRACE_in_cstr_value8916 = new BitSet(new ulong[]{0x80000000UL,0x20000000004460UL});
+		public static readonly BitSet _id_list_in_cstr_value8941 = new BitSet(new ulong[]{0x0UL,0x400000000UL});
+		public static readonly BitSet _char_defs_list_in_cstr_value8969 = new BitSet(new ulong[]{0x0UL,0x400000000UL});
+		public static readonly BitSet _tuple_or_quad_in_cstr_value8991 = new BitSet(new ulong[]{0x0UL,0x400000000UL});
+		public static readonly BitSet _R_BRACE_in_cstr_value9014 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _LOWER_in_id_list9032 = new BitSet(new ulong[]{0x4000002UL});
+		public static readonly BitSet _COMMA_in_id_list9038 = new BitSet(new ulong[]{0x0UL,0x20UL});
+		public static readonly BitSet _LOWER_in_id_list9042 = new BitSet(new ulong[]{0x4000002UL});
+		public static readonly BitSet _char_defs_in_char_defs_list9067 = new BitSet(new ulong[]{0x4000002UL});
+		public static readonly BitSet _COMMA_in_char_defs_list9073 = new BitSet(new ulong[]{0x80000000UL,0x20000000000060UL});
+		public static readonly BitSet _char_defs_in_char_defs_list9077 = new BitSet(new ulong[]{0x4000002UL});
+		public static readonly BitSet _tuple_number_in_tuple_or_quad9103 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _quad_number_in_tuple_or_quad9112 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _signed_number_in_tuple_number9134 = new BitSet(new ulong[]{0x4000000UL});
+		public static readonly BitSet _COMMA_in_tuple_number9136 = new BitSet(new ulong[]{0x0UL,0x4400UL});
+		public static readonly BitSet _signed_number_in_tuple_number9140 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _signed_number_in_quad_number9162 = new BitSet(new ulong[]{0x4000000UL});
+		public static readonly BitSet _COMMA_in_quad_number9164 = new BitSet(new ulong[]{0x0UL,0x4400UL});
+		public static readonly BitSet _signed_number_in_quad_number9168 = new BitSet(new ulong[]{0x4000000UL});
+		public static readonly BitSet _COMMA_in_quad_number9170 = new BitSet(new ulong[]{0x0UL,0x4400UL});
+		public static readonly BitSet _signed_number_in_quad_number9174 = new BitSet(new ulong[]{0x4000000UL});
+		public static readonly BitSet _COMMA_in_quad_number9176 = new BitSet(new ulong[]{0x0UL,0x4400UL});
+		public static readonly BitSet _signed_number_in_quad_number9180 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _C_STRING_in_char_defs9205 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _L_BRACE_in_char_defs9215 = new BitSet(new ulong[]{0x0UL,0x4400UL});
+		public static readonly BitSet _tuple_or_quad_in_char_defs9219 = new BitSet(new ulong[]{0x0UL,0x400000000UL});
+		public static readonly BitSet _R_BRACE_in_char_defs9221 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _defined_value_in_char_defs9233 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _LOWER_in_named_value9256 = new BitSet(new ulong[]{0x82040080080000UL,0xF020800008226C60UL,0x7C39500EF007205EUL});
+		public static readonly BitSet _value_in_named_value9260 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _LOWER_in_synpred1_Smi2005 = new BitSet(new ulong[]{0x0UL,0x4020UL});
+		public static readonly BitSet _set_in_synpred1_Smi2007 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _defined_value_in_synpred2_Smi2471 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _TRUE_KW_in_synpred3_Smi2733 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _FALSE_KW_in_synpred4_Smi2750 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _NULL_KW_in_synpred5_Smi2767 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _C_STRING_in_synpred6_Smi2784 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _defined_value_in_synpred7_Smi2804 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _signed_number_in_synpred8_Smi2823 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _choice_value_in_synpred9_Smi2842 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _sequence_value_in_synpred10_Smi2861 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _sequenceof_value_in_synpred11_Smi2880 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _cstr_value_in_synpred12_Smi2899 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _obj_id_comp_lst_in_synpred13_Smi2918 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _PLUS_INFINITY_KW_in_synpred14_Smi2937 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _MINUS_INFINITY_KW_in_synpred15_Smi2954 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _symbol_in_synpred16_Smi2968 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _L_BRACE_in_synpred17_Smi3317 = new BitSet(new ulong[]{0x0UL,0x20UL});
+		public static readonly BitSet _namedNumber_in_synpred17_Smi3319 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _L_BRACE_in_synpred18_Smi3523 = new BitSet(new ulong[]{0x0UL,0x20UL});
+		public static readonly BitSet _namedNumber_in_synpred18_Smi3525 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _CHOICE_KW_in_synpred19_Smi4080 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _LOWER_in_synpred20_Smi4215 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _RESULT_KW_in_synpred21_Smi4246 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _LOWER_in_synpred22_Smi4264 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _LOWER_in_synpred23_Smi4271 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _ERRORS_KW_in_synpred24_Smi4307 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _LINKED_KW_in_synpred25_Smi4338 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _LOWER_in_synpred26_Smi4398 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _smi_type_in_synpred27_Smi4828 = new BitSet(new ulong[]{0x0UL,0x40UL});
+		public static readonly BitSet _L_BRACE_in_synpred27_Smi4830 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _smi_type_in_synpred28_Smi4875 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _139_in_synpred29_Smi5228 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _138_in_synpred31_Smi5674 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _L_BRACE_in_synpred32_Smi5707 = new BitSet(new ulong[]{0x0UL,0x20UL});
+		public static readonly BitSet _LOWER_in_synpred32_Smi5709 = new BitSet(new ulong[]{0x4000000UL,0x400000000UL});
+		public static readonly BitSet _set_in_synpred32_Smi5711 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _smi_type_in_synpred33_Smi6489 = new BitSet(new ulong[]{0x0UL,0x40UL});
+		public static readonly BitSet _L_BRACE_in_synpred33_Smi6491 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _UPPER_in_synpred34_Smi6860 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _value_in_synpred35_Smi6874 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _L_BRACE_in_synpred36_Smi7380 = new BitSet(new ulong[]{0x4000000UL,0x400000020UL});
+		public static readonly BitSet _set_in_synpred36_Smi7382 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _smi_type_in_synpred37_Smi7464 = new BitSet(new ulong[]{0x0UL,0x40UL});
+		public static readonly BitSet _L_BRACE_in_synpred37_Smi7466 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _smi_type_in_synpred38_Smi7507 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _139_in_synpred39_Smi7624 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _type_in_synpred40_Smi7712 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _L_BRACKET_in_synpred41_Smi7835 = new BitSet(new ulong[]{0x0UL,0x20000000004020UL});
+		public static readonly BitSet _set_in_synpred41_Smi7837 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _signed_number_in_synpred42_Smi8071 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _defined_value_in_synpred43_Smi8103 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _value_range_in_synpred44_Smi8360 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _value_in_synpred45_Smi8378 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _H_STRING_in_synpred46_Smi8877 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _B_STRING_in_synpred47_Smi8897 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _id_list_in_synpred48_Smi8934 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _char_defs_list_in_synpred49_Smi8962 = new BitSet(new ulong[]{0x2UL});
 	}
 	#endregion Follow sets
 }
