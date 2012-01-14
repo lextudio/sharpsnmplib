@@ -159,6 +159,7 @@
     <None Include="Resources\BRCM-BSAPTRAP-MIB.mib" />
     <None Include="Resources\CASTELLEMIB.mib" />
     <None Include="Resources\CHECKPOINT-MIB.mib" />
+    <None Include="Resources\CISCO-CONFIG-COPY-CAPABILITY.mib" />
     <None Include="Resources\empty.txt" />
     <None Include="Resources\httpmib.txt" />
     <None Include="Resources\MM200-MIB.mib" />

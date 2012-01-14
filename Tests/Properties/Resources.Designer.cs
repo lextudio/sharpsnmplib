@@ -207,6 +207,13 @@ namespace Lextm.SharpSnmpLib.Properties {
             }
         }
         
+        internal static byte[] CISCO_CONFIG_COPY_CAPABILITY {
+            get {
+                object obj = ResourceManager.GetObject("CISCO_CONFIG_COPY_CAPABILITY", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         internal static byte[] CISCO_CSG_MIB {
             get {
                 object obj = ResourceManager.GetObject("CISCO_CSG_MIB", resourceCulture);

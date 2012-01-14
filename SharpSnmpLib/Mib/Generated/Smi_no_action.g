@@ -174,6 +174,7 @@ BEGIN_KW
 	:	'BEGIN'
 	;
 
+fragment
 BIT_KW
 	:	'BIT'
 	;
@@ -532,7 +533,7 @@ WS
 	;
 
 COMMENT 
- : '--'; ({!(input.LA(1) == '-' && input.LA(2) == '-')}?=> ~('\r' | '\n'))* (NEWLINE | '--')
+ : '--' ({!(input.LA(1) == '-' && input.LA(2) == '-')}?=> ~('\r' | '\n'))* (NEWLINE | '--')
  { skip(); }
  ;
 
@@ -546,18 +547,7 @@ HDIG		:	( :('0'..'9') )
 
 /* NSS 13/1/05: Added '_' as acceptable character - required for some PIBs */
 
-UPPER	
-	:   ('A'..'Z') 
-		(
-	:	( 'a'..'z' | 'A'..'Z' |'-' | '_' | '0'..'9' ))* 	;   // '_' | 
-
-LOWER
-	:	('a'..'z') 
-		(
-	:	( 'a'..'z' | 'A'..'Z' |'-' | '_' | '0'..'9' ))* 	;   // '_' | 
-
-
-
+NAME 	:	('a'..'z' | 'A'..'Z') ( 'a'..'z' | 'A'..'Z' |'-' | '_' | '0'..'9' )* 	;   // '_' | 
 
 // Unable to resolve a string like 010101 followed by 'H
 //B_STRING 	: 	SINGLE_QUOTE ({LA(3)!='B'}? BDIG)+  BDIG SINGLE_QUOTE 'B';
@@ -598,19 +588,18 @@ module_definition: module_identifier ('PIB-DEFINITIONS' | DEFINITIONS_KW)
 		(EXTENSIBILITY_KW IMPLIED_KW)?
 		ASSIGN_OP BEGIN_KW module_body END_KW;
 
-module_identifier: UPPER (obj_id_comp_lst)? ;
+module_identifier: NAME (obj_id_comp_lst)? ;
 
 module_body: (exports)? (imports)? (assignment)* ;
 
 /* NSS 15/1/05: Added syntactic predicate */
-obj_id_comp_lst: L_BRACE ((LOWER (LOWER|NUMBER)) => defined_value)? (obj_id_component)+ R_BRACE;
+obj_id_comp_lst: L_BRACE ((NAME (NAME|NUMBER)) => defined_value)? (obj_id_component)+ R_BRACE;
 //obj_id_comp_lst: L_BRACE (defined_value)? (obj_id_component)+ R_BRACE;
 
-fragment defined_value: ((UPPER | LOWER) DOT)? LOWER ;
+fragment defined_value: (NAME DOT)? NAME ;
 
 /* NSS 14/1/05: Checked against X.680 */
-obj_id_component: NUMBER 
-                | LOWER (L_PAREN NUMBER R_PAREN)?;
+obj_id_component: NUMBER (L_PAREN NUMBER R_PAREN)?;
 
 //obj_id_component: NUMBER 
 //                | ( LOWER (L_PAREN NUMBER R_PAREN)? ) => LOWER (L_PAREN NUMBER R_PAREN)? 
@@ -623,24 +612,24 @@ exports: EXPORTS_KW ( (symbol_list)? | ALL_KW ) SEMI;
 imports: IMPORTS_KW (symbols_from_module)* SEMI ;
 
 /* NSS 14/1/05: Shouldn't need syntactic predicate */
-assignment: UPPER ASSIGN_OP type 
-          | LOWER type ASSIGN_OP value 
-          | (UPPER | macroName) 'MACRO' ASSIGN_OP BEGIN_KW (~(END_KW))* END_KW ;
+assignment: NAME ASSIGN_OP type 
+          | NAME type ASSIGN_OP value 
+          | symbol 'MACRO' ASSIGN_OP BEGIN_KW (~(END_KW))* END_KW ;
 
-//assignment: UPPER ASSIGN_OP type 
+//assignment: NAME ASSIGN_OP type 
 //          | LOWER type ASSIGN_OP value 
-//          | ((UPPER | macroName)
+//          | ((NAME | macroName)
 //                "MACRO" ASSIGN_OP BEGIN_KW (~(END_KW) )* END_KW) => 
-//                (UPPER | macroName) "MACRO" ASSIGN_OP BEGIN_KW (~(END_KW))* END_KW ;
+//                (NAME | macroName) "MACRO" ASSIGN_OP BEGIN_KW (~(END_KW))* END_KW ;
 
 symbol_list: symbol (COMMA symbol)* ;
 
-symbols_from_module: symbol_list FROM_KW UPPER 
+symbols_from_module: symbol_list FROM_KW NAME 
                         ( obj_id_comp_lst 
                           | (defined_value) => defined_value 
                         )? ;
 
-symbol: UPPER | LOWER | macroName;
+symbol: NAME | macroName | 'BITS';
 
 macroName: OPERATION_KW | ERROR_KW  | 'BIND' | 'UNBIND' 
          | 'APPLICATION-SERVICE-ELEMENT' | 'APPLICATION-CONTEXT' | 'EXTENSION' 
@@ -665,40 +654,39 @@ value: (TRUE_KW) => TRUE_KW
      | (obj_id_comp_lst) => obj_id_comp_lst 
      | (PLUS_INFINITY_KW) => PLUS_INFINITY_KW 
      | (MINUS_INFINITY_KW) => MINUS_INFINITY_KW
+     | (full_qualified_value) => full_qualified_value
      | (symbol) => symbol 
      ;
 
 built_in_type: any_type 
              | bit_string_type 
-             | boolean_type 
+             | BOOLEAN_KW 
              | character_str_type 
              | choice_type
              | embedded_type EMBEDDED_KW PDV_KW 
              | enum_type
-             | external_type
+             | EXTERNAL_KW
 	     | integer_type
-	     | null_type
+	     | NULL_KW
 	     | object_identifier_type
 	     | octetString_type
-	     | real_type
-	     | relativeOid_type
+	     | REAL_KW
+	     | 'RELATIVE-OID'
 	     | sequence_type
 	     | sequenceof_type
 	     | set_type
 	     | setof_type
 	     | tagged_type;
 
-defined_type: (UPPER DOT)? UPPER (constraint)? ;
+defined_type: (NAME DOT)? NAME (constraint)? ;
 
-selection_type: LOWER LESS type;
+selection_type: NAME LESS type;
 
-any_type: ANY_KW (DEFINED_KW BY_KW LOWER)? ;
+any_type: ANY_KW (DEFINED_KW BY_KW NAME)? ;
 
 /* NSS 15/1/2005: Added syntactic predicate */
 bit_string_type: BIT_KW STRING_KW ((L_BRACE namedNumber) => namedNumber_list)? (constraint)? ;
 //bit_string_type: BIT_KW STRING_KW (namedNumber_list)? (constraint)? ;
-
-boolean_type: BOOLEAN_KW;
 
 character_str_type: CHARACTER_KW STRING_KW | character_set (constraint)? ;
 
@@ -708,23 +696,12 @@ embedded_type: EMBEDDED_KW PDV_KW;
 
 enum_type: ENUMERATED_KW namedNumber_list;
 
-external_type: EXTERNAL_KW;
-
-/* NSS 15/1/05: Added syntactic predicate */
 integer_type: INTEGER_KW ((L_BRACE namedNumber) => namedNumber_list | constraint)? ;
 //integer_type: INTEGER_KW (namedNumber_list | constraint)? ;
-
-null_type: NULL_KW;
 
 object_identifier_type: OBJECT_KW IDENTIFIER_KW;
 
 octetString_type: OCTET_KW STRING_KW (constraint)? ;
-
-real_type: REAL_KW;
-
-/* NSS 14/1/05: Will this work? I think not! This token detected is an UPPER */
-relativeOid_type: 'RELATIVE-OID';
-//relativeOid_type: RELATIVE_KW MINUS OID_KW;
 
 sequence_type: SEQUENCE_KW L_BRACE (elementType_list)? R_BRACE ;
 
@@ -755,9 +732,9 @@ clazz: UNIVERSAL_KW | APPLICATION_KW | PRIVATE_KW;
 class_NUMBER: NUMBER | defined_value;
 
 /* NSS 15/1/05: Added syntactic predicates; removed 'SEMI' */
-operation_macro: 'OPERATION' (ARGUMENT_KW ((LOWER) => LOWER)? type )? 
+operation_macro: 'OPERATION' (ARGUMENT_KW ((NAME) => NAME)? type )? 
                     ( (RESULT_KW) => RESULT_KW 
-                        ((LOWER) => ((LOWER) => LOWER)? type )? 
+                        ((NAME) => ((NAME) => NAME)? type )? 
 					)?
                     ( (ERRORS_KW) => ERRORS_KW L_BRACE (operation_errorlist)? R_BRACE )? 
                     ( (LINKED_KW) => LINKED_KW L_BRACE (linkedOp_list)? R_BRACE )? ;
@@ -770,7 +747,7 @@ operation_macro: 'OPERATION' (ARGUMENT_KW ((LOWER) => LOWER)? type )?
 //                    ( LINKED_KW L_BRACE (linkedOp_list)? R_BRACE )? ;
 
 /* NSS 15/1/05: Added syntactic predicate */
-error_macro: ERROR_KW ( PARAMETER_KW ((LOWER) => LOWER)? type )? ;
+error_macro: ERROR_KW ( PARAMETER_KW ((NAME) => NAME)? type )? ;
 //error_macro: ERROR_KW ( PARAMETER_KW (LOWER)? type )? ;
 
 
@@ -788,7 +765,8 @@ smi_macros: 'OBJECT-TYPE' | 'MODULE-IDENTITY' | 'OBJECT-IDENTITY' | 'NOTIFICATIO
 
 /* NSS 12-13/1/05: SMI types - some of these are standard 'textual conventions' which can replace BITS */
 /* NSS 13/1/05: Added 'LOWER' since some PIBs can't handle it */
-smi_type: 'BITS' | INTEGER_KW | OCTET_KW STRING_KW | OBJECT_KW IDENTIFIER_KW | UPPER | LOWER;
+fragment
+smi_type: 'BITS' | NAME;
 
 /* Possible SMI types??? - IpAddress Counter32 TimeTicks Opaque Counter64 Unsigned32 */
 
@@ -806,11 +784,11 @@ objecttype_macro: 'OBJECT-TYPE' 'SYNTAX'
                      | type
                     ) 
                   ('UNITS' C_STRING)? 
-                  ( ('MAX-ACCESS' | 'ACCESS') objecttype_macro_accesstypes 
-                   | 'PIB-ACCESS' objecttype_macro_pibaccess)?              /* Only in SPPI; Optional */
+                  ( ('MAX-ACCESS' | 'ACCESS') NAME 
+                   | 'PIB-ACCESS' NAME)?              /* Only in SPPI; Optional */
                   ('PIB-REFERENCES' L_BRACE value R_BRACE)?                 /* Only in SPPI */
                   ('PIB-TAG' L_BRACE value R_BRACE)?                        /* Only in SPPI */
-                  'STATUS' objecttype_macro_statustypes 
+                  'STATUS' NAME 
                   ( ('DESCRIPTION') => 'DESCRIPTION' C_STRING )?                               /* Optional only for SMIv1 */
                   ('INSTALL-ERRORS' L_BRACE objecttype_macro_error (COMMA objecttype_macro_error)* R_BRACE)?    /* Only in SPPI */
 		  ( 'REFERENCE' C_STRING )? 
@@ -822,27 +800,9 @@ objecttype_macro: 'OBJECT-TYPE' 'SYNTAX'
                   ( 'INDEX' objecttype_macro_index )?                       /* Only in SPPI - replicated from above */
                   ( 'UNIQUENESS' L_BRACE (value (COMMA value)* )? R_BRACE)?                      /* Only in SPPI */
 		  ( ('DEFVAL') => 'DEFVAL' L_BRACE 
-                    ( (L_BRACE LOWER (COMMA | R_BRACE)) => objecttype_macro_bitsvalue
+                    ( (L_BRACE NAME (COMMA | R_BRACE)) => objecttype_macro_bitsvalue
                        | value) 
                     R_BRACE )? ;
-fragment objecttype_macro_accesstypes: l=LOWER 
-                                        {if (l.getText() == ("read-only") || l.getText() == ("read-write") 
-                                            || l.getText() == ("write-only") || l.getText() == ("read-create") 
-                                            || l.getText() == ("not-accessible") || l.getText() == ("accessible-for-notify"))
-                                            {/*DOSOMETHING*/} else {}};
-fragment objecttype_macro_pibaccess: l=LOWER 
-                                        {if (l.getText() == ("install") 
-                                            || l.getText() == ("notify") 
-                                            || l.getText() == ("install-notify") 
-                                            || l.getText() == ("report-only"))
-                                            {/*DOSOMETHING*/} else {}};
-fragment objecttype_macro_statustypes: l=LOWER
-                                        {if (l.getText() == ("mandatory") 
-                                            || l.getText() == ("optional") 
-                                            || l.getText() == ("obsolete") 
-                                            || l.getText() == ("current") 
-                                            || l.getText() == ("deprecated"))
-                                            {/*DOSOMETHING*/} else {}};
 
 namedbits
     : L_BRACE n=namedbit 
@@ -853,10 +813,10 @@ namedbits
 objecttype_macro_index: L_BRACE objecttype_macro_indextype (COMMA objecttype_macro_indextype)* R_BRACE;       
 objecttype_macro_indextype: ('IMPLIED')? value;
 objecttype_macro_augments: L_BRACE value R_BRACE;  
-/* NSS 13/1/05: Added LOWER *and* UPPER for a PIB */
+/* NSS 13/1/05: Added LOWER *and* NAME for a PIB */
 
-objecttype_macro_bitsvalue: L_BRACE LOWER (COMMA LOWER)* R_BRACE;     
-objecttype_macro_error: LOWER L_PAREN NUMBER R_PAREN;
+objecttype_macro_bitsvalue: L_BRACE NAME (COMMA NAME)* R_BRACE;     
+objecttype_macro_error: NAME L_PAREN NUMBER R_PAREN;
 
 /* SMI v2 and SPPI: Module-identity macro */
 moduleidentity_macro: 'MODULE-IDENTITY' 
@@ -864,125 +824,56 @@ moduleidentity_macro: 'MODULE-IDENTITY'
                         'LAST-UPDATED' C_STRING 'ORGANIZATION' C_STRING 'CONTACT-INFO' C_STRING 
                         'DESCRIPTION' C_STRING (moduleidentity_macro_revision)* ;
 moduleidentity_macro_revision: 'REVISION' C_STRING 'DESCRIPTION' C_STRING; 
-moduleidentity_macro_categories: l=LOWER {} 
+moduleidentity_macro_categories: NAME 
                                | moduleidentity_macro_categoryid (COMMA moduleidentity_macro_categoryid)*;
-moduleidentity_macro_categoryid: LOWER L_PAREN NUMBER R_PAREN;
+moduleidentity_macro_categoryid: NAME L_PAREN NUMBER R_PAREN;
  
 /* SMI v2 and SPPI: Object-identity macro */
-objectidentity_macro: 'OBJECT-IDENTITY' 'STATUS' objectidentity_macro_statustypes 'DESCRIPTION' C_STRING ('REFERENCE' C_STRING)? ;
-fragment objectidentity_macro_statustypes: l=LOWER 
-                                        {if (l.getText() == ("current") 
-                                                || l.getText() == ("deprecated") 
-                                                || l.getText() == ("obsolete"))
-                                            {/*DOSOMETHING*/} else {}};
-
-
-/* SMI v2: Notification-type macro */
+objectidentity_macro: 'OBJECT-IDENTITY' 'STATUS' NAME 'DESCRIPTION' C_STRING ('REFERENCE' C_STRING)? ;
 notificationtype_macro: 'NOTIFICATION-TYPE' ('OBJECTS' L_BRACE value (COMMA value)* R_BRACE)? 
-                                            'STATUS' notificationtype_macro_status 'DESCRIPTION' C_STRING ('REFERENCE' C_STRING)? ;
-fragment notificationtype_macro_status: l=LOWER 
-                                        {if (l.getText() == ("current") 
-                                                || l.getText() == ("deprecated") 
-                                                || l.getText() == ("obsolete"))
-                                            {/*DOSOMETHING*/} else {}};
-
-/* SMI v2 and SPPI: Textual convention */
+                                            'STATUS' NAME 'DESCRIPTION' C_STRING ('REFERENCE' C_STRING)? ;
 textualconvention_macro: 'TEXTUAL-CONVENTION' ('DISPLAY-HINT' C_STRING)? 
-                            'STATUS' textualconvention_macro_status 
+                            'STATUS' NAME 
                             'DESCRIPTION' C_STRING 
                             ('REFERENCE' C_STRING)? 
                             'SYNTAX' ( (smi_type L_BRACE) => smi_type L_BRACE namedbit 
                                     (COMMA namedbit)* R_BRACE | type);
-fragment textualconvention_macro_status: l=LOWER 
-                                        {if (l.getText() == ("current") 
-                                                || l.getText() == ("deprecated") 
-                                                || l.getText() == ("obsolete"))
-                                            {/*DOSOMETHING*/} else {}};
-namedbit: (LOWER | UPPER) L_PAREN (MINUS)? NUMBER R_PAREN;
+namedbit: NAME L_PAREN (MINUS)? NUMBER R_PAREN;
 
 /* SMI v2 and SPPI: Object group */
 objectgroup_macro: 'OBJECT-GROUP' 'OBJECTS' L_BRACE value (COMMA value)* R_BRACE 
-                        'STATUS' objectgroup_macro_status 'DESCRIPTION' C_STRING ('REFERENCE' C_STRING)? ;
-objectgroup_macro_status: l=LOWER
-                                        {if (l.getText() == ("current") 
-                                                || l.getText() == ("deprecated") 
-                                                || l.getText() == ("obsolete"))
-                                            {/*DOSOMETHING*/} else {}};
- 
-/* SMI v2: Notification group*/
+                        'STATUS' NAME 'DESCRIPTION' C_STRING ('REFERENCE' C_STRING)? ;
 notificationgroup_macro: 'NOTIFICATION-GROUP' 'NOTIFICATIONS' L_BRACE value (COMMA value)* R_BRACE 
-                        'STATUS' notificationgroup_macro_status 'DESCRIPTION' C_STRING ('REFERENCE' C_STRING)? ;
-notificationgroup_macro_status: l=LOWER
-                                        {if (l.getText() == ("current") 
-                                                || l.getText() == ("deprecated") 
-                                                || l.getText() == ("obsolete"))
-                                            {/*DOSOMETHING*/} else {}};
- 
-/* SMI v2 and SPPI: Module compliance */
-modulecompliance_macro: 'MODULE-COMPLIANCE' 'STATUS' modulecompliance_macro_status
+                        'STATUS' NAME 'DESCRIPTION' C_STRING ('REFERENCE' C_STRING)? ;
+modulecompliance_macro: 'MODULE-COMPLIANCE' 'STATUS' NAME
                         'DESCRIPTION' C_STRING ('REFERENCE' C_STRING)? (modulecompliance_macro_module)+ ;
-modulecompliance_macro_status: l=LOWER
-                                        {if (l.getText() == ("current") 
-                                                || l.getText() == ("deprecated") 
-                                                || l.getText() == ("obsolete"))
-                                            {/*DOSOMETHING*/} else {}};
-modulecompliance_macro_module: 'MODULE' ((UPPER) => UPPER ((value) => value)? )? 
+modulecompliance_macro_module: 'MODULE' ((NAME) => NAME ((value) => value)? )? 
                                 ('MANDATORY-GROUPS' L_BRACE value (COMMA value)* R_BRACE)?
                                 (modulecompliance_macro_compliance)* ;
 modulecompliance_macro_compliance: 'GROUP' value 'DESCRIPTION' C_STRING
                                  | 'OBJECT' value 
-                                    ('SYNTAX' modulecompliance_macro_syntax)? 
-                                    ('WRITE-SYNTAX' modulecompliance_macro_syntax)?     /* Only in SMI v2 */
-                                    ('MIN-ACCESS' modulecompliance_macro_access)? 
-                                    ('PIB-MIN-ACCESS' modulecompliance_macro_pibaccess)?    /* Only in SPPI */
+                                    ('SYNTAX' syntax)? 
+                                    ('WRITE-SYNTAX' syntax)?     /* Only in SMI v2 */
+                                    ('MIN-ACCESS' NAME)? 
+                                    ('PIB-MIN-ACCESS' NAME)?    /* Only in SPPI */
                                     'DESCRIPTION' C_STRING;
-modulecompliance_macro_syntax: (smi_type L_BRACE) => smi_type L_BRACE namedbit (COMMA namedbit)* R_BRACE
+syntax: (smi_type L_BRACE) => smi_type L_BRACE namedbit (COMMA namedbit)* R_BRACE
                              | (smi_type) => smi_type (smi_subtyping)?
                              | type;
 
-modulecompliance_macro_access: l=LOWER
-                                        {if (l.getText() == ("not-accessible") 
-                                                || l.getText() == ("accessible-for-notify") 
-                                                || l.getText() == ("read-only")
-                                                || l.getText() == ("read-write")
-                                                || l.getText() == ("read-create"))
-                                            {/*DOSOMETHING*/} else {}};
-modulecompliance_macro_pibaccess: l=LOWER
-                                        {if (l.getText() == ("not-accessible") 
-                                                || l.getText() == ("install") 
-                                                || l.getText() == ("notify")
-                                                || l.getText() == ("install-notify")
-                                                || l.getText() == ("report-only"))
-                                            {/*DOSOMETHING*/} else {}};
-
-/* SMI v2: Agent capabilities */
-agentcapabilities_macro: 'AGENT-CAPABILITIES' 'PRODUCT-RELEASE' C_STRING 'STATUS' agentcapabilities_macro_status
+agentcapabilities_macro: 'AGENT-CAPABILITIES' 'PRODUCT-RELEASE' C_STRING 'STATUS' NAME
                          'DESCRIPTION' C_STRING ('REFERENCE' C_STRING)? (agentcapabilities_macro_module)*;
-agentcapabilities_macro_status: l=LOWER
-                                        {if (l.getText() == ("current") 
-                                                || l.getText() == ("obsolete"))
-                                            {/*DOSOMETHING*/} else {}};
-agentcapabilities_macro_module: 'SUPPORTS' (UPPER | LOWER) (value)? 
+agentcapabilities_macro_module: 'SUPPORTS' NAME (value)? 
                                 'INCLUDES' L_BRACE value (COMMA value)* R_BRACE 
                                 (agentcapabilities_macro_variation)*;
-agentcapabilities_macro_variation: 'VARIATION' value ('SYNTAX' agentcapabilities_macro_syntax)? ('WRITE-SYNTAX' agentcapabilities_macro_syntax)? ('ACCESS' agentcapabilities_macro_access)? 
+agentcapabilities_macro_variation: 'VARIATION' value ('SYNTAX' agentcapabilities_macro_syntax)? ('WRITE-SYNTAX' agentcapabilities_macro_syntax)? ('ACCESS' NAME)? 
                                     ('CREATION-REQUIRES' L_BRACE value (COMMA value)* R_BRACE)? 
-                                    ('DEFVAL' L_BRACE ((L_BRACE (LOWER | COMMA | R_BRACE)) => L_BRACE (LOWER)? (COMMA LOWER)* | value)  R_BRACE )? 
+                                    ('DEFVAL' L_BRACE ((L_BRACE (NAME | COMMA | R_BRACE)) => L_BRACE NAME? (COMMA NAME)* | value)  R_BRACE )? 
                                     'DESCRIPTION' C_STRING;
 agentcapabilities_macro_syntax: (smi_type L_BRACE) => 
                                     smi_type L_BRACE namedbit (COMMA namedbit)* R_BRACE
                               | (smi_type) => smi_type (smi_subtyping)?
                               | type ;
-agentcapabilities_macro_access: l=LOWER
-                                        {if (l.getText() == ("not-implemented") 
-                                                || l.getText() == ("accessible-for-notify") 
-                                                || l.getText() == ("read-only")
-                                                || l.getText() == ("read-write")
-                                                || l.getText() == ("read-create")
-                                                || l.getText() == ("write-only"))
-                                            {/*DOSOMETHING*/} else {}};
-
-/* SMI v1: Trap types */
 traptype_macro: 'TRAP-TYPE' 'ENTERPRISE' value ('VARIABLES' L_BRACE value (COMMA value)* R_BRACE)? 
                     (('DESCRIPTION') => 'DESCRIPTION' value)? ('REFERENCE' value)? ;
 
@@ -996,13 +887,13 @@ typeorvalue: (type) => type | value;
 typeorvaluelist: typeorvalue (COMMA typeorvalue)* ;
 
 /* NSS 15/1/05: Added syntactic predicate */
-elementType: LOWER  ((L_BRACKET (NUMBER|UPPER|LOWER)) => tag)? 
+elementType: NAME  ((L_BRACKET (NUMBER|NAME)) => tag)? 
                     (tag_default)? type (OPTIONAL_KW | DEFAULT_KW value)? 
            | COMPONENTS_KW OF_KW type;
 //elementType: LOWER  (tag)? (tag_default)? type (OPTIONAL_KW | DEFAULT_KW value)? 
 //           | COMPONENTS_KW OF_KW type;
 
-namedNumber: LOWER L_PAREN (signed_number | defined_value) R_PAREN;
+namedNumber: NAME L_PAREN (signed_number | defined_value) R_PAREN;
 
 signed_number: (MINUS)? NUMBER;
 
@@ -1035,9 +926,9 @@ value_range: (value | MIN_KW) (LESS)? DOTDOT (LESS)? (value | MAX_KW) ;
 
 type_constraint_list: named_constraint (COMMA named_constraint)* ;
 
-named_constraint: LOWER (constraint)? (PRESENT_KW | ABSENT_KW | OPTIONAL_KW)? ;
+named_constraint: NAME (constraint)? (PRESENT_KW | ABSENT_KW | OPTIONAL_KW)? ;
 
-choice_value: LOWER (COLON)? value;
+choice_value: NAME (COLON)? value;
 
 sequence_value: L_BRACE (named_value)? (COMMA named_value)* R_BRACE;
 
@@ -1051,7 +942,7 @@ cstr_value: (H_STRING) => H_STRING
               | tuple_or_quad
             ) R_BRACE;
 
-id_list: LOWER (COMMA LOWER)* ;
+id_list: NAME (COMMA NAME)* ;
 
 char_defs_list: char_defs (COMMA char_defs)* ;
 
@@ -1066,4 +957,6 @@ char_defs: C_STRING
 //         | L_BRACE signed_number COMMA signed_number ( R_BRACE | COMMA signed_number COMMA signed_number R_BRACE ) 
 //         | defined_value;
 
-named_value: LOWER value;
+named_value: NAME value;
+
+full_qualified_value : (NAME DOT)+ NAME;

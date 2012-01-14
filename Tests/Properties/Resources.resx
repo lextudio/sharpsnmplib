@@ -511,4 +511,7 @@
   <data name="CHECKPOINT_MIB" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\CHECKPOINT-MIB.mib;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="CISCO_CONFIG_COPY_CAPABILITY" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CISCO-CONFIG-COPY-CAPABILITY.mib;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

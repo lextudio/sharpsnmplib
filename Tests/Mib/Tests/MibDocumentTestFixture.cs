@@ -301,6 +301,17 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             Assert.AreEqual("ciscoCsgMIBGroups", node.Parent);
         }
 
+        [Test]
+        public void TestCISCO_CONFIG_COPY_CAPABILITY()
+        {
+            var m = new MemoryStream(Resources.CISCO_CONFIG_COPY_CAPABILITY);
+            var stream = new ANTLRInputStream(m);
+            var lexer = new SmiLexer(stream);
+            var tokens = new CommonTokenStream(lexer);
+            var parser = new SmiParser(tokens);
+            var file = parser.GetDocument();
+            Assert.AreEqual("CISCO-CONFIG-COPY-CAPABILITY", file.Modules[0].Name);
+        }
 
         [Test]
         public void TestCISCO_BULK_FILE_MIB()
