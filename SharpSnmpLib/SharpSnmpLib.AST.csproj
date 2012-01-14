@@ -70,6 +70,7 @@
     <DocumentationFile />
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
+  <Import Project="Antlr3.targets" />
   <ItemGroup>
     <Reference Include="Accessibility" />
     <Reference Include="Antlr3.Runtime">
@@ -128,8 +129,6 @@
     <Compile Include="Mib\FalseLiteralValue.cs" />
     <Compile Include="Mib\FromConstraintElement.cs" />
     <Compile Include="Mib\FullQualifiedValue.cs" />
-    <Compile Include="Mib\Generated\SmiLexer.cs" />
-    <Compile Include="Mib\Generated\SmiParser.cs" />
     <Compile Include="Mib\GroupCompliance.cs" />
     <Compile Include="Mib\HexLiteralValue.cs" />
     <Compile Include="Mib\IConstruct.cs" />
@@ -217,8 +216,9 @@
     <Compile Include="Mib\SimpleObjectRegistry.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Antlr3.targets" />
     <None Include="Mib\Generated\antlr.bat" />
-    <None Include="Mib\Generated\smi.g" />
+    <Antlr3 Include="Mib\Generated\Smi.g" />
     <None Include="Mib\Generated\Smi_no_action.g" />
     <None Include="Resources\SNMPv2-CONF.module" />
     <None Include="Resources\SNMPv2-MIB.module" />

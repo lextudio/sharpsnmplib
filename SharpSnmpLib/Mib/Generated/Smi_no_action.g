@@ -530,7 +530,7 @@ WS
 	;
 
 SL_COMMENT 
- : COMMENT ({!(input.LA(1) == '-' && input.LA(2) == '-')}?=> ~('\r' | '\n'))* ('\r'? '\n' | COMMENT)
+ : COMMENT ({!(input.LA(1) == '-' && input.LA(2) == '-')}?=> ~('\r' | '\n'))* ('--')?
  { skip(); }
  ;
 
