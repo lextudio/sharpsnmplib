@@ -217,7 +217,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Antlr3.targets" />
-    <None Include="Mib\Generated\antlr.bat" />
     <Antlr3 Include="Mib\Generated\Smi.g" />
     <None Include="Mib\Generated\Smi_no_action.g" />
     <None Include="Resources\SNMPv2-CONF.module" />

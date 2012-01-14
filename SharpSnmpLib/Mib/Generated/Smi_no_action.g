@@ -496,7 +496,6 @@ ASSIGN_OP:	'::=';
 BAR:		'|';
 COLON:		':';
 COMMA:		',';
-COMMENT:	'--';
 DOT:		'.';
 DOTDOT:		'..';
 DOTDOTDOT
@@ -520,23 +519,26 @@ CHARH:		'\'H';
 
 // Whitespace -- ignored
 
-WS			
-    	:	(	' ' | '\t' | '\f'	|	(	
-	:	'\r\n'		// DOS
+fragment
+NEWLINE :
+  ('\r\n') => '\r\n'		// DOS
 	|	'\r'   		// Macintosh
 	|	'\n'		// Unix 
-	))+
+	;
+
+WS			
+    	:	(	' ' | '\t' | '\f'	|	NEWLINE )+
 	{ skip(); }
 	;
 
-SL_COMMENT 
- : COMMENT ({!(input.LA(1) == '-' && input.LA(2) == '-')}?=> ~('\r' | '\n'))* ('\r'? '\n' | COMMENT)
+COMMENT 
+ : '--'; ({!(input.LA(1) == '-' && input.LA(2) == '-')}?=> ~('\r' | '\n'))* (NEWLINE | '--')
  { skip(); }
  ;
 
 NUMBER	:	'0'..'9'+ ;
 
-protected
+fragment
 HDIG		:	( :('0'..'9') )
 			|	('A'..'F')
 			|	('a'..'f')
@@ -574,9 +576,7 @@ B_STRING 	: 	SINGLE_QUOTE (('0'|'1'))+ SINGLE_QUOTE ('B' | 'b') ;
 H_STRING 	: 	SINGLE_QUOTE (HDIG)+ SINGLE_QUOTE ('H' | 'h') ;	
 	
 C_STRING 	: 	'"' (options {greedy=false;}
-                             : '\r\n'		// DOS
-                             | '\r'   		// Macintosh
-                             | '\n'		// Unix 
+                             : NEWLINE
                              | ~('\r' | '\n')
                             )* 
                         '"' ;
@@ -606,7 +606,7 @@ module_body: (exports)? (imports)? (assignment)* ;
 obj_id_comp_lst: L_BRACE ((LOWER (LOWER|NUMBER)) => defined_value)? (obj_id_component)+ R_BRACE;
 //obj_id_comp_lst: L_BRACE (defined_value)? (obj_id_component)+ R_BRACE;
 
-protected defined_value: ((UPPER | LOWER) DOT)? LOWER ;
+fragment defined_value: ((UPPER | LOWER) DOT)? LOWER ;
 
 /* NSS 14/1/05: Checked against X.680 */
 obj_id_component: NUMBER 
@@ -825,18 +825,18 @@ objecttype_macro: 'OBJECT-TYPE' 'SYNTAX'
                     ( (L_BRACE LOWER (COMMA | R_BRACE)) => objecttype_macro_bitsvalue
                        | value) 
                     R_BRACE )? ;
-protected objecttype_macro_accesstypes: l=LOWER 
+fragment objecttype_macro_accesstypes: l=LOWER 
                                         {if (l.getText() == ("read-only") || l.getText() == ("read-write") 
                                             || l.getText() == ("write-only") || l.getText() == ("read-create") 
                                             || l.getText() == ("not-accessible") || l.getText() == ("accessible-for-notify"))
                                             {/*DOSOMETHING*/} else {}};
-protected objecttype_macro_pibaccess: l=LOWER 
+fragment objecttype_macro_pibaccess: l=LOWER 
                                         {if (l.getText() == ("install") 
                                             || l.getText() == ("notify") 
                                             || l.getText() == ("install-notify") 
                                             || l.getText() == ("report-only"))
                                             {/*DOSOMETHING*/} else {}};
-protected objecttype_macro_statustypes: l=LOWER
+fragment objecttype_macro_statustypes: l=LOWER
                                         {if (l.getText() == ("mandatory") 
                                             || l.getText() == ("optional") 
                                             || l.getText() == ("obsolete") 
@@ -870,7 +870,7 @@ moduleidentity_macro_categoryid: LOWER L_PAREN NUMBER R_PAREN;
  
 /* SMI v2 and SPPI: Object-identity macro */
 objectidentity_macro: 'OBJECT-IDENTITY' 'STATUS' objectidentity_macro_statustypes 'DESCRIPTION' C_STRING ('REFERENCE' C_STRING)? ;
-protected objectidentity_macro_statustypes: l=LOWER 
+fragment objectidentity_macro_statustypes: l=LOWER 
                                         {if (l.getText() == ("current") 
                                                 || l.getText() == ("deprecated") 
                                                 || l.getText() == ("obsolete"))
@@ -880,7 +880,7 @@ protected objectidentity_macro_statustypes: l=LOWER
 /* SMI v2: Notification-type macro */
 notificationtype_macro: 'NOTIFICATION-TYPE' ('OBJECTS' L_BRACE value (COMMA value)* R_BRACE)? 
                                             'STATUS' notificationtype_macro_status 'DESCRIPTION' C_STRING ('REFERENCE' C_STRING)? ;
-protected notificationtype_macro_status: l=LOWER 
+fragment notificationtype_macro_status: l=LOWER 
                                         {if (l.getText() == ("current") 
                                                 || l.getText() == ("deprecated") 
                                                 || l.getText() == ("obsolete"))

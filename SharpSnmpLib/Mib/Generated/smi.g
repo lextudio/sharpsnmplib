@@ -506,7 +506,6 @@ ASSIGN_OP:	'::=';
 BAR:		'|';
 COLON:		':';
 COMMA:		',';
-COMMENT:	'--';
 DOT:		'.';
 DOTDOT:		'..';
 DOTDOTDOT
@@ -530,23 +529,26 @@ CHARH:		'\'H';
 
 // Whitespace -- ignored
 
-WS			
-    	:	(	' ' | '\t' | '\f'	|	(	
-	:	'\r\n'		// DOS
+fragment
+NEWLINE :
+  	('\r\n') => '\r\n'		// DOS
 	|	'\r'   		// Macintosh
 	|	'\n'		// Unix 
-	))+
+	;
+
+WS			
+    	:	(	' ' | '\t' | '\f'	| NEWLINE )+
 	{ Skip(); }
 	;
 	
-SL_COMMENT 
- : COMMENT ({!(input.LA(1) == '-' && input.LA(2) == '-')}?=> ~('\r' | '\n'))* ('\r'? '\n' | COMMENT)
+COMMENT 
+ : '--' ({!(input.LA(1) == '-' && input.LA(2) == '-')}?=> ~('\r' | '\n'))* ('\r'? '\n' | '--')
  { Skip(); }
  ;
 
 NUMBER	:	('0'..'9')+ ;
 
-protected
+fragment
 HDIG		:	( :('0'..'9') )
 			|	('A'..'F')
 			|	('a'..'f')
@@ -580,9 +582,7 @@ B_STRING 	: 	SINGLE_QUOTE (('0'|'1'))* SINGLE_QUOTE ('B' | 'b') ;
 H_STRING 	: 	SINGLE_QUOTE (HDIG)* SINGLE_QUOTE ('H' | 'h') ;	
 	
 C_STRING 	: 	'"' (options {greedy=false;}
-                             : '\r\n'		// DOS
-                             | '\r'   		// Macintosh
-                             | '\n'		// Unix 
+                             : NEWLINE 
                              | ~('\r' | '\n')
                             )* 
                         '"' ;
@@ -626,7 +626,7 @@ obj_id_comp_lst returns [IdComponentList result = new IdComponentList()]
 	;
 //obj_id_comp_lst: L_BRACE (defined_value)? (obj_id_component)+ R_BRACE;
 
-protected defined_value returns [DefinedValue result = new DefinedValue()]
+fragment defined_value returns [DefinedValue result = new DefinedValue()]
     : (mod=(UPPER | LOWER) DOT { $result.Module = $mod.text; })? 
 	v=LOWER { $result.Value = $v.text; }
 	;
@@ -1003,7 +1003,7 @@ objecttype_macro returns [ObjectTypeMacro result = new ObjectTypeMacro()]
                        | v7=value { $result.DefaultValue = $v7.result; }) 
                     R_BRACE )? ;
 
-protected objecttype_macro_accesstypes returns [Access result]
+fragment objecttype_macro_accesstypes returns [Access result]
     : l=LOWER {if (l.Text == ("read-only")) $result = Access.ReadOnly;
 	           else if (l.Text == ("read-write")) $result = Access.ReadWrite;
                else if (l.Text == ("write-only")) $result = Access.WriteOnly;
@@ -1013,7 +1013,7 @@ protected objecttype_macro_accesstypes returns [Access result]
                else {throw new SemanticException("(invalid)");}}
     ;
 
-protected objecttype_macro_pibaccess returns [PibAccess result]
+fragment objecttype_macro_pibaccess returns [PibAccess result]
     : l=LOWER {if (l.Text == ("install")) $result = PibAccess.Install; 
                else if (l.Text == ("notify")) $result = PibAccess.Notify;
                else if (l.Text == ("install-notify")) $result = PibAccess.InstallNotify;
@@ -1021,7 +1021,7 @@ protected objecttype_macro_pibaccess returns [PibAccess result]
                else {throw new SemanticException("(invalid)");}}
 	;
 
-protected objecttype_macro_statustypes returns [EntityStatus result]
+fragment objecttype_macro_statustypes returns [EntityStatus result]
     : l=LOWER {if (l.Text == ("mandatory")) $result = EntityStatus.Mandatory; 
                else if (l.Text == ("optional")) $result = EntityStatus.Optional; 
                else if (l.Text == ("obsolete")) $result = EntityStatus.Obsolete;
