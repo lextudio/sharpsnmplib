@@ -4,7 +4,7 @@ using Antlr.Runtime;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
-    partial class SmiParser
+    public partial class SmiParser
     {
         public IList<Exception> Exceptions = new List<Exception>();
 

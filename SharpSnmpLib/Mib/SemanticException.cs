@@ -11,19 +11,10 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <summary>
         /// Initializes a new instance of the <see cref="SemanticException"/> class.
         /// </summary>
-        /// <param name="message">The message.</param>
-        public SemanticException(string message) : base(message)
-		{
-		}
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SemanticException"/> class.
-        /// </summary>
-        /// <param name="message">The message.</param>
-        /// <param name="inner">The inner.</param>
-		public SemanticException(string message, Exception inner)
-			: base(message, inner)
-		{
-		}
+        /// <param name="token">The wrong token.</param>
+        public SemanticException(IToken token)
+        {
+            Token = token;
+        }
     }
 }

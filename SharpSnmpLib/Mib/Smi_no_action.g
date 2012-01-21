@@ -645,6 +645,8 @@ value: (TRUE_KW) => TRUE_KW
      | (FALSE_KW) => FALSE_KW 
      | (NULL_KW) => NULL_KW  
      | (C_STRING) => C_STRING 
+     | (full_qualified_value) => full_qualified_value
+     | (namedbit) => namedbit
      | (defined_value) => defined_value 
      | (signed_number) => signed_number
      | (choice_value) => choice_value 
@@ -654,7 +656,6 @@ value: (TRUE_KW) => TRUE_KW
      | (obj_id_comp_lst) => obj_id_comp_lst 
      | (PLUS_INFINITY_KW) => PLUS_INFINITY_KW 
      | (MINUS_INFINITY_KW) => MINUS_INFINITY_KW
-     | (full_qualified_value) => full_qualified_value
      | (symbol) => symbol 
      ;
 
@@ -875,7 +876,7 @@ agentcapabilities_macro_syntax: (smi_type L_BRACE) =>
                               | (smi_type) => smi_type (smi_subtyping)?
                               | type ;
 traptype_macro: 'TRAP-TYPE' 'ENTERPRISE' value ('VARIABLES' L_BRACE value (COMMA value)* R_BRACE)? 
-                    (('DESCRIPTION') => 'DESCRIPTION' value)? ('REFERENCE' value)? ;
+                    (('DESCRIPTION') => 'DESCRIPTION' value)? ('REFERENCE' value)?;
 
 operation_errorlist: typeorvalue (COMMA typeorvalue)* ;
 

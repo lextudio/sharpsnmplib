@@ -1,6 +1,7 @@
 namespace Lextm.SharpSnmpLib.Mib
 {
-    public class NamedBit {
+    public class NamedBit : ISmiValue
+    {
         public bool Minus;
         public long Number;
 

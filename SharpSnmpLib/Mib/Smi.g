@@ -696,7 +696,9 @@ value returns [ISmiValue result]
     : (TRUE_KW) => TRUE_KW { $result = new TrueLiteralValue(); }
      | (FALSE_KW) => FALSE_KW { $result = new FalseLiteralValue(); }
      | (NULL_KW) => NULL_KW { $result = new NullLiteralValue(); }
-     | (C_STRING) => s=C_STRING { $result = new LiteralValue($s.text); } 
+     | (C_STRING) => s=C_STRING { $result = new LiteralValue($s.text); }
+     | (full_qualified_value) => fqv=full_qualified_value { $result = $fqv.result; }
+	 | (namedbit) => nb=namedbit { $result = $nb.result; }
      | (defined_value) => dv=defined_value { $result = $dv.result; }
      | (signed_number) => sn=signed_number { $result = $sn.result; }
      | (choice_value) => cv=choice_value { $result = $cv.result; }
@@ -706,9 +708,8 @@ value returns [ISmiValue result]
      | (obj_id_comp_lst) => oid=obj_id_comp_lst { $result = $oid.result; }
      | (PLUS_INFINITY_KW) => PLUS_INFINITY_KW { $result = new PlusInfinityLiteralValue(); }
      | (MINUS_INFINITY_KW) => MINUS_INFINITY_KW { $result = new MinusInfinityLiteralValue(); }
-   | (full_qualified_value) => fqv=full_qualified_value { $result = $fqv.result; }
-   | (symbol) => name=symbol { $result = new LiteralValue($name.text); }
-   ;
+     | (symbol) => name=symbol { $result = new LiteralValue($name.text); }
+     ;
 
 built_in_type returns [ISmiType result]
     : a=any_type { $result = $a.result; }
@@ -955,7 +956,7 @@ fragment objecttype_macro_accesstypes returns [Access result]
          else if (l.Text == ("read-create")) $result = Access.ReadCreate; 
                else if (l.Text == ("not-accessible")) $result = Access.NotAccessible;
          else if (l.Text == ("accessible-for-notify")) $result = Access.AccessibleForNotify;
-               else {throw new SemanticException("(invalid)");}}
+               else {throw new SemanticException(l);}}
     ;
 
 fragment objecttype_macro_pibaccess returns [PibAccess result]
@@ -963,7 +964,7 @@ fragment objecttype_macro_pibaccess returns [PibAccess result]
                else if (l.Text == ("notify")) $result = PibAccess.Notify;
                else if (l.Text == ("install-notify")) $result = PibAccess.InstallNotify;
                else if (l.Text == ("report-only")) $result = PibAccess.ReportOnly;
-               else {throw new SemanticException("(invalid)");}}
+               else {throw new SemanticException(l);}}
   ;
 
 fragment objecttype_macro_statustypes returns [EntityStatus result]
@@ -972,7 +973,7 @@ fragment objecttype_macro_statustypes returns [EntityStatus result]
                else if (l.Text == ("obsolete")) $result = EntityStatus.Obsolete;
                else if (l.Text == ("current")) $result = EntityStatus.Current;
                else if (l.Text == ("deprecated")) $result = EntityStatus.Deprecated;
-               else {throw new SemanticException("(invalid)");}}
+               else {throw new SemanticException(l);}}
   ;
 
 
@@ -1020,7 +1021,7 @@ moduleidentity_macro_revision returns [Revision result]
 
 moduleidentity_macro_categories returns [Categories result = new Categories()]
     : l=NAME {if (l.Text ==  ("all")) $result.AllCategories = true;
-           else { throw new SemanticException ("(invalid)"); }
+           else { throw new SemanticException(l); }
       } 
     | m1=moduleidentity_macro_categoryid { $result.CategoryIds.Add($m1.result); } 
   (COMMA m2=moduleidentity_macro_categoryid { $result.CategoryIds.Add($m2.result); })*
@@ -1093,7 +1094,7 @@ status returns [EntityStatus result]
     : l=NAME {if (l.Text == ("current")) $result = EntityStatus.Current;
                else if (l.Text == ("deprecated")) $result = EntityStatus.Deprecated;
                else if (l.Text == ("obsolete")) $result = EntityStatus.Obsolete;
-               else {throw new SemanticException("(invalid)");}}
+               else {throw new SemanticException(l);}}
     ;
 
 modulecompliance_macro_module returns [ModuleCompliance result = new ModuleCompliance()]
@@ -1120,7 +1121,7 @@ modulecompliance_macro_access returns [Access result]
                else if (l.Text == ("read-only")) $result = Access.ReadOnly; 
                else if (l.Text == ("read-write")) $result = Access.ReadWrite;
                else if (l.Text == ("read-create")) $result = Access.ReadCreate;
-               else {throw new SemanticException("(invalid)");}}
+               else {throw new SemanticException(l);}}
     ;
 
 modulecompliance_macro_pibaccess returns [PibAccess result]
@@ -1129,7 +1130,7 @@ modulecompliance_macro_pibaccess returns [PibAccess result]
                else if (l.Text == ("notify")) $result = PibAccess.Notify;
                else if (l.Text == ("install-notify")) $result = PibAccess.InstallNotify;
                else if (l.Text == ("report-only")) $result = PibAccess.ReportOnly;
-               else {throw new SemanticException("(invalid)");}}
+               else {throw new SemanticException(l);}}
   ;
 
 /* SMI v2: Agent capabilities */
@@ -1144,7 +1145,7 @@ agentcapabilities_macro returns [AgentCapabilitiesMacro result]
 agentcapabilities_macro_status returns [EntityStatus result]
     : l=NAME {if (l.Text == ("current")) $result = EntityStatus.Current;
                else if (l.Text == ("obsolete")) $result =EntityStatus.Obsolete; 
-               else {throw new SemanticException("(invalid)");}};
+               else {throw new SemanticException(l);}};
 
 agentcapabilities_macro_module returns [AgentCapabilitiesModule result]
     : 'SUPPORTS' name=NAME { $result = new AgentCapabilitiesModule($name.text); }
@@ -1183,7 +1184,7 @@ agentcapabilities_macro_access returns [Access result]
      else if (l.Text == ("read-write")) $result = Access.ReadWrite;
      else if (l.Text == ("read-create")) $result = Access.ReadCreate;
      else if (l.Text == ("write-only")) $result = Access.WriteOnly;
-     else {throw new SemanticException("(invalid)");}}
+     else {throw new SemanticException(l);}}
   ;
 
 /* SMI v1: Trap types */
