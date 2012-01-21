@@ -1,26 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Antlr.Runtime;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
     public partial class SmiParser
     {
-        public IList<Exception> Exceptions = new List<Exception>();
+        public readonly IList<CompilerError> Errors = new List<CompilerError>();
+        private string _fileName;
+
+        public MibDocument GetDocument(string fileName)
+        {
+            Errors.Clear();
+            _fileName = fileName;
+            var document = statement().result;
+            document.FileName = fileName;
+            return document;
+        }
 
         public MibDocument GetDocument()
         {
-            return statement().result;
+            return GetDocument(string.Empty);
         }
 
-        public override object RecoverFromMismatchedSet(IIntStream input, RecognitionException e, BitSet follow)
+        public override void ReportError(RecognitionException e)
         {
-            throw e;
-        }
-
-        protected override object RecoverFromMismatchedToken(IIntStream input, int ttype, BitSet follow)
-        {
-            throw new MismatchedTokenException(ttype, input);
+            Errors.Add(new CompilerError(e) {FileName = _fileName});
+            base.ReportError(e);
         }
     }
 }

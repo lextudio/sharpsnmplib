@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
 using log4net;
 
 namespace Lextm.SharpSnmpLib.Mib
@@ -167,7 +166,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 result = temp;
             }
 
-            List<uint> remaining = new List<uint>();
+            var remaining = new List<uint>();
             for (int j = end; j < id.Length; j++)
             {
                 remaining.Add(id[j]);
@@ -192,7 +191,7 @@ namespace Lextm.SharpSnmpLib.Mib
             return true;
         }
 
-        private void Parse(IModule module)
+        private void Parse(MibModule module)
         {
             var watch = new Stopwatch();
             watch.Start();
@@ -240,7 +239,7 @@ namespace Lextm.SharpSnmpLib.Mib
             // */
         }
 
-        private void AddNodes(IModule module)
+        private void AddNodes(MibModule module)
         {
             var pendingNodes = new List<IEntity>();
             
@@ -280,7 +279,7 @@ namespace Lextm.SharpSnmpLib.Mib
                         }
 
                         // create all place holders.
-                        IDefinition unknown = CreateExtraNodes(module.Name, node.Parent);
+                        IDefinition unknown = CreateExtraNodes(module, node.Parent);
                         if (unknown != null)
                         {
                             node.Parent = unknown.Name;
@@ -320,12 +319,12 @@ namespace Lextm.SharpSnmpLib.Mib
             return Find(ExtractName(node.Parent.Split('.')[0])) != null;
         }
 
-        private Definition CreateExtraNodes(string module, string longParent)
+        private Definition CreateExtraNodes(MibModule module, string longParent)
         {
             string[] content = longParent.Split('.');
             Definition node = Find(ExtractName(content[0]));
             uint[] rootId = node.GetNumericalForm();
-            uint[] all = new uint[content.Length + rootId.Length - 1];
+            var all = new uint[content.Length + rootId.Length - 1];
             for (int j = rootId.Length - 1; j >= 0; j--)
             {
                 all[j] = rootId[j];
@@ -349,7 +348,8 @@ namespace Lextm.SharpSnmpLib.Mib
                     IDefinition subroot = Find(ExtractParent(all, currentCursor));
                     
                     // if not, create Prefix node.
-                    IEntity prefix = new ObjectIdentifierType(module, subroot.Name + "_" + value.ToString(CultureInfo.InvariantCulture), subroot.Name, value);
+                    var prefix = new ObjectIdentifierType(module.Name, subroot.Name + "_" + value.ToString(CultureInfo.InvariantCulture), subroot.Name, value);
+                    Logger.Info(module.ReportImplicitObjectIdentifier(prefix));
                     node = CreateSelf(prefix);
                     AddToTable(node);
                 }
@@ -357,16 +357,17 @@ namespace Lextm.SharpSnmpLib.Mib
                 {
                     string self = content[i];
                     string parent = content[i - 1];
-                    IEntity extra = new ObjectIdentifierType(module, ExtractName(self), ExtractName(parent), ExtractValue(self));
+                    var extra = new ObjectIdentifierType(module.Name, ExtractName(self), ExtractName(parent), ExtractValue(self));
                     node = CreateSelf(extra);
                     if (node != null)
                     {
+                        Logger.Info(module.ReportImplicitObjectIdentifier(extra));
                         AddToTable(node);
                         all[currentCursor] = node.Value;
                     }
                     else
                     {
-                        Logger.InfoFormat(CultureInfo.InvariantCulture, "ignored {0} in module {1}", longParent, module);
+                        Logger.Info(module.ReportIgnoredImplicitEntity(longParent));
                     }
                 }
             }
@@ -376,7 +377,7 @@ namespace Lextm.SharpSnmpLib.Mib
 
         private static uint[] ExtractParent(IList<uint> input, int length)
         {
-            uint[] result = new uint[length];
+            var result = new uint[length];
             for (int i = 0; i < length; i++)
             {
                 result[i] = input[i];
@@ -433,16 +434,9 @@ namespace Lextm.SharpSnmpLib.Mib
             
             foreach (MibModule module in _pendings.Values)
             {
-                StringBuilder builder = new StringBuilder(module.Name);
-                builder.Append(" is pending. Missing dependencies: ");
-                foreach (string depend in module.Dependents.Where(depend => !LoadedModules.Contains(depend)))
-                {
-                    builder.Append(depend).Append(' ');
-                }
-                
-                Logger.Info(builder.ToString());
+                Logger.Info(module.ReportMissingDependencies(LoadedModules));
             }
-            
+
             Logger.Info("loading modules ended");
         }
 
@@ -455,9 +449,15 @@ namespace Lextm.SharpSnmpLib.Mib
             
             foreach (MibModule module in modules)
             {
-                if (LoadedModules.Contains(module.Name) || PendingModules.Contains(module.Name))
+                if (_loaded.ContainsKey(module.Name))
                 {
-                    Logger.InfoFormat(CultureInfo.InvariantCulture, "{0} ignored", module.Name);
+                    Logger.Info(module.ReportDuplicate(_loaded[module.Name]));
+                    continue;
+                }
+
+                if (_pendings.ContainsKey(module.Name))
+                {
+                    Logger.Info(module.ReportDuplicate(_pendings[module.Name]));
                     continue;
                 }
 
@@ -472,9 +472,13 @@ namespace Lextm.SharpSnmpLib.Mib
                 throw new ArgumentNullException("module");
             }
 
-            if (LoadedModules.Contains(module.Name) || PendingModules.Contains(module.Name))
+            if (_loaded.ContainsKey(module.Name))
             {
-                Logger.InfoFormat(CultureInfo.InvariantCulture, "{0} ignored", module.Name);
+                Logger.Info(module.ReportDuplicate(_loaded[module.Name]));
+            }
+            else if (_pendings.ContainsKey(module.Name))
+            {
+                Logger.Info(module.ReportDuplicate(_pendings[module.Name]));
             }
             else
             {
@@ -500,12 +504,12 @@ namespace Lextm.SharpSnmpLib.Mib
 
         private void AddNodes(IEnumerable<Definition> nodes)
         {
-            List<Definition> pendings = new List<Definition>(nodes);
+            var pendings = new List<Definition>(nodes);
             int current = pendings.Count;
             while (current != 0)
             {
                 int previous = current;
-                List<Definition> parsed = new List<Definition>();
+                var parsed = new List<Definition>();
                 foreach (Definition node in pendings)
                 {
                     IDefinition parent = Find(Definition.GetParent(node));

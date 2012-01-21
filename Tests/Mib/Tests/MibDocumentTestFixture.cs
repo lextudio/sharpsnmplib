@@ -145,7 +145,9 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var exception = Assert.Throws<MismatchedTokenException>(() => parser.GetDocument());
+            var doc = parser.GetDocument();
+            Assert.AreEqual(1, parser.Errors.Count);
+            var exception = parser.Errors[0];
             var token = exception.Token;
             Assert.AreEqual(1, token.Line);
             Assert.AreEqual("0", token.Text);
@@ -161,10 +163,17 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lex = new SmiLexer(new ANTLRStringStream(test));
             var tokens = new CommonTokenStream(lex);
             var parser = new SmiParser(tokens);
-            var exception = Assert.Throws<MismatchedTokenException>(() => parser.GetDocument());
+            var doc = parser.GetDocument();
+            Assert.AreEqual(2, parser.Errors.Count);
+            var exception = parser.Errors[0];
             var token = exception.Token;
             Assert.AreEqual(3, token.Line);
             Assert.AreEqual("SNMPv2-SMI", token.Text);
+
+            var exception2 = parser.Errors[1];
+            var token2 = exception2.Token;
+            Assert.AreEqual(4, token2.Line);
+            Assert.AreEqual("END", token2.Text);
         }
 
         [Test]
@@ -719,8 +728,11 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var parser = new SmiParser(tokens);
             var exception = Assert.Throws<MismatchedTokenException>(() => parser.GetDocument());
             var token = exception.Token;
-            Assert.AreEqual(@"""Test Agent Simulator""", token.Text);
+            Assert.AreEqual(@"DESCRIPTION", token.Text);
             Assert.AreEqual(1, token.Line);
+            Assert.AreEqual(1, parser.Errors.Count);
+            var error = parser.Errors[0];
+            Assert.AreEqual(@"""Test Agent Simulator""", error.Token.Text);
         }
 
         [Test]

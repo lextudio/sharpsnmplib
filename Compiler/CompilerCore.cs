@@ -67,12 +67,12 @@ namespace Lextm.SharpSnmpLib.Compiler
         private void BackgroundWorker1DoWork(object sender, DoWorkEventArgs e)
         {
             var docs = (IEnumerable<string>)e.Argument;
-            IEnumerable<MibException> errors;
+            IEnumerable<CompilerError> errors;
             CompileInternal(docs, out errors);
             e.Result = errors;
         }
 
-        private void CompileInternal(IEnumerable<string> docs, out IEnumerable<MibException> errors)
+        private void CompileInternal(IEnumerable<string> docs, out IEnumerable<CompilerError> errors)
         {
             var modules = Parser.ParseToModules(docs, out errors);
             Assembler.Assemble(modules);
@@ -82,8 +82,8 @@ namespace Lextm.SharpSnmpLib.Compiler
         {
             if (e.Result != null)
             {
-                var errors = (IEnumerable<MibException>)e.Result;
-                foreach (MibException error in errors)
+                var errors = (IEnumerable<CompilerError>)e.Result;
+                foreach (CompilerError error in errors)
                 {
                     Logger.Info(error.Details);
                 }

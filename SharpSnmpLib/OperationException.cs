@@ -98,7 +98,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Details on operation.
         /// </summary>
-        public override string Details
+        protected override string Details
         {
             get
             {

@@ -68,7 +68,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Details on operation.
         /// </summary>
-        public virtual string Details
+        protected virtual string Details
         {
             get
             {

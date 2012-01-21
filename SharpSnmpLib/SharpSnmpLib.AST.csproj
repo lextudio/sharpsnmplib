@@ -144,7 +144,7 @@
     <Compile Include="Mib\LiteralValue.cs" />
     <Compile Include="Mib\Macro.cs" />
     <Compile Include="Mib\MibDocument.cs" />
-    <Compile Include="Mib\MibException.cs" />
+    <Compile Include="Mib\CompilerError.cs" />
     <Compile Include="Mib\MibModule.cs" />
     <Compile Include="Mib\MinusInfinityLiteralValue.cs" />
     <Compile Include="Mib\ModuleCompliance.cs" />

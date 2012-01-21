@@ -144,7 +144,7 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
         public void TestActona()
         {
             const string name = "ACTONA-ACTASTOR-MIB::actona";
-            IList<IModule> modules = Parser.Compile(new MemoryStream(Properties.Resources.ACTONA_ACTASTOR_MIB));
+            var modules = Parser.Compile(new MemoryStream(Properties.Resources.ACTONA_ACTASTOR_MIB), new List<CompilerError>());
             DefaultObjectRegistry.Instance.Import(modules);
             DefaultObjectRegistry.Instance.Refresh();
             uint[] id = DefaultObjectRegistry.Instance.Translate(name);
@@ -158,19 +158,19 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
         {
             const string name = "SYMMIB_MIB-MIB::symbios_3_1";
             var registry = new SimpleObjectRegistry();
-            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.RFC_1212)));
-            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.RFC1155_SMI)));
-            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.RFC1213_MIB1)));
-            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.HOST_RESOURCES_MIB)));
-            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.IF_MIB)));
-            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.IANAifType_MIB)));
-            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.SNMPv2_SMI)));
-            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.SNMPv2_CONF)));
-            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.SNMPv2_TC)));
-            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.SNMPv2_MIB)));
-            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.SNMPv2_TM)));
-            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.SYMMIB_MIB_MIB)));
-            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.DMTF_DMI_MIB)));
+            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.RFC_1212), new List<CompilerError>()));
+            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.RFC1155_SMI), new List<CompilerError>()));
+            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.RFC1213_MIB1), new List<CompilerError>()));
+            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.HOST_RESOURCES_MIB), new List<CompilerError>()));
+            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.IF_MIB), new List<CompilerError>()));
+            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.IANAifType_MIB), new List<CompilerError>()));
+            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.SNMPv2_SMI), new List<CompilerError>()));
+            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.SNMPv2_CONF), new List<CompilerError>()));
+            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.SNMPv2_TC), new List<CompilerError>()));
+            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.SNMPv2_MIB), new List<CompilerError>()));
+            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.SNMPv2_TM), new List<CompilerError>()));
+            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.SYMMIB_MIB_MIB), new List<CompilerError>()));
+            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.DMTF_DMI_MIB), new List<CompilerError>()));
             registry.Refresh();
             uint[] id = registry.Translate(name);
             Assert.AreEqual(new uint[] { 1, 3, 6, 1, 4, 1, 1123, 3, 1 }, id);
@@ -181,15 +181,15 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
         public void TestIEEE802dot11_MIB()
         {
             var registry = new SimpleObjectRegistry();
-            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.RFC_1212)));
-            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.RFC1155_SMI)));
-            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.RFC1213_MIB1)));
-            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.SNMPv2_SMI)));
-            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.SNMPv2_CONF)));
-            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.SNMPv2_TC)));
-            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.SNMPv2_MIB)));
-            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.SNMPv2_TM)));
-            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.IEEE802DOT11_MIB)));
+            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.RFC_1212), new List<CompilerError>()));
+            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.RFC1155_SMI), new List<CompilerError>()));
+            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.RFC1213_MIB1), new List<CompilerError>()));
+            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.SNMPv2_SMI), new List<CompilerError>()));
+            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.SNMPv2_CONF), new List<CompilerError>()));
+            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.SNMPv2_TC), new List<CompilerError>()));
+            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.SNMPv2_MIB), new List<CompilerError>()));
+            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.SNMPv2_TM), new List<CompilerError>()));
+            registry.Import(Parser.Compile(new MemoryStream(Properties.Resources.IEEE802DOT11_MIB), new List<CompilerError>()));
             registry.Refresh();
             
             Assert.AreEqual("IEEE802dot11-MIB::dot11SMTnotification", registry.Translate(new uint[] {1, 2, 840, 10036, 1, 6}));

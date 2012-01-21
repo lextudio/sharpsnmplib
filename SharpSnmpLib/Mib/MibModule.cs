@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,7 @@ namespace Lextm.SharpSnmpLib.Mib
         private readonly IList<IConstruct> _constructs = new List<IConstruct>();
         public string Name { get; set; }
         public bool AllExported { get; set; }
+        public string FileName { private get; set; }
 
         private Exports _exports;
         public Exports Exports
@@ -169,6 +171,49 @@ namespace Lextm.SharpSnmpLib.Mib
 
             string dependentNonVersion = Regex.Replace(dependent, Pattern, string.Empty);
             return modules.ContainsKey(dependentNonVersion);
+        }
+
+        internal string ReportMissingDependencies(ICollection<string> existing)
+        {
+            var builder = new StringBuilder();
+            if (String.IsNullOrEmpty(FileName))
+            {
+                builder.Append("warning N0001 : ");
+            }
+            else
+            {
+                builder.AppendFormat("{0} : warning N0001 : ", FileName);
+            }
+
+            builder.AppendFormat("{0} is pending. Missing dependencies: ", Name);
+            foreach (string depend in Dependents.Where(depend => !existing.Contains(depend)))
+            {
+                builder.Append(depend).Append(", ");
+            }
+
+            builder.Length--;
+            return builder.ToString();
+        }
+
+        public string ReportDuplicate(MibModule existing)
+        {
+            return string.IsNullOrEmpty(FileName)
+                       ? string.Format("warning N0002 : {0} is duplicate of {1}", Name, existing.FileName)
+                       : string.Format("{0} : warning N0002 : {1} is duplicate of {2}", FileName, Name, existing.FileName);
+        }
+
+        public string ReportImplicitObjectIdentifier(ObjectIdentifierType extra)
+        {
+            return string.IsNullOrEmpty(FileName)
+                       ? string.Format("warning N0003 : implicit object identifier {0} ({1}) created under {2} in module {3}", extra.Name, extra.Value, extra.Parent, Name)
+                       : string.Format("{0} : warning N0003 : implicit object identifier {1} ({2}) created under {3} in module {4}", FileName, extra.Name, extra.Value, extra.Parent, Name);
+        }
+
+        public string ReportIgnoredImplicitEntity(string longParent)
+        {
+            return string.IsNullOrEmpty(FileName)
+                       ? string.Format("warning N0004 : ignore implicit entity created {0} in module {1}", longParent, Name)
+                       : string.Format("{0} : warning N0004 : ignore implicit entity created {1} in module {2}", FileName, longParent, Name);
         }
     }
 }

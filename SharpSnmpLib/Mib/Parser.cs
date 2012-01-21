@@ -30,29 +30,19 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <returns></returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1021:AvoidOutParameters", MessageId = "1#")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public IEnumerable<IModule> ParseToModules(IEnumerable<string> files, out IEnumerable<MibException> errors)
+        public IEnumerable<IModule> ParseToModules(IEnumerable<string> files, out IEnumerable<CompilerError> errors)
         { 
             if (files == null)
             {
                 throw new ArgumentNullException("files");
             }
 
-            IList<MibException> list = new List<MibException>();
+            var list = new List<CompilerError>();
             var modules = new List<IModule>();
             foreach (string file in files)
             {
-                try
-                {
-                    modules.AddRange(Compile(file));
-                }
-                catch (MibException ex)
-                {
-                    list.Add(ex);
-                }
-                finally
-                {
-                    Logger.Info(file + " compiled");
-                }
+                modules.AddRange(Compile(file, list));
+                Logger.Info(file + " compiled");
             }
             
             errors = list;
@@ -62,8 +52,9 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <summary>
         /// Loads a MIB file.
         /// </summary>
-        /// <param name="fileName">File name</param>
-        public static IEnumerable<IModule> Compile(string fileName)
+        /// <param name="fileName">File name.</param>
+        /// <param name="errors">Errors.</param>
+        public static IEnumerable<IModule> Compile(string fileName, List<CompilerError> errors)
         {
             if (fileName == null)
             {
@@ -87,22 +78,24 @@ namespace Lextm.SharpSnmpLib.Mib
             var parser = new SmiParser(tokens);
             try
             {
-                var doc = parser.GetDocument();
+                var doc = parser.GetDocument(fileName);
                 Logger.Info(watch.ElapsedMilliseconds.ToString(CultureInfo.InvariantCulture) + "-ms used to parse " +
                             fileName);
                 watch.Stop();
+                errors.AddRange(parser.Errors);
                 return doc.Modules.OfType<IModule>();
             }
             catch (RecognitionException ex)
             {
-                throw new MibException("compilation error", ex) { FileName = fileName };
+                errors.Add(new CompilerError(ex) {FileName = fileName});
+                return new IModule[0];
             }
         }
 
         /// <summary>
         /// Loads a MIB file.
         /// </summary>
-        public static IList<IModule> Compile(Stream stream)
+        public static IEnumerable<IModule> Compile(Stream stream, List<CompilerError> errors)
         {
             if (stream == null)
             {
@@ -116,14 +109,16 @@ namespace Lextm.SharpSnmpLib.Mib
             var parser = new SmiParser(tokens);
             try
             {
-                var doc = parser.GetDocument();
+                var doc = parser.GetDocument(string.Empty);
                 Logger.Info(watch.ElapsedMilliseconds.ToString(CultureInfo.InvariantCulture) + "-ms used to parse");
                 watch.Stop();
+                errors.AddRange(parser.Errors);
                 return doc.Modules.OfType<IModule>().ToList();
             }
             catch (RecognitionException ex)
             {
-                throw new MibException("compilation error", ex);
+                errors.Add(new CompilerError(ex));
+                return new IModule[0];
             }
         }
     }

@@ -10,6 +10,7 @@ namespace Lextm.SharpSnmpLib.Mib
     public abstract class ObjectRegistryBase : IObjectRegistry
     {
         private IObjectTree _tree;
+        private List<CompilerError> _errors = new List<CompilerError>();
 
         /// <summary>
         /// Object tree.
@@ -209,16 +210,22 @@ namespace Lextm.SharpSnmpLib.Mib
 
             foreach (string fileName in fileNames)
             {
-                Import(Parser.Compile(fileName));
+                Import(Parser.Compile(fileName, Errors));
             }
             
             Refresh();
+        }
+
+        private List<CompilerError> Errors
+        {
+            get { return _errors; }
         }
 
         /// <summary>
         /// Loads a MIB file.
         /// </summary>
         /// <param name="fileName">File name</param>
+        /// <param name="errors">Errors.</param>
         public void Compile(string fileName)
         {
             if (fileName == null)
@@ -236,7 +243,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 throw new ArgumentException("file does not exist: " + fileName);
             }
             
-            Import(Parser.Compile(fileName));
+            Import(Parser.Compile(fileName, Errors));
             Refresh();
         }
 
