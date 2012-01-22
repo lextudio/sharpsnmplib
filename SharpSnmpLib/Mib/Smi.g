@@ -593,17 +593,16 @@ statement returns [MibDocument result = new MibDocument()]
 
 /* NSS 13/1/05: Added 'PIB-DEFINITIONS' for SPPI */
 module_definition returns [MibModule result]
-    : name=module_identifier ('PIB-DEFINITIONS' | DEFINITIONS_KW) 
+    : name=NAME (obj_id_comp_lst)? ('PIB-DEFINITIONS' | DEFINITIONS_KW) 
     ( (EXPLICIT_KW | IMPLICIT_KW | AUTOMATIC_KW) TAGS_KW )? 
     (EXTENSIBILITY_KW IMPLIED_KW)?
     ASSIGN_OP BEGIN_KW mod=module_body END_KW 
     {
         $result = $mod.result; 
-      $result.Name = $name.text;
+        $result.Name = $name.text;
+        WantModuleName($name);
     }
     ;
-
-module_identifier: NAME (obj_id_comp_lst)? ;
 
 module_body returns [MibModule result = new MibModule()]
     :
@@ -620,14 +619,26 @@ obj_id_comp_lst returns [IdComponentList result = new IdComponentList()]
 //obj_id_comp_lst: L_BRACE (defined_value)? (obj_id_component)+ R_BRACE;
 
 fragment defined_value returns [DefinedValue result = new DefinedValue()]
-    : (mod=NAME DOT { $result.Module = $mod.text; })? 
-  v=NAME { $result.Value = $v.text; }
+    : (mod=NAME DOT 
+    { 
+      $result.Module = $mod.text; 
+      WantModuleName($mod);
+    })? 
+    v=NAME 
+    { 
+      $result.Value = $v.text; 
+      WantCamelCase($v);
+    }
   ;
 
 /* NSS 14/1/05: Checked against X.680 */
 obj_id_component returns [IdComponent result = new IdComponent()]
     : (num1=NUMBER { $result.Number = long.Parse($num1.text); }
-    | name=NAME { $result.Name = $name.text; })
+    | name=NAME 
+    { 
+      $result.Name = $name.text; 
+      WantCamelCase($name);
+    })
   (L_PAREN num2=NUMBER R_PAREN { $result.Number = long.Parse($num2.text); })?
   ;
 
@@ -653,13 +664,19 @@ assignment returns [IConstruct result]
   { 
     $result = $t.result; 
     $result.Name = $u.text;
+    WantTypeName($u);
   }
     | l=NAME t2=type ASSIGN_OP v=value 
   { 
     $result = new ValueAssignment($t2.result, $v.result);
     $result.Name = $l.text;
+    WantObjectName($l);
   }
-    | name=symbol 'MACRO' ASSIGN_OP BEGIN_KW (~(END_KW))* END_KW { $result = new Macro($name.text); }
+    | name=symbol 'MACRO' ASSIGN_OP BEGIN_KW (~(END_KW))* END_KW 
+  { 
+    $result = new Macro($name.text); 
+    WantMacroName(name.Start);
+  }
   ;
 
 symbol_list returns [IList<string> result = new List<string>()]
@@ -668,7 +685,11 @@ symbol_list returns [IList<string> result = new List<string>()]
 
 symbols_from_module returns [Import result = new Import()]
     : syms=symbol_list { $result.Symbols = $syms.result; }
-  FROM_KW mod=NAME { $result.Module = $mod.text;}
+    FROM_KW mod=NAME 
+    { 
+      $result.Module = $mod.text;
+      WantModuleName($mod);
+    }
                         ( obj_id_comp_lst 
                           | (defined_value) => defined_value 
                         )? ;
@@ -734,17 +755,33 @@ built_in_type returns [ISmiType result]
   ;
 
 defined_type returns [DefinedType result = new DefinedType()]
-    : (mod=NAME DOT { $result.Module = $mod.text; })? 
-  name=NAME { $result.Name = $name.text; }
+    : (mod=NAME 
+    { 
+      $result.Module = $mod.text; 
+      WantPascalCase($mod);
+    } DOT )? 
+    name=NAME 
+    { 
+      $result.Name = $name.text; 
+      WantPascalCase($name);
+    }
   (c=constraint { $result.Constraint = $c.result; })? ;
 
 selection_type returns [SelectionType result]
-    : name=NAME LESS t=type { $result = new SelectionType($name.text, $t.result); }
+    : name=NAME LESS t=type 
+    { 
+      $result = new SelectionType($name.text, $t.result); 
+      WantCamelCase($name);
+    }
   ;
 
 any_type returns [AnyType result = new AnyType()]
-    : ANY_KW (DEFINED_KW BY_KW def=NAME { $result.DefinedById = $def.text; })? 
-  ;
+    : ANY_KW (DEFINED_KW BY_KW def=NAME 
+    { 
+      $result.DefinedById = $def.text;
+      WantCamelCase($def); 
+    })? 
+    ;
 
 /* NSS 15/1/2005: Added syntactic predicate */
 bit_string_type returns [BitStringType result = new BitStringType()]
@@ -859,11 +896,18 @@ class_NUMBER returns [ClassNumber result]
 
 /* NSS 15/1/05: Added syntactic predicates; removed 'SEMI' */
 operation_macro returns [OperationMacro result = new OperationMacro()]
-    : 'OPERATION' 
-  (ARGUMENT_KW ((NAME) => l1=NAME { $result.ArgumentIdentifier = $l1.text; })? 
+    : 'OPERATION' (ARGUMENT_KW ((NAME) => l1=NAME 
+    { 
+      $result.ArgumentIdentifier = $l1.text; 
+      WantCamelCase($l1);
+    })? 
   t1=type { $result.ArgumentType = $t1.result; })? 
     ( (RESULT_KW) => RESULT_KW 
-        ((NAME) => ((NAME) => l2=NAME { $result.ResultIdentifier = $l2.text; })? 
+        ((NAME) => ((NAME) => l2=NAME 
+        { 
+          $result.ResultIdentifier = $l2.text; 
+          WantCamelCase($l2);
+        })? 
     t2=type { $result.ResultType = $t2.result; })? 
   )?
     ( (ERRORS_KW) => ERRORS_KW L_BRACE (o=operation_errorlist { $result.ErrorList = $o.result; })? R_BRACE )? 
@@ -872,8 +916,11 @@ operation_macro returns [OperationMacro result = new OperationMacro()]
 
 /* NSS 15/1/05: Added syntactic predicate */
 error_macro returns [ErrorMacro result = new ErrorMacro()]
-    : ERROR_KW 
-  ( PARAMETER_KW ((NAME) => id=NAME { $result.Identifier = $id.text; })? 
+    : ERROR_KW ( PARAMETER_KW ((NAME) => id=NAME 
+    { 
+      $result.Identifier = $id.text; 
+      WantCamelCase($id);
+    })? 
   t=type { $result.Subtype = $t.result; })? ;
 
 /* SMI processing - a bunch of macros defined in RFC 1155 and RFC 2578 for SMI v1 and v2 respectively */
@@ -998,8 +1045,16 @@ namedbits returns [IList<NamedBit> result = new List<NamedBit>()]
   ;   
 
 objecttype_macro_bitsvalue returns [IList<string> result = new List<string>()]
-    : L_BRACE l=NAME { $result.Add($l.text); } 
-  (COMMA l2=NAME { $result.Add($l2.text); })* R_BRACE
+    : L_BRACE l=NAME 
+    { 
+      $result.Add($l.text); 
+      WantBitName($l);
+    } 
+    (COMMA l2=NAME 
+    { 
+      $result.Add($l2.text); 
+      WantBitName($l2);
+    })* R_BRACE
   ;     
 
 objecttype_macro_error returns [NamedBit result] 
@@ -1059,7 +1114,11 @@ textualconvention_macro returns [TextualConventionMacro result = new TextualConv
   ;
 
 namedbit returns [NamedBit result]
-    : name=NAME { $result = new NamedBit($name.text); }
+    : name=NAME 
+    { 
+      $result = new NamedBit($name.text); 
+      WantBitName($name);
+    }
   L_PAREN (MINUS { $result.Minus = true; })? 
   num=NUMBER R_PAREN { $result.Number = long.Parse($num.text); }
   ;
@@ -1098,7 +1157,11 @@ status returns [EntityStatus result]
     ;
 
 modulecompliance_macro_module returns [ModuleCompliance result = new ModuleCompliance()]
-    : 'MODULE' ((NAME) => name=NAME { $result.Name = $name.text; }
+    : 'MODULE' ((NAME) => name=NAME 
+    { 
+      $result.Name = $name.text; 
+      WantModuleName($name);
+    }
   ((value) => v1=value { $result.Value = $v1.result; })? )? 
     ('MANDATORY-GROUPS' L_BRACE v2=value { $result.MandatoryGroups.Add($v2.result); }
   (COMMA v3=value { $result.MandarotyGroups.Add($v3.result); })* R_BRACE)?
@@ -1148,7 +1211,11 @@ agentcapabilities_macro_status returns [EntityStatus result]
                else {throw new SemanticException(l);}};
 
 agentcapabilities_macro_module returns [AgentCapabilitiesModule result]
-    : 'SUPPORTS' name=NAME { $result = new AgentCapabilitiesModule($name.text); }
+    : 'SUPPORTS' name=NAME 
+    { 
+      $result = new AgentCapabilitiesModule($name.text); 
+      WantModuleName($name);
+    }
   (v1=value)? { $result.Value = $v1.result; }
     'INCLUDES' L_BRACE v2=value { $result.Includes.Add($v2.result); }
   (COMMA v3=value)* R_BRACE { $result.Includes.Add($v3.result); }
@@ -1162,8 +1229,16 @@ agentcapabilities_macro_variation returns [Variantion result]
   ('ACCESS' a1=agentcapabilities_macro_access)? { $result.Access = $a1.result; }
     ('CREATION-REQUIRES' L_BRACE v2=value { $result.CreationRequires.Add($v2.result); }
   (COMMA v3=value)* R_BRACE)? { $result.CreationRequires.Add($v3.result); }
-    ('DEFVAL' L_BRACE ((L_BRACE (NAME | COMMA | R_BRACE)) => L_BRACE (l1=NAME)? { $result.DefaultValueIdentifiers.Add($l1.text); } 
-  (COMMA l2=NAME)* { $result.DefaultValueIdentifiers.Add($l2.text); }
+    ('DEFVAL' L_BRACE ((L_BRACE (NAME | COMMA | R_BRACE)) => L_BRACE (l1=NAME 
+    { 
+      $result.DefaultValueIdentifiers.Add($l1.text); 
+      WantCamelCase($l1);
+    })?  
+    (COMMA l2=NAME)* 
+    { 
+      $result.DefaultValueIdentifiers.Add($l2.text); 
+      WantCamelCase($l2);
+    }
   | v4=value) R_BRACE)? { $result.DefaultValue = $v4.result; }
     'DESCRIPTION' c1=C_STRING { $result.Description = $c1.text; }
   ;
@@ -1221,8 +1296,9 @@ elementType returns [ElementType result]
 
 elementType_tagged returns [TaggedElementType result]
     : name=NAME 
-  { 
+    { 
       $result = new TaggedElementType($name.text);
+      WantCamelCase($name);
     }
   ((L_BRACKET (NUMBER|NAME)) => t1=tag { $result.Tag = $t1.result; })? 
     (t2=tag_default { $result.TagDefault = $t2.result; })? 
@@ -1233,9 +1309,16 @@ elementType_tagged returns [TaggedElementType result]
   ;
 
 namedNumber returns [NamedNumber result]
-    : name=NAME 
-  L_PAREN (sn=signed_number { $result = new NamedNumber($name.text, $sn.result); } 
-  | dv=defined_value { $result = new NamedNumber($name.text, $dv.result); }) R_PAREN
+    : name=NAME L_PAREN (sn=signed_number 
+    { 
+      $result = new NamedNumber($name.text, $sn.result); 
+      WantNumberName($name);
+    } 
+    | dv=defined_value 
+    { 
+      $result = new NamedNumber($name.text, $dv.result); 
+      WantNumberName($name);
+    }) R_PAREN
   ;
 
 signed_number returns [NumberLiteralValue result]
@@ -1320,7 +1403,11 @@ type_constraint_list returns [IList<ConstraintElement> result = new List<Constra
   ;
 
 named_constraint returns [NamedConstraintElement result]
-    : name=NAME { $result = new NamedConstraintElement($name.text); }
+    : name=NAME 
+    { 
+      $result = new NamedConstraintElement($name.text); 
+      WantConstraintName($name);
+    }
   (c=constraint { $result.Constraint = $c.result; })? 
   (PRESENT_KW { $result.Present = true; }
   | ABSENT_KW { $result.Absent = true; }
@@ -1328,7 +1415,11 @@ named_constraint returns [NamedConstraintElement result]
   ;
 
 choice_value returns [ChoiceValue result = new ChoiceValue()]
-    : name=NAME { $result.Name = $name.text; } 
+    : name=NAME 
+    { 
+      $result.Name = $name.text; 
+      WantChoiceName($name);
+    } 
   (COLON { $result.ContainsColon = true; })? 
   v=value { $result.Value = $v.result; }
   ;
@@ -1361,8 +1452,16 @@ cstr_value returns [ISmiValue result]
             ) R_BRACE;
 
 id_list returns [IdListValue result = new IdListValue()]
-    : name1=NAME { $result.Add($name1.text); }
-  (COMMA name2=NAME { $result.Add($name2.text); })* 
+    : name1=NAME 
+    { 
+      $result.Add($name1.text); 
+      WantIdName($name1);
+    }
+    (COMMA name2=NAME 
+    { 
+      $result.Add($name2.text); 
+      WantIdName($name2);
+    })* 
   ;
 
 char_defs_list returns [CharDefinitionListValue result = new CharDefinitionListValue()]
@@ -1395,7 +1494,11 @@ char_defs returns [CharDefinition result]
 //         | defined_value;
 
 named_value returns [NamedValue result]
-    : name=NAME v=value { $result = new NamedValue($name.text, $v.result); }
+    : name=NAME v=value 
+    { 
+      $result = new NamedValue($name.text, $v.result); 
+      WantCamelCase($name);
+    }
   ;
 
 full_qualified_value returns [FullQualifiedValue result = new FullQualifiedValue()]

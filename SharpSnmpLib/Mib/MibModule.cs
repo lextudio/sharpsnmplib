@@ -76,7 +76,7 @@ namespace Lextm.SharpSnmpLib.Mib
                     item.Name = assignment.Name;
                     item.ModuleName = Name;
                     var seq = assignment.SmiValue as SequenceValue;
-                    if (seq != null && seq.Values.Count > 0)
+                    if (seq != null && seq.Values.Count == 1)
                     {
                         var number = (NumberLiteralValue) seq.Values[0].Value;
                         item.Value = (uint) number.Value.Value;
@@ -86,7 +86,7 @@ namespace Lextm.SharpSnmpLib.Mib
                     }
 
                     var v = assignment.SmiValue as IdComponentList;
-                    if (v != null )
+                    if (v != null)
                     {
                         if (v.IdComponents.Count >= 2)
                         {

@@ -30,22 +30,24 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <returns></returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1021:AvoidOutParameters", MessageId = "1#")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public IEnumerable<IModule> ParseToModules(IEnumerable<string> files, out IEnumerable<CompilerError> errors)
+        public IEnumerable<IModule> ParseToModules(IEnumerable<string> files, out IEnumerable<CompilerError> errors, out IEnumerable<CompilerWarning> warnings)
         { 
             if (files == null)
             {
                 throw new ArgumentNullException("files");
             }
 
-            var list = new List<CompilerError>();
+            var errorlist = new List<CompilerError>();
+            var warninglist = new List<CompilerWarning>();
             var modules = new List<IModule>();
             foreach (string file in files)
             {
-                modules.AddRange(Compile(file, list));
+                modules.AddRange(Compile(file, errorlist, warninglist));
                 Logger.Info(file + " compiled");
             }
-            
-            errors = list;
+
+            errors = errorlist;
+            warnings = warninglist;
             return modules;
         }
 
@@ -54,7 +56,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// </summary>
         /// <param name="fileName">File name.</param>
         /// <param name="errors">Errors.</param>
-        public static IEnumerable<IModule> Compile(string fileName, List<CompilerError> errors)
+        public static IEnumerable<IModule> Compile(string fileName, List<CompilerError> errors, List<CompilerWarning> warnings)
         {
             if (fileName == null)
             {
@@ -83,11 +85,14 @@ namespace Lextm.SharpSnmpLib.Mib
                             fileName);
                 watch.Stop();
                 errors.AddRange(parser.Errors);
+                warnings.AddRange(parser.Warnings);
                 return doc.Modules.OfType<IModule>();
             }
             catch (RecognitionException ex)
             {
                 errors.Add(new CompilerError(ex) {FileName = fileName});
+                errors.AddRange(parser.Errors);
+                warnings.AddRange(parser.Warnings);
                 return new IModule[0];
             }
         }
@@ -95,7 +100,7 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <summary>
         /// Loads a MIB file.
         /// </summary>
-        public static IEnumerable<IModule> Compile(Stream stream, List<CompilerError> errors)
+        public static IEnumerable<IModule> Compile(Stream stream, List<CompilerError> errors, List<CompilerWarning> warnings)
         {
             if (stream == null)
             {
@@ -113,11 +118,14 @@ namespace Lextm.SharpSnmpLib.Mib
                 Logger.Info(watch.ElapsedMilliseconds.ToString(CultureInfo.InvariantCulture) + "-ms used to parse");
                 watch.Stop();
                 errors.AddRange(parser.Errors);
+                warnings.AddRange(parser.Warnings);
                 return doc.Modules.OfType<IModule>().ToList();
             }
             catch (RecognitionException ex)
             {
                 errors.Add(new CompilerError(ex));
+                errors.AddRange(parser.Errors);
+                warnings.AddRange(parser.Warnings);
                 return new IModule[0];
             }
         }

@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Media;
-
+using System.Tuples;
 using Lextm.SharpSnmpLib.Mib;
 
 namespace Lextm.SharpSnmpLib.Compiler
@@ -68,13 +68,14 @@ namespace Lextm.SharpSnmpLib.Compiler
         {
             var docs = (IEnumerable<string>)e.Argument;
             IEnumerable<CompilerError> errors;
-            CompileInternal(docs, out errors);
-            e.Result = errors;
+            IEnumerable<CompilerWarning> warnings;
+            CompileInternal(docs, out errors, out warnings);
+            e.Result = new Tuple<IEnumerable<CompilerError>, IEnumerable<CompilerWarning>>(errors, warnings);
         }
 
-        private void CompileInternal(IEnumerable<string> docs, out IEnumerable<CompilerError> errors)
+        private void CompileInternal(IEnumerable<string> docs, out IEnumerable<CompilerError> errors, out IEnumerable<CompilerWarning> warnings)
         {
-            var modules = Parser.ParseToModules(docs, out errors);
+            var modules = Parser.ParseToModules(docs, out errors, out warnings);
             Assembler.Assemble(modules);
         }
 
@@ -82,10 +83,17 @@ namespace Lextm.SharpSnmpLib.Compiler
         {
             if (e.Result != null)
             {
-                var errors = (IEnumerable<CompilerError>)e.Result;
+                var results = (Tuple<IEnumerable<CompilerError>, IEnumerable<CompilerWarning>>)e.Result;
+                var errors = results.First;
                 foreach (CompilerError error in errors)
                 {
                     Logger.Info(error.Details);
+                }
+
+                var warnings = results.Second;
+                foreach (var warning in warnings)
+                {
+                    Logger.Info(warning.Details);
                 }
             }
 

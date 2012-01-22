@@ -11,6 +11,7 @@ namespace Lextm.SharpSnmpLib.Mib
     {
         private IObjectTree _tree;
         private List<CompilerError> _errors = new List<CompilerError>();
+        private List<CompilerWarning> Warnings = new List<CompilerWarning>();
 
         /// <summary>
         /// Object tree.
@@ -210,7 +211,7 @@ namespace Lextm.SharpSnmpLib.Mib
 
             foreach (string fileName in fileNames)
             {
-                Import(Parser.Compile(fileName, Errors));
+                Import(Parser.Compile(fileName, Errors, Warnings));
             }
             
             Refresh();
@@ -243,7 +244,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 throw new ArgumentException("file does not exist: " + fileName);
             }
             
-            Import(Parser.Compile(fileName, Errors));
+            Import(Parser.Compile(fileName, Errors, Warnings));
             Refresh();
         }
 

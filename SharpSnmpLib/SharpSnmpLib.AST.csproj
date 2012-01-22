@@ -108,6 +108,7 @@
     <Compile Include="Mib\ChoiceType.cs" />
     <Compile Include="Mib\ChoiceValue.cs" />
     <Compile Include="Mib\ClassNumber.cs" />
+    <Compile Include="Mib\CompilerWarning.cs" />
     <Compile Include="Mib\Compliance.cs" />
     <Compile Include="Mib\ComponentsOfElementType.cs" />
     <Compile Include="Mib\Constraint.cs" />
@@ -189,6 +190,7 @@
     <Compile Include="Mib\SetType.cs" />
     <Compile Include="Mib\SizeConstraintElement.cs" />
     <Compile Include="Mib\SmiParser.cs" />
+    <Compile Include="Mib\TokenExtension.cs" />
     <Compile Include="Mib\Syntax.cs" />
     <Compile Include="Mib\Tag.cs" />
     <Compile Include="Mib\TagDefault.cs" />
