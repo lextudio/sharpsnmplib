@@ -1,5 +1,6 @@
 ﻿using System;
-using System.Windows.Forms;
+using System.IO;
+using ICSharpCode.TextEditor.Document;
 using RemObjects.Mono.Helpers;
 using WeifenLuo.WinFormsUI.Docking;
 
@@ -19,7 +20,11 @@ namespace Lextm.SharpSnmpLib.Compiler
 
             _fileName = fileName;
             TabText = _fileName;
-            txtDocument.LoadFile(_fileName, RichTextBoxStreamType.PlainText);
+            var dir = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location); // Insert the path to your xshd-files.
+            var fsmProvider = new FileSyntaxModeProvider(dir);
+            HighlightingManager.Manager.AddSyntaxModeFileProvider(fsmProvider); // Attach to the text editor.
+            txtDocument.SetHighlighting("SMI"); // Activate the highlighting, use the name from the SyntaxDefinition node.
+            txtDocument.LoadFile(_fileName);
         }
 
         public string FileName

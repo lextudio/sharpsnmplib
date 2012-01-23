@@ -341,6 +341,10 @@ LINKED_KW
   : 'LINKED'
   ;
 
+MACRO_KW
+  : 'MACRO'
+  ;
+
 MAX_KW
   : 'MAX'
   ;
@@ -393,8 +397,16 @@ PARAMETER_KW
   : 'PARAMETER'
   ;
 
+PATTERN_KW
+  : 'PATTERN'
+  ; 
+
 PDV_KW
   : 'PDV'
+  ;
+
+PIBDEFINITION_KW
+  : 'PIB-DEFINITIONS'
   ;
 
 PLUS_INFINITY_KW
@@ -497,10 +509,6 @@ WITH_KW
   : 'WITH'
   ;
   
-PATTERN_KW
-  : 'PATTERN'
-  ; 
-
 // Operators
 
 ASSIGN_OP:  '::=';
@@ -593,7 +601,7 @@ statement returns [MibDocument result = new MibDocument()]
 
 /* NSS 13/1/05: Added 'PIB-DEFINITIONS' for SPPI */
 module_definition returns [MibModule result]
-    : name=NAME (obj_id_comp_lst)? ('PIB-DEFINITIONS' | DEFINITIONS_KW) 
+    : name=NAME (obj_id_comp_lst)? (PIBDEFINITIONS_KW | DEFINITIONS_KW) 
     ( (EXPLICIT_KW | IMPLICIT_KW | AUTOMATIC_KW) TAGS_KW )? 
     (EXTENSIBILITY_KW IMPLIED_KW)?
     ASSIGN_OP BEGIN_KW mod=module_body END_KW 
@@ -672,7 +680,7 @@ assignment returns [IConstruct result]
     $result.Name = $l.text;
     WantObjectName($l);
   }
-    | name=symbol 'MACRO' ASSIGN_OP BEGIN_KW (~(END_KW))* END_KW 
+    | name=symbol MACRO_KW ASSIGN_OP BEGIN_KW (~(END_KW))* END_KW 
   { 
     $result = new Macro($name.text); 
     WantMacroName(name.Start);
@@ -896,7 +904,7 @@ class_NUMBER returns [ClassNumber result]
 
 /* NSS 15/1/05: Added syntactic predicates; removed 'SEMI' */
 operation_macro returns [OperationMacro result = new OperationMacro()]
-    : 'OPERATION' (ARGUMENT_KW ((NAME) => l1=NAME 
+    : OPERATION_KW (ARGUMENT_KW ((NAME) => l1=NAME 
     { 
       $result.ArgumentIdentifier = $l1.text; 
       WantCamelCase($l1);
