@@ -72,7 +72,6 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <Import Project="Antlr3.targets" />
   <ItemGroup>
-    <Reference Include="Accessibility" />
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\lib\ANTLR\Antlr3.Runtime.dll</HintPath>
     </Reference>
@@ -82,8 +81,6 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\lib\SharedAssemblyInfo.cs">

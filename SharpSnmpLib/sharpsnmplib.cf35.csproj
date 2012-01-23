@@ -58,6 +58,12 @@
     <Compile Include="..\lib\CryptoTools.cs">
       <Link>CryptoTools.cs</Link>
     </Compile>
+    <Compile Include="..\lib\DataContractAttribute.cs">
+      <Link>DataContractAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\lib\DataMemberAttribute.cs">
+      <Link>DataMemberAttribute.cs</Link>
+    </Compile>
     <Compile Include="..\lib\HMAC.cs">
       <Link>HMAC.cs</Link>
     </Compile>
@@ -156,8 +162,30 @@
     <Compile Include="TrapV2Pdu.cs" />
     <Compile Include="Variable.cs" />
     <Compile Include="VersionCode.cs" />
+    <Compile Include="System.Tuples\ConversionsGenerator.cs">
+      <DependentUpon>ConversionsGenerator.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="System.Tuples\TupleGenerator.cs">
+      <DependentUpon>TupleGenerator.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <None Include="Microsoft.VersionNumber.targets" />
     <None Include="sharpsnmplib.snk" />
+    <None Include="System.Tuples\ConversionsGenerator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ConversionsGenerator.cs</LastGenOutput>
+    </None>
+    <None Include="System.Tuples\NormalTuple.ttinclude" />
+    <None Include="System.Tuples\Settings.ttinclude" />
+    <None Include="System.Tuples\TupleGenerator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>TupleGenerator.cs</LastGenOutput>
+    </None>
+    <None Include="System.Tuples\Util.ttinclude" />
+    <None Include="System.Tuples\ZeroTuple.ttinclude" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="license.txt" />

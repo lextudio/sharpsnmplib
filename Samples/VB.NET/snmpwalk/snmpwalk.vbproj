@@ -103,14 +103,6 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Data" />
-    <Reference Include="System.Data.DataSetExtensions">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Xml.Linq">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -133,10 +125,6 @@
     <ProjectReference Include="..\..\..\SharpSnmpLib\SharpSnmpLib.csproj">
       <Project>{286DE6DB-8F95-4BD4-86A2-86488D2E0EE1}</Project>
       <Name>SharpSnmpLib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\System.Tuples\System.Tuples.csproj">
-      <Project>{0D826AF6-57A2-46DF-95CF-DEC1CAD1B931}</Project>
-      <Name>System.Tuples</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
