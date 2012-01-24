@@ -51,8 +51,6 @@
   </PropertyGroup>-->
 
   <PropertyGroup>
-    <AntlrBuildTaskPath>$(MSBuildProjectDirectory)\..\lib\</AntlrBuildTaskPath>
-    <AntlrToolPath>$(MSBuildProjectDirectory)\..\lib\antlr\antlr3.exe</AntlrToolPath>
     <AntlrBuildTaskLocation Condition="'$(AntlrBuildTaskPath)'==''">$(MSBuildBinPath)</AntlrBuildTaskLocation>
     <AntlrBuildTaskLocation Condition="'$(AntlrBuildTaskPath)'!=''">$(AntlrBuildTaskPath)</AntlrBuildTaskLocation>
     <AntlrToolLocation Condition="'$(AntlrToolPath)'==''">$(MSBuildBinPath)\Antlr3\Antlr3.exe</AntlrToolLocation>
