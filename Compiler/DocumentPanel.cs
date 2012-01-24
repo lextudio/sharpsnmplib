@@ -20,9 +20,6 @@ namespace Lextm.SharpSnmpLib.Compiler
 
             _fileName = fileName;
             TabText = _fileName;
-            var dir = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location); // Insert the path to your xshd-files.
-            var fsmProvider = new FileSyntaxModeProvider(dir);
-            HighlightingManager.Manager.AddSyntaxModeFileProvider(fsmProvider); // Attach to the text editor.
             txtDocument.SetHighlighting("SMI"); // Activate the highlighting, use the name from the SyntaxDefinition node.
             txtDocument.LoadFile(_fileName);
         }

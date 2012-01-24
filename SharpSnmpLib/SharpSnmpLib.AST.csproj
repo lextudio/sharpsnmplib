@@ -70,11 +70,11 @@
     <DocumentationFile />
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
-  <Import Project="..\lib\ANTLR\Antlr3.targets" />
   <PropertyGroup>
-    <AntlrBuildTaskPath>$(MSBuildProjectDirectory)\..\lib\</AntlrBuildTaskPath>
+    <AntlrBuildTaskPath>$(MSBuildProjectDirectory)\..\lib\ANTLR</AntlrBuildTaskPath>
     <AntlrToolPath>$(MSBuildProjectDirectory)\..\lib\antlr\antlr3.exe</AntlrToolPath>
   </PropertyGroup>
+  <Import Project="..\lib\ANTLR\Antlr3.targets" />
   <ItemGroup>
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\lib\ANTLR\Antlr3.Runtime.dll</HintPath>

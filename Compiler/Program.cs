@@ -8,7 +8,9 @@
  */
 
 using System;
+using System.IO;
 using System.Windows.Forms;
+using ICSharpCode.TextEditor.Document;
 using Lextm.Common;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
@@ -36,11 +38,14 @@ namespace Lextm.SharpSnmpLib.Compiler
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            SingleInstanceController controller = new SingleInstanceController(typeof(MainForm));
+            var controller = new SingleInstanceController(typeof(MainForm));
             controller.MainFormCreated += delegate
             {
                 Container = new UnityContainer().LoadConfiguration("compiler");
                 ToolStripManager.Renderer = new Office2007Renderer.Office2007Renderer();
+                var dir = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location); // Insert the path to your xshd-files.
+                var fsmProvider = new FileSyntaxModeProvider(dir);
+                HighlightingManager.Manager.AddSyntaxModeFileProvider(fsmProvider); // Attach to the text editor.
             };
             controller.Run(args);
         }
