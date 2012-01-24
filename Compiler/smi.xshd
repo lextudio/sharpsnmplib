@@ -1,17 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<!-- syntaxdefinition for SMI by Lex Li -->
-<SyntaxDefinition name = "SMI" extensions = ".mib;.my">
-
-  <Properties>
-    <Property name="LineComment" value="--"/>
-  </Properties>
+<!-- syntaxdefinition for SMI by Lex Li (gleaned from Jedit) -->
+<SyntaxDefinition name = "SMI" extensions = ".mib;.my;.txt">
 
   <Digits name = "Digits" bold = "false" italic = "false" color = "DarkCyan"/>
 
   <RuleSets>
     <RuleSet ignorecase="false">
       <Delimiters>
-        &amp;&lt;&gt;~!%^*()-+=|\#/{}[]:;"' ,	.?
+        &amp;&lt;&gt;~!%^*()+=|\#/{}[]:;"' ,	.?
       </Delimiters>
 
       <!-- ... -->
@@ -54,104 +50,99 @@
         <Key word = "&amp;" />
       </KeyWords>
 
-      <KeyWords name = "Keywords" bold = "true" italic = "false" color = "Blue">
-        <Key word="ABSENT" />
-        <Key word="ABSTRACT-SYNTAX" />
-        <Key word="ACCESS" />
-        <Key word="ALL" />
-        <Key word="ARGUMENT" />
-        <Key word="APPLICATION" />
-        <Key word="AUTOMATIC" />
-        <Key word="BASEDNUM" />
-        <Key word="BEGIN" />
-        <Key word="BIT" />
-        <Key word="BMPString" />
-        <Key word="BOOLEAN" />
-        <Key word="BY" />
-        <Key word="CHARACTER" />
-        <Key word="CHOICE" />
-        <Key word="CLASS" />
-        <Key word="COMPONENTS" />
-        <Key word="COMPONENT" />
-        <Key word="CONSTRAINED" />
-        <Key word="DEFAULT" />
-        <Key word="DEFINED" />
-        <Key word="DEFINITIONS" />
-        <Key word="DESCRIPTION" />
-        <Key word="EMBEDDED" />
-        <Key word="END" />
-        <Key word="ENUMERATED" />
-        <Key word="ERROR" />
-        <Key word="ERRORS" />
-        <Key word="EXCEPT" />
-        <Key word="EXPLICIT" />
-        <Key word="EXPORTS" />
-        <Key word="EXTENSIBILITY" />
-        <Key word="EXTERNAL" />
-        <Key word="FALSE" />
-        <Key word="FROM" />
-        <Key word="GeneralizedTime" />
-        <Key word="GeneralString" />
-        <Key word="GraphicString" />
-        <Key word="IA5String" />
-        <Key word="IDENTIFIER" />
-        <Key word="IMPLICIT" />
-        <Key word="IMPLIED" />
-        <Key word="IMPORTS" />
-        <Key word="INCLUDES" />
-        <Key word="INDEX" />
-        <Key word="INSTANCE" />
-        <Key word="INTEGER" />
-        <Key word="INTERSECTION" />
-        <Key word="ISO646String" />
-        <Key word="LINKED" />
-        <Key word="MACRO" />
-        <Key word="MAX" />
-        <Key word="MINUSINFINITY" />
-        <Key word="MIN" />
-        <Key word="NULL" />
-        <Key word="NumericString" />
-        <Key word="ObjectDescriptor" />
-        <Key word="OBJECT" />
-        <Key word="OBJECT-TYPE" />
-        <Key word="OCTET" />
-        <Key word="OPERATION" />
-        <Key word="OF" />
-        <Key word="OID" />
-        <Key word="OPTIONAL" />
-        <Key word="PARAMETER" />
-        <Key word="PATTERN" />
-        <Key word="PDV" />
-        <Key word="PIB-DEFINITIONS" />
-        <Key word="PLUSINFINITY" />
-        <Key word="PRESENT" />
-        <Key word="PrintableString" />
-        <Key word="PRIVATE" />
-        <Key word="REAL" />
-        <Key word="RELATIVE" />
-        <Key word="RESULT" />
-        <Key word="SEQUENCE" />
-        <Key word="SET" />
-        <Key word="SIZE" />
-        <Key word="STATUS" />
-        <Key word="STRING" />
-        <Key word="SYNTAX" />
-        <Key word="TAGS" />
-        <Key word="TeletexString" />
-        <Key word="T61String" />
-        <Key word="TRUE" />
-        <Key word="TYPE-IDENTIFIER" />
-        <Key word="UNION" />
-        <Key word="UNIQUE" />
-        <Key word="UNIVERSAL" />
-        <Key word="UniversalString" />
-        <Key word="UTCTime" />
-        <Key word="UTF8String" />
-        <Key word="VideotexString" />
-        <Key word="VisibleString" />
-        <Key word="WITH" />
+      <KeyWords name = "Functions" bold = "true" italic = "false" color = "Blue">
+        <Key word = "AGENT-CAPABILITIES" />
+        <Key word = "BEGIN" />
+        <Key word = "END" />
+        <Key word = "FROM" />
+        <Key word = "IMPORTS" />
+        <Key word = "MODULE-COMPLIANCE" />
+        <Key word = "MODULE-IDENTITY" />
+        <Key word = "NOTIFICATION-GROUP" />
+        <Key word = "NOTIFICATION-TYPE" />
+        <Key word = "OBJECT-GROUP" />
+        <Key word = "OBJECT-IDENTITY" />
+        <Key word = "OBJECT-TYPE" />
+        <Key word = "TEXTUAL-CONVENTION" />
       </KeyWords>
-    
+
+      <KeyWords name = "Keywords" bold = "true" italic = "false" color = "Blue">
+        <Key word = "ACCESS" />
+        <Key word = "AUGMENTS" />
+        <Key word = "CONTACT-INFO" />
+        <Key word = "CREATION-REQUIRES" />
+        <Key word = "DEFINITIONS" />
+        <Key word = "DEFVAL" />
+        <Key word = "DESCRIPTION" />
+        <Key word = "DISPLAY-HINT" />
+        <Key word = "GROUP" />
+        <Key word = "INCLUDES" />
+        <Key word = "INDEX" />
+        <Key word = "LAST-UPDATED" />
+        <Key word = "MANDATORY-GROUPS" />
+        <Key word = "MAX-ACCESS" />
+        <Key word = "MIN-ACCESS" />
+        <Key word = "MODULE" />
+        <Key word = "NOTIFICATIONS" />
+        <Key word = "OBJECT" />
+        <Key word = "OBJECTS" />
+        <Key word = "ORGANIZATION" />
+        <Key word = "PRODUCT-RELEASE" />
+        <Key word = "REFERENCE" />
+        <Key word = "REVISION" />
+        <Key word = "STATUS" />
+        <Key word = "SYNTAX" />
+        <Key word = "SUPPORTS" />
+        <Key word = "UNITS" />
+        <Key word = "VARIATION" />
+        <Key word = "WRITE-SYNTAX" />
+      </KeyWords>
+
+      <KeyWords name = "Types" bold = "true" italic = "false" color = "Blue">
+        <Key word = "AutonomousType" />
+        <Key word = "BITS" />
+        <Key word = "Counter32" />
+        <Key word = "Counter64" />
+        <Key word = "DateAndTime" />
+        <Key word = "DisplayString" />
+        <Key word = "Gauge32" />
+        <Key word = "InstancePointer" />
+        <Key word = "INTEGER" />
+        <Key word = "Integer32" />
+        <Key word = "IpAddress" />
+        <Key word = "MacAddress" />
+        <Key word = "Opaque" />
+        <Key word = "PhysAddress" />
+        <Key word = "RowPointer" />
+        <Key word = "RowStatus" />
+        <Key word = "SEQUENCE" />
+        <Key word = "TAddress" />
+        <Key word = "TDomain" />
+        <Key word = "TestAndIncr" />
+        <Key word = "TimeInterval" />
+        <Key word = "TimeStamp" />
+        <Key word = "TimeTicks" />
+        <Key word = "TruthValue" />
+        <Key word = "StorageType" />
+        <Key word = "Unsigned32" />
+        <Key word = "VariablePointer" />
+      </KeyWords>
+
+      <KeyWords name = "Status" bold = "true" italic = "false" color = "Black">
+        <Key word = "accessible-for-notify" />
+        <Key word = "current" />
+        <Key word = "deprecated" />
+        <Key word = "mandatory" />
+        <Key word = "not-accessible" />
+        <Key word = "not-implemented" />
+        <Key word = "obsolete" />
+        <Key word = "optional" />
+        <Key word = "read-create" />
+        <Key word = "read-only" />
+        <Key word = "read-write" />
+        <Key word = "SIZE" />
+        <Key word = "write-only" />
+      </KeyWords>
     </RuleSet>
 
   </RuleSets>
