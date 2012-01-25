@@ -18,23 +18,23 @@
         <Exec Command="$(NDependFolder)\NDepend.Console.exe $(NDependProject)" />
     </Target>
 	<Target Name="Clean">
-	    <MSBuild Projects="sharpsnmplib.sln" Targets="Clean" />
-	    <MSBuild Projects="sharpsnmplib.sln" Properties="Configuration=Release;Platform=Any CPU" Targets="Clean" />
+	    <MSBuild Projects="SharpSnmpLib.sln" Targets="Clean" />
+	    <MSBuild Projects="SharpSnmpLib.sln" Properties="Configuration=Release;Platform=Any CPU" Targets="Clean" />
 	</Target>	
     <Target Name="Debug">
         <Error
             Text="Please execute prepare.bat (Windows) or prepare.sh (Linux and else) first."
             Condition="!Exists('$(SignFile)')" />
-        <MSBuild Projects="sharpsnmplib.sln" />
+        <MSBuild Projects="SharpSnmpLib.sln" />
     </Target>
     <Target Name="Release">
         <Error
             Text="Please execute prepare.bat (Windows) or prepare.sh (Linux and else) first."
             Condition="!Exists('$(SignFile)')" />
-        <MSBuild Projects="sharpsnmplib.sln" Properties="Configuration=Release;Platform=Any CPU" />
+        <MSBuild Projects="SharpSnmpLib.sln" Properties="Configuration=Release;Platform=Any CPU" />
     </Target>
 	<Target Name="Package" DependsOnTargets="Release">
-	    <MSBuild Projects="sharpsnmplib.cf35.sln"  Properties="Configuration=Release;Platform=Any CPU" />
+	    <MSBuild Projects="Sharpsnmplib.cf35.sln"  Properties="Configuration=Release;Platform=Any CPU" />
 	    <MSBuild Projects="sharpsnmplib.shfbproj" Properties="Configuration=Release;Platform=Any CPU" />
 	</Target>
     <!--<Target Name="CF">
