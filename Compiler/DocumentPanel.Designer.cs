@@ -31,7 +31,6 @@
             this.components = new System.ComponentModel.Container();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.closeAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.txtDocument = new ICSharpCode.TextEditor.TextEditorControl();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -49,22 +48,11 @@
             this.closeAllToolStripMenuItem.Text = "Close All";
             this.closeAllToolStripMenuItem.Click += new System.EventHandler(this.CloseAllToolStripMenuItemClick);
             // 
-            // txtDocument
-            // 
-            this.txtDocument.ContextMenuStrip = this.contextMenuStrip1;
-            this.txtDocument.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtDocument.IsReadOnly = false;
-            this.txtDocument.Location = new System.Drawing.Point(0, 0);
-            this.txtDocument.Name = "txtDocument";
-            this.txtDocument.Size = new System.Drawing.Size(284, 286);
-            this.txtDocument.TabIndex = 1;
-            // 
             // DocumentPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 286);
-            this.Controls.Add(this.txtDocument);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Name = "DocumentPanel";
             this.TabPageContextMenuStrip = this.contextMenuStrip1;
@@ -77,6 +65,5 @@
 
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem closeAllToolStripMenuItem;
-        private ICSharpCode.TextEditor.TextEditorControl txtDocument;
     }
 }
