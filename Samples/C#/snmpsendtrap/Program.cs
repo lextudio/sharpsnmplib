@@ -15,7 +15,7 @@ using Lextm.SharpSnmpLib.Messaging;
 
 namespace SnmpSendTrap
 {
-    internal static class Program
+    internal static class Program 
     {
         public static void Main(string[] args)
         {

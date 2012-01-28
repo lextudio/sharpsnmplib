@@ -19,7 +19,7 @@ using Lextm.SharpSnmpLib.Security;
 namespace SnmpSet
 {
     internal static class Program
-    {
+    { 
         static void Main(string[] args)
         {
             string community = "public";

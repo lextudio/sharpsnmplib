@@ -8,7 +8,7 @@ namespace Lextm.SharpSnmpLib.Browser
         public FormIndex()
         {
             InitializeComponent();
-        }
+        } 
 
         public uint Index
         {

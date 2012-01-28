@@ -12,7 +12,7 @@ namespace snmptranslate
             {
                 Console.WriteLine(@"This application takes one parameter.");
                 return;
-            }
+            } 
 
             string oid = args[0];
             IObjectRegistry registry = new ReloadableObjectRegistry("modules");

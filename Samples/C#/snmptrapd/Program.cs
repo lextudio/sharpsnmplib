@@ -17,7 +17,7 @@ using Microsoft.Practices.Unity.Configuration;
 namespace SnmpTrapD
 {
     internal static class Program
-    {
+    { 
         internal static IUnityContainer Container { get; private set; }
         
         public static void Main(string[] args)

@@ -17,7 +17,7 @@ using Lextm.SharpSnmpLib.Security;
 using Lextm.SharpSnmpLib.Messaging;
 
 namespace SnmpGetNext
-{
+{ 
     internal static class Program
     {
         public static void Main(string[] args)
