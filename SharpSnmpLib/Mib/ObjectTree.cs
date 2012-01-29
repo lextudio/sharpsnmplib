@@ -17,7 +17,6 @@ namespace Lextm.SharpSnmpLib.Mib
         private readonly IDictionary<string, MibModule> _pendings = new Dictionary<string, MibModule>();
         private readonly IDictionary<string, Definition> _nameTable;
         private readonly Definition _root;
-        private readonly IDictionary<string, ITypeAssignment> _types = new Dictionary<string, ITypeAssignment>();
         private static readonly ILog Logger = LogManager.GetLogger("Lextm.SharpSnmpLib.Mib");
         
         /// <summary>
@@ -69,20 +68,21 @@ namespace Lextm.SharpSnmpLib.Mib
             }
 
             IList<ModuleLoader> result = new List<ModuleLoader>();
-            foreach (string file in files)
-            {
-                if (!File.Exists(file))
-                {
-                    continue;
-                }
+            // TODO: disable loading cache right now. Need to change cache file format and then re-enable.
+            //foreach (string file in files)
+            //{
+            //    if (!File.Exists(file))
+            //    {
+            //        continue;
+            //    }
 
-                string moduleName = Path.GetFileNameWithoutExtension(file);
-                using (StreamReader reader = new StreamReader(file))
-                {
-                    result.Add(new ModuleLoader(reader, moduleName));
-                    reader.Close();
-                }
-            }
+            //    string moduleName = Path.GetFileNameWithoutExtension(file);
+            //    using (StreamReader reader = new StreamReader(file))
+            //    {
+            //        result.Add(new ModuleLoader(reader, moduleName));
+            //        reader.Close();
+            //    }
+            //}
 
             return result;
         }
@@ -177,7 +177,7 @@ namespace Lextm.SharpSnmpLib.Mib
 
         private bool CanParse(MibModule module)
         {
-            if (!MibModule.AllDependentsAvailable(module, _loaded))
+            if (!module.Validate(_loaded))
             {
                 return false;
             }
@@ -195,21 +195,9 @@ namespace Lextm.SharpSnmpLib.Mib
         {
             var watch = new Stopwatch();
             watch.Start();
-            AddTypes(module);
             AddNodes(module);
             Logger.InfoFormat(CultureInfo.InvariantCulture, "{0}-ms used to assemble {1}", watch.ElapsedMilliseconds, module.Name);
             watch.Stop();
-        }
-
-        private void AddTypes(IModule module)
-        {
-            foreach (KeyValuePair<string, ITypeAssignment> pair in module.Types)
-            {
-                if (!_types.ContainsKey(pair.Key))
-                {
-                    _types.Add(pair);
-                }
-            }
         }
 
         private Definition CreateSelf(IEntity node)
@@ -218,10 +206,6 @@ namespace Lextm.SharpSnmpLib.Mib
             if (o != null)
             {
                 var syn = o.Syntax;
-                if (syn is UnknownType && !_types.ContainsKey(syn.Name))
-                {
-                    // TODO: fix this, o.Syntax = _types[syn.Name];
-                }
             }
             /* algorithm 2: slower, dropped
             IDefinition parent = Find(node.Parent);
@@ -397,7 +381,7 @@ namespace Lextm.SharpSnmpLib.Mib
         public void Refresh()
         {
             Logger.Info("loading modules started");
-            Stopwatch watch = new Stopwatch();
+            var watch = new Stopwatch();
             watch.Start();
             int current = _pendings.Count;
             while (current != 0)
@@ -405,7 +389,10 @@ namespace Lextm.SharpSnmpLib.Mib
                 int previous = current;
                 IList<string> parsed = new List<string>();
                 foreach (MibModule pending in
-                    from pending in _pendings.Values let succeeded = CanParse(pending) where succeeded select pending)
+                    from pending in _pendings.Values
+                    let succeeded = CanParse(pending)
+                    where succeeded
+                    select pending)
                 {
                     Parse(pending);
                     parsed.Add(pending.Name);
@@ -417,14 +404,15 @@ namespace Lextm.SharpSnmpLib.Mib
                 }
 
                 current = _pendings.Count;
-                Logger.InfoFormat(CultureInfo.InvariantCulture, "{0} pending after {1}-ms", current, watch.ElapsedMilliseconds);
+                Logger.InfoFormat(CultureInfo.InvariantCulture, "{0} pending after {1}-ms", current,
+                                  watch.ElapsedMilliseconds);
                 if (current == previous)
                 {
                     // cannot parse more
                     break;
                 }
             }
-            
+
             watch.Stop();
             
             foreach (string loaded in _loaded.Keys)

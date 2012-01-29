@@ -219,7 +219,6 @@
     <Compile Include="Mib\SimpleObjectRegistry.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Antlr3.targets" />
     <Antlr3 Include="Mib\Smi.g" />
     <None Include="Mib\Smi_no_action.g" />
     <None Include="Resources\SNMPv2-CONF.module" />

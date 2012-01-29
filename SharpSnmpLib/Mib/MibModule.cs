@@ -150,27 +150,47 @@ namespace Lextm.SharpSnmpLib.Mib
             _constructs.Add(construct);
         }
 
-        internal static bool AllDependentsAvailable(MibModule module, IDictionary<string, MibModule> modules)
+        internal bool Validate(IDictionary<string, MibModule> modules)
         {
-            return module.Dependents.All(dependent => DependentFound(dependent, modules));
+            foreach (var import in Imports.Clauses)
+            {
+                var dependencyModule = FoundDependent(import.Module, modules);
+                if (dependencyModule == null)
+                {
+                    return false; // dependency missing.
+                }
+
+                if (import.Symbols.Any(symbol => !dependencyModule.Contains(symbol)))
+                {
+                    return false; // imported type missing
+                }
+            }
+
+            return true;
+        }
+
+        private bool Contains(string symbol)
+        {
+            var result = Constructs.Any(construct => string.CompareOrdinal(construct.Name, symbol) == 0);
+            if (!result)
+            {
+                ReportMissingType(symbol);
+            }
+
+            return result;
         }
 
         const string Pattern = "-V[0-9]+$";
 
-        private static bool DependentFound(string dependent, IDictionary<string, MibModule> modules)
+        private static MibModule FoundDependent(string dependent, IDictionary<string, MibModule> modules)
         {
-            if (!Regex.IsMatch(dependent, Pattern))
+            if (Regex.IsMatch(dependent, Pattern))
             {
-                return modules.ContainsKey(dependent);
+                string dependentNonVersion = Regex.Replace(dependent, Pattern, string.Empty);
+                return modules.ContainsKey(dependentNonVersion) ? modules[dependentNonVersion] : null;
             }
 
-            if (modules.ContainsKey(dependent))
-            {
-                return true;
-            }
-
-            string dependentNonVersion = Regex.Replace(dependent, Pattern, string.Empty);
-            return modules.ContainsKey(dependentNonVersion);
+            return modules.ContainsKey(dependent) ? modules[dependent] : null;
         }
 
         internal string ReportMissingDependencies(ICollection<string> existing)
@@ -191,7 +211,22 @@ namespace Lextm.SharpSnmpLib.Mib
                 builder.Append(depend).Append(", ");
             }
 
-            builder.Length--;
+            return builder.ToString();
+        }
+
+        internal string ReportMissingType(string symbol)
+        {
+            var builder = new StringBuilder();
+            if (String.IsNullOrEmpty(FileName))
+            {
+                builder.Append("error S0002 : ");
+            }
+            else
+            {
+                builder.AppendFormat("{0} : error S0002 : ", FileName);
+            }
+
+            builder.AppendFormat("failed to import type {0} from module {1}.", symbol, Name);
             return builder.ToString();
         }
 
