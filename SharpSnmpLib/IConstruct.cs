@@ -23,5 +23,9 @@ namespace Lextm.SharpSnmpLib
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1040:AvoidEmptyInterfaces")]
     public interface IConstruct
     {
+        /// <summary>
+        /// Name.
+        /// </summary>
+        string Name { get; set; }
     }
 }

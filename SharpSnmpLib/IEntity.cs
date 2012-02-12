@@ -25,6 +25,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -40,11 +41,6 @@ namespace Lextm.SharpSnmpLib
         string ModuleName { get; set; }
 
         /// <summary>
-        /// Name.
-        /// </summary>
-        string Name { get; set; }
-
-        /// <summary>
         /// Parent name.
         /// </summary>
         string Parent { get; set; }
@@ -54,5 +50,13 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         [CLSCompliant(false)]
         uint Value { get; set; }
+
+        /// <summary>
+        /// Validates this entity.
+        /// </summary>
+        /// <param name="knownConstructs">Known constructs.</param>
+        /// <param name="fileName">File name.</param>
+        /// <returns></returns>
+        bool Validate(List<IConstruct> knownConstructs, string fileName);
     }
 }

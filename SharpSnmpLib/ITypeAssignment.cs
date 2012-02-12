@@ -5,9 +5,5 @@
     /// </summary>
     public interface ITypeAssignment : IConstruct
     {
-        /// <summary>
-        /// Name.
-        /// </summary>
-        string Name { get; }
     }
 }

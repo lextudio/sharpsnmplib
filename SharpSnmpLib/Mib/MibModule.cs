@@ -178,6 +178,8 @@ namespace Lextm.SharpSnmpLib.Mib
 
         internal bool Validate(IDictionary<string, MibModule> modules)
         {
+            var knownConstructs = new List<IConstruct>();
+            knownConstructs.AddRange(Constructs);
             foreach (var import in Imports.Clauses)
             {
                 var dependencyModule = FoundDependent(import.Module, modules);
@@ -186,24 +188,33 @@ namespace Lextm.SharpSnmpLib.Mib
                     return false; // dependency missing.
                 }
 
-                if (import.Symbols.Any(symbol => !dependencyModule.Contains(symbol)))
+                foreach (var symbol in import.Symbols)
                 {
-                    return false; // imported type missing
+                    var construct = dependencyModule.Find(symbol);
+                    if (construct == null)
+                    {
+                        return false; // imported type missing
+                    }
+
+                    knownConstructs.Add(construct);
                 }
             }
 
-            return true;
+            return Entities.All(entity => entity.Validate(knownConstructs, FileName));
         }
 
-        private bool Contains(string symbol)
+        private IConstruct Find(string symbol)
         {
-            var result = Constructs.Any(construct => string.CompareOrdinal(construct.Name, symbol) == 0);
-            if (!result)
+            foreach (var construct in Constructs)
             {
-                ReportMissingType(symbol);
+                if (string.CompareOrdinal(construct.Name, symbol) == 0)
+                {
+                    return construct;
+                }
             }
 
-            return result;
+            ReportMissingType(symbol);
+            return null;
         }
 
         const string Pattern = "-V[0-9]+$";

@@ -135,7 +135,12 @@ namespace Lextm.SharpSnmpLib.Mib
             get { return _value; }
             set { }
         }
-        
+
+        public bool Validate(List<IConstruct> knownConstructs, string fileName)
+        {
+            throw new NotImplementedException();
+        }
+
         public string Parent
         {
             get { return _parent; }

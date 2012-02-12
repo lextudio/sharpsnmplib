@@ -26,6 +26,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using log4net;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
@@ -39,6 +42,12 @@ namespace Lextm.SharpSnmpLib.Mib
         public string Description;
         [CLSCompliant(false)]
         public uint Value { get; set; }
+
+        public bool Validate(List<IConstruct> knownConstructs, string fileName)
+        {
+            return this.ValidateParent(knownConstructs, fileName);
+        }
+
         public string Parent { get; set; }
         public string Name { get; set; }
         public string ModuleName { get; set; }

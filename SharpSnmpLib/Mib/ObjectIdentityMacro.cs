@@ -25,6 +25,7 @@
 // OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 using System;
+using System.Collections.Generic;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
@@ -39,6 +40,12 @@ namespace Lextm.SharpSnmpLib.Mib
 
         [CLSCompliant(false)]
         public uint Value { get; set; }
+
+        public bool Validate(List<IConstruct> knownConstructs, string fileName)
+        {
+            return this.ValidateParent(knownConstructs, fileName);
+        }
+
         public string Parent { get; set; }
         public string Name { get; set; }
         public string ModuleName { get; set; }

@@ -133,7 +133,6 @@
     <Compile Include="Mib\FullQualifiedValue.cs" />
     <Compile Include="Mib\GroupCompliance.cs" />
     <Compile Include="Mib\HexLiteralValue.cs" />
-    <Compile Include="Mib\IConstruct.cs" />
     <Compile Include="Mib\IdComponent.cs" />
     <Compile Include="Mib\IdComponentList.cs" />
     <Compile Include="Mib\IdListValue.cs" />
@@ -203,6 +202,7 @@
     <Compile Include="Mib\TupleValue.cs" />
     <Compile Include="Mib\TypeOrValue.cs" />
     <Compile Include="Mib\UnknownType.cs" />
+    <Compile Include="Mib\ValidationHelper.cs" />
     <Compile Include="Mib\ValueAssignment.cs" />
     <Compile Include="Mib\ValueConstraintElement.cs" />
     <Compile Include="Mib\ValueRange.cs" />
