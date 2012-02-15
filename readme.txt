@@ -1,6 +1,8 @@
 *Homepage*
 
-#SNMP binaries and source code are available at http://sharpsnmplib.codeplex.com
+#SNMP binaries and documentation are available at http://sharpsnmplib.codeplex.com
+
+#SNMP source code is available at http://github.com/lextm/sharpsnmplib
  
 *License*
 Please read the following article to get the details,
