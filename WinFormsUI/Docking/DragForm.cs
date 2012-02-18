@@ -53,15 +53,13 @@ namespace WeifenLuo.WinFormsUI.Docking
 			base.WndProc (ref m);
 		}
 
-        public virtual void Show(bool bActivate)
-        {
-            if (bActivate)
-                Show();
-            else
-            {
-                // TODO: comment
-                //NativeMethods.ShowWindow(Handle, (int)Win32.ShowWindowStyles.SW_SHOWNOACTIVATE);
-            }
-        }
+		public virtual void Show(bool bActivate)
+		{
+			if (bActivate)
+				Show();
+			else
+                                if (!Win32Helper.IsRunningOnMono())
+				NativeMethods.ShowWindow(Handle, (int)Win32.ShowWindowStyles.SW_SHOWNOACTIVATE);
+		}
 	}
 }

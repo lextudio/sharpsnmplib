@@ -45,9 +45,9 @@ namespace WeifenLuo.WinFormsUI.Docking
 
                     StartMousePosition = Control.MousePosition;
 
-                    // TODO: comment
-                    //if (!NativeMethods.DragDetect(DragControl.Handle, StartMousePosition))
-                    //    return false;
+                    if (!Win32Helper.IsRunningOnMono())
+                    if (!NativeMethods.DragDetect(DragControl.Handle, StartMousePosition))
+                        return false;
 
                     DragControl.FindForm().Capture = true;
                     AssignHandle(DragControl.FindForm().Handle);
