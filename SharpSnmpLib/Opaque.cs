@@ -18,6 +18,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Tuples;
 
 // ASN.1 BER encoding library by Malcolm Crowe at the University of the West of Scotland
 // See http://cis.paisley.ac.uk/crow-ci0
@@ -50,15 +51,25 @@ namespace Lextm.SharpSnmpLib
         /// Creates an <see cref="Opaque"/> from raw bytes.
         /// </summary>
         /// <param name="raw">Raw bytes</param>
-        public Opaque(byte[] raw)
+        internal Opaque(byte[] raw) : this(new Tuple<int, byte[]>(raw.Length, raw.Length.WritePayloadLength()), new MemoryStream(raw))
         {
-            if (raw == null)
+        }
+
+        /// <summary>
+        /// Creates a <see cref="Opaque"/> instance from stream.
+        /// </summary>
+        /// <param name="length">The length.</param>
+        /// <param name="stream">The stream.</param>
+        public Opaque(Tuple<int, byte[]> length, Stream stream)
+        {
+            if (stream == null)
             {
-                throw new ArgumentNullException("raw");
+                throw new ArgumentNullException("stream");
             }
-            
-            _raw = raw;
-            _length = null;
+
+            _raw = new byte[length.First];
+            stream.Read(_raw, 0, length.First);
+            _length = length.Second;
         }
         
         /// <summary>
@@ -92,7 +103,16 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("stream");
             }
             
-            stream.AppendBytes(TypeCode, _length, _raw);
+            stream.AppendBytes(TypeCode, _length, GetRaw());
+        }
+
+        /// <summary>
+        /// Gets the raw bytes.
+        /// </summary>
+        /// <returns></returns>
+        public byte[] GetRaw()
+        {
+            return _raw;
         }
 
         /// <summary>

@@ -110,6 +110,8 @@ namespace Lextm.SharpSnmpLib
                     return new InformRequestPdu(length, stream);
                 case SnmpType.ReportPdu:
                     return new ReportPdu(length, stream);
+                case SnmpType.Opaque:
+                    return new Opaque(length, stream);
                 case SnmpType.EndMarker:
                     return null;
                 default:
