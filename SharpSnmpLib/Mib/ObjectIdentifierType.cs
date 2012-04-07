@@ -26,17 +26,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using log4net;
 
 namespace Lextm.SharpSnmpLib.Mib
 {
     public class ObjectIdentifierType : ISmiType, IEntity
     {
-        private static readonly ILog Logger = LogManager.GetLogger(typeof(ModuleIdentityMacro));
-
-    	[CLSCompliant(false)]
+        [CLSCompliant(false)]
         public ObjectIdentifierType(string moduleName, string name, string parent, uint value)
         {
             ModuleName = moduleName;

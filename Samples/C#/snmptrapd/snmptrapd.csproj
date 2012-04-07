@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -80,6 +80,10 @@
     <ProjectReference Include="..\..\..\SharpSnmpLib\SharpSnmpLib.csproj">
       <Project>{286DE6DB-8F95-4BD4-86A2-86488D2E0EE1}</Project>
       <Name>SharpSnmpLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\SharpSnmpLib\SharpSnmpLib.Engine.csproj">
+      <Project>{CD0F4B22-8235-49B1-A144-462CB8FD4973}</Project>
+      <Name>SharpSnmpLib.Engine</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

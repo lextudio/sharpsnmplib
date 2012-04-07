@@ -282,6 +282,10 @@
       <Project>{286DE6DB-8F95-4BD4-86A2-86488D2E0EE1}</Project>
       <Name>SharpSnmpLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SharpSnmpLib\SharpSnmpLib.Engine.csproj">
+      <Project>{CD0F4B22-8235-49B1-A144-462CB8FD4973}</Project>
+      <Name>SharpSnmpLib.Engine</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SharpSnmpLib\SharpSnmpLib.Optional.csproj">
       <Project>{33110773-3E28-4963-8956-C07FB8A5F7E3}</Project>
       <Name>SharpSnmpLib.Optional</Name>

@@ -210,7 +210,7 @@
     <Compile Include="Mib\Variantion.cs" />
     <Compile Include="Mib\WithComponentConstraintElement.cs" />
     <Compile Include="Mib\WithComponentsConstraintElement.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\ASTAssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -227,9 +227,6 @@
     <None Include="Resources\SNMPv2-TC.module" />
     <None Include="Resources\SNMPv2-TM.module" />
     <None Include="sharpsnmplib.snk" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="license.txt" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">

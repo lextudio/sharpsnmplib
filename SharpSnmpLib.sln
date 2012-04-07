@@ -62,6 +62,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpSnmpLib.AST", "SharpSn
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{FE484004-0780-4730-9D91-D4597341B56E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpSnmpLib.Engine", "SharpSnmpLib\SharpSnmpLib.Engine.csproj", "{CD0F4B22-8235-49B1-A144-462CB8FD4973}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -148,6 +150,10 @@ Global
 		{C75532C4-765B-418E-B09B-46D36B2ABDB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C75532C4-765B-418E-B09B-46D36B2ABDB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C75532C4-765B-418E-B09B-46D36B2ABDB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD0F4B22-8235-49B1-A144-462CB8FD4973}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD0F4B22-8235-49B1-A144-462CB8FD4973}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD0F4B22-8235-49B1-A144-462CB8FD4973}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD0F4B22-8235-49B1-A144-462CB8FD4973}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DA58ECDA-DB5D-41D0-982A-7E17E8172354}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DA58ECDA-DB5D-41D0-982A-7E17E8172354}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA58ECDA-DB5D-41D0-982A-7E17E8172354}.Release|Any CPU.ActiveCfg = Release|Any CPU
