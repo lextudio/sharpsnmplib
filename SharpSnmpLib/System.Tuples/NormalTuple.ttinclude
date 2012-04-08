@@ -16,7 +16,7 @@ void GenerateTuple(int pLength)
 	for(int i = 0; i < pLength; ++i)
 	{
 #>
-/// <typeparam name="T<#= i + 1 #>">Type of the tuple's Element<#= i + 1 #></typeparam>
+/// <typeparam name="T<#= i + 1 #>">Type of the tuple's Item<#= i + 1 #></typeparam>
 <#+
 	}
 #>
@@ -58,7 +58,7 @@ public class Tuple<<#= templateParameters #>> : ICollection, IEnumerable, IEnume
 	for(int j = 0; j < i; ++j)
 	{
 #>
-	/// <param name="t<#= j + 1 #>">Value of the tuple's Element<#= j + 1 #></param>
+	/// <param name="t<#= j + 1 #>">Value of the tuple's Item<#= j + 1 #></param>
 <#+
 	}
 #>
@@ -69,7 +69,7 @@ public class Tuple<<#= templateParameters #>> : ICollection, IEnumerable, IEnume
 		for(int j = 0; j < i; ++j)
 		{
 #>
-		Element<#= j + 1 #> = t<#= j + 1 #>;
+		Item<#= j + 1 #> = t<#= j + 1 #>;
 <#+
 		}
 #>
@@ -104,8 +104,8 @@ public class Tuple<<#= templateParameters #>> : ICollection, IEnumerable, IEnume
 	for(int j = 0; j < i + 1; ++j)
 	{
 #>
-	/// <typeparam name="T<#= pLength + j + 1 #>">Type of the new tuple's Element<#= pLength + j + 1 #></typeparam>
-	/// <param name="t<#= pLength + j + 1 #>">Value of the new tuple's Element<#= pLength + j + 1 #></param>
+	/// <typeparam name="T<#= pLength + j + 1 #>">Type of the new tuple's Item<#= pLength + j + 1 #></typeparam>
+	/// <param name="t<#= pLength + j + 1 #>">Value of the new tuple's Item<#= pLength + j + 1 #></param>
 <#+
 	}
 #>
@@ -113,12 +113,12 @@ public class Tuple<<#= templateParameters #>> : ICollection, IEnumerable, IEnume
 	public Tuple<<#= newTemplateParameters #>> Append<<#= otherTemplateParameters #>>(<#= otherFunctionParameters #>)
 	{
 		return Tuple.New(
-			Element1
+			Item1
 <#+
 			for(int j = 1; j < pLength; ++j)
 			{
 #>
-			,Element<#= j + 1 #>
+			,Item<#= j + 1 #>
 <#+
 			}
 #>
@@ -157,8 +157,8 @@ public class Tuple<<#= templateParameters #>> : ICollection, IEnumerable, IEnume
 	for(int j = 0; j < i + 1; ++j)
 	{
 #>
-	/// <typeparam name="T<#= pLength + j + 1 #>">Type of the new tuple's Element<#= j + 1 #></typeparam>
-	/// <param name="t<#= pLength + j + 1 #>">Value of the new tuple's Element<#= j + 1 #></param>
+	/// <typeparam name="T<#= pLength + j + 1 #>">Type of the new tuple's Item<#= j + 1 #></typeparam>
+	/// <param name="t<#= pLength + j + 1 #>">Value of the new tuple's Item<#= j + 1 #></param>
 <#+
 	}
 #>
@@ -179,7 +179,7 @@ public class Tuple<<#= templateParameters #>> : ICollection, IEnumerable, IEnume
 			for(int j = 0; j < pLength; ++j)
 			{
 #>
-			,Element<#= j + 1 #>
+			,Item<#= j + 1 #>
 <#+
 			}
 #>
@@ -207,7 +207,7 @@ public class Tuple<<#= templateParameters #>> : ICollection, IEnumerable, IEnume
 	for(int j = 0; j < i + 1; ++j)
 	{
 #>
-	/// <typeparam name="T<#= pLength + j + 1 #>">Type of the new tuple's Element<#= pLength + j + 1 #></typeparam>
+	/// <typeparam name="T<#= pLength + j + 1 #>">Type of the new tuple's Item<#= pLength + j + 1 #></typeparam>
 <#+
 	}
 #>
@@ -216,12 +216,12 @@ public class Tuple<<#= templateParameters #>> : ICollection, IEnumerable, IEnume
 	public Tuple<<#= newTemplateParameters #>> Append<<#= otherTemplateParameters #>>(Tuple<<#= otherTemplateParameters #>> pOther)
 	{
 		return Tuple.New(
-			Element1
+			Item1
 <#+
 			for(int j = 1; j < pLength; ++j)
 			{
 #>
-			,Element<#= j + 1 #>
+			,Item<#= j + 1 #>
 <#+
 			}
 #>
@@ -229,7 +229,7 @@ public class Tuple<<#= templateParameters #>> : ICollection, IEnumerable, IEnume
 			for(int j = 0; j < i + 1; ++j)
 			{
 #>
-			,pOther.Element<#= j + 1 #>
+			,pOther.Item<#= j + 1 #>
 <#+
 			}
 #>
@@ -258,7 +258,7 @@ public class Tuple<<#= templateParameters #>> : ICollection, IEnumerable, IEnume
 	for(int j = 0; j < i + 1; ++j)
 	{
 #>
-	/// <typeparam name="T<#= pLength + j + 1 #>">Type of the new tuple's Element<#= j + 1 #></typeparam>
+	/// <typeparam name="T<#= pLength + j + 1 #>">Type of the new tuple's Item<#= j + 1 #></typeparam>
 <#+
 	}
 #>
@@ -267,12 +267,12 @@ public class Tuple<<#= templateParameters #>> : ICollection, IEnumerable, IEnume
 	public Tuple<<#= newTemplateParameters #>> Prepend<<#= otherTemplateParameters #>>(Tuple<<#= otherTemplateParameters #>> pOther)
 	{
 		return Tuple.New(
-			pOther.Element1
+			pOther.Item1
 <#+
 			for(int j = 1; j < i + 1; ++j)
 			{
 #>
-			,pOther.Element<#= j + 1 #>
+			,pOther.Item<#= j + 1 #>
 <#+
 			}
 #>
@@ -280,7 +280,7 @@ public class Tuple<<#= templateParameters #>> : ICollection, IEnumerable, IEnume
 			for(int j = 0; j < pLength; ++j)
 			{
 #>
-			,Element<#= j + 1 #>
+			,Item<#= j + 1 #>
 <#+
 			}
 #>
@@ -310,7 +310,7 @@ public class Tuple<<#= templateParameters #>> : ICollection, IEnumerable, IEnume
 	for(int i = 0; i < pLength; ++i)
 	{
 #>
-		hash ^= Element<#= i + 1 #>.GetHashCode();
+		hash ^= Item<#= i + 1 #>.GetHashCode();
 <#+
 	}
 #>
@@ -345,7 +345,7 @@ public class Tuple<<#= templateParameters #>> : ICollection, IEnumerable, IEnume
 	for(int i = 0; i < pLength; ++i)
 	{
 #>
-		sb.Append(Element<#= i + 1 #>);
+		sb.Append(Item<#= i + 1 #>);
 <#+		if(i + 1 != pLength) 
 		{
 #>
@@ -371,7 +371,7 @@ public class Tuple<<#= templateParameters #>> : ICollection, IEnumerable, IEnume
 	for(int i = 0; i < pLength; ++i)
 	{
 #>
-			,Element<#= i + 1 #>
+			,Item<#= i + 1 #>
 <#+
 	}
 #>
@@ -398,7 +398,7 @@ public class Tuple<<#= templateParameters #>> : ICollection, IEnumerable, IEnume
 	for(int i = 0; i < pLength; ++i)
 	{
 #>
-		result = result && EqualityComparer<T<#= i + 1 #>>.Default.Equals(Element<#= i + 1 #>, pObj.Element<#= i + 1 #>);
+		result = result && EqualityComparer<T<#= i + 1 #>>.Default.Equals(Item<#= i + 1 #>, pObj.Item<#= i + 1 #>);
 <#+
 	}
 #>
@@ -429,7 +429,7 @@ public class Tuple<<#= templateParameters #>> : ICollection, IEnumerable, IEnume
 	for(int i = 0; i < pLength; ++i)
 	{
 #>
-		pArray.SetValue(Element<#= i + 1 #>, pIndex + <#= i #>);
+		pArray.SetValue(Item<#= i + 1 #>, pIndex + <#= i #>);
 <#+
 	}
 #>
@@ -480,7 +480,7 @@ public class Tuple<<#= templateParameters #>> : ICollection, IEnumerable, IEnume
 	for(int i = 0; i < pLength; ++i)
 	{
 #>
-		yield return Element<#= i + 1 #>;
+		yield return Item<#= i + 1 #>;
 <#+
 	}
 #>
@@ -499,7 +499,7 @@ public class Tuple<<#= templateParameters #>> : ICollection, IEnumerable, IEnume
     /// <returns>value indicating the order of this tuple compared to another tuple of the same length and type.</returns>
 	public int CompareTo(Tuple<<#= templateParameters #>> pOther)
 	{
-		return Comparer<T1>.Default.Compare(Element1, pOther.Element1);
+		return Comparer<T1>.Default.Compare(Item1, pOther.Item1);
 	}
 
 #endregion
@@ -519,7 +519,7 @@ public class Tuple<<#= templateParameters #>> : ICollection, IEnumerable, IEnume
 	for(int i = 0; i < pLength; ++i)
 	{
 #>
-				case <#= i #> : return Element<#= i + 1 #>;
+				case <#= i #> : return Item<#= i + 1 #>;
 <#+
 	}
 #>
@@ -537,7 +537,7 @@ public class Tuple<<#= templateParameters #>> : ICollection, IEnumerable, IEnume
 #>
 				case <#= i #> :
 					if(value is T<#= i + 1 #>)
-						Element<#= i + 1 #> = (T<#= i + 1 #>)value;
+						Item<#= i + 1 #> = (T<#= i + 1 #>)value;
 					else
 						throw new Exception("Trying to set a field with an object of the wrong type");
 					return;
@@ -593,7 +593,7 @@ public class Tuple<<#= templateParameters #>> : ICollection, IEnumerable, IEnume
 <#+
 		}
 #>
-	public T<#= i + 1 #> Element<#= i + 1 #> { get; set; }
+	public T<#= i + 1 #> Item<#= i + 1 #> { get; set; }
 	
 <#+
 	}
@@ -610,13 +610,13 @@ public class Tuple<<#= templateParameters #>> : ICollection, IEnumerable, IEnume
 #>
     /// <summary>
     /// Gets or sets the <#= GetOrdinalNumber(i + 1).ToLower() #> element of
-	/// the tuple. Same as using Element<#= i + 1 #>. Only added for
+	/// the tuple. Same as using Item<#= i + 1 #>. Only added for
 	/// syntax reasons.
     /// </summary>
 	public T<#= i + 1 #> <#= GetOrdinalNumber(i + 1) #>
 	{ 
-		get { return Element<#= i + 1 #>; }
-		set { Element<#= i + 1 #> = value; }
+		get { return Item<#= i + 1 #>; }
+		set { Item<#= i + 1 #> = value; }
 	}
 	
 <#+
@@ -631,13 +631,13 @@ public class Tuple<<#= templateParameters #>> : ICollection, IEnumerable, IEnume
 #>
     /// <summary>
     /// Gets or sets the head of the tuple, that is the first element.
-	/// Same as using the properties Element1 or First. Only Added
+	/// Same as using the properties Item1 or First. Only Added
 	/// for syntax reasons.
     /// </summary>
 	public T1 Head
 	{
-		get { return Element1; }
-		set { Element1 = value; }
+		get { return Item1; }
+		set { Item1 = value; }
 	}
 	
 <#+
@@ -657,12 +657,12 @@ public class Tuple<<#= templateParameters #>> : ICollection, IEnumerable, IEnume
 		get
 		{
 			return Tuple.New(
-				Element2
+				Item2
 <#+
 			for(int i = 2; i < pLength; ++i)
 			{
 #>
-				,Element<#= i + 1 #>
+				,Item<#= i + 1 #>
 <#+
 			}
 #>

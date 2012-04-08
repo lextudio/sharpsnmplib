@@ -12,7 +12,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Media;
-using System.Tuples;
 using Lextm.SharpSnmpLib.Mib;
 
 namespace Lextm.SharpSnmpLib.Compiler
@@ -84,13 +83,13 @@ namespace Lextm.SharpSnmpLib.Compiler
             if (e.Result != null)
             {
                 var results = (Tuple<IEnumerable<CompilerError>, IEnumerable<CompilerWarning>>)e.Result;
-                var errors = results.First;
+                var errors = results.Item1;
                 foreach (CompilerError error in errors)
                 {
                     Logger.Info(error.Details);
                 }
 
-                var warnings = results.Second;
+                var warnings = results.Item2;
                 foreach (var warning in warnings)
                 {
                     Logger.Info(warning.Details);

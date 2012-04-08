@@ -19,7 +19,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Tuples;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -91,7 +90,7 @@ namespace Lextm.SharpSnmpLib
             Variables.RemoveAt(0);
             Enterprise = (ObjectIdentifier)Variables[0].Data;
             Variables.RemoveAt(0);
-            _length = length.Second;
+            _length = length.Item2;
         }
 
         #region ISnmpPdu Members

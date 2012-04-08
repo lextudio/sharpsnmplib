@@ -10,7 +10,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Tuples;
 using NUnit.Framework;
 #pragma warning disable 1591, 0618
 namespace Lextm.SharpSnmpLib.Tests
@@ -67,7 +66,7 @@ namespace Lextm.SharpSnmpLib.Tests
             m.Write(expected, 0, 4);
             m.Flush();
             m.Position = 0;
-            Assert.AreEqual(7559605, m.ReadPayloadLength().First);
+            Assert.AreEqual(7559605, m.ReadPayloadLength().Item1);
         }
         
         [Test]

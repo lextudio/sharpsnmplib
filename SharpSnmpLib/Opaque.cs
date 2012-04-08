@@ -18,7 +18,6 @@
 using System;
 using System.IO;
 using System.Linq;
-using System.Tuples;
 
 // ASN.1 BER encoding library by Malcolm Crowe at the University of the West of Scotland
 // See http://cis.paisley.ac.uk/crow-ci0
@@ -67,9 +66,9 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("stream");
             }
 
-            _raw = new byte[length.First];
-            stream.Read(_raw, 0, length.First);
-            _length = length.Second;
+            _raw = new byte[length.Item1];
+            stream.Read(_raw, 0, length.Item1);
+            _length = length.Item2;
         }
         
         /// <summary>

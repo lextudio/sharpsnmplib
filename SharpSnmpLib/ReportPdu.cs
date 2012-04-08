@@ -27,7 +27,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Tuples;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -79,7 +78,7 @@ namespace Lextm.SharpSnmpLib
             ErrorIndex = (Integer32)DataFactory.CreateSnmpData(stream);
             _varbindSection = (Sequence)DataFactory.CreateSnmpData(stream);
             Variables = Variable.Transform(_varbindSection);
-            _length = length.Second;
+            _length = length.Item2;
         }
 
         /// <summary>

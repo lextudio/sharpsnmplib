@@ -30,7 +30,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Tuples;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -102,14 +101,14 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("stream");
             }
 
-            _length = length.Second;
-            if (length.First == 0)
+            _length = length.Item2;
+            if (length.Item1 == 0)
             {
                 return;
             }
 
             var original = stream.Position;
-            while (stream.Position < original + length.First)
+            while (stream.Position < original + length.Item1)
             {
                 _list.Add(DataFactory.CreateSnmpData(stream));
             }

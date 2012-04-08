@@ -22,7 +22,6 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Tuples;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -121,9 +120,9 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("stream");
             }
 
-            _raw = new byte[length.First];
-            stream.Read(_raw, 0, length.First);
-            if (length.First == 0)
+            _raw = new byte[length.Item1];
+            stream.Read(_raw, 0, length.Item1);
+            if (length.Item1 == 0)
             {
                 throw new ArgumentException("length cannot be 0", "length");
             }
@@ -145,7 +144,7 @@ namespace Lextm.SharpSnmpLib
             }
 
             _oid = result.ToArray();
-            _length = length.Second;
+            _length = length.Item2;
             unchecked
             {
                 if (_hashcode == 0)

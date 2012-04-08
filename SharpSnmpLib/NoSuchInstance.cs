@@ -25,7 +25,6 @@
  */
 using System;
 using System.IO;
-using System.Tuples;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -43,8 +42,8 @@ namespace Lextm.SharpSnmpLib
         /// <param name="stream">The stream.</param>
         public NoSuchInstance(Tuple<int, byte[]> length, Stream stream)
         {
-            stream.IgnoreBytes(length.First);
-            _length = length.Second;
+            stream.IgnoreBytes(length.Item1);
+            _length = length.Item2;
         }
 
         /// <summary>

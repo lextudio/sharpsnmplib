@@ -19,7 +19,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Tuples;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -64,14 +63,14 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("stream");
             }
 
-            if (length.First <= 0 || length.First > 9)
+            if (length.Item1 <= 0 || length.Item1 > 9)
             {
                 throw new ArgumentException("byte length must between 1 and 9");
             }
 
-            _raw = new byte[length.First];
-            stream.Read(_raw, 0, length.First);
-            if (length.First == 9 && _raw[0] != 0)
+            _raw = new byte[length.Item1];
+            stream.Read(_raw, 0, length.Item1);
+            if (length.Item1 == 9 && _raw[0] != 0)
             {
                 throw new ArgumentException("if byte length is 5, then first byte must be empty");
             }
@@ -89,7 +88,7 @@ namespace Lextm.SharpSnmpLib
             }
 
             _count = BitConverter.ToUInt64(list.ToArray(), 0);
-            _length = length.Second;
+            _length = length.Item2;
         }
 
         #region ISnmpData Members

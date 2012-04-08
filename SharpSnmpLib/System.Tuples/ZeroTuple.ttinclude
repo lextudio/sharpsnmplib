@@ -28,8 +28,8 @@ void GenerateZeroTuple(int pMaxTupleLength)
 	for(int j = 0; j < i + 1; ++j)
 	{
 #>
-        /// <typeparam name="T<#= j + 1 #>">Type of the new Element<#= j + 1 #></typeparam>
-        /// <param name="t<#= j + 1 #>">Value of the new Element<#= j + 1 #></param>
+        /// <typeparam name="T<#= j + 1 #>">Type of the new Item<#= j + 1 #></typeparam>
+        /// <param name="t<#= j + 1 #>">Value of the new Item<#= j + 1 #></param>
 <#+
 	}
 #>
@@ -64,7 +64,7 @@ void GenerateZeroTuple(int pMaxTupleLength)
 		for(int j = 0; j < i + 1; ++j)
 		{
 #>
-        /// <typeparam name="T<#= j + 1 #>">Type of the new Element<#= j + 1 #>. Enumerable must have an object of the same type at position <#= j + 1 #></typeparam>
+        /// <typeparam name="T<#= j + 1 #>">Type of the new Item<#= j + 1 #>. Enumerable must have an object of the same type at position <#= j + 1 #></typeparam>
 <#+
 		}
 #>
@@ -80,7 +80,7 @@ void GenerateZeroTuple(int pMaxTupleLength)
 #>
 			if(!e.MoveNext())
 				throw new ArgumentException("Enumerable is too short. Needs to have at least <#= i + 1 #> elements.", "pList");
-			t.Element<#= j + 1 #> = (T<#= j + 1 #>)e.Current;
+			t.Item<#= j + 1 #> = (T<#= j + 1 #>)e.Current;
 <#+
 		}
 #>

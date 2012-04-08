@@ -18,7 +18,6 @@
 using System;
 using System.Globalization;
 using System.IO;
-using System.Tuples;
 
 // ASN.1 BER encoding library by Malcolm Crowe at the University of the West of Scotland
 // See http://cis.paisley.ac.uk/crow-ci0
@@ -85,25 +84,25 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("stream");
             }
 
-            if (length.First <= 0)
+            if (length.Item1 <= 0)
             {
                 throw new ArgumentException("length cannot be 0.", "length");
             }
 
-            if (length.First > 4)
+            if (length.Item1 > 4)
             {
                 throw new ArgumentException("truncation error for 32-bit integer coding", "length");
             }
 
-            _raw = new byte[length.First];
-            stream.Read(_raw, 0, length.First);
+            _raw = new byte[length.Item1];
+            stream.Read(_raw, 0, length.Item1);
             _int = ((_raw[0] & 0x80) == 0x80) ? -1 : 0; // sign extended! Guy McIlroy
-            for (var j = 0; j < length.First; j++)
+            for (var j = 0; j < length.Item1; j++)
             {
                 _int = (_int << 8) | _raw[j];
             }
 
-            _length = length.Second;
+            _length = length.Item2;
         }
 
         /// <summary>

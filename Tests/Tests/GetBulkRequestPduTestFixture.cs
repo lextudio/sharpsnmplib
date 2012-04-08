@@ -8,7 +8,6 @@
  */
 using System;
 using System.Collections.Generic;
-using System.Tuples;
 using NUnit.Framework;
 
 namespace Lextm.SharpSnmpLib.Tests

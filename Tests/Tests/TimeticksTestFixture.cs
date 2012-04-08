@@ -8,7 +8,6 @@
  */
 
 using System;
-using System.Tuples;
 using NUnit.Framework;
 
 #pragma warning disable 1591,0618,1718

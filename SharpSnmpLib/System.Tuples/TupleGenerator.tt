@@ -1,5 +1,5 @@
 <#@ template inherits="Microsoft.VisualStudio.TextTemplating.VSHost.ModelingTextTransformation" language="C#" debug="true" hostSpecific="true" #>
-<#@ assembly name="Microsoft.VisualStudio.TextTemplating.Modeling.10.0.dll" #>
+<#@ assembly name="Microsoft.VisualStudio.TextTemplating.Modeling.11.0.dll" #>
 <#@ output extension=".cs" #>
 
 <#@ Assembly Name="System.Core.dll" #>
@@ -14,10 +14,10 @@
 <#@ include file="ZeroTuple.ttinclude" #>
 <#@ include file="NormalTuple.ttinclude" #>
 
-using System;
 using System.Text;
 using System.Collections;
 using System.Collections.Generic;
+#pragma warning disable
 <#
 if(addDataContract) 
 {
@@ -27,7 +27,7 @@ using System.Runtime.Serialization;
 } 
 #>
 
-namespace System.Tuples
+namespace System
 {
 #region ZeroTuple
 
@@ -46,3 +46,4 @@ namespace System.Tuples
 
 #endregion
 }
+#pragma warning enable
