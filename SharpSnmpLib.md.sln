@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-# SharpDevelop 4.3.0.8352-net45-alpha
+# SharpDevelop 4.2.0.8745-Beta 2
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{669DE011-7BAD-44D5-93A4-204CFB8F4AD5}"
 	ProjectSection(SolutionItems) = preProject
 		readme.txt = readme.txt
@@ -48,6 +48,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "snmpd", "snmpd\snmpd.csproj", "{DA58ECDA-DB5D-41D0-982A-7E17E8172354}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpSnmpLib.AST", "SharpSnmpLib\SharpSnmpLib.AST.csproj", "{F35C7321-929B-4238-959A-A60A890F10BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpSnmpLib.Engine", "SharpSnmpLib\SharpSnmpLib.Engine.csproj", "{CD0F4B22-8235-49B1-A144-462CB8FD4973}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -275,6 +277,18 @@ Global
 		{DA748764-54DF-409A-AAB4-FF6FB10E879D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{DA748764-54DF-409A-AAB4-FF6FB10E879D}.Release|x86.Build.0 = Release|Any CPU
 		{DA748764-54DF-409A-AAB4-FF6FB10E879D}.Release|x86.ActiveCfg = Release|Any CPU
+		{CD0F4B22-8235-49B1-A144-462CB8FD4973}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD0F4B22-8235-49B1-A144-462CB8FD4973}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD0F4B22-8235-49B1-A144-462CB8FD4973}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{CD0F4B22-8235-49B1-A144-462CB8FD4973}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{CD0F4B22-8235-49B1-A144-462CB8FD4973}.Debug|x86.Build.0 = Debug|Any CPU
+		{CD0F4B22-8235-49B1-A144-462CB8FD4973}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CD0F4B22-8235-49B1-A144-462CB8FD4973}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD0F4B22-8235-49B1-A144-462CB8FD4973}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD0F4B22-8235-49B1-A144-462CB8FD4973}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{CD0F4B22-8235-49B1-A144-462CB8FD4973}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{CD0F4B22-8235-49B1-A144-462CB8FD4973}.Release|x86.Build.0 = Release|Any CPU
+		{CD0F4B22-8235-49B1-A144-462CB8FD4973}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = SharpSnmpLib\SharpSnmpLib.csproj
