@@ -185,8 +185,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 return false;
             }
 
-            // TODO: make 500 configurable
-            return parameters.EngineTime.ToInt32() <= Group.EngineTime + 500;
+            return EngineGroup.IsInTime(parameters.EngineTime.ToInt32(), Group.EngineTime);
         }
 
         private void HandleDiscovery()

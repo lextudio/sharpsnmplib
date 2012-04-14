@@ -68,5 +68,18 @@ namespace Lextm.SharpSnmpLib.Pipeline
         {
             get { return Environment.TickCount; }
         }
+
+        /// <summary>
+        /// Verifies if the request comes in time.
+        /// </summary>
+        /// <param name="current"></param>
+        /// <param name="past"></param>
+        /// <returns></returns>
+        public static bool IsInTime(int current, int past)
+        {
+            // TODO: make 500 configurable            
+            var diff = current > past ? current - past : current - past - int.MinValue + int.MaxValue;
+            return diff >= 0 && diff <= 500;
+        }
     }
 }
