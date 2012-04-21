@@ -28,6 +28,8 @@
     <SourceAnalysisOverrideSettingsFile>D:\sharpsnmplib\SharpSnmpLib\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
     <RunCodeAnalysis>False</RunCodeAnalysis>
     <RunSourceAnalysis>False</RunSourceAnalysis>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -68,6 +70,7 @@
       <Link>SingleInstanceController.cs</Link>
     </Compile>
     <None Include="license.txt" />
+    <None Include="packages.config" />
     <None Include="Resources\accessories-text-editor.ico" />
     <None Include="Resources\dialog-information.ico" />
     <None Include="Resources\document-new.ico" />
@@ -150,20 +153,25 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="ICSharpCode.TextEditor">
-      <HintPath>..\lib\ICSharpCode.TextEditor.dll</HintPath>
-    </Reference>
-    <Reference Include="log4net">
-      <HintPath>..\lib\log4net.dll</HintPath>
-    </Reference>
     <Reference Include="Crad.Windows.Forms.Actions">
       <HintPath>..\lib\Crad.Windows.Forms.Actions.dll</HintPath>
     </Reference>
+    <Reference Include="ICSharpCode.TextEditor">
+      <HintPath>..\packages\ICSharpCode.TextEditor.3.2.1.6466\lib\Net20\ICSharpCode.TextEditor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.2.0.0\lib\net35-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.Unity">
-      <HintPath>..\lib\Microsoft.Practices.Unity.dll</HintPath>
+      <HintPath>..\packages\Unity.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Practices.Unity.Configuration">
-      <HintPath>..\lib\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+      <HintPath>..\packages\Unity.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.Configuration.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Office2007Renderer">
@@ -199,6 +207,7 @@
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
