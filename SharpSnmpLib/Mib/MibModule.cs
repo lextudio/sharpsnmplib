@@ -193,7 +193,8 @@ namespace Lextm.SharpSnmpLib.Mib
                     var construct = dependencyModule.Find(symbol);
                     if (construct == null)
                     {
-                        return false; // imported type missing
+                        // TODO: make it strict later.
+                        continue; //return false; // imported type missing
                     }
 
                     knownConstructs.Add(construct);

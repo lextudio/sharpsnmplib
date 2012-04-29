@@ -29,6 +29,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using log4net;
 
@@ -95,20 +96,20 @@ namespace Lextm.SharpSnmpLib.Mib
 
             IList<ModuleLoader> result = new List<ModuleLoader>();
             // TODO: disable loading cache right now. Need to change cache file format and then re-enable.
-            //foreach (string file in files)
-            //{
-            //    if (!File.Exists(file))
-            //    {
-            //        continue;
-            //    }
+            foreach (string file in files)
+            {
+                if (!File.Exists(file))
+                {
+                    continue;
+                }
 
-            //    string moduleName = Path.GetFileNameWithoutExtension(file);
-            //    using (StreamReader reader = new StreamReader(file))
-            //    {
-            //        result.Add(new ModuleLoader(reader, moduleName));
-            //        reader.Close();
-            //    }
-            //}
+                string moduleName = Path.GetFileNameWithoutExtension(file);
+                using (var reader = new StreamReader(file))
+                {
+                    result.Add(new ModuleLoader(reader, moduleName));
+                    reader.Close();
+                }
+            }
 
             return result;
         }
@@ -154,7 +155,7 @@ namespace Lextm.SharpSnmpLib.Mib
             foreach (uint digit in numerical)
 // ReSharper restore LoopCanBePartlyConvertedToQuery
             {
-                Definition temp = result.GetChildAt(digit) as Definition;
+                var temp = result.GetChildAt(digit) as Definition;
                 if (temp == null)
                 {
                     return null;

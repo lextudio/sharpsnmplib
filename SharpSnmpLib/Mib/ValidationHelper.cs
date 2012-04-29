@@ -45,7 +45,9 @@ namespace Lextm.SharpSnmpLib.Mib
 
             builder.AppendFormat("{0} is not defined", entity.Parent);
             Logger.Error(builder.ToString());
-            return false;
+
+            // TODO: make this validation strict later.
+            return true;
         }
     }
 }

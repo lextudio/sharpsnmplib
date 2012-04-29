@@ -19,7 +19,7 @@ namespace Lextm.SharpSnmpLib.Tests
         [Test]
         public void TestException()
         {
-            Assert.Throws<ArgumentNullException>(()=>new Opaque(null));
+            Assert.Throws<NullReferenceException>(()=>new Opaque(null));
         }
 
         [Test]

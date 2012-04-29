@@ -529,6 +529,18 @@ namespace Lextm.SharpSnmpLib.Messaging
             var bufferSize = udpSocket.ReceiveBufferSize;
             #endif
             var buffer = new byte[bufferSize];
+
+            // http://sharpsnmplib.codeplex.com/workitem/7234
+            if (callback != null)
+            {
+                AsyncCallback wrapped = callback;
+                callback = asyncResult =>
+                {
+                    var result = new SnmpMessageAsyncResult(asyncResult, udpSocket, registry, receiver, buffer);
+                    wrapped(result);
+                };
+            }
+
             var ar = udpSocket.BeginReceive(buffer, 0, bufferSize, SocketFlags.None, callback, state);
             return new SnmpMessageAsyncResult(ar, udpSocket, registry, receiver, buffer);
         }
