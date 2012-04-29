@@ -34,7 +34,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisLogFile>bin\Debug\Compiler.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
@@ -153,8 +153,9 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Crad.Windows.Forms.Actions">
-      <HintPath>..\lib\Crad.Windows.Forms.Actions.dll</HintPath>
+    <Reference Include="Crad.Windows.Forms.Actions, Version=1.1.1.0, Culture=neutral, PublicKeyToken=81de48f2c6979a5b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\ActionListWinForms.1.1.1.0\lib\net20\Crad.Windows.Forms.Actions.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.TextEditor">
       <HintPath>..\packages\ICSharpCode.TextEditor.3.2.1.6466\lib\Net20\ICSharpCode.TextEditor.dll</HintPath>
@@ -178,6 +179,7 @@
       <HintPath>..\lib\Office2007Renderer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Configuration" />
