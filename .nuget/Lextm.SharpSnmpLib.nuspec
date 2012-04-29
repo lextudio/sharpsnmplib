@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Lextm.SharpSnmpLib</id>
+    <version>7.0</version>
+    <title>#SNMP Library</title>
+    <authors>Malcolm Crowe,Lex Li,and other contributors.</authors>
+    <owners>Lex Li</owners>
+    <licenseUrl>http://sharpsnmplib.codeplex.com/license</licenseUrl>
+    <projectUrl>http://sharpsnmplib.codeplex.com/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>#SNMP (SharpSNMP) Suite is a set of free SNMP tools based on an open source library for developers who target Microsoft .NET/Xamarin Mono platforms. It's developed in C# and can be used for VB.NET, Delphi Prism, and more.</description>
+    <summary>#SNMP open source SNMP library for .NET and Mono.</summary>
+    <releaseNotes>* SharpSnmpLib.Controls.dll is removed. Its components are moved to SharpSnmpLib.dll.
+* Asynchronous support is added to ISnmpMessage derived classes.
+* Compiler core is enhanced.
+
+http://sharpsnmplib.codeplex.com/releases/view/52820</releaseNotes>
+    <copyright>(C) 2008-2011 Malcolm Crowe, Lex Li, and other contributors.</copyright>
+    <language>en-US</language>
+    <tags>snmp mib smi</tags>
+  </metadata>
+  <files>
+    <file src="..\bin\net35\SharpSnmpLib.dll" target="lib\net35\SharpSnmpLib.dll" />
+    <file src="..\bin\net35\SharpSnmpLib.Mib.dll" target="lib\net35\SharpSnmpLib.Mib.dll" />
+    <file src="..\bin\net35\SharpSnmpLib.Optional.dll" target="lib\net35\SharpSnmpLib.Optional.dll" />
+  </files>
+</package>
