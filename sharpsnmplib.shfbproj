@@ -30,15 +30,17 @@
     </WorkingPath>
     <BuildLogFile>
     </BuildLogFile>
-    <HelpFileFormat>HtmlHelp1, MSHelp2, MSHelpViewer</HelpFileFormat>
+    <HelpFileFormat>HtmlHelp1</HelpFileFormat>
     <FrameworkVersion>.NET 3.5</FrameworkVersion>
     <HelpTitle>#SNMP Class Library Documentation</HelpTitle>
     <FeedbackEMailAddress>lextudio%40gmail.com</FeedbackEMailAddress>
-    <PresentationStyle>Prototype</PresentationStyle>
+    <PresentationStyle>vs2010</PresentationStyle>
     <IncludeFavorites>False</IncludeFavorites>
-    <HelpFileVersion>6.0.0.0</HelpFileVersion>
+    <HelpFileVersion>7.5.0.0</HelpFileVersion>
     <DocumentationSources>
       <DocumentationSource sourceFile="bin\SharpSnmpLib.dll" />
+      <DocumentationSource sourceFile="bin\SharpSnmpLib.Engine.dll" />
+      <DocumentationSource sourceFile="bin\SharpSnmpLib.Engine.xml" />
       <DocumentationSource sourceFile="bin\SharpSnmpLib.Mib.dll" />
       <DocumentationSource sourceFile="bin\SharpSnmpLib.Mib.xml" />
       <DocumentationSource sourceFile="bin\SharpSnmpLib.Optional.dll" />
