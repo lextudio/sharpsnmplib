@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
   <metadata>
-    <version>7.5.0-alpha</version>
+    <version>7.5.0.0</version>
     <authors>Malcolm Crowe,Lex Li,and other contributors.</authors>
     <owners>Lex Li</owners>
     <licenseUrl>http://sharpsnmplib.codeplex.com/wikipage?title=600012&amp;referringTitle=KB</licenseUrl>
