@@ -32,9 +32,9 @@ grammar Smi_no_action;
 
 options
 {
-	language=Java;
-	output=AST;
-	ASTLabelType=CommonTree;
+    language=Java;
+    output=AST;
+    ASTLabelType=CommonTree;
 }
 
 @parser::header
@@ -65,450 +65,358 @@ options
 // ===================================================
 
 //	ASN1 Tokens 
-/*
-tokens {	
-	ABSENT_KW;
-	ABSTRACT_SYNTAX_KW;
-	ALL_KW ;
-	ANY_KW ;
-	ARGUMENT_KW ;
-	APPLICATION_KW ;
-	AUTOMATIC_KW ;
-	BASED_NUM_KW ;
-	BEGIN_KW ;
-	BIT_KW ;
-	BMP_STR_KW ;
-	BOOLEAN_KW ;
-	BY_KW ;
-	CHARACTER_KW ;
-	CHOICE_KW ;
-	CLASS_KW ;
-	COMPONENTS_KW ;
-	COMPONENT_KW ;
-	CONSTRAINED_KW ;
-	DEFAULT_KW ;
-	DEFINED_KW ;
-	DEFINITIONS_KW ;
-	EMBEDDED_KW ;
-	END_KW ;
-	ENUMERATED_KW ;
-	ERROR_KW ;
-	ERRORS_KW ;
-	EXCEPT_KW ;
-	EXPLICIT_KW ;
-	EXPORTS_KW ;
-	EXTENSIBILITY_KW ;
-	EXTERNAL_KW ;
-	FALSE_KW ;
-	FROM_KW ;
-	GENERALIZED_TIME_KW ;
-	GENERAL_STR_KW ;
-	GRAPHIC_STR_KW ;
-	IA5_STRING_KW ;
-	IDENTIFIER_KW ;
-	IMPLICIT_KW ;
-	IMPLIED_KW ;
-	IMPORTS_KW ;
-	INCLUDES_KW ;
-	INSTANCE_KW ;
-	INTEGER_KW ;
-	 INTERSECTION_KW ;
-	 ISO646_STR_KW ;
-	 LINKED_KW ;
-	 MAX_KW ;
-	 MINUS_INFINITY_KW ;
-	 MIN_KW ;
-	 NULL_KW ;
-	 NUMERIC_STR_KW ;
-	 OBJECT_DESCRIPTOR_KW ;
-	 OBJECT_KW ;
-	 OCTET_KW ;
-	 OPERATION_KW ;
-	 OF_KW ;
-	 OID_KW ;
-	 OPTIONAL_KW ;
-	 PARAMETER_KW ;
-	 PATTERN_KW;
-	 PDV_KW ;
-	 PLUS_INFINITY_KW ;
-	 PRESENT_KW ;
-	 PRINTABLE_STR_KW ;
-	 PRIVATE_KW ;
-	 REAL_KW ;
-	 RELATIVE_KW ;
-	 RESULT_KW ;
-	 SEQUENCE_KW ;
-	 SET_KW ;
-	 SIZE_KW ;
-	 STRING_KW ;
-	 TAGS_KW ;
-	 TELETEX_STR_KW ;
-	 T61_STR_KW;
-	 TRUE_KW ;
-	 TYPE_IDENTIFIER_KW ;
-	 UNION_KW ;
-	 UNIQUE_KW ;
-	 UNIVERSAL_KW ;
-	 UNIVERSAL_STR_KW ;
-	 UTC_TIME_KW ;
-	 UTF8_STR_KW ;
-	 VIDEOTEX_STR_KW ;
-	 VISIBLE_STR_KW ;
-	 WITH_KW ;
-}
-*/
 ABSENT_KW
-	:	'ABSENT'
-	;
+    :	'ABSENT'
+    ;
 
 ABSTRACT_SYNTAX_KW
-	:	'ABSTRACT-SYNTAX'
-	;
+    :	'ABSTRACT-SYNTAX'
+    ;
 
 ALL_KW
-	:	'ALL'
-	;
+    :	'ALL'
+    ;
 
 ANY_KW
-	:	'ANY'
-	;
+    :	'ANY'
+    ;
 
 ARGUMENT_KW
-	:	'ARGUMENT'
-	;
+    :	'ARGUMENT'
+    ;
 
 APPLICATION_KW
-	:	'APPLICATION'
-	;
+    :	'APPLICATION'
+    ;
 
 AUTOMATIC_KW
-	:	'AUTOMATIC'
-	;
+    :	'AUTOMATIC'
+    ;
 
 BASED_NUM_KW
-	:	'BASEDNUM'
-	;
+    :	'BASEDNUM'
+    ;
 
 BEGIN_KW
-	:	'BEGIN'
-	;
+    :	'BEGIN'
+    ;
 
 fragment
 BIT_KW
-	:	'BIT'
-	;
+    :	'BIT'
+    ;
 
 BMP_STR_KW
-	:	'BMPString'
-	;
+    :	'BMPString'
+    ;
 
 BOOLEAN_KW
-	:	'BOOLEAN'
-	;
+    :	'BOOLEAN'
+    ;
 
 BY_KW
-	:	'BY'
-	;
+    :	'BY'
+    ;
 
 CHARACTER_KW
-	:	'CHARACTER'
-	;
+    :	'CHARACTER'
+    ;
 
 CHOICE_KW
-	:	'CHOICE'
-	;
+    :	'CHOICE'
+    ;
 
 CLASS_KW
-	:	'CLASS'
-	;
+    :	'CLASS'
+    ;
 
 COMPONENTS_KW
-	:	'COMPONENTS'
-	;
+    :	'COMPONENTS'
+    ;
 
 COMPONENT_KW
-	:	'COMPONENT'
-	;
+    :	'COMPONENT'
+    ;
 
 CONSTRAINED_KW
-	:	'CONSTRAINED'
-	;
+    :	'CONSTRAINED'
+    ;
 
 DEFAULT_KW
-	:	'DEFAULT'
-	;
+    :	'DEFAULT'
+    ;
 
 DEFINED_KW
-	:	'DEFINED'
-	;
+    :	'DEFINED'
+    ;
 
 DEFINITIONS_KW
-	:	'DEFINITIONS'
-	;
+    :	'DEFINITIONS'
+    ;
 
 EMBEDDED_KW
-	:	'EMBEDDED'
-	;
+    :	'EMBEDDED'
+    ;
 
 END_KW
-	:	'END'
-	;
+    :	'END'
+    ;
 
 ENUMERATED_KW
-	:	'ENUMERATED'
-	;
+    :	'ENUMERATED'
+    ;
 
 ERROR_KW
-	:	'ERROR'
-	;
+    :	'ERROR'
+    ;
 
 ERRORS_KW
-	:	'ERRORS'
-	;
+    :	'ERRORS'
+    ;
 
 EXCEPT_KW
-	:	'EXCEPT'
-	;
+    :	'EXCEPT'
+    ;
 
 EXPLICIT_KW
-	:	'EXPLICIT'
-	;
+    :	'EXPLICIT'
+    ;
 
 EXPORTS_KW
-	:	'EXPORTS'
-	;
+    :	'EXPORTS'
+    ;
 
 EXTENSIBILITY_KW
-	:	'EXTENSIBILITY'
-	;
+    :	'EXTENSIBILITY'
+    ;
 
 EXTERNAL_KW
-	:	'EXTERNAL'
-	;
+    :	'EXTERNAL'
+    ;
 
 FALSE_KW
-	:	'FALSE'
-	;
+    :	'FALSE'
+    ;
 
 FROM_KW
-	:	'FROM'
-	;
+    :	'FROM'
+    ;
 
 GENERALIZED_TIME_KW
-	:	'GeneralizedTime'
-	;
+    :	'GeneralizedTime'
+    ;
 
 GENERAL_STR_KW
-	:	'GeneralString'
-	;
+    :	'GeneralString'
+    ;
 
 GRAPHIC_STR_KW
-	:	'GraphicString'
-	;
+    :	'GraphicString'
+    ;
 
 IA5_STRING_KW
-	:	'IA5String'
-	;
+    :	'IA5String'
+    ;
 
 IDENTIFIER_KW
-	:	'IDENTIFIER'
-	;
+    :	'IDENTIFIER'
+    ;
 
 IMPLICIT_KW
-	:	'IMPLICIT'
-	;
+    :	'IMPLICIT'
+    ;
 
 IMPLIED_KW
-	:	'IMPLIED'
-	;
+    :	'IMPLIED'
+    ;
 
 IMPORTS_KW
-	:	'IMPORTS'
-	;
+    :	'IMPORTS'
+    ;
 
 INCLUDES_KW
-	:	'INCLUDES'
-	;
+    :	'INCLUDES'
+    ;
 
 INSTANCE_KW
-	:	'INSTANCE'
-	;
+    :	'INSTANCE'
+    ;
 
 INTEGER_KW
-	:	'INTEGER'
-	;
+    :	'INTEGER'
+    ;
 
 INTERSECTION_KW
-	:	'INTERSECTION'
-	;
+    :	'INTERSECTION'
+    ;
 
 ISO646_STR_KW
-	:	'ISO646String'
-	;
+    :	'ISO646String'
+    ;
 
 LINKED_KW
-	:	'LINKED'
-	;
+    :	'LINKED'
+    ;
 
 MAX_KW
-	:	'MAX'
-	;
+    :	'MAX'
+    ;
 
 MINUS_INFINITY_KW
-	:	'MINUSINFINITY'
-	;
+    :	'MINUSINFINITY'
+    ;
 
 MIN_KW
-	:	'MIN'
-	;
+    :	'MIN'
+    ;
 
 NULL_KW
-	:	'NULL'
-	;
+    :	'NULL'
+    ;
 
 NUMERIC_STR_KW
-	:	'NumericString'
-	;
+    :	'NumericString'
+    ;
 
 OBJECT_DESCRIPTOR_KW
-	:	'ObjectDescriptor'
-	;
+    :	'ObjectDescriptor'
+    ;
 
 OBJECT_KW
-	:	'OBJECT'
-	;
+    :	'OBJECT'
+    ;
 
 OCTET_KW
-	:	'OCTET'
-	;
+    :	'OCTET'
+    ;
 
 OPERATION_KW
-	:	'OPERATION'
-	;
+    :	'OPERATION'
+    ;
 
 OF_KW
-	:	'OF'
-	;
+    :	'OF'
+    ;
 
 OID_KW
-	:	'OID'
-	;
+    :	'OID'
+    ;
 
 OPTIONAL_KW
-	:	'OPTIONAL'
-	;
+    :	'OPTIONAL'
+    ;
 
 PARAMETER_KW
-	:	'PARAMETER'
-	;
+    :	'PARAMETER'
+    ;
 
 PDV_KW
-	:	'PDV'
-	;
+    :	'PDV'
+    ;
 
 PLUS_INFINITY_KW
-	:	'PLUSINFINITY'
-	;
+    :	'PLUSINFINITY'
+    ;
 
 PRESENT_KW
-	:	'PRESENT'
-	;
+    :	'PRESENT'
+    ;
 
 PRINTABLE_STR_KW
-	:	'PrintableString'
-	;
+    :	'PrintableString'
+    ;
 
 PRIVATE_KW
-	:	'PRIVATE'
-	;
+    :	'PRIVATE'
+    ;
 
 REAL_KW
-	:	'REAL'
-	;
+    :	'REAL'
+    ;
 
 RELATIVE_KW
-	:	'RELATIVE'
-	;
+    :	'RELATIVE'
+    ;
 
 RESULT_KW
-	:	'RESULT'
-	;
+    :	'RESULT'
+    ;
 
 SEQUENCE_KW
-	:	'SEQUENCE'
-	;
+    :	'SEQUENCE'
+    ;
 
 SET_KW
-	:	'SET'
-	;
+    :	'SET'
+    ;
 
 SIZE_KW
-	:	'SIZE'
-	;
+    :	'SIZE'
+    ;
 
 STRING_KW
-	:	'STRING'
-	;
+    :	'STRING'
+    ;
 
 TAGS_KW
-	:	'TAGS'
-	;
+    :	'TAGS'
+    ;
 
 TELETEX_STR_KW
-	:	'TeletexString'
-	;
-	
+    :	'TeletexString'
+    ;
+    
 T61_STR_KW
-	:	'T61String'
-	;
+    :	'T61String'
+    ;
 
 TRUE_KW
-	:	'TRUE'
-	;
+    :	'TRUE'
+    ;
 
 TYPE_IDENTIFIER_KW
-	:	'TYPE-IDENTIFIER'
-	;
+    :	'TYPE-IDENTIFIER'
+    ;
 
 UNION_KW
-	:	'UNION'
-	;
+    :	'UNION'
+    ;
 
 UNIQUE_KW
-	:	'UNIQUE'
-	;
+    :	'UNIQUE'
+    ;
 
 UNIVERSAL_KW
-	:	'UNIVERSAL'
-	;
+    :	'UNIVERSAL'
+    ;
 
 UNIVERSAL_STR_KW
-	:	'UniversalString'
-	;
+    :	'UniversalString'
+    ;
 
 UTC_TIME_KW
-	:	'UTCTime'
-	;
+    :	'UTCTime'
+    ;
 
 UTF8_STR_KW
-	:	'UTF8String'
-	;
+    :	'UTF8String'
+    ;
 
 VIDEOTEX_STR_KW
-	:	'VideotexString'
-	;
+    :	'VideotexString'
+    ;
 
 VISIBLE_STR_KW
-	:	'VisibleString'
-	;
+    :	'VisibleString'
+    ;
 
 WITH_KW
-	:	'WITH'
-	;
-	
+    :	'WITH'
+    ;
+    
 PATTERN_KW
-	: 'PATTERN'
-	;	
+    : 'PATTERN'
+    ;	
 
 // Operators
 
@@ -519,7 +427,7 @@ COMMA:		',';
 DOT:		'.';
 DOTDOT:		'..';
 DOTDOTDOT
-	:	'...';
+    :	'...';
 // ELLIPSIS:	'...';
 EXCLAMATION:	'!';
 INTERSECTION:	'^';
@@ -542,14 +450,14 @@ CHARH:		'\'H';
 fragment
 NEWLINE :
   ('\r\n') => '\r\n'		// DOS
-	|	'\r'   		// Macintosh
-	|	'\n'		// Unix 
-	;
+    |	'\r'   		// Macintosh
+    |	'\n'		// Unix 
+    ;
 
 WS			
-    	:	(	' ' | '\t' | '\f'	|	NEWLINE )+
-	{ skip(); }
-	;
+        :	(	' ' | '\t' | '\f'	|	NEWLINE )+
+    { skip(); }
+    ;
 
 COMMENT 
  : '--' ({!(input.LA(1) == '-' && input.LA(2) == '-')}?=> ~('\r' | '\n'))* (NEWLINE | '--')
@@ -560,9 +468,9 @@ NUMBER	:	'0'..'9'+ ;
 
 fragment
 HDIG		:	( :('0'..'9') )
-			|	('A'..'F')
-			|	('a'..'f')
-			;
+            |	('A'..'F')
+            |	('a'..'f')
+            ;
 
 /* NSS 13/1/05: Added '_' as acceptable character - required for some PIBs */
 
@@ -577,13 +485,13 @@ NAME 	:	('a'..'z' | 'A'..'Z') ( 'a'..'z' | 'A'..'Z' |'-' | '_' | '0'..'9' )* 	; 
 //		:(B_STRING)=>B_STRING
 //		| H_STRING)
 //	;
-	
+    
 /* Changed by NSS 13/1/05 - upper case *or* lower case 'B' and 'H'; zero or more digits */
 
 B_STRING 	: 	SINGLE_QUOTE (('0'|'1'))+ SINGLE_QUOTE ('B' | 'b') ;
 
 H_STRING 	: 	SINGLE_QUOTE (HDIG)+ SINGLE_QUOTE ('H' | 'h') ;	
-	
+    
 C_STRING 	: 	'"' (options {greedy=false;}
                              : NEWLINE
                              | ~('\r' | '\n')
@@ -597,15 +505,15 @@ C_STRING 	: 	'"' (options {greedy=false;}
 
 statement
     : (module_definition)* 
-	;
-	
+    ;
+    
 // Grammar Definitions
 
 /* NSS 13/1/05: Added 'PIB-DEFINITIONS' for SPPI */
 module_definition: module_identifier ('PIB-DEFINITIONS' | DEFINITIONS_KW) 
-		( (EXPLICIT_KW | IMPLICIT_KW | AUTOMATIC_KW) TAGS_KW )? 
-		(EXTENSIBILITY_KW IMPLIED_KW)?
-		ASSIGN_OP BEGIN_KW module_body END_KW;
+        ( (EXPLICIT_KW | IMPLICIT_KW | AUTOMATIC_KW) TAGS_KW )? 
+        (EXTENSIBILITY_KW IMPLIED_KW)?
+        ASSIGN_OP BEGIN_KW module_body END_KW;
 
 module_identifier: NAME (obj_id_comp_lst)? ;
 
@@ -653,10 +561,10 @@ symbol: NAME | macroName | 'BITS';
 macroName: OPERATION_KW | ERROR_KW  | 'BIND' | 'UNBIND' 
          | 'APPLICATION-SERVICE-ELEMENT' | 'APPLICATION-CONTEXT' | 'EXTENSION' 
          | 'EXTENSIONS' | 'EXTENSION-ATTRIBUTE' | 'TOKEN' | 'TOKEN-DATA' 
-	 | 'SECURITY-CATEGORY' | 'OBJECT' | 'PORT' | 'REFINE' | 'ABSTRACT-BIND' 
-	 | 'ABSTRACT-UNBIND' | 'ABSTRACT-OPERATION' | 'ABSTRACT-ERROR' 
-	 | 'ALGORITHM' | 'ENCRYPTED' | 'SIGNED' | 'SIGNATURE' | 'PROTECTED' 
-	 | smi_macros;
+     | 'SECURITY-CATEGORY' | 'OBJECT' | 'PORT' | 'REFINE' | 'ABSTRACT-BIND' 
+     | 'ABSTRACT-UNBIND' | 'ABSTRACT-OPERATION' | 'ABSTRACT-ERROR' 
+     | 'ALGORITHM' | 'ENCRYPTED' | 'SIGNED' | 'SIGNATURE' | 'PROTECTED' 
+     | smi_macros;
 
 type: built_in_type | defined_type | selection_type | macros_type | smi_type;
 
@@ -686,17 +594,17 @@ built_in_type: any_type
              | embedded_type EMBEDDED_KW PDV_KW 
              | enum_type
              | EXTERNAL_KW
-	     | integer_type
-	     | NULL_KW
-	     | object_identifier_type
-	     | octetString_type
-	     | REAL_KW
-	     | 'RELATIVE-OID'
-	     | sequence_type
-	     | sequenceof_type
-	     | set_type
-	     | setof_type
-	     | tagged_type;
+         | integer_type
+         | NULL_KW
+         | object_identifier_type
+         | octetString_type
+         | REAL_KW
+         | 'RELATIVE-OID'
+         | sequence_type
+         | sequenceof_type
+         | set_type
+         | setof_type
+         | tagged_type;
 
 defined_type: (NAME DOT)? NAME (constraint)? ;
 
@@ -755,7 +663,7 @@ class_NUMBER: NUMBER | defined_value;
 operation_macro: 'OPERATION' (ARGUMENT_KW ((NAME) => NAME)? type )? 
                     ( (RESULT_KW) => RESULT_KW 
                         ((NAME) => ((NAME) => NAME)? type )? 
-					)?
+                    )?
                     ( (ERRORS_KW) => ERRORS_KW L_BRACE (operation_errorlist)? R_BRACE )? 
                     ( (LINKED_KW) => LINKED_KW L_BRACE (linkedOp_list)? R_BRACE )? ;
 //operation_macro: "OPERATION" (ARGUMENT_KW (LOWER)? type )? 
@@ -811,24 +719,24 @@ objecttype_macro: 'OBJECT-TYPE' 'SYNTAX'
                   'STATUS' NAME 
                   ( ('DESCRIPTION') => 'DESCRIPTION' C_STRING )?                               /* Optional only for SMIv1 */
                   ('INSTALL-ERRORS' L_BRACE objecttype_macro_error (COMMA objecttype_macro_error)* R_BRACE)?    /* Only in SPPI */
-		  ( 'REFERENCE' C_STRING )? 
-		  ( (~('PIB-INDEX')) => 'INDEX' objecttype_macro_index 
+          ( 'REFERENCE' C_STRING )? 
+          ( (~('PIB-INDEX')) => 'INDEX' objecttype_macro_index 
                     | 'AUGMENTS' objecttype_macro_augments 
                     | 'PIB-INDEX' L_BRACE value R_BRACE                     /* Only in SPPI */
                     | 'EXTENDS' L_BRACE value R_BRACE                       /* Only in SPPI */
                   )? 
                   ( 'INDEX' objecttype_macro_index )?                       /* Only in SPPI - replicated from above */
                   ( 'UNIQUENESS' L_BRACE (value (COMMA value)* )? R_BRACE)?                      /* Only in SPPI */
-		  ( ('DEFVAL') => 'DEFVAL' L_BRACE 
+          ( ('DEFVAL') => 'DEFVAL' L_BRACE 
                     ( (L_BRACE NAME (COMMA | R_BRACE)) => objecttype_macro_bitsvalue
                        | value) 
                     R_BRACE )? ;
 
 namedbits
     : L_BRACE n=namedbit 
-	(COMMA n2=namedbit)* R_BRACE
-	;     //|UPPER
-	
+    (COMMA n2=namedbit)* R_BRACE
+    ;     //|UPPER
+    
 // 'typeorvaluelist' in original ASN.1 grammar between braces
 objecttype_macro_index: L_BRACE objecttype_macro_indextype (COMMA objecttype_macro_indextype)* R_BRACE;       
 objecttype_macro_indextype: ('IMPLIED')? value;

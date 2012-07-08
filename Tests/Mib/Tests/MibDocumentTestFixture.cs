@@ -1819,6 +1819,14 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("SNMPv2-TC", file.Modules[0].Name);
             Assert.AreEqual(0, file.Modules[0].Entities.Count);
+
+            Assert.AreEqual(17, file.Modules[0].Constructs.Count);
+            var displayString = file.Modules[0].Constructs[1];
+            Assert.AreEqual("DisplayString", displayString.Name);
+            Assert.IsTrue(displayString is TextualConventionMacro);
+            var macro = displayString as TextualConventionMacro;
+            Assert.IsNotNull(macro.Syntax);
+            Assert.IsTrue(macro.Syntax is OctetStringType);
         }
 
         [Test]

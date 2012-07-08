@@ -75,98 +75,6 @@ catch (RecognitionException)
 // ===================================================
 
 //  ASN1 Tokens 
-/*
-tokens {  
-  ABSENT_KW;
-  ABSTRACT_SYNTAX_KW;
-  ALL_KW ;
-  ANY_KW ;
-  ARGUMENT_KW ;
-  APPLICATION_KW ;
-  AUTOMATIC_KW ;
-  BASED_NUM_KW ;
-  BEGIN_KW ;
-  BIT_KW ;
-  BMP_STR_KW ;
-  BOOLEAN_KW ;
-  BY_KW ;
-  CHARACTER_KW ;
-  CHOICE_KW ;
-  CLASS_KW ;
-  COMPONENTS_KW ;
-  COMPONENT_KW ;
-  CONSTRAINED_KW ;
-  DEFAULT_KW ;
-  DEFINED_KW ;
-  DEFINITIONS_KW ;
-  EMBEDDED_KW ;
-  END_KW ;
-  ENUMERATED_KW ;
-  ERROR_KW ;
-  ERRORS_KW ;
-  EXCEPT_KW ;
-  EXPLICIT_KW ;
-  EXPORTS_KW ;
-  EXTENSIBILITY_KW ;
-  EXTERNAL_KW ;
-  FALSE_KW ;
-  FROM_KW ;
-  GENERALIZED_TIME_KW ;
-  GENERAL_STR_KW ;
-  GRAPHIC_STR_KW ;
-  IA5_STRING_KW ;
-  IDENTIFIER_KW ;
-  IMPLICIT_KW ;
-  IMPLIED_KW ;
-  IMPORTS_KW ;
-  INCLUDES_KW ;
-  INSTANCE_KW ;
-  INTEGER_KW ;
-   INTERSECTION_KW ;
-   ISO646_STR_KW ;
-   LINKED_KW ;
-   MAX_KW ;
-   MINUS_INFINITY_KW ;
-   MIN_KW ;
-   NULL_KW ;
-   NUMERIC_STR_KW ;
-   OBJECT_DESCRIPTOR_KW ;
-   OBJECT_KW ;
-   OCTET_KW ;
-   OPERATION_KW ;
-   OF_KW ;
-   OID_KW ;
-   OPTIONAL_KW ;
-   PARAMETER_KW ;
-   PATTERN_KW;
-   PDV_KW ;
-   PLUS_INFINITY_KW ;
-   PRESENT_KW ;
-   PRINTABLE_STR_KW ;
-   PRIVATE_KW ;
-   REAL_KW ;
-   RELATIVE_KW ;
-   RESULT_KW ;
-   SEQUENCE_KW ;
-   SET_KW ;
-   SIZE_KW ;
-   STRING_KW ;
-   TAGS_KW ;
-   TELETEX_STR_KW ;
-   T61_STR_KW;
-   TRUE_KW ;
-   TYPE_IDENTIFIER_KW ;
-   UNION_KW ;
-   UNIQUE_KW ;
-   UNIVERSAL_KW ;
-   UNIVERSAL_STR_KW ;
-   UTC_TIME_KW ;
-   UTF8_STR_KW ;
-   VIDEOTEX_STR_KW ;
-   VISIBLE_STR_KW ;
-   WITH_KW ;
-}
-*/
 ABSENT_KW
   : 'ABSENT'
   ;
@@ -746,7 +654,7 @@ value returns [ISmiValue result]
      | (NULL_KW) => NULL_KW { $result = new NullLiteralValue(); }
      | (C_STRING) => s=C_STRING { $result = new LiteralValue($s.text); }
      | (full_qualified_value) => fqv=full_qualified_value { $result = $fqv.result; }
-	 | (namedbit) => nb=namedbit { $result = $nb.result; }
+     | (namedbit) => nb=namedbit { $result = $nb.result; }
      | (defined_value) => dv=defined_value { $result = $dv.result; }
      | (signed_number) => sn=signed_number { $result = $sn.result; }
      | (choice_value) => cv=choice_value { $result = $cv.result; }
@@ -975,7 +883,7 @@ smi_macros: 'OBJECT-TYPE' | 'MODULE-IDENTITY' | 'OBJECT-IDENTITY' | 'NOTIFICATIO
 /* NSS 13/1/05: Added 'LOWER' since some PIBs can't handle it */
 smi_type returns [ISmiType result]
     : 'BITS' { $result = new BitsType(); }
-	| name=NAME { $result = new UnknownType($name.text); }
+    | name=NAME { $result = new UnknownType($name.text); }
     ; 
 
 /* Possible SMI types??? - IpAddress Counter32 TimeTicks Opaque Counter64 Unsigned32 */
@@ -1137,7 +1045,7 @@ textualconvention_macro returns [TextualConventionMacro result = new TextualConv
     'SYNTAX' ( (smi_type L_BRACE) => s2=smi_type { $result.Syntax = $s2.result; }
   L_BRACE nb1=namedbit { $result.SyntaxNamedBits.Add($nb1.result); }
             (COMMA nb2=namedbit { $result.SyntaxNamedBits.Add($nb2.result); })* R_BRACE 
-      | t=type)
+      | t=type { $result.Syntax = $t.result; })
   ;
 
 namedbit returns [NamedBit result]
