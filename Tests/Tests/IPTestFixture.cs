@@ -62,6 +62,8 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.IsFalse(actual == another);
             Assert.IsTrue(actual != another);
             Assert.AreNotEqual(actual, another);
+
+            Assert.IsFalse(actual.Equals(1));
         }
     }
 }

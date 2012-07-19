@@ -29,6 +29,14 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.Throws<ArgumentNullException>(() => ByteTool.Convert((string)null));
             Assert.Throws<ArgumentException>(() => ByteTool.Convert("**"));
             Assert.Throws<ArgumentException>(() => ByteTool.Convert("8AB"));
+            Assert.Throws<ArgumentException>(() => (-1).WritePayloadLength());
+            Assert.Throws<ArgumentNullException>(() => ByteTool.PackMessage(null, VersionCode.V3, null, null, null));
+            Assert.Throws<ArgumentNullException>(
+                () => ByteTool.PackMessage(new byte[0], VersionCode.V3, null, null, null));
+            Assert.Throws<ArgumentNullException>(
+                () => ByteTool.PackMessage(new byte[0], VersionCode.V3, new Header(500), null, null));
+            Assert.Throws<ArgumentNullException>(
+                () => ByteTool.PackMessage(new byte[0], VersionCode.V3, new Header(500), new SecurityParameters(new OctetString("test")), null));
         }
 
         [Test]

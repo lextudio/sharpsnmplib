@@ -31,6 +31,8 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual(((uint)200).GetHashCode(), left.GetHashCode());
             Assert.AreEqual("200", left.ToString());
 
+            Assert.IsFalse(left.Equals(1));
+
             Assert.Throws<ArgumentNullException>(() => left.AppendBytesTo(null));
             Assert.Throws<ArgumentNullException>(() => new Gauge32(new Tuple<int, byte[]>(0, new byte[] { 0 }), null));
         }

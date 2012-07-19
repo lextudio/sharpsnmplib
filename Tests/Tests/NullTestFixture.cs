@@ -43,6 +43,8 @@ namespace Lextm.SharpSnmpLib.Tests
             // ReSharper restore EqualExpressionComparison
             Assert.Throws<ArgumentNullException>(() => left.AppendBytesTo(null));
             Assert.AreEqual("Null", left.ToString());
+
+            Assert.IsFalse(left.Equals(1));
         }
     }
 }

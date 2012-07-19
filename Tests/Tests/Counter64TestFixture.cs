@@ -55,6 +55,8 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.IsTrue(left != null);
             Assert.IsTrue(null != right);
             Assert.IsTrue(left.Equals(right));
+
+            Assert.IsFalse(left.Equals(1));
         }
     }
 }

@@ -42,6 +42,16 @@ namespace Lextm.SharpSnmpLib
         /// <param name="stream">The stream.</param>
         public NoSuchObject(Tuple<int, byte[]> length, Stream stream)
         {
+            if (length == null)
+            {
+                throw new ArgumentNullException("length");
+            }
+
+            if (stream == null)
+            {
+                throw new ArgumentNullException("stream");
+            }
+
             stream.IgnoreBytes(length.Item1);
             _length = length.Item2;
         }

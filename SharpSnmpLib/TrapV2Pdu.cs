@@ -74,6 +74,11 @@ namespace Lextm.SharpSnmpLib
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "temp1")]
         public TrapV2Pdu(Tuple<int, byte[]> length, Stream stream)
         {
+            if (length == null)
+            {
+                throw new ArgumentNullException("length");
+            }
+
             if (stream == null)
             {
                 throw new ArgumentNullException("stream");

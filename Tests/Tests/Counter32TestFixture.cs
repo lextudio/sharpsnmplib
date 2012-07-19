@@ -20,6 +20,7 @@ namespace Lextm.SharpSnmpLib.Tests
             var left = new Counter32(100);
             var right = new Counter32(100);
             Assert.AreEqual(left, right);
+            Assert.IsFalse(left.Equals(1));
         }
         
         [Test]

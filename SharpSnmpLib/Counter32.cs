@@ -58,6 +58,11 @@ namespace Lextm.SharpSnmpLib
         /// <param name="stream">The stream.</param>
         public Counter32(Tuple<int, byte[]> length, Stream stream)
         {
+            if (length == null)
+            {
+                throw new ArgumentNullException("length");
+            }
+
             if (stream == null)
             {
                 throw new ArgumentNullException("stream");

@@ -87,6 +87,8 @@ namespace Lextm.SharpSnmpLib.Tests
 // ReSharper restore EqualExpressionComparison
             Assert.IsTrue(left != null);
             Assert.IsTrue(left.Equals(right));
+
+            Assert.IsFalse(left.Equals(1));
         }
     }
 }

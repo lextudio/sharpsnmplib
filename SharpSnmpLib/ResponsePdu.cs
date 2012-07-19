@@ -69,6 +69,11 @@ namespace Lextm.SharpSnmpLib
         /// <param name="stream">The stream.</param>
         public ResponsePdu(Tuple<int, byte[]> length, Stream stream)
         {
+            if (length == null)
+            {
+                throw new ArgumentNullException("length");
+            }
+
             if (stream == null)
             {
                 throw new ArgumentNullException("stream");

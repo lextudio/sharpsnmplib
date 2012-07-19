@@ -20,6 +20,8 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestException()
         {
             Assert.Throws<NullReferenceException>(()=>new Opaque(null));
+            Assert.Throws<ArgumentNullException>(() => new Opaque(null, null));
+            Assert.Throws<ArgumentNullException>(() => new Opaque(new Tuple<int, byte[]>(1, new byte[0]), null));
         }
 
         [Test]
@@ -49,6 +51,8 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.IsTrue((Opaque)null == (Opaque)null);
 // ReSharper restore EqualExpressionComparison
             Assert.IsTrue(left.Equals(right));
+
+            Assert.IsFalse(left.Equals(1));
         }
     }
 }
