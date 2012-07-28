@@ -36,7 +36,7 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.Throws<ArgumentNullException>(
                 () => ByteTool.PackMessage(new byte[0], VersionCode.V3, new Header(500), null, null));
             Assert.Throws<ArgumentNullException>(
-                () => ByteTool.PackMessage(new byte[0], VersionCode.V3, new Header(500), new SecurityParameters(new OctetString("test")), null));
+                () => ByteTool.PackMessage(new byte[0], VersionCode.V3, new Header(500), SecurityParameters.Create(new OctetString("test")), null));
         }
 
         [Test]
