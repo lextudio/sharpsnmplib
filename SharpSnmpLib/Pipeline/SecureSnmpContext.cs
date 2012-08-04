@@ -185,7 +185,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 return false;
             }
 
-            return EngineGroup.IsInTime(parameters.EngineTime.ToInt32(), Group.EngineTime);
+            return EngineGroup.IsInTime(Group.EngineTime, parameters.EngineTime.ToInt32());
         }
 
         private void HandleDiscovery()

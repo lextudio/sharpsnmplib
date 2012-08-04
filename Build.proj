@@ -6,7 +6,7 @@
         <LibraryReleaseFolder>.\SharpSnmpLib\Bin\Release</LibraryReleaseFolder>
         <NDependFolder>H:\Green\NDepend</NDependFolder>
         <NDependProject>SharpSnmpLib.ndproj</NDependProject>
-        <SignFile>SharpSnmpLib\sharpsnmplib.snk</SignFile>
+        <KeyFile>SharpSnmpLib\sharpsnmplib.snk</KeyFile>
     </PropertyGroup>
     <ItemGroup>
         <LibraryOutputs Include=".\SharpSnmpLib\bin\Release\sharpsnmplib.*" />
@@ -24,13 +24,13 @@
     <Target Name="Debug">
         <Error
             Text="Please execute prepare.bat (Windows) or prepare.sh (Linux and else) first."
-            Condition="!Exists('$(SignFile)')" />
+            Condition="!Exists('$(KeyFile)')" />
         <MSBuild Projects="SharpSnmpLib.sln" />
     </Target>
     <Target Name="Release">
         <Error
             Text="Please execute prepare.bat (Windows) or prepare.sh (Linux and else) first."
-            Condition="!Exists('$(SignFile)')" />
+            Condition="!Exists('$(KeyFile)')" />
         <MSBuild Projects="SharpSnmpLib.sln" Properties="Configuration=Release;Platform=Any CPU" />
     </Target>
 	<Target Name="Package" DependsOnTargets="Release">
