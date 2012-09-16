@@ -90,6 +90,10 @@
     <Reference Include="Mono.Posix">
       <HintPath>..\lib\Mono.Posix.dll</HintPath>
     </Reference>
+    <Reference Include="WeifenLuo.WinFormsUI.Docking, Version=2.7.0.0, Culture=neutral, PublicKeyToken=5cded1a1a0a7b481, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DockPanelSuite.2.7.0.0\lib\net20\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\lib\SharedAssemblyInfo.cs">
@@ -293,10 +297,6 @@
     <ProjectReference Include="..\SharpSnmpLib\SharpSnmpLib.Optional.csproj">
       <Project>{33110773-3E28-4963-8956-C07FB8A5F7E3}</Project>
       <Name>SharpSnmpLib.Optional</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\WinFormsUI\WinFormsUI.csproj">
-      <Project>{C75532C4-765B-418E-B09B-46D36B2ABDB1}</Project>
-      <Name>WinFormsUI</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

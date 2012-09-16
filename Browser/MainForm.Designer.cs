@@ -231,7 +231,6 @@ namespace Lextm.SharpSnmpLib.Browser
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
             this.Text = "#SNMP MIB Browser";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFormClosing);
             this.Load += new System.EventHandler(this.MainFormLoad);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
