@@ -64,6 +64,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpSnmpLib.Engine", "Shar
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{C318F4F9-299E-4B71-B581-5CB86E80479D}"
 	ProjectSection(SolutionItems) = preProject
+		.nuget\Lextm.SharpSnmpLib.nuspec = .nuget\Lextm.SharpSnmpLib.nuspec
 		.nuget\NuGet.Config = .nuget\NuGet.Config
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
