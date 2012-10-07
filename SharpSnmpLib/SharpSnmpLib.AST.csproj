@@ -76,7 +76,7 @@
     <AntlrBuildTaskPath>$(MSBuildProjectDirectory)\..\lib\ANTLR</AntlrBuildTaskPath>
     <AntlrToolPath>$(MSBuildProjectDirectory)\..\lib\antlr\antlr3.exe</AntlrToolPath>
   </PropertyGroup>
-  <Import Project="..\lib\ANTLR\Antlr3.targets" />
+  <Import Project="..\lib\ANTLR\Antlr3.targets" Condition=" '$(OS)' == 'Windows_NT' " />
   <ItemGroup>
     <Reference Include="Antlr3.Runtime, Version=3.4.1.9004, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -213,6 +213,8 @@
     <Compile Include="Mib\Variantion.cs" />
     <Compile Include="Mib\WithComponentConstraintElement.cs" />
     <Compile Include="Mib\WithComponentsConstraintElement.cs" />
+    <Compile Include="Mib\Generated\SmiParser.cs" Condition=" '$(OS)' != 'Windows_NT' " />
+    <Compile Include="Mib\Generated\SmiLexer.cs" Condition=" '$(OS)' != 'Windows_NT' " />
     <Compile Include="Properties\ASTAssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -267,4 +269,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <Target Name="BeforeBuild">
+    <Exec Condition=" '$(OS)' != 'Windows_NT' " Command="mono ..\lib\ANTLR\Antlr3.exe ./Mib/Smi.g -o ./Mib/Generated" />
+  </Target>
 </Project>

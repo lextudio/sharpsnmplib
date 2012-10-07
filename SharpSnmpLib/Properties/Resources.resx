@@ -119,18 +119,18 @@
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="SNMPV2_CONF" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SNMPV2-CONF.module;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\Resources\SNMPv2-CONF.module;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="SNMPV2_MIB" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SNMPV2-MIB.module;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\Resources\SNMPv2-MIB.module;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="SNMPV2_SMI" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SNMPV2-SMI.module;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\Resources\SNMPv2-SMI.module;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="SNMPV2_TC" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SNMPV2-TC.module;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\Resources\SNMPv2-TC.module;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="SNMPV2_TM" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SNMPV2-TM.module;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\Resources\SNMPv2-TM.module;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>
