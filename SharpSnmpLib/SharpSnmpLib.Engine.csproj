@@ -49,6 +49,9 @@
     <DocumentationFile>..\bin\SharpSnmpLib.Engine.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\lib\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="Objects\SysContact.cs" />
     <Compile Include="Objects\SysDescr.cs" />
     <Compile Include="Objects\SysLocation.cs" />
