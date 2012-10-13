@@ -101,11 +101,6 @@ namespace Lextm.SharpSnmpLib
         Counter64 = 0x46,
         
         /// <summary>
-        /// Unsigned32 type. (SMIv2)
-        /// </summary>
-        UInt32 = 0x47,
-        
-        /// <summary>
         /// No such object exception.
         /// </summary>
         NoSuchObject = 0x80,
