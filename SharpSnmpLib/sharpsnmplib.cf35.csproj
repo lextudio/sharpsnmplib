@@ -138,6 +138,7 @@
     <Compile Include="Scope.cs" />
     <Compile Include="SearchResult.cs" />
     <Compile Include="SecurityParameters.cs" />
+    <Compile Include="Security\AESPrivacyProvider.cs" />
     <Compile Include="Security\AuthenticationProviderExtension.cs" />
     <Compile Include="Security\DecryptionException.cs" />
     <Compile Include="Security\DefaultAuthenticationProvider.cs" />
