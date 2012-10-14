@@ -399,7 +399,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             // Whatever you change, try to keep the Send and the Receive close to each other.
             udpSocket.SendTo(bytes, receiver);
-            #if !(CF)
+            #if !CF
             udpSocket.ReceiveTimeout = timeout;
             #endif
             int count;

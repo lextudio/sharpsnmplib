@@ -21,7 +21,7 @@ using System.Globalization;
 
 namespace Lextm.SharpSnmpLib
 {
-    #if (!CF)
+    #if !CF
     /// <summary>
     /// The <see cref="TypeConverter"/> dedicated for the <see cref="ObjectIdentifier"/> class.
     /// </summary>

@@ -19,7 +19,7 @@ using System;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-#if (!CF) && (!SILVERLIGHT)
+#if !CF
 using System.Net.NetworkInformation;
 #endif
 using System.Text;
@@ -285,7 +285,7 @@ namespace Lextm.SharpSnmpLib
             return !(left == right);
         }
 
-#if (!CF) && (!SILVERLIGHT)
+#if !CF
         /// <summary>
         /// Converts octets to physical address.
         /// </summary>

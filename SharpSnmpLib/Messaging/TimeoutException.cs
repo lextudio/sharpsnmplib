@@ -68,7 +68,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
         }
 
-#if (!SILVERLIGHT && !CF) 
+#if !CF
         private TimeoutException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {

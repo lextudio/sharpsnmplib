@@ -58,17 +58,7 @@ namespace Lextm.SharpSnmpLib
 
         private static IPAddress ParseString(string ip)
         {
-#if CF
             return IPAddress.Parse(ip);
-#else
-            IPAddress temp;
-            if (IPAddress.TryParse(ip, out temp))
-            {
-                return temp;
-            }
-
-            throw new ArgumentException("This is not a valid IP address", "ip");
-#endif
         }
 
         /// <summary>

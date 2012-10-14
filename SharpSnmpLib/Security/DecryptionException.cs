@@ -54,7 +54,7 @@ namespace Lextm.SharpSnmpLib.Security
         {
         }
 
-#if (!SILVERLIGHT && !CF) 
+#if !CF
         /// <summary>
         /// Creates a <see cref="DecryptionException"/> instance.
         /// </summary>

@@ -28,7 +28,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// ObjectIdentifier type.
     /// </summary>
-    #if (!CF)
+    #if !CF
     [TypeConverter(typeof(ObjectIdentifierConverter))]
     #endif
     [Serializable]

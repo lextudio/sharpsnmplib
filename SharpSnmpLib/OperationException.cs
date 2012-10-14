@@ -67,7 +67,7 @@ namespace Lextm.SharpSnmpLib
         public OperationException(string message, Exception inner) : base(message, inner) 
         { 
         }
-#if (!SILVERLIGHT && !CF)    
+#if !CF
         /// <summary>
         /// Creates a <see cref="OperationException"/>
         /// </summary>

@@ -68,7 +68,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             : base(message, inner)
         {
         }
-#if (!SILVERLIGHT && !CF) 
+#if !CF
         private ErrorException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
             if (info == null)

@@ -56,28 +56,28 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\lib\CryptoTools.cs">
-      <Link>CryptoTools.cs</Link>
+      <Link>Mono\CryptoTools.cs</Link>
     </Compile>
     <Compile Include="..\lib\DataContractAttribute.cs">
-      <Link>DataContractAttribute.cs</Link>
+      <Link>Mono\DataContractAttribute.cs</Link>
     </Compile>
     <Compile Include="..\lib\DataMemberAttribute.cs">
-      <Link>DataMemberAttribute.cs</Link>
+      <Link>Mono\DataMemberAttribute.cs</Link>
     </Compile>
     <Compile Include="..\lib\HMAC.cs">
-      <Link>HMAC.cs</Link>
+      <Link>Mono\HMAC.cs</Link>
     </Compile>
     <Compile Include="..\lib\HMACMD5.cs">
-      <Link>HMACMD5.cs</Link>
+      <Link>Mono\HMACMD5.cs</Link>
     </Compile>
     <Compile Include="..\lib\HMACSHA1.cs">
-      <Link>HMACSHA1.cs</Link>
+      <Link>Mono\HMACSHA1.cs</Link>
     </Compile>
     <Compile Include="..\lib\KeyedHashAlgorithm.cs">
-      <Link>KeyedHashAlgorithm.cs</Link>
+      <Link>Mono\KeyedHashAlgorithm.cs</Link>
     </Compile>
     <Compile Include="..\lib\Locale.cs">
-      <Link>Locale.cs</Link>
+      <Link>Mono\Locale.cs</Link>
     </Compile>
     <Compile Include="ByteTool.cs" />
     <Compile Include="Counter32.cs" />
@@ -189,5 +189,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="license.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Mono" />
   </ItemGroup>
 </Project>
