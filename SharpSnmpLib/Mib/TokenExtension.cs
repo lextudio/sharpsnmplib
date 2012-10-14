@@ -118,8 +118,12 @@ namespace Lextm.SharpSnmpLib.Mib
             {
                 if (_useStricterValidation == null)
                 {
+#if MA
+                    _useStricterValidation = false;
+#else
                     object setting = ConfigurationManager.AppSettings["StricterValidationEnabled"];
                     _useStricterValidation = setting != null && Convert.ToBoolean(setting.ToString(), CultureInfo.InvariantCulture);
+#endif
                 }
 
                 return _useStricterValidation.Value;

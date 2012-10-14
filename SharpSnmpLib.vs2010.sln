@@ -48,8 +48,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpSnmpLib.Optional", "Sh
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mono.Options", "Mono.Options\Mono.Options.csproj", "{C26430B5-E2AE-410E-924C-567D79E625DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinFormsUI", "WinFormsUI\WinFormsUI.csproj", "{C75532C4-765B-418E-B09B-46D36B2ABDB1}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemObjects.Mono.Helpers", "RemObjects.Mono.Helpers\RemObjects.Mono.Helpers.csproj", "{5E9B9AB3-59E8-44FA-B3DC-5EE67800C462}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Browser", "Browser\Browser.csproj", "{60EA8A71-EE0B-4F0E-9485-B30B71D454D7}"
@@ -146,10 +144,6 @@ Global
 		{C26430B5-E2AE-410E-924C-567D79E625DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C26430B5-E2AE-410E-924C-567D79E625DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C26430B5-E2AE-410E-924C-567D79E625DC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C75532C4-765B-418E-B09B-46D36B2ABDB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C75532C4-765B-418E-B09B-46D36B2ABDB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C75532C4-765B-418E-B09B-46D36B2ABDB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C75532C4-765B-418E-B09B-46D36B2ABDB1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5E9B9AB3-59E8-44FA-B3DC-5EE67800C462}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5E9B9AB3-59E8-44FA-B3DC-5EE67800C462}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5E9B9AB3-59E8-44FA-B3DC-5EE67800C462}.Release|Any CPU.ActiveCfg = Release|Any CPU

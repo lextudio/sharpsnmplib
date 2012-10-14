@@ -28,8 +28,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+#if !MA
 using log4net;
-
+#endif
 namespace Lextm.SharpSnmpLib.Mib
 {
     public class ModuleIdentityMacro : ISmiType, IEntity

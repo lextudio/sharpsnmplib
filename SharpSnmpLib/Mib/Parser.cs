@@ -46,8 +46,9 @@ namespace Lextm.SharpSnmpLib.Mib
     /// </summary>
     public sealed class Parser
     {
+#if !MA
         private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger("Lextm.SharpSnmpLib.Mib");
-
+#endif
         /// <summary>
         /// Parses MIB documents to module files (*.module).
         /// </summary>
@@ -69,7 +70,9 @@ namespace Lextm.SharpSnmpLib.Mib
             foreach (string file in files)
             {
                 modules.AddRange(Compile(file, errorlist, warninglist));
+#if !MA
                 Logger.Info(file + " compiled");
+#endif
             }
 
             errors = errorlist;
@@ -107,8 +110,10 @@ namespace Lextm.SharpSnmpLib.Mib
             try
             {
                 var doc = parser.GetDocument(fileName);
+#if !MA
                 Logger.Info(watch.ElapsedMilliseconds.ToString(CultureInfo.InvariantCulture) + "-ms used to parse " +
                             fileName);
+#endif
                 watch.Stop();
                 errors.AddRange(parser.Errors);
                 warnings.AddRange(parser.Warnings);
@@ -141,7 +146,9 @@ namespace Lextm.SharpSnmpLib.Mib
             try
             {
                 var doc = parser.GetDocument(string.Empty);
+#if !MA
                 Logger.Info(watch.ElapsedMilliseconds.ToString(CultureInfo.InvariantCulture) + "-ms used to parse");
+#endif
                 watch.Stop();
                 errors.AddRange(parser.Errors);
                 warnings.AddRange(parser.Warnings);
