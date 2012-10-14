@@ -26,7 +26,7 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.Throws<ArgumentNullException>(() => new IP(new Tuple<int, byte[]>(0, new byte[] { 0 }), null));
             Assert.Throws<ArgumentNullException>(() => new IP((IPAddress) null));
             Assert.Throws<ArgumentException>(() => new IP(new Tuple<int, byte[]>(1, new byte[] { 1 }), new MemoryStream()));
-            Assert.Throws<ArgumentException>(() => new IP("test"));
+            Assert.Throws<FormatException>(() => new IP("test"));
         }
 
         [Test]
