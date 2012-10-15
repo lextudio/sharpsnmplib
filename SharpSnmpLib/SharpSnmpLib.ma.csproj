@@ -145,7 +145,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Microsoft.VersionNumber.targets" />
-    <None Include="sharpsnmplib.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

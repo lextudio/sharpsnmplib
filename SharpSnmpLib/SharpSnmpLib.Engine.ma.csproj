@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{BD4477EB-EADF-4975-AABD-F79527743E90}</ProjectGuid>
+    <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Lextm.SharpSnmpLib</RootNamespace>
+    <AssemblyName>SharpSnmpLib.Engine.ma</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;MA</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;MA</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\lib\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="Objects\SysContact.cs" />
+    <Compile Include="Objects\SysDescr.cs" />
+    <Compile Include="Objects\SysLocation.cs" />
+    <Compile Include="Objects\SysName.cs" />
+    <Compile Include="Objects\SysObjectId.cs" />
+    <Compile Include="Objects\SysORDescr.cs" />
+    <Compile Include="Objects\SysORID.cs" />
+    <Compile Include="Objects\SysORIndex.cs" />
+    <Compile Include="Objects\SysORLastChange.cs" />
+    <Compile Include="Objects\SysORTable.cs" />
+    <Compile Include="Objects\SysORUpTime.cs" />
+    <Compile Include="Objects\SysServices.cs" />
+    <Compile Include="Objects\SysUpTime.cs" />
+    <Compile Include="Pipeline\AccessFailureException.cs" />
+    <Compile Include="Pipeline\ComposedMembershipProvider.cs" />
+    <Compile Include="Pipeline\EngineGroup.cs" />
+    <Compile Include="Pipeline\GetBulkMessageHandler.cs" />
+    <Compile Include="Pipeline\GetMessageHandler.cs" />
+    <Compile Include="Pipeline\GetNextMessageHandler.cs" />
+    <Compile Include="Pipeline\GetNextV1MessageHandler.cs" />
+    <Compile Include="Pipeline\GetV1MessageHandler.cs" />
+    <Compile Include="Pipeline\HandlerMapping.cs" />
+    <Compile Include="Pipeline\ILogger.cs" />
+    <Compile Include="Pipeline\IMembershipProvider.cs" />
+    <Compile Include="Pipeline\IMessageHandler.cs" />
+    <Compile Include="Pipeline\InformRequestMessageHandler.cs" />
+    <Compile Include="Pipeline\InformRequestMessageReceivedEventArgs.cs" />
+    <Compile Include="Pipeline\ISnmpContext.cs" />
+    <Compile Include="Pipeline\ISnmpObject.cs" />
+    <Compile Include="Pipeline\MessageHandlerFactory.cs" />
+    <Compile Include="Pipeline\NormalSnmpContext.cs" />
+    <Compile Include="Pipeline\NullMessageHandler.cs" />
+    <Compile Include="Pipeline\ObjectStore.cs" />
+    <Compile Include="Pipeline\ScalarObject.cs" />
+    <Compile Include="Pipeline\SecureSnmpContext.cs" />
+    <Compile Include="Pipeline\SetMessageHandler.cs" />
+    <Compile Include="Pipeline\SetV1MessageHandler.cs" />
+    <Compile Include="Pipeline\SnmpApplication.cs" />
+    <Compile Include="Pipeline\SnmpApplicationFactory.cs" />
+    <Compile Include="Pipeline\SnmpContextBase.cs" />
+    <Compile Include="Pipeline\SnmpContextFactory.cs" />
+    <Compile Include="Pipeline\SnmpEngine.cs" />
+    <Compile Include="Pipeline\SnmpObjectBase.cs" />
+    <Compile Include="Pipeline\TableObject.cs" />
+    <Compile Include="Pipeline\TrapV1MessageHandler.cs" />
+    <Compile Include="Pipeline\TrapV1MessageReceivedEventArgs.cs" />
+    <Compile Include="Pipeline\TrapV2MessageHandler.cs" />
+    <Compile Include="Pipeline\TrapV2MessageReceivedEventArgs.cs" />
+    <Compile Include="Pipeline\Version1MembershipProvider.cs" />
+    <Compile Include="Pipeline\Version2MembershipProvider.cs" />
+    <Compile Include="Pipeline\Version3MembershipProvider.cs" />
+    <Compile Include="Properties\EngineAssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="SharpSnmpLib.ma.csproj">
+      <Project>{630ab241-8d25-437d-ad3b-dc5e7fed0ce0}</Project>
+      <Name>SharpSnmpLib.ma</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

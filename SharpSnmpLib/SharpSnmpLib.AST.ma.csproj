@@ -182,7 +182,6 @@
     <None Include="Resources\SNMPv2-SMI.module" />
     <None Include="Resources\SNMPv2-TC.module" />
     <None Include="Resources\SNMPv2-TM.module" />
-    <None Include="sharpsnmplib.snk" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
