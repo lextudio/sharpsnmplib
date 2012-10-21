@@ -56,6 +56,18 @@ namespace Lextm.SharpSnmpLib.Tests
         }
         
         [Test]
+        public void TestNegative3()
+        {
+        	// #7240
+            const int i = -237053658;
+            Integer32 data = new Integer32(i);
+            byte[] bytes = data.ToBytes();
+            Assert.AreEqual(6, bytes.Length);
+            var exception = Assert.Throws<ArgumentException>(() => DataFactory.CreateSnmpData(new byte[] { 0x02, 0x05, 0xFF, 0xF1, 0xDE, 0xD9, 0x26 }));
+            Assert.AreEqual("truncation error for 32-bit integer coding\r\nParameter name: length", exception.Message);
+        }
+        
+        [Test]
         public void TestConstructor()
         {
             Integer32 test = new Integer32(100);
