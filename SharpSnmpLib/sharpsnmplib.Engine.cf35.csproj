@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{EBB48F98-32C4-474F-B691-3599827418A2}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Lextm.SharpSnmpLib</RootNamespace>
+    <AssemblyName>sharpsnmplib.engine.cf35</AssemblyName>
+    <TargetFrameworkVersion>CF 3.5</TargetFrameworkVersion>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SourceAnalysisOverrideSettingsFile>C:\Documents and Settings\lexli\Application Data\ICSharpCode/SharpDevelop3.0\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>sharpsnmplib.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>False</DelaySign>
+    <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <NoStdLib>True</NoStdLib>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE;CF;NET_2_0</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>..\bin\</OutputPath>
+    <DebugSymbols>false</DebugSymbols>
+    <DebugType>PdbOnly</DebugType>
+    <Optimize>True</Optimize>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE;CF;NET_2_0</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <BaseAddress>4194304</BaseAddress>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <FileAlignment>4096</FileAlignment>
+  </PropertyGroup>
+  <Import Project="SharpDevelop.Build.CSharp.targets" />
+  <ItemGroup>
+    <Reference Include="System">
+      <HintPath>C:\Program Files\Microsoft.NET\SDK\CompactFramework\v3.5\WindowsCE\System.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core">
+      <HintPath>C:\Program Files\Microsoft.NET\SDK\CompactFramework\v3.5\WindowsCE\System.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="mscorlib">
+      <HintPath>C:\Program Files\Microsoft.NET\SDK\CompactFramework\v3.5\WindowsCE\mscorlib.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Objects" />
+    <Folder Include="Pipeline" />
+    <Folder Include="Properties" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\lib\SharedAssemblyInfo.cs">
+      <Link>SharedAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="Objects\SysContact.cs" />
+    <Compile Include="Objects\SysDescr.cs" />
+    <Compile Include="Objects\SysLocation.cs" />
+    <Compile Include="Objects\SysName.cs" />
+    <Compile Include="Objects\SysObjectId.cs" />
+    <Compile Include="Objects\SysORDescr.cs" />
+    <Compile Include="Objects\SysORID.cs" />
+    <Compile Include="Objects\SysORIndex.cs" />
+    <Compile Include="Objects\SysORLastChange.cs" />
+    <Compile Include="Objects\SysORTable.cs" />
+    <Compile Include="Objects\SysORUpTime.cs" />
+    <Compile Include="Objects\SysServices.cs" />
+    <Compile Include="Objects\SysUpTime.cs" />
+    <Compile Include="Pipeline\AccessFailureException.cs" />
+    <Compile Include="Pipeline\ComposedMembershipProvider.cs" />
+    <Compile Include="Pipeline\EngineGroup.cs" />
+    <Compile Include="Pipeline\GetBulkMessageHandler.cs" />
+    <Compile Include="Pipeline\GetMessageHandler.cs" />
+    <Compile Include="Pipeline\GetNextMessageHandler.cs" />
+    <Compile Include="Pipeline\GetNextV1MessageHandler.cs" />
+    <Compile Include="Pipeline\GetV1MessageHandler.cs" />
+    <Compile Include="Pipeline\HandlerMapping.cs" />
+    <Compile Include="Pipeline\ILogger.cs" />
+    <Compile Include="Pipeline\IMembershipProvider.cs" />
+    <Compile Include="Pipeline\IMessageHandler.cs" />
+    <Compile Include="Pipeline\InformRequestMessageHandler.cs" />
+    <Compile Include="Pipeline\InformRequestMessageReceivedEventArgs.cs" />
+    <Compile Include="Pipeline\ISnmpContext.cs" />
+    <Compile Include="Pipeline\ISnmpObject.cs" />
+    <Compile Include="Pipeline\MessageHandlerFactory.cs" />
+    <Compile Include="Pipeline\NormalSnmpContext.cs" />
+    <Compile Include="Pipeline\NullMessageHandler.cs" />
+    <Compile Include="Pipeline\ObjectStore.cs" />
+    <Compile Include="Pipeline\ScalarObject.cs" />
+    <Compile Include="Pipeline\SecureSnmpContext.cs" />
+    <Compile Include="Pipeline\SetMessageHandler.cs" />
+    <Compile Include="Pipeline\SetV1MessageHandler.cs" />
+    <Compile Include="Pipeline\SnmpApplication.cs" />
+    <Compile Include="Pipeline\SnmpApplicationFactory.cs" />
+    <Compile Include="Pipeline\SnmpContextBase.cs" />
+    <Compile Include="Pipeline\SnmpContextFactory.cs" />
+    <Compile Include="Pipeline\SnmpEngine.cs" />
+    <Compile Include="Pipeline\SnmpObjectBase.cs" />
+    <Compile Include="Pipeline\TableObject.cs" />
+    <Compile Include="Pipeline\TrapV1MessageHandler.cs" />
+    <Compile Include="Pipeline\TrapV1MessageReceivedEventArgs.cs" />
+    <Compile Include="Pipeline\TrapV2MessageHandler.cs" />
+    <Compile Include="Pipeline\TrapV2MessageReceivedEventArgs.cs" />
+    <Compile Include="Pipeline\Version1MembershipProvider.cs" />
+    <Compile Include="Pipeline\Version2MembershipProvider.cs" />
+    <Compile Include="Pipeline\Version3MembershipProvider.cs" />
+    <Compile Include="Properties\EngineAssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="sharpsnmplib.cf35.csproj">
+      <Project>{EBB48F98-32C4-474F-B691-3599827418A2}</Project>
+      <Name>sharpsnmplib.cf35</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

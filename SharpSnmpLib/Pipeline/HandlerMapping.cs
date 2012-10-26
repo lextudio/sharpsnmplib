@@ -58,11 +58,19 @@ namespace Lextm.SharpSnmpLib.Pipeline
             }
 
             _catchAll = version == "*";
-            _version = _catchAll ? new string[0] : version.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            _version = _catchAll ? 
+            	new string[0] : 
+            	#if CF
+            	version.Split(new[] { ',' })
+            	#else
+            	version.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+            	#endif
+            	;
             _command = command;
             _handler = handler;
         }
 
+        #if !CF
         /// <summary>
         /// Initializes a new instance of the <see cref="HandlerMapping"/> class.
         /// </summary>
@@ -110,7 +118,8 @@ namespace Lextm.SharpSnmpLib.Pipeline
 
             return (IMessageHandler)Activator.CreateInstance(AppDomain.CurrentDomain.Load(assemblyName).GetType(type));
         }
-
+        #endif
+        
         /// <summary>
         /// Gets the handler.
         /// </summary>

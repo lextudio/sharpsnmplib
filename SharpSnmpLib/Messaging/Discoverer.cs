@@ -29,13 +29,13 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// </summary>
     public sealed class Discoverer
     {
-        private long _active;
+        private int _active;
         private int _bufferSize;
         private int _requestId;
         private static readonly UserRegistry Empty = new UserRegistry();
         private readonly IList<Variable> _defaultVariables = new List<Variable> { new Variable(new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 1, 1, 0 })) };
-        private const long Active = 1;
-        private const long Inactive = 0;
+        private const int Active = 1;
+        private const int Inactive = 0;
 
         /// <summary>
         /// http://msdn.microsoft.com/en-us/library/ms740668(VS.85).aspx
@@ -134,7 +134,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             while (true)
             {
                 // If no more active, then stop.
-                if (Interlocked.Read(ref _active) == Inactive)
+                if (Interlocked.Exchange(ref _active, _active) == Inactive)
                 {
                     return;
                 }

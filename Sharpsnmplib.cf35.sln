@@ -4,6 +4,8 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # SharpDevelop 4.3
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sharpsnmplib.cf35", "SharpSnmpLib\sharpsnmplib.cf35.csproj", "{EBB48F98-32C4-474F-B691-3599827418A2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sharpsnmplib.engine.cf35", "SharpSnmpLib\sharpsnmplib.Engine.cf35.csproj", "1253EB66-5336-4A4A-8D6D-3E91F5E20621"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -14,6 +16,10 @@ Global
 		{EBB48F98-32C4-474F-B691-3599827418A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EBB48F98-32C4-474F-B691-3599827418A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EBB48F98-32C4-474F-B691-3599827418A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		1253EB66-5336-4A4A-8D6D-3E91F5E20621.Debug|Any CPU.Build.0 = Debug|Any CPU
+		1253EB66-5336-4A4A-8D6D-3E91F5E20621.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		1253EB66-5336-4A4A-8D6D-3E91F5E20621.Release|Any CPU.Build.0 = Release|Any CPU
+		1253EB66-5336-4A4A-8D6D-3E91F5E20621.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

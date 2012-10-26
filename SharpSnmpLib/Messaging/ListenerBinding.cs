@@ -1,16 +1,16 @@
 ﻿// Listener binding class.
 // Copyright (C) 2008-2010 Malcolm Crowe, Lex Li, and other contributors.
-// 
+//
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
 // License as published by the Free Software Foundation; either
 // version 2.1 of the License, or (at your option) any later version.
-// 
+//
 // This library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 // Lesser General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -23,7 +23,7 @@ using System.Threading;
 using Lextm.SharpSnmpLib.Security;
 
 namespace Lextm.SharpSnmpLib.Messaging
-{    
+{
     /// <summary>
     /// Binding class for <see cref="Listener"/>.
     /// </summary>
@@ -31,17 +31,17 @@ namespace Lextm.SharpSnmpLib.Messaging
     {
         private Socket _socket;
         private int _bufferSize;
-        private long _active; // = Inactive
+        private int _active; // = Inactive
         private bool _disposed;
-        private const long Active = 1;
-        private const long Inactive = 0;
+        private const int Active = 1;
+        private const int Inactive = 0;
         private readonly UserRegistry _users;
 
         /// <summary>
         /// http://msdn.microsoft.com/en-us/library/ms740668(VS.85).aspx
         /// </summary>
         private const int WSAECONNRESET = 10054;
- 
+
         /// <summary>
         /// http://msdn.microsoft.com/en-us/library/ms740668(VS.85).aspx
         /// </summary>
@@ -68,7 +68,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 return;
             }
-            
+
             if (disposing)
             {
                 _active = Inactive;
@@ -79,7 +79,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                     _socket = null;
                 }
             }
-            
+
             _disposed = true;
         }
 
@@ -126,8 +126,8 @@ namespace Lextm.SharpSnmpLib.Messaging
             if (_disposed)
             {
                 throw new ObjectDisposedException(GetType().FullName);
-            }            
-            
+            }
+
             if (response == null)
             {
                 throw new ArgumentNullException("response");
@@ -170,16 +170,17 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             var addressFamily = Endpoint.AddressFamily;
+            #if !CF
             if (addressFamily == AddressFamily.InterNetwork && !Socket.SupportsIPv4)
             {
                 throw new InvalidOperationException(Listener.ErrorIPv4NotSupported);
             }
-            
+
             if (addressFamily == AddressFamily.InterNetworkV6 && !Socket.OSSupportsIPv6)
             {
                 throw new InvalidOperationException(Listener.ErrorIPv6NotSupported);
             }
-
+            #endif
             var activeBefore = Interlocked.CompareExchange(ref _active, Active, Inactive);
             if (activeBefore == Active)
             {
@@ -187,7 +188,11 @@ namespace Lextm.SharpSnmpLib.Messaging
                 return;
             }
 
-            _socket = new Socket(addressFamily, SocketType.Dgram, ProtocolType.Udp) { ExclusiveAddressUse = true };
+            _socket = new Socket(addressFamily, SocketType.Dgram, ProtocolType.Udp)
+            #if !CF
+                { ExclusiveAddressUse = true }
+            #endif
+            ;
 
             try
             {
@@ -204,17 +209,17 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw;
             }
 
-#if CF
+            #if CF
             _bufferSize = 8192;
-#else
+            #else
             _bufferSize = _socket.ReceiveBufferSize;
-#endif
+            #endif
 
-#if ASYNC
+            #if ASYNC
             ThreadPool.QueueUserWorkItem(AsyncBeginReceive);
-#else
+            #else
             ThreadPool.QueueUserWorkItem(AsyncReceive);
-#endif
+            #endif
         }
 
         /// <summary>
@@ -226,8 +231,8 @@ namespace Lextm.SharpSnmpLib.Messaging
             if (_disposed)
             {
                 throw new ObjectDisposedException(GetType().FullName);
-            }            
-            
+            }
+
             var activeBefore = Interlocked.CompareExchange(ref _active, Inactive, Active);
             if (activeBefore != Active)
             {
@@ -238,7 +243,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             _socket = null;
         }
 
-#if ASYNC
+        #if ASYNC
         private void AsyncBeginReceive(object dummy)
         {
             AsyncBeginReceive();
@@ -270,7 +275,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                         // If it was inactive, the exception is likely to result from this, and we raise nothing.
                         long activeBefore = Interlocked.CompareExchange(ref _active, Inactive, Active);
                         if (activeBefore == Active)
-                        {                        
+                        {
                             HandleException(ex);
                         }
                     }
@@ -312,19 +317,19 @@ namespace Lextm.SharpSnmpLib.Messaging
                     // If it was inactive, the exception is likely to result from this, and we raise nothing.
                     long activeBefore = Interlocked.CompareExchange(ref _active, Inactive, Active);
                     if (activeBefore == Active)
-                    {                        
+                    {
                         HandleException(ex);
                     }
                 }
             }
         }
-#else
+        #else
         private void AsyncReceive(object dummy)
         {
             while (true)
             {
                 // If no more active, then stop.
-                if (Interlocked.Read(ref _active) == Inactive)
+                if (Interlocked.Exchange(ref _active, _active) == Inactive)
                 {
                     return;
                 }
@@ -346,14 +351,14 @@ namespace Lextm.SharpSnmpLib.Messaging
                         // If it was inactive, the exception is likely to result from this, and we raise nothing.
                         var activeBefore = Interlocked.CompareExchange(ref _active, Inactive, Active);
                         if (activeBefore == Active)
-                        {                        
+                        {
                             HandleException(ex);
                         }
                     }
                 }
             }
         }
-#endif
+        #endif
 
         private void HandleException(Exception exception)
         {

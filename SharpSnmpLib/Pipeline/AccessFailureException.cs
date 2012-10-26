@@ -64,7 +64,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         {
         }
 
-#if (!SILVERLIGHT)
+#if !CF
         /// <summary>
         /// Creates a <see cref="AccessFailureException"/> instance.
         /// </summary>

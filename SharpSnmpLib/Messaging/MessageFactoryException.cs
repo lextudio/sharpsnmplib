@@ -63,7 +63,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
         }
 
-        #if (!SILVERLIGHT)
+        #if !CF
         /// <summary>
         /// Creates a <see cref="MessageFactoryException"/> instance.
         /// </summary>
