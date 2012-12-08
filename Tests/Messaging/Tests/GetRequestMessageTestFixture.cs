@@ -308,40 +308,18 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             GetRequestMessage message = new GetRequestMessage(0x4bed, VersionCode.V2, new OctetString("public"), new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) });
             
             const int time = 1500;
-            bool hasException = false;
-            try
-            {
-                message.GetResponse(time, new IPEndPoint(IPAddress.Loopback, 161), socket);
-            }
-            catch (TimeoutException)
-            {
-                hasException = true;
-            }
+            message.GetResponse(time, new IPEndPoint(IPAddress.Loopback, 161), socket);
 
-            Assert.IsFalse(hasException);
-
-            System.Diagnostics.Stopwatch timer = new System.Diagnostics.Stopwatch();
-            
-            try
-            {
-                timer.Start();
-                //IMPORTANT: test against an agent that doesn't exist.
-// ReSharper disable AssignNullToNotNullAttribute
-                message.GetResponse(time, new IPEndPoint(IPAddress.Parse("192.168.0.233"), 161), socket);
-// ReSharper restore AssignNullToNotNullAttribute
-            }
-            catch (TimeoutException)
-            {
-                hasException = true;
-            }
-
+            var timer = new System.Diagnostics.Stopwatch();            
+            timer.Start();
+            //IMPORTANT: test against an agent that doesn't exist.
+            Assert.Throws<TimeoutException>(() => message.GetResponse(time, new IPEndPoint(IPAddress.Parse("8.8.8.8"), 161), socket));
             timer.Stop();            
             
             long elapsedMilliseconds = timer.ElapsedMilliseconds;
             Console.WriteLine(@"elapsed: " + elapsedMilliseconds);
             Console.WriteLine(@"timeout: " + time);
             Assert.LessOrEqual(time, elapsedMilliseconds);
-            Assert.IsTrue(hasException);
 
             // FIXME: these values are valid on my machine openSUSE 11.2. (lex)
             // This test case usually fails on Windows, as strangely WinSock API call adds an extra 500-ms.
