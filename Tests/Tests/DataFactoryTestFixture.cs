@@ -188,6 +188,19 @@ namespace Lextm.SharpSnmpLib.Tests
             ISnmpData pdu = t[2];
             Assert.AreEqual(SnmpType.TrapV1Pdu, pdu.TypeCode);
         }
+
+        [Test]
+        public void TestInformDiscovery()
+        {
+            //#7245
+            var pdu = new InformRequestPdu(12);
+            var bytes = pdu.ToBytes();
+            var data = DataFactory.CreateSnmpData(bytes);
+            Assert.AreEqual(SnmpType.InformRequestPdu, data.TypeCode);
+            var newPdu = (InformRequestPdu)data;
+            Assert.IsNull(newPdu.Enterprise);
+            Assert.AreEqual(0, newPdu.TimeStamp);
+        }
     }
 }
 #pragma warning restore 1591,0618

@@ -179,6 +179,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 return false;
             }
 
+            // TODO: improve here, so if request's EngineBoots = agent's EngineBoots - 1 we can calculate if it is in time.
             if (parameters.EngineBoots.ToInt32() != Group.EngineBoots)
             {
                 // does not match boot count.

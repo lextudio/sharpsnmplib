@@ -63,9 +63,8 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
 
             IList<ISnmpMessage> messages = MessageFactory.ParseMessages(data, new UserRegistry());
             Assert.AreEqual(SnmpType.InformRequestPdu, messages[0].TypeCode());
-            //Assert.AreEqual(4, messages[0].TimeStamp);
         }
-        
+     
         [Test]
         public void TestString()
         {

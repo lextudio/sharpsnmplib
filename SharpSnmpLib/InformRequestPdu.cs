@@ -74,6 +74,19 @@ namespace Lextm.SharpSnmpLib
         }
 
         /// <summary>
+        /// Creates a <see cref="InformRequestPdu"/> instance for discovery.
+        /// </summary>
+        /// <param name="requestId">The request id.</param>
+        public InformRequestPdu(int requestId)
+        {
+            Enterprise = null;
+            RequestId = new Integer32(requestId);
+            _time = new TimeTicks(0);
+            Variables = new List<Variable>();
+            _varbindSection = Variable.Transform(Variables);
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="InformRequestPdu"/> class.
         /// </summary>
         /// <param name="length">The length data.</param>
@@ -99,10 +112,23 @@ namespace Lextm.SharpSnmpLib
 #pragma warning restore 168
             _varbindSection = (Sequence)DataFactory.CreateSnmpData(stream);
             Variables = Variable.Transform(_varbindSection);
-            _time = (TimeTicks)Variables[0].Data;
-            Variables.RemoveAt(0);
-            Enterprise = (ObjectIdentifier)Variables[0].Data;
-            Variables.RemoveAt(0);
+            if (Variables.Count >= 2)
+            {
+                _time = (TimeTicks)Variables[0].Data;
+                Variables.RemoveAt(0);
+                Enterprise = (ObjectIdentifier)Variables[0].Data;
+                Variables.RemoveAt(0);
+            }
+            else if (Variables.Count == 0)
+            {
+                _time = new TimeTicks(0);
+                Enterprise = null;
+            }
+            else
+            {
+                throw new InvalidDataException("malformed inform message");
+            }
+
             _length = length.Item2;
         }
 
