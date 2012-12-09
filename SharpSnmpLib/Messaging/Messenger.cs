@@ -488,9 +488,20 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Returns a new discovery request.
         /// </summary>
         /// <returns></returns>
+        [Obsolete("Please use GetNextDiscovery")]
         public static Discovery NextDiscovery
         {
             get { return new Discovery(NextMessageId, NextRequestId, MaxMessageSize); }
+        }
+
+        /// <summary>
+        /// Returns a new discovery request.
+        /// </summary>
+        /// <param name="type">Message type.</param>
+        /// <returns></returns>
+        public static Discovery GetNextDiscovery(SnmpType type)
+        {
+            return new Discovery(NextMessageId, NextRequestId, MaxMessageSize, type); 
         }
 
         /// <summary>

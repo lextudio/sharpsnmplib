@@ -175,7 +175,7 @@ Module Program
                 priv = New DefaultPrivacyProvider(auth)
             End If
 
-            Dim report As ReportMessage = Messenger.NextDiscovery.GetResponse(timeout, receiver)
+            Dim report As ReportMessage = Messenger.GetNextDiscovery(SnmpType.GetBulkRequestPdu).GetResponse(timeout, receiver)
 
             Dim request As New GetBulkRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, New OctetString(user), nonRepeaters, maxRepetitions, _
              vList, priv, Messenger.MaxMessageSize, report)

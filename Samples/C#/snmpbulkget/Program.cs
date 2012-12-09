@@ -192,7 +192,7 @@ namespace SnmpBulkGet
                     priv = new DefaultPrivacyProvider(auth);
                 }
 
-                Discovery discovery = Messenger.NextDiscovery;
+                Discovery discovery = Messenger.GetNextDiscovery(SnmpType.GetBulkRequestPdu);
                 ReportMessage report = discovery.GetResponse(timeout, receiver);
 
                 GetBulkRequestMessage request = new GetBulkRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(user), nonRepeaters, maxRepetitions, vList, priv, Messenger.MaxMessageSize, report);

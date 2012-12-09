@@ -189,7 +189,7 @@ namespace SnmpGetNext
                     priv = new DefaultPrivacyProvider(auth);
                 }
 
-                Discovery discovery = Messenger.NextDiscovery;
+                Discovery discovery = Messenger.GetNextDiscovery(SnmpType.GetNextRequestPdu);
                 ReportMessage report = discovery.GetResponse(timeout, receiver);
 
                 GetNextRequestMessage request = new GetNextRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(user), vList, priv, Messenger.MaxMessageSize, report);

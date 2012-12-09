@@ -191,7 +191,7 @@ namespace SnmpWalk
                         priv = new DefaultPrivacyProvider(auth);
                     }
 
-                    Discovery discovery = Messenger.NextDiscovery;
+                    Discovery discovery = Messenger.GetNextDiscovery(SnmpType.GetBulkRequestPdu);
                     ReportMessage report = discovery.GetResponse(timeout, receiver);
 
                     Messenger.BulkWalk(version, receiver, new OctetString(user), test, result, timeout, maxRepetitions, mode, priv, report);

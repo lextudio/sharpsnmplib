@@ -37,7 +37,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// </summary>
     public sealed class Discovery
     {
-        private readonly GetRequestMessage _discovery;
+        private readonly ISnmpMessage _discovery;
         private static readonly UserRegistry Empty = new UserRegistry();
         private static readonly SecurityParameters DefaultSecurityParameters =
             new SecurityParameters(
@@ -47,7 +47,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 OctetString.Empty,
                 OctetString.Empty,
                 OctetString.Empty);
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Discovery"/> class.
         /// </summary>
@@ -72,6 +72,107 @@ namespace Lextm.SharpSnmpLib.Messaging
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Discovery"/> class.
+        /// </summary>
+        /// <param name="requestId">The request id.</param>
+        /// <param name="messageId">The message id.</param>
+        /// <param name="maxMessageSize">The max size of message.</param>
+        /// <param name="type">Message type.</param>
+        public Discovery(int messageId, int requestId, int maxMessageSize, SnmpType type)
+        {
+            switch (type)
+            {
+                case SnmpType.GetRequestPdu:
+                    {
+                        _discovery = new GetRequestMessage(
+                            VersionCode.V3,
+                            new Header(
+                            new Integer32(messageId),
+                            new Integer32(maxMessageSize),
+                            Levels.Reportable),
+                            DefaultSecurityParameters,
+                            new Scope(
+                            OctetString.Empty,
+                            OctetString.Empty,
+                            new GetRequestPdu(requestId, new List<Variable>())),
+                            DefaultPrivacyProvider.DefaultPair,
+                            null);
+                        break;
+                    }
+                case SnmpType.GetNextRequestPdu:
+                    {
+                        _discovery = new GetNextRequestMessage(
+                            VersionCode.V3,
+                            new Header(
+                            new Integer32(messageId),
+                            new Integer32(maxMessageSize),
+                            Levels.Reportable),
+                            DefaultSecurityParameters,
+                            new Scope(
+                            OctetString.Empty,
+                            OctetString.Empty,
+                            new GetNextRequestPdu(requestId, new List<Variable>())),
+                            DefaultPrivacyProvider.DefaultPair,
+                            null);
+                        break;
+                    }
+                case SnmpType.GetBulkRequestPdu:
+                    {
+                        _discovery = new GetBulkRequestMessage(
+                            VersionCode.V3,
+                            new Header(
+                            new Integer32(messageId),
+                            new Integer32(maxMessageSize),
+                            Levels.Reportable),
+                            DefaultSecurityParameters,
+                            new Scope(
+                            OctetString.Empty,
+                            OctetString.Empty,
+                            new GetBulkRequestPdu(requestId, 0, 0, new List<Variable>())),
+                            DefaultPrivacyProvider.DefaultPair,
+                            null);
+                        break;
+                    }
+                case SnmpType.SetRequestPdu:
+                    {
+                        _discovery = new SetRequestMessage(
+                            VersionCode.V3,
+                            new Header(
+                            new Integer32(messageId),
+                            new Integer32(maxMessageSize),
+                            Levels.Reportable),
+                            DefaultSecurityParameters,
+                            new Scope(
+                            OctetString.Empty,
+                            OctetString.Empty,
+                            new SetRequestPdu(requestId, new List<Variable>())),
+                            DefaultPrivacyProvider.DefaultPair,
+                            null);
+                        break;
+                    }
+                case SnmpType.InformRequestPdu:
+                    {
+                        _discovery = new InformRequestMessage(
+                            VersionCode.V3,
+                            new Header(
+                            new Integer32(messageId),
+                            new Integer32(maxMessageSize),
+                            Levels.Reportable),
+                            DefaultSecurityParameters,
+                            new Scope(
+                            OctetString.Empty,
+                            OctetString.Empty,
+                            new InformRequestPdu(requestId)),
+                            DefaultPrivacyProvider.DefaultPair,
+                            null);
+                        break;
+                    }
+                default:
+                    throw new ArgumentException("discovery message must be a request", "type");
+            }
+        }
+
+        /// <summary>
         /// Gets the response.
         /// </summary>
         /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
@@ -83,7 +184,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new ArgumentNullException("receiver");
             }
-            
+
             using (var socket = receiver.GetSocket())
             {
                 return (ReportMessage)_discovery.GetResponse(timeout, receiver, Empty, socket);
