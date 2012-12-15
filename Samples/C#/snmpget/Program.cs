@@ -179,22 +179,44 @@ namespace SnmpGet
                 ReportMessage report = discovery.GetResponse(timeout, receiver);
 
                 GetRequestMessage request = new GetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(user), vList, priv, Messenger.MaxMessageSize, report);
-
-                ISnmpMessage response = request.GetResponse(timeout, receiver);
+                ISnmpMessage reply = request.GetResponse(timeout, receiver);
                 if (dump)
                 {
+                    Console.WriteLine("Request message bytes:");
                     Console.WriteLine(ByteTool.Convert(request.ToBytes()));
+                    Console.WriteLine("Response message bytes:");
+                    Console.WriteLine(ByteTool.Convert(reply.ToBytes()));
                 }
 
-                if (response.Pdu().ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
+                if (reply is ReportMessage)
+                {
+                    if (reply.Pdu().Variables.Count == 0)
+                    {
+                        Console.WriteLine("wrong report message received");
+                        return;
+                    }
+
+                    var id = reply.Pdu().Variables[0].Id;
+                    if (id != Messenger.NotInTimeWindow)
+                    {
+                        var error = id.GetErrorMessage();
+                        Console.WriteLine(error);
+                        return;
+                    }
+
+                    // according to RFC 3414, send a second request to sync time.
+                    request = new GetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(user), vList, priv, Messenger.MaxMessageSize, reply);
+                    reply = request.GetResponse(timeout, receiver);
+                }
+                else if (reply.Pdu().ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
                 {
                     throw ErrorException.Create(
                         "error in response",
                         receiver.Address,
-                        response);
+                        reply);
                 }
 
-                foreach (Variable v in response.Pdu().Variables)
+                foreach (Variable v in reply.Pdu().Variables)
                 {
                     Console.WriteLine(v);
                 }

@@ -563,5 +563,52 @@ namespace Lextm.SharpSnmpLib.Messaging
             report = message;
             return next.Count != 0;
         }
+
+        private static ObjectIdentifier unknownSecurityLevel = new ObjectIdentifier(new byte[] {1,3,6,1,6,3,15,1,1,1,0});
+        public static ObjectIdentifier NotInTimeWindow = new ObjectIdentifier(new byte[] {1,3,6,1,6,3,15,1,1,2,0});
+        private static ObjectIdentifier unknownUserName = new ObjectIdentifier(new byte[] {1,3,6,1,6,3,15,1,1,3,0});
+        private static ObjectIdentifier unknownEngineID = new ObjectIdentifier(new byte[] {1,3,6,1,6,3,15,1,1,4,0});
+        private static ObjectIdentifier wrongDigest = new ObjectIdentifier(new byte[] {1,3,6,1,6,3,15,1,1,5,0});
+        private static ObjectIdentifier decryptionError = new ObjectIdentifier(new byte[] {1,3,6,1,6,3,15,1,1,6,0});
+
+        /// <summary>
+        /// Returns error message for the specific <see cref="ObjectIdentifier"/>.
+        /// </summary>
+        /// <param name="id">The OID.</param>
+        /// <returns>Error message.</returns>
+        public static string GetErrorMessage(this ObjectIdentifier id)
+        {
+            if (id == unknownSecurityLevel)
+            {
+                return "unknown security level";
+            }
+            
+            if (id == NotInTimeWindow)
+            {
+                return "not in time window";
+            }
+            
+            if (id == unknownUserName)
+            {
+                return "unknown user name";
+            }
+            
+            if (id == unknownEngineID)
+            {
+                return "unknown engine ID";
+            }
+            
+            if (id == wrongDigest)
+            {
+                return "wrong digest";
+            }
+            
+            if (id == decryptionError)
+            {
+                return "decryption error";
+            }
+
+            return "unknown error";
+        }
     }
 }

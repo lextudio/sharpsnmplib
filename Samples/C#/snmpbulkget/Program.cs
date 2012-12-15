@@ -36,6 +36,7 @@ namespace SnmpBulkGet
             string privPhrase = string.Empty;
             int maxRepetitions = 10;
             int nonRepeaters = 0;
+            bool dump = false;
 
             OptionSet p = new OptionSet()
                 .Add("c:", "Community name, (default is public)", delegate (string v) { if (v != null) community = v; })
@@ -67,6 +68,7 @@ namespace SnmpBulkGet
                 .Add("u:", "Security name", delegate(string v) { user = v; })
                 .Add("h|?|help", "Print this help information.", delegate(string v) { showHelp = v != null; })
                 .Add("V", "Display version number of this application.", delegate (string v) { showVersion = v != null; })
+                .Add("d", "Display message dump", delegate(string v) { dump = true; })
                 .Add("t:", "Timeout value (unit is second).", delegate (string v) { timeout = int.Parse(v) * 1000; })
                 .Add("r:", "Retry count (default is 0)", delegate (string v) { retry = int.Parse(v); })
                 .Add("v:", "SNMP version (2 and 3 are currently supported)", delegate (string v)
@@ -196,9 +198,36 @@ namespace SnmpBulkGet
                 ReportMessage report = discovery.GetResponse(timeout, receiver);
 
                 GetBulkRequestMessage request = new GetBulkRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(user), nonRepeaters, maxRepetitions, vList, priv, Messenger.MaxMessageSize, report);
-
                 ISnmpMessage reply = request.GetResponse(timeout, receiver);
-                if (reply.Pdu().ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
+                if (dump)
+                {
+                    Console.WriteLine("Request message bytes:");
+                    Console.WriteLine(ByteTool.Convert(request.ToBytes()));
+                    Console.WriteLine("Response message bytes:");
+                    Console.WriteLine(ByteTool.Convert(reply.ToBytes()));
+                }
+
+                if (reply is ReportMessage)
+                {
+                    if (reply.Pdu().Variables.Count == 0)
+                    {
+                        Console.WriteLine("wrong report message received");
+                        return;
+                    }
+
+                    var id = reply.Pdu().Variables[0].Id;
+                    if (id != Messenger.NotInTimeWindow)
+                    {
+                        var error = id.GetErrorMessage();
+                        Console.WriteLine(error);
+                        return;
+                    }
+
+                    // according to RFC 3414, send a second request to sync time.
+                    request = new GetBulkRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(user), nonRepeaters, maxRepetitions, vList, priv, Messenger.MaxMessageSize, reply);
+                    reply = request.GetResponse(timeout, receiver);
+                }
+                else if (reply.Pdu().ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
                 {
                     throw ErrorException.Create(
                         "error in response",

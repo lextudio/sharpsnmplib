@@ -172,17 +172,37 @@ Module Program
             Dim request As New GetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, New OctetString(user), vList, priv, Messenger.MaxMessageSize, _
              report)
 
-            Dim response As ISnmpMessage = request.GetResponse(timeout, receiver)
+            Dim reply As ISnmpMessage = request.GetResponse(timeout, receiver)
             If dump Then
+                Console.WriteLine("Request message bytes:")
                 Console.WriteLine(ByteTool.Convert(request.ToBytes()))
+                Console.WriteLine("Response message bytes:")
+                Console.WriteLine(ByteTool.Convert(reply.ToBytes()))
             End If
 
-            If response.Pdu.ErrorStatus.ToInt32() <> 0 Then
+            If TypeOf reply Is ReportMessage Then
+                If reply.Pdu().Variables.Count = 0 Then
+                    Console.WriteLine("wrong report message received")
+                    Return
+                End If
+
+                Dim id As ObjectIdentifier = reply.Pdu().Variables(0).Id
+                If id <> Messenger.NotInTimeWindow Then
+                    Dim errorMessage As String = id.GetErrorMessage()
+                    Console.WriteLine(errorMessage)
+                    Return
+                End If
+
+                ' according to RFC 3414, send a second request to sync time.
+                request = New GetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, New OctetString(user), vList, priv, Messenger.MaxMessageSize, _
+             reply)
+                reply = request.GetResponse(timeout, receiver)
+            ElseIf reply.Pdu.ErrorStatus.ToInt32() <> 0 Then
                 ' != ErrorCode.NoError
-                Throw ErrorException.Create("error in response", receiver.Address, response)
+                Throw ErrorException.Create("error in response", receiver.Address, reply)
             End If
 
-            For Each v As Variable In response.Pdu.Variables
+            For Each v As Variable In reply.Pdu.Variables
                 Console.WriteLine(v)
             Next
         Catch ex As SnmpException

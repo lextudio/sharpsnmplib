@@ -24,7 +24,6 @@ namespace SnmpWalk
         public static void Main(string[] args)
         {
             string community = "public";
-            bool dump = true;
             bool showHelp   = false;
             bool showVersion = false;
             VersionCode version = VersionCode.V1;
@@ -38,6 +37,7 @@ namespace SnmpWalk
             string privacy = string.Empty;
             string privPhrase = string.Empty;
             WalkMode mode = WalkMode.WithinSubtree;
+            bool dump = false;
 
             OptionSet p = new OptionSet()
                 .Add("c:", "Community name, (default is public)", delegate(string v) { if (v != null) community = v; })
@@ -172,7 +172,6 @@ namespace SnmpWalk
                 }
                 else
                 {
-
                     if (string.IsNullOrEmpty(user))
                     {
                         Console.WriteLine("User name need to be specified for v3.");
@@ -193,7 +192,6 @@ namespace SnmpWalk
 
                     Discovery discovery = Messenger.GetNextDiscovery(SnmpType.GetBulkRequestPdu);
                     ReportMessage report = discovery.GetResponse(timeout, receiver);
-
                     Messenger.BulkWalk(version, receiver, new OctetString(user), test, result, timeout, maxRepetitions, mode, priv, report);
                 }
 
