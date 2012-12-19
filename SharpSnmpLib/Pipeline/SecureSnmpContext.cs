@@ -31,9 +31,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
     /// Secure SNMP context. It is specific to v3.
     /// </summary>
     internal sealed class SecureSnmpContext : SnmpContextBase
-    {
-        private static readonly ObjectIdentifier ReportId = new ObjectIdentifier("1.3.6.1.6.3.15.1.1.4.0");
-        
+    {   
         /// <summary>
         /// Initializes a new instance of the <see cref="SecureSnmpContext"/> class.
         /// </summary>
@@ -73,7 +71,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                         Request.RequestId(),
                         ErrorCode.AuthorizationError,
                         0,
-                        new List<Variable> { Group.NotInTimeWindow })),
+                        new List<Variable>(1) { Group.NotInTimeWindow })),
                 defaultPair,
                 null);
             if (TooBig)
@@ -211,9 +209,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         }
 
         private void HandleDiscovery()
-        {
-            Group.ReportCount++;
-            
+        {         
             // discovery message received.
             // TODO: pick up time information from Group instead of using raw data.
             Response = new ReportMessage(
@@ -236,12 +232,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                         Request.RequestId(),
                         ErrorCode.NoError,
                         0,
-                        new List<Variable>(1)
-                            {
-                                new Variable(
-                                    ReportId,
-                                    new Counter32(Group.ReportCount))
-                            })),
+                        new List<Variable>(1) { Group.UnknownEngineID })),
                 DefaultPrivacyProvider.DefaultPair,
                 null);
             if (TooBig)

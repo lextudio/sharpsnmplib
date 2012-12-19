@@ -567,7 +567,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         private static ObjectIdentifier unknownSecurityLevel = new ObjectIdentifier(new byte[] {1,3,6,1,6,3,15,1,1,1,0});
         public static ObjectIdentifier NotInTimeWindow = new ObjectIdentifier(new byte[] {1,3,6,1,6,3,15,1,1,2,0});
         private static ObjectIdentifier unknownUserName = new ObjectIdentifier(new byte[] {1,3,6,1,6,3,15,1,1,3,0});
-        private static ObjectIdentifier unknownEngineID = new ObjectIdentifier(new byte[] {1,3,6,1,6,3,15,1,1,4,0});
+        public static ObjectIdentifier UnknownEngineID = new ObjectIdentifier(new byte[] {1,3,6,1,6,3,15,1,1,4,0});
         private static ObjectIdentifier wrongDigest = new ObjectIdentifier(new byte[] {1,3,6,1,6,3,15,1,1,5,0});
         private static ObjectIdentifier decryptionError = new ObjectIdentifier(new byte[] {1,3,6,1,6,3,15,1,1,6,0});
 
@@ -593,7 +593,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 return "unknown user name";
             }
             
-            if (id == unknownEngineID)
+            if (id == UnknownEngineID)
             {
                 return "unknown engine ID";
             }

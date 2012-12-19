@@ -30,7 +30,8 @@ namespace Lextm.SharpSnmpLib.Pipeline
         // TODO: make engine ID configurable from outside and unique.
         private readonly OctetString _engineId =
             new OctetString(new byte[] { 128, 0, 31, 136, 128, 233, 99, 0, 0, 214, 31, 244 });
-        private uint counter;
+        private uint counterNotInTimeWindow;
+        private uint counterUnknownEngineID;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EngineGroup"/> class.
@@ -40,12 +41,6 @@ namespace Lextm.SharpSnmpLib.Pipeline
             EngineBoots = 0;
         }
         
-        /// <summary>
-        /// Count of handled REPORT messages.
-        /// </summary>
-        [CLSCompliant(false)]
-        public uint ReportCount { get; set; }
-
         /// <summary>
         /// Gets the engine id.
         /// </summary>
@@ -88,7 +83,15 @@ namespace Lextm.SharpSnmpLib.Pipeline
         {
             get
             {
-                return new Variable(Messenger.NotInTimeWindow, new Counter32(counter++));
+                return new Variable(Messenger.NotInTimeWindow, new Counter32(counterNotInTimeWindow++));
+            }
+        }
+
+        public Variable UnknownEngineID
+        {
+            get 
+            {
+                return new Variable(Messenger.UnknownEngineID, new Counter32(counterUnknownEngineID++));
             }
         }
     }
