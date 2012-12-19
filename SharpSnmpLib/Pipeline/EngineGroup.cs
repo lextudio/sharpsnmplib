@@ -17,6 +17,7 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+using Lextm.SharpSnmpLib.Messaging;
 using System;
 
 namespace Lextm.SharpSnmpLib.Pipeline
@@ -29,6 +30,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         // TODO: make engine ID configurable from outside and unique.
         private readonly OctetString _engineId =
             new OctetString(new byte[] { 128, 0, 31, 136, 128, 233, 99, 0, 0, 214, 31, 244 });
+        private uint counter;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EngineGroup"/> class.
@@ -80,6 +82,14 @@ namespace Lextm.SharpSnmpLib.Pipeline
             // TODO: make 500 configurable            
             var diff = current > past ? current - past : current - past - int.MinValue + int.MaxValue;
             return diff >= 0 && diff <= 500;
+        }
+
+        public Variable NotInTimeWindow 
+        {
+            get
+            {
+                return new Variable(Messenger.NotInTimeWindow, new Counter32(counter++));
+            }
         }
     }
 }

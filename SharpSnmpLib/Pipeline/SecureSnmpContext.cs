@@ -18,10 +18,12 @@
 // DEALINGS IN THE SOFTWARE.
 
 using System;
+using System.Configuration;
 using System.Collections.Generic;
 using System.Net;
 using Lextm.SharpSnmpLib.Messaging;
 using Lextm.SharpSnmpLib.Security;
+using System.Globalization;
 
 namespace Lextm.SharpSnmpLib.Pipeline
 {
@@ -51,7 +53,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         public override void HandleAuthenticationFailure()
         {
             var defaultPair = DefaultPrivacyProvider.DefaultPair;
-            Response = new ResponseMessage(
+            Response = new ReportMessage(
                 Request.Version,
                 new Header(
                     new Integer32(Request.MessageId()),
@@ -67,13 +69,12 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 new Scope(
                     Group.EngineId,
                     OctetString.Empty,
-                    new ResponsePdu(
+                    new ReportPdu(
                         Request.RequestId(),
                         ErrorCode.AuthorizationError,
                         0,
-                        Request.Pdu().Variables)),
+                        new List<Variable> { Group.NotInTimeWindow })),
                 defaultPair,
-                true,
                 null);
             if (TooBig)
             {
@@ -189,11 +190,32 @@ namespace Lextm.SharpSnmpLib.Pipeline
             return EngineGroup.IsInTime(Group.EngineTime, parameters.EngineTime.ToInt32());
         }
 
+        private static bool? _timeIncluded;
+
+        private static bool TimeIncluded
+        {
+            get
+            {
+                if (_timeIncluded == null)
+                {
+#if MA
+                    _timeIncluded = true;
+#else
+                    object setting = ConfigurationManager.AppSettings["TimeIncluded"];
+                    _timeIncluded = setting != null && Convert.ToBoolean(setting.ToString(), CultureInfo.InvariantCulture);
+#endif
+                }
+
+                return _timeIncluded.Value;
+            }
+        }
+
         private void HandleDiscovery()
         {
             Group.ReportCount++;
             
             // discovery message received.
+            // TODO: pick up time information from Group instead of using raw data.
             Response = new ReportMessage(
                 VersionCode.V3,
                 new Header(
@@ -202,8 +224,8 @@ namespace Lextm.SharpSnmpLib.Pipeline
                     0), // no need to encrypt for discovery.
                 new SecurityParameters(
                     Group.EngineId,
-                    Integer32.Zero,
-                    new Integer32(Environment.TickCount),
+                    TimeIncluded ? Integer32.Zero : Integer32.Zero,
+                    TimeIncluded ? new Integer32(Environment.TickCount) : Integer32.Zero,
                     OctetString.Empty,
                     OctetString.Empty,
                     OctetString.Empty),
