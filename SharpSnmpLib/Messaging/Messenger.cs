@@ -564,12 +564,12 @@ namespace Lextm.SharpSnmpLib.Messaging
             return next.Count != 0;
         }
 
-        private static ObjectIdentifier unknownSecurityLevel = new ObjectIdentifier(new byte[] {1,3,6,1,6,3,15,1,1,1,0});
+        public static ObjectIdentifier UnsupportedSecurityLevel = new ObjectIdentifier(new byte[] { 1, 3, 6, 1, 6, 3, 15, 1, 1, 1, 0 });
         public static ObjectIdentifier NotInTimeWindow = new ObjectIdentifier(new byte[] {1,3,6,1,6,3,15,1,1,2,0});
-        private static ObjectIdentifier unknownUserName = new ObjectIdentifier(new byte[] {1,3,6,1,6,3,15,1,1,3,0});
+        public static ObjectIdentifier UnknownSecurityName = new ObjectIdentifier(new byte[] { 1, 3, 6, 1, 6, 3, 15, 1, 1, 3, 0 });
         public static ObjectIdentifier UnknownEngineID = new ObjectIdentifier(new byte[] {1,3,6,1,6,3,15,1,1,4,0});
-        private static ObjectIdentifier wrongDigest = new ObjectIdentifier(new byte[] {1,3,6,1,6,3,15,1,1,5,0});
-        private static ObjectIdentifier decryptionError = new ObjectIdentifier(new byte[] {1,3,6,1,6,3,15,1,1,6,0});
+        public static ObjectIdentifier AuthenticationFailure = new ObjectIdentifier(new byte[] { 1, 3, 6, 1, 6, 3, 15, 1, 1, 5, 0 });
+        public static ObjectIdentifier DecryptionError = new ObjectIdentifier(new byte[] {1,3,6,1,6,3,15,1,1,6,0});
 
         /// <summary>
         /// Returns error message for the specific <see cref="ObjectIdentifier"/>.
@@ -578,19 +578,19 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns>Error message.</returns>
         public static string GetErrorMessage(this ObjectIdentifier id)
         {
-            if (id == unknownSecurityLevel)
+            if (id == UnsupportedSecurityLevel)
             {
-                return "unknown security level";
+                return "unsupported security level";
             }
             
             if (id == NotInTimeWindow)
             {
                 return "not in time window";
             }
-            
-            if (id == unknownUserName)
+
+            if (id == UnknownSecurityName)
             {
-                return "unknown user name";
+                return "unknown security name";
             }
             
             if (id == UnknownEngineID)
@@ -598,12 +598,12 @@ namespace Lextm.SharpSnmpLib.Messaging
                 return "unknown engine ID";
             }
             
-            if (id == wrongDigest)
+            if (id == AuthenticationFailure)
             {
-                return "wrong digest";
+                return "authentication failure";
             }
             
-            if (id == decryptionError)
+            if (id == DecryptionError)
             {
                 return "decryption error";
             }

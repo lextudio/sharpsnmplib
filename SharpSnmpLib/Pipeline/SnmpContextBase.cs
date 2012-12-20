@@ -117,11 +117,6 @@ namespace Lextm.SharpSnmpLib.Pipeline
         }
 
         /// <summary>
-        /// Handles the authentication failure.
-        /// </summary>
-        public abstract void HandleAuthenticationFailure();
-
-        /// <summary>
         /// Generates the response.
         /// </summary>
         /// <param name="variables">The variables.</param>

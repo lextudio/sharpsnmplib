@@ -30,11 +30,6 @@ namespace Lextm.SharpSnmpLib.Pipeline
     public interface ISnmpContext
     {
         /// <summary>
-        /// Handles the authentication failure.
-        /// </summary>
-        void HandleAuthenticationFailure();
-
-        /// <summary>
         /// Generates the response.
         /// </summary>
         /// <param name="variables">The variables.</param>

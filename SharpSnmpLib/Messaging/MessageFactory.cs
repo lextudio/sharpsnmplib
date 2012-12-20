@@ -184,10 +184,10 @@ namespace Lextm.SharpSnmpLib.Messaging
                 {
                     throw new SnmpException(string.Format(CultureInfo.InvariantCulture, "invalid v3 packets scoped data: {0}", code));
                 }
-              
+
                 if (!privacy.AuthenticationProvider.VerifyHash(version, header, parameters, body[3], privacy, body.GetLengthBytes()))
                 {
-                    throw new SnmpException("invalid v3 packet data hash detected");
+                    parameters.WrongDigest = true;
                 }
             }
 

@@ -42,15 +42,6 @@ namespace Lextm.SharpSnmpLib.Pipeline
         }
 
         /// <summary>
-        /// Handles the authentication failure.
-        /// </summary>
-        public override void HandleAuthenticationFailure()
-        {
-            // TODO: implement this later according to v1 and v2c RFC.
-            Response = null;
-        }
-
-        /// <summary>
         /// Copies the request variable bindings to response.
         /// </summary>
         /// <param name="status">The status.</param>

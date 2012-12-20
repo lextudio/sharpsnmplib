@@ -106,6 +106,7 @@ namespace Lextm.SharpSnmpLib.Security
 
             if (userName == OctetString.Empty)
             {
+                // IMPORTANT: used in messagefactory.cs to decrypt discovery messages.
                 return DefaultPrivacyProvider.DefaultPair;
             }
 

@@ -45,10 +45,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         {
         }
 
-        /// <summary>
-        /// Handles the authentication failure.
-        /// </summary>
-        public override void HandleAuthenticationFailure()
+        private void HandleFailure(Variable failure)
         {
             var defaultPair = DefaultPrivacyProvider.DefaultPair;
             Response = new ReportMessage(
@@ -69,9 +66,9 @@ namespace Lextm.SharpSnmpLib.Pipeline
                     OctetString.Empty,
                     new ReportPdu(
                         Request.RequestId(),
-                        ErrorCode.AuthorizationError,
+                        ErrorCode.NoError,
                         0,
-                        new List<Variable>(1) { Group.NotInTimeWindow })),
+                        new List<Variable>(1) { failure })),
                 defaultPair,
                 null);
             if (TooBig)
@@ -160,32 +157,54 @@ namespace Lextm.SharpSnmpLib.Pipeline
         public override bool HandleMembership()
         {
             var request = Request;
-            if (request is MalformedMessage)
-            {
-                return false;
-            }
-
             var parameters = request.Parameters;
-            if (parameters.UserName == OctetString.Empty)
+            var typeCode = Request.TypeCode();
+            if (parameters.EngineId != Group.EngineId && typeCode != SnmpType.Unknown)
             {
                 HandleDiscovery();
                 return true;
             }
 
-            if (parameters.EngineId != Group.EngineId)
+            var user = Users.Find(parameters.UserName);
+            if (user == null) 
             {
-                // not from this engine.
+                HandleFailure(Group.UnknownSecurityName);
+                return false;
+            }
+
+            if (typeCode == SnmpType.Unknown)
+            {
+                HandleFailure(Group.DecryptionError);
+                return false;
+            }
+
+            if (parameters.WrongDigest)
+            {
+                HandleFailure(Group.AuthenticationFailure);
+                return false;
+            }
+
+            if ((user.ToSecurityLevel() | Levels.Reportable) != request.Header.SecurityLevel)
+            {
+                HandleFailure(Group.UnsupportedSecurityLevel);
                 return false;
             }
 
             // TODO: improve here, so if request's EngineBoots = agent's EngineBoots - 1 we can calculate if it is in time.
             if (parameters.EngineBoots.ToInt32() != Group.EngineBoots)
             {
-                // does not match boot count.
+                HandleFailure(Group.NotInTimeWindow);
                 return false;
             }
 
-            return EngineGroup.IsInTime(Group.EngineTime, parameters.EngineTime.ToInt32());
+            var inTime = EngineGroup.IsInTime(Group.EngineTime, parameters.EngineTime.ToInt32());
+            if (!inTime)
+            {
+                HandleFailure(Group.NotInTimeWindow);
+                return false;
+            }
+
+            return true;
         }
 
         private static bool? _timeIncluded;

@@ -32,6 +32,10 @@ namespace Lextm.SharpSnmpLib.Pipeline
             new OctetString(new byte[] { 128, 0, 31, 136, 128, 233, 99, 0, 0, 214, 31, 244 });
         private uint counterNotInTimeWindow;
         private uint counterUnknownEngineID;
+        private uint counterUnknownUserName;
+        private uint counterDecryptionError;
+        private uint counterUnknownSecurityLevel;
+        private uint counterAuthenticationFailure;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EngineGroup"/> class.
@@ -92,6 +96,38 @@ namespace Lextm.SharpSnmpLib.Pipeline
             get 
             {
                 return new Variable(Messenger.UnknownEngineID, new Counter32(counterUnknownEngineID++));
+            }
+        }
+
+        public Variable UnknownSecurityName
+        {
+            get
+            {
+                return new Variable(Messenger.UnknownSecurityName, new Counter32(counterUnknownUserName++));
+            }
+        }
+
+        public Variable DecryptionError
+        {
+            get
+            {
+                return new Variable(Messenger.DecryptionError, new Counter32(counterDecryptionError++));
+            }
+        }
+
+        public Variable UnsupportedSecurityLevel
+        {
+            get
+            {
+                return new Variable(Messenger.UnsupportedSecurityLevel, new Counter32(counterUnknownSecurityLevel++));
+            }
+        }
+
+        public Variable AuthenticationFailure
+        {
+            get
+            {
+                return new Variable(Messenger.AuthenticationFailure, new Counter32(counterAuthenticationFailure++));
             }
         }
     }

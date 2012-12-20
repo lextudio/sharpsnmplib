@@ -117,7 +117,6 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 // TODO: handle error here.
                 // return TRAP saying authenticationFailed.
                 CompleteProcessing();
-                Context.HandleAuthenticationFailure();
             }
             
             if (Context.Response != null)

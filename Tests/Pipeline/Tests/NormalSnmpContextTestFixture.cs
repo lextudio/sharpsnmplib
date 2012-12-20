@@ -22,7 +22,6 @@ namespace Lextm.SharpSnmpLib.Pipeline.Tests
             Assert.IsNotNull(context.Response);
             context.SendResponse();
 
-            context.HandleAuthenticationFailure();
             Assert.IsNull(context.Response);
 
             Assert.IsFalse(context.HandleMembership());
