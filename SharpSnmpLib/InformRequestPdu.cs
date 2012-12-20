@@ -126,7 +126,7 @@ namespace Lextm.SharpSnmpLib
             }
             else
             {
-                throw new InvalidDataException("malformed inform message");
+                throw new ArgumentException("malformed inform message", "stream");
             }
 
             _length = length.Item2;
