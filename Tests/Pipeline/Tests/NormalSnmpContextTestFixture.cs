@@ -21,9 +21,6 @@ namespace Lextm.SharpSnmpLib.Pipeline.Tests
             context.GenerateResponse(new List<Variable>());
             Assert.IsNotNull(context.Response);
             context.SendResponse();
-
-            Assert.IsNull(context.Response);
-
             Assert.IsFalse(context.HandleMembership());
 
             var list = new List<Variable>();

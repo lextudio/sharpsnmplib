@@ -564,12 +564,12 @@ namespace Lextm.SharpSnmpLib.Messaging
             return next.Count != 0;
         }
 
-        public static ObjectIdentifier UnsupportedSecurityLevel = new ObjectIdentifier(new byte[] { 1, 3, 6, 1, 6, 3, 15, 1, 1, 1, 0 });
-        public static ObjectIdentifier NotInTimeWindow = new ObjectIdentifier(new byte[] {1,3,6,1,6,3,15,1,1,2,0});
-        public static ObjectIdentifier UnknownSecurityName = new ObjectIdentifier(new byte[] { 1, 3, 6, 1, 6, 3, 15, 1, 1, 3, 0 });
-        public static ObjectIdentifier UnknownEngineID = new ObjectIdentifier(new byte[] {1,3,6,1,6,3,15,1,1,4,0});
-        public static ObjectIdentifier AuthenticationFailure = new ObjectIdentifier(new byte[] { 1, 3, 6, 1, 6, 3, 15, 1, 1, 5, 0 });
-        public static ObjectIdentifier DecryptionError = new ObjectIdentifier(new byte[] {1,3,6,1,6,3,15,1,1,6,0});
+        public static ObjectIdentifier UnsupportedSecurityLevel = new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 6, 3, 15, 1, 1, 1, 0 });
+        public static ObjectIdentifier NotInTimeWindow = new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 6, 3, 15, 1, 1, 2, 0 });
+        public static ObjectIdentifier UnknownSecurityName = new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 6, 3, 15, 1, 1, 3, 0 });
+        public static ObjectIdentifier UnknownEngineID = new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 6, 3, 15, 1, 1, 4, 0 });
+        public static ObjectIdentifier AuthenticationFailure = new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 6, 3, 15, 1, 1, 5, 0 });
+        public static ObjectIdentifier DecryptionError = new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 6, 3, 15, 1, 1, 6, 0 });
 
         /// <summary>
         /// Returns error message for the specific <see cref="ObjectIdentifier"/>.

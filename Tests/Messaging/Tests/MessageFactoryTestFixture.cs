@@ -51,6 +51,23 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             var message = messages[0];
             Assert.AreEqual(1, message.Variables().Count);
         }
+
+        [Test]
+        public void TestReportFailure2()
+        {
+            const string data = "30780201033010020462d4a37602020578040101020103042f302d040b800000090340f4ecf2b113020124020200a4040762696c6c696e67040c62bc133ef237922dfa8ca39a04003030040b800000090340f4ecf2b1130400a81f02049d2b5c8c0201000201003011300f060a2b060106030f01010200410105";
+            var bytes = ByteTool.Convert(data);
+            const string userName = "billing";
+            IAuthenticationProvider auth = new MD5AuthenticationProvider(new OctetString("testing345"));
+            IPrivacyProvider priv = new DefaultPrivacyProvider(auth);
+            var users = new UserRegistry();
+            users.Add(new User(new OctetString(userName), priv));
+            var messages = MessageFactory.ParseMessages(bytes, users);
+            Assert.AreEqual(1, messages.Count);
+            var message = messages[0];
+            Assert.AreEqual(1, message.Variables().Count);
+            Assert.AreEqual("not in time window", message.Variables()[0].Id.GetErrorMessage());
+        }
         
         [Test]
         public void TestInform()
