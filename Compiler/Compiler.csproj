@@ -155,9 +155,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Crad.Windows.Forms.Actions, Version=1.2.0.0, Culture=neutral, PublicKeyToken=81de48f2c6979a5b, processorArchitecture=MSIL">
+    <Reference Include="Crad.Windows.Forms.Actions, Version=1.3.0.0, Culture=neutral, PublicKeyToken=81de48f2c6979a5b, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\packages\ActionListWinForms.1.2.0.1\lib\net20\Crad.Windows.Forms.Actions.dll</HintPath>
+      <HintPath>..\packages\ActionListWinForms.1.3.0.0\lib\net20\Crad.Windows.Forms.Actions.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.TextEditor">
       <HintPath>..\packages\ICSharpCode.TextEditor.3.2.1.6466\lib\Net20\ICSharpCode.TextEditor.dll</HintPath>
