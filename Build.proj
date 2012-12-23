@@ -2,7 +2,7 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Debug">
     <PropertyGroup>
         <!--<SharpDevelopBinPath>"C:\Program Files\SharpDevelop\3.0\bin"</SharpDevelopBinPath>-->
-        <ReleaseFolder>.\bin</ReleaseFolder>
+        <ReleaseFolderRoot>.\bin</ReleaseFolderRoot>
         <LibraryReleaseFolder>.\SharpSnmpLib\Bin\Release</LibraryReleaseFolder>
         <NDependFolder>H:\Green\NDepend</NDependFolder>
         <NDependProject>SharpSnmpLib.ndproj</NDependProject>
@@ -10,7 +10,6 @@
     </PropertyGroup>
     <ItemGroup>
         <LibraryOutputs Include=".\SharpSnmpLib\bin\Release\sharpsnmplib.*" />
-        <!-- <CFOutputs Include=".\SharpSnmpLib\bin\Release\sharpsnmplib.cf*"/>-->
     </ItemGroup>
     <UsingTask AssemblyFile="$(NDependFolder)\MSBuild\NDepend.Build.MSBuild.dll" TaskName="NDependTask" />
     <Target Name="NDepend" DependsOnTargets="Release">
@@ -34,10 +33,11 @@
         <MSBuild Projects="SharpSnmpLib.sln" Properties="Configuration=Release;Platform=Any CPU" />
     </Target>
 	<Target Name="Package" DependsOnTargets="Release">
-	    <MSBuild Projects="Sharpsnmplib.cf35.sln"  Properties="Configuration=Release;Platform=Any CPU" />
+        <ConvertToAbsolutePath Paths="$(ReleaseFolderRoot)">
+            <Output TaskParameter="AbsolutePaths" PropertyName="ReleaseFolder"/>
+        </ConvertToAbsolutePath>
+	    <MSBuild Projects="Sharpsnmplib.cf35.sln"  Properties="Configuration=Release;Platform=Any CPU;OutputPath=$(ReleaseFolder)\cf" />
+        <MSBuild Projects="SharpSnmpLib.ma.sln"  Properties="Configuration=Release;Platform=Any CPU;OutputPath=$(ReleaseFolder)\ma" />
 	    <MSBuild Projects="sharpsnmplib.shfbproj" Properties="Configuration=Release;Platform=Any CPU" />
 	</Target>
-    <!--<Target Name="CF">
-        <MSBuild Projects="sharpsnmplib.cf35.sln" Properties="Configuration=Release"/>
-    </Target>-->
 </Project>
