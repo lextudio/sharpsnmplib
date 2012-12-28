@@ -18,16 +18,16 @@ using Lextm.SharpSnmpLib.Security;
 using Mono.Options;
 
 namespace SnmpWalk
-{ 
+{
     internal static class Program
     {
         public static void Main(string[] args)
         {
             string community = "public";
-            bool showHelp   = false;
+            bool showHelp = false;
             bool showVersion = false;
             VersionCode version = VersionCode.V1;
-            int timeout = 1000; 
+            int timeout = 1000;
             int retry = 0;
             int maxRepetitions = 10;
             Levels level = Levels.Reportable;
@@ -127,18 +127,18 @@ namespace SnmpWalk
                 return;
             }
 
-           if (extra.Count < 1 || extra.Count > 2)
+            if (extra.Count < 1 || extra.Count > 2)
             {
                 Console.WriteLine("invalid variable number: " + extra.Count);
                 return;
             }
-        
+
             if (showVersion)
             {
                 Console.WriteLine(System.Reflection.Assembly.GetExecutingAssembly().GetName().Version);
                 return;
             }
- 
+
             IPAddress ip;
             bool parsed = IPAddress.TryParse(extra[0], out ip);
             if (!parsed)
@@ -165,7 +165,7 @@ namespace SnmpWalk
                 if (version == VersionCode.V1)
                 {
                     Messenger.Walk(version, receiver, new OctetString(community), test, result, timeout, mode);
-                } 
+                }
                 else if (version == VersionCode.V2)
                 {
                     Messenger.BulkWalk(version, receiver, new OctetString(community), test, result, timeout, maxRepetitions, mode, null, null);
@@ -178,8 +178,9 @@ namespace SnmpWalk
                         return;
                     }
 
-                    IAuthenticationProvider auth = (level & Levels.Authentication) == Levels.Authentication ? GetAuthenticationProviderByName(authentication, authPhrase) : DefaultAuthenticationProvider.Instance;
-
+                    IAuthenticationProvider auth = (level & Levels.Authentication) == Levels.Authentication 
+                        ? GetAuthenticationProviderByName(authentication, authPhrase) 
+                        : DefaultAuthenticationProvider.Instance;
                     IPrivacyProvider priv;
                     if ((level & Levels.Privacy) == Levels.Privacy)
                     {
@@ -216,7 +217,7 @@ namespace SnmpWalk
             {
                 return new MD5AuthenticationProvider(new OctetString(phrase));
             }
-            
+
             if (authentication.ToUpperInvariant() == "SHA")
             {
                 return new SHA1AuthenticationProvider(new OctetString(phrase));
@@ -224,7 +225,7 @@ namespace SnmpWalk
 
             throw new ArgumentException("unknown name", "authentication");
         }
-        
+
         private static void ShowHelp(OptionSet optionSet)
         {
             Console.WriteLine("#SNMP is available at http://sharpsnmplib.codeplex.com");

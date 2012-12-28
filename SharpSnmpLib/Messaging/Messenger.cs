@@ -44,12 +44,12 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// RFC 3416 (3.)
         /// </summary>
-        private static readonly NumberGenerator RequestCounter = new NumberGenerator(int.MinValue, int.MaxValue); 
-        
+        private static readonly NumberGenerator RequestCounter = new NumberGenerator(int.MinValue, int.MaxValue);
+
         /// <summary>
         /// RFC 3412 (6.)
         /// </summary>
-        private static readonly NumberGenerator MessageCounter = new NumberGenerator(0, int.MaxValue); 
+        private static readonly NumberGenerator MessageCounter = new NumberGenerator(0, int.MaxValue);
         private static int _maxMessageSize = Header.MaxMessageSize;
 
         /// <summary>
@@ -67,17 +67,17 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new ArgumentNullException("endpoint");
             }
-            
+
             if (community == null)
             {
                 throw new ArgumentNullException("community");
             }
-            
+
             if (variables == null)
             {
                 throw new ArgumentNullException("variables");
             }
-            
+
             if (version == VersionCode.V3)
             {
                 throw new NotSupportedException("SNMP v3 is not supported");
@@ -96,7 +96,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             return pdu.Variables;
         }
-        
+
         /// <summary>
         /// Sets a list of variable binds.
         /// </summary>
@@ -112,17 +112,17 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new ArgumentNullException("endpoint");
             }
-            
+
             if (community == null)
             {
                 throw new ArgumentNullException("community");
             }
-            
+
             if (variables == null)
             {
                 throw new ArgumentNullException("variables");
             }
-            
+
             if (version == VersionCode.V3)
             {
                 throw new NotSupportedException("SNMP v3 is not supported");
@@ -141,7 +141,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             return pdu.Variables;
         }
-        
+
         /// <summary>
         /// Walks.
         /// </summary>
@@ -191,7 +191,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             while (HasNext(version, endpoint, community, seed, timeout, out next));
             return result;
         }
-        
+
         /// <summary>
         /// Determines whether the specified seed has next item.
         /// </summary>
@@ -279,7 +279,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
                 seed = next[next.Count - 1];
             }
-            
+
         end:
             return result;
         }
@@ -344,32 +344,32 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new ArgumentNullException("receiver");
             }
-            
+
             if (community == null)
             {
                 throw new ArgumentNullException("community");
             }
-            
+
             if (enterprise == null)
             {
                 throw new ArgumentNullException("enterprise");
             }
-            
+
             if (variables == null)
             {
                 throw new ArgumentNullException("variables");
             }
-            
+
             if (version == VersionCode.V3 && privacy == null)
             {
                 throw new ArgumentNullException("privacy");
             }
-            
+
             if (version == VersionCode.V3 && report == null)
             {
                 throw new ArgumentNullException("report");
             }
-            
+
             var message = version == VersionCode.V3
                                     ? new InformRequestMessage(
                                           version,
@@ -389,7 +389,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                                           enterprise,
                                           timestamp,
                                           variables);
-            
+
             var response = message.GetResponse(timeout, receiver);
             if (response.Pdu().ErrorStatus.ToInt32() != 0)
             {
@@ -428,10 +428,10 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "not a table OID: {0}", table));
             }
-            
+
             IList<Variable> list = new List<Variable>();
             var rows = version == VersionCode.V1 ? Walk(version, endpoint, community, table, list, timeout, WalkMode.WithinSubtree) : BulkWalk(version, endpoint, community, table, list, timeout, maxRepetitions, WalkMode.WithinSubtree, null, null);
-            
+
             if (rows == 0)
             {
                 return new Variable[0, 0];
@@ -501,14 +501,14 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public static Discovery GetNextDiscovery(SnmpType type)
         {
-            return new Discovery(NextMessageId, NextRequestId, MaxMessageSize, type); 
+            return new Discovery(NextMessageId, NextRequestId, MaxMessageSize, type);
         }
 
         /// <summary>
         /// Determines whether the specified seed has next item.
         /// </summary>
         /// <param name="version">The version.</param>
-        /// <param name="endpoint">The endpoint.</param>
+        /// <param name="receiver">The receiver.</param>
         /// <param name="community">The community.</param>
         /// <param name="seed">The seed.</param>
         /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
@@ -520,7 +520,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <c>true</c> if the specified seed has next item; otherwise, <c>false</c>.
         /// </returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1021:AvoidOutParameters", MessageId = "5#")]
-        private static bool BulkHasNext(VersionCode version, IPEndPoint endpoint, OctetString community, Variable seed, int timeout, int maxRepetitions, out IList<Variable> next, IPrivacyProvider privacy, ref ISnmpMessage report)
+        private static bool BulkHasNext(VersionCode version, IPEndPoint receiver, OctetString community, Variable seed, int timeout, int maxRepetitions, out IList<Variable> next, IPrivacyProvider privacy, ref ISnmpMessage report)
         {
             if (version == VersionCode.V1)
             {
@@ -528,39 +528,67 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             var variables = new List<Variable> { new Variable(seed.Id) };
-            var requestId = RequestCounter.NextId;
-            var message = version == VersionCode.V3
+            var request = version == VersionCode.V3
                                                 ? new GetBulkRequestMessage(
                                                       version,
                                                       MessageCounter.NextId,
-                                                      requestId,
+                                                      RequestCounter.NextId,
                                                       community,
                                                       0,
                                                       maxRepetitions,
-                                                      variables, 
-                                                      privacy, 
+                                                      variables,
+                                                      privacy,
                                                       MaxMessageSize,
                                                       report)
                                                 : new GetBulkRequestMessage(
-                                                      requestId,
+                                                      RequestCounter.NextId,
                                                       version,
                                                       community,
                                                       0,
                                                       maxRepetitions,
                                                       variables);
+            var reply = request.GetResponse(timeout, receiver);
+            if (reply is ReportMessage)
+            {
+                if (reply.Pdu().Variables.Count == 0)
+                {
+                    // TODO: whether it is good to return?
+                    next = new List<Variable>(0);
+                    return false;
+                }
 
-            var response = message.GetResponse(timeout, endpoint);
-            var pdu = response.Pdu();
-            if (pdu.ErrorStatus.ToInt32() != 0)
+                var id = reply.Pdu().Variables[0].Id;
+                if (id != Messenger.NotInTimeWindow)
+                {
+                    var error = id.GetErrorMessage();
+                    // TODO: whether it is good to return?
+                    next = new List<Variable>(0);
+                    return false;
+                }
+
+                // according to RFC 3414, send a second request to sync time.
+                request = new GetBulkRequestMessage(version,
+                                                      MessageCounter.NextId,
+                                                      RequestCounter.NextId,
+                                                      community,
+                                                      0,
+                                                      maxRepetitions,
+                                                      variables,
+                                                      privacy,
+                                                      MaxMessageSize,
+                                                      report);
+                reply = request.GetResponse(timeout, receiver);
+            }
+            else if (reply.Pdu().ErrorStatus.ToInt32() != 0)
             {
                 throw ErrorException.Create(
                     "error in response",
-                    endpoint.Address,
-                    response);
+                    receiver.Address,
+                    reply);
             }
 
-            next = pdu.Variables;
-            report = message;
+            next = reply.Pdu().Variables;
+            report = request;
             return next.Count != 0;
         }
 
@@ -582,7 +610,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 return "unsupported security level";
             }
-            
+
             if (id == NotInTimeWindow)
             {
                 return "not in time window";
@@ -592,17 +620,17 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 return "unknown security name";
             }
-            
+
             if (id == UnknownEngineID)
             {
                 return "unknown engine ID";
             }
-            
+
             if (id == AuthenticationFailure)
             {
                 return "authentication failure";
             }
-            
+
             if (id == DecryptionError)
             {
                 return "decryption error";
