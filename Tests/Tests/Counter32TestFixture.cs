@@ -12,6 +12,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestException()
         {
             Assert.Throws<ArgumentNullException>(()=> new Counter32(0).AppendBytesTo(null));
+            Assert.Throws<ArgumentNullException>(()=> new Counter32(null, new MemoryStream()));
         }
         
         [Test]

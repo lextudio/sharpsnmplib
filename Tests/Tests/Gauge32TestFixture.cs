@@ -8,7 +8,9 @@
  */
 
 using System;
+using System.IO;
 using NUnit.Framework;
+
 #pragma warning disable 1591,0618,1718
 namespace Lextm.SharpSnmpLib.Tests
 {
@@ -35,6 +37,7 @@ namespace Lextm.SharpSnmpLib.Tests
 
             Assert.Throws<ArgumentNullException>(() => left.AppendBytesTo(null));
             Assert.Throws<ArgumentNullException>(() => new Gauge32(new Tuple<int, byte[]>(0, new byte[] { 0 }), null));
+            Assert.Throws<ArgumentNullException>(() => new Gauge32(null, new MemoryStream()));
         }
         
         [Test]

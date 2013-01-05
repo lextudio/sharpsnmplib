@@ -26,6 +26,7 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.Throws<ArgumentException>(() => new Integer32(new Tuple<int, byte[]>(-1, new[] { (byte)255 }), new MemoryStream()));
             Assert.Throws<ArgumentException>(() => new Integer32(new Tuple<int, byte[]>(6, new byte[] { 6 }), new MemoryStream()));
             Assert.Throws<ArgumentNullException>(() => new Integer32(6).AppendBytesTo(null));
+            Assert.Throws<ArgumentNullException>(() => new Integer32(null, new MemoryStream()));
         }
 
         [Test]

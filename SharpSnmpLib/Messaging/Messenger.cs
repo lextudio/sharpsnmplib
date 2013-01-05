@@ -592,11 +592,63 @@ namespace Lextm.SharpSnmpLib.Messaging
             return next.Count != 0;
         }
 
+        /// <summary>
+        /// If the information about the user indicates that it does not
+        /// support the securityLevel requested by the caller, then the
+        /// usmStatsUnsupportedSecLevels counter is incremented and an error
+        /// indication (unsupportedSecurityLevel) together with the OID and
+        /// value of the incremented counter is returned to the calling
+        /// module.
+        /// </summary>
         public static ObjectIdentifier UnsupportedSecurityLevel = new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 6, 3, 15, 1, 1, 1, 0 });
+        
+        /// <summary>
+        /// If the message is considered to be outside of the Time Window
+        /// then the usmStatsNotInTimeWindows counter is incremented and
+        /// an error indication (notInTimeWindow) together with the OID,
+        /// the value of the incremented counter, and an indication that
+        /// the error must be reported with a securityLevel of authNoPriv,
+        /// is returned to the calling module
+        /// </summary>
         public static ObjectIdentifier NotInTimeWindow = new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 6, 3, 15, 1, 1, 2, 0 });
+        
+        /// <summary>
+        /// Information about the value of the msgUserName and
+        /// msgAuthoritativeEngineID fields is extracted from the Local
+        /// Configuration Datastore (LCD, usmUserTable).  If no information
+        /// is available for the user, then the usmStatsUnknownUserNames
+        /// counter is incremented and an error indication
+        /// (unknownSecurityName) together with the OID and value of the
+        /// incremented counter is returned to the calling module.
+        /// </summary>
         public static ObjectIdentifier UnknownSecurityName = new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 6, 3, 15, 1, 1, 3, 0 });
+        
+        /// <summary>
+        /// If the value of the msgAuthoritativeEngineID field in the
+        /// securityParameters is unknown then
+        /// the usmStatsUnknownEngineIDs counter is incremented, and an
+        /// error indication (unknownEngineID) together with the OID and
+        /// value of the incremented counter is returned to the calling
+        /// module.
+        /// </summary>
         public static ObjectIdentifier UnknownEngineID = new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 6, 3, 15, 1, 1, 4, 0 });
+        
+        /// <summary>
+        /// If the authentication module returns failure, then the message
+        /// cannot be trusted, so the usmStatsWrongDigests counter is
+        /// incremented and an error indication (authenticationFailure)
+        /// together with the OID and value of the incremented counter is
+        /// returned to the calling module.
+        /// </summary>
         public static ObjectIdentifier AuthenticationFailure = new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 6, 3, 15, 1, 1, 5, 0 });
+        
+        /// <summary>
+        /// If the privacy module returns failure, then the message can
+        /// not be processed, so the usmStatsDecryptionErrors counter is
+        /// incremented and an error indication (decryptionError) together
+        /// with the OID and value of the incremented counter is returned
+        /// to the calling module.
+        /// </summary>
         public static ObjectIdentifier DecryptionError = new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 6, 3, 15, 1, 1, 6, 0 });
 
         /// <summary>

@@ -17,6 +17,13 @@ namespace Lextm.SharpSnmpLib.Tests
     public class NullTestFixture
     {
         [Test]
+        public void TestConstructors()
+        {
+            Assert.Throws<ArgumentNullException>(() => new Null(null, null));
+            Assert.Throws<ArgumentNullException>(() => new Null(new Tuple<int, byte[]>(0, new byte[0]), null));
+        }
+        
+        [Test]
         public void TestMethod()
         {
             Assert.AreEqual(false, new Null().Equals(null));

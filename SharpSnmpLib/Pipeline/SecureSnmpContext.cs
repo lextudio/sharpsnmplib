@@ -178,7 +178,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 return false;
             }
 
-            if (parameters.WrongDigest)
+            if (parameters.IsInvalid)
             {
                 HandleFailure(Group.AuthenticationFailure);
                 return false;

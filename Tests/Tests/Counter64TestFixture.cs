@@ -25,6 +25,7 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.AreEqual(14532202884452442569.GetHashCode(), counter64.GetHashCode());
             Assert.AreEqual("14532202884452442569", counter64.ToString());
 
+            Assert.Throws<ArgumentNullException>(() => new Counter64(null, new MemoryStream()));
             Assert.Throws<ArgumentNullException>(() => new Counter64(new Tuple<int, byte[]>(0, new byte[] { 0 }), null));
             Assert.Throws<ArgumentException>(() => new Counter64(new Tuple<int, byte[]>(-1, new[] { (byte)255 }), new MemoryStream()));
             Assert.Throws<ArgumentException>(() => new Counter64(new Tuple<int, byte[]>(10, new byte[]{10}), new MemoryStream()));

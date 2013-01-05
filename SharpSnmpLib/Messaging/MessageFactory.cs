@@ -187,7 +187,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
                 if (!privacy.AuthenticationProvider.VerifyHash(version, header, parameters, body[3], privacy, body.GetLengthBytes()))
                 {
-                    parameters.WrongDigest = true;
+                    parameters.IsInvalid = true;
                 }
             }
 

@@ -8,6 +8,8 @@
  */
 using System;
 using System.Collections.Generic;
+using System.IO;
+
 using NUnit.Framework;
 
 namespace Lextm.SharpSnmpLib.Tests
@@ -21,6 +23,7 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.Throws<ArgumentNullException>(() => new InformRequestPdu(new Tuple<int, byte[]>(0, new byte[] { 0 }), null));
             Assert.Throws<ArgumentNullException>(() => new InformRequestPdu(0, null, 0, null));
             Assert.Throws<ArgumentNullException>(() => new InformRequestPdu(0, new ObjectIdentifier("1.3.6.1"), 0, null));
+            Assert.Throws<ArgumentNullException>(() => new InformRequestPdu(null, new MemoryStream()));
                         
             var pdu = new InformRequestPdu(0, new ObjectIdentifier("1.3.6.1"), 0, new List<Variable>());
             Assert.Throws<ArgumentNullException>(() => pdu.AppendBytesTo(null));

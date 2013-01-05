@@ -196,6 +196,9 @@ namespace Lextm.SharpSnmpLib
             return string.Format(CultureInfo.InvariantCulture, "Security parameters: engineId: {0};engineBoots: {1};engineTime: {2};userName: {3}; authen hash: {4}; privacy hash: {5}", EngineId, EngineBoots, EngineTime, UserName, AuthenticationParameters == null ? null : AuthenticationParameters.ToHexString(), PrivacyParameters == null ? null : PrivacyParameters.ToHexString());
         }
 
-        public bool WrongDigest { get; set; }
+        /// <summary>
+        /// Gets a value that indicates whether the hashes are invalid.
+        /// </summary>
+        public bool IsInvalid { get; internal set; }
     }
 }
