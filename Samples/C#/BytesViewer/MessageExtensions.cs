@@ -59,6 +59,8 @@ namespace BytesViewer
             {
                 scope.Nodes.Add("encrypted data");
             }
+
+            tree.ExpandAll();
         }
 
         public static string GetString(this Levels levels)
