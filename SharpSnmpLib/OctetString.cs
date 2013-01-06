@@ -343,6 +343,26 @@ namespace Lextm.SharpSnmpLib
         {
             _length = bytes;
         }
+
+        /// <summary>
+        /// Indicates whether the specified <see cref="OctetString" /> object is a null reference (<code>Nothing</code> in Visual Basic) or an <seealso cref="Empty" /> string.
+        /// </summary>
+        /// <param name="value">A <see cref="OctetString" /> reference.</param>
+        /// <returns><code>true</code> if the <paramref name="value"/> parameter is a null reference (<code>Nothing</code> in Visual Basic) or an empty string (""); otherwise, <code>false</code>.</returns>
+        public static bool IsNullOrEmpty(OctetString value)
+        {
+            if (value == null)
+            {
+                return true;
+            }
+
+            if (value == Empty)
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
     
     // all references here are to ITU-X.690-12/97
