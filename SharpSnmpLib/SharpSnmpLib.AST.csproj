@@ -268,7 +268,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" />
   <Target Name="BeforeBuild">
     <Exec Condition=" '$(OS)' != 'Windows_NT' " Command="mono ..\lib\ANTLR\Antlr3.exe ./Mib/Smi.g -o ./Mib/Generated" />
   </Target>
