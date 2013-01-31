@@ -1,1 +1,2 @@
+export EnableNuGetPackageRestore=true
 xbuild SharpSnmpLib.md.sln
