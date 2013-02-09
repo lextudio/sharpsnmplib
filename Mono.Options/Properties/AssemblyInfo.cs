@@ -6,8 +6,8 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyTitle("Mono.Options")]
 [assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
+[assembly: AssemblyConfiguration("MIT/X11")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Mono.Options")]
 [assembly: AssemblyCopyright("Copyright © Novell 2010")]
 [assembly: AssemblyTrademark("")]

@@ -32,7 +32,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyTitle("SharpSnmpLib")]
 [assembly: AssemblyDescription("#SNMP Library for .NET/Mono")]
-[assembly: AssemblyConfiguration("Lesser GPL 2.1+")]
+[assembly: AssemblyConfiguration("MIT/X11")]
 [assembly: AssemblyCompany("LeXtudio")]
 [assembly: AssemblyProduct("#SNMPLib")]
 [assembly: AssemblyCopyright("(C) 2008-2012 Malcolm Crowe, Lex Li, and other contributors.")]

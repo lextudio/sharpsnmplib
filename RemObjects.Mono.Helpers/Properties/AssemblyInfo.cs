@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("RemObjects.Mono.Helpers")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("RemObjects.Mono.Helpers")]
 [assembly: AssemblyCopyright("Copyright © RemObjects 2010")]
 [assembly: AssemblyTrademark("")]
