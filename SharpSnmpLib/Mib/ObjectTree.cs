@@ -31,7 +31,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-#if !MA
+#if !MA && !MT
 using log4net;
 #endif
 namespace Lextm.SharpSnmpLib.Mib
@@ -45,7 +45,7 @@ namespace Lextm.SharpSnmpLib.Mib
         private readonly IDictionary<string, MibModule> _pendings = new Dictionary<string, MibModule>();
         private readonly IDictionary<string, Definition> _nameTable;
         private readonly Definition _root;
-#if !MA
+#if !MA && !MT
         private static readonly ILog Logger = LogManager.GetLogger("Lextm.SharpSnmpLib.Mib");
 #endif 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Lextm.SharpSnmpLib.Mib
             {
                 throw new ArgumentNullException("loaders");
             }
-#if !MA      
+#if !MA && !MT     
             Logger.InfoFormat(CultureInfo.InvariantCulture, "{0} module files found", loaders.Count);
 #endif
             var defines = new List<Definition>();
@@ -225,7 +225,7 @@ namespace Lextm.SharpSnmpLib.Mib
             var watch = new Stopwatch();
             watch.Start();
             AddNodes(module);
-#if !MA
+#if !MA && !MT
             Logger.InfoFormat(CultureInfo.InvariantCulture, "{0}-ms used to assemble {1}", watch.ElapsedMilliseconds, module.Name);
 #endif
             watch.Stop();
@@ -364,7 +364,7 @@ namespace Lextm.SharpSnmpLib.Mib
                     
                     // if not, create Prefix node.
                     var prefix = new ObjectIdentifierType(module.Name, subroot.Name + "_" + value.ToString(CultureInfo.InvariantCulture), subroot.Name, value);
-#if !MA
+#if !MA && !MT
                     Logger.Info(module.ReportImplicitObjectIdentifier(prefix));
 #endif
                     node = CreateSelf(prefix);
@@ -378,7 +378,7 @@ namespace Lextm.SharpSnmpLib.Mib
                     node = CreateSelf(extra);
                     if (node != null)
                     {
-#if !MA
+#if !MA && !MT
                         Logger.Info(module.ReportImplicitObjectIdentifier(extra));
 #endif
                         AddToTable(node);
@@ -386,7 +386,7 @@ namespace Lextm.SharpSnmpLib.Mib
                     }
                     else
                     {
-#if !MA
+#if !MA && !MT
                         Logger.Info(module.ReportIgnoredImplicitEntity(longParent));
 #endif
                     }
@@ -417,7 +417,7 @@ namespace Lextm.SharpSnmpLib.Mib
 
         public void Refresh()
         {
-#if !MA
+#if !MA && !MT
             Logger.Info("loading modules started");
 #endif
             var watch = new Stopwatch();
@@ -443,7 +443,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 }
 
                 current = _pendings.Count;
-#if !MA
+#if !MA && !MT
                 Logger.InfoFormat(CultureInfo.InvariantCulture, "{0} pending after {1}-ms", current,
                                   watch.ElapsedMilliseconds);
 #endif
@@ -455,7 +455,7 @@ namespace Lextm.SharpSnmpLib.Mib
             }
 
             watch.Stop();
-#if !MA            
+#if !MA && !MT
             foreach (string loaded in _loaded.Keys)
             {
                 Logger.InfoFormat(CultureInfo.InvariantCulture, "{0} is parsed", loaded);
@@ -481,7 +481,7 @@ namespace Lextm.SharpSnmpLib.Mib
             {
                 if (_loaded.ContainsKey(module.Name))
                 {
-#if !MA
+#if !MA && !MT
                     Logger.Info(module.ReportDuplicate(_loaded[module.Name]));
 #endif
                     continue;
@@ -489,7 +489,7 @@ namespace Lextm.SharpSnmpLib.Mib
 
                 if (_pendings.ContainsKey(module.Name))
                 {
-#if !MA
+#if !MA && !MT
                     Logger.Info(module.ReportDuplicate(_pendings[module.Name]));
 #endif
                     continue;
@@ -508,13 +508,13 @@ namespace Lextm.SharpSnmpLib.Mib
 
             if (_loaded.ContainsKey(module.Name))
             {
-#if !MA
+#if !MA && !MT
                 Logger.Info(module.ReportDuplicate(_loaded[module.Name]));
 #endif
             }
             else if (_pendings.ContainsKey(module.Name))
             {
-#if !MA
+#if !MA && !MT
                 Logger.Info(module.ReportDuplicate(_pendings[module.Name]));
 #endif
             }

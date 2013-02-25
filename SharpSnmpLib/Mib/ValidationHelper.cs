@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-#if !MA
+#if !MA && !MT
 using log4net;
 #endif
 namespace Lextm.SharpSnmpLib.Mib
 {
     internal static class ValidationHelper
     {
-#if !MA
+#if !MA && !MT
         internal static readonly ILog Logger = LogManager.GetLogger(typeof (ValidationHelper));
 #endif
         internal static bool ValidateParent(this IEntity entity, IEnumerable<IConstruct> knownConstructs, string fileName)
@@ -46,7 +46,7 @@ namespace Lextm.SharpSnmpLib.Mib
             }
 
             builder.AppendFormat("{0} is not defined", entity.Parent);
-#if !MA
+#if !MA && !MT
             Logger.Error(builder.ToString());
 #endif
             // TODO: make this validation strict later.

@@ -28,7 +28,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-#if !MA
+#if !MA && !MT
 using log4net;
 #endif
 namespace Lextm.SharpSnmpLib.Mib
