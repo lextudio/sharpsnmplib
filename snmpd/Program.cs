@@ -48,6 +48,8 @@ namespace Lextm.SharpSnmpLib.Agent
             store.Add(new SysServices());
             store.Add(new SysORLastChange());
             store.Add(new SysORTable());
+            store.Add(new IfNumber());
+            store.Add(new IfTable());
             
             var users = Container.Resolve<UserRegistry>();
             users.Add(new OctetString("neither"), DefaultPrivacyProvider.DefaultPair);

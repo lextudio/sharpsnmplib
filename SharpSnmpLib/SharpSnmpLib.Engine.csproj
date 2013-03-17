@@ -52,6 +52,30 @@
     <Compile Include="..\lib\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Objects\IfAdminStatus.cs" />
+    <Compile Include="Objects\IfDescr.cs" />
+    <Compile Include="Objects\IfIndex.cs" />
+    <Compile Include="Objects\IfInDiscards.cs" />
+    <Compile Include="Objects\IfInErrors.cs" />
+    <Compile Include="Objects\IfInNUcastPkts.cs" />
+    <Compile Include="Objects\IfInOctets.cs" />
+    <Compile Include="Objects\IfInUcastPkts.cs" />
+    <Compile Include="Objects\IfInUnknownProtos.cs" />
+    <Compile Include="Objects\IfLastChange.cs" />
+    <Compile Include="Objects\IfMtu.cs" />
+    <Compile Include="Objects\IfNumber.cs" />
+    <Compile Include="Objects\IfOperStatus.cs" />
+    <Compile Include="Objects\IfOutDiscards.cs" />
+    <Compile Include="Objects\IfOutErrors.cs" />
+    <Compile Include="Objects\IfOutNUcastPkts.cs" />
+    <Compile Include="Objects\IfOutOctets.cs" />
+    <Compile Include="Objects\IfOutQLen.cs" />
+    <Compile Include="Objects\IfOutUcastPkts.cs" />
+    <Compile Include="Objects\IfPhysAddress.cs" />
+    <Compile Include="Objects\IfSpecific.cs" />
+    <Compile Include="Objects\IfSpeed.cs" />
+    <Compile Include="Objects\IfTable.cs" />
+    <Compile Include="Objects\IfType.cs" />
     <Compile Include="Objects\SysContact.cs" />
     <Compile Include="Objects\SysDescr.cs" />
     <Compile Include="Objects\SysLocation.cs" />
