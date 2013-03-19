@@ -14,6 +14,13 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.Throws<ArgumentNullException>(()=> new Counter32(0).AppendBytesTo(null));
             Assert.Throws<ArgumentNullException>(()=> new Counter32(null, new MemoryStream()));
         }
+
+        [Test]
+        public void TestOverflow()
+        {
+            Assert.AreEqual(new Counter32((uint)32), new Counter32((long)32));
+            Assert.AreEqual(new Counter32((uint)32), new Counter32((long)uint.MaxValue + 33));
+        }
         
         [Test]
         public void TestEqual()

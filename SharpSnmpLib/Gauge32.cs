@@ -57,6 +57,15 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Initializes a new instance of the <see cref="Gauge32"/> class.
         /// </summary>
+        /// <param name="value">The value.</param>
+        public Gauge32(long value)
+        {
+            _count = new Counter32(value);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Gauge32"/> class.
+        /// </summary>
         /// <param name="length">The length.</param>
         /// <param name="stream">The stream.</param>
         public Gauge32(Tuple<int, byte[]> length, Stream stream)

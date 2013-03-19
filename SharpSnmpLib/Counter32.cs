@@ -65,6 +65,15 @@ namespace Lextm.SharpSnmpLib
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Counter32"/> class.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        public Counter32(long value)
+        {
+            _count = (uint)value;
+        }
+
+        /// <summary>
         /// Creates a <see cref="Counter32"/> instance from stream.
         /// </summary>
         /// <param name="length">The length.</param>

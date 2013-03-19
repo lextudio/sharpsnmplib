@@ -27,9 +27,7 @@
  */
 
 using System;
-using System.ComponentModel;
 using System.Net.NetworkInformation;
-using System.Reflection;
 using Lextm.SharpSnmpLib.Pipeline;
 using System.Collections.Generic;
 
@@ -48,14 +46,24 @@ namespace Lextm.SharpSnmpLib.Objects
         /// </summary>
         public IfTable()
         {
+            NetworkChange.NetworkAddressChanged +=
+                (sender, args) => LoadElements();
+            NetworkChange.NetworkAvailabilityChanged +=
+                (sender, args) => LoadElements();
+            LoadElements();
+        }
+
+        private void LoadElements()
+        {
+            _elements.Clear();
             var interfaces = NetworkInterface.GetAllNetworkInterfaces();
             var columnTypes = new[]
                 {
                     typeof (IfIndex),
                     typeof (IfDescr),
                     typeof (IfType),
-                    typeof (IfMtu), 
-                    typeof (IfSpeed), 
+                    typeof (IfMtu),
+                    typeof (IfSpeed),
                     typeof (IfPhysAddress),
                     typeof (IfAdminStatus),
                     typeof (IfOperStatus),
@@ -63,13 +71,13 @@ namespace Lextm.SharpSnmpLib.Objects
                     typeof (IfInOctets),
                     typeof (IfInUcastPkts),
                     typeof (IfInNUcastPkts),
-                    typeof (IfInDiscards), 
+                    typeof (IfInDiscards),
                     typeof (IfInErrors),
                     typeof (IfInUnknownProtos),
                     typeof (IfOutOctets),
                     typeof (IfOutUcastPkts),
                     typeof (IfOutNUcastPkts),
-                    typeof (IfOutDiscards), 
+                    typeof (IfOutDiscards),
                     typeof (IfOutErrors),
                     typeof (IfOutQLen),
                     typeof (IfSpecific)
@@ -82,7 +90,7 @@ namespace Lextm.SharpSnmpLib.Objects
                 }
             }
         }
-        
+
         protected override IEnumerable<ScalarObject> Objects 
         {
             get { return _elements; }
