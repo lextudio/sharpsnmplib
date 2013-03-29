@@ -49,11 +49,6 @@ namespace Lextm.SharpSnmpLib
             _count = new Counter32(value);
         }
 
-        public Gauge32(long value)
-        {
-            _count = new Counter32(value);
-        }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Gauge32"/> class.
         /// </summary>

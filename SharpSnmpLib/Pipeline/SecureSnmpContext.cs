@@ -20,6 +20,7 @@
 using System;
 using System.Configuration;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using Lextm.SharpSnmpLib.Messaging;
 using Lextm.SharpSnmpLib.Security;
@@ -48,6 +49,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         private void HandleFailure(Variable failure)
         {
             var defaultPair = DefaultPrivacyProvider.DefaultPair;
+            var time = Group.EngineTimeData;
             Response = new ReportMessage(
                 Request.Version,
                 new Header(
@@ -56,8 +58,8 @@ namespace Lextm.SharpSnmpLib.Pipeline
                     0), // no need to encrypt.
                 new SecurityParameters(
                     Group.EngineId,
-                    new Integer32(Group.EngineBoots),
-                    new Integer32(Group.EngineTime),
+                    new Integer32(time[0]),
+                    new Integer32(time[1]),
                     Request.Parameters.UserName,
                     defaultPair.AuthenticationProvider.CleanDigest,
                     defaultPair.Salt),
@@ -154,6 +156,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// Handles the membership.
         /// </summary>
         /// <returns></returns>
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed. Suppression is OK here.")]
         public override bool HandleMembership()
         {
             var request = Request;
@@ -190,14 +193,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 return false;
             }
 
-            // TODO: improve here, so if request's EngineBoots = agent's EngineBoots - 1 we can calculate if it is in time.
-            if (parameters.EngineBoots.ToInt32() != Group.EngineBoots)
-            {
-                HandleFailure(Group.NotInTimeWindow);
-                return false;
-            }
-
-            var inTime = EngineGroup.IsInTime(Group.EngineTime, parameters.EngineTime.ToInt32());
+            var inTime = EngineGroup.IsInTime(Group.EngineTimeData, parameters.EngineTime.ToInt32(), parameters.EngineBoots.ToInt32());
             if (!inTime)
             {
                 HandleFailure(Group.NotInTimeWindow);
@@ -230,7 +226,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         private void HandleDiscovery()
         {         
             // discovery message received.
-            // TODO: pick up time information from Group instead of using raw data.
+            var time = Group.EngineTimeData;
             Response = new ReportMessage(
                 VersionCode.V3,
                 new Header(
@@ -239,8 +235,8 @@ namespace Lextm.SharpSnmpLib.Pipeline
                     0), // no need to encrypt for discovery.
                 new SecurityParameters(
                     Group.EngineId,
-                    TimeIncluded ? Integer32.Zero : Integer32.Zero,
-                    TimeIncluded ? new Integer32(Environment.TickCount) : Integer32.Zero,
+                    TimeIncluded ? new Integer32(time[0]) : Integer32.Zero,
+                    TimeIncluded ? new Integer32(time[1]) : Integer32.Zero,
                     OctetString.Empty,
                     OctetString.Empty,
                     OctetString.Empty),

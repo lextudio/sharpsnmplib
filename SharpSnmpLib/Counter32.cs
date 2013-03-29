@@ -52,18 +52,6 @@ namespace Lextm.SharpSnmpLib
             _count = value;
         }
 
-        public Counter32(long value)
-        {
-            try
-            {
-                _count = Convert.ToUInt32(value);
-            }
-            catch (OverflowException)
-            {
-                _count = 0;
-            }
-        }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Counter32"/> class.
         /// </summary>

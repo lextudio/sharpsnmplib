@@ -36,6 +36,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         private uint counterDecryptionError;
         private uint counterUnknownSecurityLevel;
         private uint counterAuthenticationFailure;
+        private DateTime start;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EngineGroup"/> class.
@@ -43,6 +44,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         public EngineGroup()
         {
             EngineBoots = 0;
+            start = DateTime.UtcNow;
         }
         
         /// <summary>
@@ -58,6 +60,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// Gets or sets the engine boots.
         /// </summary>
         /// <value>The engine boots.</value>
+        [Obsolete("Please use EngineTimeData")]
         internal int EngineBoots { get; set; }
 
         /// <summary>
@@ -65,9 +68,25 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// </summary>
         /// <value>The engine time.</value>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public int EngineTime
+        [Obsolete("Please use EngineTimeData")]
+        public int EngineTime { get; set; }
+
+        /// <summary>
+        /// Gets the engine time data.
+        /// </summary>
+        /// <value>
+        /// The engine time data. [0] is engine boots, [1] is engine time.
+        /// </value>
+        public int[] EngineTimeData
         {
-            get { return Environment.TickCount; }
+            get
+            {
+                var now = DateTime.UtcNow;
+                var ticks = (now - start).Ticks / 10000;
+                var engineTime = (int)(ticks % int.MaxValue);
+                var engineReboots = (int)(ticks / int.MaxValue);
+                return new[] { engineReboots, engineTime };
+            }
         }
 
         /// <summary>
@@ -76,11 +95,21 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <param name="current"></param>
         /// <param name="past"></param>
         /// <returns></returns>
-        public static bool IsInTime(int current, int past)
+        public static bool IsInTime(int[] currentTimeData, int pastTime, int pastReboots)
         {
-            // TODO: make 500 configurable            
-            var diff = current > past ? current - past : current - past - int.MinValue + int.MaxValue;
-            return diff >= 0 && diff <= 500;
+            // TODO: RFC 2574 page 27
+            if (currentTimeData[1] == int.MaxValue)
+            {
+                return false;
+            }
+
+            if (currentTimeData[0] != pastReboots)
+            {
+                return false;
+            }
+
+            var diff = currentTimeData[1] > pastTime ? currentTimeData[1] - pastTime : currentTimeData[1] - pastTime - int.MinValue + int.MaxValue;
+            return diff >= 0 && diff <= 150000;
         }
 
         public Variable NotInTimeWindow 
