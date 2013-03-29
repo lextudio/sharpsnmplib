@@ -24,7 +24,7 @@ namespace Lextm.SharpSnmpLib.Objects
     /// <summary>
     /// ifInUnknownProtos object.
     /// </summary>
-    class IfInUnknownProtos : ScalarObject
+    internal sealed class IfInUnknownProtos : ScalarObject
     {
         private readonly NetworkInterface _networkInterface;
 

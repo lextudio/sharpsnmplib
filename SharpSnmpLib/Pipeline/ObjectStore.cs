@@ -33,7 +33,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <summary>
         /// Gets the object.
         /// </summary>
-        /// <param name="id">The oid.</param>
+        /// <param name="id">The object id.</param>
         /// <returns></returns>
         public ScalarObject GetObject(ObjectIdentifier id)
         {
@@ -43,7 +43,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <summary>
         /// Gets the next object.
         /// </summary>
-        /// <param name="id">The oid.</param>
+        /// <param name="id">The object id.</param>
         /// <returns></returns>
         public ScalarObject GetNextObject(ObjectIdentifier id)
         {

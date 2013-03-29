@@ -24,7 +24,7 @@ namespace Lextm.SharpSnmpLib.Objects
     /// <summary>
     /// sysObjectId object.
     /// </summary>
-    public sealed class SysObjectId : ScalarObject
+    internal sealed class SysObjectId : ScalarObject
     {
         private readonly ObjectIdentifier _objectId = new ObjectIdentifier("1.3.6.1");
 

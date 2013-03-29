@@ -33,7 +33,7 @@ namespace Lextm.SharpSnmpLib.Objects
     /// <summary>
     /// ifOperStatus.
     /// </summary>
-    public class IfOperStatus : ScalarObject
+    internal sealed class IfOperStatus : ScalarObject
     {
         private readonly NetworkInterface _networkInterface;
 

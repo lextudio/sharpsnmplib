@@ -17,8 +17,8 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-using Lextm.SharpSnmpLib.Messaging;
 using System;
+using Lextm.SharpSnmpLib.Messaging;
 
 namespace Lextm.SharpSnmpLib.Pipeline
 {
@@ -30,21 +30,21 @@ namespace Lextm.SharpSnmpLib.Pipeline
         // TODO: make engine ID configurable from outside and unique.
         private readonly OctetString _engineId =
             new OctetString(new byte[] { 128, 0, 31, 136, 128, 233, 99, 0, 0, 214, 31, 244 });
-        private uint counterNotInTimeWindow;
-        private uint counterUnknownEngineID;
-        private uint counterUnknownUserName;
-        private uint counterDecryptionError;
-        private uint counterUnknownSecurityLevel;
-        private uint counterAuthenticationFailure;
-        private DateTime start;
-
+        
+        private readonly DateTime _start;
+        private uint _counterNotInTimeWindow;
+        private uint _counterUnknownEngineId;
+        private uint _counterUnknownUserName;
+        private uint _counterDecryptionError;
+        private uint _counterUnknownSecurityLevel;
+        private uint _counterAuthenticationFailure;
+        
         /// <summary>
         /// Initializes a new instance of the <see cref="EngineGroup"/> class.
         /// </summary>
         public EngineGroup()
         {
-            EngineBoots = 0;
-            start = DateTime.UtcNow;
+            _start = DateTime.UtcNow;
         }
         
         /// <summary>
@@ -82,7 +82,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
             get
             {
                 var now = DateTime.UtcNow;
-                var ticks = (now - start).Ticks / 10000;
+                var ticks = (now - _start).Ticks / 10000;
                 var engineTime = (int)(ticks % int.MaxValue);
                 var engineReboots = (int)(ticks / int.MaxValue);
                 return new[] { engineReboots, engineTime };
@@ -92,9 +92,12 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <summary>
         /// Verifies if the request comes in time.
         /// </summary>
-        /// <param name="current"></param>
-        /// <param name="past"></param>
-        /// <returns></returns>
+        /// <param name="currentTimeData">The current time data.</param>
+        /// <param name="pastTime">The past time.</param>
+        /// <param name="pastReboots">The past reboots.</param>
+        /// <returns>
+        ///   <c>true</c> if the request is in time window; otherwise, <c>false</c>.
+        /// </returns>
         public static bool IsInTime(int[] currentTimeData, int pastTime, int pastReboots)
         {
             // TODO: RFC 2574 page 27
@@ -112,51 +115,75 @@ namespace Lextm.SharpSnmpLib.Pipeline
             return diff >= 0 && diff <= 150000;
         }
 
+        /// <summary>
+        /// Gets not-in-time-window counter.
+        /// </summary>
+        /// <value>
+        /// Counter variable.
+        /// </value>
         public Variable NotInTimeWindow 
         {
             get
             {
-                return new Variable(Messenger.NotInTimeWindow, new Counter32(counterNotInTimeWindow++));
+                return new Variable(Messenger.NotInTimeWindow, new Counter32(_counterNotInTimeWindow++));
             }
         }
 
-        public Variable UnknownEngineID
+        /// <summary>
+        /// Gets unknown engine ID counter.
+        /// </summary>
+        /// <value>
+        /// Counter variable.
+        /// </value>
+        public Variable UnknownEngineId
         {
             get 
             {
-                return new Variable(Messenger.UnknownEngineID, new Counter32(counterUnknownEngineID++));
+                return new Variable(Messenger.UnknownEngineID, new Counter32(_counterUnknownEngineId++));
             }
         }
 
+        /// <summary>
+        /// Gets unknown security name counter.
+        /// </summary>
         public Variable UnknownSecurityName
         {
             get
             {
-                return new Variable(Messenger.UnknownSecurityName, new Counter32(counterUnknownUserName++));
+                return new Variable(Messenger.UnknownSecurityName, new Counter32(_counterUnknownUserName++));
             }
         }
 
+        /// <summary>
+        /// Gets decryption error counter.
+        /// </summary>
         public Variable DecryptionError
         {
             get
             {
-                return new Variable(Messenger.DecryptionError, new Counter32(counterDecryptionError++));
+                return new Variable(Messenger.DecryptionError, new Counter32(_counterDecryptionError++));
             }
         }
 
+        /// <summary>
+        /// Gets unsupported security level counter.
+        /// </summary>
         public Variable UnsupportedSecurityLevel
         {
             get
             {
-                return new Variable(Messenger.UnsupportedSecurityLevel, new Counter32(counterUnknownSecurityLevel++));
+                return new Variable(Messenger.UnsupportedSecurityLevel, new Counter32(_counterUnknownSecurityLevel++));
             }
         }
 
+        /// <summary>
+        /// Gets authentication failure counter.
+        /// </summary>
         public Variable AuthenticationFailure
         {
             get
             {
-                return new Variable(Messenger.AuthenticationFailure, new Counter32(counterAuthenticationFailure++));
+                return new Variable(Messenger.AuthenticationFailure, new Counter32(_counterAuthenticationFailure++));
             }
         }
     }

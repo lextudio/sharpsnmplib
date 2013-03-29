@@ -34,7 +34,7 @@ namespace Lextm.SharpSnmpLib.Objects
     /// <summary>
     /// ifNumber object.
     /// </summary>
-    public sealed class IfNumber : ScalarObject
+    internal sealed class IfNumber : ScalarObject
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="IfNumber"/> class.

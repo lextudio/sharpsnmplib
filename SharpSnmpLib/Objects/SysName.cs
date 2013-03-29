@@ -25,7 +25,7 @@ namespace Lextm.SharpSnmpLib.Objects
     /// <summary>
     /// sysName object.
     /// </summary>
-    public sealed class SysName : ScalarObject
+    internal sealed class SysName : ScalarObject
     {
     	#if CF
     	private OctetString _name = new OctetString("test machine");

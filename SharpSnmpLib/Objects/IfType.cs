@@ -33,7 +33,7 @@ namespace Lextm.SharpSnmpLib.Objects
     /// <summary>
     /// ifType.
     /// </summary>
-    public class IfType : ScalarObject
+    internal sealed class IfType : ScalarObject
     {
         private readonly ISnmpData _data;
 

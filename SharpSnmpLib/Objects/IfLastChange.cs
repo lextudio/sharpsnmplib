@@ -33,7 +33,7 @@ namespace Lextm.SharpSnmpLib.Objects
     /// <summary>
     /// ifLastChange.
     /// </summary>
-    public class IfLastChange : ScalarObject
+    internal sealed class IfLastChange : ScalarObject
     {
         private readonly ISnmpData _data;
 

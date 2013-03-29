@@ -34,7 +34,7 @@ namespace Lextm.SharpSnmpLib.Objects
     /// <summary>
     /// ifIndex object.
     /// </summary>
-    public sealed class IfIndex : ScalarObject
+    internal sealed class IfIndex : ScalarObject
     {
         private readonly ISnmpData _data;
 
@@ -43,7 +43,9 @@ namespace Lextm.SharpSnmpLib.Objects
         /// </summary>
         /// <param name="index">The index.</param>
         /// <param name="networkInterface">The network interface.</param>
+// ReSharper disable UnusedParameter.Local
         public IfIndex(int index, NetworkInterface networkInterface)
+// ReSharper restore UnusedParameter.Local
             : base("1.3.6.1.2.1.2.2.1.1.{0}", index)
         {
             _data = new Integer32(index);

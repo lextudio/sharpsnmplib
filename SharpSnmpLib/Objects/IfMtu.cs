@@ -33,7 +33,7 @@ namespace Lextm.SharpSnmpLib.Objects
     /// <summary>
     /// ifMtu object.
     /// </summary>
-    public class IfMtu : ScalarObject
+    internal sealed class IfMtu : ScalarObject
     {
         private readonly ISnmpData _data;
 

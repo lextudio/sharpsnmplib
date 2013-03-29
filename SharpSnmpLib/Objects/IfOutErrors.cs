@@ -24,7 +24,7 @@ namespace Lextm.SharpSnmpLib.Objects
     /// <summary>
     /// ifOutErrors object.
     /// </summary>
-    class IfOutErrors : ScalarObject
+    internal sealed class IfOutErrors : ScalarObject
     {
         private readonly NetworkInterface _networkInterface;
 

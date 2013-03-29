@@ -33,7 +33,7 @@ namespace Lextm.SharpSnmpLib.Objects
     /// <summary>
     /// ifSpeed.
     /// </summary>
-    public class IfSpeed : ScalarObject
+    internal sealed class IfSpeed : ScalarObject
     {
         private readonly NetworkInterface _networkInterface;
 

@@ -24,7 +24,7 @@ namespace Lextm.SharpSnmpLib.Objects
     /// <summary>
     /// sysORLastChange object.
     /// </summary>
-    public sealed class SysORLastChange : ScalarObject
+    internal sealed class SysORLastChange : ScalarObject
     {
         private readonly ISnmpData _value = new TimeTicks(0);
 

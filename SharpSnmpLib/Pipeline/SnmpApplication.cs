@@ -27,9 +27,9 @@ namespace Lextm.SharpSnmpLib.Pipeline
         private readonly ILogger _logger;
         private readonly IMembershipProvider _provider;
         private readonly MessageHandlerFactory _factory;
-        private IMessageHandler _handler;
         private readonly ObjectStore _store;
         private readonly SnmpApplicationFactory _owner;
+        private IMessageHandler _handler;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SnmpApplication"/> class.
@@ -49,7 +49,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         }
 
         /// <summary>
-        /// Inits the specified context.
+        /// Initializes the specified context.
         /// </summary>
         /// <param name="context">The context.</param>
         public void Init(ISnmpContext context)

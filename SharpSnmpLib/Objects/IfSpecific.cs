@@ -24,7 +24,7 @@ namespace Lextm.SharpSnmpLib.Objects
     /// <summary>
     /// ifSpecific.
     /// </summary>
-    class IfSpecific : ScalarObject
+    internal sealed class IfSpecific : ScalarObject
     {
         private readonly ISnmpData _data;
 

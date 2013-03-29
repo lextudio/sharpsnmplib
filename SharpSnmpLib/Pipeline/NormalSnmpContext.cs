@@ -25,7 +25,7 @@ using Lextm.SharpSnmpLib.Security;
 namespace Lextm.SharpSnmpLib.Pipeline
 {
     /// <summary>
-    /// Nomral SNMP context class. It is v1 and v2c specific.
+    /// Normal SNMP context class. It is v1 and v2c specific.
     /// </summary>
     internal sealed class NormalSnmpContext : SnmpContextBase
     {

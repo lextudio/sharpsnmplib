@@ -24,7 +24,7 @@ namespace Lextm.SharpSnmpLib.Objects
     /// <summary>
     /// ifInNUcastPkts object.
     /// </summary>
-    internal class IfInNUcastPkts : ScalarObject
+    internal sealed class IfInNUcastPkts : ScalarObject
     {
         private readonly NetworkInterface _networkInterface;
 

@@ -33,7 +33,7 @@ namespace Lextm.SharpSnmpLib.Objects
     /// <summary>
     /// ifPhysAddress.
     /// </summary>
-    public class IfPhysAddress : ScalarObject
+    internal sealed class IfPhysAddress : ScalarObject
     {
         private readonly ISnmpData _data;
 

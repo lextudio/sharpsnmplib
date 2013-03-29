@@ -18,13 +18,13 @@
 // DEALINGS IN THE SOFTWARE.
 
 using System;
-using System.Configuration;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Net;
 using Lextm.SharpSnmpLib.Messaging;
 using Lextm.SharpSnmpLib.Security;
-using System.Globalization;
 
 namespace Lextm.SharpSnmpLib.Pipeline
 {
@@ -83,6 +83,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         {
             var userName = Request.Parameters.UserName;
             var privacy = Users.Find(userName);
+            var time = Group.EngineTimeData;
             Response = new ResponseMessage(
                     Request.Version,
                     new Header(
@@ -91,8 +92,8 @@ namespace Lextm.SharpSnmpLib.Pipeline
                         privacy.ToSecurityLevel()),
                     new SecurityParameters(
                         Group.EngineId,
-                        new Integer32(Group.EngineBoots),
-                        new Integer32(Group.EngineTime),
+                        new Integer32(time[0]),
+                        new Integer32(time[1]),
                         userName,
                         privacy.AuthenticationProvider.CleanDigest,
                         privacy.Salt),
@@ -120,6 +121,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         {
             var userName = Request.Parameters.UserName;
             var privacy = Users.Find(userName);
+            var time = Group.EngineTimeData;
             Response = new ResponseMessage(
                 Request.Version,
                 new Header(
@@ -128,8 +130,8 @@ namespace Lextm.SharpSnmpLib.Pipeline
                     privacy.ToSecurityLevel()),
                 new SecurityParameters(
                     Group.EngineId,
-                    new Integer32(Group.EngineBoots),
-                    new Integer32(Group.EngineTime),
+                    new Integer32(time[0]),
+                    new Integer32(time[1]),
                     userName,
                     privacy.AuthenticationProvider.CleanDigest,
                     privacy.Salt),
@@ -247,7 +249,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                         Request.RequestId(),
                         ErrorCode.NoError,
                         0,
-                        new List<Variable>(1) { Group.UnknownEngineID })),
+                        new List<Variable>(1) { Group.UnknownEngineId })),
                 DefaultPrivacyProvider.DefaultPair,
                 null);
             if (TooBig)
@@ -264,6 +266,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         {
             var userName = Request.Parameters.UserName;
             var privacy = Users.Find(userName);
+            var time = Group.EngineTimeData;
             Response = new ResponseMessage(
                 Request.Version,
                 new Header(
@@ -272,8 +275,8 @@ namespace Lextm.SharpSnmpLib.Pipeline
                     privacy.ToSecurityLevel()),
                 new SecurityParameters(
                     Group.EngineId,
-                    new Integer32(Group.EngineBoots),
-                    new Integer32(Group.EngineTime),
+                    new Integer32(time[0]),
+                    new Integer32(time[1]),
                     userName,
                     privacy.AuthenticationProvider.CleanDigest,
                     privacy.Salt),

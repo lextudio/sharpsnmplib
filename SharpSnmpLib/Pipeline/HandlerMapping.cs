@@ -18,6 +18,7 @@
 // DEALINGS IN THE SOFTWARE.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Lextm.SharpSnmpLib.Messaging;
 
@@ -26,7 +27,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
     /// <summary>
     /// Handler mapping class, who is used to map incoming messages to their handlers.
     /// </summary>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
+    [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
     public sealed class HandlerMapping
     {
         private readonly string[] _version;
@@ -40,6 +41,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <param name="version">The version.</param>
         /// <param name="command">The command.</param>
         /// <param name="handler">The handler.</param>
+        [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1027:TabsMustNotBeUsed", Justification = "Reviewed. Suppression is OK here.")]
         public HandlerMapping(string version, string command, IMessageHandler handler)
         {
             if (version == null)

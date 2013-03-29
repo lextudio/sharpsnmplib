@@ -32,7 +32,7 @@ namespace Lextm.SharpSnmpLib.Objects
     /// <summary>
     /// ifInOctets object.
     /// </summary>
-    public class IfInOctets : ScalarObject
+    internal sealed class IfInOctets : ScalarObject
     {
         private readonly NetworkInterface _networkInterface;
 

@@ -24,7 +24,7 @@ namespace Lextm.SharpSnmpLib.Objects
     /// <summary>
     /// sysServices object.
     /// </summary>
-    public sealed class SysServices : ScalarObject
+    internal sealed class SysServices : ScalarObject
     {
         private readonly Integer32 _value = new Integer32(72);
 

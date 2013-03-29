@@ -34,7 +34,7 @@ namespace Lextm.SharpSnmpLib.Objects
     /// <summary>
     /// ifDescr object.
     /// </summary>
-    public class IfDescr : ScalarObject
+    intrnal sealed class IfDescr : ScalarObject
     {
         private readonly NetworkInterface _networkInterface;
 

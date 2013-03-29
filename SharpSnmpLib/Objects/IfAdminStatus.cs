@@ -34,7 +34,7 @@ namespace Lextm.SharpSnmpLib.Objects
     /// <summary>
     /// ifAdminStatus object.
     /// </summary>
-    public class IfAdminStatus : ScalarObject
+    internal sealed class IfAdminStatus : ScalarObject
     {
         private readonly NetworkInterface _networkInterface;
 
