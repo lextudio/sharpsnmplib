@@ -25,7 +25,7 @@ namespace Lextm.SharpSnmpLib.Objects
     /// <summary>
     /// sysLocation object.
     /// </summary>
-    internal sealed class SysLocation : ScalarObject
+    public sealed class SysLocation : ScalarObject
     {
         private OctetString _location = OctetString.Empty;
 

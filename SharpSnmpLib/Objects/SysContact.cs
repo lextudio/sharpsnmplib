@@ -25,7 +25,7 @@ namespace Lextm.SharpSnmpLib.Objects
     /// <summary>
     /// sysContact object.
     /// </summary>
-    internal sealed class SysContact : ScalarObject
+    public sealed class SysContact : ScalarObject
     {
     	#if CF
     	private OctetString _contact = new OctetString("test user");

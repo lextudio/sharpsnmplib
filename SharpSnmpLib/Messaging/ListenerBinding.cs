@@ -195,7 +195,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
 #if CF
             _socket = new Socket(addressFamily, SocketType.Dgram, ProtocolType.Udp);
-#endif
+#else
             _socket = new Socket(addressFamily, SocketType.Dgram, ProtocolType.Udp) { ExclusiveAddressUse = true };
 #endif
 

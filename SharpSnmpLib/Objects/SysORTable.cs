@@ -25,7 +25,7 @@ namespace Lextm.SharpSnmpLib.Objects
     /// <summary>
     /// sysORTable object.
     /// </summary>
-    internal sealed class SysORTable : TableObject
+    public sealed class SysORTable : TableObject
     {
         // "1.3.6.1.2.1.1.9.1"
         private readonly IList<ScalarObject> _elements = new List<ScalarObject>();

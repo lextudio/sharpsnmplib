@@ -36,7 +36,7 @@ namespace Lextm.SharpSnmpLib.Objects
     /// <summary>
     /// ifTable object.
     /// </summary>
-    internal sealed class IfTable : TableObject
+    public sealed class IfTable : TableObject
     {
         // "1.3.6.1.2.1.2.2"
         private readonly IList<ScalarObject> _elements = new List<ScalarObject>();
