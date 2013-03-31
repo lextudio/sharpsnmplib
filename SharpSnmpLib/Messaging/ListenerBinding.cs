@@ -19,6 +19,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
@@ -31,22 +32,24 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// </summary>
     public sealed class ListenerBinding : IDisposable, IListenerBinding
     {
+        private readonly UserRegistry _users;
         private Socket _socket;
         private int _bufferSize;
         private int _active; // = Inactive
         private bool _disposed;
         private const int Active = 1;
         private const int Inactive = 0;
-        private readonly UserRegistry _users;
 
         /// <summary>
         /// http://msdn.microsoft.com/en-us/library/ms740668(VS.85).aspx
         /// </summary>
+        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed. Suppression is OK here.")] 
         private const int WSAECONNRESET = 10054;
 
         /// <summary>
         /// http://msdn.microsoft.com/en-us/library/ms740668(VS.85).aspx
         /// </summary>
+        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed. Suppression is OK here.")]
         private const int WSAEADDRINUSE = 10048;
 
         /// <summary>
@@ -172,7 +175,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             var addressFamily = Endpoint.AddressFamily;
-            #if !CF
+#if !CF
             if (addressFamily == AddressFamily.InterNetwork && !Socket.SupportsIPv4)
             {
                 throw new InvalidOperationException(Listener.ErrorIPv4NotSupported);
@@ -182,7 +185,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new InvalidOperationException(Listener.ErrorIPv6NotSupported);
             }
-            #endif
+#endif
             var activeBefore = Interlocked.CompareExchange(ref _active, Active, Inactive);
             if (activeBefore == Active)
             {
@@ -190,11 +193,11 @@ namespace Lextm.SharpSnmpLib.Messaging
                 return;
             }
 
-            _socket = new Socket(addressFamily, SocketType.Dgram, ProtocolType.Udp)
-            #if !CF
-                { ExclusiveAddressUse = true }
-            #endif
-            ;
+#if CF
+            _socket = new Socket(addressFamily, SocketType.Dgram, ProtocolType.Udp);
+#endif
+            _socket = new Socket(addressFamily, SocketType.Dgram, ProtocolType.Udp) { ExclusiveAddressUse = true };
+#endif
 
             try
             {
@@ -211,17 +214,17 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw;
             }
 
-            #if CF
+#if CF
             _bufferSize = 8192;
             #else
             _bufferSize = _socket.ReceiveBufferSize;
-            #endif
+#endif
 
-            #if ASYNC
+#if ASYNC
             ThreadPool.QueueUserWorkItem(AsyncBeginReceive);
             #else
             ThreadPool.QueueUserWorkItem(AsyncReceive);
-            #endif
+#endif
         }
 
         /// <summary>
@@ -378,7 +381,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             HandleMessage((MessageParams)o);
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
+        [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         private void HandleMessage(MessageParams param)
         {
             IList<ISnmpMessage> messages = null;

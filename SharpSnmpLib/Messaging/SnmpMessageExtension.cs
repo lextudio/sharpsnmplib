@@ -19,6 +19,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Net;
 using System.Net.Sockets;
@@ -95,7 +96,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// PDU.
         /// </summary>
         /// <param name="message">The <see cref="ISnmpMessage"/>.</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu")]
         public static ISnmpPdu Pdu(this ISnmpMessage message)
         {
             if (message == null)
@@ -548,7 +549,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         }
 
         /// <summary>
-        /// Tests if runnning on Mono.
+        /// Tests if running on Mono.
         /// </summary>
         /// <returns></returns>
         public static bool IsRunningOnMono
@@ -580,6 +581,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// http://msdn.microsoft.com/en-us/library/ms740668(VS.85).aspx
         /// </summary>
+        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed. Suppression is OK here.")] 
         private const int WSAETIMEDOUT = 10060;
 
         private sealed class SnmpMessageAsyncResult : IAsyncResult

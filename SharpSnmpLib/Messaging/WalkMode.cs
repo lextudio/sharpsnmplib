@@ -41,7 +41,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         Default = 0,
         
         /// <summary>
-        /// In this mode, walk within subtree.
+        /// In this mode, walk within sub-tree.
         /// </summary>
         WithinSubtree = 1
     }

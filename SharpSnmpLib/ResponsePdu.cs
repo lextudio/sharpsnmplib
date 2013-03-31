@@ -40,8 +40,8 @@ namespace Lextm.SharpSnmpLib
     public sealed class ResponsePdu : ISnmpPdu
     {
         private readonly Sequence _varbindSection;
-        private byte[] _raw;
         private readonly byte[] _length;
+        private byte[] _raw;
 
         /// <summary>
         /// Creates a <see cref="ResponsePdu"/> with all contents.

@@ -101,6 +101,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                             null);
                         break;
                     }
+
                 case SnmpType.GetNextRequestPdu:
                     {
                         _discovery = new GetNextRequestMessage(
@@ -118,6 +119,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                             null);
                         break;
                     }
+
                 case SnmpType.GetBulkRequestPdu:
                     {
                         _discovery = new GetBulkRequestMessage(
@@ -135,6 +137,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                             null);
                         break;
                     }
+
                 case SnmpType.SetRequestPdu:
                     {
                         _discovery = new SetRequestMessage(
@@ -152,6 +155,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                             null);
                         break;
                     }
+
                 case SnmpType.InformRequestPdu:
                     {
                         _discovery = new InformRequestMessage(
@@ -169,6 +173,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                             null);
                         break;
                     }
+
                 default:
                     throw new ArgumentException("discovery message must be a request", "type");
             }

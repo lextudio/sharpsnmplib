@@ -139,7 +139,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         {
             get 
             {
-                return new Variable(Messenger.UnknownEngineID, new Counter32(_counterUnknownEngineId++));
+                return new Variable(Messenger.UnknownEngineId, new Counter32(_counterUnknownEngineId++));
             }
         }
 

@@ -39,9 +39,9 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// </summary>
     public sealed class TrapV1Message : ISnmpMessage
     {
-        private Scope _scope;
         private readonly ISnmpPdu _pdu;
         private readonly Sequence _container;
+        private Scope _scope;
 
         /// <summary>
         /// Creates a <see cref="TrapV1Message"/> with all content.

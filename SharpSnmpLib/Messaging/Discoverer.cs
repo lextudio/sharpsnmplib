@@ -19,6 +19,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
@@ -42,6 +43,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// http://msdn.microsoft.com/en-us/library/ms740668(VS.85).aspx
         /// </summary>
+        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed. Suppression is OK here.")] 
         private const int WSAECONNRESET = 10054;
 
         /// <summary>

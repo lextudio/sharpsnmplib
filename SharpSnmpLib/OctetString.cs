@@ -50,6 +50,8 @@ namespace Lextm.SharpSnmpLib
     public sealed class OctetString // This namespace has its own concept of string
         : ISnmpData, IEquatable<OctetString>
     {
+        private static readonly OctetString EmptyString = new OctetString(string.Empty, Encoding.GetEncoding("ASCII")); 
+        
         // IMPORTANT: use GetEncoding because of CF.
         private static Encoding _defaultEncoding = Encoding.GetEncoding("ASCII");
         private readonly byte[] _raw;
@@ -136,8 +138,6 @@ namespace Lextm.SharpSnmpLib
             return _raw;
         }
         
-        private static readonly OctetString EmptyString = new OctetString(string.Empty, Encoding.GetEncoding("ASCII"));
-
         /// <summary>
         /// Gets the empty string.
         /// </summary>

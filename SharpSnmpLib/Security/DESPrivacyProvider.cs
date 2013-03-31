@@ -39,7 +39,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// Initializes a new instance of the <see cref="DESPrivacyProvider"/> class.
         /// </summary>
         /// <param name="phrase">The phrase.</param>
-        /// <param name="auth">The auth.</param>
+        /// <param name="auth">The authentication provider.</param>
         public DESPrivacyProvider(OctetString phrase, IAuthenticationProvider auth)
         {
             if (phrase == null)
@@ -68,9 +68,9 @@ namespace Lextm.SharpSnmpLib.Security
         public IAuthenticationProvider AuthenticationProvider { get; private set; }
 
         /// <summary>
-        /// Encrypt ScopedPdu using DES encryption protocol
+        /// Encrypt scoped PDU using DES encryption protocol
         /// </summary>
-        /// <param name="unencryptedData">Unencrypted ScopedPdu byte array</param>
+        /// <param name="unencryptedData">Unencrypted scoped PDU byte array</param>
         /// <param name="key">Encryption key. Key has to be at least 32 bytes is length</param>
         /// <param name="privacyParameters">Privacy parameters out buffer. This field will be filled in with information
         /// required to decrypt the information. Output length of this field is 8 bytes and space has to be reserved
@@ -148,7 +148,7 @@ namespace Lextm.SharpSnmpLib.Security
         }
 
         /// <summary>
-        /// Decrypt DES encrypted ScopedPdu
+        /// Decrypt DES encrypted scoped PDU.
         /// </summary>
         /// <param name="encryptedData">Source data buffer</param>
         /// <param name="key">Decryption key. Key length has to be 32 bytes in length or longer (bytes beyond 32 bytes are ignored).</param>

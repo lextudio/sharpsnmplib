@@ -233,8 +233,6 @@ namespace Lextm.SharpSnmpLib
                 {
                     return -1;
                 }
-
-                continue;
             }
 
             return _oid.Length - other._oid.Length;
@@ -250,7 +248,7 @@ namespace Lextm.SharpSnmpLib
         }
 
         /// <summary>
-        /// Converts uint array to dotted <see cref="String"/>.
+        /// Converts unsigned integer array to dotted <see cref="String"/>.
         /// </summary>
         /// <param name="numerical"></param>
         /// <returns></returns>
@@ -272,10 +270,10 @@ namespace Lextm.SharpSnmpLib
         }
 
         /// <summary>
-        /// Converts dotted <see cref="String"/> to uint array.
+        /// Converts dotted <see cref="String"/> to unsigned integer array.
         /// </summary>
         /// <param name="dotted">Dotted string.</param>
-        /// <returns>uint array.</returns>
+        /// <returns>Unsigned integer array.</returns>
         [CLSCompliant(false)]
         public static uint[] Convert(string dotted)
         {
@@ -313,7 +311,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("stream");
             }
 
-            stream.AppendBytes(TypeCode, _length, this.GetRaw());
+            stream.AppendBytes(TypeCode, _length, GetRaw());
         }
 
         private byte[] GetRaw()

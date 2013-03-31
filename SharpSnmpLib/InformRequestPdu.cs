@@ -40,10 +40,10 @@ namespace Lextm.SharpSnmpLib
     {
         private readonly uint[] _timeId = new uint[] { 1, 3, 6, 1, 2, 1, 1, 3, 0 };
         private readonly uint[] _enterpriseId = new uint[] { 1, 3, 6, 1, 6, 3, 1, 1, 4, 1, 0 };
-        private byte[] _raw;
         private readonly Sequence _varbindSection;
         private readonly TimeTicks _time;
-        private readonly byte[] _length;
+        private readonly byte[] _length; 
+        private byte[] _raw;
 
         /// <summary>
         /// Creates a <see cref="InformRequestPdu"/> instance with all content.

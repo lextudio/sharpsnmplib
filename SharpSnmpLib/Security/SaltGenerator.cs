@@ -27,18 +27,18 @@ namespace Lextm.SharpSnmpLib.Security
     /// </summary>
     public sealed class SaltGenerator
     {
-        private long _salt = Convert.ToInt64(new Random().Next(1, int.MaxValue));
         private readonly object _root = new object();
-
+        private long _salt = Convert.ToInt64(new Random().Next(1, int.MaxValue));
+        
         internal void SetSalt(long salt)
         {
             _salt = salt;
         }
 
         /// <summary>
-        /// Get next salt Int64 value. Used internally to encrypt data.
+        /// Get next salt <see cref="Int64"/> value. Used internally to encrypt data.
         /// </summary>
-        /// <returns>Random Int64 value</returns>
+        /// <returns>Random <see cref="Int64"/> value</returns>
         private long NextSalt()
         {
             lock (_root)

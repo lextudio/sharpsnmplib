@@ -27,6 +27,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Net;
 using Lextm.SharpSnmpLib.Security;
@@ -38,7 +39,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// Static methods in Manager or Agent class will be removed in the future.
     /// </summary>
     /// <remarks>
-    /// SNMP v3 is not supported by this class. Please use ISnmpMessage derived classes directly
+    /// SNMP v3 is not supported by this class. Please use <see cref="ISnmpMessage" /> derived classes directly
     /// if you want to do v3 operations.
     /// </remarks>
     public static class Messenger
@@ -52,6 +53,12 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// RFC 3412 (6.)
         /// </summary>
         private static readonly NumberGenerator MessageCounter = new NumberGenerator(0, int.MaxValue);
+        private static readonly ObjectIdentifier IdUnsupportedSecurityLevel = new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 6, 3, 15, 1, 1, 1, 0 });
+        private static readonly ObjectIdentifier IdNotInTimeWindow = new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 6, 3, 15, 1, 1, 2, 0 });
+        private static readonly ObjectIdentifier IdUnknownSecurityName = new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 6, 3, 15, 1, 1, 3, 0 });
+        private static readonly ObjectIdentifier IdUnknownEngineID = new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 6, 3, 15, 1, 1, 4, 0 });
+        private static readonly ObjectIdentifier IdAuthenticationFailure = new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 6, 3, 15, 1, 1, 5, 0 });
+        private static readonly ObjectIdentifier IdDecryptionError = new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 6, 3, 15, 1, 1, 6, 0 });
         private static int _maxMessageSize = Header.MaxMessageSize;
 
         /// <summary>
@@ -206,7 +213,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns>
         ///     <c>true</c> if the specified seed has next item; otherwise, <c>false</c>.
         /// </returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1021:AvoidOutParameters", MessageId = "5#")]
+        [SuppressMessage("Microsoft.Design", "CA1021:AvoidOutParameters", MessageId = "5#")]
         private static bool HasNext(VersionCode version, IPEndPoint endpoint, OctetString community, Variable seed, int timeout, out Variable next)
         {
             if (seed == null)
@@ -414,8 +421,8 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="registry">The registry.</param>
         /// <returns></returns>
         /// <remarks><paramref name="registry"/> can be null, which also disables table validation.</remarks>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Return", Justification = "ByDesign")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Body", Justification = "ByDesign")]
+        [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Return", Justification = "ByDesign")]
+        [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Body", Justification = "ByDesign")]
         [CLSCompliant(false)]
         [Obsolete("This method only works for a few scenarios. Will provide new methods in the future. If it does not work for you, parse WALK result on your own.")]
         public static Variable[,] GetTable(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, int timeout, int maxRepetitions, IObjectRegistry registry)
@@ -497,6 +504,89 @@ namespace Lextm.SharpSnmpLib.Messaging
         }
 
         /// <summary>
+        /// If the privacy module returns failure, then the message can
+        /// not be processed, so the usmStatsDecryptionErrors counter is
+        /// incremented and an error indication (decryptionError) together
+        /// with the OID and value of the incremented counter is returned
+        /// to the calling module.
+        /// </summary>
+        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed. Suppression is OK here.")]
+        public static ObjectIdentifier DecryptionError
+        {
+            get { return IdDecryptionError; }
+        }
+
+        /// <summary>
+        /// If the authentication module returns failure, then the message
+        /// cannot be trusted, so the usmStatsWrongDigests counter is
+        /// incremented and an error indication (authenticationFailure)
+        /// together with the OID and value of the incremented counter is
+        /// returned to the calling module.
+        /// </summary>
+        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed. Suppression is OK here.")]
+        public static ObjectIdentifier AuthenticationFailure
+        {
+            get { return IdAuthenticationFailure; }
+        }
+
+        /// <summary>
+        /// If the value of the msgAuthoritativeEngineID field in the
+        /// securityParameters is unknown then
+        /// the usmStatsUnknownEngineIDs counter is incremented, and an
+        /// error indication (unknownEngineID) together with the OID and
+        /// value of the incremented counter is returned to the calling
+        /// module.
+        /// </summary>
+        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed. Suppression is OK here.")]
+        public static ObjectIdentifier UnknownEngineId
+        {
+            get { return IdUnknownEngineID; }
+        }
+
+        /// <summary>
+        /// Information about the value of the msgUserName and
+        /// msgAuthoritativeEngineID fields is extracted from the Local
+        /// Configuration Datastore (LCD, usmUserTable).  If no information
+        /// is available for the user, then the usmStatsUnknownUserNames
+        /// counter is incremented and an error indication
+        /// (unknownSecurityName) together with the OID and value of the
+        /// incremented counter is returned to the calling module.
+        /// </summary>
+        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed. Suppression is OK here.")]
+        public static ObjectIdentifier UnknownSecurityName
+        {
+            get { return IdUnknownSecurityName; }
+        }
+
+        /// <summary>
+        /// If the message is considered to be outside of the Time Window
+        /// then the usmStatsNotInTimeWindows counter is incremented and
+        /// an error indication (notInTimeWindow) together with the OID,
+        /// the value of the incremented counter, and an indication that
+        /// the error must be reported with a securityLevel of authNoPriv,
+        /// is returned to the calling module
+        /// </summary>
+        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed. Suppression is OK here.")]
+        public static ObjectIdentifier NotInTimeWindow
+        {
+            get { return IdNotInTimeWindow; }
+        }
+
+        /// <summary>
+        /// If the information about the user indicates that it does not
+        /// support the securityLevel requested by the caller, then the
+        /// usmStatsUnsupportedSecLevels counter is incremented and an error
+        /// indication (unsupportedSecurityLevel) together with the OID and
+        /// value of the incremented counter is returned to the calling
+        /// module.
+        /// </summary>
+        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed. Suppression is OK here.")]
+        public static ObjectIdentifier UnsupportedSecurityLevel
+        {
+            get { return IdUnsupportedSecurityLevel; }
+        }
+
+        /// <summary>
         /// Returns a new discovery request.
         /// </summary>
         /// <param name="type">Message type.</param>
@@ -521,7 +611,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns>
         /// <c>true</c> if the specified seed has next item; otherwise, <c>false</c>.
         /// </returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1021:AvoidOutParameters", MessageId = "5#")]
+        [SuppressMessage("Microsoft.Design", "CA1021:AvoidOutParameters", MessageId = "5#")]
         private static bool BulkHasNext(VersionCode version, IPEndPoint receiver, OctetString community, Variable seed, int timeout, int maxRepetitions, out IList<Variable> next, IPrivacyProvider privacy, ref ISnmpMessage report)
         {
             if (version == VersionCode.V1)
@@ -560,25 +650,26 @@ namespace Lextm.SharpSnmpLib.Messaging
                 }
 
                 var id = reply.Pdu().Variables[0].Id;
-                if (id != Messenger.NotInTimeWindow)
+                if (id != IdNotInTimeWindow)
                 {
-                    var error = id.GetErrorMessage();
+                    // var error = id.GetErrorMessage();
                     // TODO: whether it is good to return?
                     next = new List<Variable>(0);
                     return false;
                 }
 
                 // according to RFC 3414, send a second request to sync time.
-                request = new GetBulkRequestMessage(version,
-                                                      MessageCounter.NextId,
-                                                      RequestCounter.NextId,
-                                                      community,
-                                                      0,
-                                                      maxRepetitions,
-                                                      variables,
-                                                      privacy,
-                                                      MaxMessageSize,
-                                                      report);
+                request = new GetBulkRequestMessage(
+                    version,
+                    MessageCounter.NextId,
+                    RequestCounter.NextId,
+                    community,
+                    0,
+                    maxRepetitions,
+                    variables,
+                    privacy,
+                    MaxMessageSize,
+                    report);
                 reply = request.GetResponse(timeout, receiver);
             }
             else if (reply.Pdu().ErrorStatus.ToInt32() != 0)
@@ -595,97 +686,38 @@ namespace Lextm.SharpSnmpLib.Messaging
         }
 
         /// <summary>
-        /// If the information about the user indicates that it does not
-        /// support the securityLevel requested by the caller, then the
-        /// usmStatsUnsupportedSecLevels counter is incremented and an error
-        /// indication (unsupportedSecurityLevel) together with the OID and
-        /// value of the incremented counter is returned to the calling
-        /// module.
-        /// </summary>
-        public static ObjectIdentifier UnsupportedSecurityLevel = new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 6, 3, 15, 1, 1, 1, 0 });
-        
-        /// <summary>
-        /// If the message is considered to be outside of the Time Window
-        /// then the usmStatsNotInTimeWindows counter is incremented and
-        /// an error indication (notInTimeWindow) together with the OID,
-        /// the value of the incremented counter, and an indication that
-        /// the error must be reported with a securityLevel of authNoPriv,
-        /// is returned to the calling module
-        /// </summary>
-        public static ObjectIdentifier NotInTimeWindow = new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 6, 3, 15, 1, 1, 2, 0 });
-        
-        /// <summary>
-        /// Information about the value of the msgUserName and
-        /// msgAuthoritativeEngineID fields is extracted from the Local
-        /// Configuration Datastore (LCD, usmUserTable).  If no information
-        /// is available for the user, then the usmStatsUnknownUserNames
-        /// counter is incremented and an error indication
-        /// (unknownSecurityName) together with the OID and value of the
-        /// incremented counter is returned to the calling module.
-        /// </summary>
-        public static ObjectIdentifier UnknownSecurityName = new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 6, 3, 15, 1, 1, 3, 0 });
-        
-        /// <summary>
-        /// If the value of the msgAuthoritativeEngineID field in the
-        /// securityParameters is unknown then
-        /// the usmStatsUnknownEngineIDs counter is incremented, and an
-        /// error indication (unknownEngineID) together with the OID and
-        /// value of the incremented counter is returned to the calling
-        /// module.
-        /// </summary>
-        public static ObjectIdentifier UnknownEngineID = new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 6, 3, 15, 1, 1, 4, 0 });
-        
-        /// <summary>
-        /// If the authentication module returns failure, then the message
-        /// cannot be trusted, so the usmStatsWrongDigests counter is
-        /// incremented and an error indication (authenticationFailure)
-        /// together with the OID and value of the incremented counter is
-        /// returned to the calling module.
-        /// </summary>
-        public static ObjectIdentifier AuthenticationFailure = new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 6, 3, 15, 1, 1, 5, 0 });
-        
-        /// <summary>
-        /// If the privacy module returns failure, then the message can
-        /// not be processed, so the usmStatsDecryptionErrors counter is
-        /// incremented and an error indication (decryptionError) together
-        /// with the OID and value of the incremented counter is returned
-        /// to the calling module.
-        /// </summary>
-        public static ObjectIdentifier DecryptionError = new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 6, 3, 15, 1, 1, 6, 0 });
-
-        /// <summary>
         /// Returns error message for the specific <see cref="ObjectIdentifier"/>.
         /// </summary>
         /// <param name="id">The OID.</param>
         /// <returns>Error message.</returns>
         public static string GetErrorMessage(this ObjectIdentifier id)
         {
-            if (id == UnsupportedSecurityLevel)
+            if (id == IdUnsupportedSecurityLevel)
             {
                 return "unsupported security level";
             }
 
-            if (id == NotInTimeWindow)
+            if (id == IdNotInTimeWindow)
             {
                 return "not in time window";
             }
 
-            if (id == UnknownSecurityName)
+            if (id == IdUnknownSecurityName)
             {
                 return "unknown security name";
             }
 
-            if (id == UnknownEngineID)
+            if (id == IdUnknownEngineID)
             {
                 return "unknown engine ID";
             }
 
-            if (id == AuthenticationFailure)
+            if (id == IdAuthenticationFailure)
             {
                 return "authentication failure";
             }
 
-            if (id == DecryptionError)
+            if (id == IdDecryptionError)
             {
                 return "decryption error";
             }

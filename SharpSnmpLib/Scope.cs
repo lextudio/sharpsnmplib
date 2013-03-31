@@ -77,7 +77,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Initializes a new instance of the <see cref="Scope"/> class.
         /// </summary>
-        /// <param name="pdu">The pdu.</param>
+        /// <param name="pdu">The PDU.</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "pdu", Justification = "definition")]
         public Scope(ISnmpPdu pdu)
         {

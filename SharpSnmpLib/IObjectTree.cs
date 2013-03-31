@@ -97,6 +97,6 @@ namespace Lextm.SharpSnmpLib
         ///// </summary>
         ///// <param name="variable">The variable to decode the value of.</param>
         ///// <returns>The best result based on the loaded MIBs.</returns>
-        //object Decode(Variable variable);
+        // object Decode(Variable variable);
     }
 }

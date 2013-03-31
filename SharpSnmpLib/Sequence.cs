@@ -41,9 +41,9 @@ namespace Lextm.SharpSnmpLib
     /// <remarks>Represents SMIv1 SEQUENCE.</remarks>
     public sealed class Sequence : ISnmpData
     {
-        private byte[] _buffer;
         private readonly List<ISnmpData> _list = new List<ISnmpData>();
         private readonly byte[] _length;
+        private byte[] _buffer;
 
         /// <summary>
         /// Gets the enumerator.

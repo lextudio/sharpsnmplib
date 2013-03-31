@@ -38,9 +38,9 @@ namespace Lextm.SharpSnmpLib
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu")]
     public sealed class ReportPdu : ISnmpPdu
     {
-        private byte[] _raw;
         private readonly Sequence _varbindSection;
         private readonly byte[] _length;
+        private byte[] _raw;
 
         /// <summary>
         /// Creates a <see cref="ReportPdu"/> with all contents.

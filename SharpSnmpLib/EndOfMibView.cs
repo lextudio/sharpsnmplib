@@ -26,6 +26,7 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 
 namespace Lextm.SharpSnmpLib
@@ -33,7 +34,8 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// EndOfMibView exception.
     /// </summary>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Mib")]
+    [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed. Suppression is OK here.")]
+    [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Mib")]
     public sealed class EndOfMibView : ISnmpData, IEquatable<EndOfMibView>
     {
         private readonly byte[] _length;

@@ -23,7 +23,7 @@ using System.IO;
 namespace Lextm.SharpSnmpLib
 {
     /// <summary>
-    /// ISnmpData extension class.
+    /// <see cref="ISnmpData"/> extension class.
     /// </summary>
     public static class SnmpDataExtension
     {

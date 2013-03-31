@@ -97,7 +97,7 @@ namespace Lextm.SharpSnmpLib
         public ISnmpData Data { get; private set; }
 
         /// <summary>
-        /// Converts varbind section to variable binds list.
+        /// Converts variable binds section to variable binds list.
         /// </summary>
         /// <param name="varbindSection"></param>
         /// <returns></returns>
@@ -134,7 +134,7 @@ namespace Lextm.SharpSnmpLib
         }
         
         /// <summary>
-        /// Converts variable binds to varbind section.
+        /// Converts variable binds to variable binds section.
         /// </summary>
         /// <param name="variables"></param>
         /// <returns></returns>

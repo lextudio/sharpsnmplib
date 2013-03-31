@@ -38,9 +38,9 @@ namespace Lextm.SharpSnmpLib
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu")]
     public sealed class SetRequestPdu : ISnmpPdu
     {
-        private byte[] _raw;
         private readonly Sequence _varbindSection;
         private readonly byte[] _length;
+        private byte[] _raw;
 
         /// <summary>
         /// Creates a <see cref="SetRequestPdu"/> instance with all contents.
@@ -52,7 +52,9 @@ namespace Lextm.SharpSnmpLib
         [Obsolete("Please use other overloads.")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "errorStatus")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "errorIndex")]
+// ReSharper disable UnusedParameter.Local
         public SetRequestPdu(int requestId, ErrorCode errorStatus, int errorIndex, IList<Variable> variables)
+// ReSharper restore UnusedParameter.Local
             : this(requestId, variables)
         {
         }
