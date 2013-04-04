@@ -53,7 +53,7 @@ namespace Lextm.SharpSnmpLib.Mib
 
         public override void ReportError(RecognitionException e)
         {
-            Errors.Add(new CompilerError(e) {FileName = FileName});
+            Errors.Add(new CompilerError(e, FileName));
             base.ReportError(e);
         }
 

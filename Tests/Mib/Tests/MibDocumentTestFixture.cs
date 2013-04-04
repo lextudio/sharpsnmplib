@@ -90,7 +90,6 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var document = parser.GetDocument();
         }
         
-        
         [Test]
         public void TestComment4()
         {
@@ -120,8 +119,7 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var parser = new SmiParser(tokens);
             var document = parser.GetDocument();
             Assert.AreEqual(1, document.Modules.Count);
-            const string expected = "ADSL-LINE-MIB";
-            Assert.AreEqual(expected, document.Modules[0].Name);
+            Assert.AreEqual("ADSL-LINE-MIB", document.Modules[0].Name);
             var module = document.Modules[0];
             Assert.AreEqual(false, module.Exports.AllExported);
             Assert.AreEqual(0, module.Exports.Symbols.Count);
@@ -213,7 +211,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual("SNMPv2-PDU", file.Modules[0].Name);
             Assert.AreEqual(1, file.Modules[0].Imports.Clauses.Count);
             Assert.AreEqual(0, file.Modules[0].Entities.Count);
@@ -227,7 +226,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual("RFC1157-SNMP", file.Modules[0].Name);
             Assert.AreEqual(1, file.Modules[0].Imports.Clauses.Count);
             Assert.AreEqual(0, file.Modules[0].Entities.Count);
@@ -241,7 +241,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual("JVM-MANAGEMENT-MIB", file.Modules[0].Name);
             Assert.AreEqual(3, file.Modules[0].Imports.Clauses.Count);
             Assert.AreEqual(160, file.Modules[0].Entities.Count);
@@ -259,7 +260,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual("IEEE8021-PAE-MIB", file.Modules[0].Name);
             Assert.AreEqual(5, file.Modules[0].Imports.Clauses.Count);
             Assert.AreEqual(106, file.Modules[0].Entities.Count);
@@ -277,7 +279,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual("IEEE802dot11-MIB", file.Modules[0].Name);
             Assert.AreEqual(4, file.Modules[0].Imports.Clauses.Count);
             Assert.AreEqual(182, file.Modules[0].Entities.Count);
@@ -300,7 +303,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual("CISCO-CSG-MIB", file.Modules[0].Name);
             Assert.AreEqual(5, file.Modules[0].Imports.Clauses.Count);
             Assert.AreEqual(82, file.Modules[0].Entities.Count);
@@ -318,7 +322,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual("CISCO-CONFIG-COPY-CAPABILITY", file.Modules[0].Name);
         }
 
@@ -330,7 +335,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual("CISCO-BULK-FILE-MIB", file.Modules[0].Name);
             Assert.AreEqual(5, file.Modules[0].Imports.Clauses.Count);
             Assert.AreEqual(51, file.Modules[0].Entities.Count);
@@ -348,7 +354,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual("CISCO-AAA-SERVER-MIB", file.Modules[0].Name);
             Assert.AreEqual(5, file.Modules[0].Imports.Clauses.Count);
             Assert.AreEqual(55, file.Modules[0].Entities.Count);
@@ -404,7 +411,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual("BRIDGE-MIB", file.Modules[0].Name);
             Assert.AreEqual(4, file.Modules[0].Imports.Clauses.Count);
             Assert.AreEqual(62, file.Modules[0].Entities.Count);
@@ -422,7 +430,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual("Brcm-BSAPTrap-MIB", file.Modules[0].Name);
             Assert.AreEqual(3, file.Modules[0].Imports.Clauses.Count);
             Assert.AreEqual(10, file.Modules[0].Entities.Count);
@@ -459,7 +468,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual("ALTIGA-CAP", file.Modules[0].Name);
             Assert.AreEqual(3, file.Modules[0].Imports.Clauses.Count);
             Assert.AreEqual(3, file.Modules[0].Entities.Count);
@@ -477,7 +487,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual("ATM-TC-MIB", file.Modules[0].Name);
             Assert.AreEqual(2, file.Modules[0].Imports.Clauses.Count);
             Assert.AreEqual(11, file.Modules[0].Entities.Count);
@@ -495,7 +506,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual("ARROWPOINT-IPV4-OSPF-MIB", file.Modules[0].Name);
             Assert.AreEqual(5, file.Modules[0].Imports.Clauses.Count);
             Assert.AreEqual(50, file.Modules[0].Entities.Count);
@@ -513,7 +525,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual("APPC-MIB", file.Modules[0].Name);
             Assert.AreEqual(4, file.Modules[0].Imports.Clauses.Count);
             Assert.AreEqual(305, file.Modules[0].Entities.Count);
@@ -531,7 +544,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual("ALVARION-DOT11-WLAN-MIB", file.Modules[0].Name);
             Assert.AreEqual(2, file.Modules[0].Imports.Clauses.Count);
             Assert.AreEqual(269, file.Modules[0].Entities.Count);
@@ -568,7 +582,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual("AIRPORT-BASESTATION-3-MIB", file.Modules[0].Name);
             Assert.AreEqual(3, file.Modules[0].Imports.Clauses.Count);
             Assert.AreEqual(47, file.Modules[0].Entities.Count);
@@ -586,7 +601,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual("ALLIEDTELESYN-MIB", file.Modules[0].Name);
             Assert.AreEqual(4, file.Modules[0].Imports.Clauses.Count);
             Assert.AreEqual(606, file.Modules[0].Entities.Count);
@@ -604,7 +620,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual("ADMIN-AUTH-STATS-MIB", file.Modules[0].Name);
             Assert.AreEqual(4, file.Modules[0].Imports.Clauses.Count);
             Assert.AreEqual(23, file.Modules[0].Entities.Count);
@@ -622,7 +639,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual("ADSL-TC-MIB", file.Modules[0].Name);
             Assert.AreEqual(2, file.Modules[0].Imports.Clauses.Count);
             Assert.AreEqual(1, file.Modules[0].Entities.Count);
@@ -640,7 +658,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual("ADSL-LINE-MIB", file.Modules[0].Name);
             Assert.AreEqual(6, file.Modules[0].Imports.Clauses.Count);
             Assert.AreEqual(275, file.Modules[0].Entities.Count);
@@ -658,7 +677,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual("ACTONA-ACTASTOR-MIB", file.Modules[0].Name);
             Assert.AreEqual(3, file.Modules[0].Imports.Clauses.Count);
             Assert.AreEqual(100, file.Modules[0].Entities.Count);
@@ -676,7 +696,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("RFC1155-SMI", file.Modules[0].Name);
             Assert.AreEqual(6, file.Modules[0].Entities.Count);
@@ -694,7 +715,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("RFC1271-MIB", file.Modules[0].Name);
             Assert.AreEqual(213, file.Modules[0].Entities.Count);
@@ -712,7 +734,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("RFC1213-MIB", file.Modules[0].Name);
             Assert.AreEqual(201, file.Modules[0].Entities.Count);
@@ -747,7 +770,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("RFC-1215", file.Modules[0].Name);
             Assert.AreEqual(0, file.Modules[0].Entities.Count);
@@ -761,7 +785,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("RMON-MIB", file.Modules[0].Name);
             Assert.AreEqual(232, file.Modules[0].Entities.Count);
@@ -779,7 +804,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("SMUX-MIB", file.Modules[0].Name);
             Assert.AreEqual(14, file.Modules[0].Entities.Count);
@@ -797,7 +823,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("SNMP-VIEW-BASED-ACM-MIB", file.Modules[0].Name);
             Assert.AreEqual(38, file.Modules[0].Entities.Count);
@@ -815,7 +842,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("TCP-MIB", file.Modules[0].Name);
             Assert.AreEqual(51, file.Modules[0].Entities.Count);
@@ -833,7 +861,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("TRANSPORT-ADDRESS-MIB", file.Modules[0].Name);
             Assert.AreEqual(18, file.Modules[0].Entities.Count);
@@ -851,7 +880,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("TUNNEL-MIB", file.Modules[0].Name);
             Assert.AreEqual(42, file.Modules[0].Entities.Count);
@@ -869,7 +899,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("UCD-DEMO-MIB", file.Modules[0].Name);
             Assert.AreEqual(7, file.Modules[0].Entities.Count);
@@ -887,7 +918,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("UCD-DISKIO-MIB", file.Modules[0].Name);
             Assert.AreEqual(14, file.Modules[0].Entities.Count);
@@ -905,7 +937,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("UCD-DLMOD-MIB", file.Modules[0].Name);
             Assert.AreEqual(9, file.Modules[0].Entities.Count);
@@ -923,7 +956,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("UCD-IPFILTER-MIB", file.Modules[0].Name);
             Assert.AreEqual(23, file.Modules[0].Entities.Count);
@@ -941,7 +975,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("UCD-IPFWACC-MIB", file.Modules[0].Name);
             Assert.AreEqual(29, file.Modules[0].Entities.Count);
@@ -959,7 +994,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("UCD-SNMP-MIB", file.Modules[0].Name);
             Assert.AreEqual(158, file.Modules[0].Entities.Count);
@@ -977,7 +1013,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("UCD-SNMP-MIB-OLD", file.Modules[0].Name);
             Assert.AreEqual(35, file.Modules[0].Entities.Count);
@@ -995,7 +1032,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("UDP-MIB", file.Modules[0].Name);
             Assert.AreEqual(31, file.Modules[0].Entities.Count);
@@ -1013,7 +1051,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("MTA-MIB", file.Modules[0].Name);
             Assert.AreEqual(81, file.Modules[0].Entities.Count);
@@ -1031,7 +1070,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("NET-SNMP-AGENT-MIB", file.Modules[0].Name);
             Assert.AreEqual(54, file.Modules[0].Entities.Count);
@@ -1049,7 +1089,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("NET-SNMP-EXAMPLES-MIB", file.Modules[0].Name);
             Assert.AreEqual(25, file.Modules[0].Entities.Count);
@@ -1067,7 +1108,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("NET-SNMP-EXTEND-MIB", file.Modules[0].Name);
             Assert.AreEqual(27, file.Modules[0].Entities.Count);
@@ -1085,7 +1127,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("NET-SNMP-MIB", file.Modules[0].Name);
             Assert.AreEqual(14, file.Modules[0].Entities.Count);
@@ -1103,7 +1146,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("NET-SNMP-MONITOR-MIB", file.Modules[0].Name);
             Assert.AreEqual(5, file.Modules[0].Entities.Count);
@@ -1121,7 +1165,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("NET-SNMP-SYSTEM-MIB", file.Modules[0].Name);
             Assert.AreEqual(6, file.Modules[0].Entities.Count);
@@ -1139,7 +1184,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("NET-SNMP-TC", file.Modules[0].Name);
             Assert.AreEqual(24, file.Modules[0].Entities.Count);
@@ -1157,7 +1203,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("NET-SNMP-VACM-MIB", file.Modules[0].Name);
             Assert.AreEqual(8, file.Modules[0].Entities.Count);
@@ -1175,7 +1222,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("NETWORK-SERVICES-MIB", file.Modules[0].Name);
             Assert.AreEqual(44, file.Modules[0].Entities.Count);
@@ -1193,7 +1241,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("NOTIFICATION-LOG-MIB", file.Modules[0].Name);
             Assert.AreEqual(55, file.Modules[0].Entities.Count);
@@ -1211,7 +1260,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("IPV6-FLOW-LABEL-MIB", file.Modules[0].Name);
             Assert.AreEqual(1, file.Modules[0].Entities.Count);
@@ -1229,7 +1279,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("IPV6-ICMP-MIB", file.Modules[0].Name);
             Assert.AreEqual(43, file.Modules[0].Entities.Count);
@@ -1247,7 +1298,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("IPV6-MIB", file.Modules[0].Name);
             Assert.AreEqual(91, file.Modules[0].Entities.Count);
@@ -1265,7 +1317,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("IPV6-TC", file.Modules[0].Name);
             Assert.AreEqual(0, file.Modules[0].Entities.Count);
@@ -1279,7 +1332,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("IPV6-TCP-MIB", file.Modules[0].Name);
             Assert.AreEqual(15, file.Modules[0].Entities.Count);
@@ -1297,7 +1351,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("IPV6-UDP-MIB", file.Modules[0].Name);
             Assert.AreEqual(12, file.Modules[0].Entities.Count);
@@ -1315,7 +1370,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("LM-SENSORS-MIB", file.Modules[0].Name);
             Assert.AreEqual(22, file.Modules[0].Entities.Count);
@@ -1333,7 +1389,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("IP-FORWARD-MIB", file.Modules[0].Name);
             Assert.AreEqual(69, file.Modules[0].Entities.Count);
@@ -1351,7 +1408,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("IF-INVERTED-STACK-MIB", file.Modules[0].Name);
             Assert.AreEqual(10, file.Modules[0].Entities.Count);
@@ -1369,7 +1427,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("IANA-RTPROTO-MIB", file.Modules[0].Name);
             Assert.AreEqual(1, file.Modules[0].Entities.Count);
@@ -1387,7 +1446,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("IANA-LANGUAGE-MIB", file.Modules[0].Name);
             Assert.AreEqual(8, file.Modules[0].Entities.Count);
@@ -1405,7 +1465,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("IANA-ADDRESS-FAMILY-NUMBERS-MIB", file.Modules[0].Name);
             Assert.AreEqual(1, file.Modules[0].Entities.Count);
@@ -1423,7 +1484,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("HOST-RESOURCES-TYPES", file.Modules[0].Name);
             Assert.AreEqual(55, file.Modules[0].Entities.Count);
@@ -1441,7 +1503,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("HOST-RESOURCES-MIB", file.Modules[0].Name);
             Assert.AreEqual(104, file.Modules[0].Entities.Count);
@@ -1459,7 +1522,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("HCNUM-TC", file.Modules[0].Name);
             Assert.AreEqual(1, file.Modules[0].Entities.Count);
@@ -1477,7 +1541,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("EtherLike-MIB", file.Modules[0].Name);
             Assert.AreEqual(76, file.Modules[0].Entities.Count);
@@ -1495,7 +1560,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("DISMAN-EVENT-MIB", file.Modules[0].Name);
             Assert.AreEqual(121, file.Modules[0].Entities.Count);
@@ -1513,7 +1579,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("DISMAN-EXPRESSION-MIB", file.Modules[0].Name);
             Assert.AreEqual(58, file.Modules[0].Entities.Count);
@@ -1531,7 +1598,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("DISMAN-NSLOOKUP-MIB", file.Modules[0].Name);
             Assert.AreEqual(25, file.Modules[0].Entities.Count);
@@ -1549,7 +1617,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("DISMAN-PING-MIB", file.Modules[0].Name);
             Assert.AreEqual(68, file.Modules[0].Entities.Count);
@@ -1567,7 +1636,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("DISMAN-SCHEDULE-MIB", file.Modules[0].Name);
             Assert.AreEqual(38, file.Modules[0].Entities.Count);
@@ -1585,7 +1655,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("DISMAN-SCRIPT-MIB", file.Modules[0].Name);
             Assert.AreEqual(94, file.Modules[0].Entities.Count);
@@ -1603,7 +1674,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("DISMAN-TRACEROUTE-MIB", file.Modules[0].Name);
             Assert.AreEqual(84, file.Modules[0].Entities.Count);
@@ -1621,7 +1693,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("SNMP-USM-DH-OBJECTS-MIB", file.Modules[0].Name);
             Assert.AreEqual(24, file.Modules[0].Entities.Count);
@@ -1639,7 +1712,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("SNMP-USM-AES-MIB", file.Modules[0].Name);
             Assert.AreEqual(2, file.Modules[0].Entities.Count);
@@ -1657,7 +1731,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("SNMP-USER-BASED-SM-MIB", file.Modules[0].Name);
             Assert.AreEqual(36, file.Modules[0].Entities.Count);
@@ -1675,7 +1750,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("SNMP-MPD-MIB", file.Modules[0].Name);
             Assert.AreEqual(12, file.Modules[0].Entities.Count);
@@ -1693,7 +1769,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("SNMP-NOTIFICATION-MIB", file.Modules[0].Name);
             Assert.AreEqual(29, file.Modules[0].Entities.Count);
@@ -1711,7 +1788,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("SNMP-PROXY-MIB", file.Modules[0].Name);
             Assert.AreEqual(18, file.Modules[0].Entities.Count);
@@ -1729,7 +1807,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("SNMP-TARGET-MIB", file.Modules[0].Name);
             Assert.AreEqual(32, file.Modules[0].Entities.Count);
@@ -1747,7 +1826,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("AGENTX-MIB", file.Modules[0].Name);
             Assert.AreEqual(41, file.Modules[0].Entities.Count);
@@ -1765,7 +1845,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("SNMP-COMMUNITY-MIB", file.Modules[0].Name);
             Assert.AreEqual(25, file.Modules[0].Entities.Count);
@@ -1783,7 +1864,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("SNMP-FRAMEWORK-MIB", file.Modules[0].Name);
             Assert.AreEqual(15, file.Modules[0].Entities.Count);
@@ -1801,7 +1883,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("SNMPv2-CONF", file.Modules[0].Name);
             Assert.AreEqual(0, file.Modules[0].Entities.Count);
@@ -1815,7 +1898,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("SNMPv2-TC", file.Modules[0].Name);
             Assert.AreEqual(0, file.Modules[0].Entities.Count);
@@ -1837,7 +1921,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual(1, file.Modules.Count);
             Assert.AreEqual("SNMPv2-SMI", file.Modules[0].Name);
             Assert.AreEqual(16, file.Modules[0].Entities.Count);
@@ -1855,7 +1940,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual("SNMPv2-MIB", file.Modules[0].Name);
             Assert.AreEqual(3, file.Modules[0].Imports.Clauses.Count);
             Assert.AreEqual(70, file.Modules[0].Entities.Count);
@@ -1874,7 +1960,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual("IANAifType-MIB", file.Modules[0].Name);
             Assert.AreEqual(2, file.Modules[0].Imports.Clauses.Count);
             Assert.AreEqual(1, file.Modules[0].Entities.Count);
@@ -1892,7 +1979,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual("IF-MIB", file.Modules[0].Name);
             Assert.AreEqual(5, file.Modules[0].Imports.Clauses.Count);
             Assert.AreEqual(91, file.Modules[0].Entities.Count);
@@ -1910,7 +1998,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual("INET-ADDRESS-MIB", file.Modules[0].Name);
             Assert.AreEqual(2, file.Modules[0].Imports.Clauses.Count);
             Assert.AreEqual(1, file.Modules[0].Entities.Count);
@@ -1928,7 +2017,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual("IP-MIB", file.Modules[0].Name);
             Assert.AreEqual(5, file.Modules[0].Imports.Clauses.Count);
             Assert.AreEqual(293, file.Modules[0].Entities.Count);
@@ -1946,7 +2036,8 @@ namespace Lextm.SharpSnmpLib.Mib.Tests
             var lexer = new SmiLexer(stream);
             var tokens = new CommonTokenStream(lexer);
             var parser = new SmiParser(tokens);
-            var file = parser.GetDocument();Assert.AreEqual(0, parser.Warnings.Count);
+            var file = parser.GetDocument();
+            Assert.AreEqual(0, parser.Warnings.Count);
             Assert.AreEqual("SNMPv2-TM", file.Modules[0].Name);
             Assert.AreEqual(2, file.Modules[0].Imports.Clauses.Count);
             Assert.AreEqual(8, file.Modules[0].Entities.Count);

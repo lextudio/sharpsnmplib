@@ -136,7 +136,7 @@ namespace Lextm.SharpSnmpLib.Mib
         private Definition Find(string name)
         {
             return (from key in _nameTable.Keys
-                    where String.CompareOrdinal(key.Split(new[] {"::"}, StringSplitOptions.None)[1], name) == 0
+                    where string.CompareOrdinal(key.Split(new[] {"::"}, StringSplitOptions.None)[1], name) == 0
                     select _nameTable[key]).FirstOrDefault();
         }
 
@@ -349,7 +349,7 @@ namespace Lextm.SharpSnmpLib.Mib
             for (int i = 1; i < content.Length; i++)
             {
                 uint value;
-                bool numberFound = UInt32.TryParse(content[i], out value);
+                bool numberFound = uint.TryParse(content[i], out value);
                 int currentCursor = rootId.Length + i - 1;
                 if (numberFound)
                 {
@@ -620,7 +620,7 @@ namespace Lextm.SharpSnmpLib.Mib
             }
 
             uint temp;
-            if (UInt32.TryParse(input.Substring(left + 1, right - left - 1), out temp))
+            if (uint.TryParse(input.Substring(left + 1, right - left - 1), out temp))
             {
                 return temp;
             }

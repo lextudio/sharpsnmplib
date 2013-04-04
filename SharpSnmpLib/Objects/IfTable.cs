@@ -27,9 +27,9 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.Net.NetworkInformation;
 using Lextm.SharpSnmpLib.Pipeline;
-using System.Collections.Generic;
 
 namespace Lextm.SharpSnmpLib.Objects
 {
@@ -59,34 +59,34 @@ namespace Lextm.SharpSnmpLib.Objects
             var interfaces = NetworkInterface.GetAllNetworkInterfaces();
             var columnTypes = new[]
                 {
-                    typeof (IfIndex),
-                    typeof (IfDescr),
-                    typeof (IfType),
-                    typeof (IfMtu),
-                    typeof (IfSpeed),
-                    typeof (IfPhysAddress),
-                    typeof (IfAdminStatus),
-                    typeof (IfOperStatus),
-                    typeof (IfLastChange),
-                    typeof (IfInOctets),
-                    typeof (IfInUcastPkts),
-                    typeof (IfInNUcastPkts),
-                    typeof (IfInDiscards),
-                    typeof (IfInErrors),
-                    typeof (IfInUnknownProtos),
-                    typeof (IfOutOctets),
-                    typeof (IfOutUcastPkts),
-                    typeof (IfOutNUcastPkts),
-                    typeof (IfOutDiscards),
-                    typeof (IfOutErrors),
-                    typeof (IfOutQLen),
-                    typeof (IfSpecific)
+                    typeof(IfIndex),
+                    typeof(IfDescr),
+                    typeof(IfType),
+                    typeof(IfMtu),
+                    typeof(IfSpeed),
+                    typeof(IfPhysAddress),
+                    typeof(IfAdminStatus),
+                    typeof(IfOperStatus),
+                    typeof(IfLastChange),
+                    typeof(IfInOctets),
+                    typeof(IfInUcastPkts),
+                    typeof(IfInNUcastPkts),
+                    typeof(IfInDiscards),
+                    typeof(IfInErrors),
+                    typeof(IfInUnknownProtos),
+                    typeof(IfOutOctets),
+                    typeof(IfOutUcastPkts),
+                    typeof(IfOutNUcastPkts),
+                    typeof(IfOutDiscards),
+                    typeof(IfOutErrors),
+                    typeof(IfOutQLen),
+                    typeof(IfSpecific)
                 };
             foreach (var type in columnTypes)
             {
                 for (int i = 0; i < interfaces.Length; i++)
                 {
-                    _elements.Add((ScalarObject) Activator.CreateInstance(type, new object[] {i + 1, interfaces[i]}));
+                    _elements.Add((ScalarObject)Activator.CreateInstance(type, new object[] { i + 1, interfaces[i] }));
                 }
             }
         }

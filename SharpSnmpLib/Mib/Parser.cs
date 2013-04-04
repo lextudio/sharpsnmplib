@@ -121,7 +121,7 @@ namespace Lextm.SharpSnmpLib.Mib
             }
             catch (RecognitionException ex)
             {
-                errors.Add(new CompilerError(ex) {FileName = fileName});
+                errors.Add(new CompilerError(ex, fileName));
                 errors.AddRange(parser.Errors);
                 warnings.AddRange(parser.Warnings);
                 return new IModule[0];
@@ -156,7 +156,7 @@ namespace Lextm.SharpSnmpLib.Mib
             }
             catch (RecognitionException ex)
             {
-                errors.Add(new CompilerError(ex));
+                errors.Add(new CompilerError(ex, null));
                 errors.AddRange(parser.Errors);
                 warnings.AddRange(parser.Warnings);
                 return new IModule[0];

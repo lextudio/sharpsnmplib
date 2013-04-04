@@ -24,7 +24,6 @@
 // IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT 
 // OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -70,9 +69,7 @@ namespace Lextm.SharpSnmpLib.Mib
 
         public IList<IConstruct> Constructs
         {
-            get {
-                return _constructs;
-            }
+            get { return _constructs; }
         }
 
         public IList<IEntity> Entities  
@@ -104,8 +101,8 @@ namespace Lextm.SharpSnmpLib.Mib
                     var seq = assignment.SmiValue as SequenceValue;
                     if (seq != null && seq.Values.Count == 1)
                     {
-                        var number = (NumberLiteralValue) seq.Values[0].Value;
-                        item.Value = (uint) number.Value.Value;
+                        var number = (NumberLiteralValue)seq.Values[0].Value;
+                        item.Value = (uint)number.Value.Value;
                         item.Parent = seq.Values[0].Name;
                         entities.Add(item);
                         continue;
@@ -150,7 +147,7 @@ namespace Lextm.SharpSnmpLib.Mib
                     }
                 }
 
-                return (_entities = entities);
+                return _entities = entities;
             }
         }
 
@@ -168,7 +165,7 @@ namespace Lextm.SharpSnmpLib.Mib
 
         public IList<IEntity> Objects
         {
-            get { return (_objects ?? (_objects = Entities.OfType<ObjectTypeMacro>().OfType<IEntity>().ToList())); }
+            get { return _objects ?? (_objects = Entities.OfType<ObjectTypeMacro>().OfType<IEntity>().ToList()); }
         }
 
         public void Add(IConstruct construct)
@@ -222,9 +219,9 @@ namespace Lextm.SharpSnmpLib.Mib
 
         private static MibModule FoundDependent(string dependent, IDictionary<string, MibModule> modules)
         {
-            if (Regex.IsMatch(dependent, Pattern))
+            if (Regex.IsMatch(dependent, Pattern, RegexOptions.IgnoreCase))
             {
-                string dependentNonVersion = Regex.Replace(dependent, Pattern, string.Empty);
+                string dependentNonVersion = Regex.Replace(dependent, Pattern, string.Empty, RegexOptions.IgnoreCase);
                 return modules.ContainsKey(dependentNonVersion) ? modules[dependentNonVersion] : null;
             }
 
@@ -234,7 +231,7 @@ namespace Lextm.SharpSnmpLib.Mib
         internal string ReportMissingDependencies(ICollection<string> existing)
         {
             var builder = new StringBuilder();
-            if (String.IsNullOrEmpty(FileName))
+            if (string.IsNullOrEmpty(FileName))
             {
                 builder.Append("warning N0001 : ");
             }
@@ -255,7 +252,7 @@ namespace Lextm.SharpSnmpLib.Mib
         internal string ReportMissingType(string symbol)
         {
             var builder = new StringBuilder();
-            if (String.IsNullOrEmpty(FileName))
+            if (string.IsNullOrEmpty(FileName))
             {
                 builder.Append("error S0002 : ");
             }

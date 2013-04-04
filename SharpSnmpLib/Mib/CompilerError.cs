@@ -49,9 +49,10 @@ namespace Lextm.SharpSnmpLib.Mib
         /// Creates a <see cref="CompilerError"/> instance with a specific <see cref="Exception"/>.
         /// </summary>
         /// <param name="exception">Compiler exception.</param>
-        public CompilerError(RecognitionException exception)
+        public CompilerError(RecognitionException exception, string fileName)
         {
             Token = exception.Token;
+            FileName = fileName;
             var result = new StringBuilder();
             if (!string.IsNullOrEmpty(FileName))
             {
@@ -80,7 +81,7 @@ namespace Lextm.SharpSnmpLib.Mib
 
         public string Details { get; set; }
 
-        public string FileName { private get; set; }
+        private string FileName { get; set; }
 
         public IToken Token { get; set; }
     }
