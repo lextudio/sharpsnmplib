@@ -43,6 +43,8 @@ namespace Lextm.SharpSnmpLib.Mib
 
         [CLSCompliant(false)]
         public uint Value { get; set; }
+
+        public string ParentModule { get; set; }
         public string Parent { get; set; }
         public string ModuleName { get; set; }
         public string Name { get; set; }

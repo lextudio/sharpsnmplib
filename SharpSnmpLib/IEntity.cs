@@ -49,6 +49,14 @@ namespace Lextm.SharpSnmpLib
         uint Value { get; set; }
 
         /// <summary>
+        /// Gets or sets the parent module.
+        /// </summary>
+        /// <value>
+        /// The parent module.
+        /// </value>
+        string ParentModule { get; set; }
+
+        /// <summary>
         /// Validates this entity.
         /// </summary>
         /// <param name="knownConstructs">Known constructs.</param>

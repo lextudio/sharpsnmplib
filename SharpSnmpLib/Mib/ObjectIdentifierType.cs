@@ -47,6 +47,8 @@ namespace Lextm.SharpSnmpLib.Mib
         [CLSCompliant(false)]
         public uint Value { get; set; }
 
+        public string ParentModule { get; set; }
+
         public bool Validate(List<IConstruct> knownConstructs, string fileName)
         {
             return this.ValidateParent(knownConstructs, fileName);

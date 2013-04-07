@@ -136,6 +136,8 @@ namespace Lextm.SharpSnmpLib.Mib
             set { }
         }
 
+        public string ParentModule { get; set; }
+
         public bool Validate(List<IConstruct> knownConstructs, string fileName)
         {
             throw new NotImplementedException();
