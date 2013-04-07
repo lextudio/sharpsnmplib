@@ -31,6 +31,9 @@ namespace Lextm.SharpSnmpLib.Mib
     public class SequenceType : ISmiType
     {
         public string Name { get; set; }
+        public int Line { get; set; }
+        public int CharPositionInLine { get; set; }
+        public string Module { get; set; }
 
         public IList<ISmiType> ElementTypeList { get; set; }
     }

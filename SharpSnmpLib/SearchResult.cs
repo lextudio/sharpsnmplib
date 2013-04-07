@@ -88,7 +88,7 @@ namespace Lextm.SharpSnmpLib
             get
             {
                 var result =
-                    new StringBuilder().Append(Definition.ModuleName).Append("::").Append(
+                    new StringBuilder().Append(Definition.Module).Append("::").Append(
                         Definition.Name);
 
                 foreach (var item in GetRemaining())

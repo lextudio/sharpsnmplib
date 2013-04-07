@@ -29,6 +29,9 @@ namespace Lextm.SharpSnmpLib.Mib
     public class TaggedType : ISmiType
     {
         public string Name { get; set; }
+        public int Line { get; set; }
+        public int CharPositionInLine { get; set; }
+        public string Module { get; set; }
 
         public Tag Tag { get; set; }
 

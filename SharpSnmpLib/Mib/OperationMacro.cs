@@ -40,5 +40,8 @@ namespace Lextm.SharpSnmpLib.Mib
         public ISmiType ArgumentType { get; set; }
 
         public string Name { get; set; }
+        public int Line { get; set; }
+        public int CharPositionInLine { get; set; }
+        public string Module { get; set; }
     }
 }

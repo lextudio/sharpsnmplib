@@ -34,7 +34,7 @@ namespace Lextm.SharpSnmpLib.Mib
         [CLSCompliant(false)]
         public ObjectIdentifierType(string moduleName, string name, string parent, uint value)
         {
-            ModuleName = moduleName;
+            Module = moduleName;
             Name = name;
             Value = value;
             Parent = parent;
@@ -54,6 +54,8 @@ namespace Lextm.SharpSnmpLib.Mib
 
         public string Parent { get; set; }
         public string Name { get; set; }
-        public string ModuleName { get; set; }
+        public int Line { get; set; }
+        public int CharPositionInLine { get; set; }
+        public string Module { get; set; }
     }
 }

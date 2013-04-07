@@ -93,12 +93,12 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// Verifies if the request comes in time.
         /// </summary>
         /// <param name="currentTimeData">The current time data.</param>
-        /// <param name="pastTime">The past time.</param>
         /// <param name="pastReboots">The past reboots.</param>
+        /// <param name="pastTime">The past time.</param>
         /// <returns>
         ///   <c>true</c> if the request is in time window; otherwise, <c>false</c>.
         /// </returns>
-        public static bool IsInTime(int[] currentTimeData, int pastTime, int pastReboots)
+        public static bool IsInTime(int[] currentTimeData, int pastReboots, int pastTime)
         {
             // TODO: RFC 2574 page 27
             if (currentTimeData[1] == int.MaxValue)

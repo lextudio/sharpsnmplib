@@ -29,6 +29,9 @@ namespace Lextm.SharpSnmpLib.Mib
     public class ElementType : ISmiType
     {
         public string Name { get; set; }
+        public int Line { get; set; }
+        public int CharPositionInLine { get; set; }
+        public string Module { get; set; }
         public Tag Tag;
         public TagDefault TagDefault;
         public ISmiType Subtype;

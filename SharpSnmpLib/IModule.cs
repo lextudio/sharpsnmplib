@@ -57,14 +57,6 @@ namespace Lextm.SharpSnmpLib
         {
             get;
         }
-
-        /// <summary>
-        /// Known types.
-        /// </summary>
-        IDictionary<string, ITypeAssignment> Types
-        {
-            get;
-        }
         
         /// <summary>
         /// Modules that this module dependent on.

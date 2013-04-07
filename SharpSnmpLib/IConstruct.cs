@@ -29,5 +29,29 @@ namespace Lextm.SharpSnmpLib
         /// Name.
         /// </summary>
         string Name { get; set; }
+
+        /// <summary>
+        /// Gets the line number.
+        /// </summary>
+        /// <value>
+        /// The line.
+        /// </value>
+        int Line { set; get; }
+
+        /// <summary>
+        /// Gets the char position in line.
+        /// </summary>
+        /// <value>
+        /// The char position in line.
+        /// </value>
+        int CharPositionInLine { set; get; }
+
+        /// <summary>
+        /// Gets or sets the module.
+        /// </summary>
+        /// <value>
+        /// The module.
+        /// </value>
+        string Module { get; set; }
     }
 }

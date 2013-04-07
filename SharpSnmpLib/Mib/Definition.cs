@@ -89,7 +89,7 @@ namespace Lextm.SharpSnmpLib.Mib
             _id = ObjectIdentifier.AppendTo(id, entity.Value);
             _parent = parent.Name;
             _name = entity.Name;
-            _module = entity.ModuleName;
+            _module = entity.Module;
             _value = entity.Value;
             _parentNode.Append(this);
             Type = DetermineType(entity.GetType().ToString(), _name, _parentNode);
@@ -199,10 +199,12 @@ namespace Lextm.SharpSnmpLib.Mib
             return (from Definition d in _children.Values let id = d._id where id[id.Length - 1] == index select d).FirstOrDefault();
         }
 
+        public int CharPositionInLine { get; set; }
+
         /// <summary>
         /// Module name.
         /// </summary>
-        public string ModuleName
+        public string Module
         {
             get { return _module; }
             set { }
@@ -216,6 +218,8 @@ namespace Lextm.SharpSnmpLib.Mib
             get { return _name; }
             set { }
         }
+
+        public int Line { get; set; }
 
         /// <summary>
         /// Gets the numerical form.

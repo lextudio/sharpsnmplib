@@ -195,7 +195,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 return false;
             }
 
-            var inTime = EngineGroup.IsInTime(Group.EngineTimeData, parameters.EngineTime.ToInt32(), parameters.EngineBoots.ToInt32());
+            var inTime = EngineGroup.IsInTime(Group.EngineTimeData, parameters.EngineBoots.ToInt32(), parameters.EngineTime.ToInt32());
             if (!inTime)
             {
                 HandleFailure(Group.NotInTimeWindow);

@@ -51,6 +51,9 @@ namespace Lextm.SharpSnmpLib.Mib
 
         public string Parent { get; set; }
         public string Name { get; set; }
+        public int Line { get; set; }
+        public int CharPositionInLine { get; set; }
+        public string Module { get; set; }
         public string ModuleName { get; set; }
     }
 }

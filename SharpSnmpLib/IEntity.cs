@@ -38,11 +38,6 @@ namespace Lextm.SharpSnmpLib
     public interface IEntity : IConstruct
     {
         /// <summary>
-        /// Module name.
-        /// </summary>
-        string ModuleName { get; set; }
-
-        /// <summary>
         /// Parent name.
         /// </summary>
         string Parent { get; set; }

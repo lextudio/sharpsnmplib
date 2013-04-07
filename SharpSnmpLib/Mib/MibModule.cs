@@ -97,7 +97,7 @@ namespace Lextm.SharpSnmpLib.Mib
                     }
 
                     item.Name = assignment.Name;
-                    item.ModuleName = Name;
+                    item.Module = Name;
                     var seq = assignment.SmiValue as SequenceValue;
                     if (seq != null && seq.Values.Count == 1)
                     {

@@ -20,11 +20,11 @@ namespace Lextm.SharpSnmpLib.Pipeline.Tests
         [Test]
         public void TestIsInTime()
         {
-            Assert.IsTrue(EngineGroup.IsInTime(new[] { 0, 0 }, -499, 0));
-            Assert.IsFalse(EngineGroup.IsInTime(new[] { 0, 0 }, -501, 0));
+            Assert.IsTrue(EngineGroup.IsInTime(new[] { 0, 0 }, 0, -499));
+            Assert.IsFalse(EngineGroup.IsInTime(new[] { 0, 0 }, 0, -150001));
             
-            Assert.IsTrue(EngineGroup.IsInTime(new[] { int.MinValue + 1, 0 }, int.MaxValue - 1, 0));
-            Assert.IsFalse(EngineGroup.IsInTime(new[] { int.MinValue + 502, 0}, int.MaxValue, 0));
+            Assert.IsTrue(EngineGroup.IsInTime(new[] { 0, int.MinValue + 1, }, 0, int.MaxValue - 1));
+            Assert.IsFalse(EngineGroup.IsInTime(new[] { 0, int.MinValue + 150002}, 0, int.MaxValue));
         }
     }
 }

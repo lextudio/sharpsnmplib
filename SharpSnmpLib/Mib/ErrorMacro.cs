@@ -31,5 +31,8 @@ namespace Lextm.SharpSnmpLib.Mib
         public string Identifier;
         public ISmiType Subtype;
         public string Name { get; set; }
+        public int Line { get; set; }
+        public int CharPositionInLine { get; set; }
+        public string Module { get; set; }
     }
 }

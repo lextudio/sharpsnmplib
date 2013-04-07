@@ -33,6 +33,9 @@ namespace Lextm.SharpSnmpLib.Mib
         public IList<ISmiValue> NamedNumberList { get; set; }
 
         public string Name { get; set; }
+        public int Line { get; set; }
+        public int CharPositionInLine { get; set; }
+        public string Module { get; set; }
 
         public Constraint Constraint { get; set; }
     }
