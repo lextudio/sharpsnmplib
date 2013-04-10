@@ -35,7 +35,7 @@ namespace Lextm.SharpSnmpLib
     /// Definition interface.
     /// </summary>
     [CLSCompliant(false)]
-    public interface IDefinition : IEntity
+    public interface IDefinition
     {      
         /// <summary>
         /// Children definitions.
@@ -79,5 +79,40 @@ namespace Lextm.SharpSnmpLib
         {
             get;
         }
+
+        /// <summary>
+        /// Gets the module.
+        /// </summary>
+        /// <value>
+        /// The module.
+        /// </value>
+        string Module { get; }
+
+        /// <summary>
+        /// Gets the name.
+        /// </summary>
+        /// <value>
+        /// The name.
+        /// </value>
+        string Name { get; }
+
+        /// <summary>
+        /// Gets the value.
+        /// </summary>
+        /// <value>
+        /// The value.
+        /// </value>
+        uint Value { get; }
+
+        /// <summary>
+        /// Appends the specified child.
+        /// </summary>
+        /// <param name="child">The child.</param>
+        void Append(IDefinition child);
+
+        /// <summary>
+        /// Clears this instance.
+        /// </summary>
+        void Clear();
     }
 }

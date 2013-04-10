@@ -36,7 +36,7 @@ namespace Lextm.SharpSnmpLib.Mib
         private readonly IList<IConstruct> _constructs = new List<IConstruct>();
         public string Name { get; set; }
         public bool AllExported { get; set; }
-        public string FileName { private get; set; }
+        public string FileName { get; set; }
 
         private Exports _exports;
         public Exports Exports
@@ -97,7 +97,7 @@ namespace Lextm.SharpSnmpLib.Mib
                     }
 
                     item.Name = assignment.Name;
-                    item.Module = Name;
+                    item.Module = this;
                     var seq = assignment.SmiValue as SequenceValue;
                     if (seq != null && seq.Values.Count == 1)
                     {
@@ -198,7 +198,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 }
             }
 
-            return Entities.All(entity => entity.Validate(knownConstructs, FileName));
+            return Entities.All(entity => entity.Validate(knownConstructs));
         }
 
         private IConstruct Find(string symbol)
@@ -228,7 +228,7 @@ namespace Lextm.SharpSnmpLib.Mib
             return modules.ContainsKey(dependent) ? modules[dependent] : null;
         }
 
-        internal string ReportMissingDependencies(ICollection<string> existing)
+        internal string ReportMissingDependencies(ICollection<IModule> existing)
         {
             var builder = new StringBuilder();
             if (string.IsNullOrEmpty(FileName))
@@ -241,7 +241,7 @@ namespace Lextm.SharpSnmpLib.Mib
             }
 
             builder.AppendFormat("{0} is pending. Missing dependencies: ", Name);
-            foreach (string depend in Dependents.Where(depend => !existing.Contains(depend)))
+            foreach (string depend in Dependents.Where(depend => existing.All(module => module.Name != depend)))
             {
                 builder.Append(depend).Append(", ");
             }

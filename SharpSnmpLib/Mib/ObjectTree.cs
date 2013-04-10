@@ -527,9 +527,9 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <summary>
         /// Loaded MIB modules.
         /// </summary>
-        public ICollection<string> LoadedModules
+        public ICollection<IModule> LoadedModules
         {
-            get { return _loaded.Keys; }
+            get { return _loaded.Values.Cast<IModule>().ToList(); }
         }
         
         /// <summary>

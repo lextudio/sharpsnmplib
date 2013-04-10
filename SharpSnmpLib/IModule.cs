@@ -65,5 +65,13 @@ namespace Lextm.SharpSnmpLib
         {
             get;
         }
+
+        /// <summary>
+        /// Gets the name of the file.
+        /// </summary>
+        /// <value>
+        /// The name of the file.
+        /// </value>
+        string FileName { get; }
     }
 }

@@ -117,6 +117,7 @@
     <Compile Include="Mib\ComponentsOfElementType.cs" />
     <Compile Include="Mib\Constraint.cs" />
     <Compile Include="Mib\ConstraintElement.cs" />
+    <Compile Include="Mib\DefaultModule.cs" />
     <Compile Include="Mib\DefaultObjectRegistry.cs" />
     <Compile Include="Mib\DefinedType.cs" />
     <Compile Include="Mib\DefinedValue.cs" />

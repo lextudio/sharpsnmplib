@@ -69,7 +69,7 @@ namespace Lextm.SharpSnmpLib.Mib
             get { return _tree; }
         }
 
-        internal ICollection<string> Modules
+        internal ICollection<IModule> Modules
         {
             get { return _tree.LoadedModules; }
         }

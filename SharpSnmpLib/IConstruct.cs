@@ -36,7 +36,7 @@ namespace Lextm.SharpSnmpLib
         /// <value>
         /// The line.
         /// </value>
-        int Line { set; get; }
+        int Line { get; set; }
 
         /// <summary>
         /// Gets the char position in line.
@@ -44,7 +44,7 @@ namespace Lextm.SharpSnmpLib
         /// <value>
         /// The char position in line.
         /// </value>
-        int CharPositionInLine { set; get; }
+        int CharPositionInLine { get; set; }
 
         /// <summary>
         /// Gets or sets the module.
@@ -52,6 +52,6 @@ namespace Lextm.SharpSnmpLib
         /// <value>
         /// The module.
         /// </value>
-        string Module { get; set; }
+        IModule Module { get; set; }
     }
 }

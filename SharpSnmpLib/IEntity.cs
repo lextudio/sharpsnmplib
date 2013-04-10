@@ -38,9 +38,17 @@ namespace Lextm.SharpSnmpLib
     public interface IEntity : IConstruct
     {
         /// <summary>
-        /// Parent name.
+        /// Parent.
         /// </summary>
         string Parent { get; set; }
+
+        /// <summary>
+        /// Gets or sets the parent module.
+        /// </summary>
+        /// <value>
+        /// The parent module.
+        /// </value>
+        IModule ParentModule { get; set; }
 
         /// <summary>
         /// Value.
@@ -49,19 +57,10 @@ namespace Lextm.SharpSnmpLib
         uint Value { get; set; }
 
         /// <summary>
-        /// Gets or sets the parent module.
-        /// </summary>
-        /// <value>
-        /// The parent module.
-        /// </value>
-        string ParentModule { get; set; }
-
-        /// <summary>
         /// Validates this entity.
         /// </summary>
         /// <param name="knownConstructs">Known constructs.</param>
-        /// <param name="fileName">File name.</param>
         /// <returns></returns>
-        bool Validate(List<IConstruct> knownConstructs, string fileName);
+        bool Validate(List<IConstruct> knownConstructs);
     }
 }

@@ -32,8 +32,10 @@ namespace Lextm.SharpSnmpLib.Mib
         public int Line { get; set; }
         public int CharPositionInLine { get; set; }
 
-        public string Module { get; set; }
+        public IModule Module { get; set; }
 
         public Constraint Constraint { get; set; }
+
+        public string ModuleName { get; set; }
     }
 }

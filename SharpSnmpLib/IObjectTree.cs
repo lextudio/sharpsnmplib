@@ -39,7 +39,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Loaded MIB modules.
         /// </summary>
-        ICollection<string> LoadedModules
+        ICollection<IModule> LoadedModules
         {
             get;
         }

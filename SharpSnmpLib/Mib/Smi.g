@@ -692,7 +692,7 @@ built_in_type returns [ISmiType result]
 defined_type returns [DefinedType result = new DefinedType()]
     : (mod=NAME 
     { 
-      $result.Module = $mod.text; 
+      $result.ModuleName = $mod.text; 
       WantPascalCase($mod);
     } DOT )? 
     name=NAME 

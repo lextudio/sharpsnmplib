@@ -89,7 +89,7 @@ namespace Lextm.SharpSnmpLib.Browser
             ReloadableObjectRegistry reg = (ReloadableObjectRegistry)sender;
             SuspendLayout();
             listView1.Items.Clear();
-            List<string> loaded = new List<string>(reg.Tree.LoadedModules);
+            var loaded = reg.Tree.LoadedModules.Select(module => module.Name).ToList();
             loaded.Sort();
             foreach (ListViewItem item in loaded.Select(module => listView1.Items.Add(module)))
             {

@@ -89,7 +89,7 @@ namespace Lextm.SharpSnmpLib.Mib
             _id = ObjectIdentifier.AppendTo(id, entity.Value);
             _parent = parent.Name;
             _name = entity.Name;
-            _module = entity.Module;
+            _module = entity.Module.Name;
             _value = entity.Value;
             _parentNode.Append(this);
             Type = DetermineType(entity.GetType().ToString(), _name, _parentNode);
@@ -262,14 +262,19 @@ namespace Lextm.SharpSnmpLib.Mib
         /// Adds a <see cref="Definition"/> child to this <see cref="Definition"/>.
         /// </summary>
         /// <param name="def"></param>
-        private void Append(IDefinition def)
+        public void Append(IDefinition def)
         {
             if (!_children.ContainsKey(def.Value))
             {
                 _children.Add(def.Value, def);
             }
         }
-        
+
+        public void Clear()
+        {
+            
+        }
+
         internal static uint[] GetParent(IDefinition definition)    // Assume all IDefinition are Definition
         {
             uint[] self = ((Definition)definition)._id;        // use _id rather than GetNumericalForm to avoid the Clone.

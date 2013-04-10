@@ -12,7 +12,7 @@ namespace Lextm.SharpSnmpLib.Mib
 #if !MA && !MT
         internal static readonly ILog Logger = LogManager.GetLogger(typeof (ValidationHelper));
 #endif
-        internal static bool ValidateParent(this IEntity entity, IEnumerable<IConstruct> knownConstructs, string fileName)
+        internal static bool ValidateParent(this IEntity entity, IEnumerable<IConstruct> knownConstructs)
         {
             // IMPORTANT: quick fix for default constructs (they are assumed as valid)
             if (entity.Parent == "iso")
@@ -36,13 +36,13 @@ namespace Lextm.SharpSnmpLib.Mib
             }
 
             var builder = new StringBuilder();
-            if (String.IsNullOrEmpty(fileName))
+            if (String.IsNullOrEmpty(entity.Module.FileName))
             {
                 builder.Append("error S0003 : ");
             }
             else
             {
-                builder.AppendFormat("{0} : error S0003 : ", fileName);
+                builder.AppendFormat("{0} : error S0003 : ", entity.Module.FileName);
             }
 
             builder.AppendFormat("{0} is not defined", entity.Parent);

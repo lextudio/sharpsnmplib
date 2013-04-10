@@ -54,7 +54,7 @@ namespace Lextm.SharpSnmpLib.Compiler
         {
             SuspendLayout();
             listView1.Items.Clear();
-            List<string> loaded = new List<string>(Assembler.Tree.LoadedModules);
+            var loaded = Assembler.Tree.LoadedModules.Select(module => module.Name).ToList();
             loaded.Sort();
             foreach (ListViewItem item in loaded.Select(module => listView1.Items.Add(module)))
             {

@@ -34,7 +34,7 @@ namespace Lextm.SharpSnmpLib.Mib
         [CLSCompliant(false)]
         public ObjectIdentifierType(string moduleName, string name, string parent, uint value)
         {
-            Module = moduleName;
+            Module = new DefaultModule(moduleName);
             Name = name;
             Value = value;
             Parent = parent;
@@ -47,17 +47,17 @@ namespace Lextm.SharpSnmpLib.Mib
         [CLSCompliant(false)]
         public uint Value { get; set; }
 
-        public string ParentModule { get; set; }
+        public IModule ParentModule { get; set; }
 
-        public bool Validate(List<IConstruct> knownConstructs, string fileName)
+        public bool Validate(List<IConstruct> knownConstructs)
         {
-            return this.ValidateParent(knownConstructs, fileName);
+            return this.ValidateParent(knownConstructs);
         }
 
         public string Parent { get; set; }
         public string Name { get; set; }
         public int Line { get; set; }
         public int CharPositionInLine { get; set; }
-        public string Module { get; set; }
+        public IModule Module { get; set; }
     }
 }
