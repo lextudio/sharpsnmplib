@@ -100,7 +100,7 @@ namespace Lextm.SharpSnmpLib.Mib
             RealTree.Refresh();  
             
             foreach (MibModule module in
-                modules.Cast<MibModule>().Where(module => !Tree.PendingModules.Contains(module.Name)))
+                modules.Cast<MibModule>().Where(module => !Tree.PendingModules.Any(pending => pending.Name == module.Name)))
             {
                 PersistModuleToFile(Folder, module, Tree);
             }

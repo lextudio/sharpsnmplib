@@ -535,9 +535,9 @@ namespace Lextm.SharpSnmpLib.Mib
         /// <summary>
         /// Pending MIB modules.
         /// </summary>
-        public ICollection<string> PendingModules
+        public ICollection<IModule> PendingModules
         {
-            get { return _pendings.Keys; }
+            get { return _pendings.Values.Cast<IModule>().ToList(); }
         }
 
         private void AddNodes(IEnumerable<Definition> nodes)
@@ -628,31 +628,13 @@ namespace Lextm.SharpSnmpLib.Mib
             throw new FormatException("input does not contain a value");
         }
 
-        // TODO: fix this.
-
-        ///// <summary>
-        ///// Decodes a variable using the loaded definitions to the best type.
-        ///// 
-        ///// Depending on the variable and loaded MIBs can return:
-        /////     * Double
-        /////     * Int32
-        /////     * UInt32
-        /////     * UInt64
-        ///// </summary>
-        ///// <param name="v">The variable to decode the value of.</param>
-        ///// <returns>The best result based on the loaded MIBs.</returns>
-        //public object Decode(Variable v)
-        //{
-        //    var def = Search(v.Id.ToNumerical()).Definition;
-        //    var o = def.Entity as ObjectTypeMacro;
-
-        //    if (o == null) { return null; }
-
-        //    var tc = o.Syntax as TextualConvention;
-
-        //    if (tc == null) { return null; }
-
-        //    return tc.Decode(v);
-        //}
+        /// <summary>
+        /// Unloads the specified module.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        public void Unload(string name)
+        {
+            // IMPORTANT: not implemented in open source version.
+        }
     }
 }

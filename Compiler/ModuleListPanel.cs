@@ -54,16 +54,16 @@ namespace Lextm.SharpSnmpLib.Compiler
         {
             SuspendLayout();
             listView1.Items.Clear();
-            var loaded = Assembler.Tree.LoadedModules.Select(module => module.Name).ToList();
-            loaded.Sort();
-            foreach (ListViewItem item in loaded.Select(module => listView1.Items.Add(module)))
+            var loaded = Assembler.Tree.LoadedModules.ToList();
+            loaded.Sort((left, right) => string.CompareOrdinal(left.Name, right.Name));
+            foreach (ListViewItem item in loaded.Select(module => listView1.Items.Add(module.Name)))
             {
                 item.Group = listView1.Groups["lvgLoaded"];
             }
             
-            List<string> pendings = new List<string>(Assembler.Tree.PendingModules);
-            pendings.Sort();
-            foreach (ListViewItem item in pendings.Select(pending => listView1.Items.Add(pending)))
+            var pendings = Assembler.Tree.PendingModules.ToList();
+            pendings.Sort((left, right) => string.CompareOrdinal(left.Name, right.Name));
+            foreach (ListViewItem item in pendings.Select(pending => listView1.Items.Add(pending.Name)))
             {
                 item.BackColor = Color.LightGray;
                 item.Group = listView1.Groups["lvgPending"];
