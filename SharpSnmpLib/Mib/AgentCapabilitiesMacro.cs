@@ -52,7 +52,7 @@ namespace Lextm.SharpSnmpLib.Mib
         public int CharPositionInLine { get; set; }
         public IModule Module { get; set; }
 
-        public bool Validate(List<IConstruct> knownConstructs)
+        public bool Validate(IEnumerable<IConstruct> knownConstructs, IErrorRegistry registry)
         {
             return this.ValidateParent(knownConstructs);
         }

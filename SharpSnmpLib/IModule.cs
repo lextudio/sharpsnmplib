@@ -57,14 +57,6 @@ namespace Lextm.SharpSnmpLib
         {
             get;
         }
-        
-        /// <summary>
-        /// Modules that this module dependent on.
-        /// </summary>
-        IList<string> Dependents
-        {
-            get;
-        }
 
         /// <summary>
         /// Gets the name of the file.

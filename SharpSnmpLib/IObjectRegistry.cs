@@ -79,25 +79,6 @@ namespace Lextm.SharpSnmpLib
         string Translate(uint[] numerical);
 
         /// <summary>
-        /// Loads a folder of MIB files.
-        /// </summary>
-        /// <param name="folder">Folder</param>
-        /// <param name="pattern">MIB file pattern</param>
-        void CompileFolder(string folder, string pattern);
-
-        /// <summary>
-        /// Loads MIB files.
-        /// </summary>
-        /// <param name="fileNames">File names.</param>
-        void CompileFiles(IEnumerable<string> fileNames);
-
-        /// <summary>
-        /// Loads a MIB file.
-        /// </summary>
-        /// <param name="fileName">File name</param>
-        void Compile(string fileName);
-
-        /// <summary>
         /// Validates the table.
         /// </summary>
         /// <param name="identifier">The identifier.</param>

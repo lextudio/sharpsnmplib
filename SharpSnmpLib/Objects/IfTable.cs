@@ -91,6 +91,12 @@ namespace Lextm.SharpSnmpLib.Objects
             }
         }
 
+        /// <summary>
+        /// Gets the objects in the table.
+        /// </summary>
+        /// <value>
+        /// The objects.
+        /// </value>
         protected override IEnumerable<ScalarObject> Objects 
         {
             get { return _elements; }

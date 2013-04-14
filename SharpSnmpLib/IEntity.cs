@@ -60,7 +60,8 @@ namespace Lextm.SharpSnmpLib
         /// Validates this entity.
         /// </summary>
         /// <param name="knownConstructs">Known constructs.</param>
+        /// <param name="registry">The registry.</param>
         /// <returns></returns>
-        bool Validate(List<IConstruct> knownConstructs);
+        bool Validate(IEnumerable<IConstruct> knownConstructs, IErrorRegistry registry);
     }
 }

@@ -198,7 +198,7 @@ namespace Lextm.SharpSnmpLib.Mib
                 }
             }
 
-            return Entities.All(entity => entity.Validate(knownConstructs));
+            return Entities.All(entity => entity.Validate(knownConstructs, null));
         }
 
         private IConstruct Find(string symbol)

@@ -46,7 +46,7 @@ namespace Lextm.SharpSnmpLib.Mib
 
         public IModule ParentModule { get; set; }
 
-        public bool Validate(List<IConstruct> knownConstructs)
+        public bool Validate(IEnumerable<IConstruct> knownConstructs, IErrorRegistry registry)
         {
             return this.ValidateParent(knownConstructs);
         }
