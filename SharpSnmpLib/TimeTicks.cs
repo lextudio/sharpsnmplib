@@ -18,7 +18,7 @@
 // DEALINGS IN THE SOFTWARE.
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.IO;
 
 namespace Lextm.SharpSnmpLib
@@ -27,6 +27,7 @@ namespace Lextm.SharpSnmpLib
     /// TimeTicks type.
     /// </summary>
     /// <remarks>Represents SNMP TimeTicks type.</remarks>
+    [DebuggerDisplay("{count} ({ToTimeSpan()})")]
     public sealed class TimeTicks : ISnmpData, IEquatable<TimeTicks>
     {
         private readonly Counter32 _count;
@@ -188,7 +189,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public override string ToString()
         {
-            return string.Format(CultureInfo.InvariantCulture, "{0} ({1})", ToUInt32(), ToTimeSpan());
+            return ToTimeSpan().ToString();
         }
         
         /// <summary>
