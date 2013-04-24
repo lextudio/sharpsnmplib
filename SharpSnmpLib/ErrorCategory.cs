@@ -33,6 +33,16 @@
         /// <summary>
         /// A module cannot be imported.
         /// </summary>
-        MissingDependency = 6
+        MissingDependency = 6,
+
+        /// <summary>
+        /// Duplicate type definitions are found.
+        /// </summary>
+        DuplicateTypes = 7,
+
+        /// <summary>
+        /// Duplicate entity definitions are found.
+        /// </summary>
+        DuplicateEntities = 8
     }
 }
