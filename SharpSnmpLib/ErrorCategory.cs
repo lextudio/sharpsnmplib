@@ -43,6 +43,11 @@
         /// <summary>
         /// Duplicate entity definitions are found.
         /// </summary>
-        DuplicateEntities = 8
+        DuplicateEntities = 8,
+
+        /// <summary>
+        /// No index is found for table entry.
+        /// </summary>
+        MissingIndex = 9
     }
 }
