@@ -26,6 +26,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// Search result.
     /// </summary>
+    [Obsolete("Please use Pro edition")]
     public sealed class SearchResult
     {
         private readonly uint[] _remaining;

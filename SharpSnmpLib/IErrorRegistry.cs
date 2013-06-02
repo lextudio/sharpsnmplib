@@ -1,8 +1,11 @@
+using System;
+
 namespace Lextm.SharpSnmpLib
 {
     /// <summary>
     /// Error registry interface.
     /// </summary>
+    [Obsolete("Please use Pro edition")]
     public interface IErrorRegistry
     {
         /// <summary>

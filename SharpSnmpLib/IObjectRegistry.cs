@@ -26,6 +26,7 @@ namespace Lextm.SharpSnmpLib
     /// Object registry interface.
     /// </summary>
     [CLSCompliant(false)]
+    [Obsolete("Please use Pro edition")]
     public interface IObjectRegistry
     {
         /// <summary>

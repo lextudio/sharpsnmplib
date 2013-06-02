@@ -25,6 +25,8 @@
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
+
+using System;
 using System.Collections.Generic;
 
 namespace Lextm.SharpSnmpLib
@@ -32,6 +34,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// MIB Module interface.
     /// </summary>
+    [Obsolete("Please use Pro edition")]
     public interface IModule
     {
         /// <summary>

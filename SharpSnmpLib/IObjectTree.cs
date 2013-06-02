@@ -26,6 +26,7 @@ namespace Lextm.SharpSnmpLib
     /// Object tree interface.
     /// </summary>
     [CLSCompliant(false)]
+    [Obsolete("Please use Pro edition")]
     public interface IObjectTree
     {
         /// <summary>

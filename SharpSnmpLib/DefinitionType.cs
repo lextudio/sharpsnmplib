@@ -25,6 +25,7 @@ namespace Lextm.SharpSnmpLib
     /// Definition type.
     /// </summary>
     [Serializable]
+    [Obsolete("Please use Pro edition")]
     public enum DefinitionType
     {
         /// <summary>

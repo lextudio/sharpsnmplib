@@ -17,11 +17,14 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+using System;
+
 namespace Lextm.SharpSnmpLib
 {
     /// <summary>
     /// Construct interface.
     /// </summary>
+    [Obsolete("Please use Pro edition")]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1040:AvoidEmptyInterfaces")]
     public interface IConstruct
     {

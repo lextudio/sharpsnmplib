@@ -17,11 +17,14 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+using System;
+
 namespace Lextm.SharpSnmpLib
 {
     /// <summary>
     /// Type assignment interface.
     /// </summary>
+    [Obsolete("Please use Pro edition")]
     public interface ITypeAssignment : IConstruct
     {
     }

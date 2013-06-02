@@ -35,6 +35,7 @@ namespace Lextm.SharpSnmpLib
     /// Entity interface.
     /// </summary>
     [CLSCompliant(false)]
+    [Obsolete("Please use Pro edition")]
     public interface IEntity : IConstruct
     {
         /// <summary>

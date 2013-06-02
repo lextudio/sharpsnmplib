@@ -1,8 +1,11 @@
-﻿namespace Lextm.SharpSnmpLib
+﻿using System;
+
+namespace Lextm.SharpSnmpLib
 {
     /// <summary>
     /// Error category.
     /// </summary>
+    [Obsolete("Please use Pro edition")]
     public enum ErrorCategory
     {
         /// <summary>
