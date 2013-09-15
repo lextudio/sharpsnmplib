@@ -61,7 +61,6 @@
     <Compile Include="..\lib\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Bits.cs" />
     <Compile Include="ErrorCategory.cs" />
     <Compile Include="IErrorRegistry.cs" />
     <Compile Include="ITypeAssignment.cs" />
