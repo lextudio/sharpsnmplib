@@ -19,20 +19,30 @@ namespace BytesViewer
         public static void Fill(this ISnmpMessage message, TreeView tree)
         {
             var messageNode = tree.Nodes.Add(string.Format("Version {0}", message.Version));
-            var header = messageNode.Nodes.Add("header");
-            header.Nodes.Add(string.Format("message id {0}", message.Header.MessageId));
-            header.Nodes.Add(string.Format("max size {0}", message.Header.MaxSize));
-            header.Nodes.Add(string.Format("security level {0}", message.Header.SecurityLevel.GetString()));
-            
+            if (message.Version == VersionCode.V3)
+            {
+                var header = messageNode.Nodes.Add("header");
+                header.Nodes.Add(string.Format("message id {0}", message.Header.MessageId));
+                header.Nodes.Add(string.Format("max size {0}", message.Header.MaxSize));
+                header.Nodes.Add(string.Format("security level {0}", message.Header.SecurityLevel.GetString()));
+            }
+
             var parameter = messageNode.Nodes.Add("parameters");
-            parameter.Nodes.Add(string.Format("user {0}", message.Parameters.UserName));
-            parameter.Nodes.Add(string.Format("engine id {0}", message.Parameters.EngineId.ToHexString()));
-            parameter.Nodes.Add(string.Format("engine boots {0}", message.Parameters.EngineBoots));
-            parameter.Nodes.Add(string.Format("engine time {0}", message.Parameters.EngineTime));
-            parameter.Nodes.Add(string.Format("checksum {0}", message.Parameters.AuthenticationParameters.ToHexString()));
-            parameter.Nodes.Add(string.Format("checksum broken {0}", message.Parameters.IsInvalid));
-            parameter.Nodes.Add(string.Format("encryption token {0}", message.Parameters.PrivacyParameters.ToHexString()));
-            
+            if (message.Version == VersionCode.V3)
+            {
+                parameter.Nodes.Add(string.Format("user {0}", message.Parameters.UserName));
+                parameter.Nodes.Add(string.Format("engine id {0}", message.Parameters.EngineId.ToHexString()));
+                parameter.Nodes.Add(string.Format("engine boots {0}", message.Parameters.EngineBoots));
+                parameter.Nodes.Add(string.Format("engine time {0}", message.Parameters.EngineTime));
+                parameter.Nodes.Add(string.Format("checksum {0}", message.Parameters.AuthenticationParameters.ToHexString()));
+                parameter.Nodes.Add(string.Format("checksum broken {0}", message.Parameters.IsInvalid));
+                parameter.Nodes.Add(string.Format("encryption token {0}", message.Parameters.PrivacyParameters.ToHexString()));
+            }
+            else
+            {
+                parameter.Nodes.Add(string.Format("community {0}", message.Parameters.UserName));
+            }
+
             var scope = messageNode.Nodes.Add("scope");
             if (message.TypeCode() == SnmpType.Unknown)
             {
@@ -40,8 +50,12 @@ namespace BytesViewer
             }
             else if (OctetString.IsNullOrEmpty(message.Parameters.PrivacyParameters))
             {
-                scope.Nodes.Add(string.Format("context name {0}", message.Scope.ContextName));
-                scope.Nodes.Add(string.Format("context engine id {0}", message.Scope.ContextEngineId.ToHexString()));
+                if (message.Version == VersionCode.V3)
+                {
+                    scope.Nodes.Add(string.Format("context name {0}", message.Scope.ContextName));
+                    scope.Nodes.Add(string.Format("context engine id {0}", message.Scope.ContextEngineId.ToHexString()));
+                }
+
                 var pdu = scope.Nodes.Add(string.Format("pdu type {0}", message.Scope.Pdu.TypeCode));
                 pdu.Nodes.Add(string.Format("request id {0}", message.Scope.Pdu.RequestId));
                 pdu.Nodes.Add(string.Format("error status {0}", message.Scope.Pdu.ErrorStatus.ToErrorCode()));
