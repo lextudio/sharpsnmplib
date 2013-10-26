@@ -29,9 +29,13 @@ namespace Lextm.SharpSnmpLib.Security
     /// </summary>
     public sealed class MD5AuthenticationProvider : IAuthenticationProvider
     {
+        private const int Md5KeyCacheCapacity = 100;
+        private static readonly CryptoKeyCache Md5KeyCache = new CryptoKeyCache(Md5KeyCacheCapacity);
+        private static readonly object Md5KeyCacheLock = new object();
+
         private readonly byte[] _password;
         private const int DigestLength = 12;
-
+        
         /// <summary>
         /// Initializes a new instance of the <see cref="MD5AuthenticationProvider"/> class.
         /// </summary>
@@ -47,6 +51,7 @@ namespace Lextm.SharpSnmpLib.Security
         }
         
         #region IAuthenticationProvider Members
+        
 
         /// <summary>
         /// Passwords to key.
@@ -55,6 +60,24 @@ namespace Lextm.SharpSnmpLib.Security
         /// <param name="engineId">The engine ID.</param>
         /// <returns></returns>
         public byte[] PasswordToKey(byte[] password, byte[] engineId)
+        {
+            lock (Md5KeyCacheLock)
+            {
+                byte[] cachedKey;
+                if (Md5KeyCache.TryGetCachedValue(password, engineId, out cachedKey))
+                {
+	                return cachedKey;
+                }
+	  	   	 
+                byte[] keyToCache = _PasswordToKey(password, engineId);
+
+                //Value not in cache compute and cache the value
+                Md5KeyCache.AddValueToCache(password, engineId, keyToCache);
+                return keyToCache;
+            }
+        }
+
+        private byte[] _PasswordToKey(byte[] password, byte[] engineId)
         {
             // key length has to be at least 8 bytes long (RFC3414)
             if (password == null)

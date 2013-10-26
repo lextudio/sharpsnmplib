@@ -30,6 +30,10 @@ namespace Lextm.SharpSnmpLib.Security
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "SHA", Justification = "definition")]
     public sealed class SHA1AuthenticationProvider : IAuthenticationProvider
     {
+        private const int Sha1KeyCacheCapacity = 100; 
+        private static readonly CryptoKeyCache Sha1KeyCache = new CryptoKeyCache(Sha1KeyCacheCapacity);
+	    private static readonly Object Sha1KeyCacheLock = new object();
+
         private readonly byte[] _password;
         private const int DigestLength = 12;
 
@@ -55,6 +59,23 @@ namespace Lextm.SharpSnmpLib.Security
         /// <param name="engineId">The engine ID.</param>
         /// <returns></returns>
         public byte[] PasswordToKey(byte[] password, byte[] engineId)
+        {
+            lock (Sha1KeyCacheLock)
+            {
+                byte[] cachedKey;
+                if (Sha1KeyCache.TryGetCachedValue(password, engineId, out cachedKey))
+                {
+	                return cachedKey;
+                }
+	  	  	 	 
+                byte[] keyToCache = _PasswordToKey(password, engineId);
+                //Value not in cache compute and cache the value
+                Sha1KeyCache.AddValueToCache(password, engineId, keyToCache);
+                return keyToCache;
+            }
+        }
+
+        private byte[] _PasswordToKey(byte[] password, byte[] engineId)
         {
             // key length has to be at least 8 bytes long (RFC3414)
             if (password == null)
