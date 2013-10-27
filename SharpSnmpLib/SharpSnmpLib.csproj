@@ -11,7 +11,7 @@
     <RootNamespace>Lextm.SharpSnmpLib</RootNamespace>
     <AssemblyName>SharpSnmpLib</AssemblyName>
     <DocumentationFile>..\bin\SharpSnmpLib.xml</DocumentationFile>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SourceAnalysisOverrideSettingsFile>D:\sharpsnmplib_svn\SharpSnmpLib\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
     <SignAssembly>true</SignAssembly>
@@ -29,6 +29,7 @@
     <RunSourceAnalysis>False</RunSourceAnalysis>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -155,16 +156,6 @@
     <Compile Include="DataFactory.cs" />
     <Compile Include="SnmpType.cs" />
     <Compile Include="StreamExtension.cs" />
-    <Compile Include="System.Tuples\ConversionsGenerator.cs" Condition="'$(TargetFrameworkVersion)' == 'v3.5'">
-      <DependentUpon>ConversionsGenerator.tt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="System.Tuples\TupleGenerator.cs" Condition="'$(TargetFrameworkVersion)' == 'v3.5'">
-      <DependentUpon>TupleGenerator.tt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <Compile Include="TimeTicks.cs" />
     <Compile Include="TrapV1Pdu.cs" />
     <Compile Include="TrapV2Pdu.cs" />
@@ -180,18 +171,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="sharpsnmplib.snk" />
-    <None Include="System.Tuples\ConversionsGenerator.tt" Condition="'$(TargetFrameworkVersion)' == 'v3.5'">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ConversionsGenerator.cs</LastGenOutput>
-    </None>
-    <None Include="System.Tuples\NormalTuple.ttinclude" Condition="'$(TargetFrameworkVersion)' == 'v3.5'" />
-    <None Include="System.Tuples\Settings.ttinclude" Condition="'$(TargetFrameworkVersion)' == 'v3.5'" />
-    <None Include="System.Tuples\TupleGenerator.tt" Condition="'$(TargetFrameworkVersion)' == 'v3.5'">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>TupleGenerator.cs</LastGenOutput>
-    </None>
-    <None Include="System.Tuples\Util.ttinclude" Condition="'$(TargetFrameworkVersion)' == 'v3.5'" />
-    <None Include="System.Tuples\ZeroTuple.ttinclude" Condition="'$(TargetFrameworkVersion)' == 'v3.5'" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

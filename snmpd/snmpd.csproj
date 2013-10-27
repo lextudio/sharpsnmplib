@@ -11,7 +11,7 @@
     <RootNamespace>Lextm.SharpSnmpLib.Agent</RootNamespace>
     <AssemblyName>snmpd</AssemblyName>
     <ApplicationIcon>Resources\network-server.ico</ApplicationIcon>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <AssemblyOriginatorKeyFile>..\SharpSnmpLib\sharpsnmplib.snk</AssemblyOriginatorKeyFile>
     <DelaySign>False</DelaySign>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
@@ -32,6 +32,7 @@
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -133,7 +134,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RemObjects.Mono.Helpers\RemObjects.Mono.Helpers.csproj">
-      <Project>{5E9B9AB3-59E8-44FA-B3DC-5EE67800C462}</Project>
+      <Project>{5e9b9ab3-59e8-44fa-b3dc-5ee67800c462}</Project>
       <Name>RemObjects.Mono.Helpers</Name>
     </ProjectReference>
     <ProjectReference Include="..\SharpSnmpLib\SharpSnmpLib.csproj">

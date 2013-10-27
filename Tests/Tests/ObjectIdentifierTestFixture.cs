@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using Lextm.SharpSnmpLib.Mib;
+// using Lextm.SharpSnmpLib.Mib;
 using NUnit.Framework;
 
 #pragma warning disable 1591,0618
@@ -89,17 +89,17 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestToString()
         {
             var transmission = new ObjectIdentifier(new uint[] {1, 3, 6, 1, 2, 1, 10});
-            Assert.AreEqual(".iso.org.dod.internet.mgmt.mib-2.transmission",
-                            transmission.ToString(DefaultObjectRegistry.Instance));
+            //Assert.AreEqual(".iso.org.dod.internet.mgmt.mib-2.transmission",
+            //                transmission.ToString(DefaultObjectRegistry.Instance));
             Assert.AreEqual(".1.3.6.1.2.1.10", transmission.ToString(null));
         }
 
-        [Test]
-        public void TestToStringLong()
-        {
-            Assert.AreEqual(".iso.org.dod.internet.mgmt.mib-2.transmission.100",
-                            new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 10, 100 }).ToString(DefaultObjectRegistry.Instance));
-        }
+        //[Test]
+        //public void TestToStringLong()
+        //{
+        //    Assert.AreEqual(".iso.org.dod.internet.mgmt.mib-2.transmission.100",
+        //                    new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 10, 100 }).ToString(DefaultObjectRegistry.Instance));
+        //}
         
         [Test]
         public void TestEqual()
