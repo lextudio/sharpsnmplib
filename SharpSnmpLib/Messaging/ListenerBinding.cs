@@ -24,6 +24,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using Lextm.SharpSnmpLib.Security;
+using System.Threading.Tasks;
 
 namespace Lextm.SharpSnmpLib.Messaging
 {
@@ -221,9 +222,9 @@ namespace Lextm.SharpSnmpLib.Messaging
 #endif
 
 #if ASYNC
-            ThreadPool.QueueUserWorkItem(AsyncBeginReceive);
-            #else
-            ThreadPool.QueueUserWorkItem(AsyncReceive);
+            Task.Factory.StartNew(()=>AsyncBeginReceive());
+#else
+            Task.Factory.StartNew(()=>AsyncReceive());
 #endif
         }
 
@@ -329,7 +330,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
         }
         #else
-        private void AsyncReceive(object dummy)
+        private void AsyncReceive()
         {
             while (true)
             {
@@ -345,7 +346,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                     EndPoint remote = _socket.AddressFamily == AddressFamily.InterNetwork ? new IPEndPoint(IPAddress.Any, 0) : new IPEndPoint(IPAddress.IPv6Any, 0);
 
                     var count = _socket.ReceiveFrom(buffer, ref remote);
-                    ThreadPool.QueueUserWorkItem(HandleMessage, new MessageParams(buffer, count, remote));
+                    Task.Factory.StartNew(()=>HandleMessage(new MessageParams(buffer, count, remote)));
                 }
                 catch (SocketException ex)
                 {
@@ -376,10 +377,6 @@ namespace Lextm.SharpSnmpLib.Messaging
             handler(this, new ExceptionRaisedEventArgs(exception));
         }
 
-        private void HandleMessage(object o)
-        {
-            HandleMessage((MessageParams)o);
-        }
 
         [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         private void HandleMessage(MessageParams param)

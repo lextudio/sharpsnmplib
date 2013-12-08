@@ -24,6 +24,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using Lextm.SharpSnmpLib.Security;
+using System.Threading.Tasks;
 
 namespace Lextm.SharpSnmpLib.Messaging
 {
@@ -117,9 +118,9 @@ namespace Lextm.SharpSnmpLib.Messaging
                 #endif
 
                 #if ASYNC
-                ThreadPool.QueueUserWorkItem(AsyncBeginReceive);
+                Task.Factory.StartNew(()=>AsyncBeginReceive());
                 #else
-                ThreadPool.QueueUserWorkItem(AsyncReceive, udp.Client);
+                Task.Factory.StartNew(()=>AsyncReceive(udp.Client));
                 #endif
 
                 Thread.Sleep(interval);                
@@ -128,9 +129,9 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
         }
 
-        private void AsyncReceive(object dummy)
+        private void AsyncReceive(Socket dummy)
         {
-            Receive((Socket)dummy);
+            Receive(dummy);
         }
         
         private void Receive(Socket socket)
@@ -148,7 +149,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                     var buffer = new byte[_bufferSize];
                     EndPoint remote = new IPEndPoint(IPAddress.Any, 0);
                     var count = socket.ReceiveFrom(buffer, ref remote);
-                    ThreadPool.QueueUserWorkItem(HandleMessage, new MessageParams(buffer, count, remote));
+                    Task.Factory.StartNew(()=> HandleMessage(new MessageParams(buffer, count, remote)));
                 }
                 catch (SocketException ex)
                 {
@@ -177,10 +178,6 @@ namespace Lextm.SharpSnmpLib.Messaging
             handler(this, new ExceptionRaisedEventArgs(exception));
         }
 
-        private void HandleMessage(object o)
-        {
-            HandleMessage((MessageParams)o);
-        }
 
         private void HandleMessage(MessageParams param)
         {
