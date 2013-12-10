@@ -44,7 +44,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// http://msdn.microsoft.com/en-us/library/ms740668(VS.85).aspx
         /// </summary>
-        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed. Suppression is OK here.")] 
+        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed. Suppression is OK here.")]
         private const int WSAECONNRESET = 10054;
 
         /// <summary>
@@ -217,14 +217,14 @@ namespace Lextm.SharpSnmpLib.Messaging
 
 #if CF
             _bufferSize = 8192;
-            #else
+#else
             _bufferSize = _socket.ReceiveBufferSize;
 #endif
 
 #if ASYNC
-            Task.Factory.StartNew(()=>AsyncBeginReceive());
+            Task.Factory.StartNew(() => AsyncBeginReceive());
 #else
-            Task.Factory.StartNew(()=>AsyncReceive());
+            Task.Factory.StartNew(() => AsyncReceive());
 #endif
         }
 
@@ -249,18 +249,13 @@ namespace Lextm.SharpSnmpLib.Messaging
             _socket = null;
         }
 
-        #if ASYNC
-        private void AsyncBeginReceive(object dummy)
-        {
-            AsyncBeginReceive();
-        }
-
+#if ASYNC
         private void AsyncBeginReceive()
         {
             while (true)
             {
                 // If no more active, then stop.
-                if (Interlocked.Read(ref _active) == Inactive)
+                if (Interlocked.Exchange(ref _active, _active) == Inactive)
                 {
                     return;
                 }
@@ -298,7 +293,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             // If no more active, then stop. This discards the received packet, if any (indeed, we may be there either
             // because we've received a packet, or because the socket has been closed).
-            if (Interlocked.Read(ref _active) == Inactive)
+            if (Interlocked.Exchange(ref _active, _active) == Inactive)
             {
                 return;
             }
@@ -312,7 +307,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 EndPoint remote = _socket.AddressFamily == AddressFamily.InterNetwork ? new IPEndPoint(IPAddress.Any, 0) : new IPEndPoint(IPAddress.IPv6Any, 0);
                 int count = _socket.EndReceiveFrom(iar, ref remote);
-                HandleMessage(new MessageParams(buffer, count, remote));
+                HandleMessage(buffer, count, (IPEndPoint)remote);
             }
             catch (SocketException ex)
             {
@@ -329,7 +324,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 }
             }
         }
-        #else
+#else
         private void AsyncReceive()
         {
             while (true)
@@ -346,7 +341,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                     EndPoint remote = _socket.AddressFamily == AddressFamily.InterNetwork ? new IPEndPoint(IPAddress.Any, 0) : new IPEndPoint(IPAddress.IPv6Any, 0);
 
                     var count = _socket.ReceiveFrom(buffer, ref remote);
-                    Task.Factory.StartNew(()=>HandleMessage(new MessageParams(buffer, count, remote)));
+                    Task.Factory.StartNew(() => HandleMessage(buffer, count, (IPEndPoint)remote));
                 }
                 catch (SocketException ex)
                 {
@@ -364,7 +359,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 }
             }
         }
-        #endif
+#endif
 
         private void HandleException(Exception exception)
         {
@@ -379,17 +374,17 @@ namespace Lextm.SharpSnmpLib.Messaging
 
 
         [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-        private void HandleMessage(MessageParams param)
+        private void HandleMessage(byte[] buffer, int count, IPEndPoint remote)
         {
             IList<ISnmpMessage> messages = null;
             try
             {
-                messages = MessageFactory.ParseMessages(param.GetBytes(), 0, param.Number, _users);
+                messages = MessageFactory.ParseMessages(buffer, 0, count, _users);
             }
             catch (Exception ex)
             {
                 var exception = new MessageFactoryException("Invalid message bytes found. Use tracing to analyze the bytes.", ex);
-                exception.SetBytes(param.GetBytes());
+                exception.SetBytes(buffer);
                 HandleException(exception);
             }
 
@@ -403,7 +398,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 var handler = MessageReceived;
                 if (handler != null)
                 {
-                    handler(this, new MessageReceivedEventArgs(param.Sender, message, this));
+                    handler(this, new MessageReceivedEventArgs(remote, message, this));
                 }
             }
         }

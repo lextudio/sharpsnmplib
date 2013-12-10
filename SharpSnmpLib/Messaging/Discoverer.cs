@@ -118,9 +118,9 @@ namespace Lextm.SharpSnmpLib.Messaging
                 #endif
 
                 #if ASYNC
-                Task.Factory.StartNew(()=>AsyncBeginReceive());
+                Task.Factory.StartNew(() => AsyncBeginReceive(udp.Client));
                 #else
-                Task.Factory.StartNew(()=>AsyncReceive(udp.Client));
+                Task.Factory.StartNew(() => AsyncReceive(udp.Client));
                 #endif
 
                 Thread.Sleep(interval);                
@@ -129,13 +129,86 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
         }
 
-        private void AsyncReceive(Socket dummy)
+#if ASYNC
+        private void AsyncBeginReceive(Socket socket)
         {
-            Receive(dummy);
+            while (true)
+            {
+                // If no more active, then stop.
+                if (Interlocked.Exchange(ref _active, _active) == Inactive)
+                {
+                    return;
+                }
+
+                byte[] buffer = new byte[_bufferSize];
+                EndPoint remote = new IPEndPoint(IPAddress.Any, 0);
+                IAsyncResult iar = null;
+                try
+                {
+                    iar = socket.BeginReceiveFrom(buffer, 0, _bufferSize, SocketFlags.None, ref remote, AsyncEndReceive, new Tuple<Socket, byte[]>(socket, buffer));
+                }
+                catch (SocketException ex)
+                {
+                    // ignore WSAECONNRESET, http://bytes.com/topic/c-sharp/answers/237558-strange-udp-socket-problem
+                    if (ex.ErrorCode != WSAECONNRESET)
+                    {
+                        // If the SnmpTrapListener was active, marks it as stopped and call HandleException.
+                        // If it was inactive, the exception is likely to result from this, and we raise nothing.
+                        long activeBefore = Interlocked.CompareExchange(ref _active, Inactive, Active);
+                        if (activeBefore == Active)
+                        {
+                            HandleException(ex);
+                        }
+                    }
+                }
+
+                if (iar != null)
+                {
+                    iar.AsyncWaitHandle.WaitOne();
+                }
+            }
         }
-        
-        private void Receive(Socket socket)
-        {            
+
+        private void AsyncEndReceive(IAsyncResult iar)
+        {
+            // If no more active, then stop. This discards the received packet, if any (indeed, we may be there either
+            // because we've received a packet, or because the socket has been closed).
+            if (Interlocked.Exchange(ref _active, _active) == Inactive)
+            {
+                return;
+            }
+
+            //// We start another receive operation.
+            //AsyncBeginReceive();
+
+            Tuple<Socket, byte[]> data = (Tuple<Socket, byte[]>)iar.AsyncState;
+            byte[] buffer = data.Item2;
+
+            try
+            {
+                EndPoint remote = data.Item1.AddressFamily == AddressFamily.InterNetwork ? new IPEndPoint(IPAddress.Any, 0) : new IPEndPoint(IPAddress.IPv6Any, 0);
+                int count = data.Item1.EndReceiveFrom(iar, ref remote);
+                HandleMessage(buffer, count, (IPEndPoint)remote);
+            }
+            catch (SocketException ex)
+            {
+                // ignore WSAECONNRESET, http://bytes.com/topic/c-sharp/answers/237558-strange-udp-socket-problem
+                if (ex.ErrorCode != WSAECONNRESET)
+                {
+                    // If the SnmpTrapListener was active, marks it as stopped and call HandleException.
+                    // If it was inactive, the exception is likely to result from this, and we raise nothing.
+                    long activeBefore = Interlocked.CompareExchange(ref _active, Inactive, Active);
+                    if (activeBefore == Active)
+                    {
+                        HandleException(ex);
+                    }
+                }
+            }
+        }
+#else
+
+        private void AsyncReceive(Socket socket)
+        {
             while (true)
             {
                 // If no more active, then stop.
@@ -149,7 +222,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                     var buffer = new byte[_bufferSize];
                     EndPoint remote = new IPEndPoint(IPAddress.Any, 0);
                     var count = socket.ReceiveFrom(buffer, ref remote);
-                    Task.Factory.StartNew(()=> HandleMessage(new MessageParams(buffer, count, remote)));
+                    Task.Factory.StartNew(()=> HandleMessage(buffer, count, (IPEndPoint)remote));
                 }
                 catch (SocketException ex)
                 {
@@ -166,7 +239,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 }
             }
         }
-
+#endif
         private void HandleException(Exception exception)
         {
             var handler = ExceptionRaised;
@@ -179,9 +252,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         }
 
 
-        private void HandleMessage(MessageParams param)
+        private void HandleMessage(byte[] buffer, int count, IPEndPoint remote)
         {
-            foreach (var message in MessageFactory.ParseMessages(param.GetBytes(), 0, param.Number, Empty))
+            foreach (var message in MessageFactory.ParseMessages(buffer, 0, count, Empty))
             {
                 EventHandler<AgentFoundEventArgs> handler;
                 var code = message.TypeCode();
@@ -201,7 +274,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                     handler = AgentFound;
                     if (handler != null)
                     {
-                        handler(this, new AgentFoundEventArgs(param.Sender, null));
+                        handler(this, new AgentFoundEventArgs(remote, null));
                     }
                 }
 
@@ -224,7 +297,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 handler = AgentFound;
                 if (handler != null)
                 {
-                    handler(this, new AgentFoundEventArgs(param.Sender, response.Variables()[0]));
+                    handler(this, new AgentFoundEventArgs(remote, response.Variables()[0]));
                 }
             }
         }

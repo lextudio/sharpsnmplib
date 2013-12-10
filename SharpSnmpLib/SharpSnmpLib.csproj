@@ -36,7 +36,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -81,7 +81,6 @@
     <Compile Include="Messaging\Manager.cs" />
     <Compile Include="Messaging\MessageFactory.cs" />
     <Compile Include="Messaging\MessageFactoryException.cs" />
-    <Compile Include="Messaging\MessageParams.cs" />
     <Compile Include="Messaging\MessageReceivedEventArgs.cs" />
     <Compile Include="Messaging\Messenger.cs" />
     <Compile Include="Messaging\NumberGenerator.cs" />
