@@ -160,7 +160,7 @@
     <SyntaxFilters>Standard</SyntaxFilters>
     <Preliminary>False</Preliminary>
     <Language>en-US</Language>
-    <CopyrightText>%402008-2012, Lex Li</CopyrightText>
+    <CopyrightText>%28C%29 2008-2012, Lex Li</CopyrightText>
     <ContentPlacement>AboveNamespaces</ContentPlacement>
     <HtmlSdkLinkType>Msdn</HtmlSdkLinkType>
     <BinaryTOC>True</BinaryTOC>
@@ -181,6 +181,7 @@
         </configuration>
       </PlugInConfig>
     </PlugInConfigurations>
+    <CopyrightHref>http://sharpsnmplib.codeplex.com</CopyrightHref>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in
        order for Visual Studio to perform the build.  The others are optional
