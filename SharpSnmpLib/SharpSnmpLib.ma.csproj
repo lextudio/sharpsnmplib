@@ -47,6 +47,7 @@
     <Compile Include="DataFactory.cs" />
     <Compile Include="DefinitionType.cs" />
     <Compile Include="EndOfMibView.cs" />
+    <Compile Include="ErrorCategory.cs" />
     <Compile Include="ErrorCode.cs" />
     <Compile Include="Gauge32.cs" />
     <Compile Include="GenericCode.cs" />
@@ -57,6 +58,7 @@
     <Compile Include="IConstruct.cs" />
     <Compile Include="IDefinition.cs" />
     <Compile Include="IEntity.cs" />
+    <Compile Include="IErrorRegistry.cs" />
     <Compile Include="IModule.cs" />
     <Compile Include="InformRequestPdu.cs" />
     <Compile Include="Integer32.cs" />
@@ -87,7 +89,6 @@
     <Compile Include="Messaging\Manager.cs" />
     <Compile Include="Messaging\MessageFactory.cs" />
     <Compile Include="Messaging\MessageFactoryException.cs" />
-    <Compile Include="Messaging\MessageParams.cs" />
     <Compile Include="Messaging\MessageReceivedEventArgs.cs" />
     <Compile Include="Messaging\Messenger.cs" />
     <Compile Include="Messaging\NumberGenerator.cs" />
@@ -116,6 +117,8 @@
     <Compile Include="SecurityParameters.cs" />
     <Compile Include="Security\AESPrivacyProvider.cs" />
     <Compile Include="Security\AuthenticationProviderExtension.cs" />
+    <Compile Include="Security\Cache.cs" />
+    <Compile Include="Security\CryptoKeyCache.cs" />
     <Compile Include="Security\DecryptionException.cs" />
     <Compile Include="Security\DefaultAuthenticationProvider.cs" />
     <Compile Include="Security\DefaultPrivacyProvider.cs" />
