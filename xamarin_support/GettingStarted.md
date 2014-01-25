@@ -2,6 +2,7 @@ Simple SNMP operations can be easily translated to #SNMP function calls, so that
 
 ## GET Operations
 To send an SNMP v1 GET message to an SNMP agent located at 192.168.1.2 and query on OID 1.3.6.1.2.1.1.1.0,
+
 ```
 var result = Messenger.Get(VersionCode.V1, 
                            new IPEndPoint(IPAddress.Parse("192.168.1.2"), 161), 
@@ -9,12 +10,14 @@ var result = Messenger.Get(VersionCode.V1,
                            new List<Variable>{new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0"))},
                            60000);
 ```
+
 This operation will time out if no reply is received after 60 seconds (1 minute), and throw an exception (`TimeoutException`). If any error occurs, an `ErrorException` can be caught. All #SNMP exceptions are derived from `SnmpException`. 
 
 The result returned is a list that matches the list of `Variable` objects sent. The `Variable` in this list contains the value of the OID. All value classes implement from `ISnmpData` interface.
 
 ## SET Operations
 To send an SNMP v1 SET message to an SNMP agent located at 192.168.1.2 and set the value of OID 1.3.6.1.2.1.1.6.0 to "Shanghai",
+
 ```
 var result = Messenger.Set(VersionCode.V1, 
                            new IPEndPoint(IPAddress.Parse("192.168.1.2"), 161), 
@@ -46,6 +49,7 @@ var result = response.Pdu().Variables;
 ## GET-BULK Operations
 
 To send an SNMP v2 GET-BULK message to an SNMP agent located at 192.168.1.2 and query on OID 1.3.6.1.2.1.1.1.0,
+
 ```
 GetBulkRequestMessage message = new GetBulkRequestMessage(0,
                       VersionCode.V2,
@@ -78,6 +82,7 @@ Messenger.Walk(VersionCode.V1,
                60000, 
                WalkMode.WithinSubtree);
 ```
+
 The result returned contains a list of all available OIDs (as `Variable`) in this SNMP agent that under tree node of 1.3.6.1.2.1.1.
 
 \#SNMP supports two walk modes, `Default` and `WithinSubtree`.
@@ -97,8 +102,10 @@ Messenger.BulkWalk(VersionCode.V2,
                    null, 
                    null);
 ```
+
 ## TRAP Operations
 It is usually an SNMP agent that sends out TRAP messages. The following code shows how to send an empty SNMP v1 TRAP message from 192.168.1.2 to an SNMP manager located at 192.168.1.3,
+
 ```
 Messenger.SendTrapV1(new IPEndPoint(IPAddress.Parse("192.168.1.3"), 162), 
                      IPAddress.Parse("192.168.1.2"), 
@@ -109,7 +116,9 @@ Messenger.SendTrapV1(new IPEndPoint(IPAddress.Parse("192.168.1.3"), 162),
                      0, 
                      new List<Variable>();
 ```
+
 SNMP v2 and above introduces a simplified TRAP v2 message,
+
 ```
 Messenger.SendTrapV2(0, 
                      VersionCode.V2, 
@@ -119,8 +128,10 @@ Messenger.SendTrapV2(0,
                      0, 
                      new List<Variable>());
 ```
+
 ## INFORM Operations
 It is usually an SNMP agent that sends out INFORM messages. The following code shows how to send an empty INFORM message to an SNMP manager located at 192.168.1.3,
+
 ```
 Messenger.SendInform(0, 
                      VersionCode.V2, 
@@ -133,6 +144,7 @@ Messenger.SendInform(0,
                      null, 
                      null);
 ```
+
 The manager should send back a reply to this INFORM message. Otherwise, a `TimeoutException` occurs.
 
 To help you understand how to use the API provided by #SNMP Library, there are more sample projects you can find under Samples folder in source code package. Both C# and VB.NET samples are available.
