@@ -23,6 +23,7 @@
     <DefineConstants>TRACE;DEBUG;MA</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AndroidLinkMode>None</AndroidLinkMode>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -31,6 +32,7 @@
     <DefineConstants>TRACE;MA</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
@@ -96,7 +98,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="SharpSnmpLib.ma.csproj">
-      <Project>{630ab241-8d25-437d-ad3b-dc5e7fed0ce0}</Project>
+      <Project>{630AB241-8D25-437D-AD3B-DC5E7FED0CE0}</Project>
       <Name>SharpSnmpLib.ma</Name>
     </ProjectReference>
   </ItemGroup>
