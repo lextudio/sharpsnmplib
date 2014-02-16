@@ -32,12 +32,13 @@
             Condition="!Exists('$(KeyFile)')" />
         <MSBuild Projects="SharpSnmpLib.sln" Properties="Configuration=Release;Platform=Any CPU" />
     </Target>
-	<Target Name="Package" DependsOnTargets="Release">
+	<Target Name="Package">
         <ConvertToAbsolutePath Paths="$(ReleaseFolderRoot)">
             <Output TaskParameter="AbsolutePaths" PropertyName="ReleaseFolder"/>
         </ConvertToAbsolutePath>
+		<MSBuild Projects="Sharpsnmplib.sln"  Properties="Configuration=Release;Platform=Any CPU;OutputPath=$(ReleaseFolder)\net40" />
 	    <MSBuild Projects="Sharpsnmplib.iOS.sln"  Properties="Configuration=Release;Platform=iPhone;OutputPath=$(ReleaseFolder)\Monotouch" />
         <MSBuild Projects="SharpSnmpLib.Android.sln"  Properties="Configuration=Release;Platform=Any CPU;OutputPath=$(ReleaseFolder)\Monoandroid" />
-	    <MSBuild Projects="sharpsnmplib.shfbproj" Properties="Configuration=Release;Platform=Any CPU" />
+<!-- 	    <MSBuild Projects="sharpsnmplib.shfbproj" Properties="Configuration=Release;Platform=Any CPU" /> -->
 	</Target>
 </Project>

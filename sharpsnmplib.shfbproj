@@ -39,12 +39,9 @@
     <HelpFileVersion>7.5.0.0</HelpFileVersion>
     <DocumentationSources>
       <DocumentationSource sourceFile="bin\SharpSnmpLib.dll" />
-      <DocumentationSource sourceFile="bin\SharpSnmpLib.Engine.dll" />
-      <DocumentationSource sourceFile="bin\SharpSnmpLib.Engine.xml" />
-      <DocumentationSource sourceFile="bin\SharpSnmpLib.Mib.dll" />
-      <DocumentationSource sourceFile="bin\SharpSnmpLib.Mib.xml" />
-      <DocumentationSource sourceFile="bin\SharpSnmpLib.xml" />
-    </DocumentationSources>
+<DocumentationSource sourceFile="bin\SharpSnmpLib.Engine.dll" />
+<DocumentationSource sourceFile="bin\SharpSnmpLib.Engine.xml" />
+<DocumentationSource sourceFile="bin\SharpSnmpLib.xml" /></DocumentationSources>
     <NamespaceSummaries>
       <NamespaceSummaryItem name="(global)" isDocumented="False" />
       <NamespaceSummaryItem name="Lextm.SharpSnmpLib" isDocumented="True">Basic building blocks for SNMP packet parsing. ISnmpData derived classes such as Counter32 are matching SNMP data types. ISnmpPdu derived classes are matching SNMP PDU types.</NamespaceSummaryItem>

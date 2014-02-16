@@ -1,14 +1,13 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
   <metadata>
-    <version>7.5.0.0</version>
+    <version>8.5.0-alpha</version>
     <authors>Malcolm Crowe,Lex Li,and other contributors.</authors>
     <owners>Lex Li</owners>
     <licenseUrl>http://sharpsnmplib.codeplex.com/wikipage?title=600012&amp;referringTitle=KB</licenseUrl>
     <projectUrl>http://sharpsnmplib.codeplex.com/</projectUrl>
     <dependencies>
-      <dependency id="log4net" version="2.0.0" />
-      <dependency id="Antlr.Unofficial" version="3.4.1.0" />
+      <dependency id="log4net" version="2.0.3" />
     </dependencies>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System" targetFramework="" />
@@ -30,13 +29,11 @@ http://sharpsnmplib.codeplex.com/releases/view/78947</releaseNotes>
     <tags>snmp mib smi</tags>
   </metadata>
   <files>
-    <file src="..\bin\net35\SharpSnmpLib.dll" target="lib\net35\SharpSnmpLib.dll" />
-    <file src="..\bin\net35\SharpSnmpLib.Engine.dll" target="lib\net35\SharpSnmpLib.Engine.dll" />
-    <file src="..\bin\net35\SharpSnmpLib.Mib.dll" target="lib\net35\SharpSnmpLib.Mib.dll" />
-    <file src="..\bin\net35\SharpSnmpLib.Optional.dll" target="lib\net35\SharpSnmpLib.Optional.dll" />
     <file src="..\bin\net40\SharpSnmpLib.dll" target="lib\net40\SharpSnmpLib.dll" />
     <file src="..\bin\net40\SharpSnmpLib.Engine.dll" target="lib\net40\SharpSnmpLib.Engine.dll" />
-    <file src="..\bin\net40\SharpSnmpLib.Mib.dll" target="lib\net40\SharpSnmpLib.Mib.dll" />
-    <file src="..\bin\net40\SharpSnmpLib.Optional.dll" target="lib\net40\SharpSnmpLib.Optional.dll" />
+	<file src="..\bin\Monotouch\SharpSnmpLib.iOS.dll" target="lib\Monotouch\SharpSnmpLib.iOS.dll" />
+    <file src="..\bin\Monotouch\SharpSnmpLib.Engine.iOS.dll" target="lib\Monotouch\SharpSnmpLib.Engine.iOS.dll" />
+	<file src="..\bin\Monoandroid\SharpSnmpLib.Android.dll" target="lib\Monoandroid\SharpSnmpLib.Android.dll" />
+    <file src="..\bin\Monoandroid\SharpSnmpLib.Engine.Android.dll" target="lib\Monoandroid\SharpSnmpLib.Engine.Android.dll" />
   </files>
 </package>
