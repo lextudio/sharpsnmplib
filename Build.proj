@@ -36,8 +36,8 @@
         <ConvertToAbsolutePath Paths="$(ReleaseFolderRoot)">
             <Output TaskParameter="AbsolutePaths" PropertyName="ReleaseFolder"/>
         </ConvertToAbsolutePath>
-	    <MSBuild Projects="Sharpsnmplib.cf35.sln"  Properties="Configuration=Release;Platform=Any CPU;OutputPath=$(ReleaseFolder)\cf" />
-        <MSBuild Projects="SharpSnmpLib.ma.sln"  Properties="Configuration=Release;Platform=Any CPU;OutputPath=$(ReleaseFolder)\ma" />
+	    <MSBuild Projects="Sharpsnmplib.iOS.sln"  Properties="Configuration=Release;Platform=iPhone;OutputPath=$(ReleaseFolder)\Monotouch" />
+        <MSBuild Projects="SharpSnmpLib.Android.sln"  Properties="Configuration=Release;Platform=Any CPU;OutputPath=$(ReleaseFolder)\Monoandroid" />
 	    <MSBuild Projects="sharpsnmplib.shfbproj" Properties="Configuration=Release;Platform=Any CPU" />
 	</Target>
 </Project>

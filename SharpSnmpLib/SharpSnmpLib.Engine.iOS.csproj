@@ -5,12 +5,12 @@
     <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{3995FA49-C69D-4981-9B1A-2F16CD200DFD}</ProjectGuid>
+    <ProjectGuid>{1EAF5179-B21C-4222-A47D-FFA3B8098ED5}</ProjectGuid>
     <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <RootNamespace>Lextm.SharpSnmpLib</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>SharpSnmpLib.Engine.mt</AssemblyName>
+    <AssemblyName>SharpSnmpLib.Engine.iOS</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
     <DebugSymbols>true</DebugSymbols>
@@ -139,9 +139,9 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="SharpSnmpLib.mt.csproj">
-      <Project>{34db5961-d127-4225-96fc-27c8c9eb21a7}</Project>
-      <Name>SharpSnmpLib.mt</Name>
+    <ProjectReference Include="SharpSnmpLib.iOS.csproj">
+      <Project>{9607a1e5-df21-4e89-9b0c-501898252bf4}</Project>
+      <Name>SharpSnmpLib.iOS</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />

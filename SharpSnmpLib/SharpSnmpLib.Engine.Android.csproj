@@ -5,12 +5,12 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{BD4477EB-EADF-4975-AABD-F79527743E90}</ProjectGuid>
+    <ProjectGuid>{4EE15C67-1B03-4186-8516-3AA0FD3B37AE}</ProjectGuid>
     <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Lextm.SharpSnmpLib</RootNamespace>
-    <AssemblyName>SharpSnmpLib.Engine.ma</AssemblyName>
+    <AssemblyName>SharpSnmpLib.Engine.Android</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
     <TargetFrameworkVersion>v2.1</TargetFrameworkVersion>
@@ -99,9 +99,9 @@
     <Compile Include="Properties\EngineAssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="SharpSnmpLib.ma.csproj">
-      <Project>{630AB241-8D25-437D-AD3B-DC5E7FED0CE0}</Project>
-      <Name>SharpSnmpLib.ma</Name>
+    <ProjectReference Include="SharpSnmpLib.Android.csproj">
+      <Project>{ac68d000-e001-43ce-86a2-cfe24624ef9c}</Project>
+      <Name>SharpSnmpLib.Android</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
