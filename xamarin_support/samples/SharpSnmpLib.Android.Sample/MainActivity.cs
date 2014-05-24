@@ -11,8 +11,6 @@ namespace SharpSnmpLib.Android.Sample
     [Activity (Label = "SharpSnmpLib.Android.Sample", MainLauncher = true)]
 	public class MainActivity : Activity
 	{
-		int count = 1;
-
 		protected override void OnCreate (Bundle bundle)
 		{
 			base.OnCreate (bundle);
@@ -35,7 +33,7 @@ namespace SharpSnmpLib.Android.Sample
                             new IPEndPoint(address, 161),
                             new OctetString("public"),
                             new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) },
-                            60000);
+							10000);
                         resultBox.Text = result[0].Data.ToString();
                     }
                     catch (Exception ex)

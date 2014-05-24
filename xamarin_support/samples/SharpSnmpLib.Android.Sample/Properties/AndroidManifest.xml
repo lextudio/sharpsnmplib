@@ -2,4 +2,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="SharpSnmpLib.Android.Sample">
 	<uses-sdk />
 	<application android:label="SharpSnmpLib.Android.Sample"></application>
+	<uses-permission android:name="android.permission.INTERNET" />
 </manifest>
