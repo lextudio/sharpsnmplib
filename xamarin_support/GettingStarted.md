@@ -156,5 +156,5 @@ To help you understand how to use the API provided by #SNMP Library, there are m
 
 * [Official Documentation](http://help.sharpsnmp.com)
 * [Project on CodePlex](http://sharpsnmplib.codeplex.com)
-* [Author's Blog](http://lextm.com)
+* [Author's Blog](http://blog.lextudio.com)
 * [Pro Edition](http://sharpsnmp.com)
