@@ -24,3 +24,7 @@ logs
 T4MVC.cs
 /SharpSnmpLib/sharpsnmplib.snk
 /packages
+*.dgml
+*.chk
+*.jrs
+*.ide
