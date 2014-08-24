@@ -180,7 +180,7 @@ namespace Lextm.SharpSnmpLib
             return result.ToString();
         }
 
-        internal byte[] GetLengthBytes()
+        public byte[] GetLengthBytes()
         {
             return _length;
         }

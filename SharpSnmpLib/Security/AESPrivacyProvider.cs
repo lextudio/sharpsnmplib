@@ -25,6 +25,7 @@
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
+#if !NETFX_CORE
 using System;
 using System.IO;
 using System.Security.Cryptography;
@@ -363,3 +364,4 @@ namespace Lextm.SharpSnmpLib.Security
         }
     }
 }
+#endif

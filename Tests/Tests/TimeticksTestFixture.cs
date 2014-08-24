@@ -36,7 +36,7 @@ namespace Lextm.SharpSnmpLib.Tests
         {
             TimeTicks time = new TimeTicks(15);
             Assert.AreEqual(15, time.ToUInt32());
-            Assert.AreEqual("15 (00:00:00.1500000)", time.ToString());
+            Assert.AreEqual("00:00:00.1500000", time.ToString());
         }
         
         [Test]

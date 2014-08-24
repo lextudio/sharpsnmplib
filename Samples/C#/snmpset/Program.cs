@@ -164,7 +164,7 @@ namespace SnmpSet
                             data = new TimeTicks(uint.Parse(extra[i + 2]));
                             break;
                         case 'a':
-                            data = new IP(IPAddress.Parse(extra[i + 2]));
+                            data = new IP(IPAddress.Parse(extra[i + 2]).GetAddressBytes());
                             break;
                         case 'o':
                             data = new ObjectIdentifier(extra[i + 2]);

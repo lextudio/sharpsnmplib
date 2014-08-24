@@ -16,7 +16,7 @@
 // FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
-
+#if !NETFX_CORE
 using System;
 using System.Globalization;
 using System.IO;
@@ -61,6 +61,22 @@ namespace Lextm.SharpSnmpLib.Security
         /// <returns></returns>
         public byte[] PasswordToKey(byte[] password, byte[] engineId)
         {
+            // key length has to be at least 8 bytes long (RFC3414)
+            if (password == null)
+            {
+                throw new ArgumentNullException("password");
+            }
+
+            if (engineId == null)
+            {
+                throw new ArgumentNullException("engineId");
+            }
+
+            if (password.Length < 8)
+            {
+                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Secret key is too short. Must be >= 8. Current: {0}", password.Length), "password");
+            }
+
             lock (Md5KeyCacheLock)
             {
                 byte[] cachedKey;
@@ -78,23 +94,7 @@ namespace Lextm.SharpSnmpLib.Security
         }
 
         private byte[] _PasswordToKey(byte[] password, byte[] engineId)
-        {
-            // key length has to be at least 8 bytes long (RFC3414)
-            if (password == null)
-            {
-                throw new ArgumentNullException("password");
-            }
-                        
-            if (engineId == null)
-            {
-                throw new ArgumentNullException("engineId");
-            }
-            
-            if (password.Length < 8)
-            {
-                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Secret key is too short. Must be >= 8. Current: {0}", password.Length), "password");
-            }
-            
+        {            
             using (MD5 md5 = new MD5CryptoServiceProvider())
             {
                 var passwordIndex = 0;
@@ -193,3 +193,4 @@ namespace Lextm.SharpSnmpLib.Security
         }
     }
 }
+#endif

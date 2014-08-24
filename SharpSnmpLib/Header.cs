@@ -49,7 +49,7 @@ namespace Lextm.SharpSnmpLib
         {            
         }
         
-        internal Header(int messageId) : this(new Integer32(messageId), DefaultMaxMessageSize, 0)
+        public Header(int messageId) : this(new Integer32(messageId), DefaultMaxMessageSize, 0)
         {
         }
 

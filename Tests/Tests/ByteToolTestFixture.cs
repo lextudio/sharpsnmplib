@@ -53,7 +53,9 @@ namespace Lextm.SharpSnmpLib.Tests
             m.WriteByte(0x66);
             m.Flush();
             m.Position = 0;
-            Assert.AreEqual(new Tuple<int, byte[]>(102, new byte[] {0x66}), m.ReadPayloadLength());
+            var result = m.ReadPayloadLength();
+            Assert.AreEqual(102, result.Item1);
+            Assert.AreEqual(new byte[] {0x66}, result.Item2);
         }
         
         [Test]

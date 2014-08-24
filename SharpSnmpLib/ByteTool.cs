@@ -215,7 +215,7 @@ namespace Lextm.SharpSnmpLib
             return list.ToArray();
         }
 
-        internal static Sequence PackMessage(byte[] length, VersionCode version, ISegment header, ISegment parameters, ISnmpData data)
+        public static Sequence PackMessage(byte[] length, VersionCode version, ISegment header, ISegment parameters, ISnmpData data)
         {
             if (header == null)
             {

@@ -18,13 +18,14 @@
 // DEALINGS IN THE SOFTWARE.
 
 using System;
+using System.Runtime.Serialization;
 
 namespace Lextm.SharpSnmpLib
 {
     /// <summary>
     /// Definition type.
     /// </summary>
-    [Serializable]
+    [DataContract]
     [Obsolete("Please use Pro edition")]
     public enum DefinitionType
     {

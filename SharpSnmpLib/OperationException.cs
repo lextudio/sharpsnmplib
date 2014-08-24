@@ -30,6 +30,8 @@ using System.Globalization;
 using System.Net;
 #if (!SILVERLIGHT)
 using System.Runtime.Serialization;
+#endif
+#if (!NETFX_CORE)
 using System.Security.Permissions; 
 #endif
 
@@ -38,7 +40,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// Operation exception of #SNMP.
     /// </summary>
-    [Serializable]
+    [DataContract]
     public class OperationException : SnmpException
     {
         /// <summary>
@@ -69,34 +71,7 @@ namespace Lextm.SharpSnmpLib
         public OperationException(string message, Exception inner) : base(message, inner) 
         { 
         }
-#if !CF
-        /// <summary>
-        /// Creates a <see cref="OperationException"/>
-        /// </summary>
-        /// <param name="info"></param>
-        /// <param name="context"></param>
-        protected OperationException(SerializationInfo info, StreamingContext context) : base(info, context) 
-        {
-            if (info == null)
-            {
-                throw new ArgumentNullException("info");
-            }
-            
-            Agent = (IPAddress)info.GetValue("Agent", typeof(IPAddress));
-        }
-        
-        /// <summary>
-        /// Gets object data.
-        /// </summary>
-        /// <param name="info">Info</param>
-        /// <param name="context">Context</param>
-        [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
-        public override void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            base.GetObjectData(info, context);
-            info.AddValue("Agent", Agent);
-        }
-#endif
+
         /// <summary>
         /// Details on operation.
         /// </summary>

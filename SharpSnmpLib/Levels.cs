@@ -18,6 +18,7 @@
 // DEALINGS IN THE SOFTWARE.
 
 using System;
+using System.Runtime.Serialization;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -25,7 +26,7 @@ namespace Lextm.SharpSnmpLib
     /// Security level.
     /// </summary>
     [Flags]
-    [Serializable]
+    [DataContract]
     public enum Levels
     {      
         /// <summary>

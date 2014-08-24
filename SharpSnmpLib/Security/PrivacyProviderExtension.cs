@@ -62,7 +62,7 @@ namespace Lextm.SharpSnmpLib.Security
             return flags;
         } 
 
-        internal static ISnmpData GetScopeData(this IPrivacyProvider privacy, Header header, SecurityParameters parameters, ISnmpData rawScopeData)
+        public static ISnmpData GetScopeData(this IPrivacyProvider privacy, Header header, SecurityParameters parameters, ISnmpData rawScopeData)
         {
             if (privacy == null)
             {

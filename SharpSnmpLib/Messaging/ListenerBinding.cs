@@ -112,6 +112,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Occurs when an exception is raised.
         /// </summary>
+        /// <remarks>The exception can be both <see cref="SocketException"/> and <see cref="SnmpException"/>.</remarks>
         public event EventHandler<ExceptionRaisedEventArgs> ExceptionRaised;
 
         /// <summary>

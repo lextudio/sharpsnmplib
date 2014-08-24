@@ -213,7 +213,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
             {
                 if (_timeIncluded == null)
                 {
-#if MA || CF || MT
+#if MA || CF || MT || __IOS__
                     _timeIncluded = true;
 #else
                     object setting = ConfigurationManager.AppSettings["TimeIncluded"];

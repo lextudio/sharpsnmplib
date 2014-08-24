@@ -18,7 +18,7 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.Throws<NotSupportedException>(() => { var test = pdu.ErrorStatus; });
             Assert.Throws<ArgumentNullException>(() => pdu.AppendBytesTo(null));
             
-            Assert.AreEqual("TRAP v2 PDU: request ID: 0; enterprise: .1.3; time stamp: 0 (00:00:00); variable count: 0", pdu.ToString());
+            Assert.AreEqual("TRAP v2 PDU: request ID: 0; enterprise: .1.3; time stamp: 00:00:00; variable count: 0", pdu.ToString());
         }
     }
 }

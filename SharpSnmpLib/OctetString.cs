@@ -287,7 +287,7 @@ namespace Lextm.SharpSnmpLib
             return !(left == right);
         }
 
-#if !CF
+#if !CF && !NETFX_CORE
         /// <summary>
         /// Converts octets to physical address.
         /// </summary>
@@ -302,7 +302,7 @@ namespace Lextm.SharpSnmpLib
             return new PhysicalAddress(_raw);
         }
 #endif
-        
+
         /// <summary>
         /// Default encoding of <see cref="OctetString"/> type.
         /// </summary>

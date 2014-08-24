@@ -26,7 +26,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// Malformed PDU class. Many things are not implemented as they are not in use.
     /// </summary>
-    internal sealed class MalformedPdu : ISnmpPdu
+    public sealed class MalformedPdu : ISnmpPdu
     {
         /// <summary>
         /// Type code.

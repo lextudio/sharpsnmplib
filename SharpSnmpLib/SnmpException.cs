@@ -35,7 +35,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// Base exception type of #SNMP.
     /// </summary>
-    [Serializable]
+    [DataContract]
     public class SnmpException : Exception
     {
         /// <summary>
@@ -63,7 +63,7 @@ namespace Lextm.SharpSnmpLib
         {
         }
 
-#if !CF
+#if !CF && !NETFX_CORE
         /// <summary>
         /// Creates a <see cref="SnmpException"/> instance.
         /// </summary>
@@ -74,7 +74,7 @@ namespace Lextm.SharpSnmpLib
         {
         }
 #endif
-       
+
         /// <summary>
         /// Returns a <see cref="String"/> that represents this <see cref="SnmpException"/>.
         /// </summary>

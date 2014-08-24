@@ -18,8 +18,9 @@
 // DEALINGS IN THE SOFTWARE.
 
 using System;
+using System.Globalization;
 using System.IO;
-using System.Net;
+using System.Linq;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -28,25 +29,18 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public sealed class IP : ISnmpData, IEquatable<IP>
     {
-        private readonly IPAddress _ip;
+        private readonly byte[] _ip;
         private readonly byte[] _length;
 
-// ReSharper disable InconsistentNaming
         private const int IPv4Length = 4;
-        private const int IPv6Length = 16;
-// ReSharper restore InconsistentNaming      
-  
-        /// <summary>
-        /// Creates an <see cref="IP"/> with a specific <see cref="IPAddress"/>.
-        /// </summary>
-        /// <param name="ip">IP address</param>
-        public IP(IPAddress ip)
+
+        public IP(byte[] ip)
         {
             if (ip == null)
             {
                 throw new ArgumentNullException("ip");
             }
-            
+
             _ip = ip;
         }
 
@@ -54,13 +48,112 @@ namespace Lextm.SharpSnmpLib
         /// Creates an <see cref="IP"/> from a specific <see cref="String"/>.
         /// </summary>
         /// <param name="ip">IP string</param>
-        public IP(string ip) : this(ParseString(ip))
+        public IP(string ip)
         {
+            // IMPORTANT: copied from Mono's IPAddress.cs
+            int pos = ip.IndexOf(' ');
+            if (pos != -1)
+            {
+                string[] nets = ip.Substring(pos + 1).Split(new char[] { '.' });
+                if (nets.Length > 0)
+                {
+                    string lastNet = nets[nets.Length - 1];
+                    if (lastNet.Length == 0)
+                        throw new FormatException("An invalid IP address was specified.");
+#if NET_2_1 //workaround for smcs, as it generate code that can't access string.GetEnumerator ()
+					foreach (char c in lastNet.ToCharArray ())
+#else
+                    foreach (char c in lastNet)
+#endif
+                        if (!IsHexDigit(c))
+                            throw new FormatException("An invalid IP address was specified.");
+                }
+                ip = ip.Substring(0, pos);
+            }
+
+            if (ip.Length == 0 || ip[ip.Length - 1] == '.')
+                throw new FormatException("An invalid IP address was specified.");
+
+            string[] ips = ip.Split(new char[] { '.' });
+            if (ips.Length > IPv4Length)
+                throw new FormatException("An invalid IP address was specified.");
+
+            // Make the number in network order
+            try
+            {
+                _ip = new byte[IPv4Length];
+                long val = 0;
+                for (int i = 0; i < ips.Length; i++)
+                {
+                    string subnet = ips[i];
+                    if ((3 <= subnet.Length && subnet.Length <= 4) &&
+                        (subnet[0] == '0') && (subnet[1] == 'x' || subnet[1] == 'X'))
+                    {
+                        if (subnet.Length == 3)
+                            val = (byte)FromHex(subnet[2]);
+                        else
+                            val = (byte)((FromHex(subnet[2]) << 4) | FromHex(subnet[3]));
+                    }
+                    else if (subnet.Length == 0)
+                        throw new FormatException("An invalid IP address was specified.");
+                    else if (subnet[0] == '0')
+                    {
+                        // octal
+                        val = 0;
+                        for (int j = 1; j < subnet.Length; j++)
+                        {
+                            if ('0' <= subnet[j] && subnet[j] <= '7')
+                                val = (val << 3) + subnet[j] - '0';
+                            else
+                                throw new FormatException("An invalid IP address was specified.");
+                        }
+                    }
+                    else
+                    {
+                        if (!long.TryParse(subnet, NumberStyles.None, null, out val))
+                            throw new FormatException("An invalid IP address was specified.");
+                    }
+
+                    if (i == (ips.Length - 1))
+                    {
+                        if (i != 0 && val >= (256 << ((3 - i) * 8)))
+                            throw new FormatException("An invalid IP address was specified.");
+                        else if (val > 0x3fffffffe) // this is the last number that parses correctly with MS
+                            throw new FormatException("An invalid IP address was specified.");
+                        i = 3;
+                    }
+                    else if (val >= 0x100)
+                        throw new FormatException("An invalid IP address was specified.");
+                    _ip[i] = (byte)val;
+                }
+            }
+            catch (Exception)
+            {
+                throw new FormatException("An invalid IP address was specified.");
+            }
         }
 
-        private static IPAddress ParseString(string ip)
+        private static int FromHex(char digit)
         {
-            return IPAddress.Parse(ip);
+            if ('0' <= digit && digit <= '9')
+            {
+                return (int)(digit - '0');
+            }
+
+            if ('a' <= digit && digit <= 'f')
+                return (int)(digit - 'a' + 10);
+
+            if ('A' <= digit && digit <= 'F')
+                return (int)(digit - 'A' + 10);
+
+            throw new ArgumentException("digit");
+        }
+
+        private static bool IsHexDigit(char character)
+        {
+            return (('0' <= character && character <= '9') ||
+                    ('a' <= character && character <= 'f') ||
+                    ('A' <= character && character <= 'F'));
         }
 
         /// <summary>
@@ -80,15 +173,20 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("stream");
             }
 
-            if (length.Item1 != IPv4Length && length.Item1 != IPv6Length)
+            if (length.Item1 != IPv4Length)
             {
                 throw new ArgumentException("bytes must contain 4 or 16 elements");
             }
 
             var raw = new byte[length.Item1];
             stream.Read(raw, 0, length.Item1);
-            _ip = new IPAddress(raw);
+            _ip = raw;
             _length = length.Item2;
+        }
+
+        public byte[] GetRaw()
+        {
+            return _ip;
         }
 
         /// <summary>
@@ -97,16 +195,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public override string ToString()
         {
-            return _ip.ToString();
-        }
-        
-        /// <summary>
-        /// Returns an <see cref="IPAddress"/> that represents this <see cref="IP"/>.
-        /// </summary>
-        /// <returns></returns>
-        public IPAddress ToIPAddress()
-        {
-            return _ip;
+            return string.Format("{0}.{1}.{2}.{3}", _ip[0], _ip[1], _ip[2], _ip[3]);
         }
         
         /// <summary>
@@ -131,7 +220,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("stream");
             }
             
-            stream.AppendBytes(TypeCode, _length, _ip.GetAddressBytes());
+            stream.AppendBytes(TypeCode, _length, _ip);
         }
 
         /// <summary>
@@ -210,7 +299,7 @@ namespace Lextm.SharpSnmpLib
                 return false;
             }
 
-            return left.ToIPAddress().Equals(right.ToIPAddress());           
+            return left._ip.SequenceEqual(right._ip);           
         }
     }
 }

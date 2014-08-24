@@ -30,6 +30,8 @@ using System.Globalization;
 using System.Net;
 #if (!SILVERLIGHT)
 using System.Runtime.Serialization;
+#endif
+#if !NETFX_CORE
 using System.Security.Permissions; 
 #endif
 
@@ -38,7 +40,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// <summary>
     /// Timeout exception type of #SNMP.
     /// </summary>
-    [Serializable]
+    [DataContract]
     public sealed class TimeoutException : OperationException
     {
         /// <summary>
@@ -70,31 +72,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
         }
 
-#if !CF
-        private TimeoutException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-            if (info == null)
-            {
-                throw new ArgumentNullException("info");
-            }
-
-            Timeout = info.GetInt32("Timeout");
-        }
-
-        /// <summary>
-        /// Gets object data.
-        /// </summary>
-        /// <param name="info">Info</param>
-        /// <param name="context">Context</param>
-        [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
-        public override void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            base.GetObjectData(info, context);
-            info.AddValue("Timeout", Timeout);
-        } 
-#endif
-        
         /// <summary>
         /// Returns a <see cref="String"/> that represents this <see cref="TimeoutException"/>.
         /// </summary>

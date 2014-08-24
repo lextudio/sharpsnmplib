@@ -162,7 +162,7 @@ Module Program
                         data = New TimeTicks(UInteger.Parse(extra(i + 2)))
                         Exit Select
                     Case "a"c
-                        data = New IP(IPAddress.Parse(extra(i + 2)))
+                        data = New IP(IPAddress.Parse(extra(i + 2)).GetAddressBytes())
                         Exit Select
                     Case "o"c
                         data = New ObjectIdentifier(extra(i + 2))

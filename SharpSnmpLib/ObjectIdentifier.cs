@@ -23,6 +23,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace Lextm.SharpSnmpLib
@@ -30,10 +31,10 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// ObjectIdentifier type.
     /// </summary>
-    #if !CF
+#if !CF && !NETFX_CORE
     [TypeConverter(typeof(ObjectIdentifierConverter))]
-    #endif
-    [Serializable]
+#endif
+    [DataContract]
     public sealed class ObjectIdentifier : 
         ISnmpData, IEquatable<ObjectIdentifier>, IComparable<ObjectIdentifier>, IComparable
     {

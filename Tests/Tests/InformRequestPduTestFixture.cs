@@ -27,7 +27,7 @@ namespace Lextm.SharpSnmpLib.Tests
                         
             var pdu = new InformRequestPdu(0, new ObjectIdentifier("1.3.6.1"), 0, new List<Variable>());
             Assert.Throws<ArgumentNullException>(() => pdu.AppendBytesTo(null));
-            Assert.AreEqual("INFORM request PDU: seq: 0; enterprise: .1.3.6.1; time stamp: 0 (00:00:00); variable count: 0", pdu.ToString());
+            Assert.AreEqual("INFORM request PDU: seq: 0; enterprise: .1.3.6.1; time stamp: 00:00:00; variable count: 0", pdu.ToString());
             Assert.Throws<NotSupportedException>(() => { var test = pdu.ErrorStatus; });
             Assert.Throws<NotSupportedException>(() => { var test = pdu.ErrorIndex; });
         }

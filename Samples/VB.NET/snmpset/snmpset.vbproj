@@ -135,9 +135,13 @@
       <Project>{C26430B5-E2AE-410E-924C-567D79E625DC}</Project>
       <Name>Mono.Options</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\SharpSnmpLib\SharpSnmpLib.csproj">
-      <Project>{286DE6DB-8F95-4BD4-86A2-86488D2E0EE1}</Project>
-      <Name>SharpSnmpLib</Name>
+    <ProjectReference Include="..\..\..\SharpSnmpLib\SharpSnmpLib.Full.csproj">
+      <Project>{286de6db-8f95-4bd4-86a2-86488d2e0ee1}</Project>
+      <Name>SharpSnmpLib.Full</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\SharpSnmpLib\SharpSnmpLib.Portable.csproj">
+      <Project>{0b7f931d-721e-4ced-8506-463777c4a1a8}</Project>
+      <Name>SharpSnmpLib.Portable</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

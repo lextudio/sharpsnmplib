@@ -76,9 +76,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\SharpSnmpLib\SharpSnmpLib.csproj">
+    <ProjectReference Include="..\..\..\SharpSnmpLib\SharpSnmpLib.Full.csproj">
       <Project>{286de6db-8f95-4bd4-86a2-86488d2e0ee1}</Project>
-      <Name>SharpSnmpLib</Name>
+      <Name>SharpSnmpLib.Full</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\SharpSnmpLib\SharpSnmpLib.Portable.csproj">
+      <Project>{0b7f931d-721e-4ced-8506-463777c4a1a8}</Project>
+      <Name>SharpSnmpLib.Portable</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

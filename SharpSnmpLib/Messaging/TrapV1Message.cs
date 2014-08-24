@@ -91,7 +91,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             TimeStamp = time;
             var pdu = new TrapV1Pdu(
                 Enterprise,
-                new IP(AgentAddress),
+                new IP(AgentAddress.GetAddressBytes()),
                 new Integer32((int)Generic),
                 new Integer32(Specific),
                 new TimeTicks(TimeStamp),
@@ -133,7 +133,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             var trapPdu = (TrapV1Pdu)_pdu;
             Enterprise = trapPdu.Enterprise;
-            AgentAddress = trapPdu.AgentAddress.ToIPAddress();
+            AgentAddress = new IPAddress(trapPdu.AgentAddress.GetRaw());
             Generic = trapPdu.Generic;
             Specific = trapPdu.Specific;
             TimeStamp = trapPdu.TimeStamp.ToUInt32();

@@ -28,11 +28,12 @@
 namespace Lextm.SharpSnmpLib
 {
     using System;
+    using System.Runtime.Serialization;
     
     /// <summary>
     /// Generic trap code.
     /// </summary>
-    [Serializable]
+    [DataContract]
     public enum GenericCode
     {
         /// <summary>

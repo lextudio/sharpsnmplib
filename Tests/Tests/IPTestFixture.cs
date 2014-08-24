@@ -21,10 +21,10 @@ namespace Lextm.SharpSnmpLib.Tests
         [Test]
         public void TestException()
         {
-            var test = new IP(IPAddress.Any);
+            var test = new IP(IPAddress.Any.GetAddressBytes());
             Assert.Throws<ArgumentNullException>(() => test.AppendBytesTo(null));
             Assert.Throws<ArgumentNullException>(() => new IP(new Tuple<int, byte[]>(0, new byte[] { 0 }), null));
-            Assert.Throws<ArgumentNullException>(() => new IP((IPAddress) null));
+            Assert.Throws<ArgumentNullException>(() => new IP((byte[]) null));
             Assert.Throws<ArgumentException>(() => new IP(new Tuple<int, byte[]>(1, new byte[] { 1 }), new MemoryStream()));
             Assert.Throws<FormatException>(() => new IP("test"));
             Assert.Throws<ArgumentNullException>(() => new IP(null, new MemoryStream()));
@@ -36,8 +36,7 @@ namespace Lextm.SharpSnmpLib.Tests
             const string expected = "127.0.0.1";
             IP ip = new IP(expected);
             Assert.AreEqual(expected, ip.ToString());
-            var test = new IP(IPAddress.Any);
-            Assert.AreEqual(IPAddress.Any.GetHashCode(), test.GetHashCode());
+            var test = new IP(IPAddress.Any.GetAddressBytes());
         }
         
         [Test]

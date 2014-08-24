@@ -21,14 +21,15 @@ using System;
 using System.Globalization;
 using System.Net;
 using System.Runtime.Serialization;
+#if !NETFX_CORE
 using System.Security.Permissions;
-
+#endif
 namespace Lextm.SharpSnmpLib.Messaging
 {
     /// <summary>
     /// Exception raised when an IP endpoint is already in use.
     /// </summary>
-    [Serializable]
+    [DataContract]
     public sealed class PortInUseException : SnmpException
     {
         /// <summary>
@@ -57,35 +58,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
         }
 
-#if (!SILVERLIGHT && !CF)
-        /// <summary>
-        /// Creates a <see cref="PortInUseException"/> instance.
-        /// </summary>
-        /// <param name="info">Info</param>
-        /// <param name="context">Context</param>
-        private PortInUseException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-            if (info == null)
-            {
-                throw new ArgumentNullException("info");
-            }
-
-            Endpoint = (IPEndPoint)info.GetValue("Endpoint", typeof(IPEndPoint));
-        }
-
-        /// <summary>
-        /// Gets object data.
-        /// </summary>
-        /// <param name="info">Info</param>
-        /// <param name="context">Context</param>
-        [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
-        public override void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            base.GetObjectData(info, context);
-            info.AddValue("Endpoint", Endpoint);
-        }
-#endif        
         /// <summary>
         /// The endpoint already in use.
         /// </summary>

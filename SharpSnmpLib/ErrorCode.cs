@@ -20,11 +20,12 @@
 namespace Lextm.SharpSnmpLib
 {
     using System;
+    using System.Runtime.Serialization;
     
     /// <summary>
     /// Error code for SNMP operations. (0-5 are first defined in SNMP v1, and others are added in v2)
     /// </summary>
-    [Serializable]
+    [DataContract]
     public enum ErrorCode
     {
         /// <summary>

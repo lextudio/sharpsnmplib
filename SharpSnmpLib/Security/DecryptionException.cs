@@ -19,14 +19,15 @@
 
 using System;
 using System.Runtime.Serialization;
+#if !NETFX_CORE
 using System.Security.Permissions;
-
+#endif
 namespace Lextm.SharpSnmpLib.Security
 {
     /// <summary>
     /// Decryption exception.
     /// </summary>
-    [Serializable]
+    [DataContract]
     public sealed class DecryptionException : SnmpException
     {
         private byte[] _bytes;
@@ -56,7 +57,7 @@ namespace Lextm.SharpSnmpLib.Security
         {
         }
 
-#if !CF
+#if !CF && !NETFX_CORE
         /// <summary>
         /// Creates a <see cref="DecryptionException"/> instance.
         /// </summary>
@@ -85,7 +86,7 @@ namespace Lextm.SharpSnmpLib.Security
             info.AddValue("Bytes", _bytes);
         }
 #endif
-        
+
         /// <summary>
         /// Gets the bytes.
         /// </summary>        

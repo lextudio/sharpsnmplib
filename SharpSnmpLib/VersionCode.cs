@@ -20,11 +20,12 @@
 namespace Lextm.SharpSnmpLib
 {
     using System;
+    using System.Runtime.Serialization;
     
     /// <summary>
     /// Protocol version code.
     /// </summary>
-    [Serializable]
+    [DataContract]
     public enum VersionCode
     {
         /// <summary>

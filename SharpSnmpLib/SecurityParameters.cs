@@ -201,6 +201,6 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Gets a value that indicates whether the hashes are invalid.
         /// </summary>
-        public bool IsInvalid { get; internal set; }
+        public bool IsInvalid { get; set; }
     }
 }

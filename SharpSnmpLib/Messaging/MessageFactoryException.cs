@@ -28,14 +28,15 @@
 using System;
 using System.Globalization;
 using System.Runtime.Serialization;
+#if !NETFX_CORE
 using System.Security.Permissions;
-
+#endif
 namespace Lextm.SharpSnmpLib.Messaging
 {
     /// <summary>
     /// Message factory exception.
     /// </summary>
-    [Serializable]
+    [DataContract]
     public sealed class MessageFactoryException : SnmpException
     {
         private byte[] _bytes;
@@ -65,36 +66,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
         }
 
-        #if !CF
-        /// <summary>
-        /// Creates a <see cref="MessageFactoryException"/> instance.
-        /// </summary>
-        /// <param name="info">Info</param>
-        /// <param name="context">Context</param>
-        private MessageFactoryException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-            if (info == null)
-            {
-                throw new ArgumentNullException("info");
-            }
-            
-            _bytes = (byte[])info.GetValue("Bytes", typeof(byte[]));
-        }
-        
-        /// <summary>
-        /// Gets object data.
-        /// </summary>
-        /// <param name="info">Info</param>
-        /// <param name="context">Context</param>
-        [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
-        public override void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            base.GetObjectData(info, context);
-            info.AddValue("Bytes", _bytes);
-        }
-        #endif
-        
         /// <summary>
         /// Gets the bytes.
         /// </summary>        

@@ -19,6 +19,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.Serialization;
 
 // SNMP library for .NET by Malcolm Crowe at University of the West of Scotland
 // http://cis.paisley.ac.uk/crow-ci0/
@@ -38,7 +39,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// SNMP type code. The values are tag values for SNMP types.
     /// </summary>
-    [Serializable]
+    [DataContract]
     public enum SnmpType // RFC1213 subset of ASN.1
     { 
         EndMarker = 0x00,

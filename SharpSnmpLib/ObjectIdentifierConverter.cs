@@ -23,7 +23,7 @@ using System.Globalization;
 
 namespace Lextm.SharpSnmpLib
 {
-    #if !CF
+#if !CF && !NETFX_CORE
     /// <summary>
     /// The <see cref="TypeConverter"/> dedicated for the <see cref="ObjectIdentifier"/> class.
     /// </summary>
@@ -107,5 +107,5 @@ namespace Lextm.SharpSnmpLib
             return "Object identifier converter";
         }
     }
-    #endif
+#endif
 }

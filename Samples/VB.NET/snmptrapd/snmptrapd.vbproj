@@ -132,16 +132,6 @@
     <Compile Include="Properties\AssemblyInfo.vb" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\SharpSnmpLib\SharpSnmpLib.csproj">
-      <Project>{286DE6DB-8F95-4BD4-86A2-86488D2E0EE1}</Project>
-      <Name>SharpSnmpLib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\SharpSnmpLib\SharpSnmpLib.Engine.csproj">
-      <Project>{CD0F4B22-8235-49B1-A144-462CB8FD4973}</Project>
-      <Name>SharpSnmpLib.Engine</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
       <Visible>False</Visible>
       <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
@@ -161,6 +151,16 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\SharpSnmpLib\SharpSnmpLib.Full.csproj">
+      <Project>{286de6db-8f95-4bd4-86a2-86488d2e0ee1}</Project>
+      <Name>SharpSnmpLib.Full</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\SharpSnmpLib\SharpSnmpLib.Portable.csproj">
+      <Project>{0b7f931d-721e-4ced-8506-463777c4a1a8}</Project>
+      <Name>SharpSnmpLib.Portable</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" />
 </Project>
