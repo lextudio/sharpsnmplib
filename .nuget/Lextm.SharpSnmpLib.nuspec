@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
   <metadata>
-    <version>8.5.0-alpha3</version>
+    <version>8.5.0-alpha4</version>
     <authors>Malcolm Crowe,Lex Li,and other contributors.</authors>
     <owners>Lex Li</owners>
     <licenseUrl>http://sharpsnmplib.codeplex.com/wikipage?title=600012&amp;referringTitle=KB</licenseUrl>
@@ -27,5 +27,6 @@
     <file src="..\bin\SharpSnmpLib.iOS.dll" target="lib\Monotouch\SharpSnmpLib.iOS.dll" />
 	<file src="..\bin\SharpSnmpLib.Portable.dll" target="lib\Monoandroid\SharpSnmpLib.Portable.dll" />
     <file src="..\bin\SharpSnmpLib.Android.dll" target="lib\Monoandroid\SharpSnmpLib.Android.dll" />
+	<file src="..\bin\SharpSnmpLib.Portable.dll" target="lib\portable-net4+netcore45+MonoAndroid1+MonoTouch1\SharpSnmpLib.Portable.dll" />
   </files>
 </package>
