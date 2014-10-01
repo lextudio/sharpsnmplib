@@ -7,6 +7,7 @@ using NUnit.Framework;
 namespace Lextm.SharpSnmpLib.Pipeline.Tests
 {
     [TestFixture]
+    [Category("Default")]
     public class TrapV2MessageReceivedEventArgsTestFixture
     {
         [Test]

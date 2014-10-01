@@ -14,6 +14,7 @@ using NUnit.Framework;
 namespace Lextm.SharpSnmpLib.Tests
 {
     [TestFixture]
+    [Category("Default")]
     public class NullTestFixture
     {
         [Test]

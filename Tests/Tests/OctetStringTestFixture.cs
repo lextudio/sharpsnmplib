@@ -15,6 +15,7 @@ using System.Text;
 namespace Lextm.SharpSnmpLib.Tests
 {
     [TestFixture]
+    [Category("Default")]
     public class OctetStringTestFixture
     {
     	[Test]

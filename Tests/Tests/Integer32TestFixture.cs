@@ -16,6 +16,7 @@ namespace Lextm.SharpSnmpLib.Tests
     /// Description of TestInteger32.
     /// </summary>
     [TestFixture]
+    [Category("Default")]
     public class Integer32TestFixture
     {
         [Test]

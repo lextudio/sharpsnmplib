@@ -17,6 +17,7 @@ using System.IO;
 namespace Lextm.SharpSnmpLib.Messaging.Tests
 {
     [TestFixture]
+    [Category("Default")]
     public class MessageFactoryTestFixture
     {   
         [Test]

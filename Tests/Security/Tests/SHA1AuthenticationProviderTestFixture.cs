@@ -12,6 +12,7 @@ using NUnit.Framework;
 namespace Lextm.SharpSnmpLib.Security.Tests
 {
     [TestFixture]
+    [Category("Default")]
     public class SHA1AuthenticationProviderTestFixture
     {
         [Test]

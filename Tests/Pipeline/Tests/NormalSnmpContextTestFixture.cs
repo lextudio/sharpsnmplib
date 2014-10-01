@@ -8,6 +8,7 @@ using NUnit.Framework;
 namespace Lextm.SharpSnmpLib.Pipeline.Tests
 {
     [TestFixture]
+    [Category("Default")]
     public class NormalSnmpContextTestFixture
     {
         [Test]

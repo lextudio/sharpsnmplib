@@ -15,6 +15,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
     /// Description of ListenerBindingTestFixture.
     /// </summary>
     [TestFixture]
+    [Category("Default")]
     public class ListenerTestFixture
     {
         [Test]

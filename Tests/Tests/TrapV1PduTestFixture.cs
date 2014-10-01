@@ -18,6 +18,7 @@ using NUnit.Framework;
 namespace Lextm.SharpSnmpLib.Tests
 {
     [TestFixture]
+    [Category("Default")]
     public class TrapV1PduTestFixture
     {
         [Test]

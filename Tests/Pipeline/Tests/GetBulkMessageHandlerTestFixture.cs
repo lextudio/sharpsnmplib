@@ -10,6 +10,7 @@ using NUnit.Framework;
 namespace Lextm.SharpSnmpLib.Pipeline.Tests
 {
     [TestFixture]
+    [Category("Default")]
     public class GetBulkMessageHandlerTestFixture
     {       
         [Test]

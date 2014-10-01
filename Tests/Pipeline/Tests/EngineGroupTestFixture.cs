@@ -15,6 +15,7 @@ namespace Lextm.SharpSnmpLib.Pipeline.Tests
     /// Description of EngineGroupTestFixture.
     /// </summary>
     [TestFixture]
+    [Category("Default")]
     public class EngineGroupTestFixture
     {
         [Test]

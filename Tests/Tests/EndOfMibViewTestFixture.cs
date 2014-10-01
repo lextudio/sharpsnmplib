@@ -15,6 +15,7 @@ namespace Lextm.SharpSnmpLib.Tests
 	/// Description of TestEndOfMibView.
 	/// </summary>
 	[TestFixture]
+	[Category("Default")]
 	public class EndOfMibViewTestFixture
 	{
 		[Test]

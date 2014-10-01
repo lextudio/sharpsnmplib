@@ -11,6 +11,7 @@ using NUnit.Framework;
 namespace Lextm.SharpSnmpLib.Objects.Tests
 {
     [TestFixture]
+    [Category("Default")]
     public class SysORTableTestFixture
     {
         [Test]

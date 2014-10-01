@@ -15,6 +15,7 @@ using NUnit.Framework;
 namespace Lextm.SharpSnmpLib.Messaging.Tests
 {
     [TestFixture]
+    [Category("Default")]
     public class ResponseMessageTestFixture
     {
         [Test]

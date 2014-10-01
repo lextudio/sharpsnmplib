@@ -22,6 +22,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
     /// Description of TestGetMessage.
     /// </summary>
     [TestFixture]
+    [Category("Default")]
     public class GetRequestMessageTestFixture
     {
         [Test]

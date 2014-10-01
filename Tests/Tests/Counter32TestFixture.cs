@@ -6,6 +6,7 @@ using NUnit.Framework;
 namespace Lextm.SharpSnmpLib.Tests
 {
     [TestFixture]
+    [Category("Default")]
     public class Counter32TestFixture
     {
         [Test]

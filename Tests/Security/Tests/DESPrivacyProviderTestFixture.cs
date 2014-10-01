@@ -13,6 +13,7 @@ using System.Collections.Generic;
 namespace Lextm.SharpSnmpLib.Security.Tests
 {
     [TestFixture]
+    [Category("Default")]
     public class DESPrivacyProviderTestFixture
     {
         [Test]
