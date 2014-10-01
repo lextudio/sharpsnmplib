@@ -22,10 +22,10 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
     /// Description of TestGetMessage.
     /// </summary>
     [TestFixture]
-    [Category("Default")]
     public class GetRequestMessageTestFixture
     {
         [Test]
+        [Category("Default")]
         public void Test()
         {
             byte[] expected = Properties.Resources.get;
@@ -40,6 +40,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
         }
 
         [Test]
+        [Category("Default")]
         public void TestConstructor()
         {
             List<Variable> list = new List<Variable>(1)
@@ -52,6 +53,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
         }
 
         [Test]
+        [Category("Default")]
         public void TestConstructorV3Auth1()
         {
             const string bytes = "30 73" +
@@ -113,6 +115,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
         }
 
         [Test]
+        [Category("Default")]
         public void TestConstructorV2AuthMd5PrivDes()
         {
             const string bytes = "30 81 80 02  01 03 30 0F  02 02 6C 99  02 03 00 FF" +
@@ -152,6 +155,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
         }
 
         [Test]
+        [Category("Default")]
         public void TestConstructorV3AuthMd5()
         {
             const string bytes = "30 73" +
@@ -200,6 +204,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
         }
 
         [Test]
+        [Category("Default")]
         public void TestConstructorV3AuthSha()
         {
             const string bytes = "30 77 02 01  03 30 0F 02  02 47 21 02  03 00 FF E3" +
@@ -237,6 +242,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
         }
   
         [Test]
+        [Category("Default")]
         public void TestDiscoveryV3()
         {
             const string bytes = "30 3A 02 01 03 30 0F 02 02 6A 09 02 03 00 FF E3" +
@@ -268,6 +274,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
         }
 
         [Test]
+        [Category("Default")]
         public void TestToBytes()
         {
             const string s = "30 27 02 01  01 04 06 70  75 62 6C 69  63 A0 1A 02" +
