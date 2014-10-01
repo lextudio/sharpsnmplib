@@ -58,9 +58,6 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\lib\WatchDog.cs">
-      <Link>WatchDog.cs</Link>
-    </Compile>
     <Compile Include="Messaging\Tests\ListenerBindingTestFixture.cs" />
     <Compile Include="Messaging\Tests\MessageFactoryTestFixture.cs" />
     <Compile Include="Pipeline\Tests\EngineGroupTestFixture.cs" />
@@ -122,7 +119,6 @@
     <Compile Include="Tests\SnmpDataExtensionTestFixture.cs" />
     <Compile Include="Tests\StreamExtensionTestFixture.cs" />
     <Compile Include="Tests\EndOfMibViewTestFixture.cs" />
-    <Compile Include="Messaging\Tests\ManagerTestFixture.cs" />
     <Compile Include="Tests\ByteToolTestFixture.cs" />
     <Compile Include="Tests\Counter32TestFixture.cs" />
     <Compile Include="Tests\Counter64TestFixture.cs" />
@@ -145,7 +141,6 @@
     <Compile Include="Tests\TrapV1PduTestFixture.cs" />
     <Compile Include="Messaging\Tests\TrapV2MessageTestFixture.cs" />
     <Compile Include="Tests\VariableTestFixture.cs" />
-    <Compile Include="Tests\WatchdogTestFixture.cs" />
     <Compile Include="Tests\TrapV2PduTestFixture.cs" />
     <None Include="packages.config" />
     <None Include="Resources\v3authNoPriv_BER_Issue" />
