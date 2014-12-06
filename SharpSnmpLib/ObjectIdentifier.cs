@@ -295,6 +295,10 @@ namespace Lextm.SharpSnmpLib
                 {
                     result.Add(temp);
                 }
+                else
+                {
+                    throw new ArgumentException(string.Format("Parameter {0} is out of 32 bit unsigned integer range", s), "dotted");
+                }
 #endif          
             }
 
