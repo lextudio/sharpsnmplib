@@ -87,6 +87,9 @@
     <Reference Include="SharpSnmpLib.iOS">
       <HintPath>..\..\SharpSnmpLib.iOS.dll</HintPath>
     </Reference>
+    <Reference Include="SharpSnmpLib.Portable">
+      <HintPath>..\..\SharpSnmpLib.Portable.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />

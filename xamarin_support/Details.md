@@ -12,3 +12,6 @@ This is the initial release on Xamarin Component Store, which is primarily a ref
 ### Version 8.5.1 (May 31, 2014)
 
 Added iOS sample.
+
+### Version 8.5.2 (Dec 6, 2014)
+Minor changes to the API. 
