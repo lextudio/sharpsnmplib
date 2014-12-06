@@ -56,13 +56,5 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         [CLSCompliant(false)]
         uint Value { get; set; }
-
-        /// <summary>
-        /// Validates this entity.
-        /// </summary>
-        /// <param name="knownConstructs">Known constructs.</param>
-        /// <param name="registry">The registry.</param>
-        /// <returns></returns>
-        bool Validate(IEnumerable<IConstruct> knownConstructs, IErrorRegistry registry);
     }
 }

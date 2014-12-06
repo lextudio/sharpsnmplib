@@ -57,8 +57,6 @@
     <Compile Include="..\lib\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="ErrorCategory.cs" />
-    <Compile Include="IErrorRegistry.cs" />
     <Compile Include="ITypeAssignment.cs" />
     <Compile Include="Levels.cs" />
     <Compile Include="Messaging\AgentFoundEventArgs.cs" />

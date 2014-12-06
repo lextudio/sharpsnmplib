@@ -50,7 +50,6 @@
     <Compile Include="DataFactory.cs" />
     <Compile Include="DefinitionType.cs" />
     <Compile Include="EndOfMibView.cs" />
-    <Compile Include="ErrorCategory.cs" />
     <Compile Include="ErrorCode.cs" />
     <Compile Include="Gauge32.cs" />
     <Compile Include="GenericCode.cs" />
@@ -61,7 +60,6 @@
     <Compile Include="IConstruct.cs" />
     <Compile Include="IDefinition.cs" />
     <Compile Include="IEntity.cs" />
-    <Compile Include="IErrorRegistry.cs" />
     <Compile Include="IModule.cs" />
     <Compile Include="InformRequestPdu.cs" />
     <Compile Include="Integer32.cs" />
