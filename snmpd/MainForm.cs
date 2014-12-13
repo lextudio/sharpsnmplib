@@ -61,7 +61,7 @@ namespace Lextm.SharpSnmpLib.Agent
             int port = int.Parse(tstxtPort.Text, CultureInfo.InvariantCulture);
             if (tscbIP.Text == StrAllUnassigned)
             {
-                if (Socket.SupportsIPv4)
+                if (Socket.OSSupportsIPv4)
                 {
                     _engine.Listener.AddBinding(new IPEndPoint(IPAddress.Any, port));
                 }
@@ -78,7 +78,7 @@ namespace Lextm.SharpSnmpLib.Agent
             IPAddress address = IPAddress.Parse(tscbIP.Text);
             if (address.AddressFamily == AddressFamily.InterNetwork)
             {
-                if (!Socket.SupportsIPv4)
+                if (!Socket.OSSupportsIPv4)
                 {
                     MessageBox.Show(Listener.ErrorIPv4NotSupported);
                     return;
