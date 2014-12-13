@@ -26,6 +26,7 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     [Obsolete("Please use Pro edition")]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1040:AvoidEmptyInterfaces")]
+    [CLSCompliant(false)]
     public interface IConstruct
     {
         /// <summary>
@@ -55,6 +56,7 @@ namespace Lextm.SharpSnmpLib
         /// <value>
         /// The module.
         /// </value>
+        [CLSCompliant(false)]
         IModule Module { get; set; }
     }
 }

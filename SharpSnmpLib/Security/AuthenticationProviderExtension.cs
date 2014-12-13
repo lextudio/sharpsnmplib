@@ -87,7 +87,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// <param name="privacy">The privacy provider.</param>
         /// <param name="length">The length bytes.</param>
         /// <returns>
-        /// Returns <code>true</code> if hash matches. Otherwise, returns <code>false</code>.
+        /// Returns <c>true</c> if hash matches. Otherwise, returns <c>false</c>.
         /// </returns>
         public static bool VerifyHash(this IAuthenticationProvider provider, VersionCode version, Header header, SecurityParameters parameters, ISnmpData scopeBytes, IPrivacyProvider privacy, byte[] length)
         {

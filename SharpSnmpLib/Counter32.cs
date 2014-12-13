@@ -135,17 +135,17 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Returns a <see cref="UInt32"/> that represents a <see cref="Counter32"/>.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A <c>uint</c> that represents the current object.</returns>
         [CLSCompliant(false)]
         public uint ToUInt32()
         {
             return _count;
         }
-        
+
         /// <summary>
         /// Returns a <see cref="String"/> that represents this <see cref="Counter32"/>.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A string that represents the current object.</returns>
         public override string ToString()
         {
             return ToUInt32().ToString(CultureInfo.InvariantCulture);

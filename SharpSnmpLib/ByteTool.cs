@@ -36,7 +36,7 @@ using System.Text;
 namespace Lextm.SharpSnmpLib
 {
     /// <summary>
-    /// Description of ByteTool.
+    /// Helper utility that performs data conversions from/to bytes.
     /// </summary>
     public static class ByteTool
     {
@@ -44,7 +44,8 @@ namespace Lextm.SharpSnmpLib
         /// Converts decimal string to bytes.
         /// </summary>
         /// <param name="description">The decimal string.</param>
-        /// <returns></returns>
+        /// <returns>The converted bytes.</returns>
+        /// <remarks><c>" 16 18 "</c> is converted to <c>new byte[] { 0x10, 0x12 }</c>.</remarks>
         public static byte[] ConvertDecimal(string description)
         {
             if (description == null)
@@ -69,12 +70,13 @@ namespace Lextm.SharpSnmpLib
 
             return result.ToArray();
         }
-        
+
         /// <summary>
-        /// Converts the byte string.
+        /// Converts the byte string to bytes.
         /// </summary>
         /// <param name="description">The HEX string.</param>
-        /// <returns></returns>
+        /// <returns>The converted bytes.</returns>
+        /// <remarks><c>"80 00"</c> is converted to <c>new byte[] { 0x80, 0x00 }</c>.</remarks>
         public static byte[] Convert(IEnumerable<char> description)
         {
             if (description == null)
@@ -117,10 +119,11 @@ namespace Lextm.SharpSnmpLib
         }
 
         /// <summary>
-        /// Converts the byte string.
+        /// Converts bytes to a byte string.
         /// </summary>
         /// <param name="buffer">The bytes.</param>
-        /// <returns></returns>
+        /// <returns>The formatted string.</returns>
+        /// <remarks><c>new byte[] { 0x80, 0x00 }</c> is converted to <c>"80 00"</c>.</remarks>
         public static string Convert(byte[] buffer)
         {
             if (buffer == null)
@@ -215,6 +218,15 @@ namespace Lextm.SharpSnmpLib
             return list.ToArray();
         }
 
+        /// <summary>
+        /// Packs parts into a single message body.
+        /// </summary>
+        /// <param name="length">Message length.</param>
+        /// <param name="version">Message version.</param>
+        /// <param name="header">Header.</param>
+        /// <param name="parameters">Security parameters.</param>
+        /// <param name="data">Scope data.</param>
+        /// <returns>The <see cref="Sequence" /> object that represents the message body.</returns>
         public static Sequence PackMessage(byte[] length, VersionCode version, ISegment header, ISegment parameters, ISnmpData data)
         {
             if (header == null)

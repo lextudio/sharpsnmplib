@@ -180,6 +180,10 @@ namespace Lextm.SharpSnmpLib
             return result.ToString();
         }
 
+        /// <summary>
+        /// Gets the length bytes.
+        /// </summary>
+        /// <returns>System.Byte[].</returns>
         public byte[] GetLengthBytes()
         {
             return _length;

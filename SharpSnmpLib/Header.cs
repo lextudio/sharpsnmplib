@@ -48,7 +48,11 @@ namespace Lextm.SharpSnmpLib
         private Header() : this(null, DefaultMaxMessageSize, 0)
         {            
         }
-        
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Header"/> class.
+        /// </summary>
+        /// <param name="messageId">The message identifier.</param>
         public Header(int messageId) : this(new Integer32(messageId), DefaultMaxMessageSize, 0)
         {
         }

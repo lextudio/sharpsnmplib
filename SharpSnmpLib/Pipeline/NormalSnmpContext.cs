@@ -78,7 +78,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <summary>
         /// Handles the membership.
         /// </summary>
-        /// <returns>Always returns <code>false</code>.</returns>
+        /// <returns>Always returns <c>false</c>.</returns>
         public override bool HandleMembership()
         {
             return false;

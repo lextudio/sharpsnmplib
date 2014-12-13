@@ -37,7 +37,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// <summary>
         /// Converts to <see cref="Levels"/>.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Levels.</returns>
         public static Levels ToSecurityLevel(this IPrivacyProvider privacy)
         {
             if (privacy == null)
@@ -60,8 +60,21 @@ namespace Lextm.SharpSnmpLib.Security
             }
 
             return flags;
-        } 
+        }
 
+        /// <summary>
+        /// Gets the scope data.
+        /// </summary>
+        /// <param name="privacy">The privacy provider.</param>
+        /// <param name="header">The header.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="rawScopeData">The raw scope data.</param>
+        /// <returns>ISnmpData.</returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// privacy
+        /// or
+        /// header
+        /// </exception>
         public static ISnmpData GetScopeData(this IPrivacyProvider privacy, Header header, SecurityParameters parameters, ISnmpData rawScopeData)
         {
             if (privacy == null)

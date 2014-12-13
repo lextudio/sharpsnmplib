@@ -35,6 +35,7 @@ namespace Lextm.SharpSnmpLib
     /// MIB Module interface.
     /// </summary>
     [Obsolete("Please use Pro edition")]
+    [CLSCompliant(false)]
     public interface IModule
     {
         /// <summary>
@@ -44,10 +45,11 @@ namespace Lextm.SharpSnmpLib
         {
             get;
         }
-        
+
         /// <summary>
         /// Objects.
         /// </summary>
+        [CLSCompliant(false)]
         IList<IEntity> Objects
         {
             get;
@@ -56,6 +58,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Entities.
         /// </summary>
+        [CLSCompliant(false)]
         IList<IEntity> Entities
         {
             get;

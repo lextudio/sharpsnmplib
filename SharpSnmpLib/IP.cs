@@ -34,6 +34,11 @@ namespace Lextm.SharpSnmpLib
 
         private const int IPv4Length = 4;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="IP"/> class.
+        /// </summary>
+        /// <param name="ip">The IP bytes.</param>
+        /// <exception cref="System.ArgumentNullException"><paramref name="ip" /> is <c>null</c>.</exception>
         public IP(byte[] ip)
         {
             if (ip == null)
@@ -45,7 +50,7 @@ namespace Lextm.SharpSnmpLib
         }
 
         /// <summary>
-        /// Creates an <see cref="IP"/> from a specific <see cref="String"/>.
+        /// Creates a new instance of the <see cref="IP"/> class from a specific <see cref="String"/>.
         /// </summary>
         /// <param name="ip">IP string</param>
         public IP(string ip)
@@ -184,6 +189,10 @@ namespace Lextm.SharpSnmpLib
             _length = length.Item2;
         }
 
+        /// <summary>
+        /// Gets the raw bytes.
+        /// </summary>
+        /// <returns>System.Byte[].</returns>
         public byte[] GetRaw()
         {
             return _ip;
