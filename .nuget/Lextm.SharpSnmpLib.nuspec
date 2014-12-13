@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
   <metadata>
-    <version>8.5.0-rc</version>
+    <version>8.5.0-rc2</version>
     <authors>Malcolm Crowe,Lex Li,and other contributors.</authors>
     <owners>Lex Li</owners>
     <licenseUrl>http://sharpsnmplib.codeplex.com/wikipage?title=600012&amp;referringTitle=KB</licenseUrl>
@@ -22,11 +22,18 @@
   </metadata>
   <files>
     <file src="..\bin\SharpSnmpLib.Full.dll" target="lib\net40\SharpSnmpLib.Full.dll" />
+    <file src="..\bin\SharpSnmpLib.Full.xml" target="lib\net40\SharpSnmpLib.Full.xml" />
     <file src="..\bin\SharpSnmpLib.Portable.dll" target="lib\net40\SharpSnmpLib.Portable.dll" />
-	<file src="..\bin\SharpSnmpLib.Portable.dll" target="lib\Monotouch\SharpSnmpLib.Portable.dll" />
+    <file src="..\bin\SharpSnmpLib.Portable.xml" target="lib\net40\SharpSnmpLib.Portable.xml" />
+	  <file src="..\bin\SharpSnmpLib.Portable.dll" target="lib\Monotouch\SharpSnmpLib.Portable.dll" />
+    <file src="..\bin\SharpSnmpLib.Portable.xml" target="lib\Monotouch\SharpSnmpLib.Portable.xml" />
     <file src="..\bin\SharpSnmpLib.iOS.dll" target="lib\Monotouch\SharpSnmpLib.iOS.dll" />
-	<file src="..\bin\SharpSnmpLib.Portable.dll" target="lib\Monoandroid\SharpSnmpLib.Portable.dll" />
+    <file src="..\bin\SharpSnmpLib.Full.xml" target="lib\Monotouch\SharpSnmpLib.iOS.xml" />
+	  <file src="..\bin\SharpSnmpLib.Portable.dll" target="lib\Monoandroid\SharpSnmpLib.Portable.dll" />
     <file src="..\bin\SharpSnmpLib.Android.dll" target="lib\Monoandroid\SharpSnmpLib.Android.dll" />
-	<file src="..\bin\SharpSnmpLib.Portable.dll" target="lib\portable-net4+netcore45+MonoAndroid1+MonoTouch1\SharpSnmpLib.Portable.dll" />
+    <file src="..\bin\SharpSnmpLib.Full.xml" target="lib\Monoandroid\SharpSnmpLib.Android.xml" />
+    <file src="..\bin\SharpSnmpLib.Portable.xml" target="lib\Monoandroid\SharpSnmpLib.Portable.xml" />
+	  <file src="..\bin\SharpSnmpLib.Portable.dll" target="lib\portable-net4+netcore45+MonoAndroid1+MonoTouch1\SharpSnmpLib.Portable.dll" />
+    <file src="..\bin\SharpSnmpLib.Portable.xml" target="lib\portable-net4+netcore45+MonoAndroid1+MonoTouch1\SharpSnmpLib.Portable.xml" />
   </files>
 </package>
