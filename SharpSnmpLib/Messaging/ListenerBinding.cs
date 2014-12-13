@@ -178,7 +178,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             var addressFamily = Endpoint.AddressFamily;
 #if !CF
-            if (addressFamily == AddressFamily.InterNetwork && !Socket.SupportsIPv4)
+            if (addressFamily == AddressFamily.InterNetwork && !Socket.OSSupportsIPv4)
             {
                 throw new InvalidOperationException(Listener.ErrorIPv4NotSupported);
             }
