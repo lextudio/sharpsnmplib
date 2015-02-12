@@ -61,11 +61,12 @@ namespace Lextm.SharpSnmpLib.Agent
             int port = int.Parse(tstxtPort.Text, CultureInfo.InvariantCulture);
             if (tscbIP.Text == StrAllUnassigned)
             {
+#if !__MonoCS__
                 if (Socket.OSSupportsIPv4)
                 {
                     _engine.Listener.AddBinding(new IPEndPoint(IPAddress.Any, port));
                 }
-
+#endif
                 if (Socket.OSSupportsIPv6)
                 {
                     _engine.Listener.AddBinding(new IPEndPoint(IPAddress.IPv6Any, port));
@@ -78,12 +79,13 @@ namespace Lextm.SharpSnmpLib.Agent
             IPAddress address = IPAddress.Parse(tscbIP.Text);
             if (address.AddressFamily == AddressFamily.InterNetwork)
             {
+#if !__MonoCS__
                 if (!Socket.OSSupportsIPv4)
                 {
                     MessageBox.Show(Listener.ErrorIPv4NotSupported);
                     return;
                 }
-
+#endif
                 _engine.Listener.AddBinding(new IPEndPoint(address, port));
                 _engine.Start();
                 return;

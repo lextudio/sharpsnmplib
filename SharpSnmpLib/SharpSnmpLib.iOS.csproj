@@ -2,9 +2,7 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{9607A1E5-DF21-4E89-9B0C-501898252BF4}</ProjectGuid>
     <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
@@ -151,7 +149,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="SharpSnmpLib.Portable.csproj">
-      <Project>{0b7f931d-721e-4ced-8506-463777c4a1a8}</Project>
+      <Project>{0B7F931D-721E-4CED-8506-463777C4A1A8}</Project>
       <Name>SharpSnmpLib.Portable</Name>
     </ProjectReference>
   </ItemGroup>

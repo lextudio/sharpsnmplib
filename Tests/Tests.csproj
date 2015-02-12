@@ -3,8 +3,6 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{FE484004-0780-4730-9D91-D4597341B56E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -47,15 +45,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Moq, Version=4.2.1312.1622, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="System" />
+    <Reference Include="Moq">
       <HintPath>..\packages\Moq.4.2.1312.1622\lib\net40\Moq.dll</HintPath>
     </Reference>
-    <Reference Include="nunit.framework, Version=2.6.3.13283, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Messaging\Tests\ListenerBindingTestFixture.cs" />
@@ -168,11 +164,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SharpSnmpLib\SharpSnmpLib.Full.csproj">
-      <Project>{286de6db-8f95-4bd4-86a2-86488d2e0ee1}</Project>
+      <Project>{286DE6DB-8F95-4BD4-86A2-86488D2E0EE1}</Project>
       <Name>SharpSnmpLib.Full</Name>
     </ProjectReference>
     <ProjectReference Include="..\SharpSnmpLib\SharpSnmpLib.Portable.csproj">
-      <Project>{0b7f931d-721e-4ced-8506-463777c4a1a8}</Project>
+      <Project>{0B7F931D-721E-4CED-8506-463777C4A1A8}</Project>
       <Name>SharpSnmpLib.Portable</Name>
     </ProjectReference>
   </ItemGroup>

@@ -178,11 +178,12 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             var addressFamily = Endpoint.AddressFamily;
 #if !CF
+#if !__MonoCS__
             if (addressFamily == AddressFamily.InterNetwork && !Socket.OSSupportsIPv4)
             {
                 throw new InvalidOperationException(Listener.ErrorIPv4NotSupported);
             }
-
+#endif
             if (addressFamily == AddressFamily.InterNetworkV6 && !Socket.OSSupportsIPv6)
             {
                 throw new InvalidOperationException(Listener.ErrorIPv6NotSupported);

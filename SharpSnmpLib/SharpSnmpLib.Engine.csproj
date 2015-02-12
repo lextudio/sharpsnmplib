@@ -3,8 +3,6 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{CD0F4B22-8235-49B1-A144-462CB8FD4973}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -45,7 +43,6 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\bin\SharpSnmpLib.Engine.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\lib\SharedAssemblyInfo.cs">
@@ -133,11 +130,11 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.configuration" />
+    <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="SharpSnmpLib.csproj">
-      <Project>{a597585f-f82d-48ae-9648-ed0b4f6fa067}</Project>
+      <Project>{A597585F-F82D-48AE-9648-ED0B4F6FA067}</Project>
       <Name>SharpSnmpLib</Name>
     </ProjectReference>
   </ItemGroup>
