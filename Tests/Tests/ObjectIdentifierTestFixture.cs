@@ -90,7 +90,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestUuid()
         {
             var exception = Assert.Throws<ArgumentException>(() => new ObjectIdentifier("2.25.329800735698586629295641978511506172918"));
-            Assert.AreEqual("Parameter 329800735698586629295641978511506172918 is out of 32 bit unsigned integer range\r\nParameter name: dotted", exception.Message);
+			Assert.AreEqual(string.Format("Parameter 329800735698586629295641978511506172918 is out of 32 bit unsigned integer range{0}Parameter name: dotted", Environment.NewLine), exception.Message);
         }
 
         [Test]
