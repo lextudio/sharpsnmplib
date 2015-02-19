@@ -25,23 +25,23 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "snmpbulkget", "Samples\VB.N
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CSharp", "CSharp", "{2766D949-12D8-4757-8E4D-FC2D6B4EBCE7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "snmpwalk", "Samples\C#\snmpwalk\snmpwalk.csproj", "{DA748764-54DF-409A-AAB4-FF6FB10E879D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "snmpwalk", "Samples\CSharp\snmpwalk\snmpwalk.csproj", "{DA748764-54DF-409A-AAB4-FF6FB10E879D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "snmptrapd", "Samples\C#\snmptrapd\snmptrapd.csproj", "{2BD083D3-01C9-46CA-9E9D-72A29240DBF3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "snmptrapd", "Samples\CSharp\snmptrapd\snmptrapd.csproj", "{2BD083D3-01C9-46CA-9E9D-72A29240DBF3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "snmpset", "Samples\C#\snmpset\snmpset.csproj", "{9557151F-BE39-48CD-BEB9-21B91DA5E531}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "snmpset", "Samples\CSharp\snmpset\snmpset.csproj", "{9557151F-BE39-48CD-BEB9-21B91DA5E531}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "snmpsendtrap", "Samples\C#\snmpsendtrap\snmpsendtrap.csproj", "{E2BB2836-97A5-4F81-A11F-4CD9DEFB5657}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "snmpsendtrap", "Samples\CSharp\snmpsendtrap\snmpsendtrap.csproj", "{E2BB2836-97A5-4F81-A11F-4CD9DEFB5657}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "snmpgetnext", "Samples\C#\snmpgetnext\snmpgetnext.csproj", "{4DA21F68-9317-4FB1-AB31-686EC8615985}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "snmpgetnext", "Samples\CSharp\snmpgetnext\snmpgetnext.csproj", "{4DA21F68-9317-4FB1-AB31-686EC8615985}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "snmpget", "Samples\C#\snmpget\snmpget.csproj", "{3A4AFEAC-A4F7-44E6-9860-1E033F0254AE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "snmpget", "Samples\CSharp\snmpget\snmpget.csproj", "{3A4AFEAC-A4F7-44E6-9860-1E033F0254AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "snmpdiscover", "Samples\C#\snmpdiscover\snmpdiscover.csproj", "{FD1CED96-0573-4115-9D7A-D5075A3FF768}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "snmpdiscover", "Samples\CSharp\snmpdiscover\snmpdiscover.csproj", "{FD1CED96-0573-4115-9D7A-D5075A3FF768}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "snmpbulkget", "Samples\C#\snmpbulkget\snmpbulkget.csproj", "{A3D5CC49-DD4A-4FD6-A165-7D5AF60CDD15}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "snmpbulkget", "Samples\CSharp\snmpbulkget\snmpbulkget.csproj", "{A3D5CC49-DD4A-4FD6-A165-7D5AF60CDD15}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BytesViewer", "Samples\C#\BytesViewer\BytesViewer.csproj", "{42D9E604-CECC-4798-B0A5-82278EB8BB6A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BytesViewer", "Samples\CSharp\BytesViewer\BytesViewer.csproj", "{42D9E604-CECC-4798-B0A5-82278EB8BB6A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "snmpd", "snmpd\snmpd.csproj", "{DA58ECDA-DB5D-41D0-982A-7E17E8172354}"
 EndProject
