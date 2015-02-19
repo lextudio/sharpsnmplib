@@ -27,6 +27,7 @@
 
 using System.Net.NetworkInformation;
 using Lextm.SharpSnmpLib.Pipeline;
+using System;
 
 namespace Lextm.SharpSnmpLib.Objects
 {
@@ -52,7 +53,14 @@ namespace Lextm.SharpSnmpLib.Objects
             }
             else
             {
-                _data = new Integer32(networkInterface.GetIPProperties().GetIPv6Properties().Mtu);
+                try
+                {
+                    _data = new Integer32(networkInterface.GetIPProperties().GetIPv6Properties().Mtu);
+                }
+				catch (NotImplementedException)
+				{
+					_data = new Integer32(0);
+				}
             }
         }
 
