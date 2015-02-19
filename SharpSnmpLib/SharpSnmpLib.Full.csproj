@@ -179,10 +179,6 @@
     <Compile Include="Security\DESPrivacyProvider.cs" />
     <Compile Include="Security\MD5AuthenticationProvider.cs" />
     <Compile Include="Security\SHA1AuthenticationProvider.cs" />
-    <None Include="..\readme.txt">
-      <Link>readme.txt</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="sharpsnmplib.snk" />
   </ItemGroup>
   <ItemGroup>

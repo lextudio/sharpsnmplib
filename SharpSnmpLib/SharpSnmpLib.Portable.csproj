@@ -124,12 +124,6 @@
   <ItemGroup>
     <None Include="license.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="..\readme.txt">
-      <Link>readme.txt</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="Microsoft.VersionNumber.targets" Condition=" '$(Configuration)' == 'Debug' " />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
