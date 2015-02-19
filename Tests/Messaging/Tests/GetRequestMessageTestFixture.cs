@@ -291,7 +291,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
         
         [Test]
         [Category("Default")]
-        public void TestTimeOutAsync()
+        public void TestResponseAsync()
         {
             var container = new UnityContainer();
             container.LoadConfiguration("agent");
@@ -327,7 +327,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
         
         [Test]
         [Category("Default")]
-        public void TestTimeOut()
+        public void TestResponse()
         {
             var container = new UnityContainer();
             container.LoadConfiguration("agent");
@@ -357,7 +357,16 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             message.GetResponse(time, new IPEndPoint(IPAddress.Loopback, 16100), socket);
 
             engine.Stop();
+        }
 
+        [Test]
+        [Category("Default")]
+        public void TestTimeOut()
+        {
+            Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            GetRequestMessage message = new GetRequestMessage(0x4bed, VersionCode.V2, new OctetString("public"), new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) });
+
+            const int time = 1500;
             var timer = new System.Diagnostics.Stopwatch();            
             timer.Start();
             //IMPORTANT: test against an agent that doesn't exist.
