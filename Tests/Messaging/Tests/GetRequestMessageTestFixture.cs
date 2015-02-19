@@ -290,7 +290,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
         }
         
         [Test]
-        [Category("External")]
+        [Category("Default")]
         public void TestTimeOutAsync()
         {
             var container = new UnityContainer();
@@ -326,7 +326,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
         }
         
         [Test]
-        [Category("External")]
+        [Category("Default")]
         public void TestTimeOut()
         {
             var container = new UnityContainer();
