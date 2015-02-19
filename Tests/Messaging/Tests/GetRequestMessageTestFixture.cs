@@ -13,6 +13,10 @@ using Lextm.SharpSnmpLib.Security;
 using NUnit.Framework;
 using System.Net.Sockets;
 using System;
+using Microsoft.Practices.Unity;
+using Lextm.SharpSnmpLib.Objects;
+using Lextm.SharpSnmpLib.Pipeline;
+using Microsoft.Practices.Unity.Configuration;
 
 #pragma warning disable 1591
 
@@ -289,17 +293,35 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
         [Category("External")]
         public void TestTimeOutAsync()
         {
-            // IMPORTANT: this test case requires a local SNMP agent such as 
-            //   #SNMP Agent (snmpd), 
-            //   Windows SNMP agent service, 
-            //   Net-SNMP agent, or 
-            //   snmp4j agent.
+            var container = new UnityContainer();
+            container.LoadConfiguration("agent");
+
+            // TODO: this is a hack. review it later.
+            var store = container.Resolve<ObjectStore>();
+            store.Add(new SysDescr());
+
+
+            var users = container.Resolve<UserRegistry>();
+            users.Add(new OctetString("neither"), DefaultPrivacyProvider.DefaultPair);
+            users.Add(new OctetString("authen"), new DefaultPrivacyProvider(new MD5AuthenticationProvider(new OctetString("authentication"))));
+            users.Add(
+                new OctetString("privacy"),
+                new DESPrivacyProvider(
+                    new OctetString("privacyphrase"),
+                    new MD5AuthenticationProvider(new OctetString("authentication"))));
+            var engine = container.Resolve<SnmpEngine>();
+            engine.Listener.ClearBindings();
+            engine.Listener.AddBinding(new IPEndPoint(IPAddress.Loopback, 16100));
+            engine.Start();
+
             Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             GetRequestMessage message = new GetRequestMessage(0x4bed, VersionCode.V2, new OctetString("public"), new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) });
             
-            var users = new UserRegistry();
-            var ar2 = message.BeginGetResponse(new IPEndPoint(IPAddress.Loopback, 161), users, socket, null, null);
+            var users1 = new UserRegistry();
+            var ar2 = message.BeginGetResponse(new IPEndPoint(IPAddress.Loopback, 16100), users1, socket, null, null);
             var response = message.EndGetResponse(ar2);
+
+            engine.Stop();
             Assert.AreEqual(SnmpType.ResponsePdu, response.TypeCode());
         }
         
@@ -307,16 +329,34 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
         [Category("External")]
         public void TestTimeOut()
         {
-            // IMPORTANT: this test case requires a local SNMP agent such as 
-            //   #SNMP Agent (snmpd), 
-            //   Windows SNMP agent service, 
-            //   Net-SNMP agent, or 
-            //   snmp4j agent.
+            var container = new UnityContainer();
+            container.LoadConfiguration("agent");
+
+            // TODO: this is a hack. review it later.
+            var store = container.Resolve<ObjectStore>();
+            store.Add(new SysDescr());
+
+
+            var users = container.Resolve<UserRegistry>();
+            users.Add(new OctetString("neither"), DefaultPrivacyProvider.DefaultPair);
+            users.Add(new OctetString("authen"), new DefaultPrivacyProvider(new MD5AuthenticationProvider(new OctetString("authentication"))));
+            users.Add(
+                new OctetString("privacy"),
+                new DESPrivacyProvider(
+                    new OctetString("privacyphrase"),
+                    new MD5AuthenticationProvider(new OctetString("authentication"))));
+            var engine = container.Resolve<SnmpEngine>();
+            engine.Listener.ClearBindings();
+            engine.Listener.AddBinding(new IPEndPoint(IPAddress.Loopback, 16100));
+            engine.Start();
+
             Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             GetRequestMessage message = new GetRequestMessage(0x4bed, VersionCode.V2, new OctetString("public"), new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) });
             
             const int time = 1500;
-            message.GetResponse(time, new IPEndPoint(IPAddress.Loopback, 161), socket);
+            message.GetResponse(time, new IPEndPoint(IPAddress.Loopback, 16100), socket);
+
+            engine.Stop();
 
             var timer = new System.Diagnostics.Stopwatch();            
             timer.Start();
