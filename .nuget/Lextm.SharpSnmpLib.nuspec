@@ -25,10 +25,10 @@
     <file src="..\bin\SharpSnmpLib.Full.xml" target="lib\net40\SharpSnmpLib.Full.xml" />
     <file src="..\bin\SharpSnmpLib.Portable.dll" target="lib\net40\SharpSnmpLib.Portable.dll" />
     <file src="..\bin\SharpSnmpLib.Portable.xml" target="lib\net40\SharpSnmpLib.Portable.xml" />
-    <file src="..\bin\SharpSnmpLib.Portable.dll" target="lib\Monotouch\SharpSnmpLib.Portable.dll" />
-    <file src="..\bin\SharpSnmpLib.Portable.xml" target="lib\Monotouch\SharpSnmpLib.Portable.xml" />
-    <file src="..\bin\SharpSnmpLib.iOS.dll" target="lib\Monotouch\SharpSnmpLib.iOS.dll" />
-    <file src="..\bin\SharpSnmpLib.Full.xml" target="lib\Monotouch\SharpSnmpLib.iOS.xml" />
+    <file src="..\bin\SharpSnmpLib.Portable.dll" target="lib\Xamarin.iOS10\SharpSnmpLib.Portable.dll" />
+    <file src="..\bin\SharpSnmpLib.Portable.xml" target="lib\Xamarin.iOS10\SharpSnmpLib.Portable.xml" />
+    <file src="..\bin\SharpSnmpLib.iOS.dll" target="lib\Xamarin.iOS10\SharpSnmpLib.iOS.dll" />
+    <file src="..\bin\SharpSnmpLib.Full.xml" target="lib\Xamarin.iOS10\SharpSnmpLib.iOS.xml" />
     <file src="..\bin\SharpSnmpLib.Portable.dll" target="lib\Monoandroid\SharpSnmpLib.Portable.dll" />
     <file src="..\bin\SharpSnmpLib.Android.dll" target="lib\Monoandroid\SharpSnmpLib.Android.dll" />
     <file src="..\bin\SharpSnmpLib.Full.xml" target="lib\Monoandroid\SharpSnmpLib.Android.xml" />
