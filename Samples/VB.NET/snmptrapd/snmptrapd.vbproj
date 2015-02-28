@@ -165,5 +165,4 @@
       <Name>SharpSnmpLib.Portable</Name>
     </ProjectReference>
   </ItemGroup>
-  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" />
 </Project>

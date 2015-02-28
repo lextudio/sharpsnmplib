@@ -165,5 +165,4 @@
   <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
-  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" />
 </Project>

@@ -1,2 +1,3 @@
 export EnableNuGetPackageRestore=true
-xbuild SharpSnmpLib.Mono.sln
+mono --runtime=v4.0.30319 .nuget/NuGet.exe restore SharpSnmpLib.sln
+xbuild SharpSnmpLib.sln

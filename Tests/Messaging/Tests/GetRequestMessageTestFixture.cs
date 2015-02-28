@@ -347,14 +347,14 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
                     new MD5AuthenticationProvider(new OctetString("authentication"))));
             var engine = container.Resolve<SnmpEngine>();
             engine.Listener.ClearBindings();
-            engine.Listener.AddBinding(new IPEndPoint(IPAddress.Loopback, 16100));
+            engine.Listener.AddBinding(new IPEndPoint(IPAddress.Loopback, 16102));
             engine.Start();
 
             Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             GetRequestMessage message = new GetRequestMessage(0x4bed, VersionCode.V2, new OctetString("public"), new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) });
             
             const int time = 1500;
-            message.GetResponse(time, new IPEndPoint(IPAddress.Loopback, 16100), socket);
+            message.GetResponse(time, new IPEndPoint(IPAddress.Loopback, 16102), socket);
 
             engine.Stop();
         }
