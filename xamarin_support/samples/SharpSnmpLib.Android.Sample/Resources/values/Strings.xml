@@ -1,5 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<resources>
-	<string name="hello">Click to send a GET message</string>
-	<string name="app_name">SharpSnmpLib.Android.Sample</string>
-</resources>
