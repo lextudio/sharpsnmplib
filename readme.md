@@ -2,4 +2,8 @@
 
 This is the source code repository of #SNMP Library.
 
-For docucmentation and other information, please visit [#SNMP Library homepage](https://sharpsnmplib.codeplex.com).
+The following can be found at [#SNMP Library homepage](https://sharpsnmplib.codeplex.com),
+
+* Get started and knowledge base
+* Issue tracker
+* Downloads and release notes
