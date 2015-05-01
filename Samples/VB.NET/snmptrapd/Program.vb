@@ -7,43 +7,43 @@
 ' To change this template use Tools | Options | Coding | Edit Standard Headers.
 '
 Imports System.Net
-Imports Microsoft.Practices.Unity.Configuration
-Imports Microsoft.Practices.Unity
+Imports Lextm.SharpSnmpLib
+Imports Lextm.SharpSnmpLib.Messaging
 Imports Lextm.SharpSnmpLib.Pipeline
+Imports Lextm.SharpSnmpLib.Security
 
 Module Program
-    Private m_Container As IUnityContainer
-
-    Friend Property Container() As IUnityContainer
-        Get
-            Return m_Container
-        End Get
-        Private Set(ByVal value As IUnityContainer)
-            m_Container = value
-        End Set
-    End Property
-
     Public Sub Main(ByVal args As String())
-        If args.Length <> 0 Then
-            Return
+        If args.Length = 0 Then
+            Dim users As UserRegistry = New UserRegistry()
+            users.Add(New OctetString("neither"), DefaultPrivacyProvider.DefaultPair)
+            users.Add(New OctetString("authen"), New DefaultPrivacyProvider(New MD5AuthenticationProvider(New OctetString("authentication"))))
+            users.Add(New OctetString("privacy"), New DESPrivacyProvider(New OctetString("privacyphrase"), New MD5AuthenticationProvider(New OctetString("authentication"))))
+            Dim trapv As TrapV1MessageHandler = New TrapV1MessageHandler()
+            AddHandler trapv.MessageReceived, AddressOf Program.WatcherTrapV1Received
+            Dim trapv1Mapping As HandlerMapping = New HandlerMapping("v1", "TRAPV1", trapv)
+            Dim trapv2 As TrapV2MessageHandler = New TrapV2MessageHandler()
+            AddHandler trapv2.MessageReceived, AddressOf Program.WatcherTrapV2Received
+            Dim trapv2Mapping As HandlerMapping = New HandlerMapping("v2,v3", "TRAPV2", trapv2)
+            Dim inform As InformRequestMessageHandler = New InformRequestMessageHandler()
+            AddHandler inform.MessageReceived, AddressOf Program.WatcherInformRequestReceived
+            Dim informMapping As HandlerMapping = New HandlerMapping("v2,v3", "INFORM", inform)
+            Dim store As ObjectStore = New ObjectStore()
+            Dim v As Version1MembershipProvider = New Version1MembershipProvider(New OctetString("public"), New OctetString("public"))
+            Dim v2 As Version2MembershipProvider = New Version2MembershipProvider(New OctetString("public"), New OctetString("public"))
+            Dim v3 As Version3MembershipProvider = New Version3MembershipProvider()
+            Dim membership As ComposedMembershipProvider = New ComposedMembershipProvider(New IMembershipProvider() {v, v2, v3})
+            Dim handlerFactory As MessageHandlerFactory = New MessageHandlerFactory(New HandlerMapping() {trapv1Mapping, trapv2Mapping, informMapping})
+            Dim pipelineFactory As SnmpApplicationFactory = New SnmpApplicationFactory(store, membership, handlerFactory)
+            Using engine As SnmpEngine = New SnmpEngine(pipelineFactory, New Listener() With {.Users = users}, New EngineGroup())
+                engine.Listener.AddBinding(New IPEndPoint(IPAddress.Any, 162))
+                engine.Start()
+                Console.WriteLine("#SNMP is available at http://sharpsnmplib.codeplex.com")
+                Console.WriteLine("Press any key to stop . . . ")
+                Console.Read()
+                engine.[Stop]()
+            End Using
         End If
-
-        Container = New UnityContainer().LoadConfiguration("snmptrapd")
-
-        Dim trapv1 = Container.Resolve(Of TrapV1MessageHandler)("TrapV1Handler")
-        AddHandler trapv1.MessageReceived, AddressOf WatcherTrapV1Received
-        Dim trapv2 = Container.Resolve(Of TrapV2MessageHandler)("TrapV2Handler")
-        AddHandler trapv2.MessageReceived, AddressOf WatcherTrapV2Received
-        Dim inform = Container.Resolve(Of InformRequestMessageHandler)("InformHandler")
-        AddHandler inform.MessageReceived, AddressOf WatcherInformRequestReceived
-        Using engine = Container.Resolve(Of SnmpEngine)()
-            engine.Listener.AddBinding(New IPEndPoint(IPAddress.Any, 162))
-            engine.Start()
-            Console.WriteLine("#SNMP is available at http://sharpsnmplib.codeplex.com")
-            Console.WriteLine("Press any key to stop . . . ")
-            Console.Read()
-            engine.[Stop]()
-        End Using
     End Sub
 
     Private Sub WatcherInformRequestReceived(ByVal sender As Object, ByVal e As InformRequestMessageReceivedEventArgs)

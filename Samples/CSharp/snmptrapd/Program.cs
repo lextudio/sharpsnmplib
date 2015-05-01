@@ -11,36 +11,46 @@ using System.Net;
 using Lextm.SharpSnmpLib;
 using Lextm.SharpSnmpLib.Pipeline;
 using Lextm.SharpSnmpLib.Security;
-using Microsoft.Practices.Unity;
-using Microsoft.Practices.Unity.Configuration;
+using Lextm.SharpSnmpLib.Messaging;
 
 namespace SnmpTrapD
 {
     internal static class Program
     { 
-        internal static IUnityContainer Container { get; private set; }
-        
         public static void Main(string[] args)
         {
             if (args.Length != 0)
             {
                 return;
             }
-            
-            Container = new UnityContainer().LoadConfiguration("snmptrapd");
-            var users = Container.Resolve<UserRegistry>();
+
+            var users = new UserRegistry();
             users.Add(new OctetString("neither"), DefaultPrivacyProvider.DefaultPair);
             users.Add(new OctetString("authen"), new DefaultPrivacyProvider(new MD5AuthenticationProvider(new OctetString("authentication"))));
             users.Add(new OctetString("privacy"), new DESPrivacyProvider(new OctetString("privacyphrase"),
                                                                          new MD5AuthenticationProvider(new OctetString("authentication")))); 
 
-            var trapv1 = Container.Resolve<TrapV1MessageHandler>("TrapV1Handler");
+            var trapv1 = new TrapV1MessageHandler();
             trapv1.MessageReceived += WatcherTrapV1Received;
-            var trapv2 = Container.Resolve<TrapV2MessageHandler>("TrapV2Handler");
+            var trapv1Mapping = new HandlerMapping("v1", "TRAPV1", trapv1);
+
+            var trapv2 = new TrapV2MessageHandler();
             trapv2.MessageReceived += WatcherTrapV2Received;
-            var inform = Container.Resolve<InformRequestMessageHandler>("InformHandler");
+            var trapv2Mapping = new HandlerMapping("v2,v3", "TRAPV2", trapv2);
+
+            var inform = new InformRequestMessageHandler();
             inform.MessageReceived += WatcherInformRequestReceived;
-            using (var engine = Container.Resolve<SnmpEngine>())
+            var informMapping = new HandlerMapping("v2,v3", "INFORM", inform);
+
+            var store = new ObjectStore();
+            var v1 = new Version1MembershipProvider(new OctetString("public"), new OctetString("public"));
+            var v2 = new Version2MembershipProvider(new OctetString("public"), new OctetString("public"));
+            var v3 = new Version3MembershipProvider();
+            var membership = new ComposedMembershipProvider(new IMembershipProvider[] {v1, v2, v3});
+            var handlerFactory = new MessageHandlerFactory(new[] {trapv1Mapping, trapv2Mapping, informMapping});
+
+            var pipelineFactory = new SnmpApplicationFactory(store, membership, handlerFactory);
+            using (var engine = new SnmpEngine(pipelineFactory, new Listener { Users = users }, new EngineGroup()))
             {
                 engine.Listener.AddBinding(new IPEndPoint(IPAddress.Any, 162));
                 engine.Start();

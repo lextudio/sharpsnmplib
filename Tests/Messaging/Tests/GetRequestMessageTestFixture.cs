@@ -13,10 +13,8 @@ using Lextm.SharpSnmpLib.Security;
 using NUnit.Framework;
 using System.Net.Sockets;
 using System;
-using Microsoft.Practices.Unity;
 using Lextm.SharpSnmpLib.Objects;
 using Lextm.SharpSnmpLib.Pipeline;
-using Microsoft.Practices.Unity.Configuration;
 
 #pragma warning disable 1591
 
@@ -293,23 +291,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
         [Category("Default")]
         public void TestResponseAsync()
         {
-            var container = new UnityContainer();
-            container.LoadConfiguration("agent");
-
-            // TODO: this is a hack. review it later.
-            var store = container.Resolve<ObjectStore>();
-            store.Add(new SysDescr());
-
-
-            var users = container.Resolve<UserRegistry>();
-            users.Add(new OctetString("neither"), DefaultPrivacyProvider.DefaultPair);
-            users.Add(new OctetString("authen"), new DefaultPrivacyProvider(new MD5AuthenticationProvider(new OctetString("authentication"))));
-            users.Add(
-                new OctetString("privacy"),
-                new DESPrivacyProvider(
-                    new OctetString("privacyphrase"),
-                    new MD5AuthenticationProvider(new OctetString("authentication"))));
-            var engine = container.Resolve<SnmpEngine>();
+            var engine = CreateEngine();
             engine.Listener.ClearBindings();
             engine.Listener.AddBinding(new IPEndPoint(IPAddress.Loopback, 16100));
             engine.Start();
@@ -329,23 +311,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
         [Category("Default")]
         public void TestResponse()
         {
-            var container = new UnityContainer();
-            container.LoadConfiguration("agent");
-
-            // TODO: this is a hack. review it later.
-            var store = container.Resolve<ObjectStore>();
-            store.Add(new SysDescr());
-
-
-            var users = container.Resolve<UserRegistry>();
-            users.Add(new OctetString("neither"), DefaultPrivacyProvider.DefaultPair);
-            users.Add(new OctetString("authen"), new DefaultPrivacyProvider(new MD5AuthenticationProvider(new OctetString("authentication"))));
-            users.Add(
-                new OctetString("privacy"),
-                new DESPrivacyProvider(
-                    new OctetString("privacyphrase"),
-                    new MD5AuthenticationProvider(new OctetString("authentication"))));
-            var engine = container.Resolve<SnmpEngine>();
+            var engine = CreateEngine();
             engine.Listener.ClearBindings();
             engine.Listener.AddBinding(new IPEndPoint(IPAddress.Loopback, 16102));
             engine.Start();
@@ -357,6 +323,68 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             message.GetResponse(time, new IPEndPoint(IPAddress.Loopback, 16102), socket);
 
             engine.Stop();
+        }
+
+        private SnmpEngine CreateEngine()
+        {
+            // TODO: this is a hack. review it later.
+            var store = new ObjectStore();
+            store.Add(new SysDescr());
+            store.Add(new SysObjectId());
+            store.Add(new SysUpTime());
+            store.Add(new SysContact());
+            store.Add(new SysName());
+            store.Add(new SysLocation());
+            store.Add(new SysServices());
+            store.Add(new SysORLastChange());
+            store.Add(new SysORTable());
+            store.Add(new IfNumber());
+            store.Add(new IfTable());
+
+            var users = new UserRegistry();
+            users.Add(new OctetString("neither"), DefaultPrivacyProvider.DefaultPair);
+            users.Add(new OctetString("authen"), new DefaultPrivacyProvider(new MD5AuthenticationProvider(new OctetString("authentication"))));
+            users.Add(new OctetString("privacy"), new DESPrivacyProvider(new OctetString("privacyphrase"),
+                                                                         new MD5AuthenticationProvider(new OctetString("authentication"))));
+
+            var getv1 = new GetV1MessageHandler();
+            var getv1Mapping = new HandlerMapping("v1", "GET", getv1);
+
+            var getv23 = new GetMessageHandler();
+            var getv23Mapping = new HandlerMapping("v2,v3", "GET", getv23);
+
+            var setv1 = new SetV1MessageHandler();
+            var setv1Mapping = new HandlerMapping("v1", "SET", setv1);
+
+            var setv23 = new SetMessageHandler();
+            var setv23Mapping = new HandlerMapping("v2,v3", "SET", setv23);
+
+            var getnextv1 = new GetNextV1MessageHandler();
+            var getnextv1Mapping = new HandlerMapping("v1", "GETNEXT", getnextv1);
+
+            var getnextv23 = new GetNextMessageHandler();
+            var getnextv23Mapping = new HandlerMapping("v2,v3", "GETNEXT", getnextv23);
+
+            var getbulk = new GetBulkMessageHandler();
+            var getbulkMapping = new HandlerMapping("v2,v3", "GETBULK", getbulk);
+
+            var v1 = new Version1MembershipProvider(new OctetString("public"), new OctetString("public"));
+            var v2 = new Version2MembershipProvider(new OctetString("public"), new OctetString("public"));
+            var v3 = new Version3MembershipProvider();
+            var membership = new ComposedMembershipProvider(new IMembershipProvider[] { v1, v2, v3 });
+            var handlerFactory = new MessageHandlerFactory(new[]
+            {
+                getv1Mapping, 
+                getv23Mapping, 
+                setv1Mapping,
+                setv23Mapping,
+                getnextv1Mapping,
+                getnextv23Mapping,
+                getbulkMapping
+            });
+
+            var pipelineFactory = new SnmpApplicationFactory(store, membership, handlerFactory);
+            return new SnmpEngine(pipelineFactory, new Listener { Users = users }, new EngineGroup());
         }
 
         [Test]
