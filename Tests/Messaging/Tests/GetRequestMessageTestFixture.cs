@@ -13,6 +13,7 @@ using Lextm.SharpSnmpLib.Security;
 using NUnit.Framework;
 using System.Net.Sockets;
 using System;
+using System.Threading.Tasks;
 using Lextm.SharpSnmpLib.Objects;
 using Lextm.SharpSnmpLib.Pipeline;
 
@@ -289,7 +290,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
         
         [Test]
         [Category("Default")]
-        public void TestResponseAsync()
+        public async Task TestResponseAsync()
         {
             var engine = CreateEngine();
             engine.Listener.ClearBindings();
@@ -300,8 +301,8 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             GetRequestMessage message = new GetRequestMessage(0x4bed, VersionCode.V2, new OctetString("public"), new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) });
             
             var users1 = new UserRegistry();
-            var ar2 = message.BeginGetResponse(new IPEndPoint(IPAddress.Loopback, 16100), users1, socket, null, null);
-            var response = message.EndGetResponse(ar2);
+            var response =
+                await message.GetResponseAsync(1500, new IPEndPoint(IPAddress.Loopback, 16100), users1, socket);
 
             engine.Stop();
             Assert.AreEqual(SnmpType.ResponsePdu, response.TypeCode());

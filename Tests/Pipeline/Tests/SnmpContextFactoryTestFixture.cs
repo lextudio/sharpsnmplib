@@ -16,11 +16,11 @@ namespace Lextm.SharpSnmpLib.Pipeline.Tests
             var messageMock = new Mock<ISnmpMessage>();
             messageMock.Setup(foo => foo.Version).Returns(VersionCode.V3);
             var bindingMock = new Mock<IListenerBinding>();
-            bindingMock.Setup(foo => foo.SendResponse(It.IsAny<ISnmpMessage>(), It.IsAny<EndPoint>())).AtMostOnce();
             var context = SnmpContextFactory.Create(messageMock.Object, new IPEndPoint(IPAddress.Loopback, 0), new UserRegistry(),
                                       new EngineGroup(),
                                       bindingMock.Object);
             context.SendResponse();
+            bindingMock.Verify(foo => foo.SendResponse(It.IsAny<ISnmpMessage>(), It.IsAny<EndPoint>()), Times.AtMostOnce);
         }
     }
 }

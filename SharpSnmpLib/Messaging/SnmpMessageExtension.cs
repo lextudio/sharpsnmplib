@@ -23,6 +23,9 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Net;
 using System.Net.Sockets;
+using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Threading.Tasks;
 using Lextm.SharpSnmpLib.Security;
 
 namespace Lextm.SharpSnmpLib.Messaging
@@ -445,6 +448,101 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             throw OperationException.Create(string.Format(CultureInfo.InvariantCulture, "wrong response type: {0}", responseCode), receiver.Address);
         }
+
+        /// <summary>
+        /// Sends an  <see cref="ISnmpMessage"/> and handles the response from agent.
+        /// </summary>
+        /// <param name="request">The <see cref="ISnmpMessage"/>.</param>
+        /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
+        /// <param name="receiver">Agent.</param>
+        /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
+        /// <param name="registry">The user registry.</param>
+        /// <returns></returns>
+        public static async Task<ISnmpMessage> GetResponseAsync(this ISnmpMessage request, int timeout, IPEndPoint receiver, UserRegistry registry, Socket udpSocket)
+        {
+            if (request == null)
+            {
+                throw new ArgumentNullException("request");
+            }
+
+            if (udpSocket == null)
+            {
+                throw new ArgumentNullException("udpSocket");
+            }
+
+            if (receiver == null)
+            {
+                throw new ArgumentNullException("receiver");
+            }
+
+            if (registry == null)
+            {
+                throw new ArgumentNullException("registry");
+            }
+
+            var requestCode = request.TypeCode();
+            if (requestCode == SnmpType.TrapV1Pdu || requestCode == SnmpType.TrapV2Pdu || requestCode == SnmpType.ReportPdu)
+            {
+                throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, "not a request message: {0}", requestCode));
+            }
+
+            var bytes = request.ToBytes();
+#if CF
+            int bufSize = 8192;
+#else
+            var bufSize = udpSocket.ReceiveBufferSize;
+#endif
+            var reply = new byte[bufSize];
+
+            // Whatever you change, try to keep the Send and the Receive close to each other.
+            udpSocket.SendTo(bytes, receiver);
+#if !CF
+            udpSocket.ReceiveTimeout = timeout;
+#endif
+            int count;
+            try
+            {
+                // IMPORTANT: follow http://blogs.msdn.com/b/pfxteam/archive/2011/12/15/10248293.aspx
+                var args = new SocketAsyncEventArgs(); 
+                args.SetBuffer(reply, 0, bufSize);
+                var awaitable = new SocketAwaitable(args);
+                count = await SocketExtensions.ReceiveAsync(udpSocket, awaitable);
+            }
+            catch (SocketException ex)
+            {
+                // FIXME: If you use a Mono build without the fix for this issue (https://bugzilla.novell.com/show_bug.cgi?id=599488), please uncomment this code.
+                /*
+                if (SnmpMessageExtension.IsRunningOnMono && ex.ErrorCode == 10035)
+                {
+                    throw TimeoutException.Create(receiver.Address, timeout);
+                }
+                // */
+
+                if (ex.ErrorCode == WSAETIMEDOUT)
+                {
+                    throw TimeoutException.Create(receiver.Address, timeout);
+                }
+
+                throw;
+            }
+
+            // Passing 'count' is not necessary because ParseMessages should ignore it, but it offer extra safety (and would avoid an issue if parsing >1 response).
+            var response = MessageFactory.ParseMessages(reply, 0, count, registry)[0];
+            var responseCode = response.TypeCode();
+            if (responseCode == SnmpType.ResponsePdu || responseCode == SnmpType.ReportPdu)
+            {
+                var requestId = request.MessageId();
+                var responseId = response.MessageId();
+                if (responseId != requestId)
+                {
+                    throw OperationException.Create(string.Format(CultureInfo.InvariantCulture, "wrong response sequence: expected {0}, received {1}", requestId, responseId), receiver.Address);
+                }
+
+                return response;
+            }
+
+            throw OperationException.Create(string.Format(CultureInfo.InvariantCulture, "wrong response type: {0}", responseCode), receiver.Address);
+        }
         
         /// <summary>
         /// Ends a pending asynchronous read.
@@ -452,6 +550,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="request">The <see cref="ISnmpMessage"/>.</param>
         /// <param name="asyncResult">An <see cref="IAsyncResult"/> that stores state information and any user defined data for this asynchronous operation.</param>
         /// <returns></returns>
+        [Obsolete("Please use GetResponseAsync and await on it.")]
         public static ISnmpMessage EndGetResponse(this ISnmpMessage request, IAsyncResult asyncResult)
         {
             if (asyncResult == null)
@@ -496,6 +595,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="callback">The callback.</param>
         /// <param name="state">The state object.</param>
         /// <returns></returns>
+        [Obsolete("Please use GetResponseAsync and await on it.")]
         public static IAsyncResult BeginGetResponse(this ISnmpMessage request, IPEndPoint receiver, UserRegistry registry, Socket udpSocket, AsyncCallback callback, object state)
         {
             if (request == null)
@@ -615,7 +715,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 get { return Inner.IsCompleted; }
             }
             
-            public System.Threading.WaitHandle AsyncWaitHandle
+            public WaitHandle AsyncWaitHandle
             {
                 get { return Inner.AsyncWaitHandle; }
             }
@@ -628,6 +728,67 @@ namespace Lextm.SharpSnmpLib.Messaging
             public bool CompletedSynchronously
             {
                 get { return Inner.CompletedSynchronously; }
+            }
+        }
+
+        internal static class SocketExtensions
+        {
+            public static SocketAwaitable ReceiveAsync(Socket socket,
+                SocketAwaitable awaitable)
+            {
+                awaitable.Reset();
+                if (!socket.ReceiveAsync(awaitable.m_eventArgs))
+                    awaitable.m_wasCompleted = true;
+                return awaitable;
+            }
+        }
+
+        internal sealed class SocketAwaitable : INotifyCompletion
+        {
+            private readonly static Action SENTINEL = () => { };
+
+            internal bool m_wasCompleted;
+            internal Action m_continuation;
+            internal SocketAsyncEventArgs m_eventArgs;
+
+            public SocketAwaitable(SocketAsyncEventArgs eventArgs)
+            {
+                if (eventArgs == null) throw new ArgumentNullException("eventArgs");
+                m_eventArgs = eventArgs;
+                eventArgs.Completed += delegate
+                {
+                    var prev = m_continuation ?? Interlocked.CompareExchange(
+                        ref m_continuation, SENTINEL, null);
+                    if (prev != null) prev();
+                };
+            }
+
+            internal void Reset()
+            {
+                m_wasCompleted = false;
+                m_continuation = null;
+            }
+
+            public SocketAwaitable GetAwaiter() { return this; }
+
+            public bool IsCompleted { get { return m_wasCompleted; } }
+
+            public void OnCompleted(Action continuation)
+            {
+                if (m_continuation == SENTINEL ||
+                    Interlocked.CompareExchange(
+                        ref m_continuation, continuation, null) == SENTINEL)
+                {
+                    Task.Run(continuation);
+                }
+            }
+
+            public int GetResult()
+            {
+                if (m_eventArgs.SocketError != SocketError.Success)
+                    throw new SocketException((int)m_eventArgs.SocketError);
+
+                return m_eventArgs.BytesTransferred;
             }
         }
     }

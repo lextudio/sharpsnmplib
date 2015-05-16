@@ -32,6 +32,7 @@ namespace Lextm.SharpSnmpLib.Pipeline.Tests
 
             context.GenerateResponse(list);
             Assert.AreEqual(ErrorCode.TooBig, context.Response.Pdu().ErrorStatus.ToErrorCode());
+            bindingMock.Verify(foo => foo.SendResponse(It.IsAny<ISnmpMessage>(), It.IsAny<EndPoint>()), Times.AtMostOnce);
         }
     }
 }
