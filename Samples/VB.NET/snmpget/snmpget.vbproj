@@ -8,7 +8,7 @@
     <MyType>Console</MyType>
     <RootNamespace>snmpget</RootNamespace>
     <AssemblyName>snmpget</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <OptionInfer>On</OptionInfer>
     <FileUpgradeFlags>
@@ -68,6 +68,7 @@
     <DefineTrace>false</DefineTrace>
     <AdditionalParameters>
     </AdditionalParameters>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
@@ -75,6 +76,7 @@
     <DefineTrace>false</DefineTrace>
     <AdditionalParameters>
     </AdditionalParameters>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -90,6 +92,7 @@
     <DefineTrace>false</DefineTrace>
     <AdditionalParameters>
     </AdditionalParameters>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -105,6 +108,7 @@
     <DefineTrace>false</DefineTrace>
     <AdditionalParameters>
     </AdditionalParameters>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.Targets" />
   <ItemGroup>
