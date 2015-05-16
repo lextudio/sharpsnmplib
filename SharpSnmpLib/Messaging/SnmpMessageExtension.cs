@@ -450,15 +450,14 @@ namespace Lextm.SharpSnmpLib.Messaging
         }
 
         /// <summary>
-        /// Sends an  <see cref="ISnmpMessage"/> and handles the response from agent.
+        /// Sends an <see cref="ISnmpMessage"/> and handles the response from agent.
         /// </summary>
         /// <param name="request">The <see cref="ISnmpMessage"/>.</param>
-        /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
         /// <param name="receiver">Agent.</param>
         /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
         /// <param name="registry">The user registry.</param>
         /// <returns></returns>
-        public static async Task<ISnmpMessage> GetResponseAsync(this ISnmpMessage request, int timeout, IPEndPoint receiver, UserRegistry registry, Socket udpSocket)
+        public static async Task<ISnmpMessage> GetResponseAsync(this ISnmpMessage request, IPEndPoint receiver, UserRegistry registry, Socket udpSocket)
         {
             if (request == null)
             {
@@ -496,9 +495,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             // Whatever you change, try to keep the Send and the Receive close to each other.
             udpSocket.SendTo(bytes, receiver);
-#if !CF
-            udpSocket.ReceiveTimeout = timeout;
-#endif
+
             int count;
             try
             {
@@ -520,7 +517,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
                 if (ex.ErrorCode == WSAETIMEDOUT)
                 {
-                    throw TimeoutException.Create(receiver.Address, timeout);
+                    throw TimeoutException.Create(receiver.Address, 0);
                 }
 
                 throw;

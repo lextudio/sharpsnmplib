@@ -302,7 +302,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             
             var users1 = new UserRegistry();
             var response =
-                await message.GetResponseAsync(1500, new IPEndPoint(IPAddress.Loopback, 16100), users1, socket);
+                await message.GetResponseAsync(new IPEndPoint(IPAddress.Loopback, 16100), users1, socket);
 
             engine.Stop();
             Assert.AreEqual(SnmpType.ResponsePdu, response.TypeCode());
