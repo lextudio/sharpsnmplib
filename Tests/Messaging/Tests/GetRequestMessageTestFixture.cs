@@ -301,8 +301,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             GetRequestMessage message = new GetRequestMessage(0x4bed, VersionCode.V2, new OctetString("public"), new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) });
             
             var users1 = new UserRegistry();
-            var response =
-                await message.GetResponseAsync(new IPEndPoint(IPAddress.Loopback, 16100), users1, socket);
+            var response = await message.GetResponseAsync(new IPEndPoint(IPAddress.Loopback, 16100), users1, socket);
 
             engine.Stop();
             Assert.AreEqual(SnmpType.ResponsePdu, response.TypeCode());

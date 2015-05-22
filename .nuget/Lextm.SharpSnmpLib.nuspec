@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
   <metadata>
-    <version>8.5.0.0</version>
+    <version>9.0.0-alpha1</version>
     <authors>Malcolm Crowe,Lex Li,and other contributors.</authors>
     <owners>Lex Li</owners>
-    <licenseUrl>http://sharpsnmplib.codeplex.com/wikipage?title=600012&amp;referringTitle=KB</licenseUrl>
+    <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
     <projectUrl>http://sharpsnmplib.codeplex.com/</projectUrl>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System" targetFramework="" />
@@ -15,16 +15,16 @@
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <description>#SNMP (SharpSNMP) Library is an open source library for developers who target Microsoft .NET/Xamarin/Mono platforms. It's developed in C# and can be used for VB.NET, Delphi Prism, and more.</description>
     <summary>#SNMP open source SNMP library for .NET and Mono.</summary>
-    <releaseNotes>https://sharpsnmplib.codeplex.com/releases/view/118578</releaseNotes>
+    <releaseNotes>http://sharpsnmplib.codeplex.com/releases/view/116908</releaseNotes>
     <copyright>(C) 2008-2015 Malcolm Crowe, Lex Li, and other contributors.</copyright>
     <language>en-US</language>
     <tags>snmp</tags>
   </metadata>
   <files>
-    <file src="..\bin\SharpSnmpLib.Full.dll" target="lib\net40\SharpSnmpLib.Full.dll" />
-    <file src="..\bin\SharpSnmpLib.Full.xml" target="lib\net40\SharpSnmpLib.Full.xml" />
-    <file src="..\bin\SharpSnmpLib.Portable.dll" target="lib\net40\SharpSnmpLib.Portable.dll" />
-    <file src="..\bin\SharpSnmpLib.Portable.xml" target="lib\net40\SharpSnmpLib.Portable.xml" />
+    <file src="..\bin\SharpSnmpLib.Full.dll" target="lib\net45\SharpSnmpLib.Full.dll" />
+    <file src="..\bin\SharpSnmpLib.Full.xml" target="lib\net45\SharpSnmpLib.Full.xml" />
+    <file src="..\bin\SharpSnmpLib.Portable.dll" target="lib\net45\SharpSnmpLib.Portable.dll" />
+    <file src="..\bin\SharpSnmpLib.Portable.xml" target="lib\net45\SharpSnmpLib.Portable.xml" />
     <file src="..\bin\SharpSnmpLib.Portable.dll" target="lib\Xamarin.iOS10\SharpSnmpLib.Portable.dll" />
     <file src="..\bin\SharpSnmpLib.Portable.xml" target="lib\Xamarin.iOS10\SharpSnmpLib.Portable.xml" />
     <file src="..\bin\SharpSnmpLib.iOS.dll" target="lib\Xamarin.iOS10\SharpSnmpLib.iOS.dll" />
@@ -33,7 +33,7 @@
     <file src="..\bin\SharpSnmpLib.Android.dll" target="lib\Monoandroid\SharpSnmpLib.Android.dll" />
     <file src="..\bin\SharpSnmpLib.Full.xml" target="lib\Monoandroid\SharpSnmpLib.Android.xml" />
     <file src="..\bin\SharpSnmpLib.Portable.xml" target="lib\Monoandroid\SharpSnmpLib.Portable.xml" />
-    <file src="..\bin\SharpSnmpLib.Portable.dll" target="lib\portable-net4+netcore45+MonoAndroid1+MonoTouch1\SharpSnmpLib.Portable.dll" />
-    <file src="..\bin\SharpSnmpLib.Portable.xml" target="lib\portable-net4+netcore45+MonoAndroid1+MonoTouch1\SharpSnmpLib.Portable.xml" />
+    <file src="..\bin\SharpSnmpLib.Portable.dll" target="lib\portable-net45+netcore45+MonoAndroid1+MonoTouch1\SharpSnmpLib.Portable.dll" />
+    <file src="..\bin\SharpSnmpLib.Portable.xml" target="lib\portable-net45+netcore45+MonoAndroid1+MonoTouch1\SharpSnmpLib.Portable.xml" />
   </files>
 </package>
