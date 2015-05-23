@@ -330,7 +330,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
 
         [Test]
         [Category("Default")]
-        public async void TestResponses()
+        public async void TestResponsesFromMultipleSources()
         {
             var start = 16102;
             var end = start + 512;
@@ -370,6 +370,51 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
                 watch.Stop();
                 Console.WriteLine("manager {0}: {1}: port {2}", index, watch.Elapsed, ((IPEndPoint)socket.LocalEndPoint).Port);
                 Assert.AreEqual(index, response.RequestId());
+            }
+            // );
+
+            engine.Stop();
+        }
+
+        [Test]
+        [Category("Default")]
+        public async void TestResponsesFromSingleSources()
+        {
+            var start = 0;
+            var end = start + 512;
+            var engine = CreateEngine();
+            engine.Listener.ClearBindings();
+            engine.Listener.AddBinding(new IPEndPoint(IPAddress.Loopback, 17000));
+
+            //// IMPORTANT: need to set min thread count so as to boost performance.
+            //int minWorker, minIOC;
+            //// Get the current settings.
+            //ThreadPool.GetMinThreads(out minWorker, out minIOC);
+            //var threads = engine.Listener.Bindings.Count;
+            //ThreadPool.SetMinThreads(threads + 1, minIOC);
+
+            var time = DateTime.Now;
+            engine.Start();
+            Console.WriteLine(DateTime.Now - time);
+
+            const int timeout = 100000;
+            Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            for (int index = start; index < end; index++)
+            //Parallel.For(start, end, async index =>
+            {
+                GetRequestMessage message = new GetRequestMessage(0, VersionCode.V2, new OctetString("public"), new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) });
+
+                Stopwatch watch = new Stopwatch();
+                watch.Start();
+                Console.WriteLine("manager [{0}]{1}", Thread.CurrentThread.ManagedThreadId, DateTime.UtcNow);
+                //var response = message.GetResponse(timeout, new IPEndPoint(IPAddress.Loopback, 17000), socket);
+                var response =
+                    await
+                        message.GetResponseAsync(new IPEndPoint(IPAddress.Loopback, 17000), new UserRegistry(), socket);
+                Console.WriteLine("manager [{0}]{1}", Thread.CurrentThread.ManagedThreadId, DateTime.UtcNow);
+                watch.Stop();
+                Console.WriteLine("manager {0}: {1}: port {2}", index, watch.Elapsed, ((IPEndPoint)socket.LocalEndPoint).Port);
+                Assert.AreEqual(0, response.RequestId());
             }
             // );
 
