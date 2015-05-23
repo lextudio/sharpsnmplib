@@ -182,8 +182,6 @@ namespace Lextm.SharpSnmpLib.Messaging
             
             try
             {
-                var threads = 2 * Bindings.Count;
-                ThreadPool.SetMinThreads(threads, threads);
                 foreach (var binding in Bindings)
                 {
                     binding.Start();

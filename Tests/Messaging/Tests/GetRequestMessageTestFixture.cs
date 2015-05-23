@@ -333,13 +333,20 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
         public async void TestResponses()
         {
             var start = 16102;
-            var end = start + 320;
+            var end = start + 512;
             var engine = CreateEngine();
             engine.Listener.ClearBindings();
             for (var index = start; index < end; index++)
             {
                 engine.Listener.AddBinding(new IPEndPoint(IPAddress.Loopback, index));
             }
+
+            // IMPORTANT: need to set min thread count so as to boost performance.
+            int minWorker, minIOC;
+            // Get the current settings.
+            ThreadPool.GetMinThreads(out minWorker, out minIOC);
+            var threads = engine.Listener.Bindings.Count;
+            ThreadPool.SetMinThreads(threads + 1, minIOC);
 
             var time = DateTime.Now;
             engine.Start();
