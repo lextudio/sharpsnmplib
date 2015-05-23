@@ -29,6 +29,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using Lextm.SharpSnmpLib.Security;
 
 namespace Lextm.SharpSnmpLib.Messaging
@@ -181,6 +182,8 @@ namespace Lextm.SharpSnmpLib.Messaging
             
             try
             {
+                var threads = 2 * Bindings.Count;
+                ThreadPool.SetMinThreads(threads, threads);
                 foreach (var binding in Bindings)
                 {
                     binding.Start();

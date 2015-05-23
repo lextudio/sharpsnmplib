@@ -14,6 +14,7 @@ using NUnit.Framework;
 using System.Net.Sockets;
 using System;
 using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
 using Lextm.SharpSnmpLib.Objects;
 using Lextm.SharpSnmpLib.Pipeline;
@@ -332,7 +333,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
         public async void TestResponses()
         {
             var start = 16102;
-            var end = start + 40;
+            var end = start + 320;
             var engine = CreateEngine();
             engine.Listener.ClearBindings();
             for (var index = start; index < end; index++)
@@ -353,10 +354,12 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
                 
                 Stopwatch watch = new Stopwatch();
                 watch.Start();
+                Console.WriteLine("manager [{0}]{1}", Thread.CurrentThread.ManagedThreadId, DateTime.UtcNow);
                 //var response = message.GetResponse(timeout, new IPEndPoint(IPAddress.Loopback, index), socket);
                 var response =
                     await
                         message.GetResponseAsync(new IPEndPoint(IPAddress.Loopback, index), new UserRegistry(), socket);
+                Console.WriteLine("manager [{0}]{1}", Thread.CurrentThread.ManagedThreadId, DateTime.UtcNow);
                 watch.Stop();
                 Console.WriteLine("manager {0}: {1}: port {2}", index, watch.Elapsed, ((IPEndPoint)socket.LocalEndPoint).Port);
                 Assert.AreEqual(index, response.RequestId());
