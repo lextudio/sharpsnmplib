@@ -26,6 +26,7 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
+using System.Diagnostics;
 using Lextm.SharpSnmpLib.Messaging;
 
 namespace Lextm.SharpSnmpLib.Pipeline
@@ -102,10 +103,18 @@ namespace Lextm.SharpSnmpLib.Pipeline
 
         private void ListenerMessageReceived(object sender, MessageReceivedEventArgs e)
         {
+#if DEBUG
+            var watch = new Stopwatch();
+            watch.Start();
+#endif
             var request = e.Message;
             var context = SnmpContextFactory.Create(request, e.Sender, Listener.Users, _group, e.Binding);
             var application = _factory.Create(context);
             application.Process();
+#if DEBUG
+            watch.Stop();
+            Console.WriteLine("agent {0}: {1}", request.RequestId(), watch.Elapsed);
+#endif
         }
 
         /// <summary>

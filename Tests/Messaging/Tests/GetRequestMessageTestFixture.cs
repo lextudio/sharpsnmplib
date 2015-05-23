@@ -13,6 +13,7 @@ using Lextm.SharpSnmpLib.Security;
 using NUnit.Framework;
 using System.Net.Sockets;
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Lextm.SharpSnmpLib.Objects;
 using Lextm.SharpSnmpLib.Pipeline;
@@ -313,14 +314,54 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
         {
             var engine = CreateEngine();
             engine.Listener.ClearBindings();
-            engine.Listener.AddBinding(new IPEndPoint(IPAddress.Loopback, 16102));
+            engine.Listener.AddBinding(new IPEndPoint(IPAddress.Loopback, 16101));
             engine.Start();
 
             Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             GetRequestMessage message = new GetRequestMessage(0x4bed, VersionCode.V2, new OctetString("public"), new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) });
             
             const int time = 1500;
-            message.GetResponse(time, new IPEndPoint(IPAddress.Loopback, 16102), socket);
+            var response = message.GetResponse(time, new IPEndPoint(IPAddress.Loopback, 16101), socket);
+            Assert.AreEqual(0x4bed, response.RequestId());
+
+            engine.Stop();
+        }
+
+        [Test]
+        [Category("Default")]
+        public async void TestResponses()
+        {
+            var start = 16102;
+            var end = start + 40;
+            var engine = CreateEngine();
+            engine.Listener.ClearBindings();
+            for (var index = start; index < end; index++)
+            {
+                engine.Listener.AddBinding(new IPEndPoint(IPAddress.Loopback, index));
+            }
+
+            var time = DateTime.Now;
+            engine.Start();
+            Console.WriteLine(DateTime.Now - time);
+            
+            const int timeout = 100000;
+            for (int index = start; index < end; index++)
+            //Parallel.For(start, end, async index =>
+            {
+                GetRequestMessage message = new GetRequestMessage(index, VersionCode.V2, new OctetString("public"), new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) });
+                Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+                
+                Stopwatch watch = new Stopwatch();
+                watch.Start();
+                //var response = message.GetResponse(timeout, new IPEndPoint(IPAddress.Loopback, index), socket);
+                var response =
+                    await
+                        message.GetResponseAsync(new IPEndPoint(IPAddress.Loopback, index), new UserRegistry(), socket);
+                watch.Stop();
+                Console.WriteLine("manager {0}: {1}: port {2}", index, watch.Elapsed, ((IPEndPoint)socket.LocalEndPoint).Port);
+                Assert.AreEqual(index, response.RequestId());
+            }
+            // );
 
             engine.Stop();
         }
