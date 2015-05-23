@@ -431,6 +431,13 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             engine.Listener.ClearBindings();
             engine.Listener.AddBinding(new IPEndPoint(IPAddress.Loopback, 17000));
 
+            // IMPORTANT: need to set min thread count so as to boost performance.
+            int minWorker, minIOC;
+            // Get the current settings.
+            ThreadPool.GetMinThreads(out minWorker, out minIOC);
+            var threads = engine.Listener.Bindings.Count;
+            ThreadPool.SetMinThreads(threads + 1, minIOC);
+
             var time = DateTime.Now;
             engine.Start();
             Console.WriteLine(DateTime.Now - time);
@@ -458,6 +465,40 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
                 watch.Stop();
                 Console.WriteLine("manager {0}: {1}: port {2}", index, watch.Elapsed, ((IPEndPoint)socket.LocalEndPoint).Port);
                 Assert.AreEqual(index, response.RequestId());
+            }
+            );
+
+            engine.Stop();
+        }
+
+        [Test]
+        [Category("Default")]
+        public async void TestResponsesFromSingleSourceWithMultipleThreadsFromManager()
+        {
+            var start = 0;
+            var end = start + 256;
+            var engine = CreateEngine();
+            engine.Listener.ClearBindings();
+            engine.Listener.AddBinding(new IPEndPoint(IPAddress.Loopback, 17000));
+
+            var time = DateTime.Now;
+            engine.Start();
+            Console.WriteLine(DateTime.Now - time);
+
+            const int timeout = 60000;
+
+            //for (int index = start; index < end; index++)
+            Parallel.For(start, end, async index =>
+            {
+
+                Stopwatch watch = new Stopwatch();
+                watch.Start();
+                
+                var result = Messenger.Get(VersionCode.V2, new IPEndPoint(IPAddress.Loopback, 17000), new OctetString("public"),
+                    new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) }, timeout);
+                Console.WriteLine("manager [{0}]{1}", Thread.CurrentThread.ManagedThreadId, DateTime.UtcNow);
+                watch.Stop();
+                Assert.AreEqual(1, result.Count);
             }
             );
 
