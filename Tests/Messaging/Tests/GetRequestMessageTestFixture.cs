@@ -23,6 +23,8 @@ using Lextm.SharpSnmpLib.Pipeline;
 
 namespace Lextm.SharpSnmpLib.Messaging.Tests
 {
+    using JetBrains.dotMemoryUnit;
+
     /// <summary>
     /// Description of TestGetMessage.
     /// </summary>
@@ -592,6 +594,115 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             {
                 Assert.LessOrEqual(elapsedMilliseconds, time + 100);
             }
+        }
+
+        //[Test]
+        //[Category("Default")]
+        public void TestMemory()
+        {
+            GC.Collect();
+
+            Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            GetRequestMessage message = new GetRequestMessage(0x4bed, VersionCode.V2, new OctetString("public"), new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) });
+            
+            //IMPORTANT: test against an agent that doesn't exist.
+            Assert.Throws<SocketException>(() => message.BeginGetResponse(new IPEndPoint(IPAddress.Loopback, 80), new UserRegistry(), socket, ar =>
+            {
+                var response = message.EndGetResponse(ar);
+                Console.WriteLine(response);
+            }, null));
+
+            GC.Collect();
+            var memoryCheckPoint1 = dotMemory.Check();
+
+            for (int i = 0; i < 100; i++)
+            {
+                //Thread.Sleep(100);
+                Assert.Throws<SocketException>(
+                    () =>
+                    message.BeginGetResponse(
+                        new IPEndPoint(IPAddress.Loopback, 80),
+                        new UserRegistry(),
+                        socket,
+                        ar =>
+                            {
+                                var response = message.EndGetResponse(ar);
+                                Console.WriteLine(response);
+                            },
+                        null));
+            }
+
+            socket.Close();
+            socket = null;
+            message = null;
+
+            GC.Collect();
+            dotMemory.Check(memory =>
+            {
+                Assert.That(memory.GetDifference(memoryCheckPoint1)
+                    .GetNewObjects().ObjectsCount, Is.LessThanOrEqualTo(15));
+            });
+        }
+
+        //[Test]
+        //[Category("Default")]
+        public void TestMemory2()
+        {
+            GC.Collect();
+            
+            GetRequestMessage message = new GetRequestMessage(0x4bed, VersionCode.V2, new OctetString("public"), new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) });
+            {
+                Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+                //IMPORTANT: test against an agent that doesn't exist.
+                Assert.Throws<SocketException>(
+                    () =>
+                    message.BeginGetResponse(
+                        new IPEndPoint(IPAddress.Loopback, 80),
+                        new UserRegistry(),
+                        socket,
+                        ar =>
+                            {
+                                var response = message.EndGetResponse(ar);
+                                Console.WriteLine(response);
+                            },
+                        null));
+
+                socket.Close();
+                socket = null;
+            }
+
+            GC.Collect();
+            var memoryCheckPoint1 = dotMemory.Check();
+
+            for (int i = 0; i < 100; i++)
+            {
+                //Thread.Sleep(100);
+                Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+                Assert.Throws<SocketException>(
+                    () =>
+                    message.BeginGetResponse(
+                        new IPEndPoint(IPAddress.Loopback, 80),
+                        new UserRegistry(),
+                        socket,
+                        ar =>
+                        {
+                            var response = message.EndGetResponse(ar);
+                            Console.WriteLine(response);
+                        },
+                        null));
+
+                socket.Close();
+                socket = null;
+            }
+
+            message = null;
+
+            GC.Collect();
+            dotMemory.Check(memory =>
+            {
+                Assert.That(memory.GetDifference(memoryCheckPoint1)
+                    .GetNewObjects().ObjectsCount, Is.LessThanOrEqualTo(31));
+            });
         }
     }
 }
