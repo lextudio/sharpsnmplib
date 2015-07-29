@@ -669,7 +669,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                     variables,
                     privacy,
                     MaxMessageSize,
-                    report);
+                    reply);
                 reply = request.GetResponse(timeout, receiver);
             }
             else if (reply.Pdu().ErrorStatus.ToInt32() != 0)
