@@ -32,6 +32,7 @@ namespace SnmpWalk
             int maxRepetitions = 10;
             Levels level = Levels.Reportable;
             string user = string.Empty;
+            string contextName = string.Empty;
             string authentication = string.Empty;
             string authPhrase = string.Empty;
             string privacy = string.Empty;
@@ -65,6 +66,7 @@ namespace SnmpWalk
                 .Add("x:", "Privacy method", delegate(string v) { privacy = v; })
                 .Add("X:", "Privacy passphrase", delegate(string v) { privPhrase = v; })
                 .Add("u:", "Security name", delegate(string v) { user = v; })
+                .Add("n:", "Context name", delegate(string v) { contextName = v; })
                 .Add("h|?|help", "Print this help information.", delegate(string v) { showHelp = v != null; })
                 .Add("V", "Display version number of this application.", delegate(string v) { showVersion = v != null; })
                 .Add("d", "Display message dump", delegate(string v) { dump = true; })
@@ -193,7 +195,11 @@ namespace SnmpWalk
 
                     Discovery discovery = Messenger.GetNextDiscovery(SnmpType.GetBulkRequestPdu);
                     ReportMessage report = discovery.GetResponse(timeout, receiver);
-                    Messenger.BulkWalk(version, receiver, new OctetString(user), test, result, timeout, maxRepetitions, mode, priv, report);
+
+                    if (string.IsNullOrEmpty(contextName))
+                        Messenger.BulkWalk(version, receiver, new OctetString(user), test, result, timeout, maxRepetitions, mode, priv, report);
+                    else
+                        Messenger.BulkWalk(version, receiver, new OctetString(user), new OctetString(contextName), test, result, timeout, maxRepetitions, mode, priv, report);
                 }
 
                 foreach (Variable variable in result)
