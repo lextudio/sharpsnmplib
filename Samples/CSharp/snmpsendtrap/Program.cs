@@ -15,6 +15,8 @@ using Lextm.SharpSnmpLib.Messaging;
 
 namespace SnmpSendTrap
 {
+    using Lextm.SharpSnmpLib.Security;
+
     internal static class Program 
     {
         public static void Main(string[] args)
@@ -32,7 +34,7 @@ namespace SnmpSendTrap
             //Thread.Sleep(50);
 
 
-            Messenger.SendTrapV2(0, VersionCode.V2, new IPEndPoint(address, 162), 
+            Messenger.SendTrapV2(0, VersionCode.V2, new IPEndPoint(address, 162),
                                  new OctetString("public"),
                                  new ObjectIdentifier(new uint[] { 1, 3, 6 }),
                                  0,
@@ -49,6 +51,45 @@ namespace SnmpSendTrap
             {
                 Console.WriteLine(ex);
             }
+
+            try
+            {
+                Discovery discovery = Messenger.GetNextDiscovery(SnmpType.InformRequestPdu);
+                ReportMessage report = discovery.GetResponse(2000, new IPEndPoint(address, 162));
+
+                Messenger.SendInform(
+                    0,
+                    VersionCode.V3,
+                    new IPEndPoint(address, 162),
+                    new OctetString("neither"),
+                    new ObjectIdentifier(new uint[] { 1, 3, 6 }),
+                    0,
+                    new List<Variable>(),
+                    2000,
+                    DefaultPrivacyProvider.DefaultPair,
+                    report);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+
+            var trap = new TrapV2Message(
+                VersionCode.V3,
+                528732060,
+
+                1905687779,
+                new OctetString("neither"),
+                new ObjectIdentifier("1.3.6"),
+                0,
+                new List<Variable>(),
+                DefaultPrivacyProvider.DefaultPair,
+                0x10000,
+                new OctetString(ByteTool.Convert("80001F8880E9630000D61FF449")),
+                0,
+                0
+               );
+            trap.Send(new IPEndPoint(address, 162));
         }
     }
 }

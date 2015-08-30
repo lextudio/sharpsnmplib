@@ -63,17 +63,17 @@ namespace SnmpTrapD
 
         private static void WatcherInformRequestReceived(object sender, InformRequestMessageReceivedEventArgs e)
         {
-            Console.WriteLine(e.InformRequestMessage);
+            Console.WriteLine("INFORM version {0}: {1}", e.InformRequestMessage.Version, e.InformRequestMessage);
         }
 
         private static void WatcherTrapV2Received(object sender, TrapV2MessageReceivedEventArgs e)
         {
-            Console.WriteLine(e.TrapV2Message);
+            Console.WriteLine("TRAP version {0}: {1}", e.TrapV2Message.Version, e.TrapV2Message);
         }
 
         private static void WatcherTrapV1Received(object sender, TrapV1MessageReceivedEventArgs e)
         {
-            Console.WriteLine(e.TrapV1Message);
+            Console.WriteLine("TRAP version {0}; {1}", e.TrapV1Message.Version, e.TrapV1Message);
         }
     }
 }

@@ -21,6 +21,8 @@ using System;
 
 namespace Lextm.SharpSnmpLib.Pipeline
 {
+    using Lextm.SharpSnmpLib.Messaging;
+
     /// <summary>
     /// SNMP version 3 membership provider. Not yet implemented.
     /// </summary>    
@@ -38,6 +40,11 @@ namespace Lextm.SharpSnmpLib.Pipeline
             if (context == null)
             {
                 throw new ArgumentNullException("context");
+            }
+
+            if (context.Request.TypeCode() == SnmpType.TrapV2Pdu)
+            {
+                return context.Request.Version == Version;
             }
             
             return context.Request.Version == Version && context.HandleMembership();

@@ -113,7 +113,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
             application.Process();
 #if DEBUG
             watch.Stop();
-            Console.WriteLine("agent {0}: {1}", request.RequestId(), watch.Elapsed);
+            Console.WriteLine("agent: {0}", watch.Elapsed);
 #endif
         }
 
