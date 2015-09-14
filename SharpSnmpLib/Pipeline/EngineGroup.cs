@@ -111,8 +111,9 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 return false;
             }
 
-            var diff = currentTimeData[1] > pastTime ? currentTimeData[1] - pastTime : currentTimeData[1] - pastTime - int.MinValue + int.MaxValue;
-            return diff >= 0 && diff <= 150000;
+            var diff = Math.Abs(currentTimeData[1] - pastTime);
+			var result = diff >= 0 && diff <= 150000;
+            return result;
         }
 
         /// <summary>

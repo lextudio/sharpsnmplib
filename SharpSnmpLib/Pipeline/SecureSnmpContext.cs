@@ -189,7 +189,8 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 return false;
             }
 
-            if ((user.ToSecurityLevel() | Levels.Reportable) != request.Header.SecurityLevel)
+			// Require report flag to be set for all PDUs but TrapV2Pdu (see RFC 3412, section 6.4.)
+			if ((request.Pdu().GetType() != typeof(TrapV2Pdu)) && ((user.ToSecurityLevel() | Levels.Reportable) != request.Header.SecurityLevel))
             {
                 HandleFailure(Group.UnsupportedSecurityLevel);
                 return false;
