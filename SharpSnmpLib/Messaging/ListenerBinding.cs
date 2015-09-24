@@ -42,18 +42,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         private const int Inactive = 0;
 
         /// <summary>
-        /// http://msdn.microsoft.com/en-us/library/ms740668(VS.85).aspx
-        /// </summary>
-        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed. Suppression is OK here.")]
-        private const int WSAECONNRESET = 10054;
-
-        /// <summary>
-        /// http://msdn.microsoft.com/en-us/library/ms740668(VS.85).aspx
-        /// </summary>
-        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed. Suppression is OK here.")]
-        private const int WSAEADDRINUSE = 10048;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="ListenerBinding"/> class.
         /// </summary>
         /// <param name="users">The users.</param>
@@ -156,7 +144,18 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             var buffer = response.ToBytes();
-            _socket.BeginSendTo(buffer, 0, buffer.Length, 0, receiver, ar => _socket.EndSendTo(ar), null);
+            try
+            {
+                _socket.SendTo(buffer, 0, buffer.Length, 0, receiver);
+            }
+            catch (SocketException ex)
+            {
+                if (ex.SocketErrorCode != SocketError.Interrupted)
+                {
+                    // IMPORTANT: interrupted means the socket is closed.
+                    throw;
+                }
+            }
         }
 
         /// <summary>
@@ -209,7 +208,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             catch (SocketException ex)
             {
                 Interlocked.Exchange(ref _active, Inactive);
-                if (ex.ErrorCode == WSAEADDRINUSE)
+                if (ex.SocketErrorCode == SocketError.AddressAlreadyInUse)
                 {
                     throw new PortInUseException("Endpoint is already in use", ex) { Endpoint = Endpoint };
                 }
@@ -272,7 +271,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 catch (SocketException ex)
                 {
                     // ignore WSAECONNRESET, http://bytes.com/topic/c-sharp/answers/237558-strange-udp-socket-problem
-                    if (ex.ErrorCode != WSAECONNRESET)
+                    if (ex.SocketErrorCode != SocketError.ConnectionReset)
                     {
                         // If the SnmpTrapListener was active, marks it as stopped and call HandleException.
                         // If it was inactive, the exception is likely to result from this, and we raise nothing.
@@ -314,7 +313,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             catch (SocketException ex)
             {
                 // ignore WSAECONNRESET, http://bytes.com/topic/c-sharp/answers/237558-strange-udp-socket-problem
-                if (ex.ErrorCode != WSAECONNRESET)
+                if (ex.SocketErrorCode != SocketError.ConnectionReset)
                 {
                     // If the SnmpTrapListener was active, marks it as stopped and call HandleException.
                     // If it was inactive, the exception is likely to result from this, and we raise nothing.
@@ -348,7 +347,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 catch (SocketException ex)
                 {
                     // ignore WSAECONNRESET, http://bytes.com/topic/c-sharp/answers/237558-strange-udp-socket-problem
-                    if (ex.ErrorCode != WSAECONNRESET)
+                    if (ex.SocketErrorCode != SocketError.ConnectionReset)
                     {
                         // If the SnmpTrapListener was active, marks it as stopped and call HandleException.
                         // If it was inactive, the exception is likely to result from this, and we raise nothing.
