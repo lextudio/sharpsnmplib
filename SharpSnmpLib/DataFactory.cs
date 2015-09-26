@@ -116,6 +116,9 @@ namespace Lextm.SharpSnmpLib
                     return new Opaque(length, stream);
                 case SnmpType.EndMarker:
                     return null;
+                case SnmpType.Unsigned32:
+                    // IMPORTANT: return Gauge32 for Unsigned32 case as workaround of RFC 1442 time entities.
+                    return new Gauge32(length, stream);
                 default:
                     throw new SnmpException(string.Format(CultureInfo.InvariantCulture, "unsupported data type: {0}", (SnmpType)type));
             }

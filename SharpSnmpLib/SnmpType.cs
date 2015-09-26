@@ -104,6 +104,11 @@ namespace Lextm.SharpSnmpLib
         /// Counter64 type. (SMIv2)
         /// </summary>
         Counter64 = 0x46,
+
+        /// <summary>
+        /// Unsigned32 type. (Use this code in RFC 1442)
+        /// </summary>
+        Unsigned32 = 0x47,
         
         /// <summary>
         /// No such object exception.
