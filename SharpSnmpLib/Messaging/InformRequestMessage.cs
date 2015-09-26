@@ -270,25 +270,12 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public override string ToString()
         {
-            return ToString(null);
-        }
-
-        /// <summary>
-        /// Returns a <see cref="System.String"/> that represents this instance.
-        /// </summary>
-        /// <param name="objects">The objects.</param>
-        /// <returns>
-        /// A <see cref="System.String"/> that represents this instance.
-        /// </returns>
-        [CLSCompliant(false)]
-        public string ToString(IObjectRegistry objects)
-        {
             return string.Format(
                 CultureInfo.InvariantCulture,
                 "INFORM request message: time stamp: {0}; community: {1}; enterprise: {2}; varbind count: {3}",
-                TimeStamp.ToString(CultureInfo.InvariantCulture),
+                this.TimeStamp.ToString(CultureInfo.InvariantCulture),
                 this.Community(),
-                Enterprise.ToString(objects),
+                this.Enterprise,
                 this.Variables().Count.ToString(CultureInfo.InvariantCulture));
         }
     }

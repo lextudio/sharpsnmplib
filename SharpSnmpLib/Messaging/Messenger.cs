@@ -418,24 +418,16 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="table">Table OID.</param>
         /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
         /// <param name="maxRepetitions">The max repetitions.</param>
-        /// <param name="registry">The registry.</param>
         /// <returns></returns>
-        /// <remarks><paramref name="registry"/> can be null, which also disables table validation.</remarks>
         [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Return", Justification = "ByDesign")]
         [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Body", Justification = "ByDesign")]
         [CLSCompliant(false)]
         [Obsolete("This method only works for a few scenarios. Will provide new methods in the future. If it does not work for you, parse WALK result on your own.")]
-        public static Variable[,] GetTable(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, int timeout, int maxRepetitions, IObjectRegistry registry)
+        public static Variable[,] GetTable(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, int timeout, int maxRepetitions)
         {
             if (version == VersionCode.V3)
             {
                 throw new NotSupportedException("SNMP v3 is not supported");
-            }
-
-            var canContinue = registry == null || registry.ValidateTable(table);
-            if (!canContinue)
-            {
-                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "not a table OID: {0}", table));
             }
 
             IList<Variable> list = new List<Variable>();

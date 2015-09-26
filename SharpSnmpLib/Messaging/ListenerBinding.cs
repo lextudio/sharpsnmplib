@@ -27,6 +27,8 @@ using System.Threading.Tasks;
 
 namespace Lextm.SharpSnmpLib.Messaging
 {
+    using Lextm.SharpSnmpLib.Security;
+
     /// <summary>
     /// Binding class for <see cref="Listener"/>.
     /// </summary>

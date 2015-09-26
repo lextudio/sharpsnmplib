@@ -425,7 +425,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
 
         [Test]
         [Category("Default")]
-        public async void TestResponsesFromSingleSourceWithMultipleThreads()
+        public void TestResponsesFromSingleSourceWithMultipleThreads()
         {
             var start = 0;
             var end = start + 32;
@@ -450,7 +450,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             // Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             
             //for (int index = start; index < end; index++)
-            Parallel.For(start, end, async index =>
+            Parallel.For(start, end, index =>
             {
                 GetRequestMessage message = new GetRequestMessage(index, VersionCode.V2, new OctetString("public"), new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) });
                 // Comment below to reveal wrong sequence number issue.
@@ -475,7 +475,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
 
         [Test]
         [Category("Default")]
-        public async void TestResponsesFromSingleSourceWithMultipleThreadsFromManager()
+        public void TestResponsesFromSingleSourceWithMultipleThreadsFromManager()
         {
             var start = 0;
             var end = start + 256;
@@ -490,7 +490,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             const int timeout = 60000;
 
             //for (int index = start; index < end; index++)
-            Parallel.For(start, end, async index =>
+            Parallel.For(start, end, index =>
             {
 
                 Stopwatch watch = new Stopwatch();

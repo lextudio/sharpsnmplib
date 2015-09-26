@@ -88,13 +88,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         }
 
         /// <summary>
-        /// Gets or sets the objects.
-        /// </summary>
-        /// <value>The objects.</value>
-        /// <remarks>Changed from 2.0: it will return null if not set.</remarks>
-        public IObjectRegistry Objects { get; set; }
-
-        /// <summary>
         /// Gets a variable bind.
         /// </summary>
         /// <param name="endpoint">Endpoint.</param>
@@ -250,7 +243,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Return", Justification = "ByDesign")]
         public Variable[,] GetTable(IPEndPoint endpoint, string community, ObjectIdentifier table)
         {
-            return Messenger.GetTable(DefaultVersion, endpoint, new OctetString(community), table, Timeout, MaxRepetitions, Objects);
+            return Messenger.GetTable(DefaultVersion, endpoint, new OctetString(community), table, Timeout, MaxRepetitions);
         }
 
         /// <summary>

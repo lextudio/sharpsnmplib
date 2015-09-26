@@ -49,7 +49,6 @@
     <Compile Include="Counter32.cs" />
     <Compile Include="Counter64.cs" />
     <Compile Include="DataFactory.cs" />
-    <Compile Include="DefinitionType.cs" />
     <Compile Include="EndOfMibView.cs" />
     <Compile Include="ErrorCode.cs" />
     <Compile Include="Gauge32.cs" />
@@ -58,19 +57,12 @@
     <Compile Include="GetNextRequestPdu.cs" />
     <Compile Include="GetRequestPdu.cs" />
     <Compile Include="Header.cs" />
-    <Compile Include="IConstruct.cs" />
-    <Compile Include="IDefinition.cs" />
-    <Compile Include="IEntity.cs" />
-    <Compile Include="IModule.cs" />
     <Compile Include="InformRequestPdu.cs" />
     <Compile Include="Integer32.cs" />
-    <Compile Include="IObjectRegistry.cs" />
-    <Compile Include="IObjectTree.cs" />
     <Compile Include="IP.cs" />
     <Compile Include="ISegment.cs" />
     <Compile Include="ISnmpData.cs" />
     <Compile Include="ISnmpPdu.cs" />
-    <Compile Include="ITypeAssignment.cs" />
     <Compile Include="Levels.cs" />
     <Compile Include="MalformedPdu.cs" />
     <Compile Include="NoSuchInstance.cs" />
@@ -84,7 +76,6 @@
     <Compile Include="ReportPdu.cs" />
     <Compile Include="ResponsePdu.cs" />
     <Compile Include="Scope.cs" />
-    <Compile Include="SearchResult.cs" />
     <Compile Include="SecurityParameters.cs" />
     <Compile Include="Security\AESPrivacyProvider.cs" />
     <Compile Include="Security\AuthenticationProviderExtension.cs" />

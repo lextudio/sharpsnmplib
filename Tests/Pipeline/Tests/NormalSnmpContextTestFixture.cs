@@ -16,7 +16,7 @@ namespace Lextm.SharpSnmpLib.Pipeline.Tests
         {
             var message = new GetRequestMessage(0, VersionCode.V1, new OctetString("public"), new List<Variable>());
             var bindingMock = new Mock<IListenerBinding>();
-            bindingMock.Setup(foo => foo.SendResponse(It.IsAny<ISnmpMessage>(), It.IsAny<EndPoint>())).AtMostOnce();
+            bindingMock.Setup(foo => foo.SendResponse(It.IsAny<ISnmpMessage>(), It.IsAny<EndPoint>()));
             var context = new NormalSnmpContext(message, new IPEndPoint(IPAddress.Loopback, 0),
                                                 new UserRegistry(), bindingMock.Object);
             context.GenerateResponse(new List<Variable>());

@@ -159,20 +159,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public override string ToString()
         {
-            return ToString(null);
-        }
-
-        /// <summary>
-        /// Returns a <see cref="System.String"/> that represents this instance.
-        /// </summary>
-        /// <param name="objects">The objects.</param>
-        /// <returns>
-        /// A <see cref="System.String"/> that represents this instance.
-        /// </returns>
-        [CLSCompliant(false)]
-        public string ToString(IObjectRegistry objects)
-        {
-            return string.Format(CultureInfo.InvariantCulture, "Variable: Id: {0}; Data: {1}", Id.ToString(objects), Data);
+            return string.Format(CultureInfo.InvariantCulture, "Variable: Id: {0}; Data: {1}", this.Id, this.Data);
         }
     }
 }

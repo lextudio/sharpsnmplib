@@ -225,23 +225,19 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public override string ToString()
         {
-            return ToString(null);
-        }
-
-        /// <summary>
-        /// Returns a <see cref="System.String"/> that represents this instance.
-        /// </summary>
-        /// <param name="objects">The objects.</param>
-        /// <returns>
-        /// A <see cref="System.String"/> that represents this instance.
-        /// </returns>
-        [CLSCompliant(false)]
-        public string ToString(IObjectRegistry objects)
-        {
+            TrapV1Pdu tempQualifier = ((TrapV1Pdu)this._pdu);
             return string.Format(
                 CultureInfo.InvariantCulture,
                 "SNMPv1 trap: {0}",
-                ((TrapV1Pdu)_pdu).ToString(objects));
+                string.Format(
+                    CultureInfo.InvariantCulture,
+                    "SNMPv1 TRAP PDU: agent address: {0}; time stamp: {1}; enterprise: {2}; generic: {3}; specific: {4}; varbind count: {5}",
+                    tempQualifier.AgentAddress,
+                    tempQualifier.TimeStamp,
+                    tempQualifier.Enterprise,
+                    tempQualifier.Generic,
+                    tempQualifier.Specific.ToString(CultureInfo.InvariantCulture),
+                    tempQualifier.Variables.Count.ToString(CultureInfo.InvariantCulture)));
         }
 
         /// <summary>

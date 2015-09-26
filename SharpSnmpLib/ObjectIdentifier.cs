@@ -70,6 +70,12 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("id");
             }
 
+            if (id.Length == 0)
+            {
+                // IMPORTANT: convert to zeroDotZero.
+                id = new[] {0U, 0U};
+            }
+
             if (id.Length < 2)
             {
                 throw new ArgumentException("The length of the shortest identifier is two", "id");
@@ -489,25 +495,6 @@ namespace Lextm.SharpSnmpLib
             }
 
             return left.CompareTo(right) == 0;
-        }
-
-        /// <summary>
-        /// Returns a <see cref="System.String"/> that represents this instance.
-        /// </summary>
-        /// <param name="objects">The objects.</param>
-        /// <returns>
-        /// A <see cref="System.String"/> that represents this instance.
-        /// </returns>
-        [CLSCompliant(false)]
-        public string ToString(IObjectRegistry objects)
-        {
-            if (objects == null)
-            {
-                return ToString();
-            }
-
-            var result = objects.Tree.Search(ToNumerical()).AlternativeText;
-            return string.IsNullOrEmpty(result) ? ToString() : result;
         }
 
         /// <summary>
