@@ -25,6 +25,7 @@ Module Program
         Dim maxRepetitions As Integer = 10
         Dim level As Levels = Levels.Reportable
         Dim user As String = String.Empty
+        Dim contextName As String = String.Empty
         Dim authentication As String = String.Empty
         Dim authPhrase As String = String.Empty
         Dim privacy As String = String.Empty
@@ -61,6 +62,9 @@ Module Program
                                                                              End Sub) _
                                             .Add("u:", "Security name", Sub(v As String)
                                                                             user = v
+                                                                        End Sub) _
+                                            .Add("n:", "Security name", Sub(v As String)
+                                                                            contextName = v
                                                                         End Sub) _
                                             .Add("h|?|help", "Print this help information.", Sub(v As String)
                                                                                                  showHelp__1 = v IsNot Nothing
@@ -182,8 +186,14 @@ Module Program
 
                 Dim report As ReportMessage = Messenger.GetNextDiscovery(SnmpType.GetBulkRequestPdu).GetResponse(timeout, receiver)
 
-                Messenger.BulkWalk(version, receiver, New OctetString(user), test, result, timeout, _
-                 maxRepetitions, mode, priv, report)
+                If String.IsNullOrEmpty(contextName) Then
+                    Messenger.BulkWalk(version, receiver, New OctetString(user), test, result, timeout, _
+                     maxRepetitions, mode, priv, report)
+                Else
+                    Messenger.BulkWalk(version, receiver, New OctetString(user), New OctetString(contextName), test, result, timeout, _
+                     maxRepetitions, mode, priv, report)
+                End If
+
             End If
             For Each variable As Variable In result
                 Console.WriteLine(variable)

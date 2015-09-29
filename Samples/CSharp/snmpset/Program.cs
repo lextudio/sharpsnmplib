@@ -30,6 +30,7 @@ namespace SnmpSet
             int retry = 0;
             Levels level = Levels.Reportable;
             string user = string.Empty;
+            string contextName = string.Empty;
             string authentication = string.Empty;
             string authPhrase = string.Empty;
             string privacy = string.Empty;
@@ -62,6 +63,7 @@ namespace SnmpSet
                 .Add("x:", "Privacy method", delegate(string v) { privacy = v; })
                 .Add("X:", "Privacy passphrase", delegate(string v) { privPhrase = v; })
                 .Add("u:", "Security name", delegate(string v) { user = v; })
+                .Add("n:", "Context name", delegate(string v) { contextName = v; })
                 .Add("h|?|help", "Print this help information.", delegate(string v) { showHelp = v != null; })
                 .Add("V", "Display version number of this application.", delegate(string v) { showVersion = v != null; })
                 .Add("d", "Display message dump", delegate(string v) { dump = true; })
@@ -225,7 +227,10 @@ namespace SnmpSet
                 Discovery discovery = Messenger.GetNextDiscovery(SnmpType.SetRequestPdu);
                 ReportMessage report = discovery.GetResponse(timeout, receiver);
 
-                SetRequestMessage request = new SetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(user), vList, priv, Messenger.MaxMessageSize, report);
+                SetRequestMessage request = string.IsNullOrEmpty(contextName) ?
+                    new SetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(user), vList, priv, Messenger.MaxMessageSize, report) :
+                    new SetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(user), new OctetString(contextName), vList, priv, Messenger.MaxMessageSize, report);
+
                 ISnmpMessage reply = request.GetResponse(timeout, receiver);
                 if (dump)
                 {
@@ -252,7 +257,10 @@ namespace SnmpSet
                     }
 
                     // according to RFC 3414, send a second request to sync time.
-                    request = new SetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(user), vList, priv, Messenger.MaxMessageSize, reply);
+                    request = string.IsNullOrEmpty(contextName) ?
+                        new SetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(user), vList, priv, Messenger.MaxMessageSize, reply) :
+                        new SetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(user), new OctetString(contextName), vList, priv, Messenger.MaxMessageSize, reply);
+
                     reply = request.GetResponse(timeout, receiver);
                 }
                 else if (reply.Pdu().ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
