@@ -99,7 +99,7 @@ namespace Lextm.SharpSnmpLib.Tests
             var transmission = new ObjectIdentifier(new uint[] {1, 3, 6, 1, 2, 1, 10});
             //Assert.AreEqual(".iso.org.dod.internet.mgmt.mib-2.transmission",
             //                transmission.ToString(DefaultObjectRegistry.Instance));
-            Assert.AreEqual(".1.3.6.1.2.1.10", transmission.ToString(null));
+            Assert.AreEqual(".1.3.6.1.2.1.10", transmission.ToString());
         }
 
         //[Test]
