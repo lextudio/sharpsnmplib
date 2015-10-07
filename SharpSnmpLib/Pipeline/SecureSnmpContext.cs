@@ -1,6 +1,6 @@
 ﻿// Secure SNMP context class.
 // Copyright (C) 2009-2010 Lex Li
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this
 // software and associated documentation files (the "Software"), to deal in the Software
 // without restriction, including without limitation the rights to use, copy, modify, merge,
@@ -32,7 +32,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
     /// Secure SNMP context. It is specific to v3.
     /// </summary>
     internal sealed class SecureSnmpContext : SnmpContextBase
-    {   
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="SecureSnmpContext"/> class.
         /// </summary>
@@ -65,7 +65,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                     defaultPair.Salt),
                 new Scope(
                     Group.EngineId,
-                    OctetString.Empty,
+                    Group.ContextName,
                     new ReportPdu(
                         Request.RequestId(),
                         ErrorCode.NoError,
@@ -99,7 +99,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                         privacy.Salt),
                     new Scope(
                         Group.EngineId,
-                        OctetString.Empty,
+                        Group.ContextName,
                         new ResponsePdu(
                             Request.RequestId(),
                             status,
@@ -137,7 +137,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                     privacy.Salt),
                 new Scope(
                     Group.EngineId,
-                    OctetString.Empty,
+                    Group.ContextName,
                     new ResponsePdu(
                         Request.RequestId(),
                         ErrorCode.TooBig,
@@ -149,7 +149,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
             if (TooBig)
             {
                 Response = null;
-                
+
                 // TODO: snmpSilentDrops++;
             }
         }
@@ -171,7 +171,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
             }
 
             var user = Users.Find(parameters.UserName);
-            if (user == null) 
+            if (user == null)
             {
                 HandleFailure(Group.UnknownSecurityName);
                 return false;
@@ -226,7 +226,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         }
 
         private void HandleDiscovery()
-        {         
+        {
             // discovery message received.
             var time = Group.EngineTimeData;
             Response = new ReportMessage(
@@ -244,7 +244,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                     OctetString.Empty),
                 new Scope(
                     Group.EngineId,
-                    OctetString.Empty,
+                    Group.ContextName,
                     new ReportPdu(
                         Request.RequestId(),
                         ErrorCode.NoError,
@@ -282,7 +282,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                     privacy.Salt),
                 new Scope(
                     Group.EngineId,
-                    OctetString.Empty,
+                    Group.ContextName,
                     new ResponsePdu(
                         Request.RequestId(),
                         ErrorCode.NoError,
