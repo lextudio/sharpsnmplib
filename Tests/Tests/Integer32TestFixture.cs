@@ -66,7 +66,7 @@ namespace Lextm.SharpSnmpLib.Tests
             byte[] bytes = data.ToBytes();
             Assert.AreEqual(6, bytes.Length);
             var exception = Assert.Throws<ArgumentException>(() => DataFactory.CreateSnmpData(new byte[] { 0x02, 0x05, 0xFF, 0xF1, 0xDE, 0xD9, 0x26 }));
-			Assert.AreEqual(string.Format("truncation error for 32-bit integer coding{0}Parametername: length", Environment.NewLine), exception.Message);
+			Assert.IsTrue(exception.Message.StartsWith("truncation error for 32-bit integer coding"));
         }
         
         [Test]
