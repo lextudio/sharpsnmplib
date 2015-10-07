@@ -38,7 +38,7 @@ namespace Lextm.SharpSnmpLib.Tests
             var o = ObjectIdentifier.Create(new uint[] {1, 3, 6}, 3255);
             Assert.AreEqual(oid, o);
         }
-        
+
         [Test]
         public void TestConstructor2()
         {
@@ -53,7 +53,7 @@ namespace Lextm.SharpSnmpLib.Tests
             ObjectIdentifier oid = new ObjectIdentifier(expected);
             Assert.AreEqual(new byte[] { 0x06, 0x0A, 0x2B, 0x06, 0x01, 0x04, 0x01, 0x90, 0x72, 0x87, 0x68, 0x02 }, oid.ToBytes());
         }
-        
+
         [Test]
         public void TestToBytes2()
         {
@@ -61,7 +61,7 @@ namespace Lextm.SharpSnmpLib.Tests
             ObjectIdentifier oid = new ObjectIdentifier(expected);
             Assert.AreEqual(new byte[] {0x06, 0x01, 0x00}, oid.ToBytes());
         }
-        
+
         [Test]
         public void TestToBytes3()
         {
@@ -85,12 +85,12 @@ namespace Lextm.SharpSnmpLib.Tests
             var o = new ObjectIdentifier(".1.3.6.1.2.1.1.1.0");
             Assert.AreEqual(".1.3.6.1.2.1.1.1.0", o.ToString());
         }
-        
+
         [Test]
         public void TestUuid()
         {
             var exception = Assert.Throws<ArgumentException>(() => new ObjectIdentifier("2.25.329800735698586629295641978511506172918"));
-			Assert.AreEqual(string.Format("Parameter 329800735698586629295641978511506172918 is out of 32 bit unsigned integer range{0}Parameter name: dotted", Environment.NewLine), exception.Message);
+			Assert.AreEqual(string.Format("Parameter 329800735698586629295641978511506172918 is out of 32 bit unsigned integer range{0}Parametername: dotted", Environment.NewLine), exception.Message);
         }
 
         [Test]
@@ -108,7 +108,7 @@ namespace Lextm.SharpSnmpLib.Tests
         //    Assert.AreEqual(".iso.org.dod.internet.mgmt.mib-2.transmission.100",
         //                    new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 10, 100 }).ToString(DefaultObjectRegistry.Instance));
         //}
-        
+
         [Test]
         public void TestEqual()
         {
