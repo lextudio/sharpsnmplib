@@ -423,7 +423,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 }
                 // */
 
-                if (ex.ErrorCode == WSAETIMEDOUT)
+                if (ex.SocketErrorCode == SocketError.TimedOut)
                 {
                     throw TimeoutException.Create(receiver.Address, timeout);
                 }
@@ -515,7 +515,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 }
                 // */
 
-                if (ex.ErrorCode == WSAETIMEDOUT)
+                if (ex.SocketErrorCode == SocketError.TimedOut)
                 {
                     throw TimeoutException.Create(receiver.Address, 0);
                 }

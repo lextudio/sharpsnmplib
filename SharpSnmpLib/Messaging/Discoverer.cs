@@ -151,7 +151,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 catch (SocketException ex)
                 {
                     // ignore WSAECONNRESET, http://bytes.com/topic/c-sharp/answers/237558-strange-udp-socket-problem
-                    if (ex.ErrorCode != WSAECONNRESET)
+                    if (ex.SocketErrorCode != SocketError.ConnectionReset)
                     {
                         // If the SnmpTrapListener was active, marks it as stopped and call HandleException.
                         // If it was inactive, the exception is likely to result from this, and we raise nothing.
@@ -194,7 +194,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             catch (SocketException ex)
             {
                 // ignore WSAECONNRESET, http://bytes.com/topic/c-sharp/answers/237558-strange-udp-socket-problem
-                if (ex.ErrorCode != WSAECONNRESET)
+                if (ex.SocketErrorCode != SocketError.ConnectionReset)
                 {
                     // If the SnmpTrapListener was active, marks it as stopped and call HandleException.
                     // If it was inactive, the exception is likely to result from this, and we raise nothing.
@@ -227,7 +227,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 }
                 catch (SocketException ex)
                 {
-                    if (ex.ErrorCode != WSAECONNRESET)
+                    if (ex.SocketErrorCode != SocketError.ConnectionReset)
                     {
                         // If the SnmpTrapListener was active, marks it as stopped and call HandleException.
                         // If it was inactive, the exception is likely to result from this, and we raise nothing.
