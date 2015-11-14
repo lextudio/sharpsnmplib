@@ -1,15 +1,15 @@
 // SNMP message extension class.
 // Copyright (C) 2008-2010 Malcolm Crowe, Lex Li, and other contributors.
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this
 // software and associated documentation files (the "Software"), to deal in the Software
 // without restriction, including without limitation the rights to use, copy, modify, merge,
 // publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons
 // to whom the Software is furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in all copies or
 // substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
 // INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
 // PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
@@ -46,10 +46,10 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new ArgumentNullException("message");
             }
-            
+
             return message.Pdu().TypeCode;
         }
-        
+
         /// <summary>
         /// Variables.
         /// </summary>
@@ -223,7 +223,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 message.SendAsync(manager, socket);
             }
         }
-        
+
         /// <summary>
         /// Sends an <see cref="ISnmpMessage"/>.
         /// </summary>
@@ -257,9 +257,9 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             var bytes = message.ToBytes();
-            socket.BeginSendTo(bytes, 0, bytes.Length, SocketFlags.None, manager, ar => socket.EndSendTo(ar), null);
+            socket.BeginSendTo(bytes, 0, bytes.Length, SocketFlags.None, manager, ar => { try { socket.EndSendTo(ar); } catch { } }, null);
         }
-        
+
         /// <summary>
         /// Sends this <see cref="ISnmpMessage"/> and handles the response from agent.
         /// </summary>
@@ -286,7 +286,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, "not a request message: {0}", code));
             }
-            
+
             using (var socket = receiver.GetSocket())
             {
                 return request.GetResponse(timeout, receiver, registry, socket);
@@ -317,7 +317,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, "not a request message: {0}", code));
             }
-            
+
             using (var socket = receiver.GetSocket())
             {
                 return request.GetResponse(timeout, receiver, socket);
@@ -338,17 +338,17 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new ArgumentNullException("request");
             }
-            
+
             if (receiver == null)
             {
                 throw new ArgumentNullException("receiver");
             }
-            
+
             if (udpSocket == null)
             {
                 throw new ArgumentNullException("udpSocket");
             }
-            
+
             var registry = new UserRegistry();
             if (request.Version == VersionCode.V3)
             {
@@ -383,7 +383,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new ArgumentNullException("receiver");
             }
-            
+
             if (registry == null)
             {
                 throw new ArgumentNullException("registry");
@@ -396,18 +396,18 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             var bytes = request.ToBytes();
-            #if CF
+#if CF
             int bufSize = 8192;
-            #else
+#else
             var bufSize = udpSocket.ReceiveBufferSize;
-            #endif
+#endif
             var reply = new byte[bufSize];
 
             // Whatever you change, try to keep the Send and the Receive close to each other.
             udpSocket.SendTo(bytes, receiver);
-            #if !CF
+#if !CF
             udpSocket.ReceiveTimeout = timeout;
-            #endif
+#endif
             int count;
             try
             {
@@ -500,7 +500,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             try
             {
                 // IMPORTANT: follow http://blogs.msdn.com/b/pfxteam/archive/2011/12/15/10248293.aspx
-                var args = new SocketAsyncEventArgs(); 
+                var args = new SocketAsyncEventArgs();
                 args.SetBuffer(reply, 0, bufSize);
                 var awaitable = new SocketAwaitable(args);
                 count = await SocketExtensions.ReceiveAsync(udpSocket, awaitable);
@@ -540,7 +540,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             throw OperationException.Create(string.Format(CultureInfo.InvariantCulture, "wrong response type: {0}", responseCode), receiver.Address);
         }
-        
+
         /// <summary>
         /// Ends a pending asynchronous read.
         /// </summary>
@@ -554,16 +554,16 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new ArgumentNullException("asyncResult");
             }
-            
+
             if (request == null)
             {
                 throw new ArgumentNullException("request");
             }
-            
+
             var ar = (SnmpMessageAsyncResult)asyncResult;
             var s = ar.WorkSocket;
             var count = s.EndReceive(ar.Inner);
-            
+
             // Passing 'count' is not necessary because ParseMessages should ignore it, but it offer extra safety (and would avoid an issue if parsing >1 response).
             var response = MessageFactory.ParseMessages(ar.GetBuffer(), 0, count, ar.Users)[0];
             var responseCode = response.TypeCode();
@@ -623,11 +623,11 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             // Whatever you change, try to keep the Send and the Receive close to each other.
             udpSocket.SendTo(request.ToBytes(), receiver);
-            #if CF
+#if CF
             var bufferSize = 8192;
-            #else
+#else
             var bufferSize = udpSocket.ReceiveBufferSize;
-            #endif
+#endif
             var buffer = new byte[bufferSize];
 
             // http://sharpsnmplib.codeplex.com/workitem/7234
@@ -678,13 +678,13 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// http://msdn.microsoft.com/en-us/library/ms740668(VS.85).aspx
         /// </summary>
-        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed. Suppression is OK here.")] 
+        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed. Suppression is OK here.")]
         private const int WSAETIMEDOUT = 10060;
 
         private sealed class SnmpMessageAsyncResult : IAsyncResult
         {
             private readonly byte[] _buffer;
-            
+
             public SnmpMessageAsyncResult(IAsyncResult inner, Socket socket, UserRegistry users, IPEndPoint receiver, byte[] buffer)
             {
                 _buffer = buffer;
@@ -693,35 +693,35 @@ namespace Lextm.SharpSnmpLib.Messaging
                 Receiver = receiver;
                 Inner = inner;
             }
-            
+
             public IAsyncResult Inner { get; private set; }
-            
+
             public Socket WorkSocket { get; private set; }
-            
+
             public UserRegistry Users { get; private set; }
 
             public byte[] GetBuffer()
             {
                 return _buffer;
             }
-            
+
             public IPEndPoint Receiver { get; private set; }
-            
+
             public bool IsCompleted
             {
                 get { return Inner.IsCompleted; }
             }
-            
+
             public WaitHandle AsyncWaitHandle
             {
                 get { return Inner.AsyncWaitHandle; }
             }
-            
+
             public object AsyncState
             {
                 get { return Inner.AsyncState; }
             }
-            
+
             public bool CompletedSynchronously
             {
                 get { return Inner.CompletedSynchronously; }
