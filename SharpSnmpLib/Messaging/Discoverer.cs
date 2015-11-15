@@ -42,12 +42,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         private const int Inactive = 0;
 
         /// <summary>
-        /// http://msdn.microsoft.com/en-us/library/ms740668(VS.85).aspx
-        /// </summary>
-        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed. Suppression is OK here.")] 
-        private const int WSAECONNRESET = 10054;
-
-        /// <summary>
         /// Occurs when an SNMP agent is found.
         /// </summary>
         public event EventHandler<AgentFoundEventArgs> AgentFound;
@@ -124,7 +118,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 Task.Factory.StartNew(() => AsyncReceive(udp.Client));
                 #endif
 
-                Thread.Sleep(interval);                
+                Thread.Sleep(interval);
                 Interlocked.CompareExchange(ref _active, Inactive, Active);
                 udp.Close();
             }

@@ -675,12 +675,6 @@ namespace Lextm.SharpSnmpLib.Messaging
                 message.Privacy.GetScopeData(message.Header, message.Parameters, message.Scope.GetData(message.Version)));
         }
 
-        /// <summary>
-        /// http://msdn.microsoft.com/en-us/library/ms740668(VS.85).aspx
-        /// </summary>
-        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed. Suppression is OK here.")] 
-        private const int WSAETIMEDOUT = 10060;
-
         private sealed class SnmpMessageAsyncResult : IAsyncResult
         {
             private readonly byte[] _buffer;

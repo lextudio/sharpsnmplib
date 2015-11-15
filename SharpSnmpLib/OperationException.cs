@@ -32,7 +32,7 @@ using System.Net;
 using System.Runtime.Serialization;
 #endif
 #if (!NETFX_CORE)
-using System.Security.Permissions; 
+//using System.Security.Permissions; 
 #endif
 
 namespace Lextm.SharpSnmpLib

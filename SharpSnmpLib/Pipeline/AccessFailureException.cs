@@ -36,7 +36,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
     /// 1. GET operation is performed on a write-only object.
     /// 2. SET operation is performed on a read-only object.
     /// </summary>
-    [Serializable]
+    [DataContract]
     public sealed class AccessFailureException : Exception
     {
         /// <summary>
@@ -65,15 +65,15 @@ namespace Lextm.SharpSnmpLib.Pipeline
         }
 
 #if !CF
-        /// <summary>
-        /// Creates a <see cref="AccessFailureException"/> instance.
-        /// </summary>
-        /// <param name="info">Info</param>
-        /// <param name="context">Context</param>
-        private AccessFailureException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-        } 
+        ///// <summary>
+        ///// Creates a <see cref="AccessFailureException"/> instance.
+        ///// </summary>
+        ///// <param name="info">Info</param>
+        ///// <param name="context">Context</param>
+        //private AccessFailureException(SerializationInfo info, StreamingContext context)
+        //    : base(info, context)
+        //{
+        //} 
 #endif
        
         /// <summary>

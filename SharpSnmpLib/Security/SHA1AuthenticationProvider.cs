@@ -33,7 +33,7 @@ namespace Lextm.SharpSnmpLib.Security
     {
         private const int Sha1KeyCacheCapacity = 100; 
         private static readonly CryptoKeyCache Sha1KeyCache = new CryptoKeyCache(Sha1KeyCacheCapacity);
-	    private static readonly Object Sha1KeyCacheLock = new object();
+        private static readonly Object Sha1KeyCacheLock = new object();
 
         private readonly byte[] _password;
         private const int DigestLength = 12;
@@ -82,9 +82,9 @@ namespace Lextm.SharpSnmpLib.Security
                 byte[] cachedKey;
                 if (Sha1KeyCache.TryGetCachedValue(password, engineId, out cachedKey))
                 {
-	                return cachedKey;
+                    return cachedKey;
                 }
-	  	  	 	 
+                 
                 byte[] keyToCache = _PasswordToKey(password, engineId);
                 //Value not in cache compute and cache the value
                 Sha1KeyCache.AddValueToCache(password, engineId, keyToCache);

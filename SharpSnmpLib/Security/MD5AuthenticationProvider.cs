@@ -82,9 +82,9 @@ namespace Lextm.SharpSnmpLib.Security
                 byte[] cachedKey;
                 if (Md5KeyCache.TryGetCachedValue(password, engineId, out cachedKey))
                 {
-	                return cachedKey;
+                    return cachedKey;
                 }
-	  	   	 
+             
                 byte[] keyToCache = _PasswordToKey(password, engineId);
 
                 //Value not in cache compute and cache the value

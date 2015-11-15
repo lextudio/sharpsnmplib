@@ -69,8 +69,8 @@ namespace Lextm.SharpSnmpLib.Messaging
                 _active = Inactive;
                 if (_socket != null)
                 {
-                    _socket.Close();    // Note that closing the socket releases the _socket.ReceiveFrom call.
-                    (_socket as IDisposable).Dispose();
+                    this._socket.Shutdown(SocketShutdown.Both);    // Note that closing the socket releases the _socket.ReceiveFrom call.
+                    _socket.Dispose();
                     _socket = null;
                 }
             }
@@ -246,7 +246,8 @@ namespace Lextm.SharpSnmpLib.Messaging
                 return;
             }
 
-            _socket.Close();    // Note that closing the socket releases the _socket.ReceiveFrom call.
+            this._socket.Shutdown(SocketShutdown.Both);    // Note that closing the socket releases the _socket.ReceiveFrom call.
+            this._socket.Dispose();
             _socket = null;
         }
 

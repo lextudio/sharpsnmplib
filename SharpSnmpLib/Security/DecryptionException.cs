@@ -20,7 +20,7 @@
 using System;
 using System.Runtime.Serialization;
 #if !NETFX_CORE
-using System.Security.Permissions;
+//using System.Security.Permissions;
 #endif
 namespace Lextm.SharpSnmpLib.Security
 {
@@ -63,28 +63,28 @@ namespace Lextm.SharpSnmpLib.Security
         /// </summary>
         /// <param name="info">Info</param>
         /// <param name="context">Context</param>
-        private DecryptionException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-            if (info == null)
-            {
-                throw new ArgumentNullException("info");
-            }
+        //private DecryptionException(SerializationInfo info, StreamingContext context)
+        //    : base(info, context)
+        //{
+        //    if (info == null)
+        //    {
+        //        throw new ArgumentNullException("info");
+        //    }
             
-            _bytes = (byte[])info.GetValue("Bytes", typeof(byte[]));
-        }
+        //    _bytes = (byte[])info.GetValue("Bytes", typeof(byte[]));
+        //}
         
         /// <summary>
         /// Gets object data.
         /// </summary>
         /// <param name="info">Info</param>
         /// <param name="context">Context</param>
-        [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
-        public override void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            base.GetObjectData(info, context);
-            info.AddValue("Bytes", _bytes);
-        }
+        //[SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
+        //public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        //{
+        //    base.GetObjectData(info, context);
+        //    info.AddValue("Bytes", _bytes);
+        //}
 #endif
 
         /// <summary>

@@ -64,15 +64,15 @@ namespace Lextm.SharpSnmpLib
         }
 
 #if !CF && !NETFX_CORE
-        /// <summary>
-        /// Creates a <see cref="SnmpException"/> instance.
-        /// </summary>
-        /// <param name="info">Info</param>
-        /// <param name="context">Context</param>
-        protected SnmpException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-        }
+        ///// <summary>
+        ///// Creates a <see cref="SnmpException"/> instance.
+        ///// </summary>
+        ///// <param name="info">Info</param>
+        ///// <param name="context">Context</param>
+        //protected SnmpException(SerializationInfo info, StreamingContext context)
+        //    : base(info, context)
+        //{
+        //}
 #endif
 
         /// <summary>
