@@ -1,6 +1,6 @@
 // Engine group class.
 // Copyright (C) 2009-2010 Lex Li
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this
 // software and associated documentation files (the "Software"), to deal in the Software
 // without restriction, including without limitation the rights to use, copy, modify, merge,
@@ -27,10 +27,13 @@ namespace Lextm.SharpSnmpLib.Pipeline
     /// </summary>
     public sealed class EngineGroup
     {
-        // TODO: make engine ID configurable from outside and unique.
-        private readonly OctetString _engineId =
-            new OctetString(new byte[] { 128, 0, 31, 136, 128, 233, 99, 0, 0, 214, 31, 244 });
-        
+        internal static readonly OctetString EngineIdDefault = new OctetString(new byte[] { 128, 0, 31, 136, 128, 233, 99, 0, 0, 214, 31, 244 });
+        private const int EngineIdMinLength = 5;
+        private const int EngineIdMaxLength = 32;
+        internal static readonly OctetString ContextNameDefault = OctetString.Empty;
+
+        private readonly OctetString _engineId = EngineIdDefault;
+        private readonly OctetString _contextName = ContextNameDefault;
         private readonly DateTime _start;
         private uint _counterNotInTimeWindow;
         private uint _counterUnknownEngineId;
@@ -38,15 +41,75 @@ namespace Lextm.SharpSnmpLib.Pipeline
         private uint _counterDecryptionError;
         private uint _counterUnknownSecurityLevel;
         private uint _counterAuthenticationFailure;
-        
+        private int engineBoots;
+        private bool customEngineBootsSet = false;
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="EngineGroup"/> class.
+        /// Initializes a new instance of the <see cref="EngineGroup"/> class with
+        /// default engine ID and engine boots behavior.
         /// </summary>
         public EngineGroup()
         {
             _start = DateTime.UtcNow;
         }
-        
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EngineGroup"/> class with default engine ID and
+        ///	custom engine boots value.
+        /// </summary>
+        /// <param name="engineBoots">The number of reboots of this engine, use <c>Int32.MaxValue</c> if unknown.</param>
+        /// <exception cref="System.ArgumentOutOfRangeException">Thrown if <paramref name="engineBoots"/> is negative.</exception>
+        public EngineGroup(int engineBoots)
+            : this()
+        {
+            if (engineBoots < 0)
+            {
+                throw new ArgumentOutOfRangeException("The Engine Boots value must not be negative.");
+            }
+
+            this.engineBoots = engineBoots;
+            this.customEngineBootsSet = true;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EngineGroup"/> class with custom engine ID and
+        /// engine boots value.
+        /// </summary>
+        /// <param name="engineId">The engine ID to use. At minimum 5 bytes length, at maximum 32 bytes length.
+        ///		The most significant bit of the first byte must be set. Please follow RFC 3411, p 40ff.</param>
+        ///	<param name="contextName">Name of the context. Must be unique within the engine. Must not be null, but can be empty.</param>
+        /// <param name="engineBoots">The number of reboots of this engine, use <c>Int32.MaxValue</c> if unknown.</param>
+        /// <exception cref="System.ArgumentNullException">Thrown if either <paramref name="engineId"/> or <paramref name="contextName"/> is null.</exception>
+        /// <exception cref="System.ArgumentException">Thrown if <paramref name="engineId"/> is invalid.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Thrown if <paramref name="engineBoots"/> is negative.</exception>
+        public EngineGroup(OctetString engineId, OctetString contextName, int engineBoots)
+            : this(engineBoots)
+        {
+            if (engineId == null)
+            {
+                throw new ArgumentNullException("engineId");
+            }
+
+            var engineIdRaw = engineId.GetRaw();
+            if ((engineIdRaw.Length < EngineIdMinLength) || (engineIdRaw.Length > EngineIdMaxLength))
+            {
+                throw new ArgumentException(string.Format("The length of the Engine ID must be >= {0} and <= {1}.", EngineIdMinLength, EngineIdMaxLength));
+            }
+
+            if ((engineIdRaw[0] & 0x80) != 0x80)
+            {
+                throw new ArgumentException("The most significant bit of the first byte of the Engine ID must be set.");
+            }
+
+            if (contextName == null)
+            {
+                throw new ArgumentNullException("contextName");
+            }
+
+            this._engineId = engineId;
+            this._contextName = contextName;
+        }
+
         /// <summary>
         /// Gets the engine id.
         /// </summary>
@@ -54,6 +117,15 @@ namespace Lextm.SharpSnmpLib.Pipeline
         internal OctetString EngineId
         {
             get { return _engineId; }
+        }
+
+        /// <summary>
+        /// Gets the context name.
+        /// </summary>
+        /// <value>The context name.</value>
+        internal OctetString ContextName
+        {
+            get { return _contextName; }
         }
 
         /// <summary>
@@ -84,7 +156,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 var now = DateTime.UtcNow;
                 var ticks = (now - _start).Ticks / 10000;
                 var engineTime = (int)(ticks % int.MaxValue);
-                var engineReboots = (int)(ticks / int.MaxValue);
+                var engineReboots = (this.customEngineBootsSet ? (this.engineBoots) : (int)(ticks / int.MaxValue));
                 return new[] { engineReboots, engineTime };
             }
         }
@@ -121,7 +193,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <value>
         /// Counter variable.
         /// </value>
-        public Variable NotInTimeWindow 
+        public Variable NotInTimeWindow
         {
             get
             {
@@ -137,7 +209,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// </value>
         public Variable UnknownEngineId
         {
-            get 
+            get
             {
                 return new Variable(Messenger.UnknownEngineId, new Counter32(_counterUnknownEngineId++));
             }
