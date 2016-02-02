@@ -7,15 +7,13 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
-using NUnit.Framework;
+using Xunit;
 
 namespace Lextm.SharpSnmpLib.Tests
 {
-    [TestFixture]
-    [Category("Default")]
     public class ScopeTestFixture
     {
-        [Test]
+        [Fact]
         public void TestException()
         {
             Assert.Throws<ArgumentNullException>(() => new Scope((ISnmpPdu)null));

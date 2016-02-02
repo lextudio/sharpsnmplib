@@ -1,13 +1,11 @@
 ﻿using Lextm.SharpSnmpLib.Pipeline;
-using NUnit.Framework;
+using Xunit;
 
 namespace Lextm.SharpSnmpLib.Objects.Tests
 {
-    [TestFixture]
-    [Category("Default")]
     public class SysUpTimeTestFixture
     {
-        [Test]
+        [Fact]
         public void Test()
         {
             var sys = new SysUpTime();

@@ -8,18 +8,17 @@
  */
 using System;
 using System.IO;
-using NUnit.Framework;
-#pragma warning disable 1591,0618
+using Xunit;
+
+#pragma warning disable 1591, 0618
 namespace Lextm.SharpSnmpLib.Tests
 {
     /// <summary>
     /// Description of TestInteger32.
     /// </summary>
-    [TestFixture]
-    [Category("Default")]
     public class Integer32TestFixture
     {
-        [Test]
+        [Fact]
         public void TestException()
         {
             Assert.Throws<ArgumentNullException>(() => new Integer32(new Tuple<int, byte[]>(0, new byte[] { 0 }), null));
@@ -30,98 +29,98 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.Throws<ArgumentNullException>(() => new Integer32(null, new MemoryStream()));
         }
 
-        [Test]
+        [Fact]
         public void TestEqual()
         {
             var left = new Integer32(599);
             var right = new Integer32(599);
-            Assert.AreEqual(left, right);
+            Assert.Equal(left, right);
 // ReSharper disable RedundantCast
 // ReSharper disable EqualExpressionComparison
-            Assert.IsTrue((Integer32)null == (Integer32)null);
+            Assert.True((Integer32)null == (Integer32)null);
 // ReSharper restore EqualExpressionComparison
 // ReSharper restore RedundantCast
-            Assert.AreNotEqual(null, right);
-            Assert.AreNotEqual(left, null);
-            Assert.IsTrue(left.Equals(right));
-            Assert.IsTrue(left != null);
+            Assert.NotEqual(null, right);
+            Assert.NotEqual(left, null);
+            Assert.True(left.Equals(right));
+            Assert.True(left != null);
         }
         
-        [Test]
+        [Fact]
         public void TestNegative()
         {
             const int i = -2147418240;
             Integer32 data = new Integer32(i);
             byte[] bytes = data.ToBytes();
             Integer32 other = (Integer32)DataFactory.CreateSnmpData(bytes);
-            Assert.AreEqual(i, other.ToInt32());
+            Assert.Equal(i, other.ToInt32());
         }
         
-        [Test]
+        [Fact]
         public void TestNegative3()
         {
-        	// #7240
+            // #7240
             const int i = -237053658;
             Integer32 data = new Integer32(i);
             byte[] bytes = data.ToBytes();
-            Assert.AreEqual(6, bytes.Length);
+            Assert.Equal(6, bytes.Length);
             var exception = Assert.Throws<ArgumentException>(() => DataFactory.CreateSnmpData(new byte[] { 0x02, 0x05, 0xFF, 0xF1, 0xDE, 0xD9, 0x26 }));
-			Assert.AreEqual(string.Format("truncation error for 32-bit integer coding{0}Parameter name: length", Environment.NewLine), exception.Message);
+            Assert.Equal(string.Format("truncation error for 32-bit integer coding{0}Parameter name: length", Environment.NewLine), exception.Message);
         }
         
-        [Test]
+        [Fact]
         public void TestConstructor()
         {
             Integer32 test = new Integer32(100);
-            Assert.AreEqual(100, test.ToInt32());
+            Assert.Equal(100, test.ToInt32());
             Assert.Throws<InvalidCastException>(() => test.ToErrorCode());
             Assert.Throws<InvalidCastException>(() => new Integer32(-1).ToErrorCode());
             
             Integer32 test2 = new Integer32(new byte[] {0x00});
-            Assert.AreEqual(0, test2.ToInt32());
+            Assert.Equal(0, test2.ToInt32());
             
             Integer32 test3 = new Integer32(new byte[] {0xFF});
-            Assert.AreEqual(-1, test3.ToInt32());
+            Assert.Equal(-1, test3.ToInt32());
         }
         
-        [Test]
+        [Fact]
         public void TestToInt32()
         {
             const int result = -26955;
             byte[] expected = new byte[] {0x96, 0xB5};
             Integer32 test = new Integer32(expected);
-            Assert.AreEqual(result, test.ToInt32());
+            Assert.Equal(result, test.ToInt32());
             
-            Assert.AreEqual(255, new Integer32(new byte[] {0x00, 0xFF}).ToInt32());
+            Assert.Equal(255, new Integer32(new byte[] {0x00, 0xFF}).ToInt32());
         }
         
-        [Test]
+        [Fact]
         public void TestToBytes()
         {
             byte[] bytes = new byte[] {0x02, 0x02, 0x96, 0xB5};
             Integer32 test = new Integer32(-26955);
-            Assert.AreEqual(bytes, test.ToBytes());
+            Assert.Equal(bytes, test.ToBytes());
             
-            Assert.AreEqual(new byte[] {0x02, 0x02, 0x00, 0xFF}, new Integer32(255).ToBytes());
+            Assert.Equal(new byte[] {0x02, 0x02, 0x00, 0xFF}, new Integer32(255).ToBytes());
             
-            Assert.AreEqual(6, new Integer32(2147483647).ToBytes().Length);
+            Assert.Equal(6, new Integer32(2147483647).ToBytes().Length);
         }
         
-        [Test]
+        [Fact]
         public void TestToBytes2()
         {
             Integer32 i = new Integer32(-1);
-            Assert.AreEqual(new byte[] {0x02, 0x01, 0xFF}, i.ToBytes());
+            Assert.Equal(new byte[] {0x02, 0x01, 0xFF}, i.ToBytes());
         }
         
-        [Test]
+        [Fact]
         public void TestNegative2()
         {
             // bug 7217 http://sharpsnmplib.codeplex.com/workitem/7217
             Integer32 i = new Integer32(-250);
             var result = DataFactory.CreateSnmpData(i.ToBytes());
-            Assert.AreEqual(SnmpType.Integer32, result.TypeCode);
-            Assert.AreEqual(-250, ((Integer32)result).ToInt32());
+            Assert.Equal(SnmpType.Integer32, result.TypeCode);
+            Assert.Equal(-250, ((Integer32)result).ToInt32());
         }
     }
 }

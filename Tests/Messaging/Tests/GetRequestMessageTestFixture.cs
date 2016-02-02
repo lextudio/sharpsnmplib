@@ -10,7 +10,6 @@
 using System.Collections.Generic;
 using System.Net;
 using Lextm.SharpSnmpLib.Security;
-using NUnit.Framework;
 using System.Net.Sockets;
 using System;
 using System.Diagnostics;
@@ -24,30 +23,27 @@ using Lextm.SharpSnmpLib.Pipeline;
 namespace Lextm.SharpSnmpLib.Messaging.Tests
 {
     using JetBrains.dotMemoryUnit;
-
+    using Xunit;
     /// <summary>
     /// Description of TestGetMessage.
     /// </summary>
-    [TestFixture]
     public class GetRequestMessageTestFixture
     {
-        [Test]
-        [Category("Default")]
+        [Fact]
         public void Test()
         {
             byte[] expected = Properties.Resources.get;
             ISnmpMessage message = MessageFactory.ParseMessages(expected, new UserRegistry())[0];
-            Assert.AreEqual(SnmpType.GetRequestPdu, message.TypeCode());
+            Assert.Equal(SnmpType.GetRequestPdu, message.TypeCode());
             GetRequestPdu pdu = (GetRequestPdu)message.Pdu();
-            Assert.AreEqual(1, pdu.Variables.Count);
+            Assert.Equal(1, pdu.Variables.Count);
             Variable v = pdu.Variables[0];
-            Assert.AreEqual(new uint[] { 1, 3, 6, 1, 2, 1, 1, 6, 0 }, v.Id.ToNumerical());
-            Assert.AreEqual(typeof(Null), v.Data.GetType());
-            Assert.GreaterOrEqual(expected.Length, message.ToBytes().Length);
+            Assert.Equal(new uint[] { 1, 3, 6, 1, 2, 1, 1, 6, 0 }, v.Id.ToNumerical());
+            Assert.Equal(typeof(Null), v.Data.GetType());
+            Assert.True(expected.Length >= message.ToBytes().Length);
         }
 
-        [Test]
-        [Category("Default")]
+        [Fact]
         public void TestConstructor()
         {
             List<Variable> list = new List<Variable>(1)
@@ -56,11 +52,10 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
                                                        new Null())
                                       };
             GetRequestMessage message = new GetRequestMessage(0, VersionCode.V2, new OctetString("public"), list);
-            Assert.GreaterOrEqual(Properties.Resources.get.Length, message.ToBytes().Length);
+            Assert.True(Properties.Resources.get.Length >= message.ToBytes().Length);
         }
 
-        [Test]
-        [Category("Default")]
+        [Fact]
         public void TestConstructorV3Auth1()
         {
             const string bytes = "30 73" +
@@ -117,12 +112,11 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
                 Messenger.MaxMessageSize,
                 report);
             
-            Assert.AreEqual(Levels.Authentication | Levels.Reportable, request.Header.SecurityLevel);
-            Assert.AreEqual(ByteTool.Convert(bytes), request.ToBytes());
+            Assert.Equal(Levels.Authentication | Levels.Reportable, request.Header.SecurityLevel);
+            Assert.Equal(ByteTool.Convert(bytes), request.ToBytes());
         }
 
-        [Test]
-        [Category("Default")]
+        [Fact]
         public void TestConstructorV2AuthMd5PrivDes()
         {
             const string bytes = "30 81 80 02  01 03 30 0F  02 02 6C 99  02 03 00 FF" +
@@ -157,12 +151,11 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
                         new List<Variable>(1) { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0")) })),
                 privacy,
                 null);
-            Assert.AreEqual(Levels.Authentication | Levels.Privacy | Levels.Reportable, request.Header.SecurityLevel);
-            Assert.AreEqual(ByteTool.Convert(bytes), request.ToBytes());
+            Assert.Equal(Levels.Authentication | Levels.Privacy | Levels.Reportable, request.Header.SecurityLevel);
+            Assert.Equal(ByteTool.Convert(bytes), request.ToBytes());
         }
 
-        [Test]
-        [Category("Default")]
+        [Fact]
         public void TestConstructorV3AuthMd5()
         {
             const string bytes = "30 73" +
@@ -206,12 +199,11 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
                         new List<Variable>(1) { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0"), new Null()) })),
                 pair,
                 null);
-            Assert.AreEqual(Levels.Authentication | Levels.Reportable, request.Header.SecurityLevel);
-            Assert.AreEqual(ByteTool.Convert(bytes), request.ToBytes());
+            Assert.Equal(Levels.Authentication | Levels.Reportable, request.Header.SecurityLevel);
+            Assert.Equal(ByteTool.Convert(bytes), request.ToBytes());
         }
 
-        [Test]
-        [Category("Default")]
+        [Fact]
         public void TestConstructorV3AuthSha()
         {
             const string bytes = "30 77 02 01  03 30 0F 02  02 47 21 02  03 00 FF E3" +
@@ -244,12 +236,11 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
                         new List<Variable>(1) { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0"), new Null()) })),
                 pair,
                 null);
-            Assert.AreEqual(Levels.Authentication | Levels.Reportable, request.Header.SecurityLevel);
-            Assert.AreEqual(ByteTool.Convert(bytes), request.ToBytes());
+            Assert.Equal(Levels.Authentication | Levels.Reportable, request.Header.SecurityLevel);
+            Assert.Equal(ByteTool.Convert(bytes), request.ToBytes());
         }
   
-        [Test]
-        [Category("Default")]
+        [Fact]
         public void TestDiscoveryV3()
         {
             const string bytes = "30 3A 02 01 03 30 0F 02 02 6A 09 02 03 00 FF E3" +
@@ -277,11 +268,10 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
                 null
                );
             string test = ByteTool.Convert(request.ToBytes());
-            Assert.AreEqual(bytes, test);
+            Assert.Equal(bytes, test);
         }
 
-        [Test]
-        [Category("Default")]
+        [Fact]
         public void TestToBytes()
         {
             const string s = "30 27 02 01  01 04 06 70  75 62 6C 69  63 A0 1A 02" +
@@ -289,11 +279,10 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
                              "06 01 02 01  01 01 00 05  00                      ";
             byte[] expected = ByteTool.Convert(s);
             GetRequestMessage message = new GetRequestMessage(0x4bed, VersionCode.V2, new OctetString("public"), new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) });
-            Assert.AreEqual(expected, message.ToBytes());
+            Assert.Equal(expected, message.ToBytes());
         }
         
-        [Test]
-        [Category("Default")]
+        [Fact]
         public async Task TestResponseAsync()
         {
             var engine = CreateEngine();
@@ -308,11 +297,10 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             var response = await message.GetResponseAsync(new IPEndPoint(IPAddress.Loopback, 16100), users1, socket);
 
             engine.Stop();
-            Assert.AreEqual(SnmpType.ResponsePdu, response.TypeCode());
+            Assert.Equal(SnmpType.ResponsePdu, response.TypeCode());
         }
         
-        [Test]
-        [Category("Default")]
+        [Fact]
         public void TestResponse()
         {
             var engine = CreateEngine();
@@ -325,13 +313,12 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             
             const int time = 1500;
             var response = message.GetResponse(time, new IPEndPoint(IPAddress.Loopback, 16101), socket);
-            Assert.AreEqual(0x4bed, response.RequestId());
+            Assert.Equal(0x4bed, response.RequestId());
 
             engine.Stop();
         }
 
-        [Test]
-        [Category("Default")]
+        [Fact]
         public async void TestResponsesFromMultipleSources()
         {
             var start = 16102;
@@ -371,15 +358,14 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
                 Console.WriteLine("manager [{0}]{1}", Thread.CurrentThread.ManagedThreadId, DateTime.UtcNow);
                 watch.Stop();
                 Console.WriteLine("manager {0}: {1}: port {2}", index, watch.Elapsed, ((IPEndPoint)socket.LocalEndPoint).Port);
-                Assert.AreEqual(index, response.RequestId());
+                Assert.Equal(index, response.RequestId());
             }
             // );
 
             engine.Stop();
         }
 
-        [Test]
-        [Category("Default")]
+        [Fact]
         public async void TestResponsesFromSingleSource()
         {
             var start = 0;
@@ -416,15 +402,14 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
                 Console.WriteLine("manager [{0}]{1}", Thread.CurrentThread.ManagedThreadId, DateTime.UtcNow);
                 watch.Stop();
                 Console.WriteLine("manager {0}: {1}: port {2}", index, watch.Elapsed, ((IPEndPoint)socket.LocalEndPoint).Port);
-                Assert.AreEqual(0, response.RequestId());
+                Assert.Equal(0, response.RequestId());
             }
             // );
 
             engine.Stop();
         }
 
-        [Test]
-        [Category("Default")]
+        [Fact]
         public void TestResponsesFromSingleSourceWithMultipleThreads()
         {
             var start = 0;
@@ -466,15 +451,14 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
                 Console.WriteLine("manager [{0}]{1}", Thread.CurrentThread.ManagedThreadId, DateTime.UtcNow);
                 watch.Stop();
                 Console.WriteLine("manager {0}: {1}: port {2}", index, watch.Elapsed, ((IPEndPoint)socket.LocalEndPoint).Port);
-                Assert.AreEqual(index, response.RequestId());
+                Assert.Equal(index, response.RequestId());
             }
             );
 
             engine.Stop();
         }
 
-        [Test]
-        [Category("Default")]
+        [Fact]
         public void TestResponsesFromSingleSourceWithMultipleThreadsFromManager()
         {
             var start = 0;
@@ -500,7 +484,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
                     new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) }, timeout);
                 Console.WriteLine("manager [{0}]{1}", Thread.CurrentThread.ManagedThreadId, DateTime.UtcNow);
                 watch.Stop();
-                Assert.AreEqual(1, result.Count);
+                Assert.Equal(1, result.Count);
             }
             );
 
@@ -569,8 +553,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             return new SnmpEngine(pipelineFactory, new Listener { Users = users }, new EngineGroup());
         }
 
-        [Test]
-        [Category("Default")]
+        [Fact]
         public void TestTimeOut()
         {
             Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
@@ -586,17 +569,17 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             long elapsedMilliseconds = timer.ElapsedMilliseconds;
             Console.WriteLine(@"elapsed: " + elapsedMilliseconds);
             Console.WriteLine(@"timeout: " + time);
-            Assert.LessOrEqual(time, elapsedMilliseconds);
+            Assert.True(time <= elapsedMilliseconds);
 
             // FIXME: these values are valid on my machine openSUSE 11.2. (lex)
             // This test case usually fails on Windows, as strangely WinSock API call adds an extra 500-ms.
             if (SnmpMessageExtension.IsRunningOnMono)
             {
-                Assert.LessOrEqual(elapsedMilliseconds, time + 100);
+                Assert.True(elapsedMilliseconds <= time + 100);
             }
         }
 
-        //[Test]
+        //[Fact]
         //[Category("Default")]
         public void TestMemory()
         {
@@ -639,12 +622,12 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             GC.Collect();
             dotMemory.Check(memory =>
             {
-                Assert.That(memory.GetDifference(memoryCheckPoint1)
-                    .GetNewObjects().ObjectsCount, Is.LessThanOrEqualTo(15));
+                Assert.True(memory.GetDifference(memoryCheckPoint1)
+                    .GetNewObjects().ObjectsCount <= 15);
             });
         }
 
-        //[Test]
+        //[Fact]
         //[Category("Default")]
         public void TestMemory2()
         {
@@ -700,8 +683,8 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             GC.Collect();
             dotMemory.Check(memory =>
             {
-                Assert.That(memory.GetDifference(memoryCheckPoint1)
-                    .GetNewObjects().ObjectsCount, Is.LessThanOrEqualTo(31));
+                Assert.True(memory.GetDifference(memoryCheckPoint1)
+                    .GetNewObjects().ObjectsCount <= 31);
             });
         }
     }

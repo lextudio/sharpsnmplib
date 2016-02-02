@@ -5,15 +5,13 @@ using Lextm.SharpSnmpLib.Messaging;
 using Lextm.SharpSnmpLib.Objects;
 using Lextm.SharpSnmpLib.Security;
 using Moq;
-using NUnit.Framework;
+using Xunit;
 
 namespace Lextm.SharpSnmpLib.Pipeline.Tests
 {
-    [TestFixture]
-    [Category("Default")]
     public class SetMessageHandlerTestFixture
     {
-        [Test]
+        [Fact]
         public void WrongType()
         {
             var handler = new SetMessageHandler();
@@ -39,10 +37,10 @@ namespace Lextm.SharpSnmpLib.Pipeline.Tests
                 null);
             handler.Handle(context, store);
             var wrongType = (ResponseMessage)context.Response;
-            Assert.AreEqual(ErrorCode.WrongType, wrongType.ErrorStatus);
+            Assert.Equal(ErrorCode.WrongType, wrongType.ErrorStatus);
         }
 
-        [Test]
+        [Fact]
         public void NoAccess()
         {
             var handler = new SetMessageHandler();
@@ -68,10 +66,10 @@ namespace Lextm.SharpSnmpLib.Pipeline.Tests
                 null);
             handler.Handle(context, store);
             var noAccess = (ResponseMessage)context.Response;
-            Assert.AreEqual(ErrorCode.NoAccess, noAccess.ErrorStatus);
+            Assert.Equal(ErrorCode.NoAccess, noAccess.ErrorStatus);
         }
 
-        [Test]
+        [Fact]
         public void GenError()
         {
             var handler = new SetMessageHandler();
@@ -97,10 +95,10 @@ namespace Lextm.SharpSnmpLib.Pipeline.Tests
                 null);
             handler.Handle(context, store);
             var genError = (ResponseMessage)context.Response;
-            Assert.AreEqual(ErrorCode.GenError, genError.ErrorStatus);
+            Assert.Equal(ErrorCode.GenError, genError.ErrorStatus);
         }
 
-        [Test]
+        [Fact]
         public void NoError()
         {
             var handler = new SetMessageHandler();
@@ -124,11 +122,11 @@ namespace Lextm.SharpSnmpLib.Pipeline.Tests
             Assert.Throws<ArgumentNullException>(() => handler.Handle(context, null));
             handler.Handle(context, store);
             var noerror = (ResponseMessage)context.Response;
-            Assert.AreEqual(ErrorCode.NoError, noerror.ErrorStatus);
-            Assert.AreEqual(new OctetString("test"), noerror.Variables()[0].Data);
+            Assert.Equal(ErrorCode.NoError, noerror.ErrorStatus);
+            Assert.Equal(new OctetString("test"), noerror.Variables()[0].Data);
         }
 
-        [Test]
+        [Fact]
         public void NotWritable()
         {
             var handler = new SetMessageHandler();
@@ -149,10 +147,10 @@ namespace Lextm.SharpSnmpLib.Pipeline.Tests
             var store = new ObjectStore();
             handler.Handle(context, store);
             var notWritable = (ResponseMessage)context.Response;
-            Assert.AreEqual(ErrorCode.NotWritable, notWritable.ErrorStatus);
+            Assert.Equal(ErrorCode.NotWritable, notWritable.ErrorStatus);
         }
         
-        [Test]
+        [Fact]
         public void TooBig()
         {
             var list = new List<Variable>();
@@ -176,7 +174,7 @@ namespace Lextm.SharpSnmpLib.Pipeline.Tests
             var store = new ObjectStore();
             handler.Handle(context, store);
             var notWritable = (ResponseMessage)context.Response;
-            Assert.AreEqual(ErrorCode.TooBig, notWritable.ErrorStatus);
+            Assert.Equal(ErrorCode.TooBig, notWritable.ErrorStatus);
         }
     }
 }

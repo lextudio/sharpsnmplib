@@ -6,25 +6,24 @@
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
-using NUnit.Framework;
+
+using Xunit;
 
 namespace Lextm.SharpSnmpLib.Security.Tests
 {
-    [TestFixture]
-    [Category("Default")]
     public class SaltGeneratorTestFixture
     {
-        [Test]
+        [Fact]
         public void Test()
         {
             var gen = new SaltGenerator();
             var first = gen.GetSaltBytes();
             var second = gen.GetSaltBytes();
-            Assert.AreNotEqual(first, second);
-            Assert.AreEqual("Salt generator", gen.ToString());
+            Assert.NotEqual(first, second);
+            Assert.Equal("Salt generator", gen.ToString());
             
             gen.SetSalt(long.MaxValue);
-            Assert.AreEqual(new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01 }, gen.GetSaltBytes());
+            Assert.Equal(new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01 }, gen.GetSaltBytes());
         }
     }
 }

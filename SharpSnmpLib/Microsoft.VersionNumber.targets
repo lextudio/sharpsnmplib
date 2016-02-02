@@ -8,8 +8,8 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <!-- Properties for controlling the Assembly Version -->
     <PropertyGroup>
-        <AssemblyMajorVersion>8</AssemblyMajorVersion>
-        <AssemblyMinorVersion>9</AssemblyMinorVersion>
+        <AssemblyMajorVersion>9</AssemblyMajorVersion>
+        <AssemblyMinorVersion>0</AssemblyMinorVersion>
         <AssemblyBuildNumber>
         </AssemblyBuildNumber>
         <AssemblyRevision>
@@ -21,8 +21,8 @@
     </PropertyGroup>
     <!-- Properties for controlling the Assembly File Version -->
     <PropertyGroup>
-        <AssemblyFileMajorVersion>8</AssemblyFileMajorVersion>
-        <AssemblyFileMinorVersion>9</AssemblyFileMinorVersion>
+        <AssemblyFileMajorVersion>9</AssemblyFileMajorVersion>
+        <AssemblyFileMinorVersion>0</AssemblyFileMinorVersion>
         <AssemblyFileBuildNumber>
         </AssemblyFileBuildNumber>
         <AssemblyFileRevision>

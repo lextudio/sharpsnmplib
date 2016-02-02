@@ -7,16 +7,13 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
-using System.IO;
-using NUnit.Framework;
+using Xunit;
 
 namespace Lextm.SharpSnmpLib.Security.Tests
 {
-    [TestFixture]
-    [Category("Default")]
     public class AuthenticationProviderExtensionTestFixture
     {
-        [Test]
+        [Fact]
         public void TestException()
         {
             Assert.Throws<ArgumentNullException>(() => AuthenticationProviderExtension.ComputeHash(null, VersionCode.V1, null, null, null, null));
@@ -27,7 +24,7 @@ namespace Lextm.SharpSnmpLib.Security.Tests
             
             var parameters = SecurityParameters.Create(new OctetString("test"));
             DefaultAuthenticationProvider.Instance.ComputeHash(VersionCode.V1, Header.Empty, parameters, new Scope(OctetString.Empty, OctetString.Empty, new MalformedPdu()), DefaultPrivacyProvider.DefaultPair);
-            Assert.AreEqual(null, parameters.AuthenticationParameters);
+            Assert.Equal(null, parameters.AuthenticationParameters);
             
             //Assert.Throws<ArgumentNullException>(() => AuthenticationProviderExtension.VerifyHash(null, VersionCode.V1, null, null, null, null));
             //Assert.Throws<ArgumentNullException>(() => DefaultAuthenticationProvider.Instance.VerifyHash(VersionCode.V1, null, null, null, null));

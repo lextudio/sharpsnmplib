@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using System.Net;
 using Lextm.SharpSnmpLib.Messaging;
-using NUnit.Framework;
+using Xunit;
 
 namespace Lextm.SharpSnmpLib.Pipeline.Tests
 {
-    [TestFixture]
-    [Category("Default")]
     public class TrapV2MessageReceivedEventArgsTestFixture
     {
-        [Test]
+        [Fact]
         public void TestException()
         {
             Assert.Throws<ArgumentNullException>(() => new TrapV2MessageReceivedEventArgs(null, null, null));

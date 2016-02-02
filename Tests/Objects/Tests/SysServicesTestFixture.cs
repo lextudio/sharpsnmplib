@@ -1,17 +1,15 @@
 ﻿using Lextm.SharpSnmpLib.Pipeline;
-using NUnit.Framework;
+using Xunit;
 
 namespace Lextm.SharpSnmpLib.Objects.Tests
 {
-    [TestFixture]
-    [Category("Default")]
     public class SysServicesTestFixture
     {
-        [Test]
+        [Fact]
         public void Test()
         {
             var sys = new SysServices();
-            Assert.AreEqual(new Integer32(72), sys.Data);
+            Assert.Equal(new Integer32(72), sys.Data);
             Assert.Throws<AccessFailureException>(() => sys.Data = new TimeTicks(0));
         }
     }

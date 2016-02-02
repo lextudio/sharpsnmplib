@@ -1,14 +1,12 @@
 ﻿using System;
 using System.IO;
-using NUnit.Framework;
+using Xunit;
 
 namespace Lextm.SharpSnmpLib.Tests
 {
-    [TestFixture]
-    [Category("Default")]
     public class StreamExtensionTestFixture
     {
-        [Test]
+        [Fact]
         public void TestException()
         {
             Assert.Throws<ArgumentNullException>(() => StreamExtension.AppendBytes(null, SnmpType.Counter32, null, null));

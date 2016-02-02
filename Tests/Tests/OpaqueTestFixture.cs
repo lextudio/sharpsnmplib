@@ -8,16 +8,14 @@
  */
 
 using System;
-using NUnit.Framework;
+using Xunit;
 
-#pragma warning disable 1591,0618
+#pragma warning disable 1591, 0618
 namespace Lextm.SharpSnmpLib.Tests
 {
-    [TestFixture]
-    [Category("Default")]
     public class OpaqueTestFixture
     {
-        [Test]
+        [Fact]
         public void TestException()
         {
             Assert.Throws<NullReferenceException>(()=>new Opaque(null));
@@ -25,35 +23,35 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.Throws<ArgumentNullException>(() => new Opaque(new Tuple<int, byte[]>(1, new byte[0]), null));
         }
 
-        [Test]
+        [Fact]
         public void TestConstructor()
         {
             Gauge32 e = new Gauge32(3);
             Opaque test = new Opaque(e.ToBytes());
-            Assert.AreEqual(new byte[] {0x44, 0x03, 0x42, 0x01, 0x03}, test.ToBytes());
-            Assert.AreEqual("42 01 03", test.ToString());
+            Assert.Equal(new byte[] {0x44, 0x03, 0x42, 0x01, 0x03}, test.ToBytes());
+            Assert.Equal("42 01 03", test.ToString());
             Assert.Throws<ArgumentNullException>(() => test.AppendBytesTo(null));
         }
         
-        [Test]
+        [Fact]
         public void TestEqual()
         {
             var left = new Opaque(new byte[] { 0x80, 0x77 });
             var right = new Opaque(new byte[] { 0x80, 0x77 });
-            Assert.AreEqual(left, right);
+            Assert.Equal(left, right);
 // ReSharper disable RedundantCast
-            Assert.AreEqual((Opaque)null, (Opaque)null);
+            Assert.Equal((Opaque)null, (Opaque)null);
 // ReSharper restore RedundantCast
-            Assert.AreNotEqual(null, right);
-            Assert.AreNotEqual(left, null);
-            Assert.IsTrue(left != null);
-            Assert.IsTrue(null != right);
+            Assert.NotEqual(null, right);
+            Assert.NotEqual(left, null);
+            Assert.True(left != null);
+            Assert.True(null != right);
 // ReSharper disable EqualExpressionComparison
-            Assert.IsTrue((Opaque)null == (Opaque)null);
+            Assert.True((Opaque)null == (Opaque)null);
 // ReSharper restore EqualExpressionComparison
-            Assert.IsTrue(left.Equals(right));
+            Assert.True(left.Equals(right));
 
-            Assert.IsFalse(left.Equals(1));
+            Assert.False(left.Equals(1));
         }
     }
 }

@@ -7,22 +7,20 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
-using NUnit.Framework;
+using Xunit;
 
 namespace Lextm.SharpSnmpLib.Security.Tests
 {
-    [TestFixture]
-    [Category("Default")]
     public class UserTestFixture
     {
-        [Test]
+        [Fact]
         public void TestException()
         {
             Assert.Throws<ArgumentNullException>(() => new User(null, null));
             Assert.Throws<ArgumentNullException>(() => new User(new OctetString("test"), null));
             
             var user = new User(new OctetString("test"), DefaultPrivacyProvider.DefaultPair);
-            Assert.AreEqual("User: name: test; provider: Default privacy provider", user.ToString());
+            Assert.Equal("User: name: test; provider: Default privacy provider", user.ToString());
         }
     }
 }

@@ -8,24 +8,22 @@
  */
 
 using System;
-using NUnit.Framework;
 using System.Text;
+using Xunit;
 
-#pragma warning disable 1591,0618,1718
+#pragma warning disable 1591, 0618, 1718
 namespace Lextm.SharpSnmpLib.Tests
 {
-    [TestFixture]
-    [Category("Default")]
     public class OctetStringTestFixture
     {
-    	[Test]
-    	public void TestToLevels()
-    	{
-    		Assert.Throws<InvalidCastException>(() => new OctetString(new byte[] { 0x00, 0x08 }).ToLevels());
-    		Assert.Throws<InvalidCastException>(() => new OctetString(new byte[] { 0xFF }).ToLevels());
-    	}
-    	
-        [Test]
+        [Fact]
+        public void TestToLevels()
+        {
+            Assert.Throws<InvalidCastException>(() => new OctetString(new byte[] { 0x00, 0x08 }).ToLevels());
+            Assert.Throws<InvalidCastException>(() => new OctetString(new byte[] { 0xFF }).ToLevels());
+        }
+        
+        [Fact]
         public void TestException()
         {
             Assert.Throws<ArgumentNullException>(() => new OctetString(new Tuple<int, byte[]>(0, new byte[] { 0 }), null));
@@ -34,64 +32,64 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.Throws<ArgumentNullException>(() => OctetString.Empty.AppendBytesTo(null));
         }
 
-        [Test]
+        [Fact]
         public void TestMethod()
         {
             byte[] expected = new byte[] {0x04, 0x06, 0x70, 0x75, 0x62, 0x6C, 0x69, 0x63};
             ISnmpData data = DataFactory.CreateSnmpData(expected);
-            Assert.AreEqual(SnmpType.OctetString, data.TypeCode);
+            Assert.Equal(SnmpType.OctetString, data.TypeCode);
             OctetString s = (OctetString)data;
-            Assert.AreEqual("public", s.ToString());
+            Assert.Equal("public", s.ToString());
         }
 
-        [Test]
+        [Fact]
         public void TestEncoding()
         {
             var temp = OctetString.DefaultEncoding;
             OctetString.DefaultEncoding = Encoding.UTF8;
-            Assert.AreEqual(Encoding.UTF8, OctetString.DefaultEncoding);
+            Assert.Equal(Encoding.UTF8, OctetString.DefaultEncoding);
             OctetString.DefaultEncoding = temp;
         }
 
-        [Test]
+        [Fact]
         public void TestPhysical()
         {
             var mac = new OctetString(new byte[] {80, 90, 64, 87, 11, 99});
-            Assert.AreEqual("505A40570B63", mac.ToPhysicalAddress().ToString());
+            Assert.Equal("505A40570B63", mac.ToPhysicalAddress().ToString());
 
             var invalid = new OctetString(new byte[] {89});
             Assert.Throws<InvalidCastException>(() => invalid.ToPhysicalAddress());
         }
         
-        [Test]
+        [Fact]
         public void TestEqual()
         {
             var left = new OctetString("public");
             var right = new OctetString("public");
-            Assert.AreEqual(left, right);
-            Assert.IsTrue(left != OctetString.Empty);
+            Assert.Equal(left, right);
+            Assert.True(left != OctetString.Empty);
 // ReSharper disable EqualExpressionComparison
-            Assert.IsTrue(left == left);
+            Assert.True(left == left);
 // ReSharper restore EqualExpressionComparison
 
         }
 
-        [Test]
+        [Fact]
         public void TestToBytes()
         {
-            Assert.AreEqual(2, new OctetString("").ToBytes().Length);
+            Assert.Equal(2, new OctetString("").ToBytes().Length);
         }
         
-        [Test]
+        [Fact]
         public void TestEmpty()
         {
-            Assert.AreEqual("", OctetString.Empty.ToString());
+            Assert.Equal("", OctetString.Empty.ToString());
         }
         
-        [Test]
+        [Fact]
         public void TestChinese()
         {
-            Assert.AreEqual("中国", new OctetString("中国", Encoding.Unicode).ToString(Encoding.Unicode));
+            Assert.Equal("中国", new OctetString("中国", Encoding.Unicode).ToString(Encoding.Unicode));
         }
     }
 }

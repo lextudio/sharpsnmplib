@@ -2,15 +2,13 @@
 using Lextm.SharpSnmpLib.Messaging;
 using Lextm.SharpSnmpLib.Security;
 using Moq;
-using NUnit.Framework;
+using Xunit;
 
 namespace Lextm.SharpSnmpLib.Pipeline.Tests
 {
-    [TestFixture]
-    [Category("Default")]
     public class SnmpContextFactoryTestFixture
     {
-        [Test]
+        [Fact]
         public void Test()
         {
             var messageMock = new Mock<ISnmpMessage>();

@@ -99,6 +99,10 @@
     <None Include="Resources\network-server.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Office2007Renderer">
       <HintPath>..\lib\Office2007Renderer.dll</HintPath>
     </Reference>
@@ -109,9 +113,6 @@
     <Reference Include="System.Configuration" />
     <Reference Include="Crad.Windows.Forms.Actions">
       <HintPath>..\packages\ActionListWinForms.1.3.0.0\lib\net40\Crad.Windows.Forms.Actions.dll</HintPath>
-    </Reference>
-    <Reference Include="log4net">
-      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Posix">
       <HintPath>..\lib\Mono.Posix.dll</HintPath>

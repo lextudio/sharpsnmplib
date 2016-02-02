@@ -1,18 +1,16 @@
 ﻿using Lextm.SharpSnmpLib.Pipeline;
-using NUnit.Framework;
+using Xunit;
 
 namespace Lextm.SharpSnmpLib.Objects.Tests
 {
-    [TestFixture]
-    [Category("Default")]
     public class SysORIndexTestFixture
     {
-        [Test]
+        [Fact]
         public void Test()
         {
             var sys = new SysORIndex(3);
-            Assert.AreEqual(".1.3.6.1.2.1.1.9.1.1.3", sys.Variable.Id.ToString());
-            Assert.AreEqual("3", sys.Data.ToString());
+            Assert.Equal(".1.3.6.1.2.1.1.9.1.1.3", sys.Variable.Id.ToString());
+            Assert.Equal("3", sys.Data.ToString());
             Assert.Throws<AccessFailureException>(() => sys.Data = OctetString.Empty);
         }
     }

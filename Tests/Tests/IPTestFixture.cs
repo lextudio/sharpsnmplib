@@ -10,16 +10,14 @@
 using System;
 using System.IO;
 using System.Net;
-using NUnit.Framework;
+using Xunit;
 
-#pragma warning disable 1591,0618,1718
+#pragma warning disable 1591, 0618, 1718
 namespace Lextm.SharpSnmpLib.Tests
 {
-    [TestFixture]
-    [Category("Default")]
     public class IPTestFixture
     {
-        [Test]
+        [Fact]
         public void TestException()
         {
             var test = new IP(IPAddress.Any.GetAddressBytes());
@@ -31,40 +29,40 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.Throws<ArgumentNullException>(() => new IP(null, new MemoryStream()));
         }
 
-        [Test]
+        [Fact]
         public void TestConstructor()
         {
             const string expected = "127.0.0.1";
             IP ip = new IP(expected);
-            Assert.AreEqual(expected, ip.ToString());
+            Assert.Equal(expected, ip.ToString());
             var test = new IP(IPAddress.Any.GetAddressBytes());
         }
         
-        [Test]
+        [Fact]
         public void TestToBytes()
         {
             IP ip = new IP("129.213.224.111");
-            Assert.AreEqual(new byte[] {0x40, 0x04, 0x81, 0xD5, 0xE0, 0x6F}, ip.ToBytes());
+            Assert.Equal(new byte[] {0x40, 0x04, 0x81, 0xD5, 0xE0, 0x6F}, ip.ToBytes());
         }
         
-        [Test]
+        [Fact]
         public void TestEquals()
         {
             IP actual = new IP("172.0.0.1");
             IP target = new IP("172.0.0.1");
             IP another = new IP("172.0.0.0");
 
-            Assert.IsTrue(actual.Equals(target));
-            Assert.IsTrue(actual == target);
+            Assert.True(actual.Equals(target));
+            Assert.True(actual == target);
 // ReSharper disable EqualExpressionComparison
-            Assert.IsTrue(actual == actual);
+            Assert.True(actual == actual);
 // ReSharper restore EqualExpressionComparison
-            Assert.AreEqual(actual, target);
-            Assert.IsFalse(actual == another);
-            Assert.IsTrue(actual != another);
-            Assert.AreNotEqual(actual, another);
+            Assert.Equal(actual, target);
+            Assert.False(actual == another);
+            Assert.True(actual != another);
+            Assert.NotEqual(actual, another);
 
-            Assert.IsFalse(actual.Equals(1));
+            Assert.False(actual.Equals(1));
         }
     }
 }

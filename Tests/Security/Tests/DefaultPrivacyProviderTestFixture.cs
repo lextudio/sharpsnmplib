@@ -7,15 +7,13 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
-using NUnit.Framework;
+using Xunit;
 
 namespace Lextm.SharpSnmpLib.Security.Tests
 {
-    [TestFixture]
-    [Category("Default")]
     public class DefaultPrivacyProviderTestFixture
     {
-        [Test]
+        [Fact]
         public void Test()
         {
             var provider = DefaultPrivacyProvider.DefaultPair;
@@ -24,12 +22,12 @@ namespace Lextm.SharpSnmpLib.Security.Tests
             Assert.Throws<ArgumentException>(() => provider.Encrypt(new Null(), SecurityParameters.Create(OctetString.Empty)));
 
             var expected = new Sequence((byte[])null);
-            Assert.AreEqual(expected, provider.Encrypt(expected, SecurityParameters.Create(OctetString.Empty)));
+            Assert.Equal(expected, provider.Encrypt(expected, SecurityParameters.Create(OctetString.Empty)));
             
             Assert.Throws<ArgumentNullException>(() => provider.Decrypt(null, null));
             Assert.Throws<ArgumentNullException>(() => provider.Decrypt(OctetString.Empty, null));
             var result = provider.Decrypt(new Sequence((byte[])null), SecurityParameters.Create(OctetString.Empty));
-            Assert.IsNotNull(result);
+            Assert.NotNull(result);
         }
     }
 }

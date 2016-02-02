@@ -11,15 +11,13 @@ using System.Collections.Generic;
 using System.Net;
 using Lextm.SharpSnmpLib.Messaging;
 using Moq;
-using NUnit.Framework;
+using Xunit;
 
 namespace Lextm.SharpSnmpLib.Pipeline.Tests
 {
-    [TestFixture]
-    [Category("Default")]
     public class InformRequestMessageHandlerTestFixture
     {
-        [Test]
+        [Fact]
         public void Test()
         {
             var mock = new Mock<ISnmpContext>();
@@ -35,9 +33,9 @@ namespace Lextm.SharpSnmpLib.Pipeline.Tests
             Assert.Throws<ArgumentNullException>(() => handler.Handle(mock.Object, null));
             handler.MessageReceived += delegate(object args, InformRequestMessageReceivedEventArgs e)
                                            {
-                                               Assert.AreEqual(mock2.Object, e.Binding);
-                                               Assert.AreEqual(message, e.InformRequestMessage);
-                                               Assert.IsTrue(new IPEndPoint(IPAddress.Any, 0).Equals(e.Sender));
+                                               Assert.Equal(mock2.Object, e.Binding);
+                                               Assert.Equal(message, e.InformRequestMessage);
+                                               Assert.True(new IPEndPoint(IPAddress.Any, 0).Equals(e.Sender));
                                            }; 
             handler.Handle(mock.Object, new ObjectStore());
         }

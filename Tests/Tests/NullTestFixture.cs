@@ -8,51 +8,49 @@
  */
 
 using System;
-using NUnit.Framework;
+using Xunit;
 
-#pragma warning disable 1591, 0618,1718
+#pragma warning disable 1591, 0618, 1718
 namespace Lextm.SharpSnmpLib.Tests
 {
-    [TestFixture]
-    [Category("Default")]
     public class NullTestFixture
     {
-        [Test]
+        [Fact]
         public void TestConstructors()
         {
             Assert.Throws<ArgumentNullException>(() => new Null(null, null));
             Assert.Throws<ArgumentNullException>(() => new Null(new Tuple<int, byte[]>(0, new byte[0]), null));
         }
         
-        [Test]
+        [Fact]
         public void TestMethod()
         {
-            Assert.AreEqual(false, new Null().Equals(null));
+            Assert.Equal(false, new Null().Equals(null));
         }
         
-        [Test]
+        [Fact]
         public void TestToBytes()
         {
-            Assert.AreEqual(new byte[] { 0x05, 0x00 }, new Null().ToBytes());
-            Assert.AreEqual(0, new Null().GetHashCode());
+            Assert.Equal(new byte[] { 0x05, 0x00 }, new Null().ToBytes());
+            Assert.Equal(0, new Null().GetHashCode());
         }
         
-        [Test]
+        [Fact]
         public void TestEqual()
         {
             var left = new Null();
             var right = new Null();
-            Assert.AreEqual(left, right);
-            Assert.IsTrue(left == right);
-            Assert.IsTrue(left.Equals(right));
-            Assert.IsTrue(left != null);
+            Assert.Equal(left, right);
+            Assert.True(left == right);
+            Assert.True(left.Equals(right));
+            Assert.True(left != null);
             // ReSharper disable EqualExpressionComparison
-            Assert.IsTrue(left == left);
+            Assert.True(left == left);
             // ReSharper restore EqualExpressionComparison
             Assert.Throws<ArgumentNullException>(() => left.AppendBytesTo(null));
-            Assert.AreEqual("Null", left.ToString());
+            Assert.Equal("Null", left.ToString());
 
-            Assert.IsFalse(left.Equals(1));
+            Assert.False(left.Equals(1));
         }
     }
 }

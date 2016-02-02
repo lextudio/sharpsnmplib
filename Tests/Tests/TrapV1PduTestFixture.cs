@@ -12,16 +12,14 @@ using System.Collections.Generic;
 using System.Text;
 using Lextm.SharpSnmpLib.Messaging;
 using Lextm.SharpSnmpLib.Security;
-using NUnit.Framework;
+using Xunit;
 
 #pragma warning disable 1591
 namespace Lextm.SharpSnmpLib.Tests
 {
-    [TestFixture]
-    [Category("Default")]
     public class TrapV1PduTestFixture
     {
-        [Test]
+        [Fact]
         public void TestException()
         {
             Assert.Throws<ArgumentNullException>(() => new TrapV1Pdu(new Tuple<int, byte[]>(0, new byte[] { 0 }),null));
@@ -61,7 +59,7 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.Throws<NotSupportedException>(() => { var test = pdu.ErrorStatus; });
         }
         
-        [Test]
+        [Fact]
         public void TestToTrapMessage()
         {
             Variable v = new Variable(new ObjectIdentifier(new uint[] {1,3,6,1,4,1,2162,1001,21,0}), 
@@ -76,18 +74,18 @@ namespace Lextm.SharpSnmpLib.Tests
                                           vList);
             byte[] bytes = TrapV1Message.PackMessage(VersionCode.V1, new OctetString("public"), pdu).ToBytes();
             TrapV1Message message = (TrapV1Message)MessageFactory.ParseMessages(bytes, new UserRegistry())[0];
-            Assert.AreEqual("127.0.0.1", message.AgentAddress.ToString());
-            Assert.AreEqual(GenericCode.EnterpriseSpecific, message.Generic);
-            Assert.AreEqual(12, message.Specific);
-            Assert.AreEqual(16352, message.TimeStamp);
-            Assert.AreEqual(new uint[] {1, 3, 6, 1, 4, 1, 2162, 1000, 2}, message.Enterprise.ToNumerical());
-            Assert.AreEqual(1, message.Variables().Count);
-            Assert.AreEqual(new uint[] {1,3,6,1,4,1,2162,1001,21,0}, message.Variables()[0].Id.ToNumerical());
-            Assert.AreEqual("TrapTest", message.Variables()[0].Data.ToString());
-            Assert.AreEqual("SNMPv1 TRAP PDU: agent address: 127.0.0.1; time stamp: 00:02:43.5200000; enterprise: .1.3.6.1.4.1.2162.1000.2; generic: EnterpriseSpecific; specific: 12; varbind count: 1", pdu.ToString());
+            Assert.Equal("127.0.0.1", message.AgentAddress.ToString());
+            Assert.Equal(GenericCode.EnterpriseSpecific, message.Generic);
+            Assert.Equal(12, message.Specific);
+            Assert.Equal(16352U, message.TimeStamp);
+            Assert.Equal(new uint[] {1, 3, 6, 1, 4, 1, 2162, 1000, 2}, message.Enterprise.ToNumerical());
+            Assert.Equal(1, message.Variables().Count);
+            Assert.Equal(new uint[] {1,3,6,1,4,1,2162,1001,21,0}, message.Variables()[0].Id.ToNumerical());
+            Assert.Equal("TrapTest", message.Variables()[0].Data.ToString());
+            Assert.Equal("SNMPv1 TRAP PDU: agent address: 127.0.0.1; time stamp: 00:02:43.5200000; enterprise: .1.3.6.1.4.1.2162.1000.2; generic: EnterpriseSpecific; specific: 12; varbind count: 1", pdu.ToString());
         }
         
-        [Test]
+        [Fact]
         public void TestToTrapMessageChinese()
         {
             Variable v = new Variable(new ObjectIdentifier(new uint[] {1,3,6,1,4,1,2162,1001,21,0}), 
@@ -102,14 +100,14 @@ namespace Lextm.SharpSnmpLib.Tests
                                           vList);
             byte[] bytes = TrapV1Message.PackMessage(VersionCode.V1, new OctetString("public"), pdu).ToBytes();
             TrapV1Message message = (TrapV1Message)MessageFactory.ParseMessages(bytes, new UserRegistry())[0];
-            Assert.AreEqual("127.0.0.1", message.AgentAddress.ToString());
-            Assert.AreEqual(GenericCode.EnterpriseSpecific, message.Generic);
-            Assert.AreEqual(12, message.Specific);
-            Assert.AreEqual(16352, message.TimeStamp);
-            Assert.AreEqual(new uint[] {1, 3, 6, 1, 4, 1, 2162, 1000, 2}, message.Enterprise.ToNumerical());
-            Assert.AreEqual(1, message.Variables().Count);
-            Assert.AreEqual(new uint[] {1,3,6,1,4,1,2162,1001,21,0}, message.Variables()[0].Id.ToNumerical());
-            Assert.AreEqual("中国", ((OctetString)message.Variables()[0].Data).ToString(Encoding.Unicode));
+            Assert.Equal("127.0.0.1", message.AgentAddress.ToString());
+            Assert.Equal(GenericCode.EnterpriseSpecific, message.Generic);
+            Assert.Equal(12, message.Specific);
+            Assert.Equal(16352U, message.TimeStamp);
+            Assert.Equal(new uint[] {1, 3, 6, 1, 4, 1, 2162, 1000, 2}, message.Enterprise.ToNumerical());
+            Assert.Equal(1, message.Variables().Count);
+            Assert.Equal(new uint[] {1,3,6,1,4,1,2162,1001,21,0}, message.Variables()[0].Id.ToNumerical());
+            Assert.Equal("中国", ((OctetString)message.Variables()[0].Data).ToString(Encoding.Unicode));
         }
     }
 }

@@ -8,19 +8,17 @@
  */
 using System;
 using System.Text;
-using NUnit.Framework;
+using Xunit;
 
 namespace Lextm.SharpSnmpLib.Security.Tests
 {
-    [TestFixture]
-    [Category("Default")]
     public class MD5AuthenticationProviderTestFixture
     {
-        [Test]
+        [Fact]
         public void TestException()
         {
             var provider = new MD5AuthenticationProvider(new OctetString("longlongago"));
-            Assert.AreEqual("MD5 authentication provider", provider.ToString());
+            Assert.Equal("MD5 authentication provider", provider.ToString());
             Assert.Throws<ArgumentNullException>(() => new MD5AuthenticationProvider(null));
             Assert.Throws<ArgumentNullException>(() => provider.PasswordToKey(null, null));
             Assert.Throws<ArgumentNullException>(() => provider.PasswordToKey(new byte[0], null));
@@ -32,14 +30,14 @@ namespace Lextm.SharpSnmpLib.Security.Tests
            // Assert.Throws<ArgumentNullException>(() => provider.ComputeHash(VersionCode.V1, Header.Empty, SecurityParameters.Create(new OctetString("test")), OctetString.Empty, null));
         }
 
-        [Test]
+        [Fact]
         public void TestPasswordToKey()
         {
             byte[] password = Encoding.ASCII.GetBytes("testpass");
             byte[] engineId = new byte[] { 0x80, 0x00, 0x1F, 0x88, 0x80, 0xE9, 0x63, 0x00, 0x00, 0xD6, 0x1F, 0xF4, 0x49 };
 
             byte[] key = new MD5AuthenticationProvider(new OctetString("")).PasswordToKey(password, engineId);
-            Assert.AreEqual(new byte[] { 226, 221, 44, 186, 149, 93, 73, 79, 237, 69, 120, 155, 145, 7, 44, 255 }, key);
+            Assert.Equal(new byte[] { 226, 221, 44, 186, 149, 93, 73, 79, 237, 69, 120, 155, 145, 7, 44, 255 }, key);
         }
     }
 }

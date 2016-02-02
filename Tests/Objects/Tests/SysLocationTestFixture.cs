@@ -1,20 +1,18 @@
 ﻿using System;
-using NUnit.Framework;
+using Xunit;
 
 namespace Lextm.SharpSnmpLib.Objects.Tests
 {
-    [TestFixture]
-    [Category("Default")]
     public class SysLocationTestFixture
     {
-        [Test]
+        [Fact]
         public void Test()
         {
             var sys = new SysLocation();
             Assert.Throws<ArgumentNullException>(() => sys.Data = null);
             Assert.Throws<ArgumentException>(() => sys.Data = new TimeTicks(0));
             sys.Data = OctetString.Empty;
-            Assert.AreEqual(OctetString.Empty, sys.Data);
+            Assert.Equal(OctetString.Empty, sys.Data);
         }
     }
 }

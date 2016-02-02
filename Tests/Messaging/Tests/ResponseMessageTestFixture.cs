@@ -9,16 +9,14 @@
 
 using System.Collections.Generic;
 using Lextm.SharpSnmpLib.Security;
-using NUnit.Framework;
+using Xunit;
 
 #pragma warning disable 1591
 namespace Lextm.SharpSnmpLib.Messaging.Tests
 {
-    [TestFixture]
-    [Category("Default")]
     public class ResponseMessageTestFixture
     {
-        [Test]
+        [Fact]
         public void TestConstructor()
         {
             var response = new ResponseMessage(
@@ -44,7 +42,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             var registry = new UserRegistry();
             registry.Add(new OctetString("lextm"), DefaultPrivacyProvider.DefaultPair);
             var messages = MessageFactory.ParseMessages(response.ToBytes(), registry);
-            Assert.AreEqual(1, messages.Count);
+            Assert.Equal(1, messages.Count);
         }
     }
 }

@@ -6,22 +6,20 @@
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
-using NUnit.Framework;
+using Xunit;
 
 namespace Lextm.SharpSnmpLib.Objects.Tests
 {
-    [TestFixture]
-    [Category("Default")]
     public class SysORTableTestFixture
     {
-        [Test]
+        [Fact]
         public void Test()
         {
             var table = new SysORTable();
-            Assert.AreEqual(null, table.MatchGet(new ObjectIdentifier("1.3.6")));
+            Assert.Equal(null, table.MatchGet(new ObjectIdentifier("1.3.6")));
             var id = new ObjectIdentifier("1.3.6.1.2.1.1.9.1.1.1");
-            Assert.AreEqual(id, table.MatchGet(id).Variable.Id);
-            Assert.AreEqual(new ObjectIdentifier("1.3.6.1.2.1.1.9.1.1.2"), table.MatchGetNext(id).Variable.Id);
+            Assert.Equal(id, table.MatchGet(id).Variable.Id);
+            Assert.Equal(new ObjectIdentifier("1.3.6.1.2.1.1.9.1.1.2"), table.MatchGetNext(id).Variable.Id);
         }
     }
 }

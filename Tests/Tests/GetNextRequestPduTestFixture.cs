@@ -8,15 +8,13 @@
  */
 using System;
 using System.Collections.Generic;
-using NUnit.Framework;
+using Xunit;
 
 namespace Lextm.SharpSnmpLib.Tests
 {
-    [TestFixture]
-    [Category("Default")]
     public class GetNextRequestPduTestFixture
     {
-        [Test]
+        [Fact]
         public void TestException()
         {
             Assert.Throws<ArgumentNullException>(() => new GetNextRequestPdu(new Tuple<int, byte[]>(0, new byte[] { 0 }), null));
@@ -24,7 +22,7 @@ namespace Lextm.SharpSnmpLib.Tests
             
             var pdu = new GetNextRequestPdu(0, ErrorCode.NoError, 0, new List<Variable>());
             Assert.Throws<ArgumentNullException>(() => pdu.AppendBytesTo(null));
-            Assert.AreEqual("GET NEXT request PDU: seq: 0; status: 0; index: 0; variable count: 0", pdu.ToString());
+            Assert.Equal("GET NEXT request PDU: seq: 0; status: 0; index: 0; variable count: 0", pdu.ToString());
 
         }
     }

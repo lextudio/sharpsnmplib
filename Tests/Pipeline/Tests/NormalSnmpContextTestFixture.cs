@@ -3,15 +3,13 @@ using System.Net;
 using Lextm.SharpSnmpLib.Messaging;
 using Lextm.SharpSnmpLib.Security;
 using Moq;
-using NUnit.Framework;
+using Xunit;
 
 namespace Lextm.SharpSnmpLib.Pipeline.Tests
 {
-    [TestFixture]
-    [Category("Default")]
     public class NormalSnmpContextTestFixture
     {
-        [Test]
+        [Fact]
         public void Test()
         {
             var message = new GetRequestMessage(0, VersionCode.V1, new OctetString("public"), new List<Variable>());
@@ -20,9 +18,9 @@ namespace Lextm.SharpSnmpLib.Pipeline.Tests
             var context = new NormalSnmpContext(message, new IPEndPoint(IPAddress.Loopback, 0),
                                                 new UserRegistry(), bindingMock.Object);
             context.GenerateResponse(new List<Variable>());
-            Assert.IsNotNull(context.Response);
+            Assert.NotNull(context.Response);
             context.SendResponse();
-            Assert.IsFalse(context.HandleMembership());
+            Assert.False(context.HandleMembership());
 
             var list = new List<Variable>();
             for (int i = 0; i < 5000; i++)
@@ -31,7 +29,7 @@ namespace Lextm.SharpSnmpLib.Pipeline.Tests
             }
 
             context.GenerateResponse(list);
-            Assert.AreEqual(ErrorCode.TooBig, context.Response.Pdu().ErrorStatus.ToErrorCode());
+            Assert.Equal(ErrorCode.TooBig, context.Response.Pdu().ErrorStatus.ToErrorCode());
             bindingMock.Verify(foo => foo.SendResponse(It.IsAny<ISnmpMessage>(), It.IsAny<EndPoint>()), Times.AtMostOnce);
         }
     }

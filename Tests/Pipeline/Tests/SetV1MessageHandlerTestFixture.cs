@@ -5,15 +5,13 @@ using Lextm.SharpSnmpLib.Messaging;
 using Lextm.SharpSnmpLib.Objects;
 using Lextm.SharpSnmpLib.Security;
 using Moq;
-using NUnit.Framework;
+using Xunit;
 
 namespace Lextm.SharpSnmpLib.Pipeline.Tests
 {
-    [TestFixture]
-    [Category("Default")]
     public class SetV1MessageHandlerTestFixture
     {
-        [Test]
+        [Fact]
         public void BadValue()
         {
             var handler = new SetV1MessageHandler();
@@ -39,10 +37,10 @@ namespace Lextm.SharpSnmpLib.Pipeline.Tests
                 null);
             handler.Handle(context, store);
             var badValue = (ResponseMessage)context.Response;
-            Assert.AreEqual(ErrorCode.BadValue, badValue.ErrorStatus);
+            Assert.Equal(ErrorCode.BadValue, badValue.ErrorStatus);
         }
 
-        [Test]
+        [Fact]
         public void GenError()
         {
             var handler = new SetV1MessageHandler();
@@ -68,10 +66,10 @@ namespace Lextm.SharpSnmpLib.Pipeline.Tests
                 null);
             handler.Handle(context, store);
             var genError = (ResponseMessage)context.Response;
-            Assert.AreEqual(ErrorCode.GenError, genError.ErrorStatus);
+            Assert.Equal(ErrorCode.GenError, genError.ErrorStatus);
         }
 
-        [Test]
+        [Fact]
         public void NoError()
         {
             var handler = new SetV1MessageHandler();
@@ -95,11 +93,11 @@ namespace Lextm.SharpSnmpLib.Pipeline.Tests
             Assert.Throws<ArgumentNullException>(() => handler.Handle(context, null));
             handler.Handle(context, store);
             var noerror = (ResponseMessage)context.Response;
-            Assert.AreEqual(ErrorCode.NoError, noerror.ErrorStatus);
-            Assert.AreEqual(new OctetString("test"), noerror.Variables()[0].Data);
+            Assert.Equal(ErrorCode.NoError, noerror.ErrorStatus);
+            Assert.Equal(new OctetString("test"), noerror.Variables()[0].Data);
         }
 
-        [Test]
+        [Fact]
         public void NoSuchName()
         {
             var handler = new SetV1MessageHandler();
@@ -120,10 +118,10 @@ namespace Lextm.SharpSnmpLib.Pipeline.Tests
             var store = new ObjectStore();
             handler.Handle(context, store);
             var noSuchName = (ResponseMessage)context.Response;
-            Assert.AreEqual(ErrorCode.NoSuchName, noSuchName.ErrorStatus);
+            Assert.Equal(ErrorCode.NoSuchName, noSuchName.ErrorStatus);
         }
         
-        [Test]
+        [Fact]
         public void NoSuchName2()
         {
             var handler = new SetV1MessageHandler();
@@ -149,7 +147,7 @@ namespace Lextm.SharpSnmpLib.Pipeline.Tests
                 null);
             handler.Handle(context, store);
             var genError = (ResponseMessage)context.Response;
-            Assert.AreEqual(ErrorCode.NoSuchName, genError.ErrorStatus);
+            Assert.Equal(ErrorCode.NoSuchName, genError.ErrorStatus);
         }
     }
 }

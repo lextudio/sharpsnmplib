@@ -10,16 +10,14 @@
 using System;
 using System.Collections.Generic;
 using Lextm.SharpSnmpLib.Security;
-using NUnit.Framework;
+using Xunit;
 
 #pragma warning disable 1591, 0618
 namespace Lextm.SharpSnmpLib.Messaging.Tests
 {
-    [TestFixture]
-    [Category("Default")]
     public class MessageFactoryTestFixture
     {   
-        [Test]
+        [Fact]
         public void TrapV1InSNMPV2()
         {
             var data = "30 42 02 01 01 04 06 70 75 62 6C 69 63 A4 35 06 08 2B 06 01 04 01 81 AB 34 40 04 C0 A8 01 14 02 01 06 02 02 03 E8 43 04 00 00 03 63 30 16 30 14 06 0C 2B 06 01 04 01 81 AB 34 02 01 01 00 02 04 00 00 00 01";
@@ -27,7 +25,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             Assert.Throws<ArgumentException>(() => MessageFactory.ParseMessages(bytes, new UserRegistry()));
         }
         
-        [Test]
+        [Fact]
         public void TestReportFailure()
         {
             const string data = "30 70 02 01 03 30"+
@@ -47,12 +45,12 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             var users = new UserRegistry();
             users.Add(new User(new OctetString(userName), priv));
             var messages = MessageFactory.ParseMessages(bytes, users);
-            Assert.AreEqual(1, messages.Count);
+            Assert.Equal(1, messages.Count);
             var message = messages[0];
-            Assert.AreEqual(1, message.Variables().Count);
+            Assert.Equal(1, message.Variables().Count);
         }
 
-        [Test]
+        [Fact]
         public void TestReportFailure2()
         {
             const string data = "30780201033010020462d4a37602020578040101020103042f302d040b800000090340f4ecf2b113020124020200a4040762696c6c696e67040c62bc133ef237922dfa8ca39a04003030040b800000090340f4ecf2b1130400a81f02049d2b5c8c0201000201003011300f060a2b060106030f01010200410105";
@@ -63,13 +61,13 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             var users = new UserRegistry();
             users.Add(new User(new OctetString(userName), priv));
             var messages = MessageFactory.ParseMessages(bytes, users);
-            Assert.AreEqual(1, messages.Count);
+            Assert.Equal(1, messages.Count);
             var message = messages[0];
-            Assert.AreEqual(1, message.Variables().Count);
-            Assert.AreEqual("not in time window", message.Variables()[0].Id.GetErrorMessage());
+            Assert.Equal(1, message.Variables().Count);
+            Assert.Equal("not in time window", message.Variables()[0].Id.GetErrorMessage());
         }
         
-        [Test]
+        [Fact]
         public void TestInform()
         {
             byte[] data = new byte[] { 0x30, 0x5d, 0x02, 0x01, 0x01, 0x04, 0x06, 0x70, 0x75, 0x62, 0x6c, 0x69, 0x63, 0xa6, 0x50, 0x02, 0x01, 0x01, 0x02, 0x01,
@@ -79,23 +77,23 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
                 0x69, 0x15, 0x00, 0x04, 0x0a, 0x49, 0x6e, 0x66, 0x6f, 0x72, 0x6d, 0x54, 0x65, 0x73, 0x74 };
 
             IList<ISnmpMessage> messages = MessageFactory.ParseMessages(data, new UserRegistry());
-            Assert.AreEqual(SnmpType.InformRequestPdu, messages[0].TypeCode());
+            Assert.Equal(SnmpType.InformRequestPdu, messages[0].TypeCode());
         }
      
-        [Test]
+        [Fact]
         public void TestString()
         {
             string bytes = "30 29 02 01 00 04 06 70 75 62 6c 69 63 a0 1c 02 04 4f 89 fb dd" + Environment.NewLine +
                 "02 01 00 02 01 00 30 0e 30 0c 06 08 2b 06 01 02 01 01 05 00 05 00";
             IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes, new UserRegistry());
-            Assert.AreEqual(1, messages.Count);
+            Assert.Equal(1, messages.Count);
             GetRequestMessage m = (GetRequestMessage)messages[0];
             Variable v = m.Variables()[0];
             string i = v.Id.ToString();
-            Assert.AreEqual(".1.3.6.1.2.1.1.5.0", i);
+            Assert.Equal(".1.3.6.1.2.1.1.5.0", i);
         }
         
-        [Test]
+        [Fact]
         public void TestBrokenString()
         {
             bool hasException = false;
@@ -103,17 +101,17 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             {
                 const string bytes = "30 39 02 01 01 04 06 70 75 62 6C 69 63 A7 2C 02 01 01 02 01 00 02 01 00 30 21 30 0D 06 08 2B 06 01 02 01 01";
                 IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes, new UserRegistry());
-                Assert.AreEqual(1, messages.Count);
+                Assert.Equal(1, messages.Count);
             }
             catch (Exception)
             {
                 hasException = true;
             }
             
-            Assert.IsTrue(hasException);
+            Assert.True(hasException);
         }
 
-        [Test]
+        [Fact]
         public void TestDiscovery()
         {
             const string bytes = "30 3A 02 01  03 30 0F 02  02 6A 09 02  03 00 FF E3" +
@@ -121,11 +119,11 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
                                  "01 00 04 00  04 00 04 00  30 12 04 00  04 00 A0 0C" +
                                  "02 02 2C 6B  02 01 00 02  01 00 30 00";
             IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes, new UserRegistry());
-            Assert.AreEqual(1, messages.Count);
-            Assert.AreEqual(OctetString.Empty, messages[0].Parameters.UserName);
+            Assert.Equal(1, messages.Count);
+            Assert.Equal(OctetString.Empty, messages[0].Parameters.UserName);
         }
 
-        [Test]
+        [Fact]
         public void TestGetV3()
         {
             const string bytes = "30 68 02 01  03 30 0F 02  02 6A 08 02  03 00 FF E3" +
@@ -138,14 +136,14 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             UserRegistry registry = new UserRegistry();
             registry.Add(new OctetString("lextm"), DefaultPrivacyProvider.DefaultPair);
             IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes, registry);
-            Assert.AreEqual(1, messages.Count);
+            Assert.Equal(1, messages.Count);
             GetRequestMessage get = (GetRequestMessage)messages[0];
-            Assert.AreEqual(27144, get.MessageId());
-            //Assert.AreEqual(SecurityLevel.None | SecurityLevel.Reportable, get.Level);
-            Assert.AreEqual("lextm", get.Community().ToString());
+            Assert.Equal(27144, get.MessageId());
+            //Assert.Equal(SecurityLevel.None | SecurityLevel.Reportable, get.Level);
+            Assert.Equal("lextm", get.Community().ToString());
         }
 
-        [Test]
+        [Fact]
         public void TestGetRequestV3AuthPriv()
         {
             const string bytes = "30 81 80 02  01 03 30 0F  02 02 6C 99  02 03 00 FF" +
@@ -161,8 +159,8 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             var registry = new UserRegistry();
             registry.Add(new OctetString("lexmark"), new DefaultPrivacyProvider(auth));
             var messages = MessageFactory.ParseMessages(bytes, registry);
-            Assert.AreEqual(1, messages.Count);
-            Assert.AreEqual(SnmpType.Unknown, messages[0].TypeCode());
+            Assert.Equal(1, messages.Count);
+            Assert.Equal(SnmpType.Unknown, messages[0].TypeCode());
 
             //registry.Add(new OctetString("lexmark"),
             // new DESPrivacyProvider(
@@ -173,17 +171,17 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
 
             registry.Add(new OctetString("lexmark"), new DESPrivacyProvider(new OctetString("passtest"), auth));
             messages = MessageFactory.ParseMessages(bytes, registry);
-            Assert.AreEqual(1, messages.Count);
+            Assert.Equal(1, messages.Count);
             GetRequestMessage get = (GetRequestMessage)messages[0];
-            Assert.AreEqual(27801, get.MessageId());
-            //Assert.AreEqual(SecurityLevel.None | SecurityLevel.Reportable, get.Level);
-            Assert.AreEqual("lexmark", get.Community().ToString());
+            Assert.Equal(27801, get.MessageId());
+            //Assert.Equal(SecurityLevel.None | SecurityLevel.Reportable, get.Level);
+            Assert.Equal("lexmark", get.Community().ToString());
             //OctetString digest = new MD5AuthenticationProvider(new OctetString("testpass")).ComputeHash(get);
 
-            //Assert.AreEqual(digest, get.Parameters.AuthenticationParameters);
+            //Assert.Equal(digest, get.Parameters.AuthenticationParameters);
         }
 
-        [Test]
+        [Fact]
         public void TestGetRequestV3Auth()
         {
             const string bytes = "30 73"+
@@ -208,33 +206,33 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             UserRegistry registry = new UserRegistry();
             registry.Add(new OctetString("lexli"), new DefaultPrivacyProvider(new MD5AuthenticationProvider(new OctetString("testpass"))));
             IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes, registry);
-            Assert.AreEqual(1, messages.Count);
+            Assert.Equal(1, messages.Count);
             GetRequestMessage get = (GetRequestMessage)messages[0];
-            Assert.AreEqual(13633, get.MessageId());
-            //Assert.AreEqual(SecurityLevel.None | SecurityLevel.Reportable, get.Level);
-            Assert.AreEqual("lexli", get.Community().ToString());
+            Assert.Equal(13633, get.MessageId());
+            //Assert.Equal(SecurityLevel.None | SecurityLevel.Reportable, get.Level);
+            Assert.Equal("lexli", get.Community().ToString());
             //OctetString digest = new MD5AuthenticationProvider(new OctetString("testpass")).ComputeHash(get);
 
-            //Assert.AreEqual(digest, get.Parameters.AuthenticationParameters);
+            //Assert.Equal(digest, get.Parameters.AuthenticationParameters);
         }
 
-        [Test]
+        [Fact]
         public void TestResponseV1()
         {
             ISnmpMessage message = MessageFactory.ParseMessages(Properties.Resources.getresponse, new UserRegistry())[0];
-            Assert.AreEqual(SnmpType.ResponsePdu, message.TypeCode());
+            Assert.Equal(SnmpType.ResponsePdu, message.TypeCode());
             ISnmpPdu pdu = message.Pdu();
-            Assert.AreEqual(SnmpType.ResponsePdu, pdu.TypeCode);
+            Assert.Equal(SnmpType.ResponsePdu, pdu.TypeCode);
             ResponsePdu response = (ResponsePdu)pdu;
-            Assert.AreEqual(Integer32.Zero, response.ErrorStatus);
-            Assert.AreEqual(0, response.ErrorIndex.ToInt32());
-            Assert.AreEqual(1, response.Variables.Count);
+            Assert.Equal(Integer32.Zero, response.ErrorStatus);
+            Assert.Equal(0, response.ErrorIndex.ToInt32());
+            Assert.Equal(1, response.Variables.Count);
             Variable v = response.Variables[0];
-            Assert.AreEqual(new uint[] { 1, 3, 6, 1, 2, 1, 1, 6, 0 }, v.Id.ToNumerical());
-            Assert.AreEqual("Shanghai", v.Data.ToString());
+            Assert.Equal(new uint[] { 1, 3, 6, 1, 2, 1, 1, 6, 0 }, v.Id.ToNumerical());
+            Assert.Equal("Shanghai", v.Data.ToString());
         }
 
-        [Test]
+        [Fact]
         public void TestGetResponseV3Error()
         {
             // TODO: make use of this test case.
@@ -249,19 +247,19 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             UserRegistry registry = new UserRegistry();
             registry.Add(new OctetString("neither"), DefaultPrivacyProvider.DefaultPair);
             IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes, registry);
-            Assert.AreEqual(1, messages.Count);
+            Assert.Equal(1, messages.Count);
             ISnmpMessage message = messages[0];
-            Assert.AreEqual("040D80001F8880E9630000D61FF449", message.Parameters.EngineId.ToHexString());
-            Assert.AreEqual(0, message.Parameters.EngineBoots.ToInt32());
-            Assert.AreEqual(22863593, message.Parameters.EngineTime.ToInt32());
-            Assert.AreEqual("neither", message.Parameters.UserName.ToString());
-            Assert.AreEqual("", message.Parameters.AuthenticationParameters.ToHexString());
-            Assert.AreEqual("", message.Parameters.PrivacyParameters.ToHexString());
-            Assert.AreEqual("040D80001F8880E9630000D61FF449", message.Scope.ContextEngineId.ToHexString());
-            Assert.AreEqual("", message.Scope.ContextName.ToHexString());
+            Assert.Equal("040D80001F8880E9630000D61FF449", message.Parameters.EngineId.ToHexString());
+            Assert.Equal(0, message.Parameters.EngineBoots.ToInt32());
+            Assert.Equal(22863593, message.Parameters.EngineTime.ToInt32());
+            Assert.Equal("neither", message.Parameters.UserName.ToString());
+            Assert.Equal("", message.Parameters.AuthenticationParameters.ToHexString());
+            Assert.Equal("", message.Parameters.PrivacyParameters.ToHexString());
+            Assert.Equal("040D80001F8880E9630000D61FF449", message.Scope.ContextEngineId.ToHexString());
+            Assert.Equal("", message.Scope.ContextName.ToHexString());
         }
         
-        [Test]
+        [Fact]
         public void TestException()
         {
             Assert.Throws<ArgumentNullException>(() => MessageFactory.ParseMessages((byte[])null, null));
@@ -274,7 +272,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             Assert.Throws<ArgumentNullException>(() => MessageFactory.ParseMessages(new byte[0], 0, 0, null));
         }
 
-        [Test]
+        [Fact]
         public void TestGetResponseV3()
         {
             const string bytes = "30 6B 02 01  03 30 0F 02  02 6A 08 02  03 00 FF E3" +
@@ -286,24 +284,24 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
                                  "2B 06 01 02  01 01 03 00  43 03 05 E7  14";
             UserRegistry registry = new UserRegistry();
             var messages = MessageFactory.ParseMessages(bytes, registry);
-            Assert.AreEqual(1, messages.Count);
-            Assert.AreEqual(SnmpType.Unknown, messages[0].TypeCode());
+            Assert.Equal(1, messages.Count);
+            Assert.Equal(SnmpType.Unknown, messages[0].TypeCode());
           
             registry.Add(new OctetString("lextm"), DefaultPrivacyProvider.DefaultPair);
             messages = MessageFactory.ParseMessages(bytes, registry);
-            Assert.AreEqual(1, messages.Count);
+            Assert.Equal(1, messages.Count);
             ISnmpMessage message = messages[0];
-            Assert.AreEqual("80001F8880E9630000D61FF449", message.Parameters.EngineId.ToHexString());
-            Assert.AreEqual(5, message.Parameters.EngineBoots.ToInt32());
-            Assert.AreEqual(3868, message.Parameters.EngineTime.ToInt32());
-            Assert.AreEqual("lextm", message.Parameters.UserName.ToString());
-            Assert.AreEqual("", message.Parameters.AuthenticationParameters.ToHexString());
-            Assert.AreEqual("", message.Parameters.PrivacyParameters.ToHexString());
-            Assert.AreEqual("80001F8880E9630000D61FF449", message.Scope.ContextEngineId.ToHexString());
-            Assert.AreEqual("", message.Scope.ContextName.ToHexString());
+            Assert.Equal("80001F8880E9630000D61FF449", message.Parameters.EngineId.ToHexString());
+            Assert.Equal(5, message.Parameters.EngineBoots.ToInt32());
+            Assert.Equal(3868, message.Parameters.EngineTime.ToInt32());
+            Assert.Equal("lextm", message.Parameters.UserName.ToString());
+            Assert.Equal("", message.Parameters.AuthenticationParameters.ToHexString());
+            Assert.Equal("", message.Parameters.PrivacyParameters.ToHexString());
+            Assert.Equal("80001F8880E9630000D61FF449", message.Scope.ContextEngineId.ToHexString());
+            Assert.Equal("", message.Scope.ContextName.ToHexString());
         }
 
-        [Test]
+        [Fact]
         public void TestDiscoveryResponse()
         {
             const string bytes = "30 66 02 01  03 30 0F 02  02 6A 09 02  03 00 FF E3" +
@@ -314,67 +312,67 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
                                  "01 00 02 01  00 30 11 30  0F 06 0A 2B  06 01 06 03" +
                                  "0F 01 01 04  00 41 01 03";
             IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes, new UserRegistry());
-            Assert.AreEqual(1, messages.Count);
-            Assert.AreEqual(5, messages[0].Parameters.EngineBoots.ToInt32());
-            Assert.AreEqual("80001F8880E9630000D61FF449", messages[0].Parameters.EngineId.ToHexString());
-            Assert.AreEqual(3867, messages[0].Parameters.EngineTime.ToInt32());
-            Assert.AreEqual(ErrorCode.NoError, messages[0].Pdu().ErrorStatus.ToErrorCode());
-            Assert.AreEqual(1, messages[0].Pdu().Variables.Count);
+            Assert.Equal(1, messages.Count);
+            Assert.Equal(5, messages[0].Parameters.EngineBoots.ToInt32());
+            Assert.Equal("80001F8880E9630000D61FF449", messages[0].Parameters.EngineId.ToHexString());
+            Assert.Equal(3867, messages[0].Parameters.EngineTime.ToInt32());
+            Assert.Equal(ErrorCode.NoError, messages[0].Pdu().ErrorStatus.ToErrorCode());
+            Assert.Equal(1, messages[0].Pdu().Variables.Count);
 
             Variable v = messages[0].Pdu().Variables[0];
-            Assert.AreEqual(".1.3.6.1.6.3.15.1.1.4.0", v.Id.ToString());
+            Assert.Equal(".1.3.6.1.6.3.15.1.1.4.0", v.Id.ToString());
             ISnmpData data = v.Data;
-            Assert.AreEqual(SnmpType.Counter32, data.TypeCode);
-            Assert.AreEqual(3, ((Counter32)data).ToUInt32());
+            Assert.Equal(SnmpType.Counter32, data.TypeCode);
+            Assert.Equal(3U, ((Counter32)data).ToUInt32());
 
-            Assert.AreEqual("80001F8880E9630000D61FF449", messages[0].Scope.ContextEngineId.ToHexString());
-            Assert.AreEqual("", messages[0].Scope.ContextName.ToHexString());
+            Assert.Equal("80001F8880E9630000D61FF449", messages[0].Scope.ContextEngineId.ToHexString());
+            Assert.Equal("", messages[0].Scope.ContextName.ToHexString());
         }
         
-        [Test]
+        [Fact]
         public void TestTrapV3()
         {
             byte[] bytes = Properties.Resources.trapv3;
             UserRegistry registry = new UserRegistry();
             registry.Add(new OctetString("lextm"), DefaultPrivacyProvider.DefaultPair);
             IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes, registry);
-            Assert.AreEqual(1, messages.Count);
+            Assert.Equal(1, messages.Count);
             ISnmpMessage message = messages[0];
-            Assert.AreEqual("80001F8880E9630000D61FF449", message.Parameters.EngineId.ToHexString());
-            Assert.AreEqual(0, message.Parameters.EngineBoots.ToInt32());
-            Assert.AreEqual(0, message.Parameters.EngineTime.ToInt32());
-            Assert.AreEqual("lextm", message.Parameters.UserName.ToString());
-            Assert.AreEqual("", message.Parameters.AuthenticationParameters.ToHexString());
-            Assert.AreEqual("", message.Parameters.PrivacyParameters.ToHexString());
-            Assert.AreEqual("", message.Scope.ContextEngineId.ToHexString()); // SNMP#NET returns string.Empty here.
-            Assert.AreEqual("", message.Scope.ContextName.ToHexString());
-            Assert.AreEqual(528732060, message.MessageId());
-            Assert.AreEqual(1905687779, message.RequestId());
-            Assert.AreEqual(".1.3.6", ((TrapV2Message)message).Enterprise.ToString());
+            Assert.Equal("80001F8880E9630000D61FF449", message.Parameters.EngineId.ToHexString());
+            Assert.Equal(0, message.Parameters.EngineBoots.ToInt32());
+            Assert.Equal(0, message.Parameters.EngineTime.ToInt32());
+            Assert.Equal("lextm", message.Parameters.UserName.ToString());
+            Assert.Equal("", message.Parameters.AuthenticationParameters.ToHexString());
+            Assert.Equal("", message.Parameters.PrivacyParameters.ToHexString());
+            Assert.Equal("", message.Scope.ContextEngineId.ToHexString()); // SNMP#NET returns string.Empty here.
+            Assert.Equal("", message.Scope.ContextName.ToHexString());
+            Assert.Equal(528732060, message.MessageId());
+            Assert.Equal(1905687779, message.RequestId());
+            Assert.Equal(".1.3.6", ((TrapV2Message)message).Enterprise.ToString());
         }
 
-        [Test]
+        [Fact]
         public void TestTrapV3Auth()
         {
             byte[] bytes = Properties.Resources.trapv3auth;
             UserRegistry registry = new UserRegistry();
             registry.Add(new OctetString("lextm"), new DefaultPrivacyProvider(new MD5AuthenticationProvider(new OctetString("authentication"))));
             IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes, registry);
-            Assert.AreEqual(1, messages.Count);
+            Assert.Equal(1, messages.Count);
             ISnmpMessage message = messages[0];
-            Assert.AreEqual("80001F8880E9630000D61FF449", message.Parameters.EngineId.ToHexString());
-            Assert.AreEqual(0, message.Parameters.EngineBoots.ToInt32());
-            Assert.AreEqual(0, message.Parameters.EngineTime.ToInt32());
-            Assert.AreEqual("lextm", message.Parameters.UserName.ToString());
-            Assert.AreEqual("84433969457707152C289A3E", message.Parameters.AuthenticationParameters.ToHexString());
-            Assert.AreEqual("", message.Parameters.PrivacyParameters.ToHexString());
-            Assert.AreEqual("", message.Scope.ContextEngineId.ToHexString()); // SNMP#NET returns string.Empty here.
-            Assert.AreEqual("", message.Scope.ContextName.ToHexString());
-            Assert.AreEqual(318463383, message.MessageId());
-            Assert.AreEqual(1276263065, message.RequestId());
+            Assert.Equal("80001F8880E9630000D61FF449", message.Parameters.EngineId.ToHexString());
+            Assert.Equal(0, message.Parameters.EngineBoots.ToInt32());
+            Assert.Equal(0, message.Parameters.EngineTime.ToInt32());
+            Assert.Equal("lextm", message.Parameters.UserName.ToString());
+            Assert.Equal("84433969457707152C289A3E", message.Parameters.AuthenticationParameters.ToHexString());
+            Assert.Equal("", message.Parameters.PrivacyParameters.ToHexString());
+            Assert.Equal("", message.Scope.ContextEngineId.ToHexString()); // SNMP#NET returns string.Empty here.
+            Assert.Equal("", message.Scope.ContextName.ToHexString());
+            Assert.Equal(318463383, message.MessageId());
+            Assert.Equal(1276263065, message.RequestId());
         }
 
-        [Test]
+        [Fact]
         public void TestTrapV3AuthBytes()
         {
             byte[] bytes = Properties.Resources.v3authNoPriv_BER_Issue;
@@ -382,25 +380,25 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             SHA1AuthenticationProvider authen = new SHA1AuthenticationProvider(new OctetString("testpass"));
             registry.Add(new OctetString("test"), new DefaultPrivacyProvider(authen));
             IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes, registry);
-            Assert.AreEqual(1, messages.Count);
+            Assert.Equal(1, messages.Count);
             ISnmpMessage message = messages[0];
-            Assert.AreEqual("80001299030005B706CF69", message.Parameters.EngineId.ToHexString());
-            Assert.AreEqual(41, message.Parameters.EngineBoots.ToInt32());
-            Assert.AreEqual(877, message.Parameters.EngineTime.ToInt32());
-            Assert.AreEqual("test", message.Parameters.UserName.ToString());
-            Assert.AreEqual("C107F9DAA3FC552960E38936", message.Parameters.AuthenticationParameters.ToHexString());
-            Assert.AreEqual("", message.Parameters.PrivacyParameters.ToHexString());
-            Assert.AreEqual("80001299030005B706CF69", message.Scope.ContextEngineId.ToHexString()); // SNMP#NET returns string.Empty here.
-            Assert.AreEqual("", message.Scope.ContextName.ToHexString());
-            Assert.AreEqual(681323585, message.MessageId());
-            Assert.AreEqual(681323584, message.RequestId());
+            Assert.Equal("80001299030005B706CF69", message.Parameters.EngineId.ToHexString());
+            Assert.Equal(41, message.Parameters.EngineBoots.ToInt32());
+            Assert.Equal(877, message.Parameters.EngineTime.ToInt32());
+            Assert.Equal("test", message.Parameters.UserName.ToString());
+            Assert.Equal("C107F9DAA3FC552960E38936", message.Parameters.AuthenticationParameters.ToHexString());
+            Assert.Equal("", message.Parameters.PrivacyParameters.ToHexString());
+            Assert.Equal("80001299030005B706CF69", message.Scope.ContextEngineId.ToHexString()); // SNMP#NET returns string.Empty here.
+            Assert.Equal("", message.Scope.ContextName.ToHexString());
+            Assert.Equal(681323585, message.MessageId());
+            Assert.Equal(681323584, message.RequestId());
 
             Console.WriteLine(new OctetString(bytes).ToHexString());
             Console.WriteLine(new OctetString(message.ToBytes()).ToHexString());
-            Assert.AreEqual(bytes, message.ToBytes());
+            Assert.Equal(bytes, message.ToBytes());
         }
 
-        [Test]
+        [Fact]
         public void TestTrapV3AuthPriv()
         {
             // The message body generated by snmp#net is problematic.
@@ -408,29 +406,29 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             UserRegistry registry = new UserRegistry();
             registry.Add(new OctetString("lextm"), new DESPrivacyProvider(new OctetString("privacyphrase"), new MD5AuthenticationProvider(new OctetString("authentication"))));
             IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes, registry);
-            Assert.AreEqual(1, messages.Count);
+            Assert.Equal(1, messages.Count);
             ISnmpMessage message = messages[0];
-            Assert.AreEqual("80001F8880E9630000D61FF449", message.Parameters.EngineId.ToHexString());
-            Assert.AreEqual(0, message.Parameters.EngineBoots.ToInt32());
-            Assert.AreEqual(0, message.Parameters.EngineTime.ToInt32());
-            Assert.AreEqual("lextm", message.Parameters.UserName.ToString());
-            Assert.AreEqual("89D351891A55829243617F2C", message.Parameters.AuthenticationParameters.ToHexString());
-            Assert.AreEqual("0000000069D39B2A", message.Parameters.PrivacyParameters.ToHexString());
-            Assert.AreEqual("", message.Scope.ContextEngineId.ToHexString()); // SNMP#NET returns string.Empty here.
-            Assert.AreEqual("", message.Scope.ContextName.ToHexString());
-            Assert.AreEqual(0, message.Scope.Pdu.Variables.Count);
-            Assert.AreEqual(1004947569, message.MessageId());
-            Assert.AreEqual(234419641, message.RequestId());
+            Assert.Equal("80001F8880E9630000D61FF449", message.Parameters.EngineId.ToHexString());
+            Assert.Equal(0, message.Parameters.EngineBoots.ToInt32());
+            Assert.Equal(0, message.Parameters.EngineTime.ToInt32());
+            Assert.Equal("lextm", message.Parameters.UserName.ToString());
+            Assert.Equal("89D351891A55829243617F2C", message.Parameters.AuthenticationParameters.ToHexString());
+            Assert.Equal("0000000069D39B2A", message.Parameters.PrivacyParameters.ToHexString());
+            Assert.Equal("", message.Scope.ContextEngineId.ToHexString()); // SNMP#NET returns string.Empty here.
+            Assert.Equal("", message.Scope.ContextName.ToHexString());
+            Assert.Equal(0, message.Scope.Pdu.Variables.Count);
+            Assert.Equal(1004947569, message.MessageId());
+            Assert.Equal(234419641, message.RequestId());
         }
 
-        [Test]
+        [Fact]
         public void TestBadResponseFromPrinter()
         {
             // #7241
             var data = "30 2B 02 01 00 04 06 70 75 62 6C 69 63 A2 1E 02 04 32 FA 7A 02 02 01 00 02 01 00 30 10 30 0E 06 0A 2B 06 01 02 01 02 02 01 16 01 06 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00";
             var bytes = ByteTool.Convert(data);
             var exception = Assert.Throws<ArgumentException>(() => MessageFactory.ParseMessages(bytes, new UserRegistry()));
-			Assert.AreEqual(string.Format("length cannot be 0{0}Parameter name: length", Environment.NewLine), exception.Message);
+            Assert.Equal(string.Format("length cannot be 0{0}Parameter name: length", Environment.NewLine), exception.Message);
         }
     }
 }

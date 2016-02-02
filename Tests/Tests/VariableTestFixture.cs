@@ -9,16 +9,14 @@
 
 using System;
 using System.Collections.Generic;
-using NUnit.Framework;
+using Xunit;
 
 #pragma warning disable 1591
 namespace Lextm.SharpSnmpLib.Tests
 {
-    [TestFixture]
-    [Category("Default")]
     public class VariableTestFixture
     {
-        [Test]
+        [Fact]
         public void TestException()
         {
             Assert.Throws<ArgumentNullException>(() => new Variable((ObjectIdentifier)null, null));
@@ -36,14 +34,14 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.Throws<ArgumentException>(() => Variable.Transform(seq3));
         }
         
-        [Test]
+        [Fact]
         public void TestToString()
         {
             var v = new Variable(new uint[] {1, 3, 6});
-            Assert.AreEqual("Variable: Id: .1.3.6; Data: Null", v.ToString());
+            Assert.Equal("Variable: Id: .1.3.6; Data: Null", v.ToString());
         }
         
-        [Test]
+        [Fact]
         public void TestToBytes()
         {
             Variable v = new Variable(
@@ -52,12 +50,12 @@ namespace Lextm.SharpSnmpLib.Tests
             List<Variable> vList = new List<Variable> {v};
 
             Sequence varbindSection = Variable.Transform(vList);
-            Assert.AreEqual(1, varbindSection.Length);
+            Assert.Equal(1, varbindSection.Length);
             Sequence varbind = (Sequence)varbindSection[0];
-            Assert.AreEqual(2, varbind.Length);
+            Assert.Equal(2, varbind.Length);
         }
 
-        [Test]
+        [Fact]
         // [ExpectedException(typeof(IndexOutOfRangeException))]
         public void TestConstructor()
         {

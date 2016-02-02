@@ -1,13 +1,11 @@
 ﻿using System;
-using NUnit.Framework;
+using Xunit;
 
 namespace Lextm.SharpSnmpLib.Objects.Tests
 {
-    [TestFixture]
-    [Category("Default")]
     public class SysContactTestFixture
     {
-        [Test]
+        [Fact]
         public void Test()
         {
             var sys = new SysContact();

@@ -7,19 +7,17 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using Lextm.SharpSnmpLib.Pipeline;
-using NUnit.Framework;
+using Xunit;
 
 namespace Lextm.SharpSnmpLib.Objects.Tests
 {
-    [TestFixture]
-    [Category("Default")]
     public class SysORLastChangeTestFixture
     {
-        [Test]
+        [Fact]
         public void Test()
         {
             var sys = new SysORLastChange();
-            Assert.AreEqual(new TimeTicks(0), sys.Data);
+            Assert.Equal(new TimeTicks(0), sys.Data);
             Assert.Throws<AccessFailureException>(() => sys.Data = OctetString.Empty);
         }
     }

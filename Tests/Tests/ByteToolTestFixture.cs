@@ -10,15 +10,14 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using NUnit.Framework;
+using Xunit;
+
 #pragma warning disable 1591, 0618
 namespace Lextm.SharpSnmpLib.Tests
 {
-    [TestFixture]
-    [Category("Default")]
     public class ByteToolTestFixture
     {
-        [Test]
+        [Fact]
         public void TestException()
         {
             Assert.Throws<ArgumentNullException>(() => ByteTool.GetRawBytes(null, true));
@@ -40,14 +39,14 @@ namespace Lextm.SharpSnmpLib.Tests
                 () => ByteTool.PackMessage(new byte[0], VersionCode.V3, new Header(500), SecurityParameters.Create(new OctetString("test")), null));
         }
 
-        [Test]
+        [Fact]
         public void TestConvertDecimal()
         {
             byte[] b = ByteTool.ConvertDecimal(" 16 18 ");
-            Assert.AreEqual(new byte[] { 0x10, 0x12 }, b);
+            Assert.Equal(new byte[] { 0x10, 0x12 }, b);
         }
 
-        [Test]
+        [Fact]
         public void TestReadShortLength()
         {
             MemoryStream m = new MemoryStream();
@@ -55,21 +54,21 @@ namespace Lextm.SharpSnmpLib.Tests
             m.Flush();
             m.Position = 0;
             var result = m.ReadPayloadLength();
-            Assert.AreEqual(102, result.Item1);
-            Assert.AreEqual(new byte[] {0x66}, result.Item2);
+            Assert.Equal(102, result.Item1);
+            Assert.Equal(new byte[] {0x66}, result.Item2);
         }
         
-        [Test]
+        [Fact]
         public void TestWriteShortLength()
         {
             const int length = 102;
             const byte expect = 0x66;
             var array = length.WritePayloadLength();
-            Assert.AreEqual(1, array.Length);
-            Assert.AreEqual(expect, array[0]);
+            Assert.Equal(1, array.Length);
+            Assert.Equal(expect, array[0]);
         }
         
-        [Test]
+        [Fact]
         public void TestReadLongLength()
         {
             byte[] expected = new byte[] {0x83, 0x73, 0x59, 0xB5};
@@ -77,17 +76,17 @@ namespace Lextm.SharpSnmpLib.Tests
             m.Write(expected, 0, 4);
             m.Flush();
             m.Position = 0;
-            Assert.AreEqual(7559605, m.ReadPayloadLength().Item1);
+            Assert.Equal(7559605, m.ReadPayloadLength().Item1);
         }
         
-        [Test]
+        [Fact]
         public void TestWriteLongLength()
         {
             const int length = 7559605;
             byte[] expected = new byte[] {0x83, 0x73, 0x59, 0xB5};
             MemoryStream m = new MemoryStream();
             var array = length.WritePayloadLength();
-            Assert.AreEqual(expected, array);
+            Assert.Equal(expected, array);
         }
     }
 }

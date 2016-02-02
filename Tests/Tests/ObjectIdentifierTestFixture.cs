@@ -1,16 +1,13 @@
 ﻿using System;
 using System.IO;
-// using Lextm.SharpSnmpLib.Mib;
-using NUnit.Framework;
+using Xunit;
 
-#pragma warning disable 1591,0618
+#pragma warning disable 1591, 0618
 namespace Lextm.SharpSnmpLib.Tests
 {
-    [TestFixture]
-    [Category("Default")]
     public class ObjectIdentifierTestFixture
     {
-        [Test]
+        [Fact]
         public void TestException()
         {
             Assert.Throws<ArgumentNullException>(() => new ObjectIdentifier((uint[])null));
@@ -30,96 +27,87 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.Throws<ArgumentNullException>(() => oid.AppendBytesTo(null));
         }
 
-        [Test]
+        [Fact]
         public void TestConstructor()
         {
             ObjectIdentifier oid = new ObjectIdentifier(new byte[] { 0x2B, 0x06, 0x99, 0x37 });
-            Assert.AreEqual(new uint[] { 1, 3, 6, 3255 }, oid.ToNumerical());
+            Assert.Equal(new uint[] { 1, 3, 6, 3255 }, oid.ToNumerical());
             var o = ObjectIdentifier.Create(new uint[] {1, 3, 6}, 3255);
-            Assert.AreEqual(oid, o);
+            Assert.Equal(oid, o);
         }
         
-        [Test]
+        [Fact]
         public void TestConstructor2()
         {
             ObjectIdentifier oid = new ObjectIdentifier(new byte[] { 0x2B, 0x06, 0x01, 0x04, 0x01, 0x90, 0x72, 0x87, 0x68, 0x02 });
-            Assert.AreEqual(new uint[] { 1, 3, 6, 1, 4, 1, 2162, 1000, 2 }, oid.ToNumerical());
+            Assert.Equal(new uint[] { 1, 3, 6, 1, 4, 1, 2162, 1000, 2 }, oid.ToNumerical());
         }
 
-        [Test]
+        [Fact]
         public void TestToBytes()
         {
             uint[] expected = new uint[] {1,3,6,1,4,1,2162,1000,2};
             ObjectIdentifier oid = new ObjectIdentifier(expected);
-            Assert.AreEqual(new byte[] { 0x06, 0x0A, 0x2B, 0x06, 0x01, 0x04, 0x01, 0x90, 0x72, 0x87, 0x68, 0x02 }, oid.ToBytes());
+            Assert.Equal(new byte[] { 0x06, 0x0A, 0x2B, 0x06, 0x01, 0x04, 0x01, 0x90, 0x72, 0x87, 0x68, 0x02 }, oid.ToBytes());
         }
         
-        [Test]
+        [Fact]
         public void TestToBytes2()
         {
             uint[] expected = new uint[] {0, 0};
             ObjectIdentifier oid = new ObjectIdentifier(expected);
-            Assert.AreEqual(new byte[] {0x06, 0x01, 0x00}, oid.ToBytes());
+            Assert.Equal(new byte[] {0x06, 0x01, 0x00}, oid.ToBytes());
         }
         
-        [Test]
+        [Fact]
         public void TestToBytes3()
         {
             uint[] expected = new uint[] {1, 3, 6, 3255};
             ObjectIdentifier oid = new ObjectIdentifier(expected);
-            Assert.AreEqual(new byte[] {0x06, 0x04, 0x2B, 0x06, 0x99, 0x37}, oid.ToBytes());
+            Assert.Equal(new byte[] {0x06, 0x04, 0x2B, 0x06, 0x99, 0x37}, oid.ToBytes());
         }
 
-        [Test]
+        [Fact]
         public void TestGreaterThan()
         {
-            Assert.Greater(new ObjectIdentifier("1.1"), new ObjectIdentifier("0.0"));
-            Assert.Greater(new ObjectIdentifier("0.0.0"), new ObjectIdentifier("0.0"));
-            Assert.IsTrue(new ObjectIdentifier("0.0") < new ObjectIdentifier("1.1"));
-            Assert.IsTrue(new ObjectIdentifier("0.0").Compare(new ObjectIdentifier("1.1")) < 0);
+            Assert.True(new ObjectIdentifier("1.1") > new ObjectIdentifier("0.0"));
+            Assert.True(new ObjectIdentifier("0.0.0") > new ObjectIdentifier("0.0"));
+            Assert.True(new ObjectIdentifier("0.0") < new ObjectIdentifier("1.1"));
+            Assert.True(new ObjectIdentifier("0.0").Compare(new ObjectIdentifier("1.1")) < 0);
         }
 
-        [Test]
+        [Fact]
         public void TestConversion()
         {
             var o = new ObjectIdentifier(".1.3.6.1.2.1.1.1.0");
-            Assert.AreEqual(".1.3.6.1.2.1.1.1.0", o.ToString());
+            Assert.Equal(".1.3.6.1.2.1.1.1.0", o.ToString());
         }
         
-        [Test]
+        [Fact]
         public void TestUuid()
         {
             var exception = Assert.Throws<ArgumentException>(() => new ObjectIdentifier("2.25.329800735698586629295641978511506172918"));
-			Assert.AreEqual(string.Format("Parameter 329800735698586629295641978511506172918 is out of 32 bit unsigned integer range{0}Parameter name: dotted", Environment.NewLine), exception.Message);
+            Assert.Equal(string.Format("Parameter 329800735698586629295641978511506172918 is out of 32 bit unsigned integer range{0}Parameter name: dotted", Environment.NewLine), exception.Message);
         }
 
-        [Test]
+        [Fact]
         public void TestToString()
         {
             var transmission = new ObjectIdentifier(new uint[] {1, 3, 6, 1, 2, 1, 10});
-            //Assert.AreEqual(".iso.org.dod.internet.mgmt.mib-2.transmission",
-            //                transmission.ToString(DefaultObjectRegistry.Instance));
-            Assert.AreEqual(".1.3.6.1.2.1.10", transmission.ToString());
+            Assert.Equal(".1.3.6.1.2.1.10", transmission.ToString());
         }
 
-        //[Test]
-        //public void TestToStringLong()
-        //{
-        //    Assert.AreEqual(".iso.org.dod.internet.mgmt.mib-2.transmission.100",
-        //                    new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 10, 100 }).ToString(DefaultObjectRegistry.Instance));
-        //}
-        
-        [Test]
+        [Fact]
         public void TestEqual()
         {
             var left = new ObjectIdentifier("1.3.6.3");
             var right = new ObjectIdentifier("1.3.6.3");
-            Assert.AreEqual(left, right);
-            Assert.IsTrue(left.Equals(right));
-            Assert.IsTrue(left != null);
+            Assert.Equal(left, right);
+            Assert.True(left.Equals(right));
+            Assert.True(left != null);
 // ReSharper disable RedundantCast
 // ReSharper disable EqualExpressionComparison
-            Assert.IsTrue((ObjectIdentifier)null == (ObjectIdentifier)null);
+            Assert.True((ObjectIdentifier)null == (ObjectIdentifier)null);
 // ReSharper restore EqualExpressionComparison
 // ReSharper restore RedundantCast
         }

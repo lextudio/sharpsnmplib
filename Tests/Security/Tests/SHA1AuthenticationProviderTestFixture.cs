@@ -7,19 +7,17 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
-using NUnit.Framework;
+using Xunit;
 
 namespace Lextm.SharpSnmpLib.Security.Tests
 {
-    [TestFixture]
-    [Category("Default")]
     public class SHA1AuthenticationProviderTestFixture
     {
-        [Test]
+        [Fact]
         public void Test()
         {
             var provider = new SHA1AuthenticationProvider(new OctetString("longlongago"));
-            Assert.AreEqual("SHA-1 authentication provider", provider.ToString());
+            Assert.Equal("SHA-1 authentication provider", provider.ToString());
             Assert.Throws<ArgumentNullException>(() => new SHA1AuthenticationProvider(null));
             Assert.Throws<ArgumentNullException>(() => provider.PasswordToKey(null, null));
             Assert.Throws<ArgumentNullException>(() => provider.PasswordToKey(new byte[0], null));
