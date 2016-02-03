@@ -79,6 +79,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Messaging\Tests\NumberGeneratorTestFixture.cs" />
     <Compile Include="Messaging\Tests\ListenerBindingTestFixture.cs" />
     <Compile Include="Messaging\Tests\MessageFactoryTestFixture.cs" />
     <Compile Include="Pipeline\Tests\EngineGroupTestFixture.cs" />
