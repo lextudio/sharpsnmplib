@@ -66,5 +66,10 @@ namespace Lextm.SharpSnmpLib.Messaging
         private int _salt;
         private readonly int _min;
         private readonly int _max;
+
+        internal void SetSalt(int value)
+        {
+            _salt = value;
+        }
     }
 }

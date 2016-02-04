@@ -39,21 +39,24 @@ namespace Lextm.SharpSnmpLib.Security
         /// Get next salt <see cref="Int64"/> value. Used internally to encrypt data.
         /// </summary>
         /// <returns>Random <see cref="Int64"/> value</returns>
-        private long NextSalt()
+        internal long NextSalt
         {
-            lock (_root)
+            get
             {
-                if (_salt == long.MaxValue)
+                lock (_root)
                 {
-                    _salt = 1;
-                }
-                else
-                {
-                    _salt++;
+                    if (_salt == long.MaxValue)
+                    {
+                        _salt = 1;
+                    }
+                    else
+                    {
+                        _salt++;
+                    }
+
+                    return _salt;
                 }
             }
-
-            return _salt;
         }
 
         /// <summary>
@@ -62,7 +65,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// <returns></returns>
         public byte[] GetSaltBytes()
         {
-            return BitConverter.GetBytes(NextSalt()).Reverse().ToArray();
+            return BitConverter.GetBytes(NextSalt).Reverse().ToArray();
         }
 
         /// <summary>
