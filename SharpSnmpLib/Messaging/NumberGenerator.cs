@@ -40,7 +40,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         }
 
         /// <summary>
-        /// Returns next ID.
+        /// Returns next ID. This method is thread-safe within this instance of NumberGenerator.
         /// </summary>
         public int NextId
         {
@@ -56,9 +56,8 @@ namespace Lextm.SharpSnmpLib.Messaging
                     {
                         _salt++;
                     }
+                    return _salt;
                 }
-
-                return _salt;
             }
         }
 
