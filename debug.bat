@@ -10,7 +10,7 @@ for %%v in (2.0, 3.5, 4.0, 12.0, 14.0) do (
 
 rmdir /S /Q bin
 mkdir bin
-.nuget\nuget.exe restore
+.nuget\nuget.exe restore SharpSnmpLib.sln
 call "%MSBuildExe%" SharpSnmpLib.sln /t:clean /p:Configuration=Debug /p:OutputPath=..\bin\
 call "%MSBuildExe%" SharpSnmpLib.sln /t:build /p:Configuration=Debug /p:OutputPath=..\bin\
 @IF %ERRORLEVEL% NEQ 0 PAUSE
