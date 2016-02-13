@@ -497,10 +497,11 @@ namespace Lextm.SharpSnmpLib.Messaging
             udpSocket.SendTo(bytes, receiver);
 
             int count;
+
+            // IMPORTANT: follow http://blogs.msdn.com/b/pfxteam/archive/2011/12/15/10248293.aspx
+            var args = new SocketAsyncEventArgs();
             try
             {
-                // IMPORTANT: follow http://blogs.msdn.com/b/pfxteam/archive/2011/12/15/10248293.aspx
-                var args = new SocketAsyncEventArgs(); 
                 args.SetBuffer(reply, 0, bufSize);
                 var awaitable = new SocketAwaitable(args);
                 count = await SocketExtensions.ReceiveAsync(udpSocket, awaitable);
@@ -521,6 +522,10 @@ namespace Lextm.SharpSnmpLib.Messaging
                 }
 
                 throw;
+            }
+            finally
+            {
+                args.Dispose();
             }
 
             // Passing 'count' is not necessary because ParseMessages should ignore it, but it offer extra safety (and would avoid an issue if parsing >1 response).
