@@ -1,6 +1,6 @@
 ﻿// Object store class.
 // Copyright (C) 2009-2010 Lex Li
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this
 // software and associated documentation files (the "Software"), to deal in the Software
 // without restriction, including without limitation the rights to use, copy, modify, merge,
@@ -26,18 +26,17 @@ namespace Lextm.SharpSnmpLib.Pipeline
     /// SNMP object store, who holds all implemented SNMP objects in the agent.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
-    public sealed class ObjectStore
+    public sealed class ObjectStore : IObjectStore
     {
         private readonly IList<ISnmpObject> _list = new List<ISnmpObject>();
 
         /// <summary>
-        /// Gets the object.
+        /// Adds the specified <see cref="ISnmpObject"/>.
         /// </summary>
-        /// <param name="id">The object id.</param>
-        /// <returns></returns>
-        public ScalarObject GetObject(ObjectIdentifier id)
+        /// <param name="newObject">The object.</param>
+        public void Add(ISnmpObject newObject)
         {
-            return _list.Select(o => o.MatchGet(id)).FirstOrDefault(result => result != null);
+            _list.Add(newObject);
         }
 
         /// <summary>
@@ -51,12 +50,13 @@ namespace Lextm.SharpSnmpLib.Pipeline
         }
 
         /// <summary>
-        /// Adds the specified <see cref="ISnmpObject"/>.
+        /// Gets the object.
         /// </summary>
-        /// <param name="newObject">The object.</param>
-        public void Add(ISnmpObject newObject)
+        /// <param name="id">The object id.</param>
+        /// <returns></returns>
+        public ScalarObject GetObject(ObjectIdentifier id)
         {
-            _list.Add(newObject);
+            return _list.Select(o => o.MatchGet(id)).FirstOrDefault(result => result != null);
         }
     }
 }

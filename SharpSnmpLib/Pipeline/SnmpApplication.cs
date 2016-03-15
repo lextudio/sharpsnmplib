@@ -27,7 +27,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         private readonly ILogger _logger;
         private readonly IMembershipProvider _provider;
         private readonly MessageHandlerFactory _factory;
-        private readonly ObjectStore _store;
+        private readonly IObjectStore _store;
         private readonly SnmpApplicationFactory _owner;
         private IMessageHandler _handler;
 
@@ -39,7 +39,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <param name="store">The store.</param>
         /// <param name="provider">The provider.</param>
         /// <param name="factory">The factory.</param>
-        public SnmpApplication(SnmpApplicationFactory owner, ILogger logger, ObjectStore store, IMembershipProvider provider, MessageHandlerFactory factory)
+        public SnmpApplication(SnmpApplicationFactory owner, ILogger logger, IObjectStore store, IMembershipProvider provider, MessageHandlerFactory factory)
         {
             _owner = owner;
             _provider = provider;

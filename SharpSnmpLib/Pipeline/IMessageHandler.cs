@@ -1,6 +1,6 @@
 ﻿// Message handler interface.
 // Copyright (C) 2009-2010 Lex Li
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this
 // software and associated documentation files (the "Software"), to deal in the Software
 // without restriction, including without limitation the rights to use, copy, modify, merge,
@@ -22,9 +22,10 @@
  * User: lextm
  * Date: 11/29/2009
  * Time: 11:01 AM
- * 
+ *
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
+
 namespace Lextm.SharpSnmpLib.Pipeline
 {
     /// <summary>
@@ -38,6 +39,6 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <param name="context">The context.</param>
         /// <param name="store">The object store.</param>
         /// <returns></returns>
-        void Handle(ISnmpContext context, ObjectStore store);
+        void Handle(ISnmpContext context, IObjectStore store);
     }
 }
