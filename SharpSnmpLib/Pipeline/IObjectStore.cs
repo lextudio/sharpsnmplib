@@ -1,4 +1,4 @@
-﻿// Null message handler class.
+﻿// Object store class.
 // Copyright (C) 2009-2010 Lex Li
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this
@@ -17,32 +17,34 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Lextm.SharpSnmpLib.Pipeline
 {
     /// <summary>
-    /// A placeholder.
+    /// SNMP object store interface, who holds all implemented SNMP objects in the agent.
     /// </summary>
-    internal sealed class NullMessageHandler : IMessageHandler
+    public interface IObjectStore
     {
         /// <summary>
-        /// Handles the specified message.
+        /// Gets the object.
         /// </summary>
-        /// <param name="context">The context.</param>
-        /// <param name="store">The object store.</param>
+        /// <param name="id">The object id.</param>
         /// <returns></returns>
-        public void Handle(ISnmpContext context, IObjectStore store)
-        {
-            if (context == null)
-            {
-                throw new ArgumentNullException("context");
-            }
+        ScalarObject GetObject(ObjectIdentifier id);
 
-            if (store == null)
-            {
-                throw new ArgumentNullException("store");
-            }
-        }
+        /// <summary>
+        /// Gets the next object.
+        /// </summary>
+        /// <param name="id">The object id.</param>
+        /// <returns></returns>
+        ScalarObject GetNextObject(ObjectIdentifier id);
+
+        /// <summary>
+        /// Adds the specified <see cref="ISnmpObject"/>.
+        /// </summary>
+        /// <param name="newObject">The object.</param>
+        void Add(ISnmpObject newObject);
     }
 }

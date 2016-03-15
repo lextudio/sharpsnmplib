@@ -1,6 +1,6 @@
 ﻿// SNMP application factory class.
 // Copyright (C) 2009-2010 Lex Li
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this
 // software and associated documentation files (the "Software"), to deal in the Software
 // without restriction, including without limitation the rights to use, copy, modify, merge,
@@ -27,12 +27,12 @@ namespace Lextm.SharpSnmpLib.Pipeline
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
     public sealed class SnmpApplicationFactory
     {
-        private readonly ILogger _logger;
-        private readonly ObjectStore _store;
-        private readonly IMembershipProvider _membershipProvider;
         private readonly MessageHandlerFactory _factory;
-        private readonly object _root = new object();
+        private readonly ILogger _logger;
+        private readonly IMembershipProvider _membershipProvider;
         private readonly Queue<SnmpApplication> _queue = new Queue<SnmpApplication>();
+        private readonly object _root = new object();
+        private readonly IObjectStore _store;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SnmpApplicationFactory"/> class.
@@ -41,7 +41,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <param name="store">The store.</param>
         /// <param name="membershipProvider">The membership provider.</param>
         /// <param name="factory">The factory.</param>
-        public SnmpApplicationFactory(ILogger logger, ObjectStore store, IMembershipProvider membershipProvider, MessageHandlerFactory factory)
+        public SnmpApplicationFactory(ILogger logger, IObjectStore store, IMembershipProvider membershipProvider, MessageHandlerFactory factory)
         {
             _logger = logger;
             _membershipProvider = membershipProvider;
@@ -55,7 +55,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <param name="store">The store.</param>
         /// <param name="membershipProvider">The membership provider.</param>
         /// <param name="factory">The factory.</param>
-        public SnmpApplicationFactory(ObjectStore store, IMembershipProvider membershipProvider, MessageHandlerFactory factory)
+        public SnmpApplicationFactory(IObjectStore store, IMembershipProvider membershipProvider, MessageHandlerFactory factory)
             : this(null, store, membershipProvider, factory) // TODO: handle the null case in the future.
         {
         }
@@ -78,7 +78,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
 
             if (result == null)
             {
-                result = new SnmpApplication(this, _logger, _store, _membershipProvider, _factory);              
+                result = new SnmpApplication(this, _logger, _store, _membershipProvider, _factory);
             }
 
             result.Init(context);
