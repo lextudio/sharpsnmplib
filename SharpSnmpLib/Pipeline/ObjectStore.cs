@@ -26,7 +26,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
     /// SNMP object store, who holds all implemented SNMP objects in the agent.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
-    public sealed class ObjectStore
+    public class ObjectStore
     {
         private readonly IList<ISnmpObject> _list = new List<ISnmpObject>();
 
@@ -35,7 +35,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// </summary>
         /// <param name="id">The object id.</param>
         /// <returns></returns>
-        public ScalarObject GetObject(ObjectIdentifier id)
+        virtual public ScalarObject GetObject(ObjectIdentifier id)
         {
             return _list.Select(o => o.MatchGet(id)).FirstOrDefault(result => result != null);
         }
@@ -45,7 +45,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// </summary>
         /// <param name="id">The object id.</param>
         /// <returns></returns>
-        public ScalarObject GetNextObject(ObjectIdentifier id)
+        virtual public ScalarObject GetNextObject(ObjectIdentifier id)
         {
             return _list.Select(o => o.MatchGetNext(id)).FirstOrDefault(result => result != null);
         }
