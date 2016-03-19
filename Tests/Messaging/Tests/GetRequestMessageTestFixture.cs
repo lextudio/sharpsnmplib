@@ -318,11 +318,12 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             engine.Stop();
         }
 
-        [Fact]
-        public async void TestResponsesFromMultipleSources()
+        [Theory]
+        [InlineData(256)]
+        public async void TestResponsesFromMultipleSources(int count)
         {
             var start = 16102;
-            var end = start + 512;
+            var end = start + count;
             var engine = CreateEngine();
             engine.Listener.ClearBindings();
             for (var index = start; index < end; index++)
@@ -340,8 +341,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             var time = DateTime.Now;
             engine.Start();
             Console.WriteLine(DateTime.Now - time);
-            
-            const int timeout = 100000;
+
             for (int index = start; index < end; index++)
             //Parallel.For(start, end, async index =>
             {
@@ -365,11 +365,12 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             engine.Stop();
         }
 
-        [Fact]
-        public async void TestResponsesFromSingleSource()
+        [Theory]
+        [InlineData(32)]
+        public async void TestResponsesFromSingleSource(int count)
         {
             var start = 0;
-            var end = start + 32;
+            var end = start + count;
             var engine = CreateEngine();
             engine.Listener.ClearBindings();
             engine.Listener.AddBinding(new IPEndPoint(IPAddress.Loopback, 17000));
@@ -385,7 +386,6 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             engine.Start();
             Console.WriteLine(DateTime.Now - time);
 
-            const int timeout = 100000;
             Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             for (int index = start; index < end; index++)
             //Parallel.For(start, end, async index =>
@@ -409,11 +409,12 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             engine.Stop();
         }
 
-        [Fact]
-        public void TestResponsesFromSingleSourceWithMultipleThreads()
+        [Theory]
+        [InlineData(32)]
+        public void TestResponsesFromSingleSourceWithMultipleThreads(int count)
         {
             var start = 0;
-            var end = start + 32;
+            var end = start + count;
             var engine = CreateEngine();
             engine.Listener.ClearBindings();
             engine.Listener.AddBinding(new IPEndPoint(IPAddress.Loopback, 17000));
@@ -458,11 +459,12 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             engine.Stop();
         }
 
-        [Fact]
-        public void TestResponsesFromSingleSourceWithMultipleThreadsFromManager()
+        [Theory]
+        [InlineData(256)]
+        public void TestResponsesFromSingleSourceWithMultipleThreadsFromManager(int count)
         {
             var start = 0;
-            var end = start + 256;
+            var end = start + count;
             var engine = CreateEngine();
             engine.Listener.ClearBindings();
             engine.Listener.AddBinding(new IPEndPoint(IPAddress.Loopback, 17000));
