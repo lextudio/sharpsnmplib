@@ -194,28 +194,40 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             var scopeCode = scope.Pdu.TypeCode;
-            switch (scopeCode)
+            try
             {
-                case SnmpType.TrapV1Pdu:
-                    return new TrapV1Message(body);
-                case SnmpType.TrapV2Pdu:
-                    return new TrapV2Message(version, header, parameters, scope, privacy, body.GetLengthBytes());
-                case SnmpType.GetRequestPdu:
-                    return new GetRequestMessage(version, header, parameters, scope, privacy, body.GetLengthBytes());
-                case SnmpType.ResponsePdu:
-                    return new ResponseMessage(version, header, parameters, scope, privacy, false, body.GetLengthBytes());
-                case SnmpType.SetRequestPdu:
-                    return new SetRequestMessage(version, header, parameters, scope, privacy, body.GetLengthBytes());
-                case SnmpType.GetNextRequestPdu:
-                    return new GetNextRequestMessage(version, header, parameters, scope, privacy, body.GetLengthBytes());
-                case SnmpType.GetBulkRequestPdu:
-                    return new GetBulkRequestMessage(version, header, parameters, scope, privacy, body.GetLengthBytes());
-                case SnmpType.ReportPdu:
-                    return new ReportMessage(version, header, parameters, scope, privacy, body.GetLengthBytes());
-                case SnmpType.InformRequestPdu:
-                    return new InformRequestMessage(version, header, parameters, scope, privacy, body.GetLengthBytes());
-                default:
-                    throw new SnmpException(string.Format(CultureInfo.InvariantCulture, "unsupported pdu: {0}", scopeCode));
+                switch (scopeCode)
+                {
+                    case SnmpType.TrapV1Pdu:
+                        return new TrapV1Message(body);
+                    case SnmpType.TrapV2Pdu:
+                        return new TrapV2Message(version, header, parameters, scope, privacy, body.GetLengthBytes());
+                    case SnmpType.GetRequestPdu:
+                        return new GetRequestMessage(version, header, parameters, scope, privacy, body.GetLengthBytes());
+                    case SnmpType.ResponsePdu:
+                        return new ResponseMessage(version, header, parameters, scope, privacy, false, body.GetLengthBytes());
+                    case SnmpType.SetRequestPdu:
+                        return new SetRequestMessage(version, header, parameters, scope, privacy, body.GetLengthBytes());
+                    case SnmpType.GetNextRequestPdu:
+                        return new GetNextRequestMessage(version, header, parameters, scope, privacy, body.GetLengthBytes());
+                    case SnmpType.GetBulkRequestPdu:
+                        return new GetBulkRequestMessage(version, header, parameters, scope, privacy, body.GetLengthBytes());
+                    case SnmpType.ReportPdu:
+                        return new ReportMessage(version, header, parameters, scope, privacy, body.GetLengthBytes());
+                    case SnmpType.InformRequestPdu:
+                        return new InformRequestMessage(version, header, parameters, scope, privacy, body.GetLengthBytes());
+                    default:
+                        throw new SnmpException(string.Format(CultureInfo.InvariantCulture, "unsupported pdu: {0}", scopeCode));
+                }
+            }
+            catch (Exception ex)
+            {
+                if (ex is SnmpException)
+                {
+                    throw;
+                }
+
+                throw new SnmpException("message construction exception", ex);
             }
         }
     }
