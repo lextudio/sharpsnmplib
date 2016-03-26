@@ -82,9 +82,9 @@ namespace Lextm.SharpSnmpLib.Pipeline
             get
             {
                 var now = DateTime.UtcNow;
-                var ticks = (now - _start).Ticks / 10000;
-                var engineTime = (int)(ticks % int.MaxValue);
-                var engineReboots = (int)(ticks / int.MaxValue);
+                var seconds = (now - _start).Ticks / 10000000;
+                var engineTime = (int)(seconds % int.MaxValue);
+                var engineReboots = (int)(seconds / int.MaxValue);
                 return new[] { engineReboots, engineTime };
             }
         }
@@ -112,7 +112,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
             }
 
             var diff = currentTimeData[1] > pastTime ? currentTimeData[1] - pastTime : currentTimeData[1] - pastTime - int.MinValue + int.MaxValue;
-            return diff >= 0 && diff <= 150000;
+            return diff >= 0 && diff <= 150;
         }
 
         /// <summary>
