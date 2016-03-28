@@ -66,61 +66,73 @@ namespace Lextm.SharpSnmpLib
             }
             
             var length = stream.ReadPayloadLength();
-            switch ((SnmpType)type)
+            try
             {
-                case SnmpType.Counter32:
-                    return new Counter32(length, stream);
-                case SnmpType.Counter64:
-                    return new Counter64(length, stream);
-                case SnmpType.Gauge32:
-                    return new Gauge32(length, stream); 
-                case SnmpType.ObjectIdentifier:
-                    return new ObjectIdentifier(length, stream);
-                case SnmpType.Null:
-                    return new Null(length, stream);
-                case SnmpType.NoSuchInstance:
-                    return new NoSuchInstance(length, stream);
-                case SnmpType.NoSuchObject:
-                    return new NoSuchObject(length, stream);
-                case SnmpType.EndOfMibView:
-                    return new EndOfMibView(length, stream);
-                case SnmpType.Integer32:
-                    return new Integer32(length, stream);
-                case SnmpType.OctetString:
-                    return new OctetString(length, stream);
-                case SnmpType.IPAddress:
-                    return new IP(length, stream);
-                case SnmpType.TimeTicks:
-                    return new TimeTicks(length, stream);
-                case SnmpType.Sequence:
-                    return new Sequence(length, stream);
-                case SnmpType.TrapV1Pdu:
-                    return new TrapV1Pdu(length, stream);
-                case SnmpType.TrapV2Pdu:
-                    return new TrapV2Pdu(length, stream);
-                case SnmpType.GetRequestPdu:
-                    return new GetRequestPdu(length, stream);
-                case SnmpType.ResponsePdu:
-                    return new ResponsePdu(length, stream);
-                case SnmpType.GetBulkRequestPdu:
-                    return new GetBulkRequestPdu(length, stream);
-                case SnmpType.GetNextRequestPdu:
-                    return new GetNextRequestPdu(length, stream);
-                case SnmpType.SetRequestPdu:
-                    return new SetRequestPdu(length, stream);
-                case SnmpType.InformRequestPdu:
-                    return new InformRequestPdu(length, stream);
-                case SnmpType.ReportPdu:
-                    return new ReportPdu(length, stream);
-                case SnmpType.Opaque:
-                    return new Opaque(length, stream);
-                case SnmpType.EndMarker:
-                    return null;
-                case SnmpType.Unsigned32:
-                    // IMPORTANT: return Gauge32 for Unsigned32 case as workaround of RFC 1442 time entities.
-                    return new Gauge32(length, stream);
-                default:
-                    throw new SnmpException(string.Format(CultureInfo.InvariantCulture, "unsupported data type: {0}", (SnmpType)type));
+                switch ((SnmpType)type)
+                {
+                    case SnmpType.Counter32:
+                        return new Counter32(length, stream);
+                    case SnmpType.Counter64:
+                        return new Counter64(length, stream);
+                    case SnmpType.Gauge32:
+                        return new Gauge32(length, stream);
+                    case SnmpType.ObjectIdentifier:
+                        return new ObjectIdentifier(length, stream);
+                    case SnmpType.Null:
+                        return new Null(length, stream);
+                    case SnmpType.NoSuchInstance:
+                        return new NoSuchInstance(length, stream);
+                    case SnmpType.NoSuchObject:
+                        return new NoSuchObject(length, stream);
+                    case SnmpType.EndOfMibView:
+                        return new EndOfMibView(length, stream);
+                    case SnmpType.Integer32:
+                        return new Integer32(length, stream);
+                    case SnmpType.OctetString:
+                        return new OctetString(length, stream);
+                    case SnmpType.IPAddress:
+                        return new IP(length, stream);
+                    case SnmpType.TimeTicks:
+                        return new TimeTicks(length, stream);
+                    case SnmpType.Sequence:
+                        return new Sequence(length, stream);
+                    case SnmpType.TrapV1Pdu:
+                        return new TrapV1Pdu(length, stream);
+                    case SnmpType.TrapV2Pdu:
+                        return new TrapV2Pdu(length, stream);
+                    case SnmpType.GetRequestPdu:
+                        return new GetRequestPdu(length, stream);
+                    case SnmpType.ResponsePdu:
+                        return new ResponsePdu(length, stream);
+                    case SnmpType.GetBulkRequestPdu:
+                        return new GetBulkRequestPdu(length, stream);
+                    case SnmpType.GetNextRequestPdu:
+                        return new GetNextRequestPdu(length, stream);
+                    case SnmpType.SetRequestPdu:
+                        return new SetRequestPdu(length, stream);
+                    case SnmpType.InformRequestPdu:
+                        return new InformRequestPdu(length, stream);
+                    case SnmpType.ReportPdu:
+                        return new ReportPdu(length, stream);
+                    case SnmpType.Opaque:
+                        return new Opaque(length, stream);
+                    case SnmpType.EndMarker:
+                        return null;
+                    case SnmpType.Unsigned32:
+                        // IMPORTANT: return Gauge32 for Unsigned32 case as workaround of RFC 1442 time entities.
+                        return new Gauge32(length, stream);
+                    default:
+                        throw new SnmpException(string.Format(CultureInfo.InvariantCulture, "unsupported data type: {0}", (SnmpType)type));
+                }
+            }
+            catch (Exception ex)
+            {
+                if (ex is SnmpException)
+                {
+                    throw;
+                }
+
+                throw new SnmpException("data construction exception", ex);
             }
         }
 
