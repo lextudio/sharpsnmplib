@@ -20,7 +20,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
 
         [Theory]
         [InlineData(1000)]
-        [InlineData(10000)]
+        //[InlineData(10000)]
         public void TestOverflow(int count)
         {
             var overallDupes = 0;

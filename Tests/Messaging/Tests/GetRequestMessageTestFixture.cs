@@ -24,11 +24,15 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
 {
     using JetBrains.dotMemoryUnit;
     using Xunit;
+
     /// <summary>
     /// Description of TestGetMessage.
     /// </summary>
     public class GetRequestMessageTestFixture
     {
+        static NumberGenerator port = new NumberGenerator(17000, 65000);
+
+
         [Fact]
         public void Test()
         {
@@ -100,7 +104,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
                         new List<Variable>(1) { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0")) })),
                 DefaultPrivacyProvider.DefaultPair,
                 null);
-            
+
             IPrivacyProvider privacy = new DefaultPrivacyProvider(new MD5AuthenticationProvider(new OctetString("testpass")));
             GetRequestMessage request = new GetRequestMessage(
                 VersionCode.V3,
@@ -111,7 +115,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
                 privacy,
                 Messenger.MaxMessageSize,
                 report);
-            
+
             Assert.Equal(Levels.Authentication | Levels.Reportable, request.Header.SecurityLevel);
             Assert.Equal(ByteTool.Convert(bytes), request.ToBytes());
         }
@@ -239,7 +243,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             Assert.Equal(Levels.Authentication | Levels.Reportable, request.Header.SecurityLevel);
             Assert.Equal(ByteTool.Convert(bytes), request.ToBytes());
         }
-  
+
         [Fact]
         public void TestDiscoveryV3()
         {
@@ -281,38 +285,40 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             GetRequestMessage message = new GetRequestMessage(0x4bed, VersionCode.V2, new OctetString("public"), new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) });
             Assert.Equal(expected, message.ToBytes());
         }
-        
+
         [Fact]
         public async Task TestResponseAsync()
         {
             var engine = CreateEngine();
             engine.Listener.ClearBindings();
-            engine.Listener.AddBinding(new IPEndPoint(IPAddress.Loopback, 16100));
+            var serverEndPoint = new IPEndPoint(IPAddress.Loopback, port.NextId);
+            engine.Listener.AddBinding(serverEndPoint);
             engine.Start();
 
             Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             GetRequestMessage message = new GetRequestMessage(0x4bed, VersionCode.V2, new OctetString("public"), new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) });
-            
+
             var users1 = new UserRegistry();
-            var response = await message.GetResponseAsync(new IPEndPoint(IPAddress.Loopback, 16100), users1, socket);
+            var response = await message.GetResponseAsync(serverEndPoint, users1, socket);
 
             engine.Stop();
             Assert.Equal(SnmpType.ResponsePdu, response.TypeCode());
         }
-        
+
         [Fact]
         public void TestResponse()
         {
             var engine = CreateEngine();
             engine.Listener.ClearBindings();
-            engine.Listener.AddBinding(new IPEndPoint(IPAddress.Loopback, 16101));
+            var serverEndPoint = new IPEndPoint(IPAddress.Loopback, port.NextId);
+            engine.Listener.AddBinding(serverEndPoint);
             engine.Start();
 
             Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             GetRequestMessage message = new GetRequestMessage(0x4bed, VersionCode.V2, new OctetString("public"), new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) });
-            
+
             const int time = 1500;
-            var response = message.GetResponse(time, new IPEndPoint(IPAddress.Loopback, 16101), socket);
+            var response = message.GetResponse(time, serverEndPoint, socket);
             Assert.Equal(0x4bed, response.RequestId());
 
             engine.Stop();
@@ -320,7 +326,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
 
         [Theory]
         [InlineData(256)]
-        public async void TestResponsesFromMultipleSources(int count)
+        public async Task TestResponsesFromMultipleSources(int count)
         {
             var start = 16102;
             var end = start + count;
@@ -347,7 +353,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             {
                 GetRequestMessage message = new GetRequestMessage(index, VersionCode.V2, new OctetString("public"), new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) });
                 Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-                
+
                 Stopwatch watch = new Stopwatch();
                 watch.Start();
                 Console.WriteLine("manager [{0}]{1}", Thread.CurrentThread.ManagedThreadId, DateTime.UtcNow);
@@ -367,13 +373,14 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
 
         [Theory]
         [InlineData(32)]
-        public async void TestResponsesFromSingleSource(int count)
+        public async Task TestResponsesFromSingleSource(int count)
         {
             var start = 0;
             var end = start + count;
             var engine = CreateEngine();
             engine.Listener.ClearBindings();
-            engine.Listener.AddBinding(new IPEndPoint(IPAddress.Loopback, 17000));
+            var serverEndPoint = new IPEndPoint(IPAddress.Loopback, port.NextId);
+            engine.Listener.AddBinding(serverEndPoint);
 
             //// IMPORTANT: need to set min thread count so as to boost performance.
             //int minWorker, minIOC;
@@ -398,7 +405,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
                 //var response = message.GetResponse(timeout, new IPEndPoint(IPAddress.Loopback, 17000), socket);
                 var response =
                     await
-                        message.GetResponseAsync(new IPEndPoint(IPAddress.Loopback, 17000), new UserRegistry(), socket);
+                        message.GetResponseAsync(serverEndPoint, new UserRegistry(), socket);
                 Console.WriteLine("manager [{0}]{1}", Thread.CurrentThread.ManagedThreadId, DateTime.UtcNow);
                 watch.Stop();
                 Console.WriteLine("manager {0}: {1}: port {2}", index, watch.Elapsed, ((IPEndPoint)socket.LocalEndPoint).Port);
@@ -417,7 +424,8 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             var end = start + count;
             var engine = CreateEngine();
             engine.Listener.ClearBindings();
-            engine.Listener.AddBinding(new IPEndPoint(IPAddress.Loopback, 17000));
+            var serverEndPoint = new IPEndPoint(IPAddress.Loopback, port.NextId);
+            engine.Listener.AddBinding(serverEndPoint);
 
             // IMPORTANT: need to set min thread count so as to boost performance.
             int minWorker, minIOC;
@@ -431,10 +439,10 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             Console.WriteLine(DateTime.Now - time);
 
             const int timeout = 10000;
-            
+
             // Uncomment below to reveal wrong sequence number issue.
             // Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            
+
             //for (int index = start; index < end; index++)
             Parallel.For(start, end, index =>
             {
@@ -445,7 +453,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
                 Stopwatch watch = new Stopwatch();
                 watch.Start();
                 Console.WriteLine("manager [{0}]{1}", Thread.CurrentThread.ManagedThreadId, DateTime.UtcNow);
-                var response = message.GetResponse(timeout, new IPEndPoint(IPAddress.Loopback, 17000), socket);
+                var response = message.GetResponse(timeout, serverEndPoint, socket);
                 //var response =
                 //    await
                 //        message.GetResponseAsync(new IPEndPoint(IPAddress.Loopback, 17000), new UserRegistry(), socket);
@@ -467,7 +475,8 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             var end = start + count;
             var engine = CreateEngine();
             engine.Listener.ClearBindings();
-            engine.Listener.AddBinding(new IPEndPoint(IPAddress.Loopback, 17000));
+            var serverEndPoint = new IPEndPoint(IPAddress.Loopback, port.NextId);
+            engine.Listener.AddBinding(serverEndPoint);
 
             var time = DateTime.Now;
             engine.Start();
@@ -481,8 +490,8 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
 
                 Stopwatch watch = new Stopwatch();
                 watch.Start();
-                
-                var result = Messenger.Get(VersionCode.V2, new IPEndPoint(IPAddress.Loopback, 17000), new OctetString("public"),
+
+                var result = Messenger.Get(VersionCode.V2, serverEndPoint, new OctetString("public"),
                     new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) }, timeout);
                 Console.WriteLine("manager [{0}]{1}", Thread.CurrentThread.ManagedThreadId, DateTime.UtcNow);
                 watch.Stop();
@@ -508,6 +517,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             store.Add(new SysORTable());
             store.Add(new IfNumber());
             store.Add(new IfTable());
+            store.Add(new TimeoutObject());
 
             var users = new UserRegistry();
             users.Add(new OctetString("neither"), DefaultPrivacyProvider.DefaultPair);
@@ -542,8 +552,8 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             var membership = new ComposedMembershipProvider(new IMembershipProvider[] { v1, v2, v3 });
             var handlerFactory = new MessageHandlerFactory(new[]
             {
-                getv1Mapping, 
-                getv23Mapping, 
+                getv1Mapping,
+                getv23Mapping,
                 setv1Mapping,
                 setv23Mapping,
                 getnextv1Mapping,
@@ -558,16 +568,23 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
         [Fact]
         public void TestTimeOut()
         {
+            var engine = CreateEngine();
+            engine.Listener.ClearBindings();
+            var serverEndPoint = new IPEndPoint(IPAddress.Loopback, port.NextId);
+            engine.Listener.AddBinding(serverEndPoint);
+
+            engine.Start();
+
             Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            GetRequestMessage message = new GetRequestMessage(0x4bed, VersionCode.V2, new OctetString("public"), new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) });
+            GetRequestMessage message = new GetRequestMessage(0x4bed, VersionCode.V2, new OctetString("public"), new List<Variable> { new Variable(new ObjectIdentifier("1.5.2")) });
 
             const int time = 1500;
-            var timer = new Stopwatch();            
+            var timer = new Stopwatch();
             timer.Start();
             //IMPORTANT: test against an agent that doesn't exist.
-            Assert.Throws<TimeoutException>(() => message.GetResponse(time, new IPEndPoint(IPAddress.Parse("8.8.8.8"), 161), socket));
-            timer.Stop();            
-            
+            Assert.Throws<TimeoutException>(() => message.GetResponse(time, serverEndPoint, socket));
+            timer.Stop();
+
             long elapsedMilliseconds = timer.ElapsedMilliseconds;
             Console.WriteLine(@"elapsed: " + elapsedMilliseconds);
             Console.WriteLine(@"timeout: " + time);
@@ -589,7 +606,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
 
             Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             GetRequestMessage message = new GetRequestMessage(0x4bed, VersionCode.V2, new OctetString("public"), new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) });
-            
+
             //IMPORTANT: test against an agent that doesn't exist.
             Assert.Throws<SocketException>(() => message.BeginGetResponse(new IPEndPoint(IPAddress.Loopback, 80), new UserRegistry(), socket, ar =>
             {
@@ -634,7 +651,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
         public void TestMemory2()
         {
             GC.Collect();
-            
+
             GetRequestMessage message = new GetRequestMessage(0x4bed, VersionCode.V2, new OctetString("public"), new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) });
             {
                 Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
@@ -688,6 +705,29 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
                 Assert.True(memory.GetDifference(memoryCheckPoint1)
                     .GetNewObjects().ObjectsCount <= 31);
             });
+        }
+
+        private class TimeoutObject : ScalarObject
+        {
+            public TimeoutObject()
+                : base(new ObjectIdentifier("1.5.2"))
+            {
+
+            }
+
+            public override ISnmpData Data
+            {
+                get
+                {
+                    Thread.Sleep(1500 * 2);
+                    throw new NotImplementedException();
+                }
+
+                set
+                {
+                    throw new NotImplementedException();
+                }
+            }
         }
     }
 }

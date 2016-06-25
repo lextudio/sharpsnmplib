@@ -167,6 +167,9 @@
     <None Include="packages.config" />
     <None Include="Resources\v3authNoPriv_BER_Issue" />
     <None Include="sharpsnmplib.tests.snk" />
+    <None Include="xunit.runner.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\fivevarbinds.dat" />
