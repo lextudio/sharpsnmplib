@@ -598,6 +598,39 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             }
         }
 
+        [Fact]
+        public void TestLargeMessage()
+        {
+            var engine = CreateEngine();
+            engine.Listener.ClearBindings();
+            var serverEndPoint = new IPEndPoint(IPAddress.Loopback, port.NextId);
+            engine.Listener.AddBinding(serverEndPoint);
+
+            engine.Start();
+
+            Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            var list = new List<Variable>();
+            for (int i = 0; i < 1000; i++)
+            {
+                list.Add(new Variable(new ObjectIdentifier("1.3.6.1.1.1.0")));
+            }
+
+            GetRequestMessage message = new GetRequestMessage(
+                0x4bed,
+                VersionCode.V2,
+                new OctetString("public"),
+                list);
+
+            Assert.True(message.ToBytes().Length > 10000);
+
+            var time = 1500;
+            //IMPORTANT: test against an agent that doesn't exist.
+            var result = message.GetResponse(time, serverEndPoint, socket);
+
+            Assert.True(result.Scope.Pdu.ErrorStatus.ToErrorCode() == ErrorCode.NoError);
+        }
+
+
         //[Fact]
         //[Category("Default")]
         public void TestMemory()
