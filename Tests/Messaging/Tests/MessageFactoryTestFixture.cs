@@ -393,8 +393,6 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             Assert.Equal(681323585, message.MessageId());
             Assert.Equal(681323584, message.RequestId());
 
-            Console.WriteLine(new OctetString(bytes).ToHexString());
-            Console.WriteLine(new OctetString(message.ToBytes()).ToHexString());
             Assert.Equal(bytes, message.ToBytes());
         }
 

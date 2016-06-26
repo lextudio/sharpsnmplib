@@ -346,27 +346,20 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
 
             var time = DateTime.Now;
             engine.Start();
-            Console.WriteLine(DateTime.Now - time);
 
             for (int index = start; index < end; index++)
-            //Parallel.For(start, end, async index =>
             {
                 GetRequestMessage message = new GetRequestMessage(index, VersionCode.V2, new OctetString("public"), new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) });
                 Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 
                 Stopwatch watch = new Stopwatch();
                 watch.Start();
-                Console.WriteLine("manager [{0}]{1}", Thread.CurrentThread.ManagedThreadId, DateTime.UtcNow);
-                //var response = message.GetResponse(timeout, new IPEndPoint(IPAddress.Loopback, index), socket);
                 var response =
                     await
                         message.GetResponseAsync(new IPEndPoint(IPAddress.Loopback, index), new UserRegistry(), socket);
-                Console.WriteLine("manager [{0}]{1}", Thread.CurrentThread.ManagedThreadId, DateTime.UtcNow);
                 watch.Stop();
-                Console.WriteLine("manager {0}: {1}: port {2}", index, watch.Elapsed, ((IPEndPoint)socket.LocalEndPoint).Port);
                 Assert.Equal(index, response.RequestId());
             }
-            // );
 
             engine.Stop();
         }
@@ -391,27 +384,19 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
 
             var time = DateTime.Now;
             engine.Start();
-            Console.WriteLine(DateTime.Now - time);
 
             Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             for (int index = start; index < end; index++)
-            //Parallel.For(start, end, async index =>
             {
                 GetRequestMessage message = new GetRequestMessage(0, VersionCode.V2, new OctetString("public"), new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) });
-
                 Stopwatch watch = new Stopwatch();
                 watch.Start();
-                Console.WriteLine("manager [{0}]{1}", Thread.CurrentThread.ManagedThreadId, DateTime.UtcNow);
-                //var response = message.GetResponse(timeout, new IPEndPoint(IPAddress.Loopback, 17000), socket);
                 var response =
                     await
                         message.GetResponseAsync(serverEndPoint, new UserRegistry(), socket);
-                Console.WriteLine("manager [{0}]{1}", Thread.CurrentThread.ManagedThreadId, DateTime.UtcNow);
                 watch.Stop();
-                Console.WriteLine("manager {0}: {1}: port {2}", index, watch.Elapsed, ((IPEndPoint)socket.LocalEndPoint).Port);
                 Assert.Equal(0, response.RequestId());
             }
-            // );
 
             engine.Stop();
         }
@@ -436,14 +421,12 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
 
             var time = DateTime.Now;
             engine.Start();
-            Console.WriteLine(DateTime.Now - time);
 
             const int timeout = 10000;
 
             // Uncomment below to reveal wrong sequence number issue.
             // Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 
-            //for (int index = start; index < end; index++)
             Parallel.For(start, end, index =>
             {
                 GetRequestMessage message = new GetRequestMessage(index, VersionCode.V2, new OctetString("public"), new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) });
@@ -452,14 +435,8 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
 
                 Stopwatch watch = new Stopwatch();
                 watch.Start();
-                Console.WriteLine("manager [{0}]{1}", Thread.CurrentThread.ManagedThreadId, DateTime.UtcNow);
                 var response = message.GetResponse(timeout, serverEndPoint, socket);
-                //var response =
-                //    await
-                //        message.GetResponseAsync(new IPEndPoint(IPAddress.Loopback, 17000), new UserRegistry(), socket);
-                Console.WriteLine("manager [{0}]{1}", Thread.CurrentThread.ManagedThreadId, DateTime.UtcNow);
                 watch.Stop();
-                Console.WriteLine("manager {0}: {1}: port {2}", index, watch.Elapsed, ((IPEndPoint)socket.LocalEndPoint).Port);
                 Assert.Equal(index, response.RequestId());
             }
             );
@@ -480,21 +457,14 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
 
             var time = DateTime.Now;
             engine.Start();
-            Console.WriteLine(DateTime.Now - time);
 
             const int timeout = 60000;
 
             //for (int index = start; index < end; index++)
             Parallel.For(start, end, index =>
             {
-
-                Stopwatch watch = new Stopwatch();
-                watch.Start();
-
                 var result = Messenger.Get(VersionCode.V2, serverEndPoint, new OctetString("public"),
                     new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) }, timeout);
-                Console.WriteLine("manager [{0}]{1}", Thread.CurrentThread.ManagedThreadId, DateTime.UtcNow);
-                watch.Stop();
                 Assert.Equal(1, result.Count);
             }
             );
@@ -586,8 +556,6 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             timer.Stop();
 
             long elapsedMilliseconds = timer.ElapsedMilliseconds;
-            Console.WriteLine(@"elapsed: " + elapsedMilliseconds);
-            Console.WriteLine(@"timeout: " + time);
             Assert.True(time <= elapsedMilliseconds);
 
             // FIXME: these values are valid on my machine openSUSE 11.2. (lex)
@@ -644,7 +612,6 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             Assert.Throws<SocketException>(() => message.BeginGetResponse(new IPEndPoint(IPAddress.Loopback, 80), new UserRegistry(), socket, ar =>
             {
                 var response = message.EndGetResponse(ar);
-                Console.WriteLine(response);
             }, null));
 
             GC.Collect();
@@ -662,7 +629,6 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
                         ar =>
                             {
                                 var response = message.EndGetResponse(ar);
-                                Console.WriteLine(response);
                             },
                         null));
             }
@@ -698,7 +664,6 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
                         ar =>
                             {
                                 var response = message.EndGetResponse(ar);
-                                Console.WriteLine(response);
                             },
                         null));
 
@@ -722,7 +687,6 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
                         ar =>
                         {
                             var response = message.EndGetResponse(ar);
-                            Console.WriteLine(response);
                         },
                         null));
 

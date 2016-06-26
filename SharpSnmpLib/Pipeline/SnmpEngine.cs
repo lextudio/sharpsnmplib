@@ -103,18 +103,10 @@ namespace Lextm.SharpSnmpLib.Pipeline
 
         private void ListenerMessageReceived(object sender, MessageReceivedEventArgs e)
         {
-#if DEBUG
-            var watch = new Stopwatch();
-            watch.Start();
-#endif
             var request = e.Message;
             var context = SnmpContextFactory.Create(request, e.Sender, Listener.Users, _group, e.Binding);
             var application = _factory.Create(context);
             application.Process();
-#if DEBUG
-            watch.Stop();
-            Console.WriteLine("agent: {0}", watch.Elapsed);
-#endif
         }
 
         /// <summary>
