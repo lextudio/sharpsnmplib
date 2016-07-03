@@ -109,8 +109,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 #if CF
                 _bufferSize = 8192;
                 #else
-                _bufferSize = Messenger.MaxMessageSize;
-                udp.Client.ReceiveBufferSize = Messenger.MaxMessageSize;
+                _bufferSize = udp.Client.ReceiveBufferSize = Messenger.MaxMessageSize;
                 #endif
 
                 #if ASYNC

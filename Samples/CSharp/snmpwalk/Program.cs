@@ -228,7 +228,7 @@ namespace SnmpWalk
 
         private static void ShowHelp(OptionSet optionSet)
         {
-            Console.WriteLine("#SNMP is available at http://sharpsnmplib.codeplex.com");
+            Console.WriteLine("#SNMP is available at https://sharpsnmplib.codeplex.com");
             Console.WriteLine("snmpwalk [Options] IP-address|host-name [OID]");
             Console.WriteLine("Options:");
             optionSet.WriteOptionDescriptions(Console.Out);

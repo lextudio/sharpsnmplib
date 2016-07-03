@@ -119,24 +119,19 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="receiver">Receiver.</param>
         public void SendResponse(ISnmpMessage response, EndPoint receiver)
         {
-            if (_disposed)
-            {
-                throw new ObjectDisposedException(GetType().FullName);
-            }
-
             if (response == null)
             {
-                throw new ArgumentNullException("response");
+                throw new ArgumentNullException(nameof(response));
             }
 
             if (receiver == null)
             {
-                throw new ArgumentNullException("receiver");
+                throw new ArgumentNullException(nameof(receiver));
             }
 
             if (_disposed)
             {
-                throw new ObjectDisposedException("Listener");
+                throw new ObjectDisposedException(GetType().FullName);
             }
 
             if (_socket == null)
@@ -219,8 +214,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 #if CF
             _bufferSize = 8192;
 #else
-            _bufferSize = Messenger.MaxMessageSize;
-            _socket.ReceiveBufferSize = Messenger.MaxMessageSize;
+            _bufferSize = _socket.ReceiveBufferSize = Messenger.MaxMessageSize;
 #endif
 
 #if ASYNC

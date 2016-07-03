@@ -54,7 +54,7 @@ namespace SnmpTrapD
             {
                 engine.Listener.AddBinding(new IPEndPoint(IPAddress.Any, 162));
                 engine.Start();
-                Console.WriteLine("#SNMP is available at http://sharpsnmplib.codeplex.com");
+                Console.WriteLine("#SNMP is available at https://sharpsnmplib.codeplex.com");
                 Console.WriteLine("Press any key to stop . . . ");
                 Console.Read();
                 engine.Stop();

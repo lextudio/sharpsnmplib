@@ -213,7 +213,7 @@ Module Program
     End Sub
 
     Private Sub ShowHelp(ByRef optionSet As OptionSet)
-        Console.WriteLine("#SNMP is available at http://sharpsnmplib.codeplex.com")
+        Console.WriteLine("#SNMP is available at https://sharpsnmplib.codeplex.com")
         Console.WriteLine("snmpget [Options] IP-address|host-name OID [OID] ...")
         Console.WriteLine("Options:")
         optionSet.WriteOptionDescriptions(Console.Out)
@@ -228,6 +228,6 @@ Module Program
             Return New SHA1AuthenticationProvider(New OctetString(phrase))
         End If
 
-        Throw New ArgumentException("unknown name", "authentication")
+        Throw New ArgumentException("unknown name", NameOf(authentication))
     End Function
 End Module

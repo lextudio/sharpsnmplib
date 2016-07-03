@@ -295,7 +295,7 @@ namespace SnmpSet
 
         private static void ShowHelp(OptionSet optionSet)
         {
-            Console.WriteLine("#SNMP is available at http://sharpsnmplib.codeplex.com");
+            Console.WriteLine("#SNMP is available at https://sharpsnmplib.codeplex.com");
             Console.WriteLine("snmpset [Options] IP-address|host-name OID TYPE VALUE [OID TYPE VALUE] ...");
             Console.WriteLine("Options:");
             optionSet.WriteOptionDescriptions(Console.Out);

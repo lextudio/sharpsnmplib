@@ -214,7 +214,7 @@ Module Program
 
             Dim report As ReportMessage = Messenger.GetNextDiscovery(SnmpType.SetRequestPdu).GetResponse(timeout, receiver)
 
-            Dim request As New SetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, New OctetString(user), vList, priv, Messenger.MaxMessageSize, _
+            Dim request As New SetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, New OctetString(user), vList, priv, Messenger.MaxMessageSize,
                                                  report)
 
             Dim reply As ISnmpMessage = request.GetResponse(timeout, receiver)
@@ -239,7 +239,7 @@ Module Program
                 End If
 
                 ' according to RFC 3414, send a second request to sync time.
-                request = New SetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, New OctetString(user), vList, priv, Messenger.MaxMessageSize, _
+                request = New SetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, New OctetString(user), vList, priv, Messenger.MaxMessageSize,
                                                  reply)
                 reply = request.GetResponse(timeout, receiver)
             ElseIf reply.Pdu.ErrorStatus.ToInt32() <> 0 Then
@@ -266,11 +266,11 @@ Module Program
             Return New SHA1AuthenticationProvider(New OctetString(phrase))
         End If
 
-        Throw New ArgumentException("unknown name", "authentication")
+        Throw New ArgumentException("unknown name", NameOf(authentication))
     End Function
 
     Private Sub ShowHelp(ByRef optionSet As OptionSet)
-        Console.WriteLine("#SNMP is available at http://sharpsnmplib.codeplex.com")
+        Console.WriteLine("#SNMP is available at https://sharpsnmplib.codeplex.com")
         Console.WriteLine("snmpset [Options] IP-address|host-name OID TYPE VALUE [OID TYPE VALUE] ...")
         Console.WriteLine("Options:")
         optionSet.WriteOptionDescriptions(Console.Out)

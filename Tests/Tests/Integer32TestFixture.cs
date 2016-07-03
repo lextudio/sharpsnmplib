@@ -116,7 +116,7 @@ namespace Lextm.SharpSnmpLib.Tests
         [Fact]
         public void TestNegative2()
         {
-            // bug 7217 http://sharpsnmplib.codeplex.com/workitem/7217
+            // bug 7217 https://sharpsnmplib.codeplex.com/workitem/7217
             Integer32 i = new Integer32(-250);
             var result = DataFactory.CreateSnmpData(i.ToBytes());
             Assert.Equal(SnmpType.Integer32, result.TypeCode);
