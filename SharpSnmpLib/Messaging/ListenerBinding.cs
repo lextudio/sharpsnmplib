@@ -219,7 +219,8 @@ namespace Lextm.SharpSnmpLib.Messaging
 #if CF
             _bufferSize = 8192;
 #else
-            _bufferSize = _socket.ReceiveBufferSize;
+            _bufferSize = Messenger.MaxMessageSize;
+            _socket.ReceiveBufferSize = Messenger.MaxMessageSize;
 #endif
 
 #if ASYNC
