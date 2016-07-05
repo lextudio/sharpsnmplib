@@ -10,6 +10,6 @@ The following can be found at [#SNMP Library homepage](https://sharpsnmplib.code
 
 [The documentation site is here](http://docs.sharpsnmp.com).
 
-Issues can be created directly at GitHub.
+Issues can be created directly at GitHub. The work item dashboard is at [Waffle.io](https://waffle.io/lextm/sharpsnmplib).
 
 Questions should post to [StackOverflow.com](http://stackoverflow.com) with sharp-snmp tag. 
