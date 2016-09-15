@@ -1,6 +1,6 @@
 #SNMP Library
 =============
-[![Join the chat at https://gitter.im/lextm/sharpsnmplib](https://badges.gitter.im/Join%20Chat.svg?style=flat-square)](https://gitter.im/lextm/sharpsnmplib?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Join the chat at https://gitter.im/sharpsnmplib](https://badges.gitter.im/Join%20Chat.svg?style=flat-square)](https://gitter.im/sharpsnmplib/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
 
 [![NuGet Version](https://img.shields.io/nuget/v/Lextm.SharpSnmpLib.svg?style=flat-square)](https://www.nuget.org/packages/Lextm.SharpSnmpLib/)
 [![Build status](https://img.shields.io/appveyor/ci/lextm/sharpsnmplib/master.svg?label=apvejor&style=flat-square)](https://ci.appveyor.com/project/lextm/sharpsnmplib)
