@@ -1,10 +1,9 @@
-#SNMP Library
+\#SNMP Library
 =============
-[![Join the chat at https://gitter.im/sharpsnmplib](https://badges.gitter.im/Join%20Chat.svg?style=flat-square)](https://gitter.im/sharpsnmplib/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
-
+[![Join the chat at https://gitter.im/sharpsnmplib](https://img.shields.io/gitter/room/sharpsnmplib/Lobby.svg?style=flat-square)](https://gitter.im/sharpsnmplib/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
 [![NuGet Version](https://img.shields.io/nuget/v/Lextm.SharpSnmpLib.svg?style=flat-square)](https://www.nuget.org/packages/Lextm.SharpSnmpLib/)
-[![Build status](https://img.shields.io/appveyor/ci/lextm/sharpsnmplib/master.svg?label=apvejor&style=flat-square)](https://ci.appveyor.com/project/lextm/sharpsnmplib)
-[![Stories in Ready](https://badge.waffle.io/lextm/sharpsnmplib.svg?label=ready&title=Ready&style=flat-square)](http://waffle.io/lextm/sharpsnmplib) 
+[![Build status](https://img.shields.io/appveyor/ci/lextm/sharpsnmplib/master.svg?label=appvejor&style=flat-square)](https://ci.appveyor.com/project/lextm/sharpsnmplib)
+[![Stories in Progress](https://img.shields.io/waffle/label/lextm/sharpsnmplib/in%20progress.svg?style=flat-square)](http://waffle.io/lextm/sharpsnmplib) 
 
 [![Throughput Graph](https://graphs.waffle.io/lextm/sharpsnmplib/throughput.svg?style=flat-square)](https://waffle.io/lextm/sharpsnmplib/metrics/throughput) 
 
