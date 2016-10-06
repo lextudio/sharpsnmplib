@@ -60,7 +60,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         private static readonly ObjectIdentifier IdUnknownEngineID = new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 6, 3, 15, 1, 1, 4, 0 });
         private static readonly ObjectIdentifier IdAuthenticationFailure = new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 6, 3, 15, 1, 1, 5, 0 });
         private static readonly ObjectIdentifier IdDecryptionError = new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 6, 3, 15, 1, 1, 6, 0 });
-        private static int _maxMessageSize = Header.MaxMessageSize;
 
         #region async methods
 
@@ -108,6 +107,12 @@ namespace Lextm.SharpSnmpLib.Messaging
             return pdu.Variables;
         }
 
+        [Obsolete("Please use SetAsync instead.")]
+        public static async Task<IList<Variable>> Set(VersionCode version, IPEndPoint endpoint, OctetString community, IList<Variable> variables)
+        {
+            throw new InvalidOperationException("Obsolete method");
+        }
+
         /// <summary>
         /// Sets a list of variable binds.
         /// </summary>
@@ -116,7 +121,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="community">Community name.</param>
         /// <param name="variables">Variable binds.</param>
         /// <returns></returns>
-        public static async Task<IList<Variable>> Set(VersionCode version, IPEndPoint endpoint, OctetString community, IList<Variable> variables)
+        public static async Task<IList<Variable>> SetAsync(VersionCode version, IPEndPoint endpoint, OctetString community, IList<Variable> variables)
         {
             if (endpoint == null)
             {
@@ -1016,11 +1021,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// You can use any value for your own application. 
         /// Also this value may be changed in #SNMP in future releases.
         /// </remarks>
-        public static int MaxMessageSize
-        {
-            get { return _maxMessageSize; }
-            set { _maxMessageSize = value; }
-        }
+        public static int MaxMessageSize { get; set; } = Header.MaxMessageSize;
 
         /// <summary>
         /// Returns a new discovery request.
