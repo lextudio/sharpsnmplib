@@ -57,7 +57,7 @@ namespace Lextm.SharpSnmpLib.Security
         {
         }
 
-#if !CF && !NETFX_CORE
+#if !NETFX_CORE
         /// <summary>
         /// Creates a <see cref="DecryptionException"/> instance.
         /// </summary>

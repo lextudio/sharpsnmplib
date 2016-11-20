@@ -21,9 +21,7 @@ using System;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-#if !CF
 using System.Net.NetworkInformation;
-#endif
 using System.Text;
 
 // ASN.1 BER encoding library by Malcolm Crowe at the University of the West of Scotland
@@ -287,7 +285,7 @@ namespace Lextm.SharpSnmpLib
             return !(left == right);
         }
 
-#if !CF && !NETFX_CORE
+#if !NETFX_CORE
         /// <summary>
         /// Converts octets to physical address.
         /// </summary>

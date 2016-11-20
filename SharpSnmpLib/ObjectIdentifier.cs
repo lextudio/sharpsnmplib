@@ -31,7 +31,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// ObjectIdentifier type.
     /// </summary>
-#if !CF && !NETFX_CORE
+#if !NETFX_CORE
     [TypeConverter(typeof(ObjectIdentifierConverter))]
 #endif
     [DataContract]
@@ -293,9 +293,6 @@ namespace Lextm.SharpSnmpLib
             var result = new List<uint>();
             foreach (var s in parts.Where(s => !string.IsNullOrEmpty(s)))
             {
-#if CF
-                result.Add(uint.Parse(s));
-#else
                 uint temp;
                 if (uint.TryParse(s, out temp))
                 {
@@ -305,7 +302,6 @@ namespace Lextm.SharpSnmpLib
                 {
                     throw new ArgumentException(string.Format("Parameter {0} is out of 32 bit unsigned integer range", s), "dotted");
                 }
-#endif          
             }
 
             return result.ToArray();

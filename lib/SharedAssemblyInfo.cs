@@ -7,7 +7,5 @@ using System.Reflection;
 // You can specify all the values or you can use the default the Revision and
 // Build Numbers by using the '*' as shown below:
 
-[assembly: AssemblyVersion("9.0.031006.01")]
-#if (!CF)
-[assembly: AssemblyFileVersion("9.0.031006.01")]
-#endif
+[assembly: AssemblyVersion("9.0.031120.10")]
+[assembly: AssemblyFileVersion("9.0.031120.10")]

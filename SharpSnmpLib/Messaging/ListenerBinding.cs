@@ -172,7 +172,6 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             var addressFamily = Endpoint.AddressFamily;
-#if !CF
             if (addressFamily == AddressFamily.InterNetwork && !Socket.OSSupportsIPv4)
             {
                 throw new InvalidOperationException(Listener.ErrorIPv4NotSupported);
@@ -182,7 +181,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new InvalidOperationException(Listener.ErrorIPv6NotSupported);
             }
-#endif
+
             var activeBefore = Interlocked.CompareExchange(ref _active, Active, Inactive);
             if (activeBefore == Active)
             {
@@ -190,11 +189,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 return;
             }
 
-#if CF
-            _socket = new Socket(addressFamily, SocketType.Dgram, ProtocolType.Udp);
-#else
             _socket = new Socket(addressFamily, SocketType.Dgram, ProtocolType.Udp) { ExclusiveAddressUse = true };
-#endif
 
             try
             {
@@ -211,11 +206,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw;
             }
 
-#if CF
-            _bufferSize = 8192;
-#else
             _bufferSize = _socket.ReceiveBufferSize = Messenger.MaxMessageSize;
-#endif
 
 #if ASYNC
             Task.Factory.StartNew(() => AsyncBeginReceive());

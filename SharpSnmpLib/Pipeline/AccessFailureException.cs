@@ -64,18 +64,16 @@ namespace Lextm.SharpSnmpLib.Pipeline
         {
         }
 
-#if !CF
-        ///// <summary>
-        ///// Creates a <see cref="AccessFailureException"/> instance.
-        ///// </summary>
-        ///// <param name="info">Info</param>
-        ///// <param name="context">Context</param>
-        //private AccessFailureException(SerializationInfo info, StreamingContext context)
-        //    : base(info, context)
-        //{
-        //} 
-#endif
-       
+        /// <summary>
+        /// Creates a <see cref="AccessFailureException"/> instance.
+        /// </summary>
+        /// <param name="info">Info</param>
+        /// <param name="context">Context</param>
+        private AccessFailureException(SerializationInfo info, StreamingContext context)
+            : base(info, context)
+        {
+        }
+
         /// <summary>
         /// Returns a <see cref="String"/> that represents this <see cref="AccessFailureException"/>.
         /// </summary>

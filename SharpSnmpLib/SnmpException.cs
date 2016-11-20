@@ -63,7 +63,7 @@ namespace Lextm.SharpSnmpLib
         {
         }
 
-#if !CF && !NETFX_CORE
+#if !NETFX_CORE
         ///// <summary>
         ///// Creates a <see cref="SnmpException"/> instance.
         ///// </summary>

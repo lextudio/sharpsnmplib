@@ -57,15 +57,11 @@ namespace Lextm.SharpSnmpLib
             var content = description.Trim().Split(new[] { ' ' });
             foreach (var part in content)
             {
-                #if CF
-                result.Add(byte.Parse(part, NumberStyles.Integer, CultureInfo.InvariantCulture));
-                #else
                 byte temp;
                 if (byte.TryParse(part, out temp))
                 {
                     result.Add(temp);
                 }
-                #endif
             }
 
             return result.ToArray();
@@ -98,15 +94,12 @@ namespace Lextm.SharpSnmpLib
                 {
                     continue;
                 }
-                #if CF
-                result.Add(byte.Parse(buffer.ToString(), NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture));
-                #else
                 byte temp;
                 if (byte.TryParse(buffer.ToString(), NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out temp))
                 {
                     result.Add(temp);
                 }
-                #endif
+
                 buffer.Length = 0;
             }
             

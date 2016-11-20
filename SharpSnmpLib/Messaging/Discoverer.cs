@@ -106,11 +106,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                     return;
                 }
 
-                #if CF
-                _bufferSize = 8192;
-                #else
                 _bufferSize = udp.Client.ReceiveBufferSize = Messenger.MaxMessageSize;
-                #endif
 
                 #if ASYNC
                 Task.Factory.StartNew(() => AsyncBeginReceive(udp.Client));

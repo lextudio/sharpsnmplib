@@ -335,18 +335,12 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             var bytes = request.ToBytes();
-#if CF
-            int bufSize = 8192;
-#else
             var bufSize = udpSocket.ReceiveBufferSize = Messenger.MaxMessageSize;
-            #endif
             var reply = new byte[bufSize];
 
             // Whatever you change, try to keep the Send and the Receive close to each other.
             udpSocket.SendTo(bytes, receiver);
-            #if !CF
             udpSocket.ReceiveTimeout = timeout;
-            #endif
             int count;
             try
             {
@@ -474,11 +468,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             // Whatever you change, try to keep the Send and the Receive close to each other.
             udpSocket.SendTo(request.ToBytes(), receiver);
-            #if CF
-            var bufferSize = 8192;
-            #else
             var bufferSize = udpSocket.ReceiveBufferSize = Messenger.MaxMessageSize;
-            #endif
             var buffer = new byte[bufferSize];
 
             // https://sharpsnmplib.codeplex.com/workitem/7234
