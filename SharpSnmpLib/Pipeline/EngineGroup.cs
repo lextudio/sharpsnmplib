@@ -100,18 +100,26 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// </returns>
         public static bool IsInTime(int[] currentTimeData, int pastReboots, int pastTime)
         {
+            var currentReboots = currentTimeData[0];
+            var currentTime = currentTimeData[1];
+
             // TODO: RFC 2574 page 27
-            if (currentTimeData[1] == int.MaxValue)
+            if (currentReboots == int.MaxValue)
             {
                 return false;
             }
 
-            if (currentTimeData[0] != pastReboots)
+            if (currentReboots != pastReboots)
             {
                 return false;
             }
 
-            var diff = currentTimeData[1] > pastTime ? currentTimeData[1] - pastTime : currentTimeData[1] - pastTime - int.MinValue + int.MaxValue;
+            if (currentTime == pastTime)
+            {
+                return true;
+            }
+
+            var diff = currentTime > pastTime ? currentTime - pastTime : currentTime - pastTime - int.MinValue + int.MaxValue;
             return diff >= 0 && diff <= 150;
         }
 
