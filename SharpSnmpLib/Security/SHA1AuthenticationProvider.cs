@@ -94,7 +94,7 @@ namespace Lextm.SharpSnmpLib.Security
 
         private byte[] _PasswordToKey(byte[] password, byte[] engineId)
         {          
-            using (SHA1 sha = new SHA1CryptoServiceProvider())
+            using (SHA1 sha = SHA1.Create())
             {
                 var passwordIndex = 0;
                 var count = 0;

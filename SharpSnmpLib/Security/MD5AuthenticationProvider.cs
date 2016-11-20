@@ -95,7 +95,7 @@ namespace Lextm.SharpSnmpLib.Security
 
         private byte[] _PasswordToKey(byte[] password, byte[] engineId)
         {            
-            using (MD5 md5 = new MD5CryptoServiceProvider())
+            using (MD5 md5 = MD5.Create())
             {
                 var passwordIndex = 0;
                 var count = 0;

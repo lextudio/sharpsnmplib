@@ -125,7 +125,7 @@ namespace Lextm.SharpSnmpLib.Security
             // Copy salt value to the iv array
             Buffer.BlockCopy(privacyParameters, 0, iv, 8, PrivacyParametersLength);
 
-            using (Rijndael rm = new RijndaelManaged())
+            using (var rm = Aes.Create())
             {
                 rm.KeySize = KeyBytes * 8;
                 rm.FeedbackSize = 128;
@@ -203,7 +203,7 @@ namespace Lextm.SharpSnmpLib.Security
             Buffer.BlockCopy(privacyParameters, 0, iv, 8, PrivacyParametersLength);
 
             // now do CFB decryption of the encrypted data
-            using (var rm = Rijndael.Create())
+            using (var rm = Aes.Create())
             {
                 rm.KeySize = KeyBytes * 8;
                 rm.FeedbackSize = 128;

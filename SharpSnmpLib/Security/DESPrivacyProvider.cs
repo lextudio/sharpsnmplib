@@ -120,7 +120,7 @@ namespace Lextm.SharpSnmpLib.Security
             var posResult = 0;
             Buffer.BlockCopy(unencryptedData, 0, buffer, 0, unencryptedData.Length);
 
-            using (DES des = new DESCryptoServiceProvider())
+            using (DES des = DES.Create())
             {
                 des.Mode = CipherMode.ECB;
                 des.Padding = PaddingMode.None;
@@ -200,7 +200,7 @@ namespace Lextm.SharpSnmpLib.Security
                 iv[i] = (byte)(key[8 + i] ^ privacyParameters[i]);
             }
             
-            using (DES des = new DESCryptoServiceProvider())
+            using (DES des = DES.Create())
             {
                 des.Mode = CipherMode.CBC;
                 des.Padding = PaddingMode.Zeros;
