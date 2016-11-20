@@ -392,6 +392,153 @@ namespace Lextm.SharpSnmpLib.Messaging
         }
 
         /// <summary>
+        /// Sends a response message.
+        /// </summary>
+        /// <param name="response">
+        /// A <see cref="ISnmpMessage"/>.
+        /// </param>
+        /// <param name="receiver">Receiver.</param>
+        public async Task SendResponseAsync(ISnmpMessage response, EndPoint receiver)
+        {
+            if (_disposed)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
+            }
+
+            if (response == null)
+            {
+                throw new ArgumentNullException("response");
+            }
+
+            if (receiver == null)
+            {
+                throw new ArgumentNullException("receiver");
+            }
+
+            if (_disposed)
+            {
+                throw new ObjectDisposedException("Listener");
+            }
+
+            if (_socket == null)
+            {
+                return;
+            }
+
+            var buffer = response.ToBytes();
+            var info = new SocketAsyncEventArgs();
+
+            try
+            {
+                info.RemoteEndPoint = receiver;
+                info.SetBuffer(buffer, 0, buffer.Length);
+                var awaitable1 = new SocketAwaitable(info);
+                await _socket.SendToAsync(awaitable1);
+            }
+            catch (SocketException ex)
+            {
+                if (ex.SocketErrorCode != SocketError.Interrupted)
+                {
+                    // IMPORTANT: interrupted means the socket is closed.
+                    throw;
+                }
+            }
+            finally
+            {
+                info.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Starts this instance.
+        /// </summary>
+        /// <exception cref="PortInUseException"/>
+        public async Task StartAsync()
+        {
+            if (_disposed)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
+            }
+
+            var addressFamily = Endpoint.AddressFamily;
+            if (addressFamily == AddressFamily.InterNetwork && !Socket.OSSupportsIPv4)
+            {
+                throw new InvalidOperationException(Listener.ErrorIPv4NotSupported);
+            }
+
+            if (addressFamily == AddressFamily.InterNetworkV6 && !Socket.OSSupportsIPv6)
+            {
+                throw new InvalidOperationException(Listener.ErrorIPv6NotSupported);
+            }
+
+            var activeBefore = Interlocked.CompareExchange(ref _active, Active, Inactive);
+            if (activeBefore == Active)
+            {
+                // If already started, we've nothing to do.
+                return;
+            }
+
+            _socket = new Socket(addressFamily, SocketType.Dgram, ProtocolType.Udp);
+
+            try
+            {
+                _socket.Bind(Endpoint);
+            }
+            catch (SocketException ex)
+            {
+                Interlocked.Exchange(ref _active, Inactive);
+                if (ex.SocketErrorCode == SocketError.AddressAlreadyInUse)
+                {
+                    throw new PortInUseException("Endpoint is already in use", ex) { Endpoint = Endpoint };
+                }
+
+                throw;
+            }
+
+            _bufferSize = _socket.ReceiveBufferSize;
+            await ReceiveAsync();
+        }
+
+        private async Task ReceiveAsync()
+        {
+            EndPoint remote = _socket.AddressFamily == AddressFamily.InterNetwork ? new IPEndPoint(IPAddress.Any, 0) : new IPEndPoint(IPAddress.IPv6Any, 0);
+            while (true)
+            {
+                // If no more active, then stop.
+                if (Interlocked.Exchange(ref _active, _active) == Inactive)
+                {
+                    return;
+                }
+
+                int count;
+                var reply = new byte[_bufferSize];
+                var args = new SocketAsyncEventArgs();
+                try
+                {
+                    args.RemoteEndPoint = remote;
+                    args.SetBuffer(reply, 0, _bufferSize);
+                    var awaitable = new SocketAwaitable(args);
+                    count = await _socket.ReceiveAsync(awaitable);
+                    await Task.Factory.StartNew(() => HandleMessage(reply, count, (IPEndPoint)remote));
+                }
+                catch (SocketException ex)
+                {
+                    // ignore WSAECONNRESET, http://bytes.com/topic/c-sharp/answers/237558-strange-udp-socket-problem
+                    if (ex.SocketErrorCode != SocketError.ConnectionReset)
+                    {
+                        // If the SnmpTrapListener was active, marks it as stopped and call HandleException.
+                        // If it was inactive, the exception is likely to result from this, and we raise nothing.
+                        var activeBefore = Interlocked.CompareExchange(ref _active, Inactive, Active);
+                        if (activeBefore == Active)
+                        {
+                            HandleException(ex);
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Returns a <see cref="String"/> that represents a <see cref="Listener"/>.
         /// </summary>
         /// <returns></returns>

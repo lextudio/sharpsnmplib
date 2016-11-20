@@ -39,9 +39,6 @@ namespace Lextm.SharpSnmpLib
         ISnmpData, IEquatable<ObjectIdentifier>, IComparable<ObjectIdentifier>, IComparable
     {
         private readonly uint[] _oid;
-        #if (CF)
-        [NonSerialized]
-        #endif
         private readonly int _hashcode;
         private readonly byte[] _length;
 

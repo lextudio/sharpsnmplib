@@ -22,12 +22,13 @@
             }
 
             this.m_eventArgs = eventArgs;
-            eventArgs.Completed += delegate
-            {
-                var prev = m_continuation ?? Interlocked.CompareExchange(
-                    ref m_continuation, SENTINEL, null);
-                if (prev != null) prev();
-            };
+            eventArgs.Completed += Completed;
+        }
+
+        private void Completed(object sender, SocketAsyncEventArgs e)
+        {
+            (m_continuation ?? Interlocked.CompareExchange(
+                    ref m_continuation, SENTINEL, null))?.Invoke();
         }
 
         internal void Reset()

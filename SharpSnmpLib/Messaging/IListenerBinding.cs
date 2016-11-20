@@ -17,7 +17,9 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+using System;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace Lextm.SharpSnmpLib.Messaging
 {
@@ -33,7 +35,17 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// A <see cref="ISnmpMessage"/>.
         /// </param>
         /// <param name="receiver">Receiver.</param>
+        [Obsolete("Please use SendResponseAsync instead.")]
         void SendResponse(ISnmpMessage response, EndPoint receiver);
+
+        /// <summary>
+        /// Sends a response message.
+        /// </summary>
+        /// <param name="response">
+        /// A <see cref="ISnmpMessage"/>.
+        /// </param>
+        /// <param name="receiver">Receiver.</param>
+        Task SendResponseAsync(ISnmpMessage response, EndPoint receiver);
 
         /// <summary>
         /// Endpoint.

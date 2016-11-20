@@ -31,6 +31,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Net;
 using Lextm.SharpSnmpLib.Security;
+using System.Threading.Tasks;
 
 namespace Lextm.SharpSnmpLib.Messaging
 {
@@ -185,6 +186,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
         /// <param name="receiver">The receiver.</param>
         /// <returns></returns>
+        [Obsolete("Please use GetResponseAsync instead.")]
         public ReportMessage GetResponse(int timeout, IPEndPoint receiver)
         {
             if (receiver == null)
@@ -195,6 +197,24 @@ namespace Lextm.SharpSnmpLib.Messaging
             using (var socket = receiver.GetSocket())
             {
                 return (ReportMessage)_discovery.GetResponse(timeout, receiver, Empty, socket);
+            }
+        }
+
+        /// <summary>
+        /// Gets the response.
+        /// </summary>
+        /// <param name="receiver">The receiver.</param>
+        /// <returns></returns>
+        public async Task<ReportMessage> GetResponseAsync(IPEndPoint receiver)
+        {
+            if (receiver == null)
+            {
+                throw new ArgumentNullException("receiver");
+            }
+
+            using (var socket = receiver.GetSocket())
+            {
+                return (ReportMessage)await _discovery.GetResponseAsync(receiver, Empty, socket).ConfigureAwait(false);
             }
         }
 

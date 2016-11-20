@@ -19,7 +19,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
@@ -60,6 +59,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="community">The community.</param>
         /// <param name="interval">The discovering time interval, in milliseconds.</param>
         /// <remarks><paramref name="broadcastAddress"/> must be an IPv4 address. IPv6 is not yet supported here.</remarks>
+        [Obsolete("Please use DiscoverAsync instead.")]
         public void Discover(VersionCode version, IPEndPoint broadcastAddress, OctetString community, int interval)
         {
             if (broadcastAddress == null)
@@ -242,7 +242,6 @@ namespace Lextm.SharpSnmpLib.Messaging
             handler(this, new ExceptionRaisedEventArgs(exception));
         }
 
-
         private void HandleMessage(byte[] buffer, int count, IPEndPoint remote)
         {
             foreach (var message in MessageFactory.ParseMessages(buffer, 0, count, Empty))
@@ -289,6 +288,113 @@ namespace Lextm.SharpSnmpLib.Messaging
                 if (handler != null)
                 {
                     handler(this, new AgentFoundEventArgs(remote, response.Variables()[0]));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Discovers agents of the specified version in a specific time interval.
+        /// </summary>
+        /// <param name="version">The version.</param>
+        /// <param name="broadcastAddress">The broadcast address.</param>
+        /// <param name="community">The community.</param>
+        /// <param name="interval">The discovering time interval, in milliseconds.</param>
+        /// <remarks><paramref name="broadcastAddress"/> must be an IPv4 address. IPv6 is not yet supported here.</remarks>
+        public async Task DiscoverAsync(VersionCode version, IPEndPoint broadcastAddress, OctetString community, int interval)
+        {
+            if (broadcastAddress == null)
+            {
+                throw new ArgumentNullException("broadcastAddress");
+            }
+
+            if (version != VersionCode.V3 && community == null)
+            {
+                throw new ArgumentNullException("community");
+            }
+
+            var addressFamily = broadcastAddress.AddressFamily;
+            if (addressFamily == AddressFamily.InterNetworkV6)
+            {
+                throw new ArgumentException("IP v6 is not yet supported", "broadcastAddress");
+            }
+
+            byte[] bytes;
+            _requestId = Messenger.NextRequestId;
+            if (version == VersionCode.V3)
+            {
+                // throw new NotSupportedException("SNMP v3 is not supported");
+                var discovery = new Discovery(Messenger.NextMessageId, _requestId, Messenger.MaxMessageSize);
+                bytes = discovery.ToBytes();
+            }
+            else
+            {
+                var message = new GetRequestMessage(_requestId, version, community, _defaultVariables);
+                bytes = message.ToBytes();
+            }
+
+            using (var udp = new Socket(addressFamily, SocketType.Dgram, ProtocolType.Udp))
+            {
+                using (var info = new SocketAsyncEventArgs())
+                {
+                    info.RemoteEndPoint = broadcastAddress;
+                    info.SetBuffer(bytes, 0, bytes.Length);
+                    var awaitable1 = new SocketAwaitable(info);
+                    await udp.SendToAsync(awaitable1);
+                }
+
+                var activeBefore = Interlocked.CompareExchange(ref _active, Active, Inactive);
+                if (activeBefore == Active)
+                {
+                    // If already started, we've nothing to do.
+                    return;
+                }
+
+                _bufferSize = udp.ReceiveBufferSize;
+                await ReceiveAsync(udp).ConfigureAwait(false);
+                await Task.Delay(interval).ConfigureAwait(false);
+                Interlocked.CompareExchange(ref _active, Inactive, Active);
+                udp.Shutdown(SocketShutdown.Both);
+            }
+        }
+
+        private async Task ReceiveAsync(Socket socket)
+        {
+            EndPoint remote = new IPEndPoint(IPAddress.Any, 0);
+            while (true)
+            {
+                // If no more active, then stop.
+                if (Interlocked.Exchange(ref _active, _active) == Inactive)
+                {
+                    return;
+                }
+
+                int count;
+                var reply = new byte[_bufferSize];
+                var args = new SocketAsyncEventArgs();
+                try
+                {
+                    args.RemoteEndPoint = remote;
+                    args.SetBuffer(reply, 0, _bufferSize);
+                    var awaitable = new SocketAwaitable(args);
+                    count = await socket.ReceiveAsync(awaitable);
+                    await Task.Factory.StartNew(() => HandleMessage(reply, count, (IPEndPoint)remote)).ConfigureAwait(false);
+                }
+                catch (SocketException ex)
+                {
+                    if (ex.SocketErrorCode != SocketError.ConnectionReset)
+                    {
+                        // If the SnmpTrapListener was active, marks it as stopped and call HandleException.
+                        // If it was inactive, the exception is likely to result from this, and we raise nothing.
+                        var activeBefore = Interlocked.CompareExchange(ref _active, Inactive, Active);
+                        if (activeBefore == Active)
+                        {
+                            HandleException(ex);
+                        }
+                    }
+                }
+                finally
+                {
+                    args.Dispose();
                 }
             }
         }
