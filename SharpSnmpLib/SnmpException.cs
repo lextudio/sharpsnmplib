@@ -26,9 +26,7 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
-#if (!SILVERLIGHT)
 using System.Runtime.Serialization; 
-#endif
 
 namespace Lextm.SharpSnmpLib
 {    
