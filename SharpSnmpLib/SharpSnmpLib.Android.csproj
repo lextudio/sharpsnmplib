@@ -72,6 +72,7 @@
     <Compile Include="Messaging\ResponseMessage.cs" />
     <Compile Include="Messaging\SetRequestMessage.cs" />
     <Compile Include="Messaging\SnmpMessageExtension.cs" />
+    <Compile Include="Messaging\SocketAsyncEventArgsFactory.cs" />
     <Compile Include="Messaging\SocketAwaitable.cs" />
     <Compile Include="Messaging\SocketExtension.cs" />
     <Compile Include="Messaging\TimeoutException.cs" />

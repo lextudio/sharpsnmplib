@@ -426,14 +426,16 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             var buffer = response.ToBytes();
-            var info = new SocketAsyncEventArgs();
+            var info = SocketExtension.EventArgsFactory.Create();
 
             try
             {
                 info.RemoteEndPoint = receiver;
                 info.SetBuffer(buffer, 0, buffer.Length);
-                var awaitable1 = new SocketAwaitable(info);
-                await _socket.SendToAsync(awaitable1);
+                using (var awaitable1 = new SocketAwaitable(info))
+                {
+                    await _socket.SendToAsync(awaitable1);
+                }
             }
             catch (SocketException ex)
             {
@@ -442,10 +444,6 @@ namespace Lextm.SharpSnmpLib.Messaging
                     // IMPORTANT: interrupted means the socket is closed.
                     throw;
                 }
-            }
-            finally
-            {
-                info.Dispose();
             }
         }
 
@@ -512,13 +510,16 @@ namespace Lextm.SharpSnmpLib.Messaging
 
                 int count;
                 var reply = new byte[_bufferSize];
-                var args = new SocketAsyncEventArgs();
+                var args = SocketExtension.EventArgsFactory.Create();
                 try
                 {
                     args.RemoteEndPoint = remote;
                     args.SetBuffer(reply, 0, _bufferSize);
-                    var awaitable = new SocketAwaitable(args);
-                    count = await _socket.ReceiveAsync(awaitable);
+                    using (var awaitable = new SocketAwaitable(args))
+                    {
+                        count = await _socket.ReceiveAsync(awaitable);
+                    }
+
                     await Task.Factory.StartNew(() => HandleMessage(reply, count, (IPEndPoint)remote));
                 }
                 catch (SocketException ex)

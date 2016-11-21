@@ -334,11 +334,11 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             using (var udp = new Socket(addressFamily, SocketType.Dgram, ProtocolType.Udp))
             {
-                using (var info = new SocketAsyncEventArgs())
+                var info = SocketExtension.EventArgsFactory.Create();
+                info.RemoteEndPoint = broadcastAddress;
+                info.SetBuffer(bytes, 0, bytes.Length);
+                using (var awaitable1 = new SocketAwaitable(info))
                 {
-                    info.RemoteEndPoint = broadcastAddress;
-                    info.SetBuffer(bytes, 0, bytes.Length);
-                    var awaitable1 = new SocketAwaitable(info);
                     await udp.SendToAsync(awaitable1);
                 }
 
@@ -370,13 +370,16 @@ namespace Lextm.SharpSnmpLib.Messaging
 
                 int count;
                 var reply = new byte[_bufferSize];
-                var args = new SocketAsyncEventArgs();
+                var args = SocketExtension.EventArgsFactory.Create();
                 try
                 {
                     args.RemoteEndPoint = remote;
                     args.SetBuffer(reply, 0, _bufferSize);
-                    var awaitable = new SocketAwaitable(args);
-                    count = await socket.ReceiveAsync(awaitable);
+                    using (var awaitable = new SocketAwaitable(args))
+                    {
+                        count = await socket.ReceiveAsync(awaitable);
+                    }
+
                     await Task.Factory.StartNew(() => HandleMessage(reply, count, (IPEndPoint)remote)).ConfigureAwait(false);
                 }
                 catch (SocketException ex)
@@ -391,10 +394,6 @@ namespace Lextm.SharpSnmpLib.Messaging
                             HandleException(ex);
                         }
                     }
-                }
-                finally
-                {
-                    args.Dispose();
                 }
             }
         }

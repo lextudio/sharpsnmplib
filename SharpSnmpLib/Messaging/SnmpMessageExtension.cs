@@ -551,11 +551,11 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             var bytes = message.ToBytes();
-            using (var info = new SocketAsyncEventArgs())
+            var info = SocketExtension.EventArgsFactory.Create();
+            info.RemoteEndPoint = manager;
+            info.SetBuffer(bytes, 0, bytes.Length);
+            using (var awaitable1 = new SocketAwaitable(info))
             {
-                info.RemoteEndPoint = manager;
-                info.SetBuffer(bytes, 0, bytes.Length);
-                var awaitable1 = new SocketAwaitable(info);
                 await socket.SendToAsync(awaitable1);
             }
         }
@@ -695,11 +695,11 @@ namespace Lextm.SharpSnmpLib.Messaging
             var bufSize = udpSocket.ReceiveBufferSize = Messenger.MaxMessageSize;
 
             // Whatever you change, try to keep the Send and the Receive close to each other.
-            using (var info = new SocketAsyncEventArgs())
+            var info = SocketExtension.EventArgsFactory.Create();
+            info.RemoteEndPoint = receiver;
+            info.SetBuffer(bytes, 0, bytes.Length);
+            using (var awaitable1 = new SocketAwaitable(info))
             {
-                info.RemoteEndPoint = receiver;
-                info.SetBuffer(bytes, 0, bytes.Length);
-                var awaitable1 = new SocketAwaitable(info);
                 await udpSocket.SendToAsync(awaitable1);
             }
 
@@ -707,14 +707,16 @@ namespace Lextm.SharpSnmpLib.Messaging
             var reply = new byte[bufSize];
 
             // IMPORTANT: follow http://blogs.msdn.com/b/pfxteam/archive/2011/12/15/10248293.aspx
-            var args = new SocketAsyncEventArgs();
+            var args = SocketExtension.EventArgsFactory.Create();
             EndPoint remote = new IPEndPoint(IPAddress.Any, 0);
             try
             {
                 args.RemoteEndPoint = remote;
                 args.SetBuffer(reply, 0, bufSize);
-                var awaitable = new SocketAwaitable(args);
-                count = await udpSocket.ReceiveAsync(awaitable);
+                using (var awaitable = new SocketAwaitable(args))
+                {
+                    count = await udpSocket.ReceiveAsync(awaitable);
+                }
             }
             catch (SocketException ex)
             {
@@ -732,10 +734,6 @@ namespace Lextm.SharpSnmpLib.Messaging
                 }
 
                 throw;
-            }
-            finally
-            {
-                args.Dispose();
             }
 
             // Passing 'count' is not necessary because ParseMessages should ignore it, but it offer extra safety (and would avoid an issue if parsing >1 response).

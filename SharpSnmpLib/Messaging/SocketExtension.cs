@@ -21,5 +21,7 @@
                 awaitable.m_wasCompleted = true;
             return awaitable;
         }
+
+        internal static readonly SocketAsyncEventArgsFactory EventArgsFactory = new SocketAsyncEventArgsFactory();
     }
 }

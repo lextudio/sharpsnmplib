@@ -6,13 +6,14 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    internal sealed class SocketAwaitable : INotifyCompletion
+    internal sealed class SocketAwaitable : INotifyCompletion, IDisposable
     {
         private readonly static Action SENTINEL = () => { };
 
         internal bool m_wasCompleted;
         internal Action m_continuation;
         internal SocketAsyncEventArgs m_eventArgs;
+        private bool _disposed;
 
         public SocketAwaitable(SocketAsyncEventArgs eventArgs)
         {
@@ -21,8 +22,35 @@
                 throw new ArgumentNullException(nameof(eventArgs));
             }
 
-            this.m_eventArgs = eventArgs;
-            eventArgs.Completed += Completed;
+            m_eventArgs = eventArgs;
+            m_eventArgs.Completed += Completed;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        ~SocketAwaitable()
+        {
+            Dispose(false);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            _disposed = true;
+            if (disposing)
+            {
+                m_eventArgs.Completed -= Completed;
+                SocketExtension.EventArgsFactory.Reuse(m_eventArgs);
+                m_eventArgs = null;
+            }
         }
 
         private void Completed(object sender, SocketAsyncEventArgs e)
