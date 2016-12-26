@@ -59,7 +59,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="community">The community.</param>
         /// <param name="interval">The discovering time interval, in milliseconds.</param>
         /// <remarks><paramref name="broadcastAddress"/> must be an IPv4 address. IPv6 is not yet supported here.</remarks>
-        [Obsolete("Please use DiscoverAsync instead.")]
         public void Discover(VersionCode version, IPEndPoint broadcastAddress, OctetString community, int interval)
         {
             if (broadcastAddress == null)
@@ -94,11 +93,14 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             using (var udp = new UdpClient(addressFamily))
             {
-                #if (!CF)
+#if (!CF)
                 udp.EnableBroadcast = true;
-                #endif
+#endif
+#if !NETSTANDARD
                 udp.Send(bytes, bytes.Length, broadcastAddress);
-
+#else
+                AsyncHelper.RunSync(() => udp.SendAsync(bytes, bytes.Length, broadcastAddress));
+#endif
                 var activeBefore = Interlocked.CompareExchange(ref _active, Active, Inactive);
                 if (activeBefore == Active)
                 {
@@ -108,15 +110,17 @@ namespace Lextm.SharpSnmpLib.Messaging
 
                 _bufferSize = udp.Client.ReceiveBufferSize = Messenger.MaxMessageSize;
 
-                #if ASYNC
+#if ASYNC
                 Task.Factory.StartNew(() => AsyncBeginReceive(udp.Client));
-                #else
+#else
                 Task.Factory.StartNew(() => AsyncReceive(udp.Client));
-                #endif
+#endif
 
                 Thread.Sleep(interval);
                 Interlocked.CompareExchange(ref _active, Inactive, Active);
+#if !NETSTANDARD
                 udp.Close();
+#endif
             }
         }
 

@@ -514,7 +514,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="variables">Variable binds.</param>
         /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
         /// <returns></returns>
-        [Obsolete("Please use GetAsync instead.")]
         public static IList<Variable> Get(VersionCode version, IPEndPoint endpoint, OctetString community, IList<Variable> variables, int timeout)
         {
             if (endpoint == null)
@@ -560,7 +559,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="variables">Variable binds.</param>
         /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
         /// <returns></returns>
-        [Obsolete("Please use SetAsync instead.")]
         public static IList<Variable> Set(VersionCode version, IPEndPoint endpoint, OctetString community, IList<Variable> variables, int timeout)
         {
             if (endpoint == null)
@@ -610,7 +608,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns>
         /// Returns row count if the OID is a table. Otherwise this value is meaningless.
         /// </returns>
-        [Obsolete("Please use WalkAsync instead.")]
         public static int Walk(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, IList<Variable> list, int timeout, WalkMode mode)
         {
             if (list == null)
@@ -696,7 +693,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="privacy">The privacy provider.</param>
         /// <param name="report">The report.</param>
         /// <returns></returns>
-        [Obsolete("Please use BulkWalkAsync instead.")]
         public static int BulkWalk(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, IList<Variable> list, int timeout, int maxRepetitions, WalkMode mode, IPrivacyProvider privacy, ISnmpMessage report)
         {
             if (list == null)
@@ -753,7 +749,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="timestamp">Timestamp.</param>
         /// <param name="variables">Variable bindings.</param>
         [CLSCompliant(false)]
-        [Obsolete("Please use SendTrapV1Async instead.")]
         public static void SendTrapV1(EndPoint receiver, IPAddress agent, OctetString community, ObjectIdentifier enterprise, GenericCode generic, int specific, uint timestamp, IList<Variable> variables)
         {
             var message = new TrapV1Message(VersionCode.V1, agent, community, enterprise, generic, specific, timestamp, variables);
@@ -771,7 +766,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="variables">Variable bindings.</param>
         /// <param name="requestId">Request ID.</param>
         [CLSCompliant(false)]
-        [Obsolete("Please use SendTrapV2Async instead.")]
         public static void SendTrapV2(int requestId, VersionCode version, EndPoint receiver, OctetString community, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables)
         {
             if (version != VersionCode.V2)
@@ -797,7 +791,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="privacy">The privacy provider.</param>
         /// <param name="report">The report.</param>
         [CLSCompliant(false)]
-        [Obsolete("Please use SendInformAsync instead.")]
         public static void SendInform(int requestId, VersionCode version, IPEndPoint receiver, OctetString community, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables, int timeout, IPrivacyProvider privacy, ISnmpMessage report)
         {
             if (receiver == null)

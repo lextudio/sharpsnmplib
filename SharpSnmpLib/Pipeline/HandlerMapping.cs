@@ -112,8 +112,11 @@ namespace Lextm.SharpSnmpLib.Pipeline
             {
                 return (IMessageHandler)Activator.CreateInstance(assembly.GetType(type));
             }
-
+#if NETSTANDARD
+            return new NullMessageHandler();
+#else
             return (IMessageHandler)Activator.CreateInstance(AppDomain.CurrentDomain.Load(assemblyName).GetType(type));
+#endif
         }
 
         /// <summary>

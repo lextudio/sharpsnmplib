@@ -35,7 +35,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// A <see cref="ISnmpMessage"/>.
         /// </param>
         /// <param name="receiver">Receiver.</param>
-        [Obsolete("Please use SendResponseAsync instead.")]
         void SendResponse(ISnmpMessage response, EndPoint receiver);
 
         /// <summary>

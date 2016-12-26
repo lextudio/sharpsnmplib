@@ -27,8 +27,11 @@ namespace Lextm.SharpSnmpLib.Objects
     /// </summary>
     public sealed class SysName : ScalarObject
     {
+#if NETSTANDARD
+        private OctetString _name = new OctetString("UNKNOWN");
+#else
         private OctetString _name = new OctetString(Environment.MachineName);
-
+#endif
         /// <summary>
         /// Initializes a new instance of the <see cref="SysName"/> class.
         /// </summary>

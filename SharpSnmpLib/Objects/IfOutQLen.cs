@@ -48,7 +48,7 @@ namespace Lextm.SharpSnmpLib.Objects
         /// <exception cref="AccessFailureException"></exception>
         public override ISnmpData Data
         {
-            get { return new Gauge32(_networkInterface.GetIPv4Statistics().OutputQueueLength); }
+            get { return new Gauge32(_networkInterface.GetIPStatistics().OutputQueueLength); }
             set { throw new AccessFailureException(); }
         }
     }

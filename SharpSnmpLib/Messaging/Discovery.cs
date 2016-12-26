@@ -186,7 +186,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
         /// <param name="receiver">The receiver.</param>
         /// <returns></returns>
-        [Obsolete("Please use GetResponseAsync instead.")]
         public ReportMessage GetResponse(int timeout, IPEndPoint receiver)
         {
             if (receiver == null)

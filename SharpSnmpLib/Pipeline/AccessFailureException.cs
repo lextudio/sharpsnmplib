@@ -63,7 +63,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
             : base(message, inner) 
         {
         }
-
+#if !NETSTANDARD
         /// <summary>
         /// Creates a <see cref="AccessFailureException"/> instance.
         /// </summary>
@@ -73,7 +73,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
             : base(info, context)
         {
         }
-
+#endif
         /// <summary>
         /// Returns a <see cref="String"/> that represents this <see cref="AccessFailureException"/>.
         /// </summary>

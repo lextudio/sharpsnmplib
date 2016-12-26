@@ -172,7 +172,9 @@ namespace Lextm.SharpSnmpLib.Security
             using (var md5 = new HMACMD5(key))
             {
                 var hash = md5.ComputeHash(ByteTool.PackMessage(length, version, header, parameters, data).ToBytes());
+#if !NETSTANDARD
                 md5.Clear();
+#endif
                 var result = new byte[DigestLength];
                 Buffer.BlockCopy(hash, 0, result, 0, result.Length);
                 return new OctetString(result);

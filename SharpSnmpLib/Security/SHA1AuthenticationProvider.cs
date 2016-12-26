@@ -171,7 +171,9 @@ namespace Lextm.SharpSnmpLib.Security
             using (var sha1 = new HMACSHA1(key))
             {
                 var hash = sha1.ComputeHash(ByteTool.PackMessage(length, version, header, parameters, data).ToBytes());
+#if !NETSTANDARD                
                 sha1.Clear();
+#endif
                 var result = new byte[DigestLength];
                 Buffer.BlockCopy(hash, 0, result, 0, result.Length);
                 return new OctetString(result);

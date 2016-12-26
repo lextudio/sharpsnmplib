@@ -130,7 +130,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         /// <param name="message">The <see cref="ISnmpMessage"/>.</param>
         /// <param name="manager">Manager</param>
-        [Obsolete("Please use SendAsync instead.")]
         public static void Send(this ISnmpMessage message, EndPoint manager)
         {
             if (message == null)
@@ -164,7 +163,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="message">The <see cref="ISnmpMessage"/>.</param>
         /// <param name="manager">Manager</param>
         /// <param name="socket">The socket.</param>
-        [Obsolete("Please use SendAsync instead.")]
         public static void Send(this ISnmpMessage message, EndPoint manager, Socket socket)
         {
             if (message == null)
@@ -203,7 +201,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="receiver">Port number.</param>
         /// <param name="registry">User registry.</param>
         /// <returns></returns>
-        [Obsolete("Please use GetResponseAsync instead.")]
         public static ISnmpMessage GetResponse(this ISnmpMessage request, int timeout, IPEndPoint receiver, UserRegistry registry)
         {
             // TODO: make more usage of UserRegistry.
@@ -236,7 +233,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
         /// <param name="receiver">Port number.</param>
         /// <returns></returns>
-        [Obsolete("Please use GetResponseAsync instead.")]
         public static ISnmpMessage GetResponse(this ISnmpMessage request, int timeout, IPEndPoint receiver)
         {
             if (request == null)
@@ -269,7 +265,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="receiver">Agent.</param>
         /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
         /// <returns></returns>
-        [Obsolete("Please use GetResponseAsync instead.")]
         public static ISnmpMessage GetResponse(this ISnmpMessage request, int timeout, IPEndPoint receiver, Socket udpSocket)
         {
             if (request == null)
@@ -305,7 +300,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
         /// <param name="registry">The user registry.</param>
         /// <returns></returns>
-        [Obsolete("Please use GetResponseAsync instead.")]
         public static ISnmpMessage GetResponse(this ISnmpMessage request, int timeout, IPEndPoint receiver, UserRegistry registry, Socket udpSocket)
         {
             if (request == null)
@@ -385,7 +379,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         #endregion
 
         #region async methods
-
+#if !NETSTANDARD
         /// <summary>
         /// Ends a pending asynchronous read.
         /// </summary>
@@ -485,7 +479,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             var ar = udpSocket.BeginReceive(buffer, 0, bufferSize, SocketFlags.None, callback, state);
             return new SnmpMessageAsyncResult(ar, udpSocket, registry, receiver, buffer);
         }
-
+#endif
         /// <summary>
         /// Sends an <see cref="ISnmpMessage"/>.
         /// </summary>

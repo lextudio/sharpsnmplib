@@ -56,7 +56,7 @@ namespace Lextm.SharpSnmpLib.Objects
         /// <exception cref="AccessFailureException"></exception>
         public override ISnmpData Data
         {
-            get { return new Counter32(_networkInterface.GetIPv4Statistics().BytesReceived); }
+            get { return new Counter32(_networkInterface.GetIPStatistics().BytesReceived); }
             set { throw new AccessFailureException(); }
         }
     }

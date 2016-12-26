@@ -48,8 +48,10 @@ namespace Lextm.SharpSnmpLib.Objects
         {
             NetworkChange.NetworkAddressChanged +=
                 (sender, args) => LoadElements();
+#if !NETSTANDARD
             NetworkChange.NetworkAvailabilityChanged +=
                 (sender, args) => LoadElements();
+#endif                
             LoadElements();
         }
 
