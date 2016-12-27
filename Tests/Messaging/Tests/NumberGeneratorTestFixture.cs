@@ -7,7 +7,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
 {
     public class NumberGeneratorTestFixture
     {
-        [Theory]
+        //[Theory]
         [InlineData(1000000)]
         public void Test(int count)
         {
@@ -18,7 +18,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             Assert.Equal(0, dupes.Count());
         }
 
-        [Theory]
+        //[Theory]
         [InlineData(1000)]
         //[InlineData(10000)]
         public void TestOverflow(int count)

@@ -48,13 +48,13 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Pv")]
         public const string ErrorIPv4NotSupported = "cannot use IP v4 as the OS does not support it";
-        
+
         /// <summary>
         /// Error message for non IP v6 OS.
         /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Pv")]
         public const string ErrorIPv6NotSupported = "cannot use IP v6 as the OS does not support it";
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Listener"/> class.
         /// </summary>
@@ -62,7 +62,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             Bindings = new List<ListenerBinding>();
         }
-        
+
         /// <summary>
         /// Releases unmanaged resources and performs other cleanup operations before the
         /// <see cref="Listener"/> is reclaimed by garbage collection.
@@ -71,7 +71,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             Dispose(false);
         }
-        
+
         /// <summary>
         /// Disposes resources in use.
         /// </summary>
@@ -80,7 +80,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             Dispose(true);
             GC.SuppressFinalize(this);
         }
-        
+
         /// <summary>
         /// Releases the unmanaged resources used by the <see cref="T:System.ComponentModel.Component"/> and optionally releases the managed resources.
         /// </summary>
@@ -91,7 +91,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 return;
             }
-            
+
             if (disposing)
             {
                 if (Bindings != null)
@@ -100,12 +100,12 @@ namespace Lextm.SharpSnmpLib.Messaging
                     {
                         binding.Dispose();
                     }
-                    
+
                     Bindings.Clear();
                     Bindings = null;
                 }
             }
-            
+
             _disposed = true;
         }
 
@@ -121,17 +121,17 @@ namespace Lextm.SharpSnmpLib.Messaging
                 {
                     throw new ObjectDisposedException(GetType().FullName);
                 }
-                
+
                 return _users ?? (_users = new UserRegistry());
             }
-            
+
             set
             {
                 if (_disposed)
                 {
                     throw new ObjectDisposedException(GetType().FullName);
                 }
-                
+
                 _users = value;
             }
         }
@@ -150,13 +150,13 @@ namespace Lextm.SharpSnmpLib.Messaging
             if (_disposed)
             {
                 throw new ObjectDisposedException(GetType().FullName);
-            }       
+            }
 
             if (!Active)
             {
                 return;
             }
-            
+
             foreach (var binding in Bindings)
             {
                 binding.Stop();
@@ -174,13 +174,13 @@ namespace Lextm.SharpSnmpLib.Messaging
             if (_disposed)
             {
                 throw new ObjectDisposedException(GetType().FullName);
-            }  
+            }
 
             if (Active)
             {
                 return;
             }
-            
+
             try
             {
                 foreach (var binding in Bindings)
@@ -254,18 +254,18 @@ namespace Lextm.SharpSnmpLib.Messaging
             if (_disposed)
             {
                 throw new ObjectDisposedException(GetType().FullName);
-            }            
-            
+            }
+
             if (Active)
             {
                 throw new InvalidOperationException("Must be called when Active == false");
             }
-            
+
             if (Bindings.Any(existed => existed.Endpoint.Equals(endpoint)))
             {
                 return;
             }
-            
+
             var binding = new ListenerBinding(Users, endpoint);
             binding.ExceptionRaised += (o, args) =>
             {
@@ -295,13 +295,13 @@ namespace Lextm.SharpSnmpLib.Messaging
             if (_disposed)
             {
                 throw new ObjectDisposedException(GetType().FullName);
-            }            
-            
+            }
+
             if (Active)
             {
                 throw new InvalidOperationException("Must be called when Active == false");
             }
-            
+
             for (var i = 0; i < Bindings.Count; i++)
             {
                 if (Bindings[i].Endpoint.Equals(endpoint))
@@ -310,7 +310,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 }
             }
         }
-        
+
         /// <summary>
         /// Clears the bindings.
         /// </summary>
@@ -319,8 +319,8 @@ namespace Lextm.SharpSnmpLib.Messaging
             if (_disposed)
             {
                 throw new ObjectDisposedException(GetType().FullName);
-            }            
-            
+            }
+
             foreach (var binding in Bindings)
             {
                 binding.Stop();

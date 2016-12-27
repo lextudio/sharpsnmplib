@@ -10,13 +10,13 @@ namespace Lextm.SharpSnmpLib.Security.Tests
         {
             Assert.Equal((Levels)0, DefaultPrivacyProvider.DefaultPair.ToSecurityLevel());
         }
-
+#if !NETSTANDARD
         [Fact]
         public void TestException()
         {
             Assert.Throws<ArgumentException>(delegate { new DESPrivacyProvider(new OctetString(""), DefaultAuthenticationProvider.Instance); });
         }
-
+#endif
         [Fact]
         public void TestAuthenticationOnly()
         {

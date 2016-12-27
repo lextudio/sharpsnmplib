@@ -31,7 +31,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             Assert.Equal(0U, m.TimeStamp);
             Assert.Equal(0, m.Variables().Count);
         }
-        
+#if !NETSTANDARD
         [Fact]
         public void TestParseNoVarbind()
         {
@@ -69,6 +69,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             Assert.Equal("TrapTest", message.Variables()[1].Data.ToString());
             Assert.Equal(new uint[] {1,3,6,1,4,1,2162,1001,22,0}, message.Variables()[1].Id.ToNumerical());
         }
+#endif
     }
 }
 #pragma warning restore 1591

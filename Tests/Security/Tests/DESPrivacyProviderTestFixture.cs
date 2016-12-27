@@ -14,6 +14,7 @@ namespace Lextm.SharpSnmpLib.Security.Tests
 {
     public class DESPrivacyProviderTestFixture
     {
+#if !NETSTANDARD
         [Fact]
         public void TestException()
         {
@@ -95,5 +96,6 @@ namespace Lextm.SharpSnmpLib.Security.Tests
             Assert.Equal(SnmpType.OctetString, data.TypeCode);
             Assert.Equal(expected, data.ToBytes());
         }
+#endif
     }
 }

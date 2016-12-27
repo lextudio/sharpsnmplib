@@ -6,6 +6,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
 {
     public class TrapV2MessageTestFixture
     {
+#if !NETSTANDARD
         [Fact]
         public void TestToBytes()
         {
@@ -90,5 +91,6 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             Assert.Equal(1004947569, message.MessageId());
             Assert.Equal(234419641, message.RequestId());
         }
+#endif
     }
 }

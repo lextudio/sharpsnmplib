@@ -16,7 +16,7 @@ using Xunit;
 namespace Lextm.SharpSnmpLib.Messaging.Tests
 {
     public class MessageFactoryTestFixture
-    {   
+    {
         [Fact]
         public void TrapV1InSNMPV2()
         {
@@ -24,7 +24,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             var bytes = ByteTool.Convert(data);
             Assert.Throws<SnmpException>(() => MessageFactory.ParseMessages(bytes, new UserRegistry()));
         }
-        
+#if !NETSTANDARD
         [Fact]
         public void TestReportFailure()
         {
@@ -49,7 +49,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             var message = messages[0];
             Assert.Equal(1, message.Variables().Count);
         }
-
+#endif
         [Fact]
         public void TestReportFailure2()
         {
@@ -66,7 +66,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             Assert.Equal(1, message.Variables().Count);
             Assert.Equal("not in time window", message.Variables()[0].Id.GetErrorMessage());
         }
-        
+
         [Fact]
         public void TestInform()
         {
@@ -79,7 +79,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             IList<ISnmpMessage> messages = MessageFactory.ParseMessages(data, new UserRegistry());
             Assert.Equal(SnmpType.InformRequestPdu, messages[0].TypeCode());
         }
-     
+
         [Fact]
         public void TestString()
         {
@@ -92,7 +92,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             string i = v.Id.ToString();
             Assert.Equal(".1.3.6.1.2.1.1.5.0", i);
         }
-        
+
         [Fact]
         public void TestBrokenString()
         {
@@ -107,7 +107,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             {
                 hasException = true;
             }
-            
+
             Assert.True(hasException);
         }
 
@@ -142,7 +142,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             //Assert.Equal(SecurityLevel.None | SecurityLevel.Reportable, get.Level);
             Assert.Equal("lextm", get.Community().ToString());
         }
-
+#if !NETSTANDARD
         [Fact]
         public void TestGetRequestV3AuthPriv()
         {
@@ -180,28 +180,28 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
 
             //Assert.Equal(digest, get.Parameters.AuthenticationParameters);
         }
-
+#endif
         [Fact]
         public void TestGetRequestV3Auth()
         {
-            const string bytes = "30 73"+
-                                 "02 01  03 "+
-                                 "30 0F "+
-                                 "02  02 35 41 "+
-                                 "02  03 00 FF E3"+
-                                 "04 01 05"+
-                                 "02  01 03"+
-                                 "04 2E  "+
-                                 "30 2C"+
-                                 "04 0D  80 00 1F 88 80 E9 63 00  00 D6 1F F4  49 "+
-                                 "02 01 0D  "+
-                                 "02 01 57 "+
-                                 "04 05 6C 65 78  6C 69 "+
-                                 "04 0C  1C 6D 67 BF  B2 38 ED 63 DF 0A 05 24  "+
-                                 "04 00 "+
-                                 "30 2D  "+
-                                 "04 0D 80 00  1F 88 80 E9 63 00 00 D6  1F F4 49 "+
-                                 "04  00 "+
+            const string bytes = "30 73" +
+                                 "02 01  03 " +
+                                 "30 0F " +
+                                 "02  02 35 41 " +
+                                 "02  03 00 FF E3" +
+                                 "04 01 05" +
+                                 "02  01 03" +
+                                 "04 2E  " +
+                                 "30 2C" +
+                                 "04 0D  80 00 1F 88 80 E9 63 00  00 D6 1F F4  49 " +
+                                 "02 01 0D  " +
+                                 "02 01 57 " +
+                                 "04 05 6C 65 78  6C 69 " +
+                                 "04 0C  1C 6D 67 BF  B2 38 ED 63 DF 0A 05 24  " +
+                                 "04 00 " +
+                                 "30 2D  " +
+                                 "04 0D 80 00  1F 88 80 E9 63 00 00 D6  1F F4 49 " +
+                                 "04  00 " +
                                  "A0 1A 02  02 01 AF 02 01 00 02 01  00 30 0E 30  0C 06 08 2B  06 01 02 01 01 03 00 05  00";
             UserRegistry registry = new UserRegistry();
             registry.Add(new OctetString("lexli"), new DefaultPrivacyProvider(new MD5AuthenticationProvider(new OctetString("testpass"))));
@@ -215,7 +215,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
 
             //Assert.Equal(digest, get.Parameters.AuthenticationParameters);
         }
-
+#if !NETSTANDARD
         [Fact]
         public void TestResponseV1()
         {
@@ -231,7 +231,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             Assert.Equal(new uint[] { 1, 3, 6, 1, 2, 1, 1, 6, 0 }, v.Id.ToNumerical());
             Assert.Equal("Shanghai", v.Data.ToString());
         }
-
+#endif
         [Fact]
         public void TestGetResponseV3Error()
         {
@@ -258,16 +258,16 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             Assert.Equal("040D80001F8880E9630000D61FF449", message.Scope.ContextEngineId.ToHexString());
             Assert.Equal("", message.Scope.ContextName.ToHexString());
         }
-        
+
         [Fact]
         public void TestException()
         {
             Assert.Throws<ArgumentNullException>(() => MessageFactory.ParseMessages((byte[])null, null));
             Assert.Throws<ArgumentNullException>(() => MessageFactory.ParseMessages(new byte[0], null));
-            
+
             Assert.Throws<ArgumentNullException>(() => MessageFactory.ParseMessages((string)null, null));
             Assert.Throws<ArgumentNullException>(() => MessageFactory.ParseMessages(string.Empty, null));
-            
+
             Assert.Throws<ArgumentNullException>(() => MessageFactory.ParseMessages(null, 0, 0, null));
             Assert.Throws<ArgumentNullException>(() => MessageFactory.ParseMessages(new byte[0], 0, 0, null));
         }
@@ -286,7 +286,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             var messages = MessageFactory.ParseMessages(bytes, registry);
             Assert.Equal(1, messages.Count);
             Assert.Equal(SnmpType.Unknown, messages[0].TypeCode());
-          
+
             registry.Add(new OctetString("lextm"), DefaultPrivacyProvider.DefaultPair);
             messages = MessageFactory.ParseMessages(bytes, registry);
             Assert.Equal(1, messages.Count);
@@ -328,7 +328,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             Assert.Equal("80001F8880E9630000D61FF449", messages[0].Scope.ContextEngineId.ToHexString());
             Assert.Equal("", messages[0].Scope.ContextName.ToHexString());
         }
-        
+#if !NETSTANDARD
         [Fact]
         public void TestTrapV3()
         {
@@ -418,7 +418,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             Assert.Equal(1004947569, message.MessageId());
             Assert.Equal(234419641, message.RequestId());
         }
-
+#endif
         [Fact]
         public void TestBadResponseFromPrinter()
         {
