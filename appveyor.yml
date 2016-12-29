@@ -7,7 +7,7 @@ branches:
 before_build:
   - git submodule update --init --recursive
   - .\prepare.bat
-  - .\.nuget\nuget.exe restore SharpSnmpLib.Desktop.sln
+  - .\.nuget\nuget.exe restore SharpSnmpLib.Classic.sln
 build:
-  project: SharpSnmpLib.Desktop.sln
+  project: SharpSnmpLib.Classic.sln
   verbosity: minimal
