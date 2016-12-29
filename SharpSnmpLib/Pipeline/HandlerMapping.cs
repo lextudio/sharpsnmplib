@@ -30,6 +30,11 @@ namespace Lextm.SharpSnmpLib.Pipeline
     [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
     public sealed class HandlerMapping
     {
+        /// <summary>
+        /// .NET standard 1.3 only helper.
+        /// </summary>
+        public static ITypeResolver TypeResolver { get; set; } = new DefaultTypeResolver();
+
         private readonly string[] _version;
         private readonly bool _catchAll;
         private readonly string _command;
@@ -113,7 +118,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 return (IMessageHandler)Activator.CreateInstance(assembly.GetType(type));
             }
 #if NETSTANDARD
-            return new NullMessageHandler();
+            return (IMessageHandler)Activator.CreateInstance(TypeResolver.Load(assemblyName, type));
 #else
             return (IMessageHandler)Activator.CreateInstance(AppDomain.CurrentDomain.Load(assemblyName).GetType(type));
 #endif
