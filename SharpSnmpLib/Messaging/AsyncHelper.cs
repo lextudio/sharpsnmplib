@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Lextm.SharpSnmpLib.Messaging
 {
-    public static class AsyncHelper
+    internal static class AsyncHelper
     {
         private static readonly TaskFactory s_myTaskFactory = new
           TaskFactory(CancellationToken.None,

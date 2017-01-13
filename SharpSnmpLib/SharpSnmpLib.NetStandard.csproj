@@ -1,11 +1,26 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <PropertyGroup Label="Configuration">
     <RootNamespace>Lextm.SharpSnmpLib</RootNamespace>
-    <DefineConstants>TRACE;DEBUG;NETSTANDARD</DefineConstants>
-  </PropertyGroup>
+    <DefineConstants>TRACE;DEBUG;NETSTANDARD</DefineConstants>    
+  </PropertyGroup>  
   <PropertyGroup>
     <TargetFramework>netstandard1.3</TargetFramework>
     <DocumentationFile>SharpSnmpLib.NetStandard.xml</DocumentationFile>
+    <PackageId>Lextm.SharpSnmpLib</PackageId>
+    <Authors>Malcolm Crowe,Lex Li,and other contributors.</Authors>
+    <Description>#SNMP (SharpSNMP) Library is an open source library for developers who target Microsoft .NET/Xamarin/Mono platforms. It's developed in C# and can be used for F#, VB.NET, Oxygene, and more.</Description>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
+    <PackageProjectUrl>https://sharpsnmplib.codeplex.com/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/lextm/sharpsnmplib.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReleaseNotes>https://sharpsnmplib.codeplex.com/releases/view/116908</PackageReleaseNotes>
+    <Copyright>All rights reserved. (c) 2008-2016 Malcolm Crowe, Lex Li, and other contributors.</Copyright>
+    <PackageTags>smi snmp mib</PackageTags>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>sharpsnmplib.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>False</DelaySign>
+    <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <OutputType>library</OutputType>

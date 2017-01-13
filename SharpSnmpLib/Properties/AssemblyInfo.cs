@@ -36,8 +36,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("MIT/X11")]
 [assembly: AssemblyCompany("LeXtudio")]
 [assembly: AssemblyProduct("#SNMPLib")]
-#endif
 [assembly: AssemblyCopyright("(C) 2008-2012 Malcolm Crowe, Lex Li, and other contributors.")]
+#endif
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

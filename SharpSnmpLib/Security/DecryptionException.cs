@@ -57,36 +57,6 @@ namespace Lextm.SharpSnmpLib.Security
         {
         }
 
-#if !NETFX_CORE
-        /// <summary>
-        /// Creates a <see cref="DecryptionException"/> instance.
-        /// </summary>
-        /// <param name="info">Info</param>
-        /// <param name="context">Context</param>
-        //private DecryptionException(SerializationInfo info, StreamingContext context)
-        //    : base(info, context)
-        //{
-        //    if (info == null)
-        //    {
-        //        throw new ArgumentNullException("info");
-        //    }
-            
-        //    _bytes = (byte[])info.GetValue("Bytes", typeof(byte[]));
-        //}
-        
-        /// <summary>
-        /// Gets object data.
-        /// </summary>
-        /// <param name="info">Info</param>
-        /// <param name="context">Context</param>
-        //[SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
-        //public override void GetObjectData(SerializationInfo info, StreamingContext context)
-        //{
-        //    base.GetObjectData(info, context);
-        //    info.AddValue("Bytes", _bytes);
-        //}
-#endif
-
         /// <summary>
         /// Gets the bytes.
         /// </summary>        

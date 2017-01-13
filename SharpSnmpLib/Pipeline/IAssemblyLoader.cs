@@ -7,6 +7,12 @@ namespace Lextm.SharpSnmpLib.Pipeline
     /// </summary>
     public interface ITypeResolver
     {
+        /// <summary>
+        /// Loads desired type from an assembly.
+        /// </summary>
+        /// <param name="assembly">Assembly name.</param>
+        /// <param name="name">Type name.</param>
+        /// <returns>Type metadata.</returns>
         Type Load(string assembly, string name);
     }
 }
