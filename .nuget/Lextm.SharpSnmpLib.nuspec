@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
   <metadata>
-    <version>9.0.6-beta1</version>
+    <version>9.0.6-beta2</version>
     <authors>Malcolm Crowe,Lex Li,and other contributors.</authors>
     <owners>Lex Li</owners>
     <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
@@ -35,7 +35,7 @@
     <file src="..\bin\SharpSnmpLib.Portable.xml" target="lib\Monoandroid\SharpSnmpLib.Portable.xml" />
     <file src="..\bin\SharpSnmpLib.Portable.dll" target="lib\portable-net45+netcore45+MonoAndroid1+MonoTouch1\SharpSnmpLib.Portable.dll" />
     <file src="..\bin\SharpSnmpLib.Portable.xml" target="lib\portable-net45+netcore45+MonoAndroid1+MonoTouch1\SharpSnmpLib.Portable.xml" />
-    <file src="..\bin\SharpSnmpLib.NetStandard.dll" target="lib\netstandard1.3\SharpSnmpLib.Portable.dll" />
+    <file src="..\bin\SharpSnmpLib.NetStandard.dll" target="lib\netstandard1.3\SharpSnmpLib.NetStandard.dll" />
     <file src="..\bin\SharpSnmpLib.NetStandard.xml" target="lib\netstandard1.3\SharpSnmpLib.NetStandard.xml" />
   </files>
 </package>
