@@ -9,12 +9,8 @@ for %%v in (2.0, 3.5, 4.0, 12.0, 14.0) do (
 )
 
 rmdir /S /Q bin
-rmdir /S /Q SharpSnmpLib\obj
-rmdir /S /Q Tests\obj
 mkdir bin
 .nuget\nuget.exe restore SharpSnmpLib.Classic.sln
 call "%MSBuildExe%" SharpSnmpLib.Classic.sln /t:clean /p:Configuration=Release /p:OutputPath=..\bin\
 call "%MSBuildExe%" SharpSnmpLib.Classic.sln /t:build /p:Configuration=Release /p:OutputPath=..\bin\
-call dotnet restore SharpSnmpLib.NetStandard.sln
-call dotnet build SharpSnmpLib.NetStandard.sln /p:Configuration=Debug /p:OutputPath=..\bin\
 @IF %ERRORLEVEL% NEQ 0 PAUSE
