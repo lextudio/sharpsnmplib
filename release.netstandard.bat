@@ -1,2 +1,3 @@
 call dotnet restore SharpSnmpLib.NetStandard.sln
-call dotnet build SharpSnmpLib.NetStandard.sln /p:Configuration=Debug /p:OutputPath=..\bin\ 
+call dotnet clean SharpSnmpLib.NetStandard.sln /p:Configuration=Release /p:OutputPath=..\bin\ 
+call dotnet build SharpSnmpLib.NetStandard.sln /p:Configuration=Release /p:OutputPath=..\bin\ 

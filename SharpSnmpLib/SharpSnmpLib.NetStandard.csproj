@@ -6,8 +6,8 @@
   <PropertyGroup>
     <TargetFramework>netstandard1.3</TargetFramework>
     <VersionPrefix>9.0.6</VersionPrefix>
-    <VersionSuffix>rc</VersionSuffix>
-    <PackageVersion>9.0.6-rc</PackageVersion>
+    <VersionSuffix></VersionSuffix>
+    <PackageVersion>9.0.6</PackageVersion>
     <DocumentationFile>SharpSnmpLib.NetStandard.xml</DocumentationFile>
     <PackageId>Lextm.SharpSnmpLib</PackageId>
     <NeutralLanguage>en-US</NeutralLanguage>
