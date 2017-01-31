@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
+﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <PropertyGroup Label="Configuration">
     <RootNamespace>Lextm.SharpSnmpLib</RootNamespace>
     <DefineConstants>TRACE;DEBUG;NETSTANDARD</DefineConstants>
@@ -6,7 +6,8 @@
   <PropertyGroup>
     <TargetFramework>netstandard1.3</TargetFramework>
     <VersionPrefix>9.0.6</VersionPrefix>
-    <VersionSuffix></VersionSuffix>
+    <VersionSuffix>
+    </VersionSuffix>
     <PackageVersion>9.0.6</PackageVersion>
     <DocumentationFile>SharpSnmpLib.NetStandard.xml</DocumentationFile>
     <PackageId>Lextm.SharpSnmpLib</PackageId>
@@ -29,9 +30,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <OutputType>library</OutputType>
   </PropertyGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="**\*.resx" />
-  </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard1.3'">
     <PackageReference Include="System.AppDomain" Version="2.0.11" />
     <PackageReference Include="System.ComponentModel.TypeConverter" Version="4.3.0" />
