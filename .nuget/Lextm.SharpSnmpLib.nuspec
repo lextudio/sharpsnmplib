@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
   <metadata>
-    <version>9.0.6</version>
+    <version>9.0.7</version>
     <authors>Malcolm Crowe,Lex Li,and other contributors.</authors>
     <owners>Lex Li</owners>
     <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
@@ -16,7 +16,7 @@
     <description>#SNMP (SharpSNMP) Library is an open source library for developers who target Microsoft .NET/Xamarin/Mono platforms. It's developed in C# and can be used for F#, VB.NET, Oxygene, and more.</description>
     <summary>#SNMP open source SNMP library for .NET and Mono.</summary>
     <releaseNotes>https://sharpsnmplib.codeplex.com/releases/view/116908</releaseNotes>
-    <copyright>All rights reserved. (c) 2008-2016 Malcolm Crowe, Lex Li, and other contributors.</copyright>
+    <copyright>All rights reserved. (c) 2008-2017 Malcolm Crowe, Lex Li, and other contributors.</copyright>
     <language>en-US</language>
     <tags>snmp</tags>
   </metadata>
