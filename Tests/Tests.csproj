@@ -122,6 +122,7 @@
     <Compile Include="Security\Tests\AuthenticationProviderExtensionTestFixture.cs" />
     <Compile Include="Security\Tests\DefaultAuthenticationProviderTestFixture.cs" />
     <Compile Include="Security\Tests\DefaultPrivacyProviderTestFixture.cs" />
+    <Compile Include="Security\Tests\AESPrivacyProviderTestFixture.cs" />
     <Compile Include="Security\Tests\DESPrivacyProviderTestFixture.cs" />
     <Compile Include="Security\Tests\MD5AuthenticationProviderTestFixture.cs" />
     <Compile Include="Security\Tests\PrivacyProviderExtensionTestFixture.cs" />
