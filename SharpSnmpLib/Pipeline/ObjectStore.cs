@@ -28,16 +28,16 @@ namespace Lextm.SharpSnmpLib.Pipeline
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
     public class ObjectStore
     {
-        private readonly IList<ISnmpObject> _list = new List<ISnmpObject>();
+        protected readonly IList<ISnmpObject> List = new List<ISnmpObject>();
 
         /// <summary>
         /// Gets the object.
         /// </summary>
         /// <param name="id">The object id.</param>
         /// <returns></returns>
-        virtual public ScalarObject GetObject(ObjectIdentifier id)
+        public virtual ScalarObject GetObject(ObjectIdentifier id)
         {
-            return _list.Select(o => o.MatchGet(id)).FirstOrDefault(result => result != null);
+            return List.Select(o => o.MatchGet(id)).FirstOrDefault(result => result != null);
         }
 
         /// <summary>
@@ -45,18 +45,18 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// </summary>
         /// <param name="id">The object id.</param>
         /// <returns></returns>
-        virtual public ScalarObject GetNextObject(ObjectIdentifier id)
+        public virtual ScalarObject GetNextObject(ObjectIdentifier id)
         {
-            return _list.Select(o => o.MatchGetNext(id)).FirstOrDefault(result => result != null);
+            return List.Select(o => o.MatchGetNext(id)).FirstOrDefault(result => result != null);
         }
 
         /// <summary>
         /// Adds the specified <see cref="ISnmpObject"/>.
         /// </summary>
         /// <param name="newObject">The object.</param>
-        public void Add(ISnmpObject newObject)
+        public virtual void Add(ISnmpObject newObject)
         {
-            _list.Add(newObject);
+            List.Add(newObject);
         }
     }
 }
