@@ -14,7 +14,6 @@
     <SourceAnalysisOverrideSettingsFile>D:\sharpsnmplib_svn\SharpSnmpLib\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>sharpsnmplib.snk</AssemblyOriginatorKeyFile>
-    <DelaySign>False</DelaySign>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
     <SccProjectName>
     </SccProjectName>
@@ -186,6 +185,7 @@
     <Compile Include="Security\MD5AuthenticationProvider.cs" />
     <Compile Include="Security\SHA1AuthenticationProvider.cs" />
     <None Include="sharpsnmplib.snk" />
+    <Compile Include="Objects\NetworkInterfaceExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
