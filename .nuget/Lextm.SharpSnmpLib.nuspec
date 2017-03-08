@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
   <metadata>
-    <version>9.0.7</version>
+    <version>9.0.8</version>
     <authors>Malcolm Crowe,Lex Li,and other contributors.</authors>
     <owners>Lex Li</owners>
     <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
@@ -19,6 +19,20 @@
     <copyright>All rights reserved. (c) 2008-2017 Malcolm Crowe, Lex Li, and other contributors.</copyright>
     <language>en-US</language>
     <tags>snmp</tags>
+    <dependencies>
+      <group targetFramework="net45" />
+      <group targetFramework="Xamarin.iOS10" />
+      <group targetFramework="Monoandroid" />
+      <group targetFramework="portable-net45+netcore45+MonoAndroid1+MonoTouch1" />
+      <group targetFramework="netstandard1.3">
+        <dependency id="NETStandard.Library" version="1.6.1" />
+        <dependency id="System.AppDomain" version="2.0.11" />
+        <dependency id="System.ComponentModel.TypeConverter" version="4.3.0" />
+        <dependency id="System.Net.NetworkInformation" version="4.3.0" />
+        <dependency id="System.Runtime.Serialization.Primitives" version="4.3.0" />
+        <dependency id="System.Threading.Thread" version="4.3.0" />
+      </group>
+    </dependencies>
   </metadata>
   <files>
     <file src="..\bin\SharpSnmpLib.Full.dll" target="lib\net45\SharpSnmpLib.Full.dll" />
