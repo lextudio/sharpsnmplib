@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 
 namespace Lextm.SharpSnmpLib.Pipeline
 {
@@ -12,6 +13,12 @@ namespace Lextm.SharpSnmpLib.Pipeline
         {
             // IMPORTANT: .NET standard 1.3 does not support this scenario so simply return a default type.
             return typeof(NullMessageHandler);
+        }
+
+        /// <inheritdoc />
+        public Assembly[] GetAssemblies()
+        {
+            return Array.Empty<Assembly>();
         }
     }
 }

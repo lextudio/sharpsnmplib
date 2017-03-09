@@ -111,7 +111,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
 
         private static IMessageHandler CreateMessageHandler(string assemblyName, string type)
         {
-            foreach (var assembly in from assembly in AppDomain.CurrentDomain.GetAssemblies()
+            foreach (var assembly in from assembly in TypeResolver.GetAssemblies()
                                           let name = assembly.GetName().Name
                                           where string.Compare(name, assemblyName, StringComparison.OrdinalIgnoreCase) == 0
                                           select assembly)

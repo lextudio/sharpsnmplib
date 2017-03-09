@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 
 namespace Lextm.SharpSnmpLib.Pipeline
 {
@@ -14,5 +15,11 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <param name="name">Type name.</param>
         /// <returns>Type metadata.</returns>
         Type Load(string assembly, string name);
+
+        /// <summary>
+        /// Returns assemblies loaded.
+        /// </summary>
+        /// <returns></returns>
+        Assembly[] GetAssemblies();
     }
 }
