@@ -12,7 +12,7 @@ rmdir /S /Q bin
 mkdir bin
 rmdir /S /Q SharpSnmpLib\obj
 rmdir /S /Q Tests\obj
-.nuget\nuget.exe restore SharpSnmpLib.sln
+.nuget\nuget.exe restore SharpSnmpLib.Classic.sln
 call "%MSBuildExe%" SharpSnmpLib.Classic.sln /t:clean /p:Configuration=Debug /p:OutputPath=..\bin\
 call "%MSBuildExe%" SharpSnmpLib.Classic.sln /t:build /p:Configuration=Debug /p:OutputPath=..\bin\
 call dotnet restore SharpSnmpLib.NetStandard.sln

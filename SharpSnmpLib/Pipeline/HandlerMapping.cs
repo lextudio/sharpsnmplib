@@ -111,16 +111,26 @@ namespace Lextm.SharpSnmpLib.Pipeline
 
         private static IMessageHandler CreateMessageHandler(string assemblyName, string type)
         {
+
+#if NETSTANDARD
             foreach (var assembly in from assembly in TypeResolver.GetAssemblies()
-                                          let name = assembly.GetName().Name
-                                          where string.Compare(name, assemblyName, StringComparison.OrdinalIgnoreCase) == 0
-                                          select assembly)
+                                     let name = assembly.GetName().Name
+                                     where string.Compare(name, assemblyName, StringComparison.OrdinalIgnoreCase) == 0
+                                     select assembly)
             {
                 return (IMessageHandler)Activator.CreateInstance(assembly.GetType(type));
             }
-#if NETSTANDARD
+
             return (IMessageHandler)Activator.CreateInstance(TypeResolver.Load(assemblyName, type));
 #else
+            foreach (var assembly in from assembly in AppDomain.CurrentDomain.GetAssemblies()
+                                let name = assembly.GetName().Name
+                                where string.Compare(name, assemblyName, StringComparison.OrdinalIgnoreCase) == 0
+                                select assembly)
+            {
+                return (IMessageHandler)Activator.CreateInstance(assembly.GetType(type));
+            }
+
             return (IMessageHandler)Activator.CreateInstance(AppDomain.CurrentDomain.Load(assemblyName).GetType(type));
 #endif
         }

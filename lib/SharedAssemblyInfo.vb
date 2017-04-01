@@ -7,5 +7,5 @@ Imports System.Reflection
 ' You can specify all values by your own or you can build default build and revision
 ' numbers with the '*' character (the default):
 
-<Assembly: AssemblyVersion("9.0.040308.00")> 
-<Assembly: AssemblyFileVersion("9.0.040308.00")> 
+<Assembly: AssemblyVersion("9.1.000401.01")> 
+<Assembly: AssemblyFileVersion("9.1.000401.01")> 
