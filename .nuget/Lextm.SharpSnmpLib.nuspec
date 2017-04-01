@@ -5,7 +5,7 @@
     <authors>Malcolm Crowe,Lex Li,and other contributors.</authors>
     <owners>Lex Li</owners>
     <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
-    <projectUrl>https://sharpsnmplib.codeplex.com/</projectUrl>
+    <projectUrl>https://docs.sharpsnmp.com/</projectUrl>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System" targetFramework="" />
       <frameworkAssembly assemblyName="System.Core" targetFramework="" />
@@ -15,7 +15,7 @@
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <description>#SNMP (SharpSNMP) Library is an open source library for developers who target Microsoft .NET/Xamarin/Mono platforms. It's developed in C# and can be used for F#, VB.NET, Oxygene, and more.</description>
     <summary>#SNMP open source SNMP library for .NET and Mono.</summary>
-    <releaseNotes>https://sharpsnmplib.codeplex.com/releases/view/116908</releaseNotes>
+    <releaseNotes>https://github.com/lextm/sharpsnmplib/releases</releaseNotes>
     <copyright>All rights reserved. (c) 2008-2017 Malcolm Crowe, Lex Li, and other contributors.</copyright>
     <language>en-US</language>
     <tags>snmp</tags>
