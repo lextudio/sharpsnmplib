@@ -20,11 +20,15 @@
     <EmbeddedResource Remove="Properties\Resources.resx" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="packages.config" />
+    <None Remove="Tests.csproj.vspscc" />
+    <None Remove="Tests.nuget.props" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="sharpsnmplib.tests.snk" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Moq" Version="4.7.1" />
-    <PackageReference Include="NETStandard.Library" Version="1.6.1" />
+    <PackageReference Include="Moq" Version="4.7.8" />
     <PackageReference Include="System.AppDomain" Version="2.0.11" />
     <PackageReference Include="System.ComponentModel.TypeConverter" Version="4.3.0" />
     <PackageReference Include="System.Linq.Parallel" Version="4.3.0" />

@@ -333,7 +333,11 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
         }
 
         [Theory]
+#if  NETSTANDARD
+        [InlineData(64)]
+#else
         [InlineData(256)]
+#endif
         public async Task TestResponsesFromMultipleSources(int count)
         {
             var start = 16102;
