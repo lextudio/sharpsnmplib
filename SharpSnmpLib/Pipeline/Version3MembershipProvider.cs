@@ -42,11 +42,6 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 throw new ArgumentNullException("context");
             }
 
-            if (context.Request.TypeCode() == SnmpType.TrapV2Pdu)
-            {
-                return context.Request.Version == Version;
-            }
-            
             return context.Request.Version == Version && context.HandleMembership();
         }
     }

@@ -63,7 +63,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
                     Integer32.Zero,
                     Integer32.Zero,
                     new OctetString("lextm"),
-                    new OctetString(ByteTool.Convert("61A9A486AF4A861BD5C0BB1F")), 
+                    new OctetString(ByteTool.Convert("61A9A486AF4A861BD5C0BB1F")),
                     new OctetString(ByteTool.Convert("0000000069D39B2A"))),
                 new Scope(OctetString.Empty, OctetString.Empty,
                           new TrapV2Pdu(
@@ -71,8 +71,8 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
                               new ObjectIdentifier("1.3.6"),
                               0,
                               new List<Variable>())),
-                privacy, 
-                null);         
+                privacy,
+                null);
             byte[] bytes = trap.ToBytes();
             UserRegistry registry = new UserRegistry();
             registry.Add(new OctetString("lextm"), privacy);

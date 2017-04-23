@@ -40,7 +40,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// Static methods in Manager or Agent class will be removed in the future.
     /// </summary>
     /// <remarks>
-    /// SNMP v3 is not supported by this class. Please use <see cref="ISnmpMessage" /> derived classes directly
+    /// SNMP v3 is not supported in many methods of this class. Please use <see cref="ISnmpMessage" /> derived classes directly
     /// if you want to do v3 operations.
     /// </remarks>
     public static class Messenger
@@ -313,6 +313,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="specific">Specific code.</param>
         /// <param name="timestamp">Timestamp.</param>
         /// <param name="variables">Variable bindings.</param>
+        /// <remarks>This method only supports SNMP v1.</remarks>
         [CLSCompliant(false)]
         public static async Task SendTrapV1Async(EndPoint receiver, IPAddress agent, OctetString community, ObjectIdentifier enterprise, GenericCode generic, int specific, uint timestamp, IList<Variable> variables)
         {
@@ -330,12 +331,13 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="timestamp">Timestamp.</param>
         /// <param name="variables">Variable bindings.</param>
         /// <param name="requestId">Request ID.</param>
+        /// <remarks>This method only supports SNMP v2c.</remarks>
         [CLSCompliant(false)]
         public static async Task SendTrapV2Async(int requestId, VersionCode version, EndPoint receiver, OctetString community, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables)
         {
             if (version != VersionCode.V2)
             {
-                throw new ArgumentException("Only SNMP v2c is supported", nameof(version));
+                throw new NotSupportedException("Only SNMP v2c is supported");
             }
 
             var message = new TrapV2Message(requestId, version, community, enterprise, timestamp, variables);
@@ -354,6 +356,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="variables">Variable bindings.</param>
         /// <param name="privacy">The privacy provider.</param>
         /// <param name="report">The report.</param>
+        /// <remarks>This method supports SNMP v2c and v3.</remarks>
         [CLSCompliant(false)]
         public static async Task SendInformAsync(int requestId, VersionCode version, IPEndPoint receiver, OctetString community, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables, IPrivacyProvider privacy, ISnmpMessage report)
         {
@@ -375,6 +378,11 @@ namespace Lextm.SharpSnmpLib.Messaging
             if (variables == null)
             {
                 throw new ArgumentNullException(nameof(variables));
+            }
+
+            if (version == VersionCode.V1)
+            {
+                throw new NotSupportedException("SNMP v1 is not supported");
             }
 
             if (version == VersionCode.V3 && privacy == null)
@@ -436,7 +444,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             // TODO: report should be updated with latest message from agent.
             if (version == VersionCode.V1)
             {
-                throw new ArgumentException("v1 is not supported", nameof(version));
+                throw new NotSupportedException("SNMP v1 is not supported");
             }
 
             var variables = new List<Variable> { new Variable(seed.Id) };
@@ -700,6 +708,11 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException(nameof(list));
             }
 
+            if (version == VersionCode.V1)
+            {
+                throw new NotSupportedException("SNMP v1 is not supported");
+            }
+
             var tableV = new Variable(table);
             var seed = tableV;
             IList<Variable> next;
@@ -770,7 +783,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             if (version != VersionCode.V2)
             {
-                throw new ArgumentException("Only SNMP v2c is supported", nameof(version));
+                throw new NotSupportedException("Only SNMP v2c is supported");
             }
 
             var message = new TrapV2Message(requestId, version, community, enterprise, timestamp, variables);
@@ -811,6 +824,11 @@ namespace Lextm.SharpSnmpLib.Messaging
             if (variables == null)
             {
                 throw new ArgumentNullException(nameof(variables));
+            }
+
+            if (version == VersionCode.V1)
+            {
+                throw new NotSupportedException("SNMP v1 is not supported");
             }
 
             if (version == VersionCode.V3 && privacy == null)
@@ -873,7 +891,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             if (version == VersionCode.V1)
             {
-                throw new ArgumentException("v1 is not supported", nameof(version));
+                throw new NotSupportedException("SNMP v1 is not supported");
             }
 
             var variables = new List<Variable> { new Variable(seed.Id) };

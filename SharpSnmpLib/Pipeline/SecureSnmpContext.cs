@@ -166,7 +166,14 @@ namespace Lextm.SharpSnmpLib.Pipeline
             var request = Request;
             var parameters = request.Parameters;
             var typeCode = Request.TypeCode();
-            if (parameters.EngineId != Group.EngineId && typeCode != SnmpType.Unknown)
+
+            if (typeCode == SnmpType.Unknown)
+            {
+                HandleFailure(Group.DecryptionError);
+                return false;
+            }
+
+            if (typeCode != SnmpType.TrapV2Pdu && parameters.EngineId != Group.EngineId)
             {
                 HandleDiscovery();
                 return true;
@@ -179,9 +186,9 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 return false;
             }
 
-            if (typeCode == SnmpType.Unknown)
+            if (typeCode == SnmpType.TrapV2Pdu && parameters.EngineId != user.EngineId)
             {
-                HandleFailure(Group.DecryptionError);
+                HandleFailure(Group.UnknownEngineId);
                 return false;
             }
 
@@ -189,6 +196,11 @@ namespace Lextm.SharpSnmpLib.Pipeline
             {
                 HandleFailure(Group.AuthenticationFailure);
                 return false;
+            }
+
+            if (typeCode == SnmpType.TrapV2Pdu)
+            {
+                return true;
             }
 
             if ((user.ToSecurityLevel() | Levels.Reportable) != request.Header.SecurityLevel)

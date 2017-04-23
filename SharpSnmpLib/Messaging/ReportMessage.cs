@@ -53,22 +53,22 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new ArgumentNullException("scope");
             }
-            
+
             if (parameters == null)
             {
                 throw new ArgumentNullException("parameters");
             }
-            
+
             if (header == null)
             {
                 throw new ArgumentNullException("header");
             }
-            
+
             if (privacy == null)
             {
                 throw new ArgumentNullException("privacy");
             }
-            
+
             if (version != VersionCode.V3)
             {
                 throw new ArgumentException("only v3 is supported", "version");
@@ -79,7 +79,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             Parameters = parameters;
             Scope = scope;
             Privacy = privacy;
-            Privacy.AuthenticationProvider.ComputeHash(Version, Header, Parameters, Scope, Privacy);            
+            Privacy.ComputeHash(Version, Header, Parameters, Scope);
             _bytes = this.PackMessage(length).ToBytes();
         }
 

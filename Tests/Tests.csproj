@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\xunit.runner.visualstudio.2.2.0\build\net20\xunit.runner.visualstudio.props" Condition="Exists('..\packages\xunit.runner.visualstudio.2.2.0\build\net20\xunit.runner.visualstudio.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Lextm.SharpSnmpLib</RootNamespace>
     <AssemblyName>SharpSnmpLib.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SourceAnalysisOverrideSettingsFile>C:\Users\Administrator\AppData\Roaming\ICSharpCode/SharpDevelop3.0\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
     <SignAssembly>true</SignAssembly>
@@ -50,16 +50,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
-      <HintPath>..\packages\Castle.Core.4.0.0\lib\net45\Castle.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="dotMemory.Unit, Version=103.0.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
-      <HintPath>..\packages\JetBrains.dotMemoryUnit.2.3.20160517.113140\lib\dotMemory.Unit.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Moq, Version=4.7.1.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
-      <HintPath>..\packages\Moq.4.7.1\lib\net45\Moq.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="mscorlib" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -67,113 +57,98 @@
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Numerics" />
-    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="xunit.abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.abstractions.2.0.1\lib\net35\xunit.abstractions.dll</HintPath>
-    </Reference>
-    <Reference Include="xunit.assert, Version=2.2.0.3545, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.assert.2.2.0\lib\netstandard1.1\xunit.assert.dll</HintPath>
-    </Reference>
-    <Reference Include="xunit.core, Version=2.2.0.3545, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.extensibility.core.2.2.0\lib\netstandard1.1\xunit.core.dll</HintPath>
-    </Reference>
-    <Reference Include="xunit.execution.dotnet, Version=2.2.0.3545, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.extensibility.execution.2.2.0\lib\netstandard1.1\xunit.execution.dotnet.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Messaging\Tests\NumberGeneratorTestFixture.cs" />
-    <Compile Include="Messaging\Tests\ListenerBindingTestFixture.cs" />
-    <Compile Include="Messaging\Tests\MessageFactoryTestFixture.cs" />
-    <Compile Include="Pipeline\Tests\EngineGroupTestFixture.cs" />
-    <Compile Include="Pipeline\Tests\NormalSnmpContextTestFixture.cs" />
-    <Compile Include="Pipeline\Tests\SnmpContextFactoryTestFixture.cs" />
-    <Compile Include="Objects\Tests\SysORUpTimeTestFixture.cs" />
-    <Compile Include="Objects\Tests\SysORIndexTestFixture.cs" />
-    <Compile Include="Objects\Tests\SysORIDTestFixture.cs" />
-    <Compile Include="Objects\Tests\SysORDescrTestFixture.cs" />
-    <Compile Include="Objects\Tests\SysORLastChangeTestFixture.cs" />
-    <Compile Include="Objects\Tests\SysLocationTestFixture.cs" />
-    <Compile Include="Objects\Tests\SysORTableTestFixture.cs" />
-    <Compile Include="Objects\Tests\SysServicesTestFixture.cs" />
-    <Compile Include="Objects\Tests\SysNameTestFixture.cs" />
-    <Compile Include="Objects\Tests\SysContactTestFixture.cs" />
-    <Compile Include="Objects\Tests\SysDescrTestFixture.cs" />
-    <Compile Include="Objects\Tests\SysObjectIdTestFixture.cs" />
-    <Compile Include="Objects\Tests\SysUpTimeTestFixture.cs" />
-    <Compile Include="Pipeline\Tests\InformRequestMessageReceivedEventArgsTestFixture.cs" />
-    <Compile Include="Pipeline\Tests\TrapV2MessageReceivedEventArgsTestFixture.cs" />
-    <Compile Include="Pipeline\Tests\TrapV1MessageReceivedEventArgsTestFixture.cs" />
-    <Compile Include="Pipeline\Tests\TrapV2MessageHandlerTestFixture.cs" />
-    <Compile Include="Pipeline\Tests\TrapV1MessageHandlerTestFixture.cs" />
-    <Compile Include="Pipeline\Tests\GetBulkMessageHandlerTestFixture.cs" />
-    <Compile Include="Pipeline\Tests\GetMessageHandlerTestFixture.cs" />
-    <Compile Include="Pipeline\Tests\GetNextMessageHandlerTestFixture.cs" />
-    <Compile Include="Pipeline\Tests\GetNextV1MessageHandlerTestFixture.cs" />
-    <Compile Include="Pipeline\Tests\GetV1MessageHandlerTestFixture.cs" />
-    <Compile Include="Pipeline\Tests\InformRequestMessageHandlerTestFixture.cs" />
-    <Compile Include="Pipeline\Tests\SetMessageHandlerTestFixture.cs" />
-    <Compile Include="Pipeline\Tests\SetV1MessageHandlerTestFixture.cs" />
+    <Compile Include="Integration\DaemonTestFixture.cs" />
+    <Compile Include="Integration\TrapDaemonTestFixture.cs" />
+    <Compile Include="Unit\Messaging\NumberGeneratorTestFixture.cs" />
+    <Compile Include="Unit\Messaging\ListenerBindingTestFixture.cs" />
+    <Compile Include="Unit\Messaging\MessageFactoryTestFixture.cs" />
+    <Compile Include="Unit\Pipeline\EngineGroupTestFixture.cs" />
+    <Compile Include="Unit\Pipeline\NormalSnmpContextTestFixture.cs" />
+    <Compile Include="Unit\Pipeline\SnmpContextFactoryTestFixture.cs" />
+    <Compile Include="Unit\Objects\SysORUpTimeTestFixture.cs" />
+    <Compile Include="Unit\Objects\SysORIndexTestFixture.cs" />
+    <Compile Include="Unit\Objects\SysORIDTestFixture.cs" />
+    <Compile Include="Unit\Objects\SysORDescrTestFixture.cs" />
+    <Compile Include="Unit\Objects\SysORLastChangeTestFixture.cs" />
+    <Compile Include="Unit\Objects\SysLocationTestFixture.cs" />
+    <Compile Include="Unit\Objects\SysORTableTestFixture.cs" />
+    <Compile Include="Unit\Objects\SysServicesTestFixture.cs" />
+    <Compile Include="Unit\Objects\SysNameTestFixture.cs" />
+    <Compile Include="Unit\Objects\SysContactTestFixture.cs" />
+    <Compile Include="Unit\Objects\SysDescrTestFixture.cs" />
+    <Compile Include="Unit\Objects\SysObjectIdTestFixture.cs" />
+    <Compile Include="Unit\Objects\SysUpTimeTestFixture.cs" />
+    <Compile Include="Unit\Pipeline\InformRequestMessageReceivedEventArgsTestFixture.cs" />
+    <Compile Include="Unit\Pipeline\TrapV2MessageReceivedEventArgsTestFixture.cs" />
+    <Compile Include="Unit\Pipeline\TrapV1MessageReceivedEventArgsTestFixture.cs" />
+    <Compile Include="Unit\Pipeline\TrapV2MessageHandlerTestFixture.cs" />
+    <Compile Include="Unit\Pipeline\TrapV1MessageHandlerTestFixture.cs" />
+    <Compile Include="Unit\Pipeline\GetBulkMessageHandlerTestFixture.cs" />
+    <Compile Include="Unit\Pipeline\GetMessageHandlerTestFixture.cs" />
+    <Compile Include="Unit\Pipeline\GetNextMessageHandlerTestFixture.cs" />
+    <Compile Include="Unit\Pipeline\GetNextV1MessageHandlerTestFixture.cs" />
+    <Compile Include="Unit\Pipeline\GetV1MessageHandlerTestFixture.cs" />
+    <Compile Include="Unit\Pipeline\InformRequestMessageHandlerTestFixture.cs" />
+    <Compile Include="Unit\Pipeline\SetMessageHandlerTestFixture.cs" />
+    <Compile Include="Unit\Pipeline\SetV1MessageHandlerTestFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Security\Tests\AuthenticationProviderExtensionTestFixture.cs" />
-    <Compile Include="Security\Tests\DefaultAuthenticationProviderTestFixture.cs" />
-    <Compile Include="Security\Tests\DefaultPrivacyProviderTestFixture.cs" />
-    <Compile Include="Security\Tests\AESPrivacyProviderTestFixture.cs" />
-    <Compile Include="Security\Tests\DESPrivacyProviderTestFixture.cs" />
-    <Compile Include="Security\Tests\MD5AuthenticationProviderTestFixture.cs" />
-    <Compile Include="Security\Tests\PrivacyProviderExtensionTestFixture.cs" />
-    <Compile Include="Security\Tests\SaltGeneratorTestFixture.cs" />
-    <Compile Include="Security\Tests\SHA1AuthenticationProviderTestFixture.cs" />
-    <Compile Include="Security\Tests\UserRegistryTestFixture.cs" />
-    <Compile Include="Security\Tests\UserTestFixture.cs" />
-    <Compile Include="Tests\GetBulkRequestPduTestFixture.cs" />
-    <Compile Include="Tests\GetNextRequestPduTestFixture.cs" />
-    <Compile Include="Tests\GetRequestPduTestFixture.cs" />
-    <Compile Include="Tests\HeaderTestFixture.cs" />
-    <Compile Include="Tests\InformRequestPduTestFixture.cs" />
-    <Compile Include="Tests\MalformedPduTestFixture.cs" />
-    <Compile Include="Tests\ReportPduTestFixture.cs" />
-    <Compile Include="Tests\ResponsePduTestFixture.cs" />
-    <Compile Include="Tests\ScopeTestFixture.cs" />
-    <Compile Include="Tests\SecurityParametersTestFixture.cs" />
-    <Compile Include="Tests\SetRequestPduTestFixture.cs" />
-    <Compile Include="Tests\SnmpDataExtensionTestFixture.cs" />
-    <Compile Include="Tests\StreamExtensionTestFixture.cs" />
-    <Compile Include="Tests\EndOfMibViewTestFixture.cs" />
-    <Compile Include="Tests\ByteToolTestFixture.cs" />
-    <Compile Include="Tests\Counter32TestFixture.cs" />
-    <Compile Include="Tests\Counter64TestFixture.cs" />
-    <Compile Include="Tests\Gauge32TestFixture.cs" />
-    <Compile Include="Messaging\Tests\GetRequestMessageTestFixture.cs" />
-    <Compile Include="Messaging\Tests\ResponseMessageTestFixture.cs" />
-    <Compile Include="Tests\Integer32TestFixture.cs" />
-    <Compile Include="Tests\IPTestFixture.cs" />
-    <Compile Include="Tests\NoSuchInstanceTestFixture.cs" />
-    <Compile Include="Tests\NoSuchObjectTestFixture.cs" />
-    <Compile Include="Tests\NullTestFixture.cs" />
-    <Compile Include="Tests\ObjectIdentifierTestFixture.cs" />
-    <Compile Include="Security\Tests\LevelsTestFixture.cs" />
-    <Compile Include="Tests\OctetStringTestFixture.cs" />
-    <Compile Include="Tests\OpaqueTestFixture.cs" />
-    <Compile Include="Tests\SequenceTestFixture.cs" />
-    <Compile Include="Tests\DataFactoryTestFixture.cs" />
-    <Compile Include="Tests\TimeticksTestFixture.cs" />
-    <Compile Include="Messaging\Tests\TrapV1MessageTestFixture.cs" />
-    <Compile Include="Tests\TrapV1PduTestFixture.cs" />
-    <Compile Include="Messaging\Tests\TrapV2MessageTestFixture.cs" />
-    <Compile Include="Tests\VariableTestFixture.cs" />
-    <Compile Include="Tests\TrapV2PduTestFixture.cs" />
+    <Compile Include="Unit\Security\DefaultAuthenticationProviderTestFixture.cs" />
+    <Compile Include="Unit\Security\DefaultPrivacyProviderTestFixture.cs" />
+    <Compile Include="Unit\Security\AESPrivacyProviderTestFixture.cs" />
+    <Compile Include="Unit\Security\DESPrivacyProviderTestFixture.cs" />
+    <Compile Include="Unit\Security\MD5AuthenticationProviderTestFixture.cs" />
+    <Compile Include="Unit\Security\PrivacyProviderExtensionTestFixture.cs" />
+    <Compile Include="Unit\Security\SaltGeneratorTestFixture.cs" />
+    <Compile Include="Unit\Security\SHA1AuthenticationProviderTestFixture.cs" />
+    <Compile Include="Unit\Security\UserRegistryTestFixture.cs" />
+    <Compile Include="Unit\Security\UserTestFixture.cs" />
+    <Compile Include="Unit\GetBulkRequestPduTestFixture.cs" />
+    <Compile Include="Unit\GetNextRequestPduTestFixture.cs" />
+    <Compile Include="Unit\GetRequestPduTestFixture.cs" />
+    <Compile Include="Unit\HeaderTestFixture.cs" />
+    <Compile Include="Unit\InformRequestPduTestFixture.cs" />
+    <Compile Include="Unit\MalformedPduTestFixture.cs" />
+    <Compile Include="Unit\ReportPduTestFixture.cs" />
+    <Compile Include="Unit\ResponsePduTestFixture.cs" />
+    <Compile Include="Unit\ScopeTestFixture.cs" />
+    <Compile Include="Unit\SecurityParametersTestFixture.cs" />
+    <Compile Include="Unit\SetRequestPduTestFixture.cs" />
+    <Compile Include="Unit\SnmpDataExtensionTestFixture.cs" />
+    <Compile Include="Unit\StreamExtensionTestFixture.cs" />
+    <Compile Include="Unit\EndOfMibViewTestFixture.cs" />
+    <Compile Include="Unit\ByteToolTestFixture.cs" />
+    <Compile Include="Unit\Counter32TestFixture.cs" />
+    <Compile Include="Unit\Counter64TestFixture.cs" />
+    <Compile Include="Unit\Gauge32TestFixture.cs" />
+    <Compile Include="Unit\Messaging\GetRequestMessageTestFixture.cs" />
+    <Compile Include="Unit\Messaging\ResponseMessageTestFixture.cs" />
+    <Compile Include="Unit\Integer32TestFixture.cs" />
+    <Compile Include="Unit\IPTestFixture.cs" />
+    <Compile Include="Unit\NoSuchInstanceTestFixture.cs" />
+    <Compile Include="Unit\NoSuchObjectTestFixture.cs" />
+    <Compile Include="Unit\NullTestFixture.cs" />
+    <Compile Include="Unit\ObjectIdentifierTestFixture.cs" />
+    <Compile Include="Unit\Security\LevelsTestFixture.cs" />
+    <Compile Include="Unit\OctetStringTestFixture.cs" />
+    <Compile Include="Unit\OpaqueTestFixture.cs" />
+    <Compile Include="Unit\SequenceTestFixture.cs" />
+    <Compile Include="Unit\DataFactoryTestFixture.cs" />
+    <Compile Include="Unit\TimeticksTestFixture.cs" />
+    <Compile Include="Unit\Messaging\TrapV1MessageTestFixture.cs" />
+    <Compile Include="Unit\TrapV1PduTestFixture.cs" />
+    <Compile Include="Unit\Messaging\TrapV2MessageTestFixture.cs" />
+    <Compile Include="Unit\VariableTestFixture.cs" />
+    <Compile Include="Unit\TrapV2PduTestFixture.cs" />
     <None Include="app.config" />
-    <None Include="packages.config" />
     <None Include="Resources\v3authNoPriv_BER_Issue" />
     <None Include="sharpsnmplib.tests.snk" />
     <None Include="xunit.runner.json">
@@ -212,6 +187,17 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Moq">
+      <Version>4.7.8</Version>
+    </PackageReference>
+    <PackageReference Include="xunit">
+      <Version>2.2.0</Version>
+    </PackageReference>
+    <PackageReference Include="xunit.runner.visualstudio">
+      <Version>2.2.0</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

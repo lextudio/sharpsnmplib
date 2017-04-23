@@ -46,26 +46,32 @@ namespace Lextm.SharpSnmpLib.Security
             {
                 throw new ArgumentNullException("phrase");
             }
-            
+
             if (auth == null)
             {
                 throw new ArgumentNullException("auth");
             }
-            
+
             // IMPORTANT: in this way privacy cannot be non-default.
             if (auth == DefaultAuthenticationProvider.Instance)
             {
                 throw new ArgumentException("if authentication is off, then privacy cannot be used");
             }
-            
+
             _phrase = phrase;
             AuthenticationProvider = auth;
         }
-        
+
         /// <summary>
         /// Corresponding <see cref="IAuthenticationProvider"/>.
         /// </summary>
         public IAuthenticationProvider AuthenticationProvider { get; private set; }
+
+        /// <summary>
+        /// Engine ID.
+        /// </summary>
+        /// <remarks>This is an optional field, and only used by TRAP v2 authentication.</remarks>
+        public OctetString EngineId { get; set; }
 
         /// <summary>
         /// Encrypt scoped PDU using DES encryption protocol
@@ -88,17 +94,17 @@ namespace Lextm.SharpSnmpLib.Security
             {
                 throw new ArgumentNullException("key");
             }
-            
+
             if (privacyParameters == null)
             {
                 throw new ArgumentNullException("privacyParameters");
             }
-            
+
             if (key.Length < MinimumKeyLength)
             {
                 throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Encryption key length has to 32 bytes or more. Current: {0}", key.Length), "key");
             }
-            
+
             var iv = GetIV(key, privacyParameters);
 
             // DES uses 8 byte keys but we need 16 to encrypt ScopedPdu. Get first 8 bytes and use them as encryption key
@@ -109,7 +115,7 @@ namespace Lextm.SharpSnmpLib.Security
             {
                 div += 1;
             }
-            
+
             var newLength = div * 8;
             var result = new byte[newLength];
             var buffer = new byte[newLength];
@@ -134,13 +140,13 @@ namespace Lextm.SharpSnmpLib.Security
                             inbuffer[i] = (byte)(buffer[posIn] ^ cipherText[i]);
                             posIn++;
                         }
-                        
+
                         transform.TransformBlock(inbuffer, 0, inbuffer.Length, cipherText, 0);
                         Buffer.BlockCopy(cipherText, 0, result, posResult, cipherText.Length);
                         posResult += cipherText.Length;
                     }
                 }
-                
+
                 des.Clear();
             }
 
@@ -163,27 +169,27 @@ namespace Lextm.SharpSnmpLib.Security
             {
                 throw new ArgumentNullException("encryptedData");
             }
-            
+
             if (key == null)
             {
                 throw new ArgumentNullException("key");
             }
-            
+
             if (privacyParameters == null)
             {
                 throw new ArgumentNullException("privacyParameters");
             }
-            
+
             if (encryptedData.Length == 0)
             {
                 throw new ArgumentException("empty encrypted data", "encryptedData");
             }
-            
+
             if ((encryptedData.Length % 8) != 0)
             {
                 throw new ArgumentException("Encrypted data buffer has to be divisible by 8.", "encryptedData");
             }
-            
+
             if (privacyParameters.Length != PrivacyParametersLength)
             {
                 throw new ArgumentOutOfRangeException("privacyParameters", "Privacy parameters argument has to be 8 bytes long");
@@ -199,7 +205,7 @@ namespace Lextm.SharpSnmpLib.Security
             {
                 iv[i] = (byte)(key[8 + i] ^ privacyParameters[i]);
             }
-            
+
             using (DES des = DES.Create())
             {
                 des.Mode = CipherMode.CBC;
@@ -232,13 +238,13 @@ namespace Lextm.SharpSnmpLib.Security
             {
                 throw new ArgumentException("Invalid privacy key length", "privacyKey");
             }
-            
+
             var iv = new byte[8];
             for (var i = 0; i < iv.Length; i++)
             {
                 iv[i] = (byte)(salt[i] ^ privacyKey[8 + i]);
             }
-            
+
             return iv;
         }
 
@@ -255,12 +261,12 @@ namespace Lextm.SharpSnmpLib.Security
             {
                 throw new ArgumentException("Invalid privacy key length.", "privacyPassword");
             }
-            
+
             var key = new byte[8];
             Buffer.BlockCopy(privacyPassword, 0, key, 0, 8);
             return key;
         }
-        
+
         /// <summary>
         /// Returns the length of privacyParameters USM header field. For DES, field length is 8.
         /// </summary>
@@ -279,9 +285,9 @@ namespace Lextm.SharpSnmpLib.Security
         {
             get { return MaximumKeyLength; }
         }
-        
+
         /// <summary>
-        /// Return maximum encryption/decryption key length. For DES, returned value is 16
+        /// Return maximum encryption/decryption key length. For DES, returned value is 16.
         /// 
         /// DES protocol itself requires an 8 byte key. Additional 8 bytes are used for generating the
         /// encryption IV. For encryption itself, first 8 bytes of the key are used.
@@ -291,7 +297,7 @@ namespace Lextm.SharpSnmpLib.Security
             get { return 16; }
         }
 
-        #region IPrivacyProvider Members
+#region IPrivacyProvider Members
 
         /// <summary>
         /// Decrypts the specified data.
@@ -310,17 +316,17 @@ namespace Lextm.SharpSnmpLib.Security
             {
                 throw new ArgumentNullException("parameters");
             }
-            
+
             var code = data.TypeCode;
             if (code != SnmpType.OctetString)
             {
                 throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "cannot decrypt the scope data: {0}", code), "data");
             }
-            
+
             var octets = (OctetString)data;
             var bytes = octets.GetRaw();
             var pkey = AuthenticationProvider.PasswordToKey(_phrase.GetRaw(), parameters.EngineId.GetRaw());
-            
+
             try
             {
                 // decode encrypted packet
@@ -332,7 +338,7 @@ namespace Lextm.SharpSnmpLib.Security
                     newException.SetBytes(bytes);
                     throw newException;
                 }
-                
+
                 return result;
             }
             catch (Exception ex)
@@ -355,17 +361,17 @@ namespace Lextm.SharpSnmpLib.Security
             {
                 throw new ArgumentNullException("data");
             }
-            
+
             if (parameters == null)
             {
                 throw new ArgumentNullException("parameters");
             }
-            
+
             if (data.TypeCode != SnmpType.Sequence && !(data is ISnmpPdu))
             {
                 throw new ArgumentException("unencrypted data is expected.", "data");
-            }        
-            
+            }
+
             var pkey = AuthenticationProvider.PasswordToKey(_phrase.GetRaw(), parameters.EngineId.GetRaw());
             var bytes = data.ToBytes();
             var reminder = bytes.Length % 8;
@@ -380,7 +386,7 @@ namespace Lextm.SharpSnmpLib.Security
 
                 bytes = stream.ToArray();
             }
-            
+
             var encrypted = Encrypt(bytes, pkey, parameters.PrivacyParameters.GetRaw());
             return new OctetString(encrypted);
         }
@@ -394,7 +400,7 @@ namespace Lextm.SharpSnmpLib.Security
             get { return new OctetString(_salt.GetSaltBytes()); }
         }
 
-        #endregion
+#endregion
     }
 }
 #endif

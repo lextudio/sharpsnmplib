@@ -82,7 +82,6 @@
     <Compile Include="Scope.cs" />
     <Compile Include="SecurityParameters.cs" />
     <Compile Include="Security\AESPrivacyProvider.cs" />
-    <Compile Include="Security\AuthenticationProviderExtension.cs" />
     <Compile Include="Security\Cache.cs" />
     <Compile Include="Security\CryptoKeyCache.cs" />
     <Compile Include="Security\DecryptionException.cs" />

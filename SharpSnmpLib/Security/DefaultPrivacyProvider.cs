@@ -54,7 +54,13 @@ namespace Lextm.SharpSnmpLib.Security
         /// Corresponding <see cref="IAuthenticationProvider"/>.
         /// </summary>
         public IAuthenticationProvider AuthenticationProvider { get; private set; }
-        
+
+        /// <summary>
+        /// Engine ID.
+        /// </summary>
+        /// <remarks>This is an optional field, and only used by TRAP v2 authentication.</remarks>
+        public OctetString EngineId { get; set; }
+
         /// <summary>
         /// Decrypts the specified data.
         /// </summary>

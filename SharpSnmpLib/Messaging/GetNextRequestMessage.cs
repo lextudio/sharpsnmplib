@@ -37,9 +37,9 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// GETNEXT request message.
     /// </summary>
     public sealed class GetNextRequestMessage : ISnmpMessage
-    {       
+    {
         private readonly byte[] _bytes;
-        
+
         /// <summary>
         /// Creates a <see cref="GetNextRequestMessage"/> with all contents.
         /// </summary>
@@ -53,17 +53,17 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new ArgumentNullException("variables");
             }
-            
+
             if (community == null)
             {
                 throw new ArgumentNullException("community");
             }
-            
+
             if (version == VersionCode.V3)
             {
                 throw new ArgumentException("only v1 and v2c are supported", "version");
             }
-            
+
             Version = version;
             Header = Header.Empty;
             Parameters = SecurityParameters.Create(community);
@@ -109,27 +109,27 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new ArgumentNullException("variables");
             }
-            
+
             if (userName == null)
             {
                 throw new ArgumentNullException("userName");
             }
-            
+
             if (version != VersionCode.V3)
             {
                 throw new ArgumentException("only v3 is supported", "version");
             }
-            
+
             if (report == null)
             {
                 throw new ArgumentNullException("report");
             }
-            
+
             if (privacy == null)
             {
                 throw new ArgumentNullException("privacy");
             }
-            
+
             Version = version;
             Privacy = privacy;
 
@@ -150,7 +150,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             var contextEngineId = scope.ContextEngineId == OctetString.Empty ? parameters.EngineId : scope.ContextEngineId;
             Scope = new Scope(contextEngineId, scope.ContextName, pdu);
 
-            authenticationProvider.ComputeHash(Version, Header, Parameters, Scope, Privacy);
+            Privacy.ComputeHash(Version, Header, Parameters, Scope);
             _bytes = this.PackMessage(null).ToBytes();
         }
 
@@ -160,17 +160,17 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new ArgumentNullException("scope");
             }
-            
+
             if (parameters == null)
             {
                 throw new ArgumentNullException("parameters");
             }
-            
+
             if (header == null)
             {
                 throw new ArgumentNullException("header");
             }
-            
+
             if (privacy == null)
             {
                 throw new ArgumentNullException("privacy");
@@ -184,7 +184,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             _bytes = this.PackMessage(length).ToBytes();
         }
-        
+
         /// <summary>
         /// Gets the header.
         /// </summary>

@@ -148,7 +148,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             
             // TODO: may expose engine ID in the future.
             Scope = new Scope(OctetString.Empty, OctetString.Empty, pdu);
-            authenticationProvider.ComputeHash(Version, Header, Parameters, Scope, Privacy);
+            Privacy.ComputeHash(Version, Header, Parameters, Scope);
             _bytes = this.PackMessage(null).ToBytes();
         }
 

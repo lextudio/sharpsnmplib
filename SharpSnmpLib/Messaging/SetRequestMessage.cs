@@ -141,7 +141,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             var contextEngineId = scope.ContextEngineId == OctetString.Empty ? parameters.EngineId : scope.ContextEngineId;
             Scope = new Scope(contextEngineId, scope.ContextName, pdu);
 
-            authenticationProvider.ComputeHash(Version, Header, Parameters, Scope, Privacy);
+            Privacy.ComputeHash(Version, Header, Parameters, Scope);
             _bytes = this.PackMessage(null).ToBytes();
         }
 

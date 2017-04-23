@@ -55,22 +55,22 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new ArgumentNullException("variables");
             }
-            
+
             if (enterprise == null)
             {
                 throw new ArgumentNullException("enterprise");
             }
-            
+
             if (community == null)
             {
                 throw new ArgumentNullException("community");
             }
-            
+
             if (version == VersionCode.V3)
             {
                 throw new ArgumentException("only v1 and v2c are supported", "version");
             }
-            
+
             Version = version;
             Enterprise = enterprise;
             TimeStamp = time;
@@ -102,7 +102,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         [CLSCompliant(false)]
         [Obsolete("Please use other overloading ones.")]
         public InformRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName, ObjectIdentifier enterprise, uint time, IList<Variable> variables, IPrivacyProvider privacy, ISnmpMessage report)
-            : this(version, messageId, requestId, userName, enterprise, time, variables, privacy, 0xFFE3, report)       
+            : this(version, messageId, requestId, userName, enterprise, time, variables, privacy, 0xFFE3, report)
         {
         }
 
@@ -126,12 +126,12 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new ArgumentNullException("userName");
             }
-            
+
             if (variables == null)
             {
                 throw new ArgumentNullException("variables");
             }
-            
+
             if (version != VersionCode.V3)
             {
                 throw new ArgumentException("only v3 is supported", "version");
@@ -146,7 +146,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new ArgumentNullException("report");
             }
-            
+
             if (privacy == null)
             {
                 throw new ArgumentNullException("privacy");
@@ -176,7 +176,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             var contextEngineId = scope.ContextEngineId == OctetString.Empty ? parameters.EngineId : scope.ContextEngineId;
             Scope = new Scope(contextEngineId, scope.ContextName, pdu);
 
-            authenticationProvider.ComputeHash(Version, Header, Parameters, Scope, Privacy);
+            Privacy.ComputeHash(Version, Header, Parameters, Scope);
             _bytes = this.PackMessage(null).ToBytes();
         }
 
@@ -186,17 +186,17 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new ArgumentNullException("scope");
             }
-            
+
             if (parameters == null)
             {
                 throw new ArgumentNullException("parameters");
             }
-            
+
             if (header == null)
             {
                 throw new ArgumentNullException("header");
             }
-            
+
             if (privacy == null)
             {
                 throw new ArgumentNullException("privacy");
@@ -210,7 +210,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             var pdu = (InformRequestPdu)scope.Pdu;
             Enterprise = pdu.Enterprise;
             TimeStamp = pdu.TimeStamp;
-            
+
             _bytes = this.PackMessage(length).ToBytes();
         }
 
@@ -237,12 +237,12 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Enterprise.
         /// </summary>
         public ObjectIdentifier Enterprise { get; private set; }
-        
+
         /// <summary>
         /// Gets the header.
         /// </summary>
         public Header Header { get; private set; }
-        
+
         /// <summary>
         /// Converts to byte format.
         /// </summary>
