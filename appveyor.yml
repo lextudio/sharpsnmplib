@@ -6,3 +6,6 @@ before_build:
   - .\prepare.bat
 build_script:
   - .\build.release.bat
+test_script:
+  - cd Tests
+  - dotnet test
