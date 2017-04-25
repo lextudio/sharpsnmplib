@@ -20,7 +20,9 @@
     <language>en-US</language>
     <tags>snmp</tags>
     <dependencies>
-      <group targetFramework="net45" />
+      <group targetFramework="net46" />
+      <group targetFramework="Xamarin.iOS10" />
+      <group targetFramework="Monoandroid" />
       <group targetFramework="netstandard1.3">
         <dependency id="NETStandard.Library" version="1.6.1" />
         <dependency id="System.ComponentModel.TypeConverter" version="4.3.0" />
@@ -31,10 +33,18 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="..\bin\SharpSnmpLib.Full.dll" target="lib\net45\SharpSnmpLib.Full.dll" />
-    <file src="..\bin\SharpSnmpLib.Full.xml" target="lib\net45\SharpSnmpLib.Full.xml" />
-    <file src="..\bin\SharpSnmpLib.Portable.dll" target="lib\net45\SharpSnmpLib.Portable.dll" />
-    <file src="..\bin\SharpSnmpLib.Portable.xml" target="lib\net45\SharpSnmpLib.Portable.xml" />
+    <file src="..\bin\SharpSnmpLib.Full.dll" target="lib\net46\SharpSnmpLib.Full.dll" />
+    <file src="..\bin\SharpSnmpLib.Full.xml" target="lib\net46\SharpSnmpLib.Full.xml" />
+    <file src="..\bin\SharpSnmpLib.NetStandard.dll" target="lib\net46\SharpSnmpLib.NetStandard.dll" />
+    <file src="..\bin\SharpSnmpLib.NetStandard.xml" target="lib\net46\SharpSnmpLib.NetStandard.xml" />
+    <file src="..\bin\SharpSnmpLib.iOS.dll" target="lib\Xamarin.iOS10\SharpSnmpLib.iOS.dll" />
+    <file src="..\bin\SharpSnmpLib.iOS.xml" target="lib\Xamarin.iOS10\SharpSnmpLib.iOS.xml" />
+    <file src="..\bin\SharpSnmpLib.NetStandard.dll" target="lib\Xamarin.iOS10\SharpSnmpLib.NetStandard.dll" />
+    <file src="..\bin\SharpSnmpLib.NetStandard.xml" target="lib\Xamarin.iOS10\SharpSnmpLib.NetStandard.xml" />    
+    <file src="..\bin\SharpSnmpLib.Android.dll" target="lib\Monoandroid\SharpSnmpLib.Android.dll" />
+    <file src="..\bin\SharpSnmpLib.Android.xml" target="lib\Monoandroid\SharpSnmpLib.Android.xml" />
+    <file src="..\bin\SharpSnmpLib.NetStandard.dll" target="lib\Monoandroid\SharpSnmpLib.NetStandard.dll" />
+    <file src="..\bin\SharpSnmpLib.NetStandard.xml" target="lib\Monoandroid\SharpSnmpLib.NetStandard.xml" />
     <file src="..\bin\SharpSnmpLib.NetStandard.dll" target="lib\netstandard1.3\SharpSnmpLib.NetStandard.dll" />
     <file src="..\bin\SharpSnmpLib.NetStandard.xml" target="lib\netstandard1.3\SharpSnmpLib.NetStandard.xml" />
   </files>

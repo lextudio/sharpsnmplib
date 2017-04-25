@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -9,7 +9,7 @@
     <RootNamespace>Lextm.SharpSnmpLib</RootNamespace>
     <AssemblyName>SharpSnmpLib.Full</AssemblyName>
     <DocumentationFile>..\bin\SharpSnmpLib.xml</DocumentationFile>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SourceAnalysisOverrideSettingsFile>D:\sharpsnmplib_svn\SharpSnmpLib\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
     <SignAssembly>true</SignAssembly>
@@ -68,132 +68,18 @@
     <Compile Include="..\lib\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Helper.cs" />
-    <Compile Include="Messaging\AgentFoundEventArgs.cs" />
-    <Compile Include="Messaging\Discoverer.cs" />
-    <Compile Include="Messaging\Discovery.cs" />
-    <Compile Include="Messaging\EndPointExtension.cs" />
-    <Compile Include="Messaging\ErrorException.cs" />
-    <Compile Include="Messaging\ExceptionRaisedEventArgs.cs" />
-    <Compile Include="Messaging\GetBulkRequestMessage.cs" />
-    <Compile Include="Messaging\GetNextRequestMessage.cs" />
-    <Compile Include="Messaging\GetRequestMessage.cs" />
-    <Compile Include="Messaging\IListenerBinding.cs" />
-    <Compile Include="Messaging\InformRequestMessage.cs" />
-    <Compile Include="Messaging\ISnmpMessage.cs" />
-    <Compile Include="Messaging\Listener.cs" />
-    <Compile Include="Messaging\ListenerBinding.cs" />
-    <Compile Include="Messaging\MalformedMessage.cs" />
-    <Compile Include="Messaging\Manager.cs" />
-    <Compile Include="Messaging\MessageFactory.cs" />
-    <Compile Include="Messaging\MessageFactoryException.cs" />
-    <Compile Include="Messaging\MessageReceivedEventArgs.cs" />
-    <Compile Include="Messaging\Messenger.cs" />
-    <Compile Include="Messaging\NumberGenerator.cs" />
-    <Compile Include="Messaging\PortInUseException.cs" />
-    <Compile Include="Messaging\ReportMessage.cs" />
-    <Compile Include="Messaging\ResponseMessage.cs" />
-    <Compile Include="Messaging\SetRequestMessage.cs" />
-    <Compile Include="Messaging\SnmpMessageExtension.cs" />
-    <Compile Include="Messaging\SocketAsyncEventArgsFactory.cs" />
-    <Compile Include="Messaging\SocketAwaitable.cs" />
-    <Compile Include="Messaging\SocketExtension.cs" />
-    <Compile Include="Messaging\TimeoutException.cs" />
-    <Compile Include="Messaging\TrapV1Message.cs" />
-    <Compile Include="Messaging\TrapV2Message.cs" />
-    <Compile Include="Messaging\WalkMode.cs" />
-    <Compile Include="ObjectIdentifierConverter.cs" />
-    <Compile Include="Objects\IfAdminStatus.cs" />
-    <Compile Include="Objects\IfDescr.cs" />
-    <Compile Include="Objects\IfIndex.cs" />
-    <Compile Include="Objects\IfInDiscards.cs" />
-    <Compile Include="Objects\IfInErrors.cs" />
-    <Compile Include="Objects\IfInNUcastPkts.cs" />
-    <Compile Include="Objects\IfInOctets.cs" />
-    <Compile Include="Objects\IfInUcastPkts.cs" />
-    <Compile Include="Objects\IfInUnknownProtos.cs" />
-    <Compile Include="Objects\IfLastChange.cs" />
-    <Compile Include="Objects\IfMtu.cs" />
-    <Compile Include="Objects\IfNumber.cs" />
-    <Compile Include="Objects\IfOperStatus.cs" />
-    <Compile Include="Objects\IfOutDiscards.cs" />
-    <Compile Include="Objects\IfOutErrors.cs" />
-    <Compile Include="Objects\IfOutNUcastPkts.cs" />
-    <Compile Include="Objects\IfOutOctets.cs" />
-    <Compile Include="Objects\IfOutQLen.cs" />
-    <Compile Include="Objects\IfOutUcastPkts.cs" />
-    <Compile Include="Objects\IfPhysAddress.cs" />
-    <Compile Include="Objects\IfSpecific.cs" />
-    <Compile Include="Objects\IfSpeed.cs" />
-    <Compile Include="Objects\IfTable.cs" />
-    <Compile Include="Objects\IfType.cs" />
-    <Compile Include="Objects\SysContact.cs" />
-    <Compile Include="Objects\SysDescr.cs" />
-    <Compile Include="Objects\SysLocation.cs" />
-    <Compile Include="Objects\SysName.cs" />
-    <Compile Include="Objects\SysObjectId.cs" />
-    <Compile Include="Objects\SysORDescr.cs" />
-    <Compile Include="Objects\SysORID.cs" />
-    <Compile Include="Objects\SysORIndex.cs" />
-    <Compile Include="Objects\SysORLastChange.cs" />
-    <Compile Include="Objects\SysORTable.cs" />
-    <Compile Include="Objects\SysORUpTime.cs" />
-    <Compile Include="Objects\SysServices.cs" />
-    <Compile Include="Objects\SysUpTime.cs" />
-    <Compile Include="OperationException.cs" />
-    <Compile Include="Pipeline\AccessFailureException.cs" />
-    <Compile Include="Pipeline\ComposedMembershipProvider.cs" />
-    <Compile Include="Pipeline\EngineGroup.cs" />
-    <Compile Include="Pipeline\GetBulkMessageHandler.cs" />
-    <Compile Include="Pipeline\GetMessageHandler.cs" />
-    <Compile Include="Pipeline\GetNextMessageHandler.cs" />
-    <Compile Include="Pipeline\GetNextV1MessageHandler.cs" />
-    <Compile Include="Pipeline\GetV1MessageHandler.cs" />
-    <Compile Include="Pipeline\HandlerMapping.cs" />
-    <Compile Include="Pipeline\ILogger.cs" />
-    <Compile Include="Pipeline\IMembershipProvider.cs" />
-    <Compile Include="Pipeline\IMessageHandler.cs" />
-    <Compile Include="Pipeline\InformRequestMessageHandler.cs" />
-    <Compile Include="Pipeline\InformRequestMessageReceivedEventArgs.cs" />
-    <Compile Include="Pipeline\ISnmpContext.cs" />
-    <Compile Include="Pipeline\ISnmpObject.cs" />
-    <Compile Include="Pipeline\MessageHandlerFactory.cs" />
-    <Compile Include="Pipeline\NormalSnmpContext.cs" />
-    <Compile Include="Pipeline\NullMessageHandler.cs" />
-    <Compile Include="Pipeline\ObjectStore.cs" />
-    <Compile Include="Pipeline\ScalarObject.cs" />
-    <Compile Include="Pipeline\SecureSnmpContext.cs" />
-    <Compile Include="Pipeline\SetMessageHandler.cs" />
-    <Compile Include="Pipeline\SetV1MessageHandler.cs" />
-    <Compile Include="Pipeline\SnmpApplication.cs" />
-    <Compile Include="Pipeline\SnmpApplicationFactory.cs" />
-    <Compile Include="Pipeline\SnmpContextBase.cs" />
-    <Compile Include="Pipeline\SnmpContextFactory.cs" />
-    <Compile Include="Pipeline\SnmpEngine.cs" />
-    <Compile Include="Pipeline\SnmpObjectBase.cs" />
-    <Compile Include="Pipeline\TableObject.cs" />
-    <Compile Include="Pipeline\TrapV1MessageHandler.cs" />
-    <Compile Include="Pipeline\TrapV1MessageReceivedEventArgs.cs" />
-    <Compile Include="Pipeline\TrapV2MessageHandler.cs" />
-    <Compile Include="Pipeline\TrapV2MessageReceivedEventArgs.cs" />
-    <Compile Include="Pipeline\Version1MembershipProvider.cs" />
-    <Compile Include="Pipeline\Version2MembershipProvider.cs" />
-    <Compile Include="Pipeline\Version3MembershipProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\AESPrivacyProvider.cs" />
     <Compile Include="Security\DESPrivacyProvider.cs" />
-    <Compile Include="Security\MD5AuthenticationProvider.cs" />
-    <Compile Include="Security\SHA1AuthenticationProvider.cs" />
     <None Include="sharpsnmplib.snk" />
-    <Compile Include="Objects\NetworkInterfaceExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="SharpSnmpLib.Portable.csproj">
-      <Project>{0B7F931D-721E-4CED-8506-463777C4A1A8}</Project>
-      <Name>SharpSnmpLib.Portable</Name>
+    <ProjectReference Include="SharpSnmpLib.NetStandard.csproj">
+      <Project>{7bc38e05-9b86-4654-b81a-bf153edaf9db}</Project>
+      <Name>SharpSnmpLib.NetStandard</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -202,6 +88,14 @@
   <Target Name="AfterBuild">
     <Gendarme Condition=" '$(Configuration)' == 'Release' AND '$(OS)' == 'Windows_NT' AND Exists('..\gendarme\gendarme.exe')" GendarmeExeFilename="..\gendarme\gendarme.exe" Assemblies="$(TargetPath)" WarningsAsErrors="False" IntegrateWithVisualStudio="True" GendarmeIgnoreFilename="gendarme.ignore" />
   </Target>
+  <PropertyGroup>
+    <PreBuildEvent>if exist "$(ProjectDir)obj\project.assets.json1" del "$(ProjectDir)obj\project.assets.json1"
+if exist "$(ProjectDir)obj\project.assets.json" rename "$(ProjectDir)obj\project.assets.json" project.assets.json1</PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>if exist "$(ProjectDir)obj\project.assets.json" del "$(ProjectDir)obj\project.assets.json"
+if exist "$(ProjectDir)obj\project.assets.json1" rename "$(ProjectDir)obj\project.assets.json1" project.assets.json</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

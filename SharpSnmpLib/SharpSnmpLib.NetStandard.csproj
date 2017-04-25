@@ -5,10 +5,10 @@
   </PropertyGroup>
   <PropertyGroup>
     <TargetFramework>netstandard1.3</TargetFramework>
-    <VersionPrefix>9.0.6</VersionPrefix>
+    <VersionPrefix>9.1.1</VersionPrefix>
     <VersionSuffix>
     </VersionSuffix>
-    <PackageVersion>9.0.6</PackageVersion>
+    <PackageVersion>9.1.1</PackageVersion>
     <DocumentationFile>SharpSnmpLib.NetStandard.xml</DocumentationFile>
     <PackageId>Lextm.SharpSnmpLib</PackageId>
     <NeutralLanguage>en-US</NeutralLanguage>
@@ -20,7 +20,7 @@
     <RepositoryUrl>https://github.com/lextm/sharpsnmplib.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageReleaseNotes>https://sharpsnmplib.codeplex.com/releases/view/116908</PackageReleaseNotes>
-    <Copyright>All rights reserved. (c) 2008-2016 Malcolm Crowe, Lex Li, and other contributors.</Copyright>
+    <Copyright>All rights reserved. (c) 2008-2017 Malcolm Crowe, Lex Li, and other contributors.</Copyright>
     <PackageTags>smi snmp mib</PackageTags>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>sharpsnmplib.snk</AssemblyOriginatorKeyFile>
@@ -29,6 +29,12 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <OutputType>library</OutputType>
+    <DebugType>full</DebugType>
+    <DebugSymbols>True</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>full</DebugType>
+    <DebugSymbols>True</DebugSymbols>
   </PropertyGroup>
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard1.3'">
     <PackageReference Include="System.ComponentModel.TypeConverter" Version="4.3.0" />

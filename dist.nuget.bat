@@ -1,5 +1,4 @@
-call release.bat
-call release.netstandard.bat
+call build.release.bat
 md .nuget
 cd .nuget
 call nuget update /self

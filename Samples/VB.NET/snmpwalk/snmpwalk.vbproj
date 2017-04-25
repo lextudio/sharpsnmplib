@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectGuid>{BE64B0A0-33D5-4CB0-A203-8F18266AD794}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -8,7 +8,7 @@
     <MyType>Console</MyType>
     <RootNamespace>snmpwalk</RootNamespace>
     <AssemblyName>snmpwalk</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <OptionInfer>On</OptionInfer>
     <FileUpgradeFlags>
@@ -129,17 +129,13 @@
     <Import Include="System.Diagnostics" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Mono.Options\Mono.Options.csproj">
-      <Project>{C26430B5-E2AE-410E-924C-567D79E625DC}</Project>
-      <Name>Mono.Options</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\SharpSnmpLib\SharpSnmpLib.Full.csproj">
       <Project>{286DE6DB-8F95-4BD4-86A2-86488D2E0EE1}</Project>
       <Name>SharpSnmpLib.Full</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\SharpSnmpLib\SharpSnmpLib.Portable.csproj">
-      <Project>{0B7F931D-721E-4CED-8506-463777C4A1A8}</Project>
-      <Name>SharpSnmpLib.Portable</Name>
+    <ProjectReference Include="..\..\..\SharpSnmpLib\SharpSnmpLib.NetStandard.csproj">
+      <Project>{7bc38e05-9b86-4654-b81a-bf153edaf9db}</Project>
+      <Name>SharpSnmpLib.NetStandard</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -161,5 +157,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Mono.Options">
+      <Version>4.4.0</Version>
+    </PackageReference>
   </ItemGroup>
 </Project>

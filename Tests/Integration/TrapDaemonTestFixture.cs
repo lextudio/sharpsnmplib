@@ -79,7 +79,8 @@ namespace Lextm.SharpSnmpLib.Integration
             var trapv1Mapping = new HandlerMapping("v1", "TRAPV1", trapv1);
 
             var trapv2 = new TrapV2MessageHandler();
-            trapv2.MessageReceived += (sender, args) => { count++; };
+            trapv2.MessageReceived += (sender, args) => 
+            { count++; };
             var trapv2Mapping = new HandlerMapping("v2,v3", "TRAPV2", trapv2);
 
             var inform = new InformRequestMessageHandler();
