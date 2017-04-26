@@ -98,7 +98,8 @@
     <None Include="Resources\network-server.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Office2007Renderer">
+    <Reference Include="Office2007Renderer, Version=1.0.0.0, Culture=neutral, PublicKeyToken=eae980f8f9738ad4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\Office2007Renderer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
