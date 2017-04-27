@@ -10,7 +10,6 @@
     <AssemblyName>snmptrapd</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <AssemblyOriginatorKeyFile>..\..\..\SharpSnmpLib\sharpsnmplib.snk</AssemblyOriginatorKeyFile>
-    <DelaySign>False</DelaySign>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>

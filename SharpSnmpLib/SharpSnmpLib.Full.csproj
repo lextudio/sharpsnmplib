@@ -88,12 +88,16 @@
     <Gendarme Condition=" '$(Configuration)' == 'Release' AND '$(OS)' == 'Windows_NT' AND Exists('..\gendarme\gendarme.exe')" GendarmeExeFilename="..\gendarme\gendarme.exe" Assemblies="$(TargetPath)" WarningsAsErrors="False" IntegrateWithVisualStudio="True" GendarmeIgnoreFilename="gendarme.ignore" />
   </Target>
   <PropertyGroup>
-    <PreBuildEvent>if exist "$(ProjectDir)obj\project.assets.json1" del "$(ProjectDir)obj\project.assets.json1"
+    <PreBuildEvent Condition=" '$(OS)' == 'Windows_NT' ">if exist "$(ProjectDir)obj\project.assets.json1" del "$(ProjectDir)obj\project.assets.json1"
 if exist "$(ProjectDir)obj\project.assets.json" rename "$(ProjectDir)obj\project.assets.json" project.assets.json1</PreBuildEvent>
+    <PreBuildEvent Condition=" '$(OS)' != 'Windows_NT' ">if [ -f "$(ProjectDir)obj\project.assets.json1" ]; then rm "$(ProjectDir)obj\project.assets.json1"; fi
+if [ -f "$(ProjectDir)obj\project.assets.json" ]; then mv "$(ProjectDir)obj\project.assets.json" project.assets.json1; fi</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>if exist "$(ProjectDir)obj\project.assets.json" del "$(ProjectDir)obj\project.assets.json"
+    <PostBuildEvent Condition=" '$(OS)' == 'Windows_NT' ">if exist "$(ProjectDir)obj\project.assets.json" del "$(ProjectDir)obj\project.assets.json"
 if exist "$(ProjectDir)obj\project.assets.json1" rename "$(ProjectDir)obj\project.assets.json1" project.assets.json</PostBuildEvent>
+    <PostBuildEvent Condition=" '$(OS)' != 'Windows_NT' ">if [ -f "$(ProjectDir)obj\project.assets.json" ]; then rm "$(ProjectDir)obj\project.assets.json"; fi
+if [ -f "$(ProjectDir)obj\project.assets.json1" ]; then mv "$(ProjectDir)obj\project.assets.json1" project.assets.json; fi</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
