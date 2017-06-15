@@ -155,7 +155,7 @@
     <SyntaxFilters>Standard</SyntaxFilters>
     <Preliminary>False</Preliminary>
     <Language>en-US</Language>
-    <CopyrightText>%28C%29 2008-2014, Lex Li</CopyrightText>
+    <CopyrightText>%28C%29 2008-2017, Lex Li</CopyrightText>
     <ContentPlacement>AboveNamespaces</ContentPlacement>
     <HtmlSdkLinkType>Msdn</HtmlSdkLinkType>
     <BinaryTOC>True</BinaryTOC>
