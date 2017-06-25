@@ -36,7 +36,7 @@ namespace Lextm.SharpSnmpLib.Tests
 
             Sequence a = Variable.Transform(vList);
             Assert.Throws<ArgumentNullException>(() => a.AppendBytesTo(null));
-            Assert.Equal("SNMP SEQUENCE: SNMP SEQUENCE: .1.3.6.1.4.1.2162.1001.21.0; TrapTest; ; ", a.ToString());
+            Assert.Equal("SNMP SEQUENCE: SNMP SEQUENCE: 1.3.6.1.4.1.2162.1001.21.0; TrapTest; ; ", a.ToString());
             byte[] bytes = a.ToBytes();
             ISnmpData data = DataFactory.CreateSnmpData(bytes);
             Assert.Equal(SnmpType.Sequence, data.TypeCode);

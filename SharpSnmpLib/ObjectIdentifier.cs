@@ -264,8 +264,8 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException("numerical");
             }
 
-            var result = new StringBuilder();
-            for (var k = 0; k < numerical.Length; k++)
+            var result = new StringBuilder(numerical[0].ToString(CultureInfo.InvariantCulture));
+            for (var k = 1; k < numerical.Length; k++)
             {
                 result.Append(".").Append(numerical[k].ToString(CultureInfo.InvariantCulture));
             }

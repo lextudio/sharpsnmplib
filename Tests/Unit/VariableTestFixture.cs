@@ -38,7 +38,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestToString()
         {
             var v = new Variable(new uint[] {1, 3, 6});
-            Assert.Equal("Variable: Id: .1.3.6; Data: Null", v.ToString());
+            Assert.Equal("Variable: Id: 1.3.6; Data: Null", v.ToString());
         }
         
         [Fact]

@@ -90,7 +90,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             GetRequestMessage m = (GetRequestMessage)messages[0];
             Variable v = m.Variables()[0];
             string i = v.Id.ToString();
-            Assert.Equal(".1.3.6.1.2.1.1.5.0", i);
+            Assert.Equal("1.3.6.1.2.1.1.5.0", i);
         }
 
         [Fact]
@@ -320,7 +320,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             Assert.Equal(1, messages[0].Pdu().Variables.Count);
 
             Variable v = messages[0].Pdu().Variables[0];
-            Assert.Equal(".1.3.6.1.6.3.15.1.1.4.0", v.Id.ToString());
+            Assert.Equal("1.3.6.1.6.3.15.1.1.4.0", v.Id.ToString());
             ISnmpData data = v.Data;
             Assert.Equal(SnmpType.Counter32, data.TypeCode);
             Assert.Equal(3U, ((Counter32)data).ToUInt32());
@@ -348,7 +348,7 @@ namespace Lextm.SharpSnmpLib.Messaging.Tests
             Assert.Equal("", message.Scope.ContextName.ToHexString());
             Assert.Equal(528732060, message.MessageId());
             Assert.Equal(1905687779, message.RequestId());
-            Assert.Equal(".1.3.6", ((TrapV2Message)message).Enterprise.ToString());
+            Assert.Equal("1.3.6", ((TrapV2Message)message).Enterprise.ToString());
         }
 
         [Fact]

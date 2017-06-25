@@ -82,7 +82,7 @@ namespace Lextm.SharpSnmpLib.Tests
             Assert.Equal(1, message.Variables().Count);
             Assert.Equal(new uint[] {1,3,6,1,4,1,2162,1001,21,0}, message.Variables()[0].Id.ToNumerical());
             Assert.Equal("TrapTest", message.Variables()[0].Data.ToString());
-            Assert.Equal("SNMPv1 TRAP PDU: agent address: 127.0.0.1; time stamp: 00:02:43.5200000; enterprise: .1.3.6.1.4.1.2162.1000.2; generic: EnterpriseSpecific; specific: 12; varbind count: 1", pdu.ToString());
+            Assert.Equal("SNMPv1 TRAP PDU: agent address: 127.0.0.1; time stamp: 00:02:43.5200000; enterprise: 1.3.6.1.4.1.2162.1000.2; generic: EnterpriseSpecific; specific: 12; varbind count: 1", pdu.ToString());
         }
         
         [Fact]

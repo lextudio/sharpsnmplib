@@ -79,8 +79,8 @@ namespace Lextm.SharpSnmpLib.Tests
         [Fact]
         public void TestConversion()
         {
-            var o = new ObjectIdentifier(".1.3.6.1.2.1.1.1.0");
-            Assert.Equal(".1.3.6.1.2.1.1.1.0", o.ToString());
+            var o = new ObjectIdentifier("1.3.6.1.2.1.1.1.0");
+            Assert.Equal("1.3.6.1.2.1.1.1.0", o.ToString());
         }
         
         [Fact]
@@ -94,7 +94,7 @@ namespace Lextm.SharpSnmpLib.Tests
         public void TestToString()
         {
             var transmission = new ObjectIdentifier(new uint[] {1, 3, 6, 1, 2, 1, 10});
-            Assert.Equal(".1.3.6.1.2.1.10", transmission.ToString());
+            Assert.Equal("1.3.6.1.2.1.10", transmission.ToString());
         }
 
         [Fact]
