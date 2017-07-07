@@ -269,19 +269,11 @@ namespace Lextm.SharpSnmpLib.Messaging
             var binding = new ListenerBinding(Users, endpoint);
             binding.ExceptionRaised += (o, args) =>
             {
-                var handler = ExceptionRaised;
-                if (handler != null)
-                {
-                    handler(o, args);
-                }
+                ExceptionRaised?.Invoke(o, args);
             };
             binding.MessageReceived += (o, args) =>
             {
-                var handler = MessageReceived;
-                if (handler != null)
-                {
-                    handler(o, args);
-                }
+                MessageReceived?.Invoke(o, args);
             };
             Bindings.Add(binding);
         }

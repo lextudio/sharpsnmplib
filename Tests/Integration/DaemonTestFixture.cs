@@ -148,6 +148,56 @@ namespace Lextm.SharpSnmpLib.Integration
             }
         }
 
+        [Fact]
+        public void TestDiscoverer()
+        {
+            using (var engine = CreateEngine())
+            {
+                engine.Listener.ClearBindings();
+                var serverEndPoint = new IPEndPoint(IPAddress.Any, port.NextId);
+                engine.Listener.AddBinding(serverEndPoint);
+                engine.Start();
+
+                var signal = new AutoResetEvent(false);
+                var discoverer = new Discoverer();
+                discoverer.AgentFound += (sender, args)
+                    =>
+                {
+                    Assert.True(args.Agent.Address.ToString() != "0.0.0.0");
+                    signal.Set();
+                };
+                discoverer.Discover(VersionCode.V2, new IPEndPoint(IPAddress.Broadcast, serverEndPoint.Port), new OctetString("public"), 5000);
+                signal.WaitOne();
+
+                engine.Stop();
+            }
+        }
+
+        [Fact]
+        public async void TestDiscovererAsync()
+        {
+            using (var engine = CreateEngine())
+            {
+                engine.Listener.ClearBindings();
+                var serverEndPoint = new IPEndPoint(IPAddress.Any, port.NextId);
+                engine.Listener.AddBinding(serverEndPoint);
+                engine.Start();
+
+                var signal = new AutoResetEvent(false);
+                var discoverer = new Discoverer();
+                discoverer.AgentFound += (sender, args)
+                    =>
+                {
+                    Assert.True(args.Agent.Address.ToString() != "0.0.0.0");
+                    signal.Set();
+                };
+                await discoverer.DiscoverAsync(VersionCode.V2, new IPEndPoint(IPAddress.Broadcast, serverEndPoint.Port), new OctetString("public"), 5000);
+                signal.WaitOne();
+
+                engine.Stop();
+            }
+        }
+
         [Theory]
 #if  NETSTANDARD
         [InlineData(64)]
