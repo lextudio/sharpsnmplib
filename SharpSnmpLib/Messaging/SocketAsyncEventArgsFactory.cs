@@ -40,17 +40,20 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 SocketAsyncEventArgs result = null;
 
-                if (_queue.Count > 0)
+                while (_queue.Count > 0)
                 {
-                    result = _queue.Dequeue();
+                    var item = _queue.Dequeue();
+                    if (item?.UserToken?.ToString() == "disposed")
+                    {
+                        item.Dispose();
+                        continue;
+                    }
+
+                    result = item;
+                    break;
                 }
 
-                if (result == null)
-                {
-                    result = new SocketAsyncEventArgs();
-                }
-
-                return result;
+                return result ?? new SocketAsyncEventArgs();
             }
         }
 
