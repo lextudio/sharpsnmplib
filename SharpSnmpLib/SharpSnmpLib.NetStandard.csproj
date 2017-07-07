@@ -23,8 +23,8 @@
     <DelaySign>False</DelaySign>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
     <AssemblyVersion>9.2.0.0</AssemblyVersion>
-    <FileVersion>9.2.1.0</FileVersion>
-    <Version>9.2.1</Version>
+    <FileVersion>9.2.2.0</FileVersion>
+    <Version>9.2.2</Version>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <OutputType>library</OutputType>
