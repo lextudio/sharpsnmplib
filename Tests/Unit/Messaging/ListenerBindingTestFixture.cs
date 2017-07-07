@@ -6,10 +6,12 @@
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
+
 using System.Net;
+using Lextm.SharpSnmpLib.Messaging;
 using Xunit;
 
-namespace Lextm.SharpSnmpLib.Messaging.Tests
+namespace Lextm.SharpSnmpLib.Unit.Messaging
 {
     /// <summary>
     /// Description of ListenerBindingTestFixture.

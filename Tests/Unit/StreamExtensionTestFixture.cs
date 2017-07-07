@@ -2,7 +2,7 @@
 using System.IO;
 using Xunit;
 
-namespace Lextm.SharpSnmpLib.Tests
+namespace Lextm.SharpSnmpLib.Unit
 {
     public class StreamExtensionTestFixture
     {

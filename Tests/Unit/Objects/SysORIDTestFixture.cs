@@ -1,7 +1,8 @@
-﻿using Lextm.SharpSnmpLib.Pipeline;
+﻿using Lextm.SharpSnmpLib.Objects;
+using Lextm.SharpSnmpLib.Pipeline;
 using Xunit;
 
-namespace Lextm.SharpSnmpLib.Objects.Tests
+namespace Lextm.SharpSnmpLib.Unit.Objects
 {
     public class SysORIDTestFixture
     {

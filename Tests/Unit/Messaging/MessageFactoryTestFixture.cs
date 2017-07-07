@@ -9,11 +9,12 @@
 
 using System;
 using System.Collections.Generic;
+using Lextm.SharpSnmpLib.Messaging;
 using Lextm.SharpSnmpLib.Security;
 using Xunit;
 
 #pragma warning disable 1591, 0618
-namespace Lextm.SharpSnmpLib.Messaging.Tests
+namespace Lextm.SharpSnmpLib.Unit.Messaging
 {
     public class MessageFactoryTestFixture
     {

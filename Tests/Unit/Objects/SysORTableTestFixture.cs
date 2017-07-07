@@ -6,9 +6,11 @@
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
+
+using Lextm.SharpSnmpLib.Objects;
 using Xunit;
 
-namespace Lextm.SharpSnmpLib.Objects.Tests
+namespace Lextm.SharpSnmpLib.Unit.Objects
 {
     public class SysORTableTestFixture
     {

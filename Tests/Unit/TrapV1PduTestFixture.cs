@@ -15,7 +15,7 @@ using Lextm.SharpSnmpLib.Security;
 using Xunit;
 
 #pragma warning disable 1591
-namespace Lextm.SharpSnmpLib.Tests
+namespace Lextm.SharpSnmpLib.Unit
 {
     public class TrapV1PduTestFixture
     {

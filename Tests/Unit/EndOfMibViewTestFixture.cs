@@ -6,11 +6,12 @@
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
+
 using System;
 using Xunit;
 
 #pragma warning disable 1591, 0618, 1718
-namespace Lextm.SharpSnmpLib.Tests
+namespace Lextm.SharpSnmpLib.Unit
 {
     /// <summary>
     /// Description of TestEndOfMibView.

@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Net;
 using Lextm.SharpSnmpLib.Messaging;
 using Lextm.SharpSnmpLib.Objects;
+using Lextm.SharpSnmpLib.Pipeline;
 using Lextm.SharpSnmpLib.Security;
 using Moq;
 using Xunit;
 
-namespace Lextm.SharpSnmpLib.Pipeline.Tests
+namespace Lextm.SharpSnmpLib.Unit.Pipeline
 {
     public class GetNextV1MessageHandlerTestFixture
     {

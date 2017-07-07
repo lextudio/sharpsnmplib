@@ -8,22 +8,14 @@
  */
 
 using System.Collections.Generic;
-using System.Net;
+using Lextm.SharpSnmpLib.Messaging;
 using Lextm.SharpSnmpLib.Security;
-using System.Net.Sockets;
-using System;
-using System.Diagnostics;
-using System.Threading;
-using System.Threading.Tasks;
-using Lextm.SharpSnmpLib.Objects;
-using Lextm.SharpSnmpLib.Pipeline;
+using Xunit;
 
 #pragma warning disable 1591
 
-namespace Lextm.SharpSnmpLib.Messaging.Tests
+namespace Lextm.SharpSnmpLib.Unit.Messaging
 {
-    using Xunit;
-
     /// <summary>
     /// Description of TestGetMessage.
     /// </summary>

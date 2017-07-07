@@ -6,11 +6,12 @@
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
+
 using System;
 using System.Collections.Generic;
 using Xunit;
 
-namespace Lextm.SharpSnmpLib.Tests
+namespace Lextm.SharpSnmpLib.Unit
 {
     public class SetRequestPduTestFixture
     {

@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using Lextm.SharpSnmpLib.Security;
-using Xunit;
-
-namespace Lextm.SharpSnmpLib.Messaging.Tests
+﻿namespace Lextm.SharpSnmpLib.Unit.Messaging
 {
     public class TrapV2MessageTestFixture
     {

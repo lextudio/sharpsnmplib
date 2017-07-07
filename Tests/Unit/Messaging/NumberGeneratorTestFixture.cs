@@ -1,9 +1,10 @@
 ﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Lextm.SharpSnmpLib.Messaging;
 using Xunit;
 
-namespace Lextm.SharpSnmpLib.Messaging.Tests
+namespace Lextm.SharpSnmpLib.Unit.Messaging
 {
     public class NumberGeneratorTestFixture
     {

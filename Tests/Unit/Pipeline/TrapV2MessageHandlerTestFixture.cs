@@ -6,14 +6,16 @@
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
+
 using System;
 using System.Collections.Generic;
 using System.Net;
 using Lextm.SharpSnmpLib.Messaging;
+using Lextm.SharpSnmpLib.Pipeline;
 using Moq;
 using Xunit;
 
-namespace Lextm.SharpSnmpLib.Pipeline.Tests
+namespace Lextm.SharpSnmpLib.Unit.Pipeline
 {
     public class TrapV2MessageHandlerTestFixture
     {

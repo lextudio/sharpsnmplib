@@ -3,7 +3,7 @@ using System.IO;
 using Xunit;
 
 #pragma warning disable 1591,0618, 1718
-namespace Lextm.SharpSnmpLib.Tests
+namespace Lextm.SharpSnmpLib.Unit
 {
     public class Counter32TestFixture
     {

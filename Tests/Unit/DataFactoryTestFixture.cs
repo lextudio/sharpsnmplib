@@ -12,7 +12,7 @@ using System.IO;
 using Xunit;
 
 #pragma warning disable 1591, 0618
-namespace Lextm.SharpSnmpLib.Tests
+namespace Lextm.SharpSnmpLib.Unit
 {
     public class DataFactoryTestFixture
     {
