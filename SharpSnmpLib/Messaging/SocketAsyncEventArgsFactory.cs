@@ -36,21 +36,22 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public SocketAsyncEventArgs Create()
         {
-            SocketAsyncEventArgs result = null;
             lock (_root)
             {
+                SocketAsyncEventArgs result = null;
+
                 if (_queue.Count > 0)
                 {
                     result = _queue.Dequeue();
                 }
-            }
 
-            if (result == null)
-            {
-                result = new SocketAsyncEventArgs();
-            }
+                if (result == null)
+                {
+                    result = new SocketAsyncEventArgs();
+                }
 
-            return result;
+                return result;
+            }
         }
 
         /// <summary>

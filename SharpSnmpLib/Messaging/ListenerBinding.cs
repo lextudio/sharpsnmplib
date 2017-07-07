@@ -194,6 +194,11 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             _socket = new Socket(addressFamily, SocketType.Dgram, ProtocolType.Udp) { ExclusiveAddressUse = true };
+            _socket.SetSocketOption(
+                addressFamily == AddressFamily.InterNetwork
+                    ? SocketOptionLevel.IP
+                    : SocketOptionLevel.IPv6,
+                SocketOptionName.PacketInformation, true);
 
             try
             {
@@ -507,7 +512,6 @@ namespace Lextm.SharpSnmpLib.Messaging
 
         private async Task ReceiveAsync()
         {
-            EndPoint remote = _socket.AddressFamily == AddressFamily.InterNetwork ? new IPEndPoint(IPAddress.Any, 0) : new IPEndPoint(IPAddress.IPv6Any, 0);
             while (true)
             {
                 // If no more active, then stop.
@@ -521,6 +525,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 var args = SocketExtension.EventArgsFactory.Create();
                 try
                 {
+                    EndPoint remote = _socket.AddressFamily == AddressFamily.InterNetwork ? new IPEndPoint(IPAddress.Any, 0) : new IPEndPoint(IPAddress.IPv6Any, 0);
                     args.RemoteEndPoint = remote;
                     args.SetBuffer(reply, 0, _bufferSize);
                     using (var awaitable = new SocketAwaitable(args))
@@ -528,7 +533,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                         count = await _socket.ReceiveAsync(awaitable);
                     }
 
-                    await Task.Factory.StartNew(() => HandleMessage(reply, count, (IPEndPoint)remote));
+                    await Task.Factory.StartNew(() => HandleMessage(reply, count, (IPEndPoint)args.RemoteEndPoint));
                 }
                 catch (SocketException ex)
                 {

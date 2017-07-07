@@ -4,6 +4,15 @@
 
     internal static class SocketExtension
     {
+        public static SocketAwaitable ReceiveMessageFromAsync(this Socket socket,
+            SocketAwaitable awaitable)
+        {
+            awaitable.Reset();
+            if (!socket.ReceiveMessageFromAsync(awaitable.m_eventArgs))
+                awaitable.m_wasCompleted = true;
+            return awaitable;
+        }
+
         public static SocketAwaitable ReceiveAsync(this Socket socket,
             SocketAwaitable awaitable)
         {

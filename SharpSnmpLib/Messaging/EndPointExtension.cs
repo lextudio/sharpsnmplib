@@ -40,7 +40,13 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException("endpoint");
             }
 
-            return new Socket(endpoint.AddressFamily, SocketType.Dgram, ProtocolType.Udp);
+            var result = new Socket(endpoint.AddressFamily, SocketType.Dgram, ProtocolType.Udp);
+            result.SetSocketOption(
+                endpoint.AddressFamily == AddressFamily.InterNetwork
+                    ? SocketOptionLevel.IP
+                    : SocketOptionLevel.IPv6,
+                SocketOptionName.PacketInformation, true);
+            return result;
         }
     }
 }

@@ -338,9 +338,12 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             using (var udp = new Socket(addressFamily, SocketType.Dgram, ProtocolType.Udp))
             {
+                udp.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.Broadcast, true);
+                udp.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.PacketInformation, true);
                 var info = SocketExtension.EventArgsFactory.Create();
                 info.RemoteEndPoint = broadcastAddress;
                 info.SetBuffer(bytes, 0, bytes.Length);
+
                 using (var awaitable1 = new SocketAwaitable(info))
                 {
                     await udp.SendToAsync(awaitable1);
@@ -354,8 +357,10 @@ namespace Lextm.SharpSnmpLib.Messaging
                 }
 
                 _bufferSize = udp.ReceiveBufferSize;
-                await ReceiveAsync(udp).ConfigureAwait(false);
-                await Task.Delay(interval).ConfigureAwait(false);
+                await Task.WhenAny(
+                    ReceiveAsync(udp),
+                    Task.Delay(interval));
+
                 Interlocked.CompareExchange(ref _active, Inactive, Active);
                 udp.Shutdown(SocketShutdown.Both);
             }
@@ -363,7 +368,6 @@ namespace Lextm.SharpSnmpLib.Messaging
 
         private async Task ReceiveAsync(Socket socket)
         {
-            EndPoint remote = new IPEndPoint(IPAddress.Any, 0);
             while (true)
             {
                 // If no more active, then stop.
@@ -377,14 +381,15 @@ namespace Lextm.SharpSnmpLib.Messaging
                 var args = SocketExtension.EventArgsFactory.Create();
                 try
                 {
+                    EndPoint remote = new IPEndPoint(IPAddress.Any, 0);
                     args.RemoteEndPoint = remote;
                     args.SetBuffer(reply, 0, _bufferSize);
                     using (var awaitable = new SocketAwaitable(args))
                     {
-                        count = await socket.ReceiveAsync(awaitable);
+                        count = await socket.ReceiveMessageFromAsync(awaitable);
                     }
 
-                    await Task.Factory.StartNew(() => HandleMessage(reply, count, (IPEndPoint)remote)).ConfigureAwait(false);
+                    await Task.Factory.StartNew(() => HandleMessage(reply, count, (IPEndPoint)args.RemoteEndPoint)).ConfigureAwait(false);
                 }
                 catch (SocketException ex)
                 {
