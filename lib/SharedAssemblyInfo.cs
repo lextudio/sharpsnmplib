@@ -8,4 +8,4 @@ using System.Reflection;
 // Build Numbers by using the '*' as shown below:
 
 [assembly: AssemblyVersion("9.2.0.0")]
-[assembly: AssemblyFileVersion("9.2.0.0")]
+[assembly: AssemblyFileVersion("9.2.1.0")]
