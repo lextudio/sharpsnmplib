@@ -166,7 +166,15 @@ namespace Lextm.SharpSnmpLib.Integration
                     Assert.True(args.Agent.Address.ToString() != "0.0.0.0");
                     signal.Set();
                 };
+                discoverer.Discover(VersionCode.V1, new IPEndPoint(IPAddress.Broadcast, serverEndPoint.Port), new OctetString("public"), 5000);
+                signal.WaitOne();
+
+                signal.Reset();
                 discoverer.Discover(VersionCode.V2, new IPEndPoint(IPAddress.Broadcast, serverEndPoint.Port), new OctetString("public"), 5000);
+                signal.WaitOne();
+
+                signal.Reset();
+                discoverer.Discover(VersionCode.V3, new IPEndPoint(IPAddress.Broadcast, serverEndPoint.Port), null, 5000);
                 signal.WaitOne();
 
                 engine.Stop();
@@ -191,7 +199,15 @@ namespace Lextm.SharpSnmpLib.Integration
                     Assert.True(args.Agent.Address.ToString() != "0.0.0.0");
                     signal.Set();
                 };
+                await discoverer.DiscoverAsync(VersionCode.V1, new IPEndPoint(IPAddress.Broadcast, serverEndPoint.Port), new OctetString("public"), 5000);
+                signal.WaitOne();
+
+                signal.Reset();
                 await discoverer.DiscoverAsync(VersionCode.V2, new IPEndPoint(IPAddress.Broadcast, serverEndPoint.Port), new OctetString("public"), 5000);
+                signal.WaitOne();
+
+                signal.Reset();
+                await discoverer.DiscoverAsync(VersionCode.V3, new IPEndPoint(IPAddress.Broadcast, serverEndPoint.Port), null, 5000);
                 signal.WaitOne();
 
                 engine.Stop();
