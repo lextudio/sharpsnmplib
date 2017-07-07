@@ -27,6 +27,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// </summary>
     public sealed class SocketAsyncEventArgsFactory
     {
+        internal const string DisposedMessage = "disposed";
         private readonly object _root = new object();
         private readonly Queue<SocketAsyncEventArgs> _queue = new Queue<SocketAsyncEventArgs>();
 
@@ -43,7 +44,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 while (_queue.Count > 0)
                 {
                     var item = _queue.Dequeue();
-                    if (item?.UserToken?.ToString() == "disposed")
+                    if (item?.UserToken?.ToString() == DisposedMessage)
                     {
                         item.Dispose();
                         continue;

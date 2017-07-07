@@ -389,7 +389,8 @@ namespace Lextm.SharpSnmpLib.Messaging
                         count = await socket.ReceiveMessageFromAsync(awaitable);
                     }
 
-                    await Task.Factory.StartNew(() => HandleMessage(reply, count, (IPEndPoint)args.RemoteEndPoint)).ConfigureAwait(false);
+                    await Task.Factory.StartNew(() => HandleMessage(reply, count, (IPEndPoint) args.RemoteEndPoint))
+                        .ConfigureAwait(false);
                 }
                 catch (SocketException ex)
                 {
@@ -403,6 +404,10 @@ namespace Lextm.SharpSnmpLib.Messaging
                             HandleException(ex);
                         }
                     }
+                }
+                catch (NullReferenceException)
+                {
+                    args.UserToken = SocketAsyncEventArgsFactory.DisposedMessage;
                 }
             }
         }
