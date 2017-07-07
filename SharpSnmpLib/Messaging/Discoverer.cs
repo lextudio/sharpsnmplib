@@ -63,18 +63,18 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             if (broadcastAddress == null)
             {
-                throw new ArgumentNullException("broadcastAddress");
+                throw new ArgumentNullException(nameof(broadcastAddress));
             }
             
             if (version != VersionCode.V3 && community == null)
             {
-                throw new ArgumentNullException("community");
+                throw new ArgumentNullException(nameof(community));
             }
 
             var addressFamily = broadcastAddress.AddressFamily;
             if (addressFamily == AddressFamily.InterNetworkV6)
             {
-                throw new ArgumentException("IP v6 is not yet supported", "broadcastAddress");
+                throw new ArgumentException("IP v6 is not yet supported", nameof(broadcastAddress));
             }
 
             byte[] bytes;
@@ -237,20 +237,13 @@ namespace Lextm.SharpSnmpLib.Messaging
 #endif
         private void HandleException(Exception exception)
         {
-            var handler = ExceptionRaised;
-            if (handler == null)
-            {
-                return;
-            }
-
-            handler(this, new ExceptionRaisedEventArgs(exception));
+            ExceptionRaised?.Invoke(this, new ExceptionRaisedEventArgs(exception));
         }
 
         private void HandleMessage(byte[] buffer, int count, IPEndPoint remote)
         {
             foreach (var message in MessageFactory.ParseMessages(buffer, 0, count, Empty))
             {
-                EventHandler<AgentFoundEventArgs> handler;
                 var code = message.TypeCode();
                 if (code == SnmpType.ReportPdu)
                 {
@@ -265,11 +258,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                         continue;
                     }
 
-                    handler = AgentFound;
-                    if (handler != null)
-                    {
-                        handler(this, new AgentFoundEventArgs(remote, null));
-                    }
+                    AgentFound?.Invoke(this, new AgentFoundEventArgs(remote, null));
                 }
 
                 if (code != SnmpType.ResponsePdu)
@@ -288,11 +277,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                     continue;
                 }
 
-                handler = AgentFound;
-                if (handler != null)
-                {
-                    handler(this, new AgentFoundEventArgs(remote, response.Variables()[0]));
-                }
+                AgentFound?.Invoke(this, new AgentFoundEventArgs(remote, response.Variables()[0]));
             }
         }
 
@@ -308,18 +293,18 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             if (broadcastAddress == null)
             {
-                throw new ArgumentNullException("broadcastAddress");
+                throw new ArgumentNullException(nameof(broadcastAddress));
             }
 
             if (version != VersionCode.V3 && community == null)
             {
-                throw new ArgumentNullException("community");
+                throw new ArgumentNullException(nameof(community));
             }
 
             var addressFamily = broadcastAddress.AddressFamily;
             if (addressFamily == AddressFamily.InterNetworkV6)
             {
-                throw new ArgumentException("IP v6 is not yet supported", "broadcastAddress");
+                throw new ArgumentException("IP v6 is not yet supported", nameof(broadcastAddress));
             }
 
             byte[] bytes;
@@ -394,15 +379,17 @@ namespace Lextm.SharpSnmpLib.Messaging
                 }
                 catch (SocketException ex)
                 {
-                    if (ex.SocketErrorCode != SocketError.ConnectionReset)
+                    if (ex.SocketErrorCode == SocketError.ConnectionReset)
                     {
-                        // If the SnmpTrapListener was active, marks it as stopped and call HandleException.
-                        // If it was inactive, the exception is likely to result from this, and we raise nothing.
-                        var activeBefore = Interlocked.CompareExchange(ref _active, Inactive, Active);
-                        if (activeBefore == Active)
-                        {
-                            HandleException(ex);
-                        }
+                        continue;
+                    }
+
+                    // If the SnmpTrapListener was active, marks it as stopped and call HandleException.
+                    // If it was inactive, the exception is likely to result from this, and we raise nothing.
+                    var activeBefore = Interlocked.CompareExchange(ref _active, Inactive, Active);
+                    if (activeBefore == Active)
+                    {
+                        HandleException(ex);
                     }
                 }
                 catch (NullReferenceException)

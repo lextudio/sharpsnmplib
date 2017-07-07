@@ -15,7 +15,7 @@ namespace Lextm.SharpSnmpLib.Integration
 {
     public class DaemonTestFixture
     {
-        static NumberGenerator port = new NumberGenerator(40000, 45000);
+        private static readonly NumberGenerator Port = new NumberGenerator(40000, 45000);
 
         private SnmpEngine CreateEngine()
         {
@@ -110,7 +110,7 @@ namespace Lextm.SharpSnmpLib.Integration
             using (var engine = CreateEngine())
             {
                 engine.Listener.ClearBindings();
-                var serverEndPoint = new IPEndPoint(IPAddress.Loopback, port.NextId);
+                var serverEndPoint = new IPEndPoint(IPAddress.Loopback, Port.NextId);
                 engine.Listener.AddBinding(serverEndPoint);
                 engine.Start();
 
@@ -132,7 +132,7 @@ namespace Lextm.SharpSnmpLib.Integration
             using (var engine = CreateEngine())
             {
                 engine.Listener.ClearBindings();
-                var serverEndPoint = new IPEndPoint(IPAddress.Loopback, port.NextId);
+                var serverEndPoint = new IPEndPoint(IPAddress.Loopback, Port.NextId);
                 engine.Listener.AddBinding(serverEndPoint);
                 engine.Start();
 
@@ -154,7 +154,7 @@ namespace Lextm.SharpSnmpLib.Integration
             using (var engine = CreateEngine())
             {
                 engine.Listener.ClearBindings();
-                var serverEndPoint = new IPEndPoint(IPAddress.Any, port.NextId);
+                var serverEndPoint = new IPEndPoint(IPAddress.Any, Port.NextId);
                 engine.Listener.AddBinding(serverEndPoint);
                 engine.Start();
 
@@ -166,15 +166,15 @@ namespace Lextm.SharpSnmpLib.Integration
                     Assert.True(args.Agent.Address.ToString() != "0.0.0.0");
                     signal.Set();
                 };
-                discoverer.Discover(VersionCode.V1, new IPEndPoint(IPAddress.Broadcast, serverEndPoint.Port), new OctetString("public"), 5000);
+                discoverer.Discover(VersionCode.V1, new IPEndPoint(IPAddress.Broadcast, serverEndPoint.Port), new OctetString("public"), 3000);
                 signal.WaitOne();
 
                 signal.Reset();
-                discoverer.Discover(VersionCode.V2, new IPEndPoint(IPAddress.Broadcast, serverEndPoint.Port), new OctetString("public"), 5000);
+                discoverer.Discover(VersionCode.V2, new IPEndPoint(IPAddress.Broadcast, serverEndPoint.Port), new OctetString("public"), 3000);
                 signal.WaitOne();
 
                 signal.Reset();
-                discoverer.Discover(VersionCode.V3, new IPEndPoint(IPAddress.Broadcast, serverEndPoint.Port), null, 5000);
+                discoverer.Discover(VersionCode.V3, new IPEndPoint(IPAddress.Broadcast, serverEndPoint.Port), null, 3000);
                 signal.WaitOne();
 
                 engine.Stop();
@@ -187,7 +187,7 @@ namespace Lextm.SharpSnmpLib.Integration
             using (var engine = CreateEngine())
             {
                 engine.Listener.ClearBindings();
-                var serverEndPoint = new IPEndPoint(IPAddress.Any, port.NextId);
+                var serverEndPoint = new IPEndPoint(IPAddress.Any, Port.NextId);
                 engine.Listener.AddBinding(serverEndPoint);
                 engine.Start();
 
@@ -199,15 +199,15 @@ namespace Lextm.SharpSnmpLib.Integration
                     Assert.True(args.Agent.Address.ToString() != "0.0.0.0");
                     signal.Set();
                 };
-                await discoverer.DiscoverAsync(VersionCode.V1, new IPEndPoint(IPAddress.Broadcast, serverEndPoint.Port), new OctetString("public"), 5000);
+                await discoverer.DiscoverAsync(VersionCode.V1, new IPEndPoint(IPAddress.Broadcast, serverEndPoint.Port), new OctetString("public"), 3000);
                 signal.WaitOne();
 
                 signal.Reset();
-                await discoverer.DiscoverAsync(VersionCode.V2, new IPEndPoint(IPAddress.Broadcast, serverEndPoint.Port), new OctetString("public"), 5000);
+                await discoverer.DiscoverAsync(VersionCode.V2, new IPEndPoint(IPAddress.Broadcast, serverEndPoint.Port), new OctetString("public"), 3000);
                 signal.WaitOne();
 
                 signal.Reset();
-                await discoverer.DiscoverAsync(VersionCode.V3, new IPEndPoint(IPAddress.Broadcast, serverEndPoint.Port), null, 5000);
+                await discoverer.DiscoverAsync(VersionCode.V3, new IPEndPoint(IPAddress.Broadcast, serverEndPoint.Port), null, 3000);
                 signal.WaitOne();
 
                 engine.Stop();
@@ -272,7 +272,7 @@ namespace Lextm.SharpSnmpLib.Integration
             using (var engine = CreateEngine())
             {
                 engine.Listener.ClearBindings();
-                var serverEndPoint = new IPEndPoint(IPAddress.Loopback, port.NextId);
+                var serverEndPoint = new IPEndPoint(IPAddress.Loopback, Port.NextId);
                 engine.Listener.AddBinding(serverEndPoint);
 
                 try
@@ -321,7 +321,7 @@ namespace Lextm.SharpSnmpLib.Integration
             using (var engine = CreateEngine())
             {
                 engine.Listener.ClearBindings();
-                var serverEndPoint = new IPEndPoint(IPAddress.Loopback, port.NextId);
+                var serverEndPoint = new IPEndPoint(IPAddress.Loopback, Port.NextId);
                 engine.Listener.AddBinding(serverEndPoint);
 #if !NETSTANDARD
                 // IMPORTANT: need to set min thread count so as to boost performance.
@@ -368,7 +368,7 @@ namespace Lextm.SharpSnmpLib.Integration
             using (var engine = CreateEngine())
             {
                 engine.Listener.ClearBindings();
-                var serverEndPoint = new IPEndPoint(IPAddress.Loopback, port.NextId);
+                var serverEndPoint = new IPEndPoint(IPAddress.Loopback, Port.NextId);
                 engine.Listener.AddBinding(serverEndPoint);
 
                 var time = DateTime.Now;
@@ -402,7 +402,7 @@ namespace Lextm.SharpSnmpLib.Integration
             using (var engine = CreateEngine())
             {
                 engine.Listener.ClearBindings();
-                var serverEndPoint = new IPEndPoint(IPAddress.Loopback, port.NextId);
+                var serverEndPoint = new IPEndPoint(IPAddress.Loopback, Port.NextId);
                 engine.Listener.AddBinding(serverEndPoint);
 
                 engine.Start();
@@ -436,7 +436,7 @@ namespace Lextm.SharpSnmpLib.Integration
             using (var engine = CreateEngine())
             {
                 engine.Listener.ClearBindings();
-                var serverEndPoint = new IPEndPoint(IPAddress.Loopback, port.NextId);
+                var serverEndPoint = new IPEndPoint(IPAddress.Loopback, Port.NextId);
                 engine.Listener.AddBinding(serverEndPoint);
 
                 engine.Start();
