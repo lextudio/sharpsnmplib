@@ -30,7 +30,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
     [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
     public sealed class HandlerMapping
     {
-#if NETSTANDARD
+#if !NET452
         /// <summary>
         /// .NET standard 1.3 only helper.
         /// </summary>
@@ -111,18 +111,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
 
         private static IMessageHandler CreateMessageHandler(string assemblyName, string type)
         {
-
-#if NETSTANDARD
-            foreach (var assembly in from assembly in TypeResolver.GetAssemblies()
-                                     let name = assembly.GetName().Name
-                                     where string.Compare(name, assemblyName, StringComparison.OrdinalIgnoreCase) == 0
-                                     select assembly)
-            {
-                return (IMessageHandler)Activator.CreateInstance(assembly.GetType(type));
-            }
-
-            return (IMessageHandler)Activator.CreateInstance(TypeResolver.Load(assemblyName, type));
-#else
+#if NET452
             foreach (var assembly in from assembly in AppDomain.CurrentDomain.GetAssemblies()
                                 let name = assembly.GetName().Name
                                 where string.Compare(name, assemblyName, StringComparison.OrdinalIgnoreCase) == 0
@@ -132,6 +121,16 @@ namespace Lextm.SharpSnmpLib.Pipeline
             }
 
             return (IMessageHandler)Activator.CreateInstance(AppDomain.CurrentDomain.Load(assemblyName).GetType(type));
+#else
+            foreach (var assembly in from assembly in TypeResolver.GetAssemblies()
+                                     let name = assembly.GetName().Name
+                                     where string.Compare(name, assemblyName, StringComparison.OrdinalIgnoreCase) == 0
+                                     select assembly)
+            {
+                return (IMessageHandler)Activator.CreateInstance(assembly.GetType(type));
+            }
+
+            return (IMessageHandler)Activator.CreateInstance(TypeResolver.Load(assemblyName, type));
 #endif
         }
 

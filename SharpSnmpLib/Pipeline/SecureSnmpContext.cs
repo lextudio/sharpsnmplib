@@ -19,7 +19,7 @@
 
 using System;
 using System.Collections.Generic;
-#if !NETSTANDARD
+#if NET452
 using System.Configuration;
 #endif
 using System.Diagnostics.CodeAnalysis;
@@ -227,11 +227,11 @@ namespace Lextm.SharpSnmpLib.Pipeline
             {
                 if (_timeIncluded == null)
                 {
-#if MA ||  MT || __IOS__ || NETSTANDARD
-                    _timeIncluded = true;
-#else
+#if NET452
                     object setting = ConfigurationManager.AppSettings["TimeIncluded"];
                     _timeIncluded = setting != null && Convert.ToBoolean(setting.ToString(), CultureInfo.InvariantCulture);
+#else
+                    _timeIncluded = true;
 #endif
                 }
 

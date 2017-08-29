@@ -96,7 +96,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 #if (!CF)
                 udp.EnableBroadcast = true;
 #endif
-#if !NETSTANDARD
+#if NET452
                 udp.Send(bytes, bytes.Length, broadcastAddress);
 #else
                 AsyncHelper.RunSync(() => udp.SendAsync(bytes, bytes.Length, broadcastAddress));
@@ -118,7 +118,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
                 Thread.Sleep(interval);
                 Interlocked.CompareExchange(ref _active, Inactive, Active);
-#if !NETSTANDARD
+#if NET452
                 udp.Close();
 #endif
             }

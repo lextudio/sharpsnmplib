@@ -125,9 +125,9 @@
       <Project>{286de6db-8f95-4bd4-86a2-86488d2e0ee1}</Project>
       <Name>SharpSnmpLib.Full</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SharpSnmpLib\SharpSnmpLib.NetStandard.csproj">
+    <ProjectReference Include="..\SharpSnmpLib\SharpSnmpLib.csproj">
       <Project>{7bc38e05-9b86-4654-b81a-bf153edaf9db}</Project>
-      <Name>SharpSnmpLib.NetStandard</Name>
+      <Name>SharpSnmpLib</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

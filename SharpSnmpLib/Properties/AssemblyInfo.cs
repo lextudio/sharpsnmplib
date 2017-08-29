@@ -30,14 +30,6 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-#if !NETSTANDARD
-[assembly: AssemblyTitle("SharpSnmpLib")]
-[assembly: AssemblyDescription("#SNMP Library for .NET/Mono")]
-[assembly: AssemblyConfiguration("MIT/X11")]
-[assembly: AssemblyCompany("LeXtudio")]
-[assembly: AssemblyProduct("#SNMPLib")]
-[assembly: AssemblyCopyright("(C) 2008-2017 Malcolm Crowe, Lex Li, and other contributors.")]
-#endif
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -45,9 +37,6 @@ using System.Runtime.InteropServices;
 // If you need to expose index type to COM, use [ComVisible(true)] on that type.
 [assembly: ComVisible(false)]
 
-#if !NETSTANDARD
-[assembly: NeutralResourcesLanguage("en-US")]
-#endif
 [assembly: CLSCompliant(true)]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Lextm")]
 

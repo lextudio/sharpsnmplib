@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\SharpSnmpLib\SharpSnmpLib.NetStandard.csproj" />
+    <ProjectReference Include="..\..\..\SharpSnmpLib\SharpSnmpLib.csproj" />
   </ItemGroup>
 
 </Project>

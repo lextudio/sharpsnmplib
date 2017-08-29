@@ -27,10 +27,10 @@ namespace Lextm.SharpSnmpLib.Objects
     /// </summary>
     public sealed class SysContact : ScalarObject
     {
-#if NETSTANDARD
-        private OctetString _contact = new OctetString("UNKNOWN");
-#else
+#if NET452
         private OctetString _contact = new OctetString(Environment.UserName);
+#else
+        private OctetString _contact = new OctetString("UNKNOWN");
 #endif
         /// <summary>
         /// Initializes a new instance of the <see cref="SysContact"/> class.

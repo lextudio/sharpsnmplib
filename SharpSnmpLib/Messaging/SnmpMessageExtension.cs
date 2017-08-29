@@ -379,7 +379,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         #endregion
 
         #region async methods
-#if !NETSTANDARD
+#if NET452
         /// <summary>
         /// Ends a pending asynchronous read.
         /// </summary>

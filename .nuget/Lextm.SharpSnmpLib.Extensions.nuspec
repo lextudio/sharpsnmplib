@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
+  <metadata>
+    <version>10.0.0-beta1</version>
+    <authors>Malcolm Crowe,Lex Li,and other contributors.</authors>
+    <owners>Lex Li</owners>
+    <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
+    <projectUrl>https://docs.sharpsnmp.com/</projectUrl>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System" targetFramework="" />
+      <frameworkAssembly assemblyName="System.Core" targetFramework="" />
+    </frameworkAssemblies>
+    <dependencies>
+      <dependency id="Lextm.SharpSnmpLib" version="10.0.0-beta1" />
+    </dependencies>
+    <id>Lextm.SharpSnmpLib.Extensions</id>
+    <title>#SNMP Library Platform Extensions</title>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <Description>#SNMP Library is an open source library for developers on .NET Framework/.NET Core/Xamarin/Mono. Developed in C# and can be used for F#, VB.NET, Oxygene. All SNMP versions are supported.</Description>
+    <summary>#SNMP open source SNMP library for .NET and Mono.</summary>
+    <releaseNotes>https://github.com/lextm/sharpsnmplib/releases</releaseNotes>
+    <copyright>All rights reserved. (c) 2008-2017 Malcolm Crowe, Lex Li, and other contributors.</copyright>
+    <language>en-US</language>
+    <tags>snmp</tags>
+  </metadata>
+  <files>
+    <file src="..\bin\SharpSnmpLib.Full.dll" target="lib\net452\SharpSnmpLib.Full.dll" />
+    <file src="..\bin\SharpSnmpLib.Full.xml" target="lib\net452\SharpSnmpLib.Full.xml" />
+    <file src="..\bin\SharpSnmpLib.iOS.dll" target="lib\Xamarin.iOS10\SharpSnmpLib.iOS.dll" />
+    <file src="..\bin\SharpSnmpLib.iOS.xml" target="lib\Xamarin.iOS10\SharpSnmpLib.iOS.xml" />    
+    <file src="..\bin\SharpSnmpLib.Android.dll" target="lib\Monoandroid\SharpSnmpLib.Android.dll" />
+    <file src="..\bin\SharpSnmpLib.Android.xml" target="lib\Monoandroid\SharpSnmpLib.Android.xml" />
+  </files>
+</package>

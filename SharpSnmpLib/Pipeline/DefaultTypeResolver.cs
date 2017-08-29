@@ -18,7 +18,11 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <inheritdoc />
         public Assembly[] GetAssemblies()
         {
+#if NETSTANDARD1_3
             return Array.Empty<Assembly>();
+#else
+            return new Assembly[0];
+#endif
         }
     }
 }

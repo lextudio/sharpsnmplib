@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.14
+VisualStudioVersion = 15.0.26730.8
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharpSnmpLib.NetStandard", "SharpSnmpLib\SharpSnmpLib.NetStandard.csproj", "{7BC38E05-9B86-4654-B81A-BF153EDAF9DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharpSnmpLib", "SharpSnmpLib\SharpSnmpLib.csproj", "{7BC38E05-9B86-4654-B81A-BF153EDAF9DB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.NetStandard", "Tests\Tests.NetStandard.csproj", "{B09DE848-5D73-45AB-92FA-F7173A0E3736}"
 EndProject
@@ -29,19 +29,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CSharpCore", "CSharpCore", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "snmpget", "Samples\CSharpCore\snmpget\snmpget.csproj", "{BFEAB4D8-77AB-471D-895E-B07B4E363FB5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "snmpbulkget", "Samples\CSharpCore\snmpbulkget\snmpbulkget.csproj", "{46F90D17-24E8-4020-861F-219ED35A4010}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "snmpbulkget", "Samples\CSharpCore\snmpbulkget\snmpbulkget.csproj", "{46F90D17-24E8-4020-861F-219ED35A4010}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "snmpdiscover", "Samples\CSharpCore\snmpdiscover\snmpdiscover.csproj", "{C1DC7CC0-9A48-4D5F-83B3-975462F7132E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "snmpdiscover", "Samples\CSharpCore\snmpdiscover\snmpdiscover.csproj", "{C1DC7CC0-9A48-4D5F-83B3-975462F7132E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "snmpgetnext", "Samples\CSharpCore\snmpgetnext\snmpgetnext.csproj", "{14BF4D10-A6C1-4495-8470-3200A3E09EF1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "snmpgetnext", "Samples\CSharpCore\snmpgetnext\snmpgetnext.csproj", "{14BF4D10-A6C1-4495-8470-3200A3E09EF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "snmpsendtrap", "Samples\CSharpCore\snmpsendtrap\snmpsendtrap.csproj", "{A4D6ADF1-2AEE-4F2C-89AE-2B9AB34E25B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "snmpsendtrap", "Samples\CSharpCore\snmpsendtrap\snmpsendtrap.csproj", "{A4D6ADF1-2AEE-4F2C-89AE-2B9AB34E25B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "snmpset", "Samples\CSharpCore\snmpset\snmpset.csproj", "{94F847EB-872D-450E-B1DC-1271A1997BE9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "snmpset", "Samples\CSharpCore\snmpset\snmpset.csproj", "{94F847EB-872D-450E-B1DC-1271A1997BE9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "snmptrapd", "Samples\CSharpCore\snmptrapd\snmptrapd.csproj", "{F4DF289A-3E97-4D5A-A68F-DDF6D3DF72B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "snmptrapd", "Samples\CSharpCore\snmptrapd\snmptrapd.csproj", "{F4DF289A-3E97-4D5A-A68F-DDF6D3DF72B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "snmpwalk", "Samples\CSharpCore\snmpwalk\snmpwalk.csproj", "{33A1E5C4-288B-4CE3-BC43-467AC3B6F721}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "snmpwalk", "Samples\CSharpCore\snmpwalk\snmpwalk.csproj", "{33A1E5C4-288B-4CE3-BC43-467AC3B6F721}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -361,5 +361,8 @@ Global
 		{94F847EB-872D-450E-B1DC-1271A1997BE9} = {955E70DC-8385-42FA-ACB2-12ACD8103BCE}
 		{F4DF289A-3E97-4D5A-A68F-DDF6D3DF72B0} = {955E70DC-8385-42FA-ACB2-12ACD8103BCE}
 		{33A1E5C4-288B-4CE3-BC43-467AC3B6F721} = {955E70DC-8385-42FA-ACB2-12ACD8103BCE}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0094FD09-7C1B-4C43-887D-0641B421D4C6}
 	EndGlobalSection
 EndGlobal

@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>SharpSnmpLib</AssemblyName>
+    <RootNamespace>Lextm.SharpSnmpLib</RootNamespace>
+    <TargetFrameworks>netstandard1.3;net452</TargetFrameworks>
+    <DocumentationFile Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">..\bin\SharpSnmpLib.xml</DocumentationFile>
+    <PackageId>Lextm.SharpSnmpLib</PackageId>
+    <Title>#SNMP Library</Title>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <Authors>Malcolm Crowe,Lex Li,and other contributors.</Authors>
+    <Description>#SNMP Library is an open source library for developers on .NET Framework/.NET Core/Xamarin/Mono. Developed in C# and can be used for F#, VB.NET, Oxygene. All SNMP versions are supported.</Description>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
+    <PackageProjectUrl>https://docs.sharpsnmp.com/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/lextm/sharpsnmplib.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReleaseNotes>https://github.com/lextm/sharpsnmplib/releases</PackageReleaseNotes>
+    <Copyright>All rights reserved. (c) 2008-2017 Malcolm Crowe, Lex Li, and other contributors.</Copyright>
+    <PackageTags>smi snmp mib</PackageTags>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>sharpsnmplib.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>False</DelaySign>
+    <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
+    <AssemblyVersion>10.0.0.0</AssemblyVersion>
+    <FileVersion>10.0.0.0</FileVersion>
+    <Version>10.0.0-beta1</Version>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='netstandard1.3'">
+    <PackageReference Include="System.ComponentModel.TypeConverter" Version="4.3.0" />
+    <PackageReference Include="System.Net.NetworkInformation" Version="4.3.0" />
+    <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
+    <PackageReference Include="System.Threading.Thread" Version="4.3.0" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='net452'">
+    <Reference Include="System.Configuration" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Security\AESPrivacyProvider.cs" />
+    <Compile Remove="Security\DESPrivacyProvider.cs" />
+  </ItemGroup>
+</Project>

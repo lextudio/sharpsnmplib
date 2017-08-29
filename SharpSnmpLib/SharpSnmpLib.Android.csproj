@@ -51,9 +51,9 @@
     <Compile Include="Security\DESPrivacyProvider.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="SharpSnmpLib.NetStandard.csproj">
+    <ProjectReference Include="SharpSnmpLib.csproj">
       <Project>{7bc38e05-9b86-4654-b81a-bf153edaf9db}</Project>
-      <Name>SharpSnmpLib.NetStandard</Name>
+      <Name>SharpSnmpLib</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
