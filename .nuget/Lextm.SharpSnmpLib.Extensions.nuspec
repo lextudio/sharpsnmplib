@@ -16,8 +16,8 @@
     <id>Lextm.SharpSnmpLib.Extensions</id>
     <title>#SNMP Library Platform Extensions</title>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
-    <Description>#SNMP Library is an open source library for developers on .NET Framework/.NET Core/Xamarin/Mono. Developed in C# and can be used for F#, VB.NET, Oxygene. All SNMP versions are supported.</Description>
-    <summary>#SNMP open source SNMP library for .NET and Mono.</summary>
+    <description>#SNMP Library is an open source library for developers on .NET Framework/.NET Core/Xamarin/Mono. Developed in C# and can be used for F#, VB.NET, Oxygene. All SNMP versions are supported.</description>
+    <summary>#SNMP Library is an open source library for developers on .NET Framework/.NET Core/Xamarin/Mono. Developed in C# and can be used for F#, VB.NET, Oxygene. All SNMP versions are supported. This is the platform extensions package, which supports .NET Framework, Xamarin.iOS, and Xamarin.Android.</summary>
     <releaseNotes>https://github.com/lextm/sharpsnmplib/releases</releaseNotes>
     <copyright>All rights reserved. (c) 2008-2017 Malcolm Crowe, Lex Li, and other contributors.</copyright>
     <language>en-US</language>
