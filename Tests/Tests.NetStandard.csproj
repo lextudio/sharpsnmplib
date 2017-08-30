@@ -4,6 +4,7 @@
     <DefineConstants>TRACE;DEBUG;NETSTANDARD</DefineConstants>
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>sharpsnmplib.tests.snk</AssemblyOriginatorKeyFile>
+    <PublicSign>True</PublicSign>
     <AssemblyName>SharpSnmpLib.Tests.NetStandard</AssemblyName>
   </PropertyGroup>
   <PropertyGroup>
@@ -28,7 +29,6 @@
     <None Include="sharpsnmplib.tests.snk" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Moq" Version="4.7.8" />
     <PackageReference Include="System.AppDomain" Version="2.0.11" />
     <PackageReference Include="System.ComponentModel.TypeConverter" Version="4.3.0" />
     <PackageReference Include="System.Linq.Parallel" Version="4.3.0" />
@@ -38,12 +38,12 @@
     <PackageReference Include="System.Threading.Tasks.Parallel" Version="4.3.0" />
     <PackageReference Include="System.Threading.Thread" Version="4.3.0" />
     <PackageReference Include="System.Threading.ThreadPool" Version="4.3.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0">
-    </PackageReference>
     <PackageReference Include="xunit" Version="2.2.0">
     </PackageReference>
     <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0">
     </PackageReference>
+    <PackageReference Include="Moq" Version="4.7.99" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SharpSnmpLib\SharpSnmpLib.csproj" />

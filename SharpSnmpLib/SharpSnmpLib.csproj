@@ -22,6 +22,7 @@
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>sharpsnmplib.snk</AssemblyOriginatorKeyFile>
     <DelaySign>False</DelaySign>
+    <PublicSign>True</PublicSign>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
     <AssemblyVersion>10.0.0.0</AssemblyVersion>
     <FileVersion>10.0.0.0</FileVersion>
