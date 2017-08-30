@@ -2,7 +2,8 @@
   <PropertyGroup>
     <AssemblyName>SharpSnmpLib</AssemblyName>
     <RootNamespace>Lextm.SharpSnmpLib</RootNamespace>
-    <TargetFrameworks>netstandard1.3;net452</TargetFrameworks>
+    <TargetFrameworks Condition="'$(OS)' == 'Windows_NT'">netstandard1.3;net452</TargetFrameworks>
+    <TargetFrameworks Condition="'$(OS)' != 'Windows_NT'">netstandard1.3</TargetFrameworks>
     <DocumentationFile Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">..\bin\SharpSnmpLib.xml</DocumentationFile>
     <PackageId>Lextm.SharpSnmpLib</PackageId>
     <Title>#SNMP Library</Title>
