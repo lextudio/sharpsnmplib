@@ -46,23 +46,6 @@ namespace Lextm.SharpSnmpLib
         /// Creates a <see cref="GetNextRequestPdu"/> with all contents.
         /// </summary>
         /// <param name="requestId">The request id.</param>
-        /// <param name="errorStatus">Error status</param>
-        /// <param name="errorIndex">Error index</param>
-        /// <param name="variables">Variables</param>
-        [Obsolete("Please use other overloaded constructor")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "errorStatus")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "errorIndex")]
-// ReSharper disable UnusedParameter.Local
-        public GetNextRequestPdu(int requestId, ErrorCode errorStatus, int errorIndex, IList<Variable> variables)
-// ReSharper restore UnusedParameter.Local
-            : this(requestId, variables)
-        {
-        }
-        
-        /// <summary>
-        /// Creates a <see cref="GetNextRequestPdu"/> with all contents.
-        /// </summary>
-        /// <param name="requestId">The request id.</param>
         /// <param name="variables">Variables</param>
         public GetNextRequestPdu(int requestId, IList<Variable> variables)
         {

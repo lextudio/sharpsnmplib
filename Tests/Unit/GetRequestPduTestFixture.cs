@@ -19,7 +19,7 @@ namespace Lextm.SharpSnmpLib.Unit
         [Fact]
         public void TestConstructor()
         {
-            var pdu = new GetRequestPdu(0, ErrorCode.NoError, 0, new List<Variable>());
+            var pdu = new GetRequestPdu(0, new List<Variable>());
             Assert.Equal("GET request PDU: seq: 0; status: 0; index: 0; variable count: 0", pdu.ToString());
         }
     }

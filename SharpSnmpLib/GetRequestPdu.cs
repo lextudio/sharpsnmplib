@@ -33,24 +33,7 @@ namespace Lextm.SharpSnmpLib
         private readonly Sequence _varbindSection;
         private readonly byte[] _length;
         private byte[] _raw;
-
-        /// <summary>
-        /// Creates a <see cref="GetRequestPdu"/> with all contents.
-        /// </summary>
-        /// <param name="requestId">The request id.</param>
-        /// <param name="errorStatus">Error status</param>
-        /// <param name="errorIndex">Error index</param>
-        /// <param name="variables">Variables</param>      
-        [Obsolete("Please use other overloads.")]
-        public GetRequestPdu(int requestId, ErrorCode errorStatus, int errorIndex, IList<Variable> variables)
-        {
-            RequestId = new Integer32(requestId);
-            ErrorStatus = new Integer32((int)errorStatus);
-            ErrorIndex = new Integer32(errorIndex);
-            Variables = variables;
-            _varbindSection = Variable.Transform(variables);
-        }
-        
+      
         /// <summary>
         /// Creates a <see cref="GetRequestPdu"/> with all contents.
         /// </summary>

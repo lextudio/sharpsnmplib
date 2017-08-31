@@ -301,7 +301,7 @@ namespace Lextm.SharpSnmpLib.Integration
                         Assert.Equal(0, response.RequestId());
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     Console.WriteLine(serverEndPoint.Port);
                 }

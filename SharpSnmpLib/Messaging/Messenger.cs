@@ -107,12 +107,6 @@ namespace Lextm.SharpSnmpLib.Messaging
             return pdu.Variables;
         }
 
-        [Obsolete("Please use SetAsync instead.")]
-        public static async Task<IList<Variable>> Set(VersionCode version, IPEndPoint endpoint, OctetString community, IList<Variable> variables)
-        {
-            throw new InvalidOperationException("Obsolete method");
-        }
-
         /// <summary>
         /// Sets a list of variable binds.
         /// </summary>
