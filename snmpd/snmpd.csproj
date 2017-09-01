@@ -9,7 +9,7 @@
     <RootNamespace>Lextm.SharpSnmpLib.Agent</RootNamespace>
     <AssemblyName>snmpd</AssemblyName>
     <ApplicationIcon>Resources\network-server.ico</ApplicationIcon>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <AssemblyOriginatorKeyFile>..\SharpSnmpLib\sharpsnmplib.snk</AssemblyOriginatorKeyFile>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
     <FileAlignment>512</FileAlignment>
@@ -121,13 +121,13 @@
       <Project>{5e9b9ab3-59e8-44fa-b3dc-5ee67800c462}</Project>
       <Name>RemObjects.Mono.Helpers</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SharpSnmpLib\SharpSnmpLib.Full.csproj">
-      <Project>{286de6db-8f95-4bd4-86a2-86488d2e0ee1}</Project>
-      <Name>SharpSnmpLib.Full</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SharpSnmpLib\SharpSnmpLib.csproj">
       <Project>{7bc38e05-9b86-4654-b81a-bf153edaf9db}</Project>
       <Name>SharpSnmpLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SharpSnmpLib\SharpSnmpLib.Full.csproj">
+      <Project>{286de6db-8f95-4bd4-86a2-86488d2e0ee1}</Project>
+      <Name>SharpSnmpLib.Full</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
