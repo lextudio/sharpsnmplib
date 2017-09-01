@@ -767,7 +767,14 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <value><c>true</c> if is running on windows; otherwise, <c>false</c>.</value>
         public static bool IsRunningOnWindows
         {
-            get { return RuntimeInformation.IsOSPlatform(OSPlatform.Windows); }
+            get
+            {
+#if NET452
+                return !IsRunningOnMono;
+#else
+                return RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+#endif
+            }
         }
 
         /// <summary>
