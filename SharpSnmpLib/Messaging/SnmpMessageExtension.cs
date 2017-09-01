@@ -23,6 +23,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Net;
 using System.Net.Sockets;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Lextm.SharpSnmpLib.Security;
@@ -45,10 +46,10 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new ArgumentNullException(nameof(message));
             }
-            
+
             return message.Pdu().TypeCode;
         }
-        
+
         /// <summary>
         /// Variables.
         /// </summary>
@@ -219,7 +220,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, "not a request message: {0}", code));
             }
-            
+
             using (var socket = receiver.GetSocket())
             {
                 return request.GetResponse(timeout, receiver, registry, socket);
@@ -250,7 +251,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, "not a request message: {0}", code));
             }
-            
+
             using (var socket = receiver.GetSocket())
             {
                 return request.GetResponse(timeout, receiver, socket);
@@ -271,17 +272,17 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new ArgumentNullException(nameof(request));
             }
-            
+
             if (receiver == null)
             {
                 throw new ArgumentNullException(nameof(receiver));
             }
-            
+
             if (udpSocket == null)
             {
                 throw new ArgumentNullException(nameof(udpSocket));
             }
-            
+
             var registry = new UserRegistry();
             if (request.Version == VersionCode.V3)
             {
@@ -316,7 +317,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new ArgumentNullException(nameof(receiver));
             }
-            
+
             if (registry == null)
             {
                 throw new ArgumentNullException(nameof(registry));
@@ -760,6 +761,16 @@ namespace Lextm.SharpSnmpLib.Messaging
         }
 
         /// <summary>
+        /// Gets a value indicating whether it is
+        /// running on Windows.
+        /// </summary>
+        /// <value><c>true</c> if is running on windows; otherwise, <c>false</c>.</value>
+        public static bool IsRunningOnWindows
+        {
+            get { return RuntimeInformation.IsOSPlatform(OSPlatform.Windows); }
+        }
+
+        /// <summary>
         /// Packs up the <see cref="ISnmpMessage"/>.
         /// </summary>
         /// <param name="message">The <see cref="ISnmpMessage"/>.</param>
@@ -783,7 +794,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         private sealed class SnmpMessageAsyncResult : IAsyncResult
         {
             private readonly byte[] _buffer;
-            
+
             public SnmpMessageAsyncResult(IAsyncResult inner, Socket socket, UserRegistry users, IPEndPoint receiver, byte[] buffer)
             {
                 _buffer = buffer;
@@ -792,35 +803,35 @@ namespace Lextm.SharpSnmpLib.Messaging
                 Receiver = receiver;
                 Inner = inner;
             }
-            
+
             public IAsyncResult Inner { get; private set; }
-            
+
             public Socket WorkSocket { get; private set; }
-            
+
             public UserRegistry Users { get; private set; }
 
             public byte[] GetBuffer()
             {
                 return _buffer;
             }
-            
+
             public IPEndPoint Receiver { get; private set; }
-            
+
             public bool IsCompleted
             {
                 get { return Inner.IsCompleted; }
             }
-            
+
             public WaitHandle AsyncWaitHandle
             {
                 get { return Inner.AsyncWaitHandle; }
             }
-            
+
             public object AsyncState
             {
                 get { return Inner.AsyncState; }
             }
-            
+
             public bool CompletedSynchronously
             {
                 get { return Inner.CompletedSynchronously; }
