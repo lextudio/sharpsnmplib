@@ -176,7 +176,7 @@
         </configuration>
       </PlugInConfig>
     </PlugInConfigurations>
-    <CopyrightHref>http://sharpsnmplib.codeplex.com</CopyrightHref>
+    <CopyrightHref>https://sharpsnmp.com</CopyrightHref>
     <MaximumGroupParts>2</MaximumGroupParts>
     <NamespaceGrouping>False</NamespaceGrouping>
   </PropertyGroup>

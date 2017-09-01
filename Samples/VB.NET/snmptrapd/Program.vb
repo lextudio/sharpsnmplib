@@ -38,7 +38,7 @@ Module Program
             Using engine As SnmpEngine = New SnmpEngine(pipelineFactory, New Listener() With {.Users = users}, New EngineGroup())
                 engine.Listener.AddBinding(New IPEndPoint(IPAddress.Any, 162))
                 engine.Start()
-                Console.WriteLine("#SNMP is available at https://sharpsnmplib.codeplex.com")
+                Console.WriteLine("#SNMP is available at https://sharpsnmp.com")
                 Console.WriteLine("Press any key to stop . . . ")
                 Console.Read()
                 engine.[Stop]()

@@ -85,7 +85,7 @@ namespace SnmpD
                 engine.Listener.ExceptionRaised += Engine_ExceptionRaised;
                 engine.Listener.MessageReceived += RequestReceived;
                 engine.Start();
-                Console.WriteLine("#SNMP is available at https://sharpsnmplib.codeplex.com");
+                Console.WriteLine("#SNMP is available at https://sharpsnmp.com");
                 Console.WriteLine("Press any key to stop . . . ");
                 Console.Read();
                 engine.Stop();

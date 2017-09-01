@@ -232,7 +232,7 @@ Module Program
     End Function
 
     Private Sub ShowHelp(ByRef optionSet As OptionSet)
-        Console.WriteLine("#SNMP is available at https://sharpsnmplib.codeplex.com")
+        Console.WriteLine("#SNMP is available at https://sharpsnmp.com")
         Console.WriteLine("snmpgetnext [Options] IP-address|host-name OID [OID] ...")
         Console.WriteLine("Options:")
         optionSet.WriteOptionDescriptions(Console.Out)

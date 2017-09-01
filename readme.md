@@ -10,7 +10,7 @@
 
 This is the source code repository of #SNMP Library. Visual Studio 2015 Update 1 is required to compile it on Windows.
 
-The following can be found at [#SNMP Library homepage](https://sharpsnmplib.codeplex.com),
+The following can be found at [#SNMP Library homepage](https://sharpsnmp.com),
 
 * News
 * Downloads and release notes
