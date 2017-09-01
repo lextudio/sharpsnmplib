@@ -347,7 +347,10 @@ namespace Lextm.SharpSnmpLib.Messaging
                     Task.Delay(interval));
 
                 Interlocked.CompareExchange(ref _active, Inactive, Active);
-                udp.Shutdown(SocketShutdown.Both);
+                if (SnmpMessageExtension.IsRunningOnWindows)
+                {
+                    udp.Shutdown(SocketShutdown.Both);
+                }
             }
         }
 

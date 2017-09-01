@@ -38,10 +38,7 @@ namespace snmpdiscover
             await discoverer.DiscoverAsync(VersionCode.V2, new IPEndPoint(IPAddress.Broadcast, 161), new OctetString("public"), 6000);
             Console.WriteLine("v3 discovery");
             await discoverer.DiscoverAsync(VersionCode.V3, new IPEndPoint(IPAddress.Broadcast, 161), null, 6000);
-
-            Console.Write("Press any key to continue . . . ");
-            Console.ReadKey(true);
-        }
+}
 
         static void DiscovererAgentFound(object sender, AgentFoundEventArgs e)
         {

@@ -246,7 +246,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 return;
             }
 
-            if (!SnmpMessageExtension.IsRunningOnMono)
+            if (SnmpMessageExtension.IsRunningOnWindows)
             {
                 _socket.Shutdown(SocketShutdown.Both);    // Note that closing the socket releases the _socket.ReceiveFrom call.
             }
