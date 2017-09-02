@@ -10,7 +10,7 @@
     <AssemblyName>snmpd</AssemblyName>
     <ApplicationIcon>Resources\network-server.ico</ApplicationIcon>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
-    <AssemblyOriginatorKeyFile>..\SharpSnmpLib\sharpsnmplib.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\..\..\SharpSnmpLib\sharpsnmplib.snk</AssemblyOriginatorKeyFile>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>
@@ -65,7 +65,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\lib\SharedAssemblyInfo.cs">
+    <Compile Include="..\..\..\lib\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
@@ -117,15 +117,15 @@
     <None Include="Resources\media-playback-start.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RemObjects.Mono.Helpers\RemObjects.Mono.Helpers.csproj">
+    <ProjectReference Include="..\..\..\RemObjects.Mono.Helpers\RemObjects.Mono.Helpers.csproj">
       <Project>{5e9b9ab3-59e8-44fa-b3dc-5ee67800c462}</Project>
       <Name>RemObjects.Mono.Helpers</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SharpSnmpLib\SharpSnmpLib.csproj">
+    <ProjectReference Include="..\..\..\SharpSnmpLib\SharpSnmpLib.csproj">
       <Project>{7bc38e05-9b86-4654-b81a-bf153edaf9db}</Project>
       <Name>SharpSnmpLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SharpSnmpLib\SharpSnmpLib.Full.csproj">
+    <ProjectReference Include="..\..\..\SharpSnmpLib\SharpSnmpLib.Full.csproj">
       <Project>{286de6db-8f95-4bd4-86a2-86488d2e0ee1}</Project>
       <Name>SharpSnmpLib.Full</Name>
     </ProjectReference>
