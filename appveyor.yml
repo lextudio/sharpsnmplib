@@ -8,4 +8,5 @@ build_script:
   - .\build.release.bat
 test_script:
   - cd Tests
+  - cd CSharpCore
   - dotnet test

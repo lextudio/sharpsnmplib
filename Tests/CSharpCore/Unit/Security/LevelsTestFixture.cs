@@ -1,8 +1,9 @@
-﻿using Lextm.SharpSnmpLib.Security;
-using Xunit;
-
-namespace Lextm.SharpSnmpLib.Unit.Security
+﻿namespace Lextm.SharpSnmpLib.Unit.Security
 {
+    using System;
+    using Lextm.SharpSnmpLib.Security;
+    using Xunit;
+
     public class LevelsTestFixture
     {
         [Fact]

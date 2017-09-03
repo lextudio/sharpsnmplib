@@ -1,5 +1,10 @@
 ﻿namespace Lextm.SharpSnmpLib.Unit.Messaging
 {
+    using System.Collections.Generic;
+    using Xunit;
+    using Lextm.SharpSnmpLib.Messaging;
+    using Lextm.SharpSnmpLib.Security;
+
     public class TrapV2MessageTestFixture
     {
 #if !NETSTANDARD

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
   <metadata>
-    <version>10.0.0-beta1</version>
+    <version>10.0.0-beta2</version>
     <authors>Malcolm Crowe,Lex Li,and other contributors.</authors>
     <owners>Lex Li</owners>
     <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
@@ -11,7 +11,7 @@
       <frameworkAssembly assemblyName="System.Core" targetFramework="" />
     </frameworkAssemblies>
     <dependencies>
-      <dependency id="Lextm.SharpSnmpLib" version="10.0.0-beta1" />
+      <dependency id="Lextm.SharpSnmpLib" version="10.0.0-beta2" />
     </dependencies>
     <id>Lextm.SharpSnmpLib.Extensions</id>
     <title>#SNMP Library Platform Extensions</title>

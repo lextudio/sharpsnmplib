@@ -73,10 +73,9 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\SharpSnmpLib\SharpSnmpLib.csproj">
-      <Project>{7bc38e05-9b86-4654-b81a-bf153edaf9db}</Project>
-      <Name>SharpSnmpLib.NetStandard</Name>
-    </ProjectReference>
+    <PackageReference Include="Lextm.SharpSnmpLib.Extensions">
+      <Version>10.0.0-beta1</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
