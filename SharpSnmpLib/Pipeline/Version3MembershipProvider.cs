@@ -39,7 +39,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         {
             if (context == null)
             {
-                throw new ArgumentNullException("context");
+                throw new ArgumentNullException(nameof(context));
             }
 
             return context.Request.Version == Version && context.HandleMembership();

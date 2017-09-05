@@ -67,12 +67,12 @@ namespace Lextm.SharpSnmpLib
         {
             if (length == null)
             {
-                throw new ArgumentNullException("length");
+                throw new ArgumentNullException(nameof(length));
             }
 
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
             
             _count = new Counter32(length, stream);
@@ -95,7 +95,7 @@ namespace Lextm.SharpSnmpLib
         {
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
             
             stream.AppendBytes(TypeCode, _count.GetLengthBytes(), _count.GetRaw());

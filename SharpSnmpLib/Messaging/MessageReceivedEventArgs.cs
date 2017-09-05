@@ -38,17 +38,17 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             if (sender == null)
             {
-                throw new ArgumentNullException("sender");
+                throw new ArgumentNullException(nameof(sender));
             }
             
             if (message == null)
             {
-                throw new ArgumentNullException("message");
+                throw new ArgumentNullException(nameof(message));
             }
             
             if (binding == null)
             {
-                throw new ArgumentNullException("binding");
+                throw new ArgumentNullException(nameof(binding));
             }
             
             Sender = sender;

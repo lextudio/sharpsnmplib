@@ -79,7 +79,7 @@ namespace Lextm.SharpSnmpLib
         {
             if (id == null)
             {
-                throw new ArgumentNullException("id");
+                throw new ArgumentNullException(nameof(id));
             }
 
             Id = id;
@@ -105,7 +105,7 @@ namespace Lextm.SharpSnmpLib
         {
             if (varbindSection == null)
             {
-                throw new ArgumentNullException("varbindSection");
+                throw new ArgumentNullException(nameof(varbindSection));
             }
 
             IList<Variable> result = new List<Variable>(varbindSection.Length);
@@ -113,18 +113,18 @@ namespace Lextm.SharpSnmpLib
             {
                 if (item.TypeCode != SnmpType.Sequence)
                 {
-                    throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "wrong varbind section data type: {0}", item.TypeCode));
+                    throw new ArgumentException($"Invalid varbind section data type: {item.TypeCode}.", nameof(varbindSection));
                 }
                 
                 var varbind = (Sequence)item;
                 if (varbind.Length != 2)
                 {
-                    throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "wrong varbind data length: {0}", varbind.Length));
+                    throw new ArgumentException($"Invalid varbind data length: {varbind.Length}.", nameof(varbindSection));
                 }
                 
                 if (varbind[0].TypeCode != SnmpType.ObjectIdentifier)
                 {
-                    throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "wrong varbind first data type: {0}", varbind[0].TypeCode));
+                    throw new ArgumentException($"Invalid varbind first data type: {varbind[0].TypeCode}.", nameof(varbindSection));
                 }
                     
                 result.Add(new Variable((ObjectIdentifier)varbind[0], varbind[1]));
@@ -143,7 +143,7 @@ namespace Lextm.SharpSnmpLib
             // TODO: use IEnumerable instead of IList.
             if (variables == null)
             {
-                throw new ArgumentNullException("variables");
+                throw new ArgumentNullException(nameof(variables));
             }
 
             var varbinds = new List<ISnmpData>(variables.Count);

@@ -44,7 +44,7 @@ namespace Lextm.SharpSnmpLib.Security
         {
             if (phrase == null)
             {
-                throw new ArgumentNullException("phrase");
+                throw new ArgumentNullException(nameof(phrase));
             }
             
             _password = phrase.GetRaw();
@@ -64,17 +64,17 @@ namespace Lextm.SharpSnmpLib.Security
             // key length has to be at least 8 bytes long (RFC3414)
             if (password == null)
             {
-                throw new ArgumentNullException("password");
+                throw new ArgumentNullException(nameof(password));
             }
 
             if (engineId == null)
             {
-                throw new ArgumentNullException("engineId");
+                throw new ArgumentNullException(nameof(engineId));
             }
 
             if (password.Length < 8)
             {
-                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Secret key is too short. Must be >= 8. Current: {0}", password.Length), "password");
+                throw new ArgumentException($"Secret key is too short. Must be >= 8. Current: {password.Length}.", nameof(password));
             }
 
             lock (Md5KeyCacheLock)
@@ -150,22 +150,22 @@ namespace Lextm.SharpSnmpLib.Security
         {
             if (header == null)
             {
-                throw new ArgumentNullException("header");
+                throw new ArgumentNullException(nameof(header));
             }
             
             if (parameters == null)
             {
-                throw new ArgumentNullException("parameters");
+                throw new ArgumentNullException(nameof(parameters));
             }
             
             if (data == null)
             {
-                throw new ArgumentNullException("data");
+                throw new ArgumentNullException(nameof(data));
             }
             
             if (privacy == null)
             {
-                throw new ArgumentNullException("privacy");
+                throw new ArgumentNullException(nameof(privacy));
             }
 
             var key = PasswordToKey(_password, parameters.EngineId.GetRaw());

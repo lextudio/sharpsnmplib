@@ -63,7 +63,7 @@ namespace Lextm.SharpSnmpLib
         {
             if (items == null)
             {
-                throw new ArgumentNullException("items");
+                throw new ArgumentNullException(nameof(items));
             }
 
             foreach (var data in items.Where(data => data != null))
@@ -82,7 +82,7 @@ namespace Lextm.SharpSnmpLib
         {
             if (items == null)
             {
-                throw new ArgumentNullException("items");
+                throw new ArgumentNullException(nameof(items));
             }
 
             foreach (var data in items.Where(data => data != null))
@@ -100,12 +100,12 @@ namespace Lextm.SharpSnmpLib
         {
             if (length == null)
             {
-                throw new ArgumentNullException("length");
+                throw new ArgumentNullException(nameof(length));
             }
 
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
 
             _length = length.Item2;
@@ -154,7 +154,7 @@ namespace Lextm.SharpSnmpLib
         {
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
 
             if (_buffer == null)

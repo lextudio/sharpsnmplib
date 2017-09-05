@@ -59,27 +59,27 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             if (variables == null)
             {
-                throw new ArgumentNullException("variables");
+                throw new ArgumentNullException(nameof(variables));
             }
             
             if (enterprise == null)
             {
-                throw new ArgumentNullException("enterprise");
+                throw new ArgumentNullException(nameof(enterprise));
             }
             
             if (community == null)
             {
-                throw new ArgumentNullException("community");
+                throw new ArgumentNullException(nameof(community));
             }
             
             if (agent == null)
             {
-                throw new ArgumentNullException("agent");
+                throw new ArgumentNullException(nameof(agent));
             }
             
             if (version != VersionCode.V1)
             {
-                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "TRAP v1 is not supported in this SNMP version: {0}", version), "version");
+                throw new ArgumentException($"TRAP v1 is not supported in this SNMP version: {version}", nameof(version));
             }
             
             Version = version;
@@ -108,12 +108,12 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             if (body == null)
             {
-                throw new ArgumentNullException("body");
+                throw new ArgumentNullException(nameof(body));
             }
             
             if (body.Length != 3)
             {
-                throw new ArgumentException("wrong message body");
+                throw new ArgumentException("Invalid message body.", nameof(body));
             }
             
             Community = (OctetString)body[1];
@@ -122,13 +122,13 @@ namespace Lextm.SharpSnmpLib.Messaging
             // IMPORTANT: comment this check out if you need to support 
             if (Version != VersionCode.V1)
             {
-                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "TRAP v1 is not supported in this SNMP version: {0}", Version), "body");
+                throw new ArgumentException($"TRAP v1 is not supported in this SNMP version: {Version}.", nameof(body));
             }
                         
             _pdu = (ISnmpPdu)body[2];
             if (_pdu.TypeCode != SnmpType.TrapV1Pdu)
             {
-                throw new ArgumentException("wrong message type");
+                throw new ArgumentException("Invalid message type.", nameof(body));
             }
 
             var trapPdu = (TrapV1Pdu)_pdu;
@@ -250,7 +250,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             if (data == null)
             {
-                throw new ArgumentNullException("data");
+                throw new ArgumentNullException(nameof(data));
             }
             
             var collection = new List<ISnmpData>(1 + data.Length) { new Integer32((int)version) };

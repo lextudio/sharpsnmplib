@@ -49,7 +49,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         {
             if (mappings == null)
             {
-                throw new ArgumentNullException("mappings");
+                throw new ArgumentNullException(nameof(mappings));
             }
 
             _mappings = mappings;

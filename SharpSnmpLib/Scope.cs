@@ -36,7 +36,7 @@ namespace Lextm.SharpSnmpLib
         {
             if (data == null)
             {
-                throw new ArgumentNullException("data");
+                throw new ArgumentNullException(nameof(data));
             }
 
             _container = data;
@@ -56,17 +56,17 @@ namespace Lextm.SharpSnmpLib
         {
             if (contextEngineId == null)
             {
-                throw new ArgumentNullException("contextEngineId");
+                throw new ArgumentNullException(nameof(contextEngineId));
             }
 
             if (contextName == null)
             {
-                throw new ArgumentNullException("contextName");
+                throw new ArgumentNullException(nameof(contextName));
             }
 
             if (pdu == null)
             {
-                throw new ArgumentNullException("pdu");
+                throw new ArgumentNullException(nameof(pdu));
             }
 
             ContextEngineId = contextEngineId;
@@ -83,7 +83,7 @@ namespace Lextm.SharpSnmpLib
         {
             if (pdu == null)
             {
-                throw new ArgumentNullException("pdu");
+                throw new ArgumentNullException(nameof(pdu));
             }
 
             Pdu = pdu;

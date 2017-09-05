@@ -73,32 +73,32 @@ namespace Lextm.SharpSnmpLib
         {
             if (enterprise == null)
             {
-                throw new ArgumentNullException("enterprise");
+                throw new ArgumentNullException(nameof(enterprise));
             }
 
             if (agent == null)
             {
-                throw new ArgumentNullException("agent");
+                throw new ArgumentNullException(nameof(agent));
             }
 
             if (generic == null)
             {
-                throw new ArgumentNullException("generic");
+                throw new ArgumentNullException(nameof(generic));
             }
 
             if (specific == null)
             {
-                throw new ArgumentNullException("specific");
+                throw new ArgumentNullException(nameof(specific));
             }
 
             if (timestamp == null)
             {
-                throw new ArgumentNullException("timestamp");
+                throw new ArgumentNullException(nameof(timestamp));
             }
 
             if (variables == null)
             {
-                throw new ArgumentNullException("variables");
+                throw new ArgumentNullException(nameof(variables));
             }
 
             Enterprise = enterprise;
@@ -119,12 +119,12 @@ namespace Lextm.SharpSnmpLib
         {
             if (length == null)
             {
-                throw new ArgumentNullException("length");
+                throw new ArgumentNullException(nameof(length));
             }
 
             if (stream == null) 
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
             
             Enterprise = (ObjectIdentifier)DataFactory.CreateSnmpData(stream);
@@ -183,7 +183,7 @@ namespace Lextm.SharpSnmpLib
         {
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
 
             if (_raw == null)

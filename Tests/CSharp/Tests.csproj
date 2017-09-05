@@ -333,9 +333,6 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Lextm.SharpSnmpLib.Extensions">
-      <Version>10.0.0-beta3</Version>
-    </PackageReference>
     <PackageReference Include="Moq">
       <Version>4.7.99</Version>
     </PackageReference>
@@ -345,6 +342,19 @@
     <PackageReference Include="xunit.runner.visualstudio">
       <Version>2.2.0</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\SharpSnmpLib\SharpSnmpLib.csproj">
+      <Project>{7bc38e05-9b86-4654-b81a-bf153edaf9db}</Project>
+      <Name>SharpSnmpLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\SharpSnmpLib\SharpSnmpLib.Full.csproj">
+      <Project>{286de6db-8f95-4bd4-86a2-86488d2e0ee1}</Project>
+      <Name>SharpSnmpLib.Full</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

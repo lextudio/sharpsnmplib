@@ -49,12 +49,12 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             if (bytes == null)
             {
-                throw new ArgumentNullException("bytes");
+                throw new ArgumentNullException(nameof(bytes));
             }
             
             if (registry == null)
             {
-                throw new ArgumentNullException("registry");
+                throw new ArgumentNullException(nameof(registry));
             }
             
             return ParseMessages(ByteTool.Convert(bytes), registry);
@@ -70,12 +70,12 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             if (buffer == null)
             {
-                throw new ArgumentNullException("buffer");
+                throw new ArgumentNullException(nameof(buffer));
             }
 
             if (registry == null)
             {
-                throw new ArgumentNullException("registry");
+                throw new ArgumentNullException(nameof(registry));
             }
 
             return ParseMessages(buffer, 0, buffer.Length, registry);
@@ -93,12 +93,12 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             if (buffer == null)
             {
-                throw new ArgumentNullException("buffer");
+                throw new ArgumentNullException(nameof(buffer));
             }
             
             if (registry == null)
             {
-                throw new ArgumentNullException("registry");
+                throw new ArgumentNullException(nameof(registry));
             }
 
             IList<ISnmpMessage> result = new List<ISnmpMessage>();

@@ -103,7 +103,7 @@ namespace Lextm.SharpSnmpLib.Security
         {
             if (userName == null)
             {
-                throw new ArgumentNullException("userName");
+                throw new ArgumentNullException(nameof(userName));
             }
 
             if (userName == OctetString.Empty)

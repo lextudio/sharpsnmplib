@@ -64,7 +64,7 @@ namespace Lextm.SharpSnmpLib
         {
             if (id == null)
             {
-                throw new ArgumentNullException("id");
+                throw new ArgumentNullException(nameof(id));
             }
 
             if (id.Length == 0)
@@ -75,17 +75,17 @@ namespace Lextm.SharpSnmpLib
 
             if (id.Length < 2)
             {
-                throw new ArgumentException("The length of the shortest identifier is two", "id");
+                throw new ArgumentException("The length of the shortest identifier is two.", nameof(id));
             }
 
             if (id[0] > 2)
             {
-                throw new ArgumentException("The first sub-identifier must be 0, 1, or 2.", "id");
+                throw new ArgumentException("The first sub-identifier must be 0, 1, or 2.", nameof(id));
             }
 
             if (id[1] > 39)
             {
-                throw new ArgumentException("The second sub-identifier must be less than 40", "id");
+                throw new ArgumentException("The second sub-identifier must be less than 40.", nameof(id));
             }
 
             _oid = id;
@@ -123,19 +123,19 @@ namespace Lextm.SharpSnmpLib
         {
             if (length == null)
             {
-                throw new ArgumentNullException("length");
+                throw new ArgumentNullException(nameof(length));
             }
 
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
 
             _raw = new byte[length.Item1];
             stream.Read(_raw, 0, length.Item1);
             if (length.Item1 == 0)
             {
-                throw new ArgumentException("length cannot be 0", "length");
+                throw new ArgumentException("Byte length cannot be 0.", nameof(length));
             }
 
             var result = new List<uint> { (uint)(_raw[0] / 40), (uint)(_raw[0] % 40) };
@@ -222,7 +222,7 @@ namespace Lextm.SharpSnmpLib
         {
             if (other == null)
             {
-                throw new ArgumentNullException("other");
+                throw new ArgumentNullException(nameof(other));
             }
 
             var shortest = (_oid.Length < other._oid.Length) ? _oid.Length : other._oid.Length;
@@ -261,7 +261,7 @@ namespace Lextm.SharpSnmpLib
         {
             if (numerical == null)
             {
-                throw new ArgumentNullException("numerical");
+                throw new ArgumentNullException(nameof(numerical));
             }
 
             var result = new StringBuilder(numerical[0].ToString(CultureInfo.InvariantCulture));
@@ -283,7 +283,7 @@ namespace Lextm.SharpSnmpLib
         {
             if (dotted == null)
             {
-                throw new ArgumentNullException("dotted");
+                throw new ArgumentNullException(nameof(dotted));
             }
 
             var parts = dotted.Split(new[] { '.' });
@@ -297,7 +297,7 @@ namespace Lextm.SharpSnmpLib
                 }
                 else
                 {
-                    throw new ArgumentException(string.Format("Parameter {0} is out of 32 bit unsigned integer range", s), "dotted");
+                    throw new ArgumentException($"Parameter {s} is out of 32 bit unsigned integer range.", nameof(dotted));
                 }
             }
 
@@ -312,7 +312,7 @@ namespace Lextm.SharpSnmpLib
         {
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
 
             stream.AppendBytes(TypeCode, _length, GetRaw());
@@ -414,7 +414,7 @@ namespace Lextm.SharpSnmpLib
             var o = obj as ObjectIdentifier;
             if (o == null)
             {
-                throw new ArgumentException("obj is not the same type as this instance", "obj");
+                throw new ArgumentException("obj is not the same type as this instance.", nameof(obj));
             }
 
             return CompareTo(o);
@@ -501,7 +501,7 @@ namespace Lextm.SharpSnmpLib
         {
             if (numerical == null)
             {
-                throw new ArgumentNullException("numerical");
+                throw new ArgumentNullException(nameof(numerical));
             }
             
             return new ObjectIdentifier(AppendTo(numerical, extra));

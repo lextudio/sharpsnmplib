@@ -74,7 +74,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             var addressFamily = broadcastAddress.AddressFamily;
             if (addressFamily == AddressFamily.InterNetworkV6)
             {
-                throw new ArgumentException("IP v6 is not yet supported", nameof(broadcastAddress));
+                throw new ArgumentException("IP v6 is not yet supported.", nameof(broadcastAddress));
             }
 
             byte[] bytes;
@@ -304,7 +304,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             var addressFamily = broadcastAddress.AddressFamily;
             if (addressFamily == AddressFamily.InterNetworkV6)
             {
-                throw new ArgumentException("IP v6 is not yet supported", nameof(broadcastAddress));
+                throw new ArgumentException("IP v6 is not yet supported.", nameof(broadcastAddress));
             }
 
             byte[] bytes;

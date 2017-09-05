@@ -64,12 +64,12 @@ namespace Lextm.SharpSnmpLib
         {
             if (length == null)
             {
-                throw new ArgumentNullException("length");
+                throw new ArgumentNullException(nameof(length));
             }
 
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
 
             _raw = new byte[length.Item1];
@@ -86,7 +86,7 @@ namespace Lextm.SharpSnmpLib
         {
             if (raw == null)
             {
-                throw new ArgumentNullException("raw");
+                throw new ArgumentNullException(nameof(raw));
             }
             
             _raw = new byte[raw.Length];
@@ -190,7 +190,7 @@ namespace Lextm.SharpSnmpLib
         {
             if (encoding == null)
             {
-                throw new ArgumentNullException("encoding");
+                throw new ArgumentNullException(nameof(encoding));
             }
 
             return encoding.GetString(_raw, 0, _raw.Length); // use this call for SL3.
@@ -224,7 +224,7 @@ namespace Lextm.SharpSnmpLib
         {
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
 
             stream.AppendBytes(TypeCode, _length, _raw);

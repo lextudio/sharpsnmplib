@@ -51,17 +51,17 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             if (variables == null)
             {
-                throw new ArgumentNullException("variables");
+                throw new ArgumentNullException(nameof(variables));
             }
 
             if (community == null)
             {
-                throw new ArgumentNullException("community");
+                throw new ArgumentNullException(nameof(community));
             }
 
             if (version == VersionCode.V3)
             {
-                throw new ArgumentException("only v1 and v2c are supported", "version");
+                throw new ArgumentException("Only v1 and v2c are supported.", nameof(version));
             }
 
             Version = version;
@@ -107,27 +107,27 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             if (variables == null)
             {
-                throw new ArgumentNullException("variables");
+                throw new ArgumentNullException(nameof(variables));
             }
 
             if (userName == null)
             {
-                throw new ArgumentNullException("userName");
+                throw new ArgumentNullException(nameof(userName));
             }
 
             if (version != VersionCode.V3)
             {
-                throw new ArgumentException("only v3 is supported", "version");
+                throw new ArgumentException("Only v3 is supported.", nameof(version));
             }
 
             if (report == null)
             {
-                throw new ArgumentNullException("report");
+                throw new ArgumentNullException(nameof(report));
             }
 
             if (privacy == null)
             {
-                throw new ArgumentNullException("privacy");
+                throw new ArgumentNullException(nameof(privacy));
             }
 
             Version = version;
@@ -158,22 +158,22 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             if (scope == null)
             {
-                throw new ArgumentNullException("scope");
+                throw new ArgumentNullException(nameof(scope));
             }
 
             if (parameters == null)
             {
-                throw new ArgumentNullException("parameters");
+                throw new ArgumentNullException(nameof(parameters));
             }
 
             if (header == null)
             {
-                throw new ArgumentNullException("header");
+                throw new ArgumentNullException(nameof(header));
             }
 
             if (privacy == null)
             {
-                throw new ArgumentNullException("privacy");
+                throw new ArgumentNullException(nameof(privacy));
             }
 
             Version = version;

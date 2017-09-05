@@ -51,27 +51,27 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             if (scope == null)
             {
-                throw new ArgumentNullException("scope");
+                throw new ArgumentNullException(nameof(scope));
             }
 
             if (parameters == null)
             {
-                throw new ArgumentNullException("parameters");
+                throw new ArgumentNullException(nameof(parameters));
             }
 
             if (header == null)
             {
-                throw new ArgumentNullException("header");
+                throw new ArgumentNullException(nameof(header));
             }
 
             if (privacy == null)
             {
-                throw new ArgumentNullException("privacy");
+                throw new ArgumentNullException(nameof(privacy));
             }
 
             if (version != VersionCode.V3)
             {
-                throw new ArgumentException("only v3 is supported", "version");
+                throw new ArgumentException("Only v3 is supported.", nameof(version));
             }
 
             Version = version;

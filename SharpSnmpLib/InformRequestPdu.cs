@@ -57,12 +57,12 @@ namespace Lextm.SharpSnmpLib
         {
             if (enterprise == null)
             {
-                throw new ArgumentNullException("enterprise");
+                throw new ArgumentNullException(nameof(enterprise));
             }
 
             if (variables == null)
             {
-                throw new ArgumentNullException("variables");
+                throw new ArgumentNullException(nameof(variables));
             }
 
             Enterprise = enterprise;
@@ -99,12 +99,12 @@ namespace Lextm.SharpSnmpLib
         {
             if (length == null)
             {
-                throw new ArgumentNullException("length");
+                throw new ArgumentNullException(nameof(length));
             }
 
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
 
             RequestId = (Integer32)DataFactory.CreateSnmpData(stream);
@@ -128,7 +128,7 @@ namespace Lextm.SharpSnmpLib
             }
             else
             {
-                throw new ArgumentException("malformed inform message", "stream");
+                throw new ArgumentException("Malformed inform message.", nameof(stream));
             }
 
             _length = length.Item2;
@@ -197,7 +197,7 @@ namespace Lextm.SharpSnmpLib
         {
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
             
             if (_raw == null)

@@ -65,7 +65,7 @@ namespace Lextm.SharpSnmpLib
         {
             if (data == null)
             {
-                throw new ArgumentNullException("data");
+                throw new ArgumentNullException(nameof(data));
             }
 
             _container = (Sequence)data;
@@ -87,7 +87,7 @@ namespace Lextm.SharpSnmpLib
         {
             if (maxMessageSize == null)
             {
-                throw new ArgumentNullException("maxMessageSize");
+                throw new ArgumentNullException(nameof(maxMessageSize));
             }
 
             _messageId = messageId;

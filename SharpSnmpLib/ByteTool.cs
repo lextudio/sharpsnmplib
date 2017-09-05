@@ -50,7 +50,7 @@ namespace Lextm.SharpSnmpLib
         {
             if (description == null)
             {
-                throw new ArgumentNullException("description");
+                throw new ArgumentNullException(nameof(description));
             }
             
             var result = new List<byte>();
@@ -77,7 +77,7 @@ namespace Lextm.SharpSnmpLib
         {
             if (description == null)
             {
-                throw new ArgumentNullException("description");
+                throw new ArgumentNullException(nameof(description));
             }
 
             var result = new List<byte>();
@@ -86,7 +86,7 @@ namespace Lextm.SharpSnmpLib
             {
                 if (!char.IsLetterOrDigit(c))
                 {
-                    throw new ArgumentException("illegal character found", "description");
+                    throw new ArgumentException("Illegal character found.", nameof(description));
                 }
                 
                 buffer.Append(c);
@@ -105,7 +105,7 @@ namespace Lextm.SharpSnmpLib
             
             if (buffer.Length != 0)
             {
-                throw new ArgumentException("not a complete byte string", "description");
+                throw new ArgumentException("Not a complete byte string.", nameof(description));
             }
             
             return result.ToArray();
@@ -121,7 +121,7 @@ namespace Lextm.SharpSnmpLib
         {
             if (buffer == null)
             {
-                throw new ArgumentNullException("buffer");
+                throw new ArgumentNullException(nameof(buffer));
             }
 
             return BitConverter.ToString(buffer).Replace('-', ' ');
@@ -131,7 +131,7 @@ namespace Lextm.SharpSnmpLib
         {
             if (items == null)
             {
-                throw new ArgumentNullException("items");
+                throw new ArgumentNullException(nameof(items));
             }
 
             using (var result = new MemoryStream())
@@ -140,7 +140,7 @@ namespace Lextm.SharpSnmpLib
                 {
                     if (item == null)
                     {
-                        throw new ArgumentException("item in the collection cannot be null", "items");
+                        throw new ArgumentException("Item in the collection cannot be null.", nameof(items));
                     }
 
                     item.AppendBytesTo(result);
@@ -154,7 +154,7 @@ namespace Lextm.SharpSnmpLib
         {
             if (items == null)
             {
-                throw new ArgumentNullException("items");
+                throw new ArgumentNullException(nameof(items));
             }
 
             using (var result = new MemoryStream())
@@ -172,7 +172,7 @@ namespace Lextm.SharpSnmpLib
         {
             if (orig == null)
             {
-                throw new ArgumentNullException("orig");
+                throw new ArgumentNullException(nameof(orig));
             }
 
             byte flag;
@@ -224,17 +224,17 @@ namespace Lextm.SharpSnmpLib
         {
             if (header == null)
             {
-                throw new ArgumentNullException("header");
+                throw new ArgumentNullException(nameof(header));
             }
 
             if (parameters == null)
             {
-                throw new ArgumentNullException("parameters");
+                throw new ArgumentNullException(nameof(parameters));
             }
 
             if (data == null)
             {
-                throw new ArgumentNullException("data");
+                throw new ArgumentNullException(nameof(data));
             }
 
             var items = new[] 
@@ -251,7 +251,7 @@ namespace Lextm.SharpSnmpLib
         {
             if (length < 0)
             {
-                throw new ArgumentException("length cannot be negative", "length");
+                throw new ArgumentException("length cannot be negative.", nameof(length));
             }
 
             var stream = new MemoryStream();

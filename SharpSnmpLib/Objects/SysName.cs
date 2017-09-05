@@ -55,12 +55,12 @@ namespace Lextm.SharpSnmpLib.Objects
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException("value");
+                    throw new ArgumentNullException(nameof(value));
                 }
                 
                 if (value.TypeCode != SnmpType.OctetString)
                 {
-                    throw new ArgumentException("data");
+                    throw new ArgumentException("Invalid data type.", nameof(value));
                 }
 
                 _name = (OctetString)value;

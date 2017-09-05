@@ -54,13 +54,13 @@ namespace Lextm.SharpSnmpLib.Objects
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException("value");
+                    throw new ArgumentNullException(nameof(value));
                 }
                 
                 // TODO: should we allow Null?
                 if (value.TypeCode != SnmpType.OctetString)
                 {
-                    throw new ArgumentException("wrong data type", "value");
+                    throw new ArgumentException("Invalid data type.", nameof(value));
                 }
 
                 _contact = (OctetString)value;

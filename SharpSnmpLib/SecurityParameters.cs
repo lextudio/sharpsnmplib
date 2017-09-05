@@ -85,12 +85,8 @@ namespace Lextm.SharpSnmpLib
                 if (value.GetRaw().Length != _authenticationParameters.GetRaw().Length)
                 {
                     throw new ArgumentException(
-                        string.Format(
-                            CultureInfo.InvariantCulture,
-                            "Length of new authentication parameters is invalid: {0} found while {1} expected",
-                            value.GetRaw().Length,
-                            _authenticationParameters.GetRaw().Length),
-                        "value");
+                        $"Length of new authentication parameters is invalid: {value.GetRaw().Length} found while {_authenticationParameters.GetRaw().Length} expected.",
+                        nameof(value));
                 }
 
                 if (value.GetLengthBytes() != _authenticationParameters.GetLengthBytes())
@@ -116,7 +112,7 @@ namespace Lextm.SharpSnmpLib
         {
             if (parameters == null)
             {
-                throw new ArgumentNullException("parameters");
+                throw new ArgumentNullException(nameof(parameters));
             }
             
             var container = (Sequence)DataFactory.CreateSnmpData(parameters.GetRaw());
@@ -143,7 +139,7 @@ namespace Lextm.SharpSnmpLib
         {
             if (userName == null)
             {
-                throw new ArgumentNullException("userName");
+                throw new ArgumentNullException(nameof(userName));
             }
 
             EngineId = engineId;

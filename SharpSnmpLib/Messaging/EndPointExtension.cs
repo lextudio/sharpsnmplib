@@ -37,7 +37,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             if (endpoint == null)
             {
-                throw new ArgumentNullException("endpoint");
+                throw new ArgumentNullException(nameof(endpoint));
             }
 
             var result = new Socket(endpoint.AddressFamily, SocketType.Dgram, ProtocolType.Udp);

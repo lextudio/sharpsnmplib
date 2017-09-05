@@ -176,7 +176,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                     }
 
                 default:
-                    throw new ArgumentException("discovery message must be a request", "type");
+                    throw new ArgumentException("Discovery message must be a request.", nameof(type));
             }
         }
 
@@ -190,7 +190,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             if (receiver == null)
             {
-                throw new ArgumentNullException("receiver");
+                throw new ArgumentNullException(nameof(receiver));
             }
 
             using (var socket = receiver.GetSocket())
@@ -208,7 +208,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             if (receiver == null)
             {
-                throw new ArgumentNullException("receiver");
+                throw new ArgumentNullException(nameof(receiver));
             }
 
             using (var socket = receiver.GetSocket())

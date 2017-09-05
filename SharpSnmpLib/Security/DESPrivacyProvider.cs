@@ -44,18 +44,18 @@ namespace Lextm.SharpSnmpLib.Security
         {
             if (phrase == null)
             {
-                throw new ArgumentNullException("phrase");
+                throw new ArgumentNullException(nameof(phrase));
             }
 
             if (auth == null)
             {
-                throw new ArgumentNullException("auth");
+                throw new ArgumentNullException(nameof(auth));
             }
 
             // IMPORTANT: in this way privacy cannot be non-default.
             if (auth == DefaultAuthenticationProvider.Instance)
             {
-                throw new ArgumentException("if authentication is off, then privacy cannot be used");
+                throw new ArgumentException("If authentication is off, then privacy cannot be used.", nameof(auth));
             }
 
             _phrase = phrase;
@@ -87,22 +87,22 @@ namespace Lextm.SharpSnmpLib.Security
         {
             if (unencryptedData == null)
             {
-                throw new ArgumentNullException("unencryptedData");
+                throw new ArgumentNullException(nameof(unencryptedData));
             }
 
             if (key == null)
             {
-                throw new ArgumentNullException("key");
+                throw new ArgumentNullException(nameof(key));
             }
 
             if (privacyParameters == null)
             {
-                throw new ArgumentNullException("privacyParameters");
+                throw new ArgumentNullException(nameof(privacyParameters));
             }
 
             if (key.Length < MinimumKeyLength)
             {
-                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Encryption key length has to 32 bytes or more. Current: {0}", key.Length), "key");
+                throw new ArgumentException($"Encryption key length has to 32 bytes or more. Current: {key.Length}.", nameof(key));
             }
 
             var iv = GetIV(key, privacyParameters);
@@ -167,37 +167,37 @@ namespace Lextm.SharpSnmpLib.Security
         {
             if (encryptedData == null)
             {
-                throw new ArgumentNullException("encryptedData");
+                throw new ArgumentNullException(nameof(encryptedData));
             }
 
             if (key == null)
             {
-                throw new ArgumentNullException("key");
+                throw new ArgumentNullException(nameof(key));
             }
 
             if (privacyParameters == null)
             {
-                throw new ArgumentNullException("privacyParameters");
+                throw new ArgumentNullException(nameof(privacyParameters));
             }
 
             if (encryptedData.Length == 0)
             {
-                throw new ArgumentException("empty encrypted data", "encryptedData");
+                throw new ArgumentException("Empty encrypted data.", nameof(encryptedData));
             }
 
             if ((encryptedData.Length % 8) != 0)
             {
-                throw new ArgumentException("Encrypted data buffer has to be divisible by 8.", "encryptedData");
+                throw new ArgumentException("Encrypted data buffer has to be divisible by 8.", nameof(encryptedData));
             }
 
             if (privacyParameters.Length != PrivacyParametersLength)
             {
-                throw new ArgumentOutOfRangeException("privacyParameters", "Privacy parameters argument has to be 8 bytes long");
+                throw new ArgumentOutOfRangeException(nameof(privacyParameters), "Privacy parameters argument has to be 8 bytes long.");
             }
 
             if (key.Length < MinimumKeyLength)
             {
-                throw new ArgumentOutOfRangeException("key", "Decryption key has to be at least 16 bytes long.");
+                throw new ArgumentOutOfRangeException(nameof(key), "Decryption key has to be at least 16 bytes long.");
             }
 
             var iv = new byte[8];
@@ -236,7 +236,7 @@ namespace Lextm.SharpSnmpLib.Security
         {
             if (privacyKey.Count < MinimumKeyLength)
             {
-                throw new ArgumentException("Invalid privacy key length", "privacyKey");
+                throw new ArgumentException("Invalid privacy key length", nameof(privacyKey));
             }
 
             var iv = new byte[8];
@@ -259,7 +259,7 @@ namespace Lextm.SharpSnmpLib.Security
         {
             if (privacyPassword.Length < 16)
             {
-                throw new ArgumentException("Invalid privacy key length.", "privacyPassword");
+                throw new ArgumentException("Invalid privacy key length.", nameof(privacyPassword));
             }
 
             var key = new byte[8];
@@ -309,18 +309,18 @@ namespace Lextm.SharpSnmpLib.Security
         {
             if (data == null)
             {
-                throw new ArgumentNullException("data");
+                throw new ArgumentNullException(nameof(data));
             }
 
             if (parameters == null)
             {
-                throw new ArgumentNullException("parameters");
+                throw new ArgumentNullException(nameof(parameters));
             }
 
             var code = data.TypeCode;
             if (code != SnmpType.OctetString)
             {
-                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "cannot decrypt the scope data: {0}", code), "data");
+                throw new ArgumentException($"Cannot decrypt the scope data: {code}.", nameof(data));
             }
 
             var octets = (OctetString)data;
@@ -359,17 +359,17 @@ namespace Lextm.SharpSnmpLib.Security
         {
             if (data == null)
             {
-                throw new ArgumentNullException("data");
+                throw new ArgumentNullException(nameof(data));
             }
 
             if (parameters == null)
             {
-                throw new ArgumentNullException("parameters");
+                throw new ArgumentNullException(nameof(parameters));
             }
 
             if (data.TypeCode != SnmpType.Sequence && !(data is ISnmpPdu))
             {
-                throw new ArgumentException("unencrypted data is expected.", "data");
+                throw new ArgumentException("Invalid data type.", nameof(data));
             }
 
             var pkey = AuthenticationProvider.PasswordToKey(_phrase.GetRaw(), parameters.EngineId.GetRaw());

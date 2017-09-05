@@ -70,17 +70,17 @@ namespace Lextm.SharpSnmpLib
         {
             if (length == null)
             {
-                throw new ArgumentNullException("length");
+                throw new ArgumentNullException(nameof(length));
             }
 
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
 
             if (length.Item1 < 1 || length.Item1 > 5)
             {
-                throw new ArgumentException("byte length must between 1 and 5");
+                throw new ArgumentException("Byte length must between 1 and 5.", nameof(length));
             }
 
             _raw = new byte[length.Item1];
@@ -89,7 +89,7 @@ namespace Lextm.SharpSnmpLib
             // TODO: improve here to read from stream directly.
             if (length.Item1 == 5 && _raw[0] != 0)
             {
-                throw new ArgumentException("if byte length is 5, then first byte must be empty");
+                throw new ArgumentException("If byte length is 5, then first byte must be 0.", nameof(length));
             }
 
             var list = new List<byte>(_raw);
@@ -125,7 +125,7 @@ namespace Lextm.SharpSnmpLib
         {
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
             
             stream.AppendBytes(TypeCode, _length, GetRaw());

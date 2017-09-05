@@ -83,22 +83,22 @@ namespace Lextm.SharpSnmpLib
         {
             if (length == null)
             {
-                throw new ArgumentNullException("length");
+                throw new ArgumentNullException(nameof(length));
             }
 
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
 
             if (length.Item1 <= 0)
             {
-                throw new ArgumentException("length cannot be 0.", "length");
+                throw new ArgumentException("Byte length cannot be 0.", nameof(length));
             }
 
             if (length.Item1 > 4)
             {
-                throw new ArgumentException("truncation error for 32-bit integer coding", "length");
+                throw new ArgumentException("Truncation error for 32-bit integer coding.", nameof(length));
             }
 
             _raw = new byte[length.Item1];
@@ -163,7 +163,7 @@ namespace Lextm.SharpSnmpLib
         {
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
             
             stream.AppendBytes(TypeCode, _length, _raw ?? (_raw = ByteTool.GetRawBytes(BitConverter.GetBytes(_int), _int < 0)));

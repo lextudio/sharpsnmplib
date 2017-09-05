@@ -57,22 +57,22 @@ namespace Lextm.SharpSnmpLib.Security
         {
             if (header == null)
             {
-                throw new ArgumentNullException("header");
+                throw new ArgumentNullException(nameof(header));
             }
 
             if (parameters == null)
             {
-                throw new ArgumentNullException("parameters");
+                throw new ArgumentNullException(nameof(parameters));
             }
 
             if (data == null)
             {
-                throw new ArgumentNullException("data");
+                throw new ArgumentNullException(nameof(data));
             }
 
             if (privacy == null)
             {
-                throw new ArgumentNullException("privacy");
+                throw new ArgumentNullException(nameof(privacy));
             }
 
             return OctetString.Empty;
@@ -87,12 +87,12 @@ namespace Lextm.SharpSnmpLib.Security
         {
             if (buffer == null)
             {
-                throw new ArgumentNullException("buffer");
+                throw new ArgumentNullException(nameof(buffer));
             }
 
             if (engineId == null)
             {
-                throw new ArgumentNullException("engineId");
+                throw new ArgumentNullException(nameof(engineId));
             }
 
             return OctetString.Empty;
@@ -117,12 +117,12 @@ namespace Lextm.SharpSnmpLib.Security
         {
             if (password == null)
             {
-                throw new ArgumentNullException("password");
+                throw new ArgumentNullException(nameof(password));
             }
             
             if (engineId == null)
             {
-                throw new ArgumentNullException("engineId");
+                throw new ArgumentNullException(nameof(engineId));
             }
             
             // IMPORTANT: this function is not used.

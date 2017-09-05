@@ -46,7 +46,7 @@ namespace Lextm.SharpSnmpLib
         {
             if (buffer == null)
             {
-                throw new ArgumentNullException("buffer");
+                throw new ArgumentNullException(nameof(buffer));
             }
 
             return CreateSnmpData(buffer, 0, buffer.Length);
@@ -62,7 +62,7 @@ namespace Lextm.SharpSnmpLib
         {
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
             
             var length = stream.ReadPayloadLength();
@@ -147,7 +147,7 @@ namespace Lextm.SharpSnmpLib
         {
             if (buffer == null)
             {
-                throw new ArgumentNullException("buffer");
+                throw new ArgumentNullException(nameof(buffer));
             }
             
             using (var m = new MemoryStream(buffer, index, count, false))
@@ -165,7 +165,7 @@ namespace Lextm.SharpSnmpLib
         {
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
 
             return CreateSnmpData(stream.ReadByte(), stream);

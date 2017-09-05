@@ -37,12 +37,12 @@ namespace Lextm.SharpSnmpLib.Pipeline
         {
             if (context == null)
             {
-                throw new ArgumentNullException("context");
+                throw new ArgumentNullException(nameof(context));
             }
 
             if (store == null)
             {
-                throw new ArgumentNullException("store");
+                throw new ArgumentNullException(nameof(store));
             }
             
             InvokeMessageReceived(new InformRequestMessageReceivedEventArgs(context.Sender, (InformRequestMessage)context.Request, context.Binding));

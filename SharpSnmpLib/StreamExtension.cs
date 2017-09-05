@@ -32,7 +32,7 @@ namespace Lextm.SharpSnmpLib
         {
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
 
             var list = new List<byte>();
@@ -67,7 +67,7 @@ namespace Lextm.SharpSnmpLib
         {
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
 
             var bytes = new byte[length];
@@ -78,12 +78,12 @@ namespace Lextm.SharpSnmpLib
         {
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
 
             if (raw == null)
             {
-                throw new ArgumentNullException("raw");
+                throw new ArgumentNullException(nameof(raw));
             }
 
             stream.WriteByte((byte)typeCode);

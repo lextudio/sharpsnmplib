@@ -51,7 +51,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             if (user == null)
             {
-                throw new ArgumentNullException("user");
+                throw new ArgumentNullException(nameof(user));
             }
 
             Header = new Header(messageId);

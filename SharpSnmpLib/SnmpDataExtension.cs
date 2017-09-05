@@ -35,7 +35,7 @@ namespace Lextm.SharpSnmpLib
         {
             if (data == null)
             {
-                throw new ArgumentNullException("data");
+                throw new ArgumentNullException(nameof(data));
             }
                 
             using (var result = new MemoryStream())

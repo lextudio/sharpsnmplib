@@ -52,17 +52,17 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             if (variables == null)
             {
-                throw new ArgumentNullException("variables");
+                throw new ArgumentNullException(nameof(variables));
             }
 
             if (community == null)
             {
-                throw new ArgumentNullException("community");
+                throw new ArgumentNullException(nameof(community));
             }
 
             if (version == VersionCode.V3)
             {
-                throw new ArgumentException("Please use overload constructor for v3", "version");
+                throw new ArgumentException("Please use overload constructor for v3.", nameof(version));
             }
 
             Version = version;
@@ -93,22 +93,22 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             if (scope == null)
             {
-                throw new ArgumentNullException("scope");
+                throw new ArgumentNullException(nameof(scope));
             }
 
             if (parameters == null)
             {
-                throw new ArgumentNullException("parameters");
+                throw new ArgumentNullException(nameof(parameters));
             }
 
             if (header == null)
             {
-                throw new ArgumentNullException("header");
+                throw new ArgumentNullException(nameof(header));
             }
 
             if (privacy == null)
             {
-                throw new ArgumentNullException("privacy");
+                throw new ArgumentNullException(nameof(privacy));
             }
 
             Version = version;

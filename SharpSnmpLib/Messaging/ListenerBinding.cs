@@ -425,12 +425,12 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             if (response == null)
             {
-                throw new ArgumentNullException("response");
+                throw new ArgumentNullException(nameof(response));
             }
 
             if (receiver == null)
             {
-                throw new ArgumentNullException("receiver");
+                throw new ArgumentNullException(nameof(receiver));
             }
 
             if (_disposed)

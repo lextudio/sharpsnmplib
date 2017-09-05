@@ -298,7 +298,7 @@ namespace SnmpSet
                 return new SHA1AuthenticationProvider(new OctetString(phrase));
             }
 
-            throw new ArgumentException("unknown name", "authentication");
+            throw new ArgumentException("unknown name", nameof(authentication));
         }
 
         private static void ShowHelp(OptionSet optionSet)

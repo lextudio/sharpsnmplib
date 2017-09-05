@@ -51,7 +51,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         {
             if (context == null)
             {
-                throw new ArgumentNullException("context");
+                throw new ArgumentNullException(nameof(context));
             }
             
             var request = context.Request;

@@ -42,7 +42,7 @@ namespace Lextm.SharpSnmpLib.Security
         {
             if (privacy == null)
             {
-                throw new ArgumentNullException("privacy");
+                throw new ArgumentNullException(nameof(privacy));
             }
                 
             Levels flags;
@@ -79,12 +79,12 @@ namespace Lextm.SharpSnmpLib.Security
         {
             if (privacy == null)
             {
-                throw new ArgumentNullException("privacy");
+                throw new ArgumentNullException(nameof(privacy));
             }
 
             if (header == null)
             {
-                throw new ArgumentNullException("header");
+                throw new ArgumentNullException(nameof(header));
             }
 
             return Levels.Privacy == (header.SecurityLevel & Levels.Privacy)
@@ -104,22 +104,22 @@ namespace Lextm.SharpSnmpLib.Security
         {
             if (header == null)
             {
-                throw new ArgumentNullException("header");
+                throw new ArgumentNullException(nameof(header));
             }
 
             if (parameters == null)
             {
-                throw new ArgumentNullException("parameters");
+                throw new ArgumentNullException(nameof(parameters));
             }
 
             if (scope == null)
             {
-                throw new ArgumentNullException("scope");
+                throw new ArgumentNullException(nameof(scope));
             }
 
             if (privacy == null)
             {
-                throw new ArgumentNullException("privacy");
+                throw new ArgumentNullException(nameof(privacy));
             }
 
             var provider = privacy.AuthenticationProvider;
@@ -153,22 +153,22 @@ namespace Lextm.SharpSnmpLib.Security
         {
             if (header == null)
             {
-                throw new ArgumentNullException("header");
+                throw new ArgumentNullException(nameof(header));
             }
 
             if (parameters == null)
             {
-                throw new ArgumentNullException("parameters");
+                throw new ArgumentNullException(nameof(parameters));
             }
 
             if (scopeBytes == null)
             {
-                throw new ArgumentNullException("scopeBytes");
+                throw new ArgumentNullException(nameof(scopeBytes));
             }
 
             if (privacy == null)
             {
-                throw new ArgumentNullException("privacy");
+                throw new ArgumentNullException(nameof(privacy));
             }
 
             var provider = privacy.AuthenticationProvider;

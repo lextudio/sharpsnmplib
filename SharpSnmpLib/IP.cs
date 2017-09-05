@@ -43,7 +43,7 @@ namespace Lextm.SharpSnmpLib
         {
             if (ip == null)
             {
-                throw new ArgumentNullException("ip");
+                throw new ArgumentNullException(nameof(ip));
             }
 
             _ip = ip;
@@ -151,7 +151,7 @@ namespace Lextm.SharpSnmpLib
             if ('A' <= digit && digit <= 'F')
                 return (int)(digit - 'A' + 10);
 
-            throw new ArgumentException("digit");
+            throw new ArgumentException("Invalid digit.", nameof(digit));
         }
 
         private static bool IsHexDigit(char character)
@@ -170,17 +170,17 @@ namespace Lextm.SharpSnmpLib
         {
             if (length == null)
             {
-                throw new ArgumentNullException("length");
+                throw new ArgumentNullException(nameof(length));
             }
 
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
 
             if (length.Item1 != IPv4Length)
             {
-                throw new ArgumentException("bytes must contain 4 or 16 elements");
+                throw new ArgumentException("Bytes must contain 4 or 16 elements.", nameof(length));
             }
 
             var raw = new byte[length.Item1];
@@ -226,7 +226,7 @@ namespace Lextm.SharpSnmpLib
         {
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
             
             stream.AppendBytes(TypeCode, _length, _ip);

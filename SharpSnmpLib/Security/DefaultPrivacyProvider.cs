@@ -71,12 +71,12 @@ namespace Lextm.SharpSnmpLib.Security
         {
             if (data == null)
             {
-                throw new ArgumentNullException("data");
+                throw new ArgumentNullException(nameof(data));
             }
             
             if (parameters == null)
             {
-                throw new ArgumentNullException("parameters");
+                throw new ArgumentNullException(nameof(parameters));
             }            
             
             if (data.TypeCode != SnmpType.Sequence)
@@ -98,12 +98,12 @@ namespace Lextm.SharpSnmpLib.Security
         {
             if (data == null)
             {
-                throw new ArgumentNullException("data");
+                throw new ArgumentNullException(nameof(data));
             }
                         
             if (parameters == null)
             {
-                throw new ArgumentNullException("parameters");
+                throw new ArgumentNullException(nameof(parameters));
             }            
           
             if (data.TypeCode == SnmpType.Sequence || data is ISnmpPdu)
@@ -111,7 +111,7 @@ namespace Lextm.SharpSnmpLib.Security
                 return data;
             }
             
-            throw new ArgumentException("unencrypted data is expected.", "data");
+            throw new ArgumentException("Invaild data type.", nameof(data));
         }
 
         /// <summary>
