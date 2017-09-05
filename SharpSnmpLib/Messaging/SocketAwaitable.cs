@@ -61,19 +61,19 @@
 
         internal void Reset()
         {
-            this.m_wasCompleted = false;
-            this.m_continuation = null;
+            m_wasCompleted = false;
+            m_continuation = null;
         }
 
         public SocketAwaitable GetAwaiter() { return this; }
 
-        public bool IsCompleted { get { return this.m_wasCompleted; } }
+        public bool IsCompleted { get { return m_wasCompleted; } }
 
         public void OnCompleted(Action continuation)
         {
-            if (this.m_continuation == SENTINEL ||
+            if (m_continuation == SENTINEL ||
                 Interlocked.CompareExchange(
-                    ref this.m_continuation, continuation, null) == SENTINEL)
+                    ref m_continuation, continuation, null) == SENTINEL)
             {
                 Task.Run(continuation);
             }
@@ -81,10 +81,10 @@
 
         public int GetResult()
         {
-            if (this.m_eventArgs.SocketError != SocketError.Success)
-                throw new SocketException((int)this.m_eventArgs.SocketError);
+            if (m_eventArgs.SocketError != SocketError.Success)
+                throw new SocketException((int)m_eventArgs.SocketError);
 
-            return this.m_eventArgs.BytesTransferred;
+            return m_eventArgs.BytesTransferred;
         }
     }
 }

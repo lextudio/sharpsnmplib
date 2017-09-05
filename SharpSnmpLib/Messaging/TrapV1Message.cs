@@ -225,7 +225,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public override string ToString()
         {
-            TrapV1Pdu tempQualifier = ((TrapV1Pdu)this._pdu);
+            TrapV1Pdu tempQualifier = ((TrapV1Pdu)_pdu);
             return string.Format(
                 CultureInfo.InvariantCulture,
                 "SNMPv1 trap: {0}",

@@ -159,7 +159,7 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public override string ToString()
         {
-            return string.Format(CultureInfo.InvariantCulture, "Variable: Id: {0}; Data: {1}", this.Id, this.Data);
+            return string.Format(CultureInfo.InvariantCulture, "Variable: Id: {0}; Data: {1}", Id, Data);
         }
     }
 }

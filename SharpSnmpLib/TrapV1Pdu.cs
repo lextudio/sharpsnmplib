@@ -240,12 +240,12 @@ namespace Lextm.SharpSnmpLib
             return string.Format(
                 CultureInfo.InvariantCulture,
                 "SNMPv1 TRAP PDU: agent address: {0}; time stamp: {1}; enterprise: {2}; generic: {3}; specific: {4}; varbind count: {5}",
-                this.AgentAddress,
-                this.TimeStamp,
-                this.Enterprise,
-                this.Generic,
-                this.Specific.ToString(CultureInfo.InvariantCulture),
-                this.Variables.Count.ToString(CultureInfo.InvariantCulture));
+                AgentAddress,
+                TimeStamp,
+                Enterprise,
+                Generic,
+                Specific.ToString(CultureInfo.InvariantCulture),
+                Variables.Count.ToString(CultureInfo.InvariantCulture));
         }
     }
 }

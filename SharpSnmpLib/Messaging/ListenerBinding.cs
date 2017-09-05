@@ -69,9 +69,9 @@ namespace Lextm.SharpSnmpLib.Messaging
                 _active = Inactive;
                 if (_socket != null)
                 {
-                    if (!SnmpMessageExtension.IsRunningOnMono)
+                    if (SnmpMessageExtension.IsRunningOnWindows)
                     {
-                        this._socket.Shutdown (SocketShutdown.Both);    // Note that closing the socket releases the _socket.ReceiveFrom call.
+                        _socket.Shutdown (SocketShutdown.Both);    // Note that closing the socket releases the _socket.ReceiveFrom call.
                     }
 
                     _socket.Dispose();

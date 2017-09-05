@@ -273,9 +273,9 @@ namespace Lextm.SharpSnmpLib.Messaging
             return string.Format(
                 CultureInfo.InvariantCulture,
                 "INFORM request message: time stamp: {0}; community: {1}; enterprise: {2}; varbind count: {3}",
-                this.TimeStamp.ToString(CultureInfo.InvariantCulture),
+                TimeStamp.ToString(CultureInfo.InvariantCulture),
                 this.Community(),
-                this.Enterprise,
+                Enterprise,
                 this.Variables().Count.ToString(CultureInfo.InvariantCulture));
         }
     }
