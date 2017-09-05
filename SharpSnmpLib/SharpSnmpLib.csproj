@@ -2,7 +2,7 @@
   <PropertyGroup>
     <AssemblyName>SharpSnmpLib</AssemblyName>
     <RootNamespace>Lextm.SharpSnmpLib</RootNamespace>
-    <TargetFrameworks>net452;netstandard1.3</TargetFrameworks>
+    <TargetFrameworks>netstandard1.3;net452</TargetFrameworks>
     <DocumentationFile Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">..\bin\SharpSnmpLib.xml</DocumentationFile>
     <PackageId>Lextm.SharpSnmpLib</PackageId>
     <Title>#SNMP Library</Title>
@@ -20,11 +20,11 @@
     <PackageTags>smi snmp mib</PackageTags>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>sharpsnmplib.snk</AssemblyOriginatorKeyFile>
-    <PublicSign>True</PublicSign>
+    <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">True</PublicSign>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
     <AssemblyVersion>10.0.0.0</AssemblyVersion>
     <FileVersion>10.0.0.0</FileVersion>
-    <Version>10.0.0-beta2</Version>
+    <Version>10.0.0-beta3</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard1.3'">
