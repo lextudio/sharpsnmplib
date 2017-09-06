@@ -1,1 +1,1 @@
-cp Tests/sharpsnmplib.tests.snk SharpSnmpLib/sharpsnmplib.snk
+cp Tests/CSharpCore/sharpsnmplib.tests.snk SharpSnmpLib/sharpsnmplib.snk
