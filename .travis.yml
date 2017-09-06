@@ -16,6 +16,7 @@ addons:
     packages:
     - dotnet-sharedframework-microsoft.netcore.app-1.0.5
 
+before_script:
+- ./prepare.sh
 script:
-- prepare.sh
-- travis.sh
+- ./travis.sh
