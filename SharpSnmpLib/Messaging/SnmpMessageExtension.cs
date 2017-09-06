@@ -764,7 +764,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Gets a value indicating whether it is
         /// running on Windows.
         /// </summary>
-        /// <value><c>true</c> if is running on windows; otherwise, <c>false</c>.</value>
+        /// <value><c>true</c> if is running on Windows; otherwise, <c>false</c>.</value>
         public static bool IsRunningOnWindows
         {
             get
@@ -773,6 +773,22 @@ namespace Lextm.SharpSnmpLib.Messaging
                 return !IsRunningOnMono;
 #else
                 return RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+#endif
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether it is running on macOS.
+        /// </summary>
+        /// <value><c>true</c> if is running on macOS; otherwise, <c>false</c>.</value>
+        public static bool IsRunningOnMac
+        {
+            get
+            {
+#if NET452
+                return !IsRunningOnMono;
+#else
+                return RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
 #endif
             }
         }

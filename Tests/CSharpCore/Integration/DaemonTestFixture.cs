@@ -509,16 +509,17 @@ namespace Lextm.SharpSnmpLib.Integration
                 Assert.True(message.ToBytes().Length > 10000);
 
                 var time = 1500;
-                if (SnmpMessageExtension.IsRunningOnWindows)
+                if (SnmpMessageExtension.IsRunningOnMac)
+                {
+                    var exception =
+                        Assert.Throws<SocketException>(() => message.GetResponse(time, serverEndPoint, socket));
+                    Assert.Equal(SocketError.MessageSize, exception.SocketErrorCode);
+                }
+                else
                 {
                     // IMPORTANT: test against an agent that doesn't exist.
                     var result = message.GetResponse(time, serverEndPoint, socket);
                     Assert.True(result.Scope.Pdu.ErrorStatus.ToErrorCode() == ErrorCode.NoError);
-                }
-                else
-                {
-                    var exception = Assert.Throws<SocketException>(() => message.GetResponse(time, serverEndPoint, socket));
-                    Assert.Equal(SocketError.MessageSize, exception.SocketErrorCode);
                 }
             }
             finally
