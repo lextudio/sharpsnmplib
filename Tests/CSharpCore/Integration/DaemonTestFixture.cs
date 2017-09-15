@@ -163,6 +163,42 @@ namespace Lextm.SharpSnmpLib.Integration
         }
 
         [Fact]
+        public void TestResponseVersion3()
+        {
+            var engine = CreateEngine();
+            engine.Listener.ClearBindings();
+            var serverEndPoint = new IPEndPoint(IPAddress.Loopback, Port.NextId);
+            engine.Listener.AddBinding(serverEndPoint);
+            engine.Start();
+
+            try
+            {
+                IAuthenticationProvider auth = new MD5AuthenticationProvider(new OctetString("authenticationauthentication"));
+                IPrivacyProvider priv = new DefaultPrivacyProvider(auth);
+
+                var timeout = 1500;
+                Discovery discovery = Messenger.GetNextDiscovery(SnmpType.GetRequestPdu);
+                ReportMessage report = discovery.GetResponse(timeout, serverEndPoint);
+
+                var expected = Messenger.NextRequestId;
+                GetRequestMessage request = new GetRequestMessage(VersionCode.V3, Messenger.NextMessageId, expected, new OctetString("authen"), new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) }, priv, Messenger.MaxMessageSize, report);
+                ISnmpMessage reply = request.GetResponse(timeout, serverEndPoint);
+                ISnmpPdu snmpPdu = reply.Pdu();
+                Assert.Equal(SnmpType.ResponsePdu, snmpPdu.TypeCode);
+                Assert.Equal(expected, reply.RequestId());
+                Assert.Equal(ErrorCode.NoError, snmpPdu.ErrorStatus.ToErrorCode());
+            }
+            finally
+            {
+                if (SnmpMessageExtension.IsRunningOnWindows)
+                {
+                    engine.Stop();
+                }
+            }
+        }
+
+
+        [Fact]
         public void TestDiscoverer()
         {
             var engine = CreateEngine();
