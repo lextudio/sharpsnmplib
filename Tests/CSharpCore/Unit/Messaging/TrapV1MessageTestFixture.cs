@@ -3,6 +3,7 @@ using System.Net;
 using Lextm.SharpSnmpLib.Messaging;
 using Lextm.SharpSnmpLib.Security;
 using Xunit;
+using System.IO;
 
 #pragma warning disable 1591
 namespace Lextm.SharpSnmpLib.Unit.Messaging
@@ -36,7 +37,7 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
         [Fact]
         public void TestParseNoVarbind()
         {
-            byte[] buffer = Properties.Resources.novarbind;
+            byte[] buffer = File.ReadAllBytes(Path.Combine("Resources", "novarbind.dat"));
             ISnmpMessage m = MessageFactory.ParseMessages(buffer, new UserRegistry())[0];
             TrapV1Message message = (TrapV1Message)m;
             Assert.Equal(GenericCode.EnterpriseSpecific, message.Generic);
@@ -51,7 +52,7 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
         [Fact]
         public void TestParseOneVarbind()
         {
-            byte[] buffer = Properties.Resources.onevarbind;
+            byte[] buffer = File.ReadAllBytes(Path.Combine("Resources", "onevarbind.dat"));
             TrapV1Message message = (TrapV1Message)MessageFactory.ParseMessages(buffer, new UserRegistry())[0];
             Assert.Equal(1, message.Variables().Count);
             Assert.Equal(new uint[] { 1, 3, 6, 1, 4, 1, 2162, 1000, 2 }, message.Enterprise.ToNumerical());
@@ -62,7 +63,7 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
         [Fact]
         public void TestParseTwoVarbinds()
         {
-            byte[] buffer = Properties.Resources.twovarbinds;
+            byte[] buffer = File.ReadAllBytes(Path.Combine("Resources", "twovarbinds.dat"));
             TrapV1Message message = (TrapV1Message)MessageFactory.ParseMessages(buffer, new UserRegistry())[0];
             Assert.Equal(2, message.Variables().Count);
             Assert.Equal("TrapTest", message.Variables()[0].Data.ToString());

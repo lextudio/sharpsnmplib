@@ -4,10 +4,10 @@
     using Xunit;
     using Lextm.SharpSnmpLib.Messaging;
     using Lextm.SharpSnmpLib.Security;
+    using System.IO;
 
     public class TrapV2MessageTestFixture
     {
-#if !NETSTANDARD
         [Fact]
         public void TestToBytes()
         {
@@ -25,7 +25,7 @@
                 0,
                 0
                );
-            Assert.Equal(ByteTool.Convert(Properties.Resources.trapv3), ByteTool.Convert(trap.ToBytes()));
+            Assert.Equal(ByteTool.Convert(File.ReadAllBytes(Path.Combine("Resources", "trapv3"))), ByteTool.Convert(trap.ToBytes()));
         }
         
         [Fact]
@@ -46,9 +46,10 @@
                 0,
                 0
                );
-            Assert.Equal(ByteTool.Convert(Properties.Resources.trapv3auth), ByteTool.Convert(trap.ToBytes()));
+            Assert.Equal(ByteTool.Convert(File.ReadAllBytes(Path.Combine("Resources", "trapv3auth"))), ByteTool.Convert(trap.ToBytes()));
         }
 
+#if NET452
         [Fact]
         public void TestToBytes3()
         {

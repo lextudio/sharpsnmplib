@@ -11,9 +11,8 @@
     <DocumentationFile>..\bin\SharpSnmpLib.xml</DocumentationFile>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <SourceAnalysisOverrideSettingsFile>D:\sharpsnmplib_svn\SharpSnmpLib\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>sharpsnmplib.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\SharpSnmpLib\sharpsnmplib.snk</AssemblyOriginatorKeyFile>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
     <SccProjectName>
     </SccProjectName>
@@ -61,23 +60,20 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\lib\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Security\AESPrivacyProvider.cs" />
-    <Compile Include="Security\DESPrivacyProvider.cs" />
-    <None Include="sharpsnmplib.snk" />
+    <Compile Include="..\SharpSnmpLib\Properties\AssemblyInfo.cs" />
+    <Compile Include="..\SharpSnmpLib\Security\AESPrivacyProvider.cs" />
+    <Compile Include="..\SharpSnmpLib\Security\DESPrivacyProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="SharpSnmpLib.csproj">
+    <ProjectReference Include="..\SharpSnmpLib\SharpSnmpLib.csproj">
       <Project>{7bc38e05-9b86-4654-b81a-bf153edaf9db}</Project>
       <Name>SharpSnmpLib</Name>
     </ProjectReference>
@@ -87,18 +83,6 @@
   <Target Name="AfterBuild">
     <Gendarme Condition=" '$(Configuration)' == 'Release' AND '$(OS)' == 'Windows_NT' AND Exists('..\gendarme\gendarme.exe')" GendarmeExeFilename="..\gendarme\gendarme.exe" Assemblies="$(TargetPath)" WarningsAsErrors="False" IntegrateWithVisualStudio="True" GendarmeIgnoreFilename="gendarme.ignore" />
   </Target>
-  <PropertyGroup>
-    <PreBuildEvent Condition=" '$(OS)' == 'Windows_NT' ">if exist "$(ProjectDir)obj\project.assets.json1" del "$(ProjectDir)obj\project.assets.json1"
-if exist "$(ProjectDir)obj\project.assets.json" rename "$(ProjectDir)obj\project.assets.json" project.assets.json1</PreBuildEvent>
-    <PreBuildEvent Condition=" '$(OS)' != 'Windows_NT' ">if [ -f "$(ProjectDir)obj\project.assets.json1" ]; then rm "$(ProjectDir)obj\project.assets.json1"; fi
-if [ -f "$(ProjectDir)obj\project.assets.json" ]; then mv "$(ProjectDir)obj\project.assets.json" project.assets.json1; fi</PreBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup>
-    <PostBuildEvent Condition=" '$(OS)' == 'Windows_NT' ">if exist "$(ProjectDir)obj\project.assets.json" del "$(ProjectDir)obj\project.assets.json"
-if exist "$(ProjectDir)obj\project.assets.json1" rename "$(ProjectDir)obj\project.assets.json1" project.assets.json</PostBuildEvent>
-    <PostBuildEvent Condition=" '$(OS)' != 'Windows_NT' ">if [ -f "$(ProjectDir)obj\project.assets.json" ]; then rm "$(ProjectDir)obj\project.assets.json"; fi
-if [ -f "$(ProjectDir)obj\project.assets.json1" ]; then mv "$(ProjectDir)obj\project.assets.json1" project.assets.json; fi</PostBuildEvent>
-  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

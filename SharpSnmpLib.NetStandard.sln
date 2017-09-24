@@ -7,11 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharpSnmpLib", "SharpSnmpLi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{A3DBD79B-05AE-487F-8863-9C777479FD4D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpSnmpLib.Full", "SharpSnmpLib\SharpSnmpLib.Full.csproj", "{286DE6DB-8F95-4BD4-86A2-86488D2E0EE1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpSnmpLib.Full", "Extensions.Full\SharpSnmpLib.Full.csproj", "{286DE6DB-8F95-4BD4-86A2-86488D2E0EE1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpSnmpLib.iOS", "SharpSnmpLib\SharpSnmpLib.iOS.csproj", "{9607A1E5-DF21-4E89-9B0C-501898252BF4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpSnmpLib.iOS", "Extensions.iOS\SharpSnmpLib.iOS.csproj", "{9607A1E5-DF21-4E89-9B0C-501898252BF4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpSnmpLib.Android", "SharpSnmpLib\SharpSnmpLib.Android.csproj", "{AC68D000-E001-43CE-86A2-CFE24624EF9C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpSnmpLib.Android", "Extensions.Android\SharpSnmpLib.Android.csproj", "{AC68D000-E001-43CE-86A2-CFE24624EF9C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CSharpCore", "CSharpCore", "{955E70DC-8385-42FA-ACB2-12ACD8103BCE}"
 EndProject

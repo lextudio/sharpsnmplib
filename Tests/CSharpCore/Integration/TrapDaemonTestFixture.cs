@@ -23,7 +23,7 @@ namespace Lextm.SharpSnmpLib.Integration
             users.Add(new OctetString("neither"), DefaultPrivacyProvider.DefaultPair);
             users.Add(new OctetString("authen"),
                 new DefaultPrivacyProvider(new MD5AuthenticationProvider(new OctetString("authentication"))));
-#if !NETSTANDARD
+#if NET452
             users.Add(new OctetString("privacy"), new DESPrivacyProvider(new OctetString("privacyphrase"),
                                                                          new MD5AuthenticationProvider(new OctetString("authentication"))));
 #endif
@@ -88,7 +88,7 @@ namespace Lextm.SharpSnmpLib.Integration
                 {
                     EngineId = engineId
                 });
-#if !NETSTANDARD
+#if NET452
             users.Add(new OctetString("privacy"), new DESPrivacyProvider(new OctetString("privacyphrase"),
                                                                          new MD5AuthenticationProvider(new OctetString("authentication"))));
 #endif
@@ -165,7 +165,7 @@ namespace Lextm.SharpSnmpLib.Integration
                 {
                     EngineId = engineId
                 });
-#if !NETSTANDARD
+#if NET452
             users.Add(new OctetString("privacy"), new DESPrivacyProvider(new OctetString("privacyphrase"),
                                                                          new MD5AuthenticationProvider(new OctetString("authentication"))));
 #endif

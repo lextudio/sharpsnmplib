@@ -786,7 +786,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             get
             {
 #if NET452
-                return !IsRunningOnMono;
+                return IsRunningOnMono;
 #else
                 return RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
 #endif

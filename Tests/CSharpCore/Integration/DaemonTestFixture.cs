@@ -5,6 +5,7 @@ using Lextm.SharpSnmpLib.Security;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
@@ -37,7 +38,7 @@ namespace Lextm.SharpSnmpLib.Integration
             var users = new UserRegistry();
             users.Add(new OctetString("neither"), DefaultPrivacyProvider.DefaultPair);
             users.Add(new OctetString("authen"), new DefaultPrivacyProvider(new MD5AuthenticationProvider(new OctetString("authentication"))));
-#if !NETSTANDARD
+#if NET452
             users.Add(new OctetString("privacy"), new DESPrivacyProvider(new OctetString("privacyphrase"),
                                                                          new MD5AuthenticationProvider(new OctetString("authentication"))));
 #endif
@@ -173,6 +174,41 @@ namespace Lextm.SharpSnmpLib.Integration
 
             try
             {
+                IAuthenticationProvider auth = new MD5AuthenticationProvider(new OctetString("authentication"));
+                IPrivacyProvider priv = new DefaultPrivacyProvider(auth);
+
+                var timeout = 1500;
+                Discovery discovery = Messenger.GetNextDiscovery(SnmpType.GetRequestPdu);
+                ReportMessage report = discovery.GetResponse(timeout, serverEndPoint);
+
+                var expected = Messenger.NextRequestId;
+                GetRequestMessage request = new GetRequestMessage(VersionCode.V3, Messenger.NextMessageId, expected, new OctetString("authen"), new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) }, priv, Messenger.MaxMessageSize, report);
+                ISnmpMessage reply = request.GetResponse(timeout, serverEndPoint);
+                ISnmpPdu snmpPdu = reply.Pdu();
+                Assert.Equal(SnmpType.ResponsePdu, snmpPdu.TypeCode);
+                Assert.Equal(expected, reply.RequestId());
+                Assert.Equal(ErrorCode.NoError, snmpPdu.ErrorStatus.ToErrorCode());
+            }
+            finally
+            {
+                if (SnmpMessageExtension.IsRunningOnWindows)
+                {
+                    engine.Stop();
+                }
+            }
+        }
+
+        [Fact]
+        public void TestResponseVersion3_2()
+        {
+            var engine = CreateEngine();
+            engine.Listener.ClearBindings();
+            var serverEndPoint = new IPEndPoint(IPAddress.Loopback, Port.NextId);
+            engine.Listener.AddBinding(serverEndPoint);
+            engine.Start();
+
+            try
+            {
                 IAuthenticationProvider auth = new MD5AuthenticationProvider(new OctetString("authenticationauthentication"));
                 IPrivacyProvider priv = new DefaultPrivacyProvider(auth);
 
@@ -197,7 +233,6 @@ namespace Lextm.SharpSnmpLib.Integration
             }
         }
 
-
         [Fact]
         public void TestDiscoverer()
         {
@@ -207,6 +242,8 @@ namespace Lextm.SharpSnmpLib.Integration
             engine.Listener.AddBinding(serverEndPoint);
             engine.Start();
 
+            var timeout = 1000;
+            var wait = 60 * timeout;
             try
             {
                 var signal = new AutoResetEvent(false);
@@ -218,18 +255,18 @@ namespace Lextm.SharpSnmpLib.Integration
                     signal.Set();
                 };
                 discoverer.Discover(VersionCode.V1, new IPEndPoint(IPAddress.Broadcast, serverEndPoint.Port),
-                    new OctetString("public"), 3000);
-                signal.WaitOne();
+                    new OctetString("public"), timeout);
+                Assert.True(signal.WaitOne(wait));
 
                 signal.Reset();
                 discoverer.Discover(VersionCode.V2, new IPEndPoint(IPAddress.Broadcast, serverEndPoint.Port),
-                    new OctetString("public"), 3000);
-                signal.WaitOne();
+                    new OctetString("public"), timeout);
+                Assert.True(signal.WaitOne(wait));
 
                 signal.Reset();
                 discoverer.Discover(VersionCode.V3, new IPEndPoint(IPAddress.Broadcast, serverEndPoint.Port), null,
-                    3000);
-                signal.WaitOne();
+                    timeout);
+                Assert.True(signal.WaitOne(wait));
             }
             finally
             {
@@ -249,6 +286,8 @@ namespace Lextm.SharpSnmpLib.Integration
             engine.Listener.AddBinding(serverEndPoint);
             engine.Start();
 
+            var timeout = 1000;
+            var wait = 60 * timeout;
             try
             {
                 var signal = new AutoResetEvent(false);
@@ -260,18 +299,18 @@ namespace Lextm.SharpSnmpLib.Integration
                     signal.Set();
                 };
                 await discoverer.DiscoverAsync(VersionCode.V1, new IPEndPoint(IPAddress.Broadcast, serverEndPoint.Port),
-                    new OctetString("public"), 3000);
-                signal.WaitOne();
+                    new OctetString("public"), timeout);
+                Assert.True(signal.WaitOne(wait));
 
                 signal.Reset();
                 await discoverer.DiscoverAsync(VersionCode.V2, new IPEndPoint(IPAddress.Broadcast, serverEndPoint.Port),
-                    new OctetString("public"), 3000);
-                signal.WaitOne();
+                    new OctetString("public"), timeout);
+                Assert.True(signal.WaitOne(wait));
 
                 signal.Reset();
                 await discoverer.DiscoverAsync(VersionCode.V3, new IPEndPoint(IPAddress.Broadcast, serverEndPoint.Port),
-                    null, 3000);
-                signal.WaitOne();
+                    null, timeout);
+                Assert.True(signal.WaitOne(wait));
             }
             finally
             {
@@ -283,11 +322,7 @@ namespace Lextm.SharpSnmpLib.Integration
         }
 
         [Theory]
-#if  NETSTANDARD
-        [InlineData(64)]
-#else
-        [InlineData(256)]
-#endif
+        [InlineData(32)]
         public async Task TestResponsesFromMultipleSources(int count)
         {
             var start = 16102;
@@ -299,7 +334,7 @@ namespace Lextm.SharpSnmpLib.Integration
                 engine.Listener.AddBinding(new IPEndPoint(IPAddress.Loopback, index));
             }
 
-#if !NETSTANDARD 
+#if NET452
             // IMPORTANT: need to set min thread count so as to boost performance.
             int minWorker, minIOC;
             // Get the current settings.
@@ -394,7 +429,7 @@ namespace Lextm.SharpSnmpLib.Integration
             engine.Listener.ClearBindings();
             var serverEndPoint = new IPEndPoint(IPAddress.Loopback, Port.NextId);
             engine.Listener.AddBinding(serverEndPoint);
-#if !NETSTANDARD 
+#if NET452 
             // IMPORTANT: need to set min thread count so as to boost performance.
             int minWorker, minIOC;
             // Get the current settings.
@@ -437,7 +472,7 @@ namespace Lextm.SharpSnmpLib.Integration
         }
 
         [Theory]
-        [InlineData(128)]
+        [InlineData(32)]
         public void TestResponsesFromSingleSourceWithMultipleThreadsFromManager(int count)
         {
             var start = 0;

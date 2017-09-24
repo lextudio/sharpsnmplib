@@ -16,7 +16,7 @@ namespace Lextm.SharpSnmpLib.Unit.Security
 
     public class AESPrivacyProviderTestFixture
     {
-#if !NETSTANDARD
+#if NET452
         [Fact]
         public void TestException()
         {

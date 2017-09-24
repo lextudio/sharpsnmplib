@@ -16,7 +16,7 @@ namespace Lextm.SharpSnmpLib.Unit.Security
 
     public class DESPrivacyProviderTestFixture
     {
-#if !NETSTANDARD
+#if NET452
         [Fact]
         public void TestException()
         {

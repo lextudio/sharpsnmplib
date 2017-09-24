@@ -11,7 +11,7 @@
         {
             Assert.Equal((Levels)0, DefaultPrivacyProvider.DefaultPair.ToSecurityLevel());
         }
-#if !NETSTANDARD
+#if NET452
         [Fact]
         public void TestException()
         {

@@ -1,15 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <PropertyGroup Label="Configuration">
     <RootNamespace>Lextm.SharpSnmpLib</RootNamespace>
-    <DefineConstants>TRACE;DEBUG;NETSTANDARD</DefineConstants>
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>sharpsnmplib.tests.snk</AssemblyOriginatorKeyFile>
-    <PublicSign>True</PublicSign>
+    <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">True</PublicSign>
     <AssemblyName>SharpSnmpLib.Tests.NetStandard</AssemblyName>
   </PropertyGroup>
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp1.0</TargetFramework>
+    <OutputType Condition="'$(TargetFramework)'!='net452'">Exe</OutputType>
+    <TargetFrameworks>netcoreapp1.0;net452</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
     <EmbeddedResource Include="**\*.resx" />
@@ -29,15 +28,6 @@
     <None Include="sharpsnmplib.tests.snk" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="System.AppDomain" Version="2.0.11" />
-    <PackageReference Include="System.ComponentModel.TypeConverter" Version="4.3.0" />
-    <PackageReference Include="System.Linq.Parallel" Version="4.3.0" />
-    <PackageReference Include="System.Net.NetworkInformation" Version="4.3.0" />
-    <PackageReference Include="System.Runtime" Version="4.3.0" />
-    <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
-    <PackageReference Include="System.Threading.Tasks.Parallel" Version="4.3.0" />
-    <PackageReference Include="System.Threading.Thread" Version="4.3.0" />
-    <PackageReference Include="System.Threading.ThreadPool" Version="4.3.0" />
     <PackageReference Include="xunit" Version="2.2.0">
     </PackageReference>
     <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0">
@@ -48,7 +38,42 @@
   <ItemGroup>
     <ProjectReference Include="..\..\SharpSnmpLib\SharpSnmpLib.csproj" />
   </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='net452'">
+    <ProjectReference Include="..\..\Extensions.Full\SharpSnmpLib.Full.csproj" />
+  </ItemGroup>
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Resources\fivevarbinds.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\get.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\getresponse.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\novarbind.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\onevarbind.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\trapv3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\trapv3auth">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\trapv3authpriv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\twovarbinds.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\v3authNoPriv_BER_Issue">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

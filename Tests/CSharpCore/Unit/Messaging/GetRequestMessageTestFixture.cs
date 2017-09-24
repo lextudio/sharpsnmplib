@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using Lextm.SharpSnmpLib.Messaging;
 using Lextm.SharpSnmpLib.Security;
 using Xunit;
+using System.IO;
 
 #pragma warning disable 1591
 
@@ -25,7 +26,7 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
         [Fact]
         public void Test()
         {
-            byte[] expected = Properties.Resources.get;
+            byte[] expected = File.ReadAllBytes(Path.Combine("Resources", "get.dat"));
             ISnmpMessage message = MessageFactory.ParseMessages(expected, new UserRegistry())[0];
             Assert.Equal(SnmpType.GetRequestPdu, message.TypeCode());
             GetRequestPdu pdu = (GetRequestPdu)message.Pdu();
@@ -45,7 +46,7 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
                                                        new Null())
                                       };
             GetRequestMessage message = new GetRequestMessage(0, VersionCode.V2, new OctetString("public"), list);
-            Assert.True(Properties.Resources.get.Length >= message.ToBytes().Length);
+            Assert.True(File.ReadAllBytes(Path.Combine("Resources", "get.dat")).Length >= message.ToBytes().Length);
         }
 #endif
         [Fact]
@@ -108,7 +109,7 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
             Assert.Equal(Levels.Authentication | Levels.Reportable, request.Header.SecurityLevel);
             Assert.Equal(ByteTool.Convert(bytes), request.ToBytes());
         }
-#if !NETSTANDARD
+#if NET452
         [Fact]
         public void TestConstructorV2AuthMd5PrivDes()
         {
