@@ -1,7 +1,0 @@
-{
-  "profiles": {
-    "Tests.NetStandard": {
-      "commandName": "Project"
-    }
-  }
-}
