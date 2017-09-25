@@ -38,9 +38,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\SharpSnmpLib\SharpSnmpLib.csproj" />
   </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)'=='net452'">
-    <ProjectReference Include="..\..\Extensions.Full\SharpSnmpLib.Full.csproj" />
-  </ItemGroup>
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>

@@ -25,7 +25,6 @@
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
-#if !NETFX_CORE && !NETSTANDARD
 using System;
 using System.IO;
 using System.Security.Cryptography;
@@ -45,6 +44,21 @@ namespace Lextm.SharpSnmpLib.Security
         private readonly SaltGenerator _salt = new SaltGenerator();
         private readonly OctetString _phrase;
         private const int KeyBytes = 16;
+
+        /// <summary>
+        /// Verifies if the provider is supported.
+        /// </summary>
+        public static bool IsSupported
+        {
+            get
+            {
+#if NETSTANDARD1_3
+                return false;
+#else
+                return true;
+#endif
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AESPrivacyProvider"/> class.
@@ -98,6 +112,9 @@ namespace Lextm.SharpSnmpLib.Security
         /// <exception cref="ArgumentOutOfRangeException">Thrown when encryption key is null or length of the encryption key is too short.</exception>
         internal static byte[] Encrypt(byte[] unencryptedData, byte[] key, int engineBoots, int engineTime, byte[] privacyParameters)
         {
+#if NETSTANDARD1_3
+            throw new PlatformNotSupportedException();
+#else
             // check the key before doing anything else
             if (key == null)
             {
@@ -162,6 +179,7 @@ namespace Lextm.SharpSnmpLib.Security
                     return encryptedData;
                 }
             }
+#endif
         }
 
         /// <summary>
@@ -178,6 +196,9 @@ namespace Lextm.SharpSnmpLib.Security
         /// argument is null or length other then 8 bytes</exception>
         internal static byte[] Decrypt(byte[] encryptedData, byte[] key, int engineBoots, int engineTime, byte[] privacyParameters)
         {
+#if NETSTANDARD1_3
+            throw new PlatformNotSupportedException();
+#else
             if (key == null)
             {
                 throw new ArgumentNullException(nameof(key));
@@ -251,6 +272,7 @@ namespace Lextm.SharpSnmpLib.Security
                     return decryptedData;
                 }
             }
+#endif
         }
 
         /// <summary>
@@ -381,4 +403,3 @@ namespace Lextm.SharpSnmpLib.Security
         }
     }
 }
-#endif

@@ -2,8 +2,7 @@
   <PropertyGroup>
     <AssemblyName>SharpSnmpLib</AssemblyName>
     <RootNamespace>Lextm.SharpSnmpLib</RootNamespace>
-    <TargetFrameworks>netstandard1.3;net452</TargetFrameworks>
-    <DocumentationFile Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">..\bin\SharpSnmpLib.xml</DocumentationFile>
+     <TargetFrameworks>netstandard1.3;net452;Xamarin.iOS10;MonoAndroid44</TargetFrameworks> 
     <PackageId>Lextm.SharpSnmpLib</PackageId>
     <Title>#SNMP Library</Title>
     <NeutralLanguage>en-US</NeutralLanguage>
@@ -22,10 +21,27 @@
     <AssemblyOriginatorKeyFile>sharpsnmplib.snk</AssemblyOriginatorKeyFile>
     <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">True</PublicSign>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
-    <AssemblyVersion>10.0.0.0</AssemblyVersion>
-    <FileVersion>10.0.0.0</FileVersion>
-    <Version>10.0.0</Version>
+    <AssemblyVersion>10.0.1.0</AssemblyVersion>
+    <FileVersion>10.0.1.0</FileVersion>
+    <Version>10.0.1-beta1</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)' == 'Xamarin.iOS10'">
+    <TargetFrameworkIdentifier>Xamarin.iOS</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
+    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
+    <DefineConstants>$(DefineConstants);IOS1_0</DefineConstants>
+    <DebugType>full</DebugType>
+    <LanguageTargets>$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets</LanguageTargets>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)' == 'MonoAndroid44'">
+    <TargetFrameworkIdentifier>MonoAndroid</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v4.4</TargetFrameworkVersion>
+    <AndroidUseLatestPlatformSdk>False</AndroidUseLatestPlatformSdk>
+    <DebugType>full</DebugType>
+    <DefineConstants>$(DefineConstants);MONOANDROID4_4</DefineConstants>
+    <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
+    <LanguageTargets>$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets</LanguageTargets>
   </PropertyGroup>
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard1.3'">
     <PackageReference Include="System.ComponentModel.TypeConverter" Version="4.3.0" />
@@ -36,8 +52,16 @@
   <ItemGroup Condition="'$(TargetFramework)'=='net452'">
     <Reference Include="System.Configuration" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Remove="Security\AESPrivacyProvider.cs" />
-    <Compile Remove="Security\DESPrivacyProvider.cs" />
+  <ItemGroup Condition="'$(TargetFramework)' == 'Xamarin.iOS10'">
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="Xamarin.iOS" />
+    <Reference Include="System.Runtime.Serialization" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'MonoAndroid44'">
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
   </ItemGroup>
 </Project>
