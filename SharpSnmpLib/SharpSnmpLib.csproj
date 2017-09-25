@@ -2,7 +2,7 @@
   <PropertyGroup>
     <AssemblyName>SharpSnmpLib</AssemblyName>
     <RootNamespace>Lextm.SharpSnmpLib</RootNamespace>
-     <TargetFrameworks>netstandard1.3;net452;Xamarin.iOS10;MonoAndroid44</TargetFrameworks> 
+    <TargetFrameworks>netstandard1.3;net452;xamarinios10;monoandroid44</TargetFrameworks> 
     <PackageId>Lextm.SharpSnmpLib</PackageId>
     <Title>#SNMP Library</Title>
     <NeutralLanguage>en-US</NeutralLanguage>
@@ -26,23 +26,9 @@
     <Version>10.0.1-beta1</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(TargetFramework)' == 'Xamarin.iOS10'">
-    <TargetFrameworkIdentifier>Xamarin.iOS</TargetFrameworkIdentifier>
-    <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
-    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <DefineConstants>$(DefineConstants);IOS1_0</DefineConstants>
-    <DebugType>full</DebugType>
-    <LanguageTargets>$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets</LanguageTargets>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(TargetFramework)' == 'MonoAndroid44'">
-    <TargetFrameworkIdentifier>MonoAndroid</TargetFrameworkIdentifier>
-    <TargetFrameworkVersion>v4.4</TargetFrameworkVersion>
-    <AndroidUseLatestPlatformSdk>False</AndroidUseLatestPlatformSdk>
-    <DebugType>full</DebugType>
-    <DefineConstants>$(DefineConstants);MONOANDROID4_4</DefineConstants>
-    <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
-    <LanguageTargets>$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets</LanguageTargets>
-  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="MSBuild.Sdk.Extras" Version="1.0.9" PrivateAssets="All" />
+  </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard1.3'">
     <PackageReference Include="System.ComponentModel.TypeConverter" Version="4.3.0" />
     <PackageReference Include="System.Net.NetworkInformation" Version="4.3.0" />
@@ -52,16 +38,17 @@
   <ItemGroup Condition="'$(TargetFramework)'=='net452'">
     <Reference Include="System.Configuration" />
   </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)' == 'Xamarin.iOS10'">
+  <ItemGroup Condition="'$(TargetFramework)' == 'xamarinios10'">
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.iOS" />
     <Reference Include="System.Runtime.Serialization" />
   </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)' == 'MonoAndroid44'">
+  <ItemGroup Condition="'$(TargetFramework)' == 'monoandroid44'">
     <Reference Include="mscorlib" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
   </ItemGroup>
+  <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
 </Project>
