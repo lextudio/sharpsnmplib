@@ -11,13 +11,13 @@
         {
             Assert.Equal((Levels)0, DefaultPrivacyProvider.DefaultPair.ToSecurityLevel());
         }
-#if NET452
+
         [Fact]
         public void TestException()
         {
             Assert.Throws<ArgumentException>(delegate { new DESPrivacyProvider(new OctetString(""), DefaultAuthenticationProvider.Instance); });
         }
-#endif
+
         [Fact]
         public void TestAuthenticationOnly()
         {

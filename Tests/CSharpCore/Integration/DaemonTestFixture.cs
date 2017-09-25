@@ -38,10 +38,12 @@ namespace Lextm.SharpSnmpLib.Integration
             var users = new UserRegistry();
             users.Add(new OctetString("neither"), DefaultPrivacyProvider.DefaultPair);
             users.Add(new OctetString("authen"), new DefaultPrivacyProvider(new MD5AuthenticationProvider(new OctetString("authentication"))));
-#if NET452
-            users.Add(new OctetString("privacy"), new DESPrivacyProvider(new OctetString("privacyphrase"),
-                                                                         new MD5AuthenticationProvider(new OctetString("authentication"))));
-#endif
+            if (DESPrivacyProvider.IsSupported)
+            {
+                users.Add(new OctetString("privacy"), new DESPrivacyProvider(new OctetString("privacyphrase"),
+                                                                             new MD5AuthenticationProvider(new OctetString("authentication"))));
+            }
+
             var getv1 = new GetV1MessageHandler();
             var getv1Mapping = new HandlerMapping("v1", "GET", getv1);
 

@@ -771,10 +771,10 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
 #if NET452
                 return !IsRunningOnMono;
-#elif IOS1_0
-                return false;
-#else
+#elif NETSTANDARD1_3
                 return RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+#else
+                return false;
 #endif
             }
         }
@@ -789,10 +789,10 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
 #if NET452
                 return IsRunningOnMono;
-#elif IOS1_0
-                return false;
-#else
+#elif NETSTANDARD1_3
                 return RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
+#else
+                return false;
 #endif
             }
         }

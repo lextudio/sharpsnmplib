@@ -171,12 +171,15 @@ namespace SnmpGet
                 IPrivacyProvider priv;
                 if ((level & Levels.Privacy) == Levels.Privacy)
                 {
-#if NET452
-                    priv = new DESPrivacyProvider(new OctetString(privPhrase), auth);
-#else
-                    Console.WriteLine("DES (ECB) is not supported by .NET Core.");
-                    return;
-#endif
+                    if (DESPrivacyProvider.IsSupported)
+                    {
+                        priv = new DESPrivacyProvider(new OctetString(privPhrase), auth);
+                    }
+                    else
+                    {
+                        Console.WriteLine("DES (ECB) is not supported by .NET Core.");
+                        return;
+                    }
                 }
                 else
                 {

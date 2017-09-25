@@ -109,10 +109,15 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
             Assert.Equal(Levels.Authentication | Levels.Reportable, request.Header.SecurityLevel);
             Assert.Equal(ByteTool.Convert(bytes), request.ToBytes());
         }
-#if NET452
+
         [Fact]
         public void TestConstructorV2AuthMd5PrivDes()
         {
+            if (!DESPrivacyProvider.IsSupported)
+            {
+                return;
+            }
+
             const string bytes = "30 81 80 02  01 03 30 0F  02 02 6C 99  02 03 00 FF" +
                                  "E3 04 01 07  02 01 03 04  38 30 36 04  0D 80 00 1F" +
                                  "88 80 E9 63  00 00 D6 1F  F4 49 02 01  14 02 01 35" +
@@ -148,7 +153,7 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
             Assert.Equal(Levels.Authentication | Levels.Privacy | Levels.Reportable, request.Header.SecurityLevel);
             Assert.Equal(ByteTool.Convert(bytes), request.ToBytes());
         }
-#endif
+
         [Fact]
         public void TestConstructorV3AuthMd5()
         {

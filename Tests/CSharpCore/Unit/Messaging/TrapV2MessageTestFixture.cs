@@ -49,10 +49,15 @@
             Assert.Equal(ByteTool.Convert(File.ReadAllBytes(Path.Combine("Resources", "trapv3auth"))), ByteTool.Convert(trap.ToBytes()));
         }
 
-#if NET452
+
         [Fact]
         public void TestToBytes3()
         {
+            if (!DESPrivacyProvider.IsSupported)
+            {
+                return;
+            }
+
             var privacy = new DESPrivacyProvider(new OctetString("privacyphrase"), new MD5AuthenticationProvider(new OctetString("authentication")));
             var trap = new TrapV2Message(
                 VersionCode.V3,
@@ -93,6 +98,5 @@
             Assert.Equal(1004947569, message.MessageId());
             Assert.Equal(234419641, message.RequestId());
         }
-#endif
     }
 }

@@ -27,10 +27,12 @@ namespace SnmpTrapD
             var users = new UserRegistry();
             users.Add(new OctetString("neither"), DefaultPrivacyProvider.DefaultPair);
             users.Add(new OctetString("authen"), new DefaultPrivacyProvider(new MD5AuthenticationProvider(new OctetString("authentication"))));
-#if NET452
-            users.Add(new OctetString("privacy"), new DESPrivacyProvider(new OctetString("privacyphrase"),
-                                                                         new MD5AuthenticationProvider(new OctetString("authentication"))));
-#endif
+            if (DESPrivacyProvider.IsSupported)
+            {
+                users.Add(new OctetString("privacy"), new DESPrivacyProvider(new OctetString("privacyphrase"),
+                                                                            new MD5AuthenticationProvider(new OctetString("authentication"))));
+            }
+            
             var trapv1 = new TrapV1MessageHandler();
             trapv1.MessageReceived += WatcherTrapV1Received;
             var trapv1Mapping = new HandlerMapping("v1", "TRAPV1", trapv1);
