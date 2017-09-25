@@ -26,14 +26,14 @@ namespace Lextm.SharpSnmpLib.Unit.Security
             Assert.Throws<ArgumentNullException>(() => provider.Encrypt(OctetString.Empty, null));
             {
                 var exception = Assert.Throws<ArgumentException>(() => provider.Encrypt(new Null(), SecurityParameters.Create(OctetString.Empty)));
-                Assert.Equal("Invalid data type.\r\nParameter name: data", exception.Message);
+                Assert.Equal($"Invalid data type.{Environment.NewLine}Parameter name: data", exception.Message);
             }
 
             Assert.Throws<ArgumentNullException>(() => provider.Decrypt(null, null));
             Assert.Throws<ArgumentNullException>(() => provider.Decrypt(OctetString.Empty, null));
             {
                 var exception = Assert.Throws<ArgumentException>(() => provider.Decrypt(new Null(), SecurityParameters.Create(OctetString.Empty)));
-                Assert.Equal("Cannot decrypt the scope data: Null.\r\nParameter name: data", exception.Message);
+                Assert.Equal($"Cannot decrypt the scope data: Null.{Environment.NewLine}Parameter name: data", exception.Message);
             }
         }
 
