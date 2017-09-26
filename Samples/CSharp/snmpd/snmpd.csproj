@@ -107,7 +107,7 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Configuration" />
     <Reference Include="Mono.Posix">
-      <HintPath>..\lib\Mono.Posix.dll</HintPath>
+      <HintPath>..\..\..\lib\Mono.Posix.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
