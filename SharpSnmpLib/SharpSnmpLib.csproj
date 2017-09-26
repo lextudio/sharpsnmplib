@@ -25,6 +25,7 @@
     <FileVersion>10.0.1.0</FileVersion>
     <Version>10.0.1-beta1</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <RuntimeIdentifier Condition=" '$(TargetFramework)' == 'net452' ">win</RuntimeIdentifier>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="MSBuild.Sdk.Extras" Version="1.1.0-preview.2.build.8" PrivateAssets="All" />
