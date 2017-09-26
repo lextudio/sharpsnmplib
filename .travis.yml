@@ -1,8 +1,8 @@
 # See http://docs.travis-ci.com/user/languages/csharp/ for details
 
-# TODO: Test against Mono as well, using matrix.include
 language: csharp
-mono: none
+mono:
+- latest
 dotnet: 2.0.0
 dist: trusty
 
@@ -16,11 +16,14 @@ addons:
     packages:
     - dotnet-sharedframework-microsoft.netcore.app-1.0.5
 
+# xamarinios10 and monoandroid44 are out of build, as not sure if they work.
+# net452 is out of testing, as dotnet test does not like it.
 before_script:
 - ./prepare.sh
 script:
 - set -e
-- sed -i -e 's/netstandard1.3;net452;xamarinios10;monoandroid44/netstandard1.3/' SharpSnmpLib/SharpSnmpLib.csproj
+- export FrameworkPathOverride=$(dirname $(which mono))/../lib/mono/4.5/
+- sed -i -e 's/netstandard1.3;net452;xamarinios10;monoandroid44/netstandard1.3;net452/' SharpSnmpLib/SharpSnmpLib.csproj
 - sed -i -e 's/netcoreapp1.0;net452/netcoreapp1.0/' Tests/CSharpCore/Tests.NetStandard.csproj
 - dotnet build SharpSnmpLib.NetStandard.macOS.sln
 - cd Tests
