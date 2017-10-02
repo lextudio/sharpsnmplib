@@ -9,6 +9,7 @@ _ReSharper*
 *.cache
 *.trx
 *.pidb
+*.nupkg
 Thumbs.db
 [Bb]in
 [Dd]ebug

@@ -23,7 +23,7 @@
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
     <AssemblyVersion>10.0.1.0</AssemblyVersion>
     <FileVersion>10.0.1.0</FileVersion>
-    <Version>10.0.1-beta1</Version>
+    <Version>10.0.1</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <RuntimeIdentifier Condition=" '$(TargetFramework)' == 'net452' ">win</RuntimeIdentifier>
   </PropertyGroup>
