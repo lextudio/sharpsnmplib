@@ -581,7 +581,7 @@ namespace Lextm.SharpSnmpLib.Integration
 
                 Assert.True(message.ToBytes().Length > 10000);
 
-                var time = 1500;
+                var time = 3000;
                 if (SnmpMessageExtension.IsRunningOnMac)
                 {
                     var exception =
