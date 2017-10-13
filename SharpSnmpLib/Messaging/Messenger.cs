@@ -214,7 +214,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns>
         ///     <c>true</c> if the specified seed has next item; otherwise, <c>false</c>.
         /// </returns>
-        [SuppressMessage("Microsoft.Design", "CA1021:AvoidOutParameters", MessageId = "5#")]
         private static async Task<Tuple<bool, Variable>> HasNextAsync(VersionCode version, IPEndPoint endpoint, OctetString community, Variable seed)
         {
             if (seed == null)
@@ -257,11 +256,10 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             var tableV = new Variable(table);
             var seed = tableV;
-            IList<Variable> next;
             var result = 0;
             var message = report;
             var data = await BulkHasNextAsync(version, endpoint, community, seed, maxRepetitions, privacy, message).ConfigureAwait(false);
-            next = data.Item2;
+            var next = data.Item2;
             message = data.Item3;
             while (data.Item1)
             {
@@ -290,6 +288,8 @@ namespace Lextm.SharpSnmpLib.Messaging
 
                 seed = next[next.Count - 1];
                 data = await BulkHasNextAsync(version, endpoint, community, seed, maxRepetitions, privacy, message).ConfigureAwait(false);
+                next = data.Item2;
+                message = data.Item3;
             }
 
             end:
@@ -432,7 +432,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns>
         /// <c>true</c> if the specified seed has next item; otherwise, <c>false</c>.
         /// </returns>
-        [SuppressMessage("Microsoft.Design", "CA1021:AvoidOutParameters", MessageId = "5#")]
         private static async Task<Tuple<bool, IList<Variable>, ISnmpMessage>> BulkHasNextAsync(VersionCode version, IPEndPoint receiver, OctetString community, Variable seed, int maxRepetitions, IPrivacyProvider privacy, ISnmpMessage report)
         {
             // TODO: report should be updated with latest message from agent.

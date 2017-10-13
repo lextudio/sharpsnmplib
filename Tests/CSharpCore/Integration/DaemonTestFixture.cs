@@ -5,7 +5,6 @@ using Lextm.SharpSnmpLib.Security;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
@@ -18,7 +17,7 @@ namespace Lextm.SharpSnmpLib.Integration
     {
         private static readonly NumberGenerator Port = new NumberGenerator(40000, 45000);
 
-        private SnmpEngine CreateEngine()
+        private SnmpEngine CreateEngine(bool timeout = false)
         {
             // TODO: this is a hack. review it later.
             var store = new ObjectStore();
@@ -33,7 +32,10 @@ namespace Lextm.SharpSnmpLib.Integration
             store.Add(new SysORTable());
             store.Add(new IfNumber());
             store.Add(new IfTable());
-            store.Add(new TimeoutObject());
+            if (timeout)
+            {
+                store.Add(new TimeoutObject());
+            }
 
             var users = new UserRegistry();
             users.Add(new OctetString("neither"), DefaultPrivacyProvider.DefaultPair);
@@ -179,7 +181,7 @@ namespace Lextm.SharpSnmpLib.Integration
                 IAuthenticationProvider auth = new MD5AuthenticationProvider(new OctetString("authentication"));
                 IPrivacyProvider priv = new DefaultPrivacyProvider(auth);
 
-                var timeout = 1500;
+                var timeout = 3000;
                 Discovery discovery = Messenger.GetNextDiscovery(SnmpType.GetRequestPdu);
                 ReportMessage report = discovery.GetResponse(timeout, serverEndPoint);
 
@@ -517,7 +519,7 @@ namespace Lextm.SharpSnmpLib.Integration
         [Fact]
         public void TestTimeOut()
         {
-            var engine = CreateEngine();
+            var engine = CreateEngine(true);
             engine.Listener.ClearBindings();
             var serverEndPoint = new IPEndPoint(IPAddress.Loopback, Port.NextId);
             engine.Listener.AddBinding(serverEndPoint);
@@ -594,6 +596,140 @@ namespace Lextm.SharpSnmpLib.Integration
                     var result = message.GetResponse(time, serverEndPoint, socket);
                     Assert.True(result.Scope.Pdu.ErrorStatus.ToErrorCode() == ErrorCode.NoError);
                 }
+            }
+            finally
+            {
+                if (SnmpMessageExtension.IsRunningOnWindows)
+                {
+                    engine.Stop();
+                }
+            }
+        }
+        
+        [Fact]
+        public void TestWalk()
+        {
+            var engine = CreateEngine();
+            engine.Listener.ClearBindings();
+            var serverEndPoint = new IPEndPoint(IPAddress.Loopback, Port.NextId);
+            engine.Listener.AddBinding(serverEndPoint);
+            engine.Start();
+
+            try
+            {
+                var list = new List<Variable>();
+                var time = 3000;
+                // IMPORTANT: test against an agent that doesn't exist.
+                var result = Messenger.Walk(
+                    VersionCode.V1, 
+                    serverEndPoint, 
+                    new OctetString("public"), 
+                    new ObjectIdentifier("1.3.6.1.2.1.1"),
+                    list,
+                    time,
+                    WalkMode.WithinSubtree);
+                Assert.Equal(16, list.Count);
+            }
+            finally
+            {
+                if (SnmpMessageExtension.IsRunningOnWindows)
+                {
+                    engine.Stop();
+                }
+            }
+        }
+        
+        [Fact]
+        public async Task TestWalkAsync()
+        {
+            var engine = CreateEngine();
+            engine.Listener.ClearBindings();
+            var serverEndPoint = new IPEndPoint(IPAddress.Loopback, Port.NextId);
+            engine.Listener.AddBinding(serverEndPoint);
+            engine.Start();
+
+            try
+            {
+                var list = new List<Variable>();
+                // IMPORTANT: test against an agent that doesn't exist.
+                var result = await Messenger.WalkAsync(
+                    VersionCode.V1, 
+                    serverEndPoint, 
+                    new OctetString("public"), 
+                    new ObjectIdentifier("1.3.6.1.2.1.1"),
+                    list,
+                    WalkMode.WithinSubtree);
+                Assert.Equal(16, list.Count);
+            }
+            finally
+            {
+                if (SnmpMessageExtension.IsRunningOnWindows)
+                {
+                    engine.Stop();
+                }
+            }
+        }
+        
+        [Fact]
+        public void TestBulkWalk()
+        {
+            var engine = CreateEngine();
+            engine.Listener.ClearBindings();
+            var serverEndPoint = new IPEndPoint(IPAddress.Loopback, Port.NextId);
+            engine.Listener.AddBinding(serverEndPoint);
+            engine.Start();
+
+            try
+            {
+                var list = new List<Variable>();
+                var time = 3000;
+                // IMPORTANT: test against an agent that doesn't exist.
+                var result = Messenger.BulkWalk(
+                    VersionCode.V2, 
+                    serverEndPoint, 
+                    new OctetString("public"), 
+                    new ObjectIdentifier("1.3.6.1.2.1.1"),
+                    list,
+                    time,
+                    10,
+                    WalkMode.WithinSubtree,
+                    null,
+                    null);
+                Assert.Equal(16, list.Count);
+            }
+            finally
+            {
+                if (SnmpMessageExtension.IsRunningOnWindows)
+                {
+                    engine.Stop();
+                }
+            }
+        }
+        
+        [Fact]
+        public async Task TestBulkWalkAsync()
+        {
+            var engine = CreateEngine();
+            engine.Listener.ClearBindings();
+            var serverEndPoint = new IPEndPoint(IPAddress.Loopback, Port.NextId);
+            engine.Listener.AddBinding(serverEndPoint);
+            engine.Start();
+
+            try
+            {
+                var list = new List<Variable>();
+                // IMPORTANT: test against an agent that doesn't exist.
+                var result = await Messenger.BulkWalkAsync(
+                    VersionCode.V2, 
+                    serverEndPoint, 
+                    new OctetString("public"), 
+                    new ObjectIdentifier("1.3.6.1.2.1.1"),
+                    list,
+                    10,
+                    WalkMode.WithinSubtree,
+                    null,
+                    null);
+                Assert.Equal(16, list.Count);
             }
             finally
             {
