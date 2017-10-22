@@ -28,6 +28,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
     public class ObjectStore
     {
+        /// <summary>The internal list of objects holding the data.</summary>
         protected readonly IList<ISnmpObject> List = new List<ISnmpObject>();
 
         /// <summary>
