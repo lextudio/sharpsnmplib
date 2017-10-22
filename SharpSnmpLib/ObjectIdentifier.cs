@@ -491,7 +491,7 @@ namespace Lextm.SharpSnmpLib
         }
 
         /// <summary>
-        /// Creates a new <see cref="Variable"/> instance.
+        /// Creates a new <see cref="ObjectIdentifier"/> instance.
         /// </summary>
         /// <param name="numerical">The numerical.</param>
         /// <param name="extra">The extra.</param>
