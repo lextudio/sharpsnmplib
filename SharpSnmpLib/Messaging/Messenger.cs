@@ -686,6 +686,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="version">Protocol version.</param>
         /// <param name="endpoint">Endpoint.</param>
         /// <param name="community">Community name.</param>
+        /// <param name="contextName">Context name.></param>
         /// <param name="table">OID.</param>
         /// <param name="list">A list to hold the results.</param>
         /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
@@ -694,7 +695,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="privacy">The privacy provider.</param>
         /// <param name="report">The report.</param>
         /// <returns></returns>
-        public static int BulkWalk(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, IList<Variable> list, int timeout, int maxRepetitions, WalkMode mode, IPrivacyProvider privacy, ISnmpMessage report)
+        public static int BulkWalk(VersionCode version, IPEndPoint endpoint, OctetString community, OctetString contextName, ObjectIdentifier table, IList<Variable> list, int timeout, int maxRepetitions, WalkMode mode, IPrivacyProvider privacy, ISnmpMessage report)
         {
             if (list == null)
             {
@@ -711,7 +712,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             IList<Variable> next;
             var result = 0;
             var message = report;
-            while (BulkHasNext(version, endpoint, community, seed, timeout, maxRepetitions, out next, privacy, ref message))
+            while (BulkHasNext(version, endpoint, community, contextName, seed, timeout, maxRepetitions, out next, privacy, ref message))
             {
                 var subTreeMask = string.Format(CultureInfo.InvariantCulture, "{0}.", table);
                 var rowMask = string.Format(CultureInfo.InvariantCulture, "{0}.1.1.", table);
@@ -870,6 +871,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="version">The version.</param>
         /// <param name="receiver">The receiver.</param>
         /// <param name="community">The community.</param>
+        /// <param name="contextName">The context name></param>
         /// <param name="seed">The seed.</param>
         /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
         /// <param name="maxRepetitions">The max repetitions.</param>
@@ -880,7 +882,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <c>true</c> if the specified seed has next item; otherwise, <c>false</c>.
         /// </returns>
         [SuppressMessage("Microsoft.Design", "CA1021:AvoidOutParameters", MessageId = "5#")]
-        private static bool BulkHasNext(VersionCode version, IPEndPoint receiver, OctetString community, Variable seed, int timeout, int maxRepetitions, out IList<Variable> next, IPrivacyProvider privacy, ref ISnmpMessage report)
+        private static bool BulkHasNext(VersionCode version, IPEndPoint receiver, OctetString community, OctetString contextName, Variable seed, int timeout, int maxRepetitions, out IList<Variable> next, IPrivacyProvider privacy, ref ISnmpMessage report)
         {
             if (version == VersionCode.V1)
             {
@@ -894,6 +896,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                                                       MessageCounter.NextId,
                                                       RequestCounter.NextId,
                                                       community,
+                                                      contextName,
                                                       0,
                                                       maxRepetitions,
                                                       variables,
@@ -932,6 +935,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                     MessageCounter.NextId,
                     RequestCounter.NextId,
                     community,
+                    contextName,
                     0,
                     maxRepetitions,
                     variables,
@@ -975,7 +979,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             IList<Variable> list = new List<Variable>();
-            var rows = version == VersionCode.V1 ? Walk(version, endpoint, community, table, list, timeout, WalkMode.WithinSubtree) : BulkWalk(version, endpoint, community, table, list, timeout, maxRepetitions, WalkMode.WithinSubtree, null, null);
+            var rows = version == VersionCode.V1 ? Walk(version, endpoint, community, table, list, timeout, WalkMode.WithinSubtree) : BulkWalk(version, endpoint, community, OctetString.Empty, table, list, timeout, maxRepetitions, WalkMode.WithinSubtree, null, null);
 
             if (rows == 0)
             {
