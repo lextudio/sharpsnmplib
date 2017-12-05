@@ -24,6 +24,7 @@ Module Program
         Dim retry As Integer = 0
         Dim level As Levels = Levels.Reportable
         Dim user As String = String.Empty
+        Dim contextName As String = String.Empty
         Dim authentication As String = String.Empty
         Dim authPhrase As String = String.Empty
         Dim privacy As String = String.Empty
@@ -69,6 +70,9 @@ Module Program
                                             .Add("u:", "Security name", Sub(v As String)
                                                                             user = v
                                                                         End Sub) _
+                                            .Add("C:", "Context name", Sub(v As String)
+                                                                            contextName = v
+                                                                       End Sub) _
                                             .Add("h|?|help", "Print this help information.", Sub(v As String)
                                                                                                  showHelp__1 = v IsNot Nothing
                                                                                              End Sub) _
@@ -181,7 +185,7 @@ Module Program
 
             Dim report As ReportMessage = Messenger.GetNextDiscovery(SnmpType.GetBulkRequestPdu).GetResponse(timeout, receiver)
 
-            Dim request As New GetBulkRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, New OctetString(user), nonRepeaters, maxRepetitions, _
+            Dim request As New GetBulkRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, New OctetString(user),  New OctetString(IF(string.IsNullOrWhiteSpace(contextName), String.Empty, contextName)), nonRepeaters, maxRepetitions, _
              vList, priv, Messenger.MaxMessageSize, report)
             Dim reply As ISnmpMessage = request.GetResponse(timeout, receiver)
 
@@ -206,7 +210,7 @@ Module Program
                 End If
 
                 ' according to RFC 3414, send a second request to sync time.
-                request = New GetBulkRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, New OctetString(user), nonRepeaters, maxRepetitions, _
+                request = New GetBulkRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, New OctetString(user),  New OctetString(IF(string.IsNullOrWhiteSpace(contextName), String.Empty, contextName)), nonRepeaters, maxRepetitions, _
              vList, priv, Messenger.MaxMessageSize, reply)
                 reply = request.GetResponse(timeout, receiver)
             ElseIf reply.Pdu.ErrorStatus.ToInt32() <> 0 Then
