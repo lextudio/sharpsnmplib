@@ -31,6 +31,7 @@ namespace SnmpBulkGet
             int retry = 0;
             Levels level = Levels.Reportable;
             string user = string.Empty;
+            string contextName = string.Empty;
             string authentication = string.Empty;
             string authPhrase = string.Empty;
             string privacy = string.Empty;
@@ -67,6 +68,7 @@ namespace SnmpBulkGet
                 .Add("x:", "Privacy method", delegate (string v) { privacy = v; })
                 .Add("X:", "Privacy passphrase", delegate (string v) { privPhrase = v; })
                 .Add("u:", "Security name", delegate (string v) { user = v; })
+                .Add("C:", "Context name", delegate (string v) { contextName = v; })
                 .Add("h|?|help", "Print this help information.", delegate (string v) { showHelp = v != null; })
                 .Add("V", "Display version number of this application.", delegate (string v) { showVersion = v != null; })
                 .Add("d", "Display message dump", delegate (string v) { dump = true; })
@@ -208,7 +210,7 @@ namespace SnmpBulkGet
                 Discovery discovery = Messenger.GetNextDiscovery(SnmpType.GetBulkRequestPdu);
                 ReportMessage report = discovery.GetResponse(timeout, receiver);
 
-                GetBulkRequestMessage request = new GetBulkRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(user), nonRepeaters, maxRepetitions, vList, priv, Messenger.MaxMessageSize, report);
+                GetBulkRequestMessage request = new GetBulkRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(user), new OctetString(string.IsNullOrWhiteSpace(contextName) ? string.Empty : contextName), nonRepeaters, maxRepetitions, vList, priv, Messenger.MaxMessageSize, report);
                 ISnmpMessage reply = request.GetResponse(timeout, receiver);
                 if (dump)
                 {
@@ -235,7 +237,7 @@ namespace SnmpBulkGet
                     }
 
                     // according to RFC 3414, send a second request to sync time.
-                    request = new GetBulkRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(user), nonRepeaters, maxRepetitions, vList, priv, Messenger.MaxMessageSize, reply);
+                    request = new GetBulkRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(user), new OctetString(string.IsNullOrWhiteSpace(contextName) ? string.Empty : contextName), nonRepeaters, maxRepetitions, vList, priv, Messenger.MaxMessageSize, reply);
                     reply = request.GetResponse(timeout, receiver);
                 }
                 else if (reply.Pdu().ErrorStatus.ToInt32() != 0) // != ErrorCode.NoError
