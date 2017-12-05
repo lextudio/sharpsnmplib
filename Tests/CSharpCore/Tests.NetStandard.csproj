@@ -28,12 +28,11 @@
     <None Include="sharpsnmplib.tests.snk" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="xunit" Version="2.2.0">
-    </PackageReference>
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0">
-    </PackageReference>
-    <PackageReference Include="Moq" Version="4.7.127" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0" />
+    <PackageReference Include="xunit" Version="2.3.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
+    <PackageReference Include="Moq" Version="4.7.145" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0" />
+    <PackageReference Include="System.Net.Sockets" Version="4.3.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\SharpSnmpLib\SharpSnmpLib.csproj" />

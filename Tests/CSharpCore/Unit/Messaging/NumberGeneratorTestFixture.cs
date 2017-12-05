@@ -9,7 +9,7 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
     public class NumberGeneratorTestFixture
     {
         //[Theory]
-        [InlineData(1000000)]
+        //[InlineData(1000000)]
         public void Test(int count)
         {
             var ng = new NumberGenerator(int.MinValue, int.MaxValue);
@@ -20,7 +20,7 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
         }
 
         //[Theory]
-        [InlineData(1000)]
+        //[InlineData(1000)]
         //[InlineData(10000)]
         public void TestOverflow(int count)
         {

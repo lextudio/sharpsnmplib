@@ -50,7 +50,7 @@ namespace Lextm.SharpSnmpLib.Unit
         {
             TimeTicks time = new TimeTicks(16352);
             ISnmpData data = DataFactory.CreateSnmpData(time.ToBytes());
-            Assert.Equal(data.TypeCode, SnmpType.TimeTicks);
+            Assert.Equal(SnmpType.TimeTicks, data.TypeCode);
             Assert.Equal(16352U, ((TimeTicks)data).ToUInt32());
             
             Assert.Equal(new byte[] {0x43, 0x05, 0x00, 0x93, 0xA3, 0x41, 0x4B}, new TimeTicks(2476949835).ToBytes());
