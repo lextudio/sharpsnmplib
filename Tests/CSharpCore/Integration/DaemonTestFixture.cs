@@ -688,6 +688,7 @@ namespace Lextm.SharpSnmpLib.Integration
                     VersionCode.V2, 
                     serverEndPoint, 
                     new OctetString("public"), 
+                    OctetString.Empty,
                     new ObjectIdentifier("1.3.6.1.2.1.1"),
                     list,
                     time,
