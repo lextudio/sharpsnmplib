@@ -165,56 +165,10 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="report">The report.</param>
         [Obsolete("Please use other overloading ones.")]
         public GetRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName, IList<Variable> variables, IPrivacyProvider privacy, int maxMessageSize, ISnmpMessage report)
+           : this(version, messageId, requestId, userName, new OctetString(string.Empty), variables, privacy, maxMessageSize, report)
         {
-            if (userName == null)
-            {
-                throw new ArgumentNullException(nameof(userName));
-            }
-            
-            if (variables == null)
-            {
-                throw new ArgumentNullException(nameof(variables));
-            }
-            
-            if (version != VersionCode.V3)
-            {
-                throw new ArgumentException("Only v3 is supported.", nameof(version));
-            }
-
-            if (report == null)
-            {
-                throw new ArgumentNullException(nameof(report));
-            }
-            
-            if (privacy == null)
-            {
-                throw new ArgumentNullException(nameof(privacy));
-            }
-
-            Version = version;
-            Privacy = privacy;
-
-            Header = new Header(new Integer32(messageId), new Integer32(maxMessageSize), privacy.ToSecurityLevel() | Levels.Reportable);
-            var parameters = report.Parameters;
-            var authenticationProvider = Privacy.AuthenticationProvider;
-            Parameters = new SecurityParameters(
-                parameters.EngineId,
-                parameters.EngineBoots,
-                parameters.EngineTime,
-                userName,
-                authenticationProvider.CleanDigest,
-                Privacy.Salt);
-            var pdu = new GetRequestPdu(
-                requestId,
-                variables);
-            var scope = report.Scope;
-            var contextEngineId = scope.ContextEngineId == OctetString.Empty ? parameters.EngineId : scope.ContextEngineId;
-            Scope = new Scope(contextEngineId, scope.ContextName, pdu);
-
-            Privacy.ComputeHash(Version, Header, Parameters, Scope);
-            _bytes = this.PackMessage(null).ToBytes();
         }
-        
+
         internal GetRequestMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, IPrivacyProvider privacy, byte[] length)
         {
             if (scope == null)
