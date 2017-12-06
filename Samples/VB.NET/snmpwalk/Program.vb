@@ -162,7 +162,7 @@ Module Program
                 Messenger.Walk(version, receiver, New OctetString(community), test, result, timeout, _
                  mode)
             ElseIf version = VersionCode.V2 Then
-                Messenger.BulkWalk(version, receiver, New OctetString(community), test, result, timeout, _
+                Messenger.BulkWalk(version, receiver, New OctetString(community), New OctetString(IF(string.IsNullOrWhiteSpace(contextName), String.Empty, contextName)), test, result, timeout, _
                  maxRepetitions, mode, Nothing, Nothing)
             Else
                 If String.IsNullOrEmpty(user) Then
