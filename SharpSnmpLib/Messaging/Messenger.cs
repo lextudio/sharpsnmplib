@@ -247,7 +247,25 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="privacy">The privacy provider.</param>
         /// <param name="report">The report.</param>
         /// <returns></returns>
+        [Obsolete("Please use other overloading ones.")]
         public static async Task<int> BulkWalkAsync(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, IList<Variable> list, int maxRepetitions, WalkMode mode, IPrivacyProvider privacy, ISnmpMessage report)
+            => await BulkWalkAsync(version, endpoint, community, OctetString.Empty, table, list, maxRepetitions, mode, privacy, report);
+
+        /// <summary>
+        /// Walks.
+        /// </summary>
+        /// <param name="version">Protocol version.</param>
+        /// <param name="endpoint">Endpoint.</param>
+        /// <param name="community">Community name.</param>
+        /// <param name="contextName">Context name.</param>
+        /// <param name="table">OID.</param>
+        /// <param name="list">A list to hold the results.</param>
+        /// <param name="maxRepetitions">The max repetitions.</param>
+        /// <param name="mode">Walk mode.</param>
+        /// <param name="privacy">The privacy provider.</param>
+        /// <param name="report">The report.</param>
+        /// <returns></returns>
+        public static async Task<int> BulkWalkAsync(VersionCode version, IPEndPoint endpoint, OctetString community, OctetString contextName, ObjectIdentifier table, IList<Variable> list, int maxRepetitions, WalkMode mode, IPrivacyProvider privacy, ISnmpMessage report)
         {
             if (list == null)
             {
@@ -258,7 +276,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             var seed = tableV;
             var result = 0;
             var message = report;
-            var data = await BulkHasNextAsync(version, endpoint, community, seed, maxRepetitions, privacy, message).ConfigureAwait(false);
+            var data = await BulkHasNextAsync(version, endpoint, community, contextName, seed, maxRepetitions, privacy, message).ConfigureAwait(false);
             var next = data.Item2;
             message = data.Item3;
             while (data.Item1)
@@ -287,7 +305,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 }
 
                 seed = next[next.Count - 1];
-                data = await BulkHasNextAsync(version, endpoint, community, seed, maxRepetitions, privacy, message).ConfigureAwait(false);
+                data = await BulkHasNextAsync(version, endpoint, community, contextName, seed, maxRepetitions, privacy, message).ConfigureAwait(false);
                 next = data.Item2;
                 message = data.Item3;
             }
@@ -432,7 +450,25 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns>
         /// <c>true</c> if the specified seed has next item; otherwise, <c>false</c>.
         /// </returns>
+        [Obsolete("Please use other overloading ones.")]
         private static async Task<Tuple<bool, IList<Variable>, ISnmpMessage>> BulkHasNextAsync(VersionCode version, IPEndPoint receiver, OctetString community, Variable seed, int maxRepetitions, IPrivacyProvider privacy, ISnmpMessage report)
+            => await BulkHasNextAsync(version, receiver, community, OctetString.Empty, seed, maxRepetitions, privacy, report);
+
+        /// <summary>
+        /// Determines whether the specified seed has next item.
+        /// </summary>
+        /// <param name="version">The version.</param>
+        /// <param name="receiver">The receiver.</param>
+        /// <param name="community">The community.</param>
+        /// <param name="contextName">The context name.</param>
+        /// <param name="seed">The seed.</param>
+        /// <param name="maxRepetitions">The max repetitions.</param>
+        /// <param name="privacy">The privacy provider.</param>
+        /// <param name="report">The report.</param>
+        /// <returns>
+        /// <c>true</c> if the specified seed has next item; otherwise, <c>false</c>.
+        /// </returns>
+        private static async Task<Tuple<bool, IList<Variable>, ISnmpMessage>> BulkHasNextAsync(VersionCode version, IPEndPoint receiver, OctetString community, OctetString contextName, Variable seed, int maxRepetitions, IPrivacyProvider privacy, ISnmpMessage report)
         {
             // TODO: report should be updated with latest message from agent.
             if (version == VersionCode.V1)
@@ -447,6 +483,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                                                       MessageCounter.NextId,
                                                       RequestCounter.NextId,
                                                       community,
+                                                      contextName,
                                                       0,
                                                       maxRepetitions,
                                                       variables,
