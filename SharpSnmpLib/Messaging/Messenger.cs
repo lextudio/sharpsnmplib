@@ -878,6 +878,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="privacy">The privacy provider.</param>
         /// <param name="report">The report.</param>
         [CLSCompliant(false)]
+        [Obsolete("Please use other overloading ones.")]
         public static void SendInform(int requestId, VersionCode version, IPEndPoint receiver, OctetString community, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables, int timeout, IPrivacyProvider privacy, ISnmpMessage report)
             => SendInform(requestId, version, receiver, community, OctetString.Empty, enterprise, timestamp, variables, timeout, privacy, report);
      
