@@ -120,7 +120,26 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="maxMessageSize">Size of the max message.</param>
         /// <param name="report">The report.</param>
         [CLSCompliant(false)]
+        [Obsolete("Please use other overloading ones.")]
         public InformRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName, ObjectIdentifier enterprise, uint time, IList<Variable> variables, IPrivacyProvider privacy, int maxMessageSize, ISnmpMessage report)
+            : this(version, messageId, requestId, userName, OctetString.Empty, enterprise, time, variables, privacy, maxMessageSize, report)
+        { }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InformRequestMessage"/> class.
+        /// </summary>
+        /// <param name="version">The version.</param>
+        /// <param name="messageId">The message id.</param>
+        /// <param name="requestId">The request id.</param>
+        /// <param name="userName">Name of the user.</param>
+        /// <param name="contextName">The context name.</param>
+        /// <param name="enterprise">The enterprise.</param>
+        /// <param name="time">The time.</param>
+        /// <param name="variables">The variables.</param>
+        /// <param name="privacy">The privacy provider.</param>
+        /// <param name="maxMessageSize">Size of the max message.</param>
+        /// <param name="report">The report.</param>
+        [CLSCompliant(false)]
+        public InformRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName, OctetString contextName, ObjectIdentifier enterprise, uint time, IList<Variable> variables, IPrivacyProvider privacy, int maxMessageSize, ISnmpMessage report)
         {
             if (userName == null)
             {
@@ -135,6 +154,11 @@ namespace Lextm.SharpSnmpLib.Messaging
             if (version != VersionCode.V3)
             {
                 throw new ArgumentException("Only v3 is supported.", nameof(version));
+            }
+
+            if (contextName == null)
+            {
+                throw new ArgumentNullException(nameof(contextName));
             }
 
             if (enterprise == null)
@@ -174,7 +198,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 variables);
             var scope = report.Scope;
             var contextEngineId = scope.ContextEngineId == OctetString.Empty ? parameters.EngineId : scope.ContextEngineId;
-            Scope = new Scope(contextEngineId, scope.ContextName, pdu);
+            Scope = new Scope(contextEngineId, contextName, pdu);
 
             Privacy.ComputeHash(Version, Header, Parameters, Scope);
             _bytes = this.PackMessage(null).ToBytes();
