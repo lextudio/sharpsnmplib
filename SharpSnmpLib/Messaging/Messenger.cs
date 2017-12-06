@@ -370,7 +370,26 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="report">The report.</param>
         /// <remarks>This method supports SNMP v2c and v3.</remarks>
         [CLSCompliant(false)]
+        [Obsolete("Please use other overloading ones.")]
         public static async Task SendInformAsync(int requestId, VersionCode version, IPEndPoint receiver, OctetString community, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables, IPrivacyProvider privacy, ISnmpMessage report)
+            => await SendInformAsync(requestId, version, receiver, community, OctetString.Empty,  enterprise, timestamp, variables, privacy, report);
+
+        /// <summary>
+        /// Sends INFORM message.
+        /// </summary>
+        /// <param name="requestId">The request id.</param>
+        /// <param name="version">Protocol version.</param>
+        /// <param name="receiver">Receiver.</param>
+        /// <param name="community">Community name.</param>
+        /// <param name="contextName">Context name.</param>
+        /// <param name="enterprise">Enterprise OID.</param>
+        /// <param name="timestamp">Timestamp.</param>
+        /// <param name="variables">Variable bindings.</param>
+        /// <param name="privacy">The privacy provider.</param>
+        /// <param name="report">The report.</param>
+        /// <remarks>This method supports SNMP v2c and v3.</remarks>
+        [CLSCompliant(false)]
+        public static async Task SendInformAsync(int requestId, VersionCode version, IPEndPoint receiver, OctetString community, OctetString contextName, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables, IPrivacyProvider privacy, ISnmpMessage report)
         {
             if (receiver == null)
             {
@@ -380,6 +399,11 @@ namespace Lextm.SharpSnmpLib.Messaging
             if (community == null)
             {
                 throw new ArgumentNullException(nameof(community));
+            }
+
+            if (contextName == null)
+            {
+                throw new ArgumentNullException(nameof(contextName));
             }
 
             if (enterprise == null)
@@ -413,6 +437,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                                           MessageCounter.NextId,
                                           requestId,
                                           community,
+                                          contextName,
                                           enterprise,
                                           timestamp,
                                           variables,
@@ -854,6 +879,24 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="report">The report.</param>
         [CLSCompliant(false)]
         public static void SendInform(int requestId, VersionCode version, IPEndPoint receiver, OctetString community, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables, int timeout, IPrivacyProvider privacy, ISnmpMessage report)
+            => SendInform(requestId, version, receiver, community, OctetString.Empty, enterprise, timestamp, variables, timeout, privacy, report);
+     
+        /// <summary>
+        /// Sends INFORM message.
+        /// </summary>
+        /// <param name="requestId">The request id.</param>
+        /// <param name="version">Protocol version.</param>
+        /// <param name="receiver">Receiver.</param>
+        /// <param name="community">Community name.</param>
+        /// <param name="contextName">Context name.</param>
+        /// <param name="enterprise">Enterprise OID.</param>
+        /// <param name="timestamp">Timestamp.</param>
+        /// <param name="variables">Variable bindings.</param>
+        /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
+        /// <param name="privacy">The privacy provider.</param>
+        /// <param name="report">The report.</param>
+        [CLSCompliant(false)]
+        public static void SendInform(int requestId, VersionCode version, IPEndPoint receiver, OctetString community, OctetString contextName, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables, int timeout, IPrivacyProvider privacy, ISnmpMessage report)
         {
             if (receiver == null)
             {
@@ -863,6 +906,11 @@ namespace Lextm.SharpSnmpLib.Messaging
             if (community == null)
             {
                 throw new ArgumentNullException(nameof(community));
+            }
+
+            if (contextName == null)
+            {
+                throw new ArgumentException(nameof(contextName));
             }
 
             if (enterprise == null)
@@ -896,6 +944,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                                           MessageCounter.NextId,
                                           requestId,
                                           community,
+                                          contextName,
                                           enterprise,
                                           timestamp,
                                           variables,
