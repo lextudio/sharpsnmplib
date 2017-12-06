@@ -206,7 +206,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="report">The report.</param>
         [Obsolete("Please use other overloading ones.")]
         public GetBulkRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName, int nonRepeaters, int maxRepetitions, IList<Variable> variables, IPrivacyProvider privacy, int maxMessageSize, ISnmpMessage report) 
-            : this(version, messageId, requestId, userName,new OctetString(string.Empty), nonRepeaters, maxRepetitions, variables, privacy, maxMessageSize, report)
+            : this(version, messageId, requestId, userName, OctetString.Empty, nonRepeaters, maxRepetitions, variables, privacy, maxMessageSize, report)
         {
         }
 
