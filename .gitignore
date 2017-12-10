@@ -30,3 +30,5 @@ T4MVC.cs
 *.jrs
 *.ide
 /.idea
+/_site
+/.vs
