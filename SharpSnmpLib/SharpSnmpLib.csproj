@@ -21,9 +21,9 @@
     <AssemblyOriginatorKeyFile>sharpsnmplib.snk</AssemblyOriginatorKeyFile>
     <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">True</PublicSign>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
-    <AssemblyVersion>10.0.2.0</AssemblyVersion>
-    <FileVersion>10.0.2.0</FileVersion>
-    <Version>10.0.2</Version>
+    <AssemblyVersion>10.0.3.0</AssemblyVersion>
+    <FileVersion>10.0.3.0</FileVersion>
+    <Version>10.0.3</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <RuntimeIdentifier Condition=" '$(TargetFramework)' == 'net452' ">win</RuntimeIdentifier>
   </PropertyGroup>
