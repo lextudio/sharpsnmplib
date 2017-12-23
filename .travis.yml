@@ -28,5 +28,6 @@ script:
 - dotnet build SharpSnmpLib.NetStandard.macOS.sln
 - cd Tests
 - cd CSharpCore
-- dotnet test --filter "FullyQualifiedName~Lextm.SharpSnmpLib.Integration"
+- dotnet test --filter "FullyQualifiedName~Lextm.SharpSnmpLib.Integration.TrapDaemonTestFixture"
+- dotnet test --filter "FullyQualifiedName~Lextm.SharpSnmpLib.Integration.DaemonTestFixture"
 - dotnet test --filter "FullyQualifiedName~Lextm.SharpSnmpLib.Unit"
