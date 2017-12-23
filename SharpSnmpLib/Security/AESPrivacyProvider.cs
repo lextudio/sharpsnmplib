@@ -54,6 +54,8 @@ namespace Lextm.SharpSnmpLib.Security
             {
 #if NETSTANDARD1_3
                 return false;
+#elif NETCOREAPP2_0
+                return false;
 #else
                 return true;
 #endif
@@ -113,6 +115,8 @@ namespace Lextm.SharpSnmpLib.Security
         internal static byte[] Encrypt(byte[] unencryptedData, byte[] key, int engineBoots, int engineTime, byte[] privacyParameters)
         {
 #if NETSTANDARD1_3
+            throw new PlatformNotSupportedException();
+#elif NETCOREAPP2_0
             throw new PlatformNotSupportedException();
 #else
             // check the key before doing anything else
@@ -197,6 +201,8 @@ namespace Lextm.SharpSnmpLib.Security
         internal static byte[] Decrypt(byte[] encryptedData, byte[] key, int engineBoots, int engineTime, byte[] privacyParameters)
         {
 #if NETSTANDARD1_3
+            throw new PlatformNotSupportedException();
+#elif NETCOREAPP2_0
             throw new PlatformNotSupportedException();
 #else
             if (key == null)
