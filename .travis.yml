@@ -3,7 +3,7 @@
 language: csharp
 mono:
 - latest
-dotnet: 2.0.0
+dotnet: 2.1.3
 dist: trusty
 
 # We need to install the .NET Core 1.0 runtime to run netcoreapp1.0
