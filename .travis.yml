@@ -3,7 +3,7 @@
 language: csharp
 mono:
 - latest
-dotnet: 2.1.3
+dotnet: 2.1.4
 dist: trusty
 
 # We need to install the .NET Core 1.0 runtime to run netcoreapp1.0
@@ -22,9 +22,8 @@ before_script:
 - ./prepare.sh
 script:
 - set -e
-- export FrameworkPathOverride=$(dirname $(which mono))/../lib/mono/4.5/
-- sed -i -e 's/netcoreapp2.0;netstandard1.3;net452;xamarinios10;monoandroid44/netstandard1.3;net452/' SharpSnmpLib/SharpSnmpLib.csproj
-- sed -i -e 's/netcoreapp2.0;netcoreapp1.0;net452/netcoreapp1.0/' Tests/CSharpCore/Tests.NetStandard.csproj
+- sed -i -e 's/netcoreapp2.0;netstandard1.3;net452;xamarinios10;monoandroid44/netcoreapp2.0;netstandard1.3/' SharpSnmpLib/SharpSnmpLib.csproj
+- sed -i -e 's/netcoreapp2.0;netcoreapp1.0;net452/netcoreapp2.0;netcoreapp1.0/' Tests/CSharpCore/Tests.NetStandard.csproj
 - dotnet build SharpSnmpLib.NetStandard.macOS.sln
 - cd Tests
 - cd CSharpCore
