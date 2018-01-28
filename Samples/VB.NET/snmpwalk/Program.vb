@@ -25,6 +25,7 @@ Module Program
         Dim maxRepetitions As Integer = 10
         Dim level As Levels = Levels.Reportable
         Dim user As String = String.Empty
+        Dim contextName As String = String.Empty
         Dim authentication As String = String.Empty
         Dim authPhrase As String = String.Empty
         Dim privacy As String = String.Empty
@@ -62,6 +63,9 @@ Module Program
                                             .Add("u:", "Security name", Sub(v As String)
                                                                             user = v
                                                                         End Sub) _
+                                            .Add("C:", "Context name", Sub(v As string)
+                                                                            contextName = v
+                                                                       End Sub) _
                                             .Add("h|?|help", "Print this help information.", Sub(v As String)
                                                                                                  showHelp__1 = v IsNot Nothing
                                                                                              End Sub) _
@@ -158,7 +162,7 @@ Module Program
                 Messenger.Walk(version, receiver, New OctetString(community), test, result, timeout, _
                  mode)
             ElseIf version = VersionCode.V2 Then
-                Messenger.BulkWalk(version, receiver, New OctetString(community), test, result, timeout, _
+                Messenger.BulkWalk(version, receiver, New OctetString(community), New OctetString(IF(string.IsNullOrWhiteSpace(contextName), String.Empty, contextName)), test, result, timeout, _
                  maxRepetitions, mode, Nothing, Nothing)
             Else
                 If String.IsNullOrEmpty(user) Then
@@ -182,7 +186,7 @@ Module Program
 
                 Dim report As ReportMessage = Messenger.GetNextDiscovery(SnmpType.GetBulkRequestPdu).GetResponse(timeout, receiver)
 
-                Messenger.BulkWalk(version, receiver, New OctetString(user), test, result, timeout, _
+                Messenger.BulkWalk(version, receiver, New OctetString(user), New OctetString(IF(string.IsNullOrWhiteSpace(contextName), String.Empty, contextName)), test, result, timeout, _
                  maxRepetitions, mode, priv, report)
             End If
             For Each variable As Variable In result

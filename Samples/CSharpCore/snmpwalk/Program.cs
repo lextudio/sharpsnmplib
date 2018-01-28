@@ -33,6 +33,7 @@ namespace SnmpWalk
             int maxRepetitions = 10;
             Levels level = Levels.Reportable;
             string user = string.Empty;
+            string contextName = string.Empty;
             string authentication = string.Empty;
             string authPhrase = string.Empty;
             string privacy = string.Empty;
@@ -66,6 +67,7 @@ namespace SnmpWalk
                 .Add("x:", "Privacy method", delegate (string v) { privacy = v; })
                 .Add("X:", "Privacy passphrase", delegate (string v) { privPhrase = v; })
                 .Add("u:", "Security name", delegate (string v) { user = v; })
+                .Add("C:", "Context name", delegate (string v) { contextName = v; })
                 .Add("h|?|help", "Print this help information.", delegate (string v) { showHelp = v != null; })
                 .Add("V", "Display version number of this application.", delegate (string v) { showVersion = v != null; })
                 .Add("d", "Display message dump", delegate (string v) { dump = true; })
@@ -171,7 +173,7 @@ namespace SnmpWalk
                 }
                 else if (version == VersionCode.V2)
                 {
-                    Messenger.BulkWalk(version, receiver, new OctetString(community), test, result, timeout, maxRepetitions, mode, null, null);
+                    Messenger.BulkWalk(version, receiver, new OctetString(community), new OctetString(string.IsNullOrWhiteSpace(contextName) ? string.Empty: contextName),  test, result, timeout, maxRepetitions, mode, null, null);
                 }
                 else
                 {
@@ -204,7 +206,7 @@ namespace SnmpWalk
 
                     Discovery discovery = Messenger.GetNextDiscovery(SnmpType.GetBulkRequestPdu);
                     ReportMessage report = discovery.GetResponse(timeout, receiver);
-                    Messenger.BulkWalk(version, receiver, new OctetString(user), test, result, timeout, maxRepetitions, mode, priv, report);
+                    Messenger.BulkWalk(version, receiver, new OctetString(user), new OctetString(string.IsNullOrWhiteSpace(contextName) ? string.Empty : contextName),  test, result, timeout, maxRepetitions, mode, priv, report);
                 }
 
                 foreach (Variable variable in result)

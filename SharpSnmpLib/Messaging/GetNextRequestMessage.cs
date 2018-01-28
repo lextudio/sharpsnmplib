@@ -99,11 +99,12 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="messageId">The message id.</param>
         /// <param name="requestId">The request id.</param>
         /// <param name="userName">Name of the user.</param>
+        /// <param name="contextName">Context name.</param>
         /// <param name="variables">The variables.</param>
         /// <param name="privacy">The privacy provider.</param>
         /// <param name="maxMessageSize">Size of the max message.</param>
         /// <param name="report">The report.</param>
-        public GetNextRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName, IList<Variable> variables, IPrivacyProvider privacy, int maxMessageSize, ISnmpMessage report)
+        public GetNextRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName,OctetString contextName, IList<Variable> variables, IPrivacyProvider privacy, int maxMessageSize, ISnmpMessage report)
         {
             if (variables == null)
             {
@@ -113,6 +114,11 @@ namespace Lextm.SharpSnmpLib.Messaging
             if (userName == null)
             {
                 throw new ArgumentNullException(nameof(userName));
+            }
+
+            if (contextName == null)
+            {
+                throw new ArgumentNullException(nameof(contextName));
             }
 
             if (version != VersionCode.V3)
@@ -148,11 +154,28 @@ namespace Lextm.SharpSnmpLib.Messaging
                 variables);
             var scope = report.Scope;
             var contextEngineId = scope.ContextEngineId == OctetString.Empty ? parameters.EngineId : scope.ContextEngineId;
-            Scope = new Scope(contextEngineId, scope.ContextName, pdu);
+            Scope = new Scope(contextEngineId, contextName, pdu);
 
             Privacy.ComputeHash(Version, Header, Parameters, Scope);
             _bytes = this.PackMessage(null).ToBytes();
         }
+
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetNextRequestMessage"/> class.
+        /// </summary>
+        /// <param name="version">The version.</param>
+        /// <param name="messageId">The message id.</param>
+        /// <param name="requestId">The request id.</param>
+        /// <param name="userName">Name of the user.</param>
+        /// <param name="variables">The variables.</param>
+        /// <param name="privacy">The privacy provider.</param>
+        /// <param name="maxMessageSize">Size of the max message.</param>
+        /// <param name="report">The report.</param>
+        [Obsolete("Please use other overloading ones.")]
+        public GetNextRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName, IList<Variable> variables, IPrivacyProvider privacy, int maxMessageSize, ISnmpMessage report)
+            : this(version, messageId, requestId, userName, OctetString.Empty, variables, privacy, maxMessageSize, report)
+        {}
 
         internal GetNextRequestMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, IPrivacyProvider privacy, byte[] length)
         {

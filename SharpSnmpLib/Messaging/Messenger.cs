@@ -247,7 +247,25 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="privacy">The privacy provider.</param>
         /// <param name="report">The report.</param>
         /// <returns></returns>
+        [Obsolete("Please use other overloading ones.")]
         public static async Task<int> BulkWalkAsync(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, IList<Variable> list, int maxRepetitions, WalkMode mode, IPrivacyProvider privacy, ISnmpMessage report)
+            => await BulkWalkAsync(version, endpoint, community, OctetString.Empty, table, list, maxRepetitions, mode, privacy, report);
+
+        /// <summary>
+        /// Walks.
+        /// </summary>
+        /// <param name="version">Protocol version.</param>
+        /// <param name="endpoint">Endpoint.</param>
+        /// <param name="community">Community name.</param>
+        /// <param name="contextName">Context name.</param>
+        /// <param name="table">OID.</param>
+        /// <param name="list">A list to hold the results.</param>
+        /// <param name="maxRepetitions">The max repetitions.</param>
+        /// <param name="mode">Walk mode.</param>
+        /// <param name="privacy">The privacy provider.</param>
+        /// <param name="report">The report.</param>
+        /// <returns></returns>
+        public static async Task<int> BulkWalkAsync(VersionCode version, IPEndPoint endpoint, OctetString community, OctetString contextName, ObjectIdentifier table, IList<Variable> list, int maxRepetitions, WalkMode mode, IPrivacyProvider privacy, ISnmpMessage report)
         {
             if (list == null)
             {
@@ -258,7 +276,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             var seed = tableV;
             var result = 0;
             var message = report;
-            var data = await BulkHasNextAsync(version, endpoint, community, seed, maxRepetitions, privacy, message).ConfigureAwait(false);
+            var data = await BulkHasNextAsync(version, endpoint, community, contextName, seed, maxRepetitions, privacy, message).ConfigureAwait(false);
             var next = data.Item2;
             message = data.Item3;
             while (data.Item1)
@@ -287,7 +305,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 }
 
                 seed = next[next.Count - 1];
-                data = await BulkHasNextAsync(version, endpoint, community, seed, maxRepetitions, privacy, message).ConfigureAwait(false);
+                data = await BulkHasNextAsync(version, endpoint, community, contextName, seed, maxRepetitions, privacy, message).ConfigureAwait(false);
                 next = data.Item2;
                 message = data.Item3;
             }
@@ -352,7 +370,26 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="report">The report.</param>
         /// <remarks>This method supports SNMP v2c and v3.</remarks>
         [CLSCompliant(false)]
+        [Obsolete("Please use other overloading ones.")]
         public static async Task SendInformAsync(int requestId, VersionCode version, IPEndPoint receiver, OctetString community, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables, IPrivacyProvider privacy, ISnmpMessage report)
+            => await SendInformAsync(requestId, version, receiver, community, OctetString.Empty,  enterprise, timestamp, variables, privacy, report);
+
+        /// <summary>
+        /// Sends INFORM message.
+        /// </summary>
+        /// <param name="requestId">The request id.</param>
+        /// <param name="version">Protocol version.</param>
+        /// <param name="receiver">Receiver.</param>
+        /// <param name="community">Community name.</param>
+        /// <param name="contextName">Context name.</param>
+        /// <param name="enterprise">Enterprise OID.</param>
+        /// <param name="timestamp">Timestamp.</param>
+        /// <param name="variables">Variable bindings.</param>
+        /// <param name="privacy">The privacy provider.</param>
+        /// <param name="report">The report.</param>
+        /// <remarks>This method supports SNMP v2c and v3.</remarks>
+        [CLSCompliant(false)]
+        public static async Task SendInformAsync(int requestId, VersionCode version, IPEndPoint receiver, OctetString community, OctetString contextName, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables, IPrivacyProvider privacy, ISnmpMessage report)
         {
             if (receiver == null)
             {
@@ -362,6 +399,11 @@ namespace Lextm.SharpSnmpLib.Messaging
             if (community == null)
             {
                 throw new ArgumentNullException(nameof(community));
+            }
+
+            if (contextName == null)
+            {
+                throw new ArgumentNullException(nameof(contextName));
             }
 
             if (enterprise == null)
@@ -395,6 +437,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                                           MessageCounter.NextId,
                                           requestId,
                                           community,
+                                          contextName,
                                           enterprise,
                                           timestamp,
                                           variables,
@@ -432,7 +475,25 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns>
         /// <c>true</c> if the specified seed has next item; otherwise, <c>false</c>.
         /// </returns>
+        [Obsolete("Please use other overloading ones.")]
         private static async Task<Tuple<bool, IList<Variable>, ISnmpMessage>> BulkHasNextAsync(VersionCode version, IPEndPoint receiver, OctetString community, Variable seed, int maxRepetitions, IPrivacyProvider privacy, ISnmpMessage report)
+            => await BulkHasNextAsync(version, receiver, community, OctetString.Empty, seed, maxRepetitions, privacy, report);
+
+        /// <summary>
+        /// Determines whether the specified seed has next item.
+        /// </summary>
+        /// <param name="version">The version.</param>
+        /// <param name="receiver">The receiver.</param>
+        /// <param name="community">The community.</param>
+        /// <param name="contextName">The context name.</param>
+        /// <param name="seed">The seed.</param>
+        /// <param name="maxRepetitions">The max repetitions.</param>
+        /// <param name="privacy">The privacy provider.</param>
+        /// <param name="report">The report.</param>
+        /// <returns>
+        /// <c>true</c> if the specified seed has next item; otherwise, <c>false</c>.
+        /// </returns>
+        private static async Task<Tuple<bool, IList<Variable>, ISnmpMessage>> BulkHasNextAsync(VersionCode version, IPEndPoint receiver, OctetString community, OctetString contextName, Variable seed, int maxRepetitions, IPrivacyProvider privacy, ISnmpMessage report)
         {
             // TODO: report should be updated with latest message from agent.
             if (version == VersionCode.V1)
@@ -447,6 +508,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                                                       MessageCounter.NextId,
                                                       RequestCounter.NextId,
                                                       community,
+                                                      contextName,
                                                       0,
                                                       maxRepetitions,
                                                       variables,
@@ -694,7 +756,26 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="privacy">The privacy provider.</param>
         /// <param name="report">The report.</param>
         /// <returns></returns>
+        [Obsolete("Please use other overloading ones.")]
         public static int BulkWalk(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, IList<Variable> list, int timeout, int maxRepetitions, WalkMode mode, IPrivacyProvider privacy, ISnmpMessage report)
+            => BulkWalk(version, endpoint, community, OctetString.Empty, table, list, timeout, maxRepetitions, mode, privacy, report);
+
+        /// <summary>
+        /// Walks.
+        /// </summary>
+        /// <param name="version">Protocol version.</param>
+        /// <param name="endpoint">Endpoint.</param>
+        /// <param name="community">Community name.</param>
+        /// <param name="contextName">Context name.></param>
+        /// <param name="table">OID.</param>
+        /// <param name="list">A list to hold the results.</param>
+        /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
+        /// <param name="maxRepetitions">The max repetitions.</param>
+        /// <param name="mode">Walk mode.</param>
+        /// <param name="privacy">The privacy provider.</param>
+        /// <param name="report">The report.</param>
+        /// <returns></returns>
+        public static int BulkWalk(VersionCode version, IPEndPoint endpoint, OctetString community, OctetString contextName, ObjectIdentifier table, IList<Variable> list, int timeout, int maxRepetitions, WalkMode mode, IPrivacyProvider privacy, ISnmpMessage report)
         {
             if (list == null)
             {
@@ -711,7 +792,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             IList<Variable> next;
             var result = 0;
             var message = report;
-            while (BulkHasNext(version, endpoint, community, seed, timeout, maxRepetitions, out next, privacy, ref message))
+            while (BulkHasNext(version, endpoint, community, contextName, seed, timeout, maxRepetitions, out next, privacy, ref message))
             {
                 var subTreeMask = string.Format(CultureInfo.InvariantCulture, "{0}.", table);
                 var rowMask = string.Format(CultureInfo.InvariantCulture, "{0}.1.1.", table);
@@ -797,7 +878,26 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="privacy">The privacy provider.</param>
         /// <param name="report">The report.</param>
         [CLSCompliant(false)]
+        [Obsolete("Please use other overloading ones.")]
         public static void SendInform(int requestId, VersionCode version, IPEndPoint receiver, OctetString community, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables, int timeout, IPrivacyProvider privacy, ISnmpMessage report)
+            => SendInform(requestId, version, receiver, community, OctetString.Empty, enterprise, timestamp, variables, timeout, privacy, report);
+     
+        /// <summary>
+        /// Sends INFORM message.
+        /// </summary>
+        /// <param name="requestId">The request id.</param>
+        /// <param name="version">Protocol version.</param>
+        /// <param name="receiver">Receiver.</param>
+        /// <param name="community">Community name.</param>
+        /// <param name="contextName">Context name.</param>
+        /// <param name="enterprise">Enterprise OID.</param>
+        /// <param name="timestamp">Timestamp.</param>
+        /// <param name="variables">Variable bindings.</param>
+        /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
+        /// <param name="privacy">The privacy provider.</param>
+        /// <param name="report">The report.</param>
+        [CLSCompliant(false)]
+        public static void SendInform(int requestId, VersionCode version, IPEndPoint receiver, OctetString community, OctetString contextName, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables, int timeout, IPrivacyProvider privacy, ISnmpMessage report)
         {
             if (receiver == null)
             {
@@ -807,6 +907,11 @@ namespace Lextm.SharpSnmpLib.Messaging
             if (community == null)
             {
                 throw new ArgumentNullException(nameof(community));
+            }
+
+            if (contextName == null)
+            {
+                throw new ArgumentException(nameof(contextName));
             }
 
             if (enterprise == null)
@@ -840,6 +945,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                                           MessageCounter.NextId,
                                           requestId,
                                           community,
+                                          contextName,
                                           enterprise,
                                           timestamp,
                                           variables,
@@ -880,7 +986,28 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <c>true</c> if the specified seed has next item; otherwise, <c>false</c>.
         /// </returns>
         [SuppressMessage("Microsoft.Design", "CA1021:AvoidOutParameters", MessageId = "5#")]
+        [Obsolete("Please use other overloading ones.")]
         private static bool BulkHasNext(VersionCode version, IPEndPoint receiver, OctetString community, Variable seed, int timeout, int maxRepetitions, out IList<Variable> next, IPrivacyProvider privacy, ref ISnmpMessage report)
+            => BulkHasNext(version, receiver, community, OctetString.Empty, seed, timeout, maxRepetitions, out next, privacy, ref report);
+
+        /// <summary>
+        /// Determines whether the specified seed has next item.
+        /// </summary>
+        /// <param name="version">The version.</param>
+        /// <param name="receiver">The receiver.</param>
+        /// <param name="community">The community.</param>
+        /// <param name="contextName">The context name></param>
+        /// <param name="seed">The seed.</param>
+        /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
+        /// <param name="maxRepetitions">The max repetitions.</param>
+        /// <param name="next">The next.</param>
+        /// <param name="privacy">The privacy provider.</param>
+        /// <param name="report">The report.</param>
+        /// <returns>
+        /// <c>true</c> if the specified seed has next item; otherwise, <c>false</c>.
+        /// </returns>
+        [SuppressMessage("Microsoft.Design", "CA1021:AvoidOutParameters", MessageId = "5#")]
+        private static bool BulkHasNext(VersionCode version, IPEndPoint receiver, OctetString community, OctetString contextName, Variable seed, int timeout, int maxRepetitions, out IList<Variable> next, IPrivacyProvider privacy, ref ISnmpMessage report)
         {
             if (version == VersionCode.V1)
             {
@@ -894,6 +1021,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                                                       MessageCounter.NextId,
                                                       RequestCounter.NextId,
                                                       community,
+                                                      contextName,
                                                       0,
                                                       maxRepetitions,
                                                       variables,
@@ -932,6 +1060,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                     MessageCounter.NextId,
                     RequestCounter.NextId,
                     community,
+                    contextName,
                     0,
                     maxRepetitions,
                     variables,
@@ -975,7 +1104,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             IList<Variable> list = new List<Variable>();
-            var rows = version == VersionCode.V1 ? Walk(version, endpoint, community, table, list, timeout, WalkMode.WithinSubtree) : BulkWalk(version, endpoint, community, table, list, timeout, maxRepetitions, WalkMode.WithinSubtree, null, null);
+            var rows = version == VersionCode.V1 ? Walk(version, endpoint, community, table, list, timeout, WalkMode.WithinSubtree) : BulkWalk(version, endpoint, community, OctetString.Empty, table, list, timeout, maxRepetitions, WalkMode.WithinSubtree, null, null);
 
             if (rows == 0)
             {

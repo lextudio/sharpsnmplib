@@ -90,22 +90,28 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="messageId">The message id.</param>
         /// <param name="requestId">The request id.</param>
         /// <param name="userName">Name of the user.</param>
+        /// <param name="contextName">Context name.</param>
         /// <param name="variables">The variables.</param>
         /// <param name="privacy">The privacy provider.</param>
         /// <param name="maxMessageSize">Size of the max message.</param>
         /// <param name="report">The report.</param>
-        public GetRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName, IList<Variable> variables, IPrivacyProvider privacy, int maxMessageSize, ISnmpMessage report)
+        public GetRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName, OctetString contextName, IList<Variable> variables, IPrivacyProvider privacy, int maxMessageSize, ISnmpMessage report)
         {
             if (userName == null)
             {
                 throw new ArgumentNullException(nameof(userName));
             }
-            
+
             if (variables == null)
             {
                 throw new ArgumentNullException(nameof(variables));
             }
-            
+
+            if (contextName == null)
+            {
+                throw new ArgumentNullException(nameof(contextName));
+            }
+
             if (version != VersionCode.V3)
             {
                 throw new ArgumentException("Only v3 is supported.", nameof(version));
@@ -115,7 +121,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new ArgumentNullException(nameof(report));
             }
-            
+
             if (privacy == null)
             {
                 throw new ArgumentNullException(nameof(privacy));
@@ -139,12 +145,30 @@ namespace Lextm.SharpSnmpLib.Messaging
                 variables);
             var scope = report.Scope;
             var contextEngineId = scope.ContextEngineId == OctetString.Empty ? parameters.EngineId : scope.ContextEngineId;
-            Scope = new Scope(contextEngineId, scope.ContextName, pdu);
+            Scope = new Scope(contextEngineId, contextName, pdu);
 
             Privacy.ComputeHash(Version, Header, Parameters, Scope);
             _bytes = this.PackMessage(null).ToBytes();
         }
-        
+
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetRequestMessage"/> class.
+        /// </summary>
+        /// <param name="version">The version.</param>
+        /// <param name="messageId">The message id.</param>
+        /// <param name="requestId">The request id.</param>
+        /// <param name="userName">Name of the user.</param>
+        /// <param name="variables">The variables.</param>
+        /// <param name="privacy">The privacy provider.</param>
+        /// <param name="maxMessageSize">Size of the max message.</param>
+        /// <param name="report">The report.</param>
+        [Obsolete("Please use other overloading ones.")]
+        public GetRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName, IList<Variable> variables, IPrivacyProvider privacy, int maxMessageSize, ISnmpMessage report)
+           : this(version, messageId, requestId, userName, OctetString.Empty, variables, privacy, maxMessageSize, report)
+        {
+        }
+
         internal GetRequestMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, IPrivacyProvider privacy, byte[] length)
         {
             if (scope == null)
