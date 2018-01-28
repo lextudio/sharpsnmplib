@@ -28,9 +28,10 @@
     <None Include="sharpsnmplib.tests.snk" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="System.Reactive.Linq" Version="3.1.1" />
     <PackageReference Include="xunit" Version="2.3.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
-    <PackageReference Include="Moq" Version="4.7.145" />
+    <PackageReference Include="Moq" Version="4.8.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)'!='net452'">

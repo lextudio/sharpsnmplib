@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
+using System.Reactive.Concurrency;
+using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -84,7 +86,7 @@ namespace Lextm.SharpSnmpLib.Integration
 
             var pipelineFactory = new SnmpApplicationFactory(store, membership, handlerFactory);
             var listener = new Listener { Users = users };
-            listener.ExceptionRaised += (sender, e) => { Assert.True(false, "unexpected exception");};
+            listener.ExceptionRaised += (sender, e) => { Assert.True(false, "unexpected exception"); };
             return new SnmpEngine(pipelineFactory, listener, new EngineGroup());
         }
 
@@ -124,7 +126,7 @@ namespace Lextm.SharpSnmpLib.Integration
             {
                 Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
                 GetRequestMessage message = new GetRequestMessage(0x4bed, VersionCode.V2, new OctetString("public"),
-                    new List<Variable> {new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0"))});
+                    new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) });
 
                 var users1 = new UserRegistry();
                 var response = await message.GetResponseAsync(serverEndPoint, users1, socket);
@@ -152,7 +154,7 @@ namespace Lextm.SharpSnmpLib.Integration
             {
                 Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
                 GetRequestMessage message = new GetRequestMessage(0x4bed, VersionCode.V2, new OctetString("public"),
-                    new List<Variable> {new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0"))});
+                    new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) });
 
                 const int time = 1500;
                 var response = message.GetResponse(time, serverEndPoint, socket);
@@ -181,17 +183,33 @@ namespace Lextm.SharpSnmpLib.Integration
                 IAuthenticationProvider auth = new MD5AuthenticationProvider(new OctetString("authentication"));
                 IPrivacyProvider priv = new DefaultPrivacyProvider(auth);
 
+                var ending = new AutoResetEvent(false);
                 var timeout = 3000;
                 Discovery discovery = Messenger.GetNextDiscovery(SnmpType.GetRequestPdu);
                 ReportMessage report = discovery.GetResponse(timeout, serverEndPoint);
 
                 var expected = Messenger.NextRequestId;
-                GetRequestMessage request = new GetRequestMessage(VersionCode.V3, Messenger.NextMessageId, expected, new OctetString("authen"), new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) }, priv, Messenger.MaxMessageSize, report);
-                ISnmpMessage reply = request.GetResponse(timeout, serverEndPoint);
-                ISnmpPdu snmpPdu = reply.Pdu();
-                Assert.Equal(SnmpType.ResponsePdu, snmpPdu.TypeCode);
-                Assert.Equal(expected, reply.RequestId());
-                Assert.Equal(ErrorCode.NoError, snmpPdu.ErrorStatus.ToErrorCode());
+                GetRequestMessage request = new GetRequestMessage(VersionCode.V3, Messenger.NextMessageId, expected, new OctetString("authen"), OctetString.Empty, new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) }, priv, Messenger.MaxMessageSize, report);
+
+                var source = Observable.Defer(() =>
+                {
+                    ISnmpMessage reply = request.GetResponse(timeout, serverEndPoint);
+                    return Observable.Return(reply);
+                })
+                .RetryWithBackoffStrategy(
+                    retryCount: 4,
+                    retryOnError: e => e is Messaging.TimeoutException
+                );
+
+                source.Subscribe(reply =>
+                {
+                    ISnmpPdu snmpPdu = reply.Pdu();
+                    Assert.Equal(SnmpType.ResponsePdu, snmpPdu.TypeCode);
+                    Assert.Equal(expected, reply.RequestId());
+                    Assert.Equal(ErrorCode.NoError, snmpPdu.ErrorStatus.ToErrorCode());
+                    ending.Set();
+                });
+                Assert.True(ending.WaitOne(60*timeout));
             }
             finally
             {
@@ -221,7 +239,7 @@ namespace Lextm.SharpSnmpLib.Integration
                 ReportMessage report = discovery.GetResponse(timeout, serverEndPoint);
 
                 var expected = Messenger.NextRequestId;
-                GetRequestMessage request = new GetRequestMessage(VersionCode.V3, Messenger.NextMessageId, expected, new OctetString("authen"), new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) }, priv, Messenger.MaxMessageSize, report);
+                GetRequestMessage request = new GetRequestMessage(VersionCode.V3, Messenger.NextMessageId, expected, new OctetString("authen"), OctetString.Empty, new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) }, priv, Messenger.MaxMessageSize, report);
                 ISnmpMessage reply = request.GetResponse(timeout, serverEndPoint);
                 ISnmpPdu snmpPdu = reply.Pdu();
                 Assert.Equal(SnmpType.ResponsePdu, snmpPdu.TypeCode);
@@ -282,7 +300,7 @@ namespace Lextm.SharpSnmpLib.Integration
         }
 
         [Fact]
-        public async void TestDiscovererAsync()
+        public void TestDiscovererAsyncV1()
         {
             var engine = CreateEngine();
             engine.Listener.ClearBindings();
@@ -295,6 +313,7 @@ namespace Lextm.SharpSnmpLib.Integration
             try
             {
                 var signal = new AutoResetEvent(false);
+                var ending = new AutoResetEvent(false);
                 var discoverer = new Discoverer();
                 discoverer.AgentFound += (sender, args)
                     =>
@@ -302,19 +321,141 @@ namespace Lextm.SharpSnmpLib.Integration
                     Assert.True(args.Agent.Address.ToString() != "0.0.0.0");
                     signal.Set();
                 };
-                await discoverer.DiscoverAsync(VersionCode.V1, new IPEndPoint(IPAddress.Broadcast, serverEndPoint.Port),
-                    new OctetString("public"), timeout);
-                Assert.True(signal.WaitOne(wait));
 
-                signal.Reset();
-                await discoverer.DiscoverAsync(VersionCode.V2, new IPEndPoint(IPAddress.Broadcast, serverEndPoint.Port),
-                    new OctetString("public"), timeout);
-                Assert.True(signal.WaitOne(wait));
+                var source = Observable.Defer(async () =>
+                {
+                    await discoverer.DiscoverAsync(VersionCode.V1, new IPEndPoint(IPAddress.Broadcast, serverEndPoint.Port),
+                        new OctetString("public"), timeout);
+                    var result = signal.WaitOne(wait);
+                    if (!result)
+                    {
+                        throw new Messaging.TimeoutException();
+                    }
 
-                signal.Reset();
-                await discoverer.DiscoverAsync(VersionCode.V3, new IPEndPoint(IPAddress.Broadcast, serverEndPoint.Port),
-                    null, timeout);
-                Assert.True(signal.WaitOne(wait));
+                    return Observable.Return(result);
+                })
+                .RetryWithBackoffStrategy(
+                    retryCount: 4,
+                    retryOnError: e => e is Messaging.TimeoutException
+                );
+
+                source.Subscribe(result =>
+                {
+                    Assert.True(result);
+                    ending.Set();
+                });
+                Assert.True(ending.WaitOne(60*wait));
+            }
+            finally
+            {
+                if (SnmpMessageExtension.IsRunningOnWindows)
+                {
+                    engine.Stop();
+                }
+            }
+        }
+        [Fact]
+        public void TestDiscovererAsyncV2()
+        {
+            var engine = CreateEngine();
+            engine.Listener.ClearBindings();
+            var serverEndPoint = new IPEndPoint(IPAddress.Any, Port.NextId);
+            engine.Listener.AddBinding(serverEndPoint);
+            engine.Start();
+
+            var timeout = 1000;
+            var wait = 60 * timeout;
+            try
+            {
+                var signal = new AutoResetEvent(false);
+                var ending = new AutoResetEvent(false);
+                var discoverer = new Discoverer();
+                discoverer.AgentFound += (sender, args)
+                    =>
+                {
+                    Assert.True(args.Agent.Address.ToString() != "0.0.0.0");
+                    signal.Set();
+                };
+
+                var source = Observable.Defer(async () =>
+                {
+                    await discoverer.DiscoverAsync(VersionCode.V2, new IPEndPoint(IPAddress.Broadcast, serverEndPoint.Port),
+                        new OctetString("public"), timeout);
+                    var result = signal.WaitOne(wait);
+                    if (!result)
+                    {
+                        throw new Messaging.TimeoutException();
+                    }
+
+                    return Observable.Return(result);
+                })
+                .RetryWithBackoffStrategy(
+                    retryCount: 4,
+                    retryOnError: e => e is Messaging.TimeoutException
+                );
+
+                source.Subscribe(result =>
+                {
+                    Assert.True(result);
+                    ending.Set();
+                });
+                Assert.True(ending.WaitOne(60*wait));
+            }
+            finally
+            {
+                if (SnmpMessageExtension.IsRunningOnWindows)
+                {
+                    engine.Stop();
+                }
+            }
+        }
+
+        [Fact]
+        public void TestDiscovererAsyncV3()
+        {
+            var engine = CreateEngine();
+            engine.Listener.ClearBindings();
+            var serverEndPoint = new IPEndPoint(IPAddress.Any, Port.NextId);
+            engine.Listener.AddBinding(serverEndPoint);
+            engine.Start();
+
+            var timeout = 1000;
+            var wait = 60 * timeout;
+            try
+            {
+                var signal = new AutoResetEvent(false);
+                var ending = new AutoResetEvent(false);
+                var discoverer = new Discoverer();
+                discoverer.AgentFound += (sender, args)
+                    =>
+                {
+                    Assert.True(args.Agent.Address.ToString() != "0.0.0.0");
+                    signal.Set();
+                };
+
+                var source = Observable.Defer(async () =>
+                {
+                    await discoverer.DiscoverAsync(VersionCode.V3, new IPEndPoint(IPAddress.Broadcast, serverEndPoint.Port),
+                        null, timeout);
+                    var result = signal.WaitOne(wait);
+                    if (!result)
+                    {
+                        throw new Messaging.TimeoutException();
+                    }
+
+                    return Observable.Return(result);
+                })
+                .RetryWithBackoffStrategy(
+                    retryCount: 4,
+                    retryOnError: e => e is Messaging.TimeoutException
+                );
+
+                source.Subscribe(result =>
+                {
+                    Assert.True(result);
+                    ending.Set();
+                });
+                Assert.True(ending.WaitOne(60*wait));
             }
             finally
             {
@@ -353,7 +494,7 @@ namespace Lextm.SharpSnmpLib.Integration
                 for (int index = start; index < end; index++)
                 {
                     GetRequestMessage message = new GetRequestMessage(index, VersionCode.V2, new OctetString("public"),
-                        new List<Variable> {new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0"))});
+                        new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) });
                     Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 
                     Stopwatch watch = new Stopwatch();
@@ -400,7 +541,7 @@ namespace Lextm.SharpSnmpLib.Integration
                 for (int index = start; index < end; index++)
                 {
                     GetRequestMessage message = new GetRequestMessage(0, VersionCode.V2, new OctetString("public"),
-                        new List<Variable> {new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0"))});
+                        new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) });
                     Stopwatch watch = new Stopwatch();
                     watch.Start();
                     var response =
@@ -454,7 +595,7 @@ namespace Lextm.SharpSnmpLib.Integration
                     {
                         GetRequestMessage message = new GetRequestMessage(index, VersionCode.V2,
                             new OctetString("public"),
-                            new List<Variable> {new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0"))});
+                            new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) });
                         // Comment below to reveal wrong sequence number issue.
                         Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 
@@ -497,7 +638,7 @@ namespace Lextm.SharpSnmpLib.Integration
                         try
                         {
                             var result = Messenger.Get(VersionCode.V2, serverEndPoint, new OctetString("public"),
-                                new List<Variable> {new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0"))}, timeout);
+                                new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) }, timeout);
                             Assert.Equal(1, result.Count);
                         }
                         catch (Exception)
@@ -529,7 +670,7 @@ namespace Lextm.SharpSnmpLib.Integration
             {
                 Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
                 GetRequestMessage message = new GetRequestMessage(0x4bed, VersionCode.V2, new OctetString("public"),
-                    new List<Variable> {new Variable(new ObjectIdentifier("1.5.2"))});
+                    new List<Variable> { new Variable(new ObjectIdentifier("1.5.2")) });
 
                 const int time = 1500;
                 var timer = new Stopwatch();
@@ -605,7 +746,7 @@ namespace Lextm.SharpSnmpLib.Integration
                 }
             }
         }
-        
+
         [Fact]
         public void TestWalk()
         {
@@ -621,9 +762,9 @@ namespace Lextm.SharpSnmpLib.Integration
                 var time = 3000;
                 // IMPORTANT: test against an agent that doesn't exist.
                 var result = Messenger.Walk(
-                    VersionCode.V1, 
-                    serverEndPoint, 
-                    new OctetString("public"), 
+                    VersionCode.V1,
+                    serverEndPoint,
+                    new OctetString("public"),
                     new ObjectIdentifier("1.3.6.1.2.1.1"),
                     list,
                     time,
@@ -638,7 +779,7 @@ namespace Lextm.SharpSnmpLib.Integration
                 }
             }
         }
-        
+
         [Fact]
         public async Task TestWalkAsync()
         {
@@ -653,9 +794,9 @@ namespace Lextm.SharpSnmpLib.Integration
                 var list = new List<Variable>();
                 // IMPORTANT: test against an agent that doesn't exist.
                 var result = await Messenger.WalkAsync(
-                    VersionCode.V1, 
-                    serverEndPoint, 
-                    new OctetString("public"), 
+                    VersionCode.V1,
+                    serverEndPoint,
+                    new OctetString("public"),
                     new ObjectIdentifier("1.3.6.1.2.1.1"),
                     list,
                     WalkMode.WithinSubtree);
@@ -669,7 +810,7 @@ namespace Lextm.SharpSnmpLib.Integration
                 }
             }
         }
-        
+
         [Fact]
         public void TestBulkWalk()
         {
@@ -681,22 +822,37 @@ namespace Lextm.SharpSnmpLib.Integration
 
             try
             {
+                var ending = new AutoResetEvent(false);
                 var list = new List<Variable>();
                 var time = 3000;
-                // IMPORTANT: test against an agent that doesn't exist.
-                var result = Messenger.BulkWalk(
-                    VersionCode.V2, 
-                    serverEndPoint, 
-                    new OctetString("public"), 
-                    OctetString.Empty,
-                    new ObjectIdentifier("1.3.6.1.2.1.1"),
-                    list,
-                    time,
-                    10,
-                    WalkMode.WithinSubtree,
-                    null,
-                    null);
-                Assert.Equal(16, list.Count);
+
+                var source = Observable.Defer(() =>
+                {
+                    var result = Messenger.BulkWalk(
+                        VersionCode.V2,
+                        serverEndPoint,
+                        new OctetString("public"),
+                        OctetString.Empty,
+                        new ObjectIdentifier("1.3.6.1.2.1.1"),
+                        list,
+                        time,
+                        10,
+                        WalkMode.WithinSubtree,
+                        null,
+                        null);
+                    return Observable.Return(result);
+                })
+                .RetryWithBackoffStrategy(
+                    retryCount: 4,
+                    retryOnError: e => e is Messaging.TimeoutException
+                );
+
+                source.Subscribe(result =>
+                {
+                    Assert.Equal(16, list.Count);
+                    ending.Set();
+                });
+                Assert.True(ending.WaitOne(60 * time));
             }
             finally
             {
@@ -706,7 +862,7 @@ namespace Lextm.SharpSnmpLib.Integration
                 }
             }
         }
-        
+
         [Fact]
         public async Task TestBulkWalkAsync()
         {
@@ -721,9 +877,9 @@ namespace Lextm.SharpSnmpLib.Integration
                 var list = new List<Variable>();
                 // IMPORTANT: test against an agent that doesn't exist.
                 var result = await Messenger.BulkWalkAsync(
-                    VersionCode.V2, 
-                    serverEndPoint, 
-                    new OctetString("public"), 
+                    VersionCode.V2,
+                    serverEndPoint,
+                    new OctetString("public"),
                     OctetString.Empty,
                     new ObjectIdentifier("1.3.6.1.2.1.1"),
                     list,
@@ -740,6 +896,39 @@ namespace Lextm.SharpSnmpLib.Integration
                     engine.Stop();
                 }
             }
+        }
+    }
+
+    static class ReactiveExtensions
+    {
+        // Adopted from https://gist.github.com/niik/6696449
+        public static readonly Func<int, TimeSpan> ExpontentialBackoff = n => TimeSpan.FromSeconds(Math.Pow(n, 2));
+
+        public static IObservable<T> RetryWithBackoffStrategy<T>(
+            this IObservable<T> source,
+            int retryCount = 3,
+            Func<int, TimeSpan> strategy = null,
+            Func<Exception, bool> retryOnError = null)
+        {
+            strategy = strategy ?? ExpontentialBackoff;
+
+            if (retryOnError == null)
+                retryOnError = e => true;
+
+            int attempt = 0;
+
+            return Observable.Defer(() =>
+            {
+                return ((++attempt == 1) ? source : source.DelaySubscription(strategy(attempt - 1)))
+                    .Select(item => new Tuple<bool, T, Exception>(true, item, null))
+                    .Catch<Tuple<bool, T, Exception>, Exception>(e => retryOnError(e)
+                        ? Observable.Throw<Tuple<bool, T, Exception>>(e)
+                        : Observable.Return(new Tuple<bool, T, Exception>(false, default(T), e)));
+            })
+            .Retry(retryCount)
+            .SelectMany(t => t.Item1
+                ? Observable.Return(t.Item2)
+                : Observable.Throw<T>(t.Item3));
         }
     }
 }

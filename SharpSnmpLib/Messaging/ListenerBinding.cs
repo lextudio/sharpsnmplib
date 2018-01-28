@@ -64,6 +64,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 return;
             }
 
+            _disposed = true;
             if (disposing)
             {
                 _active = Inactive;
@@ -78,8 +79,6 @@ namespace Lextm.SharpSnmpLib.Messaging
                     _socket = null;
                 }
             }
-
-            _disposed = true;
         }
 
         /// <summary>

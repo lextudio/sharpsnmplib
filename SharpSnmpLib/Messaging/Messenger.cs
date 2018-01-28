@@ -545,6 +545,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                     MessageCounter.NextId,
                     RequestCounter.NextId,
                     community,
+                    contextName,
                     0,
                     maxRepetitions,
                     variables,
