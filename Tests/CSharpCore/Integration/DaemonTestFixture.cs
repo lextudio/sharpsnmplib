@@ -18,6 +18,8 @@ namespace Lextm.SharpSnmpLib.Integration
     public class DaemonTestFixture
     {
         private static readonly NumberGenerator Port = new NumberGenerator(40000, 45000);
+        private const int MaxTimeout = 5 * 60 * 1000; // 5 minutes
+
 
         private SnmpEngine CreateEngine(bool timeout = false)
         {
@@ -209,7 +211,7 @@ namespace Lextm.SharpSnmpLib.Integration
                     Assert.Equal(ErrorCode.NoError, snmpPdu.ErrorStatus.ToErrorCode());
                     ending.Set();
                 });
-                Assert.True(ending.WaitOne(60*timeout));
+                Assert.True(ending.WaitOne(MaxTimeout));
             }
             finally
             {
@@ -344,7 +346,7 @@ namespace Lextm.SharpSnmpLib.Integration
                     Assert.True(result);
                     ending.Set();
                 });
-                Assert.True(ending.WaitOne(60*wait));
+                Assert.True(ending.WaitOne(MaxTimeout));
             }
             finally
             {
@@ -399,7 +401,7 @@ namespace Lextm.SharpSnmpLib.Integration
                     Assert.True(result);
                     ending.Set();
                 });
-                Assert.True(ending.WaitOne(60*wait));
+                Assert.True(ending.WaitOne(MaxTimeout));
             }
             finally
             {
@@ -455,7 +457,7 @@ namespace Lextm.SharpSnmpLib.Integration
                     Assert.True(result);
                     ending.Set();
                 });
-                Assert.True(ending.WaitOne(60*wait));
+                Assert.True(ending.WaitOne(MaxTimeout));
             }
             finally
             {
@@ -584,36 +586,52 @@ namespace Lextm.SharpSnmpLib.Integration
 #endif
             engine.Start();
 
-            try
+            var ending = new AutoResetEvent(false);
+            var source = Observable.Defer(() =>
             {
-                const int timeout = 10000;
-
-                // Uncomment below to reveal wrong sequence number issue.
-                // Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-
-                Parallel.For(start, end, index =>
-                    {
-                        GetRequestMessage message = new GetRequestMessage(index, VersionCode.V2,
-                            new OctetString("public"),
-                            new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) });
-                        // Comment below to reveal wrong sequence number issue.
-                        Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-
-                        Stopwatch watch = new Stopwatch();
-                        watch.Start();
-                        var response = message.GetResponse(timeout, serverEndPoint, socket);
-                        watch.Stop();
-                        Assert.Equal(index, response.RequestId());
-                    }
-                );
-            }
-            finally
-            {
-                if (SnmpMessageExtension.IsRunningOnWindows)
+                try
                 {
-                    engine.Stop();
+                    const int timeout = 10000;
+
+                    // Uncomment below to reveal wrong sequence number issue.
+                    // Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+
+                    Parallel.For(start, end, index =>
+                        {
+                            GetRequestMessage message = new GetRequestMessage(index, VersionCode.V2,
+                                new OctetString("public"),
+                                new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) });
+                            // Comment below to reveal wrong sequence number issue.
+                            Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+
+                            Stopwatch watch = new Stopwatch();
+                            watch.Start();
+                            var response = message.GetResponse(timeout, serverEndPoint, socket);
+                            watch.Stop();
+                            Assert.Equal(index, response.RequestId());
+                        }
+                    );
                 }
-            }
+                finally
+                {
+                    if (SnmpMessageExtension.IsRunningOnWindows)
+                    {
+                        engine.Stop();
+                    }
+                }
+
+                return Observable.Return(0);
+            })
+            .RetryWithBackoffStrategy(
+                retryCount: 4,
+                retryOnError: e => e is Messaging.TimeoutException
+            );
+
+            source.Subscribe(result =>
+            {
+                ending.Set();
+            });
+            Assert.True(ending.WaitOne(MaxTimeout));
         }
 
         [Theory]
@@ -852,7 +870,7 @@ namespace Lextm.SharpSnmpLib.Integration
                     Assert.Equal(16, list.Count);
                     ending.Set();
                 });
-                Assert.True(ending.WaitOne(60 * time));
+                Assert.True(ending.WaitOne(MaxTimeout));
             }
             finally
             {
