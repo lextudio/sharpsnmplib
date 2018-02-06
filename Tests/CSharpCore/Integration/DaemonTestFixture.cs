@@ -570,67 +570,66 @@ namespace Lextm.SharpSnmpLib.Integration
         [InlineData(32)]
         public void TestResponsesFromSingleSourceWithMultipleThreads(int count)
         {
-            var start = 0;
-            var end = start + count;
-            var engine = CreateEngine();
-            engine.Listener.ClearBindings();
-            var serverEndPoint = new IPEndPoint(IPAddress.Loopback, Port.NextId);
-            engine.Listener.AddBinding(serverEndPoint);
-#if NET452 
-            // IMPORTANT: need to set min thread count so as to boost performance.
-            int minWorker, minIOC;
-            // Get the current settings.
-            ThreadPool.GetMinThreads(out minWorker, out minIOC);
-            var threads = engine.Listener.Bindings.Count;
-            ThreadPool.SetMinThreads(threads + 1, minIOC);
-#endif
-            engine.Start();
-
             var ending = new AutoResetEvent(false);
             var source = Observable.Defer(() =>
-            {
-                try
                 {
-                    const int timeout = 10000;
+                    var start = 0;
+                    var end = start + count;
+                    var engine = CreateEngine();
+                    engine.Listener.ClearBindings();
+                    var serverEndPoint = new IPEndPoint(IPAddress.Loopback, Port.NextId);
+                    engine.Listener.AddBinding(serverEndPoint);
+#if NET452
+                    // IMPORTANT: need to set min thread count so as to boost performance.
+                    int minWorker, minIOC;
+                    // Get the current settings.
+                    ThreadPool.GetMinThreads(out minWorker, out minIOC);
+                    var threads = engine.Listener.Bindings.Count;
+                    ThreadPool.SetMinThreads(threads + 1, minIOC);
+#endif
+                    engine.Start();
 
-                    // Uncomment below to reveal wrong sequence number issue.
-                    // Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 
-                    Parallel.For(start, end, index =>
-                        {
-                            GetRequestMessage message = new GetRequestMessage(index, VersionCode.V2,
-                                new OctetString("public"),
-                                new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) });
-                            // Comment below to reveal wrong sequence number issue.
-                            Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-
-                            Stopwatch watch = new Stopwatch();
-                            watch.Start();
-                            var response = message.GetResponse(timeout, serverEndPoint, socket);
-                            watch.Stop();
-                            Assert.Equal(index, response.RequestId());
-                        }
-                    );
-                }
-                finally
-                {
-                    if (SnmpMessageExtension.IsRunningOnWindows)
+                    try
                     {
-                        engine.Stop();
+                        const int timeout = 10000;
+
+                        // Uncomment below to reveal wrong sequence number issue.
+                        // Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+
+                        Parallel.For(start, end, index =>
+                            {
+                                GetRequestMessage message = new GetRequestMessage(index, VersionCode.V2,
+                                    new OctetString("public"),
+                                    new List<Variable> {new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0"))});
+                                // Comment below to reveal wrong sequence number issue.
+                                Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram,
+                                    ProtocolType.Udp);
+
+                                Stopwatch watch = new Stopwatch();
+                                watch.Start();
+                                var response = message.GetResponse(timeout, serverEndPoint, socket);
+                                watch.Stop();
+                                Assert.Equal(index, response.RequestId());
+                            }
+                        );
                     }
-                }
+                    finally
+                    {
+                        if (SnmpMessageExtension.IsRunningOnWindows)
+                        {
+                            engine.Stop();
+                        }
+                    }
 
-                return Observable.Return(0);
-            })
-            .RetryWithBackoffStrategy(
-                retryCount: 4,
-                retryOnError: e => e is Messaging.TimeoutException
-            );
+                    return Observable.Return(0);
+                })
+                .RetryWithBackoffStrategy(
+                    retryCount: 4,
+                    retryOnError: e => e is Messaging.TimeoutException
+                );
 
-            source.Subscribe(result =>
-            {
-                ending.Set();
-            });
+            source.Subscribe(result => { ending.Set(); });
             Assert.True(ending.WaitOne(MaxTimeout));
         }
 
