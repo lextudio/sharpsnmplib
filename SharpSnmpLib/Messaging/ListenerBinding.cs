@@ -70,9 +70,14 @@ namespace Lextm.SharpSnmpLib.Messaging
                 _active = Inactive;
                 if (_socket != null)
                 {
-                    if (SnmpMessageExtension.IsRunningOnWindows)
+                    try
                     {
                         _socket.Shutdown (SocketShutdown.Both);    // Note that closing the socket releases the _socket.ReceiveFrom call.
+                    }
+                    catch (SocketException)
+                    {
+                        // This exception is thrown in .NET Core <=2.1.4 on non-Windows systems.
+                        // However, the shutdown call is necessary to release the socket binding.
                     }
 
                     _socket.Dispose();
@@ -245,9 +250,14 @@ namespace Lextm.SharpSnmpLib.Messaging
                 return;
             }
 
-            if (SnmpMessageExtension.IsRunningOnWindows)
+            try
             {
                 _socket.Shutdown(SocketShutdown.Both);    // Note that closing the socket releases the _socket.ReceiveFrom call.
+            }
+            catch (SocketException)
+            {
+                // This exception is thrown in .NET Core <=2.1.4 on non-Windows systems.
+                // However, the shutdown call is necessary to release the socket binding.
             }
 
             _socket.Dispose();
