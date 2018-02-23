@@ -27,7 +27,7 @@ using System.Threading.Tasks;
 
 namespace Lextm.SharpSnmpLib.Messaging
 {
-    using Lextm.SharpSnmpLib.Security;
+    using Security;
 
     /// <summary>
     /// Binding class for <see cref="Listener"/>.
@@ -74,10 +74,13 @@ namespace Lextm.SharpSnmpLib.Messaging
                     {
                         _socket.Shutdown (SocketShutdown.Both);    // Note that closing the socket releases the _socket.ReceiveFrom call.
                     }
-                    catch (SocketException)
+                    catch (SocketException ex)
                     {
                         // This exception is thrown in .NET Core <=2.1.4 on non-Windows systems.
                         // However, the shutdown call is necessary to release the socket binding.
+                        if (!SnmpMessageExtension.IsRunningOnWindows && ex.SocketErrorCode == SocketError.NotConnected)
+                        {
+                        }
                     }
 
                     _socket.Dispose();
@@ -166,7 +169,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Gets or sets the endpoint.
         /// </summary>
         /// <value>The endpoint.</value>
-        public IPEndPoint Endpoint { get; private set; }
+        public IPEndPoint Endpoint { get; }
 
         /// <summary>
         /// Starts this instance.
@@ -252,12 +255,16 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             try
             {
-                _socket.Shutdown(SocketShutdown.Both);    // Note that closing the socket releases the _socket.ReceiveFrom call.
+                _socket.Shutdown(SocketShutdown
+                    .Both); // Note that closing the socket releases the _socket.ReceiveFrom call.
             }
-            catch (SocketException)
+            catch (SocketException ex)
             {
                 // This exception is thrown in .NET Core <=2.1.4 on non-Windows systems.
                 // However, the shutdown call is necessary to release the socket binding.
+                if (!SnmpMessageExtension.IsRunningOnWindows && ex.SocketErrorCode == SocketError.NotConnected)
+                {
+                }
             }
 
             _socket.Dispose();
@@ -378,13 +385,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
         private void HandleException(Exception exception)
         {
-            var handler = ExceptionRaised;
-            if (handler == null)
-            {
-                return;
-            }
-
-            handler(this, new ExceptionRaisedEventArgs(exception));
+            ExceptionRaised?.Invoke(this, new ExceptionRaisedEventArgs(exception));
         }
 
 
@@ -411,10 +412,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             foreach (var message in messages)
             {
                 var handler = MessageReceived;
-                if (handler != null)
-                {
-                    handler(this, new MessageReceivedEventArgs(remote, message, this));
-                }
+                handler?.Invoke(this, new MessageReceivedEventArgs(remote, message, this));
             }
         }
 

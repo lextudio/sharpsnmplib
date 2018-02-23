@@ -347,9 +347,17 @@ namespace Lextm.SharpSnmpLib.Messaging
                     Task.Delay(interval));
 
                 Interlocked.CompareExchange(ref _active, Inactive, Active);
-                if (SnmpMessageExtension.IsRunningOnWindows)
+                try
                 {
                     udp.Shutdown(SocketShutdown.Both);
+                }
+                catch (SocketException ex)
+                {
+                    // This exception is thrown in .NET Core <=2.1.4 on non-Windows systems.
+                    // However, the shutdown call is necessary to release the socket binding.
+                    if (!SnmpMessageExtension.IsRunningOnWindows && ex.SocketErrorCode == SocketError.NotConnected)
+                    {
+                    }
                 }
             }
         }
