@@ -32,3 +32,5 @@ T4MVC.cs
 /.idea
 /_site
 /.vs
+*.vspscc
+*.vssscc
