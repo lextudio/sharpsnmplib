@@ -25,6 +25,7 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 
+using System;
 using System.Net.NetworkInformation;
 using Lextm.SharpSnmpLib.Pipeline;
 
@@ -57,8 +58,20 @@ namespace Lextm.SharpSnmpLib.Objects
         /// <exception cref="AccessFailureException"></exception>
         public override ISnmpData Data
         {
-            get { return new Gauge32(_networkInterface.Speed); }
-            set { throw new AccessFailureException(); }
+            get
+            {
+                try
+                {
+                    return new Gauge32(_networkInterface.Speed);
+                }
+                catch (PlatformNotSupportedException)
+                {
+                    return new Gauge32(0);
+                }
+            }
+
+            set
+            { throw new AccessFailureException(); }
         }
     }
 }
