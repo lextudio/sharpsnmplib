@@ -16,6 +16,7 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+using System;
 using System.Net.NetworkInformation;
 using Lextm.SharpSnmpLib.Pipeline;
 
@@ -37,7 +38,6 @@ namespace Lextm.SharpSnmpLib.Objects
             : base("1.3.6.1.2.1.2.2.1.19.{0}", index)
         {
             _networkInterface = networkInterface;
-            
         }
 
         /// <summary>
@@ -49,8 +49,22 @@ namespace Lextm.SharpSnmpLib.Objects
         /// <exception cref="AccessFailureException"></exception>
         public override ISnmpData Data
         {
-            get { return new Counter32(_networkInterface.GetIPStatistics().OutgoingPacketsDiscarded); }
-            set { throw new AccessFailureException(); }
+            get
+            {
+                try
+                {
+                    return new Counter32(_networkInterface.GetIPStatistics().OutgoingPacketsDiscarded);
+                }
+                catch (PlatformNotSupportedException)
+                {
+                    return new Counter32(0);
+                }
+            }
+
+            set 
+            {
+                throw new AccessFailureException();
+            }
         }
     }
 }
