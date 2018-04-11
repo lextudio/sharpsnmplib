@@ -781,7 +781,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="version">Protocol version.</param>
         /// <param name="endpoint">Endpoint.</param>
         /// <param name="community">Community name.</param>
-        /// <param name="contextName">Context name.></param>
+        /// <param name="contextName">Context name.</param>
         /// <param name="table">OID.</param>
         /// <param name="list">A list to hold the results.</param>
         /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
@@ -1011,7 +1011,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="version">The version.</param>
         /// <param name="receiver">The receiver.</param>
         /// <param name="community">The community.</param>
-        /// <param name="contextName">The context name></param>
+        /// <param name="contextName">The context name.</param>
         /// <param name="seed">The seed.</param>
         /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
         /// <param name="maxRepetitions">The max repetitions.</param>
