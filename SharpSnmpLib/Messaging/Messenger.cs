@@ -48,7 +48,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// RFC 3416 (3.)
         /// </summary>
-        private static readonly NumberGenerator RequestCounter = new NumberGenerator(int.MinValue, int.MaxValue);
+        private static readonly NumberGenerator RequestCounter = new NumberGenerator(0, int.MaxValue);
 
         /// <summary>
         /// RFC 3412 (6.)
