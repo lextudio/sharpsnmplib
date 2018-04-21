@@ -6,6 +6,14 @@
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
+
+// typical usage
+// snmpwalk -c=public -v=1 -m=subtree localhost 1.3.6.1.2.1.1
+// snmpwalk -c=public -v=2 -m=subtree -Cr=10 localhost 1.3.6.1.2.1.1
+// snmpwalk -v=3 -l=noAuthNoPriv -u=neither -m=subtree -Cr=10 localhost 1.3.6.1.2.1.1
+// snmpwalk -v=3 -l=authNoPriv -a=MD5 -A=authentication -u=authen -m=subtree -Cr=10 localhost 1.3.6.1.2.1.1
+// snmpwalk -v=3 -l=authPriv -a=MD5 -A=authentication -x=DES -X=privacyphrase -u=privacy -m=subtree -Cr=10 localhost 1.3.6.1.2.1.1
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -75,6 +83,11 @@ namespace SnmpWalk
                 .Add("r:", "Retry count (default is 0)", delegate (string v) { retry = int.Parse(v); })
                 .Add("v|version:", "SNMP version (1, 2, and 3 are currently supported)", delegate (string v)
                 {
+                    if (v == "2c")
+                    {
+                        v = "2";
+                    }
+
                     switch (int.Parse(v))
                     {
                         case 1:

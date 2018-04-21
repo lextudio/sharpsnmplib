@@ -1,6 +1,10 @@
 ﻿// typical usage
 // snmpget -c=public -v=1 localhost 1.3.6.1.2.1.1.1.0
-// snmpget -v=3 -l=authPriv -a=MD5 -A=authentication -x=DES -X=privacy -u=user localhost 1.3.6.1.2.1.1.1.0
+// snmpget -c=public -v=2 localhost 1.3.6.1.2.1.1.1.0
+// snmpget -v=3 -l=noAuthNoPriv -u=neither localhost 1.3.6.1.2.1.1.1.0
+// snmpget -v=3 -l=authNoPriv -a=MD5 -A=authentication -u=authen localhost 1.3.6.1.2.1.1.1.0
+// snmpget -v=3 -l=authPriv -a=MD5 -A=authentication -x=DES -X=privacyphrase -u=privacy localhost 1.3.6.1.2.1.1.1.0
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,18 +59,23 @@ namespace SnmpGet
                                                                                        }
                                                                                    })
                 .Add("a:", "Authentication method (MD5 or SHA)", delegate (string v) { authentication = v; })
-                .Add("A:", "Authentication passphrase", delegate(string v) { authPhrase = v; })
+                .Add("A:", "Authentication passphrase", delegate (string v) { authPhrase = v; })
                 .Add("x:", "Privacy method", delegate (string v) { privacy = v; })
                 .Add("X:", "Privacy passphrase", delegate (string v) { privPhrase = v; })
-                .Add("u:", "Security name", delegate(string v) { user = v; })
-                .Add("C:", "Context name", delegate(string v) { contextName = v; })
+                .Add("u:", "Security name", delegate (string v) { user = v; })
+                .Add("C:", "Context name", delegate (string v) { contextName = v; })
                 .Add("h|?|help", "Print this help information.", delegate (string v) { showHelp = v != null; })
                 .Add("V", "Display version number of this application.", delegate (string v) { showVersion = v != null; })
-                .Add("d", "Display message dump", delegate(string v) { dump = true; })
+                .Add("d", "Display message dump", delegate (string v) { dump = true; })
                 .Add("t:", "Timeout value (unit is second).", delegate (string v) { timeout = int.Parse(v) * 1000; })
                 .Add("r:", "Retry count (default is 0)", delegate (string v) { retry = int.Parse(v); })
                 .Add("v|version:", "SNMP version (1, 2, and 3 are currently supported)", delegate (string v)
                                                                                                {
+                                                                                                   if (v == "2c")
+                                                                                                   {
+                                                                                                       v = "2";
+                                                                                                   }
+
                                                                                                    switch (int.Parse(v))
                                                                                                    {
                                                                                                        case 1:

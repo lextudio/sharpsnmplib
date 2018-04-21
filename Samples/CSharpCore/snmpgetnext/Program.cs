@@ -6,6 +6,14 @@
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
+
+// typical usage
+// snmpgetnext -c=public -v=1 localhost 1.3.6.1.2.1.1.1.0
+// snmpgetnext -c=public -v=2 localhost 1.3.6.1.2.1.1.1.0
+// snmpgetnext -v=3 -l=noAuthNoPriv -u=neither localhost 1.3.6.1.2.1.1.1.0
+// snmpgetnext -v=3 -l=authNoPriv -a=MD5 -A=authentication -u=authen localhost 1.3.6.1.2.1.1.1.0
+// snmpgetnext -v=3 -l=authPriv -a=MD5 -A=authentication -x=DES -X=privacyphrase -u=privacy localhost 1.3.6.1.2.1.1.1.0
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -72,6 +80,11 @@ namespace SnmpGetNext
                 .Add("r:", "Retry count (default is 0)", delegate (string v) { retry = int.Parse(v); })
                 .Add("v:", "SNMP version (1, 2, and 3 are currently supported)", delegate (string v)
                 {
+                    if (v == "2c")
+                    {
+                        v = "2";
+                    }
+
                     switch (int.Parse(v))
                     {
                         case 1:
