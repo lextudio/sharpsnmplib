@@ -36,21 +36,6 @@ namespace Lextm.SharpSnmpLib.Security
         private readonly OctetString _phrase;
 
         /// <summary>
-        /// Verifies if the provider is supported.
-        /// </summary>
-        public static bool IsSupported
-        {
-            get
-            {
-#if NETSTANDARD1_3
-                return false;
-#else
-                return true;
-#endif
-            }
-        }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="DESPrivacyProvider"/> class.
         /// </summary>
         /// <param name="phrase">The phrase.</param>
@@ -95,9 +80,6 @@ namespace Lextm.SharpSnmpLib.Security
         /// <exception cref="ArgumentOutOfRangeException">Thrown when encryption key is null or length of the encryption key is too short.</exception>
         public static byte[] Encrypt(byte[] unencryptedData, byte[] key, byte[] privacyParameters)
         {
-#if NETSTANDARD1_3
-            throw new PlatformNotSupportedException();
-#else
             if (unencryptedData == null)
             {
                 throw new ArgumentNullException(nameof(unencryptedData));
@@ -146,12 +128,9 @@ namespace Lextm.SharpSnmpLib.Security
                         encryptedData = transform.TransformFinalBlock(tmpbuffer, 0, tmpbuffer.Length);
                     }
                 }
-
-                des.Clear();
             }
 
             return encryptedData;
-#endif
         }
 
         /// <summary>
@@ -166,9 +145,6 @@ namespace Lextm.SharpSnmpLib.Security
         /// argument is null or length other then 8 bytes</exception>
         public static byte[] Decrypt(byte[] encryptedData, byte[] key, byte[] privacyParameters)
         {
-#if NETSTANDARD1_3
-            throw new PlatformNotSupportedException();
-#else
             if (encryptedData == null)
             {
                 throw new ArgumentNullException(nameof(encryptedData));
@@ -217,11 +193,9 @@ namespace Lextm.SharpSnmpLib.Security
                 using (var transform = des.CreateDecryptor(outKey, iv))
                 {
                     var decryptedData = transform.TransformFinalBlock(encryptedData, 0, encryptedData.Length);
-                    des.Clear();
                     return decryptedData;
                 }
             }
-#endif
         }
 
         /// <summary>
