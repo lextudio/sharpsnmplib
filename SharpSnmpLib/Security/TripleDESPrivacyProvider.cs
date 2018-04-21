@@ -26,11 +26,11 @@ using System.Security.Cryptography;
 namespace Lextm.SharpSnmpLib.Security
 {
     /// <summary>
-    /// Privacy provider for DES.
+    /// Privacy provider for 3DES.
     /// </summary>
-    /// <remarks>Ported from SNMP#NET PrivacyDES class.</remarks>
+    /// <remarks>Ported from SNMP#NET Privacy3DES class.</remarks>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "DES", Justification = "definition")]
-    public sealed class DESPrivacyProvider : IPrivacyProvider
+    public sealed class TripleDESPrivacyProvider : IPrivacyProvider
     {
         private readonly SaltGenerator _salt = new SaltGenerator();
         private readonly OctetString _phrase;
@@ -55,13 +55,8 @@ namespace Lextm.SharpSnmpLib.Security
         /// </summary>
         /// <param name="phrase">The phrase.</param>
         /// <param name="auth">The authentication provider.</param>
-        public DESPrivacyProvider(OctetString phrase, IAuthenticationProvider auth)
+        public TripleDESPrivacyProvider(OctetString phrase, IAuthenticationProvider auth)
         {
-            if (phrase == null)
-            {
-                throw new ArgumentNullException(nameof(phrase));
-            }
-
             if (auth == null)
             {
                 throw new ArgumentNullException(nameof(auth));
@@ -73,7 +68,7 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentException("If authentication is off, then privacy cannot be used.", nameof(auth));
             }
 
-            _phrase = phrase;
+            _phrase = phrase ?? throw new ArgumentNullException(nameof(phrase));
             AuthenticationProvider = auth;
         }
 
@@ -123,52 +118,39 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentException($"Encryption key length has to 32 bytes or more. Current: {key.Length}.", nameof(key));
             }
 
+            //privacyParameters = GetSalt(engineBoots);
+            //byte[] privParamHash = authDigest.ComputeHash(privacyParameters, 0, privacyParameters.Length);
+            //privacyParameters = new byte[8];
+            //Buffer.BlockCopy(privParamHash, 0, privacyParameters, 0, 8);
+
             var iv = GetIV(key, privacyParameters);
 
             // DES uses 8 byte keys but we need 16 to encrypt ScopedPdu. Get first 8 bytes and use them as encryption key
             var outKey = GetKey(key);
-
-            var div = (int)Math.Floor(unencryptedData.Length / 8.0);
-            if ((unencryptedData.Length % 8) != 0)
+            byte[] encryptedData = null;
+            using (TripleDES des = TripleDES.Create())
             {
-                div += 1;
-            }
-
-            var newLength = div * 8;
-            var result = new byte[newLength];
-            var buffer = new byte[newLength];
-
-            var inbuffer = new byte[8];
-            var cipherText = iv;
-            var posIn = 0;
-            var posResult = 0;
-            Buffer.BlockCopy(unencryptedData, 0, buffer, 0, unencryptedData.Length);
-
-            using (DES des = DES.Create())
-            {
-                des.Mode = CipherMode.ECB;
+                des.Mode = CipherMode.CBC;
                 des.Padding = PaddingMode.None;
 
-                using (var transform = des.CreateEncryptor(outKey, null))
+                using (var transform = des.CreateEncryptor(outKey, iv))
                 {
-                    for (var b = 0; b < div; b++)
+                    if ((unencryptedData.Length % 8) == 0)
                     {
-                        for (var i = 0; i < 8; i++)
-                        {
-                            inbuffer[i] = (byte)(buffer[posIn] ^ cipherText[i]);
-                            posIn++;
-                        }
-
-                        transform.TransformBlock(inbuffer, 0, inbuffer.Length, cipherText, 0);
-                        Buffer.BlockCopy(cipherText, 0, result, posResult, cipherText.Length);
-                        posResult += cipherText.Length;
+                        encryptedData = transform.TransformFinalBlock(unencryptedData, 0, unencryptedData.Length);
+                    }
+                    else
+                    {
+                        byte[] tmpbuffer = new byte[8 * ((unencryptedData.Length / 8) + 1)];
+                        Buffer.BlockCopy(unencryptedData, 0, tmpbuffer, 0, unencryptedData.Length);
+                        encryptedData = transform.TransformFinalBlock(tmpbuffer, 0, tmpbuffer.Length);
                     }
                 }
 
                 des.Clear();
             }
 
-            return result;
+            return encryptedData;
 #endif
         }
 
@@ -222,24 +204,17 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentOutOfRangeException(nameof(key), "Decryption key has to be at least 16 bytes long.");
             }
 
-            var iv = new byte[8];
-            for (var i = 0; i < 8; ++i)
-            {
-                iv[i] = (byte)(key[8 + i] ^ privacyParameters[i]);
-            }
-
-            using (DES des = DES.Create())
+            var iv = GetIV(key, privacyParameters);
+            using (TripleDES des = TripleDES.Create())
             {
                 des.Mode = CipherMode.CBC;
                 des.Padding = PaddingMode.Zeros;
 
-                // .NET implementation only takes an 8 byte key
-                var outKey = new byte[8];
-                Buffer.BlockCopy(key, 0, outKey, 0, 8);
+                // normalize key - generated key is 32 bytes long, we need 24 bytes to encrypt
+                var outKey = new byte[24];
+                Buffer.BlockCopy(key, 0, outKey, 0, outKey.Length);
 
-                des.Key = outKey;
-                des.IV = iv;
-                using (var transform = des.CreateDecryptor())
+                using (var transform = des.CreateDecryptor(outKey, iv))
                 {
                     var decryptedData = transform.TransformFinalBlock(encryptedData, 0, encryptedData.Length);
                     des.Clear();
@@ -252,7 +227,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// <summary>
         /// Generate IV from the privacy key and salt value returned by GetSalt method.
         /// </summary>
-        /// <param name="privacyKey">16 byte privacy key</param>
+        /// <param name="privacyKey">32 byte privacy key</param>
         /// <param name="salt">Salt value returned by GetSalt method</param>
         /// <returns>IV value used in the encryption process</returns>
         private static byte[] GetIV(IList<byte> privacyKey, IList<byte> salt)
@@ -265,7 +240,7 @@ namespace Lextm.SharpSnmpLib.Security
             var iv = new byte[8];
             for (var i = 0; i < iv.Length; i++)
             {
-                iv[i] = (byte)(salt[i] ^ privacyKey[8 + i]);
+                iv[i] = (byte)(salt[i] ^ privacyKey[24 + i]);
             }
 
             return iv;
@@ -280,13 +255,13 @@ namespace Lextm.SharpSnmpLib.Security
         /// <returns>8 byte DES encryption password</returns>
         private static byte[] GetKey(byte[] privacyPassword)
         {
-            if (privacyPassword.Length < 16)
+            if (privacyPassword.Length < 32)
             {
                 throw new ArgumentException("Invalid privacy key length.", nameof(privacyPassword));
             }
 
-            var key = new byte[8];
-            Buffer.BlockCopy(privacyPassword, 0, key, 0, 8);
+            var key = new byte[24];
+            Buffer.BlockCopy(privacyPassword, 0, key, 0, key.Length);
             return key;
         }
 
@@ -317,7 +292,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// </summary>
         public static int MaximumKeyLength
         {
-            get { return 16; }
+            get { return 32; }
         }
 
 #region IPrivacyProvider Members
@@ -431,7 +406,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// <returns></returns>
         public override string ToString()
         {
-            return "DES privacy provider";
+            return "3DES privacy provider";
         }
     }
 }
