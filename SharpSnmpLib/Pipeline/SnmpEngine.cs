@@ -46,7 +46,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <param name="factory">The factory.</param>
         /// <param name="listener">The listener.</param>
         /// <param name="group">Engine core group.</param>
-        public SnmpEngine(SnmpApplicationFactory factory, Listener listener, EngineGroup group)
+        public SnmpEngine(SnmpApplicationFactory factory, IListener listener, EngineGroup group)
         {
             _factory = factory;
             Listener = listener;
@@ -98,7 +98,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// Gets or sets the listener.
         /// </summary>
         /// <value>The listener.</value>
-        public Listener Listener { get; private set; }
+        public IListener Listener { get; private set; }
 
         private void ListenerMessageReceived(object sender, MessageReceivedEventArgs e)
         {
@@ -158,11 +158,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1300:SpecifyMessageBoxOptions")]
         private void ListenerExceptionRaised(object sender, ExceptionRaisedEventArgs e)
         {
-            var handler = ExceptionRaised;
-            if (handler != null)
-            {
-                handler(sender, e);
-            }
+            ExceptionRaised?.Invoke(sender, e);
         }        
         
         /// <summary>

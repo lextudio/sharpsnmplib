@@ -1,4 +1,4 @@
-// Listener class.
+﻿// Listener class.
 // Copyright (C) 2008-2010 Malcolm Crowe, Lex Li, and other contributors.
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this
@@ -31,13 +31,14 @@ using System.Linq;
 using System.Net;
 using Lextm.SharpSnmpLib.Security;
 using System.Threading.Tasks;
+using SharpSnmpLib.DTLS;
 
 namespace Lextm.SharpSnmpLib.Messaging
 {
     /// <summary>
     /// Listener class.
     /// </summary>
-    public sealed class Listener : IListener
+    public sealed class SecureListener : IListener
     {
         private UserRegistry _users;
         private bool _disposed;
@@ -55,18 +56,18 @@ namespace Lextm.SharpSnmpLib.Messaging
         public const string ErrorIPv6NotSupported = "cannot use IP v6 as the OS does not support it";
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Listener"/> class.
+        /// Initializes a new instance of the <see cref="List"/> class.
         /// </summary>
-        public Listener()
+        public SecureListener()
         {
             Bindings = new List<IListenerBinding>();
         }
 
         /// <summary>
         /// Releases unmanaged resources and performs other cleanup operations before the
-        /// <see cref="Listener"/> is reclaimed by garbage collection.
+        /// <see cref="List"/> is reclaimed by garbage collection.
         /// </summary>
-        ~Listener()
+        ~SecureListener()
         {
             Dispose(false);
         }
@@ -136,7 +137,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this <see cref="Listener"/> is active.
+        /// Gets or sets a value indicating whether this <see cref="List"/> is active.
         /// </summary>
         /// <value><c>true</c> if active; otherwise, <c>false</c>.</value>
         public bool Active { get; private set; }
@@ -265,7 +266,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 return;
             }
 
-            var binding = new ListenerBinding(Users, endpoint);
+            var binding = new SecureListenerBinding(Users, endpoint);
             binding.ExceptionRaised += (o, args) =>
             {
                 ExceptionRaised?.Invoke(o, args);

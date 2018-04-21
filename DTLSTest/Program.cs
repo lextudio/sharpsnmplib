@@ -1,30 +1,22 @@
-﻿/*
- * Created by SharpDevelop.
- * User: lextm
- * Date: 2008/4/23
- * Time: 19:41
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
- */
-using System;
-using System.Net;
-using Lextm.SharpSnmpLib;
-using Lextm.SharpSnmpLib.Pipeline;
-using Lextm.SharpSnmpLib.Security;
+﻿using Lextm.SharpSnmpLib;
 using Lextm.SharpSnmpLib.Messaging;
 using Lextm.SharpSnmpLib.Objects;
+using Lextm.SharpSnmpLib.Pipeline;
+using Lextm.SharpSnmpLib.Security;
+using SharpSnmpLib.DTLS;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace SnmpD
+namespace DTLSTest
 {
-    internal static class Program
+    class Program
     {
-        public static void Main(string[] args)
+        static void Main(string[] args)
         {
-            if (args.Length != 0)
-            {
-                return;
-            }
-
             var store = new ObjectStore();
             store.Add(new SysDescr());
             store.Add(new SysObjectId());
@@ -47,7 +39,7 @@ namespace SnmpD
             }
 
             var getv1 = new GetV1MessageHandler();
-            var getv1Mapping = new HandlerMapping("v1", "GET", getv1);            
+            var getv1Mapping = new HandlerMapping("v1", "GET", getv1);
 
             var getv23 = new GetMessageHandler();
             var getv23Mapping = new HandlerMapping("v2,v3", "GET", getv23);
@@ -83,27 +75,15 @@ namespace SnmpD
             });
 
             var pipelineFactory = new SnmpApplicationFactory(store, membership, handlerFactory);
-            using (var engine = new SnmpEngine(pipelineFactory, new Listener { Users = users }, new EngineGroup()))
+            using (var engine = new SnmpEngine(pipelineFactory, new SecureListener { Users = users }, new EngineGroup()))
             {
                 engine.Listener.AddBinding(new IPEndPoint(IPAddress.Any, 161));
-                engine.Listener.ExceptionRaised += Engine_ExceptionRaised;
-                engine.Listener.MessageReceived += RequestReceived;
                 engine.Start();
                 Console.WriteLine("#SNMP is available at https://sharpsnmp.com");
                 Console.WriteLine("Press any key to stop . . . ");
                 Console.Read();
                 engine.Stop();
             }
-        }
-
-        private static void Engine_ExceptionRaised(object sender, ExceptionRaisedEventArgs e)
-        {
-            Console.WriteLine("Exception occurred: {0}", e.Exception);
-        }
-
-        private static void RequestReceived(object sender, MessageReceivedEventArgs e)
-        {
-            Console.WriteLine("Message version {0}: {1}", e.Message.Version, e.Message);
         }
     }
 }

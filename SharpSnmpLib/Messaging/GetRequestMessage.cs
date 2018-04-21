@@ -168,7 +168,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
         }
 
-        internal GetRequestMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, IPrivacyProvider privacy, byte[] length)
+        public GetRequestMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, IPrivacyProvider privacy, byte[] length)
         {
             if (scope == null)
             {

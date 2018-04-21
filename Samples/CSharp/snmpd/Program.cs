@@ -8,9 +8,6 @@
  */
 using System;
 using System.Windows.Forms;
-using Lextm.SharpSnmpLib.Objects;
-using Lextm.SharpSnmpLib.Pipeline;
-using Lextm.SharpSnmpLib.Security;
 
 namespace Lextm.SharpSnmpLib.Agent
 {

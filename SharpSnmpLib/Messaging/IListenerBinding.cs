@@ -26,7 +26,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// <summary>
     /// Listener binding interface.
     /// </summary>
-    public interface IListenerBinding
+    public interface IListenerBinding : IDisposable
     {
         /// <summary>
         /// Sends a response message.
@@ -50,5 +50,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Endpoint.
         /// </summary>
         IPEndPoint Endpoint { get; }
+
+        void Stop();
+        Task StartAsync();
+        void Start();
     }
 }
