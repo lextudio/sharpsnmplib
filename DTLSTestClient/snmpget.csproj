@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6F51F1DD-00F1-4D9B-BD25-4CBE12E41536}</ProjectGuid>
+    <ProjectGuid>{FF08E046-56CF-42AF-91B7-59BDB881601E}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>DTLSTest</RootNamespace>
-    <AssemblyName>DTLSTest</AssemblyName>
+    <RootNamespace>DTLSTestClient</RootNamespace>
+    <AssemblyName>snmpget</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -47,9 +47,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="TestServer.pem">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SharpSnmpLib.DTLS\SharpSnmpLib.DTLS.csproj">
@@ -60,6 +57,11 @@
       <Project>{7bc38e05-9b86-4654-b81a-bf153edaf9db}</Project>
       <Name>SharpSnmpLib</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Mono.Options">
+      <Version>5.3.0.1</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

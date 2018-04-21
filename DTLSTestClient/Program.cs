@@ -36,8 +36,12 @@ namespace SnmpGet
             string privacy = string.Empty;
             string privPhrase = string.Empty;
             bool dump = false;
+            string serverCertificate = string.Empty;
+            string clientCertificate = string.Empty;
 
             OptionSet p = new OptionSet()
+                .Add("Tt:", "Server certificate", delegate (string v) { serverCertificate = v; })
+                .Add("To:", "Client certificate", delegate (string v) { clientCertificate = v; })
                 .Add("c:", "Community name, (default is public)", delegate (string v) { if (v != null) community = v; })
                 .Add("l:", "Security level, (default is noAuthNoPriv)", delegate (string v)
                 {
@@ -166,10 +170,18 @@ namespace SnmpGet
 
                 if (string.IsNullOrEmpty(user))
                 {
-                    Console.WriteLine("User name need to be specified for v3.");
+                    if (string.IsNullOrEmpty(serverCertificate))
+                    {
+                        Console.WriteLine("User name need to be specified for v3.");
+                        return;
+                    }
+
+                    // TSM.
+
                     return;
                 }
 
+                // USM.
                 IAuthenticationProvider auth = (level & Levels.Authentication) == Levels.Authentication
                                                    ? GetAuthenticationProviderByName(authentication, authPhrase)
                                                    : DefaultAuthenticationProvider.Instance;

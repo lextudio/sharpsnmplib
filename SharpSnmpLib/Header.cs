@@ -31,9 +31,9 @@ namespace Lextm.SharpSnmpLib
         private readonly Integer32 _maxSize;
         private readonly OctetString _flags;
         private readonly Integer32 _securityModel;
-        private static readonly Integer32 DefaultSecurityModel = new Integer32(3);
+        private static readonly Integer32 UserSecurityModel = new Integer32(3);
+        private static readonly Integer32 TransportSecurityModel = new Integer32(4);
         private static readonly Integer32 DefaultMaxMessageSize = new Integer32(MaxMessageSize);
-        private static readonly Header EmptyHeader = new Header();
         private readonly Sequence _container;
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace Lextm.SharpSnmpLib
         public const int MaxMessageSize = 0xFFE3;
 
         private Header() : this(null, DefaultMaxMessageSize, 0)
-        {            
+        {
         }
 
         /// <summary>
@@ -84,27 +84,31 @@ namespace Lextm.SharpSnmpLib
         /// <param name="securityLevel">The security level.</param>
         /// <remarks>If you want an empty header, please use <see cref="Empty"/>.</remarks>
         public Header(Integer32 messageId, Integer32 maxMessageSize, Levels securityLevel)
+            : this(messageId, maxMessageSize, securityLevel, UserSecurityModel)
         {
-            if (maxMessageSize == null)
-            {
-                throw new ArgumentNullException(nameof(maxMessageSize));
-            }
+        }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Header"/> class.
+        /// </summary>
+        /// <param name="messageId">The message id.</param>
+        /// <param name="maxMessageSize">Size of the max message.</param>
+        /// <param name="securityLevel">The security level.</param>
+        /// <remarks>If you want an empty header, please use <see cref="Empty"/>.</remarks>
+        public Header(Integer32 messageId, Integer32 maxMessageSize, Levels securityLevel, Integer32 securityModel)
+        {
             _messageId = messageId;
-            _maxSize = maxMessageSize;
+            _maxSize = maxMessageSize ?? throw new ArgumentNullException(nameof(maxMessageSize));
             SecurityLevel = securityLevel;
             _flags = new OctetString(SecurityLevel);
-            _securityModel = DefaultSecurityModel;
+            _securityModel = securityModel;
         }
-        
+
         /// <summary>
         /// Empty header.
         /// </summary>
-        public static Header Empty
-        {
-            get { return EmptyHeader; }
-        }        
-        
+        public static Header Empty { get; } = new Header();
+
         /// <summary>
         /// Security flags.
         /// </summary>
