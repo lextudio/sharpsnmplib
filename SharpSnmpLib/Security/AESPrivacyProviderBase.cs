@@ -69,6 +69,11 @@ namespace Lextm.SharpSnmpLib.Security
         /// <param name="auth">The authentication provider.</param>
         protected AESPrivacyProviderBase(int keyBytes, OctetString phrase, IAuthenticationProvider auth)
         {
+            if (keyBytes != 16 && keyBytes != 24 && keyBytes != 32)
+            {
+                throw new ArgumentOutOfRangeException(nameof(keyBytes), "Valid key sizes are 16, 24 and 32 bytes.");
+            }
+
             if (auth == null)
             {
                 throw new ArgumentNullException(nameof(auth));
@@ -109,7 +114,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// in the USM header to store this information</param>
         /// <returns>Encrypted byte array</returns>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when encryption key is null or length of the encryption key is too short.</exception>
-        internal static byte[] Encrypt(byte[] unencryptedData, byte[] key, int engineBoots, int engineTime, byte[] privacyParameters)
+        internal byte[] Encrypt(byte[] unencryptedData, byte[] key, int engineBoots, int engineTime, byte[] privacyParameters)
         {
 #if NETSTANDARD1_3
             throw new PlatformNotSupportedException();
@@ -195,7 +200,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// <exception cref="ArgumentNullException">Thrown when encrypted data is null or length == 0</exception>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when encryption key length is less then 32 byte or if privacy parameters
         /// argument is null or length other then 8 bytes</exception>
-        internal static byte[] Decrypt(byte[] encryptedData, byte[] key, int engineBoots, int engineTime, byte[] privacyParameters)
+        internal byte[] Decrypt(byte[] encryptedData, byte[] key, int engineBoots, int engineTime, byte[] privacyParameters)
         {
 #if NETSTANDARD1_3
             throw new PlatformNotSupportedException();
@@ -292,7 +297,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// DES protocol itself requires an 8 byte key. Additional 8 bytes are used for generating the
         /// encryption IV. For encryption itself, first 8 bytes of the key are used.
         /// </summary>
-        private static int MinimumKeyLength
+        private int MinimumKeyLength
         {
             get { return KeyBytes; }
         }
@@ -303,12 +308,12 @@ namespace Lextm.SharpSnmpLib.Security
         /// DES protocol itself requires an 8 byte key. Additional 8 bytes are used for generating the
         /// encryption IV. For encryption itself, first 8 bytes of the key are used.
         /// </summary>
-        public static int MaximumKeyLength
+        public int MaximumKeyLength
         {
             get { return KeyBytes; }
         }
 
-#region IPrivacyProvider Members
+        #region IPrivacyProvider Members
 
         /// <summary>
         /// Decrypts the specified data.
@@ -336,7 +341,7 @@ namespace Lextm.SharpSnmpLib.Security
 
             var octets = (OctetString)data;
             var bytes = octets.GetRaw();
-            var pkey = AuthenticationProvider.PasswordToKey(_phrase.GetRaw(), parameters.EngineId.GetRaw());
+            var pkey = PasswordToKey(_phrase.GetRaw(), parameters.EngineId.GetRaw());
 
             // decode encrypted packet
             var decrypted = Decrypt(bytes, pkey, parameters.EngineBoots.ToInt32(), parameters.EngineTime.ToInt32(), parameters.PrivacyParameters.GetRaw());
@@ -366,7 +371,7 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentException("Invalid data type.", nameof(data));
             }
 
-            var pkey = AuthenticationProvider.PasswordToKey(_phrase.GetRaw(), parameters.EngineId.GetRaw());
+            var pkey = PasswordToKey(_phrase.GetRaw(), parameters.EngineId.GetRaw());
             var bytes = data.ToBytes();
             var reminder = bytes.Length % 8;
             var count = reminder == 0 ? 0 : 8 - reminder;
@@ -394,8 +399,61 @@ namespace Lextm.SharpSnmpLib.Security
             get { return new OctetString(_salt.GetSaltBytes()); }
         }
 
-        public static int KeyBytes { get; private set; } = 16;
+        public int KeyBytes { get; private set; } = 16;
+
+        public byte[] PasswordToKey(byte[] secret, byte[] engineId)
+        {
+            var pkey = AuthenticationProvider.PasswordToKey(secret, engineId);
+            if (pkey.Length < MinimumKeyLength)
+            {
+                pkey = ExtendShortKey(pkey, secret, engineId, AuthenticationProvider);
+            }
+
+            return pkey;
+        }
 
         #endregion
+
+        /// <summary>
+		/// Some protocols support a method to extend the encryption or decryption key when supplied key
+		/// is too short.
+		/// </summary>
+		/// <param name="shortKey">Key that needs to be extended</param>
+		/// <param name="password">Privacy password as configured on the SNMP agent.</param>
+		/// <param name="engineID">Authoritative engine id. Value is retrieved as part of SNMP v3 discovery procedure</param>
+		/// <param name="authProtocol">Authentication protocol class instance cast as <see cref="IAuthenticationDigest"/></param>
+		/// <returns>Extended key value</returns>
+		public byte[] ExtendShortKey(byte[] shortKey, byte[] password, byte[] engineID, IAuthenticationProvider authProtocol)
+        {
+            byte[] extKey = new byte[MinimumKeyLength];
+            byte[] lastKeyBuf = new byte[shortKey.Length];
+            Array.Copy(shortKey, lastKeyBuf, shortKey.Length);
+            int keyLen = shortKey.Length > MinimumKeyLength ? MinimumKeyLength : shortKey.Length;
+            Array.Copy(shortKey, extKey, keyLen);
+            while (keyLen < MinimumKeyLength)
+            {
+                byte[] tmpBuf = authProtocol.PasswordToKey(lastKeyBuf, engineID);
+                if (tmpBuf == null)
+                {
+                    return null;
+                }
+
+                if (tmpBuf.Length <= (MinimumKeyLength - keyLen))
+                {
+                    Array.Copy(tmpBuf, 0, extKey, keyLen, tmpBuf.Length);
+                    keyLen += tmpBuf.Length;
+                }
+                else
+                {
+                    Array.Copy(tmpBuf, 0, extKey, keyLen, MinimumKeyLength - keyLen);
+                    keyLen += (MinimumKeyLength - keyLen);
+                }
+
+                lastKeyBuf = new byte[tmpBuf.Length];
+                Array.Copy(tmpBuf, lastKeyBuf, tmpBuf.Length);
+            }
+
+            return extKey;
+        }
     }
 }

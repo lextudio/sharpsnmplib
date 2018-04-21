@@ -398,6 +398,11 @@ namespace Lextm.SharpSnmpLib.Security
             get { return new OctetString(_salt.GetSaltBytes()); }
         }
 
+        public byte[] PasswordToKey(byte[] secret, byte[] engineId)
+        {
+            return AuthenticationProvider.PasswordToKey(secret, engineId);
+        }
+
         #endregion
 
         /// <summary>

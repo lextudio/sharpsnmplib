@@ -96,7 +96,7 @@ namespace Lextm.SharpSnmpLib.Unit.Security
         [Fact]
         public void TestEncrypt()
         {
-            if (!AESPrivacyProvider.IsSupported)
+            if (!AESPrivacyProviderBase.IsSupported)
             {
                 return;
             }
@@ -104,7 +104,7 @@ namespace Lextm.SharpSnmpLib.Unit.Security
             byte[] decrypted =
                 ByteTool.Convert(
                     "30  2D  04 0D 80 00 1F 88 80  E9 63 00 00  D6 1F F4 49 04 00 A0 1A 02 02 3A 25  02 01 00 02  01 00 30 0E  30 0C 06 08 2B 06 01 02  01 01 03 00  05 00 01");
-            byte[] fake = AESPrivacyProvider.Encrypt(decrypted,
+            byte[] fake = new AESPrivacyProvider(OctetString.Empty, new MD5AuthenticationProvider(new OctetString("anything"))).Encrypt(decrypted,
                 new byte[]
                 {
                     0x37, 0xc6, 0x4c, 0xad, 0x49, 0x37, 0xfe, 0xda, 0x57, 0xc8, 0x48, 0x53, 0x47, 0x2a, 0x2e, 0xc0
@@ -119,7 +119,7 @@ namespace Lextm.SharpSnmpLib.Unit.Security
         [Fact]
         public void TestEncrypt2()
         {
-            if (!AESPrivacyProvider.IsSupported)
+            if (!AESPrivacyProviderBase.IsSupported)
             {
                 return;
             }

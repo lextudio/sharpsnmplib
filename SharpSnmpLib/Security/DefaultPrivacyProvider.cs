@@ -123,6 +123,11 @@ namespace Lextm.SharpSnmpLib.Security
             get { return OctetString.Empty; }
         }
 
+        public byte[] PasswordToKey(byte[] secret, byte[] engineId)
+        {
+            return AuthenticationProvider.PasswordToKey(secret, engineId);
+        }
+
         #endregion
 
         /// <summary>
