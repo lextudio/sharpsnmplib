@@ -18,7 +18,14 @@ Module Program
             Dim users As UserRegistry = New UserRegistry()
             users.Add(New OctetString("neither"), DefaultPrivacyProvider.DefaultPair)
             users.Add(New OctetString("authen"), New DefaultPrivacyProvider(New MD5AuthenticationProvider(New OctetString("authentication"))))
-            users.Add(New OctetString("privacy"), New DESPrivacyProvider(New OctetString("privacyphrase"), New MD5AuthenticationProvider(New OctetString("authentication"))))
+            If DESPrivacyProvider.IsSupported Then
+                users.Add(New OctetString("privacy"), New DESPrivacyProvider(New OctetString("privacyphrase"), New MD5AuthenticationProvider(New OctetString("authentication"))))
+            End If
+            If AESPrivacyProviderBase.IsSupported Then
+                users.Add(New OctetString("aes"), New AESPrivacyProvider(New OctetString("privacyphrase"), New MD5AuthenticationProvider(New OctetString("authentication"))))
+                users.Add(New OctetString("aes192"), New AES192PrivacyProvider(New OctetString("privacyphrase"), New MD5AuthenticationProvider(New OctetString("authentication"))))
+                users.Add(New OctetString("aes256"), New AES256PrivacyProvider(New OctetString("privacyphrase"), New MD5AuthenticationProvider(New OctetString("authentication"))))
+            End If
             Dim trapv As TrapV1MessageHandler = New TrapV1MessageHandler()
             AddHandler trapv.MessageReceived, AddressOf Program.WatcherTrapV1Received
             Dim trapv1Mapping As HandlerMapping = New HandlerMapping("v1", "TRAPV1", trapv)

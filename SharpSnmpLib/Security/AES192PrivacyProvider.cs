@@ -29,22 +29,22 @@
 namespace Lextm.SharpSnmpLib.Security
 {
     /// <summary>
-    /// Privacy provider for AES 128.
+    /// Privacy provider for AES 192.
     /// </summary>
     /// <remarks>
     /// This is an experimental port from SNMP#NET project. As AES is not part of SNMP RFC, this class is provided as it is.
     /// If you want other AES providers, you can port them from SNMP#NET in a similar manner.
     /// </remarks>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "AES", Justification = "definition")]
-    public sealed class AESPrivacyProvider : AESPrivacyProviderBase
+    public sealed class AES192PrivacyProvider : AESPrivacyProviderBase
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="AESPrivacyProvider"/> class.
+        /// Initializes a new instance of the <see cref="AES192PrivacyProvider"/> class.
         /// </summary>
         /// <param name="phrase">The phrase.</param>
         /// <param name="auth">The authentication provider.</param>
-        public AESPrivacyProvider(OctetString phrase, IAuthenticationProvider auth)
-            : base(16, phrase, auth)
+        public AES192PrivacyProvider(OctetString phrase, IAuthenticationProvider auth)
+            : base(24, phrase, auth)
         { }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// <returns></returns>
         public override string ToString()
         {
-            return "AES 128 privacy provider";
+            return "AES 192 privacy provider";
         }
     }
 }

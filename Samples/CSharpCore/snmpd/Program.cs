@@ -46,8 +46,15 @@ namespace SnmpD
                 users.Add(new OctetString("privacy"), new DESPrivacyProvider(new OctetString("privacyphrase"), new MD5AuthenticationProvider(new OctetString("authentication"))));
             }
 
+            if (AESPrivacyProviderBase.IsSupported)
+            {
+                users.Add(new OctetString("aes"), new AESPrivacyProvider(new OctetString("privacyphrase"), new MD5AuthenticationProvider(new OctetString("authentication"))));
+                users.Add(new OctetString("aes192"), new AES192PrivacyProvider(new OctetString("privacyphrase"), new MD5AuthenticationProvider(new OctetString("authentication"))));
+                users.Add(new OctetString("aes256"), new AES256PrivacyProvider(new OctetString("privacyphrase"), new MD5AuthenticationProvider(new OctetString("authentication"))));
+            }
+
             var getv1 = new GetV1MessageHandler();
-            var getv1Mapping = new HandlerMapping("v1", "GET", getv1);            
+            var getv1Mapping = new HandlerMapping("v1", "GET", getv1);
 
             var getv23 = new GetMessageHandler();
             var getv23Mapping = new HandlerMapping("v2,v3", "GET", getv23);
