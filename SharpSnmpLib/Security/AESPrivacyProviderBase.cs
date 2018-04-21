@@ -415,15 +415,15 @@ namespace Lextm.SharpSnmpLib.Security
         #endregion
 
         /// <summary>
-		/// Some protocols support a method to extend the encryption or decryption key when supplied key
-		/// is too short.
-		/// </summary>
-		/// <param name="shortKey">Key that needs to be extended</param>
-		/// <param name="password">Privacy password as configured on the SNMP agent.</param>
-		/// <param name="engineID">Authoritative engine id. Value is retrieved as part of SNMP v3 discovery procedure</param>
-		/// <param name="authProtocol">Authentication protocol class instance cast as <see cref="IAuthenticationDigest"/></param>
-		/// <returns>Extended key value</returns>
-		public byte[] ExtendShortKey(byte[] shortKey, byte[] password, byte[] engineID, IAuthenticationProvider authProtocol)
+        /// Some protocols support a method to extend the encryption or decryption key when supplied key
+        /// is too short.
+        /// </summary>
+        /// <param name="shortKey">Key that needs to be extended</param>
+        /// <param name="password">Privacy password as configured on the SNMP agent.</param>
+        /// <param name="engineID">Authoritative engine id. Value is retrieved as part of SNMP v3 discovery procedure</param>
+        /// <param name="authProtocol">Authentication protocol class instance cast as <see cref="IAuthenticationDigest"/></param>
+        /// <returns>Extended key value</returns>
+        public byte[] ExtendShortKey(byte[] shortKey, byte[] password, byte[] engineID, IAuthenticationProvider authProtocol)
         {
             byte[] extKey = new byte[MinimumKeyLength];
             byte[] lastKeyBuf = new byte[shortKey.Length];

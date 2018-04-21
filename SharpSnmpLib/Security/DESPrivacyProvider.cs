@@ -348,7 +348,7 @@ namespace Lextm.SharpSnmpLib.Security
 
             var octets = (OctetString)data;
             var bytes = octets.GetRaw();
-            var pkey = AuthenticationProvider.PasswordToKey(_phrase.GetRaw(), parameters.EngineId.GetRaw());
+            var pkey = PasswordToKey(_phrase.GetRaw(), parameters.EngineId.GetRaw());
 
             try
             {
@@ -395,7 +395,7 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentException("Invalid data type.", nameof(data));
             }
 
-            var pkey = AuthenticationProvider.PasswordToKey(_phrase.GetRaw(), parameters.EngineId.GetRaw());
+            var pkey = PasswordToKey(_phrase.GetRaw(), parameters.EngineId.GetRaw());
             var bytes = data.ToBytes();
             var reminder = bytes.Length % 8;
             var count = reminder == 0 ? 0 : 8 - reminder;

@@ -36,7 +36,6 @@ namespace Lextm.SharpSnmpLib.Security
         private static readonly Object Sha1KeyCacheLock = new object();
 
         private readonly byte[] _password;
-        private const int DigestLength = 12;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SHA1AuthenticationProvider"/> class.
@@ -179,6 +178,8 @@ namespace Lextm.SharpSnmpLib.Security
                 return new OctetString(result);
             }
         }
+
+        public int DigestLength => 12;
 
         #endregion
 

@@ -49,5 +49,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// <param name="length">The length bytes.</param>
         /// <returns></returns>
         OctetString ComputeHash(VersionCode version, ISegment header, SecurityParameters parameters, ISnmpData data, IPrivacyProvider privacy, byte[] length);
+
+        int DigestLength { get; }
     }
 }

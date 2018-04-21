@@ -34,8 +34,7 @@ namespace Lextm.SharpSnmpLib.Security
         private static readonly object Md5KeyCacheLock = new object();
 
         private readonly byte[] _password;
-        private const int DigestLength = 12;
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MD5AuthenticationProvider"/> class.
         /// </summary>
@@ -180,6 +179,8 @@ namespace Lextm.SharpSnmpLib.Security
                 return new OctetString(result);
             }
         }
+
+        public int DigestLength => 12;
 
         #endregion
 

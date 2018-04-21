@@ -129,6 +129,8 @@ namespace Lextm.SharpSnmpLib.Security
             return new byte[0];
         }
 
+        public int DigestLength => 0;
+
         #endregion
 
         /// <summary>

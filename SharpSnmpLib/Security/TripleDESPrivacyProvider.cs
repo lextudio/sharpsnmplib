@@ -323,7 +323,7 @@ namespace Lextm.SharpSnmpLib.Security
 
             var octets = (OctetString)data;
             var bytes = octets.GetRaw();
-            var pkey = AuthenticationProvider.PasswordToKey(_phrase.GetRaw(), parameters.EngineId.GetRaw());
+            var pkey = PasswordToKey(_phrase.GetRaw(), parameters.EngineId.GetRaw());
 
             try
             {
@@ -370,7 +370,7 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentException("Invalid data type.", nameof(data));
             }
 
-            var pkey = AuthenticationProvider.PasswordToKey(_phrase.GetRaw(), parameters.EngineId.GetRaw());
+            var pkey = PasswordToKey(_phrase.GetRaw(), parameters.EngineId.GetRaw());
             var bytes = data.ToBytes();
             var reminder = bytes.Length % 8;
             var count = reminder == 0 ? 0 : 8 - reminder;
@@ -400,7 +400,33 @@ namespace Lextm.SharpSnmpLib.Security
 
         public byte[] PasswordToKey(byte[] secret, byte[] engineId)
         {
-            return AuthenticationProvider.PasswordToKey(secret, engineId);
+            byte[] encryptionKey = AuthenticationProvider.PasswordToKey(secret, engineId);
+            if (encryptionKey.Length < MinimumKeyLength)
+            {
+                encryptionKey = ExtendShortKey(encryptionKey, secret, engineId, AuthenticationProvider);
+            }
+
+            return encryptionKey;
+        }
+
+        private byte[] ExtendShortKey(byte[] shortKey, byte[] password, byte[] engineID, IAuthenticationProvider authProtocol)
+        {
+            int length = shortKey.Length;
+            byte[] extendedKey = new byte[MinimumKeyLength];
+            Buffer.BlockCopy(shortKey, 0, extendedKey, 0, shortKey.Length);
+
+            while (length < MinimumKeyLength)
+            {
+                byte[] key =
+                    authProtocol.PasswordToKey(shortKey,
+                                               engineID);
+                int copyBytes = Math.Min(MaximumKeyLength - length,
+                                         authProtocol.DigestLength);
+                Buffer.BlockCopy(key, 0, extendedKey, length, copyBytes);
+                length += copyBytes;
+            }
+
+            return extendedKey;
         }
 
         #endregion
