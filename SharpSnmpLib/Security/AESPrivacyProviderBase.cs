@@ -53,8 +53,6 @@ namespace Lextm.SharpSnmpLib.Security
             {
 #if NETSTANDARD1_3
                 return false;
-#elif NETSTANDARD2_0
-                return false;
 #elif NETCOREAPP2_0
                 return false;
 #else
