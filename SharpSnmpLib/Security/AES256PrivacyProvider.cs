@@ -44,7 +44,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// <param name="phrase">The phrase.</param>
         /// <param name="auth">The authentication provider.</param>
         public AES256PrivacyProvider(OctetString phrase, IAuthenticationProvider auth)
-            : base(24, phrase, auth)
+            : base(32, phrase, auth)
         { }
 
         /// <summary>
