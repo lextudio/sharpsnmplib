@@ -1,7 +1,7 @@
 # See http://docs.travis-ci.com/user/languages/csharp/ for details
 
 language: csharp
-dotnet: 2.1.4
+dotnet: 2.1.200
 dist: trusty
 
 # We need to install the .NET Core 1.0 runtime to run netcoreapp1.0
