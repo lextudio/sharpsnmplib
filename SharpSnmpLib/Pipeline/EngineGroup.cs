@@ -42,9 +42,10 @@ namespace Lextm.SharpSnmpLib.Pipeline
         /// <summary>
         /// Initializes a new instance of the <see cref="EngineGroup"/> class.
         /// </summary>
-        public EngineGroup()
+        public EngineGroup(byte[] engineId = null)
         {
             _start = DateTime.UtcNow;
+            if (engineId != null) { _engineId = new OctetString(engineId); }
         }
         
         /// <summary>
