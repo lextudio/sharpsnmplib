@@ -27,8 +27,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
     /// </summary>
     public sealed class EngineGroup
     {
-        private readonly OctetString _engineId =
-            new OctetString(new byte[] { 128, 0, 31, 136, 128, 233, 99, 0, 0, 214, 31, 244 });
+        private readonly OctetString _engineId;
         
         private readonly DateTime _start;
         private uint _counterNotInTimeWindow;
@@ -44,7 +43,11 @@ namespace Lextm.SharpSnmpLib.Pipeline
         public EngineGroup(byte[] engineId = null)
         {
             _start = DateTime.UtcNow;
-            if (engineId != null) { _engineId = new OctetString(engineId); }
+            if(engineId == null) {
+                _engineId = new OctetString(new byte[] { 128, 0, 31, 136, 128, 233, 99, 0, 0, 214, 31, 244 });
+            } else {
+                _engineId = engineId;
+            }            
         }
         
         /// <summary>
