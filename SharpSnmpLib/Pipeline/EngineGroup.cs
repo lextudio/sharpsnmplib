@@ -27,7 +27,6 @@ namespace Lextm.SharpSnmpLib.Pipeline
     /// </summary>
     public sealed class EngineGroup
     {
-        // TODO: make engine ID configurable from outside and unique.
         private readonly OctetString _engineId =
             new OctetString(new byte[] { 128, 0, 31, 136, 128, 233, 99, 0, 0, 214, 31, 244 });
         
