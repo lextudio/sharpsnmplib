@@ -796,6 +796,27 @@ namespace Lextm.SharpSnmpLib.Messaging
         }
 
         /// <summary>
+        /// Gets a value indicating whether it is running on iOS.
+        /// </summary>
+        /// <value><c>true</c> if is running on iOS; otherwise, <c>false</c>.</value>
+
+        public static bool IsRunningOnIOS
+        {
+            get
+            {
+#if NET452
+                return false;
+#elif NETSTANDARD1_3
+                return RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
+#elif XAMARINIOS10
+                return true;
+#else
+                return false;
+#endif
+            }
+        }
+
+        /// <summary>
         /// Packs up the <see cref="ISnmpMessage"/>.
         /// </summary>
         /// <param name="message">The <see cref="ISnmpMessage"/>.</param>

@@ -41,7 +41,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             var result = new Socket(endpoint.AddressFamily, SocketType.Dgram, ProtocolType.Udp);
-            if (!SnmpMessageExtension.IsRunningOnMono)
+            if (!SnmpMessageExtension.IsRunningOnIOS)
             {
                 result.SetSocketOption(
                     endpoint.AddressFamily == AddressFamily.InterNetwork
