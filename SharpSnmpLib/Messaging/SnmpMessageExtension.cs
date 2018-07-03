@@ -343,13 +343,12 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
             catch (SocketException ex)
             {
-                // FIXME: If you use a Mono build without the fix for this issue (https://bugzilla.novell.com/show_bug.cgi?id=599488), please uncomment this code.
-                /*
-                if (SnmpMessageExtension.IsRunningOnMono && ex.ErrorCode == 10035)
+                // IMPORTANT: Mono behavior.
+                if (IsRunningOnMono && ex.SocketErrorCode == SocketError.WouldBlock)
                 {
                     throw TimeoutException.Create(receiver.Address, timeout);
                 }
-                // */
+
 
                 if (ex.SocketErrorCode == SocketError.TimedOut)
                 {
@@ -715,13 +714,12 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
             catch (SocketException ex)
             {
-                // FIXME: If you use a Mono build without the fix for this issue (https://bugzilla.novell.com/show_bug.cgi?id=599488), please uncomment this code.
-                /*
-                if (SnmpMessageExtension.IsRunningOnMono && ex.ErrorCode == 10035)
+                // IMPORTANT: Mono behavior (https://bugzilla.novell.com/show_bug.cgi?id=599488)
+                if (IsRunningOnMono && ex.SocketErrorCode == SocketError.WouldBlock)
                 {
-                    throw TimeoutException.Create(receiver.Address, timeout);
+                    throw TimeoutException.Create(receiver.Address, 0);
                 }
-                // */
+
 
                 if (ex.SocketErrorCode == SocketError.TimedOut)
                 {
