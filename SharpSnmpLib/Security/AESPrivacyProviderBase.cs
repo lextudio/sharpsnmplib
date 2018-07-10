@@ -27,7 +27,7 @@
  */
 using System;
 using System.IO;
-#if NETSTANDARD1_3 || NETCOREAPP2_0
+#if NETCOREAPP2_0
 using Org.BouncyCastle.Crypto.Engines;
 using Org.BouncyCastle.Crypto.Modes;
 using Org.BouncyCastle.Crypto.Paddings;
@@ -58,7 +58,11 @@ namespace Lextm.SharpSnmpLib.Security
         {
             get
             {
+#if NETSTANDARD1_3
+                return false;
+#else
                 return true;
+#endif
             }
         }
 
@@ -117,6 +121,9 @@ namespace Lextm.SharpSnmpLib.Security
         /// <exception cref="ArgumentOutOfRangeException">Thrown when encryption key is null or length of the encryption key is too short.</exception>
         internal byte[] Encrypt(byte[] unencryptedData, byte[] key, int engineBoots, int engineTime, byte[] privacyParameters)
         {
+#if NETSTANDARD1_3
+            throw new PlatformNotSupportedException();
+#else
             // check the key before doing anything else
             if (key == null)
             {
@@ -152,13 +159,12 @@ namespace Lextm.SharpSnmpLib.Security
             // Resize the key, if necessary, to the required length
             Array.Resize(ref key, KeyBytes);
 
-#if NETSTANDARD1_3 || NETCOREAPP2_0
+#if NETCOREAPP2_0
 
             // Encrypt using BouncyCastle
             var blockCipher = new CfbBlockCipher(new AesEngine(), 128);
             var paddedCipher = new PaddedBufferedBlockCipher(blockCipher, new ZeroBytePadding());
             var cipherParameters = new ParametersWithIV(new KeyParameter(key), iv);
-
             paddedCipher.Init(true, cipherParameters);
             byte[] encryptedData = paddedCipher.DoFinal(unencryptedData);
 
@@ -182,12 +188,14 @@ namespace Lextm.SharpSnmpLib.Security
                 }
             }
 
-#endif
+#endif // !NETCOREAPP2_0
 
             // Trim off padding, if necessary
             Array.Resize(ref encryptedData, unencryptedData.Length);
 
             return encryptedData;
+
+#endif // !NETSTANDARD1_3
         }
 
         /// <summary>
@@ -204,6 +212,9 @@ namespace Lextm.SharpSnmpLib.Security
         /// argument is null or length other then 8 bytes</exception>
         internal byte[] Decrypt(byte[] encryptedData, byte[] key, int engineBoots, int engineTime, byte[] privacyParameters)
         {
+#if NETSTANDARD1_3
+            throw new PlatformNotSupportedException();
+#else
             if (key == null)
             {
                 throw new ArgumentNullException(nameof(key));
@@ -248,7 +259,7 @@ namespace Lextm.SharpSnmpLib.Security
                 Buffer.BlockCopy(encryptedData, 0, encryptedDataPadded, 0, encryptedData.Length);
             }
 
-#if NETSTANDARD1_3 || NETCOREAPP2_0
+#if NETCOREAPP2_0
 
             // Decrypt using BouncyCastle
             var blockCipher = new CfbBlockCipher(new AesEngine(), 128);
@@ -276,12 +287,15 @@ namespace Lextm.SharpSnmpLib.Security
                     decryptedData = cryptor.TransformFinalBlock(encryptedDataPadded, 0, encryptedDataPadded.Length);
                 }
             }
-#endif
+
+#endif // !NETCOREAPP2_0
 
             // Trim off padding, if necessary
             Array.Resize(ref decryptedData, encryptedData.Length);
 
             return decryptedData;
+
+#endif // !NETSTANDARD1_3
         }
 
         /// <summary>
