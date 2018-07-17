@@ -23,7 +23,9 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Net;
 using System.Net.Sockets;
+#if NETSTANDARD1_3
 using System.Runtime.InteropServices;
+#endif
 using System.Threading;
 using System.Threading.Tasks;
 using Lextm.SharpSnmpLib.Security;
@@ -124,7 +126,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             return message.Parameters.UserName;
         }
 
-        #region sync methods
+#region sync methods
 
         /// <summary>
         /// Sends an <see cref="ISnmpMessage"/>.
@@ -376,9 +378,9 @@ namespace Lextm.SharpSnmpLib.Messaging
             throw OperationException.Create(string.Format(CultureInfo.InvariantCulture, "wrong response type: {0}", responseCode), receiver.Address);
         }
 
-        #endregion
+#endregion
 
-        #region async methods
+#region async methods
 #if NET452
         /// <summary>
         /// Ends a pending asynchronous read.
@@ -747,7 +749,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             throw OperationException.Create(string.Format(CultureInfo.InvariantCulture, "wrong response type: {0}", responseCode), receiver.Address);
         }
 
-        #endregion
+#endregion
 
         /// <summary>
         /// Tests if running on Mono.
