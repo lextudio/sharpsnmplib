@@ -808,7 +808,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 return false;
 #elif NETSTANDARD1_3
                 return RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
-#elif XAMARINIOS10
+#elif XAMARINIOS1_0
                 return true;
 #else
                 return false;
