@@ -27,7 +27,14 @@
  */
 using System;
 using System.IO;
+#if NETCOREAPP2_0
+using Org.BouncyCastle.Crypto.Engines;
+using Org.BouncyCastle.Crypto.Modes;
+using Org.BouncyCastle.Crypto.Paddings;
+using Org.BouncyCastle.Crypto.Parameters;
+#else
 using System.Security.Cryptography;
+#endif
 
 namespace Lextm.SharpSnmpLib.Security
 {
@@ -52,8 +59,6 @@ namespace Lextm.SharpSnmpLib.Security
             get
             {
 #if NETSTANDARD1_3
-                return false;
-#elif NETCOREAPP2_0
                 return false;
 #else
                 return true;
@@ -118,8 +123,6 @@ namespace Lextm.SharpSnmpLib.Security
         {
 #if NETSTANDARD1_3
             throw new PlatformNotSupportedException();
-#elif NETCOREAPP2_0
-            throw new PlatformNotSupportedException();
 #else
             // check the key before doing anything else
             if (key == null)
@@ -137,9 +140,8 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentNullException(nameof(unencryptedData));
             }
 
-            var iv = new byte[16];
-
             // Set privacy parameters to the local 64 bit salt value
+            var iv = new byte[16];
             var bootsBytes = BitConverter.GetBytes(engineBoots);
             iv[0] = bootsBytes[3];
             iv[1] = bootsBytes[2];
@@ -154,38 +156,46 @@ namespace Lextm.SharpSnmpLib.Security
             // Copy salt value to the iv array
             Buffer.BlockCopy(privacyParameters, 0, iv, 8, PrivacyParametersLength);
 
+            // Resize the key, if necessary, to the required length
+            Array.Resize(ref key, KeyBytes);
+
+#if NETCOREAPP2_0
+
+            // Encrypt using BouncyCastle
+            var blockCipher = new CfbBlockCipher(new AesEngine(), 128);
+            var paddedCipher = new PaddedBufferedBlockCipher(blockCipher, new ZeroBytePadding());
+            var cipherParameters = new ParametersWithIV(new KeyParameter(key), iv);
+            paddedCipher.Init(true, cipherParameters);
+            byte[] encryptedData = paddedCipher.DoFinal(unencryptedData);
+
+#else
+            
+            // Encrypt using System.Security.Cryptography
+            byte[] encryptedData;
             using (var rm = new RijndaelManaged())
             {
                 rm.KeySize = KeyBytes * 8;
                 rm.FeedbackSize = 128;
                 rm.BlockSize = 128;
-
-                // we have to use Zeros padding otherwise we get encrypt buffer size exception
                 rm.Padding = PaddingMode.Zeros;
                 rm.Mode = CipherMode.CFB;
-
-                // make sure we have the right key length
-                var pkey = new byte[MinimumKeyLength];
-                Buffer.BlockCopy(key, 0, pkey, 0, MinimumKeyLength);
-                rm.Key = pkey;
+                rm.Key = key;
                 rm.IV = iv;
+
                 using (var cryptor = rm.CreateEncryptor())
                 {
-                    var encryptedData = cryptor.TransformFinalBlock(unencryptedData, 0, unencryptedData.Length);
-
-                    // check if encrypted data is the same length as source data
-                    if (encryptedData.Length != unencryptedData.Length)
-                    {
-                        // cut out the padding
-                        var tmp = new byte[unencryptedData.Length];
-                        Buffer.BlockCopy(encryptedData, 0, tmp, 0, unencryptedData.Length);
-                        return tmp;
-                    }
-
-                    return encryptedData;
+                    encryptedData = cryptor.TransformFinalBlock(unencryptedData, 0, unencryptedData.Length);
                 }
             }
-#endif
+
+#endif // !NETCOREAPP2_0
+
+            // Trim off padding, if necessary
+            Array.Resize(ref encryptedData, unencryptedData.Length);
+
+            return encryptedData;
+
+#endif // !NETSTANDARD1_3
         }
 
         /// <summary>
@@ -204,8 +214,6 @@ namespace Lextm.SharpSnmpLib.Security
         {
 #if NETSTANDARD1_3
             throw new PlatformNotSupportedException();
-#elif NETCOREAPP2_0
-            throw new PlatformNotSupportedException();
 #else
             if (key == null)
             {
@@ -222,6 +230,7 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentOutOfRangeException(nameof(key), "Invalid key length.");
             }
 
+            // Set privacy parameters to the local 64 bit salt value
             var iv = new byte[16];
             var bootsBytes = BitConverter.GetBytes(engineBoots);
             iv[0] = bootsBytes[3];
@@ -237,7 +246,32 @@ namespace Lextm.SharpSnmpLib.Security
             // Copy salt value to the iv array
             Buffer.BlockCopy(privacyParameters, 0, iv, 8, PrivacyParametersLength);
 
-            // now do CFB decryption of the encrypted data
+            // Resize the key, if necessary, to the required length
+            Array.Resize(ref key, KeyBytes);
+
+            // Pad encrypted data to a multiple of 16 bytes
+            byte[] encryptedDataPadded = encryptedData;
+            if (encryptedData.Length % KeyBytes != 0)
+            {
+                var div = (int)Math.Floor(encryptedData.Length / (double)16);
+                var newLength = (div + 1) * 16;
+                encryptedDataPadded = new byte[newLength];
+                Buffer.BlockCopy(encryptedData, 0, encryptedDataPadded, 0, encryptedData.Length);
+            }
+
+#if NETCOREAPP2_0
+
+            // Decrypt using BouncyCastle
+            var blockCipher = new CfbBlockCipher(new AesEngine(), 128);
+            var paddedCipher = new PaddedBufferedBlockCipher(blockCipher, new ZeroBytePadding());
+            var cipherParameters = new ParametersWithIV(new KeyParameter(key), iv);
+            paddedCipher.Init(false, cipherParameters);
+            var decryptedData = paddedCipher.DoFinal(encryptedDataPadded);
+
+#else
+
+            // Decrypt using System.Security.Cryptography
+            byte[] decryptedData;
             using (var rm = new RijndaelManaged())
             {
                 rm.KeySize = KeyBytes * 8;
@@ -245,42 +279,23 @@ namespace Lextm.SharpSnmpLib.Security
                 rm.BlockSize = 128;
                 rm.Padding = PaddingMode.Zeros;
                 rm.Mode = CipherMode.CFB;
-                if (key.Length > KeyBytes)
-                {
-                    var normKey = new byte[KeyBytes];
-                    Buffer.BlockCopy(key, 0, normKey, 0, KeyBytes);
-                    rm.Key = normKey;
-                }
-                else
-                {
-                    rm.Key = key;
-                }
-
+                rm.Key = key;
                 rm.IV = iv;
+
                 using (var cryptor = rm.CreateDecryptor())
                 {
-                    // We need to make sure that cryptedData is a collection of 128 byte blocks
-                    byte[] decryptedData;
-                    if ((encryptedData.Length % KeyBytes) != 0)
-                    {
-                        var buffer = new byte[encryptedData.Length];
-                        Buffer.BlockCopy(encryptedData, 0, buffer, 0, encryptedData.Length);
-                        var div = (int)Math.Floor(buffer.Length / (double)16);
-                        var newLength = (div + 1) * 16;
-                        var decryptBuffer = new byte[newLength];
-                        Buffer.BlockCopy(buffer, 0, decryptBuffer, 0, buffer.Length);
-                        decryptedData = cryptor.TransformFinalBlock(decryptBuffer, 0, decryptBuffer.Length);
-
-                        // now remove padding
-                        Buffer.BlockCopy(decryptedData, 0, buffer, 0, encryptedData.Length);
-                        return buffer;
-                    }
-
-                    decryptedData = cryptor.TransformFinalBlock(encryptedData, 0, encryptedData.Length);
-                    return decryptedData;
+                    decryptedData = cryptor.TransformFinalBlock(encryptedDataPadded, 0, encryptedDataPadded.Length);
                 }
             }
-#endif
+
+#endif // !NETCOREAPP2_0
+
+            // Trim off padding, if necessary
+            Array.Resize(ref decryptedData, encryptedData.Length);
+
+            return decryptedData;
+
+#endif // !NETSTANDARD1_3
         }
 
         /// <summary>
