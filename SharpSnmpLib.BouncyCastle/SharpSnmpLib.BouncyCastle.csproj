@@ -2,7 +2,7 @@
   <PropertyGroup>
     <AssemblyName>SharpSnmpLib.BouncyCastle</AssemblyName>
     <RootNamespace>Lextm.SharpSnmpLib.BouncyCastle</RootNamespace>
-    <TargetFrameworks>netcoreapp2.0;netstandard1.3;net452</TargetFrameworks> 
+    <TargetFrameworks>netstandard1.3;net452</TargetFrameworks> 
     <PackageId>Lextm.SharpSnmpLib.BouncyCastle</PackageId>
     <Title>#SNMP Library, Bouncy Castle encryption providers</Title>
     <NeutralLanguage>en-US</NeutralLanguage>

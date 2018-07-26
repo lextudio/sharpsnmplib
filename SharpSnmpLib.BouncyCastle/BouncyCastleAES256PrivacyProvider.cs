@@ -1,5 +1,6 @@
 ﻿// Bouncy Castle AES privacy provider
 // Copyright (C) 2009-2010 Lex Li, Milan Sinadinovic
+// Copyright (C) 2018 Matt Zinkevicius
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this
 // software and associated documentation files (the "Software"), to deal in the Software
