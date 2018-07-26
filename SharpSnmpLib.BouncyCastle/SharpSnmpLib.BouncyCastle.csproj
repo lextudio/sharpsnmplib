@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
+  <PropertyGroup>
+    <AssemblyName>SharpSnmpLib.BouncyCastle</AssemblyName>
+    <RootNamespace>Lextm.SharpSnmpLib.BouncyCastle</RootNamespace>
+    <TargetFrameworks>netcoreapp2.0;netstandard1.3;net452</TargetFrameworks> 
+    <PackageId>Lextm.SharpSnmpLib.BouncyCastle</PackageId>
+    <Title>#SNMP Library, Bouncy Castle encryption providers</Title>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <Authors>Malcolm Crowe,Lex Li,and other contributors.</Authors>
+    <Description>#SNMP (SharpSNMP) Library is an open source library for developers who target Microsoft .NET/Xamarin/Mono platforms. It's developed in C# and can be used for F#, VB.NET, Oxygene, and more.</Description>
+    <Summary>#SNMP (SharpSNMP) Library is an open source library for developers who target Microsoft .NET/Xamarin/Mono platforms. It's developed in C# and can be used for F#, VB.NET, Oxygene, and more. It supports .NET Framework 4.5.2 and above, as well as .NET Standard 1.3 and above.</Summary>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
+    <PackageProjectUrl>https://docs.sharpsnmp.com/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/lextm/sharpsnmplib.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReleaseNotes>https://github.com/lextm/sharpsnmplib/releases</PackageReleaseNotes>
+    <Copyright>All rights reserved. (c) 2008-2017 Malcolm Crowe, Lex Li, and other contributors.</Copyright>
+    <PackageTags>smi snmp mib</PackageTags>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\SharpSnmpLib\sharpsnmplib.snk</AssemblyOriginatorKeyFile>
+    <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">True</PublicSign>
+    <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
+    <AssemblyVersion>10.0.9.0</AssemblyVersion>
+    <FileVersion>10.0.9.0</FileVersion>
+    <Version>10.0.9</Version>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <RuntimeIdentifier Condition=" '$(TargetFramework)' == 'net452' ">win</RuntimeIdentifier>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Portable.BouncyCastle" Version="1.8.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SharpSnmpLib\SharpSnmpLib.csproj" />
+  </ItemGroup>
+</Project>
