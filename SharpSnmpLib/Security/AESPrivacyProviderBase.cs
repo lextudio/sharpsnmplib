@@ -25,9 +25,12 @@
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
+
 using System;
 using System.IO;
+#if !NETCOREAPP2_0
 using System.Security.Cryptography;
+#endif
 
 namespace Lextm.SharpSnmpLib.Security
 {

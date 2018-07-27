@@ -118,17 +118,25 @@ namespace Lextm.SharpSnmpLib.Unit.Security
         [Fact]
         public void TestEncrypt2()
         {
-            if (!AESPrivacyProviderBase.IsSupported)
-            {
-                return;
-            }
+
 
             byte[] expected =
                 ByteTool.Convert(
                     "04 30 9D 13 04 9C 7E D9 84 8B 33 C3 26 5C 1F 91 30 27 D3 56 B0 FD 81 36 50 3A EF 80 1C B9 25 D6 38 84 A7 07 45 FE E8 D7 01 83 A1 CE 04 79 9D 5F 9E 2F");
             OctetString engineId = new OctetString(ByteTool.Convert("80 00 1F 88 80  E9 63 00 00  D6 1F F4 49"));
-            var priv = new AES192PrivacyProvider(new OctetString("passtest"),
+            Assert.False(AESPrivacyProviderBase.IsSupported);
+            IPrivacyProvider priv;
+            if (AESPrivacyProviderBase.IsSupported)
+            {
+                priv = new AES192PrivacyProvider(new OctetString("passtest"),
+                    new MD5AuthenticationProvider(new OctetString("testpass")));
+            }
+            else
+            { 
+                priv = new BouncyCastle.BouncyCastleAES192PrivacyProvider(new OctetString("passtest"),
                 new MD5AuthenticationProvider(new OctetString("testpass")));
+            }
+
             Scope scope = new Scope(engineId, OctetString.Empty,
                 new GetRequestPdu(0x3A25,
                     new List<Variable> {new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0"))}));
