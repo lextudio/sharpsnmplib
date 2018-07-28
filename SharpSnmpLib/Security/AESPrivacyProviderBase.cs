@@ -106,7 +106,7 @@ namespace Lextm.SharpSnmpLib.Security
         public OctetString EngineId { get; set; }
 
         /// <summary>
-        /// Encrypt scoped PDU using DES encryption protocol
+        /// Encrypt scoped PDU using AES encryption protocol
         /// </summary>
         /// <param name="unencryptedData">Unencrypted scoped PDU byte array</param>
         /// <param name="key">Encryption key. Key has to be at least 32 bytes is length</param>
@@ -192,7 +192,7 @@ namespace Lextm.SharpSnmpLib.Security
         }
 
         /// <summary>
-        /// Decrypt DES encrypted scoped PDU.
+        /// Decrypt AES encrypted scoped PDU.
         /// </summary>
         /// <param name="encryptedData">Source data buffer</param>
         /// <param name="engineBoots">Engine boots.</param>
