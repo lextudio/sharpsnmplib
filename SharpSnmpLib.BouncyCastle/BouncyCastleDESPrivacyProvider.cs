@@ -124,6 +124,7 @@ namespace Lextm.SharpSnmpLib.BouncyCastle
             var buffer = new byte[newLength];
 
             var inbuffer = new byte[8];
+            var outbuffer = new byte[16];
             var cipherText = iv;
             var posIn = 0;
             var posResult = 0;
@@ -143,8 +144,8 @@ namespace Lextm.SharpSnmpLib.BouncyCastle
                     posIn++;
                 }
 
-                var temp = paddedCipher.DoFinal(inbuffer);
-                Buffer.BlockCopy(temp, 0, cipherText, 0, cipherText.Length);
+                paddedCipher.DoFinal(inbuffer, outbuffer, 0);
+                Buffer.BlockCopy(outbuffer, 0, cipherText, 0, cipherText.Length);
                 Buffer.BlockCopy(cipherText, 0, result, posResult, cipherText.Length);
                 posResult += cipherText.Length;
             }
