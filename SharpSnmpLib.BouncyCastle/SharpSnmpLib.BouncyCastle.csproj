@@ -33,7 +33,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SharpSnmpLib\SharpSnmpLib.csproj" />
   </ItemGroup>
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="..\sign2.bat &quot;$(TargetPath)&quot;" />
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition=" '$(OS)' == 'Windows_NT' ">
+    <Exec Command="..\sign2.bat &quot;$(TargetPath)&quot;&#xD;&#xA;EXIT 0" />
   </Target>
 </Project>
