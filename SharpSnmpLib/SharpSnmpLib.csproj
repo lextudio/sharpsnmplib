@@ -53,6 +53,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
   <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition=" '$(OS)' == 'Windows_NT' ">
-    <Exec Command="..\sign2.bat &quot;$(TargetPath)&quot; 2&gt;nul 1&gt;nul&#xD;&#xA;EXIT 0" />
+    <Exec Command="..\sign2.bat &quot;$(TargetPath)&quot;" />
   </Target>
 </Project>
