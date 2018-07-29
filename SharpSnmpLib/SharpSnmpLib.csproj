@@ -52,4 +52,7 @@
     <Reference Include="System.Runtime.Serialization" />
   </ItemGroup>
   <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="..\sign2.bat &quot;$(TargetPath)&quot;" />
+  </Target>
 </Project>
