@@ -502,6 +502,16 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             _socket = new Socket(addressFamily, SocketType.Dgram, ProtocolType.Udp);
+            if (SnmpMessageExtension.IsRunningOnWindows)
+            {
+                _socket.ExclusiveAddressUse = true;
+            }
+
+            _socket.SetSocketOption(
+                addressFamily == AddressFamily.InterNetwork
+                    ? SocketOptionLevel.IP
+                    : SocketOptionLevel.IPv6,
+                SocketOptionName.PacketInformation, true);
 
             try
             {
