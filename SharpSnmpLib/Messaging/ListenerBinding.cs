@@ -379,6 +379,26 @@ namespace Lextm.SharpSnmpLib.Messaging
                         }
                     }
                 }
+                catch (ObjectDisposedException ex)
+                {
+                    // If the SnmpTrapListener was active, marks it as stopped and call HandleException.
+                    // If it was inactive, the exception is likely to result from this, and we raise nothing.
+                    var activeBefore = Interlocked.CompareExchange(ref _active, Inactive, Active);
+                    if (activeBefore == Active)
+                    {
+                        HandleException(ex);
+                    }
+                }
+                catch (NullReferenceException ex)
+                {
+                    // If the SnmpTrapListener was active, marks it as stopped and call HandleException.
+                    // If it was inactive, the exception is likely to result from this, and we raise nothing.
+                    var activeBefore = Interlocked.CompareExchange(ref _active, Inactive, Active);
+                    if (activeBefore == Active)
+                    {
+                        HandleException(ex);
+                    }
+                }
             }
         }
 #endif
