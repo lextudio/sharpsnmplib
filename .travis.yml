@@ -16,8 +16,6 @@ addons:
 
 # xamarinios10 and monoandroid44 are out of build, as not sure if they work.
 # net452 is out of testing, as dotnet test does not like it.
-before_script:
-- ./prepare.sh
 script:
 - set -e
 - sed -i -e 's/netcoreapp2.0;netstandard1.3;net452;xamarinios10;monoandroid44/netcoreapp2.0;netstandard1.3/' SharpSnmpLib/SharpSnmpLib.csproj

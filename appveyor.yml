@@ -3,7 +3,6 @@ skip_tags: true
 image: Visual Studio 2017
 before_build:
   - git submodule update --init --recursive
-  - .\prepare.bat
 build_script:
   - .\build.release.bat
 test_script:
