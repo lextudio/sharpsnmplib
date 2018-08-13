@@ -337,7 +337,7 @@ namespace Lextm.SharpSnmpLib.BouncyCastle
         /// <param name="shortKey">Key that needs to be extended</param>
         /// <param name="password">Privacy password as configured on the SNMP agent.</param>
         /// <param name="engineID">Authoritative engine id. Value is retrieved as part of SNMP v3 discovery procedure</param>
-        /// <param name="authProtocol">Authentication protocol class instance cast as <see cref="IAuthenticationDigest"/></param>
+        /// <param name="authProtocol">Authentication protocol class instance cast as <see cref="IAuthenticationProvider"/></param>
         /// <returns>Extended key value</returns>
         public byte[] ExtendShortKey(byte[] shortKey, byte[] password, byte[] engineID, IAuthenticationProvider authProtocol)
         {
