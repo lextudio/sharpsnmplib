@@ -341,7 +341,8 @@ namespace Lextm.SharpSnmpLib.Messaging
             try
             {
                 // check status of socket if true receive will not block, if false we got a timeout
-                if (udpSocket.Poll(timeout, SelectMode.SelectRead))
+                // timeout[ms] * 1000 becuase udpSocket.Poll needs timeout in microseconds
+                if (udpSocket.Poll((timeout * 1000), SelectMode.SelectRead))
                 {
                     count = udpSocket.Receive(reply, 0, bufSize, SocketFlags.None);
                 }
