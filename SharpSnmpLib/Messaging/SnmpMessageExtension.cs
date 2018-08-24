@@ -338,16 +338,32 @@ namespace Lextm.SharpSnmpLib.Messaging
             // Whatever you change, try to keep the Send and the Receive close to each other.
             udpSocket.SendTo(bytes, receiver);
             int count;
-            // check status of socket if true receive will not block, if false we got a timeout
-            if (udpSocket.Poll(timeout, SelectMode.SelectRead))
+            try
             {
-                count = udpSocket.Receive(reply, 0, bufSize, SocketFlags.None);
+                // check status of socket if true receive will not block, if false we got a timeout
+                if (udpSocket.Poll(timeout, SelectMode.SelectRead))
+                {
+                    count = udpSocket.Receive(reply, 0, bufSize, SocketFlags.None);
+                }
+                else
+                {
+                    throw TimeoutException.Create(receiver.Address, timeout);
+                }
             }
-            else
+            catch (SocketException ex)
             {
-                throw TimeoutException.Create(receiver.Address, timeout);
+                // IMPORTANT: Mono behavior.
+                if (IsRunningOnMono && ex.SocketErrorCode == SocketError.WouldBlock)
+                {
+                    throw TimeoutException.Create(receiver.Address, timeout);
+                }
+                if (ex.SocketErrorCode == SocketError.TimedOut)
+                {
+                    throw TimeoutException.Create(receiver.Address, timeout);
+                }
+                throw;
             }
-
+            
             // Passing 'count' is not necessary because ParseMessages should ignore it, but it offer extra safety (and would avoid an issue if parsing >1 response).
             var response = MessageFactory.ParseMessages(reply, 0, count, registry)[0];
             var responseCode = response.TypeCode();
