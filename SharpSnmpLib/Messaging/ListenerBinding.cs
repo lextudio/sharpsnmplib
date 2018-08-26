@@ -206,12 +206,6 @@ namespace Lextm.SharpSnmpLib.Messaging
                 _socket.ExclusiveAddressUse = true;
             }
 
-            _socket.SetSocketOption(
-                addressFamily == AddressFamily.InterNetwork
-                    ? SocketOptionLevel.IP
-                    : SocketOptionLevel.IPv6,
-                SocketOptionName.PacketInformation, true);
-
             try
             {
                 _socket.Bind(Endpoint);
@@ -507,12 +501,6 @@ namespace Lextm.SharpSnmpLib.Messaging
                 _socket.ExclusiveAddressUse = true;
             }
 
-            _socket.SetSocketOption(
-                addressFamily == AddressFamily.InterNetwork
-                    ? SocketOptionLevel.IP
-                    : SocketOptionLevel.IPv6,
-                SocketOptionName.PacketInformation, true);
-
             try
             {
                 _socket.Bind(Endpoint);
@@ -552,7 +540,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                     args.SetBuffer(reply, 0, _bufferSize);
                     using (var awaitable = new SocketAwaitable(args))
                     {
-                        count = await _socket.ReceiveAsync(awaitable);
+                        count = await _socket.ReceiveMessageFromAsync(awaitable);
                     }
 
                     await Task.Factory.StartNew(() => HandleMessage(reply, count, (IPEndPoint)args.RemoteEndPoint));

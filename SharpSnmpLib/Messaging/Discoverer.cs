@@ -324,7 +324,6 @@ namespace Lextm.SharpSnmpLib.Messaging
             using (var udp = new Socket(addressFamily, SocketType.Dgram, ProtocolType.Udp))
             {
                 udp.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.Broadcast, true);
-                udp.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.PacketInformation, true);
                 var info = SocketExtension.EventArgsFactory.Create();
                 info.RemoteEndPoint = broadcastAddress;
                 info.SetBuffer(bytes, 0, bytes.Length);

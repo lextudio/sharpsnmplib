@@ -671,11 +671,6 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException(nameof(udpSocket));
             }
 
-            if (receiver == null)
-            {
-                throw new ArgumentNullException(nameof(receiver));
-            }
-
             if (registry == null)
             {
                 throw new ArgumentNullException(nameof(registry));
@@ -692,7 +687,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             // Whatever you change, try to keep the Send and the Receive close to each other.
             var info = SocketExtension.EventArgsFactory.Create();
-            info.RemoteEndPoint = receiver;
+            info.RemoteEndPoint = receiver ?? throw new ArgumentNullException(nameof(receiver));
             info.SetBuffer(bytes, 0, bytes.Length);
             using (var awaitable1 = new SocketAwaitable(info))
             {
@@ -711,7 +706,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 args.SetBuffer(reply, 0, bufSize);
                 using (var awaitable = new SocketAwaitable(args))
                 {
-                    count = await udpSocket.ReceiveAsync(awaitable);
+                    count = await udpSocket.ReceiveMessageFromAsync(awaitable);
                 }
             }
             catch (SocketException ex)
@@ -721,7 +716,6 @@ namespace Lextm.SharpSnmpLib.Messaging
                 {
                     throw TimeoutException.Create(receiver.Address, 0);
                 }
-
 
                 if (ex.SocketErrorCode == SocketError.TimedOut)
                 {

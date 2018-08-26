@@ -41,15 +41,6 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             var result = new Socket(endpoint.AddressFamily, SocketType.Dgram, ProtocolType.Udp);
-            if (!SnmpMessageExtension.IsRunningOnIOS)
-            {
-                result.SetSocketOption(
-                    endpoint.AddressFamily == AddressFamily.InterNetwork
-                        ? SocketOptionLevel.IP
-                        : SocketOptionLevel.IPv6,
-                    SocketOptionName.PacketInformation, true);
-            }
-
             return result;
         }
     }
