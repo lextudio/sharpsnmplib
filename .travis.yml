@@ -1,7 +1,7 @@
 # See http://docs.travis-ci.com/user/languages/csharp/ for details
 
 language: csharp
-dotnet: 2.1.200
+dotnet: 2.1.202
 dist: trusty
 
 # We need to install the .NET Core 1.0 runtime to run netcoreapp1.0
@@ -12,15 +12,15 @@ addons:
     - sourceline: 'deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-ubuntu-trusty-prod trusty main'
       key_url: 'https://packages.microsoft.com/keys/microsoft.asc'
     packages:
-    - dotnet-sharedframework-microsoft.netcore.app-1.0.5
+    - dotnet-sharedframework-microsoft.netcore.app-1.0.9
+    - dotnet-sharedframework-microsoft.netcore.app-1.1.9
 
 # xamarinios10 and monoandroid44 are out of build, as not sure if they work.
 # net452 is out of testing, as dotnet test does not like it.
 script:
 - set -e
-- sed -i -e 's/netcoreapp2.0;netstandard1.3;net452;xamarinios10;monoandroid44/netcoreapp2.0;netstandard1.3/' SharpSnmpLib/SharpSnmpLib.csproj
+- sed -i -e 's/netcoreapp2.0;netstandard1.3;net452;xamarin.ios10;monoandroid44/netcoreapp2.0;netstandard1.3/' SharpSnmpLib/SharpSnmpLib.csproj
 - sed -i -e 's/netstandard1.3;net452/netstandard1.3/' SharpSnmpLib.BouncyCastle/SharpSnmpLib.BouncyCastle.csproj
-- sed -i -e 's/netcoreapp2.0;netcoreapp1.1;netcoreapp1.0;net452/netcoreapp2.0;netcoreapp1.0/' Tests/CSharpCore/Tests.NetStandard.csproj
 - dotnet build SharpSnmpLib.NetStandard.macOS.sln --configuration Release
 - dotnet test Tests/CSharpCore/Tests.NetStandard.csproj --configuration Release --no-build --filter "FullyQualifiedName~Lextm.SharpSnmpLib.Integration.TrapDaemonTestFixture"
 - dotnet test Tests/CSharpCore/Tests.NetStandard.csproj --configuration Release --no-build --filter "FullyQualifiedName~Lextm.SharpSnmpLib.Integration.DaemonTestFixture"
