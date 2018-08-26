@@ -3,7 +3,7 @@
 language: csharp
 dotnet: 2.1.400
 mono: none
-dist: xenial
+dist: trusty
 
 # We need to install the .NET Core 1.0 runtime to run netcoreapp1.0
 # tests.
