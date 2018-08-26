@@ -14,6 +14,9 @@
     <PackageProjectUrl>https://docs.sharpsnmp.com/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/lextm/sharpsnmplib.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
     <PackageReleaseNotes>https://github.com/lextm/sharpsnmplib/releases</PackageReleaseNotes>
     <Copyright>All rights reserved. (c) 2008-2017 Malcolm Crowe, Lex Li, and other contributors.</Copyright>
     <PackageTags>smi snmp mib</PackageTags>
@@ -21,12 +24,15 @@
     <AssemblyOriginatorKeyFile>..\SharpSnmpLib\sharpsnmplib.snk</AssemblyOriginatorKeyFile>
     <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">True</PublicSign>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
-    <AssemblyVersion>10.0.10.0</AssemblyVersion>
-    <FileVersion>10.0.10.0</FileVersion>
-    <Version>10.0.10</Version>
+    <AssemblyVersion>10.0.11.0</AssemblyVersion>
+    <FileVersion>10.0.11.0</FileVersion>
+    <Version>10.0.11</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <RuntimeIdentifier Condition=" '$(TargetFramework)' == 'net452' ">win</RuntimeIdentifier>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta-63127-02" PrivateAssets="All"/>
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Portable.BouncyCastle" Version="1.8.2" />
   </ItemGroup>

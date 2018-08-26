@@ -1,8 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
+﻿<Project Sdk="MSBuild.Sdk.Extras">
   <PropertyGroup>
     <AssemblyName>SharpSnmpLib</AssemblyName>
     <RootNamespace>Lextm.SharpSnmpLib</RootNamespace>
-    <TargetFrameworks>netcoreapp2.0;netstandard1.3;net452;xamarinios10;monoandroid44</TargetFrameworks> 
+    <TargetFrameworks>netcoreapp2.0;netstandard1.3;net452;xamarin.ios10;monoandroid44</TargetFrameworks> 
     <PackageId>Lextm.SharpSnmpLib</PackageId>
     <Title>#SNMP Library</Title>
     <NeutralLanguage>en-US</NeutralLanguage>
@@ -14,6 +14,9 @@
     <PackageProjectUrl>https://docs.sharpsnmp.com/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/lextm/sharpsnmplib.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
     <PackageReleaseNotes>https://github.com/lextm/sharpsnmplib/releases</PackageReleaseNotes>
     <Copyright>All rights reserved. (c) 2008-2017 Malcolm Crowe, Lex Li, and other contributors.</Copyright>
     <PackageTags>smi snmp mib</PackageTags>
@@ -22,15 +25,15 @@
     <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">True</PublicSign>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
     <AssemblyVersion>10.0</AssemblyVersion>
-    <FileVersion>10.0.10.0</FileVersion>
-    <Version>10.0.10</Version>
+    <FileVersion>10.0.11.0</FileVersion>
+    <Version>10.0.11</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <RuntimeIdentifier Condition=" '$(TargetFramework)' == 'net452' ">win</RuntimeIdentifier>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="MSBuild.Sdk.Extras" Version="1.2.1" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta-63127-02" PrivateAssets="All"/>
   </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)'=='netstandard1.3'">
+  <ItemGroup Condition="'$(TargetFramework)'=='netstandard1.3' OR '$(TargetFramework)'=='netcoreapp2.0'">
     <PackageReference Include="System.ComponentModel.TypeConverter" Version="4.3.0" />
     <PackageReference Include="System.Net.NetworkInformation" Version="4.3.0" />
     <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
@@ -39,7 +42,7 @@
   <ItemGroup Condition="'$(TargetFramework)'=='net452'">
     <Reference Include="System.Configuration" />
   </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)' == 'xamarinios10'">
+  <ItemGroup Condition="'$(TargetFramework)' == 'xamarin.ios10'">
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.iOS" />
@@ -51,7 +54,6 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
   </ItemGroup>
-  <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
   <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition=" '$(OS)' == 'Windows_NT' ">
     <Exec Command="..\sign2.bat &quot;$(TargetPath)&quot;" />
   </Target>
