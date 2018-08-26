@@ -1,8 +1,9 @@
 # See http://docs.travis-ci.com/user/languages/csharp/ for details
 
 language: csharp
-dotnet: 2.1.202
-dist: trusty
+dotnet: 2.1.400
+mono: none
+dist: xenial
 
 # We need to install the .NET Core 1.0 runtime to run netcoreapp1.0
 # tests.
@@ -21,6 +22,7 @@ script:
 - set -e
 - sed -i -e 's/netcoreapp2.0;netstandard1.3;net452;xamarin.ios10;monoandroid44/netcoreapp2.0;netstandard1.3/' SharpSnmpLib/SharpSnmpLib.csproj
 - sed -i -e 's/netstandard1.3;net452/netstandard1.3/' SharpSnmpLib.BouncyCastle/SharpSnmpLib.BouncyCastle.csproj
+- sed -i -e 's/netcoreapp2.0;netcoreapp1.1;netcoreapp1.0;net452/netcoreapp2.0;netcoreapp1.1;netcoreapp1.0/' Tests/CSharpCore/Tests.NetStandard.csproj
 - dotnet build SharpSnmpLib.NetStandard.macOS.sln --configuration Release
 - dotnet test Tests/CSharpCore/Tests.NetStandard.csproj --configuration Release --no-build --filter "FullyQualifiedName~Lextm.SharpSnmpLib.Integration.TrapDaemonTestFixture"
 - dotnet test Tests/CSharpCore/Tests.NetStandard.csproj --configuration Release --no-build --filter "FullyQualifiedName~Lextm.SharpSnmpLib.Integration.DaemonTestFixture"
