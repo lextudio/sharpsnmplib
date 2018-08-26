@@ -28,7 +28,7 @@
 
 using System;
 using System.IO;
-#if !NETCOREAPP2_0
+#if !NETCOREAPP2_1
 using System.Security.Cryptography;
 #endif
 
@@ -56,7 +56,7 @@ namespace Lextm.SharpSnmpLib.Security
             {
 #if NETSTANDARD1_3
                 return false;
-#elif NETCOREAPP2_0
+#elif NETCOREAPP2_1
                 return false;
 #else
                 return true;
@@ -121,7 +121,7 @@ namespace Lextm.SharpSnmpLib.Security
         {
 #if NETSTANDARD1_3
             throw new PlatformNotSupportedException();
-#elif NETCOREAPP2_0
+#elif NETCOREAPP2_1
             throw new PlatformNotSupportedException();
 #else
             // check the key before doing anything else
@@ -207,7 +207,7 @@ namespace Lextm.SharpSnmpLib.Security
         {
 #if NETSTANDARD1_3
             throw new PlatformNotSupportedException();
-#elif NETCOREAPP2_0
+#elif NETCOREAPP2_1
             throw new PlatformNotSupportedException();
 #else
             if (key == null)
