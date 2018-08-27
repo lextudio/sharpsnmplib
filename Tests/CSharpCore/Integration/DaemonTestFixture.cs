@@ -359,7 +359,7 @@ namespace Lextm.SharpSnmpLib.Integration
         [Fact]
         public void TestDiscovererAsyncV2()
         {
-            if (Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true")
+            if (Environment.GetEnvironmentVariable("APPVEYOR") == "true")
             {
                 return;
             }
