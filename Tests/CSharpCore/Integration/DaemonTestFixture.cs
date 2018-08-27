@@ -359,6 +359,11 @@ namespace Lextm.SharpSnmpLib.Integration
         [Fact]
         public void TestDiscovererAsyncV2()
         {
+            if (Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true")
+            {
+                return;
+            }
+
             var engine = CreateEngine();
             engine.Listener.ClearBindings();
             var serverEndPoint = new IPEndPoint(IPAddress.Any, Port.NextId);
