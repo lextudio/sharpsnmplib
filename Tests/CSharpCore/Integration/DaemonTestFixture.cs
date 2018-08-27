@@ -359,7 +359,7 @@ namespace Lextm.SharpSnmpLib.Integration
         [Fact]
         public void TestDiscovererAsyncV2()
         {
-            if (Environment.GetEnvironmentVariable("APPVEYOR") == "true")
+            if (Environment.GetEnvironmentVariable("CI") == "true")
             {
                 return;
             }
