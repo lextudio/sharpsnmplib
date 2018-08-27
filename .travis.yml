@@ -17,6 +17,4 @@ script:
 - sed -i -e 's/netstandard1.3;net452/netstandard1.3/' SharpSnmpLib.BouncyCastle/SharpSnmpLib.BouncyCastle.csproj
 - sed -i -e 's/netcoreapp2.1;net452/netcoreapp2.1/' Tests/CSharpCore/Tests.NetStandard.csproj
 - dotnet build SharpSnmpLib.NetStandard.macOS.sln --configuration Release
-- dotnet test Tests/CSharpCore/Tests.NetStandard.csproj --configuration Release --no-build --filter "FullyQualifiedName~Lextm.SharpSnmpLib.Integration.TrapDaemonTestFixture"
-- dotnet test Tests/CSharpCore/Tests.NetStandard.csproj --configuration Release --no-build --filter "FullyQualifiedName~Lextm.SharpSnmpLib.Integration.DaemonTestFixture"
-- dotnet test Tests/CSharpCore/Tests.NetStandard.csproj --configuration Release --no-build --filter "FullyQualifiedName~Lextm.SharpSnmpLib.Unit"
+- dotnet test Tests/CSharpCore/Tests.NetStandard.csproj --configuration Release --no-build --framework netcoreapp2.1
