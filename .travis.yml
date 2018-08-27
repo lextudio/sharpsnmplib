@@ -8,6 +8,7 @@ dist: xenial
 # xamarinios10 and monoandroid44 are out of build, as not sure if they work.
 # net452 is out of testing, as dotnet test does not like it.
 script:
+- ifconfig
 - set -e
 - sed -i -e 's/netcoreapp2.1;netstandard1.3;net452;xamarin.ios10;monoandroid44/netcoreapp2.1;netstandard1.3/' SharpSnmpLib/SharpSnmpLib.csproj
 - sed -i -e 's/netstandard1.3;net452/netstandard1.3/' SharpSnmpLib.BouncyCastle/SharpSnmpLib.BouncyCastle.csproj
