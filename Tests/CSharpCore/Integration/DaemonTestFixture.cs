@@ -236,7 +236,7 @@ namespace Lextm.SharpSnmpLib.Integration
                 IAuthenticationProvider auth = new MD5AuthenticationProvider(new OctetString("authenticationauthentication"));
                 IPrivacyProvider priv = new DefaultPrivacyProvider(auth);
 
-                var timeout = 1500;
+                var timeout = 3000;
                 Discovery discovery = Messenger.GetNextDiscovery(SnmpType.GetRequestPdu);
                 ReportMessage report = discovery.GetResponse(timeout, serverEndPoint);
 
