@@ -6,9 +6,5 @@ before_build:
 build_script:
   - .\build.release.bat
 test_script:
-  - dotnet test Tests/CSharpCore/Tests.NetStandard.csproj --configuration Release --no-build --filter "FullyQualifiedName~Lextm.SharpSnmpLib.Integration.TrapDaemonTestFixture" --framework netcoreapp2.1
-  - dotnet test Tests/CSharpCore/Tests.NetStandard.csproj --configuration Release --no-build --filter "FullyQualifiedName~Lextm.SharpSnmpLib.Integration.DaemonTestFixture" --framework netcoreapp2.1
-  - dotnet test Tests/CSharpCore/Tests.NetStandard.csproj --configuration Release --no-build --filter "FullyQualifiedName~Lextm.SharpSnmpLib.Unit" --framework netcoreapp2.1
-  - dotnet test Tests/CSharpCore/Tests.NetStandard.csproj --configuration Release --no-build --filter "FullyQualifiedName~Lextm.SharpSnmpLib.Integration.TrapDaemonTestFixture" --framework net452
-  - dotnet test Tests/CSharpCore/Tests.NetStandard.csproj --configuration Release --no-build --filter "FullyQualifiedName~Lextm.SharpSnmpLib.Integration.DaemonTestFixture" --framework net452
-  - dotnet test Tests/CSharpCore/Tests.NetStandard.csproj --configuration Release --no-build --filter "FullyQualifiedName~Lextm.SharpSnmpLib.Unit" --framework net452
+  - dotnet test Tests/CSharpCore/Tests.NetStandard.csproj --configuration Release --no-build --framework netcoreapp2.1
+  - dotnet test Tests/CSharpCore/Tests.NetStandard.csproj --configuration Release --no-build --framework net452
