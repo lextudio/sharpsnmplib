@@ -57,6 +57,12 @@ namespace Lextm.SharpSnmpLib.Security
         /// <remarks>This is an optional field, and only used by TRAP v2 authentication.</remarks>
         OctetString EngineId { get; }
 
+        /// <summary>
+        /// Passwords to key.
+        /// </summary>
+        /// <param name="secret">The secret.</param>
+        /// <param name="engineId">The engine identifier.</param>
+        /// <returns></returns>
         byte[] PasswordToKey(byte[] secret, byte[] engineId);
     }
 }

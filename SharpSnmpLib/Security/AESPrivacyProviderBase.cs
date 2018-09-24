@@ -28,7 +28,7 @@
 
 using System;
 using System.IO;
-#if !NETCOREAPP2_1
+#if !NETCOREAPP2_0
 using System.Security.Cryptography;
 #endif
 
@@ -56,7 +56,7 @@ namespace Lextm.SharpSnmpLib.Security
             {
 #if NETSTANDARD1_3
                 return false;
-#elif NETCOREAPP2_1
+#elif NETCOREAPP2_0
                 return false;
 #else
                 return true;
@@ -121,7 +121,7 @@ namespace Lextm.SharpSnmpLib.Security
         {
 #if NETSTANDARD1_3
             throw new PlatformNotSupportedException();
-#elif NETCOREAPP2_1
+#elif NETCOREAPP2_0
             throw new PlatformNotSupportedException();
 #else
             // check the key before doing anything else
@@ -207,7 +207,7 @@ namespace Lextm.SharpSnmpLib.Security
         {
 #if NETSTANDARD1_3
             throw new PlatformNotSupportedException();
-#elif NETCOREAPP2_1
+#elif NETCOREAPP2_0
             throw new PlatformNotSupportedException();
 #else
             if (key == null)
@@ -402,8 +402,18 @@ namespace Lextm.SharpSnmpLib.Security
             get { return new OctetString(_salt.GetSaltBytes()); }
         }
 
+        /// <summary>
+        /// Gets the key bytes.
+        /// </summary>
+        /// <value>The key bytes.</value>
         public int KeyBytes { get; private set; } = 16;
 
+        /// <summary>
+        /// Passwords to key.
+        /// </summary>
+        /// <param name="secret">The secret.</param>
+        /// <param name="engineId">The engine identifier.</param>
+        /// <returns></returns>
         public byte[] PasswordToKey(byte[] secret, byte[] engineId)
         {
             var pkey = AuthenticationProvider.PasswordToKey(secret, engineId);

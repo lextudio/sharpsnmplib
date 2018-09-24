@@ -180,6 +180,10 @@ namespace Lextm.SharpSnmpLib.Security
             }
         }
 
+        /// <summary>
+        /// Gets the length of the digest.
+        /// </summary>
+        /// <value>The length of the digest.</value>
         public int DigestLength => 12;
 
         #endregion
