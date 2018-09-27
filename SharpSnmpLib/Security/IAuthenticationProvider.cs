@@ -50,6 +50,10 @@ namespace Lextm.SharpSnmpLib.Security
         /// <returns></returns>
         OctetString ComputeHash(VersionCode version, ISegment header, SecurityParameters parameters, ISnmpData data, IPrivacyProvider privacy, byte[] length);
 
+        /// <summary>
+        /// Gets the length of the digest.
+        /// </summary>
+        /// <value>The length of the digest.</value>
         int DigestLength { get; }
     }
 }

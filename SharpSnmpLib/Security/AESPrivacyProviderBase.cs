@@ -402,8 +402,18 @@ namespace Lextm.SharpSnmpLib.Security
             get { return new OctetString(_salt.GetSaltBytes()); }
         }
 
+        /// <summary>
+        /// Gets the key bytes.
+        /// </summary>
+        /// <value>The key bytes.</value>
         public int KeyBytes { get; private set; } = 16;
 
+        /// <summary>
+        /// Passwords to key.
+        /// </summary>
+        /// <param name="secret">The secret.</param>
+        /// <param name="engineId">The engine identifier.</param>
+        /// <returns></returns>
         public byte[] PasswordToKey(byte[] secret, byte[] engineId)
         {
             var pkey = AuthenticationProvider.PasswordToKey(secret, engineId);
