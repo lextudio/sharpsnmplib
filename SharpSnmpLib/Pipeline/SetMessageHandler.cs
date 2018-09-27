@@ -85,10 +85,9 @@ namespace Lextm.SharpSnmpLib.Pipeline
                     {
                         status = ErrorCode.NoAccess;
                     }
-                    catch (ArgumentException ex)
+                    catch (ArgumentException)
                     {
-                        if (!Enum.TryParse<ErrorCode>(ex.Message, out status) || status == ErrorCode.NoError)
-                            status = ErrorCode.WrongType;
+                        status = ErrorCode.WrongType;
                     }
                     catch (Exception)
                     {
