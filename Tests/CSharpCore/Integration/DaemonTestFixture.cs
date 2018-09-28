@@ -20,7 +20,6 @@ namespace Lextm.SharpSnmpLib.Integration
         private static readonly NumberGenerator Port = new NumberGenerator(40000, 45000);
         private const int MaxTimeout = 5 * 60 * 1000; // 5 minutes
 
-
         private SnmpEngine CreateEngine(bool timeout = false, bool max255chars = false)
         {
             // TODO: this is a hack. review it later.
@@ -101,7 +100,6 @@ namespace Lextm.SharpSnmpLib.Integration
             public TimeoutObject()
                 : base(new ObjectIdentifier("1.5.2"))
             {
-
             }
 
             public override ISnmpData Data
@@ -125,7 +123,6 @@ namespace Lextm.SharpSnmpLib.Integration
             public Max255CharsObject()
                 : base(new ObjectIdentifier("1.5.3"))
             {
-
             }
 
             public override ISnmpData Data
@@ -643,7 +640,6 @@ namespace Lextm.SharpSnmpLib.Integration
                     ThreadPool.SetMinThreads(threads + 1, minIOC);
 #endif
                     engine.Start();
-
 
                     try
                     {
