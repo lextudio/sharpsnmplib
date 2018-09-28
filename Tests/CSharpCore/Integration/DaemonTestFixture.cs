@@ -21,7 +21,7 @@ namespace Lextm.SharpSnmpLib.Integration
         private const int MaxTimeout = 5 * 60 * 1000; // 5 minutes
 
 
-        private SnmpEngine CreateEngine(bool timeout = false)
+        private SnmpEngine CreateEngine(bool timeout = false, bool max255chars = false)
         {
             // TODO: this is a hack. review it later.
             var store = new ObjectStore();
@@ -39,6 +39,10 @@ namespace Lextm.SharpSnmpLib.Integration
             if (timeout)
             {
                 store.Add(new TimeoutObject());
+            }
+            if (max255chars)
+            {
+                store.Add(new Max255CharsObject());
             }
 
             var users = new UserRegistry();
@@ -111,6 +115,42 @@ namespace Lextm.SharpSnmpLib.Integration
                 set
                 {
                     throw new NotImplementedException();
+                }
+            }
+        }
+        private class Max255CharsObject : ScalarObject
+        {
+            private OctetString _data = new OctetString("");
+
+            public Max255CharsObject()
+                : base(new ObjectIdentifier("1.5.3"))
+            {
+
+            }
+
+            public override ISnmpData Data
+            {
+                get
+                {
+                    return _data;
+                }
+
+                set
+                {
+                    if (value == null)
+                    {
+                        throw new ArgumentNullException(nameof(value));
+                    }
+                    if (value.TypeCode != SnmpType.OctetString)
+                    {
+                        throw new ArgumentException("Invalid data type.", nameof(value));
+                    }
+                    if (((OctetString)value).ToString().Length > 255)
+                    {
+                        throw new ArgumentException(nameof(ErrorCode.WrongLength));
+                    }
+
+                    _data = (OctetString)value;
                 }
             }
         }
@@ -616,7 +656,7 @@ namespace Lextm.SharpSnmpLib.Integration
                             {
                                 GetRequestMessage message = new GetRequestMessage(index, VersionCode.V2,
                                     new OctetString("public"),
-                                    new List<Variable> {new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0"))});
+                                    new List<Variable> {new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) });
                                 // Comment below to reveal wrong sequence number issue.
                                 Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram,
                                     ProtocolType.Udp);
@@ -720,6 +760,44 @@ namespace Lextm.SharpSnmpLib.Integration
                 {
                     Assert.True(elapsedMilliseconds <= time + 100);
                 }
+            }
+            finally
+            {
+                if (SnmpMessageExtension.IsRunningOnWindows)
+                {
+                    engine.Stop();
+                }
+            }
+        }
+
+        [Fact]
+        public void TestSetWrongLength()
+        {
+            var engine = CreateEngine(max255chars: true);
+            engine.Listener.ClearBindings();
+            var serverEndPoint = new IPEndPoint(IPAddress.Loopback, Port.NextId);
+            engine.Listener.AddBinding(serverEndPoint);
+            engine.Start();
+
+            try
+            {
+                Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+
+                var string_toolong = new Variable((new Max255CharsObject()).Variable.Id, new OctetString(new string('x', 256)));
+                SetRequestMessage message = new SetRequestMessage(0x4bed, VersionCode.V2, new OctetString("public"),
+                    new List<Variable> { string_toolong });
+
+                var resp = message.GetResponse(1500, serverEndPoint, socket);
+                Assert.Equal(ErrorCode.WrongLength, resp.Pdu().ErrorStatus.ToErrorCode());
+                Assert.Equal(1, resp.Pdu().ErrorIndex.ToInt32());
+
+                var wrong_type = new Variable((new Max255CharsObject()).Variable.Id, new Integer32(666));
+                message = new SetRequestMessage(0x4bed, VersionCode.V2, new OctetString("public"),
+                    new List<Variable> { wrong_type });
+
+                resp = message.GetResponse(1500, serverEndPoint, socket);
+                Assert.Equal(ErrorCode.WrongType, resp.Pdu().ErrorStatus.ToErrorCode());
+                Assert.Equal(1, resp.Pdu().ErrorIndex.ToInt32());
             }
             finally
             {
