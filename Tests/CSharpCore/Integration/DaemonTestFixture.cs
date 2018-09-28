@@ -743,9 +743,9 @@ namespace Lextm.SharpSnmpLib.Integration
             {
                 Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 
-                var syscontanct_toolong = new Variable((new SysContact()).Variable.Id, new OctetString(new string('x', 256)));
+                var syscontact_toolong = new Variable((new SysContact()).Variable.Id, new OctetString(new string('x', 256)));
                 SetRequestMessage message = new SetRequestMessage(0x4bed, VersionCode.V2, new OctetString("public"),
-                    new List<Variable> { syscontanct_toolong });
+                    new List<Variable> { syscontact_toolong });
 
                 var resp = message.GetResponse(1500, serverEndPoint, socket);
                 Assert.Equal(ErrorCode.WrongLength, resp.Pdu().ErrorStatus.ToErrorCode());
