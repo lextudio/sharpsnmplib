@@ -62,6 +62,10 @@ namespace Lextm.SharpSnmpLib.Objects
                 {
                     throw new ArgumentException("Invalid data type.", nameof(value));
                 }
+                if (((OctetString)value).ToString().Length > 255) //respect DisplayString syntax length limitation
+                {
+                    throw new ArgumentException(nameof(ErrorCode.WrongLength));
+                }
 
                 _contact = (OctetString)value;
             }

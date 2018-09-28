@@ -616,7 +616,7 @@ namespace Lextm.SharpSnmpLib.Integration
                             {
                                 GetRequestMessage message = new GetRequestMessage(index, VersionCode.V2,
                                     new OctetString("public"),
-                                    new List<Variable> {new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0"))});
+                                    new List<Variable> { new Variable( new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) });
                                 // Comment below to reveal wrong sequence number issue.
                                 Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram,
                                     ProtocolType.Udp);
@@ -720,6 +720,36 @@ namespace Lextm.SharpSnmpLib.Integration
                 {
                     Assert.True(elapsedMilliseconds <= time + 100);
                 }
+            }
+            finally
+            {
+                if (SnmpMessageExtension.IsRunningOnWindows)
+                {
+                    engine.Stop();
+                }
+            }
+        }
+
+        [Fact]
+        public void TestSetWrongLength()
+        {
+            var engine = CreateEngine();
+            engine.Listener.ClearBindings();
+            var serverEndPoint = new IPEndPoint(IPAddress.Loopback, Port.NextId);
+            engine.Listener.AddBinding(serverEndPoint);
+            engine.Start();
+
+            try
+            {
+                Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+
+                var syscontanct_toolong = new Variable((new SysContact()).Variable.Id, new OctetString(new string('x', 256)));
+                SetRequestMessage message = new SetRequestMessage(0x4bed, VersionCode.V2, new OctetString("public"),
+                    new List<Variable> { syscontanct_toolong });
+
+                var resp = message.GetResponse(1500, serverEndPoint, socket);
+                Assert.Equal(ErrorCode.WrongLength, resp.Pdu().ErrorStatus.ToErrorCode());
+                Assert.Equal(1, resp.Pdu().ErrorIndex.ToInt32());
             }
             finally
             {
