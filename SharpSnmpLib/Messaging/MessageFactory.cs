@@ -156,7 +156,14 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 header = new Header(body[1]);
                 parameters = new SecurityParameters((OctetString)body[2]);
-                privacy = registry.Find(parameters.UserName);
+                if (version == VersionCode.V3)
+                {
+                    privacy = registry.Find(parameters.UserName, parameters.EngineId);
+                }
+                else
+                {
+                    privacy = registry.Find(parameters.UserName);
+                }
                 if (privacy == null)
                 {
                     // handle decryption exception.

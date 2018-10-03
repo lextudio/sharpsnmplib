@@ -179,7 +179,18 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 return true;
             }
 
-            var user = Users.Find(parameters.UserName);
+            IPrivacyProvider user = null;
+
+            // for V3 try to find using compound key with UserName and EngineId
+            if (typeCode == SnmpType.TrapV2Pdu)
+            {
+                user = Users.Find(parameters.UserName, parameters.EngineId);
+            }
+            else
+            {
+                user = Users.Find(parameters.UserName);
+            }
+
             if (user == null) 
             {
                 HandleFailure(Group.UnknownSecurityName);

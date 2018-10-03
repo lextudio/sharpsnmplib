@@ -95,11 +95,33 @@ namespace Lextm.SharpSnmpLib.Security
         }
 
         /// <summary>
+        /// Adds user with a compound key of UserName and EngineId
+        /// Used where User name is not unique across agents.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns>User Registry</returns>
+        public UserRegistry AddWithUserEngineId(User user)
+        {
+            if (user == null)
+            {
+                return this;
+            }
+            var uKey = getUserEngineIdKey(user.Name, user.Privacy.EngineId);
+            if (_users.ContainsKey(uKey))
+            {
+                _users.Remove(uKey);
+            }
+            _users.Add(uKey, user);
+            return this;
+        }
+
+
+        /// <summary>
         /// Finds the specified user name.
         /// </summary>
         /// <param name="userName">Name of the user.</param>
         /// <returns></returns>
-        public IPrivacyProvider Find(OctetString userName)
+        public IPrivacyProvider Find(OctetString userName, OctetString engineId = null)
         {
             if (userName == null)
             {
@@ -111,8 +133,15 @@ namespace Lextm.SharpSnmpLib.Security
                 // IMPORTANT: used in messagefactory.cs to decrypt discovery messages.
                 return DefaultPrivacyProvider.DefaultPair;
             }
-
-            return _users.ContainsKey(userName) ? _users[userName].Privacy : null;
+            if (engineId == null)
+            {
+                return _users.ContainsKey(userName) ? _users[userName].Privacy : null;
+            }
+            else
+            {
+                var userEngineIdKey = getUserEngineIdKey(userName, engineId);
+                return _users.ContainsKey(userEngineIdKey) ? _users[userEngineIdKey].Privacy : null;
+            }
         }
 
         /// <summary>
@@ -124,6 +153,19 @@ namespace Lextm.SharpSnmpLib.Security
         public override string ToString()
         {
             return string.Format(CultureInfo.InvariantCulture, "User registry: count: {0}", Count);
+        }
+
+        /// <summary>
+        /// Create a key with Username and engineId
+        /// </summary>
+        /// <param name="userName">Name of the User</param>
+        /// <param name="engineId">Unique EngineId</param>
+        /// <returns>Key </returns>
+        public OctetString getUserEngineIdKey(OctetString userName, OctetString engineId)
+        {
+            var keyStr = userName + "@@" + engineId;
+            var keyOctetString = new OctetString(keyStr);
+            return keyOctetString;
         }
     }
 }
