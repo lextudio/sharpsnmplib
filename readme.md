@@ -6,7 +6,7 @@
 
 |              | Windows | Linux |
 |:------------:|:-------:|:-----:|
-| Build status | [![Azure DevOps builds](https://img.shields.io/vso/build/lextudio/08d27f27-71b2-4158-90ec-565c685b3c05/1.svg)](https://dev.azure.com/lextudio/sharpsnmp/_build/) | [![Build status](https://img.shields.io/travis/lextm/sharpsnmplib/master.svg?label=travis&style=flat-square)](https://travis-ci.org/lextm/sharpsnmplib/) |
+| Build status | [![Azure DevOps builds](https://img.shields.io/vso/build/lextudio/08d27f27-71b2-4158-90ec-565c685b3c05/1.svg?style=flat-square)](https://dev.azure.com/lextudio/sharpsnmp/_build/) | [![Build status](https://img.shields.io/travis/lextm/sharpsnmplib/master.svg?label=travis&style=flat-square)](https://travis-ci.org/lextm/sharpsnmplib/) |
 
 This is the source code repository of #SNMP Library. Visual Studio 2017 Update 3 (15.3.x) is required to compile it on Windows.
 
