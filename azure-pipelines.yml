@@ -3,18 +3,16 @@
 # Add steps that publish symbols, save build artifacts, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/apps/windows/dot-net
 
-- job: Windows
+pool:
+  vmImage: 'VS2017-Win2016'
 
-  pool:
-    vmImage: 'VS2017-Win2016'
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
 
-  variables:
-    solution: '**/*.sln'
-    buildPlatform: 'Any CPU'
-    buildConfiguration: 'Release'
-
-  steps:
-  - script: |
-      build.release.bat
-      dotnet test Tests/CSharpCore/Tests.NetStandard.csproj --configuration $(buildConfiguration) --no-build --framework netcoreapp2.1
-      dotnet test Tests/CSharpCore/Tests.NetStandard.csproj --configuration Release --no-build --framework net452
+steps:
+- script: |
+    build.release.bat
+    dotnet test Tests/CSharpCore/Tests.NetStandard.csproj --configuration $(buildConfiguration) --no-build --framework netcoreapp2.1
+    dotnet test Tests/CSharpCore/Tests.NetStandard.csproj --configuration Release --no-build --framework net452
