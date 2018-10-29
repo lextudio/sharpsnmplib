@@ -297,6 +297,11 @@ namespace Lextm.SharpSnmpLib.Integration
         [Fact]
         public void TestDiscoverer()
         {
+            if (Environment.GetEnvironmentVariable("CI") == "true")
+            {
+                return;
+            }
+
             var engine = CreateEngine();
             engine.Listener.ClearBindings();
             var serverEndPoint = new IPEndPoint(IPAddress.Any, Port.NextId);
