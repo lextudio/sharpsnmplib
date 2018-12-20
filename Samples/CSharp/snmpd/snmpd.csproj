@@ -121,6 +121,10 @@
       <Project>{5e9b9ab3-59e8-44fa-b3dc-5ee67800c462}</Project>
       <Name>RemObjects.Mono.Helpers</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\SharpSnmpLib.Engine\SharpSnmpLib.Engine.csproj">
+      <Project>{114d0d49-19d3-47aa-b314-b0611f8a0327}</Project>
+      <Name>SharpSnmpLib.Engine</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\SharpSnmpLib\SharpSnmpLib.csproj">
       <Project>{7bc38e05-9b86-4654-b81a-bf153edaf9db}</Project>
       <Name>SharpSnmpLib</Name>

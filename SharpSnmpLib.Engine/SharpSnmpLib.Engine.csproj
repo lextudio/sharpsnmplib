@@ -1,14 +1,14 @@
-﻿<Project Sdk="MSBuild.Sdk.Extras">
+<Project Sdk="MSBuild.Sdk.Extras">
   <PropertyGroup>
-    <AssemblyName>SharpSnmpLib</AssemblyName>
+    <AssemblyName>SharpSnmpLib.Engine</AssemblyName>
     <RootNamespace>Lextm.SharpSnmpLib</RootNamespace>
     <TargetFrameworks>netcoreapp2.1;netstandard1.3;net452;xamarin.ios10;monoandroid44</TargetFrameworks> 
-    <PackageId>Lextm.SharpSnmpLib</PackageId>
+    <PackageId>Lextm.SharpSnmpLib.Engine</PackageId>
     <Title>#SNMP Library</Title>
     <NeutralLanguage>en-US</NeutralLanguage>
     <Authors>Malcolm Crowe,Lex Li,and other contributors.</Authors>
-    <Description>#SNMP (SharpSNMP) Library is an open source library for developers who target Microsoft .NET/Xamarin/Mono platforms. It's developed in C# and can be used for F#, VB.NET, Oxygene, and more.</Description>
-    <Summary>#SNMP (SharpSNMP) Library is an open source library for developers who target Microsoft .NET/Xamarin/Mono platforms. It's developed in C# and can be used for F#, VB.NET, Oxygene, and more. It supports .NET Framework 4.5.2 and above, as well as .NET Standard 1.3 and above.</Summary>
+    <Description>SNMP engine sample for #SNMP Library.</Description>
+    <Summary>SNMP engine sample for #SNMP Library.</Summary>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
     <PackageProjectUrl>https://docs.sharpsnmp.com/</PackageProjectUrl>
@@ -21,7 +21,7 @@
     <Copyright>All rights reserved. (c) 2008-2018 Malcolm Crowe, Lex Li, and other contributors.</Copyright>
     <PackageTags>smi snmp mib</PackageTags>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>sharpsnmplib.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\SharpSnmpLib\sharpsnmplib.snk</AssemblyOriginatorKeyFile>
     <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">True</PublicSign>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
     <AssemblyVersion>11.0.0.0</AssemblyVersion>
@@ -31,7 +31,7 @@
     <RuntimeIdentifier Condition=" '$(TargetFramework)' == 'net452' ">win</RuntimeIdentifier>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta-63127-02" PrivateAssets="All"/>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta-63127-02" PrivateAssets="All" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard1.3' OR '$(TargetFramework)'=='netcoreapp2.1'">
     <PackageReference Include="System.ComponentModel.TypeConverter" Version="4.3.0" />
@@ -53,6 +53,9 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SharpSnmpLib\SharpSnmpLib.csproj" />
   </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition=" '$(OS)' == 'Windows_NT' ">
     <Exec Command="..\sign2.bat &quot;$(TargetPath)&quot;" />

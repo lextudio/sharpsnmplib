@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\SharpSnmpLib.BouncyCastle\SharpSnmpLib.BouncyCastle.csproj" />
+    <ProjectReference Include="..\..\SharpSnmpLib.Engine\SharpSnmpLib.Engine.csproj" />
     <ProjectReference Include="..\..\SharpSnmpLib\SharpSnmpLib.csproj" />
   </ItemGroup>
   <ItemGroup>

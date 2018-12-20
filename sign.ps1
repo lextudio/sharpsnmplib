@@ -1,7 +1,5 @@
-Remove-Item -Path .\*.nupkg
 $nuget = "f:\nuget.exe"
 & $nuget update /self | Write-Debug
-& $nuget pack
 
 Write-Host "Sign NuGet packages."
 & $nuget sign *.nupkg -CertificateSubjectName "Yang Li" -Timestamper http://timestamp.digicert.com | Write-Debug
