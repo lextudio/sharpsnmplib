@@ -18,6 +18,7 @@ jobs:
   - script: |
       set -e
       sed -i -e 's/netcoreapp2.1;netstandard1.3;net452;xamarin.ios10;monoandroid44/netcoreapp2.1;netstandard1.3/' SharpSnmpLib/SharpSnmpLib.csproj
+      sed -i -e 's/netcoreapp2.1;netstandard1.3;net452;xamarin.ios10;monoandroid44/netcoreapp2.1;netstandard1.3/' SharpSnmpLib.Engine/SharpSnmpLib.Engine.csproj
       sed -i -e 's/netstandard1.3;net452/netstandard1.3/' SharpSnmpLib.BouncyCastle/SharpSnmpLib.BouncyCastle.csproj
       sed -i -e 's/netcoreapp2.1;net452/netcoreapp2.1/' Tests/CSharpCore/Tests.NetStandard.csproj
       dotnet build SharpSnmpLib.NetStandard.macOS.sln --configuration $(buildConfiguration)
@@ -41,6 +42,7 @@ jobs:
       export CI=true
       set -e
       sed -i -e 's/netcoreapp2.1;netstandard1.3;net452;xamarin.ios10;monoandroid44/netcoreapp2.1;netstandard1.3/' SharpSnmpLib/SharpSnmpLib.csproj
+      sed -i -e 's/netcoreapp2.1;netstandard1.3;net452;xamarin.ios10;monoandroid44/netcoreapp2.1;netstandard1.3/' SharpSnmpLib.Engine/SharpSnmpLib.Engine.csproj
       sed -i -e 's/netstandard1.3;net452/netstandard1.3/' SharpSnmpLib.BouncyCastle/SharpSnmpLib.BouncyCastle.csproj
       sed -i -e 's/netcoreapp2.1;net452/netcoreapp2.1/' Tests/CSharpCore/Tests.NetStandard.csproj
       dotnet build SharpSnmpLib.NetStandard.macOS.sln --configuration $(buildConfiguration)
