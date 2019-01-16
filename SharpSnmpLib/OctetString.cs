@@ -157,11 +157,7 @@ namespace Lextm.SharpSnmpLib
                 throw new InvalidCastException("Length should be 1");
             }
             
-            var b = (int)bytes[0];
-            if (b < 0 || b > 7)
-            {
-                throw new InvalidCastException("Value should be from 0 to 7");
-            }
+            var b = (int)bytes[0] & 7;
             
             return (Levels)b;
         }
