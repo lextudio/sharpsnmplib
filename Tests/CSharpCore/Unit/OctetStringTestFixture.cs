@@ -20,7 +20,7 @@ namespace Lextm.SharpSnmpLib.Unit
         public void TestToLevels()
         {
             Assert.Throws<InvalidCastException>(() => new OctetString(new byte[] { 0x00, 0x08 }).ToLevels());
-            Assert.Throws<InvalidCastException>(() => new OctetString(new byte[] { 0xFF }).ToLevels());
+            Assert.Equal(Levels.Authentication | Levels.Privacy | Levels.Reportable, new OctetString(new byte[] { 0xFF }).ToLevels());
         }
         
         [Fact]
