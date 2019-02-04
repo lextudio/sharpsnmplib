@@ -892,6 +892,74 @@ namespace Lextm.SharpSnmpLib.Integration
         }
 
         [Fact]
+        public void TestWalk2()
+        {
+            var engine = CreateEngine();
+            engine.Listener.ClearBindings();
+            var serverEndPoint = new IPEndPoint(IPAddress.Loopback, Port.NextId);
+            engine.Listener.AddBinding(serverEndPoint);
+            engine.Start();
+
+            try
+            {
+                var devices = new[] {
+                    new Tuple<VersionCode, IPEndPoint>(VersionCode.V1, serverEndPoint),
+                    new Tuple<VersionCode, IPEndPoint>(VersionCode.V2, serverEndPoint) };
+                foreach (var item in devices)
+                {
+                    try
+                    {
+                        List<Variable> res = new List<Variable>();
+
+                        BadMethod(item, res);
+                        Assert.NotEmpty(res);
+                    }
+
+                    catch (Exception er)
+                    {
+                        continue;
+                    }
+                }
+            }
+            finally
+            {
+                if (SnmpMessageExtension.IsRunningOnWindows)
+                {
+                    engine.Stop();
+                }
+            }
+        }
+
+        private static int BadMethod(Tuple<VersionCode, IPEndPoint> devicesItem, List<Variable> res)
+        {
+            if (devicesItem.Item1 == VersionCode.V1)
+            {
+                Messenger.Walk(VersionCode.V1,
+                            devicesItem.Item2,
+                            new OctetString("public"),
+                            new ObjectIdentifier("1.3.6.1.2.1.2.2.1.6"),
+                            res,
+                            14000,
+                            WalkMode.WithinSubtree);
+            }
+            else if (devicesItem.Item1 == VersionCode.V2)
+            {
+                Messenger.BulkWalk(VersionCode.V2,
+                                devicesItem.Item2,
+                                new OctetString("public"),
+                                new ObjectIdentifier("1.3.6.1.2.1.2.2.1.6"),
+                                res,
+                                14000,
+                                1,
+                                WalkMode.WithinSubtree,
+                                null,
+                                null);
+            }
+
+            return 0;
+        }
+
+        [Fact]
         public async Task TestWalkAsync()
         {
             var engine = CreateEngine();
