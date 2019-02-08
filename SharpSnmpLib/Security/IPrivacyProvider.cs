@@ -17,6 +17,9 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+using System;
+using System.Collections.Generic;
+
 namespace Lextm.SharpSnmpLib.Security
 {
     /// <summary>
@@ -51,11 +54,14 @@ namespace Lextm.SharpSnmpLib.Security
         /// </summary>
         IAuthenticationProvider AuthenticationProvider { get; }
 
+        [Obsolete("Use EngineIds instead.")]
+        OctetString EngineId { get; }
+
         /// <summary>
-        /// Engine ID.
+        /// Engine IDs.
         /// </summary>
         /// <remarks>This is an optional field, and only used by TRAP v2 authentication.</remarks>
-        OctetString EngineId { get; }
+        ICollection<OctetString> EngineIds { get; }
 
         /// <summary>
         /// Passwords to key.

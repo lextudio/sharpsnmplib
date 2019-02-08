@@ -19,6 +19,7 @@
 // DEALINGS IN THE SOFTWARE.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Lextm.SharpSnmpLib.Security;
 using Org.BouncyCastle.Crypto.Engines;
@@ -72,11 +73,14 @@ namespace Lextm.SharpSnmpLib.BouncyCastle
         /// </summary>
         public IAuthenticationProvider AuthenticationProvider { get; }
 
+        [Obsolete("Use EngineIds instead.")]
+        public OctetString EngineId { get; set; }
+
         /// <summary>
-        /// Engine ID.
+        /// Engine IDs.
         /// </summary>
         /// <remarks>This is an optional field, and only used by TRAP v2 authentication.</remarks>
-        public OctetString EngineId { get; set; }
+        public ICollection<OctetString> EngineIds { get; set; }
 
         /// <summary>
         /// Encrypt scoped PDU

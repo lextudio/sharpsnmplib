@@ -27,6 +27,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 #if !NETCOREAPP2_1
 using System.Security.Cryptography;
@@ -99,11 +100,14 @@ namespace Lextm.SharpSnmpLib.Security
         /// </summary>
         public IAuthenticationProvider AuthenticationProvider { get; private set; }
 
+        [Obsolete("Use EngineIds instead.")]
+        public OctetString EngineId { get; set; }
+
         /// <summary>
-        /// Engine ID.
+        /// Engine IDs.
         /// </summary>
         /// <remarks>This is an optional field, and only used by TRAP v2 authentication.</remarks>
-        public OctetString EngineId { get; set; }
+        public ICollection<OctetString> EngineIds { get; set; }
 
         /// <summary>
         /// Encrypt scoped PDU using AES encryption protocol

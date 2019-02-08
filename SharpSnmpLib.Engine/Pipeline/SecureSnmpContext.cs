@@ -186,7 +186,7 @@ namespace Lextm.SharpSnmpLib.Pipeline
                 return false;
             }
 
-            if (typeCode == SnmpType.TrapV2Pdu && parameters.EngineId != user.EngineId)
+            if (typeCode == SnmpType.TrapV2Pdu && (user.EngineIds == null || !user.EngineIds.Contains(parameters.EngineId)))
             {
                 HandleFailure(Group.UnknownEngineId);
                 return false;

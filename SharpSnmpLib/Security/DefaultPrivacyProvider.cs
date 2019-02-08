@@ -18,6 +18,7 @@
 // DEALINGS IN THE SOFTWARE.
 
 using System;
+using System.Collections.Generic;
 
 namespace Lextm.SharpSnmpLib.Security
 {
@@ -55,11 +56,14 @@ namespace Lextm.SharpSnmpLib.Security
         /// </summary>
         public IAuthenticationProvider AuthenticationProvider { get; private set; }
 
+        [Obsolete("Use EngineIds instead.")]
+        public OctetString EngineId { get; set; }
+
         /// <summary>
-        /// Engine ID.
+        /// Engine IDs.
         /// </summary>
         /// <remarks>This is an optional field, and only used by TRAP v2 authentication.</remarks>
-        public OctetString EngineId { get; set; }
+        public ICollection<OctetString> EngineIds { get; set; }
 
         /// <summary>
         /// Decrypts the specified data.
