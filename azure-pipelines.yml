@@ -63,6 +63,7 @@ jobs:
   steps:
   - script: |
       build.release.bat
+  - script: |
       dotnet test Tests/CSharpCore/Tests.NetStandard.csproj --configuration $(buildConfiguration) --no-build --framework netcoreapp2.1 --logger trx-netcore --collect "Code coverage"
       dotnet test Tests/CSharpCore/Tests.NetStandard.csproj --configuration $(buildConfiguration) --no-build --framework net452 --logger trx-net --collect "Code coverage"
   - task: PublishTestResults@2

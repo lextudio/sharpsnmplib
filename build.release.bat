@@ -7,4 +7,4 @@ exit /b 0
 
 :failed
 echo failed.
-pause
+exit /b 1
