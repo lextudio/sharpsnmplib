@@ -48,7 +48,7 @@ namespace Lextm.SharpSnmpLib.Unit.Security
             }
             else
             {
-                priv = new BouncyCastle.BouncyCastleDESPrivacyProvider(new OctetString("privacyphrase"), new MD5AuthenticationProvider(new OctetString("authentication")));
+                return;
             }
 
             var parameters = new SecurityParameters(
@@ -122,7 +122,7 @@ namespace Lextm.SharpSnmpLib.Unit.Security
             }
             else
             {
-                priv = new BouncyCastle.BouncyCastleDESPrivacyProvider(new OctetString("passtest"), new MD5AuthenticationProvider(new OctetString("testpass")));
+                return;
             }
 
             Scope scope = new Scope(engineId, OctetString.Empty, new GetRequestPdu(0x3A25, new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0")) }));

@@ -130,8 +130,7 @@ namespace Lextm.SharpSnmpLib.Unit.Security
             }
             else
             {
-                priv = new BouncyCastle.BouncyCastleAES256PrivacyProvider(new OctetString("passtest"),
-                    new MD5AuthenticationProvider(new OctetString("testpass")));
+                return;
             }
 
             Scope scope = new Scope(engineId, OctetString.Empty,
