@@ -6,6 +6,8 @@
 
 This is the source code repository of #SNMP Library. Visual Studio 2017/2019 and .NET Core SDK is required to compile it on Windows.
 
+Sample projects can be found in [their repo](https://github.com/lextudio/sharpsnmplib-samples).
+
 The following can be found at [#SNMP Library homepage](https://sharpsnmp.com),
 
 * News
