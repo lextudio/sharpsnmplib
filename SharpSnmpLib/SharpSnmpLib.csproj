@@ -2,7 +2,8 @@
   <PropertyGroup>
     <AssemblyName>SharpSnmpLib</AssemblyName>
     <RootNamespace>Lextm.SharpSnmpLib</RootNamespace>
-    <TargetFrameworks>netcoreapp2.1;netstandard1.3;net452;xamarin.ios10;monoandroid80</TargetFrameworks> 
+    <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">netcoreapp2.1;netstandard1.3;net452;xamarin.ios10;monoandroid80</TargetFrameworks> 
+    <TargetFrameworks Condition=" '$(OS)' != 'Windows_NT' ">netcoreapp2.1;netstandard1.3</TargetFrameworks> 
     <PackageId>Lextm.SharpSnmpLib</PackageId>
     <Title>#SNMP Library</Title>
     <NeutralLanguage>en-US</NeutralLanguage>
