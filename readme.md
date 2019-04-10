@@ -4,7 +4,7 @@
 [![NuGet Version](https://img.shields.io/nuget/v/Lextm.SharpSnmpLib.svg?style=flat-square)](https://www.nuget.org/packages/Lextm.SharpSnmpLib/)
 [![Azure DevOps builds](https://img.shields.io/vso/build/lextudio/08d27f27-71b2-4158-90ec-565c685b3c05/5.svg?style=flat-square)](https://dev.azure.com/lextudio/sharpsnmp/_build/)
 
-This is the source code repository of #SNMP Library. Visual Studio 2017/2019 and .NET Core SDK is required to compile it on Windows.
+This is the source code repository of #SNMP Library. Visual Studio 2019 and .NET Core SDK (for .NET Core 2.1 and above) is required to compile it on Windows.
 
 Sample projects can be found in [their repo](https://github.com/lextudio/sharpsnmplib-samples).
 
