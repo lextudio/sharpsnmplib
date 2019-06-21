@@ -204,7 +204,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         /// <param name="receiver">The receiver.</param>
         /// <returns></returns>
-        public async Task<ReportMessage> GetResponseAsync(IPEndPoint receiver)
+        public async Task<ReportMessage> GetResponseAsync(IPEndPoint receiver, int timeout)
         {
             if (receiver == null)
             {
@@ -213,7 +213,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             using (var socket = receiver.GetSocket())
             {
-                return (ReportMessage)await _discovery.GetResponseAsync(receiver, Empty, socket).ConfigureAwait(false);
+                return (ReportMessage)await _discovery.GetResponseAsync(receiver, Empty, socket, timeout).ConfigureAwait(false);
             }
         }
 

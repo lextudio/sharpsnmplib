@@ -563,7 +563,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="receiver">Port number.</param>
         /// <param name="registry">User registry.</param>
         /// <returns></returns>
-        public static async Task<ISnmpMessage> GetResponseAsync(this ISnmpMessage request, IPEndPoint receiver, UserRegistry registry)
+        public static async Task<ISnmpMessage> GetResponseAsync(this ISnmpMessage request, IPEndPoint receiver, UserRegistry registry, int timeout)
         {
             // TODO: make more usage of UserRegistry.
             if (request == null)
@@ -584,7 +584,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             using (var socket = receiver.GetSocket())
             {
-                return await request.GetResponseAsync(receiver, registry, socket).ConfigureAwait(false);
+                return await request.GetResponseAsync(receiver,  registry, socket, timeout).ConfigureAwait(false);
             }
         }
 
@@ -594,7 +594,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="request">The <see cref="ISnmpMessage"/>.</param>
         /// <param name="receiver">Port number.</param>
         /// <returns></returns>
-        public static async Task<ISnmpMessage> GetResponseAsync(this ISnmpMessage request, IPEndPoint receiver)
+        public static async Task<ISnmpMessage> GetResponseAsync(this ISnmpMessage request, IPEndPoint receiver, int timeout)
         {
             if (request == null)
             {
@@ -614,7 +614,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             using (var socket = receiver.GetSocket())
             {
-                return await request.GetResponseAsync(receiver, socket).ConfigureAwait(false);
+                return await request.GetResponseAsync(receiver, socket, timeout).ConfigureAwait(false);
             }
         }
 
@@ -625,7 +625,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="receiver">Agent.</param>
         /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
         /// <returns></returns>
-        public static async Task<ISnmpMessage> GetResponseAsync(this ISnmpMessage request, IPEndPoint receiver, Socket udpSocket)
+        public static async Task<ISnmpMessage> GetResponseAsync(this ISnmpMessage request, IPEndPoint receiver, Socket udpSocket, int timeout)
         {
             if (request == null)
             {
@@ -648,7 +648,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 registry.Add(request.Parameters.UserName, request.Privacy);
             }
 
-            return await request.GetResponseAsync(receiver, registry, udpSocket).ConfigureAwait(false);
+            return await request.GetResponseAsync(receiver, registry, udpSocket, timeout).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -659,7 +659,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
         /// <param name="registry">The user registry.</param>
         /// <returns></returns>
-        public static async Task<ISnmpMessage> GetResponseAsync(this ISnmpMessage request, IPEndPoint receiver, UserRegistry registry, Socket udpSocket)
+        public static async Task<ISnmpMessage> GetResponseAsync(this ISnmpMessage request, IPEndPoint receiver, UserRegistry registry, Socket udpSocket, int timeout)
         {
             if (request == null)
             {
@@ -683,50 +683,25 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             var bytes = request.ToBytes();
-            var bufSize = udpSocket.ReceiveBufferSize = Messenger.MaxMessageSize;
-
+            ISnmpMessage response;
             // Whatever you change, try to keep the Send and the Receive close to each other.
-            var info = SocketExtension.EventArgsFactory.Create();
-            info.RemoteEndPoint = receiver ?? throw new ArgumentNullException(nameof(receiver));
-            info.SetBuffer(bytes, 0, bytes.Length);
-            using (var awaitable1 = new SocketAwaitable(info))
+
+            // fix race condition where the gc memory was corrupted
+            using (var udpClient = new UdpClient())
             {
-                await udpSocket.SendToAsync(awaitable1);
+                udpClient.DontFragment = true;
+                await udpClient.SendAsync(bytes, bytes.Length, receiver);
+                // ReceiveAsync is an extension method implemented in class UdpClientExtension
+                // it handles the timeout behavior to avoid object dispose exception when an timeout is received
+                // but also - later - a valid datagram
+                UdpReceiveResult receiveTask = await udpClient.ReceiveAsync(receiver, timeout);
+                byte[] reply = new byte[receiveTask.Buffer.Length];
+                receiveTask.Buffer.CopyTo(reply, 0);
+
+                // Passing 'count' is not necessary because ParseMessages should ignore it, but it offer extra safety (and would avoid an issue if parsing >1 response).
+                response = MessageFactory.ParseMessages(reply, 0, reply.Length, registry)[0];
             }
 
-            int count;
-            var reply = new byte[bufSize];
-
-            // IMPORTANT: follow http://blogs.msdn.com/b/pfxteam/archive/2011/12/15/10248293.aspx
-            var args = SocketExtension.EventArgsFactory.Create();
-            EndPoint remote = new IPEndPoint(IPAddress.Any, 0);
-            try
-            {
-                args.RemoteEndPoint = remote;
-                args.SetBuffer(reply, 0, bufSize);
-                using (var awaitable = new SocketAwaitable(args))
-                {
-                    count = await udpSocket.ReceiveMessageFromAsync(awaitable);
-                }
-            }
-            catch (SocketException ex)
-            {
-                // IMPORTANT: Mono behavior (https://bugzilla.novell.com/show_bug.cgi?id=599488)
-                if (IsRunningOnMono && ex.SocketErrorCode == SocketError.WouldBlock)
-                {
-                    throw TimeoutException.Create(receiver.Address, 0);
-                }
-
-                if (ex.SocketErrorCode == SocketError.TimedOut)
-                {
-                    throw TimeoutException.Create(receiver.Address, 0);
-                }
-
-                throw;
-            }
-
-            // Passing 'count' is not necessary because ParseMessages should ignore it, but it offer extra safety (and would avoid an issue if parsing >1 response).
-            var response = MessageFactory.ParseMessages(reply, 0, count, registry)[0];
             var responseCode = response.TypeCode();
             if (responseCode == SnmpType.ResponsePdu || responseCode == SnmpType.ReportPdu)
             {
