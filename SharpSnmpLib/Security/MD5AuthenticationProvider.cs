@@ -71,7 +71,10 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentNullException(nameof(engineId));
             }
 
-            if (password.Length < 8)
+            // at least a password should be set
+            // the max length semm to depend on the hardware and its firmware
+            // on an cisco switch (SG200) a much shorter password than 8 is possible.
+            if (password.Length < 1)
             {
                 throw new ArgumentException($"Secret key is too short. Must be >= 8. Current: {password.Length}.", nameof(password));
             }
