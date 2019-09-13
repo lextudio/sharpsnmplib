@@ -22,8 +22,8 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
-using Lextm.SharpSnmpLib.Security;
 using System.Threading.Tasks;
+using Lextm.SharpSnmpLib.Security;
 
 namespace Lextm.SharpSnmpLib.Messaging
 {
@@ -215,7 +215,8 @@ namespace Lextm.SharpSnmpLib.Messaging
                 try
                 {
                     var buffer = new byte[_bufferSize];
-                    EndPoint remote = new IPEndPoint(IPAddress.Any, 0);
+                    var remoteAddress = socket.AddressFamily == AddressFamily.InterNetworkV6 ? IPAddress.IPv6Any : IPAddress.Any;
+                    EndPoint remote = new IPEndPoint(remoteAddress, 0);
                     var count = socket.ReceiveFrom(buffer, ref remote);
                     Task.Factory.StartNew(()=> HandleMessage(buffer, count, (IPEndPoint)remote));
                 }
@@ -376,7 +377,8 @@ namespace Lextm.SharpSnmpLib.Messaging
                 var args = SocketExtension.EventArgsFactory.Create();
                 try
                 {
-                    EndPoint remote = new IPEndPoint(IPAddress.Any, 0);
+                    var remoteAddress = socket.AddressFamily == AddressFamily.InterNetworkV6 ? IPAddress.IPv6Any : IPAddress.Any;
+                    EndPoint remote = new IPEndPoint(remoteAddress, 0);
                     args.RemoteEndPoint = remote;
                     args.SetBuffer(reply, 0, _bufferSize);
                     using (var awaitable = new SocketAwaitable(args))
