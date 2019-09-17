@@ -19,15 +19,15 @@
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
     <PackageReleaseNotes>https://github.com/lextudio/sharpsnmplib/releases</PackageReleaseNotes>
-    <Copyright>All rights reserved. (c) 2008-2018 Malcolm Crowe, Lex Li, and other contributors.</Copyright>
+    <Copyright>All rights reserved. (c) 2008-2019 Malcolm Crowe, Lex Li, and other contributors.</Copyright>
     <PackageTags>smi snmp mib</PackageTags>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>sharpsnmplib.snk</AssemblyOriginatorKeyFile>
     <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">True</PublicSign>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
-    <AssemblyVersion>11.2.0.0</AssemblyVersion>
-    <FileVersion>11.2.0.0</FileVersion>
-    <Version>11.2.0</Version>
+    <AssemblyVersion>11.3.0.0</AssemblyVersion>
+    <FileVersion>11.3.0.0</FileVersion>
+    <Version>11.3.0</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <RuntimeIdentifier Condition=" '$(TargetFramework)' == 'net452' ">win</RuntimeIdentifier>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
