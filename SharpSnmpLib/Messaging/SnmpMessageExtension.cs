@@ -699,7 +699,8 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             // IMPORTANT: follow http://blogs.msdn.com/b/pfxteam/archive/2011/12/15/10248293.aspx
             var args = SocketExtension.EventArgsFactory.Create();
-            EndPoint remote = new IPEndPoint(IPAddress.Any, 0);
+            var remoteAddress = udpSocket.AddressFamily == AddressFamily.InterNetworkV6 ? IPAddress.IPv6Any : IPAddress.Any;
+            EndPoint remote = new IPEndPoint(remoteAddress, 0);
             try
             {
                 args.RemoteEndPoint = remote;
