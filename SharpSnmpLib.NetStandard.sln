@@ -14,8 +14,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SnmpOverDtlsTest", "SnmpOverDtlsTest\SnmpOverDtlsTest.csproj", "{351DF600-8B14-4909-937B-9F63575802A9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DTLS.Net", "..\DTLS.Net\DTLS.Net\DTLS.Net.csproj", "{565F5603-B524-45BC-A118-66C83FD63ECE}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,24 +81,6 @@ Global
 		{351DF600-8B14-4909-937B-9F63575802A9}.Release|x64.Build.0 = Release|Any CPU
 		{351DF600-8B14-4909-937B-9F63575802A9}.Release|x86.ActiveCfg = Release|Any CPU
 		{351DF600-8B14-4909-937B-9F63575802A9}.Release|x86.Build.0 = Release|Any CPU
-		{565F5603-B524-45BC-A118-66C83FD63ECE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{565F5603-B524-45BC-A118-66C83FD63ECE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{565F5603-B524-45BC-A118-66C83FD63ECE}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{565F5603-B524-45BC-A118-66C83FD63ECE}.Debug|x64.Build.0 = Debug|Any CPU
-		{565F5603-B524-45BC-A118-66C83FD63ECE}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{565F5603-B524-45BC-A118-66C83FD63ECE}.Debug|x86.Build.0 = Debug|Any CPU
-		{565F5603-B524-45BC-A118-66C83FD63ECE}.Perf|Any CPU.ActiveCfg = Release|Any CPU
-		{565F5603-B524-45BC-A118-66C83FD63ECE}.Perf|Any CPU.Build.0 = Release|Any CPU
-		{565F5603-B524-45BC-A118-66C83FD63ECE}.Perf|x64.ActiveCfg = Release|Any CPU
-		{565F5603-B524-45BC-A118-66C83FD63ECE}.Perf|x64.Build.0 = Release|Any CPU
-		{565F5603-B524-45BC-A118-66C83FD63ECE}.Perf|x86.ActiveCfg = Release|Any CPU
-		{565F5603-B524-45BC-A118-66C83FD63ECE}.Perf|x86.Build.0 = Release|Any CPU
-		{565F5603-B524-45BC-A118-66C83FD63ECE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{565F5603-B524-45BC-A118-66C83FD63ECE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{565F5603-B524-45BC-A118-66C83FD63ECE}.Release|x64.ActiveCfg = Release|Any CPU
-		{565F5603-B524-45BC-A118-66C83FD63ECE}.Release|x64.Build.0 = Release|Any CPU
-		{565F5603-B524-45BC-A118-66C83FD63ECE}.Release|x86.ActiveCfg = Release|Any CPU
-		{565F5603-B524-45BC-A118-66C83FD63ECE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
