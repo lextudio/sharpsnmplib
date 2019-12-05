@@ -193,7 +193,8 @@ namespace Lextm.SharpSnmpLib
         public ISnmpData GetData(VersionCode version)
         {
             //if empty SecurityParameters, return an empty OctetString
-            if (_length == default && EngineId == default && EngineBoots == default && EngineTime == default && UserName == default && AuthenticationParameters == OctetString.Empty && PrivacyParameters == default)
+            if (_length == null && EngineId == null && EngineBoots == null && EngineTime == null && UserName == null && PrivacyParameters == null
+                && (AuthenticationParameters == OctetString.Empty || AuthenticationParameters == null))
             {
                 return OctetString.Empty;
             }
