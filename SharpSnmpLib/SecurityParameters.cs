@@ -104,6 +104,15 @@ namespace Lextm.SharpSnmpLib
         /// <value>The privacy parameters.</value>
         public OctetString PrivacyParameters { get; private set; }
 
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SecurityParameters"/> class.
+        /// </summary>
+        public SecurityParameters()
+        {
+
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SecurityParameters"/> class.
         /// </summary>
@@ -113,6 +122,11 @@ namespace Lextm.SharpSnmpLib
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
+            }
+
+            if(parameters == OctetString.Empty)
+            {
+                return;
             }
             
             var container = (Sequence)DataFactory.CreateSnmpData(parameters.GetRaw());
@@ -178,6 +192,12 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public ISnmpData GetData(VersionCode version)
         {
+            //if empty SecurityParameters, return an empty OctetString
+            if (_length == default && EngineId == default && EngineBoots == default && EngineTime == default && UserName == default && AuthenticationParameters == OctetString.Empty && PrivacyParameters == default)
+            {
+                return OctetString.Empty;
+            }
+
             return version == VersionCode.V3 ? new OctetString(ToSequence().ToBytes()) : UserName;
         }
 

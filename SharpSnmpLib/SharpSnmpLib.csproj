@@ -63,6 +63,9 @@
       <PackagePath></PackagePath>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\DTLS.Net\DTLS.Net\DTLS.Net.csproj" />
+  </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition=" '$(OS)' == 'Windows_NT' ">
     <Exec Command="..\sign2.bat &quot;$(TargetPath)&quot;" />
   </Target>
