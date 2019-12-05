@@ -89,7 +89,7 @@ namespace Lextm.SharpSnmpLib.Unit
         [Fact]
         public void TestChinese()
         {
-            Assert.Equal("中国", new OctetString("中国", Encoding.Unicode).ToString(Encoding.Unicode));
+            Assert.Equal("宥勫拷", new OctetString("宥勫拷", Encoding.Unicode).ToString(Encoding.Unicode));
         }
     }
 }
