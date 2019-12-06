@@ -17,10 +17,10 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-using Lextm.SharpSnmpLib.Security;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using Lextm.SharpSnmpLib.Security;
 
 namespace Lextm.SharpSnmpLib.Messaging
 {
@@ -125,7 +125,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             Version = version;
             Privacy = privacy;
             Header = new Header(new Integer32(messageId), new Integer32(maxMessageSize), privacy.ToSecurityLevel() | Levels.Reportable, new Integer32((int)SecurityModel.Tsm));
-            Parameters = new SecurityParameters();
+            Parameters = SecurityParameters.Empty;
 
             var pdu = new GetRequestPdu(
                 requestId,
@@ -191,7 +191,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             if (securityModel == SecurityModel.Tsm)
             {
-                Parameters = new SecurityParameters();
+                Parameters = SecurityParameters.Empty;
             }
             else
             {

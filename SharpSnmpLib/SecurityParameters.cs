@@ -37,6 +37,16 @@ namespace Lextm.SharpSnmpLib
     public sealed class SecurityParameters : ISegment
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="SecurityParameters"/> class.
+        /// </summary>
+        private SecurityParameters()
+        {
+
+        }
+
+        public static SecurityParameters Empty => new SecurityParameters();
+
+        /// <summary>
         /// Gets the engine ID.
         /// </summary>
         /// <value>The engine ID.</value>
@@ -103,15 +113,6 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <value>The privacy parameters.</value>
         public OctetString PrivacyParameters { get; private set; }
-
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SecurityParameters"/> class.
-        /// </summary>
-        public SecurityParameters()
-        {
-
-        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SecurityParameters"/> class.
