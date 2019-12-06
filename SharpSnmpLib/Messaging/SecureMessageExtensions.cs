@@ -1,23 +1,31 @@
 ﻿using DTLS;
-using Lextm.SharpSnmpLib;
-using Lextm.SharpSnmpLib.Messaging;
 using Lextm.SharpSnmpLib.Security;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading;
 
-namespace SharpSnmpLib.DTLS
+namespace Lextm.SharpSnmpLib.Messaging
 {
     public static class SecureMessageExtensions
     {
-        private static IEnumerable<object> ba;
-
         public static ISnmpMessage GetSecureResponse(this ISnmpMessage request, int timeout, IPEndPoint receiver, Client client)
         {
+            if (request is null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            if (receiver is null)
+            {
+                throw new ArgumentNullException(nameof(receiver));
+            }
+
+            if (client is null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
+
             var registry = new UserRegistry();
             //if (request.Version == VersionCode.V3)
             //{
@@ -46,6 +54,11 @@ namespace SharpSnmpLib.DTLS
             if (receiver == null)
             {
                 throw new ArgumentNullException(nameof(receiver));
+            }
+
+            if (client is null)
+            {
+                throw new ArgumentNullException(nameof(client));
             }
 
             if (registry == null)

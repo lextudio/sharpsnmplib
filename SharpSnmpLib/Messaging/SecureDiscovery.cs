@@ -32,7 +32,6 @@ using System.Globalization;
 using System.Net;
 using Lextm.SharpSnmpLib.Security;
 using System.Threading.Tasks;
-using SharpSnmpLib.DTLS;
 using DTLS;
 
 namespace Lextm.SharpSnmpLib.Messaging
