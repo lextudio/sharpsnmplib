@@ -111,6 +111,69 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
         }
 
         [Fact]
+        public void TestConstructorV3Auth2()
+        {
+            const string bytes = "30 73" +
+                                 "02 01  03 " +
+                                 "30 0F " +
+                                 "02  02 35 41 " +
+                                 "02  03 00 FF E3" +
+                                 "04 01 05" +
+                                 "02  01 03" +
+                                 "04 2E  " +
+                                 "30 2C" +
+                                 "04 0D  80 00 1F 88 80 E9 63 00  00 D6 1F F4  49 " +
+                                 "02 01 0D  " +
+                                 "02 01 57 " +
+                                 "04 05 6C 65 78  6C 69 " +
+                                 "04 0C  1C 6D 67 BF  B2 38 ED 63 DF 0A 05 24  " +
+                                 "04 00 " +
+                                 "30 2D  " +
+                                 "04 0D 80 00  1F 88 80 E9 63 00 00 D6  1F F4 49 " +
+                                 "04  00 " +
+                                 "A0 1A 02  02 01 AF 02 01 00 02 01  00 30 0E 30  0C 06 08 2B  06 01 02 01 01 03 00 05  00";
+            ReportMessage report = new ReportMessage(
+                VersionCode.V3,
+                new Header(
+                    new Integer32(13633),
+                    new Integer32(0xFFE3),
+                    0),
+                new SecurityParameters(
+                    new OctetString(ByteTool.Convert("80 00 1F 88 80 E9 63 00  00 D6 1F F4  49")),
+                    new Integer32(0x0d),
+                    new Integer32(0x57),
+                    new OctetString("lexli"),
+                    new OctetString(new byte[12]),
+                    OctetString.Empty),
+                new Scope(
+                    new OctetString(ByteTool.Convert("80 00 1F 88 80 E9 63 00  00 D6 1F F4  49")),
+                    OctetString.Empty,
+                    new ReportPdu(
+                        0x01AF,
+                        ErrorCode.NoError,
+                        0,
+                        new List<Variable>(1) { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0")) })),
+                DefaultPrivacyProvider.DefaultPair,
+                null);
+
+            IPrivacyProvider privacy = new DefaultPrivacyProvider(new MD5AuthenticationProvider(new OctetString("testpass")));
+            GetRequestMessage request = new GetRequestMessage(
+                VersionCode.V3,
+                13633,
+                0x01AF,
+                new OctetString("lexli"),
+                OctetString.Empty,
+                new List<Variable>(1) { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0")) },
+                privacy,
+                Messenger.MaxMessageSize,
+                report,
+                SecurityModel.Usm);
+
+            Assert.Equal(Levels.Authentication | Levels.Reportable, request.Header.SecurityLevel);
+            Assert.Equal(ByteTool.Convert(bytes), request.ToBytes());
+        }
+
+        [Fact]
         public void TestConstructorV2AuthMd5PrivDes()
         {
             if (!DESPrivacyProvider.IsSupported)
@@ -236,6 +299,28 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
                 pair,
                 null);
             Assert.Equal(Levels.Authentication | Levels.Reportable, request.Header.SecurityLevel);
+            Assert.Equal(ByteTool.Convert(bytes), request.ToBytes());
+        }
+
+        [Fact]
+        public void TestConstructorV3OverDtls()
+        {
+            const string bytes = "30 3c 02 01  03 30 11 02  04 2f 1f 26  a3 02 03 00" +
+                                 "ff e3 04 01  07 02 01 04  04 00 30 22  04 00 04 00" +
+                                 "a0 1c 02 04  ab 53 bd 3f  02 01 00 02  01 00 30 0e" +
+                                 "30 0c 06 08  2b 06 01 02  01 01 03 00  05 00";
+
+            var request = new GetRequestMessage(
+                VersionCode.V3,
+                790570659,
+                -1420575425,
+                OctetString.Empty,
+                OctetString.Empty,
+                new List<Variable>() { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0")) },
+                new TsmPrivacyProvider(TsmAuthenticationProvider.Instance),
+                65507);
+
+            Assert.Equal(Levels.Authentication | Levels.Reportable | Levels.Privacy, request.Header.SecurityLevel);
             Assert.Equal(ByteTool.Convert(bytes), request.ToBytes());
         }
 

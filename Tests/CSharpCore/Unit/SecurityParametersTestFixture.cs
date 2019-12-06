@@ -21,5 +21,11 @@ namespace Lextm.SharpSnmpLib.Unit
             obj.AuthenticationParameters = new OctetString("one");
             Assert.Throws<ArgumentException>(() => obj.AuthenticationParameters = new OctetString("me"));
         }
+
+        [Fact]
+        public void TestGetData()
+        {
+            Assert.Equal(OctetString.Empty, SecurityParameters.Empty.GetData(VersionCode.V3));
+        }
     }
 }

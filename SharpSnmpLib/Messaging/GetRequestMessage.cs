@@ -94,7 +94,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="variables">The variables.</param>
         /// <param name="privacy">The privacy provider.</param>
         /// <param name="maxMessageSize">Size of the max message.</param>
-        /// <param name="securityModel">The type of security model</param>
         public GetRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName, OctetString contextName, IList<Variable> variables, IPrivacyProvider privacy, int maxMessageSize)
         {
             if (userName == null)
