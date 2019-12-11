@@ -89,18 +89,12 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="version">The version.</param>
         /// <param name="messageId">The message id.</param>
         /// <param name="requestId">The request id.</param>
-        /// <param name="userName">Name of the user.</param>
         /// <param name="contextName">Context name.</param>
         /// <param name="variables">The variables.</param>
         /// <param name="privacy">The privacy provider.</param>
         /// <param name="maxMessageSize">Size of the max message.</param>
-        public GetRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName, OctetString contextName, IList<Variable> variables, IPrivacyProvider privacy, int maxMessageSize)
+        public GetRequestMessage(VersionCode version, int messageId, int requestId, OctetString contextName, IList<Variable> variables, IPrivacyProvider privacy, int maxMessageSize)
         {
-            if (userName == null)
-            {
-                throw new ArgumentNullException(nameof(userName));
-            }
-
             if (variables == null)
             {
                 throw new ArgumentNullException(nameof(variables));
