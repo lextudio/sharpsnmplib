@@ -34,7 +34,7 @@
     <AndroidUseIntermediateDesignerFile>False</AndroidUseIntermediateDesignerFile>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="DTLS2.Net" Version="1.0.2" />
+    <PackageReference Include="DTLS2.Net" Version="1.0.3" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="all" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard1.3' OR '$(TargetFramework)'=='netcoreapp2.1'">
