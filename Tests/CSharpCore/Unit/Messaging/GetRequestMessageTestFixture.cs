@@ -315,7 +315,6 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
                 790570659,
                 -1420575425,
                 OctetString.Empty,
-                OctetString.Empty,
                 new List<Variable>() { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0")) },
                 new TsmPrivacyProvider(TsmAuthenticationProvider.Instance),
                 65507);
