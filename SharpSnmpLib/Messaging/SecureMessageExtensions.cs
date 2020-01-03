@@ -73,7 +73,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             var bytes = request.ToBytes();
-            client.ConnectToServer(receiver);
+            client.ConnectToServer(receiver, timeout);
 
             byte[] reply = null;
             var manualReset = new ManualResetEvent(false);
@@ -87,7 +87,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             if (!manualReset.WaitOne(timeout))
             {
                 client.Stop();
-                throw new Lextm.SharpSnmpLib.Messaging.TimeoutException();
+                throw new TimeoutException();
             }
 
             client.Stop();
