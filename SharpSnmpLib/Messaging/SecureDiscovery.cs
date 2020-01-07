@@ -78,17 +78,18 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Gets the response.
         /// </summary>
-        /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
+        /// <param name="connectionTimeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
+        /// <param name="responseTimeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
         /// <param name="receiver">The receiver.</param>
         /// <returns></returns>
-        public ReportMessage GetResponse(int timeout, IPEndPoint receiver, Client client)
+        public ReportMessage GetResponse(int connectionTimeout, int responseTimeout, IPEndPoint receiver, Client client)
         {
             if (receiver == null)
             {
                 throw new ArgumentNullException(nameof(receiver));
             }
 
-            return (ReportMessage)_discovery.GetSecureResponse(timeout, receiver, client, Empty);
+            return (ReportMessage)_discovery.GetSecureResponse(connectionTimeout, responseTimeout, receiver, client, Empty);
         }
 
         /// <summary>

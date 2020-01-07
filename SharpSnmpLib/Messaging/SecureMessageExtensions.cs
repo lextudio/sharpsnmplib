@@ -9,7 +9,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 {
     public static class SecureMessageExtensions
     {
-        public static ISnmpMessage GetSecureResponse(this ISnmpMessage request, int timeout, IPEndPoint receiver, Client client)
+        public static ISnmpMessage GetSecureResponse(this ISnmpMessage request, int connectionTimeout, int responseTimeout, IPEndPoint receiver, Client client)
         {
             if (request is null)
             {
@@ -32,19 +32,19 @@ namespace Lextm.SharpSnmpLib.Messaging
             //    registry.Add(request.Parameters.UserName, request.Privacy);
             //}
 
-            return request.GetSecureResponse(timeout, receiver, client, registry);
+            return request.GetSecureResponse(connectionTimeout, responseTimeout, receiver, client, registry);
         }
 
         /// <summary>
         /// Sends an  <see cref="ISnmpMessage"/> and handles the response from agent.
         /// </summary>
         /// <param name="request">The <see cref="ISnmpMessage"/>.</param>
-        /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
+        /// <param name="responseTimeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
         /// <param name="receiver">Agent.</param>
         /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
         /// <param name="registry">The user registry.</param>
         /// <returns></returns>
-        public static ISnmpMessage GetSecureResponse(this ISnmpMessage request, int timeout, IPEndPoint receiver, Client client, UserRegistry registry)
+        public static ISnmpMessage GetSecureResponse(this ISnmpMessage request, int connectionTimeout, int responseTimeout, IPEndPoint receiver, Client client, UserRegistry registry)
         {
             if (request == null)
             {
@@ -73,7 +73,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             var bytes = request.ToBytes();
-            client.ConnectToServer(receiver, timeout);
+            client.ConnectToServer(receiver, connectionTimeout);
 
             byte[] reply = null;
             var manualReset = new ManualResetEvent(false);
@@ -84,7 +84,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 manualReset.Set();
             };
             client.Send(bytes);
-            if (!manualReset.WaitOne(timeout))
+            if (!manualReset.WaitOne(responseTimeout))
             {
                 client.Stop();
                 throw new TimeoutException();
