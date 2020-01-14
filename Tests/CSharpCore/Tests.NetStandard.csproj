@@ -7,8 +7,8 @@
     <AssemblyName>SharpSnmpLib.Tests.NetStandard</AssemblyName>
   </PropertyGroup>
   <PropertyGroup>
-    <OutputType Condition="'$(TargetFramework)'!='net452'">Exe</OutputType>
-    <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">netcoreapp2.1;net452</TargetFrameworks>
+    <OutputType Condition="'$(TargetFramework)'!='net471'">Exe</OutputType>
+    <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">netcoreapp2.1;net471</TargetFrameworks>
     <TargetFrameworks Condition=" '$(OS)' != 'Windows_NT' ">netcoreapp2.1</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
@@ -34,7 +34,7 @@
     <PackageReference Include="Moq" Version="4.13.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.4.0" />
   </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)'!='net452'">
+  <ItemGroup Condition="'$(TargetFramework)'!='net471'">
     <PackageReference Include="System.Net.Sockets" Version="4.3.0" />
   </ItemGroup>
   <ItemGroup>

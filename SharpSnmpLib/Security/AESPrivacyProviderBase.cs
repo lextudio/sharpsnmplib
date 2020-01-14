@@ -55,7 +55,7 @@ namespace Lextm.SharpSnmpLib.Security
         {
             get
             {
-#if NETSTANDARD1_3
+#if NETSTANDARD2_0
                 return false;
 #elif NETCOREAPP2_1
                 return false;
@@ -123,7 +123,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// <exception cref="ArgumentOutOfRangeException">Thrown when encryption key is null or length of the encryption key is too short.</exception>
         internal byte[] Encrypt(byte[] unencryptedData, byte[] key, int engineBoots, int engineTime, byte[] privacyParameters)
         {
-#if NETSTANDARD1_3
+#if NETSTANDARD2_0
             throw new PlatformNotSupportedException();
 #elif NETCOREAPP2_1
             throw new PlatformNotSupportedException();
@@ -209,7 +209,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// argument is null or length other then 8 bytes</exception>
         internal byte[] Decrypt(byte[] encryptedData, byte[] key, int engineBoots, int engineTime, byte[] privacyParameters)
         {
-#if NETSTANDARD1_3
+#if NETSTANDARD2_0
             throw new PlatformNotSupportedException();
 #elif NETCOREAPP2_1
             throw new PlatformNotSupportedException();

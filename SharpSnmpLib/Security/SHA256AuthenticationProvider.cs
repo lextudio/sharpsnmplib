@@ -171,7 +171,7 @@ namespace Lextm.SharpSnmpLib.Security
             using (var sha256 = new HMACSHA256(key))
             {
                 var hash = sha256.ComputeHash(ByteTool.PackMessage(length, version, header, parameters, data).ToBytes());
-#if NET452
+#if NET471
                 sha256.Clear();
 #endif
                 var result = new byte[DigestLength];

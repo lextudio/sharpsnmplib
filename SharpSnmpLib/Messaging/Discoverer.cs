@@ -96,7 +96,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 #if (!CF)
                 udp.EnableBroadcast = true;
 #endif
-#if NET452
+#if NET471
                 udp.Send(bytes, bytes.Length, broadcastAddress);
 #else
                 AsyncHelper.RunSync(() => udp.SendAsync(bytes, bytes.Length, broadcastAddress));
@@ -118,7 +118,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
                 Thread.Sleep(interval);
                 Interlocked.CompareExchange(ref _active, Inactive, Active);
-#if NET452
+#if NET471
                 udp.Close();
 #endif
             }
@@ -323,15 +323,8 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             using (var udp = new Socket(addressFamily, SocketType.Dgram, ProtocolType.Udp))
             {
-                udp.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.Broadcast, true);
-                var info = SocketExtension.EventArgsFactory.Create();
-                info.RemoteEndPoint = broadcastAddress;
-                info.SetBuffer(bytes, 0, bytes.Length);
-
-                using (var awaitable1 = new SocketAwaitable(info))
-                {
-                    await udp.SendToAsync(awaitable1);
-                }
+                var buffer = new ArraySegment<byte>(bytes);
+                await udp.SendToAsync(buffer, SocketFlags.Broadcast, broadcastAddress);
 
                 var activeBefore = Interlocked.CompareExchange(ref _active, Active, Inactive);
                 if (activeBefore == Active)
@@ -371,20 +364,13 @@ namespace Lextm.SharpSnmpLib.Messaging
                     return;
                 }
 
-                int count;
-                var reply = new byte[_bufferSize];
-                var args = SocketExtension.EventArgsFactory.Create();
                 try
                 {
                     EndPoint remote = new IPEndPoint(IPAddress.Any, 0);
-                    args.RemoteEndPoint = remote;
-                    args.SetBuffer(reply, 0, _bufferSize);
-                    using (var awaitable = new SocketAwaitable(args))
-                    {
-                        count = await socket.ReceiveMessageFromAsync(awaitable);
-                    }
+                    var buffer = new ArraySegment<byte>(new byte[_bufferSize]);
+                    var result = await socket.ReceiveMessageFromAsync(buffer, SocketFlags.None, remote);
 
-                    await Task.Factory.StartNew(() => HandleMessage(reply, count, (IPEndPoint) args.RemoteEndPoint))
+                    await Task.Factory.StartNew(() => HandleMessage(new byte[_bufferSize], result.ReceivedBytes, (IPEndPoint) result.RemoteEndPoint))
                         .ConfigureAwait(false);
                 }
                 catch (SocketException ex)
@@ -401,10 +387,6 @@ namespace Lextm.SharpSnmpLib.Messaging
                     {
                         HandleException(ex);
                     }
-                }
-                catch (NullReferenceException)
-                {
-                    args.UserToken = SocketAsyncEventArgsFactory.DisposedMessage;
                 }
             }
         }
