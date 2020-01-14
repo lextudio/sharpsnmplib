@@ -23,7 +23,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Net;
 using System.Net.Sockets;
-#if NETSTANDARD1_3
+#if NETSTANDARD2_0
 using System.Runtime.InteropServices;
 #endif
 using System.Threading;
@@ -381,7 +381,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 #endregion
 
 #region async methods
-#if NET452
+#if NET471
         /// <summary>
         /// Ends a pending asynchronous read.
         /// </summary>
@@ -546,14 +546,8 @@ namespace Lextm.SharpSnmpLib.Messaging
                     code));
             }
 
-            var bytes = message.ToBytes();
-            var info = SocketExtension.EventArgsFactory.Create();
-            info.RemoteEndPoint = manager;
-            info.SetBuffer(bytes, 0, bytes.Length);
-            using (var awaitable1 = new SocketAwaitable(info))
-            {
-                await socket.SendToAsync(awaitable1);
-            }
+            var buffer = new ArraySegment<byte>(message.ToBytes());
+            await socket.SendToAsync(buffer, SocketFlags.Broadcast, manager);
         }
 
         /// <summary>
@@ -686,29 +680,20 @@ namespace Lextm.SharpSnmpLib.Messaging
             var bufSize = udpSocket.ReceiveBufferSize = Messenger.MaxMessageSize;
 
             // Whatever you change, try to keep the Send and the Receive close to each other.
-            var info = SocketExtension.EventArgsFactory.Create();
-            info.RemoteEndPoint = receiver ?? throw new ArgumentNullException(nameof(receiver));
-            info.SetBuffer(bytes, 0, bytes.Length);
-            using (var awaitable1 = new SocketAwaitable(info))
-            {
-                await udpSocket.SendToAsync(awaitable1);
-            }
+            var buffer = new ArraySegment<byte>(bytes);
+            await udpSocket.SendToAsync(buffer, SocketFlags.Broadcast, receiver ?? throw new ArgumentNullException(nameof(receiver)));
 
             int count;
-            var reply = new byte[bufSize];
+            byte[] reply = new byte[bufSize];
 
             // IMPORTANT: follow http://blogs.msdn.com/b/pfxteam/archive/2011/12/15/10248293.aspx
-            var args = SocketExtension.EventArgsFactory.Create();
             var remoteAddress = udpSocket.AddressFamily == AddressFamily.InterNetworkV6 ? IPAddress.IPv6Any : IPAddress.Any;
             EndPoint remote = new IPEndPoint(remoteAddress, 0);
+
             try
             {
-                args.RemoteEndPoint = remote;
-                args.SetBuffer(reply, 0, bufSize);
-                using (var awaitable = new SocketAwaitable(args))
-                {
-                    count = await udpSocket.ReceiveMessageFromAsync(awaitable);
-                }
+                var result = await udpSocket.ReceiveMessageFromAsync(new ArraySegment<byte>(reply), SocketFlags.None, remote);
+                count = result.ReceivedBytes;
             }
             catch (SocketException ex)
             {
@@ -764,9 +749,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             get
             {
-#if NET452
+#if NET471
                 return !IsRunningOnMono;
-#elif NETSTANDARD1_3
+#elif NETSTANDARD2_0
                 return RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
 #else
                 return false;
@@ -782,9 +767,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             get
             {
-#if NET452
+#if NET471
                 return IsRunningOnMono;
-#elif NETSTANDARD1_3
+#elif NETSTANDARD2_0
                 return RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
 #else
                 return false;
@@ -801,9 +786,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             get
             {
-#if NET452
+#if NET471
                 return false;
-#elif NETSTANDARD1_3
+#elif NETSTANDARD2_0
                 return RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
 #elif XAMARINIOS1_0
                 return true;
