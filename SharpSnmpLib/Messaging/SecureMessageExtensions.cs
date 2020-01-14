@@ -4,12 +4,13 @@ using System;
 using System.Globalization;
 using System.Net;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Lextm.SharpSnmpLib.Messaging
 {
     public static class SecureMessageExtensions
     {
-        public static ISnmpMessage GetSecureResponse(this ISnmpMessage request, int connectionTimeout, int responseTimeout, IPEndPoint receiver, Client client)
+        public static async Task<ISnmpMessage> GetSecureResponse(this ISnmpMessage request, int connectionTimeout, int responseTimeout, IPEndPoint receiver, Client client)
         {
             if (request is null)
             {
@@ -32,7 +33,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             //    registry.Add(request.Parameters.UserName, request.Privacy);
             //}
 
-            return request.GetSecureResponse(connectionTimeout, responseTimeout, receiver, client, registry);
+            return await request.GetSecureResponse(connectionTimeout, responseTimeout, receiver, client, registry);
         }
 
         /// <summary>
@@ -44,7 +45,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
         /// <param name="registry">The user registry.</param>
         /// <returns></returns>
-        public static ISnmpMessage GetSecureResponse(this ISnmpMessage request, int connectionTimeout, int responseTimeout, IPEndPoint receiver, Client client, UserRegistry registry)
+        public static async Task<ISnmpMessage> GetSecureResponse(this ISnmpMessage request, int connectionTimeout, int responseTimeout, IPEndPoint receiver, Client client, UserRegistry registry)
         {
             if (request == null)
             {
@@ -83,14 +84,15 @@ namespace Lextm.SharpSnmpLib.Messaging
                 reply = buffer;
                 manualReset.Set();
             };
-            client.Send(bytes);
+
+            _ = Task.Run(() => client.SendAsync(bytes));
             if (!manualReset.WaitOne(responseTimeout))
             {
-                client.Stop();
+                await client.StopAsync();
                 throw new TimeoutException();
             }
 
-            client.Stop();
+            await client.StopAsync();
 
             // Passing 'count' is not necessary because ParseMessages should ignore it, but it offer extra safety (and would avoid an issue if parsing >1 response).
             var response = MessageFactory.ParseMessages(reply, 0, reply.Length, registry)[0];

@@ -2,8 +2,8 @@
   <PropertyGroup>
     <AssemblyName>SharpSnmpLib</AssemblyName>
     <RootNamespace>Lextm.SharpSnmpLib</RootNamespace>
-    <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">netcoreapp2.1;netstandard1.3;net452;xamarin.ios10;monoandroid80</TargetFrameworks> 
-    <TargetFrameworks Condition=" '$(OS)' != 'Windows_NT' ">netcoreapp2.1;netstandard1.3</TargetFrameworks> 
+    <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">netcoreapp2.1;netstandard1.3;netstandard2.1;net452;xamarin.ios10;monoandroid80</TargetFrameworks> 
+    <TargetFrameworks Condition=" '$(OS)' != 'Windows_NT' ">netcoreapp2.1;netstandard1.3;netstandard2.1;</TargetFrameworks> 
     <PackageId>Lextm.SharpSnmpLib</PackageId>
     <Title>#SNMP Library</Title>
     <NeutralLanguage>en-US</NeutralLanguage>
@@ -34,7 +34,7 @@
     <AndroidUseIntermediateDesignerFile>False</AndroidUseIntermediateDesignerFile>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="DTLS2.Net" Version="1.0.6" />
+    <PackageReference Include="DTLS2.Net" Version="1.0.7" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="all" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard1.3' OR '$(TargetFramework)'=='netcoreapp2.1'">
