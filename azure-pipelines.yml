@@ -21,7 +21,7 @@ jobs:
       packageType: sdk
       version: 2.1.803
       installationPath: $(Agent.ToolsDirectory)/dotnet
-  - task: UseDotNet@3
+  - task: UseDotNet@2
     displayName: 'Install .NET Core sdk'
     inputs:
       packageType: sdk
@@ -54,7 +54,7 @@ jobs:
       packageType: sdk
       version: 2.1.803
       installationPath: $(Agent.ToolsDirectory)/dotnet
-  - task: UseDotNet@3
+  - task: UseDotNet@2
     displayName: 'Install .NET Core sdk'
     inputs:
       packageType: sdk
@@ -89,7 +89,7 @@ jobs:
       packageType: sdk
       version: 2.1.803
       installationPath: $(Agent.ToolsDirectory)/dotnet
-  - task: UseDotNet@3
+  - task: UseDotNet@2
     displayName: 'Install .NET Core sdk'
     inputs:
       packageType: sdk
