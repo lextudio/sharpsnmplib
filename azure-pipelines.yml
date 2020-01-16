@@ -15,6 +15,18 @@ jobs:
     buildConfiguration: 'Release'
 
   steps:
+  - task: UseDotNet@2
+    displayName: 'Install .NET Core sdk'
+    inputs:
+      packageType: sdk
+      version: 2.1.803
+      installationPath: $(Agent.ToolsDirectory)/dotnet
+  - task: UseDotNet@2
+    displayName: 'Install .NET Core sdk'
+    inputs:
+      packageType: sdk
+      version: 3.1.101
+      installationPath: $(Agent.ToolsDirectory)/dotnet
   - script: |
       set -e
       dotnet build SharpSnmpLib.NetStandard.sln --configuration $(buildConfiguration)
@@ -36,6 +48,18 @@ jobs:
     buildConfiguration: 'Release'
 
   steps:
+  - task: UseDotNet@2
+    displayName: 'Install .NET Core sdk'
+    inputs:
+      packageType: sdk
+      version: 2.1.803
+      installationPath: $(Agent.ToolsDirectory)/dotnet
+  - task: UseDotNet@2
+    displayName: 'Install .NET Core sdk'
+    inputs:
+      packageType: sdk
+      version: 3.1.101
+      installationPath: $(Agent.ToolsDirectory)/dotnet
   - script: |
       sudo sysctl -w net.inet.udp.maxdgram=65535
       export CI=true
@@ -51,7 +75,7 @@ jobs:
 - job: Windows
 
   pool:
-    vmImage: 'VS2017-Win2016'
+    vmImage: 'windows-latest'
 
   variables:
     solution: '**/*.sln'
@@ -59,6 +83,18 @@ jobs:
     buildConfiguration: 'Release'
 
   steps:
+  - task: UseDotNet@2
+    displayName: 'Install .NET Core sdk'
+    inputs:
+      packageType: sdk
+      version: 2.1.803
+      installationPath: $(Agent.ToolsDirectory)/dotnet
+  - task: UseDotNet@2
+    displayName: 'Install .NET Core sdk'
+    inputs:
+      packageType: sdk
+      version: 3.1.101
+      installationPath: $(Agent.ToolsDirectory)/dotnet
   - script: |
       build.release.bat
   - script: |

@@ -29,7 +29,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-#if !NETCOREAPP2_1
+#if !(NETCOREAPP2_1 || NETCOREAPP3_0 || NETCOREAPP3_1)
 using System.Security.Cryptography;
 #endif
 
@@ -57,7 +57,7 @@ namespace Lextm.SharpSnmpLib.Security
             {
 #if NETSTANDARD2_0
                 return false;
-#elif NETCOREAPP2_1
+#elif NETCOREAPP2_1 || NETCOREAPP3_0 || NETCOREAPP3_1
                 return false;
 #else
                 return true;
@@ -125,7 +125,7 @@ namespace Lextm.SharpSnmpLib.Security
         {
 #if NETSTANDARD2_0
             throw new PlatformNotSupportedException();
-#elif NETCOREAPP2_1
+#elif NETCOREAPP2_1 || NETCOREAPP3_0 || NETCOREAPP3_1
             throw new PlatformNotSupportedException();
 #else
             // check the key before doing anything else
@@ -211,7 +211,7 @@ namespace Lextm.SharpSnmpLib.Security
         {
 #if NETSTANDARD2_0
             throw new PlatformNotSupportedException();
-#elif NETCOREAPP2_1
+#elif NETCOREAPP2_1 || NETCOREAPP3_0 || NETCOREAPP3_1
             throw new PlatformNotSupportedException();
 #else
             if (key == null)
