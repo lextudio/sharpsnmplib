@@ -3,7 +3,6 @@ using Lextm.SharpSnmpLib.Security;
 using System;
 using System.Globalization;
 using System.Net;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Lextm.SharpSnmpLib.Messaging
@@ -40,9 +39,10 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Sends an  <see cref="ISnmpMessage"/> and handles the response from agent.
         /// </summary>
         /// <param name="request">The <see cref="ISnmpMessage"/>.</param>
-        /// <param name="responseTimeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
+        /// <param name="connectionTimeout">The time-out value, in milliseconds for how long to wait for a connection</param>
+        /// <param name="responseTimeout">The time-out value, in milliseconds for how long to wait for a response. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
         /// <param name="receiver">Agent.</param>
-        /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
+        /// <param name="client">The DTLS client</param>
         /// <param name="registry">The user registry.</param>
         /// <returns></returns>
         public static async Task<ISnmpMessage> GetSecureResponse(this ISnmpMessage request, int connectionTimeout, int responseTimeout, IPEndPoint receiver, Client client, UserRegistry registry)
@@ -74,24 +74,8 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             var bytes = request.ToBytes();
-            client.ConnectToServer(receiver, connectionTimeout);
-
-            byte[] reply = null;
-            var manualReset = new ManualResetEvent(false);
-            manualReset.Reset();
-            client.DataReceived += (server, buffer) =>
-            {
-                reply = buffer;
-                manualReset.Set();
-            };
-
-            _ = Task.Run(() => client.SendAsync(bytes));
-            if (!manualReset.WaitOne(responseTimeout))
-            {
-                await client.StopAsync();
-                throw new TimeoutException();
-            }
-
+            await client.ConnectToServerWithTimeoutAsync(receiver, connectionTimeout);
+            var reply = await client.SendAndGetResponseWithTimeoutAsync(bytes, responseTimeout);
             await client.StopAsync();
 
             // Passing 'count' is not necessary because ParseMessages should ignore it, but it offer extra safety (and would avoid an issue if parsing >1 response).
