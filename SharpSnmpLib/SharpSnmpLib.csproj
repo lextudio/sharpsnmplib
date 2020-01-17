@@ -38,25 +38,13 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="all" />
   </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0' OR '$(TargetFramework)'=='netcoreapp2.1'">
-    <PackageReference Include="System.ComponentModel.TypeConverter" Version="4.3.0" />
-    <PackageReference Include="System.Net.NetworkInformation" Version="4.3.0" />
-    <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
-    <PackageReference Include="System.Threading.Thread" Version="4.3.0" />
-  </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)'=='net471'">
     <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'xamarin.ios10'">
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="Xamarin.iOS" />
     <Reference Include="System.Runtime.Serialization" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'monoandroid80'">
-    <Reference Include="mscorlib" />
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
   </ItemGroup>
   <ItemGroup>
