@@ -13,6 +13,7 @@ namespace Lextm.SharpSnmpLib.Unit.Security
     using System.Collections.Generic;
     using Xunit;
     using Lextm.SharpSnmpLib.Security;
+    using System.Runtime.InteropServices;
 
     public class AESPrivacyProviderTestFixture
     {
@@ -96,6 +97,7 @@ namespace Lextm.SharpSnmpLib.Unit.Security
         [Fact]
         public void TestEncrypt()
         {
+            Assert.Equal(RuntimeInformation.FrameworkDescription.Contains(".NET Core"), !AESPrivacyProviderBase.IsSupported);
             if (!AESPrivacyProviderBase.IsSupported)
             {
                 return;
