@@ -9,7 +9,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 {
     public static class SecureMessageExtensions
     {
-        public static async Task<ISnmpMessage> GetSecureResponse(this ISnmpMessage request, int connectionTimeout, int responseTimeout, IPEndPoint receiver, Client client)
+        public static async Task<ISnmpMessage> GetSecureResponseAsync(this ISnmpMessage request, int connectionTimeout, int responseTimeout, IPEndPoint receiver, Client client)
         {
             if (request is null)
             {
@@ -32,7 +32,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             //    registry.Add(request.Parameters.UserName, request.Privacy);
             //}
 
-            return await request.GetSecureResponse(connectionTimeout, responseTimeout, receiver, client, registry);
+            return await request.GetSecureResponseAsync(connectionTimeout, responseTimeout, receiver, client, registry);
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="client">The DTLS client</param>
         /// <param name="registry">The user registry.</param>
         /// <returns></returns>
-        public static async Task<ISnmpMessage> GetSecureResponse(this ISnmpMessage request, int connectionTimeout, int responseTimeout, IPEndPoint receiver, Client client, UserRegistry registry)
+        public static async Task<ISnmpMessage> GetSecureResponseAsync(this ISnmpMessage request, int connectionTimeout, int responseTimeout, IPEndPoint receiver, Client client, UserRegistry registry)
         {
             if (request == null)
             {
