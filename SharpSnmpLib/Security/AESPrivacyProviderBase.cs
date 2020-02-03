@@ -29,9 +29,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-#if !(NETCOREAPP2_1 || NETCOREAPP3_0 || NETCOREAPP3_1)
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
-#endif
 
 namespace Lextm.SharpSnmpLib.Security
 {
@@ -57,9 +56,14 @@ namespace Lextm.SharpSnmpLib.Security
             {
 #if NETSTANDARD2_0
                 return false;
-#elif NETCOREAPP2_1 || NETCOREAPP3_0 || NETCOREAPP3_1
-                return false;
 #else
+                if (RuntimeInformation.FrameworkDescription.Contains(".NET Core"))
+                {
+                    // netcoreappX.X
+                    return false;
+                }
+
+                // netXXX, xamarin.ios10, and monoandroid80
                 return true;
 #endif
             }
@@ -123,11 +127,11 @@ namespace Lextm.SharpSnmpLib.Security
         /// <exception cref="ArgumentOutOfRangeException">Thrown when encryption key is null or length of the encryption key is too short.</exception>
         internal byte[] Encrypt(byte[] unencryptedData, byte[] key, int engineBoots, int engineTime, byte[] privacyParameters)
         {
-#if NETSTANDARD2_0
-            throw new PlatformNotSupportedException();
-#elif NETCOREAPP2_1 || NETCOREAPP3_0 || NETCOREAPP3_1
-            throw new PlatformNotSupportedException();
-#else
+            if (!IsSupported)
+            {
+                throw new PlatformNotSupportedException();
+            }
+
             // check the key before doing anything else
             if (key == null)
             {
@@ -192,7 +196,6 @@ namespace Lextm.SharpSnmpLib.Security
                     return encryptedData;
                 }
             }
-#endif
         }
 
         /// <summary>
@@ -209,11 +212,11 @@ namespace Lextm.SharpSnmpLib.Security
         /// argument is null or length other then 8 bytes</exception>
         internal byte[] Decrypt(byte[] encryptedData, byte[] key, int engineBoots, int engineTime, byte[] privacyParameters)
         {
-#if NETSTANDARD2_0
-            throw new PlatformNotSupportedException();
-#elif NETCOREAPP2_1 || NETCOREAPP3_0 || NETCOREAPP3_1
-            throw new PlatformNotSupportedException();
-#else
+            if (!IsSupported)
+            {
+                throw new PlatformNotSupportedException();
+            }
+
             if (key == null)
             {
                 throw new ArgumentNullException(nameof(key));
@@ -287,7 +290,6 @@ namespace Lextm.SharpSnmpLib.Security
                     return decryptedData;
                 }
             }
-#endif
         }
 
         /// <summary>
