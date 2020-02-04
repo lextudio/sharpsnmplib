@@ -74,8 +74,8 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             var bytes = request.ToBytes();
-            await client.ConnectToServerWithTimeoutAsync(receiver, connectionTimeout);
-            var reply = await client.SendAndGetResponseWithTimeoutAsync(bytes, responseTimeout);
+            await client.ConnectToServerAsync(receiver, TimeSpan.FromMilliseconds(responseTimeout), TimeSpan.FromMilliseconds(connectionTimeout));
+            var reply = await client.SendAndGetResponseAsync(bytes, TimeSpan.FromMilliseconds(responseTimeout));
 
             // Passing 'count' is not necessary because ParseMessages should ignore it, but it offer extra safety (and would avoid an issue if parsing >1 response).
             var response = MessageFactory.ParseMessages(reply, 0, reply.Length, registry)[0];

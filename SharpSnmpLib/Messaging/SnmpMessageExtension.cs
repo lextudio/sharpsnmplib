@@ -23,7 +23,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Net;
 using System.Net.Sockets;
-#if NETSTANDARD2_0
+#if NETSTANDARD2_0 || NETSTANDARD2_1
 using System.Runtime.InteropServices;
 #endif
 using System.Threading;
@@ -751,7 +751,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
 #if NET471
                 return !IsRunningOnMono;
-#elif NETSTANDARD2_0
+#elif NETSTANDARD2_0 || NETSTANDARD2_1
                 return RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
 #else
                 return false;
@@ -769,7 +769,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
 #if NET471
                 return IsRunningOnMono;
-#elif NETSTANDARD2_0
+#elif NETSTANDARD2_0 || NETSTANDARD2_1
                 return RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
 #else
                 return false;
@@ -788,7 +788,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
 #if NET471
                 return false;
-#elif NETSTANDARD2_0
+#elif NETSTANDARD2_0 || NETSTANDARD2_1
                 return RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
 #elif XAMARINIOS1_0
                 return true;
