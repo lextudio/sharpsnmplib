@@ -1,15 +1,15 @@
 ﻿// TRAP message type (SNMP version 2 and above).
 // Copyright (C) 2008-2010 Malcolm Crowe, Lex Li, and other contributors.
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this
 // software and associated documentation files (the "Software"), to deal in the Software
 // without restriction, including without limitation the rights to use, copy, modify, merge,
 // publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons
 // to whom the Software is furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in all copies or
 // substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
 // INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
 // PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
@@ -90,6 +90,28 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="engineTime">The engine time.</param>
         [CLSCompliant(false)]
         public TrapV2Message(VersionCode version, int messageId, int requestId, OctetString userName, ObjectIdentifier enterprise, uint time, IList<Variable> variables, IPrivacyProvider privacy, int maxMessageSize, OctetString engineId, int engineBoots, int engineTime)
+            : this(version, messageId, requestId, userName, enterprise, time, variables, privacy, maxMessageSize, engineId, OctetString.Empty, engineBoots, engineTime)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TrapV2Message"/> class.
+        /// </summary>
+        /// <param name="version">The version.</param>
+        /// <param name="messageId">The message id.</param>
+        /// <param name="requestId">The request id.</param>
+        /// <param name="userName">Name of the user.</param>
+        /// <param name="enterprise">The enterprise.</param>
+        /// <param name="time">The time.</param>
+        /// <param name="variables">The variables.</param>
+        /// <param name="privacy">The privacy.</param>
+        /// <param name="maxMessageSize">Size of the max message.</param>
+        /// <param name="engineId">The engine ID.</param>
+		/// <param name="contextName">The context name.</param>
+        /// <param name="engineBoots">The engine boots.</param>
+        /// <param name="engineTime">The engine time.</param>
+        [CLSCompliant(false)]
+        public TrapV2Message(VersionCode version, int messageId, int requestId, OctetString userName, ObjectIdentifier enterprise, uint time, IList<Variable> variables, IPrivacyProvider privacy, int maxMessageSize, OctetString engineId, OctetString contextName, int engineBoots, int engineTime)
         {
             if (userName == null)
             {
@@ -131,8 +153,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 time,
                 variables);
 
-            // TODO: may expose engine ID in the future.
-            Scope = new Scope(OctetString.Empty, OctetString.Empty, pdu);
+            Scope = new Scope(engineId, contextName, pdu);
             Privacy.ComputeHash(Version, Header, Parameters, Scope);
             _bytes = this.PackMessage(null).ToBytes();
         }
