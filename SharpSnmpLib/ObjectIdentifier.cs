@@ -454,6 +454,17 @@ namespace Lextm.SharpSnmpLib
         {
             return left.CompareTo(right) > 0;
         }
+        
+        /// <summary>
+        /// Implements the operator &gt;=.
+        /// </summary>
+        /// <param name="left">The left.</param>
+        /// <param name="right">The right.</param>
+        /// <returns>The result of the operator.</returns>
+        public static bool operator >=(ObjectIdentifier left, ObjectIdentifier right)
+        {
+            return left.CompareTo(right) >= 0;
+        }
 
         /// <summary>
         /// Implements the operator &lt;.
@@ -464,6 +475,17 @@ namespace Lextm.SharpSnmpLib
         public static bool operator <(ObjectIdentifier left, ObjectIdentifier right)
         {
             return left.CompareTo(right) < 0;
+        }
+        
+        /// <summary>
+        /// Implements the operator &lt;=.
+        /// </summary>
+        /// <param name="left">The left.</param>
+        /// <param name="right">The right.</param>
+        /// <returns>The result of the operator.</returns>
+        public static bool operator <=(ObjectIdentifier left, ObjectIdentifier right)
+        {
+            return left.CompareTo(right) <= 0;
         }
         
         /// <summary>
