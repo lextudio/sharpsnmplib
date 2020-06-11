@@ -3,7 +3,6 @@
     <RootNamespace>Lextm.SharpSnmpLib</RootNamespace>
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>sharpsnmplib.tests.snk</AssemblyOriginatorKeyFile>
-    <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">True</PublicSign>
     <AssemblyName>SharpSnmpLib.Tests.NetStandard</AssemblyName>
   </PropertyGroup>
   <PropertyGroup>
