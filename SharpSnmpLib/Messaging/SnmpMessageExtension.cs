@@ -547,7 +547,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             var buffer = new ArraySegment<byte>(message.ToBytes());
-            await socket.SendToAsync(buffer, SocketFlags.None, manager);
+            await socket.SendToAsync(buffer, SocketFlags.None, manager).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -681,7 +681,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             // Whatever you change, try to keep the Send and the Receive close to each other.
             var buffer = new ArraySegment<byte>(bytes);
-            await udpSocket.SendToAsync(buffer, SocketFlags.None, receiver ?? throw new ArgumentNullException(nameof(receiver)));
+            await udpSocket.SendToAsync(buffer, SocketFlags.None, receiver ?? throw new ArgumentNullException(nameof(receiver))).ConfigureAwait(false);
 
             int count;
             byte[] reply = new byte[bufSize];
@@ -692,7 +692,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             try
             {
-                var result = await udpSocket.ReceiveMessageFromAsync(new ArraySegment<byte>(reply), SocketFlags.None, remote);
+                var result = await udpSocket.ReceiveMessageFromAsync(new ArraySegment<byte>(reply), SocketFlags.None, remote).ConfigureAwait(false);
                 count = result.ReceivedBytes;
             }
             catch (SocketException ex)

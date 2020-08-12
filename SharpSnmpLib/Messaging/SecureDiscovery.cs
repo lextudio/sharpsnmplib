@@ -89,7 +89,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException(nameof(receiver));
             }
 
-            return (ReportMessage) (await _discovery.GetSecureResponseAsync(connectionTimeout, responseTimeout, receiver, client, Empty));
+            return (ReportMessage) (await _discovery.GetSecureResponseAsync(connectionTimeout, responseTimeout, receiver, client, Empty).ConfigureAwait(false));
         }
 
         /// <summary>

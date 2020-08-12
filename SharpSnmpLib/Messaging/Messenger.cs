@@ -266,7 +266,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <remarks>This method only supports SNMP v2c and v3.</remarks>
         [Obsolete("Please use other overloading ones.")]
         public static async Task<int> BulkWalkAsync(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, IList<Variable> list, int maxRepetitions, WalkMode mode, IPrivacyProvider privacy, ISnmpMessage report)
-            => await BulkWalkAsync(version, endpoint, community, OctetString.Empty, table, list, maxRepetitions, mode, privacy, report);
+            => await BulkWalkAsync(version, endpoint, community, OctetString.Empty, table, list, maxRepetitions, mode, privacy, report).ConfigureAwait(false);
 
         /// <summary>
         /// Walks (based on GET BULK).
@@ -390,7 +390,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         [CLSCompliant(false)]
         [Obsolete("Please use other overloading ones.")]
         public static async Task SendInformAsync(int requestId, VersionCode version, IPEndPoint receiver, OctetString community, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables, IPrivacyProvider privacy, ISnmpMessage report)
-            => await SendInformAsync(requestId, version, receiver, community, OctetString.Empty,  enterprise, timestamp, variables, privacy, report);
+            => await SendInformAsync(requestId, version, receiver, community, OctetString.Empty,  enterprise, timestamp, variables, privacy, report).ConfigureAwait(false);
 
         /// <summary>
         /// Sends INFORM message.
@@ -496,7 +496,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <remarks>This method supports SNMP v2c and v3.</remarks>
         [Obsolete("Please use other overloading ones.")]
         private static async Task<Tuple<bool, IList<Variable>, ISnmpMessage>> BulkHasNextAsync(VersionCode version, IPEndPoint receiver, OctetString community, Variable seed, int maxRepetitions, IPrivacyProvider privacy, ISnmpMessage report)
-            => await BulkHasNextAsync(version, receiver, community, OctetString.Empty, seed, maxRepetitions, privacy, report);
+            => await BulkHasNextAsync(version, receiver, community, OctetString.Empty, seed, maxRepetitions, privacy, report).ConfigureAwait(false);
 
         /// <summary>
         /// Determines whether the specified seed has next item.
