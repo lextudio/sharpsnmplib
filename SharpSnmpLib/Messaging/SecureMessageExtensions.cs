@@ -9,7 +9,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 {
     public static class SecureMessageExtensions
     {
-        public static async Task<ISnmpMessage> GetSecureResponseAsync(this ISnmpMessage request, int connectionTimeout, int responseTimeout, IPEndPoint receiver, Client client)
+        public static async Task<ISnmpMessage> GetSecureResponseAsync(this ISnmpMessage request, TimeSpan connectionTimeout, TimeSpan responseTimeout, IPEndPoint receiver, Client client)
         {
             if (request is null)
             {
@@ -35,6 +35,32 @@ namespace Lextm.SharpSnmpLib.Messaging
             return await request.GetSecureResponseAsync(connectionTimeout, responseTimeout, receiver, client, registry).ConfigureAwait(false);
         }
 
+        public static async Task<ISnmpMessage> GetSecureResponseAsync(this ISnmpMessage request, int connectionTimeout, int responseTimeout, IPEndPoint receiver, Client client)
+        {
+            if (request is null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            if (receiver is null)
+            {
+                throw new ArgumentNullException(nameof(receiver));
+            }
+
+            if (client is null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
+
+            var registry = new UserRegistry();
+            //if (request.Version == VersionCode.V3)
+            //{
+            //    registry.Add(request.Parameters.UserName, request.Privacy);
+            //}
+
+            return await request.GetSecureResponseAsync(TimeSpan.FromMilliseconds(connectionTimeout), TimeSpan.FromMilliseconds(responseTimeout), receiver, client, registry).ConfigureAwait(false);
+        }
+
         /// <summary>
         /// Sends an  <see cref="ISnmpMessage"/> and handles the response from agent.
         /// </summary>
@@ -45,7 +71,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="client">The DTLS client</param>
         /// <param name="registry">The user registry.</param>
         /// <returns></returns>
-        public static async Task<ISnmpMessage> GetSecureResponseAsync(this ISnmpMessage request, int connectionTimeout, int responseTimeout, IPEndPoint receiver, Client client, UserRegistry registry)
+        public static async Task<ISnmpMessage> GetSecureResponseAsync(this ISnmpMessage request, TimeSpan connectionTimeout, TimeSpan responseTimeout, IPEndPoint receiver, Client client, UserRegistry registry)
         {
             if (request == null)
             {
@@ -74,8 +100,8 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             var bytes = request.ToBytes();
-            await client.ConnectToServerAsync(receiver, TimeSpan.FromMilliseconds(responseTimeout), TimeSpan.FromMilliseconds(connectionTimeout)).ConfigureAwait(false);
-            var reply = await client.SendAndGetResponseAsync(bytes, TimeSpan.FromMilliseconds(responseTimeout)).ConfigureAwait(false);
+            await client.ConnectToServerAsync(receiver, responseTimeout, connectionTimeout).ConfigureAwait(false);
+            var reply = await client.SendAndGetResponseAsync(bytes, responseTimeout).ConfigureAwait(false);
 
             // Passing 'count' is not necessary because ParseMessages should ignore it, but it offer extra safety (and would avoid an issue if parsing >1 response).
             var response = MessageFactory.ParseMessages(reply, 0, reply.Length, registry)[0];

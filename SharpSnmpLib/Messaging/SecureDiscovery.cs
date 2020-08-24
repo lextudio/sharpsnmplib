@@ -75,6 +75,16 @@ namespace Lextm.SharpSnmpLib.Messaging
                 null);
         }
 
+        public async Task<ReportMessage> GetResponseAsync(int connectionTimeout, int responseTimeout, IPEndPoint receiver, Client client)
+        {
+            if (receiver == null)
+            {
+                throw new ArgumentNullException(nameof(receiver));
+            }
+
+            return (ReportMessage)(await _discovery.GetSecureResponseAsync(TimeSpan.FromMilliseconds(connectionTimeout), TimeSpan.FromMilliseconds(responseTimeout), receiver, client, Empty).ConfigureAwait(false));
+        }
+
         /// <summary>
         /// Gets the response.
         /// </summary>
@@ -82,7 +92,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="responseTimeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
         /// <param name="receiver">The receiver.</param>
         /// <returns></returns>
-        public async Task<ReportMessage> GetResponseAsync(int connectionTimeout, int responseTimeout, IPEndPoint receiver, Client client)
+        public async Task<ReportMessage> GetResponseAsync(TimeSpan connectionTimeout, TimeSpan responseTimeout, IPEndPoint receiver, Client client)
         {
             if (receiver == null)
             {
