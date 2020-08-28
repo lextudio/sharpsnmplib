@@ -88,19 +88,67 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="version">The version.</param>
         /// <param name="messageId">The message id.</param>
         /// <param name="requestId">The request id.</param>
+        /// <param name="contextName">The context name.</param>
+        /// <param name="variables">The variables.</param>
+        /// <param name="privacy">The privacy provider.</param>
+        /// <param name="maxMessageSize">Size of the max message.</param>
+        public SetRequestMessage(VersionCode version, int messageId, int requestId, OctetString contextName, IList<Variable> variables, IPrivacyProvider privacy, int maxMessageSize)
+        {
+            if (variables == null)
+            {
+                throw new ArgumentNullException(nameof(variables));
+            }
+
+            if (contextName == null)
+            {
+                throw new ArgumentNullException(nameof(contextName));
+            }
+
+            if (version != VersionCode.V3)
+            {
+                throw new ArgumentException("Only v3 is supported.", nameof(version));
+            }
+
+            if (privacy == null)
+            {
+                throw new ArgumentNullException(nameof(privacy));
+            }
+
+            Version = version;
+            Privacy = privacy;
+            Header = new Header(new Integer32(messageId), new Integer32(maxMessageSize), privacy.ToSecurityLevel() | Levels.Reportable, new Integer32((int)SecurityModel.Tsm));
+            Parameters = SecurityParameters.Empty;
+
+            var pdu = new SetRequestPdu(
+                requestId,
+                variables);
+            var contextEngineId = OctetString.Empty;
+            Scope = new Scope(contextEngineId, contextName, pdu);
+
+            Privacy.ComputeHash(Version, Header, Parameters, Scope);
+            _bytes = this.PackMessage(null).ToBytes();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SetRequestMessage"/> class.
+        /// </summary>
+        /// <param name="version">The version.</param>
+        /// <param name="messageId">The message id.</param>
+        /// <param name="requestId">The request id.</param>
         /// <param name="userName">Name of the user.</param>
         /// <param name="contextName">The context name.</param>
         /// <param name="variables">The variables.</param>
         /// <param name="privacy">The privacy provider.</param>
         /// <param name="maxMessageSize">Size of the max message.</param>
         /// <param name="report">The report.</param>
-        public SetRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName, OctetString contextName, IList<Variable> variables, IPrivacyProvider privacy, int maxMessageSize, ISnmpMessage report)
+        /// <param name="securityModel">The type of security model</param>
+        public SetRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName, OctetString contextName, IList<Variable> variables, IPrivacyProvider privacy, int maxMessageSize, ISnmpMessage report, SecurityModel securityModel)
         {
             if (variables == null)
             {
                 throw new ArgumentNullException(nameof(variables));
             }
-            
+
             if (userName == null)
             {
                 throw new ArgumentNullException(nameof(userName));
@@ -110,7 +158,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new ArgumentNullException(nameof(contextName));
             }
-            
+
             if (version != VersionCode.V3)
             {
                 throw new ArgumentException("Only v3 is supported.", nameof(version));
@@ -120,7 +168,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new ArgumentNullException(nameof(report));
             }
-            
+
             if (privacy == null)
             {
                 throw new ArgumentNullException(nameof(privacy));
@@ -129,16 +177,26 @@ namespace Lextm.SharpSnmpLib.Messaging
             Version = version;
             Privacy = privacy;
 
-            Header = new Header(new Integer32(messageId), new Integer32(maxMessageSize), privacy.ToSecurityLevel() | Levels.Reportable);
+            Header = new Header(new Integer32(messageId), new Integer32(maxMessageSize), privacy.ToSecurityLevel() | Levels.Reportable, new Integer32((int)securityModel));
+
             var parameters = report.Parameters;
             var authenticationProvider = Privacy.AuthenticationProvider;
-            Parameters = new SecurityParameters(
-                parameters.EngineId,
-                parameters.EngineBoots,
-                parameters.EngineTime,
-                userName,
-                authenticationProvider.CleanDigest,
-                Privacy.Salt);
+
+            if (securityModel == SecurityModel.Tsm)
+            {
+                Parameters = SecurityParameters.Empty;
+            }
+            else
+            {
+                Parameters = new SecurityParameters(
+                    parameters.EngineId,
+                    parameters.EngineBoots,
+                    parameters.EngineTime,
+                    userName,
+                    authenticationProvider.CleanDigest,
+                    Privacy.Salt);
+            }
+
             var pdu = new SetRequestPdu(
                 requestId,
                 variables);
@@ -148,6 +206,24 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             Privacy.ComputeHash(Version, Header, Parameters, Scope);
             _bytes = this.PackMessage(null).ToBytes();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SetRequestMessage"/> class.
+        /// </summary>
+        /// <param name="version">The version.</param>
+        /// <param name="messageId">The message id.</param>
+        /// <param name="requestId">The request id.</param>
+        /// <param name="userName">Name of the user.</param>
+        /// <param name="contextName">The context name.</param>
+        /// <param name="variables">The variables.</param>
+        /// <param name="privacy">The privacy provider.</param>
+        /// <param name="maxMessageSize">Size of the max message.</param>
+        /// <param name="report">The report.</param>
+        public SetRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName, OctetString contextName, IList<Variable> variables, IPrivacyProvider privacy, int maxMessageSize, ISnmpMessage report)
+            : this(version, messageId, requestId, userName, contextName, variables, privacy, maxMessageSize, report, SecurityModel.Usm)
+        {
+           
         }
 
         /// <summary>

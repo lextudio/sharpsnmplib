@@ -31,7 +31,7 @@ namespace Lextm.SharpSnmpLib
         private readonly Integer32 _maxSize;
         private readonly OctetString _flags;
         private readonly Integer32 _securityModel;
-        private static readonly Integer32 DefaultSecurityModel = new Integer32(3);
+        private static readonly Integer32 DefaultSecurityModel = new Integer32((int)SecurityModel.Usm);
         private static readonly Integer32 DefaultMaxMessageSize = new Integer32(MaxMessageSize);
         private static readonly Header EmptyHeader = new Header();
         private readonly Sequence _container;
@@ -82,8 +82,9 @@ namespace Lextm.SharpSnmpLib
         /// <param name="messageId">The message id.</param>
         /// <param name="maxMessageSize">Size of the max message.</param>
         /// <param name="securityLevel">The security level.</param>
+        /// <param name="securityModel">The security model.</param>
         /// <remarks>If you want an empty header, please use <see cref="Empty"/>.</remarks>
-        public Header(Integer32 messageId, Integer32 maxMessageSize, Levels securityLevel)
+        public Header(Integer32 messageId, Integer32 maxMessageSize, Levels securityLevel, Integer32 securityModel)
         {
             if (maxMessageSize == null)
             {
@@ -94,7 +95,19 @@ namespace Lextm.SharpSnmpLib
             _maxSize = maxMessageSize;
             SecurityLevel = securityLevel;
             _flags = new OctetString(SecurityLevel);
-            _securityModel = DefaultSecurityModel;
+            _securityModel = securityModel;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Header"/> class.
+        /// </summary>
+        /// <param name="messageId">The message id.</param>
+        /// <param name="maxMessageSize">Size of the max message.</param>
+        /// <param name="securityLevel">The security level.</param>
+        /// <remarks>If you want an empty header, please use <see cref="Empty"/>.</remarks>
+        public Header(Integer32 messageId, Integer32 maxMessageSize, Levels securityLevel) 
+            : this(messageId, maxMessageSize, securityLevel, DefaultSecurityModel)
+        {
         }
         
         /// <summary>
@@ -117,6 +130,15 @@ namespace Lextm.SharpSnmpLib
         public int MessageId
         {
             get { return _messageId.ToInt32(); }
+        }
+
+        /// <summary>
+        /// Gets the security model.
+        /// </summary>
+        /// <value>The security model.</value>
+        public SecurityModel SecurityModel
+        {
+            get { return (SecurityModel)_securityModel.ToInt32(); }
         }
 
         #region ISegment Members

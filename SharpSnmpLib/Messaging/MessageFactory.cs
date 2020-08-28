@@ -156,7 +156,15 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 header = new Header(body[1]);
                 parameters = new SecurityParameters((OctetString)body[2]);
-                privacy = registry.Find(parameters.UserName);
+                if (header.SecurityModel == SecurityModel.Tsm)
+                {
+                    privacy = new TsmPrivacyProvider(TsmAuthenticationProvider.Instance);
+                }
+                else
+                {
+                    privacy = registry.Find(parameters.UserName);
+                }
+
                 if (privacy == null)
                 {
                     // handle decryption exception.
@@ -187,7 +195,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                     throw new SnmpException(string.Format(CultureInfo.InvariantCulture, "invalid v3 packets scoped data: {0}", code));
                 }
 
-                if (!privacy.VerifyHash(version, header, parameters, body[3], body.GetLengthBytes()))
+                if (header.SecurityModel != SecurityModel.Tsm && !privacy.VerifyHash(version, header, parameters, body[3], body.GetLengthBytes()))
                 {
                     parameters.IsInvalid = true;
                 }
