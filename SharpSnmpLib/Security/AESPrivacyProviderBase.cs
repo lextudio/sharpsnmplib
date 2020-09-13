@@ -55,7 +55,7 @@ namespace Lextm.SharpSnmpLib.Security
             get
             {
 #if NETSTANDARD2_0
-                return false;
+                return Helper.SecuritySupported;
 #else
                 if (RuntimeInformation.FrameworkDescription.Contains(".NET Core"))
                 {

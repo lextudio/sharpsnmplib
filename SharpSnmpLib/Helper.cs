@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Net;
 using System.Net.NetworkInformation;
+using System.Runtime.InteropServices;
 
 namespace Lextm.SharpSnmpLib
 {
@@ -35,6 +36,21 @@ namespace Lextm.SharpSnmpLib
             }
 
             return new PhysicalAddress(raw);
+        }
+
+        private static bool? securitySupported;
+
+        public static bool SecuritySupported
+        {
+            get
+            {
+                if (securitySupported != null)
+                {
+                    return securitySupported.Value;
+                }
+
+                return (securitySupported = RuntimeInformation.FrameworkDescription.StartsWith(".NET Framework")).Value;
+            }
         }
     }
 }

@@ -43,7 +43,7 @@ namespace Lextm.SharpSnmpLib.Security
             get
             {
 #if NETSTANDARD2_0
-                return false;
+                return Helper.SecuritySupported;
 #else
                 return true;
 #endif
@@ -103,9 +103,11 @@ namespace Lextm.SharpSnmpLib.Security
         /// <exception cref="ArgumentOutOfRangeException">Thrown when encryption key is null or length of the encryption key is too short.</exception>
         public static byte[] Encrypt(byte[] unencryptedData, byte[] key, byte[] privacyParameters)
         {
-#if NETSTANDARD2_0
-            throw new PlatformNotSupportedException();
-#else
+            if (!IsSupported)
+            {
+                throw new PlatformNotSupportedException();
+            }
+
             if (unencryptedData == null)
             {
                 throw new ArgumentNullException(nameof(unencryptedData));
@@ -172,7 +174,6 @@ namespace Lextm.SharpSnmpLib.Security
             }
 
             return result;
-#endif
         }
 
         /// <summary>
@@ -187,9 +188,11 @@ namespace Lextm.SharpSnmpLib.Security
         /// argument is null or length other then 8 bytes</exception>
         public static byte[] Decrypt(byte[] encryptedData, byte[] key, byte[] privacyParameters)
         {
-#if NETSTANDARD2_0
-            throw new PlatformNotSupportedException();
-#else
+            if (!IsSupported)
+            {
+                throw new PlatformNotSupportedException();
+            }
+
             if (encryptedData == null)
             {
                 throw new ArgumentNullException(nameof(encryptedData));
@@ -249,7 +252,6 @@ namespace Lextm.SharpSnmpLib.Security
                     return decryptedData;
                 }
             }
-#endif
         }
 
         /// <summary>
