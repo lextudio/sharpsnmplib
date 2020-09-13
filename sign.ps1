@@ -1,4 +1,4 @@
-$nuget = "f:\nuget.exe"
+$nuget = "..\nuget.exe"
 & $nuget update /self | Write-Debug
 
 Write-Host "Sign NuGet packages."
