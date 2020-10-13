@@ -38,11 +38,7 @@ catch
 
 Write-Host "MSBuild found. Compile the projects."
 
-$solution = "SharpSnmpLib.NetStandard.macOS.sln"
-if ($onWindows)
-{
-    $solution = "SharpSnmpLib.NetStandard.sln"
-}
+$solution = "SharpSnmpLib.NetStandard.sln"
 
 & $msBuild $solution /p:Configuration=Release /t:restore
 & $msBuild $solution /p:Configuration=Release /t:clean
