@@ -61,10 +61,7 @@ namespace Lextm.SharpSnmpLib
             RequestId = new Integer32(requestId);
             _time = new TimeTicks(time);
             Variables = variables;
-            IList<Variable> full = new List<Variable>(variables);
-            full.Insert(0, new Variable(_timeId, _time));
-            full.Insert(1, new Variable(_enterpriseId, Enterprise));
-            _varbindSection = Variable.Transform(full);
+            _varbindSection = Variable.Transform(Decorate(variables));
         }
 
         /// <summary>
@@ -191,6 +188,14 @@ namespace Lextm.SharpSnmpLib
                 _time, 
                 Variables.Count.ToString(CultureInfo.InvariantCulture),
                 RequestId);
+        }
+
+        public IList<Variable> Decorate(IList<Variable> variables)
+        {
+            var full = new List<Variable>(variables);
+            full.Insert(0, new Variable(_timeId, _time));
+            full.Insert(1, new Variable(_enterpriseId, Enterprise));
+            return full;
         }
     }
 }
