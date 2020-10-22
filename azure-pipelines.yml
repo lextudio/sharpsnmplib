@@ -29,6 +29,7 @@ jobs:
       installationPath: $(Agent.ToolsDirectory)/dotnet
   - script: |
       set -e
+      sudo pwsh -file patch-winfx.ps1 $(Agent.ToolsDirectory)/dotnet/sdk/3.1.101
       dotnet build SharpSnmpLib.NetStandard.sln --configuration $(buildConfiguration)
       dotnet test Tests/CSharpCore/Tests.NetStandard.csproj --configuration $(buildConfiguration) --no-build --logger trx
   - task: PublishTestResults@2
