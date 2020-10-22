@@ -1,3 +1,9 @@
+[CmdletBinding()]
+param(
+    [Parameter(Position = 0)]
+    [string] $Configuration = 'Release'
+)
+
 $msBuild = "msbuild"
 $onWindows = $false
 try
@@ -38,11 +44,9 @@ catch
 
 Write-Host "MSBuild found. Compile the projects."
 
-$solution = "SharpSnmpLib.NetStandard.sln"
-
-& $msBuild $solution /p:Configuration=Release /t:restore
-& $msBuild $solution /p:Configuration=Release /t:clean
-& $msBuild $solution /p:Configuration=Release
+& $msBuild /m /p:Configuration=$Configuration /t:restore
+& $msBuild /m /p:Configuration=$Configuration /t:clean
+& $msBuild /m /p:Configuration=$Configuration
 if ($LASTEXITCODE -ne 0)
 {
     Write-Host "Compilation failed. Exit."
