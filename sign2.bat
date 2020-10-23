@@ -6,3 +6,6 @@ if exist %signtool% (
         echo %ERRORLEVEL%
     )
 )
+
+exit /b 0
+
