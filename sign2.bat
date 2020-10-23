@@ -4,8 +4,5 @@ if exist %signtool% (
     %signtool% sign /tr http://timestamp.digicert.com /td sha256 /fd sha256 /a "%1"
     IF %ERRORLEVEL% NEQ 0 (
         echo %ERRORLEVEL%
-        exit /b 1
     )
 )
-
-exit /b 0
