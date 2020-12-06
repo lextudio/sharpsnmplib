@@ -6,5 +6,5 @@ call sign3.bat
 IF %ERRORLEVEL% NEQ 0 exit /b 1
 copy SharpSnmpLib\bin\Release\*.nupkg .
 
-powershell -file sign.ps1
+powershell -file sign.nuget.ps1
 @IF %ERRORLEVEL% NEQ 0 exit /b 1

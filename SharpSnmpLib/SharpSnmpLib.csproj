@@ -55,6 +55,6 @@
     </None>
   </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition=" '$(OS)' == 'Windows_NT' ">
-    <Exec Command="..\sign2.bat &quot;$(TargetPath)&quot;" />
+    <Exec Command="powershell -file ..\sign.assembly.ps1 &quot;$(TargetPath)&quot;" />
   </Target>
 </Project>
