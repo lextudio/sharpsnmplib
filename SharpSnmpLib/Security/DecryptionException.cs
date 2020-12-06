@@ -19,9 +19,7 @@
 
 using System;
 using System.Runtime.Serialization;
-#if !NETFX_CORE
-//using System.Security.Permissions;
-#endif
+
 namespace Lextm.SharpSnmpLib.Security
 {
     /// <summary>

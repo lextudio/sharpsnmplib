@@ -28,9 +28,7 @@
 using System;
 using System.Globalization;
 using System.Runtime.Serialization;
-#if !NETFX_CORE
-//using System.Security.Permissions;
-#endif
+
 namespace Lextm.SharpSnmpLib.Messaging
 {
     /// <summary>

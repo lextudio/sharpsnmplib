@@ -31,9 +31,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// ObjectIdentifier type.
     /// </summary>
-#if !NETFX_CORE
     [TypeConverter(typeof(ObjectIdentifierConverter))]
-#endif
     [DataContract]
     public sealed class ObjectIdentifier : 
         ISnmpData, IEquatable<ObjectIdentifier>, IComparable<ObjectIdentifier>, IComparable
