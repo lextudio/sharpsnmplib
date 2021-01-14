@@ -32,6 +32,7 @@ using System.Globalization;
 using System.Net;
 using Lextm.SharpSnmpLib.Security;
 using System.Threading.Tasks;
+using System.Net.Sockets;
 
 namespace Lextm.SharpSnmpLib.Messaging
 {
@@ -84,8 +85,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="endpoint">Endpoint.</param>
         /// <param name="community">Community name.</param>
         /// <param name="variables">Variable binds.</param>
+        /// <param name="udpSocket">Optional udp socket</param>
         /// <returns></returns>
-        public static async Task<IList<Variable>> GetAsync(VersionCode version, IPEndPoint endpoint, OctetString community, IList<Variable> variables)
+        public static async Task<IList<Variable>> GetAsync(VersionCode version, IPEndPoint endpoint, OctetString community, IList<Variable> variables, Socket udpSocket = null)
         {
             if (endpoint == null)
             {
@@ -107,8 +109,18 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new NotSupportedException("SNMP v3 is not supported");
             }
 
+            ISnmpMessage response;
+
             var message = new GetRequestMessage(RequestCounter.NextId, version, community, variables);
-            var response = await message.GetResponseAsync(endpoint).ConfigureAwait(false);
+            if (udpSocket != null)
+            {
+                response = await message.GetResponseAsync(endpoint, udpSocket).ConfigureAwait(false);
+            }
+            else
+            {
+                response = await message.GetResponseAsync(endpoint).ConfigureAwait(false);
+            }
+            response = await message.GetResponseAsync(endpoint).ConfigureAwait(false);
             var pdu = response.Pdu();
             if (pdu.ErrorStatus.ToInt32() != 0)
             {
@@ -128,8 +140,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="endpoint">Endpoint.</param>
         /// <param name="community">Community name.</param>
         /// <param name="variables">Variable binds.</param>
+        /// <param name="udpSocket">Optional udp socket</param>
         /// <returns></returns>
-        public static async Task<IList<Variable>> SetAsync(VersionCode version, IPEndPoint endpoint, OctetString community, IList<Variable> variables)
+        public static async Task<IList<Variable>> SetAsync(VersionCode version, IPEndPoint endpoint, OctetString community, IList<Variable> variables, Socket udpSocket = null)
         {
             if (endpoint == null)
             {
@@ -151,8 +164,18 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new NotSupportedException("SNMP v3 is not supported");
             }
 
+            ISnmpMessage response;
+
             var message = new SetRequestMessage(RequestCounter.NextId, version, community, variables);
-            var response = await message.GetResponseAsync(endpoint).ConfigureAwait(false);
+            if (udpSocket != null)
+            {
+                response = await message.GetResponseAsync(endpoint, udpSocket).ConfigureAwait(false);
+            }
+            else
+            {
+                response = await message.GetResponseAsync(endpoint).ConfigureAwait(false);
+            }
+
             var pdu = response.Pdu();
             if (pdu.ErrorStatus.ToInt32() != 0)
             {
@@ -174,11 +197,12 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="table">OID.</param>
         /// <param name="list">A list to hold the results.</param>
         /// <param name="mode">Walk mode.</param>
+        /// <param name="udpSocket">Optional udp socket</param>
         /// <returns>
         /// Returns row count if the OID is a table. Otherwise this value is meaningless.
         /// </returns>
         /// <remarks>This method only supports SNMP v1 and v2c.</remarks>
-        public static async Task<int> WalkAsync(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, IList<Variable> list, WalkMode mode)
+        public static async Task<int> WalkAsync(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, IList<Variable> list, WalkMode mode, Socket udpSocket = null)
         {
             if (list == null)
             {
@@ -197,7 +221,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 seed = data.Item2;
                 if (seed == tableV)
                 {
-                    data = await HasNextAsync(version, endpoint, community, seed).ConfigureAwait(false);
+                    data = await HasNextAsync(version, endpoint, community, seed, udpSocket).ConfigureAwait(false);
                     continue;
                 }
 
@@ -213,7 +237,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                     result++;
                 }
 
-                data = await HasNextAsync(version, endpoint, community, seed).ConfigureAwait(false);
+                data = await HasNextAsync(version, endpoint, community, seed, udpSocket).ConfigureAwait(false);
             }
             while (data.Item1);
             return result;
@@ -226,11 +250,12 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="endpoint">The endpoint.</param>
         /// <param name="community">The community.</param>
         /// <param name="seed">The seed.</param>
+        /// <param name="udpSocket">Optional udp socket</param>
         /// <returns>
         ///     <c>true</c> if the specified seed has next item; otherwise, <c>false</c>.
         /// </returns>
         /// <remarks>This method only supports SNMP v1 and v2c.</remarks>
-        private static async Task<Tuple<bool, Variable>> HasNextAsync(VersionCode version, IPEndPoint endpoint, OctetString community, Variable seed)
+        private static async Task<Tuple<bool, Variable>> HasNextAsync(VersionCode version, IPEndPoint endpoint, OctetString community, Variable seed, Socket udpSocket = null)
         {
             if (seed == null)
             {
@@ -244,7 +269,15 @@ namespace Lextm.SharpSnmpLib.Messaging
                 community,
                 variables);
 
-            var response = await message.GetResponseAsync(endpoint).ConfigureAwait(false);
+            ISnmpMessage response;
+            if (udpSocket != null)
+            {
+                response = await message.GetResponseAsync(endpoint, udpSocket).ConfigureAwait(false);
+            }
+            else
+            {
+                response = await message.GetResponseAsync(endpoint).ConfigureAwait(false);
+            }
             var pdu = response.Pdu();
             var errorFound = pdu.ErrorStatus.ToErrorCode() == ErrorCode.NoSuchName;
             return new Tuple<bool, Variable>(!errorFound, errorFound ? null : pdu.Variables[0]);
@@ -262,11 +295,12 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="mode">Walk mode.</param>
         /// <param name="privacy">The privacy provider.</param>
         /// <param name="report">The report.</param>
+        /// <param name="udpSocket">Optional udp socket</param>
         /// <returns>Returns row count if the OID is a table. Otherwise this value is meaningless.</returns>
         /// <remarks>This method only supports SNMP v2c and v3.</remarks>
         [Obsolete("Please use other overloading ones.")]
-        public static async Task<int> BulkWalkAsync(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, IList<Variable> list, int maxRepetitions, WalkMode mode, IPrivacyProvider privacy, ISnmpMessage report)
-            => await BulkWalkAsync(version, endpoint, community, OctetString.Empty, table, list, maxRepetitions, mode, privacy, report);
+        public static async Task<int> BulkWalkAsync(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, IList<Variable> list, int maxRepetitions, WalkMode mode, IPrivacyProvider privacy, ISnmpMessage report, Socket udpSocket = null)
+            => await BulkWalkAsync(version, endpoint, community, OctetString.Empty, table, list, maxRepetitions, mode, privacy, report, udpSocket);
 
         /// <summary>
         /// Walks (based on GET BULK).
@@ -281,9 +315,10 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="mode">Walk mode.</param>
         /// <param name="privacy">The privacy provider.</param>
         /// <param name="report">The report.</param>
+        /// <param name="udpSocket">Optional udp socket</param>
         /// <returns>Returns row count if the OID is a table. Otherwise this value is meaningless.</returns>
         /// <remarks>This method only supports SNMP v2c and v3.</remarks>
-        public static async Task<int> BulkWalkAsync(VersionCode version, IPEndPoint endpoint, OctetString community, OctetString contextName, ObjectIdentifier table, IList<Variable> list, int maxRepetitions, WalkMode mode, IPrivacyProvider privacy, ISnmpMessage report)
+        public static async Task<int> BulkWalkAsync(VersionCode version, IPEndPoint endpoint, OctetString community, OctetString contextName, ObjectIdentifier table, IList<Variable> list, int maxRepetitions, WalkMode mode, IPrivacyProvider privacy, ISnmpMessage report, Socket udpSocket = null)
         {
             if (list == null)
             {
@@ -294,7 +329,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             var seed = tableV;
             var result = 0;
             var message = report;
-            var data = await BulkHasNextAsync(version, endpoint, community, contextName, seed, maxRepetitions, privacy, message).ConfigureAwait(false);
+            var data = await BulkHasNextAsync(version, endpoint, community, contextName, seed, maxRepetitions, privacy, message, udpSocket).ConfigureAwait(false);
             var next = data.Item2;
             message = data.Item3;
             while (data.Item1)
@@ -323,12 +358,12 @@ namespace Lextm.SharpSnmpLib.Messaging
                 }
 
                 seed = next[next.Count - 1];
-                data = await BulkHasNextAsync(version, endpoint, community, contextName, seed, maxRepetitions, privacy, message).ConfigureAwait(false);
+                data = await BulkHasNextAsync(version, endpoint, community, contextName, seed, maxRepetitions, privacy, message, udpSocket).ConfigureAwait(false);
                 next = data.Item2;
                 message = data.Item3;
             }
 
-            end:
+        end:
             return result;
         }
 
@@ -343,12 +378,21 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="specific">Specific code.</param>
         /// <param name="timestamp">Timestamp.</param>
         /// <param name="variables">Variable bindings.</param>
+        /// <param name="udpSocket">Optional udp socket to be used for the request.</param>
         /// <remarks>This method only supports SNMP v1.</remarks>
         [CLSCompliant(false)]
-        public static async Task SendTrapV1Async(EndPoint receiver, IPAddress agent, OctetString community, ObjectIdentifier enterprise, GenericCode generic, int specific, uint timestamp, IList<Variable> variables)
+        public static async Task SendTrapV1Async(EndPoint receiver, IPAddress agent, OctetString community, ObjectIdentifier enterprise, GenericCode generic, int specific, uint timestamp, IList<Variable> variables, Socket udpSocket = null)
         {
             var message = new TrapV1Message(VersionCode.V1, agent, community, enterprise, generic, specific, timestamp, variables);
-            await message.SendAsync(receiver).ConfigureAwait(false);
+            if (udpSocket != null)
+            {
+                await message.SendAsync(receiver, udpSocket).ConfigureAwait(false);
+            }
+            else
+            {
+                await message.SendAsync(receiver).ConfigureAwait(false);
+            }
+
         }
 
         /// <summary>
@@ -361,9 +405,10 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="timestamp">Timestamp.</param>
         /// <param name="variables">Variable bindings.</param>
         /// <param name="requestId">Request ID.</param>
+        /// <param name="udpSocket">Optional udp socket to be used for the request.</param>
         /// <remarks>This method only supports SNMP v2c.</remarks>
         [CLSCompliant(false)]
-        public static async Task SendTrapV2Async(int requestId, VersionCode version, EndPoint receiver, OctetString community, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables)
+        public static async Task SendTrapV2Async(int requestId, VersionCode version, EndPoint receiver, OctetString community, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables, Socket udpSocket = null)
         {
             if (version != VersionCode.V2)
             {
@@ -371,7 +416,15 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             var message = new TrapV2Message(requestId, version, community, enterprise, timestamp, variables);
-            await message.SendAsync(receiver).ConfigureAwait(false);
+            if (udpSocket != null)
+            {
+                await message.SendAsync(receiver, udpSocket).ConfigureAwait(false);
+            }
+            else
+            {
+                await message.SendAsync(receiver).ConfigureAwait(false);
+            }
+
         }
 
         /// <summary>
@@ -386,11 +439,12 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="variables">Variable bindings.</param>
         /// <param name="privacy">The privacy provider.</param>
         /// <param name="report">The report.</param>
+        /// <param name="udpSocket">Optional udp socket</param>
         /// <remarks>This method supports SNMP v2c and v3.</remarks>
         [CLSCompliant(false)]
         [Obsolete("Please use other overloading ones.")]
-        public static async Task SendInformAsync(int requestId, VersionCode version, IPEndPoint receiver, OctetString community, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables, IPrivacyProvider privacy, ISnmpMessage report)
-            => await SendInformAsync(requestId, version, receiver, community, OctetString.Empty,  enterprise, timestamp, variables, privacy, report);
+        public static async Task SendInformAsync(int requestId, VersionCode version, IPEndPoint receiver, OctetString community, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables, IPrivacyProvider privacy, ISnmpMessage report, Socket udpSocket = null)
+            => await SendInformAsync(requestId, version, receiver, community, OctetString.Empty, enterprise, timestamp, variables, privacy, report, udpSocket);
 
         /// <summary>
         /// Sends INFORM message.
@@ -405,9 +459,10 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="variables">Variable bindings.</param>
         /// <param name="privacy">The privacy provider.</param>
         /// <param name="report">The report.</param>
+        /// <param name="udpSocket">Optional udp socket</param>
         /// <remarks>This method supports SNMP v2c and v3.</remarks>
         [CLSCompliant(false)]
-        public static async Task SendInformAsync(int requestId, VersionCode version, IPEndPoint receiver, OctetString community, OctetString contextName, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables, IPrivacyProvider privacy, ISnmpMessage report)
+        public static async Task SendInformAsync(int requestId, VersionCode version, IPEndPoint receiver, OctetString community, OctetString contextName, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables, IPrivacyProvider privacy, ISnmpMessage report, Socket udpSocket = null)
         {
             if (receiver == null)
             {
@@ -469,8 +524,16 @@ namespace Lextm.SharpSnmpLib.Messaging
                                           enterprise,
                                           timestamp,
                                           variables);
+            ISnmpMessage response;
+            if (udpSocket != null)
+            {
+                response = await message.GetResponseAsync(receiver, udpSocket).ConfigureAwait(false);
+            }
+            else
+            {
+                response = await message.GetResponseAsync(receiver).ConfigureAwait(false);
+            }
 
-            var response = await message.GetResponseAsync(receiver).ConfigureAwait(false);
             if (response.Pdu().ErrorStatus.ToInt32() != 0)
             {
                 throw ErrorException.Create(
@@ -490,13 +553,14 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="maxRepetitions">The max repetitions.</param>
         /// <param name="privacy">The privacy provider.</param>
         /// <param name="report">The report.</param>
+        /// <param name="udpSocket">Optional udp socket</param>
         /// <returns>
         /// <c>true</c> if the specified seed has next item; otherwise, <c>false</c>.
         /// </returns>
         /// <remarks>This method supports SNMP v2c and v3.</remarks>
         [Obsolete("Please use other overloading ones.")]
-        private static async Task<Tuple<bool, IList<Variable>, ISnmpMessage>> BulkHasNextAsync(VersionCode version, IPEndPoint receiver, OctetString community, Variable seed, int maxRepetitions, IPrivacyProvider privacy, ISnmpMessage report)
-            => await BulkHasNextAsync(version, receiver, community, OctetString.Empty, seed, maxRepetitions, privacy, report);
+        private static async Task<Tuple<bool, IList<Variable>, ISnmpMessage>> BulkHasNextAsync(VersionCode version, IPEndPoint receiver, OctetString community, Variable seed, int maxRepetitions, IPrivacyProvider privacy, ISnmpMessage report, Socket udpSocket = null)
+            => await BulkHasNextAsync(version, receiver, community, OctetString.Empty, seed, maxRepetitions, privacy, report, udpSocket);
 
         /// <summary>
         /// Determines whether the specified seed has next item.
@@ -509,11 +573,12 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="maxRepetitions">The max repetitions.</param>
         /// <param name="privacy">The privacy provider.</param>
         /// <param name="report">The report.</param>
+        /// <param name="udpSocket">Optional udp socket</param>
         /// <returns>
         /// <c>true</c> if the specified seed has next item; otherwise, <c>false</c>.
         /// </returns>
         /// <remarks>This method supports SNMP v2c and v3.</remarks>
-        private static async Task<Tuple<bool, IList<Variable>, ISnmpMessage>> BulkHasNextAsync(VersionCode version, IPEndPoint receiver, OctetString community, OctetString contextName, Variable seed, int maxRepetitions, IPrivacyProvider privacy, ISnmpMessage report)
+        private static async Task<Tuple<bool, IList<Variable>, ISnmpMessage>> BulkHasNextAsync(VersionCode version, IPEndPoint receiver, OctetString community, OctetString contextName, Variable seed, int maxRepetitions, IPrivacyProvider privacy, ISnmpMessage report, Socket udpSocket = null)
         {
             // TODO: report should be updated with latest message from agent.
             if (version == VersionCode.V1)
@@ -542,7 +607,16 @@ namespace Lextm.SharpSnmpLib.Messaging
                                                       0,
                                                       maxRepetitions,
                                                       variables);
-            var reply = await request.GetResponseAsync(receiver).ConfigureAwait(false);
+            ISnmpMessage reply;
+            if (udpSocket != null)
+            {
+                reply = await request.GetResponseAsync(receiver, udpSocket).ConfigureAwait(false);
+            }
+            else
+            {
+                reply = await request.GetResponseAsync(receiver).ConfigureAwait(false);
+            }
+
             if (reply is ReportMessage)
             {
                 if (reply.Pdu().Variables.Count == 0)
@@ -572,7 +646,15 @@ namespace Lextm.SharpSnmpLib.Messaging
                     privacy,
                     MaxMessageSize,
                     reply);
-                reply = await request.GetResponseAsync(receiver).ConfigureAwait(false);
+                if (udpSocket != null)
+                {
+                    reply = await request.GetResponseAsync(receiver, udpSocket).ConfigureAwait(false);
+                }
+                else
+                {
+                    reply = await request.GetResponseAsync(receiver).ConfigureAwait(false);
+                }
+
             }
             else if (reply.Pdu().ErrorStatus.ToInt32() != 0)
             {
@@ -597,9 +679,10 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="community">Community name.</param>
         /// <param name="variables">Variable binds.</param>
         /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
+        /// <param name="udpSocket">Optional udp socket</param>
         /// <returns></returns>
         /// <remarks>This method supports SNMP v1 and v2c.</remarks>
-        public static IList<Variable> Get(VersionCode version, IPEndPoint endpoint, OctetString community, IList<Variable> variables, int timeout)
+        public static IList<Variable> Get(VersionCode version, IPEndPoint endpoint, OctetString community, IList<Variable> variables, int timeout, Socket udpSocket = null)
         {
             if (endpoint == null)
             {
@@ -620,9 +703,17 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new NotSupportedException("SNMP v3 is not supported");
             }
-
+            ISnmpMessage response;
             var message = new GetRequestMessage(RequestCounter.NextId, version, community, variables);
-            var response = message.GetResponse(timeout, endpoint);
+            if (udpSocket != null)
+            {
+                response = message.GetResponse(timeout, endpoint, udpSocket);
+            }
+            else
+            {
+                response = message.GetResponse(timeout, endpoint);
+            }
+
             var pdu = response.Pdu();
             if (pdu.ErrorStatus.ToInt32() != 0)
             {
@@ -643,9 +734,10 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="community">Community name.</param>
         /// <param name="variables">Variable binds.</param>
         /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
+        /// <param name="udpSocket">Optional udp socket</param>
         /// <returns></returns>
         /// <remarks>This method supports SNMP v1 and v2c.</remarks>
-        public static IList<Variable> Set(VersionCode version, IPEndPoint endpoint, OctetString community, IList<Variable> variables, int timeout)
+        public static IList<Variable> Set(VersionCode version, IPEndPoint endpoint, OctetString community, IList<Variable> variables, int timeout, Socket udpSocket = null)
         {
             if (endpoint == null)
             {
@@ -666,9 +758,17 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new NotSupportedException("SNMP v3 is not supported");
             }
-
+            ISnmpMessage response;
             var message = new SetRequestMessage(RequestCounter.NextId, version, community, variables);
-            var response = message.GetResponse(timeout, endpoint);
+            if (udpSocket != null)
+            {
+                response = message.GetResponse(timeout, endpoint, udpSocket);
+            }
+            else
+            {
+                response = message.GetResponse(timeout, endpoint);
+            }
+
             var pdu = response.Pdu();
             if (pdu.ErrorStatus.ToInt32() != 0)
             {
@@ -691,11 +791,12 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="list">A list to hold the results.</param>
         /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
         /// <param name="mode">Walk mode.</param>
+        /// <param name="udpSocket">Optional udp socket</param>
         /// <returns>
         /// Returns row count if the OID is a table. Otherwise this value is meaningless.
         /// </returns>
         /// <remarks>This method supports SNMP v1 and v2c.</remarks>
-        public static int Walk(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, IList<Variable> list, int timeout, WalkMode mode)
+        public static int Walk(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, IList<Variable> list, int timeout, WalkMode mode, Socket udpSocket = null)
         {
             if (list == null)
             {
@@ -728,7 +829,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                     result++;
                 }
             }
-            while (HasNext(version, endpoint, community, seed, timeout, out next));
+            while (HasNext(version, endpoint, community, seed, timeout, out next, udpSocket));
             return result;
         }
 
@@ -741,12 +842,13 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="seed">The seed.</param>
         /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
         /// <param name="next">The next.</param>
+        /// <param name="udpSocket">Optional udp socket</param>
         /// <returns>
         ///     <c>true</c> if the specified seed has next item; otherwise, <c>false</c>.
         /// </returns>
         /// <remarks>This method supports SNMP v1 and v2c.</remarks>
         [SuppressMessage("Microsoft.Design", "CA1021:AvoidOutParameters", MessageId = "5#")]
-        private static bool HasNext(VersionCode version, IPEndPoint endpoint, OctetString community, Variable seed, int timeout, out Variable next)
+        private static bool HasNext(VersionCode version, IPEndPoint endpoint, OctetString community, Variable seed, int timeout, out Variable next, Socket udpSocket = null)
         {
             if (seed == null)
             {
@@ -759,8 +861,16 @@ namespace Lextm.SharpSnmpLib.Messaging
                 version,
                 community,
                 variables);
+            ISnmpMessage response;
+            if (udpSocket != null)
+            {
+                response = message.GetResponse(timeout, endpoint, udpSocket);
+            }
+            else
+            {
+                response = message.GetResponse(timeout, endpoint);
+            }
 
-            var response = message.GetResponse(timeout, endpoint);
             var pdu = response.Pdu();
             var errorFound = pdu.ErrorStatus.ToErrorCode() == ErrorCode.NoSuchName;
             next = errorFound ? null : pdu.Variables[0];
@@ -780,11 +890,12 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="mode">Walk mode.</param>
         /// <param name="privacy">The privacy provider.</param>
         /// <param name="report">The report.</param>
+        /// <param name="udpSocket">Optional udp socket</param>
         /// <returns>Returns row count if the OID is a table. Otherwise this value is meaningless.</returns>
         /// <remarks>This method supports SNMP v2c and v3.</remarks>
         [Obsolete("Please use other overloading ones.")]
-        public static int BulkWalk(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, IList<Variable> list, int timeout, int maxRepetitions, WalkMode mode, IPrivacyProvider privacy, ISnmpMessage report)
-            => BulkWalk(version, endpoint, community, OctetString.Empty, table, list, timeout, maxRepetitions, mode, privacy, report);
+        public static int BulkWalk(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, IList<Variable> list, int timeout, int maxRepetitions, WalkMode mode, IPrivacyProvider privacy, ISnmpMessage report, Socket udpSocket = null)
+            => BulkWalk(version, endpoint, community, OctetString.Empty, table, list, timeout, maxRepetitions, mode, privacy, report, udpSocket);
 
         /// <summary>
         /// Walks (based on GET BULK).
@@ -802,7 +913,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="report">The report.</param>
         /// <returns>Returns row count if the OID is a table. Otherwise this value is meaningless.</returns>
         /// <remarks>This method supports SNMP v2c and v3.</remarks>
-        public static int BulkWalk(VersionCode version, IPEndPoint endpoint, OctetString community, OctetString contextName, ObjectIdentifier table, IList<Variable> list, int timeout, int maxRepetitions, WalkMode mode, IPrivacyProvider privacy, ISnmpMessage report)
+        public static int BulkWalk(VersionCode version, IPEndPoint endpoint, OctetString community, OctetString contextName, ObjectIdentifier table, IList<Variable> list, int timeout, int maxRepetitions, WalkMode mode, IPrivacyProvider privacy, ISnmpMessage report, Socket udpSocket = null)
         {
             if (list == null)
             {
@@ -819,7 +930,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             IList<Variable> next;
             var result = 0;
             var message = report;
-            while (BulkHasNext(version, endpoint, community, contextName, seed, timeout, maxRepetitions, out next, privacy, ref message))
+            while (BulkHasNext(version, endpoint, community, contextName, seed, timeout, maxRepetitions, out next, privacy, ref message, udpSocket))
             {
                 var subTreeMask = string.Format(CultureInfo.InvariantCulture, "{0}.", table);
                 var rowMask = string.Format(CultureInfo.InvariantCulture, "{0}.1.1.", table);
@@ -862,12 +973,21 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="specific">Specific code.</param>
         /// <param name="timestamp">Timestamp.</param>
         /// <param name="variables">Variable bindings.</param>
+        /// <param name="udpSocket">Optional udp socket</param>
         /// <remarks>This method supports SNMP v1.</remarks>
         [CLSCompliant(false)]
-        public static void SendTrapV1(EndPoint receiver, IPAddress agent, OctetString community, ObjectIdentifier enterprise, GenericCode generic, int specific, uint timestamp, IList<Variable> variables)
+        public static void SendTrapV1(EndPoint receiver, IPAddress agent, OctetString community, ObjectIdentifier enterprise, GenericCode generic, int specific, uint timestamp, IList<Variable> variables, Socket udpSocket = null)
         {
             var message = new TrapV1Message(VersionCode.V1, agent, community, enterprise, generic, specific, timestamp, variables);
-            message.Send(receiver);
+            if (udpSocket != null)
+            {
+                message.Send(receiver, udpSocket);
+            }
+            else
+            {
+                message.Send(receiver);
+            }
+
         }
 
         /// <summary>
@@ -880,9 +1000,10 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="timestamp">Timestamp.</param>
         /// <param name="variables">Variable bindings.</param>
         /// <param name="requestId">Request ID.</param>
+        /// <param name="udpSocket">Optional udp socket</param>
         /// <remarks>This method supports SNMP v2c.</remarks>
         [CLSCompliant(false)]
-        public static void SendTrapV2(int requestId, VersionCode version, EndPoint receiver, OctetString community, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables)
+        public static void SendTrapV2(int requestId, VersionCode version, EndPoint receiver, OctetString community, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables, Socket udpSocket = null)
         {
             if (version != VersionCode.V2)
             {
@@ -890,7 +1011,15 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             var message = new TrapV2Message(requestId, version, community, enterprise, timestamp, variables);
-            message.Send(receiver);
+            if (udpSocket != null)
+            {
+                message.Send(receiver, udpSocket);
+            }
+            else
+            {
+                message.Send(receiver);
+            }
+
         }
 
         /// <summary>
@@ -906,12 +1035,13 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
         /// <param name="privacy">The privacy provider.</param>
         /// <param name="report">The report.</param>
+        /// <param name="udpSocket">Optional udp socket</param>
         /// <remarks>This method supports SNMP v2c and v3.</remarks>
         [CLSCompliant(false)]
         [Obsolete("Please use other overloading ones.")]
-        public static void SendInform(int requestId, VersionCode version, IPEndPoint receiver, OctetString community, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables, int timeout, IPrivacyProvider privacy, ISnmpMessage report)
-            => SendInform(requestId, version, receiver, community, OctetString.Empty, enterprise, timestamp, variables, timeout, privacy, report);
-     
+        public static void SendInform(int requestId, VersionCode version, IPEndPoint receiver, OctetString community, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables, int timeout, IPrivacyProvider privacy, ISnmpMessage report, Socket udpSocket = null)
+            => SendInform(requestId, version, receiver, community, OctetString.Empty, enterprise, timestamp, variables, timeout, privacy, report, udpSocket);
+
         /// <summary>
         /// Sends INFORM message.
         /// </summary>
@@ -926,9 +1056,10 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
         /// <param name="privacy">The privacy provider.</param>
         /// <param name="report">The report.</param>
+        /// <param name="udpSocket">Optional udp socket</param>
         /// <remarks>This method supports SNMP v2c and v3.</remarks>
         [CLSCompliant(false)]
-        public static void SendInform(int requestId, VersionCode version, IPEndPoint receiver, OctetString community, OctetString contextName, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables, int timeout, IPrivacyProvider privacy, ISnmpMessage report)
+        public static void SendInform(int requestId, VersionCode version, IPEndPoint receiver, OctetString community, OctetString contextName, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables, int timeout, IPrivacyProvider privacy, ISnmpMessage report, Socket udpSocket = null)
         {
             if (receiver == null)
             {
@@ -990,8 +1121,16 @@ namespace Lextm.SharpSnmpLib.Messaging
                                           enterprise,
                                           timestamp,
                                           variables);
+            ISnmpMessage response;
+            if (udpSocket != null)
+            {
+                response = message.GetResponse(timeout, receiver, udpSocket);
+            }
+            else
+            {
+                response = message.GetResponse(timeout, receiver);
+            }
 
-            var response = message.GetResponse(timeout, receiver);
             if (response.Pdu().ErrorStatus.ToInt32() != 0)
             {
                 throw ErrorException.Create(
@@ -1013,14 +1152,15 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="next">The next.</param>
         /// <param name="privacy">The privacy provider.</param>
         /// <param name="report">The report.</param>
+        /// <param name="udpSocket">Optional udp socket</param>
         /// <returns>
         /// <c>true</c> if the specified seed has next item; otherwise, <c>false</c>.
         /// </returns>
         /// <remarks>This method supports SNMP v2c and v3.</remarks>
         [SuppressMessage("Microsoft.Design", "CA1021:AvoidOutParameters", MessageId = "5#")]
         [Obsolete("Please use other overloading ones.")]
-        private static bool BulkHasNext(VersionCode version, IPEndPoint receiver, OctetString community, Variable seed, int timeout, int maxRepetitions, out IList<Variable> next, IPrivacyProvider privacy, ref ISnmpMessage report)
-            => BulkHasNext(version, receiver, community, OctetString.Empty, seed, timeout, maxRepetitions, out next, privacy, ref report);
+        private static bool BulkHasNext(VersionCode version, IPEndPoint receiver, OctetString community, Variable seed, int timeout, int maxRepetitions, out IList<Variable> next, IPrivacyProvider privacy, ref ISnmpMessage report, Socket udpSocket = null)
+            => BulkHasNext(version, receiver, community, OctetString.Empty, seed, timeout, maxRepetitions, out next, privacy, ref report, udpSocket);
 
         /// <summary>
         /// Determines whether the specified seed has next item.
@@ -1035,12 +1175,13 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="next">The next.</param>
         /// <param name="privacy">The privacy provider.</param>
         /// <param name="report">The report.</param>
+        /// <param name="udpSocket">Optional udp socket</param>
         /// <returns>
         /// <c>true</c> if the specified seed has next item; otherwise, <c>false</c>.
         /// </returns>
         /// <remarks>This method supports SNMP v2c and v3.</remarks>
         [SuppressMessage("Microsoft.Design", "CA1021:AvoidOutParameters", MessageId = "5#")]
-        private static bool BulkHasNext(VersionCode version, IPEndPoint receiver, OctetString community, OctetString contextName, Variable seed, int timeout, int maxRepetitions, out IList<Variable> next, IPrivacyProvider privacy, ref ISnmpMessage report)
+        private static bool BulkHasNext(VersionCode version, IPEndPoint receiver, OctetString community, OctetString contextName, Variable seed, int timeout, int maxRepetitions, out IList<Variable> next, IPrivacyProvider privacy, ref ISnmpMessage report, Socket udpSocket = null)
         {
             if (version == VersionCode.V1)
             {
@@ -1068,7 +1209,16 @@ namespace Lextm.SharpSnmpLib.Messaging
                                                       0,
                                                       maxRepetitions,
                                                       variables);
-            var reply = request.GetResponse(timeout, receiver);
+            ISnmpMessage reply;
+            if (udpSocket != null)
+            {
+                reply = request.GetResponse(timeout, receiver, udpSocket);
+            }
+            else
+            {
+                reply = request.GetResponse(timeout, receiver);
+            }
+
             if (reply is ReportMessage)
             {
                 if (reply.Pdu().Variables.Count == 0)
@@ -1100,7 +1250,14 @@ namespace Lextm.SharpSnmpLib.Messaging
                     privacy,
                     MaxMessageSize,
                     reply);
-                reply = request.GetResponse(timeout, receiver);
+                if (udpSocket != null)
+                {
+                    reply = request.GetResponse(timeout, receiver, udpSocket);
+                }
+                else
+                {
+                    reply = request.GetResponse(timeout, receiver);
+                }
             }
             else if (reply.Pdu().ErrorStatus.ToInt32() != 0)
             {
@@ -1124,6 +1281,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="table">Table OID.</param>
         /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
         /// <param name="maxRepetitions">The max repetitions.</param>
+        /// <param name="udpSocket">Optional udp socket</param>
         /// <returns></returns>
         /// <remarks>This method supports SNMP v2c and v3.</remarks>
         [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Return", Justification = "ByDesign")]
