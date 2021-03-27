@@ -38,9 +38,11 @@ namespace Lextm.SharpSnmpLib.Unit.Security
         }
 
         [Fact]
-        public void TestDecrypt2()
+        public void TestIsSupported()
         {
-            #if NET5_0
+            #if NET6_0
+                Assert.False(DESPrivacyProvider.IsSupported);
+            #elif NET5_0
                 Assert.False(DESPrivacyProvider.IsSupported);
             #elif NETCOREAPP3_1
                 Assert.False(DESPrivacyProvider.IsSupported);
@@ -49,7 +51,11 @@ namespace Lextm.SharpSnmpLib.Unit.Security
             #elif NET471
                 Assert.True(DESPrivacyProvider.IsSupported);
             #endif
+        }
 
+        [Fact]
+        public void TestDescrypt2()
+        {
             byte[] encrypted = ByteTool.Convert("04 38 A4 F9 78 15 2B 14 45 F7 4F C5 B2 1C 82 72 9A 0B D9 EE C1 17 3E E1 26 0D 8B D4 7B 0F D7 35 06 1B E2 14 0D 4A 9B CA BF EF 18 6B 53 B9 FA 70 95 D0 15 38 C5 77 96 85 61 40");
             IPrivacyProvider priv;
             if (DESPrivacyProvider.IsSupported)

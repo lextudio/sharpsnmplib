@@ -95,9 +95,11 @@ namespace Lextm.SharpSnmpLib.Unit.Security
 //*/
 
         [Fact]
-        public void TestEncrypt()
+        public void TestIsSupported()
         {
-            #if NET5_0
+            #if NET6_0
+                Assert.False(AESPrivacyProviderBase.IsSupported);
+            #elif NET5_0
                 Assert.False(AESPrivacyProviderBase.IsSupported);
             #elif NETCOREAPP3_1
                 Assert.False(AESPrivacyProviderBase.IsSupported);
@@ -106,7 +108,11 @@ namespace Lextm.SharpSnmpLib.Unit.Security
             #elif NET471
                 Assert.True(AESPrivacyProviderBase.IsSupported);
             #endif
+        }
 
+        [Fact]
+        public void TestEncrypt()
+        {
             if (!AESPrivacyProviderBase.IsSupported)
             {
                 return;
