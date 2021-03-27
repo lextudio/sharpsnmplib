@@ -97,7 +97,16 @@ namespace Lextm.SharpSnmpLib.Unit.Security
         [Fact]
         public void TestEncrypt()
         {
-            Assert.Equal(RuntimeInformation.FrameworkDescription.Contains(".NET Core"), !AESPrivacyProviderBase.IsSupported);
+            #if NET5_0
+                Assert.False(AESPrivacyProviderBase.IsSupported);
+            #elif NETCOREAPP3_1
+                Assert.False(AESPrivacyProviderBase.IsSupported);
+            #elif NETCOREAPP2_1
+                Assert.False(AESPrivacyProviderBase.IsSupported);
+            #elif NET471
+                Assert.True(AESPrivacyProviderBase.IsSupported);
+            #endif
+
             if (!AESPrivacyProviderBase.IsSupported)
             {
                 return;
