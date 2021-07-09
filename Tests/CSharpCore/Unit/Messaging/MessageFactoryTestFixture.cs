@@ -356,7 +356,7 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
             Assert.Equal("lextm", message.Parameters.UserName.ToString());
             Assert.Equal("", message.Parameters.AuthenticationParameters.ToHexString());
             Assert.Equal("", message.Parameters.PrivacyParameters.ToHexString());
-            Assert.Equal("", message.Scope.ContextEngineId.ToHexString()); // SNMP#NET returns string.Empty here.
+            Assert.Equal("80001F8880E9630000D61FF449", message.Scope.ContextEngineId.ToHexString()); // SNMP#NET returns string.Empty here.
             Assert.Equal("", message.Scope.ContextName.ToHexString());
             Assert.Equal(528732060, message.MessageId());
             Assert.Equal(1905687779, message.RequestId());
@@ -376,9 +376,9 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
             Assert.Equal(0, message.Parameters.EngineBoots.ToInt32());
             Assert.Equal(0, message.Parameters.EngineTime.ToInt32());
             Assert.Equal("lextm", message.Parameters.UserName.ToString());
-            Assert.Equal("84433969457707152C289A3E", message.Parameters.AuthenticationParameters.ToHexString());
+            Assert.Equal("C8E73A5D2FA6F364146E6A9F", message.Parameters.AuthenticationParameters.ToHexString());
             Assert.Equal("", message.Parameters.PrivacyParameters.ToHexString());
-            Assert.Equal("", message.Scope.ContextEngineId.ToHexString()); // SNMP#NET returns string.Empty here.
+            Assert.Equal("80001F8880E9630000D61FF449", message.Scope.ContextEngineId.ToHexString()); // SNMP#NET returns string.Empty here.
             Assert.Equal("", message.Scope.ContextName.ToHexString());
             Assert.Equal(318463383, message.MessageId());
             Assert.Equal(1276263065, message.RequestId());

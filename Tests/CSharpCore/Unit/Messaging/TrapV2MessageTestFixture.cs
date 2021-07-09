@@ -49,7 +49,6 @@
             Assert.Equal(ByteTool.Convert(File.ReadAllBytes(Path.Combine("Resources", "trapv3auth"))), ByteTool.Convert(trap.ToBytes()));
         }
 
-
         [Fact]
         public void TestToBytes3()
         {
