@@ -26,6 +26,7 @@ namespace Lextm.SharpSnmpLib.Security
     /// <summary>
     /// Authentication provider using MD5.
     /// </summary>
+    [Obsolete("MD5 is no longer secure. Please use a more secure provider.")]
     public sealed class MD5AuthenticationProvider : IAuthenticationProvider
     {
         private const int Md5KeyCacheCapacity = 100;

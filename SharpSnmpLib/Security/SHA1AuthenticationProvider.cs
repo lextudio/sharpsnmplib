@@ -28,6 +28,7 @@ namespace Lextm.SharpSnmpLib.Security
     /// Authentication provider using SHA-1.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "SHA", Justification = "definition")]
+    [Obsolete("SHA-1 is no longer secure. Please use a more secure provider.")]
     public sealed class SHA1AuthenticationProvider : IAuthenticationProvider
     {
         private const int Sha1KeyCacheCapacity = 100; 

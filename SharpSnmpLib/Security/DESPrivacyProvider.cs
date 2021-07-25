@@ -30,6 +30,7 @@ namespace Lextm.SharpSnmpLib.Security
     /// </summary>
     /// <remarks>Ported from SNMP#NET PrivacyDES class.</remarks>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "DES", Justification = "definition")]
+    [Obsolete("DES is no longer secure. Please use a more secure provider.")]
     public sealed class DESPrivacyProvider : IPrivacyProvider
     {
         private readonly SaltGenerator _salt = new SaltGenerator();

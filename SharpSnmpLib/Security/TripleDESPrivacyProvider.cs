@@ -28,6 +28,7 @@ namespace Lextm.SharpSnmpLib.Security
     /// Privacy provider for 3DES.
     /// </summary>
     /// <remarks>Ported from SNMP#NET Privacy3DES class.</remarks>
+    [Obsolete("3DES is no longer secure. Please use a more secure provider.")]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "DES", Justification = "definition")]
     public sealed class TripleDESPrivacyProvider : IPrivacyProvider
     {
