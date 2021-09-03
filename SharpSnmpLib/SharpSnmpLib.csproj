@@ -26,9 +26,9 @@
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>sharpsnmplib.snk</AssemblyOriginatorKeyFile>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
-    <AssemblyVersion>12.3.0.0</AssemblyVersion>
-    <FileVersion>12.3.0.0</FileVersion>
-    <Version>12.3.0</Version>
+    <AssemblyVersion>12.4.0.0</AssemblyVersion>
+    <FileVersion>12.4.0.0</FileVersion>
+    <Version>12.4.0</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <RuntimeIdentifier Condition=" '$(TargetFramework)' == 'net471' ">win</RuntimeIdentifier>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
