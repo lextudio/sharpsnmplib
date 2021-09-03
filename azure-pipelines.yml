@@ -19,25 +19,20 @@ jobs:
     displayName: 'Install .NET Core sdk'
     inputs:
       packageType: sdk
-      version: 2.1.803
+      version: 3.1.x
       installationPath: $(Agent.ToolsDirectory)/dotnet
   - task: UseDotNet@2
     displayName: 'Install .NET Core sdk'
     inputs:
       packageType: sdk
-      version: 3.1.101
+      version: 5.0.x
       installationPath: $(Agent.ToolsDirectory)/dotnet
   - task: UseDotNet@2
     displayName: 'Install .NET Core sdk'
     inputs:
       packageType: sdk
-      version: 5.0.201
-      installationPath: $(Agent.ToolsDirectory)/dotnet
-  - task: UseDotNet@2
-    displayName: 'Install .NET Core sdk'
-    inputs:
-      packageType: sdk
-      version: 6.0.100-preview.7
+      version: 6.0.x
+      includePreviewVersions: true
       installationPath: $(Agent.ToolsDirectory)/dotnet
   - script: |
       set -e
@@ -65,25 +60,20 @@ jobs:
     displayName: 'Install .NET Core sdk'
     inputs:
       packageType: sdk
-      version: 2.1.803
+      version: 3.1.x
       installationPath: $(Agent.ToolsDirectory)/dotnet
   - task: UseDotNet@2
     displayName: 'Install .NET Core sdk'
     inputs:
       packageType: sdk
-      version: 3.1.101
+      version: 5.0.x
       installationPath: $(Agent.ToolsDirectory)/dotnet
   - task: UseDotNet@2
     displayName: 'Install .NET Core sdk'
     inputs:
       packageType: sdk
-      version: 5.0.201
-      installationPath: $(Agent.ToolsDirectory)/dotnet
-  - task: UseDotNet@2
-    displayName: 'Install .NET Core sdk'
-    inputs:
-      packageType: sdk
-      version: 6.0.100-preview.7
+      version: 6.0.x
+      includePreviewVersions: true
       installationPath: $(Agent.ToolsDirectory)/dotnet
   - script: |
       sudo sysctl -w net.inet.udp.maxdgram=65535
@@ -112,25 +102,20 @@ jobs:
     displayName: 'Install .NET Core sdk'
     inputs:
       packageType: sdk
-      version: 2.1.803
+      version: 3.1.x
       installationPath: $(Agent.ToolsDirectory)/dotnet
   - task: UseDotNet@2
     displayName: 'Install .NET Core sdk'
     inputs:
       packageType: sdk
-      version: 3.1.101
+      version: 5.0.x
       installationPath: $(Agent.ToolsDirectory)/dotnet
   - task: UseDotNet@2
     displayName: 'Install .NET Core sdk'
     inputs:
       packageType: sdk
-      version: 5.0.201
-      installationPath: $(Agent.ToolsDirectory)/dotnet
-  - task: UseDotNet@2
-    displayName: 'Install .NET Core sdk'
-    inputs:
-      packageType: sdk
-      version: 6.0.100-preview.7
+      version: 6.0.x
+      includePreviewVersions: true
       installationPath: $(Agent.ToolsDirectory)/dotnet
   - script: |
       build.release.bat
