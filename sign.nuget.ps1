@@ -1,5 +1,9 @@
-$nuget = "..\nuget.exe"
-& $nuget update /self | Write-Debug
+$nuget = ".\nuget.exe"
+
+if (!(Test-Path $nuget))
+{
+    Invoke-WebRequest https://dist.nuget.org/win-x86-commandline/latest/nuget.exe -OutFile nuget.exe
+}
 
 Write-Host "Sign NuGet packages."
 & $nuget sign *.nupkg -CertificateSubjectName "Yang Li" -Timestamper http://timestamp.digicert.com | Write-Debug

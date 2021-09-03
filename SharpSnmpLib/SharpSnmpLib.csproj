@@ -56,6 +56,6 @@
     </None>
   </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition=" '$(OS)' == 'Windows_NT' ">
-    <Exec Command="powershell -file ..\sign.assembly.ps1 &quot;$(TargetPath)&quot;" />
+    <Exec Command="powershell -ExecutionPolicy Bypass -file ..\sign.assembly.ps1 &quot;$(TargetPath)&quot;" />
   </Target>
 </Project>

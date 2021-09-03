@@ -17,7 +17,7 @@ catch
 
     Install-Module VSSetup -Scope CurrentUser -Force
     Update-Module VSSetup
-    $instance =Get-VSSetupInstance -All | Select-VSSetupInstance -Latest
+    $instance = Get-VSSetupInstance -All -Prerelease | Select-VSSetupInstance -Latest
     $installDir = $instance.installationPath
     Write-Host "Found VS in " + $installDir
     $msBuild = $installDir + '\MSBuild\Current\Bin\MSBuild.exe'

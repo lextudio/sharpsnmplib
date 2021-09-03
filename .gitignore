@@ -34,3 +34,4 @@ T4MVC.cs
 /.vs
 *.vspscc
 *.vssscc
+nuget.exe
