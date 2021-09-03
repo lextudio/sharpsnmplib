@@ -33,6 +33,12 @@ jobs:
       packageType: sdk
       version: 5.0.201
       installationPath: $(Agent.ToolsDirectory)/dotnet
+  - task: UseDotNet@2
+    displayName: 'Install .NET Core sdk'
+    inputs:
+      packageType: sdk
+      version: 6.0.100-preview.7
+      installationPath: $(Agent.ToolsDirectory)/dotnet
   - script: |
       set -e
       sudo pwsh -file patch-winfx.ps1 $(Agent.ToolsDirectory)/dotnet/sdk/3.1.101
@@ -72,6 +78,12 @@ jobs:
     inputs:
       packageType: sdk
       version: 5.0.201
+      installationPath: $(Agent.ToolsDirectory)/dotnet
+  - task: UseDotNet@2
+    displayName: 'Install .NET Core sdk'
+    inputs:
+      packageType: sdk
+      version: 6.0.100-preview.7
       installationPath: $(Agent.ToolsDirectory)/dotnet
   - script: |
       sudo sysctl -w net.inet.udp.maxdgram=65535
@@ -113,6 +125,12 @@ jobs:
     inputs:
       packageType: sdk
       version: 5.0.201
+      installationPath: $(Agent.ToolsDirectory)/dotnet
+  - task: UseDotNet@2
+    displayName: 'Install .NET Core sdk'
+    inputs:
+      packageType: sdk
+      version: 6.0.100-preview.7
       installationPath: $(Agent.ToolsDirectory)/dotnet
   - script: |
       build.release.bat
