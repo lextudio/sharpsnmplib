@@ -41,13 +41,11 @@ namespace Lextm.SharpSnmpLib.Unit.Security
         public void TestIsSupported()
         {
             #if NET6_0
-                Assert.False(DESPrivacyProvider.IsSupported);
+                Assert.True(DESPrivacyProvider.IsSupported);
             #elif NET5_0
-                Assert.False(DESPrivacyProvider.IsSupported);
+                Assert.True(DESPrivacyProvider.IsSupported);
             #elif NETCOREAPP3_1
-                Assert.False(DESPrivacyProvider.IsSupported);
-            #elif NETCOREAPP2_1
-                Assert.False(DESPrivacyProvider.IsSupported);
+                Assert.True(DESPrivacyProvider.IsSupported);
             #elif NET471
                 Assert.True(DESPrivacyProvider.IsSupported);
             #endif

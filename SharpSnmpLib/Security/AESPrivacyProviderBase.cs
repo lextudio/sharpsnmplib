@@ -55,15 +55,8 @@ namespace Lextm.SharpSnmpLib.Security
             get
             {
 #if NETSTANDARD2_0
-                return Helper.SecuritySupported;
+                return Helper.AESSupported;
 #else
-                if (RuntimeInformation.FrameworkDescription.Contains(".NET Core"))
-                {
-                    // netcoreappX.X
-                    return false;
-                }
-
-                // netXXX, xamarin.ios10, and monoandroid80
                 return true;
 #endif
             }

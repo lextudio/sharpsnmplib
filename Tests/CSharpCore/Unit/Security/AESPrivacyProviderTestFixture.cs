@@ -98,12 +98,10 @@ namespace Lextm.SharpSnmpLib.Unit.Security
         public void TestIsSupported()
         {
             #if NET6_0
-                Assert.False(AESPrivacyProviderBase.IsSupported);
+                Assert.True(AESPrivacyProviderBase.IsSupported);
             #elif NET5_0
-                Assert.False(AESPrivacyProviderBase.IsSupported);
+                Assert.True(AESPrivacyProviderBase.IsSupported);
             #elif NETCOREAPP3_1
-                Assert.False(AESPrivacyProviderBase.IsSupported);
-            #elif NETCOREAPP2_1
                 Assert.False(AESPrivacyProviderBase.IsSupported);
             #elif NET471
                 Assert.True(AESPrivacyProviderBase.IsSupported);

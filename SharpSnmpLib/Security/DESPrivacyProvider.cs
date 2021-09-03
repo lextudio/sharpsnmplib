@@ -44,7 +44,7 @@ namespace Lextm.SharpSnmpLib.Security
             get
             {
 #if NETSTANDARD2_0
-                return Helper.SecuritySupported;
+                return Helper.DESSupported;
 #else
                 return true;
 #endif

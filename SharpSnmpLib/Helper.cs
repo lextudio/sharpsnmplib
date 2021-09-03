@@ -38,18 +38,38 @@ namespace Lextm.SharpSnmpLib
             return new PhysicalAddress(raw);
         }
 
-        private static bool? securitySupported;
+        private static bool? desSupported;
 
-        public static bool SecuritySupported
+        public static bool DESSupported
         {
             get
             {
-                if (securitySupported != null)
+                if (desSupported != null)
                 {
-                    return securitySupported.Value;
+                    return desSupported.Value;
                 }
 
-                return (securitySupported = RuntimeInformation.FrameworkDescription.StartsWith(".NET Framework")).Value;
+                return (desSupported = RuntimeInformation.FrameworkDescription.StartsWith(".NET Framework")
+                    || RuntimeInformation.FrameworkDescription.StartsWith(".NET 6.")
+                    || RuntimeInformation.FrameworkDescription.StartsWith(".NET 5.")
+                    || RuntimeInformation.FrameworkDescription.StartsWith(".NET Core 3.1.")).Value;
+            }
+        }
+
+        private static bool? aesSupported;
+
+        public static bool AESSupported
+        {
+            get
+            {
+                if (aesSupported != null)
+                {
+                    return aesSupported.Value;
+                }
+
+                return (aesSupported = RuntimeInformation.FrameworkDescription.StartsWith(".NET Framework")
+                    || RuntimeInformation.FrameworkDescription.StartsWith(".NET 6.")
+                    || RuntimeInformation.FrameworkDescription.StartsWith(".NET 5.")).Value;
             }
         }
     }
