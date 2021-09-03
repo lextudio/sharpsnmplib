@@ -8,7 +8,7 @@
   <PropertyGroup>
     <OutputType Condition="'$(TargetFramework)'!='net471'">Exe</OutputType>
     <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">net6.0;net5.0;netcoreapp3.1;net471</TargetFrameworks>
-    <TargetFrameworks Condition=" '$(OS)' != 'Windows_NT' ">netcoreapp3.1;netcoreapp2.1</TargetFrameworks>
+    <TargetFrameworks Condition=" '$(OS)' != 'Windows_NT' ">net6.0;net5.0;netcoreapp3.1</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
     <EmbeddedResource Include="**\*.resx" />
