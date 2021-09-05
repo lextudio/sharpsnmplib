@@ -54,9 +54,6 @@ namespace Lextm.SharpSnmpLib.Security
         /// </summary>
         IAuthenticationProvider AuthenticationProvider { get; }
 
-        [Obsolete("Use EngineIds instead.")]
-        OctetString EngineId { get; }
-
         /// <summary>
         /// Engine IDs.
         /// </summary>

@@ -64,7 +64,7 @@ namespace Lextm.SharpSnmpLib.Unit
             const int length = 102;
             const byte expect = 0x66;
             var array = length.WritePayloadLength();
-            Assert.Equal(1, array.Length);
+            Assert.Single(array);
             Assert.Equal(expect, array[0]);
         }
         

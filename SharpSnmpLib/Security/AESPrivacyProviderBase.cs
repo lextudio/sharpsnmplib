@@ -41,7 +41,6 @@ namespace Lextm.SharpSnmpLib.Security
     /// This is an experimental port from SNMP#NET project. As AES is not part of SNMP RFC, this class is provided as it is.
     /// If you want other AES providers, you can port them from SNMP#NET in a similar manner.
     /// </remarks>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "AES", Justification = "definition")]
     public abstract class AESPrivacyProviderBase : IPrivacyProvider
     {
         private readonly SaltGenerator _salt = new SaltGenerator();
@@ -96,9 +95,6 @@ namespace Lextm.SharpSnmpLib.Security
         /// Corresponding <see cref="IAuthenticationProvider"/>.
         /// </summary>
         public IAuthenticationProvider AuthenticationProvider { get; private set; }
-
-        [Obsolete("Use EngineIds instead.")]
-        public OctetString EngineId { get; set; }
 
         /// <summary>
         /// Engine IDs.
@@ -418,7 +414,7 @@ namespace Lextm.SharpSnmpLib.Security
             var pkey = AuthenticationProvider.PasswordToKey(secret, engineId);
             if (pkey.Length < MinimumKeyLength)
             {
-                pkey = ExtendShortKey(pkey, secret, engineId, AuthenticationProvider);
+                pkey = ExtendShortKey(pkey, engineId, AuthenticationProvider);
             }
 
             return pkey;
@@ -431,11 +427,10 @@ namespace Lextm.SharpSnmpLib.Security
         /// is too short.
         /// </summary>
         /// <param name="shortKey">Key that needs to be extended</param>
-        /// <param name="password">Privacy password as configured on the SNMP agent.</param>
         /// <param name="engineID">Authoritative engine id. Value is retrieved as part of SNMP v3 discovery procedure</param>
         /// <param name="authProtocol">Authentication protocol class instance cast as <see cref="IAuthenticationProvider"/></param>
         /// <returns>Extended key value</returns>
-        public byte[] ExtendShortKey(byte[] shortKey, byte[] password, byte[] engineID, IAuthenticationProvider authProtocol)
+        internal byte[] ExtendShortKey(byte[] shortKey, byte[] engineID, IAuthenticationProvider authProtocol)
         {
             byte[] extKey = new byte[MinimumKeyLength];
             byte[] lastKeyBuf = new byte[shortKey.Length];

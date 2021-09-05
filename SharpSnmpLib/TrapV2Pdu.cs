@@ -190,7 +190,7 @@ namespace Lextm.SharpSnmpLib
                 RequestId);
         }
 
-        public IList<Variable> Decorate(IList<Variable> variables)
+        internal IList<Variable> Decorate(IList<Variable> variables)
         {
             var full = new List<Variable>(variables);
             full.Insert(0, new Variable(_timeId, _time));

@@ -29,7 +29,6 @@ namespace Lextm.SharpSnmpLib.Security
     /// Privacy provider for DES.
     /// </summary>
     /// <remarks>Ported from SNMP#NET PrivacyDES class.</remarks>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "DES", Justification = "definition")]
     [Obsolete("DES is no longer secure. Please use a more secure provider.")]
     public sealed class DESPrivacyProvider : IPrivacyProvider
     {
@@ -58,11 +57,6 @@ namespace Lextm.SharpSnmpLib.Security
         /// <param name="auth">The authentication provider.</param>
         public DESPrivacyProvider(OctetString phrase, IAuthenticationProvider auth)
         {
-            if (phrase == null)
-            {
-                throw new ArgumentNullException(nameof(phrase));
-            }
-
             if (auth == null)
             {
                 throw new ArgumentNullException(nameof(auth));
@@ -74,7 +68,7 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentException("If authentication is off, then privacy cannot be used.", nameof(auth));
             }
 
-            _phrase = phrase;
+            _phrase = phrase ?? throw new ArgumentNullException(nameof(phrase));
             AuthenticationProvider = auth;
         }
 
@@ -82,9 +76,6 @@ namespace Lextm.SharpSnmpLib.Security
         /// Corresponding <see cref="IAuthenticationProvider"/>.
         /// </summary>
         public IAuthenticationProvider AuthenticationProvider { get; private set; }
-
-        [Obsolete("Use EngineIds instead.")]
-        public OctetString EngineId { get; set; }
 
         /// <summary>
         /// Engine IDs.

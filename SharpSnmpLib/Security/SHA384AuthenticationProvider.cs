@@ -33,7 +33,7 @@ namespace Lextm.SharpSnmpLib.Security
     {
         private const int Sha384KeyCacheCapacity = 100;
         private static readonly CryptoKeyCache Sha384KeyCache = new CryptoKeyCache(Sha384KeyCacheCapacity);
-        private static readonly Object Sha384KeyCacheLock = new object();
+        private static readonly object Sha384KeyCacheLock = new object();
 
         private readonly byte[] _password;
 
@@ -179,6 +179,9 @@ namespace Lextm.SharpSnmpLib.Security
             }
         }
 
+        /// <summary>
+        /// Length of the digest.
+        /// </summary>
         public int DigestLength => 32;
 
         #endregion

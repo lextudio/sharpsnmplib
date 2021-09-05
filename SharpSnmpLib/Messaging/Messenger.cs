@@ -1191,23 +1191,12 @@ namespace Lextm.SharpSnmpLib.Messaging
         public static int MaxMessageSize { get; set; } = Header.MaxMessageSize;
 
         /// <summary>
-        /// Returns a new discovery request.
-        /// </summary>
-        /// <returns></returns>
-        [Obsolete("Please use GetNextDiscovery")]
-        public static Discovery NextDiscovery
-        {
-            get { return new Discovery(NextMessageId, NextRequestId, MaxMessageSize); }
-        }
-
-        /// <summary>
         /// If the privacy module returns failure, then the message can
         /// not be processed, so the usmStatsDecryptionErrors counter is
         /// incremented and an error indication (decryptionError) together
         /// with the OID and value of the incremented counter is returned
         /// to the calling module.
         /// </summary>
-        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed. Suppression is OK here.")]
         public static ObjectIdentifier DecryptionError
         {
             get { return IdDecryptionError; }

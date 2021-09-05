@@ -28,12 +28,11 @@ namespace Lextm.SharpSnmpLib.Security
     /// Authentication provider using SHA-256.
     /// </summary>
     /// <remarks>Defined in https://tools.ietf.org/html/rfc7630#page-3.</remarks>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "SHA", Justification = "definition")]
     public sealed class SHA256AuthenticationProvider : IAuthenticationProvider
     {
         private const int Sha256KeyCacheCapacity = 100; 
         private static readonly CryptoKeyCache Sha256KeyCache = new CryptoKeyCache(Sha256KeyCacheCapacity);
-        private static readonly Object Sha256KeyCacheLock = new object();
+        private static readonly object Sha256KeyCacheLock = new object();
 
         private readonly byte[] _password;
 
@@ -179,6 +178,9 @@ namespace Lextm.SharpSnmpLib.Security
             }
         }
 
+        /// <summary>
+        /// Length of the digest.
+        /// </summary>
         public int DigestLength => 24;
 
         #endregion

@@ -40,7 +40,7 @@ namespace Lextm.SharpSnmpLib
 
         private static bool? desSupported;
 
-        public static bool DESSupported
+        internal static bool DESSupported
         {
             get
             {
@@ -58,7 +58,7 @@ namespace Lextm.SharpSnmpLib
 
         private static bool? aesSupported;
 
-        public static bool AESSupported
+        internal static bool AESSupported
         {
             get
             {
