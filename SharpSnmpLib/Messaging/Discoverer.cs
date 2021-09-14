@@ -288,8 +288,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="broadcastAddress">The broadcast address.</param>
         /// <param name="community">The community.</param>
         /// <param name="interval">The discovering time interval, in milliseconds.</param>
+        /// <param name="cancellationToken">A cancellation token that can be used to signal the asynchronous operation should be canceled.</param>
         /// <remarks><paramref name="broadcastAddress"/> must be an IPv4 address. IPv6 is not yet supported here.</remarks>
-        public async Task DiscoverAsync(VersionCode version, IPEndPoint broadcastAddress, OctetString community, int interval)
+        public async Task DiscoverAsync(VersionCode version, IPEndPoint broadcastAddress, OctetString community, int interval, CancellationToken cancellationToken = default)
         {
             if (broadcastAddress == null)
             {
@@ -325,7 +326,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 udp.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.Broadcast, true);
                 var buffer = new ArraySegment<byte>(bytes);
-                await udp.SendToAsync(buffer, SocketFlags.None, broadcastAddress);
+                await udp.SendToAsync(buffer, SocketFlags.None, broadcastAddress, cancellationToken).ConfigureAwait(false);
 
                 var activeBefore = Interlocked.CompareExchange(ref _active, Active, Inactive);
                 if (activeBefore == Active)
@@ -336,8 +337,8 @@ namespace Lextm.SharpSnmpLib.Messaging
 
                 _bufferSize = udp.ReceiveBufferSize;
                 await Task.WhenAny(
-                    ReceiveAsync(udp),
-                    Task.Delay(interval));
+                    ReceiveAsync(udp, cancellationToken),
+                    Task.Delay(interval, cancellationToken)).ConfigureAwait(false);
 
                 Interlocked.CompareExchange(ref _active, Inactive, Active);
                 try
@@ -355,7 +356,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
         }
 
-        private async Task ReceiveAsync(Socket socket)
+        private async Task ReceiveAsync(Socket socket, CancellationToken cancellationToken)
         {
             while (true)
             {
@@ -370,8 +371,8 @@ namespace Lextm.SharpSnmpLib.Messaging
                     EndPoint remote = new IPEndPoint(IPAddress.Any, 0);
 
                     var buffer = new byte[_bufferSize];
-                    var result = await socket.ReceiveMessageFromAsync(new ArraySegment<byte>(buffer), SocketFlags.None, remote);
-                    await Task.Factory.StartNew(() => HandleMessage(buffer, result.ReceivedBytes, (IPEndPoint) result.RemoteEndPoint))
+                    var result = await socket.ReceiveMessageFromAsync(new ArraySegment<byte>(buffer), SocketFlags.None, remote, cancellationToken).ConfigureAwait(false);
+                    await Task.Factory.StartNew(() => HandleMessage(buffer, result.ReceivedBytes, (IPEndPoint) result.RemoteEndPoint), cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (SocketException ex)

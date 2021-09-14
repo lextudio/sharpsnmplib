@@ -30,6 +30,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Net;
+using System.Threading;
 using Lextm.SharpSnmpLib.Security;
 using System.Threading.Tasks;
 
@@ -84,8 +85,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="endpoint">Endpoint.</param>
         /// <param name="community">Community name.</param>
         /// <param name="variables">Variable binds.</param>
+        /// <param name="cancellationToken">A cancellation token that can be used to signal the asynchronous operation should be canceled.</param>
         /// <returns></returns>
-        public static async Task<IList<Variable>> GetAsync(VersionCode version, IPEndPoint endpoint, OctetString community, IList<Variable> variables)
+        public static async Task<IList<Variable>> GetAsync(VersionCode version, IPEndPoint endpoint, OctetString community, IList<Variable> variables, CancellationToken cancellationToken = default)
         {
             if (endpoint == null)
             {
@@ -108,7 +110,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             var message = new GetRequestMessage(RequestCounter.NextId, version, community, variables);
-            var response = await message.GetResponseAsync(endpoint).ConfigureAwait(false);
+            var response = await message.GetResponseAsync(endpoint, cancellationToken).ConfigureAwait(false);
             var pdu = response.Pdu();
             if (pdu.ErrorStatus.ToInt32() != 0)
             {
@@ -128,8 +130,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="endpoint">Endpoint.</param>
         /// <param name="community">Community name.</param>
         /// <param name="variables">Variable binds.</param>
+        /// <param name="cancellationToken">A cancellation token that can be used to signal the asynchronous operation should be canceled.</param>
         /// <returns></returns>
-        public static async Task<IList<Variable>> SetAsync(VersionCode version, IPEndPoint endpoint, OctetString community, IList<Variable> variables)
+        public static async Task<IList<Variable>> SetAsync(VersionCode version, IPEndPoint endpoint, OctetString community, IList<Variable> variables, CancellationToken cancellationToken = default)
         {
             if (endpoint == null)
             {
@@ -152,7 +155,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             var message = new SetRequestMessage(RequestCounter.NextId, version, community, variables);
-            var response = await message.GetResponseAsync(endpoint).ConfigureAwait(false);
+            var response = await message.GetResponseAsync(endpoint, cancellationToken).ConfigureAwait(false);
             var pdu = response.Pdu();
             if (pdu.ErrorStatus.ToInt32() != 0)
             {
@@ -174,11 +177,12 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="table">OID.</param>
         /// <param name="list">A list to hold the results.</param>
         /// <param name="mode">Walk mode.</param>
+        /// <param name="cancellationToken">A cancellation token that can be used to signal the asynchronous operation should be canceled.</param>
         /// <returns>
         /// Returns row count if the OID is a table. Otherwise this value is meaningless.
         /// </returns>
         /// <remarks>This method only supports SNMP v1 and v2c.</remarks>
-        public static async Task<int> WalkAsync(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, IList<Variable> list, WalkMode mode)
+        public static async Task<int> WalkAsync(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, IList<Variable> list, WalkMode mode, CancellationToken cancellationToken = default)
         {
             if (list == null)
             {
@@ -197,7 +201,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 seed = data.Item2;
                 if (seed == tableV)
                 {
-                    data = await HasNextAsync(version, endpoint, community, seed).ConfigureAwait(false);
+                    data = await HasNextAsync(version, endpoint, community, seed, cancellationToken).ConfigureAwait(false);
                     continue;
                 }
 
@@ -213,7 +217,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                     result++;
                 }
 
-                data = await HasNextAsync(version, endpoint, community, seed).ConfigureAwait(false);
+                data = await HasNextAsync(version, endpoint, community, seed, cancellationToken).ConfigureAwait(false);
             }
             while (data.Item1);
             return result;
@@ -226,11 +230,12 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="endpoint">The endpoint.</param>
         /// <param name="community">The community.</param>
         /// <param name="seed">The seed.</param>
+        /// <param name="cancellationToken">A cancellation token that can be used to signal the asynchronous operation should be canceled.</param>
         /// <returns>
         ///     <c>true</c> if the specified seed has next item; otherwise, <c>false</c>.
         /// </returns>
         /// <remarks>This method only supports SNMP v1 and v2c.</remarks>
-        private static async Task<Tuple<bool, Variable>> HasNextAsync(VersionCode version, IPEndPoint endpoint, OctetString community, Variable seed)
+        private static async Task<Tuple<bool, Variable>> HasNextAsync(VersionCode version, IPEndPoint endpoint, OctetString community, Variable seed, CancellationToken cancellationToken = default)
         {
             if (seed == null)
             {
@@ -244,7 +249,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 community,
                 variables);
 
-            var response = await message.GetResponseAsync(endpoint).ConfigureAwait(false);
+            var response = await message.GetResponseAsync(endpoint, cancellationToken).ConfigureAwait(false);
             var pdu = response.Pdu();
             var errorFound = pdu.ErrorStatus.ToErrorCode() == ErrorCode.NoSuchName;
             return new Tuple<bool, Variable>(!errorFound, errorFound ? null : pdu.Variables[0]);
@@ -262,11 +267,12 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="mode">Walk mode.</param>
         /// <param name="privacy">The privacy provider.</param>
         /// <param name="report">The report.</param>
+        /// <param name="cancellationToken">A cancellation token that can be used to signal the asynchronous operation should be canceled.</param>
         /// <returns>Returns row count if the OID is a table. Otherwise this value is meaningless.</returns>
         /// <remarks>This method only supports SNMP v2c and v3.</remarks>
         [Obsolete("Please use other overloading ones.")]
-        public static async Task<int> BulkWalkAsync(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, IList<Variable> list, int maxRepetitions, WalkMode mode, IPrivacyProvider privacy, ISnmpMessage report)
-            => await BulkWalkAsync(version, endpoint, community, OctetString.Empty, table, list, maxRepetitions, mode, privacy, report);
+        public static async Task<int> BulkWalkAsync(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, IList<Variable> list, int maxRepetitions, WalkMode mode, IPrivacyProvider privacy, ISnmpMessage report, CancellationToken cancellationToken = default)
+            => await BulkWalkAsync(version, endpoint, community, OctetString.Empty, table, list, maxRepetitions, mode, privacy, report, cancellationToken);
 
         /// <summary>
         /// Walks (based on GET BULK).
@@ -281,9 +287,10 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="mode">Walk mode.</param>
         /// <param name="privacy">The privacy provider.</param>
         /// <param name="report">The report.</param>
+        /// <param name="cancellationToken">A cancellation token that can be used to signal the asynchronous operation should be canceled.</param>
         /// <returns>Returns row count if the OID is a table. Otherwise this value is meaningless.</returns>
         /// <remarks>This method only supports SNMP v2c and v3.</remarks>
-        public static async Task<int> BulkWalkAsync(VersionCode version, IPEndPoint endpoint, OctetString community, OctetString contextName, ObjectIdentifier table, IList<Variable> list, int maxRepetitions, WalkMode mode, IPrivacyProvider privacy, ISnmpMessage report)
+        public static async Task<int> BulkWalkAsync(VersionCode version, IPEndPoint endpoint, OctetString community, OctetString contextName, ObjectIdentifier table, IList<Variable> list, int maxRepetitions, WalkMode mode, IPrivacyProvider privacy, ISnmpMessage report, CancellationToken cancellationToken = default)
         {
             if (list == null)
             {
@@ -294,7 +301,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             var seed = tableV;
             var result = 0;
             var message = report;
-            var data = await BulkHasNextAsync(version, endpoint, community, contextName, seed, maxRepetitions, privacy, message).ConfigureAwait(false);
+            var data = await BulkHasNextAsync(version, endpoint, community, contextName, seed, maxRepetitions, privacy, message, cancellationToken).ConfigureAwait(false);
             var next = data.Item2;
             message = data.Item3;
             while (data.Item1)
@@ -323,7 +330,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 }
 
                 seed = next[next.Count - 1];
-                data = await BulkHasNextAsync(version, endpoint, community, contextName, seed, maxRepetitions, privacy, message).ConfigureAwait(false);
+                data = await BulkHasNextAsync(version, endpoint, community, contextName, seed, maxRepetitions, privacy, message, cancellationToken).ConfigureAwait(false);
                 next = data.Item2;
                 message = data.Item3;
             }
@@ -343,12 +350,13 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="specific">Specific code.</param>
         /// <param name="timestamp">Timestamp.</param>
         /// <param name="variables">Variable bindings.</param>
+        /// <param name="cancellationToken">A cancellation token that can be used to signal the asynchronous operation should be canceled.</param>
         /// <remarks>This method only supports SNMP v1.</remarks>
         [CLSCompliant(false)]
-        public static async Task SendTrapV1Async(EndPoint receiver, IPAddress agent, OctetString community, ObjectIdentifier enterprise, GenericCode generic, int specific, uint timestamp, IList<Variable> variables)
+        public static async Task SendTrapV1Async(EndPoint receiver, IPAddress agent, OctetString community, ObjectIdentifier enterprise, GenericCode generic, int specific, uint timestamp, IList<Variable> variables, CancellationToken cancellationToken = default)
         {
             var message = new TrapV1Message(VersionCode.V1, agent, community, enterprise, generic, specific, timestamp, variables);
-            await message.SendAsync(receiver).ConfigureAwait(false);
+            await message.SendAsync(receiver, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -361,9 +369,10 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="timestamp">Timestamp.</param>
         /// <param name="variables">Variable bindings.</param>
         /// <param name="requestId">Request ID.</param>
+        /// <param name="cancellationToken">A cancellation token that can be used to signal the asynchronous operation should be canceled.</param>
         /// <remarks>This method only supports SNMP v2c.</remarks>
         [CLSCompliant(false)]
-        public static async Task SendTrapV2Async(int requestId, VersionCode version, EndPoint receiver, OctetString community, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables)
+        public static async Task SendTrapV2Async(int requestId, VersionCode version, EndPoint receiver, OctetString community, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables, CancellationToken cancellationToken = default)
         {
             if (version != VersionCode.V2)
             {
@@ -371,7 +380,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             var message = new TrapV2Message(requestId, version, community, enterprise, timestamp, variables);
-            await message.SendAsync(receiver).ConfigureAwait(false);
+            await message.SendAsync(receiver, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -386,11 +395,12 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="variables">Variable bindings.</param>
         /// <param name="privacy">The privacy provider.</param>
         /// <param name="report">The report.</param>
+        /// <param name="cancellationToken">A cancellation token that can be used to signal the asynchronous operation should be canceled.</param>
         /// <remarks>This method supports SNMP v2c and v3.</remarks>
         [CLSCompliant(false)]
         [Obsolete("Please use other overloading ones.")]
-        public static async Task SendInformAsync(int requestId, VersionCode version, IPEndPoint receiver, OctetString community, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables, IPrivacyProvider privacy, ISnmpMessage report)
-            => await SendInformAsync(requestId, version, receiver, community, OctetString.Empty,  enterprise, timestamp, variables, privacy, report);
+        public static async Task SendInformAsync(int requestId, VersionCode version, IPEndPoint receiver, OctetString community, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables, IPrivacyProvider privacy, ISnmpMessage report, CancellationToken cancellationToken = default)
+            => await SendInformAsync(requestId, version, receiver, community, OctetString.Empty,  enterprise, timestamp, variables, privacy, report, cancellationToken);
 
         /// <summary>
         /// Sends INFORM message.
@@ -405,9 +415,10 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="variables">Variable bindings.</param>
         /// <param name="privacy">The privacy provider.</param>
         /// <param name="report">The report.</param>
+        /// <param name="cancellationToken">A cancellation token that can be used to signal the asynchronous operation should be canceled.</param>
         /// <remarks>This method supports SNMP v2c and v3.</remarks>
         [CLSCompliant(false)]
-        public static async Task SendInformAsync(int requestId, VersionCode version, IPEndPoint receiver, OctetString community, OctetString contextName, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables, IPrivacyProvider privacy, ISnmpMessage report)
+        public static async Task SendInformAsync(int requestId, VersionCode version, IPEndPoint receiver, OctetString community, OctetString contextName, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables, IPrivacyProvider privacy, ISnmpMessage report, CancellationToken cancellationToken = default)
         {
             if (receiver == null)
             {
@@ -470,7 +481,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                                           timestamp,
                                           variables);
 
-            var response = await message.GetResponseAsync(receiver).ConfigureAwait(false);
+            var response = await message.GetResponseAsync(receiver, cancellationToken).ConfigureAwait(false);
             if (response.Pdu().ErrorStatus.ToInt32() != 0)
             {
                 throw ErrorException.Create(
@@ -490,13 +501,14 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="maxRepetitions">The max repetitions.</param>
         /// <param name="privacy">The privacy provider.</param>
         /// <param name="report">The report.</param>
+        /// <param name="cancellationToken">A cancellation token that can be used to signal the asynchronous operation should be canceled.</param>
         /// <returns>
         /// <c>true</c> if the specified seed has next item; otherwise, <c>false</c>.
         /// </returns>
         /// <remarks>This method supports SNMP v2c and v3.</remarks>
         [Obsolete("Please use other overloading ones.")]
-        private static async Task<Tuple<bool, IList<Variable>, ISnmpMessage>> BulkHasNextAsync(VersionCode version, IPEndPoint receiver, OctetString community, Variable seed, int maxRepetitions, IPrivacyProvider privacy, ISnmpMessage report)
-            => await BulkHasNextAsync(version, receiver, community, OctetString.Empty, seed, maxRepetitions, privacy, report);
+        private static async Task<Tuple<bool, IList<Variable>, ISnmpMessage>> BulkHasNextAsync(VersionCode version, IPEndPoint receiver, OctetString community, Variable seed, int maxRepetitions, IPrivacyProvider privacy, ISnmpMessage report, CancellationToken cancellationToken = default)
+            => await BulkHasNextAsync(version, receiver, community, OctetString.Empty, seed, maxRepetitions, privacy, report, cancellationToken);
 
         /// <summary>
         /// Determines whether the specified seed has next item.
@@ -509,11 +521,12 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="maxRepetitions">The max repetitions.</param>
         /// <param name="privacy">The privacy provider.</param>
         /// <param name="report">The report.</param>
+        /// <param name="cancellationToken">A cancellation token that can be used to signal the asynchronous operation should be canceled.</param>
         /// <returns>
         /// <c>true</c> if the specified seed has next item; otherwise, <c>false</c>.
         /// </returns>
         /// <remarks>This method supports SNMP v2c and v3.</remarks>
-        private static async Task<Tuple<bool, IList<Variable>, ISnmpMessage>> BulkHasNextAsync(VersionCode version, IPEndPoint receiver, OctetString community, OctetString contextName, Variable seed, int maxRepetitions, IPrivacyProvider privacy, ISnmpMessage report)
+        private static async Task<Tuple<bool, IList<Variable>, ISnmpMessage>> BulkHasNextAsync(VersionCode version, IPEndPoint receiver, OctetString community, OctetString contextName, Variable seed, int maxRepetitions, IPrivacyProvider privacy, ISnmpMessage report, CancellationToken cancellationToken = default)
         {
             // TODO: report should be updated with latest message from agent.
             if (version == VersionCode.V1)
@@ -542,7 +555,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                                                       0,
                                                       maxRepetitions,
                                                       variables);
-            var reply = await request.GetResponseAsync(receiver).ConfigureAwait(false);
+            var reply = await request.GetResponseAsync(receiver, cancellationToken).ConfigureAwait(false);
             if (reply is ReportMessage)
             {
                 if (reply.Pdu().Variables.Count == 0)
@@ -572,7 +585,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                     privacy,
                     MaxMessageSize,
                     reply);
-                reply = await request.GetResponseAsync(receiver).ConfigureAwait(false);
+                reply = await request.GetResponseAsync(receiver, cancellationToken).ConfigureAwait(false);
             }
             else if (reply.Pdu().ErrorStatus.ToInt32() != 0)
             {

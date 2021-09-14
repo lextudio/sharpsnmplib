@@ -30,6 +30,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Net;
+using System.Threading;
 using Lextm.SharpSnmpLib.Security;
 using System.Threading.Tasks;
 
@@ -203,8 +204,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Gets the response.
         /// </summary>
         /// <param name="receiver">The receiver.</param>
+        /// <param name="cancellationToken">A cancellation token that can be used to signal the asynchronous operation should be canceled.</param>
         /// <returns></returns>
-        public async Task<ReportMessage> GetResponseAsync(IPEndPoint receiver)
+        public async Task<ReportMessage> GetResponseAsync(IPEndPoint receiver, CancellationToken cancellationToken = default)
         {
             if (receiver == null)
             {
@@ -213,7 +215,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             using (var socket = receiver.GetSocket())
             {
-                return (ReportMessage)await _discovery.GetResponseAsync(receiver, Empty, socket).ConfigureAwait(false);
+                return (ReportMessage)await _discovery.GetResponseAsync(receiver, Empty, socket, cancellationToken).ConfigureAwait(false);
             }
         }
 
