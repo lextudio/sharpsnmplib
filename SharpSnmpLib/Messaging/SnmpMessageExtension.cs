@@ -422,7 +422,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="manager">Manager</param>
         /// <param name="socket">The socket.</param>
         /// <param name="cancellationToken">A cancellation token that can be used to signal the asynchronous operation should be canceled.</param>
-        public static async Task SendAsync(this ISnmpMessage message, EndPoint manager, Socket socket, CancellationToken cancellationToken = default)
+        public static Task SendAsync(this ISnmpMessage message, EndPoint manager, Socket socket, CancellationToken cancellationToken = default)
         {
             if (message == null)
             {
@@ -449,7 +449,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             var buffer = new ArraySegment<byte>(message.ToBytes());
-            await socket.SendToAsync(buffer, SocketFlags.None, manager, cancellationToken);
+            return socket.SendToAsync(buffer, SocketFlags.None, manager, cancellationToken);
         }
 
         /// <summary>
@@ -524,7 +524,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
         /// <param name="cancellationToken">A cancellation token that can be used to signal the asynchronous operation should be canceled.</param>
         /// <returns></returns>
-        public static async Task<ISnmpMessage> GetResponseAsync(this ISnmpMessage request, IPEndPoint receiver, Socket udpSocket, CancellationToken cancellationToken = default)
+        public static Task<ISnmpMessage> GetResponseAsync(this ISnmpMessage request, IPEndPoint receiver, Socket udpSocket, CancellationToken cancellationToken = default)
         {
             if (request == null)
             {
@@ -547,7 +547,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 registry.Add(request.Parameters.UserName, request.Privacy);
             }
 
-            return await request.GetResponseAsync(receiver, registry, udpSocket, cancellationToken).ConfigureAwait(false);
+            return request.GetResponseAsync(receiver, registry, udpSocket, cancellationToken);
         }
 
         /// <summary>
@@ -587,7 +587,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             // Whatever you change, try to keep the Send and the Receive close to each other.
             var buffer = new ArraySegment<byte>(bytes);
-            await udpSocket.SendToAsync(buffer, SocketFlags.None, receiver ?? throw new ArgumentNullException(nameof(receiver)), cancellationToken);
+            await udpSocket.SendToAsync(buffer, SocketFlags.None, receiver ?? throw new ArgumentNullException(nameof(receiver)), cancellationToken).ConfigureAwait(false);
 
             int count;
             byte[] reply = new byte[bufSize];
@@ -598,7 +598,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             try
             {
-                var result = await udpSocket.ReceiveMessageFromAsync(new ArraySegment<byte>(reply), SocketFlags.None, remote, cancellationToken);
+                var result = await udpSocket.ReceiveMessageFromAsync(new ArraySegment<byte>(reply), SocketFlags.None, remote, cancellationToken).ConfigureAwait(false);
                 count = result.ReceivedBytes;
             }
             catch (SocketException ex)
