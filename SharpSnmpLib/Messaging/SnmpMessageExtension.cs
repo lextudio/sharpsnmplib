@@ -35,7 +35,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// <summary>
     /// Extension methods for <see cref="ISnmpMessage"/>.
     /// </summary>
-    public static class SnmpMessageExtension
+    public static partial class SnmpMessageExtension
     {
         /// <summary>
         /// Gets the <see cref="SnmpType"/>.

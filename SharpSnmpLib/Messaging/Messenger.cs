@@ -43,7 +43,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// SNMP v3 is not supported in many methods of this class. Please use <see cref="ISnmpMessage" /> derived classes directly
     /// if you want to do v3 operations.
     /// </remarks>
-    public static class Messenger
+    public static partial class Messenger
     {
         /// <summary>
         /// RFC 3416 (3.)

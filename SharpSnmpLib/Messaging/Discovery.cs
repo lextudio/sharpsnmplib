@@ -38,7 +38,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// <summary>
     /// Discovery class that participates in SNMP v3 discovery process.
     /// </summary>
-    public sealed class Discovery
+    public sealed partial class Discovery
     {
         private readonly ISnmpMessage _discovery;
         private static readonly UserRegistry Empty = new UserRegistry();
