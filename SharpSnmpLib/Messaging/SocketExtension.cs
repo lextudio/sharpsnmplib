@@ -34,7 +34,10 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             var cancellation = Task.Delay(Timeout.Infinite, cancellationToken);
             var send = socket.SendToAsync(buffer, socketFlags, remoteEP);
-            await Task.WhenAny(send, cancellation).ConfigureAwait(false);
+            var result = await Task.WhenAny(send, cancellation).ConfigureAwait(false);
+            //if this is the cancellation Task, it will throw so the next await will not be executed and thus not block
+            await result.ConfigureAwait(false);
+            //if not cancelled, await the original Task to get the result
             return await send.ConfigureAwait(false);
         }
 
@@ -42,7 +45,10 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             var cancellation = Task.Delay(Timeout.Infinite, cancellationToken);
             var receive = socket.ReceiveMessageFromAsync(buffer, socketFlags, remoteEndPoint);
-            await Task.WhenAny(receive, cancellation).ConfigureAwait(false);
+            var result = await Task.WhenAny(receive, cancellation).ConfigureAwait(false);
+            //if this is the cancellation Task, it will throw so the next await will not be executed and thus not block
+            await result.ConfigureAwait(false);
+            //if not cancelled, await the original Task to get the result
             return await receive.ConfigureAwait(false);
         }
     }
