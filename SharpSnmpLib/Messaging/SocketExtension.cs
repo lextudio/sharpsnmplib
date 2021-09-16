@@ -28,9 +28,9 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// <summary>
     /// Extension methods for <see cref="Socket"/>.
     /// </summary>
-    public static class SocketExtension
+    internal static class SocketExtension
     {
-        public static async Task<int> SendToAsync(this Socket socket, ArraySegment<byte> buffer, SocketFlags socketFlags, EndPoint remoteEP, CancellationToken cancellationToken)
+        internal static async Task<int> SendToAsync(this Socket socket, ArraySegment<byte> buffer, SocketFlags socketFlags, EndPoint remoteEP, CancellationToken cancellationToken)
         {
             var cancellation = Task.Delay(Timeout.Infinite, cancellationToken);
             var send = socket.SendToAsync(buffer, socketFlags, remoteEP);
@@ -41,7 +41,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             return await send.ConfigureAwait(false);
         }
 
-        public static async Task<SocketReceiveMessageFromResult> ReceiveMessageFromAsync(this Socket socket, ArraySegment<byte> buffer, SocketFlags socketFlags, EndPoint remoteEndPoint, CancellationToken cancellationToken)
+        internal static async Task<SocketReceiveMessageFromResult> ReceiveMessageFromAsync(this Socket socket, ArraySegment<byte> buffer, SocketFlags socketFlags, EndPoint remoteEndPoint, CancellationToken cancellationToken)
         {
             var cancellation = Task.Delay(Timeout.Infinite, cancellationToken);
             var receive = socket.ReceiveMessageFromAsync(buffer, socketFlags, remoteEndPoint);
