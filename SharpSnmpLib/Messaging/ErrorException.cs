@@ -41,7 +41,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Message body.
         /// </summary>
-        public ISnmpMessage Body { get; private set; }
+        public ISnmpMessage? Body { get; private set; }
 
         /// <summary>
         /// Creates a <see cref="ErrorException"/> instance.
@@ -75,6 +75,11 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             get
             {
+                if (Body == null)
+                {
+                    return string.Empty;
+                }
+
                 var pdu = Body.Pdu();
                 var index = pdu.ErrorIndex.ToInt32();
                 return string.Format(

@@ -34,7 +34,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="context"></param>
         /// <param name="sourceType"></param>
         /// <returns></returns>
-        public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
+        public override bool CanConvertFrom(ITypeDescriptorContext? context, Type sourceType)
         {
             return sourceType == typeof(string) || base.CanConvertFrom(context, sourceType);
         }
@@ -45,7 +45,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="context"></param>
         /// <param name="destinationType"></param>
         /// <returns></returns>
-        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
+        public override bool CanConvertTo(ITypeDescriptorContext? context, Type? destinationType)
         {
             return destinationType == typeof(string) || base.CanConvertTo(context, destinationType);
         }
@@ -57,8 +57,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="culture"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
+        public override object? ConvertFrom(ITypeDescriptorContext? context, CultureInfo? culture, object value)
         {
             var s = value as string;
             if (s != null)
@@ -84,7 +83,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="value"></param>
         /// <param name="destinationType"></param>
         /// <returns></returns>
-        public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
+        public override object? ConvertTo(ITypeDescriptorContext? context, CultureInfo? culture, object? value, Type destinationType)
         {
             var oid = value as ObjectIdentifier;
             if (destinationType == typeof(string) && oid != null)

@@ -7,6 +7,7 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 
+#pragma warning disable CS0618 // Type or member is obsolete
 namespace Lextm.SharpSnmpLib.Unit.Security
 {
     using System;
@@ -149,3 +150,4 @@ namespace Lextm.SharpSnmpLib.Unit.Security
         }
     }
 }
+#pragma warning restore CS0618 // Type or member is obsolete

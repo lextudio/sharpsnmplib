@@ -50,22 +50,20 @@ namespace Lextm.SharpSnmpLib
         /// Sent when an interface on a device goes down. The first variable binding identifies which interface went down.
         /// </summary>
         LinkDown = 2,
-        
+
         /// <summary>
         /// Sent when an interface on a device comes back up. The first variable binding identifies which interface came back up.
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "LinkUp")]
         LinkUp = 3,
         
         /// <summary>
         /// Indicates that someone has tried to query your agent with an incorrect community string; useful in determining if someone is trying to gain unauthorized access to one of your devices.
         /// </summary>
         AuthenticationFailure = 4,
-        
+
         /// <summary>
         /// Indicates that an Exterior Gateway Protocol (EGP) neighbor has gone down.
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Egp")]
         EgpNeighborLoss = 5,
         
         /// <summary>

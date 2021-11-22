@@ -100,7 +100,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// <param name="parameters">The parameters.</param>
         /// <param name="scope">The scope.</param>
         /// <param name="privacy">The privacy provider.</param>
-        public static void ComputeHash(this IPrivacyProvider privacy, VersionCode version, Header header, SecurityParameters parameters, ISegment scope)
+        public static void ComputeHash(this IPrivacyProvider privacy, VersionCode version, Header header, SecurityParameters parameters, Scope scope)
         {
             if (header == null)
             {
@@ -149,7 +149,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// <returns>
         /// Returns <c>true</c> if hash matches. Otherwise, returns <c>false</c>.
         /// </returns>
-        public static bool VerifyHash(this IPrivacyProvider privacy, VersionCode version, Header header, SecurityParameters parameters, ISnmpData scopeBytes, byte[] length)
+        public static bool VerifyHash(this IPrivacyProvider privacy, VersionCode version, Header header, SecurityParameters parameters, ISnmpData scopeBytes, byte[]? length)
         {
             if (header == null)
             {

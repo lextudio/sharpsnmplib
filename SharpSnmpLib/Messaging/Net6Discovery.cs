@@ -51,10 +51,8 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException(nameof(receiver));
             }
 
-            using (var socket = receiver.GetSocket())
-            {
-                return (ReportMessage)await _discovery.GetResponseAsync(receiver, Empty, socket, token).ConfigureAwait(false);
-            }
+            using var socket = receiver.GetSocket();
+            return (ReportMessage)await _discovery.GetResponseAsync(receiver, Empty, socket, token).ConfigureAwait(false);
         }
         #endif
     }

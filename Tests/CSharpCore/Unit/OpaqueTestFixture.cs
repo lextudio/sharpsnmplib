@@ -10,7 +10,6 @@
 using System;
 using Xunit;
 
-#pragma warning disable 1591, 0618
 namespace Lextm.SharpSnmpLib.Unit
 {
     public class OpaqueTestFixture
@@ -41,9 +40,13 @@ namespace Lextm.SharpSnmpLib.Unit
             Assert.Equal(left, right);
 // ReSharper disable RedundantCast
             Assert.Equal((Opaque)null, (Opaque)null);
-// ReSharper restore RedundantCast
+            // ReSharper restore RedundantCast
+#pragma warning disable xUnit2003 // Do not use equality check to test for null value
             Assert.NotEqual(null, right);
+#pragma warning disable xUnit2000 // Constants and literals should be the expected argument
             Assert.NotEqual(left, null);
+#pragma warning restore xUnit2000 // Constants and literals should be the expected argument
+#pragma warning restore xUnit2003 // Do not use equality check to test for null value
             Assert.True(left != null);
             Assert.True(null != right);
 // ReSharper disable EqualExpressionComparison
@@ -55,4 +58,3 @@ namespace Lextm.SharpSnmpLib.Unit
         }
     }
 }
-#pragma warning restore 1591,0618

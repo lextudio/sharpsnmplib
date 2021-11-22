@@ -11,7 +11,6 @@ using System;
 using System.IO;
 using Xunit;
 
-#pragma warning disable 1591, 0618
 namespace Lextm.SharpSnmpLib.Unit
 {
     /// <summary>
@@ -125,4 +124,3 @@ namespace Lextm.SharpSnmpLib.Unit
         }
     }
 }
-#pragma warning restore 1591,0618

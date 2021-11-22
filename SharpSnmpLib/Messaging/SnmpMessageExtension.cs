@@ -101,7 +101,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// PDU.
         /// </summary>
         /// <param name="message">The <see cref="ISnmpMessage"/>.</param>
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu")]
         public static ISnmpPdu Pdu(this ISnmpMessage message)
         {
             if (message == null)
@@ -704,7 +703,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="message">The <see cref="ISnmpMessage"/>.</param>
         /// <param name="length">The length bytes.</param>
         /// <returns></returns>
-        internal static Sequence PackMessage(this ISnmpMessage message, byte[] length)
+        internal static Sequence PackMessage(this ISnmpMessage message, byte[]? length)
         {
             if (message == null)
             {
@@ -755,7 +754,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 get { return Inner.AsyncWaitHandle; }
             }
 
-            public object AsyncState
+            public object? AsyncState
             {
                 get { return Inner.AsyncState; }
             }

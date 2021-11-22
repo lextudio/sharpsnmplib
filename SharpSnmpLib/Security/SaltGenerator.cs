@@ -27,7 +27,7 @@ namespace Lextm.SharpSnmpLib.Security
     /// </summary>
     public sealed class SaltGenerator
     {
-        private readonly object _root = new object();
+        private readonly object _root = new();
         private long _salt = Convert.ToInt64(new Random().Next(1, int.MaxValue));
         
         internal void SetSalt(long salt)

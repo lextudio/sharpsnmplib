@@ -159,11 +159,11 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             var result = 0;
             var tableV = new Variable(table);
-            Variable seed;
+            Variable? seed;
             var next = tableV;
             var rowMask = string.Format(CultureInfo.InvariantCulture, "{0}.1.1.", table);
             var subTreeMask = string.Format(CultureInfo.InvariantCulture, "{0}.", table);
-            Tuple<bool, Variable> data = new Tuple<bool, Variable>(false, next);
+            Tuple<bool, Variable?> data = new(false, next);
             do
             {
                 seed = data.Item2;
@@ -171,6 +171,11 @@ namespace Lextm.SharpSnmpLib.Messaging
                 {
                     data = await HasNextAsync(version, endpoint, community, seed, token).ConfigureAwait(false);
                     continue;
+                }
+
+                if (seed == null)
+                {
+                    break;
                 }
 
                 if (mode == WalkMode.WithinSubtree && !seed.Id.ToString().StartsWith(subTreeMask, StringComparison.Ordinal))
@@ -202,7 +207,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         ///     <c>true</c> if the specified seed has next item; otherwise, <c>false</c>.
         /// </returns>
         /// <remarks>This method only supports SNMP v1 and v2c.</remarks>
-        private static async Task<Tuple<bool, Variable>> HasNextAsync(VersionCode version, IPEndPoint endpoint, OctetString community, Variable seed, CancellationToken token)
+        private static async Task<Tuple<bool, Variable?>> HasNextAsync(VersionCode version, IPEndPoint endpoint, OctetString community, Variable seed, CancellationToken token)
         {
             if (seed == null)
             {
@@ -211,7 +216,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             var variables = new List<Variable> { new Variable(seed.Id) };
             var message = new GetNextRequestMessage(
-                Messenger.NextRequestId,
+                NextRequestId,
                 version,
                 community,
                 variables);
@@ -219,7 +224,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             var response = await message.GetResponseAsync(endpoint, token).ConfigureAwait(false);
             var pdu = response.Pdu();
             var errorFound = pdu.ErrorStatus.ToErrorCode() == ErrorCode.NoSuchName;
-            return new Tuple<bool, Variable>(!errorFound, errorFound ? null : pdu.Variables[0]);
+            return new Tuple<bool, Variable?>(!errorFound, errorFound ? null : pdu.Variables[0]);
         }
 
         /// <summary>

@@ -122,13 +122,8 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException(nameof(report));
             }
 
-            if (privacy == null)
-            {
-                throw new ArgumentNullException(nameof(privacy));
-            }
-
             Version = version;
-            Privacy = privacy;
+            Privacy = privacy ?? throw new ArgumentNullException(nameof(privacy));
 
             Header = new Header(new Integer32(messageId), new Integer32(maxMessageSize), privacy.ToSecurityLevel() | Levels.Reportable);
             var parameters = report.Parameters;
@@ -145,6 +140,11 @@ namespace Lextm.SharpSnmpLib.Messaging
                 variables);
             var scope = report.Scope;
             var contextEngineId = scope.ContextEngineId == OctetString.Empty ? parameters.EngineId : scope.ContextEngineId;
+            if (contextEngineId == null)
+            {
+                throw new SnmpException("invalid REPORT message");
+            }
+
             Scope = new Scope(contextEngineId, contextName, pdu);
 
             Privacy.ComputeHash(Version, Header, Parameters, Scope);
@@ -168,33 +168,13 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
         }
 
-        internal GetRequestMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, IPrivacyProvider privacy, byte[] length)
+        internal GetRequestMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, IPrivacyProvider privacy, byte[]? length)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-            
-            if (header == null)
-            {
-                throw new ArgumentNullException(nameof(header));
-            }
-            
-            if (privacy == null)
-            {
-                throw new ArgumentNullException(nameof(privacy));
-            }
-
             Version = version;
-            Header = header;
-            Parameters = parameters;
-            Scope = scope;
-            Privacy = privacy;
+            Header = header ?? throw new ArgumentNullException(nameof(header));
+            Parameters = parameters ?? throw new ArgumentNullException(nameof(parameters));
+            Scope = scope ?? throw new ArgumentNullException(nameof(scope));
+            Privacy = privacy ?? throw new ArgumentNullException(nameof(privacy));
 
             _bytes = this.PackMessage(length).ToBytes();
         }

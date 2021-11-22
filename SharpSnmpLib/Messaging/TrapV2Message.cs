@@ -47,12 +47,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new ArgumentNullException(nameof(variables));
             }
-            
-            if (enterprise == null)
-            {
-                throw new ArgumentNullException(nameof(enterprise));
-            }
-            
+
             if (community == null)
             {
                 throw new ArgumentNullException(nameof(community));
@@ -64,7 +59,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
             
             Version = version;
-            Enterprise = enterprise;
+            Enterprise = enterprise ?? throw new ArgumentNullException(nameof(enterprise));
             TimeStamp = time;
             Header = Header.Empty;
             Parameters = SecurityParameters.Create(community);
@@ -111,24 +106,14 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentException("Only v3 is supported.", nameof(version));
             }
 
-            if (enterprise == null)
-            {
-                throw new ArgumentNullException(nameof(enterprise));
-            }
-
             if (engineId == null)
             {
                 throw new ArgumentNullException(nameof(engineId));
             }
-            
-            if (privacy == null)
-            {
-                throw new ArgumentNullException(nameof(privacy));
-            }
 
             Version = version;
-            Privacy = privacy;
-            Enterprise = enterprise;
+            Privacy = privacy ?? throw new ArgumentNullException(nameof(privacy));
+            Enterprise = enterprise ?? throw new ArgumentNullException(nameof(enterprise));
             TimeStamp = time;
 
             Header = new Header(new Integer32(messageId), new Integer32(maxMessageSize), privacy.ToSecurityLevel());
@@ -152,33 +137,13 @@ namespace Lextm.SharpSnmpLib.Messaging
             _bytes = this.PackMessage(null).ToBytes();
         }
 
-        internal TrapV2Message(VersionCode version, Header header, SecurityParameters parameters, Scope scope, IPrivacyProvider privacy, byte[] length)
+        internal TrapV2Message(VersionCode version, Header header, SecurityParameters parameters, Scope scope, IPrivacyProvider privacy, byte[]? length)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-            
-            if (header == null)
-            {
-                throw new ArgumentNullException(nameof(header));
-            }
-            
-            if (privacy == null)
-            {
-                throw new ArgumentNullException(nameof(privacy));
-            }
-
             Version = version;
-            Header = header;
-            Parameters = parameters;
-            Scope = scope;
-            Privacy = privacy;
+            Header = header ?? throw new ArgumentNullException(nameof(header));
+            Parameters = parameters ?? throw new ArgumentNullException(nameof(parameters));
+            Scope = scope ?? throw new ArgumentNullException(nameof(scope));
+            Privacy = privacy ?? throw new ArgumentNullException(nameof(privacy));
             var pdu = (TrapV2Pdu)Scope.Pdu;
             Enterprise = pdu.Enterprise;
             TimeStamp = pdu.TimeStamp;
@@ -233,7 +198,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Time stamp.
         /// </summary>
-        [CLSCompliant(false), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "TimeStamp")]
+        [CLSCompliant(false)]
         public uint TimeStamp { get; private set; }
 
         /// <summary>

@@ -1,4 +1,5 @@
-﻿namespace Lextm.SharpSnmpLib.Unit.Security
+﻿#pragma warning disable CS0618 // Type or member is obsolete
+namespace Lextm.SharpSnmpLib.Unit.Security
 {
     using System;
     using Lextm.SharpSnmpLib.Security;
@@ -25,3 +26,4 @@
         }
     }
 }
+#pragma warning restore CS0618 // Type or member is obsolete

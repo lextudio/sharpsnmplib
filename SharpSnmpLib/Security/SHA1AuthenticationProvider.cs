@@ -27,13 +27,12 @@ namespace Lextm.SharpSnmpLib.Security
     /// <summary>
     /// Authentication provider using SHA-1.
     /// </summary>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "SHA", Justification = "definition")]
     [Obsolete("SHA-1 is no longer secure. Please use a more secure provider.")]
     public sealed class SHA1AuthenticationProvider : IAuthenticationProvider
     {
         private const int Sha1KeyCacheCapacity = 100; 
-        private static readonly CryptoKeyCache Sha1KeyCache = new CryptoKeyCache(Sha1KeyCacheCapacity);
-        private static readonly Object Sha1KeyCacheLock = new object();
+        private static readonly CryptoKeyCache Sha1KeyCache = new(Sha1KeyCacheCapacity);
+        private static readonly Object Sha1KeyCacheLock = new();
 
         private readonly byte[] _password;
 
@@ -78,10 +77,10 @@ namespace Lextm.SharpSnmpLib.Security
 
             lock (Sha1KeyCacheLock)
             {
-                byte[] cachedKey;
+                byte[]? cachedKey;
                 if (Sha1KeyCache.TryGetCachedValue(password, engineId, out cachedKey))
                 {
-                    return cachedKey;
+                    return cachedKey!;
                 }
                  
                 byte[] keyToCache = _PasswordToKey(password, engineId);
@@ -144,7 +143,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// <param name="privacy">The privacy provider.</param>
         /// <param name="length">The length bytes.</param>
         /// <returns></returns>
-        public OctetString ComputeHash(VersionCode version, ISegment header, SecurityParameters parameters, ISnmpData data, IPrivacyProvider privacy, byte[] length)
+        public OctetString ComputeHash(VersionCode version, ISegment header, SecurityParameters parameters, ISnmpData data, IPrivacyProvider privacy, byte[]? length)
         {
             if (header == null)
             {
@@ -164,6 +163,11 @@ namespace Lextm.SharpSnmpLib.Security
             if (privacy == null)
             {
                 throw new ArgumentNullException(nameof(privacy));
+            }
+
+            if (parameters.EngineId == null)
+            {
+                throw new ArgumentException("Invalid security parameters", nameof(parameters));
             }
 
             var key = PasswordToKey(_password, parameters.EngineId.GetRaw());

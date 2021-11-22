@@ -218,7 +218,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="parameters">Security parameters.</param>
         /// <param name="data">Scope data.</param>
         /// <returns>The <see cref="Sequence" /> object that represents the message body.</returns>
-        public static Sequence PackMessage(byte[] length, VersionCode version, ISegment header, ISegment parameters, ISnmpData data)
+        public static Sequence PackMessage(byte[]? length, VersionCode version, ISegment header, ISegment parameters, ISnmpData data)
         {
             if (header == null)
             {

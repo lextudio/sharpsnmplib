@@ -12,7 +12,6 @@ using System.Collections.Generic;
 using System.IO;
 using Xunit;
 
-#pragma warning disable 1591, 0618
 namespace Lextm.SharpSnmpLib.Unit
 {
     public class ByteToolTestFixture
@@ -90,4 +89,3 @@ namespace Lextm.SharpSnmpLib.Unit
         }
     }
 }
-#pragma warning restore 1591, 0618

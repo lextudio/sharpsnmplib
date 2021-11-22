@@ -35,7 +35,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         private int _active;
         private int _bufferSize;
         private int _requestId;
-        private static readonly UserRegistry Empty = new UserRegistry();
+        private static readonly UserRegistry Empty = new();
         private readonly IList<Variable> _defaultVariables = new List<Variable> { new Variable(new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 1, 1, 0 })) };
         private const int Active = 1;
         private const int Inactive = 0;
@@ -43,13 +43,13 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Occurs when an SNMP agent is found.
         /// </summary>
-        public event EventHandler<AgentFoundEventArgs> AgentFound;
+        public event EventHandler<AgentFoundEventArgs>? AgentFound;
 
         /// <summary>
         /// Occurs when an exception is raised.
         /// </summary>
         /// <remarks>The exception is typical <see cref="SocketException"/> here.</remarks>
-        public event EventHandler<ExceptionRaisedEventArgs> ExceptionRaised;
+        public event EventHandler<ExceptionRaisedEventArgs>? ExceptionRaised;
 
         /// <summary>
         /// Discovers agents of the specified version in a specific time interval.

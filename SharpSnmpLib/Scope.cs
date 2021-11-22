@@ -26,7 +26,7 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public sealed class Scope : ISegment
     {
-        private readonly Sequence _container;
+        private readonly Sequence? _container;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Scope"/> class.
@@ -34,12 +34,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="data">The data.</param>
         public Scope(Sequence data)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
-
-            _container = data;
+            _container = data ?? throw new ArgumentNullException(nameof(data));
             ContextEngineId = (OctetString)data[0];
             ContextName = (OctetString)data[1];
             Pdu = (ISnmpPdu)data[2];
@@ -51,49 +46,26 @@ namespace Lextm.SharpSnmpLib
         /// <param name="contextEngineId">The context engine ID.</param>
         /// <param name="contextName">Name of the context.</param>
         /// <param name="pdu">The PDU.</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "pdu", Justification = "definition")]
         public Scope(OctetString contextEngineId, OctetString contextName, ISnmpPdu pdu)
         {
-            if (contextEngineId == null)
-            {
-                throw new ArgumentNullException(nameof(contextEngineId));
-            }
-
-            if (contextName == null)
-            {
-                throw new ArgumentNullException(nameof(contextName));
-            }
-
-            if (pdu == null)
-            {
-                throw new ArgumentNullException(nameof(pdu));
-            }
-
-            ContextEngineId = contextEngineId;
-            ContextName = contextName;
-            Pdu = pdu;
+            ContextEngineId = contextEngineId ?? throw new ArgumentNullException(nameof(contextEngineId));
+            ContextName = contextName ?? throw new ArgumentNullException(nameof(contextName));
+            Pdu = pdu ?? throw new ArgumentNullException(nameof(pdu));
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Scope"/> class.
         /// </summary>
         /// <param name="pdu">The PDU.</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "pdu", Justification = "definition")]
         public Scope(ISnmpPdu pdu)
         {
-            if (pdu == null)
-            {
-                throw new ArgumentNullException(nameof(pdu));
-            }
-
-            Pdu = pdu;
+            Pdu = pdu ?? throw new ArgumentNullException(nameof(pdu));
         }
 
         /// <summary>
         /// Gets the PDU.
         /// </summary>
         /// <value>The PDU.</value>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu", Justification = "definition")]
         public ISnmpPdu Pdu { get; private set; }
 
         #region ISegment Members
@@ -117,13 +89,13 @@ namespace Lextm.SharpSnmpLib
         /// Gets or sets the name of the context.
         /// </summary>
         /// <value>The name of the context.</value>
-        public OctetString ContextName { get; private set; }
+        public OctetString? ContextName { get; private set; }
 
         /// <summary>
         /// Gets or sets the context engine id.
         /// </summary>
         /// <value>The context engine id.</value>
-        public OctetString ContextEngineId { get; private set; }
+        public OctetString? ContextEngineId { get; private set; }
 
         /// <summary>
         /// Converts to <see cref="Sequence"/> object.

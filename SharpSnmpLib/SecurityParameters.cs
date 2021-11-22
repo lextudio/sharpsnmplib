@@ -40,19 +40,19 @@ namespace Lextm.SharpSnmpLib
         /// Gets the engine ID.
         /// </summary>
         /// <value>The engine ID.</value>
-        public OctetString EngineId { get; private set; }
+        public OctetString? EngineId { get; private set; }
 
         /// <summary>
         /// Gets the boot count.
         /// </summary>
         /// <value>The boot count.</value>
-        public Integer32 EngineBoots { get; private set; }
+        public Integer32? EngineBoots { get; private set; }
 
         /// <summary>
         /// Gets the engine time.
         /// </summary>
         /// <value>The engine time.</value>
-        public Integer32 EngineTime { get; private set; }
+        public Integer32? EngineTime { get; private set; }
 
         /// <summary>
         /// Gets the user name.
@@ -60,14 +60,14 @@ namespace Lextm.SharpSnmpLib
         /// <value>The user name.</value>
         public OctetString UserName { get; private set; }
 
-        private OctetString _authenticationParameters;
-        private readonly byte[] _length;
+        private OctetString? _authenticationParameters;
+        private readonly byte[]? _length;
 
         /// <summary>
         /// Gets the authentication parameters.
         /// </summary>
         /// <value>The authentication parameters.</value>
-        public OctetString AuthenticationParameters
+        public OctetString? AuthenticationParameters
         {
             get
             {
@@ -76,7 +76,7 @@ namespace Lextm.SharpSnmpLib
             
             set
             {
-                if (_authenticationParameters == null)
+                if (_authenticationParameters == null || value == null)
                 {
                     _authenticationParameters = value;
                     return;
@@ -102,7 +102,7 @@ namespace Lextm.SharpSnmpLib
         /// Gets the privacy parameters.
         /// </summary>
         /// <value>The privacy parameters.</value>
-        public OctetString PrivacyParameters { get; private set; }
+        public OctetString? PrivacyParameters { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SecurityParameters"/> class.
@@ -135,17 +135,12 @@ namespace Lextm.SharpSnmpLib
         /// <param name="authenticationParameters">The authentication parameters.</param>
         /// <param name="privacyParameters">The privacy parameters.</param>
         /// <remarks>Only <paramref name="userName"/> cannot be null.</remarks>
-        public SecurityParameters(OctetString engineId, Integer32 engineBoots, Integer32 engineTime, OctetString userName, OctetString authenticationParameters, OctetString privacyParameters)
+        public SecurityParameters(OctetString? engineId, Integer32? engineBoots, Integer32? engineTime, OctetString userName, OctetString? authenticationParameters, OctetString? privacyParameters)
         {
-            if (userName == null)
-            {
-                throw new ArgumentNullException(nameof(userName));
-            }
-
             EngineId = engineId;
             EngineBoots = engineBoots;
             EngineTime = engineTime;
-            UserName = userName;
+            UserName = userName ?? throw new ArgumentNullException(nameof(userName));
             AuthenticationParameters = authenticationParameters;
             PrivacyParameters = privacyParameters;
         }

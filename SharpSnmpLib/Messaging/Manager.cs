@@ -23,7 +23,6 @@ using System.Globalization;
 using System.Net;
 using System.Threading;
 
-#pragma warning disable 612,618
 namespace Lextm.SharpSnmpLib.Messaging
 {
     /// <summary>
@@ -38,7 +37,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     public sealed class Manager
     {
         private const int DefaultPort = 161;
-        private readonly object _locker = new object();
+        private readonly object _locker = new();
         private int _timeout = 5000;
         private VersionCode _version;
 
@@ -240,7 +239,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="community">Community name.</param>
         /// <param name="table">Table OID.</param>
         /// <returns></returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Return", Justification = "ByDesign")]
         public Variable[,] GetTable(IPEndPoint endpoint, string community, ObjectIdentifier table)
         {
             return Messenger.GetTable(DefaultVersion, endpoint, new OctetString(community), table, Timeout, MaxRepetitions);
@@ -259,12 +257,11 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="community">Community name.</param>
         /// <param name="table">Table OID.</param>
         /// <returns></returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Return", Justification = "ByDesign")]
         public Variable[,] GetTable(IPAddress address, string community, ObjectIdentifier table)
         {
             return GetTable(new IPEndPoint(address, DefaultPort), community, table);
         }
-        
+
         /// <summary>
         /// Gets a table of variables.
         /// </summary>
@@ -272,7 +269,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="community">Community name.</param>
         /// <param name="table">Table OID.</param>
         /// <returns></returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Return", Justification = "ByDesign")]
         public Variable[,] GetTable(string address, string community, ObjectIdentifier table)
         {
             return GetTable(IPAddress.Parse(address), community, table);
@@ -288,4 +284,3 @@ namespace Lextm.SharpSnmpLib.Messaging
         }         
     }
 }
-#pragma warning restore 612,618

@@ -32,7 +32,7 @@ namespace Lextm.SharpSnmpLib.Security
     [Obsolete("DES is no longer secure. Please use a more secure provider.")]
     public sealed class DESPrivacyProvider : IPrivacyProvider
     {
-        private readonly SaltGenerator _salt = new SaltGenerator();
+        private readonly SaltGenerator _salt = new();
         private readonly OctetString _phrase;
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// Engine IDs.
         /// </summary>
         /// <remarks>This is an optional field, and only used by TRAP v2 authentication.</remarks>
-        public ICollection<OctetString> EngineIds { get; set; }
+        public ICollection<OctetString>? EngineIds { get; set; }
 
         /// <summary>
         /// Encrypt scoped PDU using DES encryption protocol
@@ -343,6 +343,11 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentException($"Cannot decrypt the scope data: {code}.", nameof(data));
             }
 
+            if (parameters.EngineId == null)
+            {
+                throw new ArgumentException("Invalid security parameters", nameof(parameters));
+            }
+
             var octets = (OctetString)data;
             var bytes = octets.GetRaw();
             var pkey = PasswordToKey(_phrase.GetRaw(), parameters.EngineId.GetRaw());
@@ -350,7 +355,7 @@ namespace Lextm.SharpSnmpLib.Security
             try
             {
                 // decode encrypted packet
-                var decrypted = Decrypt(bytes, pkey, parameters.PrivacyParameters.GetRaw());            
+                var decrypted = Decrypt(bytes, pkey, parameters.PrivacyParameters!.GetRaw());            
                 var result = DataFactory.CreateSnmpData(decrypted);
                 if (result.TypeCode != SnmpType.Sequence)
                 {
@@ -392,6 +397,11 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentException("Invalid data type.", nameof(data));
             }
 
+            if (parameters.EngineId == null)
+            {
+                throw new ArgumentException("Invalid security parameters", nameof(parameters));
+            }
+
             var pkey = PasswordToKey(_phrase.GetRaw(), parameters.EngineId.GetRaw());
             var bytes = data.ToBytes();
             var reminder = bytes.Length % 8;
@@ -407,7 +417,7 @@ namespace Lextm.SharpSnmpLib.Security
                 bytes = stream.ToArray();
             }
 
-            var encrypted = Encrypt(bytes, pkey, parameters.PrivacyParameters.GetRaw());
+            var encrypted = Encrypt(bytes, pkey, parameters.PrivacyParameters!.GetRaw());
             return new OctetString(encrypted);
         }
 

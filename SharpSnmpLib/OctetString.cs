@@ -48,12 +48,12 @@ namespace Lextm.SharpSnmpLib
     public sealed class OctetString // This namespace has its own concept of string
         : ISnmpData, IEquatable<OctetString>
     {
-        private static readonly OctetString EmptyString = new OctetString(string.Empty, Encoding.GetEncoding("ASCII")); 
+        private static readonly OctetString EmptyString = new(string.Empty, Encoding.GetEncoding("ASCII")); 
         
         // IMPORTANT: use GetEncoding because of CF.
         private static Encoding _defaultEncoding = Encoding.GetEncoding("ASCII");
         private readonly byte[] _raw;
-        private byte[] _length;
+        private byte[]? _length;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OctetString"/> class.
@@ -230,7 +230,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="other">An object to compare with this object.</param>
         /// <returns><value>true</value> if the current object is equal to the <paramref name="other"/> parameter; otherwise, <value>false</value>.
         /// </returns>
-        public bool Equals(OctetString other)
+        public bool Equals(OctetString? other)
         {
             return Equals(this, other);
         }
@@ -241,7 +241,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="obj">The <see cref="Object"/> to compare with the current <see cref="OctetString"/>. </param>
         /// <returns><value>true</value> if the specified <see cref="Object"/> is equal to the current <see cref="OctetString"/>; otherwise, <value>false</value>.
         /// </returns>
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             return Equals(this, obj as OctetString);
         }
@@ -262,7 +262,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="right">Right <see cref="OctetString"/> object</param>
         /// <returns>
         /// Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
-        public static bool operator ==(OctetString left, OctetString right)
+        public static bool operator ==(OctetString? left, OctetString? right)
         {
             return Equals(left, right);
         }
@@ -274,7 +274,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="right">Right <see cref="OctetString"/> object</param>
         /// <returns>
         /// Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
-        public static bool operator !=(OctetString left, OctetString right)
+        public static bool operator !=(OctetString? left, OctetString? right)
         {
             return !(left == right);
         }
@@ -309,10 +309,10 @@ namespace Lextm.SharpSnmpLib
         /// <param name="right">Right <see cref="OctetString"/> object</param>
         /// <returns>
         /// Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
-        private static bool Equals(OctetString left, OctetString right)
+        private static bool Equals(OctetString? left, OctetString? right)
         {
-            object lo = left;
-            object ro = right;
+            object? lo = left;
+            object? ro = right;
             if (lo == ro)
             {
                 return true;
@@ -323,15 +323,15 @@ namespace Lextm.SharpSnmpLib
                 return false;
             }
 
-            return left._raw.SequenceEqual(right._raw); 
+            return left!._raw.SequenceEqual(right!._raw); 
         }
 
-        internal byte[] GetLengthBytes()
+        internal byte[]? GetLengthBytes()
         {
             return _length;
         }
 
-        internal void SetLengthBytes(byte[] bytes)
+        internal void SetLengthBytes(byte[]? bytes)
         {
             _length = bytes;
         }
@@ -341,7 +341,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="value">A <see cref="OctetString" /> reference.</param>
         /// <returns><c>true</c> if the <paramref name="value"/> parameter is a null reference (<c>Nothing</c> in Visual Basic) or an empty string (""); otherwise, <c>false</c>.</returns>
-        public static bool IsNullOrEmpty(OctetString value)
+        public static bool IsNullOrEmpty(OctetString? value)
         {
             if (value == null)
             {

@@ -28,19 +28,8 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// </summary>
     public sealed class MalformedMessage : ISnmpMessage
     {
-        private static readonly Scope DefaultScope = new Scope(new MalformedPdu());
+        private static readonly Scope DefaultScope = new(new MalformedPdu());
         
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MalformedMessage"/> class.
-        /// </summary>
-        /// <param name="messageId">The message id.</param>
-        /// <param name="user">The user.</param>
-        [Obsolete("Please use the new overloading constructor.")]
-        public MalformedMessage(int messageId, OctetString user)
-            : this(messageId, user, null)
-        {
-        }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="MalformedMessage"/> class.
         /// </summary>
@@ -92,7 +81,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         public byte[] ToBytes()
         {
-            return new byte[0];
+            return Array.Empty<byte>();
         }
 
         /// <summary>
@@ -110,7 +99,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <value>The privacy provider.</value>
         public IPrivacyProvider Privacy
         {
-            get { return null; }
+            get { return DefaultPrivacyProvider.DefaultPair; }
         }
 
         /// <summary>

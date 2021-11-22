@@ -41,7 +41,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Agent address.
         /// </summary>
-        protected IPAddress Agent { get; set; }
+        protected IPAddress? Agent { get; set; }
 
         /// <summary>
         /// Creates a <see cref="OperationException"/> instance.

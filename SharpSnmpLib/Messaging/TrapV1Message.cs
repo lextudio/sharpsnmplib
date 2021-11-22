@@ -40,8 +40,8 @@ namespace Lextm.SharpSnmpLib.Messaging
     public sealed class TrapV1Message : ISnmpMessage
     {
         private readonly ISnmpPdu _pdu;
-        private readonly Sequence _container;
-        private Scope _scope;
+        private readonly Sequence? _container;
+        private Scope? _scope;
 
         /// <summary>
         /// Creates a <see cref="TrapV1Message"/> with all content.
@@ -61,31 +61,16 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new ArgumentNullException(nameof(variables));
             }
-            
-            if (enterprise == null)
-            {
-                throw new ArgumentNullException(nameof(enterprise));
-            }
-            
-            if (community == null)
-            {
-                throw new ArgumentNullException(nameof(community));
-            }
-            
-            if (agent == null)
-            {
-                throw new ArgumentNullException(nameof(agent));
-            }
-            
+
             if (version != VersionCode.V1)
             {
                 throw new ArgumentException($"TRAP v1 is not supported in this SNMP version: {version}", nameof(version));
             }
             
             Version = version;
-            AgentAddress = agent;
-            Community = community;
-            Enterprise = enterprise;
+            AgentAddress = agent ?? throw new ArgumentNullException(nameof(agent));
+            Community = community ?? throw new ArgumentNullException(nameof(community));
+            Enterprise = enterprise ?? throw new ArgumentNullException(nameof(enterprise));
             Generic = generic;
             Specific = specific;
             TimeStamp = time;
@@ -144,7 +129,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Time stamp.
         /// </summary>
-        [CLSCompliant(false), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "TimeStamp")]
+        [CLSCompliant(false)]
         public uint TimeStamp { get; private set; }
 
         /// <summary>
@@ -216,7 +201,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <remarks><see cref="TrapV1Message"/> returns null here.</remarks>
         public Scope Scope
         {
-            get { return _scope ?? (_scope = new Scope(_pdu)); }
+            get { return _scope ??= new Scope(_pdu); }
         }
         
         /// <summary>

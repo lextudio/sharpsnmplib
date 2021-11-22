@@ -41,9 +41,9 @@ namespace Lextm.SharpSnmpLib
     /// <remarks>Represents SMIv1 SEQUENCE.</remarks>
     public sealed class Sequence : ISnmpData
     {
-        private readonly List<ISnmpData> _list = new List<ISnmpData>();
-        private readonly byte[] _length;
-        private byte[] _buffer;
+        private readonly List<ISnmpData> _list = new();
+        private readonly byte[]? _length;
+        private byte[]? _buffer;
 
         /// <summary>
         /// Gets the enumerator.
@@ -59,7 +59,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="length">The length bytes.</param>
         /// <param name="items">The items.</param>
-        public Sequence(byte[] length, params ISnmpData[] items)
+        public Sequence(byte[]? length, params ISnmpData?[] items)
         {
             if (items == null)
             {
@@ -68,7 +68,7 @@ namespace Lextm.SharpSnmpLib
 
             foreach (var data in items.Where(data => data != null))
             {
-                _list.Add(data);
+                _list.Add(data!);
             }
 
             _length = length;
@@ -184,7 +184,7 @@ namespace Lextm.SharpSnmpLib
         /// Gets the length bytes.
         /// </summary>
         /// <returns>System.Byte[].</returns>
-        public byte[] GetLengthBytes()
+        public byte[]? GetLengthBytes()
         {
             return _length;
         }

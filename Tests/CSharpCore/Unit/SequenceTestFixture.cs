@@ -11,7 +11,6 @@ using System;
 using System.Collections.Generic;
 using Xunit;
 
-#pragma warning disable 1591
 namespace Lextm.SharpSnmpLib.Unit
 {
     public class SequenceTestFixture
@@ -54,5 +53,3 @@ namespace Lextm.SharpSnmpLib.Unit
         }
     }
 }
-#pragma warning restore 1591
-

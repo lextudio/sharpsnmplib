@@ -29,7 +29,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="version">The version.</param>
         /// <returns></returns>
-        ISnmpData GetData(VersionCode version);
+        ISnmpData? GetData(VersionCode version);
 
         /// <summary>
         /// Converts to <see cref="Sequence"/> object.

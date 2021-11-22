@@ -7,6 +7,7 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 
+#pragma warning disable CS0618 // Type or member is obsolete
 namespace Lextm.SharpSnmpLib.Unit.Security
 {
     using System;
@@ -122,6 +123,7 @@ namespace Lextm.SharpSnmpLib.Unit.Security
                 ByteTool.Convert(
                     "04 30 9D 13 04 9C 7E D9 84 8B 33 C3 26 5C 1F 91 30 27 D3 56 B0 FD 81 36 50 3A EF 80 1C B9 25 D6 38 84 A7 07 45 FE E8 D7 01 83 A1 CE 04 79 9D 5F 9E 2F");
             OctetString engineId = new OctetString(ByteTool.Convert("80 00 1F 88 80  E9 63 00 00  D6 1F F4 49"));
+
             var priv = new TripleDESPrivacyProvider(new OctetString("passtest"),
                 new MD5AuthenticationProvider(new OctetString("testpass")));
             Scope scope = new Scope(engineId, OctetString.Empty,
@@ -140,3 +142,4 @@ namespace Lextm.SharpSnmpLib.Unit.Security
         }
     }
 }
+#pragma warning restore CS0618 // Type or member is obsolete

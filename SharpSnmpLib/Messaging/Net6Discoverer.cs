@@ -41,7 +41,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="community">The community.</param>
         /// <param name="interval">The discovering time interval, in milliseconds.</param>
         /// <remarks><paramref name="broadcastAddress"/> must be an IPv4 address. IPv6 is not yet supported here.</remarks>
-        public void Discover(VersionCode version, IPEndPoint broadcastAddress, OctetString community, int interval, CancellationToken token)
+        public void Discover(VersionCode version, IPEndPoint broadcastAddress, OctetString? community, int interval, CancellationToken token)
         {
             if (broadcastAddress == null)
             {
@@ -69,7 +69,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
             else
             {
-                var message = new GetRequestMessage(_requestId, version, community, _defaultVariables);
+                var message = new GetRequestMessage(_requestId, version, community!, _defaultVariables);
                 bytes = message.ToBytes();
             }
 

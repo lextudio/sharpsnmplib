@@ -41,9 +41,9 @@ namespace Lextm.SharpSnmpLib.Messaging
     public sealed partial class Discovery
     {
         private readonly ISnmpMessage _discovery;
-        private static readonly UserRegistry Empty = new UserRegistry();
+        private static readonly UserRegistry Empty = new();
         private static readonly SecurityParameters DefaultSecurityParameters =
-            new SecurityParameters(
+            new(
                 OctetString.Empty,
                 Integer32.Zero,
                 Integer32.Zero,

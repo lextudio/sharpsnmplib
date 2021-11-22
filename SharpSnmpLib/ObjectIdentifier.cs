@@ -38,9 +38,9 @@ namespace Lextm.SharpSnmpLib
     {
         private readonly uint[] _oid;
         private readonly int _hashcode;
-        private readonly byte[] _length;
+        private readonly byte[]? _length;
 
-        private byte[] _raw;
+        private byte[]? _raw;
 
         #region Constructor
 
@@ -216,7 +216,7 @@ namespace Lextm.SharpSnmpLib
         /// Greater than zero
         /// This object is greater than <paramref name="other"/>.
         /// </returns>
-        public int CompareTo(ObjectIdentifier other)
+        public int CompareTo(ObjectIdentifier? other)
         {
             if (other == null)
             {
@@ -338,7 +338,7 @@ namespace Lextm.SharpSnmpLib
         private static IEnumerable<byte> ConvertToBytes(uint subIdentifier)
         {
             var result = new List<byte> { (byte)(subIdentifier & 0x7F) };
-            while ((subIdentifier = subIdentifier >> 7) > 0)
+            while ((subIdentifier >>= 7) > 0)
             {
                 result.Add((byte)((subIdentifier & 0x7F) | 0x80));
             }
@@ -364,7 +364,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="obj">The <see cref="Object"/> to compare with the current <see cref="ObjectIdentifier"/>. </param>
         /// <returns><value>true</value> if the specified <see cref="Object"/> is equal to the current <see cref="ObjectIdentifier"/>; otherwise, <value>false</value>.
         /// </returns>
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             return Equals(this, obj as ObjectIdentifier);
         }
@@ -375,7 +375,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="other">An object to compare with this object.</param>
         /// <returns><value>true</value> if the current object is equal to the <paramref name="other"/> parameter; otherwise, <value>false</value>.
         /// </returns>
-        public bool Equals(ObjectIdentifier other)
+        public bool Equals(ObjectIdentifier? other)
         {
             return Equals(this, other);
         }
@@ -407,7 +407,7 @@ namespace Lextm.SharpSnmpLib
         /// <exception cref="T:System.ArgumentException">
         ///     <paramref name="obj"/> is not the same type as this instance.
         /// </exception>
-        public int CompareTo(object obj)
+        public int CompareTo(object? obj)
         {
             var o = obj as ObjectIdentifier;
             if (o == null)
@@ -425,7 +425,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="right">Right <see cref="ObjectIdentifier"/> object</param>
         /// <returns>
         /// Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
-        public static bool operator ==(ObjectIdentifier left, ObjectIdentifier right)
+        public static bool operator ==(ObjectIdentifier? left, ObjectIdentifier? right)
         {
             return Equals(left, right);
         }
@@ -437,7 +437,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="right">Right <see cref="ObjectIdentifier"/> object</param>
         /// <returns>
         /// Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
-        public static bool operator !=(ObjectIdentifier left, ObjectIdentifier right)
+        public static bool operator !=(ObjectIdentifier? left, ObjectIdentifier? right)
         {
             return !(left == right);
         }
@@ -471,10 +471,10 @@ namespace Lextm.SharpSnmpLib
         /// <param name="right">Right <see cref="ObjectIdentifier"/> object</param>
         /// <returns>
         /// Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
-        private static bool Equals(IComparable<ObjectIdentifier> left, ObjectIdentifier right)
+        private static bool Equals(IComparable<ObjectIdentifier>? left, ObjectIdentifier? right)
         {
-            object lo = left;
-            object ro = right;
+            object? lo = left;
+            object? ro = right;
             if (lo == ro)
             {
                 return true;
@@ -485,7 +485,7 @@ namespace Lextm.SharpSnmpLib
                 return false;
             }
 
-            return left.CompareTo(right) == 0;
+            return left!.CompareTo(right!) == 0;
         }
 
         /// <summary>

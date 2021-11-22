@@ -11,6 +11,7 @@ using System;
 using Lextm.SharpSnmpLib.Security;
 using Xunit;
 
+#pragma warning disable CS0618 // Type or member is obsolete
 namespace Lextm.SharpSnmpLib.Unit.Security
 {
     public class SHA1AuthenticationProviderTestFixture
@@ -27,3 +28,4 @@ namespace Lextm.SharpSnmpLib.Unit.Security
         }
     }
 }
+#pragma warning restore CS0618 // Type or member is obsolete

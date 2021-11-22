@@ -34,18 +34,8 @@ namespace Lextm.SharpSnmpLib.Security
         /// <param name="privacy">The privacy provider.</param>
         public User(OctetString name, IPrivacyProvider privacy)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-
-            if (privacy == null)
-            {
-                throw new ArgumentNullException(nameof(privacy));
-            }
-
-            Name = name;
-            Privacy = privacy;
+            Name = name ?? throw new ArgumentNullException(nameof(name));
+            Privacy = privacy ?? throw new ArgumentNullException(nameof(privacy));
         }
 
         /// <summary>

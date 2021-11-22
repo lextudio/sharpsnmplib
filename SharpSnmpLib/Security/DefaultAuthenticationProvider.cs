@@ -30,7 +30,7 @@ namespace Lextm.SharpSnmpLib.Security
         {
         }
 
-        private static IAuthenticationProvider _instance;
+        private static IAuthenticationProvider? _instance;
 
         /// <summary>
         /// Gets the instance.
@@ -38,7 +38,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// <value>The instance.</value>
         public static IAuthenticationProvider Instance
         {
-            get { return _instance ?? (_instance = new DefaultAuthenticationProvider()); }
+            get { return _instance ??= new DefaultAuthenticationProvider(); }
         }
 
         #region IAuthenticationProvider Members
@@ -53,7 +53,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// <param name="privacy">The privacy provider.</param>
         /// <param name="length">The length bytes.</param>
         /// <returns></returns>
-        public OctetString ComputeHash(VersionCode version, ISegment header, SecurityParameters parameters, ISnmpData data, IPrivacyProvider privacy, byte[] length)
+        public OctetString ComputeHash(VersionCode version, ISegment header, SecurityParameters parameters, ISnmpData data, IPrivacyProvider privacy, byte[]? length)
         {
             if (header == null)
             {
@@ -82,7 +82,6 @@ namespace Lextm.SharpSnmpLib.Security
         /// Computes the hash.
         /// </summary>
         /// <returns></returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         public OctetString ComputeHash(byte[] buffer, OctetString engineId)
         {
             if (buffer == null)
@@ -126,7 +125,7 @@ namespace Lextm.SharpSnmpLib.Security
             }
             
             // IMPORTANT: this function is not used.
-            return new byte[0];
+            return Array.Empty<byte>();
         }
 
         /// <summary>

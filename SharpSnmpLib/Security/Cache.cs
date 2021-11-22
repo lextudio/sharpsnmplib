@@ -12,7 +12,7 @@ namespace Lextm.SharpSnmpLib.Security
     /// </summary>
     /// <typeparam name="TKey">The type of the keys in the dictionary.</typeparam>
     /// <typeparam name="TValue">The type of the values in the dictionary.</typeparam>
-    public class Cache<TKey, TValue>
+    public class Cache<TKey, TValue> where TKey : notnull
     {
         #region Data
 
@@ -60,7 +60,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// This parameter is passed uninitialized.
         /// </param>
         /// <returns>true if the Cache contains an element with the specified key; otherwise, false.</returns>
-        public bool TryGetValue(TKey key, out TValue value)
+        public bool TryGetValue(TKey key, out TValue? value)
         {
             return _dictionary.TryGetValue(key, out value);
         }

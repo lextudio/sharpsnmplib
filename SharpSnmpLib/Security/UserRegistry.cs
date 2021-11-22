@@ -34,9 +34,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// Initializes a new instance of the <see cref="UserRegistry"/> class.
         /// </summary>
         /// <param name="users">The users.</param>
-// ReSharper disable ParameterTypeCanBeEnumerable.Local
-        public UserRegistry(User[] users)
-// ReSharper restore ParameterTypeCanBeEnumerable.Local
+        public UserRegistry(User[]? users)
         {
             if (users == null)
             {
@@ -99,13 +97,8 @@ namespace Lextm.SharpSnmpLib.Security
         /// </summary>
         /// <param name="userName">Name of the user.</param>
         /// <returns></returns>
-        public IPrivacyProvider Find(OctetString userName)
+        public IPrivacyProvider? Find(OctetString userName)
         {
-            if (userName == null)
-            {
-                throw new ArgumentNullException(nameof(userName));
-            }
-
             if (userName == OctetString.Empty)
             {
                 // IMPORTANT: used in messagefactory.cs to decrypt discovery messages.

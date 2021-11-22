@@ -5,7 +5,6 @@ using Lextm.SharpSnmpLib.Security;
 using Xunit;
 using System.IO;
 
-#pragma warning disable 1591
 namespace Lextm.SharpSnmpLib.Unit.Messaging
 {
     public class TrapV1MessageTestFixture
@@ -74,5 +73,3 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
 #endif
     }
 }
-#pragma warning restore 1591
-

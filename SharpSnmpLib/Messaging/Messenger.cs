@@ -48,8 +48,8 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// RFC 3416 (3.)
         /// </summary>
-        private static readonly Lazy<NumberGenerator> RequestCounterFullRange = new Lazy<NumberGenerator>(() => new NumberGenerator(int.MinValue, int.MaxValue));
-        private static readonly Lazy<NumberGenerator> RequestCounterPositive = new Lazy<NumberGenerator>(() => new NumberGenerator(0, int.MaxValue));
+        private static readonly Lazy<NumberGenerator> RequestCounterFullRange = new(() => new NumberGenerator(int.MinValue, int.MaxValue));
+        private static readonly Lazy<NumberGenerator> RequestCounterPositive = new(() => new NumberGenerator(0, int.MaxValue));
 
         private static NumberGenerator RequestCounter
         {
@@ -67,13 +67,13 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// RFC 3412 (6.)
         /// </summary>
-        private static readonly NumberGenerator MessageCounter = new NumberGenerator(0, int.MaxValue);
-        private static readonly ObjectIdentifier IdUnsupportedSecurityLevel = new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 6, 3, 15, 1, 1, 1, 0 });
-        private static readonly ObjectIdentifier IdNotInTimeWindow = new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 6, 3, 15, 1, 1, 2, 0 });
-        private static readonly ObjectIdentifier IdUnknownSecurityName = new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 6, 3, 15, 1, 1, 3, 0 });
-        private static readonly ObjectIdentifier IdUnknownEngineID = new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 6, 3, 15, 1, 1, 4, 0 });
-        private static readonly ObjectIdentifier IdAuthenticationFailure = new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 6, 3, 15, 1, 1, 5, 0 });
-        private static readonly ObjectIdentifier IdDecryptionError = new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 6, 3, 15, 1, 1, 6, 0 });
+        private static readonly NumberGenerator MessageCounter = new(0, int.MaxValue);
+        private static readonly ObjectIdentifier IdUnsupportedSecurityLevel = new(new uint[] { 1, 3, 6, 1, 6, 3, 15, 1, 1, 1, 0 });
+        private static readonly ObjectIdentifier IdNotInTimeWindow = new(new uint[] { 1, 3, 6, 1, 6, 3, 15, 1, 1, 2, 0 });
+        private static readonly ObjectIdentifier IdUnknownSecurityName = new(new uint[] { 1, 3, 6, 1, 6, 3, 15, 1, 1, 3, 0 });
+        private static readonly ObjectIdentifier IdUnknownEngineID = new(new uint[] { 1, 3, 6, 1, 6, 3, 15, 1, 1, 4, 0 });
+        private static readonly ObjectIdentifier IdAuthenticationFailure = new(new uint[] { 1, 3, 6, 1, 6, 3, 15, 1, 1, 5, 0 });
+        private static readonly ObjectIdentifier IdDecryptionError = new(new uint[] { 1, 3, 6, 1, 6, 3, 15, 1, 1, 6, 0 });
 
         #region async methods
 
@@ -187,11 +187,11 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             var result = 0;
             var tableV = new Variable(table);
-            Variable seed;
+            Variable? seed;
             var next = tableV;
             var rowMask = string.Format(CultureInfo.InvariantCulture, "{0}.1.1.", table);
             var subTreeMask = string.Format(CultureInfo.InvariantCulture, "{0}.", table);
-            Tuple<bool, Variable> data = new Tuple<bool, Variable>(false, next);
+            Tuple<bool, Variable?> data = new(false, next);
             do
             {
                 seed = data.Item2;
@@ -199,6 +199,11 @@ namespace Lextm.SharpSnmpLib.Messaging
                 {
                     data = await HasNextAsync(version, endpoint, community, seed).ConfigureAwait(false);
                     continue;
+                }
+
+                if (seed == null)
+                {
+                    break;
                 }
 
                 if (mode == WalkMode.WithinSubtree && !seed.Id.ToString().StartsWith(subTreeMask, StringComparison.Ordinal))
@@ -230,7 +235,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         ///     <c>true</c> if the specified seed has next item; otherwise, <c>false</c>.
         /// </returns>
         /// <remarks>This method only supports SNMP v1 and v2c.</remarks>
-        private static async Task<Tuple<bool, Variable>> HasNextAsync(VersionCode version, IPEndPoint endpoint, OctetString community, Variable seed)
+        private static async Task<Tuple<bool, Variable?>> HasNextAsync(VersionCode version, IPEndPoint endpoint, OctetString community, Variable seed)
         {
             if (seed == null)
             {
@@ -247,7 +252,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             var response = await message.GetResponseAsync(endpoint).ConfigureAwait(false);
             var pdu = response.Pdu();
             var errorFound = pdu.ErrorStatus.ToErrorCode() == ErrorCode.NoSuchName;
-            return new Tuple<bool, Variable>(!errorFound, errorFound ? null : pdu.Variables[0]);
+            return new Tuple<bool, Variable?>(!errorFound, errorFound ? null : pdu.Variables[0]);
         }
 
         /// <summary>
@@ -704,7 +709,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             var result = 0;
             var tableV = new Variable(table);
-            Variable seed;
+            Variable? seed;
             var next = tableV;
             var rowMask = string.Format(CultureInfo.InvariantCulture, "{0}.1.1.", table);
             var subTreeMask = string.Format(CultureInfo.InvariantCulture, "{0}.", table);
@@ -714,6 +719,11 @@ namespace Lextm.SharpSnmpLib.Messaging
                 if (seed == tableV)
                 {
                     continue;
+                }
+
+                if (seed == null)
+                {
+                    break;
                 }
 
                 if (mode == WalkMode.WithinSubtree && !seed.Id.ToString().StartsWith(subTreeMask, StringComparison.Ordinal))
@@ -745,8 +755,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         ///     <c>true</c> if the specified seed has next item; otherwise, <c>false</c>.
         /// </returns>
         /// <remarks>This method supports SNMP v1 and v2c.</remarks>
-        [SuppressMessage("Microsoft.Design", "CA1021:AvoidOutParameters", MessageId = "5#")]
-        private static bool HasNext(VersionCode version, IPEndPoint endpoint, OctetString community, Variable seed, int timeout, out Variable next)
+        private static bool HasNext(VersionCode version, IPEndPoint endpoint, OctetString community, Variable seed, int timeout, out Variable? next)
         {
             if (seed == null)
             {
@@ -802,7 +811,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="report">The report.</param>
         /// <returns>Returns row count if the OID is a table. Otherwise this value is meaningless.</returns>
         /// <remarks>This method supports SNMP v2c and v3.</remarks>
-        public static int BulkWalk(VersionCode version, IPEndPoint endpoint, OctetString community, OctetString contextName, ObjectIdentifier table, IList<Variable> list, int timeout, int maxRepetitions, WalkMode mode, IPrivacyProvider privacy, ISnmpMessage report)
+        public static int BulkWalk(VersionCode version, IPEndPoint endpoint, OctetString community, OctetString contextName, ObjectIdentifier table, IList<Variable> list, int timeout, int maxRepetitions, WalkMode mode, IPrivacyProvider? privacy, ISnmpMessage? report)
         {
             if (list == null)
             {
@@ -1017,9 +1026,8 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <c>true</c> if the specified seed has next item; otherwise, <c>false</c>.
         /// </returns>
         /// <remarks>This method supports SNMP v2c and v3.</remarks>
-        [SuppressMessage("Microsoft.Design", "CA1021:AvoidOutParameters", MessageId = "5#")]
         [Obsolete("Please use other overloading ones.")]
-        private static bool BulkHasNext(VersionCode version, IPEndPoint receiver, OctetString community, Variable seed, int timeout, int maxRepetitions, out IList<Variable> next, IPrivacyProvider privacy, ref ISnmpMessage report)
+        private static bool BulkHasNext(VersionCode version, IPEndPoint receiver, OctetString community, Variable seed, int timeout, int maxRepetitions, out IList<Variable> next, IPrivacyProvider privacy, ref ISnmpMessage? report)
             => BulkHasNext(version, receiver, community, OctetString.Empty, seed, timeout, maxRepetitions, out next, privacy, ref report);
 
         /// <summary>
@@ -1039,8 +1047,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <c>true</c> if the specified seed has next item; otherwise, <c>false</c>.
         /// </returns>
         /// <remarks>This method supports SNMP v2c and v3.</remarks>
-        [SuppressMessage("Microsoft.Design", "CA1021:AvoidOutParameters", MessageId = "5#")]
-        private static bool BulkHasNext(VersionCode version, IPEndPoint receiver, OctetString community, OctetString contextName, Variable seed, int timeout, int maxRepetitions, out IList<Variable> next, IPrivacyProvider privacy, ref ISnmpMessage report)
+        private static bool BulkHasNext(VersionCode version, IPEndPoint receiver, OctetString community, OctetString contextName, Variable seed, int timeout, int maxRepetitions, out IList<Variable> next, IPrivacyProvider? privacy, ref ISnmpMessage? report)
         {
             if (version == VersionCode.V1)
             {
@@ -1058,9 +1065,9 @@ namespace Lextm.SharpSnmpLib.Messaging
                                                       0,
                                                       maxRepetitions,
                                                       variables,
-                                                      privacy,
+                                                      privacy!,
                                                       MaxMessageSize,
-                                                      report)
+                                                      report!)
                                                 : new GetBulkRequestMessage(
                                                       RequestCounter.NextId,
                                                       version,
@@ -1097,7 +1104,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                     0,
                     maxRepetitions,
                     variables,
-                    privacy,
+                    privacy!, // TODO: how to ensure this is not null?
                     MaxMessageSize,
                     reply);
                 reply = request.GetResponse(timeout, receiver);
@@ -1126,8 +1133,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="maxRepetitions">The max repetitions.</param>
         /// <returns></returns>
         /// <remarks>This method supports SNMP v2c and v3.</remarks>
-        [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Return", Justification = "ByDesign")]
-        [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", MessageId = "Body", Justification = "ByDesign")]
         [CLSCompliant(false)]
         [Obsolete("This method only works for a few scenarios. Might be replaced by new methods in the future. If it does not work for you, parse WALK result on your own.")]
         public static Variable[,] GetTable(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, int timeout, int maxRepetitions)
@@ -1209,7 +1214,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// together with the OID and value of the incremented counter is
         /// returned to the calling module.
         /// </summary>
-        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed. Suppression is OK here.")]
         public static ObjectIdentifier AuthenticationFailure
         {
             get { return IdAuthenticationFailure; }
@@ -1223,7 +1227,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// value of the incremented counter is returned to the calling
         /// module.
         /// </summary>
-        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed. Suppression is OK here.")]
         public static ObjectIdentifier UnknownEngineId
         {
             get { return IdUnknownEngineID; }
@@ -1238,7 +1241,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// (unknownSecurityName) together with the OID and value of the
         /// incremented counter is returned to the calling module.
         /// </summary>
-        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed. Suppression is OK here.")]
         public static ObjectIdentifier UnknownSecurityName
         {
             get { return IdUnknownSecurityName; }
@@ -1252,7 +1254,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// the error must be reported with a securityLevel of authNoPriv,
         /// is returned to the calling module
         /// </summary>
-        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed. Suppression is OK here.")]
         public static ObjectIdentifier NotInTimeWindow
         {
             get { return IdNotInTimeWindow; }
@@ -1266,7 +1267,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// value of the incremented counter is returned to the calling
         /// module.
         /// </summary>
-        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed. Suppression is OK here.")]
         public static ObjectIdentifier UnsupportedSecurityLevel
         {
             get { return IdUnsupportedSecurityLevel; }

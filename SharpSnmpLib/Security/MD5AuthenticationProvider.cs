@@ -30,8 +30,8 @@ namespace Lextm.SharpSnmpLib.Security
     public sealed class MD5AuthenticationProvider : IAuthenticationProvider
     {
         private const int Md5KeyCacheCapacity = 100;
-        private static readonly CryptoKeyCache Md5KeyCache = new CryptoKeyCache(Md5KeyCacheCapacity);
-        private static readonly object Md5KeyCacheLock = new object();
+        private static readonly CryptoKeyCache Md5KeyCache = new(Md5KeyCacheCapacity);
+        private static readonly object Md5KeyCacheLock = new();
 
         private readonly byte[] _password;
 
@@ -78,10 +78,10 @@ namespace Lextm.SharpSnmpLib.Security
 
             lock (Md5KeyCacheLock)
             {
-                byte[] cachedKey;
+                byte[]? cachedKey;
                 if (Md5KeyCache.TryGetCachedValue(password, engineId, out cachedKey))
                 {
-                    return cachedKey;
+                    return cachedKey!;
                 }
              
                 byte[] keyToCache = _PasswordToKey(password, engineId);
@@ -145,7 +145,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// <param name="privacy">The privacy provider.</param>
         /// <param name="length">The length bytes.</param>
         /// <returns></returns>
-        public OctetString ComputeHash(VersionCode version, ISegment header, SecurityParameters parameters, ISnmpData data, IPrivacyProvider privacy, byte[] length)
+        public OctetString ComputeHash(VersionCode version, ISegment header, SecurityParameters parameters, ISnmpData data, IPrivacyProvider privacy, byte[]? length)
         {
             if (header == null)
             {
@@ -165,6 +165,11 @@ namespace Lextm.SharpSnmpLib.Security
             if (privacy == null)
             {
                 throw new ArgumentNullException(nameof(privacy));
+            }
+
+            if (parameters.EngineId == null)
+            {
+                throw new ArgumentException("Invalid security parameters", nameof(parameters));
             }
 
             var key = PasswordToKey(_password, parameters.EngineId.GetRaw());

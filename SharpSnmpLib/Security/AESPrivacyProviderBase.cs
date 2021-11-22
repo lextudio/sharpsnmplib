@@ -43,7 +43,7 @@ namespace Lextm.SharpSnmpLib.Security
     /// </remarks>
     public abstract class AESPrivacyProviderBase : IPrivacyProvider
     {
-        private readonly SaltGenerator _salt = new SaltGenerator();
+        private readonly SaltGenerator _salt = new();
         private readonly OctetString _phrase;
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// Engine IDs.
         /// </summary>
         /// <remarks>This is an optional field, and only used by TRAP v2 authentication.</remarks>
-        public ICollection<OctetString> EngineIds { get; set; }
+        public ICollection<OctetString>? EngineIds { get; set; }
 
         /// <summary>
         /// Encrypt scoped PDU using AES encryption protocol
@@ -154,7 +154,11 @@ namespace Lextm.SharpSnmpLib.Security
             // Copy salt value to the iv array
             Buffer.BlockCopy(privacyParameters, 0, iv, 8, PrivacyParametersLength);
 
+#if NET471
+            using (var rm = Rijndael.Create())
+#else
             using (var rm = Aes.Create())
+#endif
             {
                 rm.KeySize = KeyBytes * 8;
                 rm.FeedbackSize = 128;
@@ -237,7 +241,11 @@ namespace Lextm.SharpSnmpLib.Security
             Buffer.BlockCopy(privacyParameters, 0, iv, 8, PrivacyParametersLength);
 
             // now do CFB decryption of the encrypted data
+#if NET471
+            using (var rm = Rijndael.Create())
+#else
             using (var rm = Aes.Create())
+#endif
             {
                 rm.KeySize = KeyBytes * 8;
                 rm.FeedbackSize = 128;
@@ -311,7 +319,7 @@ namespace Lextm.SharpSnmpLib.Security
             get { return KeyBytes; }
         }
 
-        #region IPrivacyProvider Members
+#region IPrivacyProvider Members
 
         /// <summary>
         /// Decrypts the specified data.
@@ -337,12 +345,17 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentException($"Cannot decrypt the scope data: {code}.", nameof(data));
             }
 
+            if (parameters.EngineId == null)
+            {
+                throw new ArgumentException("Invalid security parameters", nameof(parameters));
+            }
+
             var octets = (OctetString)data;
             var bytes = octets.GetRaw();
             var pkey = PasswordToKey(_phrase.GetRaw(), parameters.EngineId.GetRaw());
 
             // decode encrypted packet
-            var decrypted = Decrypt(bytes, pkey, parameters.EngineBoots.ToInt32(), parameters.EngineTime.ToInt32(), parameters.PrivacyParameters.GetRaw());
+            var decrypted = Decrypt(bytes, pkey, parameters.EngineBoots!.ToInt32(), parameters.EngineTime!.ToInt32(), parameters.PrivacyParameters!.GetRaw());
             return DataFactory.CreateSnmpData(decrypted);
         }
 
@@ -369,6 +382,11 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentException("Invalid data type.", nameof(data));
             }
 
+            if (parameters.EngineId == null)
+            {
+                throw new ArgumentException("Invalid security parameters", nameof(parameters));
+            }
+
             var pkey = PasswordToKey(_phrase.GetRaw(), parameters.EngineId.GetRaw());
             var bytes = data.ToBytes();
             var reminder = bytes.Length % 8;
@@ -384,7 +402,7 @@ namespace Lextm.SharpSnmpLib.Security
                 bytes = stream.ToArray();
             }
 
-            var encrypted = Encrypt(bytes, pkey, parameters.EngineBoots.ToInt32(), parameters.EngineTime.ToInt32(), parameters.PrivacyParameters.GetRaw());
+            var encrypted = Encrypt(bytes, pkey, parameters.EngineBoots!.ToInt32(), parameters.EngineTime!.ToInt32(), parameters.PrivacyParameters!.GetRaw());
             return new OctetString(encrypted);
         }
 
@@ -420,7 +438,7 @@ namespace Lextm.SharpSnmpLib.Security
             return pkey;
         }
 
-        #endregion
+#endregion
 
         /// <summary>
         /// Some protocols support a method to extend the encryption or decryption key when supplied key
@@ -440,11 +458,6 @@ namespace Lextm.SharpSnmpLib.Security
             while (keyLen < MinimumKeyLength)
             {
                 byte[] tmpBuf = authProtocol.PasswordToKey(lastKeyBuf, engineID);
-                if (tmpBuf == null)
-                {
-                    return null;
-                }
-
                 if (tmpBuf.Length <= (MinimumKeyLength - keyLen))
                 {
                     Array.Copy(tmpBuf, 0, extKey, keyLen, tmpBuf.Length);

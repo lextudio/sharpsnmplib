@@ -58,7 +58,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// Engine IDs.
         /// </summary>
         /// <remarks>This is an optional field, and only used by TRAP v2 authentication.</remarks>
-        ICollection<OctetString> EngineIds { get; }
+        ICollection<OctetString>? EngineIds { get; }
 
         /// <summary>
         /// Passwords to key.

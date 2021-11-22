@@ -61,7 +61,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
         }
 
-        private readonly object _root = new object();
+        private readonly object _root = new();
         private int _salt;
         private readonly int _min;
         private readonly int _max;
