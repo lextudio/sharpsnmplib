@@ -10,8 +10,9 @@ using Xunit;
 #pragma warning disable 1591
 namespace Lextm.SharpSnmpLib.Unit
 {
-    public class SocketTestFixture
+    public class Net6MessengerTestFixture
     {
+        #if NET6_0
         [Fact]
         public async Task TestGetAsyncCanBeCancelled()
         {
@@ -22,10 +23,11 @@ namespace Lextm.SharpSnmpLib.Unit
                 {
                     var getTask = Messenger.GetAsync(VersionCode.V2, receiver, OctetString.Empty, new List<Variable>(), cts.Token);
                     cts.Cancel();
-                    await Assert.ThrowsAsync<TaskCanceledException>(() => getTask);
+                    await Assert.ThrowsAsync<OperationCanceledException>(() => getTask);
                 }
             }
         }
+        #endif
     }
 }
 #pragma warning restore 1591
