@@ -174,7 +174,12 @@ namespace Lextm.SharpSnmpLib
                 RequestId);
         }
 
-        internal IList<Variable> Decorate(IList<Variable> variables)
+        /// <summary>
+        /// Decorates a list of <see cref="Variable"/> objects with time and enterprise ID.
+        /// </summary>
+        /// <param name="variables">The variables.</param>
+        /// <returns>Decorated list.</returns>
+        public IList<Variable> Decorate(IList<Variable> variables)
         {
             var full = new List<Variable>(variables);
             full.Insert(0, new Variable(_timeId, _time));
