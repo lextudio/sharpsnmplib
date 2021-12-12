@@ -38,13 +38,14 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// </summary>
     public static partial class SnmpMessageExtension
     {
-#region async methods
+        #region async methods
 
         /// <summary>
         /// Sends an <see cref="ISnmpMessage"/>.
         /// </summary>
         /// <param name="message">The <see cref="ISnmpMessage"/>.</param>
         /// <param name="manager">Manager</param>
+        /// <param name="token">The cancellation token.</param>
         public static async Task SendAsync(this ISnmpMessage message, EndPoint manager, CancellationToken token)
         {
             if (message == null)
@@ -66,10 +67,8 @@ namespace Lextm.SharpSnmpLib.Messaging
                     code));
             }
 
-            using (var socket = manager.GetSocket())
-            {
-                await message.SendAsync(manager, socket, token).ConfigureAwait(false);
-            }
+            using var socket = manager.GetSocket();
+            await message.SendAsync(manager, socket, token).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -78,6 +77,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="message">The <see cref="ISnmpMessage"/>.</param>
         /// <param name="manager">Manager</param>
         /// <param name="socket">The socket.</param>
+        /// <param name="token">The cancellation token.</param>
         public static async Task SendAsync(this ISnmpMessage message, EndPoint manager, Socket socket, CancellationToken token)
         {
             if (message == null)
@@ -114,6 +114,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="request">The <see cref="ISnmpMessage"/>.</param>
         /// <param name="receiver">Port number.</param>
         /// <param name="registry">User registry.</param>
+        /// <param name="token">The cancellation token.</param>
         /// <returns></returns>
         public static async Task<ISnmpMessage> GetResponseAsync(this ISnmpMessage request, IPEndPoint receiver, UserRegistry registry, CancellationToken token)
         {
@@ -134,10 +135,8 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, "not a request message: {0}", code));
             }
 
-            using (var socket = receiver.GetSocket())
-            {
-                return await request.GetResponseAsync(receiver, registry, socket, token).ConfigureAwait(false);
-            }
+            using var socket = receiver.GetSocket();
+            return await request.GetResponseAsync(receiver, registry, socket, token).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -145,6 +144,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         /// <param name="request">The <see cref="ISnmpMessage"/>.</param>
         /// <param name="receiver">Port number.</param>
+        /// <param name="token">The cancellation token.</param>
         /// <returns></returns>
         public static async Task<ISnmpMessage> GetResponseAsync(this ISnmpMessage request, IPEndPoint receiver, CancellationToken token)
         {
@@ -164,10 +164,8 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, "not a request message: {0}", code));
             }
 
-            using (var socket = receiver.GetSocket())
-            {
-                return await request.GetResponseAsync(receiver, socket, token).ConfigureAwait(false);
-            }
+            using var socket = receiver.GetSocket();
+            return await request.GetResponseAsync(receiver, socket, token).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -176,6 +174,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="request">The <see cref="ISnmpMessage"/>.</param>
         /// <param name="receiver">Agent.</param>
         /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
+        /// <param name="token">The cancellation token.</param>
         /// <returns></returns>
         public static async Task<ISnmpMessage> GetResponseAsync(this ISnmpMessage request, IPEndPoint receiver, Socket udpSocket, CancellationToken token)
         {
@@ -210,6 +209,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="receiver">Agent.</param>
         /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
         /// <param name="registry">The user registry.</param>
+        /// <param name="token">The cancellation token.</param>
         /// <returns></returns>
         public static async Task<ISnmpMessage> GetResponseAsync(this ISnmpMessage request, IPEndPoint receiver, UserRegistry registry, Socket udpSocket, CancellationToken token)
         {

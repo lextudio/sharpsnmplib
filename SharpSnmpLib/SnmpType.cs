@@ -17,8 +17,6 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 // SNMP library for .NET by Malcolm Crowe at University of the West of Scotland
@@ -32,8 +30,6 @@ using System.Runtime.Serialization;
 //                                new ManagerSession(hostname,"public"),
 //                                "1.3.6.1.2.1.1.4.0");
 // Then the actual OID is mi.Name and the value is in mi.Value.ToString().
-[module: SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", Scope = "member", Target = "SharpSnmpLib.SnmpType.#UTF8String", Justification = "Postponed")]
-
 namespace Lextm.SharpSnmpLib
 {
     /// <summary>
@@ -42,6 +38,9 @@ namespace Lextm.SharpSnmpLib
     [DataContract]
     public enum SnmpType // RFC1213 subset of ASN.1
     { 
+        /// <summary>
+        /// End marker.
+        /// </summary>
         EndMarker = 0x00,
         
         /// <summary>

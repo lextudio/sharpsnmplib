@@ -38,11 +38,12 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// </summary>
     public sealed partial class Discovery
     {
-        #if NET6_0
+#if NET6_0
         /// <summary>
         /// Gets the response.
         /// </summary>
         /// <param name="receiver">The receiver.</param>
+        /// <param name="token">The cancellation token.</param>
         /// <returns></returns>
         public async Task<ReportMessage> GetResponseAsync(IPEndPoint receiver, CancellationToken token)
         {
