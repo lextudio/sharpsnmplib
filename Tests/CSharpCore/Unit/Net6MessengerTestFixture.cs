@@ -27,6 +27,51 @@ namespace Lextm.SharpSnmpLib.Unit
                 }
             }
         }
+
+        [Fact]
+        public async Task TestSetAsyncCanBeCancelled()
+        {
+            var receiver = new IPEndPoint(IPAddress.Loopback, 11337);
+            using (new UdpClient(receiver))//listen to prevent ICMP unreachable
+            {
+                using (var cts = new CancellationTokenSource())
+                {
+                    var getTask = Messenger.SetAsync(VersionCode.V2, receiver, OctetString.Empty, new List<Variable>(), cts.Token);
+                    cts.Cancel();
+                    await Assert.ThrowsAsync<OperationCanceledException>(() => getTask);
+                }
+            }
+        }
+
+        [Fact]
+        public async Task TestWalkAsyncCanBeCancelled()
+        {
+            var receiver = new IPEndPoint(IPAddress.Loopback, 11337);
+            using (new UdpClient(receiver))//listen to prevent ICMP unreachable
+            {
+                using (var cts = new CancellationTokenSource())
+                {
+                    var getTask = Messenger.WalkAsync(VersionCode.V2, receiver, OctetString.Empty, new ObjectIdentifier("0.0"), new List<Variable>(), WalkMode.WithinSubtree, cts.Token);
+                    cts.Cancel();
+                    await Assert.ThrowsAsync<OperationCanceledException>(() => getTask);
+                }
+            }
+        }
+
+        [Fact]
+        public async Task TestBulkWalkAsyncCanBeCancelled()
+        {
+            var receiver = new IPEndPoint(IPAddress.Loopback, 11337);
+            using (new UdpClient(receiver))//listen to prevent ICMP unreachable
+            {
+                using (var cts = new CancellationTokenSource())
+                {
+                    var getTask = Messenger.BulkWalkAsync(VersionCode.V2, receiver, OctetString.Empty, OctetString.Empty, new ObjectIdentifier("0.0"), new List<Variable>(), 5, WalkMode.WithinSubtree, null, null, cts.Token);
+                    cts.Cancel();
+                    await Assert.ThrowsAsync<OperationCanceledException>(() => getTask);
+                }
+            }
+        }
         #endif
     }
 }
