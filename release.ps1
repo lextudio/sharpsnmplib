@@ -5,11 +5,13 @@ param(
 )
 
 $msBuild = "msbuild"
-$onWindows = $false
 try
 {
     & $msBuild /version
     Write-Host "Likely on Linux/macOS."
+    & dotnet restore
+    & dotnet clean -c $Configuration
+    & dotnet build -c $Configuration
 }
 catch
 {
@@ -36,17 +38,16 @@ catch
     }
     else
     {
-        Write-Host "Likely on Windows with VS2019."
+        Write-Host "Likely on Windows with VS2019 or VS2022."
     }
 
-    $onWindows = $true
+    Write-Host "MSBuild found. Compile the projects."
+
+    & $msBuild /m /p:Configuration=$Configuration /t:restore
+    & $msBuild /m /p:Configuration=$Configuration /t:clean
+    & $msBuild /m /p:Configuration=$Configuration
 }
 
-Write-Host "MSBuild found. Compile the projects."
-
-& $msBuild /m /p:Configuration=$Configuration /t:restore
-& $msBuild /m /p:Configuration=$Configuration /t:clean
-& $msBuild /m /p:Configuration=$Configuration
 if ($LASTEXITCODE -ne 0)
 {
     Write-Host "Compilation failed. Exit."

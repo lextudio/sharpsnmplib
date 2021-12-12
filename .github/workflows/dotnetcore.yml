@@ -1,0 +1,86 @@
+name: .NET Core
+
+on: [push, pull_request]
+
+jobs:
+  macos:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: |
+          3.1.x
+          5.0.x
+          6.0.x
+    - name: Build
+      shell: bash
+      run: |
+        sudo sysctl -w net.inet.udp.maxdgram=65535
+        export CI=true
+        set -e
+        pwsh -file release.ps1 Release
+    - name: Test
+      shell: bash
+      run: dotnet test Tests/CSharpCore/Tests.NetStandard.csproj --configuration Release --no-build --logger trx --collect "Code coverage" --results-directory ./TestResults
+    - name: Test Results
+      uses: NasAmin/trx-parser@v0.2.0
+      id: trx-parser
+      with:
+        TRX_PATH: ${{ github.workspace }}/TestResults #This should be the path to your TRX files
+        REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  linux:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: |
+          3.1.x
+          5.0.x
+          6.0.x
+    - name: Build
+      shell: bash
+      run: |
+        dotnet --info
+        set -e
+        sudo pwsh -file patch-winfx.ps1 /home/runner/.dotnet/sdk/3.1.101
+        pwsh -file release.ps1 Release
+    - name: Test
+      shell: bash
+      run: dotnet test Tests/CSharpCore/Tests.NetStandard.csproj --configuration Release --no-build --logger trx --collect "Code coverage" --results-directory ./TestResults
+    - name: Test Results
+      uses: NasAmin/trx-parser@v0.2.0
+      id: trx-parser
+      with:
+        TRX_PATH: ${{ github.workspace }}/TestResults #This should be the path to your TRX files
+        REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  windows:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: |
+          3.1.x
+          5.0.x
+          6.0.x
+    - name: Build
+      shell: cmd
+      run: build.release.bat
+    - name: Test
+      shell: cmd
+      run: dotnet test Tests/CSharpCore/Tests.NetStandard.csproj --configuration Release --no-build --logger trx --collect "Code coverage" --results-directory ./TestResults
+    - name: Test Results
+      uses: NasAmin/trx-parser@v0.2.0
+      id: trx-parser
+      with:
+        TRX_PATH: ${{ github.workspace }}/TestResults #This should be the path to your TRX files
+        REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
