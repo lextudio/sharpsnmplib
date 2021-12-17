@@ -23,13 +23,7 @@ jobs:
         pwsh -file release.ps1 Release
     - name: Test
       shell: bash
-      run: dotnet test Tests/CSharpCore/Tests.NetStandard.csproj --configuration Release --no-build --logger trx --collect "Code coverage" --results-directory ./TestResults
-    - name: Test Results
-      uses: NasAmin/trx-parser@v0.2.0
-      id: trx-parser
-      with:
-        TRX_PATH: ${{ github.workspace }}/TestResults #This should be the path to your TRX files
-        REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: dotnet test Tests/CSharpCore/Tests.NetStandard.csproj --configuration Release --no-build /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=lcov -- RunConfiguration.DisableAppDomain=true
 
   linux:
     runs-on: ubuntu-latest
@@ -51,17 +45,11 @@ jobs:
         pwsh -file release.ps1 Release
     - name: Test
       shell: bash
-      run: dotnet test Tests/CSharpCore/Tests.NetStandard.csproj --configuration Release --no-build --logger trx --collect "Code coverage" --results-directory ./TestResults
-    - name: Test Results
-      uses: NasAmin/trx-parser@v0.2.0
-      id: trx-parser
-      with:
-        TRX_PATH: ${{ github.workspace }}/TestResults #This should be the path to your TRX files
-        REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: dotnet test Tests/CSharpCore/Tests.NetStandard.csproj --configuration Release --no-build /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=lcov -- RunConfiguration.DisableAppDomain=true
 
   windows:
 
-    runs-on: windows-latest
+    runs-on: windows-2022
 
     steps:
     - uses: actions/checkout@v2
@@ -77,10 +65,9 @@ jobs:
       run: build.release.bat
     - name: Test
       shell: cmd
-      run: dotnet test Tests/CSharpCore/Tests.NetStandard.csproj --configuration Release --no-build --logger trx --collect "Code coverage" --results-directory ./TestResults
-    - name: Test Results
-      uses: NasAmin/trx-parser@v0.2.0
-      id: trx-parser
+      run: dotnet test Tests/CSharpCore/Tests.NetStandard.csproj --configuration Release --no-build /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=lcov -- RunConfiguration.DisableAppDomain=true
+    - name: Publish coverage report to coveralls.io
+      uses: coverallsapp/github-action@master
       with:
-        TRX_PATH: ${{ github.workspace }}/TestResults #This should be the path to your TRX files
-        REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        path-to-lcov: ${{ github.workspace }}\Tests\CSharpCore\TestResults\coverage.net6.0.info
