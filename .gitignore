@@ -35,3 +35,6 @@ T4MVC.cs
 *.vspscc
 *.vssscc
 nuget.exe
+
+coverage.*.xml
+coverage.*.xml.*

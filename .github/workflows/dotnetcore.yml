@@ -22,8 +22,8 @@ jobs:
         set -e
         pwsh -file release.ps1 Release
     - name: Test
-      shell: bash
-      run: dotnet test Tests/CSharpCore/Tests.NetStandard.csproj --configuration Release --no-build /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=lcov -- RunConfiguration.DisableAppDomain=true
+      shell: pwsh
+      run: dotnet test Tests/CSharpCore/Tests.NetStandard.csproj --configuration Release --no-build /p:AltCover=true /p:AltCoverStrongNameKey=../../SharpSnmpLib/sharpsnmplib.snk /p:AltCoverAssemblyFilter='^(xunit)|(AltCover)|(SharpSnmpLib\.Tests)'
 
   linux:
     runs-on: ubuntu-latest
@@ -44,8 +44,8 @@ jobs:
         sudo pwsh -file patch-winfx.ps1 /home/runner/.dotnet/sdk/3.1.101
         pwsh -file release.ps1 Release
     - name: Test
-      shell: bash
-      run: dotnet test Tests/CSharpCore/Tests.NetStandard.csproj --configuration Release --no-build /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=lcov -- RunConfiguration.DisableAppDomain=true
+      shell: pwsh
+      run: dotnet test Tests/CSharpCore/Tests.NetStandard.csproj --configuration Release --no-build /p:AltCover=true /p:AltCoverStrongNameKey=../../SharpSnmpLib/sharpsnmplib.snk /p:AltCoverAssemblyFilter='^(xunit)|(AltCover)|(SharpSnmpLib\.Tests)'
 
   windows:
 
@@ -64,10 +64,13 @@ jobs:
       shell: cmd
       run: build.release.bat
     - name: Test
-      shell: cmd
-      run: dotnet test Tests/CSharpCore/Tests.NetStandard.csproj --configuration Release --no-build /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=lcov -- RunConfiguration.DisableAppDomain=true
+      shell: pwsh
+      run: |
+        dotnet test Tests/CSharpCore/Tests.NetStandard.csproj --configuration Release --no-build /p:AltCover=true /p:AltCoverStrongNameKey=../../SharpSnmpLib/sharpsnmplib.snk /p:AltCoverAssemblyFilter='^(xunit)|(AltCover)|(SharpSnmpLib\.Tests)'
+        dotnet tool install --global dotnet-reportgenerator-globaltool
+        reportgenerator -reports:${{ github.workspace }}\Tests\CSharpCore\coverage.net6.0.xml -targetdir:${{ github.workspace }}\TestResults -reporttypes:lcov
     - name: Publish coverage report to coveralls.io
       uses: coverallsapp/github-action@master
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
-        path-to-lcov: ${{ github.workspace }}\Tests\CSharpCore\TestResults\coverage.net6.0.info
+        path-to-lcov: ${{ github.workspace }}\TestResults\lcov.info
