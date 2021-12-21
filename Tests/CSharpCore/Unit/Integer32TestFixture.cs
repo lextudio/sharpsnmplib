@@ -34,14 +34,12 @@ namespace Lextm.SharpSnmpLib.Unit
         {
             var left = new Integer32(599);
             var right = new Integer32(599);
+            Assert.Equal(599.GetHashCode(), left.GetHashCode());
             Assert.Equal(left, right);
-// ReSharper disable RedundantCast
-// ReSharper disable EqualExpressionComparison
             Assert.True((Integer32)null == (Integer32)null);
-// ReSharper restore EqualExpressionComparison
-// ReSharper restore RedundantCast
             Assert.NotEqual(null, right);
             Assert.NotEqual(left, null);
+            Assert.True(left.Equals((object)right));
             Assert.True(left.Equals(right));
             Assert.True(left != null);
         }

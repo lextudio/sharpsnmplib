@@ -21,6 +21,8 @@ namespace Lextm.SharpSnmpLib.Unit
         {
             Assert.Throws<ArgumentNullException>(() => ByteTool.GetRawBytes(null, true));
             Assert.Throws<ArgumentNullException>(() => ByteTool.ConvertDecimal(null));
+            var decimalException = Assert.Throws<ArgumentException>(() => ByteTool.ConvertDecimal("XXX YYY"));
+            Assert.StartsWith("Invalid decimal string.", decimalException.Message);
             Assert.Throws<ArgumentNullException>(() => ByteTool.Convert((byte[])null));
             Assert.Throws<ArgumentNullException>(() => ByteTool.ParseItems(null));
             Assert.Throws<ArgumentException>(() => ByteTool.ParseItems((ISnmpData)null));
@@ -28,6 +30,8 @@ namespace Lextm.SharpSnmpLib.Unit
             Assert.Throws<ArgumentNullException>(() => ByteTool.Convert((string)null));
             Assert.Throws<ArgumentException>(() => ByteTool.Convert("**"));
             Assert.Throws<ArgumentException>(() => ByteTool.Convert("8AB"));
+            var hexException = Assert.Throws<ArgumentException>(() => ByteTool.Convert("YY"));
+            Assert.StartsWith("Invalid byte string.", hexException.Message);
             Assert.Throws<ArgumentException>(() => (-1).WritePayloadLength());
             Assert.Throws<ArgumentNullException>(() => ByteTool.PackMessage(null, VersionCode.V3, null, null, null));
             Assert.Throws<ArgumentNullException>(

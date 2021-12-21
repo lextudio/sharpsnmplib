@@ -9,9 +9,10 @@ namespace Lextm.SharpSnmpLib.Unit
         [Fact]
         public void TestException()
         {
+            Assert.Throws<ArgumentNullException>(() => new TrapV2Pdu(null, null));
             Assert.Throws<ArgumentNullException>(() => new TrapV2Pdu(new Tuple<int, byte[]>(0, new byte[] { 0 }), null));
             Assert.Throws<ArgumentNullException>(() => new TrapV2Pdu(0, null, 0, null));
-            Assert.Throws<ArgumentNullException>(() => new TrapV2Pdu(0, new ObjectIdentifier("1.3.6"), 0, null));
+            Assert.Throws<ArgumentNullException>(() => new TrapV2Pdu(0, new ObjectIdentifier("1.3.6"), 0, null));            
             var pdu = new TrapV2Pdu(0, new ObjectIdentifier("1.3"), 0, new List<Variable>());
             Assert.Throws<NotSupportedException>(() => { var test = pdu.ErrorIndex; });
             Assert.Throws<NotSupportedException>(() => { var test = pdu.ErrorStatus; });

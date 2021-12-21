@@ -61,6 +61,10 @@ namespace Lextm.SharpSnmpLib
                 {
                     result.Add(temp);
                 }
+                else
+                {
+                    throw new ArgumentException("Invalid decimal string.", nameof(description));
+                }
             }
 
             return result.ToArray();
@@ -96,6 +100,10 @@ namespace Lextm.SharpSnmpLib
                 if (byte.TryParse(buffer.ToString(), NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out byte temp))
                 {
                     result.Add(temp);
+                }
+                else
+                {
+                    throw new ArgumentException("Invalid byte string.", nameof(description));
                 }
 
                 buffer.Length = 0;
